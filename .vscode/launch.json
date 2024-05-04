@@ -1,0 +1,79 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "app-main-web (dev mode)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "chrome", "--web-port", "8888"],
+      "toolArgs": [
+        "--dart-define=ENV=dev",
+        "--dart-define=DOMAIN=https://www.qa.apps-369.com",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL",
+        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
+        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY"
+      ]
+    },
+    {
+      "name": "app-main-mobile (dev mode)",
+      "request": "launch",
+      "type": "dart",
+      "toolArgs": [
+        "--dart-define=ENV=dev",
+        "--dart-define=DOMAIN=https://www.qa.apps-369.com",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL",
+        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
+        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY"
+      ]
+    },
+    {
+      "name": "app-main (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "args": ["-d", "chrome", "--web-port", "8888"],
+      "toolArgs": [
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://www.qa.apps-369.com",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY"
+      ]
+    },
+    {
+      "name": "Flutter",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "flutterMode": "release",
+      "toolArgs": [
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://www.qa.apps-369.com",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL",
+        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
+        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY"
+      ]
+    }
+  ]
+}

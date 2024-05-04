@@ -1,0 +1,6 @@
+// {
+//     "cmake.configureOnOpen": true
+// }
+{
+    "editor.rulers": [120]
+}

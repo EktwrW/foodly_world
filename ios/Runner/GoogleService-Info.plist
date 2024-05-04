@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>561934860792-84snh394lse4728r6caf54blqjdtjmi4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD6pDXFKKkdWYn_hBtb-zW2dTe_hUTG4VY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>561934860792</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.foodlyWorld</string>
+	<key>PROJECT_ID</key>
+	<string>foodly-world</string>
+	<key>STORAGE_BUCKET</key>
+	<string>foodly-world.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:561934860792:ios:4aac80d2cad9d60118d60d</string>
+</dict>
+</plist>
