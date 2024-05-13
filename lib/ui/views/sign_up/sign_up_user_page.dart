@@ -29,8 +29,7 @@ class SignUpUserPage extends StatelessWidget {
   static bool _isSnackBarVisible = false;
   static final _controller = ScrollController();
 
-  TextSpan getBoldTextSpan(String text) =>
-      TextSpan(text: text, style: FoodlyTextStyles.actionsBodyBold);
+  TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.actionsBodyBold);
 
   void showEnableFormSnackBar(BuildContext context) {
     if (_isSnackBarVisible) {
@@ -80,8 +79,7 @@ class SignUpUserPage extends StatelessWidget {
           style: FoodlyTextStyles.snackBarLightBody,
           children: <TextSpan>[
             getBoldTextSpan(S.current.owner),
-            TextSpan(
-                text: ' ${S.current.usersHaveTheAbilityToCreateAndManage} '),
+            TextSpan(text: ' ${S.current.usersHaveTheAbilityToCreateAndManage} '),
             getBoldTextSpan(S.current.businesses),
             const TextSpan(text: ', '),
             getBoldTextSpan(S.current.brands),
@@ -103,6 +101,7 @@ class SignUpUserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
       body: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -110,8 +109,7 @@ class SignUpUserPage extends StatelessWidget {
             loaded: (signUpVM) => di<DialogService>().hideLoading(),
             userCreated: (vm) {
               di<AuthSessionService>().updateForceToLogin(false);
-              context.read<RootBloc>().add(
-                  RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+              context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
               di<DialogService>().hideLoading();
               final user = vm.userSessionDM.user;
               di<DialogService>().showCustomDialog(
@@ -120,9 +118,7 @@ class SignUpUserPage extends StatelessWidget {
                 onDialogClose: () => user.isManager
                     ? context.goNamed(AppRoutes.signUpBusiness.name)
                     : context.goNamed(AppRoutes.foodlyMainPage.name,
-                        pathParameters: {
-                            AppRoutes.routeIdParam: user.userId ?? ''
-                          }),
+                        pathParameters: {AppRoutes.routeIdParam: user.userId ?? ''}),
               );
             },
             error: (e, vm) {
@@ -155,8 +151,8 @@ class SignUpUserPage extends StatelessWidget {
             context.read<StartingCubit>().setView(StartingPageView.initial);
           },
           onPressedDisabled: () => showEnableFormSnackBar(context),
-          onPressed: () async => await pickImage(context).then(
-              (value) => context.read<SignUpCubit>().processImagePath(value)),
+          onPressed: () async =>
+              await pickImage(context).then((value) => context.read<SignUpCubit>().processImagePath(value)),
           onTap: () => showUserRoleSnackBar(context),
           enabled: vm.roleId != null,
           imagePath: vm.imagePath,
@@ -171,8 +167,7 @@ class SignUpUserPage extends StatelessWidget {
     final enabled = vm.roleId != null;
 
     return Container(
-      margin:
-          const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+      margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
       child: Form(
         key: vm.formKey,
         autovalidateMode: vm.autovalidateMode,
@@ -186,11 +181,8 @@ class SignUpUserPage extends StatelessWidget {
             FoodlyLoginButton(
               type: LoginButtonType.secondary,
               margin: EdgeInsets.zero,
-              onPressed: enabled
-                  ? () async => await cubit.onSignUpUserPressed()
-                  : null,
-              shape:
-                  enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
+              onPressed: enabled ? () async => await cubit.onSignUpUserPressed() : null,
+              shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
               text: S.current.createUser,
               disabled: !enabled,
             ).paddingOnly(top: 30, bottom: 32),

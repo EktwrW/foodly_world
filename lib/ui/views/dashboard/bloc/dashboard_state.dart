@@ -9,4 +9,6 @@ class DashboardState with _$DashboardState {
   const factory DashboardState.updatingLogo(DashboardVM vm) = _UpdatingLogo;
   const factory DashboardState.updatingMenu(DashboardVM vm) = _UpdatingMenu;
   const factory DashboardState.updatingPictures(DashboardVM vm) = _UpdatingPictures;
+  const factory DashboardState.picturesUpdated(DashboardVM vm) = _PicturesUpdated;
+  const factory DashboardState.showCoverImagesDialog(DashboardVM vm) = _ShowCoverImagesDialog;
 }

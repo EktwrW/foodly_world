@@ -8,7 +8,7 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/rounded_buttons.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
@@ -52,6 +52,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
     final cubit = context.read<SignUpCubit>();
 
     return Scaffold(
+      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
       body: SizedBox(
         height: context.screenHeight,
         width: context.screenWidth,

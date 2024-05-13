@@ -6,56 +6,19 @@ import 'package:neumorphic_ui/neumorphic_ui.dart' as ui show NeumorphicColors;
 class FoodlyTextStyles {
   const FoodlyTextStyles._();
 
-  static final editableAvatarText = GoogleFonts.quicksand(
-    fontSize: 13,
-    fontWeight: FontWeight.w600,
-    color: FoodlyThemes.accentColor,
+  static const actionsBody = TextStyle(
+    fontSize: 16,
   );
 
-  static const errorBodyText = TextStyle(
-    color: FoodlyThemes.error,
+  static const actionsBodyBold = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: FoodlyThemes.primaryFoodly,
   );
 
-  static const multiImageItemsLeft = TextStyle(
+  static const bodyWhiteSemibold = TextStyle(
     color: Colors.white,
-    fontSize: 22,
-    fontWeight: FontWeight.w700,
-  );
-
-  static final snackBarPrimaryButton = GoogleFonts.quicksand(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-    color: ui.NeumorphicColors.defaultTextColor,
-  );
-
-  static const sectionsTitle = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w900,
-    color: FoodlyThemes.primaryFoodly,
-  );
-
-  static final homeAppBarMobile = GoogleFonts.quicksand(
-    fontSize: 11,
-    fontWeight: FontWeight.bold,
-    color: Colors.black.withOpacity(.85),
-  );
-
-  static const categoryButtonText = TextStyle(
-    color: FoodlyThemes.primaryFoodly,
-    fontSize: 10,
-    height: 1.1,
-  );
-
-  static const promoSubtitle = TextStyle(fontSize: 11);
-
-  static final promoTitle = TextStyle(
-    fontWeight: FontWeight.bold,
-    color: Colors.green[900]?.withOpacity(.85),
-  );
-
-  static final promoBusinessName = TextStyle(
-    fontWeight: FontWeight.bold,
-    color: Colors.black.withOpacity(.75),
+    fontWeight: FontWeight.w600,
   );
 
   static const cardTextButtonBlue = TextStyle(
@@ -65,6 +28,13 @@ class FoodlyTextStyles {
 
   static const captionWhite = TextStyle(
     color: Colors.white,
+    fontSize: 12,
+  );
+
+  static const captionPurpleBold =
+      TextStyle(color: FoodlyThemes.primaryFoodly, fontSize: 12, fontWeight: FontWeight.bold);
+
+  static const caption = TextStyle(
     fontSize: 12,
   );
 
@@ -79,34 +49,10 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static const actionsBody = TextStyle(
-    fontSize: 16,
-  );
-
-  static const actionsBodyBold = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
+  static const categoryButtonText = TextStyle(
     color: FoodlyThemes.primaryFoodly,
-  );
-
-  static const hintText = TextStyle(
-    color: FoodlyThemes.secondaryFoodly,
-    fontSize: 16,
-  );
-
-  static const inputTextValue = TextStyle(
-    color: Colors.black87,
-    fontSize: 16,
-  );
-
-  static const disabledText = TextStyle(
-    color: ui.NeumorphicColors.disabled,
-    fontSize: 16,
-  );
-
-  static final signUpSubtitle = GoogleFonts.quicksand(
-    fontSize: 15,
-    fontWeight: FontWeight.w500,
+    fontSize: 10,
+    height: 1.1,
   );
 
   static const confirmationTextPrimary = TextStyle(
@@ -115,9 +61,57 @@ class FoodlyTextStyles {
     color: FoodlyThemes.primaryFoodly,
   );
 
-  static const snackBarLightBody = TextStyle(
+  static final copyrightText = GoogleFonts.quicksand(
+    fontSize: 11,
+    color: const Color(0xFF3D0218),
+  );
+
+  static final dialogCloseText = GoogleFonts.quicksand(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: ui.NeumorphicColors.decorationMaxWhiteColor,
+  );
+
+  static const disabledText = TextStyle(
+    color: ui.NeumorphicColors.disabled,
     fontSize: 16,
+  );
+
+  static final editableAvatarText = GoogleFonts.quicksand(
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: FoodlyThemes.accentColor,
+  );
+
+  static const errorBodyText = TextStyle(
+    color: FoodlyThemes.error,
+  );
+
+  static const footerButtonNormal = TextStyle(
+    fontWeight: FontWeight.w600,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  static const footerButtonSmall = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 11,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  static const hintText = TextStyle(
     color: FoodlyThemes.secondaryFoodly,
+    fontSize: 16,
+  );
+
+  static final homeAppBarMobile = GoogleFonts.quicksand(
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+    color: Colors.black.withOpacity(.85),
+  );
+
+  static const inputTextValue = TextStyle(
+    color: Colors.black87,
+    fontSize: 16,
   );
 
   static const loginCTATextButton = TextStyle(
@@ -129,15 +123,10 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static final secondaryTitle = GoogleFonts.quicksand(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    color: Colors.black.withOpacity(.65),
-  );
-
-  static final copyrightText = GoogleFonts.quicksand(
-    fontSize: 11,
-    color: const Color(0xFF3D0218),
+  static const multiImageItemsLeft = TextStyle(
+    color: Colors.white,
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
   );
 
   static const primaryBodyBold = TextStyle(
@@ -145,9 +134,57 @@ class FoodlyTextStyles {
     color: FoodlyThemes.primaryFoodly,
   );
 
-  static final dialogCloseText = GoogleFonts.quicksand(
+  static const profileSectionTitle = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
+
+  static const profileSectionTitleGreen = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: FoodlyThemes.tertiaryFoodly,
+  );
+
+  static const profileSectionTitlePurple = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  static final promoBusinessName = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Colors.black.withOpacity(.75),
+  );
+
+  static const promoSubtitle = TextStyle(fontSize: 11);
+
+  static final promoTitle = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Colors.green[900]?.withOpacity(.85),
+  );
+
+  static const sectionsTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w900,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  static final secondaryTitle = GoogleFonts.quicksand(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.black.withOpacity(.65),
+  );
+
+  static final signUpSubtitle = GoogleFonts.quicksand(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const snackBarLightBody = TextStyle(
+    fontSize: 16,
+    color: FoodlyThemes.secondaryFoodly,
+  );
+
+  static final snackBarPrimaryButton = GoogleFonts.quicksand(
     fontSize: 18,
     fontWeight: FontWeight.bold,
-    color: ui.NeumorphicColors.decorationMaxWhiteColor,
+    color: ui.NeumorphicColors.defaultTextColor,
   );
 }

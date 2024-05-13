@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
+import 'package:foodly_world/core/consts/foodly_mocks.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
@@ -9,20 +10,11 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus/icons_plus.dart' show Clarity;
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 class NewReleasesCard extends StatelessWidget {
   const NewReleasesCard({super.key});
-
-  static const mockArray = [
-    'https://abmauri.pt/wp-content/uploads/2019/09/motivos.jpg',
-    'https://images.adsttc.com/media/images/630e/cc5c/ae0c/1d14/7231/ff36/medium_jpg/panaderia-pianistas-zooco-estudio_10.jpg?1661914226',
-    'https://emprendedor.com/wp-content/uploads/2021/12/abrir-una-panaderia.jpg',
-    'https://media-cdn.tripadvisor.com/media/photo-s/0b/79/75/ae/bread-shop.jpg',
-    'https://proingra.com/wp-content/uploads/2022/09/08-SEP-BRAHMAN-II.jpg',
-    'https://cursoscecati.info/wp-content/uploads/2023/08/Objetivos-del-Curso-de-panaderia-Cecati.jpg',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +29,7 @@ class NewReleasesCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(S.current.newBranch, style: FoodlyTextStyles.cardsHeader)
-                      .paddingOnly(top: 3),
+                  Text(S.current.newBranch, style: FoodlyTextStyles.cardsHeader).paddingOnly(top: 3),
                 ],
               ),
             )),
@@ -58,7 +49,7 @@ class NewReleasesCard extends StatelessWidget {
                           topRight: Radius.circular(10),
                         ),
                         child: FeedMultipleImageView(
-                          imageUrls: mockArray,
+                          imageUrls: FoodlyMocks.BUSINESS_PICTURES_1,
                           radius: 12,
                         ),
                       ),
@@ -95,10 +86,7 @@ class NewReleasesCard extends StatelessWidget {
                                   itemSize: 12,
                                   minRating: 1,
                                   allowHalfRating: true,
-                                  itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 10),
+                                  itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 10),
                                   onRatingUpdate: (rating) {},
                                 ),
                               ],
@@ -118,18 +106,14 @@ class NewReleasesCard extends StatelessWidget {
                         Text(S.current.mockTextNewReleasesCard),
                         Row(
                           children: [
-                            SizedBox.square(
-                                dimension: 30,
-                                child: FoodlyCategories.bakery.icon),
+                            SizedBox.square(dimension: 30, child: FoodlyCategories.bakery.icon),
                             Card(
                               color: FoodlyThemes.tertiaryFoodly,
                               child: const Row(
                                 children: [
                                   SizedBox(width: 4),
-                                  Text('Covilha, 6200-507 ',
-                                      style: FoodlyTextStyles.captionWhite),
-                                  Icon(Bootstrap.geo_fill,
-                                      color: Colors.white, size: 16),
+                                  Text('Covilha, 6200-507 ', style: FoodlyTextStyles.captionWhite),
+                                  Icon(Clarity.map_marker_solid, color: Colors.white, size: 16),
                                   SizedBox(width: 4),
                                 ],
                               ).paddingAll(3),

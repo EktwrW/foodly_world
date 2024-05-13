@@ -18,10 +18,8 @@ class DialogService {
         context: context,
         barrierColor: Colors.black12,
         barrierDismissible: false,
-        builder: (_) => const Dialog(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            child: LoadingWidgetFoodlyLogo()),
+        builder: (_) =>
+            const Dialog(backgroundColor: Colors.transparent, elevation: 0, child: LoadingWidgetFoodlyLogo()),
       ).then((_) => _isLoadingShown = false);
     }
   }
@@ -35,8 +33,7 @@ class DialogService {
     }
   }
 
-  void showCustomDialog(Widget content, double? elevation,
-      {EdgeInsets? insetPadding, VoidCallback? onDialogClose}) {
+  void showCustomDialog(Widget content, double? elevation, {EdgeInsets? insetPadding, VoidCallback? onDialogClose}) {
     final context = rootNavigatorKey.currentContext;
 
     if (context != null && !_isLoadingShown) {
@@ -48,8 +45,7 @@ class DialogService {
           backgroundColor: Colors.transparent,
           insetPadding: insetPadding,
           elevation: elevation ?? 0,
-          child: PopScope(
-              canPop: false, onPopInvoked: (_) => false, child: content),
+          child: PopScope(canPop: false, onPopInvoked: (_) => false, child: content),
         ),
       ).then((_) {
         _isLoadingShown = false;

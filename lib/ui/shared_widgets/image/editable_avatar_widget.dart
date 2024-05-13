@@ -54,9 +54,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
               Bootstrap.person_circle,
               style: ui.NeumorphicStyle(
                 shape: ui.NeumorphicShape.concave,
-                color: !widget.enabled
-                    ? ui.NeumorphicColors.disabled
-                    : FoodlyThemes.accentColor,
+                color: !widget.enabled ? ui.NeumorphicColors.disabled : FoodlyThemes.accentColor,
                 depth: widget.enabled ? 2 : 0,
               ),
               size: widget.size.longestSide,
@@ -80,31 +78,30 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
       );
 
   Widget get businessPlaceholder => DecoratedBox(
-        decoration:
-            BoxDecoration(shape: BoxShape.circle, color: Colors.grey[200]),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[200]),
         child: SizedBox.square(
           dimension: height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ui.NeumorphicIcon(
-                Icons.image_search_rounded,
-                style: ui.NeumorphicStyle(
-                  shape: ui.NeumorphicShape.concave,
-                  color: !widget.enabled
-                      ? ui.NeumorphicColors.disabled
-                      : FoodlyThemes.accentColor,
-                  depth: widget.enabled ? 2 : 0,
+          child: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ui.NeumorphicIcon(
+                  Icons.image_search_rounded,
+                  style: ui.NeumorphicStyle(
+                    shape: ui.NeumorphicShape.concave,
+                    color: !widget.enabled ? ui.NeumorphicColors.disabled : FoodlyThemes.accentColor,
+                    depth: widget.enabled ? 2 : 0,
+                  ),
+                  size: 50,
                 ),
-                size: 50,
-              ),
-              Text(
-                S.current.loadLogo,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: FoodlyTextStyles.editableAvatarText,
-              ).paddingSymmetric(horizontal: 10, vertical: 4),
-            ],
+                Text(
+                  S.current.loadLogo,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: FoodlyTextStyles.editableAvatarText,
+                ).paddingSymmetric(horizontal: 10, vertical: 4),
+              ],
+            ),
           ),
         ),
       );
@@ -112,7 +109,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: height + 40,
+      dimension: height + 20,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -121,9 +118,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
             width: width + 14,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(height),
-                color: widget.enabled
-                    ? FoodlyThemes.accentColor
-                    : ui.NeumorphicColors.disabled),
+                color: widget.enabled ? FoodlyThemes.accentColor : ui.NeumorphicColors.disabled),
           ),
           ClayContainer(
             surfaceColor: ui.NeumorphicColors.embossMaxWhiteColor,
@@ -135,9 +130,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
             width: width + 10,
           ),
           InkWell(
-            onTap: ((widget.buttonDiameter ?? 1) != 0 && widget.enabled)
-                ? widget.onPressed
-                : widget.onPressedDisabled,
+            onTap: ((widget.buttonDiameter ?? 1) != 0 && widget.enabled) ? widget.onPressed : widget.onPressedDisabled,
             customBorder: const CircleBorder(),
             child: SizedBox.fromSize(
               size: widget.size,

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/data_models/organization/business_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -14,6 +15,23 @@ abstract class BusinessClient {
 
   @POST('/business-update/{uuid}')
   Future<BusinessDM> updateBusiness(@Path('uuid') String id, @Queries() BusinessUpdateDTO loginDT);
+
+  @POST('/business-update-logo/{uuid}')
+  @MultiPart()
+  Future<BusinessDM> updateLogo({
+    @Path('uuid') required String id,
+    @Part(name: 'business_logo') required List<MultipartFile> logo,
+  });
+
+  @DELETE('/business-cover-images-delete/{uuid}')
+  Future<void> deleteCoverImageById(@Path('uuid') String id);
+
+  @POST('/business-cover-images-store')
+  @MultiPart()
+  Future<List<BusinessCoverImageDM>> storeCoverImages({
+    @Part(name: 'business_image_path[]') required List<MultipartFile> images,
+    @Part(name: 'business_id') required int businessId,
+  });
 
   @POST('/business-store')
   @MultiPart()

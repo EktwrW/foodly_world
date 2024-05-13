@@ -1,3 +1,4 @@
+import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'business_dm.freezed.dart';
@@ -5,12 +6,17 @@ part 'business_dm.g.dart';
 
 @freezed
 class BusinessDM with _$BusinessDM {
+  const BusinessDM._();
+
   const factory BusinessDM({
-    @JsonKey(name: 'id') int? intId,
-    @JsonKey(name: 'business_image_path') String? logo,
+    @JsonKey(name: 'business_id') int? intId,
+    @JsonKey(name: 'business_logo') String? logo,
+    @JsonKey(name: 'cover_images') @Default([]) List<BusinessCoverImageDM> coverImages,
+    @JsonKey(name: 'branches') @Default([]) List<Object> branches,
     @JsonKey(name: 'business_uuid') String? id,
     @JsonKey(name: 'business_name') String? name,
     @JsonKey(name: 'business_email') String? email,
+    @JsonKey(name: 'business_phone') String? phoneNumber,
     @JsonKey(name: 'business_address') String? address,
     @JsonKey(name: 'business_zipcode') String? zipCode,
     @JsonKey(name: 'business_city') String? city,
@@ -23,6 +29,22 @@ class BusinessDM with _$BusinessDM {
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);
+
+  String get fullAddress {
+    return [
+      address,
+      city,
+      zipCode,
+      country,
+    ].where((element) => element != null && element.isNotEmpty).join(', ');
+  }
+
+  List<String> get coverImageUrls {
+    if (coverImages.isNotEmpty) {
+      return coverImages.map((e) => e.url ?? '').toList();
+    }
+    return [];
+  }
 }
 
 enum BusinessPlan {

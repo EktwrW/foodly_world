@@ -30,7 +30,7 @@ class StartingCubit extends Cubit<StartingState> {
 
   StartingCubit()
       : _vm = StartingVM(
-          emailController: TextEditingController(text: 'zero@mail.com'),
+          emailController: TextEditingController(text: 'owner@mail.com'),
           passwordController: TextEditingController(text: 'Niko_2018'),
         ),
         super(const StartingState.initial()) {

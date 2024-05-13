@@ -16,6 +16,7 @@ import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -48,6 +49,7 @@ Future<Widget> buildFoodlyApp() async {
       BlocProvider(create: (context) => StartingCubit()),
       BlocProvider(create: (context) => LocalAuthCubit()),
       BlocProvider(create: (context) => LocationBloc()),
+      BlocProvider(create: (context) => DashboardBloc()),
     ],
     child: MaterialApp.router(
       title: 'Foodly App',

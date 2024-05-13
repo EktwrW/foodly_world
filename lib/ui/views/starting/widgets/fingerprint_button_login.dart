@@ -5,7 +5,7 @@ import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/rounded_buttons.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -46,8 +46,7 @@ class FingerprintButtonLogin extends StatelessWidget {
       listener: (context, state) {
         state.whenOrNull(
           authenticated: (localAuthDTO) {
-            context.read<RootBloc>().add(RootEvent.cacheAuthSession(
-                userSessionDM: localAuthDTO.userSessionDM));
+            context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: localAuthDTO.userSessionDM));
             final user = localAuthDTO.userSessionDM.user;
             di<DialogService>().hideLoading();
 
@@ -72,9 +71,7 @@ class FingerprintButtonLogin extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 height: 1,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: FoodlyThemes.primaryFoodly,
-                    borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
               ),
             ),
             RoundedButtonMobileFoodly(
@@ -102,9 +99,7 @@ class FingerprintButtonLogin extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 height: 1,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: FoodlyThemes.primaryFoodly,
-                    borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ],

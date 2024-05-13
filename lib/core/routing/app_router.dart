@@ -13,7 +13,6 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/local_storage_service.dart';
 import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.dart';
-import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/dashboard_page.dart';
 import 'package:foodly_world/ui/views/home/bloc/home_bloc.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
@@ -213,9 +212,10 @@ class AppRouter {
           ],
         ),
         _goRouteFadeTransition(
-            AppRoutes.businessPanel,
-            BlocProvider(create: (context) => DashboardBloc(), child: const DashboardPage()),
-            [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+          AppRoutes.businessPanel,
+          const DashboardPage(),
+          [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
+        ),
         _goRouteFadeTransition(
             AppRoutes.profileScreen,
             BlocProvider(create: (context) => UserProfileCubit(), child: const UserProfilePage()),

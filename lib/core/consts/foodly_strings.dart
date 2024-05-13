@@ -13,6 +13,7 @@ class FoodlyStrings {
 
   // View port types:
   static const String CIRCLE = 'circle';
+  static const String SQUARE = 'square';
 
   // Google sign in:
   static const GOOGLE_SIGN_IN_SCOPES = ['email', 'https://www.googleapis.com/auth/userinfo.profile'];

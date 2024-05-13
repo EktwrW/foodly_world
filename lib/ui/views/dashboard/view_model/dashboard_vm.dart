@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/data_models/organization/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,6 +14,8 @@ class DashboardVM with _$DashboardVM {
   const factory DashboardVM({
     @Default([]) List<BusinessDM> myBusinessesses,
     BusinessDM? currentBusiness,
+    @Default([]) List<BusinessCoverImageDM> picturesPath,
+    BusinessCoverImageDM? targetForDelete,
     TextEditingController? businessNameCtrl,
     TextEditingController? businessPhoneNumberCtrl,
     TextEditingController? businessEmailCtrl,
@@ -20,8 +23,6 @@ class DashboardVM with _$DashboardVM {
     TextEditingController? businessCityCtrl,
     TextEditingController? businessAddressCtrl,
     TextEditingController? businessZipCodeCtrl,
-    @Default([]) List<String> picturesPath,
-    String? logoPath,
     FocusNode? businessNameNode,
     FocusNode? businessEmailNode,
     FocusNode? businessPhoneNumberNode,
@@ -33,6 +34,4 @@ class DashboardVM with _$DashboardVM {
     GlobalKey<FormState>? formKey,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
   }) = _DashboardVM;
-
-  // bool get isRequestingPassword => recoverPasswordView == RecoverPasswordView.sendingRequest;
 }
