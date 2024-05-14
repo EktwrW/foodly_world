@@ -91,7 +91,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                 duration: Durations.medium1,
                 height: vm.picturesPath.length < 6 ? 580 : 530,
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: ui.NeumorphicColors.background,
@@ -170,7 +170,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                           ).paddingTop(20),
                         ),
                     ],
-                  ),
+                  ).paddingTop(10),
                 ),
               ),
             ],
