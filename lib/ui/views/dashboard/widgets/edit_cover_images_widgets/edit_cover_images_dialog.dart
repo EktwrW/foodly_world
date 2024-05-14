@@ -5,7 +5,6 @@ import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/image/adaptive_image_widget.dart';
@@ -13,8 +12,8 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
-import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widgets/edit_image_popup_menu_button.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class EditCoverImagesDialog extends StatelessWidget {
@@ -130,7 +129,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                         FadeIn(
                           child: Wrap(
                             alignment: WrapAlignment.center,
-                            spacing: 10,
+                            spacing: context.screenWidth * .022,
                             runSpacing: 10,
                             children: vm.picturesPath
                                 .map(
@@ -179,54 +178,5 @@ class EditCoverImagesDialog extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class EditImagePopupMenuButton extends StatelessWidget {
-  final BusinessCoverImageDM coverImageDM;
-
-  const EditImagePopupMenuButton({super.key, required this.coverImageDM});
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<int>(
-      elevation: 3,
-      icon: const Icon(Icons.more_vert, color: Colors.white),
-      constraints: const BoxConstraints(maxWidth: 50),
-      onSelected: (item) => onItemSelected(context, item),
-      color: Colors.white70,
-      itemBuilder: (context) => [
-        const PopupMenuItem(
-          height: 36,
-          value: 1,
-          child: Icon(Bootstrap.pencil_square, size: 24, color: FoodlyThemes.primaryFoodly),
-        ),
-        const PopupMenuItem(
-          height: 36,
-          value: 2,
-          child: Icon(Bootstrap.trash3, size: 24, color: FoodlyThemes.primaryFoodly),
-        ),
-      ],
-    );
-  }
-
-  void onItemSelected(BuildContext context, int item) async {
-    switch (item) {
-      case 1:
-        if ((coverImageDM.url?.isNotEmpty ?? false) && (coverImageDM.imageId?.isNotEmpty ?? false)) {
-          await DashboardHelpers.cropImageFromUrl(coverImageDM.url!, context).then(
-            (filePath) => filePath.isNotEmpty
-                ? context.read<DashboardBloc>().add(DashboardEvent.updatePicture(coverImageDM.imageId!, filePath))
-                : null,
-          );
-        }
-        break;
-      case 2:
-        context.read<DashboardBloc>().add(DashboardEvent.deleteCoverImageById(coverImageDM));
-        break;
-
-      default:
-        break;
-    }
   }
 }
