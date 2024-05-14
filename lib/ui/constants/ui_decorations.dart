@@ -18,4 +18,8 @@ class UIDecorations {
   static const SNACKBAR_TOP_ROUNDED_BORDER = RoundedRectangleBorder(
     borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
   );
+
+  static const SLIVER_APP_BAR_BOTTOM_SHAPE = ContinuousRectangleBorder(
+    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35), bottomRight: Radius.circular(35)),
+  );
 }

@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
+import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
@@ -32,7 +33,7 @@ class EditCoverImagesDialog extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: Durations.medium1,
-                height: vm.picturesPath.length < 6 ? 600 : 550,
+                height: vm.picturesPath.length < 6 ? 630 : 580,
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 padding: const EdgeInsets.only(bottom: 12),
@@ -46,31 +47,41 @@ class EditCoverImagesDialog extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            if (vm.targetForDelete != null) {
-                              context
-                                  .read<DashboardBloc>()
-                                  .add(DashboardEvent.deleteCoverImageById(vm.targetForDelete!));
-                            } else {
-                              bloc.add(const DashboardEvent.uploadPictures());
-                            }
-                          },
-                          child: Text(
-                            vm.targetForDelete != null ? 'Confirmar' : 'Guardar',
-                            style: FoodlyTextStyles.dialogCloseText,
+                        if (vm.picturesPath.any((p) => p.imageId == null) || vm.targetForDelete != null)
+                          FadeIn(
+                            child: InkWell(
+                              onTap: () {
+                                if (vm.targetForDelete != null) {
+                                  context
+                                      .read<DashboardBloc>()
+                                      .add(DashboardEvent.deleteCoverImageById(vm.targetForDelete!));
+                                } else {
+                                  bloc.add(const DashboardEvent.uploadPictures());
+                                }
+                              },
+                              child: Text(
+                                vm.targetForDelete != null ? 'Confirmar' : 'Guardar',
+                                style: FoodlyTextStyles.dialogCloseText,
+                              ),
+                            ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (vm.targetForDelete != null) {
-                              bloc.add(const DashboardEvent.cancelDeleteCoverImage());
-                            } else {
-                              Navigator.of(context).pop();
-                              bloc.add(const DashboardEvent.cancelUploadPictures());
-                            }
-                          },
-                          child: Text(S.current.cancel, style: FoodlyTextStyles.dialogCloseText),
+                        FadeIn(
+                          child: InkWell(
+                            onTap: () async {
+                              if (vm.targetForDelete != null) {
+                                bloc.add(const DashboardEvent.cancelDeleteCoverImage());
+                              } else {
+                                Navigator.of(context).pop();
+                                await Future.delayed(Durations.short4);
+                                bloc.add(const DashboardEvent.cancelUploadPictures());
+                              }
+                            },
+                            child: Text(
+                                vm.picturesPath.any((p) => p.imageId == null) || vm.targetForDelete != null
+                                    ? S.current.cancel
+                                    : S.current.close,
+                                style: FoodlyTextStyles.dialogCloseText),
+                          ),
                         ),
                       ],
                     ),
@@ -79,7 +90,7 @@ class EditCoverImagesDialog extends StatelessWidget {
               ),
               AnimatedContainer(
                 duration: Durations.medium1,
-                height: vm.picturesPath.length < 6 ? 550 : 500,
+                height: vm.picturesPath.length < 6 ? 580 : 530,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 decoration: BoxDecoration(
@@ -94,57 +105,71 @@ class EditCoverImagesDialog extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: const Asset(FoodlyAssets.coverImages, height: 70).paddingRight(0)),
-                          const Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Editar fotos de Portada',
-                              textAlign: TextAlign.center,
-                              style: FoodlyTextStyles.confirmationTextPrimary,
-                            ),
-                          ),
-                        ],
+                      const Asset(FoodlyAssets.coverImages, height: 70).paddingBottom(18),
+                      const Text(
+                        'Editar fotos de Portada',
+                        textAlign: TextAlign.center,
+                        style: FoodlyTextStyles.confirmationTextPrimary,
                       ).paddingBottom(30),
-                      if (vm.targetForDelete != null) AdaptiveImage(imagePath: vm.targetForDelete!.url ?? ''),
-                      if (vm.picturesPath.isNotEmpty && vm.targetForDelete == null)
-                        Wrap(
-                          alignment: WrapAlignment.center,
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: vm.picturesPath
-                              .map(
-                                (coverImageDM) => SizedBox(
-                                  width: context.screenWidth * .4,
-                                  child: Stack(
-                                    children: [
-                                      AdaptiveImage(imagePath: coverImageDM.url ?? ''),
-                                      Align(
-                                          alignment: Alignment.topRight,
-                                          child: EditImagePopupMenuButton(coverImageDM: coverImageDM)),
-                                    ],
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      if (vm.picturesPath.length < 6)
-                        IconButton.filled(
-                          onPressed: () async => await pickImageFile(
-                            context,
-                            ImageSource.gallery,
-                            aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
-                            cropStyle: CropStyle.rectangle,
-                            aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
-                          ).then(
-                            (path) => path.isNotEmpty ? bloc.add(DashboardEvent.addPicture(path)) : null,
+                      if (vm.targetForDelete != null)
+                        SizedBox(
+                          height: 300,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Deseas eliminar esta imagen de portada?',
+                                textAlign: TextAlign.center,
+                                style: FoodlyTextStyles.captionPurpleBold,
+                              ).paddingBottom(32),
+                              FadeIn(child: AdaptiveImage(imagePath: vm.targetForDelete!.url ?? '')),
+                            ],
                           ),
-                          tooltip: 'Presiona para agregar fotos, hasta un maximo de 6 imagenes',
-                          icon: const Icon(Bootstrap.plus_circle, size: 28),
-                          padding: const EdgeInsets.all(4),
-                        ).paddingTop(20),
+                        ),
+                      if (vm.picturesPath.isNotEmpty && vm.targetForDelete == null)
+                        FadeIn(
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: vm.picturesPath
+                                .map(
+                                  (coverImageDM) => ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: SizedBox(
+                                      width: context.screenWidth * .4,
+                                      child: Stack(
+                                        children: [
+                                          AdaptiveImage(imagePath: coverImageDM.url ?? ''),
+                                          Align(
+                                            alignment: Alignment.topRight,
+                                            child: EditImagePopupMenuButton(coverImageDM: coverImageDM),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      if (vm.picturesPath.length < 6 && vm.targetForDelete == null)
+                        FadeIn(
+                          child: IconButton.filled(
+                            onPressed: () async => await pickImageFile(
+                              context,
+                              ImageSource.gallery,
+                              aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
+                              cropStyle: CropStyle.rectangle,
+                              aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+                            ).then(
+                              (path) => path.isNotEmpty ? bloc.add(DashboardEvent.addPicture(path)) : null,
+                            ),
+                            tooltip: 'Presiona para agregar fotos, hasta un maximo de 6 imagenes',
+                            icon: const Icon(Bootstrap.plus_circle, size: 28),
+                            padding: const EdgeInsets.all(4),
+                          ).paddingTop(20),
+                        ),
                     ],
                   ),
                 ),
@@ -165,6 +190,7 @@ class EditImagePopupMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      elevation: 3,
       icon: const Icon(Icons.more_vert, color: Colors.white),
       constraints: const BoxConstraints(maxWidth: 50),
       onSelected: (item) => onItemSelected(context, item),
@@ -184,9 +210,16 @@ class EditImagePopupMenuButton extends StatelessWidget {
     );
   }
 
-  void onItemSelected(BuildContext context, int item) {
+  void onItemSelected(BuildContext context, int item) async {
     switch (item) {
       case 1:
+        if ((coverImageDM.url?.isNotEmpty ?? false) && (coverImageDM.imageId?.isNotEmpty ?? false)) {
+          await DashboardHelpers.cropImageFromUrl(coverImageDM.url!, context).then(
+            (filePath) => filePath.isNotEmpty
+                ? context.read<DashboardBloc>().add(DashboardEvent.updatePicture(coverImageDM.imageId!, filePath))
+                : null,
+          );
+        }
         break;
       case 2:
         context.read<DashboardBloc>().add(DashboardEvent.deleteCoverImageById(coverImageDM));

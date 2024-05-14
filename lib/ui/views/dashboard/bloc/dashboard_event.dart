@@ -7,6 +7,7 @@ class DashboardEvent with _$DashboardEvent {
   const factory DashboardEvent.editCoverImagesDialog() = _EditCoverImagesDialog;
   const factory DashboardEvent.addPicture(String path) = _AddPicture;
   const factory DashboardEvent.uploadPictures() = _UploadPictures;
+  const factory DashboardEvent.updatePicture(String imageId, String filePath) = _UpdatePicture;
   const factory DashboardEvent.cancelUploadPictures() = _CancelUploadPictures;
   const factory DashboardEvent.deleteCoverImageById(BusinessCoverImageDM coverImageDM) = _DeleteCoverImageById;
   const factory DashboardEvent.cancelDeleteCoverImage() = _CancelDeleteCoverImage;

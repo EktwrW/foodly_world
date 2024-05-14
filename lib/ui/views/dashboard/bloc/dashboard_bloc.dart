@@ -25,49 +25,54 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc()
       : _vm = const DashboardVM(),
         super(const _Initial(DashboardVM())) {
-    on<DashboardEvent>((events, emit) async {
-      await events.map(
-        started: (_Started value) async {
-          _vm = _vm.copyWith(
-            myBusinessesses: _authService.userSessionDM?.user.business ?? [],
-            currentBusiness: _authService.userSessionDM?.user.business.first,
-          );
-          await fetchAllBusinesses(emit).whenComplete(() => emit(_Loaded(_vm)));
-        },
-        updateLogo: (_UpdateLogo value) async {
-          await updateLogo(emit, value.path);
-        },
-        editCoverImagesDialog: (_EditCoverImagesDialog value) {
-          _vm = _vm.copyWith(
-            picturesPath: _authService.userSessionDM?.user.business.first.coverImages ?? [],
-          );
-          emit(_ShowCoverImagesDialog(_vm));
-        },
-        deleteCoverImageById: (_DeleteCoverImageById value) async {
-          if (_vm.targetForDelete != null) {
-            await deleteCoverImage(emit, value.coverImageDM);
-          } else {
-            _vm = _vm.copyWith(targetForDelete: value.coverImageDM);
+    on<DashboardEvent>(
+      (events, emit) async {
+        await events.map(
+          started: (_Started value) async {
+            _vm = _vm.copyWith(
+              myBusinessesses: _authService.userSessionDM?.user.business ?? [],
+              currentBusiness: _authService.userSessionDM?.user.business.first,
+            );
+            await fetchAllBusinesses(emit).whenComplete(() => emit(_Loaded(_vm)));
+          },
+          updateLogo: (_UpdateLogo value) async {
+            await updateLogo(emit, value.path);
+          },
+          editCoverImagesDialog: (_EditCoverImagesDialog value) {
+            _vm = _vm.copyWith(
+              picturesPath: _authService.userSessionDM?.user.business.first.coverImages ?? [],
+            );
+            emit(_ShowCoverImagesDialog(_vm));
+          },
+          deleteCoverImageById: (_DeleteCoverImageById value) async {
+            if (_vm.targetForDelete != null) {
+              await deleteCoverImage(emit, value.coverImageDM);
+            } else {
+              _vm = _vm.copyWith(targetForDelete: value.coverImageDM);
+              emit(_Loaded(_vm));
+            }
+          },
+          cancelDeleteCoverImage: (_CancelDeleteCoverImage value) async {
+            _vm = _vm.copyWith(targetForDelete: null);
             emit(_Loaded(_vm));
-          }
-        },
-        cancelDeleteCoverImage: (_CancelDeleteCoverImage value) async {
-          _vm = _vm.copyWith(targetForDelete: null);
-          emit(_Loaded(_vm));
-        },
-        addPicture: (_AddPicture value) async {
-          _vm = _vm.copyWith(picturesPath: List.from(_vm.picturesPath)..add(BusinessCoverImageDM(url: value.path)));
-          emit(_Loaded(_vm));
-        },
-        uploadPictures: (_UploadPictures value) async {
-          await uploadPictures(emit);
-        },
-        cancelUploadPictures: (_CancelUploadPictures value) async {
-          _vm = _vm.copyWith(picturesPath: [], targetForDelete: null);
-          emit(_Loaded(_vm));
-        },
-      );
-    });
+          },
+          addPicture: (_AddPicture value) async {
+            _vm = _vm.copyWith(picturesPath: List.from(_vm.picturesPath)..add(BusinessCoverImageDM(url: value.path)));
+            emit(_Loaded(_vm));
+          },
+          uploadPictures: (_UploadPictures value) async {
+            await uploadPictures(emit);
+          },
+          cancelUploadPictures: (_CancelUploadPictures value) async {
+            _vm = _vm.copyWith(picturesPath: [], targetForDelete: null);
+            emit(_Loaded(_vm));
+          },
+          updatePicture: (_UpdatePicture value) async {
+            await updateCoverImageById(value.imageId, value.filePath, emit);
+          },
+        );
+      },
+    );
 
     add(const DashboardEvent.started());
   }
@@ -119,15 +124,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  void updateBusinessInCurrentArray(BusinessDM updatedBusiness) {
-    final length = _vm.myBusinessesses.length;
-    final businesses = List.generate(
-        length, (i) => _vm.myBusinessesses[i].id == updatedBusiness.id ? updatedBusiness : _vm.myBusinessesses[i]);
-
-    _vm = _vm.copyWith(myBusinessesses: businesses, currentBusiness: updatedBusiness);
-    _authService.setBusinesses(businesses);
-  }
-
   Future<void> uploadPictures(Emitter<DashboardState> emit) async {
     final paths = _vm.picturesPath.where((p) => p.imageId == null).toList();
     log('$paths');
@@ -143,7 +139,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             (result) => result.when(
               success: (businessCoverImageArray) {
                 final updatedBusiness = _vm.currentBusiness!.copyWith(
-                  coverImages: List.from(_vm.picturesPath)..addAll(businessCoverImageArray),
+                  coverImages: List.from(_vm.currentBusiness!.coverImages)..addAll(businessCoverImageArray),
                 );
                 updateBusinessInCurrentArray(updatedBusiness);
                 emit(_PicturesUpdated(_vm));
@@ -183,9 +179,38 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
+  Future<void> updateCoverImageById(String imageId, String filePath, Emitter emit) async {
+    emit(_UpdatingPictures(_vm));
+    await _businessRepo.updateCoverImageById(imageId, filePath).then((result) {
+      return result.when(
+        success: (updatedImage) {
+          final currentPics = List<BusinessCoverImageDM>.from(_vm.picturesPath)
+            ..removeWhere((p) => p.imageId == imageId)
+            ..add(updatedImage);
+          final updatedBusiness = _vm.currentBusiness!.copyWith(
+            coverImages: currentPics,
+          );
+
+          updateBusinessInCurrentArray(updatedBusiness);
+          emit(_Loaded(_vm = _vm.copyWith(picturesPath: currentPics)));
+        },
+        failure: (error) => handleError(error, emit),
+      );
+    });
+  }
+
   /// Common methods
   void handleError(AppRequestException error, Emitter emit) {
     di<Logger>().e(error);
     emit(_Error('$error', _vm));
+  }
+
+  void updateBusinessInCurrentArray(BusinessDM updatedBusiness) {
+    final length = _vm.myBusinessesses.length;
+    final businesses = List.generate(
+        length, (i) => _vm.myBusinessesses[i].id == updatedBusiness.id ? updatedBusiness : _vm.myBusinessesses[i]);
+
+    _vm = _vm.copyWith(myBusinessesses: businesses, currentBusiness: updatedBusiness);
+    _authService.setBusinesses(businesses);
   }
 }

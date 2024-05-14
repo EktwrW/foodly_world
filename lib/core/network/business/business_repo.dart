@@ -81,6 +81,20 @@ class BusinessRepo {
     }
   }
 
+  Future<ApiResult<BusinessCoverImageDM>> updateCoverImageById(String imageId, String filePath) async {
+    final fileHandler = getFileHandler();
+    final imageFile = await fileHandler.getMultipartFile(filePath);
+
+    try {
+      return ApiResult.success(await _businessClient.updateCoverImageById(
+        id: imageId,
+        image: imageFile != null ? [imageFile] : [],
+      ));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<List<BusinessCoverImageDM>>> storeCoverImages({
     required List<String> filePaths,
     required int businessId,

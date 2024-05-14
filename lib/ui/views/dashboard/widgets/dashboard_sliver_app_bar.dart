@@ -6,6 +6,7 @@ import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
@@ -43,9 +44,7 @@ class DashboardSliverAppBar extends StatelessWidget {
           leadingWidth: 76,
           expandedHeight: 350,
           collapsedHeight: 110,
-          shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35), bottomRight: Radius.circular(35)),
-          ),
+          shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           pinned: true,
           floating: true,
           title: Text(
@@ -111,26 +110,26 @@ class DashboardSliverAppBar extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: 40,
+                      height: 35,
                       child: Center(
                         child: Text(
                           vm.currentBusiness?.name ?? '',
                           textAlign: TextAlign.center,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: FoodlyTextStyles.cardSubtitle.copyWith(color: Colors.black),
                         ),
                       ),
                     ).paddingBottom(5),
                   ],
-                ).paddingHorizontal(UIDimens.SCREEN_PADDING_MOB),
+                ).paddingHorizontal(14),
                 background: SafeArea(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(
                         child: SizedBox(
-                          height: 282,
+                          height: 296,
                           child: Stack(
                             children: [
                               ClipRRect(
@@ -138,7 +137,7 @@ class DashboardSliverAppBar extends StatelessWidget {
                                 child: ColoredBox(
                                   color: FoodlyThemes.primaryFoodly.withOpacity(0.1),
                                   child: SizedBox(
-                                    height: 150,
+                                    height: 165,
                                     width: double.infinity,
                                     child: (vm.currentBusiness?.coverImages.isNotEmpty ?? false)
                                         ? ImageSliderFade(

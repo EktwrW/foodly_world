@@ -26,6 +26,12 @@ abstract class BusinessClient {
   @DELETE('/business-cover-images-delete/{uuid}')
   Future<void> deleteCoverImageById(@Path('uuid') String id);
 
+  @POST('/business-cover-images-update/{uuid}')
+  Future<BusinessCoverImageDM> updateCoverImageById({
+    @Path('uuid') required String id,
+    @Part(name: 'business_image_path') required List<MultipartFile> image,
+  });
+
   @POST('/business-cover-images-store')
   @MultiPart()
   Future<List<BusinessCoverImageDM>> storeCoverImages({

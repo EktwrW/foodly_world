@@ -82,9 +82,8 @@ class AuthSessionService {
         return value.when(
           success: (_) => clearSession(context),
           failure: (e) {
-            //TODO: hw - handle error
-
             di<Logger>().e('$e');
+            clearSession(context);
           },
         );
       });

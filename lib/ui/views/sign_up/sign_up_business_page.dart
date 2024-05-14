@@ -7,6 +7,7 @@ import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
@@ -109,6 +110,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
               leadingWidth: 60,
               expandedHeight: 360,
               collapsedHeight: 140,
+              shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
               pinned: true,
               floating: true,
               title: Text(

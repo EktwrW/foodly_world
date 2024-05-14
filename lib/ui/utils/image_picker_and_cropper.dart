@@ -88,10 +88,13 @@ Future<String> pickImageFile(
     final fileSize = await getFileSize(pickedFile);
     int quality = 100;
 
-    if (fileSize > 1000000) quality = 60;
-    if (fileSize > 1500000) quality = 50;
+    if (fileSize > 1000000) quality = 70;
+    if (fileSize > 1500000) quality = 60;
     if (fileSize > 3000000) quality = 40;
-    if (fileSize > 5000000) quality = 25;
+    if (fileSize > 5000000) quality = 30;
+    if (fileSize > 8000000) quality = 20;
+
+    //if(fileSize >10000000) return 'Image size must be less than 10mb';
 
     return await _cropImage(pickedFile.path, getContext(), quality, aspectRatioPresets, cropStyle, aspectRatio);
   }

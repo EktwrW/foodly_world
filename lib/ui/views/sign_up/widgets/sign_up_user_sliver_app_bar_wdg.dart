@@ -5,6 +5,7 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -44,6 +45,7 @@ class SignUpUserSliverAppBar extends StatelessWidget {
       leadingWidth: 76,
       expandedHeight: 380,
       collapsedHeight: 140,
+      shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
       pinned: true,
       floating: true,
       title: Text(
