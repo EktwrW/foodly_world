@@ -37,6 +37,7 @@ class FoodlyAssets {
   static const AssetData isoFoodlyBlack = AssetData('iso_foodly_black.png', AssetType.image);
   static const AssetData isoFoodlyWhite = AssetData('iso_foodly_white.png', AssetType.image);
   static const AssetData isoFoodlyGreen = AssetData('iso_foodly_green.png', AssetType.image);
+  static const AssetData trash = AssetData('trash.png', AssetType.image);
 
   // Login & Sign Up
   static const AssetData wellDone = AssetData('well-done.png', AssetType.image);

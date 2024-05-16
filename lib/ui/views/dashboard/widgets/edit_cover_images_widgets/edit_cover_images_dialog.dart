@@ -113,16 +113,30 @@ class EditCoverImagesDialog extends StatelessWidget {
                       if (vm.targetForDelete != null)
                         SizedBox(
                           height: 300,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Deseas eliminar esta imagen de portada?',
-                                textAlign: TextAlign.center,
-                                style: FoodlyTextStyles.captionPurpleBold,
-                              ).paddingBottom(32),
-                              FadeIn(child: AdaptiveImage(imagePath: vm.targetForDelete!.url ?? '')),
-                            ],
+                          child: AnimatedCrossFade(
+                            duration: Durations.medium3,
+                            crossFadeState: state == DashboardState.pictureDeleted(vm)
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
+                            firstChild: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Deseas eliminar esta imagen de portada?',
+                                  textAlign: TextAlign.center,
+                                  style: FoodlyTextStyles.captionPurpleBold,
+                                ).paddingBottom(32),
+                                FadeIn(child: AdaptiveImage(imagePath: vm.targetForDelete!.url ?? '')),
+                              ],
+                            ),
+                            secondChild: ElasticIn(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Asset(FoodlyAssets.trash, height: 60).paddingBottom(24),
+                                const Text('Successfully deleted!'),
+                              ],
+                            )),
                           ),
                         ),
                       if (vm.picturesPath.isNotEmpty && vm.targetForDelete == null)

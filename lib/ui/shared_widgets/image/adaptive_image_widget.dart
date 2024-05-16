@@ -22,7 +22,8 @@ class AdaptiveImage extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: imagePath,
         fit: fit ?? BoxFit.cover,
-        placeholder: (context, url) => loadingWdg ?? const CircularProgressIndicator(),
+        placeholder: (context, url) =>
+            Center(heightFactor: 2.5, child: loadingWdg ?? const CircularProgressIndicator()),
         errorWidget: (context, url, error) => errorWdg,
       );
     } else {

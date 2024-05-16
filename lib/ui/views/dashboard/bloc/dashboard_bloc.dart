@@ -157,7 +157,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       emit(_UpdatingPictures(_vm));
       await _businessRepo.deleteCoverImageById(coverImageDM.imageId ?? '').then((result) {
         return result.when(
-          success: (value) {
+          success: (value) async {
             final currentPics = List<BusinessCoverImageDM>.from(_vm.picturesPath)
               ..removeWhere((p) => p.imageId == _vm.targetForDelete?.imageId);
             final updatedBusiness = _vm.currentBusiness!.copyWith(
@@ -165,6 +165,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             );
 
             updateBusinessInCurrentArray(updatedBusiness);
+            emit(_PictureDeleted(_vm));
+            await Future.delayed(const Duration(milliseconds: 2500));
             emit(_Loaded(_vm = _vm.copyWith(targetForDelete: null, picturesPath: currentPics)));
           },
           failure: (error) => handleError(error, emit),

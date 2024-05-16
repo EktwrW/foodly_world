@@ -15,6 +15,8 @@ import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_titles_rich_te
 import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:icons_plus/icons_plus.dart' show Clarity;
+
+import 'widgets/snackbars/cover_images_updated_snackbar.dart';
 //import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class DashboardPage extends StatefulWidget {
@@ -45,10 +47,12 @@ class _DashboardPageState extends State<DashboardPage> {
             loaded: (vm) => di<DialogService>().hideLoading(),
             showCoverImagesDialog: (_) => di<DialogService>().showCustomDialog(const EditCoverImagesDialog(), 2),
             updatingPictures: (vm) => di<DialogService>().showLoading(),
-            picturesUpdated: (vm) {
+            picturesUpdated: (vm) async {
               Navigator.of(context).pop();
               di<DialogService>().hideLoading();
+              await Future.delayed(Durations.long1).then((_) => coverImagesUpdatedSnackbar(context));
             },
+            pictureDeleted: (vm) => di<DialogService>().hideLoading(),
             error: (e, vm) => di<DialogService>().hideLoading(),
           );
         },
