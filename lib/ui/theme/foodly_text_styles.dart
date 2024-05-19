@@ -21,9 +21,18 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.w600,
   );
 
+  static const bodyLink = TextStyle(
+    color: Colors.blue,
+    fontWeight: FontWeight.w600,
+  );
+
   static const cardTextButtonBlue = TextStyle(
     color: Colors.blue,
     fontWeight: FontWeight.w600,
+  );
+
+  static const caption = TextStyle(
+    fontSize: 12,
   );
 
   static const captionWhite = TextStyle(
@@ -31,11 +40,22 @@ class FoodlyTextStyles {
     fontSize: 12,
   );
 
-  static const captionPurpleBold =
-      TextStyle(color: FoodlyThemes.primaryFoodly, fontSize: 12, fontWeight: FontWeight.bold);
-
-  static const caption = TextStyle(
+  static const captionWhiteBold = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
     fontSize: 12,
+  );
+
+  static const captionBold = TextStyle(
+    fontSize: 12,
+    color: Colors.black87,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const captionPurpleBold = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
   );
 
   static const cardSubtitle = TextStyle(
@@ -53,6 +73,17 @@ class FoodlyTextStyles {
     color: FoodlyThemes.primaryFoodly,
     fontSize: 10,
     height: 1.1,
+  );
+
+  static const choiceChipWhiteBold = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 11,
+  );
+
+  static const choiceChipBold = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 11,
   );
 
   static const confirmationTextPrimary = TextStyle(
@@ -85,6 +116,11 @@ class FoodlyTextStyles {
 
   static const errorBodyText = TextStyle(
     color: FoodlyThemes.error,
+  );
+
+  static const errorInputText = TextStyle(
+    color: FoodlyThemes.error,
+    fontSize: 10,
   );
 
   static const footerButtonNormal = TextStyle(
@@ -132,6 +168,10 @@ class FoodlyTextStyles {
   static const primaryBodyBold = TextStyle(
     fontWeight: FontWeight.bold,
     color: FoodlyThemes.primaryFoodly,
+  );
+
+  static const profileSectionTextButton = TextStyle(
+    fontStyle: FontStyle.italic,
   );
 
   static const profileSectionTitle = TextStyle(

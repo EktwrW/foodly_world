@@ -4,20 +4,19 @@ import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_text.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
-import 'package:foodly_world/ui/views/starting/widgets/login_input_text.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 class SignUpUserForm extends StatelessWidget {
   const SignUpUserForm({super.key});
 
-  Future<void> _selectDate(
-      BuildContext context, SignUpVM vm, SignUpCubit cubit) async {
+  Future<void> _selectDate(BuildContext context, SignUpVM vm, SignUpCubit cubit) async {
     final locale = Locale(cubit.lang, vm.currentCountryCode?.toUpperCase());
 
     final DateTime? picked = await showDatePicker(
@@ -41,7 +40,7 @@ class SignUpUserForm extends StatelessWidget {
 
     return Column(
       children: [
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.nickNameController!,
           focusNode: vm.nickNameNode,
           secondaryFocusNode: vm.firstNameNode,
@@ -50,7 +49,7 @@ class SignUpUserForm extends StatelessWidget {
           maxLength: 30,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.firstNameController!,
           focusNode: vm.firstNameNode,
           secondaryFocusNode: vm.lastNameNode,
@@ -58,7 +57,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.lastNameController!,
           focusNode: vm.lastNameNode,
           secondaryFocusNode: vm.emailNode,
@@ -66,7 +65,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.emailController!,
           focusNode: vm.emailNode,
           secondaryFocusNode: vm.passwordNode,
@@ -74,7 +73,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.passwordController!,
           focusNode: vm.passwordNode,
           secondaryFocusNode: vm.dateOfBirthNode,
@@ -91,8 +90,7 @@ class SignUpUserForm extends StatelessWidget {
                   ? (val) async {
                       if ((vm.dateOfBirthNode?.hasFocus ?? false) && !isOpen) {
                         setState(() => isOpen = true);
-                        await _selectDate(context, vm, cubit)
-                            .then((value) => setState(() => isOpen = false));
+                        await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
                       }
                     }
                   : null,
@@ -101,8 +99,7 @@ class SignUpUserForm extends StatelessWidget {
                   : enabled
                       ? () async {
                           setState(() => isOpen = true);
-                          await _selectDate(context, vm, cubit)
-                              .then((value) => setState(() => isOpen = false));
+                          await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
                         }
                       : null,
               focusColor: Colors.transparent,
@@ -116,13 +113,10 @@ class SignUpUserForm extends StatelessWidget {
                       Icon(
                         Bootstrap.calendar2_event,
                         size: 24,
-                        color: enabled
-                            ? Colors.black87
-                            : NeumorphicColors.disabled,
+                        color: enabled ? Colors.black87 : NeumorphicColors.disabled,
                       ).paddingSymmetric(horizontal: 12),
                       Text(
-                        vm.dateOfBirth?.getStringFormat ??
-                            S.current.dateOfBirth,
+                        vm.dateOfBirth?.getStringFormat ?? S.current.dateOfBirth,
                         style: !enabled
                             ? FoodlyTextStyles.disabledText
                             : vm.dateOfBirth != null
@@ -145,32 +139,15 @@ class SignUpUserForm extends StatelessWidget {
             );
           },
         ),
-        SizedBox(
-          height: 70,
-          child: IntlPhoneField(
-            enabled: enabled,
-            controller: vm.phoneNumberController,
-            focusNode: vm.phoneNumberNode,
-            dropdownTextStyle: TextStyle(
-              color: !enabled ? NeumorphicColors.disabled : Colors.black,
-            ),
-            autovalidateMode: vm.autovalidateMode,
-            onSubmitted: (value) => vm.countryNode?.requestFocus(),
-            decoration: InputDecoration(
-              hintText: FoodlyInputType.phone.text,
-              hintStyle: TextStyle(
-                  color: enabled
-                      ? FoodlyThemes.secondaryFoodly
-                      : NeumorphicColors.disabled),
-              border: const UnderlineInputBorder(),
-              errorMaxLines: 2,
-              errorStyle: const TextStyle(fontSize: 10.0),
-              contentPadding: const EdgeInsets.only(top: 15),
-            ),
-            initialCountryCode: cubit.currentCountryCode.toUpperCase(),
-          ),
+        FoodlyPhoneInputText(
+          enabled: enabled,
+          controller: vm.phoneNumberController,
+          focusNode: vm.phoneNumberNode,
+          autovalidateMode: vm.autovalidateMode,
+          onSubmitted: (value) => vm.countryNode?.requestFocus(),
+          initialCountryCode: cubit.currentCountryCode.toUpperCase(),
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.countryController!,
           focusNode: vm.countryNode,
           secondaryFocusNode: vm.cityNode,
@@ -178,7 +155,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.cityController!,
           focusNode: vm.cityNode,
           secondaryFocusNode: vm.zipCodeNode,
@@ -186,33 +163,27 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.zipCodeController!,
           focusNode: vm.zipCodeNode,
           secondaryFocusNode: vm.genderNode,
           inputTextType: FoodlyInputType.zipCode,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
-          countryCode:
-              vm.currentCountryCode ?? cubit.currentCountryCode.toUpperCase(),
+          countryCode: vm.currentCountryCode ?? cubit.currentCountryCode.toUpperCase(),
         ),
         DropdownButtonFormField<UserGender>(
           value: vm.gender,
           focusNode: vm.genderNode,
           decoration: InputDecoration(
             prefixIcon: const Icon(Bootstrap.person),
-            prefixIconColor:
-                enabled ? Colors.black87 : NeumorphicColors.disabled,
+            prefixIconColor: enabled ? Colors.black87 : NeumorphicColors.disabled,
             hintText: S.current.gender,
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: enabled ? 0.75 : 0.5,
-                  color: enabled ? Colors.black87 : Colors.grey),
+              borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
             ),
             hintStyle: TextStyle(
-              color: enabled
-                  ? FoodlyThemes.secondaryFoodly
-                  : NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodly : NeumorphicColors.disabled,
             ),
           ),
           onChanged: enabled
@@ -220,16 +191,14 @@ class SignUpUserForm extends StatelessWidget {
                   cubit.setUserGender(newValue);
                 }
               : null,
-          items: vm.userGenders
-              .map<DropdownMenuItem<UserGender>>((UserGender gender) {
+          items: vm.userGenders.map<DropdownMenuItem<UserGender>>((UserGender gender) {
             return DropdownMenuItem<UserGender>(
               value: gender,
               child: Text(gender.text),
             );
           }).toList(),
           autovalidateMode: vm.autovalidateMode,
-          validator: (value) =>
-              value == null ? S.current.pleaseSelectAnOption : null,
+          validator: (value) => value == null ? S.current.pleaseSelectAnOption : null,
         ),
       ],
     );

@@ -1,21 +1,23 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
+import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
 export 'package:foodly_world/data_models/organization/business_dm.dart';
+export 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 
+part 'dashboard_bloc.freezed.dart';
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
-part 'dashboard_bloc.freezed.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   static final _authService = di<AuthSessionService>();
@@ -23,7 +25,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardVM _vm;
 
   DashboardBloc()
-      : _vm = const DashboardVM(),
+      : _vm = DashboardVM(
+          businessAddressCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessNameCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessAboutUsCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessEmailCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessPhoneCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessCountryCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessCityCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessZipCodeCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+        ),
         super(const _Initial(DashboardVM())) {
     on<DashboardEvent>(
       (events, emit) async {
@@ -70,12 +81,26 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           updatePicture: (_UpdatePicture value) async {
             await updateCoverImageById(value.imageId, value.filePath, emit);
           },
+          updateEditing: (_UpdateEditing value) {
+            _vm = _vm.copyWith(dashboardEditing: value.editing);
+            emit(_Loaded(_vm));
+          },
+          updateBusiness: (_UpdateBusiness value) async {
+            await updateBusiness(emit);
+          },
+          setCategory: (_SetCategory value) {
+            _vm = _vm.copyWith(newCategory: value.category);
+            emit(_Loaded(_vm));
+          },
         );
       },
     );
 
     add(const DashboardEvent.started());
   }
+
+  bool get contactUsIsEmpty =>
+      (_vm.currentBusiness?.email?.isEmpty ?? true) && (_vm.currentBusiness?.phoneNumber?.isEmpty ?? true);
 
   /// Fetch Businesses
   Future<void> fetchAllBusinesses(Emitter emit) async {
@@ -87,7 +112,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         await _businessRepo.fetchBusinessById(business.id!).then(
               (response) => response.when(
                 success: (business) => businesses.add(business),
-                failure: (error) => handleError(error, emit),
+                failure: (error) => _handleError(error, emit),
               ),
             );
       }
@@ -113,12 +138,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             (response) => response.when(
               success: (businessDM) {
                 if (businessDM.logo?.isNotEmpty ?? false) {
-                  updateBusinessInCurrentArray(businessDM);
+                  _updateBusinessInCurrentArray(businessDM);
                 }
 
                 emit(_Loaded(_vm));
               },
-              failure: (error) => handleError(error, emit),
+              failure: (error) => _handleError(error, emit),
             ),
           );
     }
@@ -141,10 +166,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
                 final updatedBusiness = _vm.currentBusiness!.copyWith(
                   coverImages: List.from(_vm.currentBusiness!.coverImages)..addAll(businessCoverImageArray),
                 );
-                updateBusinessInCurrentArray(updatedBusiness);
+                _updateBusinessInCurrentArray(updatedBusiness);
                 emit(_PicturesUpdated(_vm));
               },
-              failure: (error) => handleError(error, emit),
+              failure: (error) => _handleError(error, emit),
             ),
           );
     } else {
@@ -164,12 +189,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
               coverImages: currentPics,
             );
 
-            updateBusinessInCurrentArray(updatedBusiness);
+            _updateBusinessInCurrentArray(updatedBusiness);
             emit(_PictureDeleted(_vm));
             await Future.delayed(const Duration(milliseconds: 2500));
             emit(_Loaded(_vm = _vm.copyWith(targetForDelete: null, picturesPath: currentPics)));
           },
-          failure: (error) => handleError(error, emit),
+          failure: (error) => _handleError(error, emit),
         );
       });
     } else {
@@ -193,21 +218,70 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             coverImages: currentPics,
           );
 
-          updateBusinessInCurrentArray(updatedBusiness);
+          _updateBusinessInCurrentArray(updatedBusiness);
           emit(_Loaded(_vm = _vm.copyWith(picturesPath: currentPics)));
         },
-        failure: (error) => handleError(error, emit),
+        failure: (error) => _handleError(error, emit),
       );
     });
   }
 
+  /// Update a business
+  Future<void> updateBusiness(Emitter emit) async {
+    var dto = const BusinessUpdateDTO();
+
+    if (_vm.currentBusiness!.id != null) {
+      switch (_vm.dashboardEditing) {
+        case DashboardEditing.category:
+          dto = dto.copyWith(category: _vm.newCategory);
+
+        case DashboardEditing.address:
+          dto = dto.copyWith();
+        case DashboardEditing.aboutUs:
+          dto = dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.controller?.text);
+
+        case DashboardEditing.contactUs:
+          if (_vm.businessEmailCtrl?.controller?.text.isNotEmpty ?? false) {
+            dto = dto.copyWith(businessEmail: _vm.businessEmailCtrl?.controller?.text);
+          }
+
+          if (_vm.businessPhoneCtrl?.controller?.text.isNotEmpty ?? false) {
+            dto = dto.copyWith(businessPhone: _vm.businessPhoneCtrl?.controller?.text);
+          }
+
+        case DashboardEditing.openingHours:
+          dto = dto.copyWith();
+
+        case DashboardEditing.services:
+          dto = dto.copyWith();
+
+        case DashboardEditing.additionalInfo:
+          dto = dto.copyWith();
+
+          break;
+        default:
+      }
+
+      emit(_Loading(_vm));
+      await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
+            (result) => result.when(
+              success: (updatedBusiness) {
+                _updateBusinessInCurrentArray(updatedBusiness);
+                emit(_Loaded(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
+              },
+              failure: (error) => _handleError(error, emit),
+            ),
+          );
+    }
+  }
+
   /// Common methods
-  void handleError(AppRequestException error, Emitter emit) {
+  void _handleError(AppRequestException error, Emitter emit) {
     di<Logger>().e(error);
     emit(_Error('$error', _vm));
   }
 
-  void updateBusinessInCurrentArray(BusinessDM updatedBusiness) {
+  void _updateBusinessInCurrentArray(BusinessDM updatedBusiness) {
     final length = _vm.myBusinessesses.length;
     final businesses = List.generate(
         length, (i) => _vm.myBusinessesses[i].id == updatedBusiness.id ? updatedBusiness : _vm.myBusinessesses[i]);

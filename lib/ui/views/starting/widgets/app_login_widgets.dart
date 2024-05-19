@@ -7,13 +7,13 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
-import 'package:foodly_world/ui/shared_widgets/password_recover/password_recover_dialog.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
-import 'package:foodly_world/ui/views/starting/widgets/login_input_text.dart';
+import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart';
 
@@ -53,9 +53,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
   }
 
   Widget buildLoginWidgets(StartingVM vm) =>
-      vm.currentView == StartingPageView.initial
-          ? buildLogicAndGetStartedButtons()
-          : buildLoginForm(vm);
+      vm.currentView == StartingPageView.initial ? buildLogicAndGetStartedButtons() : buildLoginForm(vm);
 
   Widget buildLoginForm(StartingVM vm) {
     return FadeIn(
@@ -66,7 +64,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Spacer(),
-            LoginInputText(
+            FoodlyPrimaryInputText(
               enabled: true,
               controller: vm.emailController!,
               focusNode: _emailNode,
@@ -74,7 +72,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               inputTextType: FoodlyInputType.email,
               autovalidateMode: vm.autovalidateMode,
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-            LoginInputText(
+            FoodlyPrimaryInputText(
               enabled: true,
               controller: vm.passwordController!,
               focusNode: _passwordNode,
@@ -109,8 +107,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
                           2,
                           onDialogClose: () => cubit.resetPasswordController(),
                         ),
-                    child: Text(S.current.forgotPassword,
-                        style: FoodlyTextStyles.loginCTATextButton)),
+                    child: Text(S.current.forgotPassword, style: FoodlyTextStyles.loginCTATextButton)),
               ],
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
           ],

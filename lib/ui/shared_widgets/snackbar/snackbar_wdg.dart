@@ -71,7 +71,7 @@ class SnackBarWdg {
                   ),
                   content.paddingSymmetric(vertical: 20),
                   SizedBox(
-                    height: 60,
+                    height: 58,
                     child: ui.NeumorphicButton(
                       onPressed: () {
                         if (onPressed != null) onPressed!();

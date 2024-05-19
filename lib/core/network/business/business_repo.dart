@@ -3,7 +3,6 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_client.dart';
 import 'package:foodly_world/core/utils/file_handler/file_handler_selector.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/data_models/organization/business_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';

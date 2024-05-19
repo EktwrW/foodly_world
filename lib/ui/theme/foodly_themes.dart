@@ -6,9 +6,8 @@ import 'package:neumorphic_ui/neumorphic_ui.dart';
 class FoodlyThemes {
   const FoodlyThemes._();
 
-  static final VisualDensity _visualDensity = kIsWeb
-      ? FlexColorScheme.comfortablePlatformDensity
-      : VisualDensity.adaptivePlatformDensity;
+  static final VisualDensity _visualDensity =
+      kIsWeb ? FlexColorScheme.comfortablePlatformDensity : VisualDensity.adaptivePlatformDensity;
 
   //Foodly colors:
   static const primaryFoodly = Color(0xFF79005D);
@@ -44,6 +43,12 @@ class FoodlyThemes {
         brightness: Brightness.light,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(),
+    ).copyWith(
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+        ),
+      ),
     );
   }
 
@@ -66,6 +71,12 @@ class FoodlyThemes {
         brightness: Brightness.dark,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(),
+    ).copyWith(
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+        ),
+      ),
     );
   }
 }

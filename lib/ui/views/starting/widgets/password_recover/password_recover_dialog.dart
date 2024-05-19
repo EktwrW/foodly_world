@@ -7,12 +7,12 @@ import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
-import 'package:foodly_world/ui/views/starting/widgets/login_input_text.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class PasswordRecoverDialog extends StatelessWidget {
@@ -23,8 +23,7 @@ class PasswordRecoverDialog extends StatelessWidget {
         child: Text(text, style: FoodlyTextStyles.dialogCloseText),
       );
 
-  TextSpan getBoldTextSpan(String text) =>
-      TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
+  TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +36,7 @@ class PasswordRecoverDialog extends StatelessWidget {
               Container(
                 height: 450,
                 width: double.infinity,
-                margin: const EdgeInsets.symmetric(
-                    horizontal: UIDimens.SCREEN_PADDING_MOB),
+                margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 padding: const EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -49,18 +47,13 @@ class PasswordRecoverDialog extends StatelessWidget {
                   children: [
                     state.whenOrNull(
                           welcome: (vm) {
-                            var text = vm.passwordSuccessfullySent
-                                ? S.current.close
-                                : S.current.cancel;
-                            var onTap = vm.isRequestingPassword
-                                ? null
-                                : () => Navigator.of(context).pop();
+                            var text = vm.passwordSuccessfullySent ? S.current.close : S.current.cancel;
+                            var onTap = vm.isRequestingPassword ? null : () => Navigator.of(context).pop();
 
                             return _getTextCloseDialog(text, onTap);
                           },
                         ) ??
-                        _getTextCloseDialog(S.current.cancel,
-                            () => Navigator.of(context).pop()),
+                        _getTextCloseDialog(S.current.cancel, () => Navigator.of(context).pop()),
                   ],
                 ),
               ),
@@ -80,8 +73,7 @@ class PasswordRecoverDialog extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElasticIn(
-                        child: const Asset(FoodlyAssets.password, height: 90)),
+                    ElasticIn(child: const Asset(FoodlyAssets.password, height: 90)),
                     state.maybeWhen(
                       welcome: (vm) => _stateContent(vm, context),
                       // error: (msg, vm) => _stateContent(vm, context, errorMsg: msg), //TODO: check if this msg should be rendered
@@ -98,8 +90,7 @@ class PasswordRecoverDialog extends StatelessWidget {
     );
   }
 
-  Widget _stateContent(StartingVM vm, BuildContext context,
-      {String? errorMsg}) {
+  Widget _stateContent(StartingVM vm, BuildContext context, {String? errorMsg}) {
     return FadeIn(
       duration: Durations.extralong4,
       child: vm.recoverPasswordView == RecoverPasswordView.sendingRequest
@@ -119,7 +110,7 @@ class PasswordRecoverDialog extends StatelessWidget {
                 if (vm.willRequestPassword)
                   SizedBox(
                     height: 90,
-                    child: LoginInputText(
+                    child: FoodlyPrimaryInputText(
                       enabled: true,
                       autofocus: true,
                       focusNode: FocusNode(),
@@ -148,16 +139,12 @@ class PasswordRecoverDialog extends StatelessWidget {
                   SizedBox(
                     height: 48,
                     child: FoodlyLoginButton(
-                      text: vm.errorRequestingPassword
-                          ? S.current.tryAgain
-                          : S.current.send,
+                      text: vm.errorRequestingPassword ? S.current.tryAgain : S.current.send,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       disabled: false,
                       fontSize: 14.5,
                       onPressed: () => vm.errorRequestingPassword
-                          ? context
-                              .read<StartingCubit>()
-                              .restartRecoverPassword()
+                          ? context.read<StartingCubit>().restartRecoverPassword()
                           : context.read<StartingCubit>().recoverPassword(),
                       shape: ui.NeumorphicShape.concave,
                     ),

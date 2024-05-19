@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_text.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
-import 'package:foodly_world/ui/views/starting/widgets/login_input_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class SignUpBusinessForm extends StatelessWidget {
   const SignUpBusinessForm({super.key});
@@ -53,8 +51,7 @@ class SignUpBusinessForm extends StatelessWidget {
                   onMapCreated: cubit.onMapCreated,
                   initialCameraPosition: CameraPosition(
                     target: cubit.getCurrentPosition != null
-                        ? LatLng(cubit.getCurrentPosition!.latitude,
-                            cubit.getCurrentPosition!.longitude)
+                        ? LatLng(cubit.getCurrentPosition!.latitude, cubit.getCurrentPosition!.longitude)
                         : cubit.center,
                     zoom: 16.0,
                   ),
@@ -64,53 +61,29 @@ class SignUpBusinessForm extends StatelessWidget {
             ),
           ],
         ).paddingOnly(bottom: 30),
-        //! TODO: create custom dropdown button for generic use <T>
-        SizedBox(
-          height: 65,
-          child: DropdownButtonFormField<FoodlyCategories>(
-            value: vm.businessCategory,
-            decoration: InputDecoration(
-              prefixIcon: vm.businessCategory == null
-                  ? const Icon(Icons.business_center_rounded)
-                  : null,
-              prefixIconColor:
-                  enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
-              hintText: S.current.businessCategory,
-              errorStyle: const TextStyle(fontSize: 10.0),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    width: enabled ? 0.75 : 0.5,
-                    color: enabled ? Colors.black87 : Colors.grey),
+        FoodlyDropdownButtonFormField(
+          onChanged: (FoodlyCategories? newValue) {
+            cubit.setBusinessCategory(newValue);
+            vm.businessNameNode?.requestFocus();
+          },
+          enabled: enabled,
+          items: FoodlyCategories.values.map<DropdownMenuItem<FoodlyCategories>>((category) {
+            return DropdownMenuItem<FoodlyCategories>(
+              value: category,
+              child: Row(
+                children: [
+                  SizedBox.square(dimension: 30, child: category.icon).paddingSymmetric(horizontal: 10),
+                  Text(category.text),
+                ],
               ),
-              hintStyle: TextStyle(
-                  color: enabled
-                      ? FoodlyThemes.secondaryFoodly
-                      : ui.NeumorphicColors.disabled),
-            ),
-            onChanged: enabled
-                ? (FoodlyCategories? newValue) {
-                    cubit.setBusinessCategory(newValue);
-                    vm.businessNameNode?.requestFocus();
-                  }
-                : null,
-            items: FoodlyCategories.values
-                .map<DropdownMenuItem<FoodlyCategories>>((category) {
-              return DropdownMenuItem<FoodlyCategories>(
-                value: category,
-                child: Row(
-                  children: [
-                    SizedBox.square(dimension: 30, child: category.icon)
-                        .paddingSymmetric(horizontal: 10),
-                    Text(category.text),
-                  ],
-                ),
-              );
-            }).toList(),
-            validator: (value) =>
-                value == null ? S.current.pleaseSelectBusinessCategory : null,
-          ),
+            );
+          }).toList(),
+          value: vm.businessCategory,
+          validatorText: S.current.pleaseSelectBusinessCategory,
+          hintText: S.current.businessCategory,
+          prefixIcon: vm.businessCategory == null ? const Icon(Icons.business_center_rounded) : null,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.businessNameController!,
           focusNode: vm.businessNameNode,
           secondaryFocusNode: vm.businessEmailNode,
@@ -118,10 +91,10 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.businessEmailController!,
           focusNode: vm.businessEmailNode,
-          secondaryFocusNode: vm.businessDateOfOpeningNode,
+          secondaryFocusNode: vm.businessPhoneNumberNode,
           inputTextType: FoodlyInputType.businessEmail,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
@@ -187,61 +160,16 @@ class SignUpBusinessForm extends StatelessWidget {
         //     );
         //   },
         // ),
-        if (vm.businessCountryCode != null)
-          SizedBox(
-            height: 70,
-            child: IntlPhoneField(
-              key: Key(vm.businessCountryCode!),
-              enabled: enabled,
-              controller: vm.businessPhoneNumberController,
-              focusNode: vm.businessPhoneNumberNode,
-              autovalidateMode: vm.autovalidateMode,
-              dropdownTextStyle: TextStyle(
-                color: !enabled ? ui.NeumorphicColors.disabled : Colors.black,
-              ),
-              onSubmitted: (value) => vm.businessCountryNode?.requestFocus(),
-              decoration: InputDecoration(
-                hintText: FoodlyInputType.businessPhone.text,
-                hintStyle: TextStyle(
-                    color: enabled
-                        ? FoodlyThemes.secondaryFoodly
-                        : ui.NeumorphicColors.disabled),
-                border: const UnderlineInputBorder(),
-                errorMaxLines: 2,
-                errorStyle: const TextStyle(fontSize: 10.0),
-                contentPadding: const EdgeInsets.only(top: 15),
-              ),
-              initialCountryCode: vm.businessCountryCode,
-            ),
-          )
-        else
-          SizedBox(
-            height: 70,
-            child: IntlPhoneField(
-              key: Key(cubit.currentCountryCode),
-              enabled: enabled,
-              controller: vm.businessPhoneNumberController,
-              focusNode: vm.businessPhoneNumberNode,
-              autovalidateMode: vm.autovalidateMode,
-              dropdownTextStyle: TextStyle(
-                color: !enabled ? ui.NeumorphicColors.disabled : Colors.black,
-              ),
-              onSubmitted: (value) => vm.businessCountryNode?.requestFocus(),
-              decoration: InputDecoration(
-                hintText: FoodlyInputType.businessPhone.text,
-                hintStyle: TextStyle(
-                    color: enabled
-                        ? FoodlyThemes.secondaryFoodly
-                        : ui.NeumorphicColors.disabled),
-                border: const UnderlineInputBorder(),
-                errorMaxLines: 2,
-                errorStyle: const TextStyle(fontSize: 10.0),
-                contentPadding: const EdgeInsets.only(top: 15),
-              ),
-              initialCountryCode: cubit.currentCountryCode,
-            ),
-          ),
-        LoginInputText(
+        FoodlyPhoneInputText(
+          keyString: vm.businessCountryCode,
+          enabled: enabled,
+          controller: vm.businessPhoneNumberController,
+          focusNode: vm.businessPhoneNumberNode,
+          autovalidateMode: vm.autovalidateMode,
+          onSubmitted: (value) => vm.businessCountryNode?.requestFocus(),
+          initialCountryCode: vm.businessCountryCode ?? vm.currentCountryCode,
+        ),
+        FoodlyPrimaryInputText(
           controller: vm.businessCountryController!,
           focusNode: vm.businessCountryNode,
           secondaryFocusNode: vm.businessCityNode,
@@ -249,7 +177,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.businessCityController!,
           focusNode: vm.businessCityNode,
           secondaryFocusNode: vm.businessAddressNode,
@@ -257,7 +185,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.businessAddressController!,
           focusNode: vm.businessAddressNode,
           secondaryFocusNode: vm.businessZipCodeNode,
@@ -265,7 +193,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        LoginInputText(
+        FoodlyPrimaryInputText(
           controller: vm.businessZipCodeController!,
           focusNode: vm.businessZipCodeNode,
           inputTextType: FoodlyInputType.businessZipCode,

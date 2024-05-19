@@ -5,13 +5,13 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 class DashboardTitleRichText extends StatelessWidget {
   final String firstText;
   final String secondText;
-  final double? paddingTop;
+  final double? topPadding;
 
   const DashboardTitleRichText({
     super.key,
     required this.firstText,
     required this.secondText,
-    this.paddingTop,
+    this.topPadding,
   });
 
   @override
@@ -23,6 +23,6 @@ class DashboardTitleRichText extends StatelessWidget {
           TextSpan(text: secondText, style: FoodlyTextStyles.profileSectionTitlePurple),
         ],
       ),
-    ).paddingTop(paddingTop ?? 24);
+    ).paddingTop(topPadding ?? 16);
   }
 }

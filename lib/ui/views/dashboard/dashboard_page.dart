@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -9,6 +8,10 @@ import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/business_services/business_services.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/category/category.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/contact_channels.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_footer_buttons.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_titles_rich_text.dart';
@@ -16,7 +19,7 @@ import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widget
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:icons_plus/icons_plus.dart' show Clarity;
 
-import 'widgets/snackbars/cover_images_updated_snackbar.dart';
+import '../../shared_widgets/snackbar/foodly_snackbars.dart';
 //import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class DashboardPage extends StatefulWidget {
@@ -50,10 +53,14 @@ class _DashboardPageState extends State<DashboardPage> {
             picturesUpdated: (vm) async {
               Navigator.of(context).pop();
               di<DialogService>().hideLoading();
-              await Future.delayed(Durations.long1).then((_) => coverImagesUpdatedSnackbar(context));
+              await Future.delayed(Durations.long1)
+                  .then((_) => FoodlySnackbars.successGeneric(context, 'Cover Images successfully updated!'));
             },
             pictureDeleted: (vm) => di<DialogService>().hideLoading(),
-            error: (e, vm) => di<DialogService>().hideLoading(),
+            error: (e, vm) async {
+              di<DialogService>().hideLoading();
+              await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
+            },
           );
         },
         builder: (context, state) {
@@ -64,83 +71,66 @@ class _DashboardPageState extends State<DashboardPage> {
             persistentFooterButtons: const [DashboardFooterButtons()],
             body: NestedScrollView(
               headerSliverBuilder: (context, value) => [const DashboardSliverAppBar()],
-              body: Form(
-                key: vm.formKey,
-                autovalidateMode: vm.autovalidateMode,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Card(
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        color: FoodlyThemes.tertiaryFoodly,
-                        child: Row(
-                          children: [
-                            const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16).paddingLeft(6),
-                            Expanded(
-                              child: Text(
-                                vm.currentBusiness?.fullAddress ?? '',
-                                maxLines: 5,
-                                style: FoodlyTextStyles.bodyWhiteSemibold,
-                              ).paddingLeft(8),
-                            ),
-                          ],
-                        ).paddingAll(6),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Card(
+                      margin: const EdgeInsets.symmetric(vertical: 24),
+                      color: FoodlyThemes.tertiaryFoodly,
+                      child: Row(
                         children: [
-                          Row(
-                            children: [
-                              SizedBox.square(dimension: 30, child: FoodlyCategories.bakery.icon),
-                              Text(FoodlyCategories.bakery.text).paddingLeft(8),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text.rich(TextSpan(children: [
-                                TextSpan(text: 'Rating Avg:', style: FoodlyTextStyles.caption),
-                                TextSpan(text: ' 4.3', style: FoodlyTextStyles.captionPurpleBold),
-                              ])),
-                              RatingBar.builder(
-                                initialRating: 4.3,
-                                itemSize: 18,
-                                minRating: 1,
-                                allowHalfRating: true,
-                                itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 16),
-                                onRatingUpdate: (rating) {},
-                              ),
-                            ],
+                          const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16).paddingLeft(6),
+                          Expanded(
+                            child: Text(
+                              vm.currentBusiness?.fullAddress ?? '',
+                              maxLines: 5,
+                              style: FoodlyTextStyles.bodyWhiteSemibold,
+                            ).paddingLeft(8),
                           ),
                         ],
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Sobre ',
-                        secondText: 'Nosotros',
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Horarios de ',
-                        secondText: 'Apertura',
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Opiniones de nuestros ',
-                        secondText: 'Clientes',
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Servicios en el ',
-                        secondText: 'Establecimiento',
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Medios de ',
-                        secondText: 'Contacto',
-                      ),
-                      const DashboardTitleRichText(
-                        firstText: 'Informaciones ',
-                        secondText: 'Adicionales',
-                      ),
-                    ],
-                  ),
+                      ).paddingAll(6),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(child: CategoryWdg(vm: vm)),
+                        Column(
+                          children: [
+                            const Text.rich(TextSpan(children: [
+                              TextSpan(text: 'Rating Avg:', style: FoodlyTextStyles.caption),
+                              TextSpan(text: ' 4.3', style: FoodlyTextStyles.captionPurpleBold),
+                            ])),
+                            RatingBar.builder(
+                              initialRating: 4.3,
+                              itemSize: 18,
+                              minRating: 1,
+                              allowHalfRating: true,
+                              itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 16),
+                              onRatingUpdate: (rating) {},
+                            ),
+                          ],
+                        ).paddingOnly(top: 10, right: 4),
+                      ],
+                    ),
+                    AboutUsWdg(vm: vm),
+                    const DashboardTitleRichText(
+                      firstText: 'Horarios de ',
+                      secondText: 'Apertura',
+                    ),
+                    const DashboardTitleRichText(
+                      firstText: 'Opiniones de nuestros ',
+                      secondText: 'Clientes',
+                    ),
+                    BusinessServicesWdg(vm: vm),
+                    ContactChannelsWdg(vm: vm),
+                    const DashboardTitleRichText(
+                      firstText: 'Informaciones ',
+                      secondText: 'Adicionales',
+                    ),
+                  ],
                 ),
               ),
             ),

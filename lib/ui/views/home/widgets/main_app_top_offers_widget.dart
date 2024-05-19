@@ -122,11 +122,11 @@ class Home369TopOffersWidget extends StatelessWidget {
           .toList(),
       carouselController: promosCarouselController,
       options: CarouselOptions(
-        height: 220,
+        height: 230,
         autoPlay: true,
         enlargeCenterPage: true,
         enlargeFactor: .15,
-        viewportFraction: context.screenWidth <= 320 ? .75 : .65,
+        viewportFraction: context.screenWidth <= 320 ? .85 : .75,
       ),
     );
   }

@@ -61,10 +61,13 @@ enum FoodlyInputType {
   businessAddress(icon: Icon(Clarity.map_marker_solid), textInputType: TextInputType.streetAddress),
   businessZipCode(icon: Icon(Bootstrap.postage_fill), textInputType: TextInputType.text),
 
+  // dashboard
+  businessAboutUs(icon: null, textInputType: TextInputType.text),
+
   // generic
   generic(icon: Icon(Bootstrap.person), textInputType: TextInputType.text);
 
-  final Widget icon;
+  final Widget? icon;
   final TextInputType textInputType;
 
   const FoodlyInputType({required this.icon, required this.textInputType});
@@ -130,6 +133,9 @@ enum FoodlyInputType {
 
       case FoodlyInputType.businessEmail:
         return 'Correo electronico de contacto';
+
+      case FoodlyInputType.businessAboutUs:
+        return 'Agrega una descripción';
     }
   }
 }

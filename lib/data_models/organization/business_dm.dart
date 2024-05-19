@@ -1,5 +1,9 @@
+import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+export 'package:foodly_world/core/enums/foodly_categories_enums.dart';
+export 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 
 part 'business_dm.freezed.dart';
 part 'business_dm.g.dart';
@@ -15,6 +19,9 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'branches') @Default([]) List<Object> branches,
     @JsonKey(name: 'business_uuid') String? id,
     @JsonKey(name: 'business_name') String? name,
+    @JsonKey(name: 'business_about_us') String? aboutUs,
+    @JsonKey(name: 'business_services') List<String>? services,
+    @JsonKey(name: 'business_additional_info') String? additionalInfo,
     @JsonKey(name: 'business_email') String? email,
     @JsonKey(name: 'business_phone') String? phoneNumber,
     @JsonKey(name: 'business_address') String? address,
@@ -25,7 +32,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_opening_hours') String? openingHours,
     @JsonKey(name: 'business_latitude') double? latitude,
     @JsonKey(name: 'business_longitude') double? longitude,
-    @JsonKey(name: 'category_id') int? categoryId,
+    @JsonKey(name: 'category_id') FoodlyCategories? category,
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);
@@ -44,33 +51,5 @@ class BusinessDM with _$BusinessDM {
       return coverImages.map((e) => e.url ?? '').toList();
     }
     return [];
-  }
-}
-
-enum BusinessPlan {
-  @JsonValue('free')
-  free,
-  @JsonValue('plan3')
-  plan3,
-  @JsonValue('plan6')
-  plan6,
-  @JsonValue('plan9')
-  plan9,
-}
-
-extension BusinessPlanExtension on BusinessPlan {
-  String get value {
-    switch (this) {
-      case BusinessPlan.free:
-        return 'free';
-      case BusinessPlan.plan3:
-        return 'plan3';
-      case BusinessPlan.plan6:
-        return 'plan6';
-      case BusinessPlan.plan9:
-        return 'plan9';
-      default:
-        return 'free';
-    }
   }
 }

@@ -1,58 +1,27 @@
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'business_update_dto.freezed.dart';
 part 'business_update_dto.g.dart';
 
-@JsonSerializable()
-class BusinessUpdateDTO {
-  @JsonKey(name: 'business_name')
-  final String? businessName;
-
-  @JsonKey(name: 'business_email')
-  final String? businessEmail;
-
-  @JsonKey(name: 'business_phone')
-  final String? businessPhone;
-
-  @JsonKey(name: 'business_address')
-  final String? businessAddress;
-
-  @JsonKey(name: 'business_zipcode')
-  final String? businessZipcode;
-
-  @JsonKey(name: 'business_city')
-  final String? businessCity;
-
-  @JsonKey(name: 'business_country')
-  final String? businessCountry;
-
-  @JsonKey(name: 'business_website')
-  final String? businessWebsite;
-
-  @JsonKey(name: 'business_latitude')
-  final double? businessLatitude;
-
-  @JsonKey(name: 'business_longitude')
-  final double? businessLongitude;
-
-  @JsonKey(name: 'category_id')
-  final FoodlyCategories categoryId;
-
-  const BusinessUpdateDTO({
-    required this.businessName,
-    required this.businessEmail,
-    required this.businessPhone,
-    required this.businessAddress,
-    required this.businessZipcode,
-    required this.businessCity,
-    required this.businessCountry,
-    required this.businessWebsite,
-    required this.businessLatitude,
-    required this.businessLongitude,
-    required this.categoryId,
-  });
+@freezed
+class BusinessUpdateDTO with _$BusinessUpdateDTO {
+  const factory BusinessUpdateDTO({
+    @JsonKey(name: 'business_name') String? businessName,
+    @JsonKey(name: 'business_about_us') String? businessAboutUs,
+    @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
+    @JsonKey(name: 'business_services') List<String>? businessServices,
+    @JsonKey(name: 'business_email') String? businessEmail,
+    @JsonKey(name: 'business_phone') String? businessPhone,
+    @JsonKey(name: 'business_address') String? businessAddress,
+    @JsonKey(name: 'business_zipcode') String? businessZipcode,
+    @JsonKey(name: 'business_city') String? businessCity,
+    @JsonKey(name: 'business_country') String? businessCountry,
+    @JsonKey(name: 'business_website') String? businessWebsite,
+    @JsonKey(name: 'business_latitude') double? businessLatitude,
+    @JsonKey(name: 'business_longitude') double? businessLongitude,
+    @JsonKey(name: 'category_id') FoodlyCategories? category,
+  }) = _BusinessUpdateDTO;
 
   factory BusinessUpdateDTO.fromJson(Map<String, dynamic> json) => _$BusinessUpdateDTOFromJson(json);
-
-  Map<String, dynamic> toJson() => _$BusinessUpdateDTOToJson(this);
 }

@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_regex.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
-class LoginInputText extends StatelessWidget {
+class FoodlyPrimaryInputText extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
   final FocusNode? secondaryFocusNode;
@@ -20,8 +22,13 @@ class LoginInputText extends StatelessWidget {
   final int? maxLength;
   final bool enabled;
   final bool autofocus;
+  final int? minLines;
+  final int? maxLines;
+  final Widget? label;
+  final String? labelText;
+  final String? hintText;
 
-  const LoginInputText({
+  const FoodlyPrimaryInputText({
     super.key,
     required this.controller,
     required this.focusNode,
@@ -36,11 +43,14 @@ class LoginInputText extends StatelessWidget {
     this.maxLength,
     this.enabled = false,
     this.autofocus = false,
+    this.minLines,
+    this.maxLines,
+    this.label,
+    this.labelText,
+    this.hintText,
   });
 
-  bool get isPassword =>
-      inputTextType == FoodlyInputType.password ||
-      inputTextType == FoodlyInputType.confirmPassword;
+  bool get isPassword => inputTextType == FoodlyInputType.password || inputTextType == FoodlyInputType.confirmPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -68,27 +78,22 @@ class LoginInputText extends StatelessWidget {
               autovalidateMode: autovalidateMode,
               decoration: InputDecoration(
                 fillColor: Colors.transparent,
-                hintText: inputTextType.text,
+                hintText: hintText ?? inputTextType.text,
                 hintStyle: TextStyle(
-                  color: enabled
-                      ? FoodlyThemes.secondaryFoodly
-                      : NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
                 ),
                 prefixIcon: inputTextType.icon,
-                prefixIconColor:
-                    enabled ? Colors.black87 : NeumorphicColors.disabled,
+                prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
                 suffixIcon: isPassword
                     ? InkWell(
                         customBorder: const CircleBorder(),
                         onTap: () => showPassword.value = !showPasswordValue,
-                        child: Icon(showPasswordValue
-                            ? AntDesign.eye_invisible_fill
-                            : AntDesign.eye_fill))
+                        child: Icon(showPasswordValue ? AntDesign.eye_invisible_fill : AntDesign.eye_fill))
                     : null,
                 border: const UnderlineInputBorder(),
                 focusColor: FoodlyThemes.primaryFoodly,
                 errorMaxLines: 2,
-                errorStyle: const TextStyle(fontSize: 10.0),
+                errorStyle: FoodlyTextStyles.errorInputText,
                 contentPadding: const EdgeInsets.only(top: 15),
               ),
               validator: (value) {
@@ -98,9 +103,7 @@ class LoginInputText extends StatelessWidget {
                   case FoodlyInputType.password:
                     if (notValue) return S.current.pleaseEnterPassword;
 
-                    return !FormValidations.isPasswordValid(value)
-                        ? S.current.passwordInstructions
-                        : null;
+                    return !FormValidations.isPasswordValid(value) ? S.current.passwordInstructions : null;
 
                   default:
                     return null;
@@ -113,7 +116,7 @@ class LoginInputText extends StatelessWidget {
     }
 
     return SizedBox(
-      height: height ?? 70,
+      height: minLines != null ? (minLines! * 40) : height ?? 70,
       child: TextFormField(
         enabled: enabled,
         autofocus: autofocus,
@@ -129,18 +132,20 @@ class LoginInputText extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         autovalidateMode: autovalidateMode,
+        minLines: minLines,
+        maxLines: maxLines,
         decoration: InputDecoration(
           fillColor: Colors.transparent,
-          hintText: inputTextType.text,
+          hintText: hintText ?? inputTextType.text,
           hintStyle: TextStyle(
-            color: enabled
-                ? FoodlyThemes.secondaryFoodly
-                : NeumorphicColors.disabled,
+            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
           ),
+          label: label,
+          labelText: labelText,
           prefixIcon: inputTextType.icon,
           border: const UnderlineInputBorder(),
           focusColor: FoodlyThemes.primaryFoodly,
-          prefixIconColor: enabled ? Colors.black87 : NeumorphicColors.disabled,
+          prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
           errorMaxLines: 2,
           errorStyle: const TextStyle(fontSize: 10.0),
           contentPadding: const EdgeInsets.only(top: 15),
@@ -156,9 +161,7 @@ class LoginInputText extends StatelessWidget {
                 return S.current.mustContainAtLeast3Characters;
               }
 
-              return !FormValidations.isUserNameValid(value)
-                  ? S.current.canNotContainSpecialCharactersBut_
-                  : null;
+              return !FormValidations.isUserNameValid(value) ? S.current.canNotContainSpecialCharactersBut_ : null;
 
             case FoodlyInputType.firstName:
               if (notValue) return S.current.pleaseEnterYourName;
@@ -167,9 +170,7 @@ class LoginInputText extends StatelessWidget {
                 return S.current.mustContainAtLeastTwoCharacters;
               }
 
-              return !FormValidations.isNameValid(value)
-                  ? S.current.onlyContainLetters
-                  : null;
+              return !FormValidations.isNameValid(value) ? S.current.onlyContainLetters : null;
 
             case FoodlyInputType.lastName:
               if (notValue) return S.current.pleaseEnterYourLastName;
@@ -178,30 +179,24 @@ class LoginInputText extends StatelessWidget {
                 return S.current.mustContainAtLeastTwoCharacters;
               }
 
-              return !FormValidations.isNameValid(value)
-                  ? S.current.onlyContainLetters
-                  : null;
+              return !FormValidations.isNameValid(value) ? S.current.onlyContainLetters : null;
 
             case FoodlyInputType.email:
               if (notValue) return S.current.pleaseEnterEmail;
 
-              return !FormValidations.isEmailValid(value)
-                  ? S.current.enterAValidEmail
-                  : null;
+              return !FormValidations.isEmailValid(value) ? S.current.enterAValidEmail : null;
 
             case FoodlyInputType.zipCode:
               if (notValue) return S.current.pleaseEnterPostalCode;
 
-              return !FormValidations.validateFormWithCountryCode(
-                      value, countryCode, FoodlyRegex.postalCodeRegex)
+              return !FormValidations.validateFormWithCountryCode(value, countryCode, FoodlyRegex.postalCodeRegex)
                   ? S.current.enterAValidPostalCode
                   : null;
 
             case FoodlyInputType.phone:
               if (notValue) return S.current.pleaseEnterPhoneNumber;
 
-              return !FormValidations.validateFormWithCountryCode(
-                      value, countryCode, FoodlyRegex.phoneNumberRegex)
+              return !FormValidations.validateFormWithCountryCode(value, countryCode, FoodlyRegex.phoneNumberRegex)
                   ? S.current.enterAValidPhoneNumber
                   : null;
 
@@ -213,15 +208,12 @@ class LoginInputText extends StatelessWidget {
             case FoodlyInputType.businessEmail:
               if (notValue) return S.current.pleaseEnterEmail;
 
-              return !FormValidations.isEmailValid(value)
-                  ? S.current.enterAValidEmail
-                  : null;
+              return !FormValidations.isEmailValid(value) ? S.current.enterAValidEmail : null;
 
             case FoodlyInputType.businessPhone:
               if (notValue) return S.current.pleaseEnterPhoneNumber;
 
-              return !FormValidations.validateFormWithCountryCode(
-                      value, countryCode, FoodlyRegex.phoneNumberRegex)
+              return !FormValidations.validateFormWithCountryCode(value, countryCode, FoodlyRegex.phoneNumberRegex)
                   ? S.current.enterAValidPhoneNumber
                   : null;
 
@@ -242,8 +234,7 @@ class LoginInputText extends StatelessWidget {
                 return S.current.zipCodeNotAvailable;
               }
 
-              return !FormValidations.validateFormWithCountryCode(
-                      value, countryCode, FoodlyRegex.postalCodeRegex)
+              return !FormValidations.validateFormWithCountryCode(value, countryCode, FoodlyRegex.postalCodeRegex)
                   ? S.current.enterAValidPostalCode
                   : null;
 

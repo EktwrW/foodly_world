@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/data_models/organization/business_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -13,8 +12,8 @@ abstract class BusinessClient {
   @GET('/business/{uuid}')
   Future<BusinessDM> fetchBusinessById(@Path('uuid') String id);
 
-  @POST('/business-update/{uuid}')
-  Future<BusinessDM> updateBusiness(@Path('uuid') String id, @Queries() BusinessUpdateDTO loginDT);
+  @PUT('/business-update/{uuid}')
+  Future<BusinessDM> updateBusiness(@Path('uuid') String id, @Queries() BusinessUpdateDTO businessUpdateDTO);
 
   @POST('/business-update-logo/{uuid}')
   @MultiPart()

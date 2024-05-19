@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/network/users/me_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';

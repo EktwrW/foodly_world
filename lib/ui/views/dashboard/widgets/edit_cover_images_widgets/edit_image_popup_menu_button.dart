@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
