@@ -1,10 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:logger/logger.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DashboardEmailAndPhoneWdg extends StatelessWidget {
   final String email;
@@ -24,7 +22,7 @@ class DashboardEmailAndPhoneWdg extends StatelessWidget {
         if (email.isNotEmpty)
           FadeIn(
             child: TextButton.icon(
-              onPressed: () => _launchEmail(email),
+              onPressed: () => UrlLauncher.launchEmail(email),
               icon: const Icon(Bootstrap.envelope_at),
               label: Text(
                 email,
@@ -35,7 +33,7 @@ class DashboardEmailAndPhoneWdg extends StatelessWidget {
         if (phoneNumber.isNotEmpty)
           FadeIn(
             child: TextButton.icon(
-              onPressed: () => _launchPhone(phoneNumber),
+              onPressed: () => UrlLauncher.launchPhone(phoneNumber),
               icon: const Icon(Bootstrap.phone_vibrate),
               label: Text(
                 phoneNumber,
@@ -45,25 +43,5 @@ class DashboardEmailAndPhoneWdg extends StatelessWidget {
           ),
       ],
     );
-  }
-
-  Future<void> _launchEmail(String email) async {
-    final Uri emailUri = Uri(scheme: 'mailto', path: email);
-
-    if (await canLaunchUrl(emailUri)) {
-      await launchUrl(emailUri);
-    } else {
-      di<Logger>().e('Could not launch $emailUri');
-    }
-  }
-
-  Future<void> _launchPhone(String phoneNumber) async {
-    final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
-
-    if (await canLaunchUrl(phoneUri)) {
-      await launchUrl(phoneUri);
-    } else {
-      di<Logger>().e('Could not launch $phoneUri');
-    }
   }
 }
