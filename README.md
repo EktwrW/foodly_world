@@ -2,6 +2,8 @@
 
 Become a foodler.
 
+![Logo](https://github.com/EktwrW/foodly_world/blob/main/assets/images/simulator_screenshot_55075B0F-39A4-410A-BCD5-748504B808E9.png?raw=true)
+
 ## Getting Started
 
 Welcome to Foodly, a Flutter application designed to showcase a robust architecture model for developing modern, feature-rich mobile apps. Foodly integrates a variety of powerful tools and features to provide an enhanced experience for both business owners and customers in the food and beverage industry, as well as cooking schools.
