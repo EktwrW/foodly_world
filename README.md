@@ -2,7 +2,7 @@
 
 Become a foodler.
 
-![Logo](https://github.com/EktwrW/foodly_world/blob/main/assets/images/simulator_screenshot_55075B0F-39A4-410A-BCD5-748504B808E9.png?raw=true)
+<img src="https://github.com/EktwrW/foodly_world/blob/main/assets/images/simulator_screenshot_55075B0F-39A4-410A-BCD5-748504B808E9.png?raw=true" alt="Logo" width="300"/>
 
 ## Getting Started
 
