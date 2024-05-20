@@ -69,6 +69,6 @@ Explore Foodly and see how it can be adapted and extended to meet the needs of v
 
 - Code Comments: Add more comments and documentation within the code to explain the logic, especially for complex functions and classes.
 
-- Unit Tests: Ensure comprehensive test coverage for all features and components. This will help maintain code quality and reliability.
+- Unit Tests: test coverage for all features and components. This will help maintain code quality and reliability.
 
 - Security: Implement a SECURITY.md file to define security policies and procedures for reporting vulnerabilities.
