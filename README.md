@@ -1,34 +1,61 @@
-# foodly_world
+# foodly.world
 
-A new Flutter project.
+Become a foodler.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Welcome to Foodly, a Flutter application designed to showcase a robust architecture model for developing modern, feature-rich mobile apps. Foodly integrates a variety of powerful tools and features to provide an enhanced experience for both business owners and customers in the food and beverage industry, as well as cooking schools.
 
-A few resources to get you started if this is your first Flutter project:
+## Key Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Google Maps Integration: Seamlessly navigate and discover locations with Google Maps.
+Geolocation Services: Utilize advanced geolocation to find and promote nearby businesses.
+Artificial Intelligence: Leverage AI for personalized recommendations and smart features.
+Social Feed: Engage with the community through a dynamic social feed.
+Comprehensive Business Tools: Provide business owners with tools to manage and grow their establishments.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Prerequisites
 
-## borrador de scripts:
+Before you begin, ensure you have met the following requirements:
 
-para serializar archivos: 
-dart run build_runner build --delete-conflicting-outputs 
+Flutter SDK installed on your development machine.
+Google Maps API Key.
 
-para activar diccionarios:
-flutter pub global activate intl_utils
+### Installation
 
-para actualizar diccionarios:
-flutter pub global run intl_utils:generate
+- Clone the repository
+  `git clone https://github.com/EktwrW/foodly_world.git`
 
-para generar iconos de lanzamiento:
-dart run icons_launcher:create --icons_launcher.yaml
+- Navigate to the project directory
+  `cd foodly_world`
 
-flutter build apk --release --dart-define=ENV=prod --dart-define=DOMAIN=https://www.qa.apps-369.com --dart-define=API_VERSION=/api --dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL --dart-define=REG_PREFILL=true --dart-define=APP_ROOT=/app/ --dart-define=MAPBOX_PLACES=https://api.mapbox.com/geocoding/v5/mapbox.places --dart-define=MAPBOX_DEFAULT_PUBLIC_TOKEN=pk.eyJ1IjoiYXBwcy0zNjkiLCJhIjoiY2xzb2xuMzMyMDU3djJqbmowZnAycm42YiJ9.CyXO3nT15sjCAx1nAsLOvQ
+- Install dependencies
+  `flutter pub get`
 
-NEW flutter build apk --release --dart-define=ENV=prod --dart-define=DOMAIN=https://www.qa.apps-369.com --dart-define=API_VERSION=/api --dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL --dart-define=REG_PREFILL=true --dart-define=APP_ROOT=/app/ --dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng= --dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY
+- Configure Google Maps API Key
+  Add your API key to the android/app/src/main/AndroidManifest.xml and ios/Runner/Info.plist files.
+
+- Run the app
+  `flutter run`
+
+### Useful Scripts
+
+- Serialize files:
+  `dart run build_runner build --delete-conflicting-outputs`
+
+- Activate dictionaries:
+  `flutter pub global activate intl_utils`
+
+- Update dictionaries:
+  `flutter pub global run intl_utils:generate`
+
+- Generate launch icons:
+  `dart run icons_launcher:create --icons_launcher.yaml`
+
+- Generate native splash screen:
+  `dart run flutter_native_splash:create`
+
+###API Documentation
+For detailed API documentation, visit [API Documentation](https://www.qa.apps-369.com/api/documentation#/).
+
+Explore Foodly and see how it can be adapted and extended to meet the needs of various businesses in the culinary world.

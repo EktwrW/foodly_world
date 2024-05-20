@@ -3,7 +3,7 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_client.dart';
 import 'package:foodly_world/core/utils/file_handler/file_handler_selector.dart';
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 
@@ -47,7 +47,7 @@ class BusinessRepo {
         businessLatitude: registerDTO.businessLatitude,
         businessLongitude: registerDTO.businessLongitude,
         businessWebsite: registerDTO.businessWebsite,
-        categoryId: registerDTO.categoryId.index,
+        categoryId: registerDTO.categoryId.value,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],
       ));
     } catch (e, s) {

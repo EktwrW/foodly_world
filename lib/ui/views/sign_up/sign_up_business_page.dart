@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -69,9 +70,9 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                 context.goNamed(AppRoutes.foodlyMainPage.name,
                     pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.userId ?? ''});
               },
-              error: (e, vm) {
+              error: (e, vm) async {
                 di<DialogService>().hideLoading();
-                //TODO: hw - handle error / show snackbar
+                await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
               },
             );
           },
@@ -81,6 +82,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
               loaded: (signUpVM) => _buildContent(signUpVM, cubit),
               userCreated: (signUpVM) => _buildContent(signUpVM, cubit),
               businessCreated: (signUpVM) => _buildContent(signUpVM, cubit),
+              error: (e, signUpVM) => _buildContent(signUpVM, cubit),
               orElse: () => const SizedBox.expand(),
             );
           },

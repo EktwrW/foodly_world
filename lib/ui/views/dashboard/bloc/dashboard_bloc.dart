@@ -12,7 +12,7 @@ import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-export 'package:foodly_world/data_models/organization/business_dm.dart';
+export 'package:foodly_world/data_models/business/business_dm.dart';
 export 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 
 part 'dashboard_bloc.freezed.dart';

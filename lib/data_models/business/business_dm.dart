@@ -1,9 +1,9 @@
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
-import 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
+import 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 export 'package:foodly_world/core/enums/foodly_categories_enums.dart';
-export 'package:foodly_world/data_models/organization/business_cover_image_dm.dart';
+export 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
 
 part 'business_dm.freezed.dart';
 part 'business_dm.g.dart';

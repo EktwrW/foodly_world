@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:retrofit/retrofit.dart';
 

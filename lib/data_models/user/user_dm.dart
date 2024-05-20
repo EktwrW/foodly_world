@@ -1,4 +1,4 @@
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/user/user_prefs_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -44,15 +44,11 @@ class UserDM with _$UserDM {
 
   String get fullName => '$firstName $lastName';
   bool get isVisitor => roleId == UserRole.visitor;
-  bool get mustSignInFromProvider =>
-      (userId?.isEmpty ?? true) && (provider?.isNotEmpty ?? false);
-  String get getFirstNameForSignUp =>
-      mustSignInFromProvider ? firstName ?? '' : '';
-  String get getLastNameForSignUp =>
-      mustSignInFromProvider ? lastName ?? '' : '';
+  bool get mustSignInFromProvider => (userId?.isEmpty ?? true) && (provider?.isNotEmpty ?? false);
+  String get getFirstNameForSignUp => mustSignInFromProvider ? firstName ?? '' : '';
+  String get getLastNameForSignUp => mustSignInFromProvider ? lastName ?? '' : '';
   String get getEmailForSignUp => mustSignInFromProvider ? email ?? '' : '';
-  String? get getAvatarForSignUp =>
-      mustSignInFromProvider ? providerAvatar : null;
+  String? get getAvatarForSignUp => mustSignInFromProvider ? providerAvatar : null;
 }
 
 enum UserGender {

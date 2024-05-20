@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-export 'package:foodly_world/data_models/organization/business_dm.dart';
+export 'package:foodly_world/data_models/business/business_dm.dart';
 
 part 'dashboard_vm.freezed.dart';
 

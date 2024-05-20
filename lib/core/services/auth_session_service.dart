@@ -13,7 +13,7 @@ import 'package:foodly_world/core/network/users/me_repo.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/local_storage_service.dart';
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';

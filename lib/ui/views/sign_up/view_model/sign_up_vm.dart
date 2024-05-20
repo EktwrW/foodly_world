@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/data_models/organization/business_dm.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
