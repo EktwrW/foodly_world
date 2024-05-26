@@ -7,6 +7,7 @@ class DashboardEvent with _$DashboardEvent {
   const factory DashboardEvent.editCoverImagesDialog() = _EditCoverImagesDialog;
   const factory DashboardEvent.addPicture(String path) = _AddPicture;
   const factory DashboardEvent.setCategory(FoodlyCategories category) = _SetCategory;
+  const factory DashboardEvent.setService(BusinessServices service) = _SetService;
   const factory DashboardEvent.uploadPictures() = _UploadPictures;
   const factory DashboardEvent.updatePicture(String imageId, String filePath) = _UpdatePicture;
   const factory DashboardEvent.cancelUploadPictures() = _CancelUploadPictures;

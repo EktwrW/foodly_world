@@ -63,6 +63,7 @@ enum FoodlyInputType {
 
   // dashboard
   businessAboutUs(icon: null, textInputType: TextInputType.text),
+  businessAdditionalInfo(icon: null, textInputType: TextInputType.text),
 
   // generic
   generic(icon: Icon(Bootstrap.person), textInputType: TextInputType.text);
@@ -114,10 +115,10 @@ enum FoodlyInputType {
         return S.current.dateOfBirth;
 
       case FoodlyInputType.businessName:
-        return 'Nombre comercial';
+        return S.current.businessName;
 
       case FoodlyInputType.businessPhone:
-        return 'Numero de contacto';
+        return S.current.contactNumber;
 
       case FoodlyInputType.businessCountry:
         return S.current.country;
@@ -132,10 +133,13 @@ enum FoodlyInputType {
         return S.current.zipCode;
 
       case FoodlyInputType.businessEmail:
-        return 'Correo electronico de contacto';
+        return S.current.contactEmail;
 
       case FoodlyInputType.businessAboutUs:
-        return 'Agrega una descripción';
+        return S.current.addADescription;
+
+      case FoodlyInputType.businessAdditionalInfo:
+        return S.current.addAdditionalInformation;
     }
   }
 }

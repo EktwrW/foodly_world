@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/business_enums.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,7 +11,7 @@ class BusinessUpdateDTO with _$BusinessUpdateDTO {
     @JsonKey(name: 'business_name') String? businessName,
     @JsonKey(name: 'business_about_us') String? businessAboutUs,
     @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
-    @JsonKey(name: 'business_services') List<String>? businessServices,
+    @JsonKey(name: 'business_services[]') List<BusinessServices>? businessServices,
     @JsonKey(name: 'business_email') String? businessEmail,
     @JsonKey(name: 'business_phone') String? businessPhone,
     @JsonKey(name: 'business_address') String? businessAddress,

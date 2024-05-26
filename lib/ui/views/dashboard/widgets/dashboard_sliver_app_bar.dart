@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/business_name/business_name.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
@@ -42,8 +43,8 @@ class DashboardSliverAppBar extends StatelessWidget {
           centerTitle: true,
           toolbarHeight: 70,
           leadingWidth: 76,
-          expandedHeight: 350,
-          collapsedHeight: 110,
+          expandedHeight: vm.isEditingName ? 424 : 350,
+          collapsedHeight: vm.isEditingName ? 184 : 110,
           shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           pinned: true,
           floating: true,
@@ -97,31 +98,16 @@ class DashboardSliverAppBar extends StatelessWidget {
           flexibleSpace: LayoutBuilder(
             builder: (context, constraints) {
               var top = constraints.biggest.height;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                isExpanded.value = top >= 250;
-              });
+              WidgetsBinding.instance.addPostFrameCallback((_) => isExpanded.value = top >= 250);
 
               return FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 titlePadding: EdgeInsets.zero,
                 centerTitle: true,
+                expandedTitleScale: vm.isEditingName ? 1 : 1.5,
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 35,
-                      child: Center(
-                        child: Text(
-                          vm.currentBusiness?.name ?? '',
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: FoodlyTextStyles.cardSubtitle.copyWith(color: Colors.black),
-                        ),
-                      ),
-                    ).paddingBottom(5),
-                  ],
+                  children: [BusinessNameWdg(vm: vm)],
                 ).paddingHorizontal(14),
                 background: SafeArea(
                   child: Column(

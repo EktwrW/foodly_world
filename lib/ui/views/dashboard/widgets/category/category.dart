@@ -56,7 +56,7 @@ class CategoryWdg extends StatelessWidget {
     return FadeIn(
       child: MaterialButton(
         onPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.category)),
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
             SizedBox.square(dimension: 30, child: vm.currentBusiness?.category?.icon ?? const SizedBox.shrink()),

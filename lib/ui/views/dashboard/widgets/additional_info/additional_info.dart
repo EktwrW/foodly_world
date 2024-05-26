@@ -10,13 +10,13 @@ import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_titles_rich_text.dart';
 
-class AboutUsWdg extends StatelessWidget {
-  const AboutUsWdg({
+class AdditionalInfoWdg extends StatelessWidget {
+  final DashboardVM vm;
+
+  const AdditionalInfoWdg({
     super.key,
     required this.vm,
   });
-
-  final DashboardVM vm;
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +25,25 @@ class AboutUsWdg extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DashboardTitleRichText(firstText: '${S.current.about} ', secondText: S.current.us, topPadding: 26),
+        DashboardTitleRichText(
+          firstText: '${S.current.dashboardAdditionalInformationText1} ',
+          secondText: S.current.dashboardAdditionalInformationText2,
+        ),
         Visibility(
-          visible: vm.isEditingAboutUs,
+          visible: vm.isEditingAdditionalInfo,
           replacement: TextButton(
             onPressed: () {
-              vm.businessAboutUsCtrl?.controller?.text = vm.currentBusiness?.aboutUs ?? '';
-              bloc.add(const DashboardEvent.updateEditing(DashboardEditing.aboutUs));
+              vm.businessAdditionalInfoCtrl?.controller?.text = vm.currentBusiness?.additionalInfo ?? '';
+              bloc.add(const DashboardEvent.updateEditing(DashboardEditing.additionalInfo));
             },
-            focusNode: vm.businessAddressCtrl?.focusNode,
+            focusNode: vm.businessAdditionalInfoCtrl?.focusNode,
             child: Row(
               children: [
                 Expanded(
                   child: FadeIn(
                     child: Text(
-                      vm.currentBusiness?.aboutUs ?? S.current.addADescription,
-                      style: (vm.currentBusiness?.aboutUs?.isNotEmpty ?? false)
+                      vm.currentBusiness?.additionalInfo ?? S.current.addAdditionalInformation,
+                      style: (vm.currentBusiness?.additionalInfo?.isNotEmpty ?? false)
                           ? FoodlyTextStyles.actionsBody
                           : FoodlyTextStyles.profileSectionTextButton,
                     ),
@@ -59,24 +62,26 @@ class AboutUsWdg extends StatelessWidget {
                     child: Column(
                       children: [
                         FoodlyPrimaryInputText(
-                          controller: vm.businessAboutUsCtrl?.controller ?? TextEditingController(),
-                          focusNode: vm.businessAboutUsCtrl?.focusNode,
-                          inputTextType: FoodlyInputType.businessAboutUs,
+                          controller: vm.businessAdditionalInfoCtrl!.controller!,
+                          focusNode: vm.businessAdditionalInfoCtrl?.focusNode,
+                          inputTextType: FoodlyInputType.businessAdditionalInfo,
                           autovalidateMode: vm.autovalidateMode,
-                          minLines: 3,
+                          minLines: 2,
                           autofocus: true,
-                          maxLines: 3,
-                          maxLength: 250,
-                          enabled: vm.isEditingAboutUs,
-                          hintText: vm.currentBusiness?.aboutUs,
+                          maxLines: 2,
+                          maxLength: 100,
+                          enabled: vm.isEditingAdditionalInfo,
+                          hintText: vm.currentBusiness?.additionalInfo,
                         ),
                         DasboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                           onCancelPressed: () {
-                            vm.businessAboutUsCtrl?.controller?.clear();
+                            vm.businessAdditionalInfoCtrl?.controller?.clear();
                             bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                           },
-                          showSaveButton: (vm.businessAboutUsCtrl?.controller?.text != vm.currentBusiness?.aboutUs),
+                          showSaveButton:
+                              (vm.businessAdditionalInfoCtrl?.controller?.text != vm.currentBusiness?.additionalInfo) &&
+                                  (vm.businessAdditionalInfoCtrl?.controller?.text.isNotEmpty ?? false),
                         ),
                       ],
                     ),

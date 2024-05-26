@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -34,34 +33,32 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           businessCountryCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
           businessCityCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
           businessZipCodeCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessAdditionalInfoCtrl:
+              DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
         ),
         super(const _Initial(DashboardVM())) {
     on<DashboardEvent>(
       (events, emit) async {
         await events.map(
           started: (_Started value) async {
-            _vm = _vm.copyWith(
-              myBusinessesses: _authService.userSessionDM?.user.business ?? [],
-              currentBusiness: _authService.userSessionDM?.user.business.first,
-            );
-            await fetchAllBusinesses(emit).whenComplete(() => emit(_Loaded(_vm)));
+            _vm = _vm.copyWith(myBusinessesses: _authService.userSessionDM?.user.business ?? []);
+            await _initializeAllBusinesses(emit);
           },
           updateLogo: (_UpdateLogo value) async {
-            await updateLogo(emit, value.path);
+            await _updateLogo(emit, value.path);
           },
           editCoverImagesDialog: (_EditCoverImagesDialog value) {
-            _vm = _vm.copyWith(
-              picturesPath: _authService.userSessionDM?.user.business.first.coverImages ?? [],
-            );
+            _vm = _vm.copyWith(picturesPath: _authService.userSessionDM?.user.business.first.coverImages ?? []);
             emit(_ShowCoverImagesDialog(_vm));
           },
           deleteCoverImageById: (_DeleteCoverImageById value) async {
             if (_vm.targetForDelete != null) {
-              await deleteCoverImage(emit, value.coverImageDM);
-            } else {
-              _vm = _vm.copyWith(targetForDelete: value.coverImageDM);
-              emit(_Loaded(_vm));
+              await _deleteCoverImage(emit, value.coverImageDM);
+              return;
             }
+
+            _vm = _vm.copyWith(targetForDelete: value.coverImageDM);
+            emit(_Loaded(_vm));
           },
           cancelDeleteCoverImage: (_CancelDeleteCoverImage value) async {
             _vm = _vm.copyWith(targetForDelete: null);
@@ -72,26 +69,41 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             emit(_Loaded(_vm));
           },
           uploadPictures: (_UploadPictures value) async {
-            await uploadPictures(emit);
+            await _uploadPictures(emit);
           },
           cancelUploadPictures: (_CancelUploadPictures value) async {
             _vm = _vm.copyWith(picturesPath: [], targetForDelete: null);
             emit(_Loaded(_vm));
           },
           updatePicture: (_UpdatePicture value) async {
-            await updateCoverImageById(value.imageId, value.filePath, emit);
+            await _updateCoverImageById(value.imageId, value.filePath, emit);
           },
           updateEditing: (_UpdateEditing value) {
-            _vm = _vm.copyWith(dashboardEditing: value.editing);
+            _vm = _vm.copyWith(
+              dashboardEditing: value.editing,
+              currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
+            );
             emit(_Loaded(_vm));
-          },
-          updateBusiness: (_UpdateBusiness value) async {
-            await updateBusiness(emit);
           },
           setCategory: (_SetCategory value) {
             _vm = _vm.copyWith(newCategory: value.category);
             emit(_Loaded(_vm));
           },
+          setService: (_SetService value) {
+            if (_vm.currentBusinessServices.contains(value.service)) {
+              _vm = _vm.copyWith(
+                  currentBusinessServices: List<BusinessServices>.from(_vm.currentBusinessServices)
+                    ..remove(value.service));
+              emit(_Loaded(_vm));
+              return;
+            }
+            _vm = _vm.copyWith(
+                currentBusinessServices: List<BusinessServices>.from(_vm.currentBusinessServices)..add(value.service));
+            emit(_Loaded(_vm));
+          },
+
+          /// Event to call server for updating the business object
+          updateBusiness: (_UpdateBusiness value) async => await _callToUpdateBusiness(emit),
         );
       },
     );
@@ -99,11 +111,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     add(const DashboardEvent.started());
   }
 
+  bool get noCurrentBusiness => _vm.currentBusiness == null;
   bool get contactUsIsEmpty =>
       (_vm.currentBusiness?.email?.isEmpty ?? true) && (_vm.currentBusiness?.phoneNumber?.isEmpty ?? true);
 
   /// Fetch Businesses
-  Future<void> fetchAllBusinesses(Emitter emit) async {
+  Future<void> _initializeAllBusinesses(Emitter emit) async {
     emit(_Loading(_vm));
     final businesses = <BusinessDM>[];
 
@@ -120,13 +133,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     _vm = _vm.copyWith(
       myBusinessesses: businesses,
-      currentBusiness: businesses.firstWhereOrNull((e) => e.id == _vm.currentBusiness?.id),
+      currentBusiness: businesses.first,
+      currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
     );
     _authService.setBusinesses(businesses);
+
+    emit(_Loaded(_vm));
   }
 
   /// Image methods & handling
-  Future<void> updateLogo(Emitter emit, String path) async {
+  Future<void> _updateLogo(Emitter emit, String path) async {
     if (path.isNotEmpty) {
       emit(_UpdatingLogo(_vm));
       await _businessRepo
@@ -149,7 +165,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  Future<void> uploadPictures(Emitter<DashboardState> emit) async {
+  Future<void> _uploadPictures(Emitter<DashboardState> emit) async {
     final paths = _vm.picturesPath.where((p) => p.imageId == null).toList();
     log('$paths');
 
@@ -177,7 +193,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  Future<void> deleteCoverImage(Emitter<DashboardState> emit, BusinessCoverImageDM coverImageDM) async {
+  Future<void> _deleteCoverImage(Emitter<DashboardState> emit, BusinessCoverImageDM coverImageDM) async {
     if (_vm.targetForDelete?.imageId?.isNotEmpty ?? false) {
       emit(_UpdatingPictures(_vm));
       await _businessRepo.deleteCoverImageById(coverImageDM.imageId ?? '').then((result) {
@@ -206,7 +222,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  Future<void> updateCoverImageById(String imageId, String filePath, Emitter emit) async {
+  Future<void> _updateCoverImageById(String imageId, String filePath, Emitter emit) async {
     emit(_UpdatingPictures(_vm));
     await _businessRepo.updateCoverImageById(imageId, filePath).then((result) {
       return result.when(
@@ -226,53 +242,58 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     });
   }
 
-  /// Update a business
-  Future<void> updateBusiness(Emitter emit) async {
+  /// Logic and Call to update a business
+  Future<void> _callToUpdateBusiness(Emitter emit) async {
     var dto = const BusinessUpdateDTO();
 
-    if (_vm.currentBusiness!.id != null) {
-      switch (_vm.dashboardEditing) {
-        case DashboardEditing.category:
-          dto = dto.copyWith(category: _vm.newCategory);
-
-        case DashboardEditing.address:
-          dto = dto.copyWith();
-        case DashboardEditing.aboutUs:
-          dto = dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.controller?.text);
-
-        case DashboardEditing.contactUs:
-          if (_vm.businessEmailCtrl?.controller?.text.isNotEmpty ?? false) {
-            dto = dto.copyWith(businessEmail: _vm.businessEmailCtrl?.controller?.text);
-          }
-
-          if (_vm.businessPhoneCtrl?.controller?.text.isNotEmpty ?? false) {
-            dto = dto.copyWith(businessPhone: _vm.businessPhoneCtrl?.controller?.text);
-          }
-
-        case DashboardEditing.openingHours:
-          dto = dto.copyWith();
-
-        case DashboardEditing.services:
-          dto = dto.copyWith();
-
-        case DashboardEditing.additionalInfo:
-          dto = dto.copyWith();
-
-          break;
-        default:
-      }
-
-      emit(_Loading(_vm));
-      await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
-            (result) => result.when(
-              success: (updatedBusiness) {
-                _updateBusinessInCurrentArray(updatedBusiness);
-                emit(_Loaded(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
-              },
-              failure: (error) => _handleError(error, emit),
-            ),
-          );
+    if (_vm.currentBusiness?.id == null) {
+      return;
     }
+
+    switch (_vm.dashboardEditing) {
+      case DashboardEditing.category:
+        dto = dto.copyWith(category: _vm.newCategory);
+
+      case DashboardEditing.address:
+        dto = dto.copyWith();
+      case DashboardEditing.aboutUs:
+        dto = dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.controller?.text);
+
+      case DashboardEditing.contactUs:
+        if (_vm.businessEmailCtrl?.controller?.text.isNotEmpty ?? false) {
+          dto = dto.copyWith(businessEmail: _vm.businessEmailCtrl?.controller?.text);
+        }
+
+        if (_vm.businessPhoneCtrl?.controller?.text.isNotEmpty ?? false) {
+          dto = dto.copyWith(businessPhone: _vm.businessPhoneCtrl?.controller?.text);
+        }
+
+      case DashboardEditing.openingHours:
+        dto = dto.copyWith();
+
+      case DashboardEditing.services:
+        dto = dto.copyWith(businessServices: _vm.currentBusinessServices);
+
+      case DashboardEditing.additionalInfo:
+        dto = dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.controller?.text);
+
+      case DashboardEditing.name:
+        dto = dto.copyWith(businessName: _vm.businessNameCtrl?.controller?.text);
+
+      default:
+        break;
+    }
+
+    emit(_Loading(_vm));
+    await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
+          (result) => result.when(
+            success: (updatedBusiness) {
+              _updateBusinessInCurrentArray(updatedBusiness);
+              emit(_Loaded(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
+            },
+            failure: (error) => _handleError(error, emit),
+          ),
+        );
   }
 
   /// Common methods

@@ -1,7 +1,9 @@
+import 'package:foodly_world/core/enums/business_enums.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+export 'package:foodly_world/core/enums/business_enums.dart';
 export 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 export 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
 
@@ -13,14 +15,14 @@ class BusinessDM with _$BusinessDM {
   const BusinessDM._();
 
   const factory BusinessDM({
-    @JsonKey(name: 'business_id') int? intId,
+    @JsonKey(name: 'id') int? intId,
     @JsonKey(name: 'business_logo') String? logo,
     @JsonKey(name: 'cover_images') @Default([]) List<BusinessCoverImageDM> coverImages,
     @JsonKey(name: 'branches') @Default([]) List<Object> branches,
     @JsonKey(name: 'business_uuid') String? id,
     @JsonKey(name: 'business_name') String? name,
     @JsonKey(name: 'business_about_us') String? aboutUs,
-    @JsonKey(name: 'business_services') List<String>? services,
+    @JsonKey(name: 'business_services') List<BusinessServicesDM>? servicesDM,
     @JsonKey(name: 'business_additional_info') String? additionalInfo,
     @JsonKey(name: 'business_email') String? email,
     @JsonKey(name: 'business_phone') String? phoneNumber,
@@ -52,4 +54,23 @@ class BusinessDM with _$BusinessDM {
     }
     return [];
   }
+
+  List<BusinessServices> get businessServices => (servicesDM?.isEmpty ?? true)
+      ? []
+      : List<BusinessServices>.generate(servicesDM!.length, (i) => servicesDM![i].service)
+    ..sort((a, b) => a.value.compareTo(b.value));
+}
+
+@freezed
+class BusinessServicesDM with _$BusinessServicesDM {
+  const BusinessServicesDM._();
+  const factory BusinessServicesDM({
+    @JsonKey(name: 'id') required BusinessServices service,
+    @JsonKey(name: 'service_uuid') String? uuid,
+    @JsonKey(name: 'service_name') String? serviceName,
+    @JsonKey(name: 'service_description') String? serviceDescriptio,
+    @JsonKey(name: 'service_image_path') String? serviceImagePath,
+  }) = _BusinessServiceDM;
+
+  factory BusinessServicesDM.fromJson(Map<String, dynamic> json) => _$BusinessServicesDMFromJson(json);
 }

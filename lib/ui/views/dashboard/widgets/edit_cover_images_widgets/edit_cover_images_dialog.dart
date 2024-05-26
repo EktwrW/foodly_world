@@ -59,7 +59,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                                 }
                               },
                               child: Text(
-                                vm.targetForDelete != null ? 'Confirmar' : 'Guardar',
+                                vm.targetForDelete != null ? S.current.confirm : S.current.save,
                                 style: FoodlyTextStyles.dialogCloseText,
                               ),
                             ),
@@ -105,8 +105,8 @@ class EditCoverImagesDialog extends StatelessWidget {
                   child: Column(
                     children: [
                       const Asset(FoodlyAssets.coverImages, height: 70).paddingBottom(18),
-                      const Text(
-                        'Editar fotos de Portada',
+                      Text(
+                        S.current.editCoverImages,
                         textAlign: TextAlign.center,
                         style: FoodlyTextStyles.confirmationTextPrimary,
                       ).paddingBottom(30),
@@ -121,8 +121,8 @@ class EditCoverImagesDialog extends StatelessWidget {
                             firstChild: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  'Deseas eliminar esta imagen de portada?',
+                                Text(
+                                  S.current.doYouWantToDeleteThisCoverImage,
                                   textAlign: TextAlign.center,
                                   style: FoodlyTextStyles.captionPurpleBold,
                                 ).paddingBottom(32),
@@ -130,13 +130,14 @@ class EditCoverImagesDialog extends StatelessWidget {
                               ],
                             ),
                             secondChild: ElasticIn(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Asset(FoodlyAssets.trash, height: 60).paddingBottom(24),
-                                const Text('Successfully deleted!'),
-                              ],
-                            )),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Asset(FoodlyAssets.trash, height: 60).paddingBottom(24),
+                                  Text(S.current.successfullyDeleted),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       if (vm.picturesPath.isNotEmpty && vm.targetForDelete == null)
@@ -178,7 +179,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                             ).then(
                               (path) => path.isNotEmpty ? bloc.add(DashboardEvent.addPicture(path)) : null,
                             ),
-                            tooltip: 'Presiona para agregar fotos, hasta un maximo de 6 imagenes',
+                            tooltip: S.current.pressToAddPhotosUpToMaxImages(6),
                             icon: const Icon(Bootstrap.plus_circle, size: 28),
                             padding: const EdgeInsets.all(4),
                           ).paddingTop(20),

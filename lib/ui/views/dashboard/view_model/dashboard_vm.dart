@@ -16,7 +16,7 @@ class DashboardVM with _$DashboardVM {
     @Default(DashboardEditing.none) DashboardEditing dashboardEditing,
     @Default([]) List<BusinessDM> myBusinessesses,
     BusinessDM? currentBusiness,
-    @Default([]) List<String> currentBusinessServices,
+    @Default([]) List<BusinessServices> currentBusinessServices,
     @Default([]) List<BusinessCoverImageDM> picturesPath,
     FoodlyCategories? newCategory,
     BusinessCoverImageDM? targetForDelete,
@@ -28,6 +28,7 @@ class DashboardVM with _$DashboardVM {
     DasboardSectionController? businessCityCtrl,
     DasboardSectionController? businessAddressCtrl,
     DasboardSectionController? businessZipCodeCtrl,
+    DasboardSectionController? businessAdditionalInfoCtrl,
     GlobalKey<FormState>? formKey,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
   }) = _DashboardVM;
