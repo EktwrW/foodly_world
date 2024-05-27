@@ -89,6 +89,12 @@ class ContactChannelsWdg extends StatelessWidget {
                             vm.businessPhoneCtrl?.controller?.clear();
                             bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                           },
+                          recordControllers: [
+                            if (vm.businessEmailCtrl?.controller != null && vm.currentBusiness?.email != null)
+                              (vm.businessEmailCtrl!.controller!, vm.currentBusiness!.email!),
+                            if (vm.businessPhoneCtrl?.controller != null && vm.currentBusiness?.phoneNumber != null)
+                              (vm.businessPhoneCtrl!.controller!, vm.currentBusiness!.phoneNumber!),
+                          ],
                         ),
                       ],
                     ).paddingTop(8),

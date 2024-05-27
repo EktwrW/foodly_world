@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
+import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/network/users/me_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -32,50 +33,75 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   SignUpCubit()
       : _vm = SignUpVM(
-          nickNameController: TextEditingController(),
-          firstNameController: TextEditingController(
-            text: _authService.userSessionDM?.user.getFirstNameForSignUp,
+          nickNameController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
           ),
-          lastNameController: TextEditingController(
-            text: _authService.userSessionDM?.user.getLastNameForSignUp,
+          firstNameController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getFirstNameForSignUp),
+            focusNode: FocusNode(),
           ),
-          emailController: TextEditingController(
-            text: _authService.userSessionDM?.user.getEmailForSignUp,
+          lastNameController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getLastNameForSignUp),
+            focusNode: FocusNode(),
           ),
-          passwordController: TextEditingController(),
-          phoneNumberController: TextEditingController(),
-          countryController: TextEditingController(text: _locationService.currentCountry),
-          cityController: TextEditingController(text: _locationService.currentCity),
-          zipCodeController: TextEditingController(text: _locationService.currentZipCode),
-          businessNameController: TextEditingController(),
-          businessEmailController: TextEditingController(),
-          businessPhoneNumberController: TextEditingController(),
-          businessCountryController: TextEditingController(text: _locationService.currentCountry),
-          businessCityController: TextEditingController(text: _locationService.currentState),
-          businessAddressController: TextEditingController(text: _locationService.currentCity),
-          businessZipCodeController: TextEditingController(text: _locationService.currentZipCode),
+          emailController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getEmailForSignUp),
+            focusNode: FocusNode(),
+          ),
+          passwordController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          phoneNumberController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          countryController: InputController(
+            controller: TextEditingController(text: _locationService.currentCountry),
+            focusNode: FocusNode(),
+          ),
+          cityController: InputController(
+            controller: TextEditingController(text: _locationService.currentCity),
+            focusNode: FocusNode(),
+          ),
+          zipCodeController: InputController(
+            controller: TextEditingController(text: _locationService.currentZipCode),
+            focusNode: FocusNode(),
+          ),
+          businessNameController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessEmailController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessPhoneNumberController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessCountryController: InputController(
+            controller: TextEditingController(text: _locationService.currentCountry),
+            focusNode: FocusNode(),
+          ),
+          businessCityController: InputController(
+            controller: TextEditingController(text: _locationService.currentState),
+            focusNode: FocusNode(),
+          ),
+          businessAddressController: InputController(
+            controller: TextEditingController(text: _locationService.currentCity),
+            focusNode: FocusNode(),
+          ),
+          businessZipCodeController: InputController(
+            controller: TextEditingController(text: _locationService.currentZipCode),
+            focusNode: FocusNode(),
+          ),
           autoCompleteController: TextEditingController(),
           currentCountryCode: _locationService.currentCountryCode,
           formKey: GlobalKey<FormState>(),
-          nickNameNode: FocusNode(),
-          firstNameNode: FocusNode(),
-          lastNameNode: FocusNode(),
-          emailNode: FocusNode(),
-          passwordNode: FocusNode(),
           dateOfBirthNode: FocusNode(),
-          phoneNumberNode: FocusNode(),
-          countryNode: FocusNode(),
-          cityNode: FocusNode(),
-          zipCodeNode: FocusNode(),
           genderNode: FocusNode(),
-          businessNameNode: FocusNode(),
-          businessEmailNode: FocusNode(),
-          businessDateOfOpeningNode: FocusNode(),
-          businessPhoneNumberNode: FocusNode(),
-          businessCountryNode: FocusNode(),
-          businessCityNode: FocusNode(),
-          businessAddressNode: FocusNode(),
-          businessZipCodeNode: FocusNode(),
         ),
         super(const SignUpState.initial()) {
     _initializeMarkers();
@@ -116,18 +142,18 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(_Loading(_vm));
 
     final registerDTO = UserBodyRegisterDTO(
-      userName: _vm.nickNameController?.text ?? '',
-      firstName: _vm.firstNameController?.text ?? '',
-      lastName: _vm.lastNameController?.text ?? '',
-      email: _vm.emailController?.text ?? '',
-      password: _vm.passwordController?.text ?? '',
-      passwordConfirmation: _vm.passwordController?.text ?? '',
-      phone: _vm.phoneNumberController?.text ?? '',
+      userName: _vm.nickNameController?.controller?.text ?? '',
+      firstName: _vm.firstNameController?.controller?.text ?? '',
+      lastName: _vm.lastNameController?.controller?.text ?? '',
+      email: _vm.emailController?.controller?.text ?? '',
+      password: _vm.passwordController?.controller?.text ?? '',
+      passwordConfirmation: _vm.passwordController?.controller?.text ?? '',
+      phone: _vm.phoneNumberController?.controller?.text ?? '',
       dateOfBirth: _vm.dateOfBirth?.toUtc() ?? DateTime.now().toUtc(),
       address: '-',
-      zipCode: _vm.zipCodeController?.text ?? '',
-      city: _vm.cityController?.text ?? '',
-      country: _vm.countryController?.text ?? '',
+      zipCode: _vm.zipCodeController?.controller?.text ?? '',
+      city: _vm.cityController?.controller?.text ?? '',
+      country: _vm.countryController?.controller?.text ?? '',
       gender: _vm.userGender.name.toLowerCase(),
       roleId: _vm.roleId,
     );
@@ -166,24 +192,25 @@ class SignUpCubit extends Cubit<SignUpState> {
   void hideTooltipInBusinessSignUp() => emit(_Loaded(_vm = _vm.copyWith(tooltipActive: false)));
 
   void updateBusinessFromPlacesAPI(Place detail) async {
-    _vm.businessNameController?.text = detail.name ?? '';
+    _vm.businessNameController?.controller?.text = detail.name ?? '';
 
-    _vm.businessPhoneNumberController?.text = (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
+    _vm.businessPhoneNumberController?.controller?.text =
+        (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
 
-    _vm.businessCountryController?.text =
+    _vm.businessCountryController?.controller?.text =
         detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
 
     _vm = _vm.copyWith(
         businessCountryCode: detail.addressComponents?.firstWhere((d) => d.types.contains('country')).shortName ??
             _locationService.currentCountryCode);
 
-    _vm.businessCityController?.text =
+    _vm.businessCityController?.controller?.text =
         detail.addressComponents?.firstWhere((d) => d.types.contains('locality')).longName ?? '';
 
-    _vm.businessAddressController?.text =
+    _vm.businessAddressController?.controller?.text =
         detail.addressComponents?.firstWhere((d) => d.types.contains('route')).longName ?? '';
 
-    _vm.businessZipCodeController?.text =
+    _vm.businessZipCodeController?.controller?.text =
         detail.addressComponents?.firstWhere((d) => d.types.contains('postal_code')).longName ?? '';
 
     if (detail.geometry != null) {
@@ -209,13 +236,13 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(_Loading(_vm));
 
     final bodyRegisterDTO = BusinessBodyRegisterDTO(
-      businessName: _vm.businessNameController?.text ?? '',
-      businessEmail: _vm.businessEmailController?.text ?? '',
-      businessPhone: _vm.businessPhoneNumberController?.text ?? '',
-      businessAddress: _vm.businessAddressController?.text ?? '',
-      businessZipcode: _vm.businessZipCodeController?.text ?? '',
-      businessCity: _vm.businessCityController?.text ?? '',
-      businessCountry: _vm.businessCountryController?.text ?? '',
+      businessName: _vm.businessNameController?.controller?.text ?? '',
+      businessEmail: _vm.businessEmailController?.controller?.text ?? '',
+      businessPhone: _vm.businessPhoneNumberController?.controller?.text ?? '',
+      businessAddress: _vm.businessAddressController?.controller?.text ?? '',
+      businessZipcode: _vm.businessZipCodeController?.controller?.text ?? '',
+      businessCity: _vm.businessCityController?.controller?.text ?? '',
+      businessCountry: _vm.businessCountryController?.controller?.text ?? '',
       businessWebsite: '',
       businessLatitude: _vm.businessLocation?.lat,
       businessLongitude: _vm.businessLocation?.lng,

@@ -76,7 +76,12 @@ class AboutUsWdg extends StatelessWidget {
                             vm.businessAboutUsCtrl?.controller?.clear();
                             bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                           },
-                          showSaveButton: (vm.businessAboutUsCtrl?.controller?.text != vm.currentBusiness?.aboutUs),
+                          recordControllers: [
+                            (
+                              vm.businessAboutUsCtrl?.controller ?? TextEditingController(),
+                              vm.currentBusiness?.aboutUs ?? '',
+                            )
+                          ],
                         ),
                       ],
                     ),

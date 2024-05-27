@@ -79,9 +79,12 @@ class AdditionalInfoWdg extends StatelessWidget {
                             vm.businessAdditionalInfoCtrl?.controller?.clear();
                             bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                           },
-                          showSaveButton:
-                              (vm.businessAdditionalInfoCtrl?.controller?.text != vm.currentBusiness?.additionalInfo) &&
-                                  (vm.businessAdditionalInfoCtrl?.controller?.text.isNotEmpty ?? false),
+                          recordControllers: [
+                            (
+                              vm.businessAdditionalInfoCtrl?.controller ?? TextEditingController(),
+                              vm.currentBusiness?.additionalInfo ?? '',
+                            )
+                          ],
                         ),
                       ],
                     ),

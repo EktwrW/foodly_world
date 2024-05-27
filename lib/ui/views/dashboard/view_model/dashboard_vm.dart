@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,15 +21,15 @@ class DashboardVM with _$DashboardVM {
     @Default([]) List<BusinessCoverImageDM> picturesPath,
     FoodlyCategories? newCategory,
     BusinessCoverImageDM? targetForDelete,
-    DasboardSectionController? businessNameCtrl,
-    DasboardSectionController? businessAboutUsCtrl,
-    DasboardSectionController? businessEmailCtrl,
-    DasboardSectionController? businessPhoneCtrl,
-    DasboardSectionController? businessCountryCtrl,
-    DasboardSectionController? businessCityCtrl,
-    DasboardSectionController? businessAddressCtrl,
-    DasboardSectionController? businessZipCodeCtrl,
-    DasboardSectionController? businessAdditionalInfoCtrl,
+    InputController? businessNameCtrl,
+    InputController? businessAboutUsCtrl,
+    InputController? businessEmailCtrl,
+    InputController? businessPhoneCtrl,
+    InputController? businessCountryCtrl,
+    InputController? businessCityCtrl,
+    InputController? businessAddressCtrl,
+    InputController? businessZipCodeCtrl,
+    InputController? businessAdditionalInfoCtrl,
     GlobalKey<FormState>? formKey,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
   }) = _DashboardVM;
@@ -41,14 +42,4 @@ class DashboardVM with _$DashboardVM {
   bool get isEditingServices => dashboardEditing == DashboardEditing.services;
   bool get isEditingContactUs => dashboardEditing == DashboardEditing.contactUs;
   bool get isEditingAdditionalInfo => dashboardEditing == DashboardEditing.additionalInfo;
-}
-
-@freezed
-class DasboardSectionController with _$DasboardSectionController {
-  const DasboardSectionController._();
-
-  const factory DasboardSectionController({
-    TextEditingController? controller,
-    FocusNode? focusNode,
-  }) = _DashboardSectionController;
 }

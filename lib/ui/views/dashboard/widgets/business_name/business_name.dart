@@ -70,8 +70,12 @@ class BusinessNameWdg extends StatelessWidget {
                         vm.businessNameCtrl?.controller?.clear();
                         bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                       },
-                      showSaveButton: (vm.businessNameCtrl?.controller?.text != vm.currentBusiness?.name) &&
-                          (vm.businessNameCtrl?.controller?.text.isNotEmpty ?? false),
+                      recordControllers: [
+                        (
+                          vm.businessNameCtrl?.controller ?? TextEditingController(),
+                          vm.currentBusiness?.name ?? '',
+                        )
+                      ],
                     ),
                   ],
                 ),

@@ -2,5 +2,6 @@
 //     "cmake.configureOnOpen": true
 // }
 {
-    "editor.rulers": [120]
+  "editor.rulers": [120],
+  "editor.snippets.codeActions.enabled": true
 }

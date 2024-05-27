@@ -31,7 +31,7 @@ class SignUpUserForm extends StatelessWidget {
     if (picked != null && picked != vm.dateOfBirth) {
       cubit.updateDateOfBirth(picked);
     }
-    vm.phoneNumberNode?.requestFocus();
+    vm.phoneNumberController?.focusNode?.requestFocus();
   }
 
   Widget _buildForm(SignUpVM vm, BuildContext context) {
@@ -41,41 +41,41 @@ class SignUpUserForm extends StatelessWidget {
     return Column(
       children: [
         FoodlyPrimaryInputText(
-          controller: vm.nickNameController!,
-          focusNode: vm.nickNameNode,
-          secondaryFocusNode: vm.firstNameNode,
+          controller: vm.nickNameController!.controller!,
+          focusNode: vm.nickNameController?.focusNode,
+          secondaryFocusNode: vm.firstNameController?.focusNode,
           inputTextType: FoodlyInputType.nickName,
           autovalidateMode: vm.autovalidateMode,
           maxLength: 30,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.firstNameController!,
-          focusNode: vm.firstNameNode,
-          secondaryFocusNode: vm.lastNameNode,
+          controller: vm.firstNameController!.controller!,
+          focusNode: vm.firstNameController?.focusNode,
+          secondaryFocusNode: vm.lastNameController?.focusNode,
           inputTextType: FoodlyInputType.firstName,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.lastNameController!,
-          focusNode: vm.lastNameNode,
-          secondaryFocusNode: vm.emailNode,
+          controller: vm.lastNameController!.controller!,
+          focusNode: vm.lastNameController?.focusNode,
+          secondaryFocusNode: vm.emailController?.focusNode,
           inputTextType: FoodlyInputType.lastName,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.emailController!,
-          focusNode: vm.emailNode,
-          secondaryFocusNode: vm.passwordNode,
+          controller: vm.emailController!.controller!,
+          focusNode: vm.emailController?.focusNode,
+          secondaryFocusNode: vm.passwordController?.focusNode,
           inputTextType: FoodlyInputType.email,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.passwordController!,
-          focusNode: vm.passwordNode,
+          controller: vm.passwordController!.controller!,
+          focusNode: vm.passwordController?.focusNode,
           secondaryFocusNode: vm.dateOfBirthNode,
           inputTextType: FoodlyInputType.password,
           autovalidateMode: vm.autovalidateMode,
@@ -141,31 +141,31 @@ class SignUpUserForm extends StatelessWidget {
         ),
         FoodlyPhoneInputText(
           enabled: enabled,
-          controller: vm.phoneNumberController,
-          focusNode: vm.phoneNumberNode,
+          controller: vm.phoneNumberController?.controller,
+          focusNode: vm.phoneNumberController?.focusNode,
           autovalidateMode: vm.autovalidateMode,
-          onSubmitted: (value) => vm.countryNode?.requestFocus(),
+          onSubmitted: (value) => vm.countryController?.focusNode?.requestFocus(),
           initialCountryCode: cubit.currentCountryCode.toUpperCase(),
         ),
         FoodlyPrimaryInputText(
-          controller: vm.countryController!,
-          focusNode: vm.countryNode,
-          secondaryFocusNode: vm.cityNode,
+          controller: vm.countryController!.controller!,
+          focusNode: vm.countryController?.focusNode,
+          secondaryFocusNode: vm.cityController?.focusNode,
           inputTextType: FoodlyInputType.country,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.cityController!,
-          focusNode: vm.cityNode,
-          secondaryFocusNode: vm.zipCodeNode,
+          controller: vm.cityController!.controller!,
+          focusNode: vm.cityController?.focusNode,
+          secondaryFocusNode: vm.zipCodeController?.focusNode,
           inputTextType: FoodlyInputType.city,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.zipCodeController!,
-          focusNode: vm.zipCodeNode,
+          controller: vm.zipCodeController!.controller!,
+          focusNode: vm.zipCodeController?.focusNode,
           secondaryFocusNode: vm.genderNode,
           inputTextType: FoodlyInputType.zipCode,
           autovalidateMode: vm.autovalidateMode,

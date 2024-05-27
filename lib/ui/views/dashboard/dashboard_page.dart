@@ -72,7 +72,11 @@ class _DashboardPageState extends State<DashboardPage> {
             body: NestedScrollView(
               headerSliverBuilder: (context, value) => [const DashboardSliverAppBar()],
               body: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                padding: const EdgeInsets.only(
+                  right: UIDimens.SCREEN_PADDING_MOB,
+                  left: UIDimens.SCREEN_PADDING_MOB,
+                  bottom: 24,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

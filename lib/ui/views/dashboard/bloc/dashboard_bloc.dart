@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -25,16 +26,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc()
       : _vm = DashboardVM(
-          businessAddressCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessNameCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessAboutUsCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessEmailCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessPhoneCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessCountryCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessCityCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessZipCodeCtrl: DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessAdditionalInfoCtrl:
-              DasboardSectionController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessAddressCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessNameCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessAboutUsCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessEmailCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessPhoneCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessCountryCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessCityCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessZipCodeCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          businessAdditionalInfoCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
         ),
         super(const _Initial(DashboardVM())) {
     on<DashboardEvent>(
@@ -81,6 +81,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           updateEditing: (_UpdateEditing value) {
             _vm = _vm.copyWith(
               dashboardEditing: value.editing,
+              newCategory: _vm.currentBusiness?.category,
               currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
             );
             emit(_Loaded(_vm));

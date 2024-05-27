@@ -9,30 +9,47 @@ class DasboardSaveAndCancelButtons extends StatelessWidget {
     super.key,
     this.onCancelPressed,
     this.onSavePressed,
+    this.recordControllers = const [],
     this.showSaveButton = true,
   });
 
   final void Function()? onCancelPressed;
   final void Function()? onSavePressed;
+  final List<(TextEditingController, String)> recordControllers;
   final bool showSaveButton;
 
   @override
   Widget build(BuildContext context) {
     return FadeIn(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (showSaveButton)
-            TextButton(
-              onPressed: onSavePressed,
-              child: const Text('Guardar', style: FoodlyTextStyles.captionPurpleBold),
-            ),
+      child: recordControllers.isNotEmpty
+          ? AnimatedBuilder(
+              animation: Listenable.merge(
+                recordControllers.map((rc) => rc.$1).toList(),
+              ),
+              builder: (_, __) {
+                final mustShowSaveButton = recordControllers.any((rc) => rc.$1.text != rc.$2 && rc.$1.text.isNotEmpty);
+
+                return _buildButtons(mustShowSaveButton);
+              },
+            )
+          : _buildButtons(showSaveButton),
+    );
+  }
+
+  Row _buildButtons(bool saveButtonVisible) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (saveButtonVisible)
           TextButton(
-            onPressed: onCancelPressed,
-            child: Text(S.current.cancel, style: FoodlyTextStyles.captionBold),
-          ).paddingLeft(8),
-        ],
-      ),
+            onPressed: onSavePressed,
+            child: Text(S.current.save, style: FoodlyTextStyles.captionPurpleBold),
+          ),
+        TextButton(
+          onPressed: onCancelPressed,
+          child: Text(S.current.cancel, style: FoodlyTextStyles.captionBold),
+        ).paddingLeft(8),
+      ],
     );
   }
 }
