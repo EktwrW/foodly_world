@@ -67,13 +67,15 @@ Explore Foodly and see how it can be adapted and extended to meet the needs of v
 
 - Documentation: Enhance the README.md with more detailed setup instructions, examples of usage, and a section for contributing guidelines.
 
-## Credits and Attribution
-We would like to express our gratitude to [Freepik](Freepik) for providing the icons used in our application. Specifically, the icons for business categories and some dialogue boxes in the app are attributed to the Circular Flat icon family by Freepik.
-
-Freepik's contribution has been essential in enhancing the visual appearance and user experience of our application. We appreciate the excellent work of Freepik's designers and creators and their generosity in sharing it with the community.
-
 - Code Comments: Add more comments and documentation within the code to explain the logic, especially for complex functions and classes.
 
 - Unit Tests: test coverage for all features and components. This will help maintain code quality and reliability.
 
 - Security: Implement a SECURITY.md file to define security policies and procedures for reporting vulnerabilities.
+
+
+## Credits and Attribution
+
+We would like to express our gratitude to [Freepik](https://www.freepik.es/autor/freepik/iconos/flat-circular-flat_9?t=f#from_element=families) for providing the icons used in our application. Specifically, the icons for business categories and some dialogue boxes in the app are attributed to the Circular Flat icon family by Freepik.
+
+Freepik's contribution has been essential in enhancing the visual appearance and user experience of our application. We appreciate the excellent work of Freepik's designers and creators and their generosity in sharing it with the community.
