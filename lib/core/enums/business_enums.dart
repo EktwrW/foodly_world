@@ -107,3 +107,44 @@ extension BusinessPlanExtension on BusinessPlan {
     }
   }
 }
+
+enum Weekday {
+  @JsonValue(0)
+  sunday(0),
+  @JsonValue(1)
+  monday(1),
+  @JsonValue(2)
+  tuesday(2),
+  @JsonValue(3)
+  wednesday(3),
+  @JsonValue(4)
+  thursday(4),
+  @JsonValue(5)
+  friday(5),
+  @JsonValue(6)
+  saturday(6);
+
+  final int value;
+  const Weekday(this.value);
+}
+
+extension WeekdayExtension on Weekday {
+  String get dayString {
+    switch (this) {
+      case Weekday.sunday:
+        return S.current.weekday0;
+      case Weekday.monday:
+        return S.current.weekday1;
+      case Weekday.tuesday:
+        return S.current.weekday2;
+      case Weekday.wednesday:
+        return S.current.weekday3;
+      case Weekday.thursday:
+        return S.current.weekday4;
+      case Weekday.friday:
+        return S.current.weekday5;
+      case Weekday.saturday:
+        return S.current.weekday6;
+    }
+  }
+}

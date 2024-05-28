@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/business_enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'opening_hours_dm.freezed.dart';
@@ -46,7 +47,7 @@ class Period with _$Period {
 @freezed
 class OpenCloseDetails with _$OpenCloseDetails {
   const factory OpenCloseDetails({
-    required int day,
+    required Weekday day,
     required String time,
   }) = _OpenCloseDetails;
 
