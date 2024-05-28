@@ -55,7 +55,7 @@ class BusinessNameWdg extends StatelessWidget {
                 child: Column(
                   children: [
                     FoodlyPrimaryInputText(
-                      controller: vm.businessNameCtrl!.controller!,
+                      controller: vm.businessNameCtrl?.controller,
                       focusNode: vm.businessNameCtrl?.focusNode,
                       inputTextType: FoodlyInputType.businessName,
                       autovalidateMode: vm.autovalidateMode,

@@ -59,7 +59,7 @@ class AboutUsWdg extends StatelessWidget {
                     child: Column(
                       children: [
                         FoodlyPrimaryInputText(
-                          controller: vm.businessAboutUsCtrl?.controller ?? TextEditingController(),
+                          controller: vm.businessAboutUsCtrl?.controller,
                           focusNode: vm.businessAboutUsCtrl?.focusNode,
                           inputTextType: FoodlyInputType.businessAboutUs,
                           autovalidateMode: vm.autovalidateMode,

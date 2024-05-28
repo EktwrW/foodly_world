@@ -9,7 +9,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class FoodlyPrimaryInputText extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode? focusNode;
   final FocusNode? secondaryFocusNode;
   final String? Function(String?)? validator;

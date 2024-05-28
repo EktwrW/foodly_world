@@ -66,7 +66,7 @@ class ContactChannelsWdg extends StatelessWidget {
                     child: Column(
                       children: [
                         FoodlyPrimaryInputText(
-                          controller: vm.businessEmailCtrl?.controller ?? TextEditingController(),
+                          controller: vm.businessEmailCtrl?.controller,
                           hintText: vm.currentBusiness?.email,
                           focusNode: vm.businessEmailCtrl?.focusNode,
                           secondaryFocusNode: vm.businessPhoneCtrl?.focusNode,

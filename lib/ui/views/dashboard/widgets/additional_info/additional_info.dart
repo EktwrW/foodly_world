@@ -62,7 +62,7 @@ class AdditionalInfoWdg extends StatelessWidget {
                     child: Column(
                       children: [
                         FoodlyPrimaryInputText(
-                          controller: vm.businessAdditionalInfoCtrl!.controller!,
+                          controller: vm.businessAdditionalInfoCtrl?.controller,
                           focusNode: vm.businessAdditionalInfoCtrl?.focusNode,
                           inputTextType: FoodlyInputType.businessAdditionalInfo,
                           autovalidateMode: vm.autovalidateMode,

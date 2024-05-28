@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:collection/collection.dart' show ListEquality, ListExtensions;
+import 'package:collection/collection.dart' show ListExtensions;
+import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
@@ -18,8 +19,6 @@ class BusinessServicesWdg extends StatelessWidget {
     super.key,
     required this.vm,
   });
-
-  static const _equality = ListEquality();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +106,7 @@ class BusinessServicesWdg extends StatelessWidget {
           DasboardSaveAndCancelButtons(
             onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
             onCancelPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none)),
-            showSaveButton: !_equality.equals(vm.currentBusinessServices, vm.currentBusiness?.businessServices),
+            showSaveButton: !listEquals(vm.currentBusinessServices, vm.currentBusiness?.businessServices),
           ).paddingTop(4),
       ],
     );
