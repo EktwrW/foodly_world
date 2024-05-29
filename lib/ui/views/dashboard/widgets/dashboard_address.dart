@@ -16,7 +16,8 @@ class AddressWdg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 24),
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       color: FoodlyThemes.tertiaryFoodly,
       child: Row(
         children: [

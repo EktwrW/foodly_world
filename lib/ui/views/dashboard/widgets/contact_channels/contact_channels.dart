@@ -33,7 +33,7 @@ class ContactChannelsWdg extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const DashboardTitleRichText(firstText: 'Medios de ', secondText: 'Contacto'),
+        const DashboardSectionsTitle(firstText: 'Medios de ', secondText: 'Contacto'),
         Visibility(
           visible: vm.isEditingContactUs,
           replacement: TextButton(

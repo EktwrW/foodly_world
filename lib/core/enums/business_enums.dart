@@ -109,20 +109,20 @@ extension BusinessPlanExtension on BusinessPlan {
 }
 
 enum Weekday {
-  @JsonValue(0)
-  sunday(0),
   @JsonValue(1)
-  monday(1),
+  sunday(1),
   @JsonValue(2)
-  tuesday(2),
+  monday(2),
   @JsonValue(3)
-  wednesday(3),
+  tuesday(3),
   @JsonValue(4)
-  thursday(4),
+  wednesday(4),
   @JsonValue(5)
-  friday(5),
+  thursday(5),
   @JsonValue(6)
-  saturday(6);
+  friday(6),
+  @JsonValue(7)
+  saturday(7);
 
   final int value;
   const Weekday(this.value);
@@ -132,19 +132,19 @@ extension WeekdayExtension on Weekday {
   String get dayString {
     switch (this) {
       case Weekday.sunday:
-        return S.current.weekday0;
-      case Weekday.monday:
         return S.current.weekday1;
-      case Weekday.tuesday:
+      case Weekday.monday:
         return S.current.weekday2;
-      case Weekday.wednesday:
+      case Weekday.tuesday:
         return S.current.weekday3;
-      case Weekday.thursday:
+      case Weekday.wednesday:
         return S.current.weekday4;
-      case Weekday.friday:
+      case Weekday.thursday:
         return S.current.weekday5;
-      case Weekday.saturday:
+      case Weekday.friday:
         return S.current.weekday6;
+      case Weekday.saturday:
+        return S.current.weekday7;
     }
   }
 }

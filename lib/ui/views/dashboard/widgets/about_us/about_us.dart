@@ -25,7 +25,7 @@ class AboutUsWdg extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DashboardTitleRichText(firstText: '${S.current.about} ', secondText: S.current.us, topPadding: 26),
+        DashboardSectionsTitle(firstText: '${S.current.about} ', secondText: S.current.us),
         Visibility(
           visible: vm.isEditingAboutUs,
           replacement: TextButton(

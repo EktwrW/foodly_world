@@ -27,7 +27,7 @@ class BusinessServicesWdg extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DashboardTitleRichText(
+        DashboardSectionsTitle(
           firstText: '${S.current.dashboardServicesAtText1} ',
           secondText: S.current.dashboardServicesAtText2,
         ),

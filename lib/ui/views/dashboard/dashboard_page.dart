@@ -8,14 +8,14 @@ import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/additional_info/additional_info.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/business_services/business_services.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/category/category.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/category_and_rating/category_and_rating.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/contact_channels.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/customer_reviews/customer_reviews.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_address.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_footer_buttons.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_rating.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_sliver_app_bar.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_titles_rich_text.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/opening_hours/opening_hours.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 
 import '../../shared_widgets/snackbar/foodly_snackbars.dart';
@@ -66,43 +66,29 @@ class _DashboardPageState extends State<DashboardPage> {
         },
         builder: (context, state) {
           final vm = state.vm;
+          final dasboardSections = [
+            AddressWdg(vm: vm),
+            CategoryAndRatingWdg(vm: vm),
+            AboutUsWdg(vm: vm),
+            OpeningHoursWdg(vm: vm),
+            BusinessServicesWdg(vm: vm),
+            CustomerReviewsWdg(vm: vm),
+            ContactChannelsWdg(vm: vm),
+            AdditionalInfoWdg(vm: vm),
+          ];
 
           return Scaffold(
             persistentFooterButtons: const [DashboardFooterButtons()],
             body: NestedScrollView(
-              headerSliverBuilder: (context, value) => [const DashboardSliverAppBar()],
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  right: UIDimens.SCREEN_PADDING_MOB,
-                  left: UIDimens.SCREEN_PADDING_MOB,
-                  bottom: 24,
+              headerSliverBuilder: (_, value) => [const DashboardSliverAppBar()],
+              body: ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UIDimens.SCREEN_PADDING_MOB,
+                  vertical: 28,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AddressWdg(vm: vm),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(flex: vm.isEditingCategory ? 8 : 3, child: CategoryWdg(vm: vm)),
-                        Expanded(child: DashboardRatingWdg(vm: vm)),
-                      ],
-                    ),
-                    AboutUsWdg(vm: vm),
-                    DashboardTitleRichText(
-                      firstText: '${S.current.dashboardOpeningHoursText1} ',
-                      secondText: S.current.dashboardOpeningHoursText2,
-                    ),
-                    BusinessServicesWdg(vm: vm),
-                    DashboardTitleRichText(
-                      firstText: '${S.current.dashboardReviewsOfOurCustomersText1} ',
-                      secondText: S.current.dashboardReviewsOfOurCustomersText2,
-                    ),
-                    ContactChannelsWdg(vm: vm),
-                    AdditionalInfoWdg(vm: vm),
-                  ],
-                ),
+                itemCount: dasboardSections.length,
+                itemBuilder: (_, i) => dasboardSections[i],
+                separatorBuilder: (_, i) => const SizedBox(height: 30),
               ),
             ),
           );

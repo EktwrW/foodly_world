@@ -25,7 +25,7 @@ class AdditionalInfoWdg extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DashboardTitleRichText(
+        DashboardSectionsTitle(
           firstText: '${S.current.dashboardAdditionalInformationText1} ',
           secondText: S.current.dashboardAdditionalInformationText2,
         ),

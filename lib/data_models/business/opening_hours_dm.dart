@@ -5,33 +5,51 @@ part 'opening_hours_dm.freezed.dart';
 part 'opening_hours_dm.g.dart';
 
 @freezed
+class OpeningHoursResult with _$OpeningHoursResult {
+  const factory OpeningHoursResult({
+    @JsonKey(name: 'opening_hours') required OpeningHoursDM openingHoursDM,
+  }) = _OpeningHoursResult;
+
+  factory OpeningHoursResult.fromJson(Map<String, dynamic> json) => _$OpeningHoursResultFromJson(json);
+}
+
+@freezed
 class OpeningHoursDM with _$OpeningHoursDM {
+  const OpeningHoursDM._();
+
   const factory OpeningHoursDM({
-    @JsonKey(name: 'result') required Result result,
+    @JsonKey(name: 'periods') @Default([]) List<Period> periods,
   }) = _OpeningHoursDM;
 
   factory OpeningHoursDM.fromJson(Map<String, dynamic> json) => _$OpeningHoursDMFromJson(json);
-}
 
-@freezed
-class Result with _$Result {
-  const factory Result({
-    required String name,
-    @JsonKey(name: 'opening_hours') required OpeningHours openingHours,
-  }) = _Result;
+  bool get isOpenNow {
+    final now = DateTime.now();
+    final currentWeekday = Weekday.values.firstWhere((day) => day.value == now.weekday);
+    final currentTime = '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}';
 
-  factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
-}
+    return periods.any((period) {
+      final (openDay, openTime) = (period.open.day, period.open.time);
+      final (closeDay, closeTime) = (period.close.day, period.close.time);
 
-@freezed
-class OpeningHours with _$OpeningHours {
-  const factory OpeningHours({
-    @JsonKey(name: 'open_now') required bool openNow,
-    required List<Period> periods,
-    @JsonKey(name: 'weekday_text') required List<String> weekdayText,
-  }) = _OpeningHours;
+      if (openDay == currentWeekday) {
+        // Handle case when open and close are on the same day
+        if (closeDay == currentWeekday) {
+          return currentTime.compareTo(openTime) >= 0 && currentTime.compareTo(closeTime) <= 0;
+        }
 
-  factory OpeningHours.fromJson(Map<String, dynamic> json) => _$OpeningHoursFromJson(json);
+        // Handle case when close is on the next day
+        return currentTime.compareTo(openTime) >= 0;
+      }
+
+      // Handle case when the current day is the close day and open day was the previous day
+      if (closeDay == currentWeekday && openDay.value == (currentWeekday.value - 1) % 7) {
+        return currentTime.compareTo(closeTime) <= 0;
+      }
+
+      return false;
+    });
+  }
 }
 
 @freezed
@@ -48,6 +66,8 @@ class Period with _$Period {
 class OpenCloseDetails with _$OpenCloseDetails {
   const factory OpenCloseDetails({
     required Weekday day,
+
+    /// 'time' is saved using 0000 simple string formatting because we want to keep the current format from the google places api
     required String time,
   }) = _OpenCloseDetails;
 

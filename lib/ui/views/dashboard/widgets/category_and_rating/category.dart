@@ -19,6 +19,7 @@ class CategoryWdg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<DashboardBloc>();
+
     if (vm.isEditingCategory) {
       return FadeIn(
         child: Column(

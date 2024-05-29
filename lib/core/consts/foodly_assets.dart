@@ -46,8 +46,9 @@ class FoodlyAssets {
   // Logout
   static const AssetData exit = AssetData('exit.png', AssetType.image);
 
-  // Dashboard
+  // Business & Dashboard
   static const AssetData coverImages = AssetData('cover.png', AssetType.image);
+  static const AssetData noCustomerReviewsYet = AssetData('no_customer_reviews.png', AssetType.image);
 
   // eliminar estos assets de pruebas cuando ya no sean utilizados:
   static const AssetData sushiTemp = AssetData('sushi.webp', AssetType.image);
