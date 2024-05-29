@@ -11,4 +11,7 @@ class InputController with _$InputController {
     TextEditingController? controller,
     FocusNode? focusNode,
   }) = _InputController;
+
+  String? get text => controller?.text;
+  bool get isFocused => focusNode?.hasFocus ?? false;
 }

@@ -18,6 +18,7 @@ export 'package:foodly_world/data_transfer_objects/business/business_update_dto.
 part 'dashboard_bloc.freezed.dart';
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
+part 'dashboard_bloc_helper.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   static final _authService = di<AuthSessionService>();
@@ -26,6 +27,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc()
       : _vm = DashboardVM(
+          formKey: GlobalKey<FormState>(),
           businessAddressCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessNameCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAboutUsCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
@@ -80,6 +82,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           },
           updateEditing: (_UpdateEditing value) {
             _vm = _vm.copyWith(
+              autovalidateMode: AutovalidateMode.disabled,
               dashboardEditing: value.editing,
               newCategory: _vm.currentBusiness?.category,
               currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
@@ -245,45 +248,30 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   /// Logic and Call to update a business
   Future<void> _callToUpdateBusiness(Emitter emit) async {
+    setAutovalidateMode(AutovalidateMode.always, emit);
+
+    if (!(_vm.formKey?.currentState?.validate() ?? false)) {
+      return;
+    }
+
     var dto = const BusinessUpdateDTO();
 
     if (_vm.currentBusiness?.id == null) {
       return;
     }
 
-    switch (_vm.dashboardEditing) {
-      case DashboardEditing.category:
-        dto = dto.copyWith(category: _vm.newCategory);
+    final dtoMap = {
+      DashboardEditing.category: dto.copyWith(category: _vm.newCategory),
+      DashboardEditing.address: dto, // TODO complete address in business
+      DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
+      DashboardEditing.contactUs: getContactUsFields(dto, _vm),
+      DashboardEditing.openingHours: dto.copyWith(),
+      DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
+      DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),
+      DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),
+    };
 
-      case DashboardEditing.address:
-        dto = dto.copyWith();
-      case DashboardEditing.aboutUs:
-        dto = dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.controller?.text);
-
-      case DashboardEditing.contactUs:
-        if (_vm.businessEmailCtrl?.controller?.text.isNotEmpty ?? false) {
-          dto = dto.copyWith(businessEmail: _vm.businessEmailCtrl?.controller?.text);
-        }
-
-        if (_vm.businessPhoneCtrl?.controller?.text.isNotEmpty ?? false) {
-          dto = dto.copyWith(businessPhone: _vm.businessPhoneCtrl?.controller?.text);
-        }
-
-      case DashboardEditing.openingHours:
-        dto = dto.copyWith();
-
-      case DashboardEditing.services:
-        dto = dto.copyWith(businessServices: _vm.currentBusinessServices);
-
-      case DashboardEditing.additionalInfo:
-        dto = dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.controller?.text);
-
-      case DashboardEditing.name:
-        dto = dto.copyWith(businessName: _vm.businessNameCtrl?.controller?.text);
-
-      default:
-        break;
-    }
+    dto = dtoMap[_vm.dashboardEditing] ?? dto;
 
     emit(_Loading(_vm));
     await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
@@ -298,10 +286,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   /// Common methods
+
   void _handleError(AppRequestException error, Emitter emit) {
     di<Logger>().e(error);
     emit(_Error('$error', _vm));
   }
+
+  void setAutovalidateMode(AutovalidateMode newMode, Emitter emit) =>
+      emit(_Loaded(_vm = _vm.copyWith(autovalidateMode: newMode)));
 
   void _updateBusinessInCurrentArray(BusinessDM updatedBusiness) {
     final length = _vm.myBusinessesses.length;

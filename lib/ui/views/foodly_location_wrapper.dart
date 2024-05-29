@@ -20,7 +20,9 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
   @override
   void initState() {
     super.initState();
-    context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+    if (di<LocationService>().mustFetchLocation) {
+      context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+    }
   }
 
   @override

@@ -132,7 +132,7 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   Future<void> onSignUpUserPressed() async {
     setAutovalidateMode(AutovalidateMode.always);
-    emit(_Loaded(_vm));
+
     if (_vm.formKey?.currentState?.validate() ?? false) {
       await signUpUser();
     }

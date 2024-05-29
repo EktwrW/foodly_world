@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/consts/foodly_regex.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/core/utils/form_validations.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -39,6 +42,15 @@ class FoodlyPhoneInputText extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         autovalidateMode: autovalidateMode,
+        invalidNumberMessage: S.current.enterAValidPhoneNumber,
+        validator: (p0) {
+          if (p0?.number.isEmpty ?? true) return S.current.pleaseEnterPhoneNumber;
+
+          return !FormValidations.validateFormWithCountryCode(
+                  p0?.number ?? '', p0?.countryCode ?? '', FoodlyRegex.phoneNumberRegex)
+              ? S.current.enterAValidPhoneNumber
+              : null;
+        },
         dropdownTextStyle: TextStyle(
           color: !enabled ? ui.NeumorphicColors.disabled : Colors.black,
         ),
