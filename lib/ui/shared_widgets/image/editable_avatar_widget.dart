@@ -82,6 +82,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
         child: SizedBox.square(
           dimension: height,
           child: FittedBox(
+            fit: BoxFit.scaleDown,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

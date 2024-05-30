@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
+import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_form.dart';
@@ -53,39 +54,41 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   Widget build(BuildContext context) {
     final cubit = context.read<SignUpCubit>();
 
-    return Scaffold(
-      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
-      body: SizedBox(
-        height: context.screenHeight,
-        width: context.screenWidth,
-        child: BlocConsumer<SignUpCubit, SignUpState>(
-          listener: (context, state) {
-            state.whenOrNull(
-              loading: (signUpVM) => di<DialogService>().showLoading(),
-              loaded: (signUpVM) => di<DialogService>().hideLoading(),
-              businessCreated: (vm) {
-                context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-                di<DialogService>().hideLoading();
+    return FoodlyWrapper(
+      child: Scaffold(
+        backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
+        body: SizedBox(
+          height: context.screenHeight,
+          width: context.screenWidth,
+          child: BlocConsumer<SignUpCubit, SignUpState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                loading: (signUpVM) => di<DialogService>().showLoading(),
+                loaded: (signUpVM) => di<DialogService>().hideLoading(),
+                businessCreated: (vm) {
+                  context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+                  di<DialogService>().hideLoading();
 
-                context.goNamed(AppRoutes.foodlyMainPage.name,
-                    pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.userId ?? ''});
-              },
-              error: (e, vm) async {
-                di<DialogService>().hideLoading();
-                await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
-              },
-            );
-          },
-          builder: (context, state) {
-            return state.maybeWhen(
-              loading: (signUpVM) => _buildContent(signUpVM, cubit),
-              loaded: (signUpVM) => _buildContent(signUpVM, cubit),
-              userCreated: (signUpVM) => _buildContent(signUpVM, cubit),
-              businessCreated: (signUpVM) => _buildContent(signUpVM, cubit),
-              error: (e, signUpVM) => _buildContent(signUpVM, cubit),
-              orElse: () => const SizedBox.expand(),
-            );
-          },
+                  context.goNamed(AppRoutes.foodlyMainPage.name,
+                      pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.userId ?? ''});
+                },
+                error: (e, vm) async {
+                  di<DialogService>().hideLoading();
+                  await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
+                },
+              );
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                loading: (signUpVM) => _buildContent(signUpVM, cubit),
+                loaded: (signUpVM) => _buildContent(signUpVM, cubit),
+                userCreated: (signUpVM) => _buildContent(signUpVM, cubit),
+                businessCreated: (signUpVM) => _buildContent(signUpVM, cubit),
+                error: (e, signUpVM) => _buildContent(signUpVM, cubit),
+                orElse: () => const SizedBox.expand(),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -207,9 +210,9 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     TextSpan(
                       style: FoodlyTextStyles.actionsBody,
                       children: [
-                        TextSpan(text: S.current.switchUserCategoryTextSpan1),
+                        TextSpan(text: '${S.current.switchUserCategoryTextSpan1} '),
                         getBoldTextSpan(S.current.customer),
-                        TextSpan(text: S.current.switchUserCategoryTextSpan2),
+                        TextSpan(text: ', ${S.current.switchUserCategoryTextSpan2} '),
                         getBoldTextSpan(S.current.switchUserCategoryTextSpan3),
                         const TextSpan(text: '.'),
                       ],
@@ -228,7 +231,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     shape: ui.NeumorphicShape.convex,
                     text: S.current.completeSignUp,
                     disabled: false,
-                  ).paddingOnly(top: 20, bottom: 26),
+                  ).paddingOnly(top: 20, bottom: 30),
                 ],
               ),
             ),

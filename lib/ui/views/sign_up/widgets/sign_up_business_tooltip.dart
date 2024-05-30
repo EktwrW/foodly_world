@@ -79,18 +79,15 @@ class SignUpBusinessTooltip extends StatelessWidget {
             WidgetSpan(
               child: const Asset(FoodlyAssets.isoFoodly, height: 24).paddingOnly(right: 5, left: 2),
             ),
-            _getTextSpan(S.current.signUpBusinessTooltipTextSpan1, cubit),
-            TextSpan(
-                text: S.current.signUpBusinessTooltipTextSpan2,
-                recognizer: _getRecognizer(cubit),
-                style: FoodlyTextStyles.primaryBodyBold),
-            _getTextSpan(S.current.signUpBusinessTooltipTextSpan3, cubit),
+            _getTextSpan('${S.current.signUpBusinessTooltipTextSpan1} ', cubit),
+            _getTextSpanBold(S.current.signUpBusinessTooltipTextSpan2, cubit),
+            _getTextSpan(' ${S.current.signUpBusinessTooltipTextSpan3} ', cubit),
             _getTextSpanBold(S.current.signUpBusinessTooltipTextSpan4, cubit),
-            _getTextSpan(S.current.signUpBusinessTooltipTextSpan5, cubit),
+            _getTextSpan(' ${S.current.signUpBusinessTooltipTextSpan5} ', cubit),
             _getTextSpanBold(S.current.signUpBusinessTooltipTextSpan6, cubit),
-            _getTextSpan(S.current.signUpBusinessTooltipTextSpan7, cubit),
+            _getTextSpan(' ${S.current.signUpBusinessTooltipTextSpan7} ', cubit),
             _getTextSpanBold(S.current.signUpBusinessTooltipTextSpan8, cubit),
-            _getTextSpan(S.current.signUpBusinessTooltipTextSpan9, cubit),
+            _getTextSpan(' ${S.current.signUpBusinessTooltipTextSpan9}', cubit),
           ],
         ),
         child: ColoredBox(
@@ -111,6 +108,8 @@ class SignUpBusinessTooltip extends StatelessWidget {
               onSearchFailed: (error) {
                 di<Logger>().e(error);
               },
+              autocompleteOnTrailingWhitespace: true,
+              autofocus: !vm.tooltipActive,
               onPickedPlaceDetail: (detail) {
                 cubit.updateBusinessFromPlacesAPI(detail);
                 if (detail.geometry != null) {

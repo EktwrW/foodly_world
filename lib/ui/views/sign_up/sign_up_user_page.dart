@@ -11,6 +11,7 @@ import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
+import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_form.dart';
@@ -100,42 +101,44 @@ class SignUpUserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
-      body: BlocConsumer<SignUpCubit, SignUpState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            loading: (signUpVM) => di<DialogService>().showLoading(),
-            loaded: (signUpVM) => di<DialogService>().hideLoading(),
-            userCreated: (vm) {
-              di<AuthSessionService>().updateForceToLogin(false);
-              context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-              di<DialogService>().hideLoading();
-              final user = vm.userSessionDM.user;
-              di<DialogService>().showCustomDialog(
-                const WelcomeDialog(),
-                2,
-                onDialogClose: () => user.isManager
-                    ? context.goNamed(AppRoutes.signUpBusiness.name)
-                    : context.goNamed(AppRoutes.foodlyMainPage.name,
-                        pathParameters: {AppRoutes.routeIdParam: user.userId ?? ''}),
-              );
-            },
-            error: (e, vm) {
-              di<DialogService>().hideLoading();
-              //TODO: hw - handle error / show snackbar
-            },
-          );
-        },
-        builder: (context, state) {
-          return state.maybeWhen(
-            loading: (signUpVM) => _buildSignUpScreen(signUpVM, context),
-            loaded: (signUpVM) => _buildSignUpScreen(signUpVM, context),
-            userCreated: (signUpVM) => _buildSignUpScreen(signUpVM, context),
-            error: (e, signUpVM) => _buildSignUpScreen(signUpVM, context),
-            orElse: () => const SizedBox.shrink(),
-          );
-        },
+    return FoodlyWrapper(
+      child: Scaffold(
+        backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
+        body: BlocConsumer<SignUpCubit, SignUpState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              loading: (signUpVM) => di<DialogService>().showLoading(),
+              loaded: (signUpVM) => di<DialogService>().hideLoading(),
+              userCreated: (vm) {
+                di<AuthSessionService>().updateForceToLogin(false);
+                context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+                di<DialogService>().hideLoading();
+                final user = vm.userSessionDM.user;
+                di<DialogService>().showCustomDialog(
+                  const WelcomeDialog(),
+                  2,
+                  onDialogClose: () => user.isManager
+                      ? context.goNamed(AppRoutes.signUpBusiness.name)
+                      : context.goNamed(AppRoutes.foodlyMainPage.name,
+                          pathParameters: {AppRoutes.routeIdParam: user.userId ?? ''}),
+                );
+              },
+              error: (e, vm) {
+                di<DialogService>().hideLoading();
+                //TODO: hw - handle error / show snackbar
+              },
+            );
+          },
+          builder: (context, state) {
+            return state.maybeWhen(
+              loading: (signUpVM) => _buildSignUpScreen(signUpVM, context),
+              loaded: (signUpVM) => _buildSignUpScreen(signUpVM, context),
+              userCreated: (signUpVM) => _buildSignUpScreen(signUpVM, context),
+              error: (e, signUpVM) => _buildSignUpScreen(signUpVM, context),
+              orElse: () => const SizedBox.shrink(),
+            );
+          },
+        ),
       ),
     );
   }
