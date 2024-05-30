@@ -17,6 +17,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
+import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -77,7 +78,7 @@ Future<Widget> buildFoodlyApp() async {
       darkTheme: FoodlyThemes.darkTheme(),
       themeMode: ThemeMode.light,
       builder: (context, childWidget) => ResponsiveBreakpoints.builder(
-        child: childWidget ?? const StartingPage369(),
+        child: FoodlyWrapper(child: childWidget ?? const StartingPage369()),
         breakpoints: DeviceSize.breakpoints,
       ),
     ),

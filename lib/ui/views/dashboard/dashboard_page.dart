@@ -4,6 +4,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/additional_info/additional_info.dart';
@@ -16,9 +17,7 @@ import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_footer_buttons
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/opening_hours/opening_hours.dart';
-import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 
-import '../../shared_widgets/snackbar/foodly_snackbars.dart';
 //import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class DashboardPage extends StatefulWidget {
@@ -41,59 +40,57 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FoodlyWrapper(
-      child: BlocConsumer<DashboardBloc, DashboardState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            loading: (vm) => di<DialogService>().showLoading(),
-            updatingLogo: (vm) => di<DialogService>().showLoading(),
-            updatingMenu: (vm) => di<DialogService>().showLoading(),
-            loaded: (vm) => di<DialogService>().hideLoading(),
-            showCoverImagesDialog: (_) => di<DialogService>().showCustomDialog(const EditCoverImagesDialog(), 2),
-            updatingPictures: (vm) => di<DialogService>().showLoading(),
-            picturesUpdated: (vm) async {
-              Navigator.of(context).pop();
-              di<DialogService>().hideLoading();
-              await Future.delayed(Durations.long1)
-                  .then((_) => FoodlySnackbars.successGeneric(context, S.current.coverImagesSuccessfullyUpdated));
-            },
-            pictureDeleted: (vm) => di<DialogService>().hideLoading(),
-            error: (e, vm) async {
-              di<DialogService>().hideLoading();
-              await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
-            },
-          );
-        },
-        builder: (context, state) {
-          final vm = state.vm;
-          final dasboardSections = [
-            AddressWdg(vm: vm),
-            CategoryAndRatingWdg(vm: vm),
-            AboutUsWdg(vm: vm),
-            OpeningHoursWdg(vm: vm),
-            BusinessServicesWdg(vm: vm),
-            CustomerReviewsWdg(vm: vm),
-            ContactChannelsWdg(vm: vm),
-            AdditionalInfoWdg(vm: vm),
-          ];
+    return BlocConsumer<DashboardBloc, DashboardState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loading: (vm) => di<DialogService>().showLoading(),
+          updatingLogo: (vm) => di<DialogService>().showLoading(),
+          updatingMenu: (vm) => di<DialogService>().showLoading(),
+          loaded: (vm) => di<DialogService>().hideLoading(),
+          showCoverImagesDialog: (_) => di<DialogService>().showCustomDialog(const EditCoverImagesDialog(), 2),
+          updatingPictures: (vm) => di<DialogService>().showLoading(),
+          picturesUpdated: (vm) async {
+            Navigator.of(context).pop();
+            di<DialogService>().hideLoading();
+            await Future.delayed(Durations.long1)
+                .then((_) => FoodlySnackbars.successGeneric(context, S.current.coverImagesSuccessfullyUpdated));
+          },
+          pictureDeleted: (vm) => di<DialogService>().hideLoading(),
+          error: (e, vm) async {
+            di<DialogService>().hideLoading();
+            await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
+          },
+        );
+      },
+      builder: (context, state) {
+        final vm = state.vm;
+        final dasboardSections = [
+          AddressWdg(vm: vm),
+          CategoryAndRatingWdg(vm: vm),
+          AboutUsWdg(vm: vm),
+          OpeningHoursWdg(vm: vm),
+          BusinessServicesWdg(vm: vm),
+          CustomerReviewsWdg(vm: vm),
+          ContactChannelsWdg(vm: vm),
+          AdditionalInfoWdg(vm: vm),
+        ];
 
-          return Scaffold(
-            persistentFooterButtons: const [DashboardFooterButtons()],
-            body: NestedScrollView(
-              headerSliverBuilder: (_, value) => [const DashboardSliverAppBar()],
-              body: ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: UIDimens.SCREEN_PADDING_MOB,
-                  vertical: 28,
-                ),
-                itemCount: dasboardSections.length,
-                itemBuilder: (_, i) => dasboardSections[i],
-                separatorBuilder: (_, i) => const SizedBox(height: 30),
+        return Scaffold(
+          persistentFooterButtons: const [DashboardFooterButtons()],
+          body: NestedScrollView(
+            headerSliverBuilder: (_, value) => [const DashboardSliverAppBar()],
+            body: ListView.separated(
+              padding: const EdgeInsets.symmetric(
+                horizontal: UIDimens.SCREEN_PADDING_MOB,
+                vertical: 28,
               ),
+              itemCount: dasboardSections.length,
+              itemBuilder: (_, i) => dasboardSections[i],
+              separatorBuilder: (_, i) => const SizedBox(height: 30),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

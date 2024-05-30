@@ -13,7 +13,6 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
@@ -27,57 +26,52 @@ enum StartingPageView { initial, login, register, completeRegister }
 class StartingPage369 extends StatelessWidget {
   final StartingPageView? currentView;
 
-  const StartingPage369(
-      {super.key, this.currentView = StartingPageView.initial});
+  const StartingPage369({super.key, this.currentView = StartingPageView.initial});
 
   @override
   Widget build(BuildContext context) {
-    return FoodlyWrapper(
-      child: BlocConsumer<StartingCubit, StartingState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            loading: (vm) => di<DialogService>().showLoading(),
-            welcome: (vm) {
-              di<AuthSessionService>().updateForceToLogin(false);
-              di<DialogService>().hideLoading();
-            },
-            userAuthenticated: (vm) {
-              di<AuthSessionService>().updateForceToLogin(false);
-              context.read<RootBloc>().add(
-                  RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-              final user = vm.userSessionDM.user;
-              di<DialogService>().hideLoading();
+    return BlocConsumer<StartingCubit, StartingState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          loading: (vm) => di<DialogService>().showLoading(),
+          welcome: (vm) {
+            di<AuthSessionService>().updateForceToLogin(false);
+            di<DialogService>().hideLoading();
+          },
+          userAuthenticated: (vm) {
+            di<AuthSessionService>().updateForceToLogin(false);
+            context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+            final user = vm.userSessionDM.user;
+            di<DialogService>().hideLoading();
 
-              if (user.isManager && user.business.isEmpty) {
-                context.goNamed(AppRoutes.signUpBusiness.name);
-              } else {
-                context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {
-                  AppRoutes.routeIdParam: user.userId ?? ''
-                });
-              }
-            },
-            isNewUser: (vm) {
-              di<DialogService>().hideLoading();
-              context.goNamed(AppRoutes.signUp.name);
-            },
-            error: (msg, vm) {
-              di<DialogService>().hideLoading();
-              // TODO: hw - place here a snackbar with error msg
-            },
-          );
-        },
-        builder: (context, state) {
-          return DecoratedBox(
-            decoration: UIDecorations.BACKGROUND_GRADIENT_1,
-            child: state.maybeWhen(
-              loading: (vm) => buildContent(context, vm),
-              welcome: (vm) => buildContent(context, vm),
-              error: (e, vm) => buildContent(context, vm),
-              orElse: () => const SizedBox.shrink(),
-            ),
-          );
-        },
-      ),
+            if (user.isManager && user.business.isEmpty) {
+              context.goNamed(AppRoutes.signUpBusiness.name);
+            } else {
+              context
+                  .goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: user.userId ?? ''});
+            }
+          },
+          isNewUser: (vm) {
+            di<DialogService>().hideLoading();
+            context.goNamed(AppRoutes.signUp.name);
+          },
+          error: (msg, vm) {
+            di<DialogService>().hideLoading();
+            // TODO: hw - place here a snackbar with error msg
+          },
+        );
+      },
+      builder: (context, state) {
+        return DecoratedBox(
+          decoration: UIDecorations.BACKGROUND_GRADIENT_1,
+          child: state.maybeWhen(
+            loading: (vm) => buildContent(context, vm),
+            welcome: (vm) => buildContent(context, vm),
+            error: (e, vm) => buildContent(context, vm),
+            orElse: () => const SizedBox.shrink(),
+          ),
+        );
+      },
     );
   }
 
@@ -105,13 +99,10 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 400),
             child: SizedBox(
-              height: isLogin
-                  ? context.screenHeight * .19
-                  : context.screenHeight * .31,
+              height: isLogin ? context.screenHeight * .19 : context.screenHeight * .31,
               child: Center(
                 child: AnimatedPadding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: isLogin ? 80 : 50),
+                    padding: EdgeInsets.symmetric(horizontal: isLogin ? 80 : 50),
                     duration: const Duration(milliseconds: 400),
                     child: const Asset(FoodlyAssets.logo)),
               ),
@@ -120,18 +111,14 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 400),
             child: SizedBox(
-              height: isLogin
-                  ? context.screenHeight * .36
-                  : context.screenHeight * .22,
+              height: isLogin ? context.screenHeight * .36 : context.screenHeight * .22,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
             duration: const Duration(milliseconds: 400),
             child: SizedBox(
-              height: isLogin
-                  ? context.screenHeight * .30
-                  : context.screenHeight * .32,
+              height: isLogin ? context.screenHeight * .30 : context.screenHeight * .32,
               child: const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -145,8 +132,7 @@ class StartingPage369 extends StatelessWidget {
             height: context.screenHeight * .03,
             child: Column(
               children: [
-                Text(S.current.copyrightText,
-                    style: FoodlyTextStyles.copyrightText),
+                Text(S.current.copyrightText, style: FoodlyTextStyles.copyrightText),
               ],
             ),
           ),

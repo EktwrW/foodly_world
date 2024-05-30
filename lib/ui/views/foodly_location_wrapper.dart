@@ -38,15 +38,13 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
           },
         );
       },
-      builder: (context, state) => _buildContent(),
+      builder: (context, state) => state.maybeWhen(
+        locationChecked: (locationDM) => _buildContent(),
+        orElse: () => const SizedBox.shrink(),
+      ),
     );
   }
 
-  Widget _buildContent() => SingleChildScrollView(
-        child: SizedBox(
-          height: context.screenHeight,
-          width: context.screenWidth,
-          child: widget.childWidget,
-        ),
-      );
+  Widget _buildContent() =>
+      SizedBox(height: context.screenHeight, width: context.screenWidth, child: widget.childWidget);
 }
