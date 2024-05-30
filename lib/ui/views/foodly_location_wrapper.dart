@@ -45,6 +45,6 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
     );
   }
 
-  Widget _buildContent() =>
-      SizedBox(height: context.screenHeight, width: context.screenWidth, child: widget.childWidget);
+  Widget _buildContent() => SingleChildScrollView(
+      child: SizedBox(height: context.screenHeight, width: context.screenWidth, child: widget.childWidget));
 }

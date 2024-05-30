@@ -43,7 +43,7 @@ class DialogService {
         barrierDismissible: false,
         builder: (_) => Dialog(
           backgroundColor: Colors.transparent,
-          insetPadding: insetPadding,
+          insetPadding: insetPadding ?? EdgeInsets.zero,
           elevation: elevation ?? 0,
           child: PopScope(canPop: false, onPopInvoked: (_) => false, child: content),
         ),

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
+import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
@@ -12,6 +14,41 @@ import 'package:path_provider/path_provider.dart';
 
 class DashboardHelpers {
   const DashboardHelpers._();
+
+  static BusinessUpdateDTO getContactUsFields(BusinessUpdateDTO dto, DashboardVM vm) {
+    if (vm.businessEmailCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessEmail: vm.businessEmailCtrl?.text);
+    }
+
+    if (vm.businessPhoneCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+    }
+    return dto;
+  }
+
+  static BusinessUpdateDTO getAddressFields(BusinessUpdateDTO dto, DashboardVM vm) {
+    if (vm.businessCountryCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessEmail: vm.businessEmailCtrl?.text);
+    }
+
+    if (vm.businessCityCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+    }
+
+    if (vm.businessAddressCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+    }
+
+    if (vm.businessZipCodeCtrl?.text?.isNotEmpty ?? false) {
+      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+    }
+
+    if (vm.latitude != null && vm.longitude != null) {
+      dto = dto.copyWith(businessLatitude: vm.latitude, businessLongitude: vm.longitude);
+    }
+
+    return dto;
+  }
 
   static Future<String> cropImageFromUrl(String imageUrl, BuildContext context) async {
     BuildContext getContext() => context;

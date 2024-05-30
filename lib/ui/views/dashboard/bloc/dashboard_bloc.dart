@@ -8,6 +8,7 @@ import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
+import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
@@ -18,7 +19,6 @@ export 'package:foodly_world/data_transfer_objects/business/business_update_dto.
 part 'dashboard_bloc.freezed.dart';
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
-part 'dashboard_bloc_helper.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   static final _authService = di<AuthSessionService>();
@@ -262,9 +262,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     final dtoMap = {
       DashboardEditing.category: dto.copyWith(category: _vm.newCategory),
-      DashboardEditing.address: dto, // TODO complete address in business
+      DashboardEditing.address: DashboardHelpers.getAddressFields(dto, _vm),
       DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
-      DashboardEditing.contactUs: getContactUsFields(dto, _vm),
+      DashboardEditing.contactUs: DashboardHelpers.getContactUsFields(dto, _vm),
       DashboardEditing.openingHours: dto.copyWith(),
       DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
       DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),

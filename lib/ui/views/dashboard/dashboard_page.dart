@@ -8,7 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/additional_info/additional_info.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/address/dashboard_address.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/address/address.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/business_services/business_services.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/category_and_rating/category_and_rating.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/contact_channels.dart';

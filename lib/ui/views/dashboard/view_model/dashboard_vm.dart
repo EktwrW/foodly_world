@@ -31,6 +31,8 @@ class DashboardVM with _$DashboardVM {
     InputController? businessZipCodeCtrl,
     InputController? businessAdditionalInfoCtrl,
     String? businessCountryCode,
+    double? latitude,
+    double? longitude,
     GlobalKey<FormState>? formKey,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
   }) = _DashboardVM;
