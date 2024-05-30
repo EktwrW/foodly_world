@@ -13,7 +13,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class PasswordRecoverDialog extends StatelessWidget {
   const PasswordRecoverDialog({super.key});

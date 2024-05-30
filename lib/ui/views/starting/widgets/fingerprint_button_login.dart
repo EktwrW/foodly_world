@@ -11,8 +11,8 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 class FingerprintButtonLogin extends StatelessWidget {
   const FingerprintButtonLogin({

@@ -70,7 +70,7 @@ class AboutUsWdg extends StatelessWidget {
                           enabled: vm.isEditingAboutUs,
                           hintText: vm.currentBusiness?.aboutUs,
                         ),
-                        DasboardSaveAndCancelButtons(
+                        DashboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                           onCancelPressed: () {
                             vm.businessAboutUsCtrl?.controller?.clear();

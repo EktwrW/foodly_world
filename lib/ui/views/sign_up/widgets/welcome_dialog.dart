@@ -9,13 +9,12 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class WelcomeDialog extends StatelessWidget {
   const WelcomeDialog({super.key});
 
-  TextSpan getBoldTextSpan(String text) =>
-      TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
+  TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
 
   UserDM? get user => di<AuthSessionService>().userSessionDM?.user;
 
@@ -28,8 +27,7 @@ class WelcomeDialog extends StatelessWidget {
           Container(
             height: 650,
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(
-                horizontal: UIDimens.SCREEN_PADDING_MOB),
+            margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             padding: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -40,8 +38,7 @@ class WelcomeDialog extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () => Navigator.of(context).pop(),
-                  child: Text(S.current.okGo,
-                      style: FoodlyTextStyles.dialogCloseText),
+                  child: Text(S.current.okGo, style: FoodlyTextStyles.dialogCloseText),
                 ),
               ],
             ),
@@ -69,8 +66,7 @@ class WelcomeDialog extends StatelessWidget {
                       from: 1.3,
                       child: const Asset(FoodlyAssets.wellDone, height: 90),
                     ),
-                    ElasticIn(
-                        child: const Asset(FoodlyAssets.wellDone, height: 90)),
+                    ElasticIn(child: const Asset(FoodlyAssets.wellDone, height: 90)),
                   ],
                 ),
                 Text(
@@ -84,38 +80,26 @@ class WelcomeDialog extends StatelessWidget {
                           children: [
                             TextSpan(text: S.current.welcomeDialogTextSpan1),
                             const WidgetSpan(
-                                child: Asset(FoodlyAssets.logo, height: 14),
-                                alignment: PlaceholderAlignment.middle),
+                                child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
                             TextSpan(text: S.current.welcomeDialogTextSpan2),
-                            if (user != null)
-                              getBoldTextSpan(' ${user?.fullName} ')
-                            else
-                              const TextSpan(text: ', '),
+                            if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
                             TextSpan(text: S.current.welcomeDialogTextSpan3),
                             getBoldTextSpan(S.current.owner),
-                            TextSpan(
-                                text: S.current.welcomeDialogTextSpanOwner),
+                            TextSpan(text: S.current.welcomeDialogTextSpanOwner),
                           ],
                         )
                       : TextSpan(
                           children: [
                             TextSpan(text: S.current.welcomeDialogTextSpan1),
                             const WidgetSpan(
-                                child: Asset(FoodlyAssets.logo, height: 14),
-                                alignment: PlaceholderAlignment.middle),
+                                child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
                             TextSpan(text: S.current.welcomeDialogTextSpan2),
-                            if (user != null)
-                              getBoldTextSpan(' ${user?.fullName} ')
-                            else
-                              const TextSpan(text: ', '),
+                            if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
                             TextSpan(text: S.current.welcomeDialogTextSpan3),
                             getBoldTextSpan(S.current.customer),
-                            TextSpan(
-                                text: S.current.welcomeDialogTextSpanClient1),
-                            getBoldTextSpan(
-                                S.current.welcomeDialogTextSpanClient2),
-                            TextSpan(
-                                text: S.current.welcomeDialogTextSpanClient3),
+                            TextSpan(text: S.current.welcomeDialogTextSpanClient1),
+                            getBoldTextSpan(S.current.welcomeDialogTextSpanClient2),
+                            TextSpan(text: S.current.welcomeDialogTextSpanClient3),
                           ],
                         ),
                   textAlign: TextAlign.center,

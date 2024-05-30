@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui show NeumorphicColors;
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui show NeumorphicColors;
 
 class FoodlyTextStyles {
   const FoodlyTextStyles._();

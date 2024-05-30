@@ -82,7 +82,7 @@ class ContactChannelsWdg extends StatelessWidget {
                           autovalidateMode: vm.autovalidateMode,
                           enabled: vm.isEditingContactUs,
                         ),
-                        DasboardSaveAndCancelButtons(
+                        DashboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                           onCancelPressed: () {
                             vm.businessEmailCtrl?.controller?.clear();

@@ -1,5 +1,5 @@
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class RoundedButtonMobileFoodly extends StatelessWidget {
   final void Function()? onPressed;

@@ -1,7 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class FoodlyThemes {
   const FoodlyThemes._();

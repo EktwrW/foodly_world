@@ -19,7 +19,7 @@ import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
 import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 enum StartingPageView { initial, login, register, completeRegister }
 

@@ -103,7 +103,7 @@ class BusinessServicesWdg extends StatelessWidget {
           ),
         ),
         if (vm.isEditingServices)
-          DasboardSaveAndCancelButtons(
+          DashboardSaveAndCancelButtons(
             onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
             onCancelPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none)),
             showSaveButton: !listEquals(vm.currentBusinessServices, vm.currentBusiness?.businessServices),

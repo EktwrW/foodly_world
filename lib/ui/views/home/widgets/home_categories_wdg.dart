@@ -5,8 +5,8 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 class HomeCategories extends StatefulWidget {
   const HomeCategories({
@@ -34,8 +34,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       style: const NeumorphicRadioStyle(
                           shape: NeumorphicShape.convex,
                           intensity: .6,
-                          unselectedColor:
-                              NeumorphicColors.decorationMaxWhiteColor),
+                          unselectedColor: NeumorphicColors.decorationMaxWhiteColor),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -75,12 +74,9 @@ class _HomeCategoriesState extends State<HomeCategories> {
               children: [
                 InkWell(
                   onTap: () => buttonCarouselController.previousPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.linear),
-                  child: const Icon(Bootstrap.caret_left_fill,
-                          color: NeumorphicColors.decorationMaxWhiteColor)
-                      .paddingSymmetric(
-                          horizontal: UIDimens.SCREEN_PADDING_MOB),
+                      duration: const Duration(milliseconds: 400), curve: Curves.linear),
+                  child: const Icon(Bootstrap.caret_left_fill, color: NeumorphicColors.decorationMaxWhiteColor)
+                      .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 ),
                 ...FoodlyCategories.values.asMap().entries.map((entry) {
                   return GestureDetector(
@@ -98,14 +94,10 @@ class _HomeCategoriesState extends State<HomeCategories> {
                             duration: const Duration(milliseconds: 400),
                             width: thisIsCurrent ? 10 : 7.5,
                             height: 12,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 4.0),
+                            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: (Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? Colors.white
-                                        : Colors.black)
+                                color: (Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black)
                                     .withOpacity(thisIsCurrent ? 0.8 : 0.3)),
                           );
                         }),
@@ -113,12 +105,9 @@ class _HomeCategoriesState extends State<HomeCategories> {
                 }),
                 InkWell(
                   onTap: () => buttonCarouselController.nextPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.linear),
-                  child: const Icon(Bootstrap.caret_right_fill,
-                          color: NeumorphicColors.decorationMaxWhiteColor)
-                      .paddingSymmetric(
-                          horizontal: UIDimens.SCREEN_PADDING_MOB),
+                      duration: const Duration(milliseconds: 400), curve: Curves.linear),
+                  child: const Icon(Bootstrap.caret_right_fill, color: NeumorphicColors.decorationMaxWhiteColor)
+                      .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 ),
               ],
             ).paddingOnly(bottom: 6),

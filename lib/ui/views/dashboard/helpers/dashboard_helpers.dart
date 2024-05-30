@@ -5,9 +5,9 @@ import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 import 'package:path_provider/path_provider.dart';
 
 class DashboardHelpers {

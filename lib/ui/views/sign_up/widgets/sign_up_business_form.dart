@@ -84,7 +84,7 @@ class SignUpBusinessForm extends StatelessWidget {
           prefixIcon: vm.businessCategory == null ? const Icon(Icons.business_center_rounded) : null,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessNameController!.controller!,
+          controller: vm.businessNameController?.controller,
           focusNode: vm.businessNameController?.focusNode,
           secondaryFocusNode: vm.businessEmailController?.focusNode,
           inputTextType: FoodlyInputType.businessName,
@@ -92,7 +92,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessEmailController!.controller!,
+          controller: vm.businessEmailController?.controller,
           focusNode: vm.businessEmailController?.focusNode,
           secondaryFocusNode: vm.businessPhoneNumberController?.focusNode,
           inputTextType: FoodlyInputType.businessEmail,
@@ -170,7 +170,7 @@ class SignUpBusinessForm extends StatelessWidget {
           initialCountryCode: vm.businessCountryCode ?? vm.currentCountryCode,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessCountryController!.controller!,
+          controller: vm.businessCountryController?.controller,
           focusNode: vm.businessCountryController?.focusNode,
           secondaryFocusNode: vm.businessCityController?.focusNode,
           inputTextType: FoodlyInputType.businessCountry,
@@ -178,7 +178,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessCityController!.controller!,
+          controller: vm.businessCityController?.controller,
           focusNode: vm.businessCityController?.focusNode,
           secondaryFocusNode: vm.businessAddressController?.focusNode,
           inputTextType: FoodlyInputType.businessCity,
@@ -186,7 +186,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessAddressController!.controller!,
+          controller: vm.businessAddressController?.controller,
           focusNode: vm.businessAddressController?.focusNode,
           secondaryFocusNode: vm.businessZipCodeController?.focusNode,
           inputTextType: FoodlyInputType.businessAddress,
@@ -194,7 +194,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
         ),
         FoodlyPrimaryInputText(
-          controller: vm.businessZipCodeController!.controller!,
+          controller: vm.businessZipCodeController?.controller,
           focusNode: vm.businessZipCodeController?.focusNode,
           inputTextType: FoodlyInputType.businessZipCode,
           autovalidateMode: vm.autovalidateMode,

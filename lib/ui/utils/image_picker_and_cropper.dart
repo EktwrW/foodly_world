@@ -7,10 +7,10 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui show NeumorphicColors;
 import 'package:universal_io/io.dart' as uni_io;
 
 export 'package:image_cropper/image_cropper.dart' show CropAspectRatioPreset, CropAspectRatio, CropStyle;

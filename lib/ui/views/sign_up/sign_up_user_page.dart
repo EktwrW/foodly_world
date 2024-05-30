@@ -21,7 +21,7 @@ import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class SignUpUserPage extends StatelessWidget {
   const SignUpUserPage({super.key});

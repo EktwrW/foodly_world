@@ -2,7 +2,7 @@ import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 enum LoginButtonType { primary, secondary }
 
@@ -31,27 +31,21 @@ class FoodlyLoginButton extends StatelessWidget {
   });
 
   NeumorphicShape get getShape => shape ?? NeumorphicShape.convex;
-  TextStyle get getBaseTextStyle =>
-      FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 18);
+  TextStyle get getBaseTextStyle => FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 18);
 
   @override
   Widget build(BuildContext context) {
     if (type == LoginButtonType.secondary) {
       return NeumorphicButton(
         onPressed: !disabled ? onPressed : null,
-        margin: margin ??
-            EdgeInsets.symmetric(
-                horizontal: UIDimens.SCREEN_PADDING_MOB,
-                vertical: verticalMargin ?? 18),
+        margin: margin ?? EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB, vertical: verticalMargin ?? 18),
         style: NeumorphicStyle(
           shape: getShape,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
           depth: 3,
           intensity: 1.2,
           surfaceIntensity: .3,
-          color: !disabled
-              ? NeumorphicColors.embossMaxWhiteColor
-              : Colors.grey[200],
+          color: !disabled ? NeumorphicColors.embossMaxWhiteColor : Colors.grey[200],
         ),
         padding: padding ?? const EdgeInsets.all(14),
         child: Row(
@@ -68,8 +62,7 @@ class FoodlyLoginButton extends StatelessWidget {
       );
     }
     return NeumorphicButton(
-      margin: margin ??
-          const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+      margin: margin ?? const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
       onPressed: !disabled ? onPressed : null,
       style: NeumorphicStyle(
         shape: getShape,

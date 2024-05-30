@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class AppLoginWidgets extends StatefulWidget {
   const AppLoginWidgets({

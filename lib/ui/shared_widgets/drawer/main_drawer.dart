@@ -13,8 +13,8 @@ import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.d
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class FoodlyDrawer extends StatelessWidget {

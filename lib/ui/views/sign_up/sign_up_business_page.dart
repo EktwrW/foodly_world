@@ -23,8 +23,8 @@ import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_form.dart
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_tooltip.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
 
 class SignUpBusinessPage extends StatefulWidget {
   const SignUpBusinessPage({super.key});

@@ -6,7 +6,7 @@ import 'package:foodly_world/ui/views/home/widgets/home_app_bar_mobile.dart';
 import 'package:foodly_world/ui/views/home/widgets/home_categories_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_app_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class FoodlyMainPage extends StatelessWidget {
   const FoodlyMainPage({super.key});
@@ -15,8 +15,7 @@ class FoodlyMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return NestedScrollView(
       floatHeaderSlivers: true,
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
-          [const Home369AppBarMobile()],
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [const Home369AppBarMobile()],
       body: Column(
         children: [
           const HomeCategories(),
@@ -35,16 +34,14 @@ class FoodlyMainPage extends StatelessWidget {
                       S.current.news,
                       style: FoodlyTextStyles.sectionsTitle,
                     ).paddingOnly(top: 25, bottom: 12),
-                    const NewReleasesCard().paddingSymmetric(
-                        horizontal: UIDimens.SCREEN_PADDING_MOB),
+                    const NewReleasesCard().paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                     Text(
                       S.current.tendencies,
                       style: FoodlyTextStyles.sectionsTitle,
                     ).paddingOnly(top: 25),
                     const Text(
                             'DEV: Implementar aca carrusel con nuevos comercios y tendencias de las apps del ecosistema 369')
-                        .paddingSymmetric(
-                            horizontal: UIDimens.SCREEN_PADDING_MOB),
+                        .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ],
                 ).paddingSymmetric(vertical: 25),
               ),

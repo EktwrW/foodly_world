@@ -43,7 +43,7 @@ class CategoryWdg extends StatelessWidget {
               validatorText: S.current.pleaseSelectBusinessCategory,
               hintText: S.current.businessCategory,
             ),
-            DasboardSaveAndCancelButtons(
+            DashboardSaveAndCancelButtons(
               onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
               onCancelPressed: () {
                 bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));

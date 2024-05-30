@@ -15,8 +15,8 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/greeting_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_app_search_widget.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 class Home369AppBarMobile extends StatelessWidget {
   const Home369AppBarMobile({

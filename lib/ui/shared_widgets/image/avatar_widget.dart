@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart';
 
 enum AvatarType { generic, user, business }
 
@@ -30,8 +30,7 @@ class AvatarWidget extends StatelessWidget {
       );
 
   Widget get businessPlaceholder => DecoratedBox(
-        decoration:
-            BoxDecoration(shape: BoxShape.circle, color: Colors.grey[200]),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[200]),
         child: SizedBox.square(
           dimension: height,
           child: Column(
@@ -63,8 +62,7 @@ class AvatarWidget extends StatelessWidget {
         decoration: const BoxDecoration(shape: BoxShape.circle),
         child: CircleAvatar(foregroundImage: imageProvider, radius: 100),
       ),
-      errorWidget: (p0, p1, p2) =>
-          isBusiness ? businessPlaceholder : userAvatarPlaceholder,
+      errorWidget: (p0, p1, p2) => isBusiness ? businessPlaceholder : userAvatarPlaceholder,
       placeholder: (context, __) => isUser
           ? userAvatarPlaceholder
           : isBusiness
@@ -74,8 +72,7 @@ class AvatarWidget extends StatelessWidget {
                   children: [
                     SizedBox.square(
                         dimension: 40,
-                        child: CircularProgressIndicator.adaptive(
-                            backgroundColor: FoodlyThemes.secondaryFoodly)),
+                        child: CircularProgressIndicator.adaptive(backgroundColor: FoodlyThemes.secondaryFoodly)),
                   ],
                 ),
       fadeInDuration: _duration,

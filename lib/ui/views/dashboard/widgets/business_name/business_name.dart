@@ -64,7 +64,7 @@ class BusinessNameWdg extends StatelessWidget {
                       enabled: vm.isEditingName,
                       hintText: vm.currentBusiness?.name,
                     ),
-                    DasboardSaveAndCancelButtons(
+                    DashboardSaveAndCancelButtons(
                       onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                       onCancelPressed: () {
                         vm.businessNameCtrl?.controller?.clear();

@@ -9,13 +9,12 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/starting/widgets/login_buttons.dart';
-import 'package:neumorphic_ui/neumorphic_ui.dart' as ui;
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
 
-  TextSpan getBoldTextSpan(String text) =>
-      TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
+  TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +25,7 @@ class LogoutDialog extends StatelessWidget {
           Container(
             height: 650,
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(
-                horizontal: UIDimens.SCREEN_PADDING_MOB),
+            margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             padding: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
@@ -88,8 +86,7 @@ class LogoutDialog extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           disabled: false,
                           fontSize: 14.5,
-                          onPressed: () =>
-                              di<AuthSessionService>().exit(context)),
+                          onPressed: () => di<AuthSessionService>().exit(context)),
                     ),
                     SizedBox(
                       height: 78,
@@ -100,8 +97,7 @@ class LogoutDialog extends StatelessWidget {
                           fontSize: 14.5,
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           disabled: false,
-                          onPressed: () =>
-                              di<AuthSessionService>().endSession(context),
+                          onPressed: () => di<AuthSessionService>().endSession(context),
                           type: LoginButtonType.secondary),
                     ),
                   ],

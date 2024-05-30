@@ -73,7 +73,7 @@ class AdditionalInfoWdg extends StatelessWidget {
                           enabled: vm.isEditingAdditionalInfo,
                           hintText: vm.currentBusiness?.additionalInfo,
                         ),
-                        DasboardSaveAndCancelButtons(
+                        DashboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                           onCancelPressed: () {
                             vm.businessAdditionalInfoCtrl?.controller?.clear();
