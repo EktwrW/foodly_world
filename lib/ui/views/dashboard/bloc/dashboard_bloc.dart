@@ -294,7 +294,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
       DashboardEditing.contactUs: DashboardHelpers.getContactUsFields(dto, _vm),
       DashboardEditing.openingHours: dto.copyWith(),
-      DashboardEditing.services: dto.copyWith(businessServices: []),
+      DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
       DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),
       DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),
     };
