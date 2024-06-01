@@ -100,7 +100,6 @@ class DashboardHelpers {
       compressQuality: 100,
       aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
       aspectRatioPresets: [
-        CropAspectRatioPreset.original,
         CropAspectRatioPreset.ratio16x9,
       ],
       uiSettings: [
@@ -110,11 +109,14 @@ class DashboardHelpers {
           activeControlsWidgetColor: ui.NeumorphicColors.accent,
           toolbarWidgetColor: ui.NeumorphicColors.background,
           initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: false,
+          lockAspectRatio: true,
           showCropGrid: false,
         ),
         IOSUiSettings(
           title: S.current.cropImage,
+          aspectRatioLockEnabled: true,
+          cancelButtonTitle: S.current.cancel,
+          doneButtonTitle: S.current.save,
         ),
         WebUiSettings(
           context: getContext(),

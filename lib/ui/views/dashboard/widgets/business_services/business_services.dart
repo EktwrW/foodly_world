@@ -24,91 +24,96 @@ class BusinessServicesWdg extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<DashboardBloc>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        DashboardSectionsTitle(
-          firstText: '${S.current.dashboardServicesAtText1} ',
-          secondText: S.current.dashboardServicesAtText2,
-        ),
-        Visibility(
-          visible: vm.isEditingServices,
-          replacement: TextButton(
-            onPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.services)),
-            style: TextButton.styleFrom(
-              padding: vm.currentBusiness?.businessServices.isEmpty ?? true ? null : EdgeInsets.zero,
-            ),
-            child: vm.currentBusiness?.businessServices.isEmpty ?? true
-                ? FadeIn(
-                    child: Row(
-                      children: [
-                        Text(
-                          S.current.addServices,
-                          style: FoodlyTextStyles.profileSectionTextButton,
-                        ),
-                      ],
-                    ),
-                  )
-                : FadeIn(
-                    child: SizedBox(
-                      width: context.screenWidth,
-                      child: Wrap(
-                        spacing: context.screenWidth * .02,
-                        runSpacing: 10,
-                        children: vm.currentBusiness!.businessServices
-                            .map(
-                              (e) => SizedBox(
-                                width: context.screenWidth * .405,
-                                child: Row(
-                                  children: [
-                                    Icon(e.iconData, size: 18),
-                                    Flexible(
-                                        child: Text(
-                                      e.text,
-                                      style: FoodlyTextStyles.caption,
-                                      overflow: TextOverflow.ellipsis,
-                                    ).paddingLeft(10)),
-                                  ],
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ).paddingVertical(10),
-                    ).paddingHorizontal(8),
-                  ),
+    return Form(
+      key: vm.formKey,
+      autovalidateMode: vm.autovalidateMode,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          DashboardSectionsTitle(
+            firstText: '${S.current.dashboardServicesAtText1} ',
+            secondText: S.current.dashboardServicesAtText2,
           ),
-          child: Center(
-            child: Wrap(
-              spacing: context.screenWidth * .02,
-              children: BusinessServices.values.mapIndexed(
-                (i, e) {
-                  final selected = vm.currentBusinessServices.contains(e);
+          Visibility(
+            visible: vm.isEditingServices,
+            replacement: TextButton(
+              onPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.services)),
+              style: TextButton.styleFrom(
+                padding: vm.currentBusiness?.businessServices.isEmpty ?? true ? null : EdgeInsets.zero,
+              ),
+              child: vm.currentBusiness?.businessServices.isEmpty ?? true
+                  ? FadeIn(
+                      child: Row(
+                        children: [
+                          Text(
+                            S.current.addServices,
+                            style: FoodlyTextStyles.profileSectionTextButton,
+                          ),
+                        ],
+                      ),
+                    )
+                  : FadeIn(
+                      child: SizedBox(
+                        width: context.screenWidth,
+                        child: Wrap(
+                          spacing: context.screenWidth * .02,
+                          runSpacing: 10,
+                          children: vm.currentBusiness!.businessServices
+                              .map(
+                                (e) => SizedBox(
+                                  width: context.screenWidth * .405,
+                                  child: Row(
+                                    children: [
+                                      Icon(e.iconData, size: 18),
+                                      Flexible(
+                                          child: Text(
+                                        e.text,
+                                        style: FoodlyTextStyles.caption,
+                                        overflow: TextOverflow.ellipsis,
+                                      ).paddingLeft(10)),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ).paddingVertical(10),
+                      ).paddingHorizontal(8),
+                    ),
+            ),
+            child: Center(
+              child: Wrap(
+                spacing: context.screenWidth * .02,
+                children: BusinessServices.values.mapIndexed(
+                  (i, e) {
+                    final selected = vm.currentBusinessServices.contains(e);
 
-                  if (i.isEven) {
-                    return FadeInLeft(
+                    if (i.isEven) {
+                      return FadeInLeft(
+                        duration: Durations.medium2,
+                        delay: Duration(milliseconds: 50 * i),
+                        child: buildChoiceContent(context, e, selected, bloc),
+                      );
+                    }
+
+                    return FadeInRight(
                       duration: Durations.medium2,
                       delay: Duration(milliseconds: 50 * i),
                       child: buildChoiceContent(context, e, selected, bloc),
                     );
-                  }
-
-                  return FadeInRight(
-                    duration: Durations.medium2,
-                    delay: Duration(milliseconds: 50 * i),
-                    child: buildChoiceContent(context, e, selected, bloc),
-                  );
-                },
-              ).toList(),
-            ).paddingTop(10),
+                  },
+                ).toList(),
+              ).paddingTop(10),
+            ),
           ),
-        ),
-        if (vm.isEditingServices)
-          DashboardSaveAndCancelButtons(
-            onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
-            onCancelPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none)),
-            showSaveButton: !listEquals(vm.currentBusinessServices, vm.currentBusiness?.businessServices),
-          ).paddingTop(4),
-      ],
+          if (vm.isEditingServices)
+            DashboardSaveAndCancelButtons(
+              onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
+              onCancelPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none)),
+              showSaveButton: !listEquals(vm.currentBusinessServices, vm.currentBusiness?.businessServices) &&
+                  vm.currentBusinessServices.isNotEmpty,
+            ).paddingTop(4),
+        ],
+      ),
     );
   }
 

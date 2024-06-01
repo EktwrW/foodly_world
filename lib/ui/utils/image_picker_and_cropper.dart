@@ -131,12 +131,10 @@ Future<String> _cropImage(
         activeControlsWidgetColor: ui.NeumorphicColors.accent,
         toolbarWidgetColor: ui.NeumorphicColors.background,
         initAspectRatio: CropAspectRatioPreset.square,
-        lockAspectRatio: false,
+        lockAspectRatio: aspectRatioPresets?.length == 1,
         showCropGrid: false,
       ),
-      IOSUiSettings(
-        title: S.current.cropImage,
-      ),
+      IOSUiSettings(title: S.current.cropImage, aspectRatioLockEnabled: aspectRatioPresets?.length == 1),
       WebUiSettings(
         context: context,
         boundary: CroppieBoundary(

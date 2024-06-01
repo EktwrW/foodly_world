@@ -251,7 +251,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       });
     } else {
       _vm = _vm.copyWith(
-        picturesPath: List.from(_vm.picturesPath)..removeWhere((p) => p.imageId == coverImageDM.imageId),
+        picturesPath: List.from(_vm.picturesPath)..removeWhere((p) => p == coverImageDM),
         targetForDelete: null,
       );
       emit(_Loaded(_vm));
@@ -294,7 +294,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
       DashboardEditing.contactUs: DashboardHelpers.getContactUsFields(dto, _vm),
       DashboardEditing.openingHours: dto.copyWith(),
-      DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
+      DashboardEditing.services: dto.copyWith(businessServices: []),
       DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),
       DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),
     };
