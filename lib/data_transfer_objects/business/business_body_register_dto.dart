@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'business_body_register_dto.g.dart';
@@ -24,7 +25,7 @@ class BusinessBodyRegisterDTO {
   final String businessCity;
 
   @JsonKey(name: 'business_country')
-  final String businessCountry;
+  final FoodlyCountries businessCountry;
 
   @JsonKey(name: 'business_website')
   final String businessWebsite;

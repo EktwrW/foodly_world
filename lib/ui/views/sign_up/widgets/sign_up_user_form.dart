@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_text.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -17,7 +19,7 @@ class SignUpUserForm extends StatelessWidget {
   const SignUpUserForm({super.key});
 
   Future<void> _selectDate(BuildContext context, SignUpVM vm, SignUpCubit cubit) async {
-    final locale = Locale(cubit.lang, vm.currentCountryCode?.toUpperCase());
+    final locale = Locale(cubit.lang, cubit.currentCountryCode.toUpperCase());
 
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -144,16 +146,43 @@ class SignUpUserForm extends StatelessWidget {
           controller: vm.phoneNumberController?.controller,
           focusNode: vm.phoneNumberController?.focusNode,
           autovalidateMode: vm.autovalidateMode,
-          onSubmitted: (value) => vm.countryController?.focusNode?.requestFocus(),
+          onSubmitted: (value) => vm.countryNode?.requestFocus(),
           initialCountryCode: cubit.currentCountryCode.toUpperCase(),
         ),
-        FoodlyPrimaryInputText(
-          controller: vm.countryController!.controller!,
-          focusNode: vm.countryController?.focusNode,
-          secondaryFocusNode: vm.cityController?.focusNode,
-          inputTextType: FoodlyInputType.country,
-          autovalidateMode: vm.autovalidateMode,
+        FoodlyDropdownButtonFormField(
+          value: vm.country,
+          focusNode: vm.countryNode,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Bootstrap.person),
+            prefixIconColor: enabled ? Colors.black87 : NeumorphicColors.disabled,
+            hintText: S.current.country,
+            icon: FoodlyInputType.country.icon,
+            iconColor: enabled ? null : NeumorphicColors.disabled,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
+            ),
+            hintStyle: TextStyle(
+              color: enabled ? FoodlyThemes.secondaryFoodly : NeumorphicColors.disabled,
+            ),
+          ),
           enabled: enabled,
+          onChanged: (FoodlyCountries? newValue) {
+            cubit.setUserCountry(newValue);
+            vm.cityController?.focusNode?.requestFocus();
+          },
+          items: FoodlyCountries.values
+              .map<DropdownMenuItem<FoodlyCountries>>(
+                (FoodlyCountries country) => DropdownMenuItem<FoodlyCountries>(
+                  value: country,
+                  child: Row(
+                    children: [
+                      if (country.flag != null) country.flag!.paddingHorizontal(12),
+                      Text(country.value),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
         ),
         FoodlyPrimaryInputText(
           controller: vm.cityController!.controller!,
@@ -170,7 +199,7 @@ class SignUpUserForm extends StatelessWidget {
           inputTextType: FoodlyInputType.zipCode,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
-          countryCode: vm.currentCountryCode ?? cubit.currentCountryCode.toUpperCase(),
+          countryCode: cubit.currentCountryCode.toUpperCase(),
         ),
         DropdownButtonFormField<UserGender>(
           value: vm.gender,

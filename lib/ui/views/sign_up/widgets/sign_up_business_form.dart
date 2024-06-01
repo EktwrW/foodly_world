@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
@@ -13,25 +14,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SignUpBusinessForm extends StatelessWidget {
   const SignUpBusinessForm({super.key});
-
-  // TODO: move this method to business profile page:
-  // Future<void> _selectDate(BuildContext context, SignUpVM vm, SignUpCubit cubit) async {
-  //   final locale = Locale(cubit.lang, vm.currentCountryCode?.toUpperCase());
-
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDatePickerMode: DatePickerMode.year,
-  //     initialDate: DateTime(1990),
-  //     firstDate: DateTime(1900),
-  //     lastDate: DateTime.now(),
-  //     locale: locale,
-  //   );
-
-  //   if (picked != null && picked != vm.businessDateOfOpening) {
-  //     cubit.setBusinessDateOfOpening(picked);
-  //   }
-  //   vm.businessPhoneNumberNode?.requestFocus();
-  // }
 
   Widget _buildForm(SignUpVM vm, BuildContext context) {
     final cubit = context.read<SignUpCubit>();
@@ -99,83 +81,38 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
         ),
-        // TODO: add this widget to business profile page:
-        // StatefulBuilder(
-        //   builder: (_, setNewState) {
-        //     var isOpen = false;
-        //     return InkWell(
-        //       onFocusChange: (enabled && vm.businessDateOfOpening == null)
-        //           ? (val) async {
-        //               if ((vm.businessDateOfOpeningNode?.hasFocus ?? false) && !isOpen) {
-        //                 setNewState(() => isOpen = true);
-        //                 await _selectDate(context, vm, cubit).then((value) => setNewState(() => isOpen = false));
-        //               }
-        //             }
-        //           : null,
-        //       onTap: isOpen
-        //           ? null
-        //           : enabled
-        //               ? () async {
-        //                   setNewState(() => isOpen = true);
-        //                   await _selectDate(context, vm, cubit).then((value) => setNewState(() => isOpen = false));
-        //                 }
-        //               : null,
-        //       focusColor: Colors.transparent,
-        //       splashColor: Colors.transparent,
-        //       focusNode: vm.businessDateOfOpeningNode,
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: [
-        //           Row(
-        //             children: [
-        //               Icon(
-        //                 Bootstrap.calendar2_event_fill,
-        //                 size: 24,
-        //                 color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
-        //               ).paddingSymmetric(horizontal: 12),
-        //               Text(
-        //                 vm.businessDateOfOpening?.getStringFormat ?? 'Fecha de apertura',
-        //                 style: TextStyle(
-        //                   color: !enabled
-        //                       ? ui.NeumorphicColors.disabled
-        //                       : vm.businessDateOfOpening != null
-        //                           ? Colors.black87
-        //                           : FoodlyThemes.secondaryFoodly,
-        //                   fontSize: 16,
-        //                 ),
-        //               ).paddingOnly(top: 6)
-        //             ],
-        //           ),
-        //           Divider(
-        //             color: (vm.businessDateOfOpeningNode?.hasFocus ?? false)
-        //                 ? FoodlyThemes.primaryFoodly
-        //                 : !enabled
-        //                     ? Colors.black12
-        //                     : FoodlyThemes.secondaryFoodly,
-        //             height: 20,
-        //             thickness: (vm.businessDateOfOpeningNode?.hasFocus ?? false) ? 2 : 1,
-        //           ),
-        //         ],
-        //       ).paddingOnly(top: 8, bottom: 10),
-        //     );
-        //   },
-        // ),
         FoodlyPhoneInputText(
           keyString: vm.businessCountryCode,
           enabled: enabled,
           controller: vm.businessPhoneNumberController!.controller,
           focusNode: vm.businessPhoneNumberController?.focusNode,
           autovalidateMode: vm.autovalidateMode,
-          onSubmitted: (value) => vm.businessCountryController?.focusNode?.requestFocus(),
-          initialCountryCode: vm.businessCountryCode ?? vm.currentCountryCode,
+          onSubmitted: (value) => vm.businessCountryNode?.requestFocus(),
+          initialCountryCode: cubit.currentCountryCode,
         ),
-        FoodlyPrimaryInputText(
-          controller: vm.businessCountryController?.controller,
-          focusNode: vm.businessCountryController?.focusNode,
-          secondaryFocusNode: vm.businessCityController?.focusNode,
-          inputTextType: FoodlyInputType.businessCountry,
-          autovalidateMode: vm.autovalidateMode,
+        FoodlyDropdownButtonFormField(
+          value: vm.businessCountry,
+          focusNode: vm.businessCountryNode,
+          hintText: S.current.country,
           enabled: enabled,
+          onChanged: (FoodlyCountries? newValue) {
+            cubit.setBusinessCountry(newValue);
+            vm.businessCityController?.focusNode?.requestFocus();
+          },
+          items: FoodlyCountries.values
+              .map<DropdownMenuItem<FoodlyCountries>>(
+                (FoodlyCountries country) => DropdownMenuItem<FoodlyCountries>(
+                  value: country,
+                  child: Row(
+                    children: [
+                      if (country.flag != null) country.flag!.paddingHorizontal(12),
+                      Text(country.value),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+          prefixIcon: vm.businessCountry == null ? FoodlyInputType.businessCountry.icon : null,
         ),
         FoodlyPrimaryInputText(
           controller: vm.businessCityController?.controller,

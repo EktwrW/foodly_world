@@ -13,6 +13,9 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>>? items;
   final String? validatorText;
   final String? hintText;
+  final InputDecoration? decoration;
+  final FocusNode? focusNode;
+  final Widget? icon;
 
   const FoodlyDropdownButtonFormField({
     super.key,
@@ -24,6 +27,9 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
     this.items,
     this.validatorText,
     this.hintText,
+    this.decoration,
+    this.focusNode,
+    this.icon,
   });
 
   @override
@@ -32,17 +38,20 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
       height: 65,
       child: DropdownButtonFormField<T>(
         value: value,
-        decoration: InputDecoration(
-          prefixIcon: prefixIcon,
-          prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
-          hintText: hintText,
-          errorStyle: FoodlyTextStyles.errorInputText,
-          enabledBorder: enabledBorder ??
-              UnderlineInputBorder(
-                borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
-              ),
-          hintStyle: TextStyle(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
-        ),
+        focusNode: focusNode,
+        decoration: decoration ??
+            InputDecoration(
+              prefixIcon: prefixIcon,
+              prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+              hintText: hintText,
+              icon: icon,
+              errorStyle: FoodlyTextStyles.errorInputText,
+              enabledBorder: enabledBorder ??
+                  UnderlineInputBorder(
+                    borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
+                  ),
+              hintStyle: TextStyle(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
+            ),
         onChanged: enabled ? onChanged : null,
         items: items,
         validator: (value) => value == null ? (validatorText ?? S.current.pleaseSelectAnOption) : null,

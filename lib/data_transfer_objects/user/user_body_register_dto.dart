@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -39,7 +40,7 @@ class UserBodyRegisterDTO {
   final String city;
 
   @JsonKey(name: 'country')
-  final String country;
+  final FoodlyCountries country;
 
   @JsonKey(name: 'gender')
   final String gender;

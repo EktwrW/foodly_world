@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' show Marker, GoogleMapController;
 
 export 'package:foodly_world/data_models/business/business_dm.dart';
 
@@ -25,7 +27,6 @@ class DashboardVM with _$DashboardVM {
     InputController? businessAboutUsCtrl,
     InputController? businessEmailCtrl,
     InputController? businessPhoneCtrl,
-    InputController? businessCountryCtrl,
     InputController? businessCityCtrl,
     InputController? businessAddressCtrl,
     InputController? businessZipCodeCtrl,
@@ -34,6 +35,10 @@ class DashboardVM with _$DashboardVM {
     double? latitude,
     double? longitude,
     GlobalKey<FormState>? formKey,
+    GlobalKey<FormState>? locationFormKey,
+    FoodlyCountries? businessCountry,
+    @Default({}) Set<Marker> markers,
+    GoogleMapController? mapController,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
   }) = _DashboardVM;
 

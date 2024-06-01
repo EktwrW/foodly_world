@@ -73,75 +73,32 @@ enum FoodlyInputType {
 
   const FoodlyInputType({required this.icon, required this.textInputType});
 
-  String get text {
-    switch (this) {
-      case FoodlyInputType.email:
-        return S.current.email;
+  static final _texts = {
+    FoodlyInputType.email: S.current.email,
+    FoodlyInputType.phone: S.current.phoneNumber,
+    FoodlyInputType.password: S.current.password,
+    FoodlyInputType.confirmPassword: S.current.confirmPassword,
+    FoodlyInputType.address: S.current.address,
+    FoodlyInputType.country: S.current.country,
+    FoodlyInputType.city: S.current.city,
+    FoodlyInputType.zipCode: S.current.zipCode,
+    FoodlyInputType.generic: '',
+    FoodlyInputType.nickName: S.current.nickName,
+    FoodlyInputType.firstName: S.current.firstName,
+    FoodlyInputType.lastName: S.current.lastName,
+    FoodlyInputType.dateOfBirth: S.current.dateOfBirth,
+    FoodlyInputType.businessName: S.current.businessName,
+    FoodlyInputType.businessPhone: S.current.contactNumber,
+    FoodlyInputType.businessCountry: S.current.country,
+    FoodlyInputType.businessCity: S.current.city,
+    FoodlyInputType.businessAddress: S.current.address,
+    FoodlyInputType.businessZipCode: S.current.zipCode,
+    FoodlyInputType.businessEmail: S.current.contactEmail,
+    FoodlyInputType.businessAboutUs: S.current.addADescription,
+    FoodlyInputType.businessAdditionalInfo: S.current.addAdditionalInformation,
+  };
 
-      case FoodlyInputType.phone:
-        return S.current.phoneNumber;
-
-      case FoodlyInputType.password:
-        return S.current.password;
-
-      case FoodlyInputType.confirmPassword:
-        return S.current.confirmPassword;
-
-      case FoodlyInputType.address:
-        return S.current.address;
-
-      case FoodlyInputType.country:
-        return S.current.country;
-
-      case FoodlyInputType.city:
-        return S.current.city;
-
-      case FoodlyInputType.zipCode:
-        return S.current.zipCode;
-
-      case FoodlyInputType.generic:
-        return '';
-
-      case FoodlyInputType.nickName:
-        return S.current.nickName;
-
-      case FoodlyInputType.firstName:
-        return S.current.firstName;
-
-      case FoodlyInputType.lastName:
-        return S.current.lastName;
-
-      case FoodlyInputType.dateOfBirth:
-        return S.current.dateOfBirth;
-
-      case FoodlyInputType.businessName:
-        return S.current.businessName;
-
-      case FoodlyInputType.businessPhone:
-        return S.current.contactNumber;
-
-      case FoodlyInputType.businessCountry:
-        return S.current.country;
-
-      case FoodlyInputType.businessCity:
-        return S.current.city;
-
-      case FoodlyInputType.businessAddress:
-        return S.current.address;
-
-      case FoodlyInputType.businessZipCode:
-        return S.current.zipCode;
-
-      case FoodlyInputType.businessEmail:
-        return S.current.contactEmail;
-
-      case FoodlyInputType.businessAboutUs:
-        return S.current.addADescription;
-
-      case FoodlyInputType.businessAdditionalInfo:
-        return S.current.addAdditionalInformation;
-    }
-  }
+  String get text => _texts[this] ?? '';
 }
 
 enum ImageResourceType { vector, raster }

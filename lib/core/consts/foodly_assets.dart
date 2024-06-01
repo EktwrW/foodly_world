@@ -48,6 +48,7 @@ class FoodlyAssets {
 
   // Business & Dashboard
   static const AssetData coverImages = AssetData('cover.png', AssetType.image);
+  static const AssetData editLocation = AssetData('edit_location.png', AssetType.image);
   static const AssetData noCustomerReviewsYet = AssetData('no_customer_reviews.png', AssetType.image);
 
   // eliminar estos assets de pruebas cuando ya no sean utilizados:

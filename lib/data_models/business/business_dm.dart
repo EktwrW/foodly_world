@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/enums/business_enums.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
 import 'package:foodly_world/data_models/business/opening_hours_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -30,7 +31,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_address') String? address,
     @JsonKey(name: 'business_zipcode') String? zipCode,
     @JsonKey(name: 'business_city') String? city,
-    @JsonKey(name: 'business_country') String? country,
+    @JsonKey(name: 'business_country') FoodlyCountries? country,
     @JsonKey(name: 'business_website') String? website,
     @JsonKey(name: 'business_latitude') double? latitude,
     @JsonKey(name: 'business_longitude') double? longitude,
@@ -47,7 +48,7 @@ class BusinessDM with _$BusinessDM {
       address,
       city,
       zipCode,
-      country,
+      country?.value,
     ].where((element) => element != null && element.isNotEmpty).join(', ');
   }
 

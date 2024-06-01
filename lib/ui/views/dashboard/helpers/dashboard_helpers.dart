@@ -15,6 +15,36 @@ import 'package:path_provider/path_provider.dart';
 class DashboardHelpers {
   const DashboardHelpers._();
 
+  static List<(TextEditingController, String)> addressFieldControllers(DashboardVM vm) {
+    final list = <(TextEditingController, String)>[];
+
+    if (vm.businessCityCtrl?.controller != null && vm.currentBusiness?.city != null) {
+      list.add((vm.businessCityCtrl!.controller!, vm.currentBusiness!.city!));
+    }
+    if (vm.businessAddressCtrl?.controller != null && vm.currentBusiness?.address != null) {
+      list.add((vm.businessAddressCtrl!.controller!, vm.currentBusiness!.address!));
+    }
+    if (vm.businessZipCodeCtrl?.controller != null && vm.currentBusiness?.zipCode != null) {
+      list.add((vm.businessZipCodeCtrl!.controller!, vm.currentBusiness!.zipCode!));
+    }
+
+    return list;
+  }
+
+  static List<(TextEditingController, String)> contactChannelsFieldControllers(DashboardVM vm) {
+    final list = <(TextEditingController, String)>[];
+
+    if (vm.businessEmailCtrl?.controller != null && vm.currentBusiness?.email != null) {
+      list.add((vm.businessEmailCtrl!.controller!, vm.currentBusiness!.email!));
+    }
+
+    if (vm.businessPhoneCtrl?.controller != null && vm.currentBusiness?.phoneNumber != null) {
+      list.add(((vm.businessPhoneCtrl!.controller!, vm.currentBusiness!.phoneNumber!)));
+    }
+
+    return list;
+  }
+
   static BusinessUpdateDTO getContactUsFields(BusinessUpdateDTO dto, DashboardVM vm) {
     if (vm.businessEmailCtrl?.text?.isNotEmpty ?? false) {
       dto = dto.copyWith(businessEmail: vm.businessEmailCtrl?.text);
@@ -27,20 +57,20 @@ class DashboardHelpers {
   }
 
   static BusinessUpdateDTO getAddressFields(BusinessUpdateDTO dto, DashboardVM vm) {
-    if (vm.businessCountryCtrl?.text?.isNotEmpty ?? false) {
-      dto = dto.copyWith(businessEmail: vm.businessEmailCtrl?.text);
+    if (vm.businessCountry != null) {
+      dto = dto.copyWith(businessCountry: vm.businessCountry);
     }
 
     if (vm.businessCityCtrl?.text?.isNotEmpty ?? false) {
-      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+      dto = dto.copyWith(businessCity: vm.businessCityCtrl?.text);
     }
 
     if (vm.businessAddressCtrl?.text?.isNotEmpty ?? false) {
-      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+      dto = dto.copyWith(businessAddress: vm.businessAddressCtrl?.text);
     }
 
     if (vm.businessZipCodeCtrl?.text?.isNotEmpty ?? false) {
-      dto = dto.copyWith(businessPhone: vm.businessPhoneCtrl?.text);
+      dto = dto.copyWith(businessZipcode: vm.businessZipCodeCtrl?.text);
     }
 
     if (vm.latitude != null && vm.longitude != null) {

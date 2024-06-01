@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/user/user_prefs_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -16,7 +17,7 @@ class UserDM with _$UserDM {
     @JsonKey(name: 'username') String? username,
     @JsonKey(name: 'name') String? firstName,
     @JsonKey(name: 'last_name') String? lastName,
-    @JsonKey(name: 'country') String? country,
+    @JsonKey(name: 'country') FoodlyCountries? country,
     @JsonKey(name: 'city') String? city,
     @JsonKey(name: 'address') String? address,
     @JsonKey(name: 'zip_code') String? zipCode,

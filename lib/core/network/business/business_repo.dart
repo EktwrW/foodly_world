@@ -40,7 +40,7 @@ class BusinessRepo {
         businessName: registerDTO.businessName,
         businessEmail: registerDTO.businessEmail,
         businessPhone: registerDTO.businessPhone,
-        businessCountry: registerDTO.businessCountry,
+        businessCountry: registerDTO.businessCountry.value,
         businessCity: registerDTO.businessCity,
         businessAddress: registerDTO.businessAddress,
         businessZipcode: registerDTO.businessZipcode,

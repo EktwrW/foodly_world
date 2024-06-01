@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/network/users/me_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -16,7 +18,6 @@ import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:nova_places_autocomplete/nova_places_autocomplete.dart';
 
@@ -57,10 +58,6 @@ class SignUpCubit extends Cubit<SignUpState> {
             controller: TextEditingController(),
             focusNode: FocusNode(),
           ),
-          countryController: InputController(
-            controller: TextEditingController(text: _locationService.currentCountry),
-            focusNode: FocusNode(),
-          ),
           cityController: InputController(
             controller: TextEditingController(text: _locationService.currentCity),
             focusNode: FocusNode(),
@@ -81,10 +78,6 @@ class SignUpCubit extends Cubit<SignUpState> {
             controller: TextEditingController(),
             focusNode: FocusNode(),
           ),
-          businessCountryController: InputController(
-            controller: TextEditingController(text: _locationService.currentCountry),
-            focusNode: FocusNode(),
-          ),
           businessCityController: InputController(
             controller: TextEditingController(text: _locationService.currentState),
             focusNode: FocusNode(),
@@ -98,22 +91,23 @@ class SignUpCubit extends Cubit<SignUpState> {
             focusNode: FocusNode(),
           ),
           autoCompleteController: TextEditingController(),
-          currentCountryCode: _locationService.currentCountryCode,
           formKey: GlobalKey<FormState>(),
           dateOfBirthNode: FocusNode(),
           genderNode: FocusNode(),
+          countryNode: FocusNode(),
+          businessCountryNode: FocusNode(),
         ),
         super(const SignUpState.initial()) {
     _initializeMarkers();
     emit(_Loaded(_vm));
   }
 
-  String get currentCountryCode => _vm.currentCountryCode ?? _locationService.currentCountryCode;
+  String get currentCountryCode => _vm.country?.countryCode ?? _locationService.currentCountryCode;
   UserRole? get getUserRole => _vm.roleId;
   List<UserRole> get getUserTypes => _vm.userTypes;
   Position? get getCurrentPosition => _locationService.currentLocation.position;
   String get imagePath => _vm.imagePath;
-  String get lang => Intl.getCurrentLocale().substring(0, 2);
+  String get lang => _authService.lang;
   String get googleApiKey => di<BaseConfig>().googleDefaultApiKey;
 
   void _initializeMarkers() {
@@ -153,7 +147,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       address: '-',
       zipCode: _vm.zipCodeController?.controller?.text ?? '',
       city: _vm.cityController?.controller?.text ?? '',
-      country: _vm.countryController?.controller?.text ?? '',
+      country: _vm.country!,
       gender: _vm.userGender.name.toLowerCase(),
       roleId: _vm.roleId,
     );
@@ -174,6 +168,9 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void processImagePath(String? imagePath) async => emit(_Loaded(_vm = _vm.copyWith(imagePath: imagePath ?? '')));
 
+  void setUserCountry(FoodlyCountries? country) =>
+      country != null ? emit(_Loaded(_vm = _vm.copyWith(country: country))) : null;
+
   void setUserGender(UserGender? gender) => gender != null ? emit(_Loaded(_vm = _vm.copyWith(gender: gender))) : null;
 
   void setUserType(UserRole role) => emit(_Loaded(_vm = _vm.copyWith(roleId: role)));
@@ -185,33 +182,40 @@ class SignUpCubit extends Cubit<SignUpState> {
   void setBusinessCategory(FoodlyCategories? category) =>
       category != null ? emit(_Loaded(_vm = _vm.copyWith(businessCategory: category))) : null;
 
-  void setBusinessDateOfOpening(DateTime? picked) => emit(_Loaded(_vm = _vm.copyWith(businessDateOfOpening: picked)));
+  void setBusinessCountry(FoodlyCountries? country) => country != null
+      ? emit(_Loaded(_vm = _vm.copyWith(businessCountry: country, businessCountryCode: country.countryCode)))
+      : null;
 
   void processLogoPath(String? logoPath) => emit(_Loaded(_vm = _vm.copyWith(logoPath: logoPath ?? '')));
 
   void hideTooltipInBusinessSignUp() => emit(_Loaded(_vm = _vm.copyWith(tooltipActive: false)));
 
   void updateBusinessFromPlacesAPI(Place detail) async {
+    //TODO: store all hardcoded strings and REGEXP
+
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
+
+    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
+      _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
+    }
+
     _vm.businessNameController?.controller?.text = detail.name ?? '';
 
     _vm.businessPhoneNumberController?.controller?.text =
         (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
-
-    _vm.businessCountryController?.controller?.text =
-        detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
 
     _vm = _vm.copyWith(
         businessCountryCode: detail.addressComponents?.firstWhere((d) => d.types.contains('country')).shortName ??
             _locationService.currentCountryCode);
 
     _vm.businessCityController?.controller?.text =
-        detail.addressComponents?.firstWhere((d) => d.types.contains('locality')).longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('locality'))?.longName ?? '';
 
     _vm.businessAddressController?.controller?.text =
-        detail.addressComponents?.firstWhere((d) => d.types.contains('route')).longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('route'))?.longName ?? '';
 
     _vm.businessZipCodeController?.controller?.text =
-        detail.addressComponents?.firstWhere((d) => d.types.contains('postal_code')).longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('postal_code'))?.longName ?? '';
 
     if (detail.geometry != null) {
       final location = detail.geometry!.location;
@@ -228,8 +232,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     }
 
     emit(_Loaded(_vm));
-
-    // if (detail.placeId != null) await fetchPlaceDetails(detail.placeId!);
   }
 
   Future<void> signUpBusiness() async {
@@ -242,7 +244,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       businessAddress: _vm.businessAddressController?.controller?.text ?? '',
       businessZipcode: _vm.businessZipCodeController?.controller?.text ?? '',
       businessCity: _vm.businessCityController?.controller?.text ?? '',
-      businessCountry: _vm.businessCountryController?.controller?.text ?? '',
+      businessCountry: _vm.businessCountry!,
       businessWebsite: '',
       businessLatitude: _vm.businessLocation?.lat,
       businessLongitude: _vm.businessLocation?.lng,
@@ -269,35 +271,4 @@ class SignUpCubit extends Cubit<SignUpState> {
   void onMapCreated(GoogleMapController controller) => emit(_Loaded(_vm = _vm.copyWith(mapController: controller)));
 
   void setAutovalidateMode(AutovalidateMode newMode) => emit(_Loaded(_vm = _vm.copyWith(autovalidateMode: newMode)));
-
-  // Future<void> fetchPlaceDetails(String placeId) async {
-  //   final String url = 'https://maps.googleapis.com/maps/api/place/details/json';
-  //   final _dio = Dio();
-
-  //   try {
-  //     final response = await _dio.get(url, queryParameters: {
-  //       'place_id': placeId,
-  //       'key': 'AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY',
-  //       'fields': 'name,opening_hours',
-  //     });
-
-  //     if (response.statusCode == 200) {
-  //       var openingHours = response.data['result']['opening_hours'];
-  //       if (openingHours != null) {
-  //         log('openingHours: $openingHours');
-  //         print('openingHours: $openingHours');
-  //         // Acceso a 'weekday_text' dentro de 'opening_hours'
-  //         var weekdayText = openingHours['weekday_text'];
-  //         log('Horario de apertura: $weekdayText');
-  //         print('Horario de apertura: $weekdayText');
-  //       } else {
-  //         log('Los horarios de apertura no están disponibles.');
-  //       }
-  //     } else {
-  //       log('Error al obtener los datos del lugar: ${response.statusCode}');
-  //     }
-  //   } on DioException catch (e) {
-  //     log('DioError al obtener los datos del lugar: $e');
-  //   }
-  // }
 }

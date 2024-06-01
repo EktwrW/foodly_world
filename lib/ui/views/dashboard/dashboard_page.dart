@@ -49,13 +49,12 @@ class _DashboardPageState extends State<DashboardPage> {
           loaded: (vm) => di<DialogService>().hideLoading(),
           showCoverImagesDialog: (_) => di<DialogService>().showCustomDialog(const EditCoverImagesDialog(), 2),
           updatingPictures: (vm) => di<DialogService>().showLoading(),
-          picturesUpdated: (vm) async {
-            Navigator.of(context).pop();
-            di<DialogService>().hideLoading();
-            await Future.delayed(Durations.long1)
-                .then((_) => FoodlySnackbars.successGeneric(context, S.current.coverImagesSuccessfullyUpdated));
-          },
+          picturesUpdated: (vm) async =>
+              await popAndSuccessConfirmation(context, S.current.coverImagesSuccessfullyUpdated),
           pictureDeleted: (vm) => di<DialogService>().hideLoading(),
+          editLocation: (vm) => di<DialogService>().showCustomDialog(const EditAddressDialog(), 2),
+          locationUpdated: (vm) async =>
+              await popAndSuccessConfirmation(context, S.current.locationSuccessfullyUpdated),
           error: (e, vm) async {
             di<DialogService>().hideLoading();
             await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.errorGeneric(context, e));
@@ -92,5 +91,11 @@ class _DashboardPageState extends State<DashboardPage> {
         );
       },
     );
+  }
+
+  Future<void> popAndSuccessConfirmation(BuildContext context, String text) async {
+    Navigator.of(context).pop();
+    di<DialogService>().hideLoading();
+    await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.successGeneric(context, text));
   }
 }

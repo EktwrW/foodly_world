@@ -104,7 +104,7 @@ class EditCoverImagesDialog extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const Asset(FoodlyAssets.coverImages, height: 70).paddingBottom(18),
+                      const Asset(FoodlyAssets.coverImages, height: 50).paddingBottom(18),
                       Text(
                         S.current.editCoverImages,
                         textAlign: TextAlign.center,

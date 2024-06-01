@@ -7,6 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_te
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
+import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/dashboard_email_phone.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_save_and_cancel_buttons.dart';
@@ -20,12 +21,6 @@ class ContactChannelsWdg extends StatelessWidget {
     required this.vm,
   });
 
-  void onPressToEdit(DashboardBloc bloc) {
-    vm.businessEmailCtrl?.controller?.text = vm.currentBusiness?.email ?? '';
-    vm.businessPhoneCtrl?.controller?.text = vm.currentBusiness?.phoneNumber ?? '';
-    bloc.add(const DashboardEvent.updateEditing(DashboardEditing.contactUs));
-  }
-
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<DashboardBloc>();
@@ -37,7 +32,10 @@ class ContactChannelsWdg extends StatelessWidget {
         Visibility(
           visible: vm.isEditingContactUs,
           replacement: TextButton(
-            onPressed: () => onPressToEdit(bloc),
+            onPressed: () {
+              bloc.restartContactUsControllers();
+              bloc.add(const DashboardEvent.updateEditing(DashboardEditing.contactUs));
+            },
             focusNode: vm.businessEmailCtrl?.focusNode,
             child: Row(
               children: [
@@ -85,16 +83,10 @@ class ContactChannelsWdg extends StatelessWidget {
                         DashboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
                           onCancelPressed: () {
-                            vm.businessEmailCtrl?.controller?.clear();
-                            vm.businessPhoneCtrl?.controller?.clear();
+                            bloc.restartContactUsControllers();
                             bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
                           },
-                          recordControllers: [
-                            if (vm.businessEmailCtrl?.controller != null && vm.currentBusiness?.email != null)
-                              (vm.businessEmailCtrl!.controller!, vm.currentBusiness!.email!),
-                            if (vm.businessPhoneCtrl?.controller != null && vm.currentBusiness?.phoneNumber != null)
-                              (vm.businessPhoneCtrl!.controller!, vm.currentBusiness!.phoneNumber!),
-                          ],
+                          recordControllers: DashboardHelpers.contactChannelsFieldControllers(vm),
                         ),
                       ],
                     ).paddingTop(8),

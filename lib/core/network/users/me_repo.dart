@@ -80,7 +80,7 @@ class MeRepo {
         address: registerDTO.address,
         zipCode: registerDTO.zipCode,
         city: registerDTO.city,
-        country: registerDTO.country,
+        country: registerDTO.country.value,
         gender: registerDTO.gender,
         roleId: registerDTO.roleId?.index ?? 4,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],

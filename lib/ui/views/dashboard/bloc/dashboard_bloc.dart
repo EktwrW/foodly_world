@@ -3,15 +3,20 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/ui/views/dashboard/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
+import 'package:nova_places_autocomplete/nova_places_autocomplete.dart';
 
 export 'package:foodly_world/data_models/business/business_dm.dart';
 export 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
@@ -28,12 +33,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc()
       : _vm = DashboardVM(
           formKey: GlobalKey<FormState>(),
+          locationFormKey: GlobalKey<FormState>(),
           businessAddressCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessNameCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAboutUsCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessEmailCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessPhoneCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
-          businessCountryCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessCityCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessZipCodeCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAdditionalInfoCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
@@ -105,6 +110,24 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
                 currentBusinessServices: List<BusinessServices>.from(_vm.currentBusinessServices)..add(value.service));
             emit(_Loaded(_vm));
           },
+          editLocationDialog: (_EditLocationDialog value) {
+            restartAddressControllers();
+            _initializeMarkers();
+            _vm = _vm.copyWith(dashboardEditing: DashboardEditing.address);
+            emit(_EditLocation(_vm));
+          },
+          setMapController: (_SetMapController value) {
+            _vm = _vm.copyWith(mapController: value.controller);
+            emit(_Loaded(_vm));
+          },
+          setCountry: (_SetCountry value) {
+            _vm = _vm.copyWith(businessCountry: value.country);
+            emit(_Loaded(_vm));
+          },
+          setAddressFromPlacesAPI: (_SetAddressFromPlacesAPI value) {
+            _updateBusinessFromPlacesAPI(value.detail);
+            emit(_Loaded(_vm));
+          },
 
           /// Event to call server for updating the business object
           updateBusiness: (_UpdateBusiness value) async => await _callToUpdateBusiness(emit),
@@ -115,9 +138,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     add(const DashboardEvent.started());
   }
 
+  // Getters
   bool get noCurrentBusiness => _vm.currentBusiness == null;
   bool get contactUsIsEmpty =>
       (_vm.currentBusiness?.email?.isEmpty ?? true) && (_vm.currentBusiness?.phoneNumber?.isEmpty ?? true);
+  bool get cantUpdateBusiness =>
+      _vm.dashboardEditing != DashboardEditing.address && !(_vm.formKey?.currentState?.validate() ?? false) ||
+      _vm.currentBusiness?.id == null;
+  bool get cantUpdateLocationBusiness =>
+      _vm.dashboardEditing == DashboardEditing.address && !(_vm.locationFormKey?.currentState?.validate() ?? false) ||
+      _vm.currentBusiness?.id == null;
+  String get lang => _authService.lang;
 
   /// Fetch Businesses
   Future<void> _initializeAllBusinesses(Emitter emit) async {
@@ -250,15 +281,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Future<void> _callToUpdateBusiness(Emitter emit) async {
     setAutovalidateMode(AutovalidateMode.always, emit);
 
-    if (!(_vm.formKey?.currentState?.validate() ?? false)) {
+    if (cantUpdateBusiness || cantUpdateLocationBusiness) {
       return;
     }
 
-    var dto = const BusinessUpdateDTO();
-
-    if (_vm.currentBusiness?.id == null) {
-      return;
-    }
+    BusinessUpdateDTO? dto = const BusinessUpdateDTO();
 
     final dtoMap = {
       DashboardEditing.category: dto.copyWith(category: _vm.newCategory),
@@ -271,18 +298,25 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),
     };
 
-    dto = dtoMap[_vm.dashboardEditing] ?? dto;
+    dto = dtoMap[_vm.dashboardEditing];
 
-    emit(_Loading(_vm));
-    await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
-          (result) => result.when(
-            success: (updatedBusiness) {
-              _updateBusinessInCurrentArray(updatedBusiness);
-              emit(_Loaded(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
-            },
-            failure: (error) => _handleError(error, emit),
-          ),
-        );
+    if (dto != null) {
+      emit(_Loading(_vm));
+      await _businessRepo.updateBusiness(_vm.currentBusiness!.id!, dto).then(
+            (result) => result.when(
+              success: (updatedBusiness) {
+                _updateBusinessInCurrentArray(updatedBusiness);
+
+                if (_vm.dashboardEditing == DashboardEditing.address) {
+                  emit(_LocationUpdated(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
+                } else {
+                  emit(_Loaded(_vm = _vm.copyWith(dashboardEditing: DashboardEditing.none)));
+                }
+              },
+              failure: (error) => _handleError(error, emit),
+            ),
+          );
+    }
   }
 
   /// Common methods
@@ -303,4 +337,109 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     _vm = _vm.copyWith(myBusinessesses: businesses, currentBusiness: updatedBusiness);
     _authService.setBusinesses(businesses);
   }
+
+  void restartContactUsControllers() {
+    _vm.businessEmailCtrl?.controller?.text = _vm.currentBusiness?.email ?? '';
+    _vm.businessPhoneCtrl?.controller?.text = _vm.currentBusiness?.phoneNumber ?? '';
+  }
+
+  void restartAddressControllers() {
+    _vm = _vm.copyWith(businessCountry: _vm.currentBusiness?.country);
+    _vm.businessCityCtrl?.controller?.text = _vm.currentBusiness?.city ?? '';
+    _vm.businessAddressCtrl?.controller?.text = _vm.currentBusiness?.address ?? '';
+    _vm.businessZipCodeCtrl?.controller?.text = _vm.currentBusiness?.zipCode ?? '';
+  }
+
+  void _initializeMarkers() {
+    final position = di<LocationService>().currentLocation.position;
+
+    final marker = Marker(
+      markerId: MarkerId('${_vm.currentBusiness?.name} location'),
+      position: LatLng(
+        _vm.currentBusiness?.latitude ?? position?.latitude ?? 0.0,
+        _vm.currentBusiness?.longitude ?? position?.longitude ?? 0.0,
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+    );
+
+    _vm = _vm.copyWith(markers: {marker});
+  }
+
+  void _updateBusinessFromPlacesAPI(Place detail) {
+    //TODO: store all hardcoded strings and REGEXP
+
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
+
+    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
+      _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
+    }
+
+    _vm.businessNameCtrl?.controller?.text = detail.name ?? '';
+
+    _vm.businessPhoneCtrl?.controller?.text = (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
+
+    _vm = _vm.copyWith(
+      businessCountryCode: detail.addressComponents
+              ?.firstWhere(
+                (d) => d.types.contains('country'),
+              )
+              .shortName ??
+          _vm.businessCountry?.countryCode ??
+          di<LocationService>().currentCountryCode,
+    );
+
+    _vm.businessCityCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('locality'))?.longName ?? '';
+
+    _vm.businessAddressCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('route'))?.longName ?? '';
+
+    _vm.businessZipCodeCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('postal_code'))?.longName ?? '';
+
+    if (detail.geometry != null) {
+      final location = detail.geometry!.location;
+
+      _vm = _vm.copyWith(latitude: location.lat, longitude: location.lng);
+
+      final newMarker = Marker(
+        markerId: MarkerId(detail.placeId ?? ''),
+        position: LatLng(location.lat, location.lng),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+        infoWindow: InfoWindow(title: detail.name ?? ''),
+      );
+      _vm = _vm.copyWith(markers: Set.from(_vm.markers)..add(newMarker));
+    }
+  }
 }
+
+// Future<void> fetchPlaceDetails(String placeId) async {
+  //   final String url = 'https://maps.googleapis.com/maps/api/place/details/json';
+  //   final _dio = Dio();
+
+  //   try {
+  //     final response = await _dio.get(url, queryParameters: {
+  //       'place_id': placeId,
+  //       'key': 'AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY',
+  //       'fields': 'name,opening_hours',
+  //     });
+
+  //     if (response.statusCode == 200) {
+  //       var openingHours = response.data['result']['opening_hours'];
+  //       if (openingHours != null) {
+  //         log('openingHours: $openingHours');
+  //         print('openingHours: $openingHours');
+  //         // Acceso a 'weekday_text' dentro de 'opening_hours'
+  //         var weekdayText = openingHours['weekday_text'];
+  //         log('Horario de apertura: $weekdayText');
+  //         print('Horario de apertura: $weekdayText');
+  //       } else {
+  //         log('Los horarios de apertura no están disponibles.');
+  //       }
+  //     } else {
+  //       log('Error al obtener los datos del lugar: ${response.statusCode}');
+  //     }
+  //   } on DioException catch (e) {
+  //     log('DioError al obtener los datos del lugar: $e');
+  //   }
+  // }

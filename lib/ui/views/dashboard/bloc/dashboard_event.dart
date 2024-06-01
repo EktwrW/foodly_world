@@ -14,5 +14,9 @@ class DashboardEvent with _$DashboardEvent {
   const factory DashboardEvent.deleteCoverImageById(BusinessCoverImageDM coverImageDM) = _DeleteCoverImageById;
   const factory DashboardEvent.cancelDeleteCoverImage() = _CancelDeleteCoverImage;
   const factory DashboardEvent.updateEditing(DashboardEditing editing) = _UpdateEditing;
+  const factory DashboardEvent.editLocationDialog() = _EditLocationDialog;
+  const factory DashboardEvent.setCountry(FoodlyCountries country) = _SetCountry;
+  const factory DashboardEvent.setAddressFromPlacesAPI(Place detail) = _SetAddressFromPlacesAPI;
+  const factory DashboardEvent.setMapController(GoogleMapController controller) = _SetMapController;
   const factory DashboardEvent.updateBusiness() = _UpdateBusiness;
 }

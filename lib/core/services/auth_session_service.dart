@@ -21,6 +21,7 @@ import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 class AuthSessionService {
@@ -47,6 +48,7 @@ class AuthSessionService {
   bool get userIsManager => userSessionDM?.user.isManager ?? false;
   String get userId => userSessionDM?.user.userId ?? '';
   Map<String, String>? get authHeader => _authHeader;
+  String get lang => Intl.getCurrentLocale().substring(0, 2);
   // bool get isAccessTokenExpired => isLoggedIn && (userSessionDM?.user.authToken?.isTokenExpired ?? true); //TODO: HW - define the logic to get this value
   bool get isAccessTokenExpired => false; //TODO: HW - define the logic to get this value
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value

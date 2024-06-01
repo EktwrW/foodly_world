@@ -96,7 +96,7 @@ class SignUpBusinessTooltip extends StatelessWidget {
             absorbing: vm.tooltipActive,
             child: NovaPlacesAutocomplete(
               language: cubit.lang,
-              region: vm.currentCountryCode,
+              region: cubit.currentCountryCode,
               apiKey: cubit.googleApiKey,
               prefixIcon: const Icon(Icons.manage_search_sharp),
               cancelIcon: const Icon(Bootstrap.eraser_fill, size: 22),
