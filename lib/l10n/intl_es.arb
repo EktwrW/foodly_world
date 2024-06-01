@@ -14,6 +14,8 @@
   "@addServices": {},
   "address": "Dirección",
   "@address": {},
+  "addOpeningHours": "Añadir Horarios de Apertura",
+  "@addOpeningHours": {},
   "admin": "Administrador",
   "@admin": {},
   "and": "y",
