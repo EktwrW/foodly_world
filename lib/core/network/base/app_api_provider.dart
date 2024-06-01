@@ -11,8 +11,8 @@ class FoodlyApiProvider {
   FoodlyApiProvider(BaseConfig config) {
     _dio = Dio(BaseOptions(
       headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json',
+        FoodlyStrings.CONTENT_TYPE: FoodlyStrings.APPLICATION_JSON,
+        FoodlyStrings.ACCEPT: FoodlyStrings.APPLICATION_JSON,
       },
       baseUrl: '${config.foodlyBaseUrl}${config.foodlyApiVersion}',
     ));

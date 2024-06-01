@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
+import 'package:foodly_world/core/consts/foodly_regex.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
@@ -144,7 +146,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       passwordConfirmation: _vm.passwordController?.controller?.text ?? '',
       phone: _vm.phoneNumberController?.controller?.text ?? '',
       dateOfBirth: _vm.dateOfBirth?.toUtc() ?? DateTime.now().toUtc(),
-      address: '-',
+      address: '',
       zipCode: _vm.zipCodeController?.controller?.text ?? '',
       city: _vm.cityController?.controller?.text ?? '',
       country: _vm.country!,
@@ -191,9 +193,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   void hideTooltipInBusinessSignUp() => emit(_Loaded(_vm = _vm.copyWith(tooltipActive: false)));
 
   void updateBusinessFromPlacesAPI(Place detail) async {
-    //TODO: store all hardcoded strings and REGEXP
-
-    final country = detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
 
     if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
       _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
@@ -202,20 +202,21 @@ class SignUpCubit extends Cubit<SignUpState> {
     _vm.businessNameController?.controller?.text = detail.name ?? '';
 
     _vm.businessPhoneNumberController?.controller?.text =
-        (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
+        (detail.formattedPhoneNumber ?? '').replaceAll(FoodlyRegex.phoneCleanUpCode, '');
 
     _vm = _vm.copyWith(
-        businessCountryCode: detail.addressComponents?.firstWhere((d) => d.types.contains('country')).shortName ??
-            _locationService.currentCountryCode);
+        businessCountryCode:
+            detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).shortName ??
+                _locationService.currentCountryCode);
 
     _vm.businessCityController?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('locality'))?.longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
 
     _vm.businessAddressController?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('route'))?.longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.ROUTE))?.longName ?? '';
 
     _vm.businessZipCodeController?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('postal_code'))?.longName ?? '';
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.POSTAL_CODE))?.longName ?? '';
 
     if (detail.geometry != null) {
       final location = detail.geometry!.location;

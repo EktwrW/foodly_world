@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -44,6 +45,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
     await checkLocationServiceEnabled();
 
+    // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
     if (!_locationDM.serviceEnabled) {
       return Future.error('Los servicios de ubicación están deshabilitados.');
     }
@@ -56,12 +58,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
       _locationDM = _locationDM.copyWith(permission: newPermission);
 
+      // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
       if (_locationDM.permission == LocationPermission.denied) {
         // Los permisos están denegados, siguiente código.
         return Future.error('Los permisos de ubicación están denegados');
       }
     }
 
+    // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
     if (_locationDM.permission == LocationPermission.deniedForever) {
       // Los permisos están denegados para siempre, manejar apropiadamente.
       return Future.error('Los permisos de ubicación están permanentemente denegados, no podemos solicitar permisos.');
@@ -85,24 +89,25 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
         if (results.isNotEmpty) {
           // Google Maps puede retornar múltiples resultados; normalmente, el primero es el más relevante
-          final addressComponents = results[0]['address_components'] as List;
+          final addressComponents = results[0][FoodlyStrings.ADDRESS_COMPONENTS] as List;
 
           for (final component in addressComponents) {
-            final types = component['types'] as List;
-            if (types.contains('country')) {
-              _locationDM = _locationDM.copyWith(country: component['long_name'], countryCode: component['short_name']);
+            final types = component[FoodlyStrings.TYPES] as List;
+            if (types.contains(FoodlyStrings.COUNTRY)) {
+              _locationDM = _locationDM.copyWith(
+                  country: component[FoodlyStrings.LONG_NAME], countryCode: component[FoodlyStrings.SHORT_NAME]);
             }
-            if (types.contains('administrative_area_level_1')) {
-              _locationDM = _locationDM.copyWith(state: component['long_name']);
+            if (types.contains(FoodlyStrings.ADMIN_AREA_LEVEL_1)) {
+              _locationDM = _locationDM.copyWith(state: component[FoodlyStrings.LONG_NAME]);
             }
-            if (types.contains('locality')) {
-              _locationDM = _locationDM.copyWith(city: component['long_name']);
+            if (types.contains(FoodlyStrings.LOCALITY)) {
+              _locationDM = _locationDM.copyWith(city: component[FoodlyStrings.LONG_NAME]);
             }
-            if (types.contains('route')) {
-              _locationDM = _locationDM.copyWith(address: component['long_name']);
+            if (types.contains(FoodlyStrings.ROUTE)) {
+              _locationDM = _locationDM.copyWith(address: component[FoodlyStrings.LONG_NAME]);
             }
-            if (types.contains('postal_code')) {
-              _locationDM = _locationDM.copyWith(zipCode: component['long_name']);
+            if (types.contains(FoodlyStrings.POSTAL_CODE)) {
+              _locationDM = _locationDM.copyWith(zipCode: component[FoodlyStrings.LONG_NAME]);
             }
           }
         }

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart' show Locale;
+import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 
 class FoodlyLocales {
   const FoodlyLocales._();
 
-  static const SUPPORTED_LOCALES = [
-    Locale('en', 'US'),
-    Locale('es', 'US'),
-    Locale('es', 'AR'),
-    Locale('en', 'AR'),
-    Locale('es', 'VE'),
-    Locale('en', 'VE'),
-    Locale('es', 'SV'),
-    Locale('en', 'SV'),
-    Locale('es', 'ES'),
-    Locale('en', 'ES'),
-    Locale('pt', 'PT'),
-    Locale('en', 'PT'),
-    Locale('es', 'PT'),
+  static final supportedLocales = [
+    Locale(FoodlyStrings.EN, FoodlyCountries.USA.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.USA.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.ARGENTINA.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.ARGENTINA.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.VENEZUELA.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.VENEZUELA.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.EL_SALVADOR.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.EL_SALVADOR.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.SPAIN.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.SPAIN.countryCode),
+    Locale(FoodlyStrings.PT, FoodlyCountries.PORTUGAL.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.PORTUGAL.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.PORTUGAL.countryCode),
   ];
 }

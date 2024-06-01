@@ -10,6 +10,8 @@ import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/blocs/root/root_bloc.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/consts/foodly_locales.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/extensions/app_scroll_extension.dart';
 import 'package:foodly_world/core/routing/app_router.dart';
@@ -56,7 +58,7 @@ Future<Widget> buildFoodlyApp() async {
       title: 'Foodly App',
       debugShowCheckedModeBanner: false,
       routerConfig: di<AppRouter>().appRouter,
-      supportedLocales: FoodlyLocales.SUPPORTED_LOCALES,
+      supportedLocales: FoodlyLocales.supportedLocales,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -71,7 +73,7 @@ Future<Widget> buildFoodlyApp() async {
           }
         }
 
-        return const Locale('en', 'US');
+        return Locale(FoodlyStrings.EN, FoodlyCountries.USA.countryCode);
       },
       scrollBehavior: AppScrollBehavior(),
       theme: FoodlyThemes.lightTheme(),

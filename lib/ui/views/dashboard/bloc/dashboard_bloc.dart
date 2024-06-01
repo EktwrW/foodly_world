@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
@@ -368,20 +369,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   void _updateBusinessFromPlacesAPI(Place detail) {
     //TODO: store all hardcoded strings and REGEXP
 
-    final country = detail.addressComponents?.firstWhere((d) => d.types.contains('country')).longName ?? '';
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
 
     if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
       _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
     }
 
-    _vm.businessNameCtrl?.controller?.text = detail.name ?? '';
-
-    _vm.businessPhoneCtrl?.controller?.text = (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(r'[()\s-]'), '');
-
     _vm = _vm.copyWith(
       businessCountryCode: detail.addressComponents
               ?.firstWhere(
-                (d) => d.types.contains('country'),
+                (d) => d.types.contains(FoodlyStrings.COUNTRY),
               )
               .shortName ??
           _vm.businessCountry?.countryCode ??

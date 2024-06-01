@@ -42,42 +42,26 @@ enum BusinessServices {
 
   const BusinessServices(this.iconData, this.value);
 
-  String get text {
-    switch (this) {
-      case BusinessServices.wifi:
-        return S.current.wifi;
-      case BusinessServices.kidChairs:
-        return S.current.kidChairs;
-      case BusinessServices.babyChangingStation:
-        return S.current.babyChangingStation;
-      case BusinessServices.smokingArea:
-        return S.current.smokingArea;
-      case BusinessServices.accessiblePMR:
-        return S.current.accessiblePMR;
-      case BusinessServices.happyBirthday:
-        return S.current.happyBirthday;
-      case BusinessServices.multiLanguage:
-        return S.current.multilanguage;
-      case BusinessServices.delivery:
-        return S.current.delivery;
-      case BusinessServices.takeAway:
-        return S.current.takeAway;
-      case BusinessServices.kidsPlayArea:
-        return S.current.kidsPlayArea;
-      case BusinessServices.catering:
-        return S.current.catering;
-      case BusinessServices.happyHours:
-        return S.current.happyHours;
-      case BusinessServices.parking:
-        return S.current.parking;
-      case BusinessServices.petFriendly:
-        return S.current.petFriendly;
-      case BusinessServices.outdoor:
-        return S.current.outdoorSeating;
-      case BusinessServices.liveMusic:
-        return S.current.liveMusic;
-    }
-  }
+  static final _textMap = {
+    BusinessServices.wifi: S.current.wifi,
+    BusinessServices.kidChairs: S.current.kidChairs,
+    BusinessServices.babyChangingStation: S.current.babyChangingStation,
+    BusinessServices.smokingArea: S.current.smokingArea,
+    BusinessServices.accessiblePMR: S.current.accessiblePMR,
+    BusinessServices.happyBirthday: S.current.happyBirthday,
+    BusinessServices.multiLanguage: S.current.multilanguage,
+    BusinessServices.delivery: S.current.delivery,
+    BusinessServices.takeAway: S.current.takeAway,
+    BusinessServices.kidsPlayArea: S.current.kidsPlayArea,
+    BusinessServices.catering: S.current.catering,
+    BusinessServices.happyHours: S.current.happyHours,
+    BusinessServices.parking: S.current.parking,
+    BusinessServices.petFriendly: S.current.petFriendly,
+    BusinessServices.outdoor: S.current.outdoorSeating,
+    BusinessServices.liveMusic: S.current.liveMusic,
+  };
+
+  String get text => _textMap[this] ?? '';
 }
 
 enum BusinessPlan {
@@ -126,25 +110,16 @@ enum Weekday {
 
   final int value;
   const Weekday(this.value);
-}
 
-extension WeekdayExtension on Weekday {
-  String get dayString {
-    switch (this) {
-      case Weekday.sunday:
-        return S.current.weekday1;
-      case Weekday.monday:
-        return S.current.weekday2;
-      case Weekday.tuesday:
-        return S.current.weekday3;
-      case Weekday.wednesday:
-        return S.current.weekday4;
-      case Weekday.thursday:
-        return S.current.weekday5;
-      case Weekday.friday:
-        return S.current.weekday6;
-      case Weekday.saturday:
-        return S.current.weekday7;
-    }
-  }
+  static final _dayStrings = {
+    Weekday.sunday: S.current.weekday1,
+    Weekday.monday: S.current.weekday2,
+    Weekday.tuesday: S.current.weekday3,
+    Weekday.wednesday: S.current.weekday4,
+    Weekday.thursday: S.current.weekday5,
+    Weekday.friday: S.current.weekday6,
+    Weekday.saturday: S.current.weekday7,
+  };
+
+  String get dayString => _dayStrings[this] ?? '';
 }

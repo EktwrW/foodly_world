@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 
 class LocationService {
@@ -5,7 +6,7 @@ class LocationService {
   LocationDetailsDM get currentLocation => _locationDM;
   bool get mustFetchLocation => currentZipCode.isEmpty;
 
-  String get currentCountryCode => _locationDM.countryCode ?? 'US';
+  String get currentCountryCode => _locationDM.countryCode ?? FoodlyCountries.USA.countryCode;
   String get currentCountry => _locationDM.country ?? '';
   String get currentState => _locationDM.state ?? '';
   String get currentCity => _locationDM.city ?? '';
