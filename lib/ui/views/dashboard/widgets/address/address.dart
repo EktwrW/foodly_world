@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
@@ -13,6 +12,7 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
+import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -22,9 +22,8 @@ import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_save_and_cancel_buttons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
+import 'package:icons_plus/icons_plus.dart' show Clarity;
 import 'package:logger/logger.dart';
-import 'package:nova_places_autocomplete/nova_places_autocomplete.dart';
 
 part 'edit_address_dialog.dart';
 

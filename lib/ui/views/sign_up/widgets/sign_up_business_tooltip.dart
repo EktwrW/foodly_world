@@ -2,19 +2,19 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/view_model/sign_up_vm.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:logger/logger.dart';
-import 'package:nova_places_autocomplete/nova_places_autocomplete.dart';
 
 class SignUpBusinessTooltip extends StatelessWidget {
   const SignUpBusinessTooltip({
@@ -94,21 +94,9 @@ class SignUpBusinessTooltip extends StatelessWidget {
           color: vm.tooltipActive ? Colors.white : Colors.transparent,
           child: AbsorbPointer(
             absorbing: vm.tooltipActive,
-            child: NovaPlacesAutocomplete(
+            child: PlacesAutocompleteWdg(
               language: cubit.lang,
-              region: cubit.currentCountryCode,
-              apiKey: cubit.googleApiKey,
-              prefixIcon: const Icon(Icons.manage_search_sharp),
-              cancelIcon: const Icon(Bootstrap.eraser_fill, size: 22),
-              detailRequired: true,
-              hintText: S.current.searchBusinessOrAddress,
-              onPicked: (prediction) {
-                di<Logger>().i('$prediction');
-              },
-              onSearchFailed: (error) {
-                di<Logger>().e(error);
-              },
-              autocompleteOnTrailingWhitespace: true,
+              components: FoodlyCountries.USA.apiComponents,
               autofocus: !vm.tooltipActive,
               onPickedPlaceDetail: (detail) {
                 cubit.updateBusinessFromPlacesAPI(detail);

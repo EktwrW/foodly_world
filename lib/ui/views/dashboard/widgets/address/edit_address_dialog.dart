@@ -65,18 +65,9 @@ class EditAddressDialog extends StatelessWidget {
                             ).paddingLeft(20),
                           ],
                         ).paddingOnly(top: 25, bottom: 35),
-                        NovaPlacesAutocomplete(
+                        PlacesAutocompleteWdg(
                           language: bloc.lang,
-                          apiKey: di<BaseConfig>().googleDefaultApiKey,
-                          onPicked: (prediction) => di<Logger>().i('$prediction'),
-                          onSearchFailed: (error) {
-                            di<Logger>().e(error);
-                          },
                           components: vm.businessCountry?.apiComponents,
-                          prefixIcon: const Icon(Icons.manage_search_sharp),
-                          cancelIcon: const Icon(Bootstrap.eraser_fill, size: 22),
-                          autocompleteOnTrailingWhitespace: true,
-                          detailRequired: true,
                           onPickedPlaceDetail: (detail) {
                             bloc.add(DashboardEvent.setAddressFromPlacesAPI(detail));
                             if (detail.geometry != null) {
