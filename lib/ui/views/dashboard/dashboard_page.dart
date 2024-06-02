@@ -9,7 +9,6 @@ import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/additional_info/additional_info.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/address/address.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/services/services.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/category_and_rating/category_and_rating.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/contact_channels.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/customer_reviews/customer_reviews.dart';
@@ -17,6 +16,7 @@ import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_footer_buttons
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/opening_hours/opening_hours.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/services/services.dart';
 
 //import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
