@@ -21,37 +21,41 @@ class CategoryWdg extends StatelessWidget {
     final bloc = context.read<DashboardBloc>();
 
     if (vm.isEditingCategory) {
-      return FadeIn(
-        child: Column(
-          children: [
-            FoodlyDropdownButtonFormField<FoodlyCategories>(
-              onChanged: (FoodlyCategories? category) =>
-                  category != null ? bloc.add(DashboardEvent.setCategory(category)) : null,
-              enabled: vm.isEditingCategory,
-              items: FoodlyCategories.values.map<DropdownMenuItem<FoodlyCategories>>((category) {
-                return DropdownMenuItem<FoodlyCategories>(
-                  value: category,
-                  child: Row(
-                    children: [
-                      SizedBox.square(dimension: 30, child: category.icon).paddingSymmetric(horizontal: 10),
-                      Text(category.text),
-                    ],
-                  ),
-                );
-              }).toList(),
-              value: vm.newCategory ?? vm.currentBusiness?.category,
-              validatorText: S.current.pleaseSelectBusinessCategory,
-              hintText: S.current.businessCategory,
-            ),
-            DashboardSaveAndCancelButtons(
-              onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
-              onCancelPressed: () {
-                bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
-              },
-              showSaveButton: vm.newCategory != null && vm.newCategory != vm.currentBusiness?.category,
-            ),
-          ],
-        ).paddingRight(16),
+      return Form(
+        key: vm.categoryFormKey,
+        autovalidateMode: vm.autovalidateMode,
+        child: FadeIn(
+          child: Column(
+            children: [
+              FoodlyDropdownButtonFormField<FoodlyCategories>(
+                onChanged: (FoodlyCategories? category) =>
+                    category != null ? bloc.add(DashboardEvent.setCategory(category)) : null,
+                enabled: vm.isEditingCategory,
+                items: FoodlyCategories.values.map<DropdownMenuItem<FoodlyCategories>>((category) {
+                  return DropdownMenuItem<FoodlyCategories>(
+                    value: category,
+                    child: Row(
+                      children: [
+                        SizedBox.square(dimension: 30, child: category.icon).paddingSymmetric(horizontal: 10),
+                        Text(category.text),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                value: vm.newCategory ?? vm.currentBusiness?.category,
+                validatorText: S.current.pleaseSelectBusinessCategory,
+                hintText: S.current.businessCategory,
+              ),
+              DashboardSaveAndCancelButtons(
+                onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
+                onCancelPressed: () {
+                  bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none));
+                },
+                showSaveButton: vm.newCategory != null && vm.newCategory != vm.currentBusiness?.category,
+              ),
+            ],
+          ).paddingRight(16),
+        ),
       );
     }
     return FadeIn(

@@ -59,7 +59,7 @@ class ContactChannelsWdg extends StatelessWidget {
               Expanded(
                 child: FadeIn(
                   child: Form(
-                    key: vm.formKey,
+                    key: vm.contactUsFormKey,
                     autovalidateMode: vm.autovalidateMode,
                     child: Column(
                       children: [
@@ -79,6 +79,7 @@ class ContactChannelsWdg extends StatelessWidget {
                           onSubmitted: (_) => bloc.add(const DashboardEvent.updateBusiness()),
                           autovalidateMode: vm.autovalidateMode,
                           enabled: vm.isEditingContactUs,
+                          initialCountryCode: vm.businessCountryCode,
                         ),
                         DashboardSaveAndCancelButtons(
                           onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),

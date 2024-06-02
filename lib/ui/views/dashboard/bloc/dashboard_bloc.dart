@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
-import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -33,8 +31,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc()
       : _vm = DashboardVM(
-          formKey: GlobalKey<FormState>(),
+          nameFormKey: GlobalKey<FormState>(),
           locationFormKey: GlobalKey<FormState>(),
+          categoryFormKey: GlobalKey<FormState>(),
+          aboutUsFormKey: GlobalKey<FormState>(),
+          openingHoursFormKey: GlobalKey<FormState>(),
+          servicesFormKey: GlobalKey<FormState>(),
+          contactUsFormKey: GlobalKey<FormState>(),
+          addInfoFormKey: GlobalKey<FormState>(),
           businessAddressCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessNameCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAboutUsCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
@@ -143,12 +147,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   bool get noCurrentBusiness => _vm.currentBusiness == null;
   bool get contactUsIsEmpty =>
       (_vm.currentBusiness?.email?.isEmpty ?? true) && (_vm.currentBusiness?.phoneNumber?.isEmpty ?? true);
-  bool get cantUpdateBusiness =>
-      _vm.dashboardEditing != DashboardEditing.address && !(_vm.formKey?.currentState?.validate() ?? false) ||
-      _vm.currentBusiness?.id == null;
-  bool get cantUpdateLocationBusiness =>
-      _vm.dashboardEditing == DashboardEditing.address && !(_vm.locationFormKey?.currentState?.validate() ?? false) ||
-      _vm.currentBusiness?.id == null;
+
+  // Form keys validations
+  bool get notValidName => !(_vm.nameFormKey?.currentState?.validate() ?? false);
+  bool get notValidLocation => !(_vm.locationFormKey?.currentState?.validate() ?? false);
+  bool get notValidCategory => !(_vm.categoryFormKey?.currentState?.validate() ?? false);
+  bool get notValidAboutUs => !(_vm.aboutUsFormKey?.currentState?.validate() ?? false);
+  bool get notValidOpeningHours => !(_vm.openingHoursFormKey?.currentState?.validate() ?? false);
+  bool get notValidServices => !(_vm.servicesFormKey?.currentState?.validate() ?? false);
+  bool get notValidContactUs => !(_vm.contactUsFormKey?.currentState?.validate() ?? false);
+  bool get notValidAdditionalInfo => !(_vm.addInfoFormKey?.currentState?.validate() ?? false);
+
+  Map<DashboardEditing, bool> get cantEditBusiness => {
+        DashboardEditing.name: notValidName || _vm.currentBusiness?.id == null,
+        DashboardEditing.address: notValidLocation || _vm.currentBusiness?.id == null,
+        DashboardEditing.category: notValidCategory || _vm.currentBusiness?.id == null,
+        DashboardEditing.aboutUs: notValidAboutUs || _vm.currentBusiness?.id == null,
+        DashboardEditing.openingHours: notValidOpeningHours || _vm.currentBusiness?.id == null,
+        DashboardEditing.services: notValidServices || _vm.currentBusiness?.id == null,
+        DashboardEditing.contactUs: notValidContactUs || _vm.currentBusiness?.id == null,
+        DashboardEditing.additionalInfo: notValidAdditionalInfo || _vm.currentBusiness?.id == null,
+      };
+
   String get lang => _authService.lang;
 
   /// Fetch Businesses
@@ -282,7 +302,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Future<void> _callToUpdateBusiness(Emitter emit) async {
     setAutovalidateMode(AutovalidateMode.always, emit);
 
-    if (cantUpdateBusiness || cantUpdateLocationBusiness) {
+    if (cantEditBusiness[_vm.dashboardEditing] ?? true) {
       return;
     }
 
@@ -360,54 +380,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         _vm.currentBusiness?.latitude ?? position?.latitude ?? 0.0,
         _vm.currentBusiness?.longitude ?? position?.longitude ?? 0.0,
       ),
+      infoWindow: InfoWindow(title: '${_vm.currentBusiness?.name ?? ''} ${_vm.currentBusiness?.fullAddress ?? ''}'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
     );
 
     _vm = _vm.copyWith(markers: {marker});
   }
 
-  void _updateBusinessFromPlacesAPI(Place detail) {
-    //TODO: store all hardcoded strings and REGEXP
-
-    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
-
-    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
-      _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
-    }
-
-    _vm = _vm.copyWith(
-      businessCountryCode: detail.addressComponents
-              ?.firstWhere(
-                (d) => d.types.contains(FoodlyStrings.COUNTRY),
-              )
-              .shortName ??
-          _vm.businessCountry?.countryCode ??
-          di<LocationService>().currentCountryCode,
-    );
-
-    _vm.businessCityCtrl?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('locality'))?.longName ?? '';
-
-    _vm.businessAddressCtrl?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('route'))?.longName ?? '';
-
-    _vm.businessZipCodeCtrl?.controller?.text =
-        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains('postal_code'))?.longName ?? '';
-
-    if (detail.geometry != null) {
-      final location = detail.geometry!.location;
-
-      _vm = _vm.copyWith(latitude: location.lat, longitude: location.lng);
-
-      final newMarker = Marker(
-        markerId: MarkerId(detail.placeId ?? ''),
-        position: LatLng(location.lat, location.lng),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
-        infoWindow: InfoWindow(title: detail.name ?? ''),
-      );
-      _vm = _vm.copyWith(markers: Set.from(_vm.markers)..add(newMarker));
-    }
-  }
+  void _updateBusinessFromPlacesAPI(Place detail) => _vm = DashboardHelpers.setAddressFromPlacesAPI(detail, _vm);
 }
 
 // Future<void> fetchPlaceDetails(String placeId) async {

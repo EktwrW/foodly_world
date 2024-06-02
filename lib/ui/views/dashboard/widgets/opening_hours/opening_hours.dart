@@ -49,7 +49,7 @@ class OpeningHoursWdg extends StatelessWidget {
             ),
           ),
           child: Form(
-            key: vm.formKey,
+            key: vm.openingHoursFormKey,
             autovalidateMode: vm.autovalidateMode,
             child: DashboardSaveAndCancelButtons(
               showSaveButton: false,

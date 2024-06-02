@@ -31,11 +31,16 @@ class DashboardVM with _$DashboardVM {
     InputController? businessAddressCtrl,
     InputController? businessZipCodeCtrl,
     InputController? businessAdditionalInfoCtrl,
-    String? businessCountryCode,
     double? latitude,
     double? longitude,
-    GlobalKey<FormState>? formKey,
+    GlobalKey<FormState>? nameFormKey,
+    GlobalKey<FormState>? aboutUsFormKey,
+    GlobalKey<FormState>? openingHoursFormKey,
+    GlobalKey<FormState>? servicesFormKey,
+    GlobalKey<FormState>? contactUsFormKey,
+    GlobalKey<FormState>? addInfoFormKey,
     GlobalKey<FormState>? locationFormKey,
+    GlobalKey<FormState>? categoryFormKey,
     FoodlyCountries? businessCountry,
     @Default({}) Set<Marker> markers,
     GoogleMapController? mapController,
@@ -50,4 +55,6 @@ class DashboardVM with _$DashboardVM {
   bool get isEditingServices => dashboardEditing == DashboardEditing.services;
   bool get isEditingContactUs => dashboardEditing == DashboardEditing.contactUs;
   bool get isEditingAdditionalInfo => dashboardEditing == DashboardEditing.additionalInfo;
+
+  String? get businessCountryCode => businessCountry?.countryCode ?? currentBusiness?.country?.countryCode;
 }

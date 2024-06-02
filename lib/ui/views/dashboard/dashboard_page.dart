@@ -9,7 +9,7 @@ import 'package:foodly_world/ui/views/dashboard/bloc/dashboard_bloc.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/additional_info/additional_info.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/address/address.dart';
-import 'package:foodly_world/ui/views/dashboard/widgets/business_services/business_services.dart';
+import 'package:foodly_world/ui/views/dashboard/widgets/services/services.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/category_and_rating/category_and_rating.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/contact_channels/contact_channels.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/customer_reviews/customer_reviews.dart';
@@ -68,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
           CategoryAndRatingWdg(vm: vm),
           AboutUsWdg(vm: vm),
           OpeningHoursWdg(vm: vm),
-          BusinessServicesWdg(vm: vm),
+          ServicesWdg(vm: vm),
           CustomerReviewsWdg(vm: vm),
           ContactChannelsWdg(vm: vm),
           AdditionalInfoWdg(vm: vm),

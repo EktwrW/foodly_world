@@ -13,9 +13,9 @@ import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/views/dashboard/widgets/dashboard_titles_rich_text.dart';
 
-class BusinessServicesWdg extends StatelessWidget {
+class ServicesWdg extends StatelessWidget {
   final DashboardVM vm;
-  const BusinessServicesWdg({
+  const ServicesWdg({
     super.key,
     required this.vm,
   });
@@ -25,7 +25,7 @@ class BusinessServicesWdg extends StatelessWidget {
     final bloc = context.read<DashboardBloc>();
 
     return Form(
-      key: vm.formKey,
+      key: vm.servicesFormKey,
       autovalidateMode: vm.autovalidateMode,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -50,7 +50,7 @@ class BusinessNameWdg extends StatelessWidget {
           Expanded(
             child: FadeIn(
               child: Form(
-                key: vm.formKey,
+                key: vm.nameFormKey,
                 autovalidateMode: vm.autovalidateMode,
                 child: Column(
                   children: [

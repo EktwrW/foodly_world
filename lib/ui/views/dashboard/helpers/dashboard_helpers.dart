@@ -2,18 +2,54 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/dashboard/view_model/dashboard_vm.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:nova_places_autocomplete/nova_places_autocomplete.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DashboardHelpers {
   const DashboardHelpers._();
+
+  static DashboardVM setAddressFromPlacesAPI(Place detail, DashboardVM vm) {
+    final countryCode =
+        detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).shortName ?? '';
+
+    vm = vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.countryCode.contains(countryCode)));
+
+    vm.businessCityCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
+
+    vm.businessAddressCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.ROUTE))?.longName ?? '';
+
+    vm.businessZipCodeCtrl?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.POSTAL_CODE))?.longName ?? '';
+
+    if (detail.geometry != null) {
+      final location = detail.geometry!.location;
+
+      vm = vm.copyWith(latitude: location.lat, longitude: location.lng);
+
+      final newMarker = Marker(
+        markerId: MarkerId(detail.placeId ?? ''),
+        position: LatLng(location.lat, location.lng),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+        infoWindow: InfoWindow(title: '${detail.name ?? ''} ${detail.formattedAddress ?? ''}'),
+      );
+      vm = vm.copyWith(markers: Set.from(vm.markers)..add(newMarker));
+    }
+
+    return vm;
+  }
 
   static List<(TextEditingController, String)> addressFieldControllers(DashboardVM vm) {
     final list = <(TextEditingController, String)>[];

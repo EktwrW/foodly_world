@@ -57,7 +57,7 @@ class AdditionalInfoWdg extends StatelessWidget {
               Expanded(
                 child: FadeIn(
                   child: Form(
-                    key: vm.formKey,
+                    key: vm.addInfoFormKey,
                     autovalidateMode: vm.autovalidateMode,
                     child: Column(
                       children: [

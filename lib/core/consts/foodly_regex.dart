@@ -18,8 +18,8 @@ class FoodlyRegex {
     /// United States: 5 digits, optionally followed by a dash and 4 additional digits
     FoodlyCountries.USA.countryCode: r'^\d{5}(-\d{4})?$',
 
-    /// Argentina: 4 digits, and optionally a letter at the beginning and three letters at the end
-    FoodlyCountries.ARGENTINA.countryCode: r'^[A-Z]?\d{4}[A-Z]{3}?$',
+    /// Argentina: optionally one letter at the beginning, exactly 4 digits, optionally up to three letters at the end
+    FoodlyCountries.ARGENTINA.countryCode: r'^[A-Z]?\d{4}[A-Z]{0,3}$',
 
     /// Venezuela: 4 digits
     FoodlyCountries.VENEZUELA.countryCode: r'^\d{4}$',
