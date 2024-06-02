@@ -55,8 +55,11 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (avatarUrl?.isEmpty ?? true) {
+      return isBusiness ? businessPlaceholder : userAvatarPlaceholder;
+    }
     return CachedNetworkImage(
-      imageUrl: avatarUrl ?? '',
+      imageUrl: avatarUrl!,
       imageBuilder: (context, imageProvider) => Container(
         constraints: BoxConstraints.tight(Size(width!, height!)),
         decoration: const BoxDecoration(shape: BoxShape.circle),
