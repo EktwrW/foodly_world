@@ -135,9 +135,6 @@ class DashboardHelpers {
       sourcePath: imagePath,
       compressQuality: 100,
       aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
-      aspectRatioPresets: [
-        CropAspectRatioPreset.ratio16x9,
-      ],
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: S.current.cropImage,
@@ -147,28 +144,22 @@ class DashboardHelpers {
           initAspectRatio: CropAspectRatioPreset.square,
           lockAspectRatio: true,
           showCropGrid: false,
+          aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
         ),
         IOSUiSettings(
           title: S.current.cropImage,
           aspectRatioLockEnabled: true,
           cancelButtonTitle: S.current.cancel,
           doneButtonTitle: S.current.save,
+          aspectRatioPresets: [CropAspectRatioPreset.ratio16x9],
         ),
         WebUiSettings(
           context: getContext(),
-          boundary: CroppieBoundary(
+          size: CropperSize(
             width: (getContext().screenWidth - 200).toInt(),
             height: ((getContext().screenWidth - 200) / 16 * 9).toInt(),
           ),
-          viewPort: CroppieViewPort(
-            width: (getContext().screenWidth - 200).toInt(),
-            height: ((getContext().screenWidth - 200) / 16 * 9).toInt(),
-            type: FoodlyStrings.SQUARE,
-          ),
-          enableExif: true,
-          enableZoom: true,
-          showZoomer: true,
-          enableOrientation: true,
+          viewwMode: WebViewMode.mode_0,
         ),
       ],
     );

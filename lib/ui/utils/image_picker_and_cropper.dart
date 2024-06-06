@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
@@ -111,21 +110,21 @@ Future<String> _cropImage(
   CropAspectRatio? aspectRatio,
 ) async {
   final isRectangle = cropStyle == CropStyle.rectangle;
+  final presets = aspectRatioPresets ??
+      [
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9,
+      ];
 
   final croppedImage = await ImageCropper().cropImage(
     sourcePath: imagePath,
     compressQuality: quality,
-    cropStyle: cropStyle ?? CropStyle.circle,
     aspectRatio: aspectRatio,
-    aspectRatioPresets: aspectRatioPresets ??
-        [
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9,
-        ],
     uiSettings: [
       AndroidUiSettings(
+        cropStyle: cropStyle ?? CropStyle.circle,
         toolbarTitle: S.current.cropImage,
         toolbarColor: FoodlyThemes.primaryFoodly,
         activeControlsWidgetColor: ui.NeumorphicColors.accent,
@@ -133,24 +132,21 @@ Future<String> _cropImage(
         initAspectRatio: CropAspectRatioPreset.square,
         lockAspectRatio: aspectRatioPresets?.length == 1,
         showCropGrid: false,
+        aspectRatioPresets: presets,
       ),
-      IOSUiSettings(title: S.current.cropImage, aspectRatioLockEnabled: aspectRatioPresets?.length == 1),
+      IOSUiSettings(
+        title: S.current.cropImage,
+        aspectRatioLockEnabled: aspectRatioPresets?.length == 1,
+        cropStyle: cropStyle ?? CropStyle.circle,
+        aspectRatioPresets: presets,
+      ),
       WebUiSettings(
         context: context,
-        boundary: CroppieBoundary(
+        size: CropperSize(
           width: (context.screenWidth - 200).toInt(),
           height: isRectangle ? ((context.screenWidth - 200) / 16 * 9).toInt() : (context.screenWidth - 200).toInt(),
         ),
-        viewPort: CroppieViewPort(
-          width: (context.screenWidth - 200).toInt(),
-          height: isRectangle ? ((context.screenWidth - 200) / 16 * 9).toInt() : (context.screenWidth - 200).toInt(),
-          type: isRectangle ? FoodlyStrings.SQUARE : FoodlyStrings.CIRCLE,
-        ),
-        enableExif: true,
-        enableZoom: true,
-        showZoomer: true,
-        enableOrientation: true,
-        enableResize: !isRectangle,
+        viewwMode: WebViewMode.mode_0,
       ),
     ],
   );

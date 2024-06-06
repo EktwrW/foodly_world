@@ -107,8 +107,8 @@ class FoodlyDrawer extends StatelessWidget {
                   iconSize: iconSize,
                   buttonDiameter: buttonDiameter,
                   paddingAll: 0,
-                  onPressed: () async =>
-                      await pickImage(context).then((path) => getCubit(context).updateProfilePhoto(path)),
+                  onPressed: () async => await pickImage(context)
+                      .then((path) => path.isNotEmpty ? getCubit(context).updateProfilePhoto(path) : null),
                 ),
               ),
             ],

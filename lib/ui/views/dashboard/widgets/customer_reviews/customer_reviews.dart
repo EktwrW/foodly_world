@@ -26,21 +26,24 @@ class CustomerReviewsWdg extends StatelessWidget {
           firstText: '${S.current.dashboardReviewsOfOurCustomersText1} ',
           secondText: S.current.dashboardReviewsOfOurCustomersText2,
         ),
-        // Center(
-        //   child: Column(
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: [
-        //       const Asset(FoodlyAssets.noCustomerReviewsYet, width: 40),
-        //       Flexible(
-        //         child: Text(
-        //           S.current.thereAreNoCustomerReviewsYet,
-        //           style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.primaryFoodly),
-        //         ).paddingTop(8),
-        //       ),
-        //     ],
-        //   ).paddingVertical(16),
-        // ),
-        const ReviewCard()
+        Visibility(
+          visible: vm.currentBusiness?.reviews?.isEmpty ?? true,
+          replacement: const ReviewCard(),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Asset(FoodlyAssets.noCustomerReviewsYet, width: 40),
+                Flexible(
+                  child: Text(
+                    S.current.thereAreNoCustomerReviewsYet,
+                    style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.primaryFoodly),
+                  ).paddingTop(8),
+                ),
+              ],
+            ).paddingVertical(16),
+          ),
+        ),
       ],
     );
   }
