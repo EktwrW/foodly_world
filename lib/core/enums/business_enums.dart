@@ -93,20 +93,20 @@ extension BusinessPlanExtension on BusinessPlan {
 }
 
 enum Weekday {
+  @JsonValue(0)
+  sunday(0),
   @JsonValue(1)
-  sunday(1),
+  monday(1),
   @JsonValue(2)
-  monday(2),
+  tuesday(2),
   @JsonValue(3)
-  tuesday(3),
+  wednesday(3),
   @JsonValue(4)
-  wednesday(4),
+  thursday(4),
   @JsonValue(5)
-  thursday(5),
+  friday(5),
   @JsonValue(6)
-  friday(6),
-  @JsonValue(7)
-  saturday(7);
+  saturday(6);
 
   final int value;
   const Weekday(this.value);
@@ -122,4 +122,106 @@ enum Weekday {
   };
 
   String get dayString => _dayStrings[this] ?? '';
+}
+
+enum Hour {
+  @JsonValue('00:00')
+  zero('00:00'),
+  @JsonValue('00:30')
+  zeroAndAHalf('00:30'),
+  @JsonValue('01:00')
+  one('01:00'),
+  @JsonValue('01:30')
+  oneAndAHalf('01:30'),
+  @JsonValue('02:00')
+  two('02:00'),
+  @JsonValue('02:30')
+  twoAndAHalf('02:30'),
+  @JsonValue('03:00')
+  three('03:00'),
+  @JsonValue('03:30')
+  threeAndAHalf('03:30'),
+  @JsonValue('04:00')
+  four('04:00'),
+  @JsonValue('04:30')
+  fourAndAHalf('04:30'),
+  @JsonValue('05:00')
+  five('05:00'),
+  @JsonValue('05:30')
+  fiveAndAHalf('05:30'),
+  @JsonValue('06:00')
+  six('06:00'),
+  @JsonValue('06:30')
+  sixAndAHalf('06:30'),
+  @JsonValue('07:00')
+  seven('07:00'),
+  @JsonValue('07:30')
+  sevenAndAHalf('07:30'),
+  @JsonValue('08:00')
+  eight('08:00'),
+  @JsonValue('08:30')
+  eightAndAHalf('08:30'),
+  @JsonValue('09:00')
+  nine('09:00'),
+  @JsonValue('09:30')
+  nineAndAHalf('09:30'),
+  @JsonValue('10:00')
+  ten('10:00'),
+  @JsonValue('10:30')
+  tenAndAHalf('10:30'),
+  @JsonValue('11:00')
+  eleven('11:00'),
+  @JsonValue('11:30')
+  elevenAndAHalf('11:30'),
+  @JsonValue('12:00')
+  twelve('12:00'),
+  @JsonValue('12:30')
+  twelveAndAHalf('12:30'),
+  @JsonValue('13:00')
+  thirteen('13:00'),
+  @JsonValue('13:30')
+  thirteenAndAHalf('13:30'),
+  @JsonValue('14:00')
+  fourteen('14:00'),
+  @JsonValue('14:30')
+  fourteenAndAHalf('14:30'),
+  @JsonValue('15:00')
+  fifteen('15:00'),
+  @JsonValue('15:30')
+  fifteenAndAHalf('15:30'),
+  @JsonValue('16:00')
+  sixteen('16:00'),
+  @JsonValue('16:30')
+  sixteenAndAHalf('16:30'),
+  @JsonValue('17:00')
+  seventeen('17:00'),
+  @JsonValue('17:30')
+  seventeenAndAHalf('17:30'),
+  @JsonValue('18:00')
+  eighteen('18:00'),
+  @JsonValue('18:30')
+  eighteenAndAHalf('18:30'),
+  @JsonValue('19:00')
+  nineteen('19:00'),
+  @JsonValue('19:30')
+  nineteenAndAHalf('19:30'),
+  @JsonValue('20:00')
+  twenty('20:00'),
+  @JsonValue('20:30')
+  twentyAndAHalf('20:30'),
+  @JsonValue('21:00')
+  twentyOne('21:00'),
+  @JsonValue('21:30')
+  twentyOneAndAHalf('21:30'),
+  @JsonValue('22:00')
+  twentyTwo('22:00'),
+  @JsonValue('22:30')
+  twentyTwoAndAHalf('22:30'),
+  @JsonValue('23:00')
+  twentyThree('23:00'),
+  @JsonValue('23:30')
+  twentyThreeAndAHalf('23:30');
+
+  final String value;
+  const Hour(this.value);
 }

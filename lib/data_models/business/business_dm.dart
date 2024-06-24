@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:foodly_world/core/enums/business_enums.dart';
 export 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 export 'package:foodly_world/data_models/business/business_cover_image_dm.dart';
+export 'package:foodly_world/data_models/business/opening_hours_dm.dart';
 
 part 'business_dm.freezed.dart';
 part 'business_dm.g.dart';
@@ -38,7 +39,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'category_id') FoodlyCategories? category,
     @JsonKey(name: 'business_reviews') @Default([]) List<Object>? reviews,
     @JsonKey(name: 'business_rating') double? rating,
-    @JsonKey(name: 'opening_hours') OpeningHoursDM? openingHours,
+    @JsonKey(name: 'opening_hours') @Default(BusinessOpeningHoursDm()) BusinessOpeningHoursDm openingHours,
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);

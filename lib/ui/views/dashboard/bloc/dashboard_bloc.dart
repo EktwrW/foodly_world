@@ -96,6 +96,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
               dashboardEditing: value.editing,
               newCategory: _vm.currentBusiness?.category,
               currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
+              currentOpeningHours: _vm.currentBusiness?.openingHours ?? const BusinessOpeningHoursDm(),
             );
             emit(_Loaded(_vm));
           },
@@ -132,6 +133,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           setAddressFromPlacesAPI: (_SetAddressFromPlacesAPI value) {
             _updateBusinessFromPlacesAPI(value.detail);
             emit(_Loaded(_vm));
+          },
+          setOpeningHoursDay: (_SetOpeningHoursDay value) {
+            _setOpeningHours(value, emit);
           },
 
           /// Event to call server for updating the business object
@@ -195,6 +199,29 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     _authService.setBusinesses(businesses);
 
     emit(_Loaded(_vm));
+  }
+
+  /// handle opening hours edition
+  void _setOpeningHours(_SetOpeningHoursDay value, Emitter<DashboardState> emit) {
+    if (value.dayIndex >= 0 && value.dayIndex <= 6) {
+      final Map<int, BusinessDays Function(BusinessDays, Day)> copyWithMap = {
+        0: (BusinessDays days, Day day) => days.copyWith(day0: day),
+        1: (BusinessDays days, Day day) => days.copyWith(day1: day),
+        2: (BusinessDays days, Day day) => days.copyWith(day2: day),
+        3: (BusinessDays days, Day day) => days.copyWith(day3: day),
+        4: (BusinessDays days, Day day) => days.copyWith(day4: day),
+        5: (BusinessDays days, Day day) => days.copyWith(day5: day),
+        6: (BusinessDays days, Day day) => days.copyWith(day6: day),
+      };
+
+      final updatedBusinessDays = copyWithMap[value.dayIndex]!(_vm.currentOpeningHours.businessDays, value.day);
+
+      final updatedOpeningHours = _vm.currentOpeningHours.copyWith(businessDays: updatedBusinessDays);
+
+      _vm = _vm.copyWith(currentOpeningHours: updatedOpeningHours);
+
+      emit(_Loaded(_vm));
+    }
   }
 
   /// Image methods & handling
@@ -313,7 +340,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       DashboardEditing.address: DashboardHelpers.getAddressFields(dto, _vm),
       DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
       DashboardEditing.contactUs: DashboardHelpers.getContactUsFields(dto, _vm),
-      DashboardEditing.openingHours: dto.copyWith(),
+      DashboardEditing.openingHours: dto.copyWith(openingHours: _vm.currentOpeningHours),
       DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
       DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),
       DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),
@@ -340,7 +367,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  /// Common methods
+  /// Dashboard common methods
 
   void _handleError(AppRequestException error, Emitter emit) {
     di<Logger>().e(error);

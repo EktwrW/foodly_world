@@ -16,6 +16,9 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
   final InputDecoration? decoration;
   final FocusNode? focusNode;
   final Widget? icon;
+  final double? height;
+  final double? width;
+  final String? Function(T?)? validator;
 
   const FoodlyDropdownButtonFormField({
     super.key,
@@ -30,12 +33,16 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
     this.decoration,
     this.focusNode,
     this.icon,
+    this.height = 65,
+    this.width,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 65,
+      height: height,
+      width: width,
       child: DropdownButtonFormField<T>(
         value: value,
         focusNode: focusNode,
@@ -54,7 +61,7 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
             ),
         onChanged: enabled ? onChanged : null,
         items: items,
-        validator: (value) => value == null ? (validatorText ?? S.current.pleaseSelectAnOption) : null,
+        validator: validator ?? (value) => value == null ? (validatorText ?? S.current.pleaseSelectAnOption) : null,
       ),
     );
   }

@@ -56,6 +56,8 @@
   "@city": {},
   "close": "Close",
   "@close": {},
+  "closed": "Closed",
+  "@closed": {},
   "composure": "Composure",
   "@composure": {},
   "complete": "Complete",

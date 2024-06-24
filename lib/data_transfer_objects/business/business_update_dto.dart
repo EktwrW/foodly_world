@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/enums/business_enums.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/data_models/business/opening_hours_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'business_update_dto.freezed.dart';
@@ -23,6 +24,7 @@ class BusinessUpdateDTO with _$BusinessUpdateDTO {
     @JsonKey(name: 'business_latitude') double? businessLatitude,
     @JsonKey(name: 'business_longitude') double? businessLongitude,
     @JsonKey(name: 'category_id') FoodlyCategories? category,
+    @JsonKey(name: 'business_opening_hours') BusinessOpeningHoursDm? openingHours,
   }) = _BusinessUpdateDTO;
 
   factory BusinessUpdateDTO.fromJson(Map<String, dynamic> json) => _$BusinessUpdateDTOFromJson(json);

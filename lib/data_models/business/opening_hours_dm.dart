@@ -5,71 +5,57 @@ part 'opening_hours_dm.freezed.dart';
 part 'opening_hours_dm.g.dart';
 
 @freezed
-class OpeningHoursResult with _$OpeningHoursResult {
-  const factory OpeningHoursResult({
-    @JsonKey(name: 'opening_hours') required OpeningHoursDM openingHoursDM,
-  }) = _OpeningHoursResult;
+class BusinessOpeningHoursDm with _$BusinessOpeningHoursDm {
+  const BusinessOpeningHoursDm._();
 
-  factory OpeningHoursResult.fromJson(Map<String, dynamic> json) => _$OpeningHoursResultFromJson(json);
+  const factory BusinessOpeningHoursDm({
+    @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
+  }) = _BusinessOpeningHoursDm;
+
+  factory BusinessOpeningHoursDm.fromJson(Map<String, dynamic> json) => _$BusinessOpeningHoursDmFromJson(json);
+
+  Map<Weekday, Day> get weekdaysData => {
+        Weekday.sunday: businessDays.day0,
+        Weekday.monday: businessDays.day1,
+        Weekday.tuesday: businessDays.day2,
+        Weekday.wednesday: businessDays.day3,
+        Weekday.thursday: businessDays.day4,
+        Weekday.friday: businessDays.day5,
+        Weekday.saturday: businessDays.day6
+      };
+
+  bool get allDaysAreDayOff => weekdaysData.values.every((day) => day.isDayOff);
 }
 
 @freezed
-class OpeningHoursDM with _$OpeningHoursDM {
-  const OpeningHoursDM._();
+class BusinessDays with _$BusinessDays {
+  const factory BusinessDays({
+    @JsonKey(name: 'day_0') @Default(Day()) Day day0,
+    @JsonKey(name: 'day_1') @Default(Day()) Day day1,
+    @JsonKey(name: 'day_2') @Default(Day()) Day day2,
+    @JsonKey(name: 'day_3') @Default(Day()) Day day3,
+    @JsonKey(name: 'day_4') @Default(Day()) Day day4,
+    @JsonKey(name: 'day_5') @Default(Day()) Day day5,
+    @JsonKey(name: 'day_6') @Default(Day()) Day day6,
+  }) = _BusinessDays;
 
-  const factory OpeningHoursDM({
-    @JsonKey(name: 'periods') @Default([]) List<Period> periods,
-  }) = _OpeningHoursDM;
-
-  factory OpeningHoursDM.fromJson(Map<String, dynamic> json) => _$OpeningHoursDMFromJson(json);
-
-  bool get isOpenNow {
-    final now = DateTime.now();
-    final currentWeekday = Weekday.values.firstWhere((day) => day.value == now.weekday);
-    final currentTime = '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}';
-
-    return periods.any((period) {
-      final (openDay, openTime) = (period.open.day, period.open.time);
-      final (closeDay, closeTime) = (period.close.day, period.close.time);
-
-      if (openDay == currentWeekday) {
-        // Handle case when open and close are on the same day
-        if (closeDay == currentWeekday) {
-          return currentTime.compareTo(openTime) >= 0 && currentTime.compareTo(closeTime) <= 0;
-        }
-
-        // Handle case when close is on the next day
-        return currentTime.compareTo(openTime) >= 0;
-      }
-
-      // Handle case when the current day is the close day and open day was the previous day
-      if (closeDay == currentWeekday && openDay.value == (currentWeekday.value - 1) % 7) {
-        return currentTime.compareTo(closeTime) <= 0;
-      }
-
-      return false;
-    });
-  }
+  factory BusinessDays.fromJson(Map<String, dynamic> json) => _$BusinessDaysFromJson(json);
 }
 
 @freezed
-class Period with _$Period {
-  const factory Period({
-    required OpenCloseDetails open,
-    required OpenCloseDetails close,
-  }) = _Period;
+class Day with _$Day {
+  const Day._();
 
-  factory Period.fromJson(Map<String, dynamic> json) => _$PeriodFromJson(json);
-}
+  const factory Day({
+    @JsonKey(name: 'open_a') String? openA,
+    @JsonKey(name: 'open_b') String? openB,
+    @JsonKey(name: 'close_a') String? closeA,
+    @JsonKey(name: 'close_b') String? closeB,
+  }) = _Day;
 
-@freezed
-class OpenCloseDetails with _$OpenCloseDetails {
-  const factory OpenCloseDetails({
-    required Weekday day,
+  factory Day.fromJson(Map<String, dynamic> json) => _$DayFromJson(json);
 
-    /// 'time' is saved using 0000 simple string formatting because we want to keep the current format from the google places api
-    required String time,
-  }) = _OpenCloseDetails;
-
-  factory OpenCloseDetails.fromJson(Map<String, dynamic> json) => _$OpenCloseDetailsFromJson(json);
+  bool get isDayOff => openA == null && openB == null;
+  bool get canAddSecondPeriod => openA != null && closeA != null;
+  bool get limitPeriodsReached => canAddSecondPeriod && openB != null && closeB != null;
 }
