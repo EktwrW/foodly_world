@@ -96,7 +96,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
               dashboardEditing: value.editing,
               newCategory: _vm.currentBusiness?.category,
               currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
-              currentOpeningHours: _vm.currentBusiness?.openingHours ?? const BusinessOpeningHoursDm(),
+              businessDays: _vm.currentBusiness?.businessDays ?? const BusinessDays(),
             );
             emit(_Loaded(_vm));
           },
@@ -214,11 +214,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         6: (BusinessDays days, Day day) => days.copyWith(day6: day),
       };
 
-      final updatedBusinessDays = copyWithMap[value.dayIndex]!(_vm.currentOpeningHours.businessDays, value.day);
+      final updatedBusinessDays = copyWithMap[value.dayIndex]!(_vm.businessDays, value.day);
 
-      final updatedOpeningHours = _vm.currentOpeningHours.copyWith(businessDays: updatedBusinessDays);
-
-      _vm = _vm.copyWith(currentOpeningHours: updatedOpeningHours);
+      _vm = _vm.copyWith(businessDays: updatedBusinessDays);
 
       emit(_Loaded(_vm));
     }
@@ -340,7 +338,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       DashboardEditing.address: DashboardHelpers.getAddressFields(dto, _vm),
       DashboardEditing.aboutUs: dto.copyWith(businessAboutUs: _vm.businessAboutUsCtrl?.text),
       DashboardEditing.contactUs: DashboardHelpers.getContactUsFields(dto, _vm),
-      DashboardEditing.openingHours: dto.copyWith(openingHours: _vm.currentOpeningHours),
+      DashboardEditing.openingHours: dto.copyWith(businessDays: _vm.businessDays),
       DashboardEditing.services: dto.copyWith(businessServices: _vm.currentBusinessServices),
       DashboardEditing.additionalInfo: dto.copyWith(businessAdditionalInfo: _vm.businessAdditionalInfoCtrl?.text),
       DashboardEditing.name: dto.copyWith(businessName: _vm.businessNameCtrl?.text),

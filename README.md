@@ -59,7 +59,7 @@ Google Maps API Key.
 
 ### API Documentation
 
-For detailed API documentation, visit [API Documentation](https://www.qa.apps-369.com/api/documentation#/).
+For detailed API documentation, visit [API Documentation](https://foodly.world/api/documentation#/).
 
 Explore Foodly and see how it can be adapted and extended to meet the needs of various businesses in the culinary world.
 
@@ -72,7 +72,6 @@ Explore Foodly and see how it can be adapted and extended to meet the needs of v
 - Unit Tests: test coverage for all features and components. This will help maintain code quality and reliability.
 
 - Security: Implement a SECURITY.md file to define security policies and procedures for reporting vulnerabilities.
-
 
 ## Credits and Attribution
 

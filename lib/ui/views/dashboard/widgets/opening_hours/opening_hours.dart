@@ -49,12 +49,16 @@ class OpeningHoursWdg extends StatelessWidget {
                   itemBuilder: (_, i) {
                     if (i == Weekday.values.length) {
                       return DashboardSaveAndCancelButtons(
-                        showSaveButton: false,
+                        onSavePressed: () => bloc.add(const DashboardEvent.updateBusiness()),
+                        showSaveButton:
+                            vm.businessDays.weekdaysData.entries.any((wd) => wd.value.canSaveOrAddSecondPeriod),
                         onCancelPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.none)),
                       ).paddingTop(16);
                     }
 
-                    final day = vm.currentOpeningHours.weekdaysData[Weekday.values[i]];
+                    final day = vm.businessDays.weekdaysData[Weekday.values[i]];
+                    final enableAddPeriodBtn =
+                        (day?.canSaveOrAddSecondPeriod ?? false) && !(day?.limitPeriodsReached ?? true);
 
                     return AnimatedContainer(
                       duration: Durations.medium4,
@@ -71,7 +75,7 @@ class OpeningHoursWdg extends StatelessWidget {
                         children: [
                           Text(
                             Weekday.values[i].dayString,
-                            style: day?.canAddSecondPeriod ?? false
+                            style: day?.canSaveOrAddSecondPeriod ?? false
                                 ? FoodlyTextStyles.captionPurpleBold
                                 : FoodlyTextStyles.captionBold,
                           ).paddingLeft(6),
@@ -129,13 +133,16 @@ class OpeningHoursWdg extends StatelessWidget {
                           ),
                           FadeIn(
                             child: IconButton.filled(
-                              onPressed: day?.canAddSecondPeriod ?? false ? () {} : null,
+                              onPressed: enableAddPeriodBtn
+                                  ? () => bloc.add(DashboardEvent.setOpeningHoursDay(
+                                      i, day?.copyWith(showSecondPeriod: true) ?? const Day()))
+                                  : null,
                               constraints: BoxConstraints.tight(const Size(22, 22)),
                               tooltip: 'Add a new time',
                               icon: const Icon(Bootstrap.plus_circle, size: 16),
                               padding: const EdgeInsets.all(3),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     );
@@ -165,12 +172,12 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
     return TextButton(
       onPressed: () => bloc.add(const DashboardEvent.updateEditing(DashboardEditing.openingHours)),
       child: Visibility(
-        visible: !vm.currentOpeningHours.allDaysAreDayOff,
+        visible: vm.businessDays.allDaysAreDayOff,
         replacement: FadeIn(
           child: Column(
             children: Weekday.values.indexed.map(
               (w) {
-                final day = vm.currentOpeningHours.weekdaysData[w.$2];
+                final day = vm.businessDays.weekdaysData[w.$2];
                 return Column(
                   children: [
                     Row(

@@ -45,7 +45,7 @@ class DashboardVM with _$DashboardVM {
     @Default({}) Set<Marker> markers,
     GoogleMapController? mapController,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
-    @Default(BusinessOpeningHoursDm()) BusinessOpeningHoursDm currentOpeningHours,
+    @Default(BusinessDays()) BusinessDays businessDays,
   }) = _DashboardVM;
 
   bool get isEditingName => dashboardEditing == DashboardEditing.name;

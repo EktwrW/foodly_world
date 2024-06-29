@@ -6,29 +6,17 @@ part 'opening_hours_dm.g.dart';
 
 @freezed
 class BusinessOpeningHoursDm with _$BusinessOpeningHoursDm {
-  const BusinessOpeningHoursDm._();
-
   const factory BusinessOpeningHoursDm({
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
   }) = _BusinessOpeningHoursDm;
 
   factory BusinessOpeningHoursDm.fromJson(Map<String, dynamic> json) => _$BusinessOpeningHoursDmFromJson(json);
-
-  Map<Weekday, Day> get weekdaysData => {
-        Weekday.sunday: businessDays.day0,
-        Weekday.monday: businessDays.day1,
-        Weekday.tuesday: businessDays.day2,
-        Weekday.wednesday: businessDays.day3,
-        Weekday.thursday: businessDays.day4,
-        Weekday.friday: businessDays.day5,
-        Weekday.saturday: businessDays.day6
-      };
-
-  bool get allDaysAreDayOff => weekdaysData.values.every((day) => day.isDayOff);
 }
 
 @freezed
 class BusinessDays with _$BusinessDays {
+  const BusinessDays._();
+
   const factory BusinessDays({
     @JsonKey(name: 'day_0') @Default(Day()) Day day0,
     @JsonKey(name: 'day_1') @Default(Day()) Day day1,
@@ -40,6 +28,18 @@ class BusinessDays with _$BusinessDays {
   }) = _BusinessDays;
 
   factory BusinessDays.fromJson(Map<String, dynamic> json) => _$BusinessDaysFromJson(json);
+
+  Map<Weekday, Day> get weekdaysData => {
+        Weekday.sunday: day0,
+        Weekday.monday: day1,
+        Weekday.tuesday: day2,
+        Weekday.wednesday: day3,
+        Weekday.thursday: day4,
+        Weekday.friday: day5,
+        Weekday.saturday: day6
+      };
+
+  bool get allDaysAreDayOff => weekdaysData.values.every((day) => day.isDayOff);
 }
 
 @freezed
@@ -51,11 +51,12 @@ class Day with _$Day {
     @JsonKey(name: 'open_b') String? openB,
     @JsonKey(name: 'close_a') String? closeA,
     @JsonKey(name: 'close_b') String? closeB,
+    @JsonKey(includeFromJson: false, includeToJson: false) @Default(false) bool showSecondPeriod,
   }) = _Day;
 
   factory Day.fromJson(Map<String, dynamic> json) => _$DayFromJson(json);
 
   bool get isDayOff => openA == null && openB == null;
-  bool get canAddSecondPeriod => openA != null && closeA != null;
-  bool get limitPeriodsReached => canAddSecondPeriod && openB != null && closeB != null;
+  bool get canSaveOrAddSecondPeriod => openA != null && closeA != null;
+  bool get limitPeriodsReached => canSaveOrAddSecondPeriod && openB != null && closeB != null;
 }
