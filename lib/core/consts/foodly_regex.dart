@@ -25,7 +25,7 @@ class FoodlyRegex {
     FoodlyCountries.VENEZUELA.countryCode: r'^\d{4}$',
 
     /// El Salvador: 4 digits
-    FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}$',
+    //FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}$',
 
     /// Spain: 5 digits
     FoodlyCountries.SPAIN.countryCode: r'^\d{5}$',
@@ -45,7 +45,7 @@ class FoodlyRegex {
     FoodlyCountries.VENEZUELA.countryCode: r'^0?\d{2,3}-?\d{7}$',
 
     /// El Salvador: 4 digits for the area code, followed by 4 digits for the local number, with or without a dash:
-    FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}-?\d{4}$',
+    //FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}-?\d{4}$',
 
     /// Spain: 2 or 3 digits for the area code, followed by 6 or 7 digits for the local number, with or without a dash:
     FoodlyCountries.SPAIN.countryCode: r'^\d{2,3}-?\d{6,7}$',

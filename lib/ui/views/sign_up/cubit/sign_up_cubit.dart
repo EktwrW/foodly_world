@@ -98,6 +98,8 @@ class SignUpCubit extends Cubit<SignUpState> {
           genderNode: FocusNode(),
           countryNode: FocusNode(),
           businessCountryNode: FocusNode(),
+          businessCountry: _authService.userSessionDM?.user.country,
+          businessCountryCode: _authService.userSessionDM?.user.country?.countryCode,
         ),
         super(const SignUpState.initial()) {
     _initializeMarkers();

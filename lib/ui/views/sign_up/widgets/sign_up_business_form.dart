@@ -151,6 +151,7 @@ class SignUpBusinessForm extends StatelessWidget {
           loaded: (signUpVM) => _buildForm(signUpVM, context),
           userCreated: (signUpVM) => _buildForm(signUpVM, context),
           businessCreated: (signUpVM) => _buildForm(signUpVM, context),
+          error: (e, signUpVM) => _buildForm(signUpVM, context),
           orElse: () => const SizedBox.shrink(),
         );
       },
