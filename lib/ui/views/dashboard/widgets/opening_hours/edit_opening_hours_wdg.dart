@@ -112,7 +112,7 @@ class EditHoursWdg extends StatelessWidget {
     return FoodlyDropdownButtonFormField<Hour>(
       key: Key(key),
       height: 48,
-      width: 56,
+      width: 54,
       primaryIcon: const SizedBox.shrink(),
       enabled: enabled,
       decoration: _dropdownDecoration,

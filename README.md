@@ -63,7 +63,7 @@ For detailed API documentation, visit [API Documentation](https://foodly.world/a
 
 Explore Foodly and see how it can be adapted and extended to meet the needs of various businesses in the culinary world.
 
-### Coming up for for Improvement
+### Coming up for Improvement
 
 - Documentation: Enhance the README.md with more detailed setup instructions, examples of usage, and a section for contributing guidelines.
 
