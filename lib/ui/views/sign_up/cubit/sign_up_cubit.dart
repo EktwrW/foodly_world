@@ -204,7 +204,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     _vm.businessNameController?.controller?.text = detail.name ?? '';
 
     _vm.businessPhoneNumberController?.controller?.text =
-        (detail.formattedPhoneNumber ?? '').replaceAll(FoodlyRegex.phoneCleanUpCode, '');
+        (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(FoodlyRegex.phoneCleanUpCode as String), '');
 
     _vm = _vm.copyWith(
         businessCountryCode:

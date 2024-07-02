@@ -39,7 +39,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'category_id') FoodlyCategories? category,
     @JsonKey(name: 'business_reviews') @Default([]) List<Object>? reviews,
     @JsonKey(name: 'business_rating') double? rating,
-    @JsonKey(name: 'opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
+    @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);

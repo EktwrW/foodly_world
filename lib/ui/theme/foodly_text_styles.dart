@@ -150,6 +150,23 @@ class FoodlyTextStyles {
     fontSize: 16,
   );
 
+  static const label = TextStyle(
+    color: Colors.black87,
+    fontSize: 13,
+  );
+
+  static const labelBold = TextStyle(
+    fontSize: 13,
+    color: Colors.black87,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const labelPurpleBold = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+  );
+
   static const loginCTATextButton = TextStyle(
     fontWeight: FontWeight.w600,
     color: FoodlyThemes.primaryFoodly,

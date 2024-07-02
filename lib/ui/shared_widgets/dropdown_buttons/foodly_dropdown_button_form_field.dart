@@ -15,10 +15,14 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
   final String? hintText;
   final InputDecoration? decoration;
   final FocusNode? focusNode;
-  final Widget? icon;
+  final Widget? decorationIcon;
+  final Widget? primaryIcon;
+  final Widget? hint;
   final double? height;
   final double? width;
   final String? Function(T?)? validator;
+  final EdgeInsetsGeometry? padding;
+  final double? iconSize;
 
   const FoodlyDropdownButtonFormField({
     super.key,
@@ -32,10 +36,14 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
     this.hintText,
     this.decoration,
     this.focusNode,
-    this.icon,
+    this.decorationIcon,
+    this.primaryIcon,
     this.height = 65,
     this.width,
     this.validator,
+    this.padding,
+    this.iconSize,
+    this.hint,
   });
 
   @override
@@ -46,12 +54,16 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
       child: DropdownButtonFormField<T>(
         value: value,
         focusNode: focusNode,
+        padding: padding,
+        iconSize: iconSize ?? 24,
+        icon: primaryIcon,
+        hint: hint,
         decoration: decoration ??
             InputDecoration(
               prefixIcon: prefixIcon,
               prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
               hintText: hintText,
-              icon: icon,
+              icon: decorationIcon,
               errorStyle: FoodlyTextStyles.errorInputText,
               enabledBorder: enabledBorder ??
                   UnderlineInputBorder(
