@@ -153,10 +153,10 @@ class SignUpUserForm extends StatelessWidget {
           value: vm.country,
           focusNode: vm.countryNode,
           decoration: InputDecoration(
-            prefixIcon: const Icon(Bootstrap.person),
+            prefixIcon: vm.country?.flag?.paddingAll(10) ?? FoodlyInputType.country.icon,
             prefixIconColor: enabled ? Colors.black87 : NeumorphicColors.disabled,
             hintText: S.current.country,
-            icon: FoodlyInputType.country.icon,
+            contentPadding: const EdgeInsets.only(top: 10),
             iconColor: enabled ? null : NeumorphicColors.disabled,
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
@@ -174,12 +174,7 @@ class SignUpUserForm extends StatelessWidget {
               .map<DropdownMenuItem<FoodlyCountries>>(
                 (FoodlyCountries country) => DropdownMenuItem<FoodlyCountries>(
                   value: country,
-                  child: Row(
-                    children: [
-                      if (country.flag != null) country.flag!.paddingHorizontal(12),
-                      Text(country.value),
-                    ],
-                  ),
+                  child: Text(country.value),
                 ),
               )
               .toList(),

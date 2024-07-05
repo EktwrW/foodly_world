@@ -112,7 +112,7 @@ class SignUpBusinessForm extends StatelessWidget {
                 ),
               )
               .toList(),
-          prefixIcon: vm.businessCountry == null ? FoodlyInputType.businessCountry.icon : null,
+          prefixIcon: vm.country?.flag?.paddingAll(12) ?? FoodlyInputType.businessCountry.icon,
         ),
         FoodlyPrimaryInputText(
           controller: vm.businessCityController?.controller,
