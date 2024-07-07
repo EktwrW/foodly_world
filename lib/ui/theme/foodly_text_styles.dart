@@ -176,6 +176,12 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  static final menuTitle = GoogleFonts.quicksand(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
   static const multiImageItemsLeft = TextStyle(
     color: Colors.white,
     fontSize: 22,

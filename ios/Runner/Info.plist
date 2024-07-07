@@ -4,7 +4,7 @@
 	<dict>
 		<!-- TODO: Remember to remove impeller deactivation when flutter fix the render issue for shape/shadows -->
 		<key>FLTEnableImpeller</key>
-		<false />
+		<false/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -72,9 +72,9 @@
 		<false/>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
-		<string>sms</string>
-		<string>tel</string>
-		<string>mailto</string>
+			<string>sms</string>
+			<string>tel</string>
+			<string>mailto</string>
 		</array>
 		<key>NSAppTransportSecurity</key>
 		<dict>

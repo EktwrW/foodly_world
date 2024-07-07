@@ -139,7 +139,7 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
                 builder: (_) {
                   if (widget.imageUrl?.isNotEmpty ?? false) {
                     return AnimatedSize(
-                      duration: const Duration(milliseconds: 400),
+                      duration: Durations.medium4,
                       child: AvatarWidget(
                         avatarUrl: widget.imageUrl,
                         enabled: widget.enabled,

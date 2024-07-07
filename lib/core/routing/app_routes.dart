@@ -13,8 +13,10 @@ enum AppRoutes {
   savedPromotions('$_routeIdParam/saved-promotions', 'savedPromotions'),
   favedBusiness('$_routeIdParam/faved-business', 'favedBusiness'),
   notifications('$_routeIdParam/notifications', 'notifications'),
-  //
-  businessPanel('$mainRoute/$_routeIdParam/business-panel', 'businessPanel'),
+  // Business routes
+  business('$mainRoute/$_routeIdParam/business', 'business'),
+  menu('$mainRoute/menu/$_routeIdParam', 'menu'),
+  // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //
   noAccess('/no-access', 'noAccess'),

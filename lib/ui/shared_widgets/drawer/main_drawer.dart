@@ -55,7 +55,7 @@ class FoodlyDrawer extends StatelessWidget {
 
   Widget _buildSidebarXContent(BuildContext context, MainDrawerVM vm) {
     return SidebarX(
-      animationDuration: const Duration(milliseconds: 400),
+      animationDuration: Durations.medium4,
       controller: _sidebarController,
       theme: const SidebarXTheme(
         width: 90,
@@ -118,7 +118,7 @@ class FoodlyDrawer extends StatelessWidget {
       items: [
         if (di<AuthSessionService>().userIsManager)
           SidebarXItem(
-            onTap: () => context.goNamed(AppRoutes.businessPanel.name,
+            onTap: () => context.goNamed(AppRoutes.business.name,
                 pathParameters: {AppRoutes.routeIdParam: di<AuthSessionService>().userId}),
             icon: Icons.business_center_rounded,
             label: S.current.dashboard,

@@ -73,8 +73,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () => buttonCarouselController.previousPage(
-                      duration: const Duration(milliseconds: 400), curve: Curves.linear),
+                  onTap: () => buttonCarouselController.previousPage(duration: Durations.medium4, curve: Curves.linear),
                   child: const Icon(Bootstrap.caret_left_fill, color: NeumorphicColors.decorationMaxWhiteColor)
                       .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 ),
@@ -91,7 +90,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
 
                           return AnimatedContainer(
                             key: Key('${entry.key}'),
-                            duration: const Duration(milliseconds: 400),
+                            duration: Durations.medium4,
                             width: thisIsCurrent ? 10 : 7.5,
                             height: 12,
                             margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
@@ -104,8 +103,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                   );
                 }),
                 InkWell(
-                  onTap: () => buttonCarouselController.nextPage(
-                      duration: const Duration(milliseconds: 400), curve: Curves.linear),
+                  onTap: () => buttonCarouselController.nextPage(duration: Durations.medium4, curve: Curves.linear),
                   child: const Icon(Bootstrap.caret_right_fill, color: NeumorphicColors.decorationMaxWhiteColor)
                       .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 ),

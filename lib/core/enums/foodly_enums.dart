@@ -115,3 +115,16 @@ extension AssetTypeExtension on AssetType {
     }
   }
 }
+
+@JsonEnum()
+enum Version {
+  @JsonValue('regular')
+  regular('regular'),
+  @JsonValue('medium')
+  medium('medium'),
+  @JsonValue('big')
+  big('big');
+
+  final String value;
+  const Version(this.value);
+}

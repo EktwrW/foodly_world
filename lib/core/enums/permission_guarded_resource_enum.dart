@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 enum ModuleGuardType {
   accountSettings,
   home,
-  businessPanel,
+  business,
   unknown;
 
   static ModuleGuardType getModuleGuardTypeByRoute(GoRouterState state) {
@@ -23,7 +23,8 @@ enum ModuleGuardType {
         AppRoutes.savedPromotions.name: ModuleGuardType.home,
         AppRoutes.favedBusiness.name: ModuleGuardType.home,
         AppRoutes.usersCommunity.name: ModuleGuardType.home,
-        AppRoutes.businessPanel.name: ModuleGuardType.businessPanel,
+        AppRoutes.business.name: ModuleGuardType.business,
+        AppRoutes.menu.name: ModuleGuardType.business,
         AppRoutes.profileScreen.name: ModuleGuardType.accountSettings,
         '': ModuleGuardType.unknown,
       };

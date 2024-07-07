@@ -13,7 +13,9 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/local_storage_service.dart';
 import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.dart';
-import 'package:foodly_world/ui/views/dashboard/dashboard_page.dart';
+import 'package:foodly_world/ui/views/business/business_page.dart';
+import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
+import 'package:foodly_world/ui/views/business/menu/menu_screen.dart';
 import 'package:foodly_world/ui/views/home/bloc/home_bloc.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/faved_business_page/faved_business_page.dart';
@@ -68,8 +70,13 @@ class AppRouter {
       appRouter.go(lastRoute);
       _routeHistory.removeLast();
       _routeHistory.removeLast();
-    } else {
+      return;
+    }
+
+    if (authSessService.isLoggedIn) {
       context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authSessService.userId});
+    } else {
+      context.goNamed(AppRoutes.login.name);
     }
   }
 
@@ -87,23 +94,21 @@ class AppRouter {
     ];
   }
 
-  GoRoute _goRouteFadeTransition(AppRoutes appRoute, Widget page, List<RedirectRoute> redirectors) {
-    return GoRoute(
-      path: appRoute.path,
-      name: appRoute.name,
-      redirect: Redirector(_getRedirectors(redirectors)).call,
-      pageBuilder: (context, state) => CustomTransitionPage<void>(
-        transitionDuration: const Duration(milliseconds: 400),
-        key: state.pageKey,
-        child: page,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
-          opacity: animation,
-          child: child,
-        ),
-      ),
-      builder: (context, state) => page,
-    );
-  }
+  Page<dynamic> Function(BuildContext, GoRouterState)? _transitionPageBuilder(Widget page) =>
+      (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: page,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          );
+
+  GoRoute _goRouteWithTransition(AppRoutes appRoute, Widget page, List<RedirectRoute> redirectors) => GoRoute(
+        path: appRoute.path,
+        name: appRoute.name,
+        redirect: Redirector(_getRedirectors(redirectors)).call,
+        pageBuilder: _transitionPageBuilder(page),
+      );
 
   GoRoute _goRouteForStatefulShell(AppRoutes appRoute, GoRoute route) {
     return GoRoute(
@@ -146,14 +151,14 @@ class AppRouter {
       },
       initialLocation: AppRoutes.start.path,
       routes: [
-        _goRouteFadeTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
-        _goRouteFadeTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),
+        _goRouteWithTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
+        _goRouteWithTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),
             [RedirectRoute.requiresAppInitial]),
-        _goRouteFadeTransition(
+        _goRouteWithTransition(
             AppRoutes.signUp,
             BlocProvider(create: (context) => SignUpCubit(), child: const SignUpUserPage()),
             [RedirectRoute.requiresAppInitial]),
-        _goRouteFadeTransition(
+        _goRouteWithTransition(
             AppRoutes.signUpBusiness,
             BlocProvider(create: (context) => SignUpCubit(), child: const SignUpBusinessPage()),
             [RedirectRoute.requiresAppInitial]),
@@ -172,54 +177,75 @@ class AppRouter {
             StatefulShellBranch(
               routes: [
                 _goRouteForStatefulShell(
-                    AppRoutes.home,
-                    _goRouteFadeTransition(AppRoutes.savedPromotions, const SavedPromotionsPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])),
+                  AppRoutes.home,
+                  _goRouteWithTransition(AppRoutes.savedPromotions, const SavedPromotionsPage(),
+                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                ),
               ],
             ),
             StatefulShellBranch(
               routes: [
                 _goRouteForStatefulShell(
-                    AppRoutes.home,
-                    _goRouteFadeTransition(AppRoutes.favedBusiness, const FavedBusinessPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])),
+                  AppRoutes.home,
+                  _goRouteWithTransition(AppRoutes.favedBusiness, const FavedBusinessPage(),
+                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                ),
               ],
             ),
             StatefulShellBranch(
               routes: [
                 _goRouteForStatefulShell(
-                    AppRoutes.home,
-                    _goRouteFadeTransition(AppRoutes.usersCommunity, const UsersCommunityPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])),
+                  AppRoutes.home,
+                  _goRouteWithTransition(AppRoutes.usersCommunity, const UsersCommunityPage(),
+                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                ),
               ],
             ),
             StatefulShellBranch(
               routes: [
                 _goRouteForStatefulShell(
-                    AppRoutes.home,
-                    _goRouteFadeTransition(AppRoutes.notifications, const NotificationsPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])),
+                  AppRoutes.home,
+                  _goRouteWithTransition(AppRoutes.notifications, const NotificationsPage(),
+                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                ),
               ],
             ),
             StatefulShellBranch(
               routes: [
                 _goRouteForStatefulShell(
-                    AppRoutes.home,
-                    _goRouteFadeTransition(AppRoutes.foodlyMainPage, const FoodlyMainPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])),
+                  AppRoutes.home,
+                  _goRouteWithTransition(AppRoutes.foodlyMainPage, const FoodlyMainPage(),
+                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                ),
               ],
             ),
           ],
         ),
-        _goRouteFadeTransition(
-          AppRoutes.businessPanel,
-          const DashboardPage(),
+        _goRouteWithTransition(
+          AppRoutes.profileScreen,
+          BlocProvider(create: (context) => UserProfileCubit(), child: const UserProfilePage()),
           [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
         ),
-        _goRouteFadeTransition(
-            AppRoutes.profileScreen,
-            BlocProvider(create: (context) => UserProfileCubit(), child: const UserProfilePage()),
-            [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+        _goRouteWithTransition(
+          AppRoutes.business,
+          const BusinessPage(),
+          [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
+        ),
+        GoRoute(
+          path: AppRoutes.menu.path,
+          name: AppRoutes.menu.name,
+          redirect: Redirector([GoRouterRedirector.requiresLogin()]).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => MenuCubit(menuId: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
+              child: const MenuScreen(),
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          ),
+        ),
       ],
       errorPageBuilder: (context, state) {
         return const MaterialPage(child: NotFoundPage());

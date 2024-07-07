@@ -84,8 +84,8 @@ flutter_native_splash:
   color_dark_web: "#18171c"
   image_android: assets/icons/splash/splash_light_foodly.png
   image_dark_android: assets/icons/splash/splash_dark_foodly.png
-  image_ios: assets/icons/splash/splash_light_foodly.png
-  image_dark_ios: assets/icons/splash/splash_dark_foodly.png
+  image_ios: assets/icons/splash/splash_foodly_ios.png
+  image_dark_ios: assets/icons/splash/splash_foodly_ios.png
   image_web: assets/icons/splash/splash_light_foodly_web.png
   image_dark_web: assets/icons/splash/splash_dark_foodly_web.png
   #background_image_android: "assets/background-android.png"
@@ -112,7 +112,7 @@ flutter_native_splash:
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
   # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
   # bottomLeft, or bottomRight.
-  ios_content_mode: "center_horizontal"
+  ios_content_mode: "scaleAspectFit"
   #
   # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
   web_image_mode: "center"

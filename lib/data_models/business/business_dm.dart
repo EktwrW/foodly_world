@@ -33,7 +33,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_zipcode') String? zipCode,
     @JsonKey(name: 'business_city') String? city,
     @JsonKey(name: 'business_country') FoodlyCountries? country,
-    @JsonKey(name: 'business_website') String? website,
+    @JsonKey(name: 'business_menu_id') String? menuId,
     @JsonKey(name: 'business_latitude') double? latitude,
     @JsonKey(name: 'business_longitude') double? longitude,
     @JsonKey(name: 'category_id') FoodlyCategories? category,

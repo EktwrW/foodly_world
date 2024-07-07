@@ -100,7 +100,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
             }
           : null,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
+        duration: Durations.medium4,
         color: vm.tooltipActive ? Colors.black54 : Colors.transparent,
         child: NestedScrollView(
           physics: vm.tooltipActive ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
@@ -172,7 +172,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               AnimatedOpacity(
-                                duration: const Duration(milliseconds: 400),
+                                duration: Durations.medium4,
                                 opacity: vm.tooltipActive ? .3 : 1,
                                 child: EditableAvatarWdg(
                                   onPressed: () async => await pickImageFile(context, ImageSource.gallery)

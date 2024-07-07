@@ -44,4 +44,7 @@ class FoodlyStrings {
   static const EN = 'en';
   static const ES = 'es';
   static const PT = 'pt';
+
+  // Default id for new menu:
+  static const NEW_MENU = 'new_menu';
 }

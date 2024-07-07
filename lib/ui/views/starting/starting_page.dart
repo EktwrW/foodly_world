@@ -83,7 +83,7 @@ class StartingPage369 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AnimatedSize(
-            duration: const Duration(milliseconds: 400),
+            duration: Durations.medium4,
             child: SizedBox(
               height: context.screenHeight * .12,
               child: Align(
@@ -97,26 +97,26 @@ class StartingPage369 extends StatelessWidget {
             ),
           ),
           AnimatedSize(
-            duration: const Duration(milliseconds: 400),
+            duration: Durations.medium4,
             child: SizedBox(
               height: isLogin ? context.screenHeight * .19 : context.screenHeight * .31,
               child: Center(
                 child: AnimatedPadding(
                     padding: EdgeInsets.symmetric(horizontal: isLogin ? 80 : 50),
-                    duration: const Duration(milliseconds: 400),
+                    duration: Durations.medium4,
                     child: const Asset(FoodlyAssets.logo)),
               ),
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
           ),
           AnimatedSize(
-            duration: const Duration(milliseconds: 400),
+            duration: Durations.medium4,
             child: SizedBox(
               height: isLogin ? context.screenHeight * .36 : context.screenHeight * .22,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
-            duration: const Duration(milliseconds: 400),
+            duration: Durations.medium4,
             child: SizedBox(
               height: isLogin ? context.screenHeight * .30 : context.screenHeight * .32,
               child: const Column(

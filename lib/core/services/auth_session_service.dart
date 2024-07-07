@@ -131,7 +131,7 @@ class AuthSessionService {
       case ModuleGuardType.home:
         return [UserRole.admin, UserRole.owner, UserRole.customer].contains(userSessionDM?.user.roleId);
 
-      case ModuleGuardType.businessPanel:
+      case ModuleGuardType.business:
         return [UserRole.admin, UserRole.owner].contains(userSessionDM?.user.roleId);
 
       case ModuleGuardType.accountSettings:

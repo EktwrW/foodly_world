@@ -1,0 +1,316 @@
+{
+  "menu": {
+    "uuid": "12345",
+    "business": {
+      "id": 38,
+      "user_id": 16,
+      "business_uuid": "df950a2f-ad31-4dfa-9684-0283ed4da1fc",
+      "business_logo": "https://foodly.s3.amazonaws.com/public/business_logos/SYdBtoo2H6X4oKYXwOvJwEjQrsYuQcq5NCdbPNhk.jpg",
+      "business_name": "Niko's Bakery",
+      "business_email": "nikos@mail.com",
+      "business_phone": "925015152",
+      "business_about_us": "lorem Ipsum.",
+      "business_services": [
+        {
+          "id": 5,
+          "service_uuid": "8c31ff3d-6376-4b0d-8e6e-be2d2d8d7d1f",
+          "service_name": "Outdoor"
+        },
+        {
+          "id": 3,
+          "service_uuid": "617ad901-d528-443f-8753-f31f1306c00e",
+          "service_name": "Kid Chairs"
+        },
+        {
+          "id": 1,
+          "service_uuid": "6a2cb952-635d-4a04-a1c9-df1e5a39d6d2",
+          "service_name": "Wifi"
+        },
+        {
+          "id": 2,
+          "service_uuid": "b108d050-d2ae-4e79-9def-a431f54ba506",
+          "service_name": "Multilenguage"
+        },
+        {
+          "id": 6,
+          "service_uuid": "f1fb3ce1-110d-445e-a92e-d00c8ce035d0",
+          "service_name": "PMR"
+        },
+        {
+          "id": 8,
+          "service_uuid": "bf008bc1-2b34-470f-b5e2-fc43fa8c7ae0",
+          "service_name": "Delivery"
+        },
+        {
+          "id": 12,
+          "service_uuid": "9d527ded-30c5-4e89-a6ba-cb13b61607bd",
+          "service_name": "Happy Birthday"
+        }
+      ],
+      "business_additional_info": "info test",
+      "business_address": "Alameda P\u00earo da Covilh\u00e3",
+      "business_zipcode": "6200-507",
+      "business_city": "Covilh\u00e3",
+      "business_country": "Portugal",
+      "business_website": null,
+      "business_latitude": 40.2673055,
+      "business_longitude": -7.5006241,
+      "category_id": 13,
+      "category": {
+        "id": 13,
+        "category_uuid": "905d62d3-01e3-47ab-a46f-b267a3c4506b",
+        "category_name": "Caf\u00e9s y Desayunos",
+        "category_image_path": "https://foodly.s3.amazonaws.com/public/categories_images/NC2D2vwB28ReT6E9HyBaq1rkJJLGCBodBLdNLvee.jpg",
+        "subcategories": []
+      },
+      "business_opening_hours": {
+        "day_0": {
+          "open_a": "02:30",
+          "close_a": "04:00",
+          "open_b": "07:00",
+          "close_b": "22:00"
+        },
+        "day_1": {
+          "open_a": null,
+          "close_a": null,
+          "open_b": null,
+          "close_b": null
+        },
+        "day_2": {
+          "open_a": "13:00",
+          "close_a": "05:00",
+          "open_b": null,
+          "close_b": null
+        },
+        "day_3": {
+          "open_a": "04:00",
+          "close_a": "08:00",
+          "open_b": "10:00",
+          "close_b": "13:30"
+        },
+        "day_4": {
+          "open_a": "21:00",
+          "close_a": "02:30",
+          "open_b": null,
+          "close_b": null
+        },
+        "day_5": {
+          "open_a": "14:00",
+          "close_a": "03:00",
+          "open_b": null,
+          "close_b": null
+        },
+        "day_6": {
+          "open_a": "08:00",
+          "close_a": "15:00",
+          "open_b": "17:30",
+          "close_b": "19:30"
+        }
+      },
+      "created_at": "2024-07-01 13:30:02",
+      "updated_at": "2024-07-02 13:52:24",
+      "deleted_at": null,
+      "cover_images": [
+        {
+          "id": 3,
+          "business_image_uuid": "ae64a8f9-f6b8-4155-b040-c4abe066cf30",
+          "business_image_path": "https://foodly.s3.amazonaws.com/public/business_photos/cKzZ12EnsMpxpiioNmTMruNp0GnYpvTq6EBWIRjg.jpg",
+          "business_id": 38
+        },
+        {
+          "id": 4,
+          "business_image_uuid": "abe5dcf0-f389-4fd1-b1e8-aa549a0b3e40",
+          "business_image_path": "https://foodly.s3.amazonaws.com/public/business_photos/iEiSdlpXi1eOKE7x9lG8v4hBVuhhqRGTQvy6YDC3.jpg",
+          "business_id": 38
+        },
+        {
+          "id": 5,
+          "business_image_uuid": "77f2505b-310b-45bb-b01d-3b394d963b58",
+          "business_image_path": "https://foodly.s3.amazonaws.com/public/business_photos/EInVfbGJSF2yZ14ycwe7zXBHvHnZZilOehJ6CgsC.jpg",
+          "business_id": 38
+        },
+        {
+          "id": 6,
+          "business_image_uuid": "2feea1a7-0232-46c7-80df-5c38e042c827",
+          "business_image_path": "https://foodly.s3.amazonaws.com/public/business_photos/SoBuuBrnkOQSUYuJht7mieeUt0AWTlo8EKPy8e1I.jpg",
+          "business_id": 38
+        }
+      ],
+      "business_promotions": [],
+      "business_branches": []
+    },
+    "last_update": "2024-07-03",
+    "food_categories": [
+      {
+        "name": "Appetizers",
+        "items": [
+          {
+            "name": "Bruschetta",
+            "description": "Grilled bread with tomato and basil",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 5.0,
+              "medium": 7.0,
+              "big": 9.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 10,
+            "available": true
+          },
+          {
+            "name": "Stuffed Mushrooms",
+            "description": "Mushrooms stuffed with cheese and herbs",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 6.0,
+              "medium": 8.0,
+              "big": 10.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 8,
+            "available": true
+          },
+          {
+            "name": "Garlic Bread",
+            "description": "Bread with garlic and butter",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 4.0,
+              "medium": 6.0,
+              "big": 8.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 15,
+            "available": true
+          },
+          {
+            "name": "Chicken Wings",
+            "description": "Spicy grilled chicken wings",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 7.0,
+              "medium": 9.0,
+              "big": 11.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 20,
+            "available": true
+          }
+        ]
+      }
+    ],
+    "drink_categories": [
+      {
+        "name": "Soft Drinks",
+        "items": [
+          {
+            "name": "Cola",
+            "description": "Classic cola drink",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 2.0,
+              "medium": 3.0,
+              "big": 4.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 30,
+            "available": true
+          },
+          {
+            "name": "Lemonade",
+            "description": "Fresh squeezed lemonade",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 2.5,
+              "medium": 3.5,
+              "big": 4.5
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 25,
+            "available": true
+          },
+          {
+            "name": "Iced Tea",
+            "description": "Chilled tea with lemon",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 2.0,
+              "medium": 3.0,
+              "big": 4.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 20,
+            "available": true
+          },
+          {
+            "name": "Orange Juice",
+            "description": "Freshly squeezed orange juice",
+            "versions": ["regular", "medium", "big"],
+            "prices": {
+              "regular": 3.0,
+              "medium": 4.0,
+              "big": 5.0
+            },
+            "reference_photos": ["https://acortar.link/Za1NRx"],
+            "favorites_count": 22,
+            "available": true
+          }
+        ]
+      }
+    ],
+    "combos": [
+      {
+        "name": "Family Feast",
+        "description": "A combo meal for the whole family",
+        "versions": ["regular", "medium", "big"],
+        "prices": {
+          "regular": 25.0,
+          "medium": 30.0,
+          "big": 35.0
+        },
+        "reference_photos": ["https://acortar.link/Za1NRx"],
+        "favorites_count": 50,
+        "available": true
+      },
+      {
+        "name": "Couple's Delight",
+        "description": "Perfect for two",
+        "versions": ["regular", "medium", "big"],
+        "prices": {
+          "regular": 15.0,
+          "medium": 20.0,
+          "big": 25.0
+        },
+        "reference_photos": ["https://acortar.link/Za1NRx"],
+        "favorites_count": 40,
+        "available": true
+      },
+      {
+        "name": "Kid's Special",
+        "description": "Special combo for kids",
+        "versions": ["regular", "medium", "big"],
+        "prices": {
+          "regular": 10.0,
+          "medium": 12.0,
+          "big": 14.0
+        },
+        "reference_photos": ["https://acortar.link/Za1NRx"],
+        "favorites_count": 35,
+        "available": true
+      },
+      {
+        "name": "Solo Meal",
+        "description": "A perfect meal for one",
+        "versions": ["regular", "medium", "big"],
+        "prices": {
+          "regular": 8.0,
+          "medium": 10.0,
+          "big": 12.0
+        },
+        "reference_photos": ["https://acortar.link/Za1NRx"],
+        "favorites_count": 45,
+        "available": true
+      }
+    ]
+  }
+}
