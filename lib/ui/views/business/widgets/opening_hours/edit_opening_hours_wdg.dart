@@ -168,7 +168,7 @@ class EditHoursWdg extends StatelessWidget {
                         : null,
                     hintText: S.current.start,
                   ),
-                  const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingRight(12),
+                  const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
                   _buildDropdownButton(
                     key: 'closeA - Day: $i',
                     enabled: day?.openA != null,
@@ -211,7 +211,7 @@ class EditHoursWdg extends StatelessWidget {
                                 : null,
                         hintText: S.current.start,
                       ),
-                      const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingRight(12),
+                      const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
                       _buildDropdownButton(
                         key: 'closeB - Day: $i',
                         enabled: day?.openB != null,

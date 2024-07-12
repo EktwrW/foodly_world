@@ -4,13 +4,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/rounded_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
-class Home369TopOffersWidget extends StatelessWidget {
-  const Home369TopOffersWidget({
+class TopOffersWidget extends StatelessWidget {
+  const TopOffersWidget({
     super.key,
   });
 
@@ -100,21 +100,7 @@ class Home369TopOffersWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Positioned(
-                    right: 5,
-                    top: 5,
-                    child: RoundedButtonMobileFoodly(
-                      diameter: 20,
-                      depth: .5,
-                      shape: NeumorphicShape.concave,
-                      buttonColor: e.key.isOdd ? Colors.black38 : Colors.white60,
-                      iconData:
-                          e.key.isEven ? FontAwesome.heart_circle_check_solid : FontAwesome.heart_circle_plus_solid,
-                      iconSize: 20,
-                      iconColor: e.key.isEven ? const Color(0xFFFC1908) : Colors.white70,
-                      onPressed: () {},
-                    ),
-                  ),
+                  Positioned(right: 5, top: 5, child: LikeWidget(like: e.key.isOdd)),
                 ],
               ),
             ),

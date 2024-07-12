@@ -22,7 +22,7 @@ class Menu with _$Menu {
     @JsonKey(name: 'last_update') DateTime? lastUpdate,
     @JsonKey(name: 'food_categories') List<Category>? foodCategories,
     @JsonKey(name: 'drink_categories') List<Category>? drinkCategories,
-    List<ComboDM>? combos,
+    List<ItemDM>? combos,
   }) = _Menu;
 
   factory Menu.fromJson(Map<String, dynamic> json) => _$MenuFromJson(json);

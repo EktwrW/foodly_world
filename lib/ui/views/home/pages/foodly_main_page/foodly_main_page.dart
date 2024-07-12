@@ -29,7 +29,7 @@ class FoodlyMainPage extends StatelessWidget {
                       S.current.mainPromos,
                       style: FoodlyTextStyles.sectionsTitle,
                     ).paddingOnly(bottom: 12),
-                    const Home369TopOffersWidget(),
+                    const TopOffersWidget(),
                     Text(
                       S.current.news,
                       style: FoodlyTextStyles.sectionsTitle,

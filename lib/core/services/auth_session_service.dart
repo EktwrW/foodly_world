@@ -134,14 +134,14 @@ class AuthSessionService {
       case ModuleGuardType.business:
         return [UserRole.admin, UserRole.owner].contains(userSessionDM?.user.roleId);
 
+      case ModuleGuardType.menu:
+        return true;
+
       case ModuleGuardType.accountSettings:
         return [UserRole.admin, UserRole.owner, UserRole.customer].contains(userSessionDM?.user.roleId);
 
       case ModuleGuardType.unknown:
         return false;
-
-      default:
-        return true;
     }
   }
 }

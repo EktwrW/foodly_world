@@ -188,6 +188,18 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static const itemPriceBold = TextStyle(
+    fontSize: 11,
+    color: Colors.black87,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const itemPricePurpleBold = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+  );
+
   static const primaryBodyBold = TextStyle(
     fontWeight: FontWeight.bold,
     color: FoodlyThemes.primaryFoodly,

@@ -74,28 +74,28 @@ enum FoodlyInputType {
   const FoodlyInputType({required this.icon, required this.textInputType});
 
   static final _texts = {
-    FoodlyInputType.email: S.current.email,
-    FoodlyInputType.phone: S.current.phoneNumber,
-    FoodlyInputType.password: S.current.password,
-    FoodlyInputType.confirmPassword: S.current.confirmPassword,
-    FoodlyInputType.address: S.current.address,
-    FoodlyInputType.country: S.current.country,
-    FoodlyInputType.city: S.current.city,
-    FoodlyInputType.zipCode: S.current.zipCode,
-    FoodlyInputType.generic: '',
-    FoodlyInputType.nickName: S.current.nickName,
-    FoodlyInputType.firstName: S.current.firstName,
-    FoodlyInputType.lastName: S.current.lastName,
-    FoodlyInputType.dateOfBirth: S.current.dateOfBirth,
-    FoodlyInputType.businessName: S.current.businessName,
-    FoodlyInputType.businessPhone: S.current.contactNumber,
-    FoodlyInputType.businessCountry: S.current.country,
-    FoodlyInputType.businessCity: S.current.city,
-    FoodlyInputType.businessAddress: S.current.address,
-    FoodlyInputType.businessZipCode: S.current.zipCode,
-    FoodlyInputType.businessEmail: S.current.contactEmail,
-    FoodlyInputType.businessAboutUs: S.current.addADescription,
-    FoodlyInputType.businessAdditionalInfo: S.current.addAdditionalInformation,
+    email: S.current.email,
+    phone: S.current.phoneNumber,
+    password: S.current.password,
+    confirmPassword: S.current.confirmPassword,
+    address: S.current.address,
+    country: S.current.country,
+    city: S.current.city,
+    zipCode: S.current.zipCode,
+    generic: '',
+    nickName: S.current.nickName,
+    firstName: S.current.firstName,
+    lastName: S.current.lastName,
+    dateOfBirth: S.current.dateOfBirth,
+    businessName: S.current.businessName,
+    businessPhone: S.current.contactNumber,
+    businessCountry: S.current.country,
+    businessCity: S.current.city,
+    businessAddress: S.current.address,
+    businessZipCode: S.current.zipCode,
+    businessEmail: S.current.contactEmail,
+    businessAboutUs: S.current.addADescription,
+    businessAdditionalInfo: S.current.addAdditionalInformation,
   };
 
   String get text => _texts[this] ?? '';
@@ -127,4 +127,26 @@ enum Version {
 
   final String value;
   const Version(this.value);
+
+  static final _texts = {
+    regular: S.current.regular,
+    medium: S.current.medium,
+    big: S.current.big,
+  };
+
+  String get text => _texts[this] ?? '';
+}
+
+enum MenuCategory {
+  food,
+  drinks,
+  combos;
+
+  static final _texts = {
+    food: S.current.dishes,
+    drinks: S.current.drinks,
+    combos: S.current.combos,
+  };
+
+  String get text => _texts[this] ?? '';
 }

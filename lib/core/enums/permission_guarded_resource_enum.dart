@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 enum ModuleGuardType {
   accountSettings,
   home,
+  menu,
   business,
   unknown;
 
@@ -24,7 +25,7 @@ enum ModuleGuardType {
         AppRoutes.favedBusiness.name: ModuleGuardType.home,
         AppRoutes.usersCommunity.name: ModuleGuardType.home,
         AppRoutes.business.name: ModuleGuardType.business,
-        AppRoutes.menu.name: ModuleGuardType.business,
+        AppRoutes.menu.name: ModuleGuardType.menu,
         AppRoutes.profileScreen.name: ModuleGuardType.accountSettings,
         '': ModuleGuardType.unknown,
       };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -24,7 +25,7 @@ class BusinessFooterButtons extends StatelessWidget {
           children: [
             FooterButton(
               onPressed: () => context.pushNamed(AppRoutes.menu.name,
-                  pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.menuId ?? '123456'}),
+                  pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.menuId ?? FoodlyStrings.NEW_MENU}),
               dimension: 30,
               iconSize: 30,
               iconData: BoxIcons.bx_food_menu,

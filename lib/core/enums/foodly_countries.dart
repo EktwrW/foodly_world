@@ -7,21 +7,22 @@ import 'package:json_annotation/json_annotation.dart';
 
 enum FoodlyCountries {
   @JsonValue('Argentina')
-  ARGENTINA('AR', 'Argentina'),
+  ARGENTINA('AR', 'Argentina', 'ARS'),
   // @JsonValue('El Salvador')
   // EL_SALVADOR('SV', 'El Salvador'),
   @JsonValue('Spain')
-  SPAIN('ES', 'Spain'),
+  SPAIN('ES', 'Spain', '€'),
   @JsonValue('Portugal')
-  PORTUGAL('PT', 'Portugal'),
+  PORTUGAL('PT', 'Portugal', '€'),
   @JsonValue('United States')
-  USA('US', 'United States'),
+  USA('US', 'United States', '\$'),
   @JsonValue('Venezuela')
-  VENEZUELA('VE', 'Venezuela');
+  VENEZUELA('VE', 'Venezuela', 'Bs');
 
   final String countryCode;
   final String value;
-  const FoodlyCountries(this.countryCode, this.value);
+  final String currencySymbol;
+  const FoodlyCountries(this.countryCode, this.value, this.currencySymbol);
 
   //TODO: define countries final array according region of app release
   static final _countriesMap = {

@@ -25,7 +25,7 @@ class MenuCubit extends Cubit<MenuState> {
   Future<void> _loadMenu() async {
     final String response = await rootBundle.loadString('assets/mocks/menu.json');
     final data = await json.decode(response);
-    _vm = _vm.copyWith(menuDM: MenuDM.fromJson(data));
+    _vm = _vm.copyWith(menuDM: MenuDM.fromJson(data), menuEditionDM: MenuDM.fromJson(data));
     log('${_vm.menuDM?.menu.uuid}');
     log('${_vm.menuDM?.menu.lastUpdate}');
     log('${_vm.menuDM?.menu.foodCategories}');
