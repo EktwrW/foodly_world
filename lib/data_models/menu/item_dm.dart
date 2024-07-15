@@ -15,6 +15,7 @@ class ItemDM with _$ItemDM {
     required String description,
     required List<Version> versions,
     required Prices prices,
+    @JsonKey(name: 'uuid') required String id,
     @JsonKey(name: 'reference_photos') required List<String> referencePhotos,
     @JsonKey(name: 'favorites_count') required int favoritesCount,
     required bool available,

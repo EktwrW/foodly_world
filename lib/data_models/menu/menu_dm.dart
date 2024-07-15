@@ -6,26 +6,26 @@ part 'menu_dm.freezed.dart';
 part 'menu_dm.g.dart';
 
 @freezed
-class MenuDM with _$MenuDM {
-  factory MenuDM({
-    required Menu menu,
-  }) = _MenuDM;
+class MenuResponse with _$MenuResponse {
+  factory MenuResponse({
+    @JsonKey(name: 'menu') required MenuDM menuDM,
+  }) = _MenuResponse;
 
-  factory MenuDM.fromJson(Map<String, dynamic> json) => _$MenuDMFromJson(json);
+  factory MenuResponse.fromJson(Map<String, dynamic> json) => _$MenuResponseFromJson(json);
 }
 
 @freezed
-class Menu with _$Menu {
-  factory Menu({
+class MenuDM with _$MenuDM {
+  factory MenuDM({
     required String uuid,
     BusinessDM? business,
     @JsonKey(name: 'last_update') DateTime? lastUpdate,
     @JsonKey(name: 'food_categories') List<Category>? foodCategories,
     @JsonKey(name: 'drink_categories') List<Category>? drinkCategories,
     List<ItemDM>? combos,
-  }) = _Menu;
+  }) = _MenuDM;
 
-  factory Menu.fromJson(Map<String, dynamic> json) => _$MenuFromJson(json);
+  factory MenuDM.fromJson(Map<String, dynamic> json) => _$MenuDMFromJson(json);
 }
 
 @freezed

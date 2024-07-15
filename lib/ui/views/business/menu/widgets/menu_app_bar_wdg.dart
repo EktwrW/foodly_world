@@ -27,6 +27,7 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
     return BlocBuilder<MenuCubit, MenuState>(
       builder: (context, state) {
         final vm = state.vm;
+        final cubit = context.read<MenuCubit>();
 
         return SliverAppBar(
           primary: false,
@@ -39,8 +40,11 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ToggleSwitch(
-                initialLabelIndex: vm.initialIndex,
-                onToggle: (i) {},
+                initialLabelIndex: vm.indexView,
+                onToggle: (i) {
+                  vm.controller?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                  cubit.updateView(i ?? 0);
+                },
                 animate: true,
                 animationDuration: 500,
                 minHeight: 32,

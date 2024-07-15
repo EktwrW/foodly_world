@@ -145,6 +145,7 @@
         "name": "Appetizers",
         "items": [
           {
+            "uuid": "jnviurn4478ty87954gh87",
             "name": "Bruschetta",
             "description": "Grilled bread with tomato and basil",
             "versions": ["regular", "medium", "big"],
@@ -158,6 +159,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh871",
             "name": "Stuffed Mushrooms",
             "description": "Mushrooms stuffed with cheese and herbs",
             "versions": ["regular", "medium"],
@@ -171,6 +173,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh872",
             "name": "Garlic Bread",
             "description": "Bread with garlic and butter",
             "versions": ["regular", "medium", "big"],
@@ -184,6 +187,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh873",
             "name": "Chicken Wings",
             "description": "Spicy grilled chicken wings",
             "versions": ["regular"],
@@ -202,6 +206,7 @@
         "name": "Hamburgers",
         "items": [
           {
+            "uuid": "jnviurn4478ty87954gh874",
             "name": "Bruschetta",
             "description": "Grilled bread with tomato and basil",
             "versions": ["regular", "medium", "big"],
@@ -215,6 +220,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh875",
             "name": "Stuffed Mushrooms",
             "description": "Mushrooms stuffed with cheese and herbs",
             "versions": ["regular", "medium", "big"],
@@ -228,6 +234,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh876",
             "name": "Garlic Bread",
             "description": "Bread with garlic and butter",
             "versions": ["regular", "medium", "big"],
@@ -241,6 +248,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh877",
             "name": "Chicken Wings",
             "description": "Spicy grilled chicken wings",
             "versions": ["regular", "medium", "big"],
@@ -261,6 +269,7 @@
         "name": "Soft Drinks",
         "items": [
           {
+            "uuid": "jnviurn4478ty87954gh878",
             "name": "Cola",
             "description": "Classic cola drink",
             "versions": ["regular", "medium", "big"],
@@ -274,6 +283,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh879",
             "name": "Lemonade",
             "description": "Fresh squeezed lemonade",
             "versions": ["regular", "medium", "big"],
@@ -287,6 +297,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh8711",
             "name": "Iced Tea",
             "description": "Chilled tea with lemon",
             "versions": ["regular", "medium", "big"],
@@ -300,6 +311,7 @@
             "available": true
           },
           {
+            "uuid": "jnviurn4478ty87954gh8722",
             "name": "Orange Juice",
             "description": "Freshly squeezed orange juice",
             "versions": ["regular", "medium", "big"],
@@ -317,6 +329,7 @@
     ],
     "combos": [
       {
+        "uuid": "jnviurn4478ty87954gh8733",
         "name": "Family Feast",
         "description": "A combo meal for the whole family",
         "versions": ["regular", "medium", "big"],
@@ -330,6 +343,7 @@
         "available": true
       },
       {
+        "uuid": "jnviurn4478ty87954gh8744",
         "name": "Couple's Delight",
         "description": "Perfect for two",
         "versions": ["regular", "medium", "big"],
@@ -343,6 +357,7 @@
         "available": true
       },
       {
+        "uuid": "jnviurn4478ty87954gh8755",
         "name": "Kid's Special",
         "description": "Special combo for kids",
         "versions": ["regular", "medium", "big"],
@@ -356,6 +371,7 @@
         "available": true
       },
       {
+        "uuid": "jnviurn4478ty87954gh8766",
         "name": "Solo Meal",
         "description": "A perfect meal for one",
         "versions": ["regular", "medium", "big"],

@@ -14,6 +14,8 @@ extension ScreenSizeExtension on BuildContext {
   bool get isSmallerOrEqualsToTablet => isScreenSmallerOrEqualTo(DeviceSize.tablet.name);
   bool isDeviceType(String deviceType) => ResponsiveBreakpoints.of(this).equals(deviceType);
   Orientation get orientation => ResponsiveBreakpoints.of(this).orientation;
+  bool get isFoldableInHalfView =>
+      ResponsiveBreakpoints.of(this).screenWidth <= 344.0 && ((screenHeight / screenWidth) > 2.0);
 
   /// Is the [screenWidth] larger than [name]?
   /// Defaults to false if the [name] cannot be found.
