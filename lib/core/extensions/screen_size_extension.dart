@@ -15,8 +15,9 @@ extension ScreenSizeExtension on BuildContext {
   bool isDeviceType(String deviceType) => ResponsiveBreakpoints.of(this).equals(deviceType);
   Orientation get orientation => ResponsiveBreakpoints.of(this).orientation;
   static const double Z_FOLD_UNFOLDED_WIDTH = 344.0;
-  bool get isFoldableInHalfView =>
-      ResponsiveBreakpoints.of(this).screenWidth <= Z_FOLD_UNFOLDED_WIDTH && ((screenHeight / screenWidth) > 2.0);
+  static const double SMALL_MOBILE_SCREENS_REFERENCE = 384.0;
+  bool get isFoldableInHalfView => screenWidth <= Z_FOLD_UNFOLDED_WIDTH && ((screenHeight / screenWidth) > 2.0);
+  bool get isSmallWidthPhone => screenWidth <= SMALL_MOBILE_SCREENS_REFERENCE;
 
   /// Is the [screenWidth] larger than [name]?
   /// Defaults to false if the [name] cannot be found.

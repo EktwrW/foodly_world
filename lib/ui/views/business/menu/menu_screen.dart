@@ -102,26 +102,6 @@ class MenuScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildAnimatedPage(Widget page) {
-  //   return AnimatedSwitcher(
-  //     duration: Durations.medium4,
-  //     transitionBuilder: (Widget child, Animation<double> animation) {
-  //       return MatrixTransition(
-  //         animation: animation,
-  //         child: child,
-  //         onTransform: (double value) {
-  //           return Matrix4.identity()
-  //             ..setEntry(3, 2, 0.0005)
-  //             ..translate(100.0 * (1 - value))
-  //             ..rotateY(pi / 6 * (1 - value))
-  //             ..scale(0.9 + 0.1 * value);
-  //         },
-  //       );
-  //     },
-  //     child: page,
-  //   );
-  // }
 }
 
 class MenuCategoryBuilder extends StatelessWidget {
@@ -255,7 +235,7 @@ class MenuCategoryBuilder extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ).paddingBottom(context.isFoldableInHalfView ? 6 : 0),
+                            ).paddingBottom(context.isSmallWidthPhone ? 6 : 0),
                           ],
                         ).paddingRight(2),
                       ),
@@ -291,15 +271,11 @@ class AdaptiveItemVersionSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (context.isFoldableInHalfView) {
-          return _buildDropdownButton(context);
-        } else {
-          return _buildToggleButtons(context);
-        }
-      },
-    );
+    if (context.isSmallWidthPhone) {
+      return _buildDropdownButton(context);
+    } else {
+      return _buildToggleButtons(context);
+    }
   }
 
   Widget _buildToggleButtons(BuildContext context) {
