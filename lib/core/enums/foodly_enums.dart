@@ -150,3 +150,7 @@ enum MenuCategory {
 
   String get text => _texts[this] ?? '';
 }
+
+enum PrimaryEditButtonStyle { rounded, rectangular }
+
+enum ItemEditing { name, description, pictures, versions, none }

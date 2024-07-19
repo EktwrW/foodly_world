@@ -8,7 +8,7 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:http/http.dart' as http;
@@ -19,7 +19,7 @@ import 'package:path_provider/path_provider.dart';
 class DashboardHelpers {
   const DashboardHelpers._();
 
-  static DashboardVM setAddressFromPlacesAPI(Place detail, DashboardVM vm) {
+  static BusinessVM setAddressFromPlacesAPI(Place detail, BusinessVM vm) {
     final countryCode =
         detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).shortName ?? '';
 
@@ -51,7 +51,7 @@ class DashboardHelpers {
     return vm;
   }
 
-  static List<(TextEditingController, String)> addressFieldControllers(DashboardVM vm) {
+  static List<(TextEditingController, String)> addressFieldControllers(BusinessVM vm) {
     final list = <(TextEditingController, String)>[];
 
     if (vm.businessCityCtrl?.controller != null && vm.currentBusiness?.city != null) {
@@ -67,7 +67,7 @@ class DashboardHelpers {
     return list;
   }
 
-  static List<(TextEditingController, String)> contactChannelsFieldControllers(DashboardVM vm) {
+  static List<(TextEditingController, String)> contactChannelsFieldControllers(BusinessVM vm) {
     final list = <(TextEditingController, String)>[];
 
     if (vm.businessEmailCtrl?.controller != null && vm.currentBusiness?.email != null) {
@@ -81,7 +81,7 @@ class DashboardHelpers {
     return list;
   }
 
-  static BusinessUpdateDTO getContactUsFields(BusinessUpdateDTO dto, DashboardVM vm) {
+  static BusinessUpdateDTO getContactUsFields(BusinessUpdateDTO dto, BusinessVM vm) {
     if (vm.businessEmailCtrl?.text?.isNotEmpty ?? false) {
       dto = dto.copyWith(businessEmail: vm.businessEmailCtrl?.text);
     }
@@ -92,7 +92,7 @@ class DashboardHelpers {
     return dto;
   }
 
-  static BusinessUpdateDTO getAddressFields(BusinessUpdateDTO dto, DashboardVM vm) {
+  static BusinessUpdateDTO getAddressFields(BusinessUpdateDTO dto, BusinessVM vm) {
     if (vm.businessCountry != null) {
       dto = dto.copyWith(businessCountry: vm.businessCountry);
     }

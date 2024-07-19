@@ -7,15 +7,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart' show Marker, Googl
 
 export 'package:foodly_world/data_models/business/business_dm.dart';
 
-part 'dashboard_vm.freezed.dart';
+part 'business_vm.freezed.dart';
 
 enum DashboardEditing { none, name, address, category, aboutUs, openingHours, services, contactUs, additionalInfo }
 
 @freezed
-class DashboardVM with _$DashboardVM {
-  const DashboardVM._();
+class BusinessVM with _$BusinessVM {
+  const BusinessVM._();
 
-  const factory DashboardVM({
+  const factory BusinessVM({
     @Default(DashboardEditing.none) DashboardEditing dashboardEditing,
     @Default([]) List<BusinessDM> myBusinessesses,
     BusinessDM? currentBusiness,
@@ -46,7 +46,7 @@ class DashboardVM with _$DashboardVM {
     GoogleMapController? mapController,
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
     @Default(BusinessDays()) BusinessDays businessDays,
-  }) = _DashboardVM;
+  }) = _BusinessVM;
 
   bool get isEditingName => dashboardEditing == DashboardEditing.name;
   bool get isEditingAddress => dashboardEditing == DashboardEditing.address;

@@ -18,7 +18,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_save_and_cancel_buttons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;

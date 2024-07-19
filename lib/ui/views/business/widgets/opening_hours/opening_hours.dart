@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_titles_rich_text.dart';
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/current_opening_hours_wdg.dart';
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/edit_opening_hours_wdg.dart';
 
 class OpeningHoursWdg extends StatelessWidget {
-  final DashboardVM vm;
+  final BusinessVM vm;
 
   const OpeningHoursWdg({
     super.key,

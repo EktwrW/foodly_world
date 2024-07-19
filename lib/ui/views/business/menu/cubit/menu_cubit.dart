@@ -15,6 +15,7 @@ part 'menu_cubit.freezed.dart';
 
 class MenuCubit extends Cubit<MenuState> {
   MenuVM _vm;
+  late final Map<MenuCategory, List<Category>?> subCategories;
   MenuCubit({
     required String menuId,
   })  : _vm = MenuVM(
@@ -24,6 +25,12 @@ class MenuCubit extends Cubit<MenuState> {
         ),
         super(const MenuState.initial(MenuVM())) {
     _loadMenu();
+    // _vm = _vm.copyWith(
+    //   editMenuDM: _vm.menuDM,
+    //   indexView: _vm.menuDM?.business?.category == FoodlyCategories.drinkHouse ? 1 : 0,
+    // );
+
+    emit(_Loaded(_vm));
   }
 
   Future<void> _loadMenu() async {
@@ -35,6 +42,10 @@ class MenuCubit extends Cubit<MenuState> {
       editMenuDM: menuData.menuDM,
       indexView: menuData.menuDM.business?.category == FoodlyCategories.drinkHouse ? 1 : 0,
     );
+    subCategories = {
+      MenuCategory.food: _vm.editMenuDM!.foodCategories,
+      MenuCategory.drinks: _vm.editMenuDM!.drinkCategories,
+    };
     log('${_vm.menuDM?.uuid}');
     log('${_vm.menuDM?.lastUpdate}');
     log('${_vm.menuDM?.foodCategories}');
@@ -43,8 +54,27 @@ class MenuCubit extends Cubit<MenuState> {
     emit(_Loaded(_vm));
   }
 
-  void updateView(int index) {
-    emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
+  void updateView(int index) => emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
+
+  void updateEditMode() => emit(_Loaded(_vm = _vm.copyWith(editMode: !_vm.editMode)));
+
+  void updateSubCategoryEditMode(MenuCategory category, bool editingName, String uuid) {
+    final rawList = subCategories[category] ?? [];
+    final updatedList = List<Category>.generate(
+        rawList.length, (i) => rawList[i].uuid == uuid ? rawList[i].copyWith(editingName: editingName) : rawList[i]);
+
+    _updateFoodOrDrinkCategory(updatedList, category);
+
+    emit(_Loaded(_vm));
+  }
+
+  void addNewSubCategory(MenuCategory category) {
+    final list = List<Category>.from(subCategories[category] ?? [])
+      ..insert(0, Category(name: '', items: [], uuid: FoodlyStrings.NEW_CATEGORY, editingName: true));
+
+    _updateFoodOrDrinkCategory(list, category);
+
+    emit(_Loaded(_vm));
   }
 
   void updateItemVersion(ItemDM item, MenuCategory menuCategory, String subCategoryName) {
@@ -94,5 +124,14 @@ class MenuCubit extends Cubit<MenuState> {
 
     _vm = _vm.copyWith(editMenuDM: _vm.editMenuDM?.copyWith(combos: updatedItems));
     emit(_Loaded(_vm));
+  }
+
+  void _updateFoodOrDrinkCategory(List<Category> subCategories, MenuCategory category) {
+    if (category == MenuCategory.food) {
+      _vm = _vm.copyWith(editMenuDM: _vm.editMenuDM?.copyWith(foodCategories: subCategories));
+    }
+    if (category == MenuCategory.drinks) {
+      _vm = _vm.copyWith(editMenuDM: _vm.editMenuDM?.copyWith(drinkCategories: subCategories));
+    }
   }
 }

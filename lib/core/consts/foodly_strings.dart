@@ -47,4 +47,6 @@ class FoodlyStrings {
 
   // Default id for new menu:
   static const NEW_MENU = 'new_menu';
+  static const NEW_CATEGORY = 'new_category';
+  static const NEW_ITEM = 'new_item';
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 
 import 'category.dart';
 import 'rating.dart';
@@ -10,7 +10,7 @@ class CategoryAndRatingWdg extends StatelessWidget {
     required this.vm,
   });
 
-  final DashboardVM vm;
+  final BusinessVM vm;
 
   @override
   Widget build(BuildContext context) {

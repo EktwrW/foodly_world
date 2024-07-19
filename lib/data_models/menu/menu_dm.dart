@@ -32,7 +32,9 @@ class MenuDM with _$MenuDM {
 class Category with _$Category {
   factory Category({
     required String name,
+    required String uuid,
     required List<ItemDM> items,
+    @JsonKey(includeFromJson: false, includeToJson: false) @Default(false) bool editingName,
   }) = _Category;
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);

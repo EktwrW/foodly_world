@@ -27,11 +27,15 @@ class FoodlyPrimaryInputText extends StatelessWidget {
   final Widget? label;
   final String? labelText;
   final String? hintText;
+  final Widget? suffixIcon;
+  final bool showPrefix;
+  final void Function(String)? onChanged;
+  final double? hintTextSize;
 
   const FoodlyPrimaryInputText({
     super.key,
-    required this.controller,
-    required this.focusNode,
+    this.controller,
+    this.focusNode,
     this.secondaryFocusNode,
     this.validator,
     required this.inputTextType,
@@ -48,6 +52,10 @@ class FoodlyPrimaryInputText extends StatelessWidget {
     this.label,
     this.labelText,
     this.hintText,
+    this.suffixIcon,
+    this.showPrefix = true,
+    this.onChanged,
+    this.hintTextSize,
   });
 
   bool get isPassword => inputTextType == FoodlyInputType.password || inputTextType == FoodlyInputType.confirmPassword;
@@ -84,12 +92,10 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 ),
                 prefixIcon: inputTextType.icon,
                 prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
-                suffixIcon: isPassword
-                    ? InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: () => showPassword.value = !showPasswordValue,
-                        child: Icon(showPasswordValue ? AntDesign.eye_invisible_fill : AntDesign.eye_fill))
-                    : null,
+                suffixIcon: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () => showPassword.value = !showPasswordValue,
+                    child: Icon(showPasswordValue ? AntDesign.eye_invisible_fill : AntDesign.eye_fill)),
                 border: const UnderlineInputBorder(),
                 focusColor: FoodlyThemes.primaryFoodly,
                 errorMaxLines: 2,
@@ -129,6 +135,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
         onFieldSubmitted: (value) {
           secondaryFocusNode?.requestFocus();
         },
+        onChanged: onChanged,
         controller: controller,
         obscureText: obscureText,
         autovalidateMode: autovalidateMode,
@@ -138,11 +145,11 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           fillColor: Colors.transparent,
           hintText: hintText ?? inputTextType.text,
           hintStyle: TextStyle(
-            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
-          ),
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled, fontSize: hintTextSize),
           label: label,
           labelText: labelText,
-          prefixIcon: inputTextType.icon,
+          prefixIcon: showPrefix ? inputTextType.icon : null,
+          suffixIcon: suffixIcon,
           border: const UnderlineInputBorder(),
           focusColor: FoodlyThemes.primaryFoodly,
           prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,

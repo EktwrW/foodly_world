@@ -28,6 +28,7 @@ class MenuScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: MenuFloatingActionButton(
         floatingButtonKey: vm.floatingButtonKey,
+        loggerUserCanEdit: vm.loggerUserCanEdit,
       ),
       body: NestedScrollView(
         headerSliverBuilder: (_, __) => [

@@ -1,7 +1,7 @@
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-export 'package:foodly_world/core/enums/foodly_enums.dart';
+export 'package:foodly_world/core/enums/foodly_enums.dart' show ItemEditing, Version, MenuCategory;
 
 part 'item_dm.freezed.dart';
 part 'item_dm.g.dart';
@@ -20,6 +20,7 @@ class ItemDM with _$ItemDM {
     @JsonKey(name: 'favorites_count') required int favoritesCount,
     required bool available,
     @JsonKey(includeFromJson: false, includeToJson: false) @Default(Version.regular) Version selectedVersion,
+    @JsonKey(includeFromJson: false, includeToJson: false) @Default(ItemEditing.none) ItemEditing editingField,
   }) = _ItemDM;
 
   factory ItemDM.fromJson(Map<String, dynamic> json) => _$ItemDMFromJson(json);

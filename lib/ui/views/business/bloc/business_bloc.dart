@@ -11,7 +11,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
@@ -27,10 +27,10 @@ part 'business_state.dart';
 class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   static final _authService = di<AuthSessionService>();
   static final _businessRepo = di<BusinessRepo>();
-  DashboardVM _vm;
+  BusinessVM _vm;
 
   BusinessBloc()
-      : _vm = DashboardVM(
+      : _vm = BusinessVM(
           nameFormKey: GlobalKey<FormState>(),
           locationFormKey: GlobalKey<FormState>(),
           categoryFormKey: GlobalKey<FormState>(),
@@ -48,7 +48,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
           businessZipCodeCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAdditionalInfoCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
         ),
-        super(const _Initial(DashboardVM())) {
+        super(const _Initial(BusinessVM())) {
     on<BusinessEvent>(
       (events, emit) async {
         await events.map(

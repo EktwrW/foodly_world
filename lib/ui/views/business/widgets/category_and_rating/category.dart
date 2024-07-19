@@ -5,11 +5,11 @@ import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_save_and_cancel_buttons.dart';
 
 class CategoryWdg extends StatelessWidget {
-  final DashboardVM vm;
+  final BusinessVM vm;
 
   const CategoryWdg({
     super.key,

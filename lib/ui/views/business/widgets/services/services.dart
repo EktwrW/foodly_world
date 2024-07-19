@@ -9,12 +9,12 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
-import 'package:foodly_world/ui/views/business/view_model/dashboard_vm.dart';
+import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_titles_rich_text.dart';
 
 class ServicesWdg extends StatelessWidget {
-  final DashboardVM vm;
+  final BusinessVM vm;
   const ServicesWdg({
     super.key,
     required this.vm,

@@ -13,6 +13,7 @@ class RoundedButtonMobileFoodly extends StatelessWidget {
   final Color? iconColor;
   final bool? disableDepth;
   final double? depth;
+  final EdgeInsets? padding;
 
   const RoundedButtonMobileFoodly({
     super.key,
@@ -27,6 +28,7 @@ class RoundedButtonMobileFoodly extends StatelessWidget {
     this.iconColor,
     this.disableDepth = false,
     this.depth,
+    this.padding,
   });
 
   @override
@@ -41,7 +43,7 @@ class RoundedButtonMobileFoodly extends StatelessWidget {
             disableDepth: disableDepth,
             depth: depth,
           ),
-      padding: const EdgeInsets.all(8),
+      padding: padding ?? const EdgeInsets.all(8),
       child: SizedBox.square(
         dimension: diameter ?? 40,
         child: Center(

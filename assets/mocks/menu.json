@@ -143,6 +143,7 @@
     "food_categories": [
       {
         "name": "Appetizers",
+        "uuid": "jnviurn44788766",
         "items": [
           {
             "uuid": "jnviurn4478ty87954gh87",
@@ -204,6 +205,7 @@
       },
       {
         "name": "Hamburgers",
+        "uuid": "jnviurn4478gh8766",
         "items": [
           {
             "uuid": "jnviurn4478ty87954gh874",
@@ -267,6 +269,7 @@
     "drink_categories": [
       {
         "name": "Soft Drinks",
+        "uuid": "jnviurn44788a33q766",
         "items": [
           {
             "uuid": "jnviurn4478ty87954gh878",
