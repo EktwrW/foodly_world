@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
-import 'package:foodly_world/core/network/base/dio_request_handler.dart';
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, DioRequestHandler, FoodlyStrings;
 
 class FoodlyApiProvider {
   Dio? _dio;

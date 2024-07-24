@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, FoodlyStrings, di;
+
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';

@@ -4,11 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
-import 'package:foodly_world/core/network/users/me_repo.dart';
-import 'package:foodly_world/core/services/auth_session_service.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
+
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';

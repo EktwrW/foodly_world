@@ -1,4 +1,4 @@
-import 'package:foodly_world/core/configs/base_config.dart';
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig;
 import 'package:logger/logger.dart';
 
 class AppLogFilter extends LogFilter {

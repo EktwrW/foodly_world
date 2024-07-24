@@ -1,14 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/network/base/app_api_provider.dart';
-import 'package:foodly_world/core/network/business/business_client.dart';
-import 'package:foodly_world/core/network/business/business_repo.dart';
-import 'package:foodly_world/core/network/users/me_client.dart';
-import 'package:foodly_world/core/network/users/me_repo.dart';
-import 'package:foodly_world/core/services/auth_session_service.dart';
-import 'package:foodly_world/core/services/local_storage_service.dart';
-import 'package:foodly_world/core/services/location_service.dart';
-import 'package:foodly_world/core/utils/app_log_filter.dart';
+import 'package:foodly_world/core/core_exports.dart';
+
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';

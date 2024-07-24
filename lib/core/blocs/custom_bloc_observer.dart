@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
+
 import 'package:logger/logger.dart';
 
 class AppBlocObserver extends BlocObserver {

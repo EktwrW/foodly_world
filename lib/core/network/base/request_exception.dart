@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 
 class AppRequestException implements Exception {
   final Object? error;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:logger/logger.dart';
