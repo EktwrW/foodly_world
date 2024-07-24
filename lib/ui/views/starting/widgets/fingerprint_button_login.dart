@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/blocs/cubit/local_auth_cubit.dart';
+import 'package:foodly_world/core/blocs/local_auth/local_auth_cubit.dart';
 import 'package:foodly_world/core/blocs/root/root_bloc.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';

@@ -3,7 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/blocs/cubit/local_auth_cubit.dart';
+import 'package:foodly_world/core/blocs/local_auth/local_auth_cubit.dart';
 import 'package:foodly_world/core/blocs/root/root_bloc.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';

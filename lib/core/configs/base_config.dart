@@ -13,6 +13,7 @@ abstract class BaseConfig {
   (String, String) get testUser => ('', '');
   String get googlePlacesBaseUrl => '';
   String get googleDefaultApiKey => '';
+  String get googleSignInClientId => '';
 
   Environment get environment => this is ProdConfig
       ? Environment.prod
@@ -39,6 +40,7 @@ abstract class BaseConfig {
     final logLevel = const String.fromEnvironment('LOGGER_LEVEL').toLogLevel();
     const googlePlacesBaseUrl = String.fromEnvironment('GOOGLE_MAPS_GEOCODING_URL');
     const googleDefaultApiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
+    const googleSignInClientId = String.fromEnvironment('GOOGLE_SIGN_IN_CLIENT_ID');
 
     late final BaseConfig config;
     switch (env) {
@@ -52,6 +54,7 @@ abstract class BaseConfig {
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
           envGoogleDefaultPublicToken: googleDefaultApiKey,
+          envGoogleSignInClientId: googleSignInClientId,
         );
         break;
       case Environment.demo:
@@ -63,6 +66,7 @@ abstract class BaseConfig {
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
           envGoogleDefaultPublicToken: googleDefaultApiKey,
+          envGoogleSignInClientId: googleSignInClientId,
         );
         break;
       case Environment.dev:
@@ -78,6 +82,7 @@ abstract class BaseConfig {
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
           envGoogleDefaultPublicToken: googleDefaultApiKey,
+          envGoogleSignInClientId: googleSignInClientId,
         );
     }
     return config;

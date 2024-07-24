@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/network/users/me_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -21,7 +26,7 @@ part 'starting_state.dart';
 class StartingCubit extends Cubit<StartingState> {
   static final _meRepo = di<MeRepo>();
   final _googleSignIn = GoogleSignIn(
-    //clientId: '561934860792-mm5io1pu38t1h2htbohqbmqrfe6c0551.apps.googleusercontent.com', //TODO: check if needed for web
+    clientId: kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
   );
 
@@ -38,31 +43,42 @@ class StartingCubit extends Cubit<StartingState> {
   }
 
   void googleSignIn() async {
-    if (await _googleSignIn.isSignedIn()) await _googleSignIn.signOut();
-    final signIn = await _googleSignIn.signIn();
-    _vm = _vm.copyWith(googleSignInAccount: signIn);
+    try {
+      if (await _googleSignIn.isSignedIn()) {
+        await _googleSignIn.signOut();
+      }
+      final signIn = await _googleSignIn.signIn();
+      _vm = _vm.copyWith(googleSignInAccount: signIn);
 
-    if (signIn != null) {
-      emit(_Loading(_vm));
+      if (signIn != null) {
+        emit(_Loading(_vm));
 
-      final googleAuth = await _vm.googleSignInAccount?.authentication;
-      final body = AuthSocialLoginDTO(accessToken: googleAuth?.accessToken ?? '', provider: 'google');
+        final googleAuth = await _vm.googleSignInAccount?.authentication;
+        final body = AuthSocialLoginDTO(accessToken: googleAuth?.accessToken ?? '', provider: 'google');
 
-      _meRepo.socialLogin(body).then(
-        (response) {
-          return response.when(
-            success: (userSessionDM) => (userSessionDM.user.userId?.isEmpty ?? true)
-                ? setSocialLoginUserForSignUp(userSessionDM)
-                : _provideAccessToUser(userSessionDM),
-            failure: ((error) {
-              di<Logger>().e('$error');
-              emit(_Error('$error', _vm));
-            }),
-          );
-        },
-      );
-    } else {
-      emit(_Error('error', _vm));
+        _meRepo.socialLogin(body).then(
+          (response) {
+            return response.when(
+              success: (userSessionDM) => (userSessionDM.user.userId?.isEmpty ?? true)
+                  ? setSocialLoginUserForSignUp(userSessionDM)
+                  : _provideAccessToUser(userSessionDM),
+              failure: ((error) {
+                di<Logger>().e('$error');
+                emit(_Error('$error', _vm));
+              }),
+            );
+          },
+        );
+      } else {
+        emit(_Error('error', _vm));
+      }
+    } catch (error) {
+      if (error is PlatformException) {
+        log('Error code: ${error.code}');
+        log('Error message: ${error.message}');
+        log('Error details: ${error.details}');
+      }
+      emit(_Error('$error', _vm));
     }
   }
 

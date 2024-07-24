@@ -9,6 +9,7 @@ class DemoConfig extends BaseConfig {
   final Level envLogLevel;
   final String envGooglePlacesBaseUrl;
   final String envGoogleDefaultPublicToken;
+  final String envGoogleSignInClientId;
 
   DemoConfig({
     required this.envLogLevel,
@@ -18,6 +19,7 @@ class DemoConfig extends BaseConfig {
     required this.envMain369ApiKey,
     required this.envGooglePlacesBaseUrl,
     required this.envGoogleDefaultPublicToken,
+    required this.envGoogleSignInClientId,
   });
 
   @override
@@ -40,4 +42,7 @@ class DemoConfig extends BaseConfig {
 
   @override
   String get googleDefaultApiKey => envGoogleDefaultPublicToken;
+
+  @override
+  String get googleSignInClientId => envGoogleSignInClientId;
 }

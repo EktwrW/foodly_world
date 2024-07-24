@@ -10,6 +10,7 @@ class ProdConfig extends BaseConfig {
   final String envGooglePlacesBaseUrl;
   final String envGoogleDefaultPublicToken;
   final bool? regPrefill;
+  final String envGoogleSignInClientId;
 
   ProdConfig({
     required this.envLogLevel,
@@ -20,6 +21,7 @@ class ProdConfig extends BaseConfig {
     required this.envGooglePlacesBaseUrl,
     required this.envGoogleDefaultPublicToken,
     this.regPrefill,
+    required this.envGoogleSignInClientId,
   });
 
   @override
@@ -45,4 +47,7 @@ class ProdConfig extends BaseConfig {
 
   @override
   bool get shouldPrefillLogin => regPrefill ?? false;
+
+  @override
+  String get googleSignInClientId => envGoogleSignInClientId;
 }

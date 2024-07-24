@@ -98,6 +98,7 @@ class SignUpCubit extends Cubit<SignUpState> {
           genderNode: FocusNode(),
           countryNode: FocusNode(),
           businessCountryNode: FocusNode(),
+          country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == _locationService.currentCountryCode),
           businessCountry: _authService.userSessionDM?.user.country,
           businessCountryCode: _authService.userSessionDM?.user.country?.countryCode,
         ),
