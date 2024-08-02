@@ -57,16 +57,16 @@ class WelcomeDialog extends StatelessWidget {
               left: UIDimens.SCREEN_PADDING_MOB,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     ZoomOut(
                       from: 1.3,
-                      child: const Asset(FoodlyAssets.wellDone, height: 90),
+                      child: const Asset(FoodlyAssets.wellDone, height: 80),
                     ),
-                    ElasticIn(child: const Asset(FoodlyAssets.wellDone, height: 90)),
+                    ElasticIn(child: const Asset(FoodlyAssets.wellDone, height: 80)),
                   ],
                 ),
                 Text(
@@ -75,34 +75,37 @@ class WelcomeDialog extends StatelessWidget {
                   style: FoodlyTextStyles.confirmationTextPrimary,
                 ),
                 Text.rich(
-                  user?.isManager ?? false
+                  !(user?.isManager ?? false)
                       ? TextSpan(
                           children: [
-                            TextSpan(text: S.current.welcomeDialogTextSpan1),
+                            TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
                             const WidgetSpan(
                                 child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
-                            TextSpan(text: S.current.welcomeDialogTextSpan2),
+                            TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
                             if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
-                            TextSpan(text: S.current.welcomeDialogTextSpan3),
+                            TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
                             getBoldTextSpan(S.current.owner),
-                            TextSpan(text: S.current.welcomeDialogTextSpanOwner),
+                            const TextSpan(text: '. '),
+                            TextSpan(text: '${S.current.welcomeDialogTextSpanOwner}.'),
                           ],
                         )
                       : TextSpan(
                           children: [
-                            TextSpan(text: S.current.welcomeDialogTextSpan1),
+                            TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
                             const WidgetSpan(
                                 child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
-                            TextSpan(text: S.current.welcomeDialogTextSpan2),
+                            TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
                             if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
-                            TextSpan(text: S.current.welcomeDialogTextSpan3),
+                            TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
                             getBoldTextSpan(S.current.customer),
+                            const TextSpan(text: '. '),
                             TextSpan(text: S.current.welcomeDialogTextSpanClient1),
-                            getBoldTextSpan(S.current.welcomeDialogTextSpanClient2),
-                            TextSpan(text: S.current.welcomeDialogTextSpanClient3),
+                            getBoldTextSpan(' ${S.current.welcomeDialogTextSpanClient2}'),
+                            TextSpan(text: ', ${S.current.welcomeDialogTextSpanClient3}.'),
                           ],
                         ),
                   textAlign: TextAlign.center,
+                  style: TextStyle(height: (user?.isManager ?? false) ? 1.8 : 1.5),
                 ),
               ],
             ),

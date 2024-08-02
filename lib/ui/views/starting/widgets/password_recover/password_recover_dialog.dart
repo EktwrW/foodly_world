@@ -73,7 +73,7 @@ class PasswordRecoverDialog extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElasticIn(child: const Asset(FoodlyAssets.password, height: 90)),
+                    ElasticIn(child: const Asset(FoodlyAssets.password, height: 80)),
                     state.maybeWhen(
                       welcome: (vm) => _stateContent(vm, context),
                       // error: (msg, vm) => _stateContent(vm, context, errorMsg: msg), //TODO: check if this msg should be rendered
@@ -123,13 +123,14 @@ class PasswordRecoverDialog extends StatelessWidget {
                   Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: S.current.recoverPasswordTextSpan1),
+                        TextSpan(text: '${S.current.recoverPasswordTextSpan1} '),
                         getBoldTextSpan(S.current.recoverPasswordTextSpan2),
-                        TextSpan(text: S.current.recoverPasswordTextSpan3),
+                        TextSpan(text: ', ${S.current.recoverPasswordTextSpan3}.'),
                       ],
                     ),
                     textAlign: TextAlign.center,
-                  ),
+                    style: const TextStyle(height: 1.6),
+                  ).paddingVertical(20),
                 if (vm.errorRequestingPassword)
                   Text(
                     errorMsg ?? S.current.recoverPasswordErrorMsg,

@@ -7,8 +7,7 @@ class LoadingWidgetFoodlyLogo extends StatefulWidget {
   LoadingWidgetFoodlyLogoState createState() => LoadingWidgetFoodlyLogoState();
 }
 
-class LoadingWidgetFoodlyLogoState extends State<LoadingWidgetFoodlyLogo>
-    with SingleTickerProviderStateMixin {
+class LoadingWidgetFoodlyLogoState extends State<LoadingWidgetFoodlyLogo> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late List<Animation<double>> _opacityAnimations;
   static const _numberOfImages = 6;
@@ -59,7 +58,7 @@ class LoadingWidgetFoodlyLogoState extends State<LoadingWidgetFoodlyLogo>
               (index) => FadeTransition(
                 opacity: _opacityAnimations[index],
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 200),
+                  constraints: const BoxConstraints(maxHeight: 150),
                   child: UILoading.FOODLY_LOGOS[index],
                 ),
               ),
