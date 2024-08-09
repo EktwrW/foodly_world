@@ -60,7 +60,7 @@ class LogoutDialog extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElasticIn(child: const Asset(FoodlyAssets.exit, height: 90)),
+                ElasticIn(child: const Asset(FoodlyAssets.exit, height: 80)),
                 Text(
                   S.current.logoutDialogTitle,
                   textAlign: TextAlign.center,
@@ -70,9 +70,9 @@ class LogoutDialog extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(text: S.current.logoutDialogTextSpan1),
-                      TextSpan(text: S.current.logoutDialogTextSpan2),
+                      TextSpan(text: ' ${S.current.logoutDialogTextSpan2} '),
                       getBoldTextSpan(S.current.logoutDialogTextSpan3),
-                      TextSpan(text: S.current.logoutDialogTextSpan4),
+                      TextSpan(text: ' ${S.current.logoutDialogTextSpan4}'),
                     ],
                   ),
                   textAlign: TextAlign.center,
