@@ -1,0 +1,190 @@
+import 'package:clay_containers/widgets/clay_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
+import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/animations/animated_loading_text_dots.dart';
+import 'package:foodly_world/ui/shared_widgets/animations/icon_pulsing.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
+import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
+
+class VoiceSearchSnackbars {
+  const VoiceSearchSnackbars._();
+
+  static void showInputSearchWdg(
+    BuildContext context,
+  ) {
+    final cubit = context.read<VoiceSearchCubit>();
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.action,
+      onDismiss: () => cubit.resetToInitial(),
+      buttonBuilder: (dismiss) => BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+        builder: (context, state) {
+          final vm = state.vm;
+          final locationService = di<LocationService>();
+
+          return SizedBox(
+            width: double.infinity,
+            child: ValueListenableBuilder(
+                valueListenable: vm.inputController.controller ?? TextEditingController(),
+                builder: (_, textValue, __) {
+                  final canNotSave = vm.recognizedText.isEmpty && textValue.text.isEmpty;
+
+                  return ui.NeumorphicButton(
+                    onPressed: canNotSave
+                        ? null
+                        : (textValue.text.isNotEmpty)
+                            ? () {
+                                cubit.searchBusinesses(
+                                  locationService.currentLocation.position?.latitude ?? 0.0,
+                                  locationService.currentLocation.position?.longitude ?? 0.0,
+                                );
+                                dismiss();
+                              }
+                            : () async {
+                                await cubit.stopListening();
+                                cubit.searchBusinesses(
+                                  locationService.currentLocation.position?.latitude ?? 0.0,
+                                  locationService.currentLocation.position?.longitude ?? 0.0,
+                                );
+                                dismiss();
+                              },
+                    style: ui.NeumorphicStyle(
+                      shape: ui.NeumorphicShape.convex,
+                      boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                      depth: 3,
+                      lightSource: ui.LightSource.topRight,
+                      intensity: 1.2,
+                      surfaceIntensity: .3,
+                      color: ui.NeumorphicColors.embossMaxWhiteColor,
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: ClayText(
+                        S.current.send,
+                        color: canNotSave ? FoodlyThemes.lightTheme().disabledColor : FoodlyThemes.primaryFoodly,
+                        spread: 0,
+                        style: FoodlyTextStyles.snackBarPrimaryButton,
+                      ),
+                    ),
+                  );
+                }),
+          );
+        },
+      ),
+      content: BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+        builder: (context, state) {
+          final vm = state.vm;
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 36,
+            children: [
+              if (vm.smartSearchMode.isVoice)
+                PulsingMicIcon(
+                  icon: const Asset(FoodlyAssets.mic, height: 55, width: 55),
+                  animate: vm.isListening,
+                ),
+              if (vm.smartSearchMode.isVoice)
+                Flexible(
+                  child: AnimatedSize(
+                    clipBehavior: Clip.antiAlias,
+                    duration: Durations.medium1,
+                    child: vm.recognizedText.isNotEmpty
+                        ? _TextWdg(text: vm.recognizedText, key: const Key('recognized-text'))
+                        : !vm.isListening
+                            ? const _TextWdg(text: 'Ready to listen', key: Key('Ready-to-listen'))
+                            : AnimatedTextLoadingDots(
+                                key: const Key('voice_search_listening_text'),
+                                text: 'Listening',
+                                textStyle: FoodlyTextStyles.snackBarLightBody,
+                                alignment: MainAxisAlignment.center,
+                              ),
+                  ),
+                )
+              else
+                Flexible(
+                  child: Column(
+                    spacing: 18,
+                    children: [
+                      const Center(child: Asset(FoodlyAssets.searchBusinesses, height: 55, width: 55)),
+                      const _TextWdg(text: '¿Necesitas las mejores recomendaciones?'),
+                      FoodlyPrimaryInputText(
+                        minLines: 2,
+                        maxLines: 3,
+                        inputTextType: FoodlyInputType.search,
+                        autovalidateMode: AutovalidateMode.onUnfocus,
+                        controller: vm.inputController.controller,
+                        focusNode: vm.inputController.focusNode,
+                        enabled: !vm.smartSearchMode.isVoice,
+                        hideCurrentSnackBarWhenOnTap: false,
+                        showLeading: false,
+                        hintTextSize: 14,
+                        prefixIconConstraints: const BoxConstraints.tightFor(width: 32),
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+              if (vm.smartSearchMode.isVoice)
+                SizedBox(
+                  width: double.infinity,
+                  child: ui.NeumorphicButton(
+                    onPressed: vm.isListening ? () => cubit.stopListening() : () => cubit.startListening(),
+                    style: ui.NeumorphicStyle(
+                      shape: ui.NeumorphicShape.convex,
+                      boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                      depth: 3,
+                      lightSource: ui.LightSource.topRight,
+                      intensity: 1.2,
+                      surfaceIntensity: .3,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: ClayText(
+                        vm.isListening ? 'Detener' : 'Volver a grabar',
+                        color: ui.NeumorphicColors.decorationMaxWhiteColor,
+                        spread: 0,
+                        style: FoodlyTextStyles.snackBarPrimaryButton,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+
+    scaffoldMessenger
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar.getSnackBar(context));
+  }
+}
+
+class _TextWdg extends StatelessWidget {
+  final String text;
+  const _TextWdg({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: FoodlyTextStyles.snackBarLightBody,
+      maxLines: 16,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}

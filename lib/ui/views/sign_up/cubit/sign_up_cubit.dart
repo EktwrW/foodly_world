@@ -1,0 +1,325 @@
+import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/view_models/user_profile_vm.dart';
+import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/user_body_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nova_places_api/nova_places_api.dart';
+
+part 'sign_up_cubit.freezed.dart';
+part 'sign_up_state.dart';
+
+class SignUpCubit extends Cubit<SignUpState> {
+  UserProfileVM _vm;
+  static final _locationService = di<LocationService>();
+  static final _authService = di<AuthSessionService>();
+  final _meRepo = di<MeRepo>();
+  final _businessRepo = di<BusinessRepo>();
+  final center = const LatLng(45.521563, -122.677433);
+
+  SignUpCubit()
+      : _vm = UserProfileVM(
+          nickNameController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          firstNameController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getFirstNameForSignUp),
+            focusNode: FocusNode(),
+          ),
+          lastNameController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getLastNameForSignUp),
+            focusNode: FocusNode(),
+          ),
+          emailController: InputController(
+            controller: TextEditingController(text: _authService.userSessionDM?.user.getEmailForSignUp),
+            focusNode: FocusNode(),
+          ),
+          passwordController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          phoneNumberController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          addressController: InputController(
+            controller: TextEditingController(text: _locationService.currentAddress),
+            focusNode: FocusNode(),
+          ),
+          cityController: InputController(
+            controller: TextEditingController(text: _locationService.currentCity),
+            focusNode: FocusNode(),
+          ),
+          zipCodeController: InputController(
+            controller: TextEditingController(text: _locationService.currentZipCode),
+            focusNode: FocusNode(),
+          ),
+          businessNameController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessEmailController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessPhoneNumberController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
+          businessCityController: InputController(
+            controller:
+                TextEditingController(text: _authService.userSessionDM?.user.city ?? _locationService.currentCity),
+            focusNode: FocusNode(),
+          ),
+          businessAddressController: InputController(
+            controller: TextEditingController(
+                text: _authService.userSessionDM?.user.isClient == true ? '' : _locationService.currentAddress),
+            focusNode: FocusNode(),
+          ),
+          businessZipCodeController: InputController(
+            controller: TextEditingController(
+                text: _authService.userSessionDM?.user.zipCode ?? _locationService.currentZipCode),
+            focusNode: FocusNode(),
+          ),
+          formKey: GlobalKey<FormState>(),
+          dateOfBirthNode: FocusNode(),
+          genderNode: FocusNode(),
+          countryNode: FocusNode(),
+          placesFocusNode: FocusNode(),
+          businessCountryNode: FocusNode(),
+          country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == _locationService.currentCountryCode),
+          businessCountry: _authService.userSessionDM?.user.country,
+          businessCountryCode: _authService.userSessionDM?.user.country?.countryCode,
+          userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
+        ),
+        super(const SignUpState.initial()) {
+    _initializeMarkers();
+    emit(_Loaded(_vm));
+  }
+
+  String get currentCountryCode => _vm.country?.countryCode ?? _locationService.currentCountryCode;
+  UserRole? get getUserRole => _vm.roleId;
+  List<UserRole> get getUserTypes => _vm.userTypes;
+  Position? get getCurrentPosition => _locationService.currentLocation.position;
+  String get lang => _authService.lang;
+  String get googleApiKey => di<BaseConfig>().googleDefaultApiKey;
+
+  void _initializeMarkers() {
+    final marker = Marker(
+      markerId: MarkerId('${_vm.userSessionDM.user.username} location'),
+      position:
+          LatLng(getCurrentPosition?.latitude ?? center.latitude, getCurrentPosition?.longitude ?? center.longitude),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+    );
+
+    _vm = _vm.copyWith(markers: {marker});
+  }
+
+  Future<void> onSignUpUserPressed() async {
+    setAutovalidateMode(AutovalidateMode.always);
+
+    if (_vm.formKey?.currentState?.validate() ?? false) {
+      await signUpUser();
+    }
+  }
+
+  Future<void> signUpUser() async {
+    emit(_Loading(_vm));
+
+    final registerDTO = UserBodyRegisterDTO(
+      userName: _vm.nickNameController?.controller?.text ?? '',
+      firstName: _vm.firstNameController?.controller?.text ?? '',
+      lastName: _vm.lastNameController?.controller?.text ?? '',
+      email: _vm.emailController?.controller?.text ?? '',
+      password: _vm.passwordController?.controller?.text ?? '',
+      passwordConfirmation: _vm.passwordController?.controller?.text ?? '',
+      phone: _vm.phoneNumberController?.controller?.text ?? '',
+      dateOfBirth: _vm.dateOfBirth?.toUtc() ?? DateTime.now().toUtc(),
+      address: _vm.addressController?.controller?.text ?? '',
+      zipCode: _vm.zipCodeController?.controller?.text ?? '',
+      city: _vm.cityController?.controller?.text ?? '',
+      country: _vm.country!,
+      gender: _vm.userGender.key,
+      roleId: _vm.roleId,
+      termsAndContiditionsAccepted: _vm.termsAndContiditionsAccepted,
+      latitude: _vm.userLocation?.lat,
+      longitude: _vm.userLocation?.lng,
+    );
+
+    await _meRepo
+        .register(registerDTO: registerDTO, filePath: _vm.imagePath, avatarUrl: _vm.importedAvatar)
+        .then((response) {
+      return response.when(
+        success: (userSessionDM) {
+          _authService.setSession(userSessionDM);
+          emit(_UserCreated(_vm = _vm.copyWith(userSessionDM: userSessionDM)));
+        },
+        failure: (e) {
+          di<Logger>().e(e.errorMsg);
+          emit(_Error('$e', _vm));
+        },
+      );
+    });
+  }
+
+  void processImagePath(String? imagePath) async => emit(_Loaded(_vm = _vm.copyWith(imagePath: imagePath ?? '')));
+
+  void processImportedAvatar(String? importedAvatar) async =>
+      emit(_Loaded(_vm = _vm.copyWith(importedAvatar: importedAvatar)));
+
+  void setUserCountry(FoodlyCountries? country) =>
+      country != null ? emit(_Loaded(_vm = _vm.copyWith(country: country))) : null;
+
+  void updateUserLocationFromPlacesAPI(Place detail) async {
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
+
+    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
+      _vm = _vm.copyWith(country: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
+    }
+
+    _vm.cityController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
+
+    _vm.zipCodeController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.POSTAL_CODE))?.longName ?? '';
+
+    if (detail.geometry != null) {
+      final location = detail.geometry!.location;
+
+      _vm = _vm.copyWith(userLocation: LatLngLiteral(lat: location.lat, lng: location.lng));
+    }
+
+    _vm.phoneNumberController?.focusNode?.requestFocus();
+
+    emit(_Loaded(_vm));
+  }
+
+  void setUserGender(UserGender? gender) => gender != null ? emit(_Loaded(_vm = _vm.copyWith(gender: gender))) : null;
+
+  void setUserType(UserRole role) => emit(_Loaded(_vm = _vm.copyWith(roleId: role)));
+
+  void setTermsAndContiditions(bool value) => emit(_Loaded(_vm = _vm.copyWith(termsAndContiditionsAccepted: value)));
+
+  void userCreated() => emit(_UserCreated(_vm));
+
+  void updateDateOfBirth(DateTime? picked) => emit(_Loaded(_vm = _vm.copyWith(dateOfBirth: picked)));
+
+  void setBusinessCategory(FoodlyCategories? category) =>
+      category != null ? emit(_Loaded(_vm = _vm.copyWith(businessCategory: category))) : null;
+
+  void setBusinessCountry(FoodlyCountries? country) => country != null
+      ? emit(_Loaded(_vm = _vm.copyWith(businessCountry: country, businessCountryCode: country.countryCode)))
+      : null;
+
+  void processLogoPath(String? logoPath) => emit(_Loaded(_vm = _vm.copyWith(logoPath: logoPath ?? '')));
+
+  void hideTooltipInBusinessSignUp() => emit(_Loaded(_vm = _vm.copyWith(tooltipActive: false)));
+
+  void updateBusinessFromPlacesAPI(Place detail) async {
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
+
+    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
+      _vm = _vm.copyWith(businessCountry: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
+    }
+
+    _vm.businessNameController?.controller?.text = detail.name ?? '';
+
+    _vm.businessPhoneNumberController?.controller?.text =
+        (detail.formattedPhoneNumber ?? '').replaceAll(RegExp(FoodlyRegex.phoneCleanUpCode as String), '');
+
+    _vm = _vm.copyWith(
+        businessCountryCode:
+            detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).shortName ??
+                _locationService.currentCountryCode);
+
+    _vm.businessCityController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
+
+    _vm.businessAddressController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.ROUTE))?.longName ?? '';
+
+    _vm.businessZipCodeController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.POSTAL_CODE))?.longName ?? '';
+
+    if (detail.geometry != null) {
+      final location = detail.geometry!.location;
+
+      _vm = _vm.copyWith(businessLocation: LatLngLiteral(lat: location.lat, lng: location.lng));
+
+      final newMarker = Marker(
+        markerId: MarkerId(detail.placeId ?? ''),
+        position: LatLng(location.lat, location.lng),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
+        infoWindow: InfoWindow(title: detail.name ?? ''),
+      );
+      _vm = _vm.copyWith(markers: Set.from(_vm.markers)..add(newMarker));
+    }
+
+    emit(_Loaded(_vm));
+  }
+
+  Future<void> signUpBusiness() async {
+    emit(_Loading(_vm));
+
+    final bodyRegisterDTO = BusinessBodyRegisterDTO(
+      businessName: _vm.businessNameController?.controller?.text ?? '',
+      businessEmail: _vm.businessEmailController?.controller?.text ?? '',
+      businessPhone: _vm.businessPhoneNumberController?.controller?.text ?? '',
+      businessAddress: _vm.businessAddressController?.controller?.text ?? '',
+      businessZipcode: _vm.businessZipCodeController?.controller?.text ?? '',
+      businessCity: _vm.businessCityController?.controller?.text ?? '',
+      businessCountry: _vm.businessCountry!,
+      businessWebsite: '',
+      businessLatitude: _vm.businessLocation?.lat,
+      businessLongitude: _vm.businessLocation?.lng,
+      categoryId: _vm.businessCategory!,
+    );
+
+    await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath).then((response) {
+      return response.when(
+        success: (businessDM) {
+          final manager = _authService.userSessionDM!.user.copyWith(business: [businessDM]);
+          if (_authService.userSessionDM != null) {
+            _authService.setSession(_authService.userSessionDM!.copyWith(user: manager));
+          }
+
+          emit(_BusinessCreationFinished(_vm = _vm.copyWith(
+              userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''))));
+        },
+        failure: (e) {
+          di<Logger>().e(e.errorMsg);
+          emit(_Error(e.errorMsg, _vm));
+        },
+      );
+    });
+  }
+
+  void onMapCreated(GoogleMapController controller) => emit(_Loaded(_vm = _vm.copyWith(mapController: controller)));
+
+  void setAutovalidateMode(AutovalidateMode newMode) => emit(_Loaded(_vm = _vm.copyWith(autovalidateMode: newMode)));
+
+  void changeUserRoleToClient() async {
+    emit(_Loading(_vm));
+
+    final dto = const UserBodyUpdateDTO(roleId: UserRole.customer);
+
+    await _meRepo.updateProfile(dto).then((result) {
+      result.when(
+        success: (userSessionDM) => emit(_BusinessCreationFinished(_vm =
+            _vm.copyWith(userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: '')))),
+        failure: (e) {
+          di<Logger>().e(e.errorMsg);
+          emit(_Error(e.errorMsg, _vm));
+        },
+      );
+    });
+
+    setAutovalidateMode(AutovalidateMode.disabled);
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "sh",
+      "args": ["${workspaceFolder}/.vscode/generate_models.sh"],
+      "problemMatcher": ["$dart-build_runner"],
+      "group": "build",
+      "label": "Foodly - Generate Models for Development",
+      "detail": ""
+    },
+    {
+      "type": "shell",
+      "command": "sh",
+      "args": ["${workspaceFolder}/.vscode/generate_translations.sh"],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Foodly - Generate Translations for Development",
+      "detail": ""
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+part of '../menu_category_builder_wdg.dart';
+
+class FavAndEditItemBtns extends StatelessWidget {
+  const FavAndEditItemBtns({
+    super.key,
+    required this.subCategory,
+    required this.item,
+    required this.menuCategory,
+  });
+
+  final CategoryDM subCategory;
+  final ItemDM item;
+  final MenuCategory menuCategory;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MenuCubit, MenuState>(
+      builder: (context, state) {
+        final vm = state.vm;
+        final cubit = context.read<MenuCubit>();
+
+        if (vm.editMode) {
+          return PopupMenuButton<String>(
+            enabled: !vm.menuIsEditing || item.isEditing, // Habilitar solo si no hay otros en edición o es este item
+            offset: const Offset(-10, 10),
+            surfaceTintColor: Colors.white,
+            icon: Icon(
+              Bootstrap.three_dots_vertical,
+              color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+              size: 22,
+            ),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'edit',
+                enabled: !vm.menuIsEditing || item.isEditing,
+                child: Row(
+                  children: [
+                    Icon(
+                      item.isEditing ? Icons.settings_backup_restore : Bootstrap.pencil_square,
+                      size: 16,
+                      color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                    ),
+                    Text(
+                      item.isEditing ? S.current.cancelEdit : S.current.edit,
+                      style: TextStyle(
+                        color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                      ),
+                    ).paddingLeft(8),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                enabled: !vm.menuIsEditing || item.isEditing,
+                child: Row(
+                  children: [
+                    Icon(
+                      Bootstrap.trash3,
+                      size: 16,
+                      color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                    ),
+                    Text(
+                      S.current.delete,
+                      style: TextStyle(
+                        color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                      ),
+                    ).paddingLeft(8),
+                  ],
+                ),
+              ),
+              if (item.hasSavedPhotos)
+                PopupMenuItem(
+                  value: 'remove-photos',
+                  enabled: !vm.menuIsEditing || item.isEditing,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Bootstrap.trash2,
+                        size: 16,
+                        color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                      ),
+                      Text(
+                        S.current.removePhotos,
+                        style: TextStyle(
+                          color: vm.menuIsEditing && !item.isEditing ? Colors.grey : FoodlyThemes.primaryFoodly,
+                        ),
+                      ).paddingLeft(8),
+                    ],
+                  ),
+                ),
+            ],
+            onSelected: (value) {
+              switch (value) {
+                case 'edit':
+                  if (item.isEditing) {
+                    cubit.cancelEditItemOrSubCategory(
+                        itemRecord: item.photosRemovedDuringEdition ? (item, menuCategory, subCategory.uuid) : null);
+                    break;
+                  }
+
+                  cubit.updateItemNameOrDescription(
+                    item.copyWith(editingField: ItemEditing.name),
+                    menuCategory,
+                    subCategory.uuid,
+                  );
+                  break;
+                case 'delete':
+                  MenuSnackbars.showDeleteItemSnackBar(
+                    context,
+                    cubit,
+                    item,
+                    menuCategory,
+                  );
+                case 'remove-photos':
+                  cubit.deleteItemPhotos(item, menuCategory, subCategory.uuid);
+                  break;
+              }
+            },
+          );
+        }
+
+        return IconButton(
+          onPressed: () {},
+          tooltip: S.current.addToFavorites,
+          color: Colors.transparent,
+          icon: Icon(
+            subCategory.items.indexOf(item).isEven
+                ? FontAwesome.heart_circle_plus_solid
+                : FontAwesome.heart_circle_check_solid,
+            color: subCategory.items.indexOf(item).isEven ? const Color(0xFFB5B4B4) : FoodlyThemes.primaryFoodly,
+            size: 22,
+          ),
+        );
+      },
+    );
+  }
+}

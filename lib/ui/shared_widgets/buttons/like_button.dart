@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
+import 'package:icons_plus/icons_plus.dart' show FontAwesome;
+
+class LikeWidget extends StatelessWidget {
+  final void Function()? onPressed;
+  final bool liked;
+  final double? iconSize;
+  final double? diameter;
+
+  const LikeWidget({
+    super.key,
+    this.onPressed,
+    required this.liked,
+    this.iconSize,
+    this.diameter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomRoundedNeumorphicButton(
+      diameter: diameter ?? 20,
+      depth: .5,
+      tooltip: S.current.addToFavorites,
+      shape: ui.NeumorphicShape.concave,
+      buttonColor: Colors.white,
+      iconData: liked ? FontAwesome.heart_circle_check_solid : FontAwesome.heart_circle_plus_solid,
+      iconSize: iconSize ?? 20,
+      iconColor: liked ? const Color(0xFFFC1908) : Colors.white70,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class FoodlyFavButton extends StatelessWidget {
+  final bool isFav;
+  final void Function()? onPressed;
+  final ButtonStyle? style;
+  final double? iconSize;
+
+  const FoodlyFavButton({super.key, required this.isFav, this.onPressed, this.style, this.iconSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      style: style,
+      tooltip: S.current.addToFavorites,
+      color: Colors.transparent,
+      icon: Icon(
+        isFav ? FontAwesome.heart_circle_plus_solid : FontAwesome.heart_circle_check_solid,
+        color: isFav ? const Color(0xFFB5B4B4) : FoodlyThemes.primaryFoodly,
+        size: iconSize ?? 22,
+      ),
+    );
+  }
+}
