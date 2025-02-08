@@ -1,6 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:universal_io/io.dart';
 import 'package:video_player/video_player.dart';
@@ -253,7 +254,7 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     if (videoId == null) {
-      return const Center(child: Text('Invalid YouTube URL'));
+      return Center(child: Text(S.current.invalidYoutubeUrl));
     }
 
     return YoutubePlayerEmbed(

@@ -9,7 +9,12 @@ class _VoiceSearchWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<VoiceSearchCubit, VoiceSearchState>(
       listener: (context, state) {
-        state.whenOrNull();
+        state.whenOrNull(
+          error: (message, vm) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            FoodlySnackbars.errorGeneric(context, message);
+          },
+        );
       },
       builder: (context, state) {
         final vsCubit = context.read<VoiceSearchCubit>();
@@ -32,8 +37,8 @@ class _VoiceSearchWrapper extends StatelessWidget {
                   Flexible(
                     child: Column(
                       children: [
-                        const Text(
-                          'Resultados para:',
+                        Text(
+                          '${S.current.resultsFor}:',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: FoodlyTextStyles.captionPurpleBold,
@@ -94,9 +99,9 @@ class BusinessResultsView extends StatelessWidget {
       return Column(
         spacing: 24,
         children: [
-          const Asset(FoodlyAssets.editLocation, width: 40),
+          const Asset(FoodlyAssets.searchBusinessAgain, width: 40),
           Text(
-            'No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.',
+            S.current.noRecommendationsFound,
             style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
             textAlign: TextAlign.center,
           ).paddingHorizontal(context.screenWidth * .1),
@@ -135,8 +140,6 @@ class BusinessResultsView extends StatelessWidget {
     );
   }
 }
-
-// ... other imports and code
 
 class ViewModeToggleButton extends StatefulWidget {
   final bool isGrid;

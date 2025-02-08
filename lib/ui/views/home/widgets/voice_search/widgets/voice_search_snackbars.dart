@@ -106,10 +106,10 @@ class VoiceSearchSnackbars {
                     child: vm.recognizedText.isNotEmpty
                         ? _TextWdg(text: vm.recognizedText, key: const Key('recognized-text'))
                         : !vm.isListening
-                            ? const _TextWdg(text: 'Ready to listen', key: Key('Ready-to-listen'))
+                            ? _TextWdg(text: S.current.readyToListen, key: const Key('Ready-to-listen'))
                             : AnimatedTextLoadingDots(
                                 key: const Key('voice_search_listening_text'),
-                                text: 'Listening',
+                                text: S.current.listening,
                                 textStyle: FoodlyTextStyles.snackBarLightBody,
                                 alignment: MainAxisAlignment.center,
                               ),
@@ -121,7 +121,7 @@ class VoiceSearchSnackbars {
                     spacing: 18,
                     children: [
                       const Center(child: Asset(FoodlyAssets.searchBusiness, height: 55, width: 55)),
-                      const _TextWdg(text: '¿Necesitas las mejores recomendaciones?'),
+                      _TextWdg(text: S.current.needBestRecommendations),
                       FoodlyPrimaryInputText(
                         minLines: 2,
                         maxLines: 3,
@@ -165,7 +165,7 @@ class VoiceSearchSnackbars {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: ClayText(
-                        vm.isListening ? 'Detener' : 'Volver a grabar',
+                        vm.isListening ? S.current.stop : S.current.retryRecording,
                         color: ui.NeumoColors.decorationMaxWhiteColor,
                         spread: 0,
                         style: FoodlyTextStyles.snackBarPrimaryButton,

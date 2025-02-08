@@ -7,6 +7,8 @@ class CurrentLocationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
       builder: (context, state) {
+        final locationService = di<LocationService>();
+
         return Tooltip(
           message: di<AuthSessionService>().userSessionDM?.user.fullAddress,
           child: Material(
@@ -36,7 +38,7 @@ class CurrentLocationButton extends StatelessWidget {
                     const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
                     Expanded(
                       child: Text(
-                        '${di<LocationService>().currentCity}, ${di<LocationService>().currentZipCode}.',
+                        '${locationService.currentCity}, ${locationService.currentZipCode}.',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: FoodlyTextStyles.labelBold,
@@ -123,13 +125,13 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   spacing: 20,
                   children: [
-                    const Row(
+                    Row(
                       spacing: 20,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Asset(FoodlyAssets.editLocation, width: 40),
+                        const Asset(FoodlyAssets.editLocation, width: 40),
                         Text(
-                          'Cambiar Ubicación',
+                          S.current.changeLocation,
                           style: FoodlyTextStyles.confirmationTextPrimary,
                         ),
                       ],
@@ -140,7 +142,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         unselectedColor: FoodlyThemes.alternativeUnselectedLightColor,
                       ),
                       child: PlacesAutocompleteWdg(
-                        hintText: 'Cambia el punto de búsqueda para recomendaciones',
+                        hintText: S.current.changeSearchPoint,
                         language: authSessionService.lang,
                         components: loggedUser?.country?.apiComponents,
                         onPickedPlaceDetail: _handlePlaceSelected,
@@ -152,8 +154,8 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         child: Column(
                           spacing: 4,
                           children: [
-                            const Text(
-                              'Selected place:',
+                            Text(
+                              '${S.current.selectedPlace}:',
                               style: FoodlyTextStyles.captionPurpleBold,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -193,13 +195,13 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   spacing: 8,
                                   children: [
-                                    const Row(
+                                    Row(
                                       spacing: 8,
                                       children: [
-                                        Icon(Icons.my_location, size: 18),
+                                        const Icon(Icons.my_location, size: 18),
                                         Expanded(
                                           child: Text(
-                                            'Usar ubicación del dispositivo',
+                                            S.current.useDeviceLocation,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: FoodlyTextStyles.captionPurpleBold,
@@ -251,13 +253,13 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             spacing: 8,
                             children: [
-                              const Row(
+                              Row(
                                 spacing: 8,
                                 children: [
-                                  Icon(Icons.location_history_rounded, size: 18),
+                                  const Icon(Icons.location_history_rounded, size: 18),
                                   Expanded(
                                     child: Text(
-                                      'Usar ubicación registrada',
+                                      S.current.useSavedLocation,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: FoodlyTextStyles.captionPurpleBold,

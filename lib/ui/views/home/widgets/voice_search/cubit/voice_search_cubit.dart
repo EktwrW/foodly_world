@@ -1,10 +1,10 @@
 import 'dart:async' show Timer;
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart' show Durations, FocusNode, TextEditingController;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/home/widgets/voice_search/view_model/voice_search_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +32,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
     try {
       final available = await _speechToText.initialize(
         onError: _handleError,
-        onStatus: (status) => log('Status: $status'),
+        onStatus: (status) => di<Logger>().t('Status: $status'),
         debugLogging: true,
       );
 
@@ -46,11 +46,11 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       if (available) {
         emit(VoiceSearchState.initial(vm));
       } else {
-        emit(VoiceSearchState.error('El reconocimiento de voz no está disponible en este dispositivo', vm));
+        emit(VoiceSearchState.error(S.current.speechRecognitionUnavailable, vm));
       }
     } on Exception catch (e) {
-      log('Error de inicialización: $e');
-      emit(VoiceSearchState.error('Error al inicializar el reconocimiento de voz', VoiceSearchVM.initial()));
+      di<Logger>().e('Error de inicialización: $e');
+      emit(VoiceSearchState.error(S.current.speechRecognitionError, VoiceSearchVM.initial()));
     }
   }
 
@@ -98,7 +98,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       } catch (e) {
         _listenTimer?.cancel();
         emit(VoiceSearchState.error(
-          'Error al iniciar el reconocimiento de voz',
+          S.current.speechRecognitionError,
           listeningVm.copyWith(isListening: false),
         ));
       }
@@ -112,8 +112,6 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
     );
 
     if (result.finalResult) {
-      log('Texto final reconocido: ${result.recognizedWords}');
-
       // Primero emitimos el estado con el texto final
       final updatedVm = currentVm.copyWith(
         recognizedText: result.recognizedWords,
@@ -291,7 +289,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       orElse: () => VoiceSearchVM.initial(),
     );
 
-    log('Error de reconocimiento: ${error.errorMsg}');
+    di<Logger>().e('Error de reconocimiento: ${error.errorMsg}');
     emit(VoiceSearchState.error(
       _getErrorMessage(error.errorMsg),
       currentVm.copyWith(isListening: false),
@@ -299,10 +297,10 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
   }
 
   String _getErrorMessage(String errorMsg) => switch (errorMsg) {
-        'error_no_match' => 'No se pudo entender el audio. Por favor, intenta de nuevo.',
-        'error_speech_timeout' => 'No se detectó audio. Por favor, intenta de nuevo.',
-        'error_network' => 'Error de conexión. Verifica tu internet e intenta de nuevo.',
-        _ => 'Error al procesar el audio. Por favor, intenta de nuevo.',
+        'error_no_match' => S.current.audioNotUnderstood,
+        'error_speech_timeout' => S.current.noAudioDetected,
+        'error_network' => S.current.connectionError,
+        _ => S.current.audioProcessingError,
       };
 
   @override

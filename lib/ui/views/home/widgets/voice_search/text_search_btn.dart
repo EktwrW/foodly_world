@@ -10,7 +10,7 @@ class TextSmartSearchButton extends StatelessWidget {
     return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
       builder: (context, state) {
         return Tooltip(
-          message: 'Ask recommendations by text smart',
+          message: S.current.askRecommendationsByTextSmart,
           child: ElevatedButton(
             onPressed: state.vm.smartSearchMode.isText
                 ? null
@@ -19,14 +19,12 @@ class TextSmartSearchButton extends StatelessWidget {
 
                     if (state.vm.smartSearchMode.isVoice) {
                       if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      // await Future.delayed(Durations.short3);
                       await cubit.resetToInitial();
                     }
 
                     await Future.microtask(() async {
                       if (context.mounted) {
                         cubit.setTextSearchMode();
-                        // await Future.delayed(Durations.short3);
                       }
                     });
 

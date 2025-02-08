@@ -6,6 +6,7 @@ import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';

@@ -8,7 +8,7 @@ class VoiceSearchButton extends StatelessWidget {
     return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
       builder: (context, state) {
         return Tooltip(
-          message: 'Ask recommendations by your voice',
+          message: S.current.askRecommendationsByYourVoice,
           child: ElevatedButton(
             onPressed: state.vm.smartSearchMode.isVoice
                 ? null

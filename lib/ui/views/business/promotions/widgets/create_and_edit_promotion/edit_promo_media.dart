@@ -62,15 +62,15 @@ class _EditPromoMediaWdg extends StatelessWidget {
                 onTap: () => _editVideo(context),
               ),
             PopupMenuItem(
-              child: const Text('Upload Image'),
+              child: Text(S.current.uploadImage),
               onTap: () => _pickImage(context),
             ),
             PopupMenuItem(
-              child: const Text('Upload Video'),
+              child: Text(S.current.uploadVideo),
               onTap: () => _pickVideo(context),
             ),
             PopupMenuItem(
-              child: const Text('Add YouTube URL'),
+              child: Text(S.current.addYoutubeUrl),
               onTap: () => _addYoutubeUrl(context),
             ),
           ],
