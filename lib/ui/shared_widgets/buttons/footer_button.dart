@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class FooterButton extends StatelessWidget {
   final void Function() onPressed;
@@ -27,13 +27,13 @@ class FooterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ui.NeumorphicButton(
+        ui.NeumoButton(
           margin: const EdgeInsets.all(6),
           onPressed: onPressed,
-          style: const ui.NeumorphicStyle(
-            shape: ui.NeumorphicShape.convex,
+          style: const ui.NeumoStyle(
+            shape: ui.NeumoShape.convex,
             intensity: .6,
-            color: ui.NeumorphicColors.decorationMaxWhiteColor,
+            color: ui.NeumoColors.decorationMaxWhiteColor,
           ),
           child: SizedBox.square(
             dimension: dimension ?? 80,

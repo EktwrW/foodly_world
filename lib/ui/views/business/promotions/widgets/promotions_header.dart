@@ -42,7 +42,7 @@ class _PromotionsHeader extends StatelessWidget {
           top: 54,
           left: 14,
           child: CustomRoundedNeumorphicButton(
-            shape: ui.NeumorphicShape.concave,
+            shape: ui.NeumoShape.concave,
             iconSize: 26,
             depth: 2,
             diameter: 30,
@@ -132,7 +132,7 @@ class _PromotionsHeader extends StatelessWidget {
                   style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 4, horizontal: 12)),
                       fixedSize: const WidgetStatePropertyAll(Size(double.infinity, 20)),
-                      backgroundColor: WidgetStatePropertyAll(ui.NeumorphicColors.background.withValues(alpha: .6))),
+                      backgroundColor: WidgetStatePropertyAll(ui.NeumoColors.background.withValues(alpha: .6))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

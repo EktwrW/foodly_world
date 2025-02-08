@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -13,7 +14,6 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class SignUpUserForm extends StatelessWidget {
@@ -68,7 +68,7 @@ class SignUpUserForm extends StatelessWidget {
                       key: const Key('check-username-signup-initial'),
                       visible: checkUsernameCubit.isInitialState,
                       child: Icon(Bootstrap.search,
-                          size: 20, color: enabled ? FoodlyThemes.primaryFoodly : ui.NeumorphicColors.disabled),
+                          size: 20, color: enabled ? FoodlyThemes.primaryFoodly : ui.NeumoColors.disabled),
                     ),
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-loading'),
@@ -146,16 +146,17 @@ class SignUpUserForm extends StatelessWidget {
           focusNode: vm.countryNode,
           decoration: InputDecoration(
             prefixIcon: vm.country?.flag?.paddingAll(10) ?? FoodlyInputType.country.icon,
-            prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+            prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
             hintText: S.current.country,
-            contentPadding: const EdgeInsets.only(top: 10),
-            iconColor: enabled ? null : ui.NeumorphicColors.disabled,
+            contentPadding: const EdgeInsets.only(top: 12),
+            iconColor: enabled ? null : ui.NeumoColors.disabled,
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: enabled ? 0.7 : 0.35, color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled),
+              borderSide:
+                  BorderSide(width: enabled ? 0.7 : 0.35, color: enabled ? Colors.black87 : ui.NeumoColors.disabled),
             ),
             hintStyle: TextStyle(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              fontSize: 14,
             ),
           ),
           enabled: enabled,
@@ -167,7 +168,7 @@ class SignUpUserForm extends StatelessWidget {
               .map<DropdownMenuItem<FoodlyCountries>>(
                 (FoodlyCountries country) => DropdownMenuItem<FoodlyCountries>(
                   value: country,
-                  child: Text(country.value),
+                  child: Text(country.value, style: FoodlyTextStyles.actionsBody),
                 ),
               )
               .toList(),
@@ -240,7 +241,7 @@ class SignUpUserForm extends StatelessWidget {
                       Icon(
                         Bootstrap.calendar2_event,
                         size: 24,
-                        color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+                        color: enabled ? Colors.black87 : ui.NeumoColors.disabled,
                       ).paddingSymmetric(horizontal: 12),
                       Text(
                         vm.dateOfBirth?.getStringFormat ?? S.current.dateOfBirth,
@@ -271,17 +272,17 @@ class SignUpUserForm extends StatelessWidget {
           focusNode: vm.genderNode,
           disabledHint: Text(
             S.current.gender,
-            style: const TextStyle(color: ui.NeumorphicColors.disabled),
+            style: FoodlyTextStyles.disabledText,
           ),
           decoration: InputDecoration(
             prefix: const SizedBox.shrink(),
-            prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+            prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
             hintText: S.current.gender,
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
             ),
-            hintStyle: TextStyle(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+            hintStyle: FoodlyTextStyles.hintText.copyWith(
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
             ),
           ),
           onChanged: enabled
@@ -292,7 +293,7 @@ class SignUpUserForm extends StatelessWidget {
           items: vm.userGenders.map<DropdownMenuItem<UserGender>>((UserGender gender) {
             return DropdownMenuItem<UserGender>(
               value: gender,
-              child: Text(gender.text),
+              child: Text(gender.text, style: FoodlyTextStyles.inputTextValue),
             );
           }).toList(),
           autovalidateMode: vm.autovalidateMode,

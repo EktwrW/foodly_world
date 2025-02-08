@@ -48,14 +48,14 @@ class PromotionsSnackbars {
             children: [
               ValueListenableBuilder<(bool, OpenAIImageStyle)>(
                 valueListenable: generateAIPromoImage,
-                builder: (context, value, child) => ui.NeumorphicCheckbox(
+                builder: (context, value, child) => ui.NeumoCheckbox(
                   value: value.$1,
                   onChanged: (newValue) => generateAIPromoImage.value = ((newValue as bool?) ?? true, value.$2),
                   padding: const EdgeInsets.all(2),
                   margin: const EdgeInsets.fromLTRB(0, 12, 8, 12),
-                  style: ui.NeumorphicCheckboxStyle(
+                  style: ui.NeumoCheckboxStyle(
                     selectedColor: FoodlyThemes.primaryFoodly,
-                    boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(4)),
+                    boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(4)),
                   ),
                 ),
               ),

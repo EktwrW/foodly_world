@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
@@ -10,7 +11,6 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:nova_places_api/nova_places_api.dart';
@@ -139,8 +139,8 @@ class DashboardHelpers {
         AndroidUiSettings(
           toolbarTitle: S.current.cropImage,
           toolbarColor: FoodlyThemes.primaryFoodly,
-          activeControlsWidgetColor: ui.NeumorphicColors.accent,
-          toolbarWidgetColor: ui.NeumorphicColors.background,
+          activeControlsWidgetColor: ui.NeumoColors.accent,
+          toolbarWidgetColor: ui.NeumoColors.background,
           initAspectRatio: CropAspectRatioPreset.square,
           lockAspectRatio: true,
           showCropGrid: false,

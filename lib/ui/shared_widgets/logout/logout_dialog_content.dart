@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -8,7 +9,6 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -49,7 +49,7 @@ class LogoutDialog extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: ui.NeumorphicColors.background,
+              color: ui.NeumoColors.background,
             ),
             margin: const EdgeInsets.only(
               bottom: 50,
@@ -91,7 +91,7 @@ class LogoutDialog extends StatelessWidget {
                       height: 78,
                       child: CustomNeumorphicButton(
                           text: S.current.endSession,
-                          shape: ui.NeumorphicShape.concave,
+                          shape: ui.NeumoShape.concave,
                           verticalMargin: 15,
                           fontSize: 14.5,
                           padding: const EdgeInsets.symmetric(vertical: 10),

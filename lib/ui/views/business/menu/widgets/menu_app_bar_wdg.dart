@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -10,7 +11,6 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -114,7 +114,7 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
           pinned: true,
           shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           leading: CustomRoundedNeumorphicButton(
-            shape: ui.NeumorphicShape.concave,
+            shape: ui.NeumoShape.concave,
             iconSize: 26,
             depth: 2,
             diameter: 30,
@@ -152,10 +152,10 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(S.current.menu, style: FoodlyTextStyles.secondaryTitle.copyWith(fontSize: 15)).paddingBottom(6),
-                ui.NeumorphicText(
+                ui.NeumoText(
                   vm.businessName ?? '',
-                  style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
-                  textStyle: ui.NeumorphicTextStyle(
+                  style: const ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
+                  textStyle: ui.NeumoTextStyle(
                     fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,

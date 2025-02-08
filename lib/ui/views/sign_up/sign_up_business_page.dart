@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -19,7 +20,6 @@ import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_form.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_tooltip.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart';
 
 class SignUpBusinessPage extends StatefulWidget {
@@ -61,7 +61,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
     final cubit = context.read<SignUpCubit>();
 
     return Scaffold(
-      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
+      backgroundColor: ui.NeumoColors.decorationMaxWhiteColor,
       body: SizedBox(
         height: context.screenHeight,
         width: context.screenWidth,
@@ -157,7 +157,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                       Flexible(
                         child: (userIsMigratingToManager
                                 ? CustomRoundedNeumorphicButton(
-                                    shape: ui.NeumorphicShape.concave,
+                                    shape: ui.NeumoShape.concave,
                                     iconSize: 24,
                                     iconData: Bootstrap.caret_left_fill,
                                     onPressed: () {
@@ -173,7 +173,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                                     },
                                   )
                                 : CustomRoundedNeumorphicButton(
-                                    shape: ui.NeumorphicShape.concave,
+                                    shape: ui.NeumoShape.concave,
                                     iconSize: 24,
                                     iconData: Bootstrap.door_open_fill,
                                     onPressed: vm.tooltipActive
@@ -265,7 +265,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                         await cubit.signUpBusiness();
                       }
                     },
-                    shape: ui.NeumorphicShape.convex,
+                    shape: ui.NeumoShape.convex,
                     text: S.current.completeSignUp,
                     disabled: false,
                   ).paddingOnly(top: 20, bottom: 40),

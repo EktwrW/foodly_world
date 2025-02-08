@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_mocks.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
@@ -6,7 +7,6 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class ReviewCard extends StatelessWidget {
   const ReviewCard({super.key});

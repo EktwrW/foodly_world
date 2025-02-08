@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show FontAwesome;
 
 class LikeWidget extends StatelessWidget {
@@ -25,7 +25,7 @@ class LikeWidget extends StatelessWidget {
       diameter: diameter ?? 20,
       depth: .5,
       tooltip: S.current.addToFavorites,
-      shape: ui.NeumorphicShape.concave,
+      shape: ui.NeumoShape.concave,
       buttonColor: Colors.white,
       iconData: liked ? FontAwesome.heart_circle_check_solid : FontAwesome.heart_circle_plus_solid,
       iconSize: iconSize ?? 20,

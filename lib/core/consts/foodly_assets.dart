@@ -54,7 +54,6 @@ class FoodlyAssets {
   // Features
   static const AssetData trends = AssetData('trends.png', AssetType.image);
   static const AssetData mic = AssetData('mic.png', AssetType.image);
-  static const AssetData searchBusinesses = AssetData('search_business.png', AssetType.image);
 
   // Business & Dashboard
   static const AssetData coverImages = AssetData('cover.png', AssetType.image);
@@ -62,6 +61,8 @@ class FoodlyAssets {
   static const AssetData noCustomerReviewsYet = AssetData('no_customer_reviews.png', AssetType.image);
   static const AssetData emptyMenu = AssetData('empty_menu.png', AssetType.image);
   static const AssetData ai = AssetData('ai.png', AssetType.image);
+  static const AssetData searchBusiness = AssetData('search_business.png', AssetType.image);
+  static const AssetData searchBusinessAgain = AssetData('search_business_again.png', AssetType.image);
 
   // eliminar estos assets de pruebas cuando ya no sean utilizados:
   static const AssetData sushiTemp = AssetData('sushi.webp', AssetType.image);

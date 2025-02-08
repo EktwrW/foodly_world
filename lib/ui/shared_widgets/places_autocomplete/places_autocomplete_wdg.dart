@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:logger/logger.dart';
 import 'package:nova_places_api/nova_places_api.dart';
@@ -54,11 +54,11 @@ class PlacesAutocompleteWdg extends StatelessWidget {
       enabled: !disabled,
       prefixIcon: Icon(
         Bootstrap.geo_alt,
-        color: disabled ? ui.NeumorphicColors.disabled : FoodlyThemes.primaryFoodly,
+        color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(6),
       cancelIcon: Icon(
         Bootstrap.eraser_fill,
-        color: disabled ? ui.NeumorphicColors.disabled : FoodlyThemes.primaryFoodly,
+        color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(4),
       autocompleteOnTrailingWhitespace: true,
       detailRequired: true,
@@ -192,10 +192,12 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
               enabled: widget.enabled,
               autofocus: widget.autofocus,
               focusNode: _focusNode,
+              style: const TextStyle(fontSize: 14),
               controller: _textController,
               onChanged: _onTextChange,
               decoration: InputDecoration(
                 hintText: widget.hintText,
+                hintStyle: const TextStyle(fontSize: 14),
                 prefixIcon: widget.prefixIcon ?? const Icon(Icons.search),
                 suffixIcon: GestureDetector(
                   onTap: _clearText,

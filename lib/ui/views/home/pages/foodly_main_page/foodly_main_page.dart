@@ -3,7 +3,10 @@ import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -16,8 +19,6 @@ import 'package:foodly_world/ui/views/home/widgets/home_categories_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
-import 'package:foodly_world/ui/views/home/widgets/voice_search/view_model/voice_search_vm.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:local_hero/local_hero.dart';
 
@@ -38,7 +39,7 @@ class FoodlyMainPage extends StatelessWidget {
             const HomeCategories(),
             Expanded(
               child: ColoredBox(
-                color: ui.NeumorphicColors.background,
+                color: ui.NeumoColors.background,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

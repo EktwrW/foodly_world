@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
   final bool enabled;
@@ -61,7 +61,7 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
         decoration: decoration ??
             InputDecoration(
               prefixIcon: prefixIcon,
-              prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+              prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
               hintText: hintText,
               icon: decorationIcon,
               errorStyle: FoodlyTextStyles.errorInputText,
@@ -69,7 +69,7 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
                   UnderlineInputBorder(
                     borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
                   ),
-              hintStyle: TextStyle(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
+              hintStyle: TextStyle(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled),
             ),
         onChanged: enabled ? onChanged : null,
         items: items,

@@ -18,7 +18,7 @@ import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hou
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 
-//import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
+//import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({super.key});

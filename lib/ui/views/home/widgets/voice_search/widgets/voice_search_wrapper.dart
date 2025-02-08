@@ -7,7 +7,10 @@ class _VoiceSearchWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+    return BlocConsumer<VoiceSearchCubit, VoiceSearchState>(
+      listener: (context, state) {
+        state.whenOrNull();
+      },
       builder: (context, state) {
         final vsCubit = context.read<VoiceSearchCubit>();
 
@@ -23,7 +26,7 @@ class _VoiceSearchWrapper extends StatelessWidget {
                     onPressed: () => vsCubit.clearSearch(),
                     diameter: 26,
                     depth: 3,
-                    shape: ui.NeumorphicShape.concave,
+                    shape: ui.NeumoShape.concave,
                     child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
                   ).paddingAll(6),
                   Flexible(
@@ -87,6 +90,20 @@ class BusinessResultsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (searchResults.isEmpty) {
+      return Column(
+        spacing: 24,
+        children: [
+          const Asset(FoodlyAssets.editLocation, width: 40),
+          Text(
+            'No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.',
+            style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
+            textAlign: TextAlign.center,
+          ).paddingHorizontal(context.screenWidth * .1),
+        ],
+      ).paddingTop(100);
+    }
+
     return LocalHeroScope(
       curve: Curves.decelerate,
       duration: Durations.long4,
@@ -174,7 +191,7 @@ class _ViewModeToggleButtonState extends State<ViewModeToggleButton> with Single
       onPressed: widget.onPressed,
       diameter: widget.diameter ?? 26,
       depth: 3,
-      shape: ui.NeumorphicShape.concave,
+      shape: ui.NeumoShape.concave,
       child: AnimatedBuilder(
         animation: _rotation,
         builder: (context, child) {

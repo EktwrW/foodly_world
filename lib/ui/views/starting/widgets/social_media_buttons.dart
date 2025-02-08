@@ -11,25 +11,30 @@ class SocialMediaButtonsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<StartingCubit>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         CustomRoundedNeumorphicButton(
-          onPressed: () => context.read<StartingCubit>().googleSignIn(),
+          onPressed: () => cubit.googleSignIn(),
           iconData: Bootstrap.google,
+          diameter: 50,
         ),
         CustomRoundedNeumorphicButton(
           onPressed: () {},
           iconData: Bootstrap.apple,
+          diameter: 50,
         ),
         CustomRoundedNeumorphicButton(
           onPressed: () {},
           iconData: Bootstrap.facebook,
+          diameter: 50,
         ),
-        CustomRoundedNeumorphicButton(
-          onPressed: () {},
-          iconData: Bootstrap.twitter_x,
-        ),
+        // CustomRoundedNeumorphicButton(
+        //   onPressed: () {},
+        //   iconData: Bootstrap.twitter_x,
+        // ),
       ],
     );
   }

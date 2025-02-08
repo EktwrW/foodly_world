@@ -133,6 +133,7 @@ class SignUpBusinessForm extends StatelessWidget {
           inputTextType: FoodlyInputType.businessAddress,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
+          maxLines: 1,
           showLeading: false,
         ),
         FoodlyPrimaryInputText(

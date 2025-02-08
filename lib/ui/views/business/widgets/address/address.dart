@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -16,7 +17,6 @@ import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Clarity;
 
 part 'edit_address_dialog.dart';

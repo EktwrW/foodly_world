@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show DiagnosticPropertiesBuilder, DiagnosticsProperty, StringProperty;
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/shared_widgets/animations/animated_opacity.dart';
@@ -7,7 +8,6 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class SliverAppBarActionWidgets extends StatelessWidget {
@@ -40,7 +40,7 @@ class SliverAppBarActionWidgets extends StatelessWidget {
                       diameter: buttonDiameter,
                       depth: 3,
                       padding: EdgeInsets.zero,
-                      shape: ui.NeumorphicShape.concave,
+                      shape: ui.NeumoShape.concave,
                       child: Stack(
                         alignment: Alignment.centerRight,
                         children: [
@@ -96,11 +96,11 @@ class SliverAppBarAnimatedTitleText extends StatelessWidget {
       visible: visible,
       key: ValueKey(text),
       child: switch (style) {
-        SliverTitleTextStyle.decorated => ui.NeumorphicButton(
+        SliverTitleTextStyle.decorated => ui.NeumoButton(
             onPressed: onTitlePressed,
-            style: ui.NeumorphicStyle(
-              shape: ui.NeumorphicShape.concave,
-              boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+            style: ui.NeumoStyle(
+              shape: ui.NeumoShape.concave,
+              boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(50)),
               depth: 3,
               lightSource: ui.LightSource.topRight,
               intensity: 1.2,

@@ -37,7 +37,7 @@ class _StartAndExpiryDatesWdg extends StatelessWidget {
                 ? PromotionsHelper.formatDate(vm.newPromo!.startDate)
                 : S.current.setDate,
             type: CustomNeumorphicBtnType.outlined,
-            shape: ui.NeumorphicShape.flat,
+            shape: ui.NeumoShape.flat,
             leading: const Icon(Bootstrap.calendar2_plus),
             bosShapeRadius: 8,
             foregroundColor: vm.hasInvalidDates ? FoodlyThemes.error : null,
@@ -81,7 +81,7 @@ class _StartAndExpiryDatesWdg extends StatelessWidget {
                 ? PromotionsHelper.formatDate(vm.newPromo!.expireDate)
                 : S.current.setDate,
             type: CustomNeumorphicBtnType.outlined,
-            shape: ui.NeumorphicShape.flat,
+            shape: ui.NeumoShape.flat,
             leading: Icon(Bootstrap.calendar2_range, color: vm.newPromo?.startDate == null ? Colors.grey : null),
             bosShapeRadius: 8,
             foregroundColor: vm.hasInvalidDates ? FoodlyThemes.error : null,

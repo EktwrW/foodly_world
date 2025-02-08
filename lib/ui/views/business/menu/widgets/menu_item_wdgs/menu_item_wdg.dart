@@ -36,7 +36,7 @@ class MenuItemWdg extends StatelessWidget {
               height: item.isEditing ? _editingItemHeight : _itemHeight,
               child: Card(
                 elevation: 2,
-                color: ui.NeumorphicColors.decorationMaxWhiteColor,
+                color: ui.NeumoColors.decorationMaxWhiteColor,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 margin: const EdgeInsets.only(right: 5, left: 2),
                 child: Column(
@@ -178,16 +178,16 @@ class MenuItemWdg extends StatelessWidget {
                           ).paddingBottom(6),
                           Row(
                             children: [
-                              ui.NeumorphicCheckbox(
+                              ui.NeumoCheckbox(
                                 value: item.available,
                                 onChanged: (available) =>
                                     cubit.toggleItemAvailability(item, menuCategory, subCategory.uuid),
                                 padding: const EdgeInsets.all(2),
                                 margin: const EdgeInsets.all(10),
-                                style: ui.NeumorphicCheckboxStyle(
+                                style: ui.NeumoCheckboxStyle(
                                   selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: item.available ? 1 : .25),
                                   unselectedDepth: 0,
-                                  boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(4)),
+                                  boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(4)),
                                 ),
                               ),
                               GestureDetector(

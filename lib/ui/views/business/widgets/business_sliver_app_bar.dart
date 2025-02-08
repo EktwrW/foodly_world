@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -16,7 +17,6 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_name/business_name.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
 
 class BusinessSliverAppBar extends StatelessWidget {
@@ -55,7 +55,7 @@ class BusinessSliverAppBar extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomRoundedNeumorphicButton(
-                  shape: ui.NeumorphicShape.concave,
+                  shape: ui.NeumoShape.concave,
                   iconSize: 26,
                   depth: 2,
                   diameter: 30,
@@ -139,8 +139,8 @@ class BusinessSliverAppBar extends StatelessWidget {
                                     iconColor: Colors.white70,
                                     iconData: Bootstrap.pencil_square,
                                     iconSize: 28,
-                                    iconShape: ui.NeumorphicShape.concave,
-                                    shape: ui.NeumorphicShape.concave,
+                                    iconShape: ui.NeumoShape.concave,
+                                    shape: ui.NeumoShape.concave,
                                     disableDepth: true,
                                   ),
                                 ).paddingAll(6),

@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class CustomRoundedNeumorphicButton extends StatelessWidget {
   final void Function()? onPressed;
-  final NeumorphicStyle? style;
-  final NeumorphicShape shape;
-  final NeumorphicShape iconShape;
+  final ui.NeumoStyle? style;
+  final ui.NeumoShape shape;
+  final ui.NeumoShape iconShape;
   final double? diameter;
   final double? iconSize;
   final IconData iconData;
@@ -22,15 +23,15 @@ class CustomRoundedNeumorphicButton extends StatelessWidget {
     super.key,
     this.onPressed,
     this.style,
-    this.shape = NeumorphicShape.convex,
-    this.iconShape = NeumorphicShape.convex,
+    this.shape = ui.NeumoShape.convex,
+    this.iconShape = ui.NeumoShape.convex,
     this.diameter,
     this.iconSize,
     this.iconData = Bootstrap.menu_button_wide_fill,
     this.buttonColor,
     this.iconColor,
     this.disableDepth = false,
-    this.depth,
+    this.depth = 2,
     this.padding,
     this.tooltip = '',
     this.child,
@@ -38,13 +39,13 @@ class CustomRoundedNeumorphicButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicButton(
+    return ui.NeumoButton(
       onPressed: onPressed,
       tooltip: tooltip,
       style: style ??
-          NeumorphicStyle(
+          ui.NeumoStyle(
             shape: shape,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
+            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(50)),
             color: buttonColor ?? const Color.fromARGB(255, 250, 250, 250),
             disableDepth: disableDepth,
             depth: depth,
@@ -54,8 +55,8 @@ class CustomRoundedNeumorphicButton extends StatelessWidget {
         dimension: diameter ?? 40,
         child: Center(
           child: child ??
-              NeumorphicIcon(
-                style: NeumorphicStyle(
+              ui.NeumoIcon(
+                style: ui.NeumoStyle(
                   shape: iconShape,
                   color: iconColor ?? FoodlyThemes.primaryFoodly,
                 ),

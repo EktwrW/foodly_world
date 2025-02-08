@@ -28,8 +28,8 @@ class CurrentLocationButton extends StatelessWidget {
               splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
               highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
+                decoration:
+                    BoxDecoration(color: ui.NeumoColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   spacing: 8,
                   children: [
@@ -110,7 +110,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: ui.NeumorphicColors.background,
+                color: ui.NeumoColors.background,
               ),
               margin: const EdgeInsets.only(
                 bottom: 50,
@@ -121,7 +121,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                 duration: Durations.medium3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  spacing: 24,
+                  spacing: 20,
                   children: [
                     const Row(
                       spacing: 20,
@@ -133,10 +133,12 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                           style: FoodlyTextStyles.confirmationTextPrimary,
                         ),
                       ],
-                    ).paddingOnly(top: 30, bottom: 20),
-                    ui.NeumorphicRadio(
-                      style: const ui.NeumorphicRadioStyle(
-                          unselectedDepth: 3, unselectedColor: FoodlyThemes.alternativeUnselectedLightColor),
+                    ).paddingOnly(top: 24, bottom: 20),
+                    ui.NeumoRadio(
+                      style: const ui.NeumoRadioStyle(
+                        unselectedDepth: 2,
+                        unselectedColor: FoodlyThemes.alternativeUnselectedLightColor,
+                      ),
                       child: PlacesAutocompleteWdg(
                         hintText: 'Cambia el punto de búsqueda para recomendaciones',
                         language: authSessionService.lang,
@@ -166,122 +168,118 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                           ],
                         ),
                       ),
-                    Row(
-                      spacing: 16,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: BlocBuilder<LocationBloc, LocationState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                locationChecked: (locationDM) => ui.NeumorphicButton(
-                                  onPressed: () {
-                                    locationService.updateLocation(locationDM);
-                                    voiceSearchCubit.resetToInitial();
-                                    setState(
-                                      () => _selectedPlace = Place(
-                                        formattedAddress:
-                                            '${locationDM.address ?? '-'}, ${locationDM.city ?? '-'}, ${locationDM.zipCode ?? '-'}',
-                                      ),
-                                    );
-                                  },
-                                  style: ui.NeumorphicStyle(
-                                    color: FoodlyThemes.primaryLighten73,
-                                    depth: 2,
+                    Flexible(
+                      child: BlocBuilder<LocationBloc, LocationState>(
+                        builder: (context, state) {
+                          return state.maybeWhen(
+                            locationChecked: (locationDM) => ui.NeumoButton(
+                              onPressed: () {
+                                locationService.updateLocation(locationDM);
+                                voiceSearchCubit.resetToInitial();
+                                setState(
+                                  () => _selectedPlace = Place(
+                                    formattedAddress:
+                                        '${locationDM.address ?? '-'}, ${locationDM.city ?? '-'}, ${locationDM.zipCode ?? '-'}',
                                   ),
-                                  child: SizedBox(
-                                    height: 100,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                );
+                              },
+                              style: ui.NeumoStyle(
+                                color: FoodlyThemes.primaryLighten73,
+                                depth: 2,
+                              ),
+                              child: SizedBox(
+                                height: 66,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 8,
+                                  children: [
+                                    const Row(
                                       spacing: 8,
                                       children: [
-                                        const Row(
-                                          spacing: 8,
-                                          children: [
-                                            Icon(Icons.my_location, size: 18),
-                                            Expanded(
-                                              child: Text(
-                                                'Usar ubicación del dispositivo',
-                                                maxLines: 2,
-                                                style: FoodlyTextStyles.captionPurpleBold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        Icon(Icons.my_location, size: 18),
                                         Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              '${locationDM.address ?? ''}, ${locationDM.city ?? ''}',
-                                              style: FoodlyTextStyles.addressSmallText,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                          child: Text(
+                                            'Usar ubicación del dispositivo',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FoodlyTextStyles.captionPurpleBold,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                orElse: () => const Text('-'),
-                              );
-                            },
-                          ),
-                        ),
-                        Flexible(
-                          child: ui.NeumorphicButton(
-                            onPressed: loggedUser != null
-                                ? () {
-                                    locationService.updateLocationUserDM(loggedUser!);
-                                    voiceSearchCubit.resetToInitial();
-                                    setState(
-                                      () => _selectedPlace = Place(
-                                        formattedAddress:
-                                            '${loggedUser?.address ?? '-'}, ${loggedUser?.city ?? '-'}, ${loggedUser?.zipCode ?? '-'}',
-                                      ),
-                                    );
-                                  }
-                                : null,
-                            style: ui.NeumorphicStyle(
-                              color: FoodlyThemes.primaryLighten73,
-                              depth: 2,
-                            ),
-                            child: SizedBox(
-                              height: 100,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                spacing: 8,
-                                children: [
-                                  const Row(
-                                    spacing: 8,
-                                    children: [
-                                      Icon(Icons.location_history_rounded, size: 18),
-                                      Expanded(
+                                    Expanded(
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
                                         child: Text(
-                                          'Usar ubicación registrada',
+                                          '${locationDM.address ?? ''}, ${locationDM.city ?? ''}',
+                                          style: FoodlyTextStyles.addressSmallText,
                                           maxLines: 2,
-                                          style: FoodlyTextStyles.captionPurpleBold,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            orElse: () => const Text('-'),
+                          );
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      child: ui.NeumoButton(
+                        onPressed: loggedUser != null
+                            ? () {
+                                locationService.updateLocationUserDM(loggedUser!);
+                                voiceSearchCubit.resetToInitial();
+                                setState(
+                                  () => _selectedPlace = Place(
+                                    formattedAddress:
+                                        '${loggedUser?.address ?? '-'}, ${loggedUser?.city ?? '-'}, ${loggedUser?.zipCode ?? '-'}',
                                   ),
+                                );
+                              }
+                            : null,
+                        style: ui.NeumoStyle(
+                          color: FoodlyThemes.primaryLighten73,
+                          depth: 2,
+                        ),
+                        child: SizedBox(
+                          height: 66,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: [
+                              const Row(
+                                spacing: 8,
+                                children: [
+                                  Icon(Icons.location_history_rounded, size: 18),
                                   Expanded(
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '${di<AuthSessionService>().userSessionDM?.user.city ?? '-'}, ${di<AuthSessionService>().userSessionDM?.user.zipCode}',
-                                        style: FoodlyTextStyles.addressSmallText,
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    child: Text(
+                                      'Usar ubicación registrada',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FoodlyTextStyles.captionPurpleBold,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    '${di<AuthSessionService>().userSessionDM?.user.city ?? '-'}, ${di<AuthSessionService>().userSessionDM?.user.zipCode}',
+                                    style: FoodlyTextStyles.addressSmallText,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
+                      ),
                     )
                   ],
                 ),

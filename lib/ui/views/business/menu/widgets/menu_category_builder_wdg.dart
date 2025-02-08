@@ -7,6 +7,7 @@ import 'package:collection/collection.dart' show ListExtensions;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -23,7 +24,6 @@ import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/menu/view_model/menu_vm.dart';
 import 'package:foodly_world/ui/views/business/menu/widgets/menu_snackbars.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, EvaIcons, FontAwesome;
 
 part 'adaptive_item_version_selector_wdg.dart';

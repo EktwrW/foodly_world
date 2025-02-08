@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/main.dart';
@@ -11,7 +13,6 @@ import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.d
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -51,7 +52,7 @@ class FoodlyDrawer extends StatelessWidget {
       theme: const SidebarXTheme(
         width: 90,
         decoration: BoxDecoration(
-          color: NeumorphicColors.background,
+          color: ui.NeumoColors.background,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20),
             bottomRight: Radius.circular(20),
@@ -78,7 +79,7 @@ class FoodlyDrawer extends StatelessWidget {
         selectedItemTextPadding: EdgeInsets.only(left: 10),
         selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
         decoration: BoxDecoration(
-          color: NeumorphicColors.background,
+          color: ui.NeumoColors.background,
           borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
         ),
       ),

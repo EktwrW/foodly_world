@@ -36,7 +36,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                             bosShapeRadius: 10,
                             depth: 3,
                             text: S.current.generateWithAI,
-                            shape: ui.NeumorphicShape.convex,
+                            shape: ui.NeumoShape.convex,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
                             margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),

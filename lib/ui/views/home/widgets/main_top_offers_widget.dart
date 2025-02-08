@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class TopOffersWidget extends StatelessWidget {
@@ -24,11 +24,10 @@ class TopOffersWidget extends StatelessWidget {
           .asMap()
           .entries
           .map(
-            (e) => ui.NeumorphicButton(
+            (e) => ui.NeumoButton(
               padding: EdgeInsets.zero,
               margin: const EdgeInsets.symmetric(horizontal: 8),
-              style: const ui.NeumorphicStyle(
-                  shape: ui.NeumorphicShape.concave, color: ui.NeumorphicColors.decorationMaxWhiteColor),
+              style: const ui.NeumoStyle(shape: ui.NeumoShape.concave, color: ui.NeumoColors.decorationMaxWhiteColor),
               child: Stack(
                 children: [
                   Column(
@@ -44,12 +43,11 @@ class TopOffersWidget extends StatelessWidget {
                           ),
                           Positioned(
                             bottom: 5,
-                            child: ui.Neumorphic(
+                            child: ui.Neumo(
                               margin: const EdgeInsets.symmetric(horizontal: 4),
-                              style: ui.NeumorphicStyle(
+                              style: ui.NeumoStyle(
                                   color: Colors.white70,
-                                  boxShape:
-                                      ui.NeumorphicBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
+                                  boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

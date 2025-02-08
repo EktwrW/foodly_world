@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -16,7 +17,6 @@ import 'package:foodly_world/ui/views/sign_up/widgets/welcome_dialog.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class SignUpUserPage extends StatefulWidget {
   const SignUpUserPage({super.key});
@@ -111,7 +111,7 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
+      backgroundColor: ui.NeumoColors.decorationMaxWhiteColor,
       body: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -195,7 +195,7 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
               margin: EdgeInsets.zero,
               onPressed:
                   enabled && vm.termsAndContiditionsAccepted ? () async => await cubit.onSignUpUserPressed() : null,
-              shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
+              shape: enabled ? ui.NeumoShape.convex : ui.NeumoShape.flat,
               text: S.current.createUser,
               disabled: !enabled || !vm.termsAndContiditionsAccepted,
             ).paddingOnly(top: 33, bottom: 66),

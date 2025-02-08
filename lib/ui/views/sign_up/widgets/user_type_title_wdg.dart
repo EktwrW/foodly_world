@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:clay_containers/widgets/clay_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class SelectUserTitleWdg extends StatelessWidget {
@@ -34,10 +35,10 @@ class SelectUserTitleWdg extends StatelessWidget {
             duration: const Duration(milliseconds: 1600),
             child: Flash(
               delay: const Duration(milliseconds: 600),
-              child: NeumorphicIcon(
+              child: const ui.NeumoIcon(
                 Bootstrap.info_circle,
                 size: 22,
-                style: const NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
+                style: ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
               ),
             ),
           ),

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoColors;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -127,8 +127,8 @@ Future<String> _cropImage(
         cropStyle: cropStyle ?? CropStyle.circle,
         toolbarTitle: S.current.cropImage,
         toolbarColor: FoodlyThemes.primaryFoodly,
-        activeControlsWidgetColor: ui.NeumorphicColors.accent,
-        toolbarWidgetColor: ui.NeumorphicColors.background,
+        activeControlsWidgetColor: ui.NeumoColors.accent,
+        toolbarWidgetColor: ui.NeumoColors.background,
         initAspectRatio: CropAspectRatioPreset.square,
         lockAspectRatio: aspectRatioPresets?.length == 1,
         showCropGrid: false,

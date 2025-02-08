@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class EditableAvatarWdg extends StatefulWidget {
@@ -50,24 +50,22 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
   Widget get userPlaceholder => Center(
         child: Stack(
           children: [
-            ui.NeumorphicIcon(
+            ui.NeumoIcon(
               Bootstrap.person_circle,
-              style: ui.NeumorphicStyle(
-                shape: ui.NeumorphicShape.concave,
-                color: !widget.enabled ? ui.NeumorphicColors.disabled : FoodlyThemes.accentColor,
+              style: ui.NeumoStyle(
+                shape: ui.NeumoShape.concave,
+                color: !widget.enabled ? ui.NeumoColors.disabled : FoodlyThemes.accentColor,
                 depth: widget.enabled ? 2 : 0,
               ),
               size: widget.size.longestSide,
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: ui.NeumorphicIcon(
+              child: ui.NeumoIcon(
                 Bootstrap.camera,
-                style: ui.NeumorphicStyle(
-                  shape: ui.NeumorphicShape.concave,
-                  color: !widget.enabled
-                      ? ui.NeumorphicColors.embossMaxWhiteColor
-                      : ui.NeumorphicColors.decorationMaxWhiteColor,
+                style: ui.NeumoStyle(
+                  shape: ui.NeumoShape.concave,
+                  color: !widget.enabled ? ui.NeumoColors.embossMaxWhiteColor : ui.NeumoColors.decorationMaxWhiteColor,
                   depth: widget.enabled ? 2 : 0,
                 ),
                 size: widget.size.longestSide / 3.5,
@@ -86,11 +84,11 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ui.NeumorphicIcon(
+                ui.NeumoIcon(
                   Icons.image_search_rounded,
-                  style: ui.NeumorphicStyle(
-                    shape: ui.NeumorphicShape.concave,
-                    color: !widget.enabled ? ui.NeumorphicColors.disabled : FoodlyThemes.accentColor,
+                  style: ui.NeumoStyle(
+                    shape: ui.NeumoShape.concave,
+                    color: !widget.enabled ? ui.NeumoColors.disabled : FoodlyThemes.accentColor,
                     depth: widget.enabled ? 2 : 0,
                   ),
                   size: 50,
@@ -119,10 +117,10 @@ class _EditableAvatarWdgState extends State<EditableAvatarWdg> {
             width: width + 14,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(height),
-                color: widget.enabled ? FoodlyThemes.accentColor : ui.NeumorphicColors.disabled),
+                color: widget.enabled ? FoodlyThemes.accentColor : ui.NeumoColors.disabled),
           ),
           ClayContainer(
-            surfaceColor: ui.NeumorphicColors.embossMaxWhiteColor,
+            surfaceColor: ui.NeumoColors.embossMaxWhiteColor,
             depth: 2,
             spread: 0,
             borderRadius: 200,

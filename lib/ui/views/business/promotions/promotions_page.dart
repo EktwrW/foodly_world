@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -32,20 +33,19 @@ import 'package:foodly_world/ui/views/business/promotions/helper/promotions_help
 import 'package:foodly_world/ui/views/business/promotions/view_model/promotions_vm.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity, FontAwesome, LineAwesome;
 import 'package:intl/intl.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:universal_io/io.dart';
 import 'package:video_player/video_player.dart' show VideoPlayerController;
 
+part 'widgets/cards/promotion_card.dart';
 part 'widgets/create_and_edit_promotion/create_or_edit_promotion_wdg.dart';
+part 'widgets/create_and_edit_promotion/edit_promo_media.dart';
+part 'widgets/create_and_edit_promotion/select_promo_dates.dart';
+part 'widgets/create_and_edit_promotion/select_weekdays.dart';
 part 'widgets/promotions_header.dart';
 part 'widgets/promotions_snackbars.dart';
-part 'widgets/cards/promotion_card.dart';
-part 'widgets/create_and_edit_promotion/edit_promo_media.dart';
-part 'widgets/create_and_edit_promotion/select_weekdays.dart';
-part 'widgets/create_and_edit_promotion/select_promo_dates.dart';
 
 class PromotionsPage extends StatelessWidget {
   const PromotionsPage({super.key});

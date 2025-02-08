@@ -1,6 +1,7 @@
 import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -12,7 +13,6 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 
 class VoiceSearchSnackbars {
   const VoiceSearchSnackbars._();
@@ -22,14 +22,14 @@ class VoiceSearchSnackbars {
   ) {
     final cubit = context.read<VoiceSearchCubit>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final locationService = di<LocationService>();
 
     final snackBar = SnackBarWdg(
       type: SnackBarType.action,
-      onDismiss: () => cubit.resetToInitial(),
+      onDismiss: () => cubit.checkForResetToInitial(),
       buttonBuilder: (dismiss) => BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
         builder: (context, state) {
           final vm = state.vm;
-          final locationService = di<LocationService>();
 
           return SizedBox(
             width: double.infinity,
@@ -38,7 +38,7 @@ class VoiceSearchSnackbars {
                 builder: (_, textValue, __) {
                   final canNotSave = vm.recognizedText.isEmpty && textValue.text.isEmpty;
 
-                  return ui.NeumorphicButton(
+                  return ui.NeumoButton(
                     onPressed: canNotSave
                         ? null
                         : (textValue.text.isNotEmpty)
@@ -47,24 +47,28 @@ class VoiceSearchSnackbars {
                                   locationService.currentLocation.position?.latitude ?? 0.0,
                                   locationService.currentLocation.position?.longitude ?? 0.0,
                                 );
+
                                 dismiss();
                               }
                             : () async {
+                                final locationService = di<LocationService>();
+
                                 await cubit.stopListening();
                                 cubit.searchBusinesses(
                                   locationService.currentLocation.position?.latitude ?? 0.0,
                                   locationService.currentLocation.position?.longitude ?? 0.0,
                                 );
+
                                 dismiss();
                               },
-                    style: ui.NeumorphicStyle(
-                      shape: ui.NeumorphicShape.convex,
-                      boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                    style: ui.NeumoStyle(
+                      shape: ui.NeumoShape.convex,
+                      boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
                       depth: 3,
                       lightSource: ui.LightSource.topRight,
                       intensity: 1.2,
                       surfaceIntensity: .3,
-                      color: ui.NeumorphicColors.embossMaxWhiteColor,
+                      color: ui.NeumoColors.embossMaxWhiteColor,
                     ),
                     padding: const EdgeInsets.all(10),
                     child: FittedBox(
@@ -116,11 +120,21 @@ class VoiceSearchSnackbars {
                   child: Column(
                     spacing: 18,
                     children: [
-                      const Center(child: Asset(FoodlyAssets.searchBusinesses, height: 55, width: 55)),
+                      const Center(child: Asset(FoodlyAssets.searchBusiness, height: 55, width: 55)),
                       const _TextWdg(text: '¿Necesitas las mejores recomendaciones?'),
                       FoodlyPrimaryInputText(
                         minLines: 2,
                         maxLines: 3,
+                        // onFieldSubmitted: (_) {
+                        //   cubit
+                        //     ..searchBusinesses(
+                        //       locationService.currentLocation.position?.latitude ?? 0.0,
+                        //       locationService.currentLocation.position?.longitude ?? 0.0,
+                        //     )
+                        //     ..checkForResetToInitial();
+
+                        //   scaffoldMessenger.removeCurrentSnackBar();
+                        // },
                         inputTextType: FoodlyInputType.search,
                         autovalidateMode: AutovalidateMode.onUnfocus,
                         controller: vm.inputController.controller,
@@ -128,9 +142,7 @@ class VoiceSearchSnackbars {
                         enabled: !vm.smartSearchMode.isVoice,
                         hideCurrentSnackBarWhenOnTap: false,
                         showLeading: false,
-                        hintTextSize: 14,
                         prefixIconConstraints: const BoxConstraints.tightFor(width: 32),
-                        style: const TextStyle(fontSize: 14),
                       ),
                     ],
                   ),
@@ -138,11 +150,11 @@ class VoiceSearchSnackbars {
               if (vm.smartSearchMode.isVoice)
                 SizedBox(
                   width: double.infinity,
-                  child: ui.NeumorphicButton(
+                  child: ui.NeumoButton(
                     onPressed: vm.isListening ? () => cubit.stopListening() : () => cubit.startListening(),
-                    style: ui.NeumorphicStyle(
-                      shape: ui.NeumorphicShape.convex,
-                      boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                    style: ui.NeumoStyle(
+                      shape: ui.NeumoShape.convex,
+                      boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
                       depth: 3,
                       lightSource: ui.LightSource.topRight,
                       intensity: 1.2,
@@ -154,7 +166,7 @@ class VoiceSearchSnackbars {
                       fit: BoxFit.scaleDown,
                       child: ClayText(
                         vm.isListening ? 'Detener' : 'Volver a grabar',
-                        color: ui.NeumorphicColors.decorationMaxWhiteColor,
+                        color: ui.NeumoColors.decorationMaxWhiteColor,
                         spread: 0,
                         style: FoodlyTextStyles.snackBarPrimaryButton,
                       ),

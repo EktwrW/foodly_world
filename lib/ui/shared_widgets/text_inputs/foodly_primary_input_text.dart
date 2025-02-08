@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_regex.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart' show FoodlyInputType;
@@ -8,7 +9,6 @@ import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart';
 
 export 'package:foodly_world/core/enums/foodly_enums.dart' show FoodlyInputType;
@@ -72,7 +72,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
     this.trailing,
     this.showLeading = true,
     this.onChanged,
-    this.hintTextSize,
+    this.hintTextSize = 14,
     this.onFieldSubmitted,
     this.leading,
     this.border,
@@ -80,7 +80,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
     this.onTap,
     this.counter,
     this.prefixIconConstraints,
-    this.style,
+    this.style = const TextStyle(fontSize: 14),
     this.suffixIconConstraints,
     this.onEditingComplete,
     this.hideCurrentSnackBarWhenOnTap = true,
@@ -122,10 +122,11 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 hintText: hintText ?? inputTextType.text,
                 hintStyle: TextStyle(
                   letterSpacing: 0,
-                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+                  fontSize: hintTextSize,
                 ),
                 prefixIcon: inputTextType.icon,
-                prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+                prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
                 suffixIcon: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: () => showPassword.value = !showPasswordValue,
@@ -183,9 +184,10 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           fillColor: Colors.transparent,
           hintText: hintText ?? inputTextType.text,
           hintStyle: TextStyle(
-              overflow: TextOverflow.ellipsis,
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
-              fontSize: hintTextSize),
+            overflow: TextOverflow.ellipsis,
+            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+            fontSize: hintTextSize,
+          ),
           label: label,
           labelText: labelText,
           prefixIcon: showLeading ? leading : inputTextType.icon,
@@ -193,7 +195,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           suffixIcon: trailing,
           border: border ?? const UnderlineInputBorder(),
           focusColor: FoodlyThemes.primaryFoodly,
-          prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+          prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
           errorMaxLines: 2,
           errorStyle: const TextStyle(fontSize: 10.0),
           contentPadding: contentPadding ?? const EdgeInsets.only(top: 15, right: 6),

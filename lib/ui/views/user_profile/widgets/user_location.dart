@@ -20,9 +20,17 @@ class UserLocation extends StatelessWidget {
               }
             : null,
         child: Row(
+          spacing: 10,
           children: [
             const Icon(Clarity.map_marker_line, color: FoodlyThemes.primaryFoodly),
-            Text(vm.currentUserFullAddress, style: FoodlyTextStyles.primaryBodySemiBold).paddingLeft(12),
+            Flexible(
+              child: Text(
+                vm.currentUserFullAddress,
+                style: FoodlyTextStyles.primaryBodySemiBold,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ).paddingLeft(14),
       ).paddingTop(8),

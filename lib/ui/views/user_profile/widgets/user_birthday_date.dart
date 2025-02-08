@@ -9,9 +9,10 @@ class _BirthdayDate extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeIn(
       child: Row(
+        spacing: 10,
         children: [
-          const Icon(Bootstrap.cake, color: FoodlyThemes.primaryFoodly, size: 22),
-          Text(birthdayDate, style: FoodlyTextStyles.primaryBodySemiBold).paddingLeft(12),
+          const Icon(Bootstrap.cake, color: FoodlyThemes.primaryFoodly, size: 18),
+          Text(birthdayDate, style: FoodlyTextStyles.primaryBodySemiBold),
         ],
       ).paddingOnly(left: 26, top: 16, bottom: 8),
     );

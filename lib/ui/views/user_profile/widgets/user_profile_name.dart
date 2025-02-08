@@ -27,10 +27,10 @@ class ProfileNameWdg extends StatelessWidget {
         focusNode: vm.firstNameController?.focusNode,
         child: FittedBox(
           child: FadeIn(
-            child: ui.NeumorphicText(
+            child: ui.NeumoText(
               vm.userSessionDM.loggedUserFullName,
-              style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
-              textStyle: ui.NeumorphicTextStyle(
+              style: const ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
+              textStyle: ui.NeumoTextStyle(
                 fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
                 fontSize: FoodlyTextStyles.sectionsTitle.fontSize,
                 fontWeight: FoodlyTextStyles.sectionsTitle.fontWeight,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoColors;
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui show NeumorphicColors;
 
 class FoodlyTextStyles {
   const FoodlyTextStyles._();
 
   static const actionsBody = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
   );
 
   static const actionsBodyBold = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.bold,
     color: FoodlyThemes.primaryFoodly,
   );
@@ -91,7 +91,7 @@ class FoodlyTextStyles {
   );
 
   static const confirmationTextPrimary = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.w900,
     color: FoodlyThemes.primaryFoodly,
   );
@@ -104,12 +104,12 @@ class FoodlyTextStyles {
   static final dialogCloseText = GoogleFonts.quicksand(
     fontSize: 18,
     fontWeight: FontWeight.bold,
-    color: ui.NeumorphicColors.decorationMaxWhiteColor,
+    color: ui.NeumoColors.decorationMaxWhiteColor,
   );
 
   static const disabledText = TextStyle(
-    color: ui.NeumorphicColors.disabled,
-    fontSize: 16,
+    color: ui.NeumoColors.disabled,
+    fontSize: 14,
   );
 
   static final editableAvatarText = GoogleFonts.quicksand(
@@ -141,7 +141,7 @@ class FoodlyTextStyles {
 
   static const hintText = TextStyle(
     color: FoodlyThemes.secondaryFoodly,
-    fontSize: 16,
+    fontSize: 14,
   );
 
   static final homeAppBarMobile = GoogleFonts.quicksand(
@@ -152,7 +152,7 @@ class FoodlyTextStyles {
 
   static const inputTextValue = TextStyle(
     color: Colors.black87,
-    fontSize: 16,
+    fontSize: 14,
   );
 
   static const label = TextStyle(
@@ -274,19 +274,19 @@ class FoodlyTextStyles {
   );
 
   static final snackBarLightBody = TextStyle(
-    fontSize: 16,
+    fontSize: 15,
     color: FoodlyThemes.primaryFoodly.withValues(alpha: .85),
   );
 
   static final snackBarPrimaryButton = GoogleFonts.quicksand(
-    fontSize: 16.5,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
-    color: ui.NeumorphicColors.defaultTextColor,
+    color: ui.NeumoColors.defaultTextColor,
   );
 
   static final subTitleWhite = GoogleFonts.quicksand(
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
   );
 

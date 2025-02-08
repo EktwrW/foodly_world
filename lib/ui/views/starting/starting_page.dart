@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -14,7 +15,6 @@ import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
 import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 enum StartingPageView { initial, login, register, completeRegister }
 
@@ -105,7 +105,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: isLogin ? context.screenHeight * .36 : context.screenHeight * .22,
+              height: isLogin ? context.screenHeight * .36 : context.screenHeight * .21,
               child: const AppLoginWidgets(),
             ),
           ),

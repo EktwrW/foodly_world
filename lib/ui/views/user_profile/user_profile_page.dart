@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart';
@@ -31,7 +32,6 @@ import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart
 import 'package:foodly_world/ui/views/user_profile/helpers/profile_helpers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart' as ui;
 import 'package:icons_plus/icons_plus.dart';
 
 part 'widgets/user_birthday_date.dart';
@@ -203,7 +203,7 @@ class UserProfilePage extends StatelessWidget {
                           CustomNeumorphicButton(
                             onPressed: () => _showSwitchRoleSnackBar(context),
                             text: S.current.switchToManagerRole,
-                            shape: ui.NeumorphicShape.concave,
+                            shape: ui.NeumoShape.concave,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
                             margin: const EdgeInsets.only(bottom: 20),

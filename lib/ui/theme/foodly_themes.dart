@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 
 class FoodlyThemes {
   const FoodlyThemes._();
@@ -34,7 +35,7 @@ class FoodlyThemes {
       visualDensity: _visualDensity,
       surface: Colors.white,
       useMaterial3ErrorColors: true,
-      scaffoldBackground: NeumorphicColors.background,
+      scaffoldBackground: ui.NeumoColors.background,
       appBarBackground: Colors.white,
       appBarStyle: FlexAppBarStyle.background,
       colorScheme: ColorScheme.fromSeed(seedColor: primaryFoodly),

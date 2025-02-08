@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:gusto_neumorphic/gusto_neumorphic.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 enum AvatarType { generic, user, business }
@@ -44,7 +45,7 @@ class AvatarWidget extends StatelessWidget {
   // Placeholders optimizados
   Widget get userAvatarPlaceholder => Icon(
         Bootstrap.person_circle,
-        color: enabled ? FoodlyThemes.accentColor : NeumorphicColors.disabled,
+        color: enabled ? FoodlyThemes.accentColor : ui.NeumoColors.disabled,
         size: height,
       );
 
@@ -55,11 +56,11 @@ class AvatarWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              NeumorphicIcon(
+              ui.NeumoIcon(
                 FontAwesome.store_solid,
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.concave,
-                  color: NeumorphicColors.disabled,
+                style: ui.NeumoStyle(
+                  shape: ui.NeumoShape.concave,
+                  color: ui.NeumoColors.disabled,
                   depth: enabled ? 2 : 0,
                 ),
                 size: (height ?? 30) / 2,
