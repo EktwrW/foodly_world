@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
@@ -20,7 +21,7 @@ part 'starting_state.dart';
 class StartingCubit extends Cubit<StartingState> {
   final _meRepo = di<MeRepo>();
   final _googleSignIn = GoogleSignIn(
-    clientId: di<BaseConfig>().googleSignInClientId,
+    clientId: kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
   );
 
