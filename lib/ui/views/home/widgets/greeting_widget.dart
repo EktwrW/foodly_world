@@ -11,12 +11,9 @@ class GreetingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      userName != null
-          ? '$_getGreetingMessage, $userName.'
-          : '$_getGreetingMessage!',
+      userName != null ? '$_getGreetingMessage, $userName.' : '$_getGreetingMessage!',
       overflow: TextOverflow.ellipsis,
-      style:
-          FoodlyTextStyles.homeAppBarMobile.copyWith(fontSize: titleFontSize),
+      style: FoodlyTextStyles.homeAppBarSmallSubtitle.copyWith(fontSize: titleFontSize),
     );
   }
 

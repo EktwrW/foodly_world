@@ -31,15 +31,16 @@ class _HomeCategoriesState extends State<HomeCategories> {
           CarouselSlider(
             items: FoodlyCategories.values
                 .map((e) => ui.NeumoRadio(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(6),
                       style: const ui.NeumoRadioStyle(
                           shape: ui.NeumoShape.convex,
                           intensity: .6,
+                          unselectedDepth: 2,
                           unselectedColor: ui.NeumoColors.decorationMaxWhiteColor),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox.square(dimension: 50, child: e.icon),
+                          SizedBox.square(dimension: 48, child: e.icon).paddingTop(4),
                           SizedBox(
                             width: 92,
                             height: 33,
@@ -56,12 +57,12 @@ class _HomeCategoriesState extends State<HomeCategories> {
                           ),
                         ],
                       ),
-                    ).paddingOnly(top: 14, bottom: 10))
+                    ).paddingOnly(top: 10, bottom: 8))
                 .toList(),
             carouselController: buttonCarouselController,
             options: CarouselOptions(
               onPageChanged: (index, reason) => current.value = index,
-              height: 124,
+              height: 118,
               viewportFraction: context.screenWidth <= 320 ? .41 : .33,
               aspectRatio: 3.0,
             ),
@@ -107,7 +108,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                 ),
               ],
-            ).paddingOnly(bottom: 6),
+            ).paddingOnly(bottom: 5),
           ),
         ],
       ),

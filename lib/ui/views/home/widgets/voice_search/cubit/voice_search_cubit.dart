@@ -259,11 +259,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
     ));
   }
 
-  void checkForResetToInitial() {
-    if (state != VoiceSearchState.searchComplete(state.vm)) {
-      resetToInitial();
-    }
-  }
+  void checkForResetToInitial() => state == VoiceSearchState.searchComplete(state.vm) ? null : resetToInitial();
 
   Future<void> resetToInitial() async {
     _listenTimer?.cancel();

@@ -284,7 +284,6 @@
   "promotionDays": "Dias de promoção",
   "promotions": "Promoções",
   "pubsAndWineBars": "Pubs e Vinharias",
-  "readyToFindSomethingInteresting": "Pronto para encontrar algo interessante?",
   "readyToListen": "Pronto para ouvir",
   "retryRecording": "Tentar novamente gravar",
   "recommend": "Recomendar",
@@ -422,6 +421,7 @@
   "welcomeDialogTextSpanOwner": "O próximo passo é completar o registo do seu negócio, inicialmente pediremos dados básicos e depois poderá adicionar mais informações relevantes a partir do painel da sua empresa e, claro, começar a criar conteúdo, menus, promoções e tudo o que desejar através da sua nova ferramenta digital",
   "welcomeTo": "Bem-vindos",
   "weWillCheckAvailability": "Verificaremos disponibilidade",
+  "whatAreYouCravingToday": "O que te apetece hoje?",
   "wifi": "Wifi",
   "zipCode": "Código Postal",
   "zipCodeNotAvailable": "Este código está fora da nossa área atual de cobertura"

@@ -144,8 +144,8 @@ class FoodlyTextStyles {
     fontSize: 14,
   );
 
-  static final homeAppBarMobile = GoogleFonts.quicksand(
-    fontSize: 11,
+  static final homeAppBarSmallSubtitle = GoogleFonts.quicksand(
+    fontSize: 12,
     fontWeight: FontWeight.bold,
     color: Colors.black.withValues(alpha: .85),
   );

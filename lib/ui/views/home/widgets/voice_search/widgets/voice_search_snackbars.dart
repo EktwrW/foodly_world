@@ -181,7 +181,7 @@ class VoiceSearchSnackbars {
 
     scaffoldMessenger
       ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar.getSnackBar(context));
+      ..showSnackBar(snackBar.getSnackBar(context)).closed.then((_) => cubit.checkForResetToInitial());
   }
 }
 
