@@ -161,7 +161,6 @@
 				95CBFA045D1998F9E9E1D63C /* Pods-RunnerTests.release.xcconfig */,
 				FE2357E48926831EAAB10503 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -702,7 +701,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.foodlyWorld;
+				PRODUCT_BUNDLE_IDENTIFIER = world.foodly.mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
