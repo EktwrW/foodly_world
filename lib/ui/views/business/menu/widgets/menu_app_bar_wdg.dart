@@ -116,7 +116,6 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
           leading: CustomRoundedNeumorphicButton(
             shape: ui.NeumoShape.concave,
             iconSize: 26,
-            depth: 2,
             diameter: 30,
             iconData: Bootstrap.caret_left_fill,
             onPressed: () {

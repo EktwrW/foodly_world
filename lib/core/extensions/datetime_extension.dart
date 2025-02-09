@@ -91,7 +91,7 @@ extension BusinessStatusExtension on Day {
 extension BusinessDaysExtension on BusinessDays {
   Day get currentDaySchedule {
     final currentWeekday = DateTime.now().weekday;
-    return weekdaysData[Weekday.values[currentWeekday]]!;
+    return weekdaysData[Weekday.values[currentWeekday - 1]]!;
   }
 }
 

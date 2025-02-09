@@ -120,7 +120,6 @@ class SubCategoryWdg extends StatelessWidget {
                   onFieldSubmitted: (_) => _handleSaveCategory(controllerValue.text),
                   enabled: subCategory?.editingName ?? false,
                   showLeading: false,
-                  hintTextSize: 14,
                   autofocus: true,
                   hintText: S.current.enterCategoryName,
                   inputTextType: FoodlyInputType.generic,
