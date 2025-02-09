@@ -10,8 +10,8 @@ class FoodlyLocales {
     Locale(FoodlyStrings.ES, FoodlyCountries.USA.countryCode),
     Locale(FoodlyStrings.ES, FoodlyCountries.ARGENTINA.countryCode),
     Locale(FoodlyStrings.EN, FoodlyCountries.ARGENTINA.countryCode),
-    Locale(FoodlyStrings.ES, FoodlyCountries.VENEZUELA.countryCode),
-    Locale(FoodlyStrings.EN, FoodlyCountries.VENEZUELA.countryCode),
+    // Locale(FoodlyStrings.ES, FoodlyCountries.VENEZUELA.countryCode),
+    // Locale(FoodlyStrings.EN, FoodlyCountries.VENEZUELA.countryCode),
     // Locale(FoodlyStrings.ES, FoodlyCountries.EL_SALVADOR.countryCode),
     // Locale(FoodlyStrings.EN, FoodlyCountries.EL_SALVADOR.countryCode),
     Locale(FoodlyStrings.ES, FoodlyCountries.SPAIN.countryCode),
@@ -19,5 +19,7 @@ class FoodlyLocales {
     Locale(FoodlyStrings.PT, FoodlyCountries.PORTUGAL.countryCode),
     Locale(FoodlyStrings.EN, FoodlyCountries.PORTUGAL.countryCode),
     Locale(FoodlyStrings.ES, FoodlyCountries.PORTUGAL.countryCode),
+    Locale(FoodlyStrings.ES, FoodlyCountries.ECUADOR.countryCode),
+    Locale(FoodlyStrings.EN, FoodlyCountries.ECUADOR.countryCode),
   ];
 }

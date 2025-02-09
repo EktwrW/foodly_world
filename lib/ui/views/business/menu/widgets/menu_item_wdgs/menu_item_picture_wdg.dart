@@ -86,8 +86,8 @@ class MenuItemPictureWdg extends StatelessWidget {
     return InkWell(
       onTap: item.isEditing
           ? () async {
-              FocusScope.of(context).unfocus();
-              await Future.delayed(Durations.medium1);
+              await Future.microtask(() => context.mounted ? FocusScope.of(context).unfocus() : null);
+
               if (context.mounted) {
                 await pickImage(
                   context,

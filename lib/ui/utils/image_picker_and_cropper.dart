@@ -88,7 +88,7 @@ Future<String> pickImageFile(
     final fileSize = await _getFileSize(pickedFile);
 
     if (fileSize > 10000000) {
-      if (context.mounted) FoodlySnackbars.errorGeneric(context, 'Image size must be less than 10mb');
+      if (context.mounted) FoodlySnackbars.errorGeneric(context, S.current.imageSizeLessThan10mb);
       return '';
     }
 
@@ -122,6 +122,8 @@ Future<String> _cropImage(
     compressQuality: quality,
     aspectRatio: aspectRatio,
     compressFormat: ImageCompressFormat.png,
+    maxWidth: 960,
+    maxHeight: 960,
     uiSettings: [
       AndroidUiSettings(
         cropStyle: cropStyle ?? CropStyle.circle,
@@ -167,11 +169,11 @@ Future<int> _getFileSize(XFile pickedFile) async {
 }
 
 const _qualityMap = {
-  8000000: 15,
-  5000000: 30,
-  3000000: 40,
-  1500000: 60,
-  1000000: 70,
+  8000000: 20,
+  5000000: 35,
+  3000000: 50,
+  1500000: 65,
+  1000000: 80,
 };
 
 int _getQuality(int fileSize) => _qualityMap.entries

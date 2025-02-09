@@ -139,7 +139,7 @@ class SignUpUserForm extends StatelessWidget {
             di<LocationService>().updateLocationFromPlace(place);
             di<Logger>().i('$place');
           },
-          hintText: 'Find easier your location',
+          hintText: S.current.findAndCompleteAddress,
         ).paddingOnly(top: 12, bottom: 20),
         FoodlyDropdownButtonFormField(
           value: vm.country,

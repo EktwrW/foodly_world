@@ -128,18 +128,10 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
             },
           ).paddingSymmetric(vertical: 8, horizontal: 15),
           actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: AvatarWidget(
-                    avatarUrl: vm.businessLogo ?? '',
-                    height: 45,
-                    width: 45,
-                  ),
-                ),
-              ],
+            AvatarWidget(
+              avatarUrl: vm.businessLogo ?? '',
+              height: 45,
+              width: 45,
             ).paddingRight(15),
           ],
           flexibleSpace: FlexibleSpaceBar(

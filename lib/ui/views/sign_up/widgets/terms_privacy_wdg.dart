@@ -3,12 +3,10 @@ import 'dart:developer';
 import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 
 class TermsAndPrivacyPolicyWdg extends StatelessWidget {
@@ -27,16 +25,9 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
       opacity: enabled ? 1.0 : .3,
       child: Row(
         children: [
-          ui.NeumoCheckbox(
+          Checkbox(
             value: vm.termsAndContiditionsAccepted,
-            onChanged: (value) => context.read<SignUpCubit>().setTermsAndContiditions(value),
-            padding: const EdgeInsets.all(2),
-            margin: const EdgeInsets.fromLTRB(6, 12, 16, 12),
-            style: ui.NeumoCheckboxStyle(
-              selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: vm.termsAndContiditionsAccepted ? 1 : .25),
-              unselectedDepth: 0,
-              boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(4)),
-            ),
+            onChanged: enabled ? (value) => context.read<SignUpCubit>().setTermsAndContiditions(value!) : null,
           ),
           Expanded(
             child: Text.rich(
@@ -60,7 +51,7 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
             ),
           )
         ],
-      ).paddingOnly(top: 20),
+      ).paddingOnly(top: 30),
     );
   }
 }

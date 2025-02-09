@@ -22,7 +22,7 @@ class AdaptiveItemVersionSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!item.available) {
-      return Text(S.current.temporarilyUnavailable, style: FoodlyTextStyles.captionBold);
+      return Text(S.current.temporarilyUnavailable, style: FoodlyTextStyles.errorBodyText).paddingTop(12);
     }
 
     if (context.isSmallWidthPhone) {

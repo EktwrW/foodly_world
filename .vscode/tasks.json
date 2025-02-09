@@ -18,6 +18,52 @@
       "group": "build",
       "label": "Foodly - Generate Translations for Development",
       "detail": ""
+    },
+    {
+      "type": "shell",
+      "command": "flutter",
+      "args": [
+        "build",
+        "apk",
+        "--release",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Foodly - Build APK Release",
+      "detail": "Build APK with production environment"
+    },
+    {
+      "type": "shell",
+      "command": "flutter",
+      "args": [
+        "build",
+        "ipa",
+        "--release",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=API_KEY=NXn9VCmNLYjlkcv9StbDq9LnVm2dX7OL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Foodly - Build IPA Release",
+      "detail": "Build IPA with production environment"
     }
   ]
 }

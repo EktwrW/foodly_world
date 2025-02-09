@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -17,6 +18,7 @@ import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.da
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
+import 'package:universal_io/io.dart';
 
 class BusinessRepo {
   final BusinessClient _businessClient;
@@ -72,6 +74,12 @@ class BusinessRepo {
   }) async {
     final fileHandler = getFileHandler();
     final logoMultipartFile = await fileHandler.getMultipartFile(filePath);
+
+    log('File path: $filePath');
+    log('File exists: ${await File(filePath).exists()}');
+    log('File size: ${await File(filePath).length()}');
+    log('Multipart file: ${logoMultipartFile?.filename}');
+    log('Content type: ${logoMultipartFile?.contentType}');
 
     try {
       return ApiResult.success(await _businessClient.updateLogo(

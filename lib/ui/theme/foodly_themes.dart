@@ -54,6 +54,16 @@ class FoodlyThemes {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
         ),
       ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith<Color>(
+          (states) => states.contains(WidgetState.selected) ? primaryFoodly : primaryFoodly.withValues(alpha: 0.2),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        side: BorderSide(
+          color: primaryFoodly.withValues(alpha: 0.2),
+          width: 1.5,
+        ),
+      ),
     );
   }
 
@@ -79,6 +89,16 @@ class FoodlyThemes {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+        ),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith<Color>(
+          (states) => states.contains(WidgetState.selected) ? primaryFoodly : primaryFoodly.withValues(alpha: 0.2),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        side: BorderSide(
+          color: primaryFoodly.withValues(alpha: 0.2),
+          width: 1.5,
         ),
       ),
     );

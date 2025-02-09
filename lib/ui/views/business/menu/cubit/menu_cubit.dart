@@ -446,6 +446,7 @@ class MenuCubit extends Cubit<MenuState> {
     // Si el item no es nuevo y solo cambiara las fotos:
     if (!item.isNewItem && !hasItemChanges && hasPhotoChanges) {
       await _storeOrUpdateItemPhoto(item, menuCategory, updateItemData);
+      emit(_ShowSnackbar(_vm, S.current.itemUpdatedSuccess));
       return;
     }
 

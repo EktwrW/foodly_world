@@ -42,28 +42,22 @@ class PromotionsSnackbars {
             autovalidateMode: vm.autovalidateMode,
             inputTextType: FoodlyInputType.generic,
             hideCurrentSnackBarWhenOnTap: false,
-            hintText: 'Tap here to add a new prompt',
+            hintText: S.current.tapToAddPrompt,
           ),
           Row(
             children: [
               ValueListenableBuilder<(bool, OpenAIImageStyle)>(
                 valueListenable: generateAIPromoImage,
-                builder: (context, value, child) => ui.NeumoCheckbox(
+                builder: (context, value, child) => Checkbox(
                   value: value.$1,
-                  onChanged: (newValue) => generateAIPromoImage.value = ((newValue as bool?) ?? true, value.$2),
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.fromLTRB(0, 12, 8, 12),
-                  style: ui.NeumoCheckboxStyle(
-                    selectedColor: FoodlyThemes.primaryFoodly,
-                    boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(4)),
-                  ),
+                  onChanged: (newValue) => generateAIPromoImage.value = ((newValue) ?? true, value.$2),
                 ),
               ),
               Text(
                 S.current.aiPromoImageLabel,
                 overflow: TextOverflow.ellipsis,
                 style: FoodlyTextStyles.snackBarLightBody,
-              ).paddingLeft(8),
+              ),
             ],
           ),
           ValueListenableBuilder<(bool, OpenAIImageStyle)>(

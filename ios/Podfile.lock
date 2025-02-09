@@ -213,7 +213,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  image_cropper: 37d40f62177c101ff4c164906d259ea2c3aa70cf
+  image_cropper: e0bb0042e4404ff2ef134e5cf0492cbd892156cd
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   local_auth_darwin: 66e40372f1c29f383a314c738c7446e2f7fdadc3
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94

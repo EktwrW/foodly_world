@@ -21,8 +21,11 @@ class FoodlyRegex {
     /// Argentina: optionally one letter at the beginning, exactly 4 digits, optionally up to three letters at the end
     FoodlyCountries.ARGENTINA.countryCode: r'^[A-Z]?\d{4}[A-Z]{0,3}$',
 
+    /// Ecuador: 6 digits
+    FoodlyCountries.ECUADOR.countryCode: r'^\d{6}$',
+
     /// Venezuela: 4 digits
-    FoodlyCountries.VENEZUELA.countryCode: r'^\d{4}$',
+    // FoodlyCountries.VENEZUELA.countryCode: r'^\d{4}$',
 
     /// El Salvador: 4 digits
     //FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}$',
@@ -41,8 +44,11 @@ class FoodlyRegex {
     /// Argentina: Between 2 and 4 digits for the area code, followed by 6 to 8 digits for the local number, with or without a dash:
     FoodlyCountries.ARGENTINA.countryCode: r'^(\d{2,4})-?\d{6,8}$',
 
+    /// Ecuador: 2 digits for area code (starting with 0), followed by 8 digits for the local number, with or without a dash:
+    FoodlyCountries.ECUADOR.countryCode: r'^0\d{1}-?\d{8}$',
+
     /// Venezuela: 2 or 3 digits for the area code (optionally preceded by 0), followed by 7 digits for the local number, with or without a dash:
-    FoodlyCountries.VENEZUELA.countryCode: r'^0?\d{2,3}-?\d{7}$',
+    // FoodlyCountries.VENEZUELA.countryCode: r'^0?\d{2,3}-?\d{7}$',
 
     /// El Salvador: 4 digits for the area code, followed by 4 digits for the local number, with or without a dash:
     //FoodlyCountries.EL_SALVADOR.countryCode: r'^\d{4}-?\d{4}$',
