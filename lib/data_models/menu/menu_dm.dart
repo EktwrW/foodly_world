@@ -28,6 +28,7 @@ class MenuDM with _$MenuDM {
     @JsonKey(name: 'business_food_categories') @Default([]) List<CategoryDM> foodCategories,
     @JsonKey(name: 'business_drink_categories') @Default([]) List<CategoryDM> drinkCategories,
     @JsonKey(name: 'business_combos') @Default([]) List<ItemDM> combos,
+    @JsonKey(name: 'followers_length') @Default(0) int followersLength,
   }) = _MenuDM;
 
   factory MenuDM.fromJson(Map<String, dynamic> json) => _$MenuDMFromJson(json);

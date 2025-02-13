@@ -52,6 +52,7 @@ class PromotionDM with _$PromotionDM {
     @JsonKey(name: 'media_link') String? mediaLink,
     @JsonKey(name: 'business_promo_reference_media') @Default([]) List<PromoMediaDM> promoMedia,
     @JsonKey(name: 'promo_active_days') required PromoDaysDM promoDays,
+    @JsonKey(name: 'followers_length') @Default(0) int followersLength,
   }) = _PromotionDM;
 
   factory PromotionDM.fromJson(Map<String, dynamic> json) => _$PromotionDMFromJson(json);

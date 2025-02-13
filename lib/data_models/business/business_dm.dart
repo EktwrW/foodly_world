@@ -39,6 +39,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_reviews') @Default([]) List<Object>? reviews,
     @JsonKey(name: 'business_rating') double? rating,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
+    @JsonKey(name: 'followers_length') @Default(0) int followersLength,
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);

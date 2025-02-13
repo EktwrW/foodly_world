@@ -40,6 +40,10 @@ class UserDM with _$UserDM {
     @JsonKey(name: 'provider') String? provider,
     @JsonKey(name: 'provider_id') String? providerId,
     @JsonKey(name: 'provider_avatar') String? providerAvatar,
+    @JsonKey(name: 'favorite_businesses') @Default([]) List<String> favoriteBusiness,
+    @JsonKey(name: 'favorite_menus') @Default([]) List<String> favoriteMenus,
+    @JsonKey(name: 'favorite_items') @Default([]) List<String> favoriteItems,
+    @JsonKey(name: 'saved_promotions') @Default([]) List<String> savedPromotions,
   }) = _UserDM;
 
   factory UserDM.fromJson(Map<String, dynamic> json) => _$UserDMFromJson(json);

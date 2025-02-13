@@ -28,6 +28,7 @@ class ItemDM with _$ItemDM {
     @JsonKey(name: 'business_drink_category_id') int? drinkCategoryId,
     @JsonKey(name: 'business_menu_id') int? comboCategoryId,
     @Default(true) bool available,
+    @JsonKey(name: 'followers_length') @Default(0) int followersLength,
 
     // Attributes for editing and rendering
 
