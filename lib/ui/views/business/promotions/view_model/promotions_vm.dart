@@ -103,17 +103,17 @@ class PromotionsVM with _$PromotionsVM {
 
   List<PromotionDM> get upcomingPromotions {
     final now = DateTime.now();
-    return promotions.where((promo) => promo.startDate.isAfter(now)).toList();
+    return sortedPromotions.where((promo) => promo.startDate.isAfter(now)).toList();
   }
 
   List<PromotionDM> get activePromotions {
     final now = DateTime.now();
-    return promotions.where((promo) => promo.startDate.isBefore(now) && promo.expireDate.isAfter(now)).toList();
+    return sortedPromotions.where((promo) => promo.startDate.isBefore(now) && promo.expireDate.isAfter(now)).toList();
   }
 
   List<PromotionDM> get expiredPromotions {
     final now = DateTime.now();
-    return promotions.where((promo) => promo.expireDate.isBefore(now)).toList();
+    return sortedPromotions.where((promo) => promo.expireDate.isBefore(now)).toList();
   }
 
   List<PromotionDM> get sortedPromotions {

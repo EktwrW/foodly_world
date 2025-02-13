@@ -31,7 +31,7 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
               child: Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
                     child: AspectRatio(
                       aspectRatio: 16 / 9,
                       child: widget.promo.mediaFileUrl.isNotEmpty
@@ -210,9 +210,7 @@ class _PromoMedia extends StatelessWidget {
         imageUrl: promoMedia?.mediaUrl ?? '',
         fit: BoxFit.cover,
         width: double.infinity,
-        placeholder: (context, url) => const Center(
-          child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly),
-        ),
+        placeholder: (context, url) => const Center(child: LoadingWidgetFoodlyIso()),
         errorWidget: (context, url, error) => const Icon(
           Icons.error,
           color: FoodlyThemes.error,
@@ -362,14 +360,31 @@ class _LikeOrEditWidget extends StatelessWidget {
                   ..setControllers(promo: promo)
                   ..updateEditMode(PromotionEditing.title);
               }
+
+              if (value == 'delete') {
+                context.read<PromotionsCubit>().deletePromotion(promo.uuid);
+              }
             },
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'edit',
                 child: Row(
-                  children: [const Icon(Bootstrap.pencil_square), Text(S.current.edit).paddingLeft(12)],
+                  children: [
+                    const Icon(Bootstrap.pencil_square, color: FoodlyThemes.primaryFoodly),
+                    Text(S.current.edit).paddingLeft(14)
+                  ],
                 ),
               ),
+              if (promo.uuid.isNotEmpty)
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      const Icon(Bootstrap.trash3, color: FoodlyThemes.primaryFoodly),
+                      Text(S.current.delete).paddingLeft(14)
+                    ],
+                  ),
+                ),
             ],
           );
         }
