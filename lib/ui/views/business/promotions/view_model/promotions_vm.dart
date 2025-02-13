@@ -1,7 +1,7 @@
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart'
-    show AutovalidateMode, FormState, GlobalKey, PageController, TextEditingController;
+    show AutovalidateMode, FormState, GlobalKey, PageController, ScrollController, TextEditingController;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -57,6 +57,7 @@ class PromotionsVM with _$PromotionsVM {
     (String, MediaType)? newPromoMediaPath,
     Uint8List? imageBytes,
     VideoPlayerController? videoController,
+    ScrollController? activePromosScrollController,
   }) = _PromotionsVM;
 
   String get businessLogo => businessDM?.logo ?? '';
@@ -117,7 +118,7 @@ class PromotionsVM with _$PromotionsVM {
   }
 
   List<PromotionDM> get sortedPromotions {
-    return List<PromotionDM>.from(promotions)..sort((a, b) => a.startDate.compareTo(b.startDate));
+    return List<PromotionDM>.from(promotions)..sort((a, b) => b.startDate.compareTo(a.startDate));
   }
 
   PromotionDM? get nextUpcomingPromotion {

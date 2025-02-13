@@ -96,6 +96,7 @@ class PromotionsPage extends StatelessWidget {
                           return FadeIn(
                             child: ListView.builder(
                               key: ValueKey(status.name),
+                              controller: status == PromotionStatus.active ? vm.activePromosScrollController : null,
                               padding: const EdgeInsets.only(top: 232),
                               itemBuilder: (_, i) => PromotionCard(
                                 key: ValueKey('promo-${promos[i].uuid}'),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data' show Uint8List;
 
+import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -70,6 +71,10 @@ class PromotionDM with _$PromotionDM {
 
     return promoMedia.first.mediaUrl;
   }
+
+  bool get isActive => DateTime.now().isBetween(startDate, expireDate);
+  bool get isFuture => startDate.isBeforeNow;
+  bool get isExpired => expireDate.isAfterNow;
 }
 
 @JsonEnum()

@@ -57,6 +57,12 @@ extension DateExtension on DateTime {
     if (lang == FoodlyStrings.ES) return _birthdayStringLAT;
     return _birthdayStringUS;
   }
+
+  bool isBetween(DateTime start, DateTime end) => isAfter(start.toLocal()) && isBefore(end.toLocal());
+
+  bool get isBeforeNow => DateTime.now().isBefore(toLocal());
+
+  bool get isAfterNow => DateTime.now().isAfter(toLocal());
 }
 
 extension BusinessStatusExtension on Day {

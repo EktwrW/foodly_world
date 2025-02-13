@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:typed_data' show Uint8List;
 
 import 'package:bloc/bloc.dart';
@@ -25,6 +24,7 @@ class PromotionsCubit extends Cubit<PromotionsState> {
   )   : _vm = PromotionsVM(
           promotions: [],
           controller: PageController(),
+          activePromosScrollController: ScrollController(),
         ),
         super(const PromotionsState.initial(PromotionsVM())) {
     _initializePromos();
@@ -240,8 +240,6 @@ class PromotionsCubit extends Cubit<PromotionsState> {
       mediaLink: _vm.newPromo?.mediaLink,
     );
 
-    log('$promotionDTO');
-
     await _businessRepo.createPromotion(promotionDTO).then((result) {
       result.when(
         success: (promotion) async {
@@ -278,6 +276,22 @@ class PromotionsCubit extends Cubit<PromotionsState> {
             imageBytes: null,
             editing: PromotionEditing.none,
           );
+
+          if (promotion.isActive) {
+            await _vm.controller?.animateToPage(0, duration: Durations.long2, curve: Curves.decelerate).then((_) async {
+              await Future.microtask(() {
+                if (_vm.activePromosScrollController?.hasClients ?? false) {
+                  _vm.activePromosScrollController?.animateTo(
+                    0,
+                    duration: Durations.medium4,
+                    curve: Curves.decelerate,
+                  );
+                }
+              });
+            });
+
+            updateView(0);
+          }
 
           emit(_Loaded(_vm));
         },
