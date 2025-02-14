@@ -97,8 +97,8 @@ class BusinessListCard extends StatelessWidget {
                   child: LikeWidget(
                     liked: true,
                     onPressed: () {},
-                    diameter: 16,
-                    iconSize: 18,
+                    diameter: 15,
+                    iconSize: 15,
                   ),
                 ),
               ],
@@ -186,8 +186,8 @@ class BusinessGridCard extends StatelessWidget {
                         child: LikeWidget(
                           liked: true,
                           onPressed: () {},
-                          diameter: 14,
-                          iconSize: 15,
+                          diameter: 15,
+                          iconSize: 16,
                         ),
                       ),
                     ],

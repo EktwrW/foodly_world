@@ -73,7 +73,7 @@ class PromotionDM with _$PromotionDM {
   }
 
   bool get isActive => DateTime.now().isBetween(startDate, expireDate);
-  bool get isFuture => startDate.isBeforeNow;
+  bool get isUpcoming => startDate.isBeforeNow;
   bool get isExpired => expireDate.isAfterNow;
 }
 

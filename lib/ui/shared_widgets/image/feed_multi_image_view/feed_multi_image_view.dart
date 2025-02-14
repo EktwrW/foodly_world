@@ -33,6 +33,8 @@ class FeedMultipleImageView extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
+            fullscreenDialog: true,
+            barrierDismissible: true,
             builder: (context) => ImageViewer(imageUrls: imageUrls),
           ),
         ),

@@ -5,8 +5,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:universal_io/io.dart';
 import 'package:video_player/video_player.dart';
-import 'package:youtube_player_embed/controller/video_controller.dart';
-import 'package:youtube_player_embed/enum/video_state.dart';
+
 import 'package:youtube_player_embed/youtube_player_embed.dart';
 
 class VideoPreview extends StatefulWidget {
@@ -205,7 +204,7 @@ class CustomFlickPortraitControls extends StatelessWidget {
   }
 }
 
-class YouTubeVideoPlayer extends StatefulWidget {
+class YouTubeVideoPlayer extends StatelessWidget {
   const YouTubeVideoPlayer({
     super.key,
     required this.url,
@@ -215,30 +214,13 @@ class YouTubeVideoPlayer extends StatefulWidget {
   final String url;
   final String? videoTitle;
 
-  @override
-  State<YouTubeVideoPlayer> createState() => _YouTubeVideoPlayerState();
-}
-
-class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
-  VideoController? videoController;
-  late final String? videoId;
-
-  @override
-  void initState() {
-    super.initState();
-    videoId = _getVideoId(widget.url);
-  }
-
   String? _getVideoId(String url) {
-    // Para URLs en formato https://www.youtube.com/watch?v=XXXXXXXXXXX
     if (url.contains('youtube.com')) {
       return Uri.parse(url).queryParameters['v'];
     }
-    // Para URLs en formato https://youtu.be/XXXXXXXXXXX
     if (url.contains('youtu.be')) {
       return url.split('/').last;
     }
-    // Si la entrada ya es un ID
     if (!url.contains('/') && !url.contains('?')) {
       return url;
     }
@@ -246,37 +228,25 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
   }
 
   @override
-  void dispose() {
-    videoController?.controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final videoId = _getVideoId(url);
+
     if (videoId == null) {
       return Center(child: Text(S.current.invalidYoutubeUrl));
     }
 
-    return YoutubePlayerEmbed(
-      key: ValueKey(videoId),
-      callBackVideoController: (controller) => videoController = controller,
-      videoId: videoId!,
-      customVideoTitle: widget.videoTitle ?? '',
-      autoPlay: false,
-      mute: true,
-      aspectRatio: 16 / 9,
-      onVideoEnd: () => debugPrint('video ended'),
-      onVideoSeek: (currentTime) => debugPrint('Seeked to $currentTime seconds'),
-      onVideoTimeUpdate: (currentTime) => debugPrint('Current time: $currentTime seconds'),
-      onVideoStateChange: (state) => debugPrint(
-        switch (state) {
-          VideoState.playing => 'Video is playing',
-          VideoState.paused => 'Video is paused',
-          VideoState.muted => 'Video is muted',
-          VideoState.unmuted => 'Video is unmuted',
-          VideoState.fullscreen => 'Video is in fullscreen',
-          VideoState.normalView => 'Video is in normal view',
-        },
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: YoutubePlayerEmbed(
+          key: ValueKey(videoId),
+          videoId: videoId,
+          customVideoTitle: videoTitle ?? '',
+          autoPlay: false,
+          mute: true,
+          aspectRatio: 16 / 9,
+        ),
       ),
     );
   }

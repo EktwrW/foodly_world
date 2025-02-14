@@ -5,6 +5,7 @@ import 'package:dart_openai/dart_openai.dart' show OpenAIImageStyle;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
@@ -19,6 +20,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -75,7 +77,6 @@ class PromotionsPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: PageView.builder(
-                        key: const PageStorageKey<String>('promotions-pageview'),
                         controller: vm.controller,
                         physics: vm.isEditing ? const NeverScrollableScrollPhysics() : const PageScrollPhysics(),
                         itemCount: PromotionStatus.values.length,
@@ -93,10 +94,15 @@ class PromotionsPage extends StatelessWidget {
                             return FadeIn(child: NoItemsViewWdg(text: S.current.noPromotionsInSection).paddingTop(120));
                           }
 
+                          final scrollController = {
+                            PromotionStatus.active: vm.activePromosScrollController,
+                            PromotionStatus.next: vm.upcomingPromosScrollController,
+                          }[status];
+
                           return FadeIn(
                             child: ListView.builder(
-                              key: ValueKey(status.name),
-                              controller: status == PromotionStatus.active ? vm.activePromosScrollController : null,
+                              key: ValueKey(status),
+                              controller: scrollController,
                               padding: const EdgeInsets.only(top: 232),
                               itemBuilder: (_, i) => PromotionCard(
                                 key: ValueKey('promo-${promos[i].uuid}'),

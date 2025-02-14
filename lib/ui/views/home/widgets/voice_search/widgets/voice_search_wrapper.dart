@@ -75,7 +75,7 @@ class _VoiceSearchWrapper extends StatelessWidget {
               ),
             ],
           ).paddingSymmetric(horizontal: 6, vertical: 24),
-          searching: (_) => const Center(child: LoadingWidgetFoodlyLogo()).paddingHorizontal(context.screenWidth * .2),
+          searching: (_) => const Center(child: LoadingWidgetFoodlyLogo()).paddingHorizontal(context.screenWidth * .3),
           orElse: () => FadeIn(duration: Durations.medium2, child: child),
         );
       },

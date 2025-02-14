@@ -26,11 +26,12 @@ class LikeWidget extends StatelessWidget {
       depth: .5,
       tooltip: S.current.addToFavorites,
       shape: ui.NeumoShape.concave,
-      buttonColor: Colors.white,
+      buttonColor: liked ? Colors.white60 : FoodlyThemes.primaryFoodly.withValues(alpha: .3),
       iconData: liked ? FontAwesome.heart_circle_check_solid : FontAwesome.heart_circle_plus_solid,
       iconSize: iconSize ?? 20,
-      iconColor: liked ? const Color(0xFFFC1908) : Colors.white70,
+      iconColor: liked ? const Color(0xFFFC1908) : const Color(0xFFFCDDDD), //TODO: store this colors
       onPressed: onPressed,
+      padding: const EdgeInsets.fromLTRB(6, 6, 8, 7),
     );
   }
 }

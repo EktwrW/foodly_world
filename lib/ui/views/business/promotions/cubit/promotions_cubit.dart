@@ -24,7 +24,8 @@ class PromotionsCubit extends Cubit<PromotionsState> {
   )   : _vm = PromotionsVM(
           promotions: [],
           controller: PageController(),
-          activePromosScrollController: ScrollController(),
+          activePromosScrollController: ScrollController(debugLabel: 'active'),
+          upcomingPromosScrollController: ScrollController(debugLabel: 'upcoming'),
         ),
         super(const PromotionsState.initial(PromotionsVM())) {
     _initializePromos();
@@ -66,13 +67,14 @@ class PromotionsCubit extends Cubit<PromotionsState> {
 
   void updateView(int index) => emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
 
-  void updateEditMode(PromotionEditing mode) {
+  void updateEditMode(PromotionEditing mode) async {
     if (mode.isNone) {
       _vm = _vm.copyWith(
         newPromo: null,
         newPromoMediaPath: null,
         youtubeUrlCtrl: null,
         youtubeUrlFormKey: null,
+        imageBytes: null,
       );
     }
     emit(_Loaded(_vm = _vm.copyWith(editing: mode)));
@@ -277,27 +279,45 @@ class PromotionsCubit extends Cubit<PromotionsState> {
             editing: PromotionEditing.none,
           );
 
-          if (promotion.isActive) {
-            await _vm.controller?.animateToPage(0, duration: Durations.long2, curve: Curves.decelerate).then((_) async {
-              await Future.microtask(() {
-                if (_vm.activePromosScrollController?.hasClients ?? false) {
-                  _vm.activePromosScrollController?.animateTo(
-                    0,
-                    duration: Durations.medium4,
-                    curve: Curves.decelerate,
-                  );
-                }
-              });
-            });
-
-            updateView(0);
-          }
+          await _updateScrollPositionForActivePromo(promotion);
 
           emit(_Loaded(_vm));
         },
         failure: (error) => _handleError(error.errorMsg),
       );
     });
+  }
+
+  Future<void> _updateScrollPositionForActivePromo(PromotionDM promotion) async {
+    if (promotion.isActive) {
+      await _vm.controller?.animateToPage(0, duration: Durations.long2, curve: Curves.decelerate).then((_) async {
+        await Future.microtask(() {
+          if (_vm.activePromosScrollController?.hasClients ?? false) {
+            _vm.activePromosScrollController?.animateTo(
+              0,
+              duration: Durations.long1,
+              curve: Curves.decelerate,
+            );
+          }
+        });
+      });
+
+      updateView(0);
+    }
+
+    if (promotion.isUpcoming) {
+      emit(_Loaded(_vm));
+
+      await Future.delayed(Durations.medium1, () {
+        if (_vm.upcomingPromosScrollController?.hasClients ?? false) {
+          _vm.upcomingPromosScrollController?.animateTo(
+            0,
+            duration: Durations.long1,
+            curve: Curves.decelerate,
+          );
+        }
+      });
+    }
   }
 
   void updatePromotion() async {
@@ -355,6 +375,7 @@ class PromotionsCubit extends Cubit<PromotionsState> {
       final updatedPromotion = promotion.copyWith(
         promoMedia: response is PromoMediaDM ? [response] : response.promoMedia,
       );
+
       _updateStateAfterSuccess(updatedPromotion);
       return;
     }
@@ -396,15 +417,16 @@ class PromotionsCubit extends Cubit<PromotionsState> {
           if (_vm.newPromoMediaPath != null || _vm.imageBytes != null) {
             await _updatePromotionImage(promotion);
           } else {
-            _updateStateAfterSuccess(promotion);
+            await _updateStateAfterSuccess(promotion);
           }
+          await _updateScrollPositionForActivePromo(promotion);
         },
         failure: (error) => _handleError(error.errorMsg),
       );
     });
   }
 
-  void _updateStateAfterSuccess(PromotionDM promotion) {
+  Future<void> _updateStateAfterSuccess(PromotionDM promotion) async {
     final updatedPromotions = _vm.promotions.map((p) => p.uuid == promotion.uuid ? promotion : p).toList();
     _vm.youtubeUrlCtrl?.clear();
     _vm = _vm.copyWith(

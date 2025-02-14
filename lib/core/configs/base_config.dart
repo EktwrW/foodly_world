@@ -14,6 +14,7 @@ abstract class BaseConfig {
   String get googleDefaultApiKey => '';
   String get googleSignInClientId => '';
   String get openaiApiKey => '';
+  String get replicateApiKey => '';
 
   Environment get environment => this is ProdConfig
       ? Environment.prod
@@ -42,6 +43,7 @@ abstract class BaseConfig {
     const googleDefaultApiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
     const googleSignInClientId = String.fromEnvironment('GOOGLE_SIGN_IN_CLIENT_ID');
     const openaiApiKey = String.fromEnvironment('OPENAI_API_KEY');
+    const replicateApiKey = String.fromEnvironment('REPLICATE_API_KEY');
 
     late final BaseConfig config;
     switch (env) {
@@ -57,6 +59,7 @@ abstract class BaseConfig {
           envGoogleDefaultPublicToken: googleDefaultApiKey,
           envGoogleSignInClientId: googleSignInClientId,
           envOpenaiApiKey: openaiApiKey,
+          envReplicateApiKey: replicateApiKey,
         );
         break;
       case Environment.demo:
@@ -70,6 +73,7 @@ abstract class BaseConfig {
           envGoogleDefaultPublicToken: googleDefaultApiKey,
           envGoogleSignInClientId: googleSignInClientId,
           envOpenaiApiKey: openaiApiKey,
+          envReplicateApiKey: replicateApiKey,
         );
         break;
       case Environment.dev:
@@ -86,6 +90,7 @@ abstract class BaseConfig {
           envGoogleDefaultPublicToken: googleDefaultApiKey,
           envGoogleSignInClientId: googleSignInClientId,
           envOpenaiApiKey: openaiApiKey,
+          envReplicateApiKey: replicateApiKey,
         );
     }
     return config;

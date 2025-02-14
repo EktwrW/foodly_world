@@ -206,15 +206,9 @@ class _PromoMedia extends StatelessWidget {
     } else if (_mustPlayVideo) {
       return NetworkVideoPlayer(url: promoMedia?.mediaUrl ?? '');
     } else {
-      return CachedNetworkImage(
-        imageUrl: promoMedia?.mediaUrl ?? '',
-        fit: BoxFit.cover,
-        width: double.infinity,
-        placeholder: (context, url) => const Center(child: LoadingWidgetFoodlyIso()),
-        errorWidget: (context, url, error) => const Icon(
-          Icons.error,
-          color: FoodlyThemes.error,
-        ),
+      return FeedMultipleImageView(
+        imageUrls: [promoMedia?.mediaUrl ?? ''],
+        radius: 8,
       );
     }
   }
@@ -355,14 +349,21 @@ class _LikeOrEditWidget extends StatelessWidget {
             icon: const Icon(Icons.more_vert, color: Colors.white),
             color: Colors.white70,
             onSelected: (value) {
+              final cubit = context.read<PromotionsCubit>();
+
               if (value == 'edit') {
-                context.read<PromotionsCubit>()
+                cubit
                   ..setControllers(promo: promo)
                   ..updateEditMode(PromotionEditing.title);
+
+                if (vm.indexView != 1) {
+                  vm.controller?.animateToPage(1, duration: Durations.long2, curve: Curves.decelerate);
+                  cubit.updateView(1);
+                }
               }
 
               if (value == 'delete') {
-                context.read<PromotionsCubit>().deletePromotion(promo.uuid);
+                cubit.deletePromotion(promo.uuid);
               }
             },
             itemBuilder: (context) => [

@@ -30,7 +30,8 @@ class DependencyInjectionService {
     di
       ..registerLazySingleton(() => MeClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BusinessClient(di<FoodlyApiProvider>().dio))
-      ..registerLazySingleton(() => AIPromoService());
+      ..registerLazySingleton(() => ReplicateService())
+      ..registerLazySingleton(() => AIPromoService(di()));
 
     /// Register singleton repositories
     di

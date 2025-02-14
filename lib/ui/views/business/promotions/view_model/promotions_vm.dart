@@ -58,6 +58,7 @@ class PromotionsVM with _$PromotionsVM {
     Uint8List? imageBytes,
     VideoPlayerController? videoController,
     ScrollController? activePromosScrollController,
+    ScrollController? upcomingPromosScrollController,
   }) = _PromotionsVM;
 
   String get businessLogo => businessDM?.logo ?? '';
@@ -85,7 +86,10 @@ class PromotionsVM with _$PromotionsVM {
   }
 
   bool get hasMediaContent =>
-      imageBytes != null || (newPromoMediaPath?.$1.isNotEmpty ?? false) || (newPromo?.promoMedia.isNotEmpty ?? false);
+      (youtubeUrlCtrl?.text.isNotEmpty ?? false) ||
+      imageBytes != null ||
+      (newPromoMediaPath?.$1.isNotEmpty ?? false) ||
+      (newPromo?.promoMedia.isNotEmpty ?? false);
 
   bool get canSavePromotion =>
       ((titleCtrl?.text?.isNotEmpty ?? false)) &&

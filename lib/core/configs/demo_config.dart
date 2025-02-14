@@ -11,6 +11,7 @@ class DemoConfig extends BaseConfig {
   final String envGoogleDefaultPublicToken;
   final String envGoogleSignInClientId;
   final String envOpenaiApiKey;
+  final String envReplicateApiKey;
 
   DemoConfig({
     required this.envLogLevel,
@@ -22,6 +23,7 @@ class DemoConfig extends BaseConfig {
     required this.envGoogleDefaultPublicToken,
     required this.envGoogleSignInClientId,
     required this.envOpenaiApiKey,
+    required this.envReplicateApiKey,
   });
 
   @override
@@ -50,4 +52,7 @@ class DemoConfig extends BaseConfig {
 
   @override
   String get openaiApiKey => envOpenaiApiKey;
+
+  @override
+  String get replicateApiKey => envReplicateApiKey;
 }

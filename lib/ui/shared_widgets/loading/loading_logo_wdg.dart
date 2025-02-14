@@ -58,7 +58,7 @@ class LoadingWidgetFoodlyLogoState extends State<LoadingWidgetFoodlyLogo> with S
               (index) => FadeTransition(
                 opacity: _opacityAnimations[index],
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxHeight: 150),
+                  constraints: const BoxConstraints(maxHeight: 140),
                   child: UILoading.FOODLY_LOGOS[index],
                 ),
               ),

@@ -53,10 +53,13 @@ class PromotionsSnackbars {
                   onChanged: (newValue) => generateAIPromoImage.value = ((newValue) ?? true, value.$2),
                 ),
               ),
-              Text(
-                S.current.aiPromoImageLabel,
-                overflow: TextOverflow.ellipsis,
-                style: FoodlyTextStyles.snackBarLightBody,
+              Expanded(
+                child: Text(
+                  S.current.aiPromoImageLabel,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: FoodlyTextStyles.snackBarLightBody,
+                ),
               ),
             ],
           ),

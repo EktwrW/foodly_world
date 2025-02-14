@@ -1,5 +1,7 @@
 part of '../../promotions_page.dart';
 
+enum MediaMenuAction { removePhotos, removeVideo, uploadImage, uploadVideo, addYoutubeUrl }
+
 class _EditPromoMediaWdg extends StatelessWidget {
   const _EditPromoMediaWdg({
     super.key,
@@ -36,61 +38,79 @@ class _EditPromoMediaWdg extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: ColoredBox(
-            color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
+            color: FoodlyThemes.success.withValues(alpha: 0.1),
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: _buildMediaContent(),
             ),
           ),
         ),
-        PopupMenuButton(
+        PopupMenuButton<MediaMenuAction>(
           elevation: 3,
           style: vm.hasMediaContent
               ? ButtonStyle(backgroundColor: WidgetStatePropertyAll(FoodlyThemes.primaryFoodly.withValues(alpha: .25)))
-              : null,
-          icon: Icon(Bootstrap.three_dots_vertical,
-              color: vm.hasMediaContent ? Colors.white : FoodlyThemes.primaryFoodly),
+              : const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.white54)),
+          icon: Icon(
+            Bootstrap.three_dots_vertical,
+            color: vm.hasMediaContent ? Colors.white : FoodlyThemes.primaryFoodly,
+          ),
+          onSelected: (MediaMenuAction action) {
+            switch (action) {
+              case MediaMenuAction.removePhotos:
+                _editImage(context);
+              case MediaMenuAction.removeVideo:
+                _editVideo(context);
+              case MediaMenuAction.uploadImage:
+                _pickImage(context);
+              case MediaMenuAction.uploadVideo:
+                _pickVideo(context);
+              case MediaMenuAction.addYoutubeUrl:
+                _addYoutubeUrl(context);
+            }
+          },
           itemBuilder: (context) => [
             if (vm.newPromo?.mediaFileIsImage ?? false)
               PopupMenuItem(
+                value: MediaMenuAction.removePhotos,
                 child: Text(S.current.removePhotos),
-                onTap: () => _editImage(context),
               ),
             if (vm.newPromo?.mediaFileIsVideo ?? false)
               PopupMenuItem(
+                value: MediaMenuAction.removeVideo,
                 child: Text(S.current.removeVideo),
-                onTap: () => _editVideo(context),
               ),
             PopupMenuItem(
+              value: MediaMenuAction.uploadImage,
               child: Text(S.current.uploadImage),
-              onTap: () => _pickImage(context),
             ),
             PopupMenuItem(
+              value: MediaMenuAction.uploadVideo,
               child: Text(S.current.uploadVideo),
-              onTap: () => _pickVideo(context),
             ),
             PopupMenuItem(
+              value: MediaMenuAction.addYoutubeUrl,
               child: Text(S.current.addYoutubeUrl),
-              onTap: () => _addYoutubeUrl(context),
             ),
           ],
-        ).paddingAll(6),
+        ).paddingAll(6)
       ],
     );
   }
 
   Widget _buildMediaContent() {
     if (vm.newPromo?.mediaFileIsExternalLink ?? false || (vm.youtubeUrlCtrl?.text.isNotEmpty ?? false)) {
+      final url =
+          (vm.youtubeUrlCtrl?.text.isNotEmpty ?? false) ? vm.youtubeUrlCtrl!.text : (vm.newPromo?.mediaFileUrl ?? '');
+
       return YouTubeVideoPlayer(
-        url: vm.newPromo?.mediaFileUrl ?? vm.youtubeUrlCtrl?.text ?? '',
+        key: ObjectKey(url),
+        url: url,
         videoTitle: vm.newPromo?.title,
       );
     }
 
     if (vm.newPromoMediaPath?.$2.mediaFileIsVideo == true) {
-      // Usar una key única basada en el path para forzar la reconstrucción
       return VideoPreview(
-        key: ValueKey(vm.newPromoMediaPath!.$1),
         filePath: vm.newPromoMediaPath!.$1,
       );
     }
@@ -218,11 +238,17 @@ class YoutubeUrlDialog extends StatefulWidget {
 
 class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
   bool isValid = false;
+  final focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(_validateInput);
+
+    // Validamos inmediatamente si hay texto inicial
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _validateInput();
+    });
   }
 
   void _validateInput() {
@@ -236,6 +262,7 @@ class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
   @override
   void dispose() {
     widget.controller.removeListener(_validateInput);
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -256,14 +283,12 @@ class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
-                    onTap: isValid ? widget.onTap : null,
-                    child: Text(
-                      'Attach video to promo',
-                      style: FoodlyTextStyles.dialogCloseText.copyWith(
-                        color: isValid ? null : Colors.grey,
-                      ),
-                    ),
+                  SaveAndCancelButtons(
+                    btnType: SaveAndCancelBtnType.dialog,
+                    onCancelPressed: () => Navigator.of(context).pop(),
+                    showSaveButton: isValid,
+                    onSavePressed: isValid ? widget.onTap : null,
+                    saveButtonText: S.current.attachVideo,
                   ),
                 ],
               ),
@@ -284,15 +309,27 @@ class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FoodlyPrimaryInputText(
-                    controller: widget.controller,
-                    maxLines: 1,
-                    autofocus: true,
-                    inputTextType: FoodlyInputType.youtubeUrl,
-                    autovalidateMode: AutovalidateMode.always,
-                    enabled: true,
-                    showLeading: false,
-                  )
+                  KeyboardListener(
+                    focusNode: focusNode,
+                    onKeyEvent: (event) {
+                      // Detectar Ctrl+V o Cmd+V
+                      if ((HardwareKeyboard.instance.isControlPressed || HardwareKeyboard.instance.isMetaPressed) &&
+                          event.logicalKey == LogicalKeyboardKey.keyV) {
+                        // Esperamos un momento para que el texto se pegue
+                        Future.delayed(Duration.zero, _validateInput);
+                      }
+                    },
+                    child: FoodlyPrimaryInputText(
+                      controller: widget.controller,
+                      maxLines: 1,
+                      autofocus: true,
+                      inputTextType: FoodlyInputType.youtubeUrl,
+                      autovalidateMode: AutovalidateMode.always,
+                      enabled: true,
+                      showLeading: false,
+                      onChanged: (_) => _validateInput(),
+                    ),
+                  ),
                 ],
               ),
             ),

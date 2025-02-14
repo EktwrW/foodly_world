@@ -18,7 +18,8 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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"
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_7ojh3uAxxv7QXTUCZdqpyMbX5H4vJHs4TKHlU"
       ]
     },
     {
@@ -37,7 +38,8 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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"
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_7ojh3uAxxv7QXTUCZdqpyMbX5H4vJHs4TKHlU"
       ]
     },
     {
@@ -56,7 +58,8 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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"
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_7ojh3uAxxv7QXTUCZdqpyMbX5H4vJHs4TKHlU"
       ]
     },
     {
@@ -77,7 +80,8 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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"
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_7ojh3uAxxv7QXTUCZdqpyMbX5H4vJHs4TKHlU"
       ]
     }
   ]

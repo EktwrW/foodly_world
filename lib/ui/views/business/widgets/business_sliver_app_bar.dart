@@ -118,7 +118,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                                                     fadeInDuration: Durations.medium2,
                                                     fit: BoxFit.fitWidth,
                                                     progressIndicatorBuilder: (context, url, progress) =>
-                                                        const LoadingWidgetFoodlyLogo(),
+                                                        const LoadingWidgetFoodlyIso().paddingAll(20),
                                                   ),
                                                 )
                                                 .toList(),
