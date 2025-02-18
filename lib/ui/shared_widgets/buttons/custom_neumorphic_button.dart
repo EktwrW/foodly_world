@@ -11,40 +11,41 @@ enum CustomNeumorphicBtnType { primary, secondary, outlined }
 class CustomNeumorphicButton extends StatelessWidget {
   final void Function()? onPressed;
   final String text;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsets padding;
+  final EdgeInsets margin;
   final double? verticalMargin;
   final bool disabled;
   final CustomNeumorphicBtnType? type;
   final ui.NeumoShape? shape;
   final double? fontSize;
-  final double? bosShapeRadius;
+  final double bosShapeRadius;
   final TextStyle? textStyle;
   final Color? backgroundColor;
   final Color? foregroundColor;
   final double? depth;
   final Widget? leading;
+  final String? tooltip;
 
   const CustomNeumorphicButton({
     super.key,
     this.onPressed,
     required this.text,
-    this.padding,
-    this.margin,
+    this.padding = const EdgeInsets.all(13),
+    this.margin = const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
     required this.disabled,
     this.type = CustomNeumorphicBtnType.primary,
     this.verticalMargin,
     this.shape,
     this.fontSize,
-    this.bosShapeRadius,
+    this.bosShapeRadius = 10,
     this.textStyle,
     this.backgroundColor,
-    this.depth,
+    this.depth = 3,
     this.leading,
     this.foregroundColor,
+    this.tooltip,
   });
 
-  ui.NeumoShape get getShape => shape ?? ui.NeumoShape.convex;
   TextStyle get getBaseTextStyle => textStyle ?? FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 17);
 
   @override
@@ -53,17 +54,17 @@ class CustomNeumorphicButton extends StatelessWidget {
       case CustomNeumorphicBtnType.secondary:
         return ui.NeumoButton(
           onPressed: !disabled ? onPressed : null,
-          margin:
-              margin ?? EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB, vertical: verticalMargin ?? 18),
+          margin: margin,
+          tooltip: tooltip,
           style: ui.NeumoStyle(
-            shape: getShape,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius ?? 12)),
-            depth: depth ?? 3,
+            shape: shape ?? ui.NeumoShape.convex,
+            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+            depth: depth,
             intensity: 1.2,
             surfaceIntensity: .3,
-            color: !disabled ? ui.NeumoColors.embossMaxWhiteColor : Colors.grey[200],
+            color: !disabled ? FoodlyThemes.primaryLighten73 : Colors.grey[200],
           ),
-          padding: padding ?? const EdgeInsets.all(13),
+          padding: padding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -80,29 +81,34 @@ class CustomNeumorphicButton extends StatelessWidget {
       case CustomNeumorphicBtnType.outlined:
         return ui.NeumoButton(
           onPressed: !disabled ? onPressed : null,
-          margin: margin ?? EdgeInsets.zero,
+          margin: margin,
+          tooltip: tooltip,
           style: ui.NeumoStyle(
             shape: shape ?? ui.NeumoShape.flat,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius ?? 12)),
-            depth: depth ?? 0,
+            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+            depth: depth,
             border: ui.NeumoBorder(
               color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
               width: 1.5,
             ),
             color: backgroundColor ?? Colors.transparent,
           ),
-          padding: padding ?? const EdgeInsets.all(13),
+          padding: padding,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (leading != null) leading!.paddingRight(12),
               Expanded(
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: getBaseTextStyle.copyWith(
-                    color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (leading != null) leading!.paddingRight(12),
+                    Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: getBaseTextStyle.copyWith(
+                        color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -112,17 +118,18 @@ class CustomNeumorphicButton extends StatelessWidget {
       case CustomNeumorphicBtnType.primary:
       default:
         return ui.NeumoButton(
-          margin: margin ?? const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+          margin: margin,
           onPressed: !disabled ? onPressed : null,
+          tooltip: tooltip,
           style: ui.NeumoStyle(
-            shape: getShape,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
-            depth: depth ?? 3,
+            shape: shape ?? ui.NeumoShape.convex,
+            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+            depth: depth,
             intensity: 1.2,
             color: FoodlyThemes.primaryFoodly,
             surfaceIntensity: .8,
           ),
-          padding: padding ?? const EdgeInsets.all(13),
+          padding: padding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

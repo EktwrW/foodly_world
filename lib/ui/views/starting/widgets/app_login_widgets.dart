@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoShape;
 import 'package:flutter_neumo/flutter_neumo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -7,11 +8,13 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class AppLoginWidgets extends StatefulWidget {
   const AppLoginWidgets({
@@ -116,7 +119,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FadeIn(
-            delay: const Duration(milliseconds: 250),
+            delay: Durations.short3,
             child: CustomNeumorphicButton(
               onPressed: () => cubit.setView(StartingPageView.login),
               text: S.current.login,
@@ -124,12 +127,28 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
             ),
           ),
           FadeIn(
-            delay: const Duration(milliseconds: 250),
+            delay: Durations.medium2,
             child: CustomNeumorphicButton(
               onPressed: () => context.goNamed(AppRoutes.signUp.name),
-              text: S.current.getStarted,
+              margin: const EdgeInsets.fromLTRB(
+                  UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, 0),
+              text: S.current.signup,
               type: CustomNeumorphicBtnType.secondary,
               disabled: false,
+            ),
+          ),
+          FadeIn(
+            delay: Durations.long3,
+            child: CustomNeumorphicButton(
+              key: const Key('google-sign-in-btn'),
+              onPressed: () => cubit.googleSignIn(),
+              padding: const EdgeInsets.all(12),
+              leading: const Icon(Bootstrap.google, color: FoodlyThemes.primaryFoodly),
+              text: S.current.signInWithGoogle,
+              shape: ui.NeumoShape.convex,
+              disabled: false,
+              type: CustomNeumorphicBtnType.outlined,
+              margin: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
             ),
           ),
         ],

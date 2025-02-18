@@ -8,12 +8,14 @@ import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_recover_password_dto.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/utils/split_name.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:universal_io/io.dart';
 
 part 'starting_cubit.freezed.dart';
 part 'starting_state.dart';
@@ -21,7 +23,7 @@ part 'starting_state.dart';
 class StartingCubit extends Cubit<StartingState> {
   final _meRepo = di<MeRepo>();
   final _googleSignIn = GoogleSignIn(
-    clientId: kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
+    clientId: Platform.isIOS || kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
   );
 
@@ -67,15 +69,14 @@ class StartingCubit extends Cubit<StartingState> {
           },
         );
       } else {
-        emit(_Error('error', _vm));
+        emit(_Error(S.current.error, _vm));
       }
+    } on PlatformException catch (e) {
+      di<Logger>().e('PlatformException: ${e.code} - ${e.message}');
+      emit(_Error(e.message ?? S.current.platformError, _vm));
     } catch (error) {
-      if (error is PlatformException) {
-        di<Logger>().e('Error code: ${error.code}');
-        di<Logger>().e('Error message: ${error.message}');
-        di<Logger>().e('Error details: ${error.details}');
-      }
-      emit(_Error('$error', _vm));
+      di<Logger>().e('${S.current.error}: $error');
+      emit(_Error('${S.current.loginError}: $error', _vm));
     }
   }
 

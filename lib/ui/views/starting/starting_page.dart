@@ -13,10 +13,17 @@ import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
-import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
+//import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
 import 'package:go_router/go_router.dart';
 
-enum StartingPageView { initial, login, register, completeRegister }
+enum StartingPageView {
+  initial,
+  login,
+  register,
+  completeRegister;
+
+  bool get isLogin => this == StartingPageView.login;
+}
 
 class StartingPage369 extends StatelessWidget {
   final StartingPageView? currentView;
@@ -70,8 +77,6 @@ class StartingPage369 extends StatelessWidget {
   }
 
   Widget buildContent(BuildContext context, StartingVM vm) {
-    final isLogin = vm.currentView == StartingPageView.login;
-
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +88,7 @@ class StartingPage369 extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
-                  visible: isLogin,
+                  visible: vm.currentView.isLogin,
                   replacement: topTextWidget(S.current.welcomeTo),
                   child: topTextWidget(S.current.loginTo),
                 ),
@@ -93,10 +98,10 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: isLogin ? context.screenHeight * .19 : context.screenHeight * .31,
+              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .30,
               child: Center(
                 child: AnimatedPadding(
-                    padding: EdgeInsets.symmetric(horizontal: isLogin ? 80 : 50),
+                    padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
                     duration: Durations.medium4,
                     child: const Asset(FoodlyAssets.logo)),
               ),
@@ -105,25 +110,25 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: isLogin ? context.screenHeight * .36 : context.screenHeight * .21,
+              height: vm.currentView.isLogin ? context.screenHeight * .36 : context.screenHeight * .335,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: isLogin ? context.screenHeight * .30 : context.screenHeight * .32,
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              height: vm.currentView.isLogin ? context.screenHeight * .24 : context.screenHeight * .16,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SocialMediaButtonsRow(),
-                  FingerprintButtonLogin(),
+                  if (!vm.currentView.isLogin) const Center(child: FingerprintButtonLogin()),
+                  const SizedBox.shrink(),
                 ],
               ),
-            ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+            ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
           ),
           SizedBox(
-            height: context.screenHeight * .03,
+            height: context.screenHeight * .04,
             child: Column(
               children: [
                 Text(S.current.copyrightText, style: FoodlyTextStyles.copyrightText),

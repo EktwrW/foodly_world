@@ -28,6 +28,7 @@ class FoodlyThemes {
   //Variances:
   static const alternativeUnselectedLightColor = Color(0xFFF1EAEF);
   static final primaryLighten73 = primaryFoodly.lighten(73);
+  static const favourites = Color(0xFFFC1908);
 
   //Themes:
   static ThemeData lightTheme() {

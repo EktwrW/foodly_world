@@ -33,8 +33,6 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                             key: const Key('generate-promo-using-ai-service'),
                             onPressed: () => PromotionsSnackbars.showCreatePromoWithAI(context, cubit, vm),
                             padding: const EdgeInsets.all(10),
-                            bosShapeRadius: 10,
-                            depth: 3,
                             text: S.current.generateWithAI,
                             shape: ui.NeumoShape.convex,
                             disabled: false,

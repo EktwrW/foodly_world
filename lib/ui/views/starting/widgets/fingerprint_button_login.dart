@@ -14,7 +14,7 @@ class FingerprintButtonLogin extends StatelessWidget {
     super.key,
   });
 
-  void showBiometricSnackBar(BuildContext context) {
+  void _showBiometricSnackBar(BuildContext context) {
     final snackBar = SnackBarWdg(
       type: SnackBarType.warning,
       content: Text.rich(
@@ -71,23 +71,26 @@ class FingerprintButtonLogin extends StatelessWidget {
             ),
             CustomRoundedNeumorphicButton(
               diameter: 62,
-              iconSize: 50,
+              iconSize: 48,
               onPressed: () {
                 switch (context.read<LocalAuthCubit>().biometricAuthEnabled) {
                   case true:
                     if (di<AuthSessionService>().isLoggedIn) {
                       context.read<LocalAuthCubit>().authenticate();
                     } else {
-                      showBiometricSnackBar(context);
+                      _showBiometricSnackBar(context);
                     }
                     break;
 
                   case false:
-                    showBiometricSnackBar(context);
+                    _showBiometricSnackBar(context);
                     break;
                 }
               },
+              depth: 1,
+              padding: const EdgeInsets.fromLTRB(9, 6, 6, 7),
               iconData: Bootstrap.fingerprint,
+              tooltip: S.current.resumeSessionWithSecurity,
             ),
             Flexible(
               child: Container(

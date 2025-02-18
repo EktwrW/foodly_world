@@ -23,13 +23,13 @@ class LikeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomRoundedNeumorphicButton(
       diameter: diameter ?? 20,
-      depth: .5,
+      depth: 0,
       tooltip: S.current.addToFavorites,
-      shape: ui.NeumoShape.concave,
-      buttonColor: liked ? Colors.white60 : FoodlyThemes.primaryFoodly.withValues(alpha: .3),
+      shape: liked ? ui.NeumoShape.concave : ui.NeumoShape.flat,
+      buttonColor: liked ? Colors.white70 : FoodlyThemes.primaryFoodly.withValues(alpha: .7),
       iconData: liked ? FontAwesome.heart_circle_check_solid : FontAwesome.heart_circle_plus_solid,
       iconSize: iconSize ?? 20,
-      iconColor: liked ? const Color(0xFFFC1908) : const Color(0xFFFCDDDD), //TODO: store this colors
+      iconColor: liked ? FoodlyThemes.favourites : FoodlyThemes.alternativeUnselectedLightColor,
       onPressed: onPressed,
       padding: const EdgeInsets.fromLTRB(6, 6, 8, 7),
     );
