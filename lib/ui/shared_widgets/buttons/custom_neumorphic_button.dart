@@ -61,18 +61,21 @@ class CustomNeumorphicButton extends StatelessWidget {
             boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
             intensity: 1.2,
-            surfaceIntensity: .3,
             color: !disabled ? FoodlyThemes.primaryLighten73 : Colors.grey[200],
           ),
           padding: padding,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClayText(
-                text,
-                color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
-                spread: 0.5,
-                style: getBaseTextStyle,
+              Expanded(
+                child: Center(
+                  child: ClayText(
+                    text,
+                    color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
+                    spread: 0.39,
+                    style: getBaseTextStyle,
+                  ),
+                ),
               ),
             ],
           ),
@@ -101,12 +104,11 @@ class CustomNeumorphicButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (leading != null) leading!.paddingRight(12),
-                    Text(
+                    ClayText(
                       text,
-                      textAlign: TextAlign.center,
-                      style: getBaseTextStyle.copyWith(
-                        color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
-                      ),
+                      spread: 0.25,
+                      color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
+                      style: getBaseTextStyle,
                     ),
                   ],
                 ),
@@ -133,11 +135,15 @@ class CustomNeumorphicButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClayText(
-                text,
-                color: foregroundColor ?? ui.NeumoColors.decorationMaxWhiteColor,
-                spread: 0.5,
-                style: getBaseTextStyle,
+              Expanded(
+                child: Center(
+                  child: ClayText(
+                    text,
+                    color: foregroundColor ?? ui.NeumoColors.decorationMaxWhiteColor,
+                    spread: 0.39,
+                    style: getBaseTextStyle,
+                  ),
+                ),
               ),
             ],
           ),
