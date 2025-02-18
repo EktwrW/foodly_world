@@ -70,8 +70,8 @@ class FingerprintButtonLogin extends StatelessWidget {
               ),
             ),
             CustomRoundedNeumorphicButton(
-              diameter: 62,
-              iconSize: 48,
+              diameter: 64,
+              iconSize: 52,
               onPressed: () {
                 switch (context.read<LocalAuthCubit>().biometricAuthEnabled) {
                   case true:
@@ -88,7 +88,7 @@ class FingerprintButtonLogin extends StatelessWidget {
                 }
               },
               depth: 1,
-              padding: const EdgeInsets.fromLTRB(9, 6, 6, 7),
+              padding: const EdgeInsets.fromLTRB(10, 6, 6, 7),
               iconData: Bootstrap.fingerprint,
               tooltip: S.current.resumeSessionWithSecurity,
             ),
