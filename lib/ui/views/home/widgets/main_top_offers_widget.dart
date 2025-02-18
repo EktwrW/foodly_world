@@ -8,6 +8,8 @@ import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
+//import 'package:foodly_world/ui/views/business/promotions/promotions_page.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class TopOffersWidget extends StatelessWidget {
@@ -24,47 +26,26 @@ class TopOffersWidget extends StatelessWidget {
           .asMap()
           .entries
           .map(
-            (e) => ui.NeumoButton(
-              padding: EdgeInsets.zero,
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              style: const ui.NeumoStyle(shape: ui.NeumoShape.concave, color: ui.NeumoColors.decorationMaxWhiteColor),
+            (e) => Card(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              color: ui.NeumoColors.decorationMaxWhiteColor,
               child: Stack(
                 children: [
                   Column(
                     children: [
                       Stack(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Image.asset(e.value.imageUrl, fit: BoxFit.cover, height: 160),
-                              ),
-                            ],
-                          ),
-                          Positioned(
-                            bottom: 5,
-                            child: ui.Neumo(
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              style: ui.NeumoStyle(
-                                  color: Colors.white70,
-                                  boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    e.value.storeName,
-                                    style: FoodlyTextStyles.promoBusinessName,
-                                  ),
-                                  RatingBar.builder(
-                                    initialRating: 4.3,
-                                    itemSize: 12,
-                                    minRating: 1,
-                                    allowHalfRating: true,
-                                    itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 10),
-                                    onRatingUpdate: (rating) => log('$rating'),
-                                  ),
-                                ],
-                              ).paddingSymmetric(horizontal: 4),
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                            child: AspectRatio(
+                              aspectRatio: 16 / 9,
+                              child: Image.asset(e.value.imageUrl, fit: BoxFit.cover, height: 160),
+                              // child: PromoMedia(
+                              //   externalUrl: e.value.imageUrl, //widget.promo.mediaLink ?? '',
+                              //   promoMedia: null,
+                              //   // widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
+                              //   title: e.value.title, //widget.promo.title,
+                              // ),
                             ),
                           ),
                         ],
@@ -77,6 +58,8 @@ class TopOffersWidget extends StatelessWidget {
                               child: Text(
                                 e.value.title,
                                 style: FoodlyTextStyles.promoTitle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Flexible(
@@ -86,11 +69,13 @@ class TopOffersWidget extends StatelessWidget {
                                   Text(
                                     e.value.subtitle,
                                     style: FoodlyTextStyles.cardsSmallSubtitle,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  Icon(
+                                  const Icon(
                                     Bootstrap.megaphone_fill,
-                                    color: Colors.green[700],
-                                    size: 14,
+                                    color: FoodlyThemes.tertiaryFoodly,
+                                    size: 16,
                                   ).paddingOnly(left: 6)
                                 ],
                               ),
@@ -100,7 +85,35 @@ class TopOffersWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Positioned(right: 5, top: 5, child: LikeWidget(liked: e.key.isOdd)),
+                  Positioned(right: 3, top: 3, child: LikeButton(liked: e.key.isOdd)),
+                  Positioned(
+                    top: 136,
+                    left: 1,
+                    child: ui.Neumo(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      style: ui.NeumoStyle(
+                          depth: 1,
+                          color: Colors.white.withValues(alpha: .9),
+                          boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e.value.storeName,
+                            style: FoodlyTextStyles.promoBusinessName,
+                          ),
+                          RatingBar.builder(
+                            initialRating: 4.3,
+                            itemSize: 13,
+                            minRating: 1,
+                            allowHalfRating: true,
+                            itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 13),
+                            onRatingUpdate: (rating) => log('$rating'),
+                          ),
+                        ],
+                      ).paddingSymmetric(horizontal: 4),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -108,7 +121,7 @@ class TopOffersWidget extends StatelessWidget {
           .toList(),
       carouselController: promosCarouselController,
       options: CarouselOptions(
-        height: 230,
+        height: 254,
         autoPlay: true,
         enlargeCenterPage: true,
         enlargeFactor: .15,

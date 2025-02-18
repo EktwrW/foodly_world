@@ -94,7 +94,7 @@ class BusinessListCard extends StatelessWidget {
                 ),
                 LocalHero(
                   tag: 'like-$heroTagPrefix',
-                  child: LikeWidget(
+                  child: LikeButton(
                     liked: true,
                     onPressed: () {},
                     diameter: 15,
@@ -183,7 +183,7 @@ class BusinessGridCard extends StatelessWidget {
                     children: [
                       LocalHero(
                         tag: 'like-$heroTagPrefix',
-                        child: LikeWidget(
+                        child: LikeButton(
                           liked: true,
                           onPressed: () {},
                           diameter: 15,

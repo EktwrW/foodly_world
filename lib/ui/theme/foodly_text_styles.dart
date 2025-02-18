@@ -246,9 +246,9 @@ class FoodlyTextStyles {
     color: FoodlyThemes.primaryFoodly,
   );
 
-  static final promoBusinessName = TextStyle(
+  static const promoBusinessName = TextStyle(
+    fontSize: 13,
     fontWeight: FontWeight.bold,
-    color: Colors.black.withValues(alpha: .75),
   );
 
   static final promoTitle = TextStyle(

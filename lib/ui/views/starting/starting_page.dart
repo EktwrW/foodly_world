@@ -110,14 +110,14 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .36 : context.screenHeight * .335,
+              height: vm.currentView.isLogin ? context.screenHeight * .38 : context.screenHeight * .335,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .24 : context.screenHeight * .16,
+              height: vm.currentView.isLogin ? context.screenHeight * .22 : context.screenHeight * .16,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

@@ -35,7 +35,7 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
                     child: AspectRatio(
                       aspectRatio: 16 / 9,
                       child: widget.promo.mediaFileUrl.isNotEmpty
-                          ? _PromoMedia(
+                          ? PromoMedia(
                               externalUrl: widget.promo.mediaLink ?? '',
                               promoMedia: widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
                               title: widget.promo.title,
@@ -185,12 +185,13 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
   }
 }
 
-class _PromoMedia extends StatelessWidget {
+class PromoMedia extends StatelessWidget {
   final String externalUrl;
   final PromoMediaDM? promoMedia;
   final String? title;
 
-  const _PromoMedia({
+  const PromoMedia({
+    super.key,
     required this.externalUrl,
     required this.promoMedia,
     this.title,
@@ -390,7 +391,7 @@ class _LikeOrEditWidget extends StatelessWidget {
           );
         }
 
-        return LikeWidget(liked: promo.hashCode.isEven);
+        return LikeButton(liked: promo.hashCode.isEven);
       },
     );
   }
