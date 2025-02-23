@@ -17,9 +17,8 @@ class TextSmartSearchButton extends StatelessWidget {
                 : () async {
                     final cubit = context.read<VoiceSearchCubit>();
 
-                    if (state.vm.smartSearchMode.isVoice) {
-                      if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      await cubit.resetToInitial();
+                    if (state.vm.smartSearchMode.isOff) {
+                      if (context.mounted) VoiceSearchSnackbars.showInputSearchWdg(context);
                     }
 
                     await Future.microtask(() async {
@@ -27,8 +26,6 @@ class TextSmartSearchButton extends StatelessWidget {
                         cubit.setTextSearchMode();
                       }
                     });
-
-                    if (context.mounted) VoiceSearchSnackbars.showInputSearchWdg(context);
                   },
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.white),

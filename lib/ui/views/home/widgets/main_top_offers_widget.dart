@@ -101,7 +101,7 @@ class TopOffersWidget extends StatelessWidget {
                             ),
                           ],
                         ).paddingSymmetric(horizontal: 6, vertical: 2),
-                      ).paddingBottom(6),
+                      ).paddingBottom(8),
                     ],
                   ),
                   Positioned(right: 1, top: 1, child: LikeButton(liked: e.key.isOdd)),
@@ -112,11 +112,11 @@ class TopOffersWidget extends StatelessWidget {
           .toList(),
       carouselController: promosCarouselController,
       options: CarouselOptions(
-        height: 266,
+        height: 296,
         autoPlay: true,
         enlargeCenterPage: true,
         enlargeFactor: .15,
-        viewportFraction: context.screenWidth <= 360 ? .85 : .75,
+        viewportFraction: context.screenWidth <= 360 ? .85 : .8,
       ),
     );
   }

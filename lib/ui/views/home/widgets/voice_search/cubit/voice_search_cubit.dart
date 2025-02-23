@@ -21,54 +21,55 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
   final SpeechToText _speechToText;
   Timer? _listenTimer;
   final _businessRepo = di<BusinessRepo>();
+  VoiceSearchVM _vm;
 
   VoiceSearchCubit()
       : _speechToText = SpeechToText(),
+        _vm = VoiceSearchVM.initial(),
         super(VoiceSearchState.initial(VoiceSearchVM.initial())) {
     _initialize();
   }
 
   Future<void> _initialize() async {
     try {
+      if (_speechToText.isListening) {
+        await _speechToText.stop();
+      }
+
       final available = await _speechToText.initialize(
         onError: _handleError,
         onStatus: (status) => di<Logger>().t('Status: $status'),
         debugLogging: true,
       );
 
-      final vm = VoiceSearchVM(
+      _vm = _vm.copyWith(
         isInitialized: available,
         isListening: false,
         recognizedText: '',
-        inputController: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+        smartSearchMode: SmartSearchMode.none,
+        inputController: InputController(
+          controller: TextEditingController(),
+          focusNode: FocusNode(),
+        ),
       );
 
       if (available) {
-        emit(VoiceSearchState.initial(vm));
+        emit(VoiceSearchState.initial(_vm));
       } else {
-        emit(VoiceSearchState.error(S.current.speechRecognitionUnavailable, vm));
+        emit(VoiceSearchState.error(S.current.speechRecognitionUnavailable, _vm));
       }
     } on Exception catch (e) {
       di<Logger>().e('Error de inicialización: $e');
-      emit(VoiceSearchState.error(S.current.speechRecognitionError, VoiceSearchVM.initial()));
+      emit(VoiceSearchState.error(S.current.speechRecognitionError, _vm));
     }
   }
 
   void startListening() async {
-    final currentVm = state.maybeMap(
-      initial: (s) => s.vm,
-      listening: (s) => s.vm,
-      recognized: (s) => s.vm,
-      error: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
-    // Reinicializar si es necesario
     if (!_speechToText.isAvailable) {
       await _initialize();
     }
 
-    if (!currentVm.isListening) {
+    if (!_vm.isListening) {
       _listenTimer?.cancel();
       _listenTimer = null;
 
@@ -77,11 +78,11 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         await Future.delayed(const Duration(milliseconds: 100));
       }
 
-      final listeningVm = currentVm.copyWith(
+      _vm = _vm.copyWith(
         isListening: true,
         recognizedText: '',
       );
-      emit(VoiceSearchState.listening(listeningVm));
+      emit(VoiceSearchState.listening(_vm));
 
       try {
         await _speechToText.listen(
@@ -97,76 +98,46 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         _listenTimer = Timer(const Duration(seconds: 30), stopListening);
       } catch (e) {
         _listenTimer?.cancel();
-        emit(VoiceSearchState.error(
-          S.current.speechRecognitionError,
-          listeningVm.copyWith(isListening: false),
-        ));
+        _vm = _vm.copyWith(isListening: false);
+        emit(VoiceSearchState.error(S.current.speechRecognitionError, _vm));
       }
     }
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    final currentVm = state.maybeMap(
-      listening: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
+    _vm = _vm.copyWith(recognizedText: result.recognizedWords);
 
     if (result.finalResult) {
-      // Primero emitimos el estado con el texto final
-      final updatedVm = currentVm.copyWith(
-        recognizedText: result.recognizedWords,
-      );
-      emit(VoiceSearchState.listening(updatedVm));
-
-      // Luego, después de un micro-delay, detenemos la escucha
+      emit(VoiceSearchState.listening(_vm));
       Future.microtask(() {
         stopListening();
-        emit(VoiceSearchState.recognized(updatedVm));
+        emit(VoiceSearchState.recognized(_vm));
       });
     } else {
-      final updatedVm = currentVm.copyWith(
-        recognizedText: result.recognizedWords,
-      );
-      emit(VoiceSearchState.listening(updatedVm));
+      emit(VoiceSearchState.listening(_vm));
     }
   }
 
   Future<void> stopListening() async {
-    final currentVm = state.maybeMap(
-      listening: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
-    if (currentVm.isListening) {
+    if (_vm.isListening) {
       await _speechToText.stop();
       _listenTimer?.cancel();
       _listenTimer = null;
 
-      final stoppedVm = currentVm.copyWith(
-        isListening: false,
-      );
+      _vm = _vm.copyWith(isListening: false);
 
-      // Asegurarnos que el speechToText está completamente detenido
       await Future.delayed(Durations.short2);
 
-      emit(VoiceSearchState.recognized(stoppedVm));
+      emit(VoiceSearchState.recognized(_vm));
     }
   }
 
   void searchBusinesses(double latitude, double longitude) async {
-    final currentVm = state.maybeMap(
-      recognized: (s) => s.vm,
-      initial: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
-    // Obtenemos el texto de búsqueda según el modo
-    final searchText =
-        currentVm.smartSearchMode.isVoice ? currentVm.recognizedText : currentVm.inputController.controller?.text;
+    final searchText = _vm.smartSearchMode.isVoice ? _vm.recognizedText : _vm.inputController.controller?.text;
 
     if (searchText?.isEmpty ?? true) return;
 
-    emit(VoiceSearchState.searching(currentVm));
+    emit(VoiceSearchState.searching(_vm));
 
     final result = await _businessRepo.businessSearch(
       BusinessSearchBodyDTO(
@@ -178,118 +149,123 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
 
     result.when(
       success: (data) {
-        final updatedVm = currentVm.copyWith(searchResults: data.business, smartSearchMode: SmartSearchMode.none);
-        emit(VoiceSearchState.searchComplete(updatedVm));
+        _vm = _vm.copyWith(
+          searchResults: data.business,
+          smartSearchMode: SmartSearchMode.none,
+        );
+        emit(VoiceSearchState.searchComplete(_vm));
       },
       failure: (error) {
-        emit(VoiceSearchState.error(
-          error.toString(),
-          currentVm.copyWith(smartSearchMode: SmartSearchMode.none),
-        ));
+        _vm = _vm.copyWith(smartSearchMode: SmartSearchMode.none);
+        emit(VoiceSearchState.error(error.toString(), _vm));
       },
     );
   }
 
   void clearSearch() {
-    final currentVm = state.maybeMap(
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
-    if (currentVm.smartSearchMode.isVoice) {
-      emit(VoiceSearchState.initial(
-        currentVm.copyWith(
-          recognizedText: '',
-          searchResults: [],
-        ),
-      ));
+    if (_vm.smartSearchMode.isVoice) {
+      _vm = _vm.copyWith(
+        recognizedText: '',
+        searchResults: [],
+      );
     } else {
-      emit(VoiceSearchState.initial(
-        currentVm.copyWith(
-          inputController: InputController(controller: TextEditingController(), focusNode: FocusNode()),
-          searchResults: [],
+      _vm = _vm.copyWith(
+        inputController: InputController(
+          controller: TextEditingController(),
+          focusNode: FocusNode(),
         ),
-      ));
+        searchResults: [],
+      );
     }
+    emit(VoiceSearchState.initial(_vm));
   }
 
   void toggleViewMode() {
-    final currentVm = state.maybeMap(
-      searchComplete: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
     final newViewMode =
-        currentVm.viewMode == SearchResultsViewMode.grid ? SearchResultsViewMode.list : SearchResultsViewMode.grid;
+        _vm.viewMode == SearchResultsViewMode.grid ? SearchResultsViewMode.list : SearchResultsViewMode.grid;
 
-    emit(VoiceSearchState.searchComplete(
-      currentVm.copyWith(viewMode: newViewMode),
-    ));
+    _vm = _vm.copyWith(viewMode: newViewMode);
+    emit(VoiceSearchState.searchComplete(_vm));
   }
 
-  void setTextSearchMode() {
-    final currentVm = state.maybeMap(
-      initial: (s) => s.vm,
-      recognized: (s) => s.vm,
-      searchComplete: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
+  void setTextSearchMode() async {
+    // Detenemos cualquier escucha activa si existe
+    if (_speechToText.isListening) {
+      await _speechToText.stop();
+      _listenTimer?.cancel();
+      _listenTimer = null;
+    }
+
+    _vm = _vm.copyWith(
+      smartSearchMode: SmartSearchMode.text,
+      recognizedText: '',
+      isListening: false,
+      inputController: InputController(
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+      ),
     );
 
-    emit(VoiceSearchState.initial(
-      currentVm.copyWith(
-        smartSearchMode: SmartSearchMode.text,
-        recognizedText: '',
-        isListening: false,
-      ),
-    ));
+    emit(VoiceSearchState.initial(_vm));
   }
 
-  void setVoiceSearchMode() {
-    final currentVm = state.maybeMap(
-      initial: (s) => s.vm,
-      recognized: (s) => s.vm,
-      searchComplete: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
+  void setVoiceSearchMode() async {
+    // Primero detenemos cualquier escucha activa
+    if (_speechToText.isListening) {
+      await _speechToText.stop();
+      _listenTimer?.cancel();
+      _listenTimer = null;
+    }
+
+    // Actualizamos el modo y limpiamos el estado
+    _vm = _vm.copyWith(
+      smartSearchMode: SmartSearchMode.voice,
+      recognizedText: '',
+      isListening: false,
+      inputController: InputController(
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
+      ),
     );
 
-    emit(VoiceSearchState.initial(
-      currentVm.copyWith(
-        smartSearchMode: SmartSearchMode.voice,
-        inputController: InputController(controller: TextEditingController(), focusNode: FocusNode()),
-      ),
-    ));
+    emit(VoiceSearchState.initial(_vm));
+
+    // Iniciamos la escucha automáticamente
+    startListening();
   }
 
-  void checkForResetToInitial() => state == VoiceSearchState.searchComplete(state.vm) ? null : resetToInitial();
+  void checkForResetToInitial() async {
+    if (state is! _SearchComplete) {
+      await resetToInitial();
+    }
+  }
 
   Future<void> resetToInitial() async {
     _listenTimer?.cancel();
     _listenTimer = null;
 
     if (_speechToText.isListening) {
-      _speechToText.stop();
+      await _speechToText.stop();
     }
 
-    emit(VoiceSearchState.initial(
-      VoiceSearchVM(
-        isInitialized: _speechToText.isAvailable,
-        isListening: false,
-        recognizedText: '',
-        inputController: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+    _vm = VoiceSearchVM(
+      isInitialized: _speechToText.isAvailable,
+      isListening: false,
+      recognizedText: '',
+      inputController: InputController(
+        controller: TextEditingController(),
+        focusNode: FocusNode(),
       ),
-    ));
+    );
+
+    emit(VoiceSearchState.initial(_vm));
   }
 
   void _handleError(SpeechRecognitionError error) {
-    final currentVm = state.maybeMap(
-      listening: (s) => s.vm,
-      orElse: () => VoiceSearchVM.initial(),
-    );
-
     di<Logger>().e('Error de reconocimiento: ${error.errorMsg}');
-    emit(VoiceSearchState.error(
-      _getErrorMessage(error.errorMsg),
-      currentVm.copyWith(isListening: false),
-    ));
+
+    _vm = _vm.copyWith(isListening: false);
+    emit(VoiceSearchState.error(_getErrorMessage(error.errorMsg), _vm));
   }
 
   String _getErrorMessage(String errorMsg) => switch (errorMsg) {

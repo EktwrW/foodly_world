@@ -85,103 +85,147 @@ class VoiceSearchSnackbars {
           );
         },
       ),
-      content: BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
-        builder: (context, state) {
-          final vm = state.vm;
-
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 36,
-            children: [
-              if (vm.smartSearchMode.isVoice)
-                PulsingMicIcon(
-                  icon: const Asset(FoodlyAssets.mic, height: 55, width: 55),
-                  animate: vm.isListening,
-                ),
-              if (vm.smartSearchMode.isVoice)
-                Flexible(
-                  child: AnimatedSize(
-                    clipBehavior: Clip.antiAlias,
-                    duration: Durations.medium1,
-                    child: vm.recognizedText.isNotEmpty
-                        ? _TextWdg(text: vm.recognizedText, key: const Key('recognized-text'))
-                        : !vm.isListening
-                            ? _TextWdg(text: S.current.readyToListen, key: const Key('Ready-to-listen'))
-                            : AnimatedTextLoadingDots(
-                                key: const Key('voice_search_listening_text'),
-                                text: S.current.listening,
-                                textStyle: FoodlyTextStyles.snackBarLightBody,
-                                alignment: MainAxisAlignment.center,
-                              ),
-                  ),
-                )
-              else
-                Flexible(
-                  child: Column(
-                    spacing: 18,
-                    children: [
-                      const Center(child: Asset(FoodlyAssets.searchBusiness, height: 55, width: 55)),
-                      _TextWdg(text: S.current.needBestRecommendations),
-                      FoodlyPrimaryInputText(
-                        minLines: 2,
-                        maxLines: 3,
-                        // onFieldSubmitted: (_) {
-                        //   cubit
-                        //     ..searchBusinesses(
-                        //       locationService.currentLocation.position?.latitude ?? 0.0,
-                        //       locationService.currentLocation.position?.longitude ?? 0.0,
-                        //     )
-                        //     ..checkForResetToInitial();
-
-                        //   scaffoldMessenger.removeCurrentSnackBar();
-                        // },
-                        inputTextType: FoodlyInputType.search,
-                        autovalidateMode: AutovalidateMode.onUnfocus,
-                        controller: vm.inputController.controller,
-                        focusNode: vm.inputController.focusNode,
-                        enabled: !vm.smartSearchMode.isVoice,
-                        hideCurrentSnackBarWhenOnTap: false,
-                        showLeading: false,
-                        prefixIconConstraints: const BoxConstraints.tightFor(width: 32),
-                      ),
-                    ],
-                  ),
-                ),
-              if (vm.smartSearchMode.isVoice)
-                SizedBox(
-                  width: double.infinity,
-                  child: ui.NeumoButton(
-                    onPressed: vm.isListening ? () => cubit.stopListening() : () => cubit.startListening(),
-                    style: ui.NeumoStyle(
-                      shape: ui.NeumoShape.convex,
-                      boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
-                      depth: 3,
-                      lightSource: ui.LightSource.topRight,
-                      intensity: 1.2,
-                      surfaceIntensity: .3,
-                      color: FoodlyThemes.primaryFoodly,
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: ClayText(
-                        vm.isListening ? S.current.stop : S.current.retryRecording,
-                        color: ui.NeumoColors.decorationMaxWhiteColor,
-                        spread: 0,
-                        style: FoodlyTextStyles.snackBarPrimaryButton,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        },
-      ),
+      content: const VoiceSearchContent(),
     );
 
     scaffoldMessenger
       ..removeCurrentSnackBar()
       ..showSnackBar(snackBar.getSnackBar(context)).closed.then((_) => cubit.checkForResetToInitial());
+  }
+}
+
+class VoiceSearchContent extends StatelessWidget {
+  const VoiceSearchContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+      builder: (context, state) {
+        final vm = state.vm;
+
+        return AnimatedSize(
+          duration: Durations.medium2,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedCrossFade(
+                duration: Durations.medium3,
+                crossFadeState: vm.smartSearchMode.isVoice ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                firstChild: _VoiceSearchView(vm: vm),
+                secondChild: _TextSearchView(vm: vm),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _VoiceSearchView extends StatelessWidget {
+  final VoiceSearchVM vm;
+
+  const _VoiceSearchView({required this.vm});
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<VoiceSearchCubit>();
+
+    return Column(
+      spacing: 40,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: PulsingMicIcon(
+            icon: const Asset(FoodlyAssets.mic, height: 55, width: 55),
+            animate: vm.isListening,
+          ).paddingTop(20),
+        ),
+        Flexible(
+          child: AnimatedSize(
+            clipBehavior: Clip.antiAlias,
+            duration: Durations.medium1,
+            child: vm.recognizedText.isNotEmpty
+                ? _TextWdg(
+                    text: vm.recognizedText,
+                    key: const Key('recognized-text'),
+                  )
+                : !vm.isListening
+                    ? _TextWdg(
+                        text: S.current.readyToListen,
+                        key: const Key('Ready-to-listen'),
+                      )
+                    : AnimatedTextLoadingDots(
+                        key: const Key('voice_search_listening_text'),
+                        text: S.current.listening,
+                        textStyle: FoodlyTextStyles.snackBarLightBody,
+                        alignment: MainAxisAlignment.center,
+                      ),
+          ).paddingVertical(10),
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: ui.NeumoButton(
+            onPressed: vm.isListening ? () => cubit.stopListening() : () => cubit.startListening(),
+            style: ui.NeumoStyle(
+              shape: ui.NeumoShape.convex,
+              boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
+              depth: 3,
+              lightSource: ui.LightSource.topRight,
+              intensity: 1.2,
+              surfaceIntensity: .3,
+              color: FoodlyThemes.primaryFoodly,
+            ),
+            padding: const EdgeInsets.all(10),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: ClayText(
+                vm.isListening ? S.current.stop : S.current.retryRecording,
+                color: ui.NeumoColors.decorationMaxWhiteColor,
+                spread: 0,
+                style: FoodlyTextStyles.snackBarPrimaryButton,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TextSearchView extends StatelessWidget {
+  final VoiceSearchVM vm;
+
+  const _TextSearchView({required this.vm});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 24,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Center(
+          child: Asset(
+            FoodlyAssets.searchBusiness,
+            height: 55,
+            width: 55,
+          ),
+        ),
+        _TextWdg(text: S.current.needBestRecommendations),
+        FoodlyPrimaryInputText(
+          minLines: 2,
+          maxLines: 3,
+          inputTextType: FoodlyInputType.search,
+          autovalidateMode: AutovalidateMode.onUnfocus,
+          controller: vm.inputController.controller,
+          focusNode: vm.inputController.focusNode,
+          enabled: !vm.smartSearchMode.isVoice,
+          hideCurrentSnackBarWhenOnTap: false,
+          showLeading: false,
+          prefixIconConstraints: const BoxConstraints.tightFor(width: 32),
+        ),
+      ],
+    ).paddingBottom(12);
   }
 }
 

@@ -13,8 +13,8 @@ class VoiceSearchButton extends StatelessWidget {
             onPressed: state.vm.smartSearchMode.isVoice
                 ? null
                 : () async {
-                    if (state.vm.smartSearchMode.isText) {
-                      if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    if (state.vm.smartSearchMode.isOff) {
+                      if (context.mounted) VoiceSearchSnackbars.showInputSearchWdg(context);
                     }
 
                     await Future.microtask(() {
@@ -24,8 +24,6 @@ class VoiceSearchButton extends StatelessWidget {
                           ..startListening();
                       }
                     });
-
-                    if (context.mounted) VoiceSearchSnackbars.showInputSearchWdg(context);
                   },
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.white),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'voice_search_vm.freezed.dart';
 
 enum SearchResultsViewMode {
   grid,
@@ -19,50 +22,28 @@ enum SmartSearchMode {
   bool get isOff => this == none;
 }
 
-class VoiceSearchVM {
-  final bool isInitialized;
-  final bool isListening;
-  final String recognizedText;
-  final List<BusinessDM> searchResults;
-  final SearchResultsViewMode viewMode;
-  final SmartSearchMode smartSearchMode;
-  final InputController inputController;
+@freezed
+class VoiceSearchVM with _$VoiceSearchVM {
+  const VoiceSearchVM._();
 
-  const VoiceSearchVM({
-    required this.isInitialized,
-    required this.isListening,
-    required this.recognizedText,
-    this.searchResults = const [],
-    this.viewMode = SearchResultsViewMode.list,
-    this.smartSearchMode = SmartSearchMode.none,
-    required this.inputController,
-  });
-
-  VoiceSearchVM copyWith({
-    bool? isInitialized,
-    bool? isListening,
-    String? recognizedText,
-    List<BusinessDM>? searchResults,
-    SearchResultsViewMode? viewMode,
-    SmartSearchMode? smartSearchMode,
-    InputController? inputController,
-  }) {
-    return VoiceSearchVM(
-      isInitialized: isInitialized ?? this.isInitialized,
-      isListening: isListening ?? this.isListening,
-      recognizedText: recognizedText ?? this.recognizedText,
-      searchResults: searchResults ?? this.searchResults,
-      viewMode: viewMode ?? this.viewMode,
-      smartSearchMode: smartSearchMode ?? this.smartSearchMode,
-      inputController: inputController ?? this.inputController,
-    );
-  }
+  const factory VoiceSearchVM({
+    required bool isInitialized,
+    required bool isListening,
+    required String recognizedText,
+    @Default([]) List<BusinessDM> searchResults,
+    @Default(SearchResultsViewMode.list) SearchResultsViewMode viewMode,
+    @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
+    required InputController inputController,
+  }) = _VoiceSearchVM;
 
   factory VoiceSearchVM.initial() => VoiceSearchVM(
         isInitialized: false,
         isListening: false,
         recognizedText: '',
-        inputController: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+        inputController: InputController(
+          controller: TextEditingController(),
+          focusNode: FocusNode(),
+        ),
       );
 
   String get searchedText =>
