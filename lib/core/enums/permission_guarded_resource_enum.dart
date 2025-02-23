@@ -19,6 +19,7 @@ enum ModuleGuardType {
   /// access to the following app modules
   static Map<String, ModuleGuardType> get _appModulesMap => {
         AppRoutes.home.name: home,
+        AppRoutes.categories.name: home,
         AppRoutes.foodlyMainPage.name: home,
         AppRoutes.notifications.name: home,
         AppRoutes.savedPromotions.name: home,

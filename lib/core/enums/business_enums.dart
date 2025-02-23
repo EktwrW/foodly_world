@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show IconData, Icons;
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, BoxIcons;
 import 'package:json_annotation/json_annotation.dart';
 
 enum BusinessServices {
@@ -9,11 +9,11 @@ enum BusinessServices {
   @JsonValue(2)
   multiLanguage(Icons.language, 2),
   @JsonValue(3)
-  kidChairs(Icons.child_care, 3),
+  kidChairs(Icons.chair_alt_outlined, 3),
   @JsonValue(4)
   babyChangingStation(Icons.baby_changing_station, 4),
   @JsonValue(5)
-  kidsPlayArea(BoxIcons.bx_child, 5),
+  kidsPlayArea(Icons.toys, 5),
   @JsonValue(6)
   outdoor(Icons.table_restaurant, 6),
   @JsonValue(7)
@@ -35,7 +35,11 @@ enum BusinessServices {
   @JsonValue(15)
   catering(Icons.room_service, 15),
   @JsonValue(16)
-  liveMusic(Bootstrap.music_note_list, 16);
+  liveMusic(Bootstrap.music_note_list, 16),
+  @JsonValue(17)
+  onSite(BoxIcons.bx_restaurant, 17),
+  @JsonValue(18)
+  kidsMenu(Icons.child_care, 18);
 
   final IconData iconData;
   final int value;
@@ -43,22 +47,24 @@ enum BusinessServices {
   const BusinessServices(this.iconData, this.value);
 
   static final _textMap = {
-    BusinessServices.wifi: S.current.wifi,
-    BusinessServices.kidChairs: S.current.kidChairs,
-    BusinessServices.babyChangingStation: S.current.babyChangingStation,
-    BusinessServices.smokingArea: S.current.smokingArea,
-    BusinessServices.accessiblePMR: S.current.accessiblePMR,
-    BusinessServices.happyBirthday: S.current.happyBirthday,
-    BusinessServices.multiLanguage: S.current.multilanguage,
-    BusinessServices.delivery: S.current.delivery,
-    BusinessServices.takeAway: S.current.takeAway,
-    BusinessServices.kidsPlayArea: S.current.kidsPlayArea,
-    BusinessServices.catering: S.current.catering,
-    BusinessServices.happyHours: S.current.happyHours,
-    BusinessServices.parking: S.current.parking,
-    BusinessServices.petFriendly: S.current.petFriendly,
-    BusinessServices.outdoor: S.current.outdoorSeating,
-    BusinessServices.liveMusic: S.current.liveMusic,
+    wifi: S.current.wifi,
+    kidChairs: S.current.kidChairs,
+    babyChangingStation: S.current.babyChangingStation,
+    smokingArea: S.current.smokingArea,
+    accessiblePMR: S.current.accessiblePMR,
+    happyBirthday: S.current.happyBirthday,
+    multiLanguage: S.current.multilanguage,
+    delivery: S.current.delivery,
+    takeAway: S.current.takeAway,
+    kidsPlayArea: S.current.kidsPlayArea,
+    catering: S.current.catering,
+    happyHours: S.current.happyHours,
+    parking: S.current.parking,
+    petFriendly: S.current.petFriendly,
+    outdoor: S.current.outdoorSeating,
+    liveMusic: S.current.liveMusic,
+    onSite: S.current.onSite,
+    kidsMenu: S.current.kidsMenu,
   };
 
   String get text => _textMap[this] ?? '';

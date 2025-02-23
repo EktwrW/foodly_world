@@ -8,6 +8,7 @@ enum AppRoutes {
   profileScreen('$_accountSettingsRoot/profile', 'profileScreen'),
   // Home routes
   home('$mainRoute/home', 'home'),
+  categories('$mainRoute/categories', 'categories'),
   foodlyMainPage('$_routeIdParam/foodly-main-page', 'foodlyMainPage'),
   usersCommunity('$_routeIdParam/users-community', 'usersCommunity'),
   savedPromotions('$_routeIdParam/saved-promotions', 'savedPromotions'),

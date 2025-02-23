@@ -11,9 +11,10 @@ import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/menu/menu_screen.dart';
 import 'package:foodly_world/ui/views/business/promotions/cubit/promotions_cubit.dart';
 import 'package:foodly_world/ui/views/business/promotions/promotions_page.dart';
-import 'package:foodly_world/ui/views/home/bloc/home_bloc.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/faved_business_page/faved_business_page.dart';
+import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
+import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
 import 'package:foodly_world/ui/views/home/pages/notifications_page/notifications_page.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
@@ -118,7 +119,7 @@ class AppRouter {
   }
 
   List<Widget> _getChildrenFadeTransition(List<Widget> children) =>
-      children.map((child) => FadeIn(duration: const Duration(milliseconds: 300), child: child)).toList();
+      children.map((child) => FadeIn(duration: Durations.medium2, child: child)).toList();
 
   bool _isPublicRoute(String path) {
     final exactPublicPaths = [
@@ -131,13 +132,9 @@ class AppRouter {
     return exactPublicPaths.contains(path) || path.startsWith('/menu/');
   }
 
-  bool _isLoginRoute(String path) {
-    return path == AppRoutes.login.path;
-  }
+  bool _isLoginRoute(String path) => path == AppRoutes.login.path;
 
-  bool _isProfileRoute(String path) {
-    return path == AppRoutes.profileScreen.path;
-  }
+  bool _isProfileRoute(String path) => path == AppRoutes.profileScreen.path;
 
   AppRouter({
     required this.rootBloc,
@@ -189,12 +186,9 @@ class AppRouter {
             BlocProvider(create: (context) => SignUpCubit(), child: const SignUpBusinessPage()),
             [RedirectRoute.requiresAppInitial]),
         StatefulShellRoute(
-          navigatorContainerBuilder: (context, navigationShell, children) => BlocProvider(
-            create: (context) => HomeBloc(),
-            child: FadeIn(
-                duration: const Duration(milliseconds: 300),
-                child: HomePage369(navigationShell: navigationShell, children: _getChildrenFadeTransition(children))),
-          ),
+          navigatorContainerBuilder: (context, navigationShell, children) => FadeIn(
+              duration: Durations.medium2,
+              child: HomePage369(navigationShell: navigationShell, children: _getChildrenFadeTransition(children))),
           builder: (_, __, navigationShell) => navigationShell,
           branches: [
             StatefulShellBranch(
@@ -243,6 +237,26 @@ class AppRouter {
               ],
             ),
           ],
+        ),
+        GoRoute(
+          path: AppRoutes.categories.path,
+          name: AppRoutes.categories.name,
+          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => CategoriesCubit(state.extra as FoodlyCategories?),
+              child: const CategoriesPage(),
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          ),
         ),
         GoRoute(
           path: AppRoutes.profileScreen.path,

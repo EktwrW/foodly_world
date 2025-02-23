@@ -77,16 +77,39 @@ Future<Widget> buildFoodlyApp() async {
       theme: FoodlyThemes.lightTheme(),
       darkTheme: FoodlyThemes.darkTheme(),
       themeMode: ThemeMode.light,
-      builder: (context, childWidget) => Overlay(
-        initialEntries: [
-          OverlayEntry(
-            builder: (context) => ResponsiveBreakpoints.builder(
-              child: FoodlyWrapper(child: FoodlyMainScaffold(child: childWidget)),
-              breakpoints: DeviceSize.breakpoints,
+      builder: (context, childWidget) {
+        final mediaQuery = MediaQuery.of(context);
+        final width = mediaQuery.size.width;
+
+        final baseScale = width < 360
+            ? 0.85
+            : width < 400
+                ? 0.9
+                : width < 600
+                    ? 1.0
+                    : 1.1;
+
+        return MediaQuery(
+          data: mediaQuery.copyWith(
+            textScaler: mediaQuery.textScaler.clamp(
+              minScaleFactor: baseScale * 0.9,
+              maxScaleFactor: baseScale * 1.2,
             ),
           ),
-        ],
-      ),
+          child: Overlay(
+            initialEntries: [
+              OverlayEntry(
+                builder: (context) => ResponsiveBreakpoints.builder(
+                  child: FoodlyWrapper(
+                    child: FoodlyMainScaffold(child: childWidget),
+                  ),
+                  breakpoints: DeviceSize.breakpoints,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     ),
   );
 }

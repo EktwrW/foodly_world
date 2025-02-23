@@ -33,22 +33,18 @@ class TopOffersWidget extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-                            child: AspectRatio(
-                              aspectRatio: 16 / 9,
-                              child: Image.asset(e.value.imageUrl, fit: BoxFit.cover, height: 160),
-                              // child: PromoMedia(
-                              //   externalUrl: e.value.imageUrl, //widget.promo.mediaLink ?? '',
-                              //   promoMedia: null,
-                              //   // widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
-                              //   title: e.value.title, //widget.promo.title,
-                              // ),
-                            ),
-                          ),
-                        ],
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Image.asset(e.value.imageUrl, fit: BoxFit.cover, height: 160),
+                          // child: PromoMedia(
+                          //   externalUrl: e.value.imageUrl, //widget.promo.mediaLink ?? '',
+                          //   promoMedia: null,
+                          //   // widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
+                          //   title: e.value.title, //widget.promo.title,
+                          // ),
+                        ),
                       ),
                       Flexible(
                         child: Column(
@@ -83,37 +79,32 @@ class TopOffersWidget extends StatelessWidget {
                           ],
                         ),
                       ),
+                      ui.Neumo(
+                        margin: const EdgeInsets.symmetric(horizontal: 6),
+                        style: ui.NeumoStyle(
+                            depth: 1,
+                            color: Colors.white.withValues(alpha: .9),
+                            boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
+                        child: Column(
+                          children: [
+                            Text(
+                              e.value.storeName,
+                              style: FoodlyTextStyles.promoBusinessName,
+                            ),
+                            RatingBar.builder(
+                              initialRating: 4.3,
+                              itemSize: 13,
+                              minRating: 1,
+                              allowHalfRating: true,
+                              itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 13),
+                              onRatingUpdate: (rating) => log('$rating'),
+                            ),
+                          ],
+                        ).paddingSymmetric(horizontal: 6, vertical: 2),
+                      ).paddingBottom(6),
                     ],
                   ),
-                  Positioned(right: 3, top: 3, child: LikeButton(liked: e.key.isOdd)),
-                  Positioned(
-                    top: 136,
-                    left: 1,
-                    child: ui.Neumo(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      style: ui.NeumoStyle(
-                          depth: 1,
-                          color: Colors.white.withValues(alpha: .9),
-                          boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.value.storeName,
-                            style: FoodlyTextStyles.promoBusinessName,
-                          ),
-                          RatingBar.builder(
-                            initialRating: 4.3,
-                            itemSize: 13,
-                            minRating: 1,
-                            allowHalfRating: true,
-                            itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 13),
-                            onRatingUpdate: (rating) => log('$rating'),
-                          ),
-                        ],
-                      ).paddingSymmetric(horizontal: 4),
-                    ),
-                  ),
+                  Positioned(right: 1, top: 1, child: LikeButton(liked: e.key.isOdd)),
                 ],
               ),
             ),
@@ -121,11 +112,11 @@ class TopOffersWidget extends StatelessWidget {
           .toList(),
       carouselController: promosCarouselController,
       options: CarouselOptions(
-        height: 254,
+        height: 266,
         autoPlay: true,
         enlargeCenterPage: true,
         enlargeFactor: .15,
-        viewportFraction: context.screenWidth <= 320 ? .85 : .75,
+        viewportFraction: context.screenWidth <= 360 ? .85 : .75,
       ),
     );
   }

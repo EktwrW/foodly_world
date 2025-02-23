@@ -7,8 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class FoodlyThemes {
   const FoodlyThemes._();
 
-  static final VisualDensity _visualDensity =
-      kIsWeb ? FlexColorScheme.comfortablePlatformDensity : VisualDensity.adaptivePlatformDensity;
+  static final VisualDensity _visualDensity = VisualDensity.standard;
 
   //Foodly colors:
   static const primaryFoodly = Color(0xFF79005D);
