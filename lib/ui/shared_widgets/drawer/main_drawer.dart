@@ -49,6 +49,8 @@ class FoodlyDrawer extends StatelessWidget {
     return SidebarX(
       animationDuration: Durations.medium4,
       controller: vm.sidebarController,
+      collapseIcon: Bootstrap.caret_left_fill,
+      extendIcon: Bootstrap.caret_right_fill,
       theme: const SidebarXTheme(
         width: 90,
         decoration: BoxDecoration(

@@ -41,27 +41,27 @@ enum DeviceSize {
 
 enum FoodlyInputType {
   // user form
-  nickName(icon: Icon(Bootstrap.at), textInputType: TextInputType.text),
-  firstName(icon: Icon(Bootstrap.person_fill), textInputType: TextInputType.name),
-  lastName(icon: Icon(Bootstrap.person_lines_fill), textInputType: TextInputType.name),
-  email(icon: Icon(Bootstrap.envelope_at), textInputType: TextInputType.emailAddress),
-  password(icon: Icon(LineAwesome.user_lock_solid), textInputType: TextInputType.visiblePassword),
-  newPassword(icon: Icon(LineAwesome.user_lock_solid), textInputType: TextInputType.visiblePassword),
-  dateOfBirth(icon: Icon(Bootstrap.cake2), textInputType: TextInputType.datetime),
-  phone(icon: Icon(Bootstrap.telephone), textInputType: TextInputType.phone),
-  country(icon: Icon(Clarity.map_line), textInputType: TextInputType.name),
-  city(icon: Icon(Clarity.map_outline_badged), textInputType: TextInputType.name),
-  address(icon: Icon(Bootstrap.house_add), textInputType: TextInputType.streetAddress),
-  zipCode(icon: Icon(Bootstrap.postage), textInputType: TextInputType.text),
+  nickName(icon: Icon(Bootstrap.at, size: 22), textInputType: TextInputType.text),
+  firstName(icon: Icon(Bootstrap.person_fill, size: 22), textInputType: TextInputType.name),
+  lastName(icon: Icon(Bootstrap.person_lines_fill, size: 22), textInputType: TextInputType.name),
+  email(icon: Icon(Bootstrap.envelope_at, size: 22), textInputType: TextInputType.emailAddress),
+  password(icon: Icon(LineAwesome.user_lock_solid, size: 22), textInputType: TextInputType.visiblePassword),
+  newPassword(icon: Icon(LineAwesome.user_lock_solid, size: 22), textInputType: TextInputType.visiblePassword),
+  dateOfBirth(icon: Icon(Bootstrap.cake2, size: 22), textInputType: TextInputType.datetime),
+  phone(icon: Icon(Bootstrap.telephone, size: 22), textInputType: TextInputType.phone),
+  country(icon: Icon(Clarity.map_line, size: 22), textInputType: TextInputType.name),
+  city(icon: Icon(Clarity.map_outline_badged, size: 22), textInputType: TextInputType.name),
+  address(icon: Icon(Bootstrap.house_add, size: 22), textInputType: TextInputType.streetAddress),
+  zipCode(icon: Icon(Bootstrap.postage, size: 22), textInputType: TextInputType.text),
 
   // business form
-  businessName(icon: Icon(Bootstrap.shop_window), textInputType: TextInputType.text),
-  businessEmail(icon: Icon(Bootstrap.envelope_at_fill), textInputType: TextInputType.emailAddress),
-  businessPhone(icon: Icon(Bootstrap.telephone_fill), textInputType: TextInputType.phone),
-  businessCountry(icon: Icon(Clarity.map_solid), textInputType: TextInputType.name),
-  businessCity(icon: Icon(Clarity.map_solid_badged), textInputType: TextInputType.name),
-  businessAddress(icon: Icon(Clarity.map_marker_solid), textInputType: TextInputType.streetAddress),
-  businessZipCode(icon: Icon(Bootstrap.postage_fill), textInputType: TextInputType.text),
+  businessName(icon: Icon(Bootstrap.shop_window, size: 22), textInputType: TextInputType.text),
+  businessEmail(icon: Icon(Bootstrap.envelope_at_fill, size: 22), textInputType: TextInputType.emailAddress),
+  businessPhone(icon: Icon(Bootstrap.telephone_fill, size: 22), textInputType: TextInputType.phone),
+  businessCountry(icon: Icon(Clarity.map_solid, size: 22), textInputType: TextInputType.name),
+  businessCity(icon: Icon(Clarity.map_solid_badged, size: 22), textInputType: TextInputType.name),
+  businessAddress(icon: Icon(Clarity.map_marker_solid, size: 22), textInputType: TextInputType.streetAddress),
+  businessZipCode(icon: Icon(Bootstrap.postage_fill, size: 22), textInputType: TextInputType.text),
 
   // dashboard
   businessAboutUs(icon: null, textInputType: TextInputType.text),
@@ -72,7 +72,7 @@ enum FoodlyInputType {
 
   // common
   prices(icon: null, textInputType: TextInputType.number),
-  youtubeUrl(icon: Icon(Bootstrap.youtube), textInputType: TextInputType.url),
+  youtubeUrl(icon: Icon(Bootstrap.youtube, size: 22), textInputType: TextInputType.url),
   generic(icon: null, textInputType: TextInputType.text);
 
   final Widget? icon;

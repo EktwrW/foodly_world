@@ -101,7 +101,6 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                 color: FoodlyThemes.primaryFoodly,
               ),
               child: SaveAndCancelButtons(
-                showSaveButton: false,
                 onCancelPressed: () => Navigator.of(context).pop(),
                 btnType: SaveAndCancelBtnType.dialog,
               ),

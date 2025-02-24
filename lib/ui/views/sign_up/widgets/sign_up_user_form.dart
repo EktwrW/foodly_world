@@ -137,7 +137,6 @@ class SignUpUserForm extends StatelessWidget {
           onPickedPlaceDetail: (place) {
             cubit.updateUserLocationFromPlacesAPI(place);
             di<LocationService>().updateLocationFromPlace(place);
-            di<Logger>().i('$place');
           },
           hintText: S.current.findAndCompleteAddress,
         ).paddingOnly(top: 12, bottom: 20),
@@ -240,7 +239,7 @@ class SignUpUserForm extends StatelessWidget {
                     children: [
                       Icon(
                         Bootstrap.calendar2_event,
-                        size: 24,
+                        size: 22,
                         color: enabled ? Colors.black87 : ui.NeumoColors.disabled,
                       ).paddingSymmetric(horizontal: 12),
                       Text(
@@ -274,6 +273,13 @@ class SignUpUserForm extends StatelessWidget {
             S.current.gender,
             style: FoodlyTextStyles.disabledText,
           ),
+          hint: Text(
+            S.current.gender,
+            style: FoodlyTextStyles.hintText.copyWith(
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              fontSize: 14,
+            ),
+          ),
           decoration: InputDecoration(
             prefix: const SizedBox.shrink(),
             prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
@@ -283,6 +289,7 @@ class SignUpUserForm extends StatelessWidget {
             ),
             hintStyle: FoodlyTextStyles.hintText.copyWith(
               color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              fontSize: 14,
             ),
           ),
           onChanged: enabled

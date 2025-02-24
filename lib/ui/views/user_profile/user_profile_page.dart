@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.da
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_text.dart';
@@ -98,6 +99,9 @@ class UserProfilePage extends StatelessWidget {
               onTap: () {
                 if (ScaffoldMessenger.maybeOf(context)?.mounted ?? false) {
                   ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
+                }
+                if (FocusScope.of(context).hasFocus) {
+                  FocusScope.of(context).unfocus();
                 }
               },
               child: CustomScrollView(

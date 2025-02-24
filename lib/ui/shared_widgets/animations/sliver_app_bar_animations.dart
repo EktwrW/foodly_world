@@ -101,8 +101,7 @@ class SliverAppBarAnimatedTitleText extends StatelessWidget {
             style: ui.NeumoStyle(
               shape: ui.NeumoShape.concave,
               boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(50)),
-              depth: 3,
-              lightSource: ui.LightSource.topRight,
+              depth: 2,
               intensity: 1.2,
               surfaceIntensity: .3,
               color: FoodlyThemes.primaryFoodly,

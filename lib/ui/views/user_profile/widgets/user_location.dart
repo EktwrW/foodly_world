@@ -14,6 +14,7 @@ class UserLocation extends StatelessWidget {
         onPressed: vm.loggedUserCanEdit
             ? () {
                 if (vm.currentUser?.country != null) cubit.setUserCountry(vm.currentUser?.country);
+                vm.addressController?.controller?.text = vm.currentUserAddress ?? '';
                 vm.cityController?.controller?.text = vm.currentUserCity ?? '';
                 vm.zipCodeController?.controller?.text = vm.currentUserZipCode ?? '';
                 cubit.updateEditMode(ProfileEditing.location);
@@ -50,6 +51,16 @@ class EditUsersLocationWidgets extends StatelessWidget {
     return FadeIn(
       child: Column(
         children: [
+          PlacesAutocompleteWdg(
+            key: const Key('find-user-location'),
+            language: cubit.lang,
+            focusNode: vm.placesFocusNode,
+            components: FoodlyCountries.USA.apiComponents,
+            onPickedPlaceDetail: (place) {
+              cubit.updateUserLocationFromPlacesAPI(place);
+            },
+            hintText: S.current.findAndCompleteAddress,
+          ).paddingOnly(top: 12, bottom: 20),
           FoodlyDropdownButtonFormField(
             value: vm.country,
             focusNode: vm.countryNode,
@@ -67,7 +78,7 @@ class EditUsersLocationWidgets extends StatelessWidget {
             onChanged: (FoodlyCountries? newValue) {
               cubit.setUserCountry(newValue);
               cubit.setAutovalidateMode(AutovalidateMode.always);
-              vm.cityController?.focusNode?.requestFocus();
+              vm.addressController?.focusNode?.requestFocus();
             },
             items: FoodlyCountries.values
                 .map<DropdownMenuItem<FoodlyCountries>>(
@@ -79,29 +90,41 @@ class EditUsersLocationWidgets extends StatelessWidget {
                 .toList(),
           ),
           FoodlyPrimaryInputText(
-            controller: vm.cityController!.controller!,
+            controller: vm.addressController?.controller,
+            focusNode: vm.addressController?.focusNode,
+            secondaryFocusNode: vm.cityController?.focusNode,
+            inputTextType: FoodlyInputType.address,
+            autovalidateMode: vm.autovalidateMode,
+            enabled: true,
+            maxLines: 1,
+            showLeading: false,
+          ),
+          FoodlyPrimaryInputText(
+            controller: vm.cityController?.controller,
             focusNode: vm.cityController?.focusNode,
             secondaryFocusNode: vm.zipCodeController?.focusNode,
             inputTextType: FoodlyInputType.city,
             autovalidateMode: vm.autovalidateMode,
             enabled: true,
+            showLeading: false,
           ),
           FoodlyPrimaryInputText(
-            controller: vm.zipCodeController!.controller!,
+            controller: vm.zipCodeController?.controller,
             focusNode: vm.zipCodeController?.focusNode,
             secondaryFocusNode: vm.genderNode,
             inputTextType: FoodlyInputType.zipCode,
             autovalidateMode: vm.autovalidateMode,
             enabled: true,
             countryCode: cubit.currentCountryCode,
+            showLeading: false,
           ),
           SaveAndCancelButtons(
             onSavePressed: () => cubit.callToUpdateProfile(),
             onCancelPressed: () {
-              vm.cityController?.controller?.clear();
-              vm.zipCodeController?.controller?.clear();
+              cubit.cancelEditLocation();
               cubit.updateEditMode(ProfileEditing.none);
             },
+            showSaveButton: vm.currentUserHasNewLocation,
             recordControllers: ProfileHelpers.addressFieldControllers(vm),
           ),
         ],

@@ -117,7 +117,7 @@ class BusinessResultsView extends StatelessWidget {
               key: const ValueKey(SearchResultsViewMode.grid),
               padding: const EdgeInsets.symmetric(vertical: 16),
               crossAxisCount: 2,
-              childAspectRatio: 16 / 29,
+              childAspectRatio: 18 / 29,
               children: searchResults
                   .map((result) => BusinessGridCard(
                         business: result,

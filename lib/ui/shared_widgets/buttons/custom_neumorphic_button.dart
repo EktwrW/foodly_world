@@ -72,7 +72,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                   child: ClayText(
                     text,
                     color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
-                    spread: 0.39,
+                    spread: 0.16,
                     style: getBaseTextStyle,
                   ),
                 ),
@@ -106,7 +106,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                     if (leading != null) leading!.paddingRight(12),
                     ClayText(
                       text,
-                      spread: 0.25,
+                      spread: 0.2,
                       color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
                       style: getBaseTextStyle,
                     ),
@@ -117,7 +117,6 @@ class CustomNeumorphicButton extends StatelessWidget {
           ),
         );
 
-      case CustomNeumorphicBtnType.primary:
       default:
         return ui.NeumoButton(
           margin: margin,
@@ -140,7 +139,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                   child: ClayText(
                     text,
                     color: foregroundColor ?? ui.NeumoColors.decorationMaxWhiteColor,
-                    spread: 0.39,
+                    spread: 0.2,
                     style: getBaseTextStyle,
                   ),
                 ),

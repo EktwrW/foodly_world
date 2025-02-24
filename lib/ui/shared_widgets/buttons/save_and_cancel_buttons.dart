@@ -17,7 +17,7 @@ class SaveAndCancelButtons extends StatelessWidget {
     this.onCancelPressed,
     this.onSavePressed,
     this.recordControllers = const [],
-    this.showSaveButton = true,
+    this.showSaveButton = false,
     this.btnType = SaveAndCancelBtnType.standardView,
     this.onCancelPressedSecondary,
     this.saveButtonText,
@@ -60,7 +60,7 @@ class SaveAndCancelButtons extends StatelessWidget {
                 // field has been edited and is non-empty.
                 final mustShowSaveButton = recordControllers.any((rc) => rc.$1.text != rc.$2 && rc.$1.text.isNotEmpty);
 
-                return _buildButtons(mustShowSaveButton);
+                return _buildButtons(mustShowSaveButton || showSaveButton);
               },
             )
           : _buildButtons(showSaveButton),

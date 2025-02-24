@@ -42,6 +42,7 @@ class _ContactEditingWdg extends StatelessWidget {
               inputTextType: FoodlyInputType.email,
               autovalidateMode: vm.autovalidateMode,
               enabled: vm.edition.isEditingContact,
+              showLeading: false,
             ),
             FoodlyPhoneInputText(
               controller: vm.phoneNumberController?.controller,

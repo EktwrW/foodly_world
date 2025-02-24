@@ -183,6 +183,9 @@ class SignUpCubit extends Cubit<SignUpState> {
       _vm = _vm.copyWith(country: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
     }
 
+    _vm.addressController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.ROUTE))?.longName ?? '';
+
     _vm.cityController?.controller?.text =
         detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
 

@@ -54,10 +54,12 @@ class PlacesAutocompleteWdg extends StatelessWidget {
       enabled: !disabled,
       prefixIcon: Icon(
         Bootstrap.geo_alt,
+        size: 22,
         color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(6),
       cancelIcon: Icon(
         Bootstrap.eraser_fill,
+        size: 22,
         color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(4),
       autocompleteOnTrailingWhitespace: true,
@@ -138,12 +140,12 @@ class FoodlyPlacesAutocompleteWdg extends StatefulWidget {
 }
 
 class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg> {
-  late PlacesApi _placesApi;
-  late PlaceDebouncer _placeDebouncer;
-  late String _sessionToken;
-  late TextEditingController _textController;
-  late FocusNode _focusNode;
-  late LayerLink _link;
+  late final PlacesApi _placesApi;
+  late final PlaceDebouncer _placeDebouncer;
+  late final String _sessionToken;
+  late final TextEditingController _textController;
+  late final FocusNode _focusNode;
+  late final LayerLink _link;
 
   OverlayEntry? _overlayEntry;
   String? _prevSearchTerm;
@@ -208,13 +210,13 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Colors.grey[300]!,
+                    color: FoodlyThemes.primaryFoodly.withValues(alpha: .25),
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(
-                    color: Colors.grey[300]!,
+                    color: FoodlyThemes.primaryFoodly.withValues(alpha: .25),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -225,8 +227,8 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(
-                    color: Colors.grey[200]!,
+                  borderSide: const BorderSide(
+                    color: ui.NeumoColors.disabled,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(

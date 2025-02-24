@@ -48,6 +48,7 @@ class _EditUsersPassword extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           obscureText: true,
           enabled: true,
+          showLeading: false,
         ),
         FoodlyPrimaryInputText(
           controller: vm.newPasswordController?.controller,
@@ -56,6 +57,7 @@ class _EditUsersPassword extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           obscureText: true,
           enabled: true,
+          showLeading: false,
         ),
         if (vm.newPasswordController?.controller != null)
           ValueListenableBuilder<TextEditingValue>(

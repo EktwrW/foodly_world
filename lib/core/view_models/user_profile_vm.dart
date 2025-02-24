@@ -99,11 +99,16 @@ class UserProfileVM with _$UserProfileVM {
   String? get currentUserEmail => currentUser?.email;
   String? get currentUserPhoneNumber => currentUser?.phone;
   String? get currentUserCountry => currentUser?.country?.value;
-  String? get currentUserCity => currentUser?.city;
-  String? get currentUserAddress => currentUser?.address;
-  String? get currentUserZipCode => currentUser?.zipCode;
+  String? get currentUserCity => currentUser?.city ?? '';
+  String? get currentUserAddress => currentUser?.address ?? '';
+  String? get currentUserZipCode => currentUser?.zipCode ?? '';
   String? get currentUserBirthday => currentUser?.dateOfBirth?.getBirthdayFormat;
   UserGender? get currentUserGender => currentUser?.gender;
+
+  bool get currentUserHasNewLocation =>
+      userLocation != null &&
+      (userLocation?.lng != currentUser?.longitude) &&
+      (userLocation?.lat != currentUser?.latitude);
 
   String get currentUserFullAddress => [
         currentUserAddress,

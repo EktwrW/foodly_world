@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -96,9 +98,11 @@ class BusinessListCard extends StatelessWidget {
                   tag: 'like-$heroTagPrefix',
                   child: LikeButton(
                     liked: true,
-                    onPressed: () {},
-                    diameter: 15,
-                    iconSize: 15,
+                    onPressed: () {
+                      log('like pressed');
+                    },
+                    diameter: 28,
+                    iconSize: 16,
                   ),
                 ),
               ],
@@ -171,27 +175,31 @@ class BusinessGridCard extends StatelessWidget {
                 children: [
                   LocalHero(
                     tag: 'avatar-$heroTagPrefix',
-                    child: AvatarWidget(
-                      avatarUrl: business.logo,
-                      avatarStyle: AvatarStyle.square,
-                      height: double.infinity,
-                      width: double.infinity,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: AvatarWidget(
+                        avatarUrl: business.logo,
+                        avatarStyle: AvatarStyle.square,
+                        height: double.infinity,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      LocalHero(
-                        tag: 'like-$heroTagPrefix',
-                        child: LikeButton(
-                          liked: true,
-                          onPressed: () {},
-                          diameter: 15,
-                          iconSize: 16,
-                        ),
+                  Positioned(
+                    top: 3,
+                    right: 3,
+                    child: LocalHero(
+                      tag: 'like-$heroTagPrefix',
+                      child: LikeButton(
+                        liked: true,
+                        onPressed: () {
+                          log('like pressed');
+                        },
+                        diameter: 28,
+                        iconSize: 16,
                       ),
-                    ],
-                  ).paddingAll(3),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -225,11 +233,11 @@ class BusinessGridCard extends StatelessWidget {
               ],
             ).paddingBottom(4),
             Column(
-              spacing: 3,
+              spacing: 6,
               children: [
                 Text(
                   currentDay.formattedHours,
-                  style: FoodlyTextStyles.caption,
+                  style: FoodlyTextStyles.cardsSmallSubtitle,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

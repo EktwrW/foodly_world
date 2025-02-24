@@ -286,8 +286,6 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
   }
 
   void _handleError(SpeechRecognitionError error) {
-    di<Logger>().e('Error de reconocimiento: ${error.errorMsg}');
-
     _vm = _vm.copyWith(isListening: false);
     emit(SmartSearchState.error(_getErrorMessage(error.errorMsg), _vm));
   }

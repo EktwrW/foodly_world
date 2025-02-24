@@ -77,10 +77,13 @@ abstract class MeClient {
     @Part(name: 'current_password') String? password,
     @Part(name: 'new_password') String? newPassword,
     @Part(name: 'zip_code') String? zipCode,
+    @Part(name: 'address') String? address,
     @Part(name: 'city') String? city,
     @Part(name: 'country') String? country,
     @Part(name: 'gender') String? gender,
     @Part(name: 'role_id') int? roleId,
+    @Part(name: 'latitude') double? latitude,
+    @Part(name: 'longitude') double? longitude,
   });
 
   @GET('/username-available/{username}')

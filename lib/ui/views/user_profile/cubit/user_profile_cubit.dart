@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart' show AutovalidateMode, FocusNode, FormState, GlobalKey, TextEditingController;
 import 'package:foodly_world/core/core_exports.dart';
@@ -5,6 +7,7 @@ import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nova_places_api/nova_places_api.dart';
 
 export 'package:foodly_world/core/view_models/user_profile_vm.dart';
 
@@ -51,6 +54,10 @@ class UserProfileCubit extends Cubit<UserProfileState> {
             controller: TextEditingController(),
             focusNode: FocusNode(),
           ),
+          addressController: InputController(
+            controller: TextEditingController(text: _locationService.currentAddress),
+            focusNode: FocusNode(),
+          ),
           cityController: InputController(
             controller: TextEditingController(text: _locationService.currentCity),
             focusNode: FocusNode(),
@@ -72,6 +79,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   }
 
   String get currentCountryCode => (_vm.country?.countryCode ?? di<LocationService>().currentCountryCode).toUpperCase();
+  String get lang => _authService.lang;
   UserRole? get getUserRole => _vm.roleId;
   String get imagePath => _vm.imagePath;
 
@@ -92,13 +100,20 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     final isInitialFetch = !_vm.edition.isActive;
 
     if (_vm.loggedUserCanEdit) {
+      if (_vm.edition.isEditingAddress) {
+        di<LocationService>().updateLocationUserDM(user);
+      }
+
       _vm = _vm.copyWith(userSessionDM: _vm.userSessionDM.copyWith(user: user), edition: ProfileEditing.none);
+
       _authService.setSession(_vm.userSessionDM);
+
       if (isInitialFetch) {
         emit(_Loaded(_vm));
       } else {
         emit(_UserUpdated(_vm = _vm.copyWith(edition: ProfileEditing.none), S.current.userProfileUpdated));
       }
+
       return;
     }
 
@@ -128,9 +143,12 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         newPassword: _vm.newPasswordController?.controller?.text,
       ),
       ProfileEditing.location: dto.copyWith(
-        city: _vm.cityController?.controller?.text,
-        zipCode: _vm.zipCodeController?.controller?.text,
+        city: _vm.cityController?.text,
+        zipCode: _vm.zipCodeController?.text,
         country: _vm.country,
+        address: _vm.addressController?.text,
+        latitude: _vm.userLocation?.lat,
+        longitude: _vm.userLocation?.lng,
       ),
       ProfileEditing.dateOfBirth: dto.copyWith(
         dateOfBirth: _vm.dateOfBirth,
@@ -145,12 +163,18 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     };
 
     dto = dtoMap[_vm.edition] ?? dto;
+    log('DTO: $dto');
 
     await (_vm.edition.isEditingPassword ? _meRepo.updatePassword(dto) : _meRepo.updateProfile(dto)).then((result) {
       result.when(
-        success: (userSessionDM) => _vm.edition.isEditingPassword
-            ? emit(_UserUpdated(_vm = _vm.copyWith(edition: ProfileEditing.none), S.current.userPasswordUpdated))
-            : _updateCurrentUser((userSessionDM as UserSessionDM).user),
+        success: (userSessionDM) {
+          log('USER: ${(userSessionDM as UserSessionDM).user}');
+          if (_vm.edition.isEditingPassword) {
+            emit(_UserUpdated(_vm = _vm.copyWith(edition: ProfileEditing.none), S.current.userPasswordUpdated));
+          } else {
+            _updateCurrentUser((userSessionDM as UserSessionDM).user);
+          }
+        },
         failure: (e) => emit(_Error(e.errorMsg, _vm)),
       );
     });
@@ -187,5 +211,36 @@ class UserProfileCubit extends Cubit<UserProfileState> {
             failure: (e) => emit(_Error(e.errorMsg, _vm)),
           ),
         );
+  }
+
+  void updateUserLocationFromPlacesAPI(Place detail) async {
+    final country = detail.addressComponents?.firstWhere((d) => d.types.contains(FoodlyStrings.COUNTRY)).longName ?? '';
+
+    if (FoodlyCountries.values.any((c) => c.value.contains(country))) {
+      _vm = _vm.copyWith(country: FoodlyCountries.values.firstWhere((c) => c.value.contains(country)));
+    }
+
+    _vm.addressController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.ROUTE))?.longName ?? '';
+
+    _vm.cityController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.LOCALITY))?.longName ?? '';
+
+    _vm.zipCodeController?.controller?.text =
+        detail.addressComponents?.firstWhereOrNull((d) => d.types.contains(FoodlyStrings.POSTAL_CODE))?.longName ?? '';
+
+    if (detail.geometry != null) {
+      final location = detail.geometry!.location;
+
+      _vm = _vm.copyWith(userLocation: LatLngLiteral(lat: location.lat, lng: location.lng));
+    }
+
+    emit(_Loaded(_vm));
+  }
+
+  void cancelEditLocation() {
+    _vm.cityController?.controller?.clear();
+    _vm.zipCodeController?.controller?.clear();
+    _vm = _vm.copyWith(userLocation: null);
   }
 }

@@ -141,6 +141,9 @@ class MeRepo {
         country: updateDTO.country?.value,
         gender: updateDTO.gender,
         roleId: updateDTO.roleId?.index,
+        latitude: updateDTO.latitude,
+        longitude: updateDTO.longitude,
+        address: updateDTO.address,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

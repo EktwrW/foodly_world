@@ -29,6 +29,10 @@ class ProfileHelpers {
       list.add((vm.zipCodeController!.controller!, vm.currentUserZipCode!));
     }
 
+    if (vm.addressController?.controller != null && vm.currentUserAddress != null) {
+      list.add((vm.addressController!.controller!, vm.currentUserAddress!));
+    }
+
     return list;
   }
 }
