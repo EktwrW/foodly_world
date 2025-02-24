@@ -12,22 +12,22 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/smart_search/cubit/smart_search_cubit.dart';
 
-class VoiceSearchSnackbars {
-  const VoiceSearchSnackbars._();
+class SmartSearchSnackbars {
+  const SmartSearchSnackbars._();
 
   static void showInputSearchWdg(
     BuildContext context,
   ) {
-    final cubit = context.read<VoiceSearchCubit>();
+    final cubit = context.read<SmartSearchCubit>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final locationService = di<LocationService>();
 
     final snackBar = SnackBarWdg(
       type: SnackBarType.action,
       onDismiss: () => cubit.checkForResetToInitial(),
-      buttonBuilder: (dismiss) => BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+      buttonBuilder: (dismiss) => BlocBuilder<SmartSearchCubit, SmartSearchState>(
         builder: (context, state) {
           final vm = state.vm;
 
@@ -99,7 +99,7 @@ class VoiceSearchContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+    return BlocBuilder<SmartSearchCubit, SmartSearchState>(
       builder: (context, state) {
         final vm = state.vm;
 
@@ -123,13 +123,13 @@ class VoiceSearchContent extends StatelessWidget {
 }
 
 class _VoiceSearchView extends StatelessWidget {
-  final VoiceSearchVM vm;
+  final SmartSearchVM vm;
 
   const _VoiceSearchView({required this.vm});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<VoiceSearchCubit>();
+    final cubit = context.read<SmartSearchCubit>();
 
     return Column(
       spacing: 40,
@@ -194,7 +194,7 @@ class _VoiceSearchView extends StatelessWidget {
 }
 
 class _TextSearchView extends StatelessWidget {
-  final VoiceSearchVM vm;
+  final SmartSearchVM vm;
 
   const _TextSearchView({required this.vm});
 

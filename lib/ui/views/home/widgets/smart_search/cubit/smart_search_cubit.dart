@@ -5,28 +5,28 @@ import 'package:flutter/material.dart' show Durations, FocusNode, TextEditingCon
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/views/home/widgets/voice_search/view_model/voice_search_vm.dart';
+import 'package:foodly_world/ui/views/home/widgets/smart_search/view_model/smart_search_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-export 'package:foodly_world/ui/views/home/widgets/voice_search/view_model/voice_search_vm.dart';
+export 'package:foodly_world/ui/views/home/widgets/smart_search/view_model/smart_search_vm.dart';
 
-part 'voice_search_state.dart';
-part 'voice_search_cubit.freezed.dart';
+part 'smart_search_state.dart';
+part 'smart_search_cubit.freezed.dart';
 
-class VoiceSearchCubit extends Cubit<VoiceSearchState> {
+class SmartSearchCubit extends Cubit<SmartSearchState> {
   final SpeechToText _speechToText;
   Timer? _listenTimer;
   final _businessRepo = di<BusinessRepo>();
-  VoiceSearchVM _vm;
+  SmartSearchVM _vm;
 
-  VoiceSearchCubit()
+  SmartSearchCubit()
       : _speechToText = SpeechToText(),
-        _vm = VoiceSearchVM.initial(),
-        super(VoiceSearchState.initial(VoiceSearchVM.initial())) {
+        _vm = SmartSearchVM.initial(),
+        super(SmartSearchState.initial(SmartSearchVM.initial())) {
     _initialize();
   }
 
@@ -42,25 +42,28 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         debugLogging: true,
       );
 
+      final textController = TextEditingController();
+      final focusNode = FocusNode();
+
       _vm = _vm.copyWith(
         isInitialized: available,
         isListening: false,
         recognizedText: '',
         smartSearchMode: SmartSearchMode.none,
         inputController: InputController(
-          controller: TextEditingController(),
-          focusNode: FocusNode(),
+          controller: textController,
+          focusNode: focusNode,
         ),
       );
 
       if (available) {
-        emit(VoiceSearchState.initial(_vm));
+        emit(SmartSearchState.initial(_vm));
       } else {
-        emit(VoiceSearchState.error(S.current.speechRecognitionUnavailable, _vm));
+        emit(SmartSearchState.error(S.current.speechRecognitionUnavailable, _vm));
       }
     } on Exception catch (e) {
       di<Logger>().e('Error de inicialización: $e');
-      emit(VoiceSearchState.error(S.current.speechRecognitionError, _vm));
+      emit(SmartSearchState.error(S.current.speechRecognitionError, _vm));
     }
   }
 
@@ -82,7 +85,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         isListening: true,
         recognizedText: '',
       );
-      emit(VoiceSearchState.listening(_vm));
+      emit(SmartSearchState.listening(_vm));
 
       try {
         await _speechToText.listen(
@@ -99,22 +102,29 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       } catch (e) {
         _listenTimer?.cancel();
         _vm = _vm.copyWith(isListening: false);
-        emit(VoiceSearchState.error(S.current.speechRecognitionError, _vm));
+        emit(SmartSearchState.error(S.current.speechRecognitionError, _vm));
       }
     }
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    _vm = _vm.copyWith(recognizedText: result.recognizedWords);
+    final newText = result.recognizedWords;
+
+    _vm = _vm.copyWith(
+      recognizedText: newText,
+      inputController: _vm.inputController.copyWith(
+        controller: TextEditingController(text: newText),
+      ),
+    );
 
     if (result.finalResult) {
-      emit(VoiceSearchState.listening(_vm));
+      emit(SmartSearchState.listening(_vm));
       Future.microtask(() {
         stopListening();
-        emit(VoiceSearchState.recognized(_vm));
+        emit(SmartSearchState.recognized(_vm));
       });
     } else {
-      emit(VoiceSearchState.listening(_vm));
+      emit(SmartSearchState.listening(_vm));
     }
   }
 
@@ -128,16 +138,22 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
 
       await Future.delayed(Durations.short2);
 
-      emit(VoiceSearchState.recognized(_vm));
+      emit(SmartSearchState.recognized(_vm));
     }
   }
 
   void searchBusinesses(double latitude, double longitude) async {
-    final searchText = _vm.smartSearchMode.isVoice ? _vm.recognizedText : _vm.inputController.controller?.text;
+    // Aseguramos obtener el texto correcto según el modo
+    final String? searchText;
+    if (_vm.smartSearchMode.isVoice) {
+      searchText = _vm.recognizedText;
+    } else {
+      searchText = _vm.inputController.controller?.text;
+    }
 
     if (searchText?.isEmpty ?? true) return;
 
-    emit(VoiceSearchState.searching(_vm));
+    emit(SmartSearchState.searching(_vm));
 
     final result = await _businessRepo.businessSearch(
       BusinessSearchBodyDTO(
@@ -152,32 +168,40 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         _vm = _vm.copyWith(
           searchResults: data.business,
           smartSearchMode: SmartSearchMode.none,
+          // Mantenemos el texto en el controller
+          inputController: _vm.inputController.copyWith(
+            controller: TextEditingController(text: searchText),
+          ),
         );
-        emit(VoiceSearchState.searchComplete(_vm));
+        emit(SmartSearchState.searchComplete(_vm));
       },
       failure: (error) {
-        _vm = _vm.copyWith(smartSearchMode: SmartSearchMode.none);
-        emit(VoiceSearchState.error(error.toString(), _vm));
+        _vm = _vm.copyWith(
+          smartSearchMode: SmartSearchMode.none,
+          // Mantenemos el texto en caso de error
+          inputController: _vm.inputController.copyWith(
+            controller: TextEditingController(text: searchText),
+          ),
+        );
+        emit(SmartSearchState.error(error.toString(), _vm));
       },
     );
   }
 
   void clearSearch() {
-    if (_vm.smartSearchMode.isVoice) {
-      _vm = _vm.copyWith(
-        recognizedText: '',
-        searchResults: [],
-      );
-    } else {
-      _vm = _vm.copyWith(
-        inputController: InputController(
-          controller: TextEditingController(),
-          focusNode: FocusNode(),
-        ),
-        searchResults: [],
-      );
-    }
-    emit(VoiceSearchState.initial(_vm));
+    final newController = TextEditingController();
+    final newFocusNode = FocusNode();
+
+    _vm = _vm.copyWith(
+      recognizedText: '',
+      searchResults: [],
+      inputController: InputController(
+        controller: newController,
+        focusNode: newFocusNode,
+      ),
+    );
+
+    emit(SmartSearchState.initial(_vm));
   }
 
   void toggleViewMode() {
@@ -185,53 +209,53 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
         _vm.viewMode == SearchResultsViewMode.grid ? SearchResultsViewMode.list : SearchResultsViewMode.grid;
 
     _vm = _vm.copyWith(viewMode: newViewMode);
-    emit(VoiceSearchState.searchComplete(_vm));
+    emit(SmartSearchState.searchComplete(_vm));
   }
 
   void setTextSearchMode() async {
-    // Detenemos cualquier escucha activa si existe
-    if (_speechToText.isListening) {
-      await _speechToText.stop();
-      _listenTimer?.cancel();
-      _listenTimer = null;
-    }
+    await _stopListeningIfNeeded();
+
+    final currentText = _vm.recognizedText;
+    final textController = TextEditingController(text: currentText);
 
     _vm = _vm.copyWith(
       smartSearchMode: SmartSearchMode.text,
-      recognizedText: '',
+      recognizedText: currentText,
       isListening: false,
       inputController: InputController(
-        controller: TextEditingController(),
+        controller: textController,
         focusNode: FocusNode(),
       ),
     );
 
-    emit(VoiceSearchState.initial(_vm));
+    emit(SmartSearchState.initial(_vm));
   }
 
   void setVoiceSearchMode() async {
-    // Primero detenemos cualquier escucha activa
+    await _stopListeningIfNeeded();
+
+    final currentText = _vm.inputController.controller?.text ?? '';
+
+    _vm = _vm.copyWith(
+      smartSearchMode: SmartSearchMode.voice,
+      recognizedText: currentText,
+      isListening: false,
+      inputController: InputController(
+        controller: TextEditingController(text: currentText),
+        focusNode: FocusNode(),
+      ),
+    );
+
+    emit(SmartSearchState.initial(_vm));
+    startListening();
+  }
+
+  Future<void> _stopListeningIfNeeded() async {
     if (_speechToText.isListening) {
       await _speechToText.stop();
       _listenTimer?.cancel();
       _listenTimer = null;
     }
-
-    // Actualizamos el modo y limpiamos el estado
-    _vm = _vm.copyWith(
-      smartSearchMode: SmartSearchMode.voice,
-      recognizedText: '',
-      isListening: false,
-      inputController: InputController(
-        controller: TextEditingController(),
-        focusNode: FocusNode(),
-      ),
-    );
-
-    emit(VoiceSearchState.initial(_vm));
-
-    // Iniciamos la escucha automáticamente
-    startListening();
   }
 
   void checkForResetToInitial() async {
@@ -248,7 +272,7 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       await _speechToText.stop();
     }
 
-    _vm = VoiceSearchVM(
+    _vm = SmartSearchVM(
       isInitialized: _speechToText.isAvailable,
       isListening: false,
       recognizedText: '',
@@ -258,14 +282,14 @@ class VoiceSearchCubit extends Cubit<VoiceSearchState> {
       ),
     );
 
-    emit(VoiceSearchState.initial(_vm));
+    emit(SmartSearchState.initial(_vm));
   }
 
   void _handleError(SpeechRecognitionError error) {
     di<Logger>().e('Error de reconocimiento: ${error.errorMsg}');
 
     _vm = _vm.copyWith(isListening: false);
-    emit(VoiceSearchState.error(_getErrorMessage(error.errorMsg), _vm));
+    emit(SmartSearchState.error(_getErrorMessage(error.errorMsg), _vm));
   }
 
   String _getErrorMessage(String errorMsg) => switch (errorMsg) {

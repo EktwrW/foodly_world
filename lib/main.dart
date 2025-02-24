@@ -13,7 +13,7 @@ import 'package:foodly_world/ui/shared_widgets/drawer/main_drawer.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
-import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/smart_search/cubit/smart_search_cubit.dart';
 import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,7 +50,7 @@ Future<Widget> buildFoodlyApp() async {
       BlocProvider(create: (context) => LocationBloc()),
       BlocProvider(create: (context) => BusinessBloc()),
       BlocProvider(create: (context) => MainDrawerCubit()),
-      BlocProvider(create: (context) => VoiceSearchCubit()),
+      BlocProvider(create: (context) => SmartSearchCubit()),
     ],
     child: MaterialApp.router(
       title: 'Foodly App',

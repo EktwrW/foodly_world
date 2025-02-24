@@ -5,7 +5,7 @@ class CurrentLocationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+    return BlocBuilder<SmartSearchCubit, SmartSearchState>(
       builder: (context, state) {
         final locationService = di<LocationService>();
 
@@ -23,7 +23,7 @@ class CurrentLocationButton extends StatelessWidget {
                 di<DialogService>().showCustomDialog(
                   const ChangeLocationDialog(),
                   2,
-                  onDialogClose: () => context.read<VoiceSearchCubit>().resetToInitial(),
+                  onDialogClose: () => context.read<SmartSearchCubit>().resetToInitial(),
                 );
               },
               borderRadius: BorderRadius.circular(10),
@@ -66,14 +66,14 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
   Place? _selectedPlace;
   late final LocationService locationService;
   late final AuthSessionService authSessionService;
-  late final VoiceSearchCubit voiceSearchCubit;
+  late final SmartSearchCubit voiceSearchCubit;
   late final UserDM? loggedUser;
 
   @override
   void initState() {
     super.initState();
     locationService = di<LocationService>();
-    voiceSearchCubit = context.read<VoiceSearchCubit>();
+    voiceSearchCubit = context.read<SmartSearchCubit>();
     authSessionService = di<AuthSessionService>();
     loggedUser = authSessionService.userSessionDM?.user;
   }

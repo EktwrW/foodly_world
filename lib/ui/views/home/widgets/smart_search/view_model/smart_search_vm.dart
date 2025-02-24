@@ -3,7 +3,7 @@ import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'voice_search_vm.freezed.dart';
+part 'smart_search_vm.freezed.dart';
 
 enum SearchResultsViewMode {
   grid,
@@ -23,10 +23,10 @@ enum SmartSearchMode {
 }
 
 @freezed
-class VoiceSearchVM with _$VoiceSearchVM {
-  const VoiceSearchVM._();
+class SmartSearchVM with _$SmartSearchVM {
+  const SmartSearchVM._();
 
-  const factory VoiceSearchVM({
+  const factory SmartSearchVM({
     required bool isInitialized,
     required bool isListening,
     required String recognizedText,
@@ -34,9 +34,9 @@ class VoiceSearchVM with _$VoiceSearchVM {
     @Default(SearchResultsViewMode.list) SearchResultsViewMode viewMode,
     @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
     required InputController inputController,
-  }) = _VoiceSearchVM;
+  }) = _SmartSearchVM;
 
-  factory VoiceSearchVM.initial() => VoiceSearchVM(
+  factory SmartSearchVM.initial() => SmartSearchVM(
         isInitialized: false,
         isListening: false,
         recognizedText: '',

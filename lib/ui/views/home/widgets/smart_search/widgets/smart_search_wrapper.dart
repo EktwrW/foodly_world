@@ -1,13 +1,13 @@
 part of '../../../pages/foodly_main_page/foodly_main_page.dart';
 
-class _VoiceSearchWrapper extends StatelessWidget {
+class _SmartSearchWrapper extends StatelessWidget {
   final Widget child;
 
-  const _VoiceSearchWrapper({super.key, required this.child});
+  const _SmartSearchWrapper({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<VoiceSearchCubit, VoiceSearchState>(
+    return BlocConsumer<SmartSearchCubit, SmartSearchState>(
       listener: (context, state) {
         state.whenOrNull(
           error: (message, vm) {
@@ -17,7 +17,7 @@ class _VoiceSearchWrapper extends StatelessWidget {
         );
       },
       builder: (context, state) {
-        final vsCubit = context.read<VoiceSearchCubit>();
+        final vsCubit = context.read<SmartSearchCubit>();
 
         return state.maybeWhen(
           searchComplete: (vm) => Column(

@@ -19,11 +19,11 @@ import 'package:foodly_world/ui/views/home/widgets/home_app_bar_mobile.dart';
 import 'package:foodly_world/ui/views/home/widgets/home_categories_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
-import 'package:foodly_world/ui/views/home/widgets/voice_search/cubit/voice_search_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/smart_search/cubit/smart_search_cubit.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:local_hero/local_hero.dart';
 
-part '../../widgets/voice_search/widgets/voice_search_wrapper.dart';
+part '../../widgets/smart_search/widgets/smart_search_wrapper.dart';
 
 class FoodlyMainPage extends StatelessWidget {
   const FoodlyMainPage({super.key});
@@ -33,7 +33,7 @@ class FoodlyMainPage extends StatelessWidget {
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (_, __) => [const Home369AppBarMobile()],
-      body: _VoiceSearchWrapper(
+      body: _SmartSearchWrapper(
         key: const Key('voice-search-wrapper'),
         child: Column(
           children: [

@@ -1,29 +1,27 @@
 part of '../main_search_widget.dart';
 
-class TextSmartSearchButton extends StatelessWidget {
-  const TextSmartSearchButton({
-    super.key,
-  });
+class VoiceSearchButton extends StatelessWidget {
+  const VoiceSearchButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VoiceSearchCubit, VoiceSearchState>(
+    return BlocBuilder<SmartSearchCubit, SmartSearchState>(
       builder: (context, state) {
         return Tooltip(
-          message: S.current.askRecommendationsByTextSmart,
+          message: S.current.askRecommendationsByYourVoice,
           child: ElevatedButton(
-            onPressed: state.vm.smartSearchMode.isText
+            onPressed: state.vm.smartSearchMode.isVoice
                 ? null
                 : () async {
-                    final cubit = context.read<VoiceSearchCubit>();
-
                     if (state.vm.smartSearchMode.isOff) {
-                      if (context.mounted) VoiceSearchSnackbars.showInputSearchWdg(context);
+                      if (context.mounted) SmartSearchSnackbars.showInputSearchWdg(context);
                     }
 
-                    await Future.microtask(() async {
+                    await Future.microtask(() {
                       if (context.mounted) {
-                        cubit.setTextSearchMode();
+                        context.read<SmartSearchCubit>()
+                          ..setVoiceSearchMode()
+                          ..startListening();
                       }
                     });
                   },
@@ -31,7 +29,7 @@ class TextSmartSearchButton extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll(Colors.white),
               padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
             ),
-            child: const Icon(Iconsax.text_outline, size: 24),
+            child: const Icon(Iconsax.microphone_2_outline, size: 24),
           ),
         );
       },
