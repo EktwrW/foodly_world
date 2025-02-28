@@ -104,7 +104,7 @@ class TopOffersWidget extends StatelessWidget {
                       ).paddingBottom(8),
                     ],
                   ),
-                  Positioned(right: 1, top: 1, child: LikeButton(liked: e.key.isOdd)),
+                  Positioned(right: 6, top: 6, child: LikeButton(liked: e.key.isOdd)),
                 ],
               ),
             ),

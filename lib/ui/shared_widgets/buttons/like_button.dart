@@ -12,6 +12,10 @@ class LikeButton extends StatelessWidget {
   final Color likedBackgroundColor;
   final Color unlikedBackgroundColor;
   final String? tooltip;
+  final Color likeColor;
+  final Color unlikeColor;
+  final bool enableShadows;
+  final bool enableBackground;
 
   const LikeButton({
     super.key,
@@ -22,6 +26,10 @@ class LikeButton extends StatelessWidget {
     this.likedBackgroundColor = Colors.white60,
     this.unlikedBackgroundColor = FoodlyThemes.primaryFoodly,
     this.tooltip,
+    this.likeColor = FoodlyThemes.favourites,
+    this.unlikeColor = Colors.white,
+    this.enableShadows = true,
+    this.enableBackground = true,
   });
 
   @override
@@ -39,20 +47,24 @@ class LikeButton extends StatelessWidget {
               child: DecoratedBox(
                   decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: liked ? likedBackgroundColor : unlikedBackgroundColor.withValues(alpha: .15),
+                color: enableBackground
+                    ? (liked ? likedBackgroundColor : unlikedBackgroundColor.withValues(alpha: .15))
+                    : Colors.transparent,
               )),
             ),
             !liked
                 ? FadeIn(
                     child: Icon(
                       FontAwesome.heart_circle_plus_solid,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                            color: FoodlyThemes.primaryFoodly.withValues(alpha: .39),
-                            offset: const Offset(1, 2),
-                            blurRadius: 4.0),
-                      ],
+                      color: unlikeColor,
+                      shadows: enableShadows
+                          ? [
+                              Shadow(
+                                  color: FoodlyThemes.primaryFoodly.withValues(alpha: .39),
+                                  offset: const Offset(1, 2),
+                                  blurRadius: 4.0),
+                            ]
+                          : [],
                       size: iconSize,
                     ),
                   )
@@ -63,18 +75,20 @@ class LikeButton extends StatelessWidget {
                         from: 1.6,
                         child: Icon(
                           FontAwesome.heart_circle_bolt_solid,
-                          color: FoodlyThemes.favourites,
+                          color: likeColor,
                           size: iconSize,
                         ),
                       ),
                       ElasticIn(
                         child: Icon(
                           FontAwesome.heart_circle_check_solid,
-                          color: FoodlyThemes.favourites,
+                          color: likeColor,
                           size: iconSize,
-                          shadows: [
-                            const Shadow(color: Colors.white30, offset: Offset(1, 2), blurRadius: 4.0),
-                          ],
+                          shadows: enableShadows
+                              ? [
+                                  const Shadow(color: Colors.white30, offset: Offset(1, 2), blurRadius: 4.0),
+                                ]
+                              : [],
                         ),
                       ),
                     ],

@@ -43,8 +43,8 @@ class SubCategoryWdg extends StatelessWidget {
       children: [
         Flexible(
           child: AnimatedCrossFade(
-            firstChild: _buildEditingView(vm),
-            secondChild: _buildDisplayView(),
+            firstChild: _buildTitleEditingView(vm),
+            secondChild: _buildTitleDisplayView(),
             crossFadeState: subCategory?.editingName == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: Durations.medium3,
           ),
@@ -102,10 +102,10 @@ class SubCategoryWdg extends StatelessWidget {
             ),
           ),
       ],
-    );
+    ).paddingBottom(20);
   }
 
-  Widget _buildEditingView(MenuVM vm) {
+  Widget _buildTitleEditingView(MenuVM vm) {
     final controller = TextEditingController(text: subCategory?.name);
 
     return FadeIn(
@@ -144,7 +144,7 @@ class SubCategoryWdg extends StatelessWidget {
     );
   }
 
-  Widget _buildDisplayView() {
+  Widget _buildTitleDisplayView() {
     return FadeIn(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,7 +166,7 @@ class SubCategoryWdg extends StatelessWidget {
           ),
           _divider,
         ],
-      ).paddingOnly(top: 40, right: 12, left: 12),
+      ).paddingOnly(top: 24, right: 12, left: 12),
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart' show AutovalidateMode, FocusNode, FormState, GlobalKey, TextEditingController;
 import 'package:foodly_world/core/core_exports.dart';
@@ -163,12 +161,10 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     };
 
     dto = dtoMap[_vm.edition] ?? dto;
-    log('DTO: $dto');
 
     await (_vm.edition.isEditingPassword ? _meRepo.updatePassword(dto) : _meRepo.updateProfile(dto)).then((result) {
       result.when(
         success: (userSessionDM) {
-          log('USER: ${(userSessionDM as UserSessionDM).user}');
           if (_vm.edition.isEditingPassword) {
             emit(_UserUpdated(_vm = _vm.copyWith(edition: ProfileEditing.none), S.current.userPasswordUpdated));
           } else {

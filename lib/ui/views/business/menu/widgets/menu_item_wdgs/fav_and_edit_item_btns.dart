@@ -119,18 +119,14 @@ class FavAndEditItemBtns extends StatelessWidget {
           );
         }
 
-        return IconButton(
+        return LikeButton(
           onPressed: () {},
+          liked: subCategory.items.indexOf(item).isEven,
           tooltip: S.current.addToFavorites,
-          color: Colors.transparent,
-          icon: Icon(
-            subCategory.items.indexOf(item).isEven
-                ? FontAwesome.heart_circle_plus_solid
-                : FontAwesome.heart_circle_check_solid,
-            color: subCategory.items.indexOf(item).isEven ? const Color(0xFFB5B4B4) : FoodlyThemes.primaryFoodly,
-            size: 22,
-          ),
-        );
+          enableBackground: false,
+          enableShadows: false,
+          unlikeColor: ui.NeumoColors.disabled,
+        ).paddingAll(3);
       },
     );
   }
