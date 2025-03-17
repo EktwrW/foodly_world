@@ -13,10 +13,16 @@ class FoodlyLocationWrapper extends StatefulWidget {
 }
 
 class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
+  late final LocationService _locationService;
+  late final DialogService _dialogService;
+
   @override
   void initState() {
     super.initState();
-    if (di<LocationService>().mustFetchLocation) {
+    _locationService = di<LocationService>();
+    _dialogService = di<DialogService>();
+
+    if (_locationService.mustFetchLocation) {
       context.read<LocationBloc>().add(const LocationEvent.checkLocation());
     }
   }
@@ -26,10 +32,10 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
     return BlocConsumer<LocationBloc, LocationState>(
       listener: (context, state) {
         state.whenOrNull(
-          checkingLocation: () => mounted ? di<DialogService>().showLoading() : null,
+          checkingLocation: () => mounted ? _dialogService.showLoading() : null,
           locationChecked: (locationDM) {
-            di<LocationService>().updateLocation(locationDM);
-            if (mounted) di<DialogService>().hideLoading();
+            _locationService.updateLocation(locationDM);
+            if (mounted) _dialogService.hideLoading();
             FlutterNativeSplash.remove();
           },
         );

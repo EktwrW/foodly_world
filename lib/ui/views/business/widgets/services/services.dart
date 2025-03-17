@@ -94,14 +94,14 @@ class ServicesWdg extends StatelessWidget {
                       return FadeInLeft(
                         duration: Durations.medium2,
                         delay: Duration(milliseconds: 50 * i),
-                        child: buildChoiceContent(context, e, selected, bloc),
+                        child: _buildChoiceContent(context, e, selected, bloc),
                       );
                     }
 
                     return FadeInRight(
                       duration: Durations.medium2,
                       delay: Duration(milliseconds: 50 * i),
-                      child: buildChoiceContent(context, e, selected, bloc),
+                      child: _buildChoiceContent(context, e, selected, bloc),
                     );
                   },
                 ).toList(),
@@ -120,7 +120,7 @@ class ServicesWdg extends StatelessWidget {
     );
   }
 
-  Widget buildChoiceContent(
+  Widget _buildChoiceContent(
     BuildContext context,
     BusinessServices e,
     bool selected,

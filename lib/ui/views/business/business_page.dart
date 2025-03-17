@@ -28,13 +28,13 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
-  late final DialogService dialogService;
+  late final DialogService _dialogService;
 
   @override
   void initState() {
     super.initState();
 
-    dialogService = di<DialogService>();
+    _dialogService = di<DialogService>();
 
     final bloc = context.read<BusinessBloc>();
     if (bloc.noCurrentBusiness) {
@@ -48,20 +48,20 @@ class _BusinessPageState extends State<BusinessPage> {
       child: BlocConsumer<BusinessBloc, BusinessState>(
         listener: (context, state) {
           state.whenOrNull(
-            loading: (vm) => dialogService.showLoading(),
-            updatingLogo: (vm) => dialogService.showLoading(),
-            updatingMenu: (vm) => dialogService.showLoading(),
-            loaded: (vm) => dialogService.hideLoading(),
-            showCoverImagesDialog: (_) => dialogService.showCustomDialog(const EditCoverImagesDialog(), 2),
-            updatingPictures: (vm) => dialogService.showLoading(),
+            loading: (vm) => _dialogService.showLoading(),
+            updatingLogo: (vm) => _dialogService.showLoading(),
+            updatingMenu: (vm) => _dialogService.showLoading(),
+            loaded: (vm) => _dialogService.hideLoading(),
+            showCoverImagesDialog: (_) => _dialogService.showCustomDialog(const EditCoverImagesDialog(), 2),
+            updatingPictures: (vm) => _dialogService.showLoading(),
             picturesUpdated: (vm) async =>
                 await _popAndSuccessConfirmation(context, S.current.coverImagesSuccessfullyUpdated),
-            pictureDeleted: (vm) => dialogService.hideLoading(),
-            editLocation: (vm) => dialogService.showCustomDialog(const EditAddressDialog(), 2),
+            pictureDeleted: (vm) => _dialogService.hideLoading(),
+            editLocation: (vm) => _dialogService.showCustomDialog(const EditAddressDialog(), 2),
             locationUpdated: (vm) async =>
                 await _popAndSuccessConfirmation(context, S.current.locationSuccessfullyUpdated),
             error: (e, vm) async {
-              dialogService.hideLoading();
+              _dialogService.hideLoading();
               await Future.delayed(Durations.long1)
                   .then((_) => context.mounted ? FoodlySnackbars.errorGeneric(context, e) : null);
             },
@@ -73,11 +73,12 @@ class _BusinessPageState extends State<BusinessPage> {
             const AddressWdg(),
             CustomNeumorphicButton(
               onPressed: () {},
-              text: S.current.bookATable,
+              text: S.current.requestReservation,
               tooltip: '',
               shape: ui.NeumoShape.concave,
               disabled: !vm.loggedUserCanEdit,
               type: CustomNeumorphicBtnType.outlined,
+              leading: const Icon(Icons.table_restaurant, size: 22),
               margin: const EdgeInsets.only(bottom: 20),
             ),
             CategoryAndRatingWdg(vm: vm),
@@ -92,7 +93,7 @@ class _BusinessPageState extends State<BusinessPage> {
           return Scaffold(
             persistentFooterButtons: const [BusinessFooterButtons()],
             body: NestedScrollView(
-              headerSliverBuilder: (_, value) => [const BusinessSliverAppBar()],
+              headerSliverBuilder: (_, value) => const [BusinessSliverAppBar()],
               body: ListView.separated(
                 padding: const EdgeInsets.symmetric(
                   horizontal: UIDimens.SCREEN_PADDING_MOB,
@@ -111,7 +112,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
   Future<void> _popAndSuccessConfirmation(BuildContext context, String text) async {
     Navigator.of(context).pop();
-    dialogService.hideLoading();
+    _dialogService.hideLoading();
     await Future.delayed(Durations.long1)
         .then((_) => context.mounted ? FoodlySnackbars.successGeneric(context, text) : null);
   }
