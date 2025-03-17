@@ -6,6 +6,7 @@ import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -26,6 +27,8 @@ class SignUpUserPage extends StatefulWidget {
 }
 
 class _SignUpUserPageState extends State<SignUpUserPage> {
+  late final SignUpCubit _signUpCubit;
+  late final DialogService _dialogService;
   bool _isSnackBarVisible = false;
   final _controller = ScrollController();
   String? importedAvatar;
@@ -35,9 +38,13 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   @override
   void initState() {
     super.initState();
+    _signUpCubit = context.read<SignUpCubit>();
+    _dialogService = di<DialogService>();
+
     importedAvatar = di<AppRouter>().currentRoute.extra as String?;
+
     if (importedAvatar?.isNotEmpty ?? false) {
-      context.read<SignUpCubit>().processImportedAvatar(importedAvatar);
+      _signUpCubit.processImportedAvatar(importedAvatar);
     }
   }
 
@@ -115,14 +122,14 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
       body: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
           state.whenOrNull(
-            loading: (signUpVM) => di<DialogService>().showLoading(),
-            loaded: (signUpVM) => di<DialogService>().hideLoading(),
+            loading: (signUpVM) => _dialogService.showLoading(),
+            loaded: (signUpVM) => _dialogService.hideLoading(),
             userCreated: (vm) {
               di<AuthSessionService>().updateForceToLogin(false);
               context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-              di<DialogService>().hideLoading();
+              _dialogService.hideLoading();
               final user = vm.userSessionDM.user;
-              di<DialogService>().showCustomDialog(
+              _dialogService.showCustomDialog(
                 const WelcomeDialog(),
                 2,
                 onDialogClose: () => user.isManager
@@ -131,9 +138,10 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
                         pathParameters: {AppRoutes.routeIdParam: user.uuid ?? ''}),
               );
             },
-            error: (e, vm) {
-              di<DialogService>().hideLoading();
-              //TODO: hw - handle error / show snackbar
+            error: (e, vm) async {
+              _dialogService.hideLoading();
+              await Future.delayed(Durations.long1)
+                  .then((_) => context.mounted ? FoodlySnackbars.errorGeneric(context, e) : null);
             },
           );
         },
@@ -151,8 +159,6 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   }
 
   Widget _buildSignUpScreen(UserProfileVM vm, BuildContext context) {
-    final cubit = context.read<SignUpCubit>();
-
     return CustomScrollView(
       controller: _controller,
       slivers: <Widget>[
@@ -163,7 +169,7 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
             context.read<StartingCubit>().setView(StartingPageView.initial);
           },
           onPressedDisabled: () => _showEnableFormSnackBar(context),
-          onPressed: () async => await pickImage(context).then((value) => cubit.processImagePath(value)),
+          onPressed: () async => await pickImage(context).then((value) => _signUpCubit.processImagePath(value)),
           onTap: () => _showUserRoleSnackBar(context),
           enabled: vm.roleId != null,
           imagePath: vm.imagePath,
@@ -175,7 +181,6 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   }
 
   Widget _buildSignUpContent(UserProfileVM vm, BuildContext context) {
-    final cubit = context.read<SignUpCubit>();
     final enabled = vm.roleId != null;
 
     return Container(
@@ -191,10 +196,10 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
             ),
             TermsAndPrivacyPolicyWdg(enabled: enabled, vm: vm),
             CustomNeumorphicButton(
-              type: CustomNeumorphicBtnType.secondary,
               margin: EdgeInsets.zero,
-              onPressed:
-                  enabled && vm.termsAndContiditionsAccepted ? () async => await cubit.onSignUpUserPressed() : null,
+              onPressed: enabled && vm.termsAndContiditionsAccepted
+                  ? () async => await _signUpCubit.onSignUpUserPressed()
+                  : null,
               shape: enabled ? ui.NeumoShape.convex : ui.NeumoShape.flat,
               text: S.current.createUser,
               disabled: !enabled || !vm.termsAndContiditionsAccepted,

@@ -35,63 +35,132 @@ part 'menu_item_wdgs/menu_item_picture_wdg.dart';
 part 'menu_item_wdgs/menu_item_wdg.dart';
 part 'sub_category_wdg.dart';
 
-class MenuCategoryBuilder extends StatelessWidget {
-  const MenuCategoryBuilder({
+// Widget separado para mejorar el rendimiento de la paginación
+class MenuCategoryPage extends StatefulWidget {
+  const MenuCategoryPage({
     super.key,
     required this.categories,
     required this.vm,
     required this.menuCategory,
+    required this.onScrollStart,
+    required this.onScrollEnd,
   });
 
   final List<CategoryDM>? categories;
   final MenuVM vm;
   final MenuCategory menuCategory;
+  final VoidCallback onScrollStart;
+  final VoidCallback onScrollEnd;
+
+  @override
+  State<MenuCategoryPage> createState() => _MenuCategoryPageState();
+}
+
+class _MenuCategoryPageState extends State<MenuCategoryPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  // No agregar ScrollController aquí, ya que interferiría con el NestedScrollView
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final cubit = context.read<MenuCubit>();
 
     return Column(
       children: [
-        if (menuCategory != MenuCategory.combos)
-          _CategoryEditButtons(
-            key: const Key('add-new-sub-category'),
-            editMode: vm.editMode,
-            canAdd: !vm.menuIsEditing,
-            onPressed: () {
-              cubit.addNewSubCategory(menuCategory);
-              ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
-            },
-            iconData: Bootstrap.plus_circle,
-            text: S.current.addNewCategory,
+        if (widget.menuCategory != MenuCategory.combos)
+          RepaintBoundary(
+            child: _CategoryEditButtons(
+              key: const Key('add-new-sub-category'),
+              editMode: widget.vm.editMode,
+              canAdd: !widget.vm.menuIsEditing,
+              onPressed: () {
+                cubit.addNewSubCategory(widget.menuCategory);
+                ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
+              },
+              iconData: Bootstrap.plus_circle,
+              text: S.current.addNewCategory,
+            ),
           ),
-        if ((categories?.isEmpty ?? false) && !vm.editMode) Expanded(child: const NoItemsViewWdg().paddingBottom(80)),
-        if (categories?.isNotEmpty ?? false)
+        if ((widget.categories?.isEmpty ?? false) && !widget.vm.editMode)
+          Expanded(child: const NoItemsViewWdg().paddingBottom(80)),
+        if (widget.categories?.isNotEmpty ?? false)
           Expanded(
-            child: CustomScrollView(
-              key: PageStorageKey('menu_category_${menuCategory.name}'),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final subCategory = categories?[index];
-                      final isLastSubCategory = index == ((categories?.length ?? 1000) - 1);
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification is ScrollStartNotification) {
+                  widget.onScrollStart();
+                } else if (notification is ScrollEndNotification) {
+                  widget.onScrollEnd();
+                }
+                // No propagar la notificación al padre para evitar doble procesamiento
+                return true;
+              },
+              child: ListView.builder(
+                // No usar CustomScrollView aquí, sino un ListView más simple
+                key: PageStorageKey('menu_category_${widget.menuCategory.name}'),
+                // No usar controller aquí para evitar conflictos con NestedScrollView
+                physics: const AlwaysScrollableScrollPhysics(),
+                addAutomaticKeepAlives: true,
+                addRepaintBoundaries: true,
+                itemCount: widget.categories?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final subCategory = widget.categories?[index];
+                  final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
 
-                      return SubCategoryWdg(
-                        key: ObjectKey(subCategory?.uuid),
-                        menuCategory: menuCategory,
-                        cubit: cubit,
-                        subCategory: subCategory,
-                        isLastSubCategory: isLastSubCategory,
-                      );
-                    },
-                    childCount: categories?.length ?? 0,
-                  ),
-                ),
-              ],
+                  return SubCategoryWdgKeepAlive(
+                    key: ValueKey(subCategory?.uuid),
+                    menuCategory: widget.menuCategory,
+                    cubit: cubit,
+                    subCategory: subCategory,
+                    isLastSubCategory: isLastSubCategory,
+                  );
+                },
+              ),
             ),
           ),
       ],
+    );
+  }
+}
+
+// Widget envoltorio para SubCategoryWdg con keep-alive
+class SubCategoryWdgKeepAlive extends StatefulWidget {
+  const SubCategoryWdgKeepAlive({
+    super.key,
+    required this.menuCategory,
+    required this.cubit,
+    required this.subCategory,
+    required this.isLastSubCategory,
+  });
+
+  final MenuCategory menuCategory;
+  final MenuCubit cubit;
+  final CategoryDM? subCategory;
+  final bool isLastSubCategory;
+
+  @override
+  State<SubCategoryWdgKeepAlive> createState() => _SubCategoryWdgKeepAliveState();
+}
+
+class _SubCategoryWdgKeepAliveState extends State<SubCategoryWdgKeepAlive> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return RepaintBoundary(
+      child: SubCategoryWdg(
+        key: ObjectKey(widget.subCategory?.uuid),
+        menuCategory: widget.menuCategory,
+        cubit: widget.cubit,
+        subCategory: widget.subCategory,
+        isLastSubCategory: widget.isLastSubCategory,
+      ),
     );
   }
 }

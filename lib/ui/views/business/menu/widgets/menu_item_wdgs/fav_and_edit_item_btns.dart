@@ -120,6 +120,7 @@ class FavAndEditItemBtns extends StatelessWidget {
         }
 
         return LikeButton(
+          key: Key(item.uuid),
           onPressed: () {},
           liked: subCategory.items.indexOf(item).isEven,
           tooltip: S.current.addToFavorites,

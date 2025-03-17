@@ -45,6 +45,7 @@
   "big": "Big",
   "biometricSnackbarTextSpanA": "This device's operating system does not support or has not configured biometric or pattern accesses.",
   "biometricSnackbarTextSpanB": "The session has expired, you must log in with your username and password, or access via your preferred social network.",
+  "bookATable": "Book a table",
   "brands": "brands",
   "business": "Business",
   "businessAccountUpgradeInfo": "We'll redirect you to the business registration form. Your submission will be reviewed for platform verification. Please note that creating false businesses, misappropriation, or impersonation of brands and establishments may result in legal consequences.",

@@ -17,74 +17,99 @@ class MenuScreen extends StatefulWidget {
   State<MenuScreen> createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   late final ScrollController _scrollController;
   final _isFabVisible = ValueNotifier<bool>(true);
+  bool _isProcessingScroll = false;
+  late final DialogService _dialogService;
 
   @override
   void initState() {
     super.initState();
+    _dialogService = di<DialogService>();
     _scrollController = ScrollController();
     _setupScrollListener();
   }
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
-      // Verificar si está scrolleando basado en el offset
-      if (_scrollController.position.pixels != _scrollController.position.minScrollExtent &&
-          _scrollController.position.isScrollingNotifier.value) {
-        _hideFab();
-      } else {
-        _showFab();
-      }
+      if (_isProcessingScroll) return;
+
+      _isProcessingScroll = true;
+
+      Future.delayed(const Duration(milliseconds: 50), () async {
+        if (_scrollController.position.pixels != _scrollController.position.minScrollExtent &&
+            _scrollController.position.isScrollingNotifier.value) {
+          await _hideFab();
+        } else {
+          await _showFab();
+        }
+        _isProcessingScroll = false;
+      });
     });
   }
 
   Future<void> _hideFab() async {
-    await Future.delayed(Durations.short2);
-    if (mounted) _isFabVisible.value = false;
+    if (!mounted || !_isFabVisible.value) return;
+    _isFabVisible.value = false;
   }
 
   Future<void> _showFab() async {
-    await Future.delayed(Durations.short2);
-    if (mounted) _isFabVisible.value = true;
+    if (!mounted || _isFabVisible.value) return;
+    _isFabVisible.value = true;
   }
 
   String get _publicMenuUrl {
     final baseUrl = di<BaseConfig>().foodlyBaseUrl;
     final cleanLocation = di<AppRouter>().currentLocation.replaceAll('/main', '');
-
     return '$baseUrl$cleanLocation';
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _isFabVisible.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return BlocConsumer<MenuCubit, MenuState>(
       listener: (context, state) {
         state.whenOrNull(
           loading: (vm) {
-            di<DialogService>().showLoading();
+            _dialogService.showLoading();
           },
-          loaded: (vm) => di<DialogService>().hideLoading(),
+          loaded: (vm) => _dialogService.hideLoading(),
           showSnackbar: (vm, msg) {
-            di<DialogService>().hideLoading();
+            _dialogService.hideLoading();
             if (context.mounted) {
               FoodlySnackbars.successGeneric(context, msg);
             }
           },
           error: (msg, vm) {
-            di<DialogService>().hideLoading();
+            _dialogService.hideLoading();
             if (context.mounted) {
               FoodlySnackbars.errorGeneric(context, msg);
             }
           },
         );
+      },
+      buildWhen: (previous, current) {
+        if (previous.isLoaded && current.isLoaded) {
+          final prevVm = previous.vm;
+          final currVm = current.vm;
+
+          return prevVm.editMode != currVm.editMode ||
+              prevVm.menuIsEditing != currVm.menuIsEditing ||
+              prevVm.menuDM?.id != currVm.menuDM?.id;
+        }
+        return true;
       },
       builder: (context, state) {
         return state.maybeWhen(
@@ -101,35 +126,29 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget _buildMenuWdg(BuildContext context, MenuVM vm) {
     return Scaffold(
       floatingActionButton: ValueListenableBuilder(
-          valueListenable: _isFabVisible,
-          child: MenuFloatingActionButton(
-            floatingButtonKey: vm.floatingButtonKey,
-            loggedUserCanEdit: vm.loggerUserCanEdit,
-            menuUrl: _publicMenuUrl,
-            businessName: vm.menuDM?.business?.name ?? '-',
-          ),
-          builder: (_, visible, child) {
-            return AnimatedOpacity(
-              opacity: visible ? UiUtilities.sliverVisibleOpacity : UiUtilities.sliverHiddenOpacity,
-              duration: Durations.medium1,
-              child: child,
-            );
-          }),
+        valueListenable: _isFabVisible,
+        builder: (_, visible, child) {
+          return AnimatedOpacity(
+            opacity: visible ? UiUtilities.sliverVisibleOpacity : UiUtilities.sliverHiddenOpacity,
+            duration: Durations.medium1,
+            child: child!,
+          );
+        },
+        child: MenuFloatingActionButton(
+          floatingButtonKey: vm.floatingButtonKey,
+          loggedUserCanEdit: vm.loggerUserCanEdit,
+          menuUrl: _publicMenuUrl,
+          businessName: vm.menuDM?.business?.name ?? '-',
+        ),
+      ),
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (_, __) => [
           const PrimaryMenuSliverAppBar(),
           const SecondaryMenuSliverAppBar(),
         ],
-        body: NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is ScrollUpdateNotification) {
-              _hideFab();
-            } else {
-              _showFab();
-            }
-            return true;
-          },
+        body: GestureDetector(
+          onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
           child: PageView.builder(
             controller: vm.controller,
             physics: vm.menuIsEditing ? const NeverScrollableScrollPhysics() : const PageScrollPhysics(),
@@ -138,16 +157,15 @@ class _MenuScreenState extends State<MenuScreen> {
             itemBuilder: (context, index) {
               final category = MenuCategory.values[index];
 
-              return GestureDetector(
-                onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
-                onLongPressStart: (_) async => await _hideFab(),
-                onLongPressEnd: (_) async => await _showFab(),
-                onLongPressCancel: () async => await _showFab(),
-                child: MenuCategoryBuilder(
+              // Usamos RepaintBoundary para aislar la pintura
+              return RepaintBoundary(
+                child: MenuCategoryPage(
                   key: ValueKey(category),
                   categories: vm.menuScreens[category],
                   vm: vm,
                   menuCategory: category,
+                  onScrollStart: _hideFab,
+                  onScrollEnd: _showFab,
                 ),
               );
             },

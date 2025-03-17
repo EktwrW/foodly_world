@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/widgets/about_us/about_us.dart';
@@ -18,8 +20,6 @@ import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hou
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
 import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 
-//import 'package:flutter_neumo/flutter_neumo.dart' as ui;
-
 class BusinessPage extends StatefulWidget {
   const BusinessPage({super.key});
 
@@ -28,9 +28,13 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
+  late final DialogService dialogService;
+
   @override
   void initState() {
     super.initState();
+
+    dialogService = di<DialogService>();
 
     final bloc = context.read<BusinessBloc>();
     if (bloc.noCurrentBusiness) {
@@ -44,20 +48,20 @@ class _BusinessPageState extends State<BusinessPage> {
       child: BlocConsumer<BusinessBloc, BusinessState>(
         listener: (context, state) {
           state.whenOrNull(
-            loading: (vm) => di<DialogService>().showLoading(),
-            updatingLogo: (vm) => di<DialogService>().showLoading(),
-            updatingMenu: (vm) => di<DialogService>().showLoading(),
-            loaded: (vm) => di<DialogService>().hideLoading(),
-            showCoverImagesDialog: (_) => di<DialogService>().showCustomDialog(const EditCoverImagesDialog(), 2),
-            updatingPictures: (vm) => di<DialogService>().showLoading(),
+            loading: (vm) => dialogService.showLoading(),
+            updatingLogo: (vm) => dialogService.showLoading(),
+            updatingMenu: (vm) => dialogService.showLoading(),
+            loaded: (vm) => dialogService.hideLoading(),
+            showCoverImagesDialog: (_) => dialogService.showCustomDialog(const EditCoverImagesDialog(), 2),
+            updatingPictures: (vm) => dialogService.showLoading(),
             picturesUpdated: (vm) async =>
-                await popAndSuccessConfirmation(context, S.current.coverImagesSuccessfullyUpdated),
-            pictureDeleted: (vm) => di<DialogService>().hideLoading(),
-            editLocation: (vm) => di<DialogService>().showCustomDialog(const EditAddressDialog(), 2),
+                await _popAndSuccessConfirmation(context, S.current.coverImagesSuccessfullyUpdated),
+            pictureDeleted: (vm) => dialogService.hideLoading(),
+            editLocation: (vm) => dialogService.showCustomDialog(const EditAddressDialog(), 2),
             locationUpdated: (vm) async =>
-                await popAndSuccessConfirmation(context, S.current.locationSuccessfullyUpdated),
+                await _popAndSuccessConfirmation(context, S.current.locationSuccessfullyUpdated),
             error: (e, vm) async {
-              di<DialogService>().hideLoading();
+              dialogService.hideLoading();
               await Future.delayed(Durations.long1)
                   .then((_) => context.mounted ? FoodlySnackbars.errorGeneric(context, e) : null);
             },
@@ -67,6 +71,15 @@ class _BusinessPageState extends State<BusinessPage> {
           final vm = state.vm;
           final dasboardSections = [
             const AddressWdg(),
+            CustomNeumorphicButton(
+              onPressed: () {},
+              text: S.current.bookATable,
+              tooltip: '',
+              shape: ui.NeumoShape.concave,
+              disabled: !vm.loggedUserCanEdit,
+              type: CustomNeumorphicBtnType.outlined,
+              margin: const EdgeInsets.only(bottom: 20),
+            ),
             CategoryAndRatingWdg(vm: vm),
             AboutUsWdg(vm: vm),
             OpeningHoursWdg(vm: vm),
@@ -96,9 +109,9 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
-  Future<void> popAndSuccessConfirmation(BuildContext context, String text) async {
+  Future<void> _popAndSuccessConfirmation(BuildContext context, String text) async {
     Navigator.of(context).pop();
-    di<DialogService>().hideLoading();
+    dialogService.hideLoading();
     await Future.delayed(Durations.long1)
         .then((_) => context.mounted ? FoodlySnackbars.successGeneric(context, text) : null);
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
@@ -32,16 +30,24 @@ class SignUpBusinessPage extends StatefulWidget {
 class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   final GlobalKey _tooltipKey = GlobalKey();
   late dynamic tooltip;
-  final _authService = di<AuthSessionService>();
-  bool userIsMigratingToManager = false;
+  late final LocalStorageService _localStorageService;
+  late final AuthSessionService _authService;
+  late final DialogService _dialogService;
+  bool _userIsMigratingToManager = false;
+  late final SignUpCubit _signUpcubit;
 
-  TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.actionsBodyBold);
+  TextSpan _getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.actionsBodyBold);
 
   @override
   void initState() {
     super.initState();
+    _localStorageService = di<LocalStorageService>();
+    _authService = di<AuthSessionService>();
+    _dialogService = di<DialogService>();
+    _signUpcubit = context.read<SignUpCubit>();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      userIsMigratingToManager = await di<LocalStorageService>().getBool('user-migration') ?? false;
+      _userIsMigratingToManager = await _localStorageService.getBool('user-migration') ?? false;
       tooltip = _tooltipKey.currentState;
       tooltip?.ensureTooltipVisible();
     });
@@ -50,16 +56,13 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   @override
   void dispose() {
     super.dispose();
-    if (userIsMigratingToManager) {
-      di<LocalStorageService>().saveBool('user-migration', false);
+    if (_userIsMigratingToManager) {
+      _localStorageService.saveBool('user-migration', false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    log('$userIsMigratingToManager');
-    final cubit = context.read<SignUpCubit>();
-
     return Scaffold(
       backgroundColor: ui.NeumoColors.decorationMaxWhiteColor,
       body: SizedBox(
@@ -68,17 +71,17 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
         child: BlocConsumer<SignUpCubit, SignUpState>(
           listener: (context, state) {
             state.whenOrNull(
-              loading: (signUpVM) => di<DialogService>().showLoading(),
-              loaded: (signUpVM) => di<DialogService>().hideLoading(),
+              loading: (signUpVM) => _dialogService.showLoading(),
+              loaded: (signUpVM) => _dialogService.hideLoading(),
               businessCreationFinished: (vm) {
                 context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-                di<DialogService>().hideLoading();
+                _dialogService.hideLoading();
 
                 context.goNamed(AppRoutes.foodlyMainPage.name,
                     pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.uuid ?? ''});
               },
               error: (e, vm) async {
-                di<DialogService>().hideLoading();
+                _dialogService.hideLoading();
                 await Future.delayed(Durations.long1)
                     .then((_) => context.mounted ? FoodlySnackbars.errorGeneric(context, e) : null);
               },
@@ -86,11 +89,11 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
           },
           builder: (context, state) {
             return state.maybeWhen(
-              loading: (signUpVM) => _buildContent(signUpVM, cubit),
-              loaded: (signUpVM) => _buildContent(signUpVM, cubit),
-              userCreated: (signUpVM) => _buildContent(signUpVM, cubit),
-              businessCreationFinished: (signUpVM) => _buildContent(signUpVM, cubit),
-              error: (e, signUpVM) => _buildContent(signUpVM, cubit),
+              loading: (signUpVM) => _buildContent(signUpVM),
+              loaded: (signUpVM) => _buildContent(signUpVM),
+              userCreated: (signUpVM) => _buildContent(signUpVM),
+              businessCreationFinished: (signUpVM) => _buildContent(signUpVM),
+              error: (e, signUpVM) => _buildContent(signUpVM),
               orElse: () => const SizedBox.expand(),
             );
           },
@@ -99,12 +102,12 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
     );
   }
 
-  Widget _buildContent(UserProfileVM vm, SignUpCubit cubit) {
+  Widget _buildContent(UserProfileVM vm) {
     return GestureDetector(
       onTap: vm.tooltipActive
           ? () {
               Tooltip.dismissAllToolTips();
-              cubit.hideTooltipInBusinessSignUp();
+              _signUpcubit.hideTooltipInBusinessSignUp();
             }
           : () {
               if (FocusScope.of(context).hasFocus) {
@@ -155,7 +158,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     children: [
                       const SizedBox(width: 6),
                       Flexible(
-                        child: (userIsMigratingToManager
+                        child: (_userIsMigratingToManager
                                 ? CustomRoundedNeumorphicButton(
                                     shape: ui.NeumoShape.concave,
                                     iconSize: 24,
@@ -210,7 +213,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                                 opacity: vm.tooltipActive ? .3 : 1,
                                 child: EditableAvatarWdg(
                                   onPressed: () async => await pickImageFile(context, ImageSource.gallery)
-                                      .then((path) => cubit.processLogoPath(path)),
+                                      .then((path) => _signUpcubit.processLogoPath(path)),
                                   avatarType: AvatarType.business,
                                   size: const Size(130, 130),
                                   paddingAll: 0,
@@ -240,15 +243,15 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                   const SignUpBusinessForm(),
                   vm.userSessionDM.user.isManager
                       ? TextButton(
-                          onPressed: () => cubit.changeUserRoleToClient(),
+                          onPressed: () => _signUpcubit.changeUserRoleToClient(),
                           child: Text.rich(
                             TextSpan(
                               style: FoodlyTextStyles.actionsBody,
                               children: [
                                 TextSpan(text: '${S.current.switchUserCategoryTextSpan1} '),
-                                getBoldTextSpan(S.current.customer),
+                                _getBoldTextSpan(S.current.customer),
                                 TextSpan(text: ', ${S.current.switchUserCategoryTextSpan2} '),
-                                getBoldTextSpan(S.current.switchUserCategoryTextSpan3),
+                                _getBoldTextSpan(S.current.switchUserCategoryTextSpan3),
                                 const TextSpan(text: '.'),
                               ],
                             ),
@@ -257,12 +260,11 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                         ).paddingSymmetric(vertical: 25)
                       : const SizedBox(height: 25),
                   CustomNeumorphicButton(
-                    type: CustomNeumorphicBtnType.secondary,
                     margin: EdgeInsets.zero,
                     onPressed: () async {
-                      cubit.setAutovalidateMode(AutovalidateMode.always);
+                      _signUpcubit.setAutovalidateMode(AutovalidateMode.always);
                       if (vm.formKey?.currentState?.validate() ?? false) {
-                        await cubit.signUpBusiness();
+                        await _signUpcubit.signUpBusiness();
                       }
                     },
                     shape: ui.NeumoShape.convex,
