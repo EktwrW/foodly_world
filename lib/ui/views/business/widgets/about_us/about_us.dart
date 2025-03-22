@@ -17,13 +17,14 @@ class AboutUsWdg extends StatelessWidget {
 
   final BusinessVM vm;
 
+  void onPressed(BusinessBloc bloc) {
+    vm.businessAboutUsCtrl?.controller?.text = vm.currentBusiness?.aboutUs ?? '';
+    bloc.add(const BusinessEvent.updateEditing(DashboardEditing.aboutUs));
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BusinessBloc>();
-    void onPressed() {
-      vm.businessAboutUsCtrl?.controller?.text = vm.currentBusiness?.aboutUs ?? '';
-      bloc.add(const BusinessEvent.updateEditing(DashboardEditing.aboutUs));
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,12 +32,12 @@ class AboutUsWdg extends StatelessWidget {
         FoodlySectionsTitle(
           firstText: '${S.current.about} ',
           secondText: S.current.us,
-          onPressed: !vm.loggedUserCanEdit || vm.isEditingAboutUs ? null : onPressed,
+          onPressed: !vm.loggedUserCanEdit || vm.isEditingAboutUs ? null : () => onPressed(bloc),
         ),
         Visibility(
           visible: vm.isEditingAboutUs,
           replacement: TextButton(
-            onPressed: onPressed,
+            onPressed: () => onPressed(bloc),
             focusNode: vm.businessAddressCtrl?.focusNode,
             child: Row(
               children: [

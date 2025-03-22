@@ -6,6 +6,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/business/widgets/additional_info/additional_info.dart';
@@ -45,6 +46,7 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   Widget build(BuildContext context) {
     return FoodlyWrapper(
+      key: const Key('business-page'),
       child: BlocConsumer<BusinessBloc, BusinessState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -69,40 +71,39 @@ class _BusinessPageState extends State<BusinessPage> {
         },
         builder: (context, state) {
           final vm = state.vm;
-          final dasboardSections = [
-            const AddressWdg(),
-            if (vm.currentBusiness?.category?.isAcademy == false)
-              CustomNeumorphicButton(
-                onPressed: () {},
-                text: S.current.requestReservation,
-                tooltip: '',
-                shape: ui.NeumoShape.concave,
-                disabled: !vm.loggedUserCanEdit,
-                type: CustomNeumorphicBtnType.outlined,
-                leading: const Icon(Icons.table_restaurant, size: 22),
-                margin: const EdgeInsets.only(bottom: 20),
-              ),
-            CategoryAndRatingWdg(vm: vm),
-            AboutUsWdg(vm: vm),
-            OpeningHoursWdg(vm: vm),
-            ServicesWdg(vm: vm),
-            CustomerReviewsWdg(vm: vm),
-            ContactChannelsWdg(vm: vm),
-            AdditionalInfoWdg(vm: vm),
-          ];
 
           return Scaffold(
             persistentFooterButtons: const [BusinessFooterButtons()],
             body: NestedScrollView(
               headerSliverBuilder: (_, value) => const [BusinessSliverAppBar()],
-              body: ListView.separated(
-                padding: const EdgeInsets.symmetric(
+              body: SingleChildScrollView(
+                child: Column(
+                  spacing: 40,
+                  children: [
+                    const AddressWdg(),
+                    CategoryAndRatingWdg(vm: vm),
+                    if (vm.currentBusiness?.category?.isAcademy == false)
+                      CustomNeumorphicButton(
+                        onPressed: () {},
+                        text: S.current.requestReservation,
+                        tooltip: '',
+                        shape: ui.NeumoShape.concave,
+                        disabled: !vm.loggedUserCanEdit,
+                        type: CustomNeumorphicBtnType.outlined,
+                        leading: const Icon(Icons.table_restaurant, size: 22, color: FoodlyThemes.primaryFoodly),
+                        margin: EdgeInsets.zero,
+                      ),
+                    AboutUsWdg(vm: vm),
+                    OpeningHoursWdg(vm: vm),
+                    ServicesWdg(vm: vm),
+                    CustomerReviewsWdg(vm: vm),
+                    ContactChannelsWdg(vm: vm),
+                    AdditionalInfoWdg(vm: vm),
+                  ],
+                ).paddingSymmetric(
                   horizontal: UIDimens.SCREEN_PADDING_MOB,
                   vertical: 28,
                 ),
-                itemCount: dasboardSections.length,
-                itemBuilder: (_, i) => dasboardSections[i],
-                separatorBuilder: (_, i) => const SizedBox(height: 40),
               ),
             ),
           );
