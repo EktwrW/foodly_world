@@ -86,7 +86,7 @@ class SignUpBusinessForm extends StatelessWidget {
           showLeading: false,
         ),
         FoodlyPhoneInputText(
-          keyString: vm.businessCountryCode,
+          key: Key('phone_input_${vm.businessCountryCode}'),
           enabled: enabled,
           controller: vm.businessPhoneNumberController!.controller,
           focusNode: vm.businessPhoneNumberController?.focusNode,

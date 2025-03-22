@@ -71,16 +71,17 @@ class _BusinessPageState extends State<BusinessPage> {
           final vm = state.vm;
           final dasboardSections = [
             const AddressWdg(),
-            CustomNeumorphicButton(
-              onPressed: () {},
-              text: S.current.requestReservation,
-              tooltip: '',
-              shape: ui.NeumoShape.concave,
-              disabled: !vm.loggedUserCanEdit,
-              type: CustomNeumorphicBtnType.outlined,
-              leading: const Icon(Icons.table_restaurant, size: 22),
-              margin: const EdgeInsets.only(bottom: 20),
-            ),
+            if (vm.currentBusiness?.category?.isAcademy == false)
+              CustomNeumorphicButton(
+                onPressed: () {},
+                text: S.current.requestReservation,
+                tooltip: '',
+                shape: ui.NeumoShape.concave,
+                disabled: !vm.loggedUserCanEdit,
+                type: CustomNeumorphicBtnType.outlined,
+                leading: const Icon(Icons.table_restaurant, size: 22),
+                margin: const EdgeInsets.only(bottom: 20),
+              ),
             CategoryAndRatingWdg(vm: vm),
             AboutUsWdg(vm: vm),
             OpeningHoursWdg(vm: vm),

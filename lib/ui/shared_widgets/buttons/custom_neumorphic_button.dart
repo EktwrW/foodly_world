@@ -127,7 +127,7 @@ class CustomNeumorphicButton extends StatelessWidget {
             boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
             intensity: 1.2,
-            color: FoodlyThemes.primaryFoodly,
+            color: !disabled ? FoodlyThemes.primaryFoodly : Colors.grey[400],
             surfaceIntensity: .8,
           ),
           padding: padding,

@@ -202,6 +202,7 @@ class SignUpUserForm extends StatelessWidget {
           showLeading: false,
         ),
         FoodlyPhoneInputText(
+          key: Key('phone_input_${cubit.currentCountryCode}'),
           enabled: enabled,
           controller: vm.phoneNumberController?.controller,
           focusNode: vm.phoneNumberController?.focusNode,

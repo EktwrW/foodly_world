@@ -85,7 +85,7 @@ class SmartSearchSnackbars {
           );
         },
       ),
-      content: const VoiceSearchContent(),
+      content: const SmartSearchContent(),
     );
 
     scaffoldMessenger
@@ -94,8 +94,8 @@ class SmartSearchSnackbars {
   }
 }
 
-class VoiceSearchContent extends StatelessWidget {
-  const VoiceSearchContent({super.key});
+class SmartSearchContent extends StatelessWidget {
+  const SmartSearchContent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -53,43 +53,29 @@ enum FoodlyCategories {
   final Widget icon;
   final int value;
   const FoodlyCategories(this.icon, this.value);
-}
 
-extension CategoriesExtension on FoodlyCategories {
-  String get text {
-    switch (this) {
-      case FoodlyCategories.international:
-        return S.current.internationalCuisine;
-      case FoodlyCategories.fusion:
-        return S.current.fusionCuisine;
-      case FoodlyCategories.pizza:
-        return S.current.pizzerias;
-      case FoodlyCategories.mexican:
-        return S.current.mexicanCuisine;
-      case FoodlyCategories.coffee:
-        return S.current.cafesAndBreakfasts;
-      case FoodlyCategories.american:
-        return S.current.fastFood;
-      case FoodlyCategories.japanese:
-        return S.current.japaneseCuisine;
-      case FoodlyCategories.steakhouse:
-        return S.current.steakhouse;
-      case FoodlyCategories.vegetarian:
-        return S.current.vegetarianCuisine;
-      case FoodlyCategories.korean:
-        return S.current.koreanCuisine;
-      case FoodlyCategories.portuguese:
-        return S.current.portugueseCuisine;
-      case FoodlyCategories.bakery:
-        return S.current.bakeryAndDesserts;
-      case FoodlyCategories.drinkHouse:
-        return S.current.pubsAndWineBars;
-      case FoodlyCategories.stores:
-        return S.current.marketsAndStores;
-      case FoodlyCategories.academy:
-        return S.current.cookingSchools;
-    }
-  }
+  bool get isDrinkHouse => this == drinkHouse;
+  bool get isAcademy => this == academy;
+  bool get isBakeryOrCoffee => this == coffee || this == bakery;
+  bool get isRestaurant => !isDrinkHouse && !isAcademy && !isBakeryOrCoffee;
+
+  String get text => switch (this) {
+        international => S.current.internationalCuisine,
+        american => S.current.fastFood,
+        pizza => S.current.pizzerias,
+        japanese => S.current.japaneseCuisine,
+        steakhouse => S.current.steakhouse,
+        fusion => S.current.fusionCuisine,
+        vegetarian => S.current.vegetarianCuisine,
+        mexican => S.current.mexicanCuisine,
+        korean => S.current.koreanCuisine,
+        portuguese => S.current.portugueseCuisine,
+        bakery => S.current.bakeryAndDesserts,
+        drinkHouse => S.current.pubsAndWineBars,
+        coffee => S.current.cafesAndBreakfasts,
+        stores => S.current.marketsAndStores,
+        academy => S.current.cookingSchools,
+      };
 }
 
 //pescados: MingCute.fish_fill LineAwesome.fish_solid
