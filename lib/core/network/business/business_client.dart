@@ -1,11 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/business/business_item_photo_dm.dart';
 import 'package:foodly_world/data_models/business/business_search_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_businesses_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_drinks_items_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_food_items_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
+import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
@@ -203,4 +209,34 @@ abstract class BusinessClient {
 
   @POST('/business/search')
   Future<BusinessSearchDM> businessSearch(@Body() BusinessSearchBodyDTO body);
+
+  @GET('/business-favorites')
+  Future<FavoriteBusinessesResponseDM> getMyFavoriteBusinesses();
+
+  @POST('/business-favorites/{businessUuid}')
+  Future<void> setFavoriteBusiness(@Path('businessUuid') String businessUuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/business-menu-favorites')
+  Future<FavoriteMenusResponseDM> getMyFavoriteMenus();
+
+  @POST('/business-menu-favorites/{uuid}')
+  Future<void> setFavoriteMenu(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/business-food-item-favorites')
+  Future<FavoriteFoodItemsResponseDM> getMyFavoriteFoodItems();
+
+  @POST('/business-food-item-favorites/{uuid}')
+  Future<void> setFavoriteFoodItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/business-drink-item-favorites')
+  Future<FavoriteDrinksItemsResponseDM> getMyFavoriteDrinkItems();
+
+  @POST('/business-drink-item-favorites/{uuid}')
+  Future<void> setFavoriteDrinkItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/save-promotions')
+  Future<SavedPromotionsResponseDM> getMyFavoritePromotions();
+
+  @POST('/save-promotions/{uuid}')
+  Future<void> setFavoritePromotion(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
 }

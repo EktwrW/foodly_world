@@ -8,12 +8,18 @@ import 'package:foodly_world/core/network/business/business_client.dart';
 import 'package:foodly_world/core/utils/file_handler/file_handler_selector.dart';
 import 'package:foodly_world/data_models/business/business_item_photo_dm.dart';
 import 'package:foodly_world/data_models/business/business_search_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_businesses_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_drinks_items_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_food_items_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
+import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
@@ -502,6 +508,86 @@ class BusinessRepo {
   Future<ApiResult<BusinessSearchDM>> businessSearch(BusinessSearchBodyDTO body) async {
     try {
       return ApiResult.success(await _businessClient.businessSearch(body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<FavoriteBusinessesResponseDM>> getMyFavoriteBusinesses() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoriteBusinesses());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoriteBusiness(String businessUuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoriteBusiness(businessUuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<FavoriteMenusResponseDM>> getMyFavoriteMenus() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoriteMenus());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoriteMenu(String uuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoriteMenu(uuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<FavoriteFoodItemsResponseDM>> getMyFavoriteFoodItems() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoriteFoodItems());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoriteFoodItem(String uuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoriteFoodItem(uuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<FavoriteDrinksItemsResponseDM>> getMyFavoriteDrinkItems() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoriteDrinkItems());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoriteDrinkItem(String uuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoriteDrinkItem(uuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<SavedPromotionsResponseDM>> getMyFavoritePromotions() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoritePromotions());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoritePromotion(String uuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoritePromotion(uuid, body));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

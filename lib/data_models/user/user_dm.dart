@@ -94,21 +94,13 @@ enum UserGender {
 
   final String key;
   const UserGender(this.key);
-}
 
-extension UserGenderExtension on UserGender {
-  String get text {
-    switch (this) {
-      case UserGender.male:
-        return S.current.male;
-      case UserGender.female:
-        return S.current.female;
-      case UserGender.other:
-        return S.current.other;
-      case UserGender.preferNotToSay:
-        return S.current.preferNotToSay;
-    }
-  }
+  String get text => switch (this) {
+        male => S.current.male,
+        female => S.current.female,
+        other => S.current.other,
+        preferNotToSay => S.current.preferNotToSay,
+      };
 }
 
 enum UserRole {
@@ -125,22 +117,14 @@ enum UserRole {
   admin,
 
   @JsonValue(4)
-  customer,
-}
+  customer;
 
-extension UserRoleExtension on UserRole {
-  String get renderText {
-    switch (this) {
-      case UserRole.customer:
-        return S.current.customer;
-      case UserRole.owner:
-        return S.current.owner;
-      case UserRole.admin:
-        return S.current.admin;
-      default:
-        return S.current.visitor;
-    }
-  }
+  String get renderText => switch (this) {
+        customer => S.current.customer,
+        owner => S.current.owner,
+        admin => S.current.admin,
+        _ => S.current.visitor,
+      };
 }
 
 @freezed
