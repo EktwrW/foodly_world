@@ -21,7 +21,9 @@ part 'starting_cubit.freezed.dart';
 part 'starting_state.dart';
 
 class StartingCubit extends Cubit<StartingState> {
-  final _meRepo = di<MeRepo>();
+  final AuthSessionService _authSessionService;
+  final Logger _logger;
+  final MeRepo _meRepo;
   final _googleSignIn = GoogleSignIn(
     clientId: Platform.isIOS || kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
@@ -30,8 +32,14 @@ class StartingCubit extends Cubit<StartingState> {
   StartingVM _vm;
   GoogleSignInAccount? get googleSignInAccount => _vm.googleSignInAccount;
 
-  StartingCubit()
-      : _vm = StartingVM(
+  StartingCubit(
+    AuthSessionService authSessionService,
+    Logger logger,
+    MeRepo meRepo,
+  )   : _authSessionService = authSessionService,
+        _logger = logger,
+        _meRepo = meRepo,
+        _vm = StartingVM(
           emailController: TextEditingController(text: 'hwald@mailinator.com'),
           passwordController: TextEditingController(text: 'Niko_2018'),
           // emailController: TextEditingController(text: 'jh@mailinator.com'), //client user
@@ -62,7 +70,7 @@ class StartingCubit extends Cubit<StartingState> {
                   ? _setSocialLoginUserForSignUp(userSessionDM)
                   : _provideAccessToUser(userSessionDM),
               failure: ((error) {
-                di<Logger>().e('$error ${error.stackTrace}', stackTrace: error.stackTrace);
+                _logger.e('$error ${error.stackTrace}', stackTrace: error.stackTrace);
                 emit(_Error(error.errorMsg, _vm));
               }),
             );
@@ -72,10 +80,10 @@ class StartingCubit extends Cubit<StartingState> {
         emit(_Error(S.current.error, _vm));
       }
     } on PlatformException catch (e) {
-      di<Logger>().e('PlatformException: ${e.code} - ${e.message}');
+      _logger.e('PlatformException: ${e.code} - ${e.message}');
       emit(_Error(e.message ?? S.current.platformError, _vm));
     } catch (error) {
-      di<Logger>().e('${S.current.error}: $error');
+      _logger.e('${S.current.error}: $error');
       emit(_Error('${S.current.loginError}: $error', _vm));
     }
   }
@@ -103,7 +111,7 @@ class StartingCubit extends Cubit<StartingState> {
       return response.when(
         success: (userSessionDM) => _provideAccessToUser(userSessionDM),
         failure: (e) {
-          di<Logger>().e('${e.error}');
+          _logger.e('${e.error}');
           emit(_Error(e.errorMsg, _vm));
         },
       );
@@ -111,7 +119,9 @@ class StartingCubit extends Cubit<StartingState> {
   }
 
   void _provideAccessToUser(UserSessionDM userSessionDM) {
-    di<AuthSessionService>().setSession(userSessionDM);
+    _authSessionService
+      ..setSession(userSessionDM)
+      ..initializeFavorites();
     if (userSessionDM.user.uuid?.isNotEmpty ?? false) {
       emit(_UserAuthenticated(_vm = _vm.copyWith(userSessionDM: userSessionDM)));
     } else {
@@ -141,7 +151,7 @@ class StartingCubit extends Cubit<StartingState> {
             emit(_Welcome(_vm = _vm.copyWith(recoverPasswordView: RecoverPasswordView.passwordSent)));
           },
           failure: (e) {
-            di<Logger>().e('$e');
+            _logger.e('$e');
             emit(_Error('$e', _vm = _vm.copyWith(recoverPasswordView: RecoverPasswordView.errorRequest)));
           },
         );

@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/drawer/view_model/main_drawer_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,11 +7,16 @@ part 'main_drawer_cubit.freezed.dart';
 part 'main_drawer_state.dart';
 
 class MainDrawerCubit extends Cubit<MainDrawerState> {
-  final _meRepo = di<MeRepo>();
+  final MeRepo _meRepo;
+  final AuthSessionService _authSessionService;
   MainDrawerVM _vm;
 
-  MainDrawerCubit()
-      : _vm = MainDrawerVM(
+  MainDrawerCubit(
+    MeRepo meRepo,
+    AuthSessionService authSessionService,
+  )   : _meRepo = meRepo,
+        _authSessionService = authSessionService,
+        _vm = MainDrawerVM(
           sidebarController: SidebarXController(selectedIndex: 0),
         ),
         super(_Loaded(MainDrawerVM(
@@ -46,8 +50,8 @@ class MainDrawerCubit extends Cubit<MainDrawerState> {
               await _meRepo.fetchLoggedUser().then(
                     (result) => result.when(
                       success: (userDM) {
-                        final newUserSessionDM = di<AuthSessionService>().userSessionDM?.copyWith(user: userDM);
-                        di<AuthSessionService>().setSession(newUserSessionDM);
+                        final newUserSessionDM = _authSessionService.userSessionDM?.copyWith(user: userDM);
+                        _authSessionService.setSession(newUserSessionDM);
 
                         emit(_Loaded(_vm));
                       },

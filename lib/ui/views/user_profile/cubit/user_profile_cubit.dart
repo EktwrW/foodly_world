@@ -1,9 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart' show AutovalidateMode, FocusNode, FormState, GlobalKey, TextEditingController;
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nova_places_api/nova_places_api.dart';
 
@@ -14,30 +11,32 @@ part 'user_profile_cubit.freezed.dart';
 
 class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileVM _vm;
-  static final _locationService = di<LocationService>();
-  static final _authService = di<AuthSessionService>();
-  final _meRepo = di<MeRepo>();
+  final AuthSessionService _authService;
+  final MeRepo _meRepo;
   late final String _currentuuid;
 
-  UserProfileCubit(String currentuuid)
-      : _currentuuid = currentuuid,
+  UserProfileCubit(
+      String currentuuid, LocationService locationService, AuthSessionService authSessionService, MeRepo meRepo)
+      : _authService = authSessionService,
+        _meRepo = meRepo,
+        _currentuuid = currentuuid,
         _vm = UserProfileVM(
-          loggedUserCanEdit: _authService.uuid == currentuuid,
-          userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
+          loggedUserCanEdit: authSessionService.uuid == currentuuid,
+          userSessionDM: authSessionService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
           nickNameController: InputController(
             controller: TextEditingController(),
             focusNode: FocusNode(),
           ),
           firstNameController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getFirstNameForSignUp),
+            controller: TextEditingController(text: authSessionService.userSessionDM?.user.getFirstNameForSignUp),
             focusNode: FocusNode(),
           ),
           lastNameController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getLastNameForSignUp),
+            controller: TextEditingController(text: authSessionService.userSessionDM?.user.getLastNameForSignUp),
             focusNode: FocusNode(),
           ),
           emailController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getEmailForSignUp),
+            controller: TextEditingController(text: authSessionService.userSessionDM?.user.getEmailForSignUp),
             focusNode: FocusNode(),
           ),
           passwordController: InputController(
@@ -53,24 +52,24 @@ class UserProfileCubit extends Cubit<UserProfileState> {
             focusNode: FocusNode(),
           ),
           addressController: InputController(
-            controller: TextEditingController(text: _locationService.currentAddress),
+            controller: TextEditingController(text: locationService.currentAddress),
             focusNode: FocusNode(),
           ),
           cityController: InputController(
-            controller: TextEditingController(text: _locationService.currentCity),
+            controller: TextEditingController(text: locationService.currentCity),
             focusNode: FocusNode(),
           ),
           zipCodeController: InputController(
-            controller: TextEditingController(text: _locationService.currentZipCode),
+            controller: TextEditingController(text: locationService.currentZipCode),
             focusNode: FocusNode(),
           ),
           formKey: GlobalKey<FormState>(),
-          gender: _authService.userSessionDM?.user.gender,
+          gender: authSessionService.userSessionDM?.user.gender,
           genderNode: FocusNode(),
           dateOfBirthNode: FocusNode(),
           countryNode: FocusNode(),
-          country: _authService.userSessionDM?.user.country ??
-              FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == _locationService.currentCountryCode),
+          country: authSessionService.userSessionDM?.user.country ??
+              FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode),
         ),
         super(const UserProfileState.initial(UserProfileVM())) {
     _fetchUser();
@@ -194,7 +193,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
                     (result) => result.when(
                       success: (userDM) {
                         final newUserSessionDM = di<AuthSessionService>().userSessionDM?.copyWith(user: userDM);
-                        di<AuthSessionService>().setSession(newUserSessionDM);
+                        _authService.setSession(newUserSessionDM);
 
                         _vm = _vm.copyWith(userSessionDM: newUserSessionDM ?? _vm.userSessionDM);
 

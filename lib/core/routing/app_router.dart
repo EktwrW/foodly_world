@@ -179,11 +179,11 @@ class AppRouter {
             [RedirectRoute.requiresAppInitial]),
         _goRouteWithTransition(
             AppRoutes.signUp,
-            BlocProvider(create: (context) => SignUpCubit(), child: const SignUpUserPage()),
+            BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpUserPage()),
             [RedirectRoute.requiresAppInitial]),
         _goRouteWithTransition(
             AppRoutes.signUpBusiness,
-            BlocProvider(create: (context) => SignUpCubit(), child: const SignUpBusinessPage()),
+            BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpBusinessPage()),
             [RedirectRoute.requiresAppInitial]),
         StatefulShellRoute(
           navigatorContainerBuilder: (context, navigationShell, children) => FadeIn(
@@ -266,9 +266,8 @@ class AppRouter {
             transitionDuration: Durations.medium4,
             key: state.pageKey,
             child: BlocProvider(
-              create: (context) => UserProfileCubit(
-                state.pathParameters[AppRoutes.routeIdParam] ?? '',
-              ),
+              create: (context) =>
+                  UserProfileCubit(state.pathParameters[AppRoutes.routeIdParam] ?? '', di(), di(), di()),
               child: const UserProfilePage(),
             ),
             transitionsBuilder: (context, animation, secondaryAnimation, child) =>

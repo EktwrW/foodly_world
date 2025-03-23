@@ -16,28 +16,36 @@ part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   UserProfileVM _vm;
-  static final _locationService = di<LocationService>();
-  static final _authService = di<AuthSessionService>();
-  final _meRepo = di<MeRepo>();
-  final _businessRepo = di<BusinessRepo>();
+  final LocationService _locationService;
+  final AuthSessionService _authService;
+  final MeRepo _meRepo;
+  final BusinessRepo _businessRepo;
   final center = const LatLng(45.521563, -122.677433);
 
-  SignUpCubit()
-      : _vm = UserProfileVM(
+  SignUpCubit(
+    LocationService locationService,
+    AuthSessionService authService,
+    MeRepo meRepo,
+    BusinessRepo businessRepo,
+  )   : _locationService = locationService,
+        _authService = authService,
+        _meRepo = meRepo,
+        _businessRepo = businessRepo,
+        _vm = UserProfileVM(
           nickNameController: InputController(
             controller: TextEditingController(),
             focusNode: FocusNode(),
           ),
           firstNameController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getFirstNameForSignUp),
+            controller: TextEditingController(text: authService.userSessionDM?.user.getFirstNameForSignUp),
             focusNode: FocusNode(),
           ),
           lastNameController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getLastNameForSignUp),
+            controller: TextEditingController(text: authService.userSessionDM?.user.getLastNameForSignUp),
             focusNode: FocusNode(),
           ),
           emailController: InputController(
-            controller: TextEditingController(text: _authService.userSessionDM?.user.getEmailForSignUp),
+            controller: TextEditingController(text: authService.userSessionDM?.user.getEmailForSignUp),
             focusNode: FocusNode(),
           ),
           passwordController: InputController(
@@ -49,15 +57,15 @@ class SignUpCubit extends Cubit<SignUpState> {
             focusNode: FocusNode(),
           ),
           addressController: InputController(
-            controller: TextEditingController(text: _locationService.currentAddress),
+            controller: TextEditingController(text: locationService.currentAddress),
             focusNode: FocusNode(),
           ),
           cityController: InputController(
-            controller: TextEditingController(text: _locationService.currentCity),
+            controller: TextEditingController(text: locationService.currentCity),
             focusNode: FocusNode(),
           ),
           zipCodeController: InputController(
-            controller: TextEditingController(text: _locationService.currentZipCode),
+            controller: TextEditingController(text: locationService.currentZipCode),
             focusNode: FocusNode(),
           ),
           businessNameController: InputController(
@@ -74,17 +82,17 @@ class SignUpCubit extends Cubit<SignUpState> {
           ),
           businessCityController: InputController(
             controller:
-                TextEditingController(text: _authService.userSessionDM?.user.city ?? _locationService.currentCity),
+                TextEditingController(text: authService.userSessionDM?.user.city ?? locationService.currentCity),
             focusNode: FocusNode(),
           ),
           businessAddressController: InputController(
             controller: TextEditingController(
-                text: _authService.userSessionDM?.user.isClient == true ? '' : _locationService.currentAddress),
+                text: authService.userSessionDM?.user.isClient == true ? '' : locationService.currentAddress),
             focusNode: FocusNode(),
           ),
           businessZipCodeController: InputController(
-            controller: TextEditingController(
-                text: _authService.userSessionDM?.user.zipCode ?? _locationService.currentZipCode),
+            controller:
+                TextEditingController(text: authService.userSessionDM?.user.zipCode ?? locationService.currentZipCode),
             focusNode: FocusNode(),
           ),
           formKey: GlobalKey<FormState>(),
@@ -93,10 +101,10 @@ class SignUpCubit extends Cubit<SignUpState> {
           countryNode: FocusNode(),
           placesFocusNode: FocusNode(),
           businessCountryNode: FocusNode(),
-          country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == _locationService.currentCountryCode),
-          businessCountry: _authService.userSessionDM?.user.country,
-          businessCountryCode: _authService.userSessionDM?.user.country?.countryCode,
-          userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
+          country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode),
+          businessCountry: authService.userSessionDM?.user.country,
+          businessCountryCode: authService.userSessionDM?.user.country?.countryCode,
+          userSessionDM: authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
         ),
         super(const SignUpState.initial()) {
     _initializeMarkers();
@@ -289,7 +297,9 @@ class SignUpCubit extends Cubit<SignUpState> {
         success: (businessDM) {
           final manager = _authService.userSessionDM!.user.copyWith(business: [businessDM]);
           if (_authService.userSessionDM != null) {
-            _authService.setSession(_authService.userSessionDM!.copyWith(user: manager));
+            _authService
+              ..setSession(_authService.userSessionDM!.copyWith(user: manager))
+              ..initializeFavorites();
           }
 
           emit(_BusinessCreationFinished(_vm = _vm.copyWith(

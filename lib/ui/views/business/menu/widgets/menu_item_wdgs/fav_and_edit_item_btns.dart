@@ -119,15 +119,20 @@ class FavAndEditItemBtns extends StatelessWidget {
           );
         }
 
-        return LikeButton(
-          key: Key(item.uuid),
-          onPressed: () {},
-          liked: subCategory.items.indexOf(item).isEven,
-          tooltip: S.current.addToFavorites,
-          enableBackground: false,
-          enableShadows: false,
-          unlikeColor: ui.NeumoColors.disabled,
-        ).paddingAll(3);
+        return (menuCategory.isDrinks
+                ? FavoriteButton.forDrinkItem(
+                    key: Key(item.uuid),
+                    diameter: 28,
+                    iconSize: 16,
+                    item: item,
+                  )
+                : FavoriteButton.forFoodItem(
+                    key: Key(item.uuid),
+                    diameter: 28,
+                    iconSize: 16,
+                    item: item,
+                  ))
+            .paddingOnly(top: 4, right: 2);
       },
     );
   }

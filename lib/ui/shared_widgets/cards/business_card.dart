@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/data_models/business/business_dm.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:local_hero/local_hero.dart';
 
 class BusinessListCard extends StatelessWidget {
@@ -96,13 +91,11 @@ class BusinessListCard extends StatelessWidget {
                 ),
                 LocalHero(
                   tag: 'like-$heroTagPrefix',
-                  child: LikeButton(
-                    liked: true,
-                    onPressed: () {
-                      log('like pressed');
-                    },
+                  child: FavoriteButton.forBusiness(
+                    key: ValueKey(business.uuid),
                     diameter: 28,
                     iconSize: 16,
+                    business: business,
                   ),
                 ),
               ],
@@ -190,13 +183,11 @@ class BusinessGridCard extends StatelessWidget {
                     right: 3,
                     child: LocalHero(
                       tag: 'like-$heroTagPrefix',
-                      child: LikeButton(
-                        liked: true,
-                        onPressed: () {
-                          log('like pressed');
-                        },
+                      child: FavoriteButton.forBusiness(
+                        key: ValueKey(business.uuid),
                         diameter: 28,
                         iconSize: 16,
+                        business: business,
                       ),
                     ),
                   ),

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:foodly_world/core/core_exports.dart';
 
 import 'package:get_it/get_it.dart';
@@ -24,7 +23,8 @@ class DependencyInjectionService {
     /// Register Singletons
     di
       ..registerLazySingleton(() => LocationService())
-      ..registerSingleton<DialogService>(DialogService());
+      ..registerSingleton<DialogService>(DialogService())
+      ..registerLazySingleton(() => LocalStorageService());
 
     /// Register network clients
     di
@@ -39,10 +39,23 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => BusinessRepo(businessClient: di()));
 
     /// Register services
-    di.registerLazySingleton(
-      () => AuthSessionService(config: config, localStorageService: di(), appApiProvider: di(), meRepo: di()),
+    final authService = AuthSessionService(
+      config: config,
+      meRepo: di(),
+      localStorageService: di(),
+      appApiProvider: di(),
     );
 
-    di.registerLazySingleton(() => LocalStorageService());
+    di.registerLazySingleton(() => authService);
+
+    final favoritesCubit = FavoritesCubit(
+      businessRepo: di(),
+      logger: di(),
+      authService: authService,
+    );
+
+    di.registerLazySingleton(() => favoritesCubit);
+
+    authService.setFavoritesCubit(favoritesCubit);
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/like_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 //import 'package:foodly_world/ui/views/business/promotions/promotions_page.dart';
@@ -104,7 +104,7 @@ class TopOffersWidget extends StatelessWidget {
                       ).paddingBottom(8),
                     ],
                   ),
-                  Positioned(right: 6, top: 6, child: LikeButton(liked: e.key.isOdd)),
+                  Positioned(right: 6, top: 6, child: UIFavoriteWidget(liked: e.key.isOdd)),
                 ],
               ),
             ),

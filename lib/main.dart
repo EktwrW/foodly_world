@@ -1,23 +1,4 @@
-import 'package:dart_openai/dart_openai.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodly_world/core/core_exports.dart';
-
-import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.dart';
-import 'package:foodly_world/ui/shared_widgets/drawer/main_drawer.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
-import 'package:foodly_world/ui/views/foodly_wrapper.dart';
-import 'package:foodly_world/ui/views/home/widgets/smart_search/cubit/smart_search_cubit.dart';
-import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 void main() async => runApp(await buildFoodlyApp());
 
@@ -32,25 +13,27 @@ Future<Widget> buildFoodlyApp() async {
         kIsWeb ? HydratedStorageDirectory.web : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
+  final baseConfig = di<BaseConfig>();
   final rootBloc = RootBloc(authSessionService: di());
 
   di.registerLazySingleton(() => AppRouter(rootBloc: rootBloc));
 
-  if (di<BaseConfig>().isLoggingEnabled) {
+  if (baseConfig.isLoggingEnabled) {
     Bloc.observer = AppBlocObserver(config: config);
   }
 
-  OpenAI.apiKey = di<BaseConfig>().openaiApiKey;
+  OpenAI.apiKey = baseConfig.openaiApiKey;
 
   return MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => rootBloc),
-      BlocProvider(create: (context) => StartingCubit()),
+      BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
       BlocProvider(create: (context) => LocalAuthCubit()),
       BlocProvider(create: (context) => LocationBloc()),
       BlocProvider(create: (context) => BusinessBloc()),
-      BlocProvider(create: (context) => MainDrawerCubit()),
+      BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
       BlocProvider(create: (context) => SmartSearchCubit()),
+      BlocProvider(create: (context) => di<FavoritesCubit>()),
     ],
     child: MaterialApp.router(
       title: 'Foodly App',

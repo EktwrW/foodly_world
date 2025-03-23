@@ -6,9 +6,9 @@ part 'favorite_drinks_items_response_dm.g.dart';
 @JsonSerializable(createToJson: false)
 class FavoriteDrinksItemsResponseDM {
   @JsonKey(name: 'favorite_drinks_items', defaultValue: [])
-  final List<ItemDM> favoriteDrinksItems;
+  final List<ItemDM> favoriteDrinkItems;
 
-  const FavoriteDrinksItemsResponseDM({this.favoriteDrinksItems = const []});
+  const FavoriteDrinksItemsResponseDM({this.favoriteDrinkItems = const []});
 
   factory FavoriteDrinksItemsResponseDM.fromJson(Map<String, dynamic> json) =>
       _$FavoriteDrinksItemsResponseDMFromJson(json);

@@ -391,7 +391,12 @@ class _LikeOrEditWidget extends StatelessWidget {
           );
         }
 
-        return LikeButton(liked: promo.hashCode.isEven);
+        return FavoriteButton.forPromotion(
+          key: Key(promo.uuid),
+          diameter: 28,
+          iconSize: 16,
+          promotion: promo,
+        );
       },
     );
   }

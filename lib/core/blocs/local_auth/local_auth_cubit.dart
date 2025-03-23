@@ -1,9 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/local_auth/local_auth_dto.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -111,7 +107,9 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
       (response) {
         return response.when(
           success: (userSessionDM) {
-            _authSessionService.setSession(userSessionDM);
+            _authSessionService
+              ..setSession(userSessionDM)
+              ..initializeFavorites();
             emit(_Authenticated(_dto = _dto.copyWith(userSessionDM: userSessionDM, isAuthenticating: false)));
           },
           failure: (e) {

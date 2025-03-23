@@ -1,16 +1,11 @@
 // ignore_for_file: unused_field
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart';
 
-import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
-import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
-import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +14,7 @@ class AuthSessionService {
   final LocalStorageService _localStorageService;
   final FoodlyApiProvider _appApiProvider;
   final MeRepo _meRepo;
+  FavoritesCubit? _favoritesCubit;
 
   AuthSessionService({
     required BaseConfig config,
@@ -57,6 +53,17 @@ class AuthSessionService {
       ? userSessionDM = userSessionDM?.copyWith(user: userSessionDM!.user.copyWith(business: businesses))
       : null;
 
+  void setFavoritesCubit(FavoritesCubit cubit) {
+    _favoritesCubit = cubit;
+  }
+
+  void initializeFavorites() {
+    if (isLoggedIn && _favoritesCubit != null) {
+      _favoritesCubit!.initFromUserDM();
+      _favoritesCubit!.loadFavoriteObjects();
+    }
+  }
+
   void logout(BuildContext context) {
     if (context.read<LocalAuthCubit>().biometricAuthEnabled) {
       di<DialogService>().showCustomDialog(const LogoutDialog(), 2);
@@ -90,6 +97,7 @@ class AuthSessionService {
       userSessionDM = null;
       _authHeader = null;
       _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
+      _favoritesCubit?.clearAllFavorites();
 
       if (context.mounted) {
         context.read<RootBloc>().add(const RootEvent.userLogout());
