@@ -264,8 +264,12 @@ class AppRouter {
             transitionDuration: Durations.medium4,
             key: state.pageKey,
             child: BlocProvider(
-              create: (context) =>
-                  UserProfileCubit(state.pathParameters[AppRoutes.routeIdParam] ?? '', di(), di(), di()),
+              create: (context) => UserProfileCubit(
+                state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                di(),
+                di(),
+                di(),
+              ),
               child: const UserProfilePage(),
             ),
             transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -286,6 +290,7 @@ class AppRouter {
             key: state.pageKey,
             child: BlocProvider(
               create: (context) => MenuCubit(
+                di(),
                 uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 businessDM: state.extra as BusinessDM?,
               ),
@@ -305,6 +310,8 @@ class AppRouter {
             child: BlocProvider(
               create: (context) => PromotionsCubit(
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                di(),
+                di(),
               ),
               child: const PromotionsPage(),
             ),

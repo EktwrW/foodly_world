@@ -10,9 +10,10 @@ part 'menu_cubit.freezed.dart';
 
 class MenuCubit extends Cubit<MenuState> {
   MenuVM _vm;
-  static final _businessRepo = di<BusinessRepo>();
+  final BusinessRepo _businessRepo;
 
-  MenuCubit({
+  MenuCubit(
+    BusinessRepo businessRepo, {
     required String? uuid,
     required BusinessDM? businessDM,
   })  : _vm = MenuVM(
@@ -24,6 +25,7 @@ class MenuCubit extends Cubit<MenuState> {
           controller: PageController(),
           floatingButtonKey: GlobalKey(),
         ),
+        _businessRepo = businessRepo,
         super(const MenuState.initial(MenuVM())) {
     _loadMenu();
   }

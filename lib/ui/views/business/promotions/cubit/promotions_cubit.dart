@@ -10,17 +10,21 @@ part 'promotions_state.dart';
 
 class PromotionsCubit extends Cubit<PromotionsState> {
   PromotionsVM _vm;
-  final _logger = di<Logger>();
-  final _businessRepo = di<BusinessRepo>();
+  final Logger _logger;
+  final BusinessRepo _businessRepo;
 
   PromotionsCubit(
     String businessUuid,
+    BusinessRepo businessRepo,
+    Logger logger,
   )   : _vm = PromotionsVM(
           promotions: [],
           controller: PageController(),
           activePromosScrollController: ScrollController(debugLabel: 'active'),
           upcomingPromosScrollController: ScrollController(debugLabel: 'upcoming'),
         ),
+        _logger = logger,
+        _businessRepo = businessRepo,
         super(const PromotionsState.initial(PromotionsVM())) {
     _initializePromos();
   }
