@@ -1,12 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/string_extensions.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/menu/widgets/menu_snackbars.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -18,13 +16,13 @@ class MenuFloatingActionButton extends StatelessWidget {
     required this.floatingButtonKey,
     required this.loggedUserCanEdit,
     required this.menuUrl,
-    required this.businessName,
+    required this.menu,
   });
 
   final GlobalKey<FabCircularMenuPlusState>? floatingButtonKey;
   final bool loggedUserCanEdit;
   final String menuUrl;
-  final String businessName;
+  final MenuDM? menu;
 
   void _closeFAB() {
     if (floatingButtonKey?.currentState?.isOpen ?? false) {
@@ -35,6 +33,7 @@ class MenuFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MenuCubit>();
+    final logger = di<Logger>();
 
     return !cubit.state.vm.editMode
         ? FadeIn(
@@ -53,7 +52,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                 fabOpenIcon: const Icon(Icons.menu_open_outlined, color: Colors.white),
                 fabCloseIcon: const Icon(Icons.close_outlined, color: Colors.white),
                 animationDuration: Durations.extralong1,
-                onDisplayChange: (isOpen) => di<Logger>().i('The menu is open: $isOpen'),
+                onDisplayChange: (isOpen) => logger.i('The menu is open: $isOpen'),
                 children: <Widget>[
                   CustomRoundedNeumorphicButton(
                     onPressed: menuUrl.isNotEmpty
@@ -61,17 +60,17 @@ class MenuFloatingActionButton extends StatelessWidget {
                             _closeFAB();
                             try {
                               await Share.share(
-                                S.current.shareMenuMessage(businessName.toBold(), ('Foodly').toBold(), menuUrl),
+                                S.current.shareMenuMessage(
+                                    menu?.business?.name ?? '-'.toBold(), ('Foodly').toBold(), menuUrl),
                                 subject: S.current.shareMenuSubject,
                               );
                             } catch (e) {
-                              di<Logger>().e('Error sharing menu: $e');
+                              logger.e('Error sharing menu: $e');
 
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(S.current.shareMenuError),
-                                  ),
+                                  //TODO: set custom snackbar instead of generic
+                                  SnackBar(content: Text(S.current.shareMenuError)),
                                 );
                               }
                             }
@@ -95,7 +94,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                     depth: 4,
                     iconData: Icons.qr_code_2,
                   ),
-                  if (loggedUserCanEdit)
+                  if (!loggedUserCanEdit)
                     CustomRoundedNeumorphicButton(
                       onPressed: () async {
                         _closeFAB();
@@ -106,16 +105,13 @@ class MenuFloatingActionButton extends StatelessWidget {
                       iconSize: 26,
                       depth: 4,
                       iconData: Bootstrap.pencil_square,
-                    )
-                  else
-                    CustomRoundedNeumorphicButton(
-                      onPressed: () {
-                        _closeFAB();
-                      },
+                    ),
+                  if (loggedUserCanEdit && menu != null)
+                    FavoriteButton.forMenu(
+                      key: Key(menu!.uuid),
+                      menu: menu!,
                       tooltip: S.current.saveMenu,
                       iconSize: 25,
-                      depth: 4,
-                      iconData: Bootstrap.bookmark_heart_fill,
                     ),
                 ],
               ),

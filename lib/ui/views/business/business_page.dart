@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/business/widgets/additional_info/additional_info.dart';
 import 'package:foodly_world/ui/views/business/widgets/address/address.dart';
@@ -19,7 +14,6 @@ import 'package:foodly_world/ui/views/business/widgets/customer_reviews/customer
 import 'package:foodly_world/ui/views/business/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hours.dart';
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
-import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({super.key});

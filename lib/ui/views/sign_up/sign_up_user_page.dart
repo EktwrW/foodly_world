@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -15,7 +12,6 @@ import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_form.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_sliver_app_bar_wdg.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/terms_privacy_wdg.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/welcome_dialog.dart';
-import 'package:foodly_world/ui/views/starting/cubit/starting_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:go_router/go_router.dart';
 

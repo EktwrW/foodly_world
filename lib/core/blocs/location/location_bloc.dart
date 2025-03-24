@@ -1,12 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 
-import 'package:foodly_world/core/core_exports.dart' show BaseConfig, FoodlyStrings, di;
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, Bloc, Emitter, FoodlyStrings, Logger;
 
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:logger/logger.dart';
 
 part 'location_bloc.freezed.dart';
 part 'location_event.dart';
@@ -15,15 +13,20 @@ part 'location_state.dart';
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationDetailsDM _locationDM;
   final dio = Dio();
-  final _baseConfig = di<BaseConfig>();
+  final BaseConfig _baseConfig;
+  final Logger _logger;
 
   String get _placesBaseUrl => _baseConfig.googlePlacesBaseUrl;
   String get _apiKey => _baseConfig.googleDefaultApiKey;
   double get _latitude => _locationDM.position?.latitude ?? 0.0;
   double get _longitude => _locationDM.position?.longitude ?? 0.0;
 
-  LocationBloc()
-      : _locationDM = const LocationDetailsDM(),
+  LocationBloc(
+    BaseConfig baseConfig,
+    Logger logger,
+  )   : _baseConfig = baseConfig,
+        _logger = logger,
+        _locationDM = const LocationDetailsDM(),
         super(const _Initial()) {
     on<LocationEvent>((event, emit) async {
       await event
@@ -113,7 +116,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         }
       }
     } catch (e) {
-      di<Logger>().e('Error getting location data: $e');
+      _logger.e('Error getting location data: $e');
     }
   }
 }

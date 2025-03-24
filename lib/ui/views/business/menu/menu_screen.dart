@@ -135,10 +135,10 @@ class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMi
           );
         },
         child: MenuFloatingActionButton(
+          menu: vm.menuDM,
           floatingButtonKey: vm.floatingButtonKey,
           loggedUserCanEdit: vm.loggerUserCanEdit,
           menuUrl: _publicMenuUrl,
-          businessName: vm.menuDM?.business?.name ?? '-',
         ),
       ),
       body: NestedScrollView(

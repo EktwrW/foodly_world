@@ -1,10 +1,5 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,12 +14,19 @@ part 'business_event.dart';
 part 'business_state.dart';
 
 class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
-  static final _authService = di<AuthSessionService>();
-  static final _businessRepo = di<BusinessRepo>();
+  final AuthSessionService _authService;
+  final BusinessRepo _businessRepo;
+  final Logger _logger;
   BusinessVM _vm;
 
-  BusinessBloc()
-      : _vm = BusinessVM(
+  BusinessBloc(
+    AuthSessionService authService,
+    BusinessRepo businessRepo,
+    Logger logger,
+  )   : _authService = authService,
+        _businessRepo = businessRepo,
+        _logger = logger,
+        _vm = BusinessVM(
           nameFormKey: GlobalKey<FormState>(),
           locationFormKey: GlobalKey<FormState>(),
           categoryFormKey: GlobalKey<FormState>(),
@@ -239,7 +241,6 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
 
   Future<void> _uploadPictures(Emitter<BusinessState> emit) async {
     final paths = _vm.picturesPath.where((p) => p.imageId == null).toList();
-    log('$paths');
 
     if (_vm.currentBusiness?.intId != null && paths.isNotEmpty) {
       emit(_UpdatingPictures(_vm));
@@ -261,7 +262,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
             ),
           );
     } else {
-      log('no images to store');
+      _logger.w('no images to store');
     }
   }
 
@@ -359,7 +360,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   /// Dashboard common methods
 
   void _handleError(AppRequestException error, Emitter emit) {
-    di<Logger>().e(error);
+    _logger.e(error);
     emit(_Error('$error', _vm));
   }
 

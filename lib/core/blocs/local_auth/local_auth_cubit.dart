@@ -9,11 +9,18 @@ part 'local_auth_state.dart';
 class LocalAuthCubit extends Cubit<LocalAuthState> {
   LocalAuthDTO _dto;
   final LocalAuthentication auth = LocalAuthentication();
-  final _meRepo = di<MeRepo>();
-  final _authSessionService = di<AuthSessionService>();
+  final MeRepo _meRepo;
+  final AuthSessionService _authSessionService;
+  final Logger _logger;
 
-  LocalAuthCubit()
-      : _dto = const LocalAuthDTO(),
+  LocalAuthCubit(
+    MeRepo meRepo,
+    AuthSessionService authSessionService,
+    Logger logger,
+  )   : _authSessionService = authSessionService,
+        _meRepo = meRepo,
+        _logger = logger,
+        _dto = const LocalAuthDTO(),
         super(const LocalAuthState.initial(LocalAuthDTO())) {
     if (!kIsWeb) {
       initializeLocalAuth();
@@ -28,7 +35,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
     emit(_Loading(_dto));
     await auth.isDeviceSupported().then(
       (isSupported) async {
-        if (di<AuthSessionService>().isLoggedIn && isSupported == false) {
+        if (_authSessionService.isLoggedIn && isSupported == false) {
           await _checkLoginStatusCall();
         }
 
@@ -42,7 +49,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           await _getAvailableBiometrics();
         }
 
-        if (di<AuthSessionService>().isLoggedIn && biometricAuthEnabled) {
+        if (_authSessionService.isLoggedIn && biometricAuthEnabled) {
           emit(_NeedAuthentication(_dto));
         } else {
           emit(_Loaded(_dto));
@@ -58,7 +65,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           );
     } on PlatformException catch (e) {
       _dto = _dto.copyWith(availableBiometrics: <BiometricType>[]);
-      di<Logger>().e(e.toString());
+      _logger.e(e.toString());
     }
   }
 
@@ -68,7 +75,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
       canCheckBiometrics = await auth.canCheckBiometrics;
     } on PlatformException catch (e) {
       canCheckBiometrics = false;
-      di<Logger>().e(e.toString());
+      _logger.e(e.toString());
     }
 
     return canCheckBiometrics;
@@ -89,14 +96,14 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           if (authenticated) {
             await _checkLoginStatusCall();
           } else {
-            di<Logger>().e(S.current.unauthorizedAccess);
+            _logger.e(S.current.unauthorizedAccess);
             emit(_Error(S.current.unauthorizedAccess, _dto.copyWith(isAuthenticating: false)));
           }
         },
       );
       return;
     } on PlatformException catch (e) {
-      di<Logger>().e('$e');
+      _logger.e('$e');
       emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
       return;
     }
@@ -113,7 +120,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
             emit(_Authenticated(_dto = _dto.copyWith(userSessionDM: userSessionDM, isAuthenticating: false)));
           },
           failure: (e) {
-            di<Logger>().e('$e');
+            _logger.e('$e');
             emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
           },
         );

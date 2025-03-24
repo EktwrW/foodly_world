@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 
 class FoodlyLocationWrapper extends StatefulWidget {

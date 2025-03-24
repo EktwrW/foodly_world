@@ -1,11 +1,7 @@
 import 'dart:async' show Timer;
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart' show Durations, FocusNode, TextEditingController;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
-import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/views/home/widgets/smart_search/view_model/smart_search_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
@@ -20,11 +16,16 @@ part 'smart_search_cubit.freezed.dart';
 class SmartSearchCubit extends Cubit<SmartSearchState> {
   final SpeechToText _speechToText;
   Timer? _listenTimer;
-  final _businessRepo = di<BusinessRepo>();
+  final BusinessRepo _businessRepo;
+  final Logger _logger;
   SmartSearchVM _vm;
 
-  SmartSearchCubit()
-      : _speechToText = SpeechToText(),
+  SmartSearchCubit(
+    BusinessRepo businessRepo,
+    Logger logger,
+  )   : _speechToText = SpeechToText(),
+        _businessRepo = businessRepo,
+        _logger = logger,
         _vm = SmartSearchVM.initial(),
         super(SmartSearchState.initial(SmartSearchVM.initial())) {
     _initialize();
@@ -38,7 +39,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
       final available = await _speechToText.initialize(
         onError: _handleError,
-        onStatus: (status) => di<Logger>().t('Status: $status'),
+        onStatus: (status) => _logger.t('Status: $status'),
         debugLogging: true,
       );
 
@@ -62,7 +63,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         emit(SmartSearchState.error(S.current.speechRecognitionUnavailable, _vm));
       }
     } on Exception catch (e) {
-      di<Logger>().e('Error de inicialización: $e');
+      _logger.e('Error de inicialización: $e');
       emit(SmartSearchState.error(S.current.speechRecognitionError, _vm));
     }
   }

@@ -28,11 +28,11 @@ Future<Widget> buildFoodlyApp() async {
     providers: [
       BlocProvider(create: (context) => rootBloc),
       BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
-      BlocProvider(create: (context) => LocalAuthCubit()),
-      BlocProvider(create: (context) => LocationBloc()),
-      BlocProvider(create: (context) => BusinessBloc()),
+      BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
+      BlocProvider(create: (context) => LocationBloc(di(), di())),
+      BlocProvider(create: (context) => BusinessBloc(di(), di(), di())),
       BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
-      BlocProvider(create: (context) => SmartSearchCubit()),
+      BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
       BlocProvider(create: (context) => di<FavoritesCubit>()),
     ],
     child: MaterialApp.router(

@@ -6,8 +6,9 @@ import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show FontAwesome;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
 /// Un enum que representa los diferentes tipos de elementos que pueden ser favoritos
 enum FavoriteItemType {
@@ -15,7 +16,9 @@ enum FavoriteItemType {
   menu,
   foodItem,
   drinkItem,
-  promotion,
+  promotion;
+
+  bool get isMenu => this == menu;
 }
 
 /// Un widget que encapsula la funcionalidad de favoritos integrándose con el FavoritesCubit
@@ -39,6 +42,8 @@ class FavoriteButton extends StatelessWidget {
   final Color unlikeColor;
   final bool enableShadows;
   final bool enableBackground;
+  final IconData addFavoriteIcon;
+  final IconData isFavoriteIcon;
 
   /// Constructor privado base
   const FavoriteButton._({
@@ -55,6 +60,8 @@ class FavoriteButton extends StatelessWidget {
     this.unlikeColor = Colors.white,
     this.enableShadows = true,
     this.enableBackground = true,
+    this.addFavoriteIcon = FontAwesome.heart_circle_plus_solid,
+    this.isFavoriteIcon = FontAwesome.heart_circle_check_solid,
   });
 
   /// Factory constructor para negocio
@@ -95,9 +102,9 @@ class FavoriteButton extends StatelessWidget {
     double iconSize = 20,
     double diameter = 34,
     Color likedBackgroundColor = Colors.white60,
-    required Color unlikedBackgroundColor,
+    Color unlikedBackgroundColor = FoodlyThemes.primaryFoodly,
     String? tooltip,
-    required Color likeColor,
+    Color likeColor = FoodlyThemes.primaryFoodly,
     Color unlikeColor = Colors.white,
     bool enableShadows = true,
     bool enableBackground = true,
@@ -116,6 +123,8 @@ class FavoriteButton extends StatelessWidget {
       unlikeColor: unlikeColor,
       enableShadows: enableShadows,
       enableBackground: enableBackground,
+      addFavoriteIcon: Bootstrap.bookmark_plus,
+      isFavoriteIcon: Bootstrap.bookmark_heart_fill,
     );
   }
 
@@ -244,6 +253,9 @@ class FavoriteButton extends StatelessWidget {
       selector: (state) => _isFavorite(state),
       builder: (context, isFavorite) {
         return UIFavoriteWidget(
+          key: key,
+          addFavoriteIcon: addFavoriteIcon,
+          isFavoriteIcon: isFavoriteIcon,
           liked: isFavorite,
           onPressed: () => _toggleFavorite(favoritesCubit),
           iconSize: iconSize,
@@ -255,6 +267,7 @@ class FavoriteButton extends StatelessWidget {
           unlikeColor: unlikeColor,
           enableShadows: enableShadows,
           enableBackground: enableBackground,
+          useMenuStyle: type.isMenu,
         );
       },
     );
@@ -274,6 +287,11 @@ class UIFavoriteWidget extends StatelessWidget {
   final bool enableShadows;
   final bool enableBackground;
 
+  final bool useMenuStyle;
+  final double neumorphicDepth;
+  final IconData addFavoriteIcon;
+  final IconData isFavoriteIcon;
+
   const UIFavoriteWidget({
     super.key,
     this.onPressed,
@@ -287,10 +305,26 @@ class UIFavoriteWidget extends StatelessWidget {
     this.unlikeColor = Colors.white,
     this.enableShadows = true,
     this.enableBackground = true,
+    this.useMenuStyle = false,
+    this.neumorphicDepth = 4,
+    required this.addFavoriteIcon,
+    required this.isFavoriteIcon,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Si estamos utilizando el estilo de menú, renderizar el botón neumórfico
+    if (useMenuStyle) {
+      return CustomRoundedNeumorphicButton(
+        onPressed: onPressed,
+        tooltip: tooltip ?? S.current.saveMenu,
+        iconSize: 25,
+        depth: neumorphicDepth,
+        child: _buildMenuContent(),
+      );
+    }
+
+    // Si no, renderizar el botón circular estándar
     return Tooltip(
       message: tooltip ?? S.current.addToFavorites,
       child: InkWell(
@@ -302,57 +336,111 @@ class UIFavoriteWidget extends StatelessWidget {
             SizedBox.square(
               dimension: diameter,
               child: DecoratedBox(
-                  decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: enableBackground
-                    ? (liked ? likedBackgroundColor : unlikedBackgroundColor?.withValues(alpha: .15))
-                    : Colors.transparent,
-              )),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: enableBackground
+                      ? (liked ? likedBackgroundColor : unlikedBackgroundColor?.withValues(alpha: .15))
+                      : Colors.transparent,
+                ),
+              ),
             ),
-            !liked
-                ? FadeIn(
-                    child: Icon(
-                      FontAwesome.heart_circle_plus_solid,
-                      color: unlikeColor,
-                      shadows: enableShadows
-                          ? [
-                              Shadow(
-                                  color: FoodlyThemes.primaryFoodly.withValues(alpha: .39),
-                                  offset: const Offset(1, 2),
-                                  blurRadius: 4.0),
-                            ]
-                          : [],
-                      size: iconSize,
-                    ),
-                  )
-                : Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      ZoomOut(
-                        from: 1.6,
-                        child: Icon(
-                          FontAwesome.heart_circle_bolt_solid,
-                          color: likeColor,
-                          size: iconSize,
-                        ),
-                      ),
-                      ElasticIn(
-                        child: Icon(
-                          FontAwesome.heart_circle_check_solid,
-                          color: likeColor,
-                          size: iconSize,
-                          shadows: enableShadows
-                              ? [
-                                  const Shadow(color: Colors.white30, offset: Offset(1, 2), blurRadius: 4.0),
-                                ]
-                              : [],
-                        ),
-                      ),
-                    ],
-                  ),
+            _buildStandardContent(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildMenuContent() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        !liked
+            ? FadeIn(
+                child: Icon(
+                  addFavoriteIcon,
+                  color: FoodlyThemes.primaryFoodly,
+                  size: iconSize,
+                ),
+              )
+            : _BuildAnimatedFavoriteContentWdg(
+                key: key,
+                likeColor: likeColor,
+                iconSize: iconSize,
+                enableShadows: enableShadows,
+                addFavoriteIcon: addFavoriteIcon,
+                isFavoriteIcon: isFavoriteIcon,
+              ),
+      ],
+    );
+  }
+
+  Widget _buildStandardContent() {
+    return !liked
+        ? FadeIn(
+            child: Icon(
+              FontAwesome.heart_circle_plus_solid,
+              color: unlikeColor,
+              shadows: enableShadows
+                  ? [
+                      Shadow(
+                          color: FoodlyThemes.primaryFoodly.withValues(alpha: .39),
+                          offset: const Offset(1, 2),
+                          blurRadius: 4.0),
+                    ]
+                  : [],
+              size: iconSize,
+            ),
+          )
+        : _BuildAnimatedFavoriteContentWdg(
+            key: key,
+            likeColor: likeColor,
+            iconSize: iconSize,
+            enableShadows: enableShadows,
+            addFavoriteIcon: addFavoriteIcon,
+            isFavoriteIcon: isFavoriteIcon,
+          );
+  }
+}
+
+class _BuildAnimatedFavoriteContentWdg extends StatelessWidget {
+  const _BuildAnimatedFavoriteContentWdg({
+    super.key,
+    required this.likeColor,
+    required this.iconSize,
+    required this.enableShadows,
+    required this.addFavoriteIcon,
+    required this.isFavoriteIcon,
+  });
+
+  final Color? likeColor;
+  final double iconSize;
+  final bool enableShadows;
+  final IconData addFavoriteIcon;
+  final IconData isFavoriteIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ZoomOut(
+          from: 1.6,
+          child: Icon(addFavoriteIcon, color: likeColor, size: iconSize),
+        ),
+        ElasticIn(
+          child: Icon(
+            isFavoriteIcon,
+            color: likeColor,
+            size: iconSize,
+            shadows: enableShadows
+                ? [
+                    const Shadow(color: Colors.white30, offset: Offset(1, 2), blurRadius: 4.0),
+                  ]
+                : [],
+          ),
+        ),
+      ],
     );
   }
 }

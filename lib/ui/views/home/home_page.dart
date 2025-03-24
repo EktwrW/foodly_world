@@ -1,10 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:flutter_neumo/flutter_neumo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_icons_data.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:foodly_world/ui/views/foodly_wrapper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 

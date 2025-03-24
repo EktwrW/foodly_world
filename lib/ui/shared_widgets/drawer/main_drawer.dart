@@ -1,17 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
-import 'package:foodly_world/ui/shared_widgets/drawer/cubit/main_drawer_cubit.dart';
 import 'package:foodly_world/ui/shared_widgets/drawer/view_model/main_drawer_vm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sidebarx/sidebarx.dart';
