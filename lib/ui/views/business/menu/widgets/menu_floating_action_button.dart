@@ -94,7 +94,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                     depth: 4,
                     iconData: Icons.qr_code_2,
                   ),
-                  if (!loggedUserCanEdit)
+                  if (loggedUserCanEdit)
                     CustomRoundedNeumorphicButton(
                       onPressed: () async {
                         _closeFAB();
@@ -106,7 +106,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                       depth: 4,
                       iconData: Bootstrap.pencil_square,
                     ),
-                  if (loggedUserCanEdit && menu != null)
+                  if (!loggedUserCanEdit && menu != null)
                     FavoriteButton.forMenu(
                       key: Key(menu!.uuid),
                       menu: menu!,

@@ -5,6 +5,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/animations/sliver_app_bar_animations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
@@ -122,22 +123,35 @@ class BusinessSliverAppBar extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: SizedBox.square(
-                                  dimension: 45,
-                                  child: CustomRoundedNeumorphicButton(
-                                    onPressed: () => bloc.add(const BusinessEvent.editCoverImagesDialog()),
-                                    buttonColor: FoodlyThemes.primaryFoodly.withValues(alpha: .15),
-                                    iconColor: Colors.white70,
-                                    iconData: Bootstrap.pencil_square,
-                                    iconSize: 28,
-                                    iconShape: ui.NeumoShape.concave,
-                                    shape: ui.NeumoShape.concave,
-                                    disableDepth: true,
-                                  ),
-                                ).paddingAll(6),
-                              ),
+                              if (vm.loggedUserCanEdit)
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: SizedBox.square(
+                                    dimension: 45,
+                                    child: CustomRoundedNeumorphicButton(
+                                      onPressed: () => bloc.add(const BusinessEvent.editCoverImagesDialog()),
+                                      buttonColor: FoodlyThemes.primaryFoodly.withValues(alpha: .39),
+                                      iconColor: Colors.white,
+                                      iconData: Bootstrap.pencil_square,
+                                      iconSize: 28,
+                                      iconShape: ui.NeumoShape.concave,
+                                      shape: ui.NeumoShape.concave,
+                                      disableDepth: true,
+                                    ),
+                                  ).paddingAll(6),
+                                ),
+                              if (!vm.loggedUserCanEdit && vm.currentBusiness != null)
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: SizedBox.square(
+                                    dimension: 45,
+                                    child: FavoriteButton.forBusiness(
+                                      business: vm.currentBusiness!,
+                                      diameter: 20,
+                                      iconSize: 22,
+                                    ),
+                                  ).paddingAll(6),
+                                ),
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: EditableAvatarWdg(

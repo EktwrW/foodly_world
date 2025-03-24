@@ -18,7 +18,7 @@ enum FavoriteItemType {
   drinkItem,
   promotion;
 
-  bool get isMenu => this == menu;
+  bool get isMenuOrBusiness => this == menu || this == business;
 }
 
 /// Un widget que encapsula la funcionalidad de favoritos integrándose con el FavoritesCubit
@@ -70,10 +70,10 @@ class FavoriteButton extends StatelessWidget {
     required BusinessDM business,
     double iconSize = 20,
     double diameter = 34,
-    Color likedBackgroundColor = Colors.white60,
+    Color likedBackgroundColor = Colors.transparent,
     Color unlikedBackgroundColor = FoodlyThemes.primaryFoodly,
     String? tooltip,
-    Color likeColor = FoodlyThemes.favourites,
+    Color likeColor = FoodlyThemes.primaryFoodly,
     Color unlikeColor = Colors.white,
     bool enableShadows = true,
     bool enableBackground = true,
@@ -92,6 +92,8 @@ class FavoriteButton extends StatelessWidget {
       unlikeColor: unlikeColor,
       enableShadows: enableShadows,
       enableBackground: enableBackground,
+      addFavoriteIcon: Bootstrap.bookmark_plus,
+      isFavoriteIcon: Bootstrap.bookmark_heart_fill,
     );
   }
 
@@ -101,7 +103,7 @@ class FavoriteButton extends StatelessWidget {
     required MenuDM menu,
     double iconSize = 20,
     double diameter = 34,
-    Color likedBackgroundColor = Colors.white60,
+    Color likedBackgroundColor = Colors.transparent,
     Color unlikedBackgroundColor = FoodlyThemes.primaryFoodly,
     String? tooltip,
     Color likeColor = FoodlyThemes.primaryFoodly,
@@ -267,7 +269,7 @@ class FavoriteButton extends StatelessWidget {
           unlikeColor: unlikeColor,
           enableShadows: enableShadows,
           enableBackground: enableBackground,
-          useMenuStyle: type.isMenu,
+          useMenuOrBusinessStyle: type.isMenuOrBusiness,
         );
       },
     );
@@ -287,7 +289,7 @@ class UIFavoriteWidget extends StatelessWidget {
   final bool enableShadows;
   final bool enableBackground;
 
-  final bool useMenuStyle;
+  final bool useMenuOrBusinessStyle;
   final double neumorphicDepth;
   final IconData addFavoriteIcon;
   final IconData isFavoriteIcon;
@@ -305,7 +307,7 @@ class UIFavoriteWidget extends StatelessWidget {
     this.unlikeColor = Colors.white,
     this.enableShadows = true,
     this.enableBackground = true,
-    this.useMenuStyle = false,
+    this.useMenuOrBusinessStyle = false,
     this.neumorphicDepth = 4,
     required this.addFavoriteIcon,
     required this.isFavoriteIcon,
@@ -314,7 +316,7 @@ class UIFavoriteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Si estamos utilizando el estilo de menú, renderizar el botón neumórfico
-    if (useMenuStyle) {
+    if (useMenuOrBusinessStyle) {
       return CustomRoundedNeumorphicButton(
         onPressed: onPressed,
         tooltip: tooltip ?? S.current.saveMenu,
