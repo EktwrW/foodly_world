@@ -1,7 +1,3 @@
-import 'dart:typed_data' show Uint8List;
-
-import 'package:flutter/material.dart'
-    show AutovalidateMode, FormState, GlobalKey, PageController, ScrollController, TextEditingController;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

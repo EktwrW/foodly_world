@@ -1,13 +1,7 @@
-import 'dart:typed_data' show Uint8List;
-
-import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart' as itr show IterableExtension;
-import 'package:dart_openai/dart_openai.dart' show OpenAIImageStyle;
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

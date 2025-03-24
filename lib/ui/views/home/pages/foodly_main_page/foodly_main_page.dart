@@ -1,25 +1,19 @@
 import 'dart:math' as math;
 
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
-import 'package:foodly_world/data_models/business/business_dm.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/home_app_bar_mobile.dart';
 import 'package:foodly_world/ui/views/home/widgets/home_categories_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
-import 'package:foodly_world/ui/views/home/widgets/smart_search/cubit/smart_search_cubit.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:local_hero/local_hero.dart';
 

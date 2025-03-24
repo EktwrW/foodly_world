@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:typed_data' show Uint8List;
 
-import 'package:dart_openai/dart_openai.dart';
 import 'package:dio/dio.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';

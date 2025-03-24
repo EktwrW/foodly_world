@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 
 class GoRouterObserver extends NavigatorObserver {
