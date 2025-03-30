@@ -12,13 +12,15 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
 /// Un enum que representa los diferentes tipos de elementos que pueden ser favoritos
 enum FavoriteItemType {
-  business,
+  businessPage,
+  businessCard,
   menu,
   foodItem,
   drinkItem,
   promotion;
 
-  bool get isMenuOrBusiness => this == menu || this == business;
+  bool get isMenuOrBusinessPage => this == menu || this == businessPage;
+  bool get isBusinessCard => this == businessCard;
 }
 
 /// Un widget que encapsula la funcionalidad de favoritos integrándose con el FavoritesCubit
@@ -44,6 +46,7 @@ class FavoriteButton extends StatelessWidget {
   final bool enableBackground;
   final IconData addFavoriteIcon;
   final IconData isFavoriteIcon;
+  final double? alphaOpacity;
 
   /// Constructor privado base
   const FavoriteButton._({
@@ -62,10 +65,11 @@ class FavoriteButton extends StatelessWidget {
     this.enableBackground = true,
     this.addFavoriteIcon = FontAwesome.heart_circle_plus_solid,
     this.isFavoriteIcon = FontAwesome.heart_circle_check_solid,
+    this.alphaOpacity = .15,
   });
 
   /// Factory constructor para negocio
-  factory FavoriteButton.forBusiness({
+  factory FavoriteButton.forBusinessPage({
     Key? key,
     required BusinessDM business,
     double iconSize = 20,
@@ -80,7 +84,7 @@ class FavoriteButton extends StatelessWidget {
   }) {
     return FavoriteButton._(
       key: key,
-      type: FavoriteItemType.business,
+      type: FavoriteItemType.businessPage,
       itemId: business.uuid,
       item: business,
       iconSize: iconSize,
@@ -94,6 +98,41 @@ class FavoriteButton extends StatelessWidget {
       enableBackground: enableBackground,
       addFavoriteIcon: Bootstrap.bookmark_plus,
       isFavoriteIcon: Bootstrap.bookmark_heart_fill,
+    );
+  }
+
+  /// Factory constructor para tarjeta de negocio
+  factory FavoriteButton.forBusinessCard({
+    Key? key,
+    required BusinessDM business,
+    double iconSize = 20,
+    double diameter = 34,
+    Color likedBackgroundColor = Colors.white70,
+    Color unlikedBackgroundColor = Colors.white,
+    String? tooltip,
+    Color likeColor = FoodlyThemes.primaryFoodly,
+    Color unlikeColor = FoodlyThemes.primaryFoodly,
+    bool enableShadows = true,
+    bool enableBackground = true,
+    double? alphaOpacity = .69,
+  }) {
+    return FavoriteButton._(
+      key: key,
+      type: FavoriteItemType.businessCard,
+      itemId: business.uuid,
+      item: business,
+      iconSize: iconSize,
+      diameter: diameter,
+      likedBackgroundColor: likedBackgroundColor,
+      unlikedBackgroundColor: unlikedBackgroundColor,
+      tooltip: tooltip,
+      likeColor: likeColor,
+      unlikeColor: unlikeColor,
+      enableShadows: enableShadows,
+      enableBackground: enableBackground,
+      addFavoriteIcon: Bootstrap.bookmark_plus,
+      isFavoriteIcon: Bootstrap.bookmark_heart_fill,
+      alphaOpacity: alphaOpacity,
     );
   }
 
@@ -229,7 +268,7 @@ class FavoriteButton extends StatelessWidget {
 
     return state.maybeWhen(
       loaded: (vm) => switch (type) {
-        FavoriteItemType.business => vm.favoriteBusinessIds.contains(itemId),
+        FavoriteItemType.businessPage || FavoriteItemType.businessCard => vm.favoriteBusinessIds.contains(itemId),
         FavoriteItemType.menu => vm.favoriteMenuIds.contains(itemId),
         FavoriteItemType.promotion => vm.savedPromotionIds.contains(itemId),
         _ => vm.favoriteItemIds.contains(itemId),
@@ -240,7 +279,9 @@ class FavoriteButton extends StatelessWidget {
 
   /// Ejecuta la acción de toggle basada en el tipo de elemento
   void _toggleFavorite(FavoritesCubit favoritesCubit) => switch (type) {
-        FavoriteItemType.business => favoritesCubit.toggleBusinessFavorite(item as BusinessDM),
+        FavoriteItemType.businessPage ||
+        FavoriteItemType.businessCard =>
+          favoritesCubit.toggleBusinessFavorite(item as BusinessDM),
         FavoriteItemType.menu => favoritesCubit.toggleMenuFavorite(item as MenuDM),
         FavoriteItemType.foodItem => favoritesCubit.toggleFoodItemFavorite(item as ItemDM),
         FavoriteItemType.drinkItem => favoritesCubit.toggleDrinkItemFavorite(item as ItemDM),
@@ -251,15 +292,33 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final favoritesCubit = context.read<FavoritesCubit>();
 
-    return BlocSelector<FavoritesCubit, FavoritesState, bool>(
-      selector: (state) => _isFavorite(state),
-      builder: (context, isFavorite) {
+    return BlocBuilder<FavoritesCubit, FavoritesState>(
+      buildWhen: (previous, current) {
+        final prevFavorite = previous.maybeWhen(
+          loaded: (vm) => _isFavorite(previous),
+          orElse: () => false,
+        );
+        final currFavorite = current.maybeWhen(
+          loaded: (vm) => _isFavorite(current),
+          orElse: () => false,
+        );
+
+        return prevFavorite != currFavorite;
+      },
+      builder: (context, state) {
+        final isFavorite = _isFavorite(state);
+        final isInitialBuild = context.mounted && !state.vm.hasBeenToggled(itemId);
+
+        final shouldAnimate = isFavorite && !isInitialBuild;
+
         return UIFavoriteWidget(
           key: key,
           addFavoriteIcon: addFavoriteIcon,
           isFavoriteIcon: isFavoriteIcon,
           liked: isFavorite,
-          onPressed: () => _toggleFavorite(favoritesCubit),
+          onPressed: () {
+            _toggleFavorite(favoritesCubit);
+          },
           iconSize: iconSize,
           diameter: diameter,
           likedBackgroundColor: likedBackgroundColor,
@@ -269,7 +328,9 @@ class FavoriteButton extends StatelessWidget {
           unlikeColor: unlikeColor,
           enableShadows: enableShadows,
           enableBackground: enableBackground,
-          useMenuOrBusinessStyle: type.isMenuOrBusiness,
+          useMenuOrBusinessStyle: type.isMenuOrBusinessPage,
+          shouldAnimate: shouldAnimate,
+          alphaOpacity: alphaOpacity,
         );
       },
     );
@@ -288,11 +349,12 @@ class UIFavoriteWidget extends StatelessWidget {
   final Color? unlikeColor;
   final bool enableShadows;
   final bool enableBackground;
-
+  final bool shouldAnimate;
   final bool useMenuOrBusinessStyle;
   final double neumorphicDepth;
   final IconData addFavoriteIcon;
   final IconData isFavoriteIcon;
+  final double? alphaOpacity;
 
   const UIFavoriteWidget({
     super.key,
@@ -311,6 +373,8 @@ class UIFavoriteWidget extends StatelessWidget {
     this.neumorphicDepth = 4,
     required this.addFavoriteIcon,
     required this.isFavoriteIcon,
+    this.shouldAnimate = false,
+    this.alphaOpacity = 0.15,
   });
 
   @override
@@ -341,7 +405,7 @@ class UIFavoriteWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: enableBackground
-                      ? (liked ? likedBackgroundColor : unlikedBackgroundColor?.withValues(alpha: .15))
+                      ? (liked ? likedBackgroundColor : unlikedBackgroundColor?.withValues(alpha: alphaOpacity))
                       : Colors.transparent,
                 ),
               ),
@@ -381,7 +445,7 @@ class UIFavoriteWidget extends StatelessWidget {
     return !liked
         ? FadeIn(
             child: Icon(
-              FontAwesome.heart_circle_plus_solid,
+              addFavoriteIcon,
               color: unlikeColor,
               shadows: enableShadows
                   ? [
@@ -401,6 +465,7 @@ class UIFavoriteWidget extends StatelessWidget {
             enableShadows: enableShadows,
             addFavoriteIcon: addFavoriteIcon,
             isFavoriteIcon: isFavoriteIcon,
+            shouldAnimate: shouldAnimate,
           );
   }
 }
@@ -413,6 +478,7 @@ class _BuildAnimatedFavoriteContentWdg extends StatelessWidget {
     required this.enableShadows,
     required this.addFavoriteIcon,
     required this.isFavoriteIcon,
+    this.shouldAnimate = false,
   });
 
   final Color? likeColor;
@@ -420,6 +486,7 @@ class _BuildAnimatedFavoriteContentWdg extends StatelessWidget {
   final bool enableShadows;
   final IconData addFavoriteIcon;
   final IconData isFavoriteIcon;
+  final bool shouldAnimate;
 
   @override
   Widget build(BuildContext context) {
@@ -427,10 +494,12 @@ class _BuildAnimatedFavoriteContentWdg extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         ZoomOut(
+          animate: shouldAnimate,
           from: 1.6,
-          child: Icon(addFavoriteIcon, color: likeColor, size: iconSize),
+          child: Icon(shouldAnimate ? addFavoriteIcon : isFavoriteIcon, color: likeColor, size: iconSize),
         ),
         ElasticIn(
+          animate: shouldAnimate,
           child: Icon(
             isFavoriteIcon,
             color: likeColor,
