@@ -17,6 +17,10 @@ class FavoritesVM {
   final List<ItemDM> favoriteDrinkItems;
   final List<PromotionDM> favoritePromotions;
 
+  // Seguimiento de elementos que han sido cambiados explícitamente
+  // para controlar la animación
+  final Set<String> toggledItemIds;
+
   const FavoritesVM({
     this.favoriteBusinessIds = const [],
     this.favoriteMenuIds = const [],
@@ -27,6 +31,7 @@ class FavoritesVM {
     this.favoriteFoodItems = const [],
     this.favoriteDrinkItems = const [],
     this.favoritePromotions = const [],
+    this.toggledItemIds = const {},
   });
 
   /// Crea un VM a partir del UserDM (solo IDs)
@@ -52,6 +57,7 @@ class FavoritesVM {
     List<ItemDM>? favoriteFoodItems,
     List<ItemDM>? favoriteDrinkItems,
     List<PromotionDM>? favoritePromotions,
+    Set<String>? toggledItemIds,
   }) {
     return FavoritesVM(
       favoriteBusinessIds: favoriteBusinessIds ?? this.favoriteBusinessIds,
@@ -63,6 +69,17 @@ class FavoritesVM {
       favoriteFoodItems: favoriteFoodItems ?? this.favoriteFoodItems,
       favoriteDrinkItems: favoriteDrinkItems ?? this.favoriteDrinkItems,
       favoritePromotions: favoritePromotions ?? this.favoritePromotions,
+      toggledItemIds: toggledItemIds ?? this.toggledItemIds,
     );
+  }
+
+  FavoritesVM withToggledItem(String itemId) {
+    final newToggledItemIds = Set<String>.from(toggledItemIds)..add(itemId);
+    return copyWith(toggledItemIds: newToggledItemIds);
+  }
+
+  /// Verifica si un elemento ha sido togglado anteriormente
+  bool hasBeenToggled(String itemId) {
+    return toggledItemIds.contains(itemId);
   }
 }
