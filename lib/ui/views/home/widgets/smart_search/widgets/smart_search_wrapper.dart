@@ -112,6 +112,9 @@ class BusinessResultsView extends StatelessWidget {
     return LocalHeroScope(
       curve: Curves.decelerate,
       duration: Durations.long4,
+      createRectTween: (begin, end) {
+        return MaterialRectCenterArcTween(begin: begin, end: end);
+      },
       child: isGridView
           ? GridView.count(
               key: const ValueKey(SearchResultsViewMode.grid),
