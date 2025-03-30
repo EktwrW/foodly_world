@@ -40,6 +40,7 @@ class FoodlyDrawer extends StatelessWidget {
   Widget _buildSidebarXContent(BuildContext context, MainDrawerVM vm) {
     final cubit = context.read<MainDrawerCubit>();
     final navigator = di<AppRouter>();
+    final authService = di<AuthSessionService>();
 
     return SidebarX(
       animationDuration: Durations.medium4,
@@ -61,7 +62,7 @@ class FoodlyDrawer extends StatelessWidget {
           IconButton(
             onPressed: () {
               FoodlyMainScaffold.toggleDrawer();
-              di<AuthSessionService>().logout(rootNavigatorKey.currentContext ?? context);
+              authService.logout(rootNavigatorKey.currentContext ?? context);
             },
             icon: const Icon(Bootstrap.door_open_fill, size: 32),
             tooltip: S.current.logout,
@@ -94,7 +95,7 @@ class FoodlyDrawer extends StatelessWidget {
             children: [
               Expanded(
                 child: EditableAvatarWdg(
-                  imageUrl: di<AuthSessionService>().userSessionDM?.user.avatarUrl ?? '',
+                  imageUrl: authService.userSessionDM?.user.avatarUrl ?? '',
                   size: avatarSize,
                   iconSize: iconSize,
                   buttonDiameter: buttonDiameter,
@@ -111,8 +112,8 @@ class FoodlyDrawer extends StatelessWidget {
       items: [
         SidebarXItem(
           onTap: () {
-            navigator.appRouter.goNamed(AppRoutes.foodlyMainPage.name,
-                pathParameters: {AppRoutes.routeIdParam: di<AuthSessionService>().uuid});
+            navigator.appRouter
+                .goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
 
             cubit.updateSelectedIndex(0);
             FoodlyMainScaffold.toggleDrawer();
@@ -121,11 +122,11 @@ class FoodlyDrawer extends StatelessWidget {
               FoodlyIsoIconBehavior(height: 16, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
           label: 'Home',
         ),
-        if (di<AuthSessionService>().userIsManager)
+        if (authService.userIsManager)
           SidebarXItem(
             onTap: () {
               navigator.appRouter.goNamed(AppRoutes.business.name,
-                  pathParameters: {AppRoutes.routeIdParam: di<AuthSessionService>().uuid});
+                  pathParameters: {AppRoutes.routeIdParam: authService.userSessionDM?.user.business.first.uuid ?? ''});
 
               cubit.updateSelectedIndex(1);
               FoodlyMainScaffold.toggleDrawer();
@@ -135,8 +136,8 @@ class FoodlyDrawer extends StatelessWidget {
           ),
         SidebarXItem(
           onTap: () {
-            navigator.appRouter.goNamed(AppRoutes.profileScreen.name,
-                pathParameters: {AppRoutes.routeIdParam: di<AuthSessionService>().uuid});
+            navigator.appRouter
+                .goNamed(AppRoutes.profileScreen.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
 
             cubit.updateSelectedIndex(2);
             FoodlyMainScaffold.toggleDrawer();
