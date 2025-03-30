@@ -30,7 +30,6 @@ Future<Widget> buildFoodlyApp() async {
       BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
       BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
       BlocProvider(create: (context) => LocationBloc(di(), di())),
-      BlocProvider(create: (context) => BusinessBloc(di(), di(), di())),
       BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
       BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
       BlocProvider(create: (context) => di<FavoritesCubit>()),
