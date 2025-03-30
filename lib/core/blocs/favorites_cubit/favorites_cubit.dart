@@ -119,10 +119,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       updatedBusinesses = List<BusinessDM>.from(_vm.favoriteBusinesses)..removeWhere((b) => b.uuid == uuid);
     }
 
-    _vm = _vm.copyWith(
-      favoriteBusinessIds: updatedIds,
-      favoriteBusinesses: updatedBusinesses,
-    );
+    _vm = _vm
+        .copyWith(
+          favoriteBusinessIds: updatedIds,
+          favoriteBusinesses: updatedBusinesses,
+        )
+        .withToggledItem(uuid);
+
     emit(FavoritesState.loaded(_vm));
 
     try {
@@ -197,10 +200,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       updatedMenus = List<MenuDM>.from(_vm.favoriteMenus)..removeWhere((m) => m.uuid == uuid);
     }
 
-    _vm = _vm.copyWith(
-      favoriteMenuIds: updatedIds,
-      favoriteMenus: updatedMenus,
-    );
+    _vm = _vm
+        .copyWith(
+          favoriteMenuIds: updatedIds,
+          favoriteMenus: updatedMenus,
+        )
+        .withToggledItem(uuid);
+
     emit(FavoritesState.loaded(_vm));
 
     try {
@@ -291,11 +297,14 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       }
     }
 
-    _vm = _vm.copyWith(
-      favoriteItemIds: updatedIds,
-      favoriteFoodItems: updatedFoodItems,
-      favoriteDrinkItems: updatedDrinkItems,
-    );
+    _vm = _vm
+        .copyWith(
+          favoriteItemIds: updatedIds,
+          favoriteFoodItems: updatedFoodItems,
+          favoriteDrinkItems: updatedDrinkItems,
+        )
+        .withToggledItem(uuid);
+
     emit(FavoritesState.loaded(_vm));
 
     try {
@@ -381,10 +390,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       updatedPromotions = List<PromotionDM>.from(_vm.favoritePromotions)..removeWhere((p) => p.uuid == uuid);
     }
 
-    _vm = _vm.copyWith(
-      savedPromotionIds: updatedIds,
-      favoritePromotions: updatedPromotions,
-    );
+    _vm = _vm
+        .copyWith(
+          savedPromotionIds: updatedIds,
+          favoritePromotions: updatedPromotions,
+        )
+        .withToggledItem(uuid);
+
     emit(FavoritesState.loaded(_vm));
 
     // API call
