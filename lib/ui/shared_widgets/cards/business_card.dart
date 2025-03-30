@@ -91,7 +91,7 @@ class BusinessListCard extends StatelessWidget {
                 ),
                 LocalHero(
                   tag: 'like-$heroTagPrefix',
-                  child: FavoriteButton.forBusiness(
+                  child: FavoriteButton.forBusinessCard(
                     key: ValueKey(business.uuid),
                     diameter: 28,
                     iconSize: 16,
@@ -183,7 +183,7 @@ class BusinessGridCard extends StatelessWidget {
                     right: 3,
                     child: LocalHero(
                       tag: 'like-$heroTagPrefix',
-                      child: FavoriteButton.forBusiness(
+                      child: FavoriteButton.forBusinessCard(
                         key: ValueKey(business.uuid),
                         diameter: 28,
                         iconSize: 16,

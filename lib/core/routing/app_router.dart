@@ -276,8 +276,8 @@ class AppRouter {
                 FadeTransition(opacity: animation, child: child),
           ),
         ),
-         _goRouteWithTransition(
-          AppRoutes.myBusiness,
+        _goRouteWithTransition(
+          AppRoutes.business,
           BlocProvider(
             create: (context) => BusinessBloc(di(), di(), di()),
             child: const BusinessPage(),
