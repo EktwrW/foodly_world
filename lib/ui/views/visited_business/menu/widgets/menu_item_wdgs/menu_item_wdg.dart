@@ -21,7 +21,8 @@ class MenuItemWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
+    return AnimatedOpacity(
+      duration: Durations.short1,
       opacity: _itemNotAvailable ? .5 : 1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

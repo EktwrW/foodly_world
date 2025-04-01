@@ -131,7 +131,8 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                 style: FoodlyTextStyles.secondaryTitle,
               ),
               actions: [
-                Opacity(
+                AnimatedOpacity(
+                  duration: Durations.medium1,
                   opacity: vm.tooltipActive ? 0.3 : 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -148,7 +149,8 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                   ).paddingRight(UIDimens.SCREEN_PADDING_MOB),
                 )
               ],
-              leading: Opacity(
+              leading: AnimatedOpacity(
+                  duration: Durations.medium1,
                   opacity: vm.tooltipActive ? 0.3 : 1,
                   child: Row(
                     children: [

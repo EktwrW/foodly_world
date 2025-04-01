@@ -23,7 +23,8 @@ class MenuItemWdg extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<ManageMenuCubit>();
 
-    return Opacity(
+    return AnimatedOpacity(
+      duration: Durations.short1,
       opacity: _itemNotAvailable ? .5 : 1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

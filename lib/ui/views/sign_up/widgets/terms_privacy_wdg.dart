@@ -21,7 +21,8 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(
+    return AnimatedOpacity(
+      duration: Durations.medium2,
       opacity: enabled ? 1.0 : .3,
       child: Row(
         children: [

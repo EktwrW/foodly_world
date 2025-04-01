@@ -320,7 +320,8 @@ class _PromoPlaceholderState extends State<PromoPlaceholder> with SingleTickerPr
 
             return ScaleTransition(
               scale: scaleAnimation,
-              child: Opacity(
+              child: AnimatedOpacity(
+                duration: Durations.short1,
                 opacity: opacityAnimation.value * fadeOutAnimation.value,
                 child: Icon(
                   _icons[_currentIconIndex],

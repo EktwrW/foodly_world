@@ -105,7 +105,8 @@ class Home369AppBarMobile extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
-                        child: Opacity(
+                        child: AnimatedOpacity(
+                          duration: Duration.zero,
                           opacity: .15,
                           child: Asset(
                             FoodlyAssets.isoFoodlyWhite,
