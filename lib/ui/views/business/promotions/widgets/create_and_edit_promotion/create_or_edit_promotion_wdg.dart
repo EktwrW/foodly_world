@@ -1,13 +1,13 @@
-part of '../../promotions_page.dart';
+part of '../../manage_promotions_page.dart';
 
 class CreateOrEditPromotionWdg extends StatelessWidget {
   const CreateOrEditPromotionWdg({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PromotionsCubit, PromotionsState>(
+    return BlocBuilder<ManagePromotionsCubit, ManagePromotionsState>(
       builder: (context, state) {
-        final cubit = context.read<PromotionsCubit>();
+        final cubit = context.read<ManagePromotionsCubit>();
         final vm = state.vm;
 
         return FadeIn(
@@ -31,7 +31,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                           replacement: const SizedBox(height: 16),
                           child: CustomNeumorphicButton(
                             key: const Key('generate-promo-using-ai-service'),
-                            onPressed: () => PromotionsSnackbars.showCreatePromoWithAI(context, cubit, vm),
+                            onPressed: () => ManagePromotionsSnackbars.showCreatePromoWithAI(context, cubit, vm),
                             padding: const EdgeInsets.all(10),
                             text: S.current.generateWithAI,
                             shape: ui.NeumoShape.convex,

@@ -1,4 +1,4 @@
-part of '../../promotions_page.dart';
+part of '../../manage_promotions_page.dart';
 
 class _SelectWeekdaysWdg extends StatelessWidget {
   const _SelectWeekdaysWdg({
@@ -7,8 +7,8 @@ class _SelectWeekdaysWdg extends StatelessWidget {
     required this.cubit,
   });
 
-  final PromotionsVM vm;
-  final PromotionsCubit cubit;
+  final ManagePromotionsVM vm;
+  final ManagePromotionsCubit cubit;
 
   @override
   Widget build(BuildContext context) {

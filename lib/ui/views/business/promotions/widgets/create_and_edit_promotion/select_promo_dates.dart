@@ -1,4 +1,4 @@
-part of '../../promotions_page.dart';
+part of '../../manage_promotions_page.dart';
 
 class _StartAndExpiryDatesWdg extends StatelessWidget {
   const _StartAndExpiryDatesWdg({
@@ -7,8 +7,8 @@ class _StartAndExpiryDatesWdg extends StatelessWidget {
     required this.vm,
   });
 
-  final PromotionsCubit cubit;
-  final PromotionsVM vm;
+  final ManagePromotionsCubit cubit;
+  final ManagePromotionsVM vm;
 
   @override
   Widget build(BuildContext context) {

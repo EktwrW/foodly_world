@@ -18,7 +18,7 @@ class BusinessFooterButtons extends StatelessWidget {
           children: [
             FooterButton(
               onPressed: () => context.goNamed(
-                AppRoutes.menu.name,
+                AppRoutes.manageMenu.name,
                 pathParameters: {
                   AppRoutes.routeIdParam: vm.currentBusiness?.menus.firstOrNull?.uuid ?? FoodlyStrings.NEW_MENU
                 },
@@ -33,7 +33,7 @@ class BusinessFooterButtons extends StatelessWidget {
             ),
             FooterButton(
               onPressed: () => context.goNamed(
-                AppRoutes.promotions.name,
+                AppRoutes.managePromotions.name,
                 pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
               ),
               dimension: 30,

@@ -58,10 +58,10 @@ class ReviewCard extends StatelessWidget {
                       children: [
                         Text('Fecha de Publicacion:',
                             style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic)),
-                        const Text('25 - 12 - 2023', style: FoodlyTextStyles.captionBold),
+                        const Text('25 - 12 - 2023', style: FoodlyTextStyles.captionPurpleBold),
                         Text('Visitado el:', style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic))
                             .paddingTop(10),
-                        const Text('24 - 12 - 2024', style: FoodlyTextStyles.captionBold)
+                        const Text('24 - 12 - 2024', style: FoodlyTextStyles.captionPurpleBold)
                       ],
                     ).paddingHorizontal(16),
                   ],

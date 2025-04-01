@@ -39,87 +39,92 @@ class BusinessListCard extends StatelessWidget {
     final currentDay = business.businessDays.currentDaySchedule;
 
     return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          Flexible(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              spacing: 10,
-              children: [
-                LocalHero(
-                  tag: 'avatar-$heroTagPrefix',
-                  child: AvatarWidget(
-                    avatarUrl: business.logo,
-                    avatarStyle: AvatarStyle.square,
-                    height: 60,
-                    width: 60,
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
+            pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            Flexible(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                spacing: 10,
+                children: [
+                  LocalHero(
+                    tag: 'avatar-$heroTagPrefix',
+                    child: AvatarWidget(
+                      avatarUrl: business.logo,
+                      avatarStyle: AvatarStyle.square,
+                      height: 60,
+                      width: 60,
+                    ),
                   ),
-                ),
-                Flexible(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          business.name ?? '-',
-                          style: FoodlyTextStyles.captionPurpleBold,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            business.name ?? '-',
+                            style: FoodlyTextStyles.captionPurpleBold,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                business.fullAddress,
-                                style: FoodlyTextStyles.cardsSmallSubtitle,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                        Flexible(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  business.fullAddress,
+                                  style: FoodlyTextStyles.cardsSmallSubtitle,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                LocalHero(
-                  tag: 'like-$heroTagPrefix',
-                  child: FavoriteButton.forBusinessCard(
-                    key: ValueKey(business.uuid),
-                    diameter: 28,
-                    iconSize: 16,
-                    business: business,
+                  LocalHero(
+                    tag: 'like-$heroTagPrefix',
+                    child: FavoriteButton.forBusinessCard(
+                      key: ValueKey(business.uuid),
+                      diameter: 28,
+                      iconSize: 16,
+                      business: business,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Flexible(
-            child: Row(
-              spacing: 8,
-              children: [
-                _buildStatusBadge(currentDay.currentStatus),
-                Text(
-                  currentDay.formattedHours,
-                  style: FoodlyTextStyles.caption,
-                ),
-                const Spacer(),
-                LocalHero(
-                  tag: 'category-$heroTagPrefix',
-                  child: SizedBox.square(dimension: 28, child: business.category?.icon ?? const SizedBox.shrink()),
-                ),
-              ],
+            Flexible(
+              child: Row(
+                spacing: 8,
+                children: [
+                  _buildStatusBadge(currentDay.currentStatus),
+                  Text(
+                    currentDay.formattedHours,
+                    style: FoodlyTextStyles.caption,
+                  ),
+                  const Spacer(),
+                  LocalHero(
+                    tag: 'category-$heroTagPrefix',
+                    child: SizedBox.square(dimension: 28, child: business.category?.icon ?? const SizedBox.shrink()),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ).paddingAll(8),
+          ],
+        ).paddingAll(8),
+      ),
     );
   }
 }
@@ -160,90 +165,96 @@ class BusinessGridCard extends StatelessWidget {
     return SizedBox(
       width: context.screenWidth * .43,
       child: Card(
-        child: Column(
-          spacing: 8,
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  LocalHero(
-                    tag: 'avatar-$heroTagPrefix',
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: AvatarWidget(
-                        avatarUrl: business.logo,
-                        avatarStyle: AvatarStyle.square,
-                        height: double.infinity,
-                        width: double.infinity,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 3,
-                    right: 3,
-                    child: LocalHero(
-                      tag: 'like-$heroTagPrefix',
-                      child: FavoriteButton.forBusinessCard(
-                        key: ValueKey(business.uuid),
-                        diameter: 28,
-                        iconSize: 16,
-                        business: business,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: Text(
-                    business.name ?? '-',
-                    style: FoodlyTextStyles.captionPurpleBold,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Flexible(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          business.fullAddress,
-                          style: FoodlyTextStyles.cardsSmallSubtitle,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
+              pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business),
+          child: Column(
+            spacing: 8,
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    LocalHero(
+                      tag: 'avatar-$heroTagPrefix',
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: AvatarWidget(
+                          avatarUrl: business.logo,
+                          avatarStyle: AvatarStyle.square,
+                          height: double.infinity,
+                          width: double.infinity,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ).paddingBottom(4),
-            Column(
-              spacing: 6,
-              children: [
-                Text(
-                  currentDay.formattedHours,
-                  style: FoodlyTextStyles.cardsSmallSubtitle,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildStatusBadge(currentDay.currentStatus),
-                    LocalHero(
-                      tag: 'category-$heroTagPrefix',
-                      child: SizedBox.square(dimension: 28, child: business.category?.icon ?? const SizedBox.shrink()),
+                    ),
+                    Positioned(
+                      top: 3,
+                      right: 3,
+                      child: LocalHero(
+                        tag: 'like-$heroTagPrefix',
+                        child: FavoriteButton.forBusinessCard(
+                          key: ValueKey(business.uuid),
+                          diameter: 28,
+                          iconSize: 16,
+                          business: business,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          ],
-        ).paddingAll(8),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      business.name ?? '-',
+                      style: FoodlyTextStyles.captionPurpleBold,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            business.fullAddress,
+                            style: FoodlyTextStyles.cardsSmallSubtitle,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ).paddingBottom(4),
+              Column(
+                spacing: 6,
+                children: [
+                  Text(
+                    currentDay.formattedHours,
+                    style: FoodlyTextStyles.cardsSmallSubtitle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildStatusBadge(currentDay.currentStatus),
+                      LocalHero(
+                        tag: 'category-$heroTagPrefix',
+                        child:
+                            SizedBox.square(dimension: 28, child: business.category?.icon ?? const SizedBox.shrink()),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ).paddingAll(8),
+        ),
       ),
     );
   }

@@ -54,6 +54,11 @@ class FoodlyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  static const captionPurple = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 12,
+  );
+
   static const captionPurpleBold = TextStyle(
     color: FoodlyThemes.primaryFoodly,
     fontSize: 12,
@@ -155,6 +160,18 @@ class FoodlyTextStyles {
     fontSize: 14,
   );
 
+  static const itemPriceBold = TextStyle(
+    fontSize: 11,
+    color: Colors.black87,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const itemPricePurpleBold = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+  );
+
   static const label = TextStyle(
     color: Colors.black87,
     fontSize: 13,
@@ -196,18 +213,6 @@ class FoodlyTextStyles {
     color: Colors.white,
     fontSize: 22,
     fontWeight: FontWeight.w700,
-  );
-
-  static const itemPriceBold = TextStyle(
-    fontSize: 11,
-    color: Colors.black87,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const itemPricePurpleBold = TextStyle(
-    color: FoodlyThemes.primaryFoodly,
-    fontSize: 11,
-    fontWeight: FontWeight.bold,
   );
 
   static const primaryBodyBold = TextStyle(
@@ -293,5 +298,10 @@ class FoodlyTextStyles {
   static const toogleButtonText = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 13,
+  );
+
+  static const visitBusinessBody = TextStyle(
+    color: FoodlyThemes.primaryFoodly,
+    fontSize: 14,
   );
 }

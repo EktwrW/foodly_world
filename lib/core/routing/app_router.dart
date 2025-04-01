@@ -5,10 +5,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:foodly_world/core/core_exports.dart';
 
 import 'package:foodly_world/ui/views/business/business_page.dart';
-import 'package:foodly_world/ui/views/business/menu/cubit/menu_cubit.dart';
-import 'package:foodly_world/ui/views/business/menu/menu_screen.dart';
-import 'package:foodly_world/ui/views/business/promotions/cubit/promotions_cubit.dart';
-import 'package:foodly_world/ui/views/business/promotions/promotions_page.dart';
+import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
+import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
+import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotions_cubit.dart';
+import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/faved_business_page/faved_business_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
@@ -24,6 +24,12 @@ import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart';
 import 'package:foodly_world/ui/views/user_profile/user_profile_page.dart';
+import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/menu_screen.dart';
+import 'package:foodly_world/ui/views/visited_business/promotions/cubit/promotions_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
+import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -277,7 +283,7 @@ class AppRouter {
           ),
         ),
         _goRouteWithTransition(
-          AppRoutes.business,
+          AppRoutes.myBusiness,
           BlocProvider(
             create: (context) => BusinessBloc(di(), di(), di()),
             child: const BusinessPage(),
@@ -285,8 +291,66 @@ class AppRouter {
           [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
         ),
         GoRoute(
-          path: AppRoutes.menu.path,
-          name: AppRoutes.menu.name,
+          path: AppRoutes.manageMenu.path,
+          name: AppRoutes.manageMenu.name,
+          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => ManageMenuCubit(
+                di(),
+                uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                businessDM: state.extra as BusinessDM?,
+              ),
+              child: const ManageMenuScreen(),
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.managePromotions.path,
+          name: AppRoutes.managePromotions.name,
+          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => ManagePromotionsCubit(
+                state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                di(),
+                di(),
+              ),
+              child: const ManagePromotionsPage(),
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.visitBusiness.path,
+          name: AppRoutes.visitBusiness.name,
+          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => VisitBusinessCubit(
+                di(),
+                di(),
+                state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                state.extra as BusinessDM?,
+              ),
+              child: const VisitedBusinessPage(),
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.visitMenu.path,
+          name: AppRoutes.visitMenu.name,
           redirect: Redirector([]).call,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             transitionDuration: Durations.medium4,
@@ -304,8 +368,8 @@ class AppRouter {
           ),
         ),
         GoRoute(
-          path: AppRoutes.promotions.path,
-          name: AppRoutes.promotions.name,
+          path: AppRoutes.visitPromotions.path,
+          name: AppRoutes.visitPromotions.name,
           redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             transitionDuration: Durations.medium4,

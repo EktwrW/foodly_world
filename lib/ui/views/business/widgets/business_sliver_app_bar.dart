@@ -5,7 +5,6 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/animations/sliver_app_bar_animations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
@@ -113,7 +112,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                                                     fadeInDuration: Durations.medium2,
                                                     fit: BoxFit.fitWidth,
                                                     progressIndicatorBuilder: (context, url, progress) =>
-                                                        const LoadingWidgetFoodlyIso().paddingAll(20),
+                                                        const LoadingWidgetFoodlyIso().paddingAll(24),
                                                   ),
                                                 )
                                                 .toList(),
@@ -137,18 +136,6 @@ class BusinessSliverAppBar extends StatelessWidget {
                                       iconShape: ui.NeumoShape.concave,
                                       shape: ui.NeumoShape.concave,
                                       disableDepth: true,
-                                    ),
-                                  ).paddingAll(6),
-                                ),
-                              if (!vm.loggedUserCanEdit && vm.currentBusiness != null)
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: SizedBox.square(
-                                    dimension: 45,
-                                    child: FavoriteButton.forBusinessPage(
-                                      business: vm.currentBusiness!,
-                                      diameter: 20,
-                                      iconSize: 22,
                                     ),
                                   ).paddingAll(6),
                                 ),

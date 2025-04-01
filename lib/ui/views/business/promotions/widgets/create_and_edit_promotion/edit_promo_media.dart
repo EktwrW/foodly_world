@@ -1,4 +1,4 @@
-part of '../../promotions_page.dart';
+part of '../../manage_promotions_page.dart';
 
 enum MediaMenuAction { removePhotos, removeVideo, uploadImage, uploadVideo, addYoutubeUrl }
 
@@ -8,12 +8,12 @@ class _EditPromoMediaWdg extends StatelessWidget {
     required this.vm,
   });
 
-  final PromotionsVM vm;
+  final ManagePromotionsVM vm;
   static const _maxVideoDuration = Duration(seconds: 20);
 
   void _addYoutubeUrl(BuildContext context) {
     if (vm.youtubeUrlCtrl != null && vm.youtubeUrlFormKey != null) {
-      final cubit = context.read<PromotionsCubit>();
+      final cubit = context.read<ManagePromotionsCubit>();
 
       di<DialogService>().showCustomDialog(
         YoutubeUrlDialog(
@@ -158,7 +158,7 @@ class _EditPromoMediaWdg extends StatelessWidget {
   }
 
   Future<void> _pickImage(BuildContext context) async {
-    final cubit = context.read<PromotionsCubit>();
+    final cubit = context.read<ManagePromotionsCubit>();
     cubit.updateEditMode(PromotionEditing.media);
 
     final path = await pickImage(
@@ -174,7 +174,7 @@ class _EditPromoMediaWdg extends StatelessWidget {
   }
 
   Future<void> _pickVideo(BuildContext context) async {
-    final cubit = context.read<PromotionsCubit>();
+    final cubit = context.read<ManagePromotionsCubit>();
     cubit.updateEditMode(PromotionEditing.media);
 
     final result = await FilePicker.platform.pickFiles(type: FileType.video);

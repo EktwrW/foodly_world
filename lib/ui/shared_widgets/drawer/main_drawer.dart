@@ -125,7 +125,7 @@ class FoodlyDrawer extends StatelessWidget {
         if (authService.userIsManager)
           SidebarXItem(
             onTap: () {
-              navigator.appRouter.goNamed(AppRoutes.business.name,
+              navigator.appRouter.goNamed(AppRoutes.myBusiness.name,
                   pathParameters: {AppRoutes.routeIdParam: authService.userSessionDM?.user.business.first.uuid ?? ''});
 
               cubit.updateSelectedIndex(1);

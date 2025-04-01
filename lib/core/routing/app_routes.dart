@@ -15,9 +15,12 @@ enum AppRoutes {
   favedBusiness('$_routeIdParam/faved-business', 'favedBusiness'),
   notifications('$_routeIdParam/notifications', 'notifications'),
   // Business routes
-  business('$mainRoute/$_routeIdParam/business', 'business'),
-  menu('/menu/$_routeIdParam', 'menu'),
-  promotions('$mainRoute/$_routeIdParam/business/promotions', 'promotions'),
+  myBusiness('$mainRoute/$_routeIdParam/my-business', 'myBusiness'),
+  manageMenu('/manage-menu/$_routeIdParam', 'manageMenu'),
+  managePromotions('$mainRoute/$_routeIdParam/my-business/manage-promotions', 'managePromotions'),
+  visitBusiness('$mainRoute/$_routeIdParam/visit-business', 'visitBusiness'),
+  visitMenu('/visit-menu/$_routeIdParam', 'visitMenu'),
+  visitPromotions('$mainRoute/$_routeIdParam/visit-business/visit-promotions', 'visitPromotions'),
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //

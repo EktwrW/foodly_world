@@ -331,6 +331,7 @@ class FavoriteButton extends StatelessWidget {
           useMenuOrBusinessStyle: type.isMenuOrBusinessPage,
           shouldAnimate: shouldAnimate,
           alphaOpacity: alphaOpacity,
+          neumorphicDepth: type.isMenuOrBusinessPage ? 2 : 4,
         );
       },
     );
@@ -436,6 +437,7 @@ class UIFavoriteWidget extends StatelessWidget {
                 enableShadows: enableShadows,
                 addFavoriteIcon: addFavoriteIcon,
                 isFavoriteIcon: isFavoriteIcon,
+                shouldAnimate: shouldAnimate,
               ),
       ],
     );
