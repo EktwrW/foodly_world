@@ -50,7 +50,6 @@ class BusinessListCard extends StatelessWidget {
             Flexible(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 spacing: 10,
                 children: [
                   LocalHero(
@@ -63,6 +62,7 @@ class BusinessListCard extends StatelessWidget {
                     ),
                   ),
                   Flexible(
+                    fit: FlexFit.tight,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -36,7 +36,7 @@ class ServicesWdg extends StatelessWidget {
             onPressed: !vm.loggedUserCanEdit || vm.isEditingServices
                 ? null
                 : () => bloc.add(const BusinessEvent.updateEditing(DashboardEditing.services)),
-          ),
+          ).paddingBottom(6),
           Visibility(
             visible: vm.isEditingServices,
             replacement: TextButton(

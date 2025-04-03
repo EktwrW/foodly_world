@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
-import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_regex.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart' show FoodlyInputType;
 import 'package:foodly_world/core/utils/form_validations.dart';
@@ -48,6 +46,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
   final void Function()? onEditingComplete;
   final bool hideCurrentSnackBarWhenOnTap;
   final double? minLinesHeightFactorReference;
+  final bool isUnavailable;
 
   const FoodlyPrimaryInputText({
     super.key,
@@ -85,6 +84,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
     this.onEditingComplete,
     this.hideCurrentSnackBarWhenOnTap = true,
     this.minLinesHeightFactorReference,
+    this.isUnavailable = false,
   });
 
   double get _getMinLinesHeightFactor => minLinesHeightFactorReference ?? 40;
@@ -206,19 +206,17 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             (value) {
               final notValue = value == null || value.isEmpty;
 
+              if (!enabled) return null;
+
               switch (inputTextType) {
                 case FoodlyInputType.nickName:
-                  if (!enabled) return null;
-
                   if (notValue) return S.current.pleaseEnterNickName;
 
                   if (value.length < 3) {
                     return S.current.mustContainAtLeast3Characters;
                   }
 
-                  final cubit = context.read<CheckAvailabilitiesCubit>();
-
-                  if (cubit.isUnavailable) {
+                  if (isUnavailable) {
                     return S.current.usernameNotAvailable;
                   }
 

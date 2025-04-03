@@ -29,38 +29,30 @@ class CheckAvailabilitiesCubit extends Cubit<CheckAvailabilitiesState> {
     return super.close();
   }
 
-  bool get isNotInitialState => state is! _Initial;
-  bool get isInitialState => state is _Initial;
-  bool get isAvailable => state is _Available;
-  bool get isUnavailable => state is _Unavailable;
-  bool get isLoading => state is _Loading;
-
   void resetToInitialState() => emit(const _Initial());
 
   void onTextChanged(String text) {
-    _textChangeSubject.add(text); // Agrega el texto al Subject
+    _textChangeSubject.add(text);
   }
 
   void _validateAndCheckUsername(String text) {
-    // Ahora es privado
     if (text.length > 2) {
       _checkUsernameAvailability(text);
     } else {
-      emit(const _Unavailable());
+      emit(const _Initial());
     }
   }
 
   void _checkUsernameAvailability(String text) async {
-    // Ahora es privado
     await Future.microtask(() => emit(const _Loading()));
 
     await _meRepo.checkUsernameAvailability(text).then((result) {
       result.when(
-        success: (usernameDM) {
+        success: (usernameDM) async {
           if (usernameDM.isAvailable) {
-            emit(const _Available());
+            await Future.microtask(() => emit(const _Available()));
           } else {
-            emit(const _Unavailable());
+            await Future.microtask(() => emit(const _Unavailable()));
           }
         },
         failure: (e) => emit(_Error(e.errorMsg)),

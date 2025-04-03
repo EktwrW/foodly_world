@@ -27,10 +27,11 @@ class EditUserNameDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       color: FoodlyThemes.primaryFoodly,
                     ),
-                    child: BlocBuilder<CheckAvailabilitiesCubit, CheckAvailabilitiesState>(
-                      builder: (context, state) {
+                    child: BlocSelector<CheckAvailabilitiesCubit, CheckAvailabilitiesState, bool>(
+                      selector: (state) => state.isAvailable,
+                      builder: (context, isAvailable) {
                         return SaveAndCancelButtons(
-                          showSaveButton: cubit.isAvailable,
+                          showSaveButton: isAvailable,
                           onSavePressed: onSavePressed,
                           onCancelPressed: () {
                             _cancel(context);
@@ -73,7 +74,7 @@ class EditUserNameDialog extends StatelessWidget {
                               children: [
                                 FoodlyAnimatedOpacity(
                                   key: const Key('initial'),
-                                  visible: cubit.isInitialState,
+                                  visible: state.isInitialState,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -88,7 +89,7 @@ class EditUserNameDialog extends StatelessWidget {
                                 ),
                                 FoodlyAnimatedOpacity(
                                   key: const Key('loading'),
-                                  visible: cubit.isLoading,
+                                  visible: state.isLoading,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -103,7 +104,7 @@ class EditUserNameDialog extends StatelessWidget {
                                 ),
                                 FoodlyAnimatedOpacity(
                                   key: const Key('available'),
-                                  visible: cubit.isAvailable,
+                                  visible: state.isAvailable,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -118,7 +119,7 @@ class EditUserNameDialog extends StatelessWidget {
                                 ),
                                 FoodlyAnimatedOpacity(
                                   key: const Key('unavailable'),
-                                  visible: cubit.isUnavailable,
+                                  visible: state.isUnavailable,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -135,17 +136,23 @@ class EditUserNameDialog extends StatelessWidget {
                             );
                           },
                         ).paddingBottom(24),
-                        FoodlyPrimaryInputText(
-                          controller: vm.nickNameController?.controller,
-                          onChanged: (p0) {
-                            cubit.onTextChanged(p0);
+                        BlocSelector<CheckAvailabilitiesCubit, CheckAvailabilitiesState, (bool, bool)>(
+                          selector: (state) => (state.isLoading, state.isUnavailable),
+                          builder: (context, record) {
+                            return FoodlyPrimaryInputText(
+                              controller: vm.nickNameController?.controller,
+                              onChanged: (p0) {
+                                cubit.onTextChanged(p0);
+                              },
+                              focusNode: vm.nickNameController?.focusNode,
+                              inputTextType: FoodlyInputType.nickName,
+                              autovalidateMode: AutovalidateMode.always,
+                              enabled: true,
+                              showLeading: false,
+                              autofocus: true,
+                              isUnavailable: record.$2,
+                            );
                           },
-                          focusNode: vm.nickNameController?.focusNode,
-                          inputTextType: FoodlyInputType.nickName,
-                          autovalidateMode: AutovalidateMode.always,
-                          enabled: !cubit.isLoading,
-                          showLeading: false,
-                          autofocus: true,
                         ),
                       ],
                     ),

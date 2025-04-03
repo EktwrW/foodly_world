@@ -110,8 +110,8 @@ class BusinessResultsView extends StatelessWidget {
     }
 
     return LocalHeroScope(
-      curve: Curves.decelerate,
-      duration: Durations.long4,
+      curve: Curves.fastEaseInToSlowEaseOut,
+      duration: Durations.extralong2,
       createRectTween: (begin, end) {
         return MaterialRectCenterArcTween(begin: begin, end: end);
       },
@@ -120,6 +120,8 @@ class BusinessResultsView extends StatelessWidget {
               key: const ValueKey(SearchResultsViewMode.grid),
               padding: const EdgeInsets.symmetric(vertical: 16),
               crossAxisCount: 2,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
               childAspectRatio: 18 / 29,
               children: searchResults
                   .map((result) => BusinessGridCard(
@@ -128,10 +130,11 @@ class BusinessResultsView extends StatelessWidget {
                       ))
                   .toList(),
             )
-          : ListView.builder(
+          : ListView.separated(
               key: const ValueKey(SearchResultsViewMode.list),
               itemCount: searchResults.length,
               padding: const EdgeInsets.symmetric(vertical: 16),
+              separatorBuilder: (_, __) => const SizedBox(height: 4),
               itemBuilder: (context, index) {
                 final business = searchResults[index];
                 return BusinessListCard(

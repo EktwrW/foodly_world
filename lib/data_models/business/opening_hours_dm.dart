@@ -31,6 +31,25 @@ class BusinessDays with _$BusinessDays {
         Weekday.saturday: day6,
       };
 
+  bool get isOpen {
+    final now = DateTime.now();
+
+    final Weekday currentWeekday = switch (now.weekday) {
+      1 => Weekday.monday,
+      2 => Weekday.tuesday,
+      3 => Weekday.wednesday,
+      4 => Weekday.thursday,
+      5 => Weekday.friday,
+      6 => Weekday.saturday,
+      7 => Weekday.sunday,
+      _ => throw ArgumentError('Invalid weekday: ${now.weekday}')
+    };
+
+    final today = weekdaysData[currentWeekday]!;
+
+    return today.isInOpeningHoursRange;
+  }
+
   bool get allDaysAreDayOff => weekdaysData.values.every((day) => day.isDayOff);
 }
 

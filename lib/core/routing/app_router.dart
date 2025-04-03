@@ -10,7 +10,8 @@ import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.da
 import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
-import 'package:foodly_world/ui/views/home/pages/faved_business_page/faved_business_page.dart';
+import 'package:foodly_world/ui/views/home/pages/my_favorites_page/cubit/my_favorites_cubit.dart';
+import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
@@ -208,7 +209,16 @@ class AppRouter {
               routes: [
                 _goRouteForStatefulShell(
                   AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.favedBusiness, const FavedBusinessPage(),
+                  _goRouteWithTransition(
+                      AppRoutes.favedBusiness,
+                      BlocProvider(
+                        create: (context) => MyFavoritesCubit(
+                          businessRepo: di(),
+                          logger: di(),
+                          authService: di(),
+                        ),
+                        child: const MyFavoritesPage(),
+                      ),
                       [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
                 ),
               ],

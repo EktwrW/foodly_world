@@ -46,9 +46,7 @@ class SignUpUserForm extends StatelessWidget {
               final checkUsernameCubit = context.read<CheckAvailabilitiesCubit>();
 
               return FoodlyPrimaryInputText(
-                onChanged: (p0) {
-                  context.read<CheckAvailabilitiesCubit>().onTextChanged(p0);
-                },
+                onChanged: (p0) => checkUsernameCubit.onTextChanged(p0),
                 controller: vm.nickNameController!.controller!,
                 focusNode: vm.nickNameController?.focusNode,
                 secondaryFocusNode: vm.firstNameController?.focusNode,
@@ -56,30 +54,31 @@ class SignUpUserForm extends StatelessWidget {
                 autovalidateMode: AutovalidateMode.always,
                 maxLength: 30,
                 enabled: enabled,
+                isUnavailable: state.isUnavailable,
                 showLeading: false,
                 trailing: Stack(
                   alignment: Alignment.center,
                   children: [
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-initial'),
-                      visible: checkUsernameCubit.isInitialState,
+                      visible: state.isInitialState,
                       child: Icon(Bootstrap.search,
                           size: 20, color: enabled ? FoodlyThemes.primaryFoodly : ui.NeumoColors.disabled),
                     ),
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-loading'),
-                      visible: checkUsernameCubit.isLoading,
+                      visible: state.isLoading,
                       child: const SizedBox.square(
                           dimension: 20, child: CircularProgressIndicator.adaptive(strokeWidth: 2.5)),
                     ),
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-available'),
-                      visible: checkUsernameCubit.isAvailable,
+                      visible: state.isAvailable,
                       child: const Icon(Bootstrap.check2_circle, size: 24, color: FoodlyThemes.tertiaryFoodly),
                     ),
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-unavailable'),
-                      visible: checkUsernameCubit.isUnavailable,
+                      visible: state.isUnavailable,
                       child: const Icon(Bootstrap.x_circle, size: 21, color: FoodlyThemes.error),
                     ),
                   ],
