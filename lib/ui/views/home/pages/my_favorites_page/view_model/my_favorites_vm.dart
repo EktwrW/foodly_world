@@ -38,28 +38,21 @@ class MyFavoritesVM with _$MyFavoritesVM {
   List<BusinessDM> get sortedFavoriteBusinesses {
     if (favoriteBusinesses.isEmpty) return [];
 
-    final sortedList = List<BusinessDM>.from(favoriteBusinesses);
+    var sortedList = List<BusinessDM>.from(favoriteBusinesses);
 
     switch (businessSortType) {
       case BusinessSortType.open:
         // Para ordenamiento por apertura
-        if (isBusinessSortAscending) {
-          // Primero los negocios abiertos, luego los cerrados
-          sortedList.sort((a, b) {
-            final aIsOpen = a.businessDays.isOpen;
-            final bIsOpen = b.businessDays.isOpen;
-            if (aIsOpen != bIsOpen) return aIsOpen ? -1 : 1;
-            return (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? ''));
-          });
-        } else {
-          // Primero los negocios cerrados, luego los abiertos
-          sortedList.sort((a, b) {
-            final aIsOpen = a.businessDays.isOpen;
-            final bIsOpen = b.businessDays.isOpen;
-            if (aIsOpen != bIsOpen) return aIsOpen ? 1 : -1;
-            return (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? ''));
-          });
-        }
+        final openBusinesses = sortedList.where((business) => business.businessDays.isOpen).toList()
+          ..sort((a, b) => (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? '')));
+
+        final closedBusinesses = sortedList.where((business) => !business.businessDays.isOpen).toList()
+          ..sort((a, b) => (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? '')));
+
+        sortedList = isBusinessSortAscending
+            ? [...openBusinesses, ...closedBusinesses] // Primero abiertos, luego cerrados
+            : [...closedBusinesses, ...openBusinesses]; // Primero cerrados, luego abiertos
+
       case BusinessSortType.alphabetical:
         // Para ordenamiento alfabético
         if (isBusinessSortAscending) {

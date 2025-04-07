@@ -1,4 +1,4 @@
-part of '../my_favorites_page.dart';
+part of '../../my_favorites_page.dart';
 
 class _MyFavoritesToggleSwitch extends StatelessWidget {
   const _MyFavoritesToggleSwitch({

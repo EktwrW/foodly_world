@@ -89,12 +89,14 @@ class Day with _$Day {
     final openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
     var closeDateTime = DateTime(now.year, now.month, now.day, closeTime.hour, closeTime.minute);
 
-    // Handle next day close time
+    // Handle next day close time (e.g., open 22:00, close 02:00)
     if (closeDateTime.isBefore(openDateTime)) {
       closeDateTime = closeDateTime.add(const Duration(days: 1));
     }
 
-    return now.isAfter(openDateTime) && now.isBefore(closeDateTime);
+    // Check if current time is between open and close times
+    return now.isAfter(openDateTime) && now.isBefore(closeDateTime) || 
+        now.isAtSameMomentAs(openDateTime); // Also consider exact opening time as open
   }
 
   bool get closeAIsNextDay {

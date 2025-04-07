@@ -26,12 +26,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   void _initializeVisitBusiness(String businessUuid, BusinessDM? business) async {
     Future.microtask(() => emit(_Loading(_vm)));
 
-    if (business != null) {
-      _vm = _vm.copyWith(currentBusiness: business);
-      Future.microtask(() => emit(_Loaded(_vm)));
-    } else {
-      await _fetchBusinessById(businessUuid);
-    }
+    await _fetchBusinessById(businessUuid);
   }
 
   void setMapcontroller(GoogleMapController controller) {

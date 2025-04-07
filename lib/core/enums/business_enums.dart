@@ -115,6 +115,16 @@ enum Weekday {
   final int value;
   const Weekday(this.value);
 
+  int get dateTimeKey => switch (this) {
+        monday => 1,
+        tuesday => 2,
+        wednesday => 3,
+        thursday => 4,
+        friday => 5,
+        saturday => 6,
+        sunday => 7,
+      };
+
   static final _dayStrings = {
     Weekday.sunday: S.current.weekday1,
     Weekday.monday: S.current.weekday2,

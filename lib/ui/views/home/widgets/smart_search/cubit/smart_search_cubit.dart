@@ -154,7 +154,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
     if (searchText?.isEmpty ?? true) return;
 
-    emit(SmartSearchState.searching(_vm));
+    Future.microtask(() => emit(SmartSearchState.searching(_vm)));
 
     final result = await _businessRepo.businessSearch(
       BusinessSearchBodyDTO(

@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/view_model/my_favorites_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -58,15 +59,15 @@ class MyFavoritesCubit extends Cubit<MyFavoritesState> {
     _vm = _vm.copyWith(isGridView: !_vm.isGridView);
     emit(_Loaded(_vm));
   }
-  
+
   /// Cambia el tipo de ordenamiento de negocios favoritos
   void changeSortType(BusinessSortType sortType) {
     if (_vm.businessSortType == sortType) return;
-    
+
     _vm = _vm.copyWith(businessSortType: sortType);
     emit(_Loaded(_vm));
   }
-  
+
   /// Cambia el orden ascendente/descendente del ordenamiento de negocios
   void toggleBusinessSortDirection() {
     _vm = _vm.copyWith(isBusinessSortAscending: !_vm.isBusinessSortAscending);
@@ -82,8 +83,9 @@ class MyFavoritesCubit extends Cubit<MyFavoritesState> {
 
     emit(_Loading(_vm));
 
+    await _loadFavoriteBusinesses();
+
     await Future.wait([
-      _loadFavoriteBusinesses(),
       _loadFavoriteMenus(),
       _loadFavoriteFoodItems(),
       _loadFavoriteDrinkItems(),
@@ -100,12 +102,42 @@ class MyFavoritesCubit extends Cubit<MyFavoritesState> {
       );
 
   /// Carga los menús favoritos del usuario
-  Future<void> _loadFavoriteMenus() => _businessRepo.getMyFavoriteMenus().then(
-        (result) => result.when(
-          success: (data) => _vm = _vm.copyWith(favoriteMenus: data.favoriteMenus),
-          failure: (error) => _handleError('Error loading favorite menus: $error'),
-        ),
-      );
+  Future<void> _loadFavoriteMenus() async {
+    final result = await _businessRepo.getMyFavoriteMenus();
+
+    result.when(
+      success: (data) async {
+        final menus = List<MenuDM>.from(data.favoriteMenus);
+        final updatedMenus = <MenuDM>[];
+
+        // Para cada menú, intentamos asociar su negocio correspondiente
+        for (final menu in menus) {
+          // Primero buscamos si tenemos el negocio en los favoritos
+          final matchingBusiness = _vm.favoriteBusinesses.firstWhere(
+            (business) => business.uuid == menu.businessUuid,
+            orElse: () => const BusinessDM(),
+          );
+
+          if (matchingBusiness.uuid.isNotEmpty) {
+            updatedMenus.add(menu.copyWith(business: matchingBusiness));
+          } else {
+            await _businessRepo.fetchBusinessById(menu.businessUuid).then(
+                  (businessResult) => businessResult.when(
+                    success: (business) => updatedMenus.add(menu.copyWith(business: business)),
+                    failure: (error) {
+                      _logger.e('Error fetching business for menu: $error');
+                      updatedMenus.add(menu);
+                    },
+                  ),
+                );
+          }
+        }
+
+        _vm = _vm.copyWith(favoriteMenus: updatedMenus);
+      },
+      failure: (error) => _handleError('Error loading favorite menus: $error'),
+    );
+  }
 
   /// Carga los alimentos favoritos del usuario
   Future<void> _loadFavoriteFoodItems() => _businessRepo.getMyFavoriteFoodItems().then(

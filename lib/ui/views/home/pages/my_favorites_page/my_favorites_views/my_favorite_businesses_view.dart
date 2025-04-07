@@ -10,9 +10,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<MyFavoritesCubit, MyFavoritesState, List<BusinessDM>>(
-      selector: (state) {
-        return state.vm.sortedFavoriteBusinesses;
-      },
+      selector: (state) => state.vm.sortedFavoriteBusinesses,
       builder: (context, favoriteBusinesses) {
         if (favoriteBusinesses.isEmpty) {
           return Column(

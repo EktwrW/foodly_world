@@ -69,10 +69,50 @@ extension BusinessStatusExtension on Day {
     if (isInOpeningHoursRange) return BusinessStatus.open;
 
     final now = DateTime.now();
+    final dateFormat = DateFormat('HH:mm');
+    
+    // Check first period
     if (openA != null) {
-      final openTime = DateFormat('HH:mm').parse(openA!);
-      final openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
-
+      final openTime = dateFormat.parse(openA!);
+      var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
+      
+      // If opening time is in the past today, check if it might be tomorrow's opening time
+      if (openDateTime.isBefore(now)) {
+        final closeTime = closeA != null ? dateFormat.parse(closeA!) : null;
+        if (closeTime != null) {
+          final closeDateTime = DateTime(now.year, now.month, now.day, closeTime.hour, closeTime.minute);
+          // If closing time is before opening time, it crosses midnight
+          if (closeDateTime.isBefore(openDateTime)) {
+            // Check tomorrow's opening time
+            openDateTime = openDateTime.add(const Duration(days: 1));
+          }
+        }
+      }
+      
+      final difference = openDateTime.difference(now);
+      if (difference.inHours <= 1 && difference.inHours >= 0) {
+        return BusinessStatus.openingSoon;
+      }
+    }
+    
+    // Check second period
+    if (openB != null) {
+      final openTime = dateFormat.parse(openB!);
+      var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
+      
+      // If opening time is in the past today, check if it might be tomorrow's opening time
+      if (openDateTime.isBefore(now)) {
+        final closeTime = closeB != null ? dateFormat.parse(closeB!) : null;
+        if (closeTime != null) {
+          final closeDateTime = DateTime(now.year, now.month, now.day, closeTime.hour, closeTime.minute);
+          // If closing time is before opening time, it crosses midnight
+          if (closeDateTime.isBefore(openDateTime)) {
+            // Check tomorrow's opening time
+            openDateTime = openDateTime.add(const Duration(days: 1));
+          }
+        }
+      }
+      
       final difference = openDateTime.difference(now);
       if (difference.inHours <= 1 && difference.inHours >= 0) {
         return BusinessStatus.openingSoon;
@@ -94,8 +134,23 @@ extension BusinessStatusExtension on Day {
 
 extension BusinessDaysExtension on BusinessDays {
   Day get currentDaySchedule {
-    final currentWeekday = DateTime.now().weekday;
-    return weekdaysData[Weekday.values[currentWeekday - 1]]!;
+    final now = DateTime.now();
+    final currentWeekday = now.weekday % 7; // 0-6, where 0 is Sunday
+    
+    // Map DateTime weekday to our Weekday enum 
+    // DateTime: 1-7 (Monday-Sunday)
+    // Our enum: 0-6 (Sunday-Saturday)
+    // To convert: (weekday % 7) gives us 1-6,0 which matches our enum order if we shift
+    return switch (currentWeekday) {
+      0 => weekdaysData[Weekday.sunday]!,  // Sunday
+      1 => weekdaysData[Weekday.monday]!,  // Monday
+      2 => weekdaysData[Weekday.tuesday]!,
+      3 => weekdaysData[Weekday.wednesday]!,
+      4 => weekdaysData[Weekday.thursday]!,
+      5 => weekdaysData[Weekday.friday]!,
+      6 => weekdaysData[Weekday.saturday]!,
+      _ => throw ArgumentError('Invalid weekday: $currentWeekday')
+    };
   }
 }
 

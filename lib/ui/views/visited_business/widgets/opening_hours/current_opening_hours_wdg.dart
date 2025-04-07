@@ -16,7 +16,11 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
               ...Weekday.values.indexed.map(
                 (w) {
                   final day = businessDays?.weekdaysData[w.$2];
-                  final isOpenNow = DateTime.now().day == w.$1 && (day?.isInOpeningHoursRange ?? false);
+                  final isOpenNow =
+                      DateTime.now().weekday == (w.$2.dateTimeKey) && (day?.isInOpeningHoursRange ?? false);
+                  log('DateTime.now().weekday: ${DateTime.now().weekday}');
+                  log('dateTimeKey: ${w.$2.dateTimeKey}');
+                  log('record: $w');
 
                   return Column(
                     children: [
