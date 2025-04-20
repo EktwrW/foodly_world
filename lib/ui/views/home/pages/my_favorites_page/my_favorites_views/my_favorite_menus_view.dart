@@ -74,7 +74,7 @@ class _FavoriteMenusCard extends StatelessWidget {
         onTap: () => di<AppRouter>().appRouter.goNamed(
               AppRoutes.visitMenu.name,
               pathParameters: {AppRoutes.routeIdParam: menuItem.uuid},
-              extra: menuItem,
+              extra: business,
             ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -105,13 +105,11 @@ class _FavoriteMenusCard extends StatelessWidget {
                           ),
                         ),
                         Flexible(
-                          child: Flexible(
-                            child: Text(
-                              business?.name ?? '-',
-                              style: FoodlyTextStyles.actionsBodyBold,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          child: Text(
+                            business?.name ?? '-',
+                            style: FoodlyTextStyles.actionsBodyBold,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -129,18 +127,46 @@ class _FavoriteMenusCard extends StatelessWidget {
                 ).paddingAll(8),
               ),
             ),
-            Flexible(
+            Expanded(
               child: Row(
-                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (currentDay != null) _buildStatusBadge(currentDay.currentStatus),
                   if (currentDay != null)
-                    Text(
-                      currentDay.formattedHours,
-                      style: FoodlyTextStyles.caption,
+                    Row(
+                      spacing: 8,
+                      children: [
+                        _buildStatusBadge(currentDay.currentStatus),
+                        Text(
+                          currentDay.formattedHours,
+                          style: FoodlyTextStyles.caption,
+                        ),
+                      ],
                     ),
-                  const Spacer(),
                   SizedBox.square(dimension: 28, child: menuItem.business?.category?.avatar ?? const SizedBox.shrink()),
+                ],
+              ).paddingHorizontal(3),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CustomRoundedNeumorphicButton(
+                    onPressed: (business?.uuid.isNotEmpty ?? false)
+                        ? () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
+                            pathParameters: {AppRoutes.routeIdParam: business!.uuid}, extra: business)
+                        : null,
+                    tooltip: S.current.shareMenu,
+                    iconSize: 18,
+                    diameter: 18,
+                    iconData: Bootstrap.shop_window,
+                  ),
+                  CustomRoundedNeumorphicButton(
+                    onPressed: () => MenuSnackbars.showQRCodeSnackBar(context, _publicMenuUrl),
+                    tooltip: S.current.shareMenu,
+                    iconSize: 18,
+                    diameter: 18,
+                    iconData: Bootstrap.qr_code_scan,
+                  ),
                   CustomRoundedNeumorphicButton(
                     onPressed: _publicMenuUrl.isNotEmpty
                         ? () async {
@@ -163,9 +189,9 @@ class _FavoriteMenusCard extends StatelessWidget {
                     iconSize: 18,
                     diameter: 18,
                     iconData: Bootstrap.send,
-                  ).paddingRight(7),
+                  ),
                 ],
-              ),
+              ).paddingBottom(3),
             ),
           ],
         ).paddingAll(8),

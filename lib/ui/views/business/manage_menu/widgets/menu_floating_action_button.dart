@@ -92,7 +92,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                     tooltip: S.current.generateQR,
                     iconSize: 28,
                     depth: 4,
-                    iconData: Icons.qr_code_2,
+                    iconData: Bootstrap.qr_code_scan,
                   ),
                   if (loggedUserCanEdit)
                     CustomRoundedNeumorphicButton(

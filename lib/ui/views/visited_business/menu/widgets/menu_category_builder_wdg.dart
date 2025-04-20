@@ -49,6 +49,8 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> with AutomaticKeepA
   @override
   bool get wantKeepAlive => true;
 
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -71,6 +73,7 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> with AutomaticKeepA
                 return true;
               },
               child: ListView.builder(
+                controller: _scrollController,
                 key: PageStorageKey('menu_category_${widget.menuCategory.name}'),
                 // No usar controller aquí para evitar conflictos con NestedScrollView
                 physics: const AlwaysScrollableScrollPhysics(),
