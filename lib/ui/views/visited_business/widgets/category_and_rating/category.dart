@@ -6,11 +6,11 @@ class CategoryWdg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<VisitBusinessCubit, VisitBusinessState, FoodlyCategories?>(
-      selector: (state) => state.vm.currentBusiness?.category,
+      selector: (state) => state.vm.currentBusiness?.category?.id,
       builder: (context, category) {
         return Row(
           children: [
-            SizedBox.square(dimension: 30, child: category?.icon ?? const SizedBox.shrink()),
+            SizedBox.square(dimension: 30, child: category?.avatar ?? const SizedBox.shrink()),
             Text(category?.text ?? '-').paddingLeft(8),
           ],
         );

@@ -140,7 +140,7 @@ class _FavoriteMenusCard extends StatelessWidget {
                       style: FoodlyTextStyles.caption,
                     ),
                   const Spacer(),
-                  SizedBox.square(dimension: 28, child: menuItem.business?.category?.icon ?? const SizedBox.shrink()),
+                  SizedBox.square(dimension: 28, child: menuItem.business?.category?.avatar ?? const SizedBox.shrink()),
                   CustomRoundedNeumorphicButton(
                     onPressed: _publicMenuUrl.isNotEmpty
                         ? () async {

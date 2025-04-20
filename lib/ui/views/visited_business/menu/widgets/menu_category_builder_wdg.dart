@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart' show ListExtensions;
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/core_exports.dart' hide CategoryDM;
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';

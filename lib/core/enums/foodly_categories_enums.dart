@@ -1,58 +1,56 @@
-import 'package:flutter/widgets.dart';
-import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
+import 'package:flutter/material.dart' show BoxFit, Widget;
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 enum FoodlyCategories {
   @JsonValue(1)
-  international(Asset(FoodlyAssets.international), 1),
+  international(1),
 
   @JsonValue(2)
-  american(Asset(FoodlyAssets.american), 2),
+  american(2),
 
   @JsonValue(3)
-  pizza(Asset(FoodlyAssets.pizza), 3),
+  pizza(3),
 
   @JsonValue(4)
-  japanese(Asset(FoodlyAssets.sushi), 4),
+  japanese(4),
 
   @JsonValue(5)
-  steakhouse(Asset(FoodlyAssets.steakhouse), 5),
+  steakhouse(5),
 
   @JsonValue(6)
-  fusion(Asset(FoodlyAssets.fusion), 6),
+  fusion(6),
 
   @JsonValue(7)
-  vegetarian(Asset(FoodlyAssets.vegetarian), 7),
+  vegetarian(7),
 
   @JsonValue(8)
-  mexican(Asset(FoodlyAssets.mexican), 8),
+  mexican(8),
 
   @JsonValue(9)
-  korean(Asset(FoodlyAssets.korean), 9),
+  korean(9),
 
   @JsonValue(10)
-  portuguese(Asset(FoodlyAssets.portuguese), 10),
+  portuguese(10),
 
   @JsonValue(11)
-  bakery(Asset(FoodlyAssets.bakery), 11),
+  bakery(11),
 
   @JsonValue(12)
-  drinkHouse(Asset(FoodlyAssets.pubs), 12),
+  drinkHouse(12),
 
   @JsonValue(13)
-  coffee(Asset(FoodlyAssets.coffee), 13),
+  coffee(13),
 
   @JsonValue(14)
-  stores(Asset(FoodlyAssets.stores), 14),
+  stores(14),
 
   @JsonValue(15)
-  academy(Asset(FoodlyAssets.chef), 15);
+  academy(15);
 
-  final Widget icon;
   final int value;
-  const FoodlyCategories(this.icon, this.value);
+  const FoodlyCategories(this.value);
 
   bool get isDrinkHouse => this == drinkHouse;
   bool get isAcademy => this == academy;
@@ -75,6 +73,41 @@ enum FoodlyCategories {
         coffee => S.current.cafesAndBreakfasts,
         stores => S.current.marketsAndStores,
         academy => S.current.cookingSchools,
+      };
+
+  Widget get avatar => AvatarWidget(avatarUrl: avatarUrl, boxFit: BoxFit.contain);
+
+  String get avatarUrl => switch (this) {
+        international =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg',
+        american =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/3R7zsx7VXzFekjM2qFz0pktxpYeMnhT6b7fKmTo5.jpg',
+        pizza =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/zy66xbwjltRgitojWuzbUoOxX4OpLfQUmlotimVi.jpg',
+        japanese =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/rEvbOnKbTYnpoz7Qc1Vu0jHXSDt8YMer2WaxqyOz.jpg',
+        steakhouse =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/DXj6PxsVPe9inTs8eDh2u47b1LhgwOpOXyYNV7Gp.jpg',
+        fusion =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/6uT3gxrcugQPiMIxICRVG06cHQbYBOCnPKolRqIh.jpg',
+        vegetarian =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/BpIS39yEA6lpcIRjSbkWC3Tt4lgrp2Pk4NclnMKn.jpg',
+        mexican =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/6rvuMCOXDbQm08Xf5D2snlnBj5sfTIcMF5PeLtcB.jpg',
+        korean =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/FoJ3Uycii6zgFHelMfU6rR5w0A0PHnjcKv8jvMuy.jpg',
+        portuguese =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/OKZVzDcXq0csGYOsBZiSPa16oMrovNzQBr8sYmAT.jpg',
+        bakery =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/eo6lgLdLH87PCLbwjyNVTTuNeXzxW4Jx67EGNDaS.jpg',
+        drinkHouse =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/31DbV0wNR6topTeaVpBBlD8AdtJrSxD26XgC16hQ.jpg',
+        coffee =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/NC2D2vwB28ReT6E9HyBaq1rkJJLGCBodBLdNLvee.jpg',
+        stores =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9UrhIE91n2kbClChH8d0zAJ3WHdKv4cQ06fqq2NU.jpg',
+        academy =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/sck0rO2HlaBnXzHMAaYPLuIJhYkTlqmMauOrZZYM.jpg',
       };
 }
 

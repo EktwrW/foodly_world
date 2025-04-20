@@ -1,5 +1,7 @@
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart' show FabCircularMenuPlusState;
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:flutter/material.dart' show GlobalKey, PageController;
+import 'package:foodly_world/core/enums/foodly_enums.dart' show MenuCategory;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, AuthSessionService;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

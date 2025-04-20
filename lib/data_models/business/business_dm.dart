@@ -35,7 +35,8 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_menus') @Default([]) List<MenuDM> menus,
     @JsonKey(name: 'business_latitude') double? latitude,
     @JsonKey(name: 'business_longitude') double? longitude,
-    @JsonKey(name: 'category_id') FoodlyCategories? category,
+    @JsonKey(name: 'category_id') FoodlyCategories? categoryId,
+    @JsonKey(name: 'category') CategoryDM? category,
     @JsonKey(name: 'business_reviews') @Default([]) List<Object>? reviews,
     @JsonKey(name: 'business_rating') double? rating,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
@@ -63,6 +64,18 @@ class BusinessDM with _$BusinessDM {
   List<BusinessServices> get businessServices =>
       (services?.isEmpty ?? true) ? [] : List<BusinessServices>.generate(services!.length, (i) => services![i].service)
         ..sort((a, b) => a.value.compareTo(b.value));
+}
+
+@freezed
+class CategoryDM with _$CategoryDM {
+  const factory CategoryDM({
+    @JsonKey(name: 'id') FoodlyCategories? id,
+    @JsonKey(name: 'category_uuid') String? categoryUuid,
+    @JsonKey(name: 'category_name') String? categoryName,
+    @JsonKey(name: 'category_image_path') String? categoryImagePath,
+  }) = _CategoryDM;
+
+  factory CategoryDM.fromJson(Map<String, dynamic> json) => _$CategoryDMFromJson(json);
 }
 
 @freezed

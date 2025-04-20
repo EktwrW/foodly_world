@@ -58,7 +58,7 @@ class _ItemNameAndDescriptionWdgState extends State<ItemNameAndDescriptionWdg> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         widget.item.isEditingName
-                ? FoodlyPrimaryInputText(
+            ? FoodlyPrimaryInputText(
                 key: ValueKey('name_${widget.item.uuid}'),
                 controller: _nameController,
                 focusNode: _nameFocusNode,

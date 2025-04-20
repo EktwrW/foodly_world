@@ -1,7 +1,15 @@
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:flutter/foundation.dart' show listEquals;
+import 'package:flutter/material.dart' show GlobalKey, PageController;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart' show FoodlyStrings;
+import 'package:foodly_world/core/extensions/iterable_extension.dart';
+import 'package:foodly_world/core/network/business/business_repo.dart' show BusinessRepo;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show Logger, di;
+import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM, FoodlyCategories;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/view_model/manage_menu_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -62,7 +70,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     _vm = _vm.copyWith(
       menuDM: menuData,
       editMenuDM: menuData,
-      indexView: menuData.business?.category == FoodlyCategories.drinkHouse ? 1 : 0,
+      indexView: menuData.business?.category?.id == FoodlyCategories.drinkHouse ? 1 : 0,
     );
 
     emit(_Loaded(_vm));

@@ -106,7 +106,7 @@ class NewReleasesCard extends StatelessWidget {
                         Text(S.current.mockTextNewReleasesCard),
                         Row(
                           children: [
-                            SizedBox.square(dimension: 30, child: FoodlyCategories.bakery.icon),
+                            SizedBox.square(dimension: 30, child: FoodlyCategories.bakery.avatar),
                             Card(
                               color: FoodlyThemes.tertiaryFoodly,
                               child: const Row(

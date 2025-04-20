@@ -51,7 +51,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox.square(dimension: 48, child: e.icon).paddingTop(4),
+                          SizedBox.square(dimension: 48, child: e.avatar).paddingTop(4),
                           SizedBox(
                             width: 92,
                             height: 33,

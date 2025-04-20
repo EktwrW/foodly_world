@@ -56,7 +56,7 @@ class SignUpBusinessForm extends StatelessWidget {
               value: category,
               child: Row(
                 children: [
-                  SizedBox.square(dimension: 30, child: category.icon).paddingSymmetric(horizontal: 10),
+                  SizedBox.square(dimension: 30, child: category.avatar).paddingSymmetric(horizontal: 10),
                   Text(category.text),
                 ],
               ),

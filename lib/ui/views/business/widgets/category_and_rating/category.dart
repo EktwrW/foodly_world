@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
@@ -36,13 +37,13 @@ class CategoryWdg extends StatelessWidget {
                     value: category,
                     child: Row(
                       children: [
-                        SizedBox.square(dimension: 30, child: category.icon).paddingSymmetric(horizontal: 10),
+                        SizedBox.square(dimension: 30, child: category.avatar).paddingSymmetric(horizontal: 10),
                         Text(category.text),
                       ],
                     ),
                   );
                 }).toList(),
-                value: vm.newCategory ?? vm.currentBusiness?.category,
+                value: vm.newCategory ?? vm.currentBusiness?.category?.id,
                 validatorText: S.current.pleaseSelectBusinessCategory,
                 hintText: S.current.businessCategory,
               ),
@@ -51,7 +52,7 @@ class CategoryWdg extends StatelessWidget {
                 onCancelPressed: () {
                   bloc.add(const BusinessEvent.updateEditing(DashboardEditing.none));
                 },
-                showSaveButton: vm.newCategory != null && vm.newCategory != vm.currentBusiness?.category,
+                showSaveButton: vm.newCategory != null && vm.newCategory != vm.currentBusiness?.category?.id,
               ),
             ],
           ).paddingRight(16),
@@ -64,8 +65,8 @@ class CategoryWdg extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
-            SizedBox.square(dimension: 30, child: vm.currentBusiness?.category?.icon ?? const SizedBox.shrink()),
-            Text(vm.currentBusiness?.category?.text ?? '').paddingLeft(8),
+            SizedBox.square(dimension: 30, child: vm.currentBusiness?.category?.avatar ?? const SizedBox.shrink()),
+            Text(vm.currentBusiness?.category?.id?.text ?? '').paddingLeft(8),
           ],
         ),
       ),

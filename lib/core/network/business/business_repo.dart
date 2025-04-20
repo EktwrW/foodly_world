@@ -15,7 +15,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
-import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
+import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';

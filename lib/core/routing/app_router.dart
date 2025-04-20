@@ -3,18 +3,17 @@ import 'dart:collection';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:foodly_world/core/core_exports.dart';
-
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
 import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
-import 'package:foodly_world/ui/views/home/pages/my_favorites_page/cubit/my_favorites_cubit.dart';
-import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
+import 'package:foodly_world/ui/views/home/pages/my_favorites_page/cubit/my_favorites_cubit.dart';
+import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_page.dart';
 import 'package:foodly_world/ui/views/home/pages/notifications_page/notifications_page.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/users_community_page.dart';

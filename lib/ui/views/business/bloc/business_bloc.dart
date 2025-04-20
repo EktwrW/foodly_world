@@ -90,7 +90,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
             _vm = _vm.copyWith(
               autovalidateMode: AutovalidateMode.disabled,
               dashboardEditing: value.editing,
-              newCategory: _vm.currentBusiness?.category,
+              newCategory: _vm.currentBusiness?.category?.id,
               currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
               businessDays: _vm.currentBusiness?.businessDays ?? const BusinessDays(),
             );

@@ -64,7 +64,7 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         SizedBox.square(
           dimension: 48,
-          child: category?.icon,
+          child: category?.avatar,
         ).paddingRight(12),
       ],
       shape: const RoundedRectangleBorder(

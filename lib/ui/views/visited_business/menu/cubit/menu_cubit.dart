@@ -60,7 +60,7 @@ class MenuCubit extends Cubit<MenuState> {
 
     _vm = _vm.copyWith(
       menuDM: menuData,
-      indexView: menuData.business?.category == FoodlyCategories.drinkHouse ? 1 : 0,
+      indexView: menuData.business?.category?.id == FoodlyCategories.drinkHouse ? 1 : 0,
     );
 
     emit(_Loaded(_vm));

@@ -1,4 +1,4 @@
-import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/core_exports.dart' hide CategoryDM;
 
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';

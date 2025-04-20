@@ -79,7 +79,7 @@ class CategoriesPage extends StatelessWidget {
                                       ? FoodlyThemes.primaryFoodly
                                       : FoodlyThemes.alternativeUnselectedLightColor,
                                 ),
-                                child: e.icon.paddingAll(3)),
+                                child: e.avatar.paddingAll(3)),
                           ),
                           SizedBox(
                             height: 38,

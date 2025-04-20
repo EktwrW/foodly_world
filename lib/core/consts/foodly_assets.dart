@@ -10,23 +10,6 @@ class FoodlyAssets {
   static const AssetData logo369 = AssetData('logo_369.png', AssetType.image);
   static const AssetData symbol369 = AssetData('369.png', AssetType.image);
 
-  // Foodly categories
-  static const AssetData american = AssetData('american.png', AssetType.image);
-  static const AssetData bakery = AssetData('bakery.png', AssetType.image);
-  static const AssetData coffee = AssetData('coffee.png', AssetType.image);
-  static const AssetData fusion = AssetData('fusion.png', AssetType.image);
-  static const AssetData international = AssetData('international.png', AssetType.image);
-  static const AssetData korean = AssetData('korean.png', AssetType.image);
-  static const AssetData mexican = AssetData('mexican.png', AssetType.image);
-  static const AssetData pizza = AssetData('pizza.png', AssetType.image);
-  static const AssetData portuguese = AssetData('portuguese.png', AssetType.image);
-  static const AssetData pubs = AssetData('pubs.png', AssetType.image);
-  static const AssetData steakhouse = AssetData('steakhouse.png', AssetType.image);
-  static const AssetData stores = AssetData('stores.png', AssetType.image);
-  static const AssetData sushi = AssetData('sushi.png', AssetType.image);
-  static const AssetData vegetarian = AssetData('vegetarian.png', AssetType.image);
-  static const AssetData chef = AssetData('chef.png', AssetType.image);
-
   // Profile user
   static const AssetData available = AssetData('available.png', AssetType.image);
   static const AssetData unavailable = AssetData('unavailable.png', AssetType.image);
