@@ -6,7 +6,7 @@ part 'favorite_food_items_response_dm.g.dart';
 @JsonSerializable(createToJson: false)
 class FavoriteFoodItemsResponseDM {
   /// Lista de ítems de comida favoritos
-  @JsonKey(name: 'favorite_foods_items', defaultValue: [])
+  @JsonKey(name: 'favorite_food_items', defaultValue: [])
   final List<ItemDM> favoriteFoodItems;
 
   const FavoriteFoodItemsResponseDM({this.favoriteFoodItems = const []});

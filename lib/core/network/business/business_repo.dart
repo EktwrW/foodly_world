@@ -9,6 +9,7 @@ import 'package:foodly_world/core/utils/file_handler/file_handler_selector.dart'
 import 'package:foodly_world/data_models/business/business_item_photo_dm.dart';
 import 'package:foodly_world/data_models/business/business_search_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_businesses_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_combo_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_drinks_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_food_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.dart';
@@ -561,7 +562,7 @@ class BusinessRepo {
     }
   }
 
-  Future<ApiResult<FavoriteDrinksItemsResponseDM>> getMyFavoriteDrinkItems() async {
+  Future<ApiResult<FavoriteDrinkItemsResponseDM>> getMyFavoriteDrinkItems() async {
     try {
       return ApiResult.success(await _businessClient.getMyFavoriteDrinkItems());
     } catch (e, s) {
@@ -570,6 +571,22 @@ class BusinessRepo {
   }
 
   Future<ApiResult<void>> setFavoriteDrinkItem(String uuid, SetFavoriteBodyDTO body) async {
+    try {
+      return ApiResult.success(await _businessClient.setFavoriteDrinkItem(uuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<FavoriteComboItemsResponseDM>> getMyFavoriteComboItems() async {
+    try {
+      return ApiResult.success(await _businessClient.getMyFavoriteComboItems());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> setFavoriteComboItem(String uuid, SetFavoriteBodyDTO body) async {
     try {
       return ApiResult.success(await _businessClient.setFavoriteDrinkItem(uuid, body));
     } catch (e, s) {

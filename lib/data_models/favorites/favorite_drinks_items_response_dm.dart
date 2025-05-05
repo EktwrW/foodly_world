@@ -4,12 +4,12 @@ import 'package:json_annotation/json_annotation.dart';
 part 'favorite_drinks_items_response_dm.g.dart';
 
 @JsonSerializable(createToJson: false)
-class FavoriteDrinksItemsResponseDM {
-  @JsonKey(name: 'favorite_drinks_items', defaultValue: [])
+class FavoriteDrinkItemsResponseDM {
+  @JsonKey(name: 'favorite_drink_items', defaultValue: [])
   final List<ItemDM> favoriteDrinkItems;
 
-  const FavoriteDrinksItemsResponseDM({this.favoriteDrinkItems = const []});
+  const FavoriteDrinkItemsResponseDM({this.favoriteDrinkItems = const []});
 
-  factory FavoriteDrinksItemsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$FavoriteDrinksItemsResponseDMFromJson(json);
+  factory FavoriteDrinkItemsResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$FavoriteDrinkItemsResponseDMFromJson(json);
 }

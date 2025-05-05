@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/business/business_item_photo_dm.dart';
 import 'package:foodly_world/data_models/business/business_search_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_businesses_response_dm.dart';
+import 'package:foodly_world/data_models/favorites/favorite_combo_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_drinks_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_food_items_response_dm.dart';
 import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.dart';
@@ -229,10 +230,16 @@ abstract class BusinessClient {
   Future<void> setFavoriteFoodItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
 
   @GET('/business-drink-item-favorites')
-  Future<FavoriteDrinksItemsResponseDM> getMyFavoriteDrinkItems();
+  Future<FavoriteDrinkItemsResponseDM> getMyFavoriteDrinkItems();
 
   @POST('/business-drink-item-favorites/{uuid}')
   Future<void> setFavoriteDrinkItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('//business-combo-favorites')
+  Future<FavoriteComboItemsResponseDM> getMyFavoriteComboItems();
+
+  @POST('//business-combo-favorites/{uuid}')
+  Future<void> setFavoriteComboItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
 
   @GET('/save-promotions')
   Future<SavedPromotionsResponseDM> getMyFavoritePromotions();
