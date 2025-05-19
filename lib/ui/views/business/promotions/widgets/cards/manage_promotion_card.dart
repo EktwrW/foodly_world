@@ -359,7 +359,7 @@ class _LikeOrEditWidget extends StatelessWidget {
                   ..updateEditMode(PromotionEditing.title);
 
                 if (vm.indexView != 1) {
-                  vm.controller?.animateToPage(1, duration: Durations.long2, curve: Curves.decelerate);
+                  vm.controller?.animateToPage(1, duration: Durations.short4, curve: Curves.decelerate);
                   cubit.updateView(1);
                 }
               }

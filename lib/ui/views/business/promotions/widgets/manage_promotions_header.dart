@@ -80,7 +80,8 @@ class _ManagePromotionsHeader extends StatelessWidget {
                       onToggle: vm.isEditing
                           ? null
                           : (i) {
-                              vm.controller?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                              vm.controller
+                                  ?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
                               cubit.updateView(i ?? 0);
                             },
                       animate: true,
@@ -168,7 +169,7 @@ class _ManagePromotionsHeader extends StatelessWidget {
       ..updateEditMode(PromotionEditing.title);
 
     if (vm.indexView != 1) {
-      vm.controller?.animateToPage(1, duration: Durations.long2, curve: Curves.decelerate);
+      vm.controller?.animateToPage(1, duration: Durations.short4, curve: Curves.decelerate);
       cubit.updateView(1);
     }
   }

@@ -40,7 +40,7 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
                   onToggle: vm.menuIsEditing
                       ? null
                       : (i) {
-                          vm.controller?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                          vm.controller?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
                           cubit.updateView(i ?? 0);
                         },
                   animate: true,

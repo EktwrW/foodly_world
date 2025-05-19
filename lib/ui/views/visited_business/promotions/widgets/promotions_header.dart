@@ -70,7 +70,7 @@ class _PromotionsHeader extends StatelessWidget {
               child: ToggleSwitch(
                 initialLabelIndex: vm.indexView,
                 onToggle: (i) {
-                  vm.controller?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                  vm.controller?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
                   cubit.updateView(i ?? 0);
                 },
                 animate: true,

@@ -1,0 +1,1 @@
+/Users/hectorwaldman/Development/Foodly Apps/foodly_world/foodly_world/build/app/intermediates/cxx/RelWithDebInfo/4a3a2yi3/obj/x86_64

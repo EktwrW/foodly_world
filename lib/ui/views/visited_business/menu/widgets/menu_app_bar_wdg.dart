@@ -36,7 +36,7 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
               ToggleSwitch(
                 initialLabelIndex: record.$2,
                 onToggle: (i) {
-                  record.$1?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                  record.$1?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
                   cubit.updateView(i ?? 0);
                 },
                 animate: true,

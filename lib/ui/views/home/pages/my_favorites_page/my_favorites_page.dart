@@ -74,7 +74,8 @@ class _MyFavoritesPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<FavoritesCubit>().initPageController();
+    final cubit = context.read<FavoritesCubit>();
+    cubit.initPageController();
 
     return BlocSelector<FavoritesCubit, FavoritesState, bool>(
       selector: (state) => state.vm.isInitializing,
@@ -93,6 +94,7 @@ class _MyFavoritesPageContent extends StatelessWidget {
                   physics: const PageScrollPhysics(),
                   itemCount: _myFavoritesViews.length,
                   itemBuilder: (context, index) => _myFavoritesViews[index],
+                  onPageChanged: (i) => cubit.changeView(i),
                 ),
               );
             },

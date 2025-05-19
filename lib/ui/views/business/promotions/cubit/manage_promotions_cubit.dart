@@ -288,7 +288,7 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
 
   Future<void> _updateScrollPositionForActivePromo(PromotionDM promotion) async {
     if (promotion.isActive) {
-      await _vm.controller?.animateToPage(0, duration: Durations.long2, curve: Curves.decelerate).then((_) async {
+      await _vm.controller?.animateToPage(0, duration: Durations.short4, curve: Curves.decelerate).then((_) async {
         await Future.microtask(() {
           if (_vm.activePromosScrollController?.hasClients ?? false) {
             _vm.activePromosScrollController?.animateTo(
