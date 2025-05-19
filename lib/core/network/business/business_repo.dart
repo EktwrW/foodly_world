@@ -588,7 +588,7 @@ class BusinessRepo {
 
   Future<ApiResult<void>> setFavoriteComboItem(String uuid, SetFavoriteBodyDTO body) async {
     try {
-      return ApiResult.success(await _businessClient.setFavoriteDrinkItem(uuid, body));
+      return ApiResult.success(await _businessClient.setFavoriteComboItem(uuid, body));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

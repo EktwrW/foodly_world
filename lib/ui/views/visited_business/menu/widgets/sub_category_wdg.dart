@@ -31,7 +31,6 @@ class SubCategoryWdg extends StatelessWidget {
           ...subCategory!.items.mapIndexed(
             (i, item) => MenuItemWdg(
               key: Key(item.uuid),
-              subCategory: subCategory!,
               menuCategory: menuCategory,
               vm: vm,
               item: item,

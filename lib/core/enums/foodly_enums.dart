@@ -161,8 +161,26 @@ enum MenuCategory {
   drinks,
   combos;
 
+//TODO: CONSIDERAR ESTAS POSIBILIDADES:
+// Opción 1 (Más casual/estándar):
+
+// Food (Comidas)
+// Drinks (Bebidas)
+// Combos (Combos)
+
+// Opción 2 (Ligeramente más formal):
+
+// Meals (Comidas)
+// Beverages (Bebidas)
+// Meal Deals (Combos)
+
+// Opción 3 (Para restaurantes de servicio completo):
+
+// Main Courses (Comidas)
+// Beverages (Bebidas)
+// Set Menus (Combos)
   static final _texts = {
-    food: S.current.dishes,
+    food: S.current.food,
     drinks: S.current.drinks,
     combos: S.current.combos,
   };

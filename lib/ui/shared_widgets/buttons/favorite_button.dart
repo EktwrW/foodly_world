@@ -17,6 +17,7 @@ enum FavoriteItemType {
   menu,
   foodItem,
   drinkItem,
+  comboItem,
   promotion;
 
   bool get isMenuOrBusinessPage => this == menu || this == businessPage;
@@ -231,6 +232,37 @@ class FavoriteButton extends StatelessWidget {
     );
   }
 
+  /// Factory constructor para item de combo
+  factory FavoriteButton.forComboItem({
+    Key? key,
+    required ItemDM item,
+    double iconSize = 20,
+    double diameter = 34,
+    Color likedBackgroundColor = Colors.white60,
+    Color unlikedBackgroundColor = FoodlyThemes.primaryFoodly,
+    String? tooltip,
+    Color likeColor = FoodlyThemes.favourites,
+    Color unlikeColor = Colors.white,
+    bool enableShadows = true,
+    bool enableBackground = true,
+  }) {
+    return FavoriteButton._(
+      key: key,
+      type: FavoriteItemType.comboItem,
+      itemId: item.uuid,
+      item: item,
+      iconSize: iconSize,
+      diameter: diameter,
+      likedBackgroundColor: likedBackgroundColor,
+      unlikedBackgroundColor: unlikedBackgroundColor,
+      tooltip: tooltip,
+      likeColor: likeColor,
+      unlikeColor: unlikeColor,
+      enableShadows: enableShadows,
+      enableBackground: enableBackground,
+    );
+  }
+
   /// Factory constructor para promoción
   factory FavoriteButton.forPromotion({
     Key? key,
@@ -285,6 +317,7 @@ class FavoriteButton extends StatelessWidget {
         FavoriteItemType.menu => favoritesCubit.toggleMenuFavorite(item as MenuDM),
         FavoriteItemType.foodItem => favoritesCubit.toggleFoodItemFavorite(item as ItemDM),
         FavoriteItemType.drinkItem => favoritesCubit.toggleDrinkItemFavorite(item as ItemDM),
+        FavoriteItemType.comboItem => favoritesCubit.toggleComboItemFavorite(item as ItemDM),
         FavoriteItemType.promotion => favoritesCubit.togglePromotionFavorite(item as PromotionDM),
       };
 

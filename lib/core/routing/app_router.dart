@@ -12,7 +12,6 @@ import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
-import 'package:foodly_world/ui/views/home/pages/my_favorites_page/cubit/my_favorites_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_page.dart';
 import 'package:foodly_world/ui/views/home/pages/notifications_page/notifications_page.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
@@ -210,14 +209,7 @@ class AppRouter {
                   AppRoutes.home,
                   _goRouteWithTransition(
                       AppRoutes.favedBusiness,
-                      BlocProvider(
-                        create: (context) => MyFavoritesCubit(
-                          businessRepo: di(),
-                          logger: di(),
-                          authService: di(),
-                        ),
-                        child: const MyFavoritesPage(),
-                      ),
+                      const MyFavoritesPage(),
                       [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
                 ),
               ],

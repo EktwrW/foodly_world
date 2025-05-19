@@ -20,6 +20,8 @@ class ItemDM with _$ItemDM {
     required Prices prices,
     required int? id,
     required String uuid,
+    @JsonKey(name: 'menu_uuid') String? menuUuid,
+    @JsonKey(name: 'business_uuid') String? businessUuid,
     @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodPhotos,
     @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkPhotos,
     @JsonKey(name: 'business_combos_reference_photos') List<MenuItemPhotoDM>? comboPhotos,

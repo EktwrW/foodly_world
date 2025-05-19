@@ -3,20 +3,22 @@ part of '../menu_category_builder_wdg.dart';
 class MenuItemWdg extends StatelessWidget {
   const MenuItemWdg({
     super.key,
-    required this.subCategory,
     required this.menuCategory,
-    required this.vm,
+    this.vm,
+    this.currency,
     required this.item,
     required this.isLastScreenItem,
+    this.margin,
   });
 
-  final CategoryDM subCategory;
   final MenuCategory menuCategory;
-  final MenuVM vm;
+  final MenuVM? vm;
+  final String? currency;
   final ItemDM item;
   final bool isLastScreenItem;
+  final EdgeInsetsGeometry? margin;
 
-  Widget get _currencyWidget => Text('${vm.currency}:', style: FoodlyTextStyles.label);
+  Widget get _currencyWidget => Text('${vm?.currency ?? currency}:', style: FoodlyTextStyles.label);
   bool get _itemNotAvailable => !item.available;
 
   @override
@@ -31,7 +33,7 @@ class MenuItemWdg extends StatelessWidget {
             elevation: 2,
             color: ui.NeumoColors.decorationMaxWhiteColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            margin: const EdgeInsets.symmetric(horizontal: 4),
+            margin: margin ?? const EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedSize(
               duration: Durations.medium3,
               child: Column(
@@ -45,17 +47,12 @@ class MenuItemWdg extends StatelessWidget {
                         isEditing: item.isEditing,
                         item: item,
                         menuCategory: menuCategory,
-                        subCategory: subCategory,
                       ),
                       Expanded(
                         flex: 9,
-                        child: ItemNameAndDescriptionWdg(
-                          item: item,
-                          menuCategory: menuCategory,
-                          subCategory: subCategory,
-                        ),
+                        child: ItemNameAndDescriptionWdg(item: item),
                       ),
-                      FavMenuBtns(item: item, menuCategory: menuCategory).paddingAll(2),
+                      FavMenuItemBtns(item: item, menuCategory: menuCategory).paddingAll(2),
                     ],
                   ),
                   Row(
@@ -64,7 +61,6 @@ class MenuItemWdg extends StatelessWidget {
                       AdaptiveItemVersionSelector(
                         item: item,
                         menuCategory: menuCategory,
-                        subCategoryUuid: subCategory.uuid,
                       ).paddingOnly(left: 10, right: 6),
                       if (item.available) const Spacer(),
                       if (item.available) _currencyWidget.paddingHorizontal(4),

@@ -6,13 +6,11 @@ class MenuItemPictureWdg extends StatelessWidget {
     required this.isEditing,
     required this.item,
     required this.menuCategory,
-    required this.subCategory,
   });
 
   final bool isEditing;
   final ItemDM item;
   final MenuCategory menuCategory;
-  final CategoryDM subCategory;
 
   String get _imageSource {
     if (menuCategory.isFood) {

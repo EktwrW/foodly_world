@@ -44,7 +44,6 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
   @override
   void initState() {
     super.initState();
-
     _dialogService = di<DialogService>();
   }
 

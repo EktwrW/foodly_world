@@ -7,10 +7,10 @@ class _MyFavoritesToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<MyFavoritesCubit, MyFavoritesState, int>(
+    return BlocSelector<FavoritesCubit, FavoritesState, int>(
       selector: (state) => state.vm.indexView,
       builder: (context, indexView) {
-        final cubit = context.read<MyFavoritesCubit>();
+        final cubit = di<FavoritesCubit>();
 
         return SliverAppBar(
           primary: false,
@@ -21,12 +21,15 @@ class _MyFavoritesToggleSwitch extends StatelessWidget {
           collapsedHeight: 60,
           surfaceTintColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          title: BlocSelector<MyFavoritesCubit, MyFavoritesState, PageController?>(
+          title: BlocSelector<FavoritesCubit, FavoritesState, PageController?>(
             selector: (state) => state.vm.controller,
             builder: (context, controller) {
               return ToggleSwitch(
                 initialLabelIndex: indexView,
-                onToggle: (i) => cubit.changeView(i ?? 0),
+                onToggle: (i) async {
+                  await controller?.animateToPage(i ?? 0, duration: Durations.long2, curve: Curves.decelerate);
+                  cubit.changeView(i ?? 0);
+                },
                 animate: true,
                 animationDuration: 500,
                 minHeight: 30,

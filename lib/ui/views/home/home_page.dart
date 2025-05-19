@@ -80,10 +80,14 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
   }
 
   Widget _buildTabBarView() {
-    return TabBarView(
-      physics: const NeverScrollableScrollPhysics(),
-      controller: _tabController,
-      children: widget.children,
+    return SizedBox(
+      height: context.screenHeight,
+      width: context.screenWidth,
+      child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _tabController,
+        children: widget.children,
+      ),
     );
   }
 

@@ -36,7 +36,9 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
   RootState? fromJson(Map<String, dynamic> json) {
     try {
       final cachedState = _CachedState.fromJson(json);
-      _authSessionService.setSession(cachedState.userSessionDM);
+      _authSessionService
+        ..setSession(cachedState.userSessionDM)
+        ..initializeFavorites();
       _authSessionService.updateBiometricAuth(true);
       return cachedState;
     } catch (e) {

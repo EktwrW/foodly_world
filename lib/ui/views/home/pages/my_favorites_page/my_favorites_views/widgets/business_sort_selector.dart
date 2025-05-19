@@ -11,10 +11,10 @@ class _BusinessSortSelector extends StatelessWidget {
       spacing: 8,
       mainAxisSize: MainAxisSize.min,
       children: [
-        BlocSelector<MyFavoritesCubit, MyFavoritesState, BusinessSortType>(
+        BlocSelector<FavoritesCubit, FavoritesState, BusinessSortType>(
           selector: (state) => state.vm.businessSortType,
           builder: (context, sortType) {
-            final cubit = context.read<MyFavoritesCubit>();
+            final cubit = context.read<FavoritesCubit>();
 
             return Flexible(
               child: SegmentedButton<BusinessSortType>(
@@ -58,10 +58,10 @@ class _BusinessSortSelector extends StatelessWidget {
             );
           },
         ),
-        BlocSelector<MyFavoritesCubit, MyFavoritesState, bool>(
+        BlocSelector<FavoritesCubit, FavoritesState, bool>(
           selector: (state) => state.vm.isBusinessSortAscending,
           builder: (context, isAscending) {
-            final cubit = context.read<MyFavoritesCubit>();
+            final cubit = context.read<FavoritesCubit>();
 
             return InkWell(
               onTap: cubit.toggleBusinessSortDirection,

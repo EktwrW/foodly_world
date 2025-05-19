@@ -65,21 +65,19 @@ class UserProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UserProfileCubit, UserProfileState>(
       listener: (context, state) {
+        final dialogService = di<DialogService>();
+
         state.whenOrNull(
-          loading: (_) => di<DialogService>().showLoading(),
-          updatingProfilePicture: (_) => di<DialogService>().showLoading(),
-          loaded: (_) => di<DialogService>().hideLoading(),
+          loading: (_) => dialogService.showLoading(),
+          updatingProfilePicture: (_) => dialogService.showLoading(),
+          loaded: (_) => dialogService.hideLoading(),
           userUpdated: (vm, msg) {
-            di<DialogService>().hideLoading();
-            if (context.mounted) {
-              FoodlySnackbars.successGeneric(context, msg);
-            }
+            dialogService.hideLoading();
+            FoodlySnackbars.successGeneric(context, msg);
           },
           error: (e, vm) {
-            di<DialogService>().hideLoading();
-            if (context.mounted) {
-              FoodlySnackbars.errorGeneric(context, e);
-            }
+            dialogService.hideLoading();
+            FoodlySnackbars.errorGeneric(context, e);
           },
         );
       },

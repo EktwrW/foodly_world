@@ -126,12 +126,19 @@ class FavAndEditItemBtns extends StatelessWidget {
                     iconSize: 16,
                     item: item,
                   )
-                : FavoriteButton.forFoodItem(
-                    key: Key(item.uuid),
-                    diameter: 28,
-                    iconSize: 16,
-                    item: item,
-                  ))
+                : menuCategory.isCombos
+                    ? FavoriteButton.forComboItem(
+                        key: Key(item.uuid),
+                        diameter: 28,
+                        iconSize: 16,
+                        item: item,
+                      )
+                    : FavoriteButton.forFoodItem(
+                        key: Key(item.uuid),
+                        diameter: 28,
+                        iconSize: 16,
+                        item: item,
+                      ))
             .paddingOnly(top: 4, right: 2);
       },
     );

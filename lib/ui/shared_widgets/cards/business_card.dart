@@ -113,7 +113,7 @@ class BusinessListCard extends StatelessWidget {
                   _buildStatusBadge(currentDay.currentStatus),
                   Text(
                     currentDay.formattedHours,
-                    style: FoodlyTextStyles.caption,
+                    style: FoodlyTextStyles.labelBoldMini,
                   ),
                   const Spacer(),
                   LocalHero(
@@ -238,7 +238,7 @@ class BusinessGridCard extends StatelessWidget {
                 children: [
                   Text(
                     currentDay.formattedHours,
-                    style: FoodlyTextStyles.cardsSmallSubtitle,
+                    style: FoodlyTextStyles.labelBoldMini,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

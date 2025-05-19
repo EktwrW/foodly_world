@@ -59,8 +59,10 @@ class AuthSessionService {
 
   void initializeFavorites() {
     if (isLoggedIn && _favoritesCubit != null) {
-      _favoritesCubit!.initFromUserDM();
-      _favoritesCubit!.loadFavoriteObjects();
+      _favoritesCubit!
+        ..initFromUserDM()
+        ..loadFavoriteObjects()
+        ..initPageController();
     }
   }
 

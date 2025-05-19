@@ -235,10 +235,10 @@ abstract class BusinessClient {
   @POST('/business-drink-item-favorites/{uuid}')
   Future<void> setFavoriteDrinkItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
 
-  @GET('//business-combo-favorites')
+  @GET('/business-combo-favorites')
   Future<FavoriteComboItemsResponseDM> getMyFavoriteComboItems();
 
-  @POST('//business-combo-favorites/{uuid}')
+  @POST('/business-combo-favorites/{uuid}')
   Future<void> setFavoriteComboItem(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
 
   @GET('/save-promotions')

@@ -17,7 +17,7 @@ import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.d
 import 'package:google_fonts/google_fonts.dart';
 
 part 'adaptive_item_version_selector_wdg.dart';
-part 'menu_item_wdgs/fav_and_edit_item_btns.dart';
+part 'menu_item_wdgs/fav_menu_item_btns.dart';
 part 'menu_item_wdgs/item_name_and_description_wdg.dart';
 part 'menu_item_wdgs/menu_disclaimer_wdg.dart';
 part 'menu_item_wdgs/menu_item_picture_wdg.dart';

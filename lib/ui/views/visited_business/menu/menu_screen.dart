@@ -85,15 +85,11 @@ class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMi
           loaded: (vm) => _dialogService.hideLoading(),
           showSnackbar: (vm, msg) {
             _dialogService.hideLoading();
-            if (context.mounted) {
-              FoodlySnackbars.successGeneric(context, msg);
-            }
+            FoodlySnackbars.successGeneric(context, msg);
           },
           error: (msg, vm) {
             _dialogService.hideLoading();
-            if (context.mounted) {
-              FoodlySnackbars.errorGeneric(context, msg);
-            }
+            FoodlySnackbars.errorGeneric(context, msg);
           },
         );
       },

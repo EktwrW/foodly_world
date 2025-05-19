@@ -107,7 +107,6 @@ class _BusinessPageState extends State<BusinessPage> {
   Future<void> _popAndSuccessConfirmation(BuildContext context, String text) async {
     Navigator.of(context).pop();
     _dialogService.hideLoading();
-    await Future.delayed(Durations.long1)
-        .then((_) => context.mounted ? FoodlySnackbars.successGeneric(context, text) : null);
+    await Future.delayed(Durations.long1).then((_) => FoodlySnackbars.successGeneric(context, text));
   }
 }

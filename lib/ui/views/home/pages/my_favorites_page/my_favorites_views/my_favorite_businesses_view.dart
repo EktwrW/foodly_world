@@ -9,7 +9,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<MyFavoritesCubit, MyFavoritesState, List<BusinessDM>>(
+    return BlocSelector<FavoritesCubit, FavoritesState, List<BusinessDM>>(
       selector: (state) => state.vm.sortedFavoriteBusinesses,
       builder: (context, favoriteBusinesses) {
         if (favoriteBusinesses.isEmpty) {
@@ -26,10 +26,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
           ).paddingTop(100);
         }
 
-        return BlocSelector<MyFavoritesCubit, MyFavoritesState, bool>(
+        return BlocSelector<FavoritesCubit, FavoritesState, bool>(
           selector: (state) => state.vm.isGridView,
           builder: (context, isGridView) {
-            final cubit = context.read<MyFavoritesCubit>();
+            final cubit = di<FavoritesCubit>();
 
             return Column(
               children: [

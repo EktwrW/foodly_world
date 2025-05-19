@@ -7,13 +7,11 @@ class MyFavoriteMenusView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<MyFavoritesCubit, MyFavoritesState, List<MenuDM>>(
+    return BlocSelector<FavoritesCubit, FavoritesState, List<MenuDM>>(
       selector: (state) {
         return state.vm.favoriteMenus;
       },
       builder: (context, favoriteMenus) {
-        final cubit = context.read<MyFavoritesCubit>();
-
         if (favoriteMenus.isEmpty) {
           return Column(
             spacing: 24,
@@ -138,7 +136,7 @@ class _FavoriteMenusCard extends StatelessWidget {
                         _buildStatusBadge(currentDay.currentStatus),
                         Text(
                           currentDay.formattedHours,
-                          style: FoodlyTextStyles.caption,
+                          style: FoodlyTextStyles.labelBoldMini,
                         ),
                       ],
                     ),

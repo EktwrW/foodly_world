@@ -3,13 +3,11 @@ part of 'menu_category_builder_wdg.dart';
 class AdaptiveItemVersionSelector extends StatelessWidget {
   final ItemDM item;
   final MenuCategory menuCategory;
-  final String subCategoryUuid;
 
   const AdaptiveItemVersionSelector({
     super.key,
     required this.item,
     required this.menuCategory,
-    required this.subCategoryUuid,
   });
 
   void _onVersionChanged(BuildContext context, Version? newVersion) {

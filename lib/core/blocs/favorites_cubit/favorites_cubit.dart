@@ -34,6 +34,50 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
+  /// Inicializa el controlador de página para la navegación entre vistas de favoritos
+  void initPageController() {
+    if (_vm.controller != null) return;
+
+    final controller = PageController(initialPage: _vm.indexView);
+    _vm = _vm.copyWith(controller: controller, isInitializing: false);
+    emit(FavoritesState.loaded(_vm));
+  }
+
+  /// Cambia la vista actual de favoritos
+  void changeView(int index) async {
+    if (_vm.indexView == index) return;
+
+    _vm = _vm.copyWith(indexView: index);
+
+    emit(FavoritesState.loaded(_vm));
+  }
+
+  /// Alterna entre vista de cuadrícula y lista para negocios
+  void toggleViewMode() {
+    _vm = _vm.copyWith(isGridView: !_vm.isGridView);
+    emit(FavoritesState.loaded(_vm));
+  }
+
+  /// Cambia el tipo de ordenamiento de negocios favoritos
+  void changeSortType(BusinessSortType sortType) {
+    if (_vm.businessSortType == sortType) return;
+
+    _vm = _vm.copyWith(businessSortType: sortType);
+    emit(FavoritesState.loaded(_vm));
+  }
+
+  /// Cambia el orden ascendente/descendente del ordenamiento de negocios
+  void toggleBusinessSortDirection() {
+    _vm = _vm.copyWith(isBusinessSortAscending: !_vm.isBusinessSortAscending);
+    emit(FavoritesState.loaded(_vm));
+  }
+
+  /// Inicializa la página de favoritos
+  void initFavoritesPage() {
+    initPageController();
+    loadFavoriteObjects();
+  }
+
   /// Carga las entidades completas de favoritos (complementa los IDs con objetos)
   Future<void> loadFavoriteObjects() async {
     if (!_authService.isLoggedIn || _authService.authHeader == null) {
@@ -44,13 +88,22 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(FavoritesState.loading(_vm));
 
     try {
+      if (_vm.favoriteBusinessIds.isNotEmpty) await _getMyFavoriteBusinesses();
+      if (_vm.favoriteMenuIds.isNotEmpty) await _getMyFavoriteMenus();
+
       await Future.wait([
-        if (_vm.favoriteBusinessIds.isNotEmpty) _getMyFavoriteBusinesses(),
-        if (_vm.favoriteMenuIds.isNotEmpty) _getMyFavoriteMenus(),
-        if (_vm.favoriteItemIds.isNotEmpty) _getMyFavoriteFoodItems(),
-        if (_vm.favoriteItemIds.isNotEmpty) _getMyFavoriteDrinkItems(),
+        if (_vm.favoriteItemIds.isNotEmpty) ...[
+          _getMyFavoriteFoodItems(),
+          _getMyFavoriteDrinkItems(),
+          _getMyFavoriteComboItems(),
+        ],
         if (_vm.savedPromotionIds.isNotEmpty) _getMyFavoritePromotions(),
       ]);
+
+      // Agrupar los items favoritos por negocio después de cargarlos
+      if (_vm.favoriteItemIds.isNotEmpty) {
+        await _populateFavoriteItems();
+      }
 
       emit(FavoritesState.loaded(_vm));
     } catch (e) {
@@ -63,6 +116,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         (result) => result.when(
           success: (data) => _vm = _vm.copyWith(favoritePromotions: data.savedPromotions),
           failure: (error) => _logger.e('Error loading promotions: $error'),
+        ),
+      );
+
+  Future<void> _getMyFavoriteComboItems() async => await _businessRepo.getMyFavoriteComboItems().then(
+        (result) => result.when(
+          success: (data) => _vm = _vm.copyWith(favoriteComboItems: data.favoriteCombos),
+          failure: (error) => _logger.e('Error loading combo items: $error'),
         ),
       );
 
@@ -80,12 +140,42 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         ),
       );
 
-  Future<void> _getMyFavoriteMenus() async => await _businessRepo.getMyFavoriteMenus().then(
-        (result) => result.when(
-          success: (data) => _vm = _vm.copyWith(favoriteMenus: data.favoriteMenus),
-          failure: (error) => _logger.e('Error loading menus: $error'),
-        ),
-      );
+  Future<void> _getMyFavoriteMenus() async {
+    final result = await _businessRepo.getMyFavoriteMenus();
+
+    result.when(
+      success: (data) async {
+        final menus = List<MenuDM>.from(data.favoriteMenus);
+        final updatedMenus = <MenuDM>[];
+
+        // Para cada menú, intentamos asociar su negocio correspondiente
+        for (final menu in menus) {
+          // Primero buscamos si tenemos el negocio en los favoritos
+          final matchingBusiness = _vm.favoriteBusinesses.firstWhere(
+            (business) => business.uuid == menu.businessUuid,
+            orElse: () => const BusinessDM(),
+          );
+
+          if (matchingBusiness.uuid.isNotEmpty) {
+            updatedMenus.add(menu.copyWith(business: matchingBusiness));
+          } else {
+            await _businessRepo.fetchBusinessById(menu.businessUuid).then(
+                  (businessResult) => businessResult.when(
+                    success: (business) => updatedMenus.add(menu.copyWith(business: business)),
+                    failure: (error) {
+                      _logger.e('Error fetching business for menu: $error');
+                      updatedMenus.add(menu);
+                    },
+                  ),
+                );
+          }
+        }
+
+        _vm = _vm.copyWith(favoriteMenus: updatedMenus);
+      },
+      failure: (error) => _handleError('Error loading favorite menus: $error'),
+    );
+  }
 
   Future<void> _getMyFavoriteBusinesses() async => await _businessRepo.getMyFavoriteBusinesses().then(
         (result) => result.when(
@@ -93,6 +183,117 @@ class FavoritesCubit extends Cubit<FavoritesState> {
           failure: (error) => _logger.e('Error loading businesses: $error'),
         ),
       );
+
+  Future<void> _populateFavoriteItems() async {
+    try {
+      // Paso 1: Crear un mapa de businessUuid a FavoriteItemDM usando agrupación funcional
+      final Map<String, FavoriteItemDM> itemsByBusiness = {};
+
+      // Función auxiliar para agregar elementos a la colección mapeada
+      void addItemToBusinessMap(ItemDM item, String itemType) {
+        final businessUuid = item.businessUuid ?? '';
+        if (businessUuid.isEmpty) return;
+
+        // Si el negocio ya existe en el mapa, actualizamos su entrada
+        // Si no, creamos una nueva entrada
+        itemsByBusiness.update(
+          businessUuid,
+          (existing) {
+            // Agregamos el item al tipo correspondiente
+            return switch (itemType) {
+              'food' => existing.copyWith(
+                  favoriteFoodItems: [...existing.favoriteFoodItems, item],
+                ),
+              'drink' => existing.copyWith(
+                  favoriteDrinkItems: [...existing.favoriteDrinkItems, item],
+                ),
+              'combo' => existing.copyWith(
+                  favoriteComboItems: [...existing.favoriteComboItems, item],
+                ),
+              _ => existing
+            };
+          },
+          // Si no existe, creamos una nueva entrada según el tipo
+          ifAbsent: () {
+            return switch (itemType) {
+              'food' => FavoriteItemDM(
+                  businessUuid: businessUuid,
+                  favoriteFoodItems: [item],
+                ),
+              'drink' => FavoriteItemDM(
+                  businessUuid: businessUuid,
+                  favoriteDrinkItems: [item],
+                ),
+              'combo' => FavoriteItemDM(
+                  businessUuid: businessUuid,
+                  favoriteComboItems: [item],
+                ),
+              _ => FavoriteItemDM(businessUuid: businessUuid)
+            };
+          },
+        );
+      }
+
+      // Agregar todos los items a sus correspondientes grupos de negocio
+      for (final item in _vm.favoriteFoodItems) {
+        addItemToBusinessMap(item, 'food');
+      }
+
+      for (final item in _vm.favoriteDrinkItems) {
+        addItemToBusinessMap(item, 'drink');
+      }
+
+      for (final item in _vm.favoriteComboItems) {
+        addItemToBusinessMap(item, 'combo');
+      }
+
+      // Paso 2: Asociar cada FavoriteItemDM con su correspondiente BusinessDM
+      final favoriteItems = await Future.wait(
+        itemsByBusiness.entries.map((entry) async {
+          final businessUuid = entry.key;
+          var favoriteItem = entry.value;
+
+          // Buscar primero en los negocios favoritos
+          final business = _vm.favoriteBusinesses.firstWhereOrNull(
+            (b) => b.uuid == businessUuid,
+          );
+
+          if (business != null) {
+            return favoriteItem.copyWith(business: business);
+          }
+
+          // Buscar en los negocios de menús favoritos
+          final menuWithBusiness = _vm.favoriteMenus.firstWhereOrNull(
+            (m) => m.businessUuid == businessUuid && m.business != null,
+          );
+
+          if (menuWithBusiness?.business != null) {
+            return favoriteItem.copyWith(business: menuWithBusiness!.business);
+          }
+
+          // Si no encontramos el negocio, hacer una petición para obtenerlo
+          try {
+            final response = await _businessRepo.fetchBusinessById(businessUuid);
+            return response.when(
+              success: (data) => favoriteItem.copyWith(business: data),
+              failure: (error) {
+                _logger.e('Error fetching business for items: ${error.errorMsg}');
+                return favoriteItem;
+              },
+            );
+          } catch (e) {
+            _logger.e('Exception fetching business: $e');
+            return favoriteItem;
+          }
+        }),
+      );
+
+      // Actualizar el ViewModel con los items agrupados
+      _vm = _vm.copyWith(favoriteItems: favoriteItems);
+    } catch (e) {
+      _logger.e('Error populating favorite items: $e');
+    }
+  }
 
   // Business favorites
   Future<void> toggleBusinessFavorite(BusinessDM business) async {
@@ -257,13 +458,16 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   // Food item favorites
-  Future<void> toggleFoodItemFavorite(ItemDM item) async => await _toggleItemFavorite(item, false);
+  Future<void> toggleFoodItemFavorite(ItemDM item) async => await _toggleItemFavorite(item, false, false);
 
   // Drink item favorites
-  Future<void> toggleDrinkItemFavorite(ItemDM item) async => await _toggleItemFavorite(item, true);
+  Future<void> toggleDrinkItemFavorite(ItemDM item) async => await _toggleItemFavorite(item, true, false);
 
-  // Item favorites (works for both food and drink)
-  Future<void> _toggleItemFavorite(ItemDM item, bool isDrink) async {
+  // Combo item favorites
+  Future<void> toggleComboItemFavorite(ItemDM item) async => await _toggleItemFavorite(item, false, true);
+
+  // Item favorites (works for food, drink and combo items)
+  Future<void> _toggleItemFavorite(ItemDM item, bool isDrink, bool isCombo) async {
     if (!_authService.isLoggedIn || item.uuid.isEmpty) return;
 
     final isFavorite = _vm.favoriteItemIds.contains(item.uuid);
@@ -274,11 +478,16 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     List<String> updatedIds;
     final List<ItemDM> updatedFoodItems = List<ItemDM>.from(_vm.favoriteFoodItems);
     final List<ItemDM> updatedDrinkItems = List<ItemDM>.from(_vm.favoriteDrinkItems);
+    final List<ItemDM> updatedComboItems = List<ItemDM>.from(_vm.favoriteComboItems);
 
     if (newValue) {
       updatedIds = List<String>.from(_vm.favoriteItemIds)..add(uuid);
 
-      if (isDrink) {
+      if (isCombo) {
+        if (!updatedComboItems.any((i) => i.uuid == uuid)) {
+          updatedComboItems.add(item);
+        }
+      } else if (isDrink) {
         if (!updatedDrinkItems.any((i) => i.uuid == uuid)) {
           updatedDrinkItems.add(item);
         }
@@ -290,7 +499,9 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     } else {
       updatedIds = List<String>.from(_vm.favoriteItemIds)..remove(uuid);
 
-      if (isDrink) {
+      if (isCombo) {
+        updatedComboItems.removeWhere((i) => i.uuid == uuid);
+      } else if (isDrink) {
         updatedDrinkItems.removeWhere((i) => i.uuid == uuid);
       } else {
         updatedFoodItems.removeWhere((i) => i.uuid == uuid);
@@ -302,15 +513,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
           favoriteItemIds: updatedIds,
           favoriteFoodItems: updatedFoodItems,
           favoriteDrinkItems: updatedDrinkItems,
+          favoriteComboItems: updatedComboItems,
         )
         .withToggledItem(uuid);
 
     emit(FavoritesState.loaded(_vm));
 
     try {
-      final result = isDrink
-          ? await _businessRepo.setFavoriteDrinkItem(uuid, SetFavoriteBodyDTO(isFavorite: newValue))
-          : await _businessRepo.setFavoriteFoodItem(uuid, SetFavoriteBodyDTO(isFavorite: newValue));
+      final result = isCombo
+          ? await _businessRepo.setFavoriteComboItem(uuid, SetFavoriteBodyDTO(isFavorite: newValue))
+          : isDrink
+              ? await _businessRepo.setFavoriteDrinkItem(uuid, SetFavoriteBodyDTO(isFavorite: newValue))
+              : await _businessRepo.setFavoriteFoodItem(uuid, SetFavoriteBodyDTO(isFavorite: newValue));
 
       result.when(
         success: (_) {
@@ -319,29 +533,34 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         },
         failure: (error) {
           _logger.e('Error toggling item favorite: $error');
-          _revertItemFavorite(item, !newValue, isDrink);
+          _revertItemFavorite(item, !newValue, isDrink, isCombo);
           emit(FavoritesState.error(_vm, error.toString()));
         },
       );
     } catch (e) {
       _logger.e('Exception toggling item favorite: $e');
-      _revertItemFavorite(item, !newValue, isDrink);
+      _revertItemFavorite(item, !newValue, isDrink, isCombo);
       emit(FavoritesState.error(_vm, e.toString()));
     }
   }
 
-  void _revertItemFavorite(ItemDM item, bool newValue, bool isDrink) {
+  void _revertItemFavorite(ItemDM item, bool newValue, bool isDrink, bool isCombo) {
     if (item.uuid.isEmpty) return;
 
     final uuid = item.uuid;
     List<String> updatedIds;
     final List<ItemDM> updatedFoodItems = List<ItemDM>.from(_vm.favoriteFoodItems);
     final List<ItemDM> updatedDrinkItems = List<ItemDM>.from(_vm.favoriteDrinkItems);
+    final List<ItemDM> updatedComboItems = List<ItemDM>.from(_vm.favoriteComboItems);
 
     if (newValue) {
       updatedIds = List<String>.from(_vm.favoriteItemIds)..add(uuid);
 
-      if (isDrink) {
+      if (isCombo) {
+        if (!updatedComboItems.any((i) => i.uuid == uuid)) {
+          updatedComboItems.add(item);
+        }
+      } else if (isDrink) {
         if (!updatedDrinkItems.any((i) => i.uuid == uuid)) {
           updatedDrinkItems.add(item);
         }
@@ -353,7 +572,9 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     } else {
       updatedIds = List<String>.from(_vm.favoriteItemIds)..remove(uuid);
 
-      if (isDrink) {
+      if (isCombo) {
+        updatedComboItems.removeWhere((i) => i.uuid == uuid);
+      } else if (isDrink) {
         updatedDrinkItems.removeWhere((i) => i.uuid == uuid);
       } else {
         updatedFoodItems.removeWhere((i) => i.uuid == uuid);
@@ -364,6 +585,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       favoriteItemIds: updatedIds,
       favoriteFoodItems: updatedFoodItems,
       favoriteDrinkItems: updatedDrinkItems,
+      favoriteComboItems: updatedComboItems,
     );
   }
 
@@ -501,10 +723,22 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   bool isMenuFavorite(String? uuid) => uuid != null && _vm.favoriteMenuIds.contains(uuid);
   bool isFoodItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
   bool isDrinkItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
+  bool isComboItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
   bool isPromotionFavorite(String? uuid) => uuid != null && _vm.savedPromotionIds.contains(uuid);
 
   void clearAllFavorites() {
     _vm = const FavoritesVM();
     emit(FavoritesState.initial(_vm));
+  }
+
+  void _handleError(String errorMessage) {
+    _logger.e(errorMessage);
+    emit(_Error(_vm, errorMessage));
+  }
+
+  @override
+  Future<void> close() {
+    _vm.controller?.dispose();
+    return super.close();
   }
 }
