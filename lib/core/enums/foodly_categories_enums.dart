@@ -107,7 +107,7 @@ enum FoodlyCategories {
         stores =>
           'https://foodly.s3.amazonaws.com/public/categories_images/9UrhIE91n2kbClChH8d0zAJ3WHdKv4cQ06fqq2NU.jpg',
         academy =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/sck0rO2HlaBnXzHMAaYPLuIJhYkTlqmMauOrZZYM.jpg',
+          'https://foodly.s3.amazonaws.com/public/categories_images/V5fnkZrKmpVhOPDqHkOs9FJdQE523ENhfdwoTDUN.jpg',
       };
 }
 
