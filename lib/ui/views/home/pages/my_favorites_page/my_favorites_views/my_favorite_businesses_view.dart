@@ -59,9 +59,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             mainAxisSpacing: 2,
                             childAspectRatio: 18 / 29,
                             children: favoriteBusinesses
-                                .map((result) => BusinessGridCard(
-                                      business: result,
-                                      heroTagPrefix: result.uuid,
+                                .map((business) => BusinessGridCard(
+                                      key: Key(business.uuid),
+                                      business: business,
+                                      heroTagPrefix: business.uuid,
                                     ))
                                 .toList(),
                           )
@@ -73,6 +74,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final business = favoriteBusinesses[index];
                               return BusinessListCard(
+                                key: Key(business.uuid),
                                 business: business,
                                 heroTagPrefix: business.uuid,
                               );

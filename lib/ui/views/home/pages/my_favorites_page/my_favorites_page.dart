@@ -74,13 +74,15 @@ class _MyFavoritesPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesCubit>().initPageController();
+
     return BlocSelector<FavoritesCubit, FavoritesState, bool>(
       selector: (state) => state.vm.isInitializing,
       builder: (context, isInitializing) {
         return AnimatedCrossFade(
           duration: Durations.medium4,
           crossFadeState: isInitializing ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-          firstChild: const Center(child: LoadingWidgetFoodlyIso(height: 90)),
+          firstChild: const Center(child: LoadingWidgetFoodlyIso(height: 80)),
           secondChild: BlocSelector<FavoritesCubit, FavoritesState, PageController?>(
             selector: (state) => state.vm.controller,
             builder: (context, controller) {

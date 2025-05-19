@@ -36,7 +36,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   /// Inicializa el controlador de página para la navegación entre vistas de favoritos
   void initPageController() {
-    if (_vm.controller != null) return;
+    if (_vm.controller != null && _vm.indexView == 0) return;
 
     final controller = PageController(initialPage: _vm.indexView);
     _vm = _vm.copyWith(controller: controller, isInitializing: false);
