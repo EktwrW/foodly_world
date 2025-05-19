@@ -54,7 +54,10 @@ class FoodlyWrapper extends StatelessWidget {
               },
             );
           },
-          builder: (context, state) => FoodlyLocationWrapper(childWidget: child),
+          builder: (context, state) => state.maybeWhen(
+            orElse: () => const Center(child: LoadingWidgetFoodlyIso()),
+            authenticated: (localAuthDTO) => FoodlyLocationWrapper(childWidget: child),
+          ),
         ),
       ),
     );

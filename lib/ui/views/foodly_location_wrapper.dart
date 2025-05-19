@@ -32,8 +32,13 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
           checkingLocation: () => mounted ? _dialogService.showLoading() : null,
           locationChecked: (locationDM) {
             _locationService.updateLocation(locationDM);
-            if (mounted) _dialogService.hideLoading();
-            FlutterNativeSplash.remove();
+
+            final favsState = context.read<FavoritesCubit>().state;
+
+            if (favsState == FavoritesState.loaded(favsState.vm)) {
+              if (mounted) _dialogService.hideLoading();
+              FlutterNativeSplash.remove();
+            }
           },
         );
       },
@@ -44,6 +49,28 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
     );
   }
 
-  Widget _buildContent() => SingleChildScrollView(
-      child: SizedBox(height: context.screenHeight, width: context.screenWidth, child: widget.childWidget));
+  Widget _buildContent() => BlocListener<FavoritesCubit, FavoritesState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            loaded: (vm) async {
+              if (!_locationService.mustFetchLocation) {
+                if (mounted) _dialogService.hideLoading();
+                FlutterNativeSplash.remove();
+              } else {
+                await Future.delayed(const Duration(seconds: 10), () {
+                  if (mounted) _dialogService.hideLoading();
+                  FlutterNativeSplash.remove();
+                });
+              }
+            },
+          );
+        },
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: context.screenHeight,
+            width: context.screenWidth,
+            child: widget.childWidget,
+          ),
+        ),
+      );
 }

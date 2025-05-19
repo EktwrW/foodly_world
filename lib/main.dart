@@ -5,7 +5,7 @@ void main() async => runApp(await buildFoodlyApp());
 Future<Widget> buildFoodlyApp() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.microtask(() => FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding));
   final config = BaseConfig.initConfig();
   DependencyInjectionService.registerDependencies(config);
   HydratedBloc.storage = await HydratedStorage.build(
