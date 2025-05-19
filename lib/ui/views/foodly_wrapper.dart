@@ -31,6 +31,7 @@ class FoodlyWrapper extends StatelessWidget {
                     authSessionService.exit(context);
                   }
                   dialogService.hideLoading();
+                  FlutterNativeSplash.remove();
                 }
               },
               authenticated: (localAuthDTO) async {
@@ -56,6 +57,7 @@ class FoodlyWrapper extends StatelessWidget {
           },
           builder: (context, state) => state.maybeWhen(
             orElse: () => const Center(child: LoadingWidgetFoodlyIso()),
+            loaded: (localAuthDTO) => FoodlyLocationWrapper(childWidget: child),
             authenticated: (localAuthDTO) => FoodlyLocationWrapper(childWidget: child),
           ),
         ),

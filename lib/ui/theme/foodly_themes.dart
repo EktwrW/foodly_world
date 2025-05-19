@@ -63,6 +63,7 @@ class FoodlyThemes {
           width: 1.5,
         ),
       ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(strokeCap: StrokeCap.round),
     );
   }
 
@@ -100,6 +101,7 @@ class FoodlyThemes {
           width: 1.5,
         ),
       ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(strokeCap: StrokeCap.round),
     );
   }
 }
