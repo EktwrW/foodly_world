@@ -1,7 +1,7 @@
-part of '../menu_category_builder_wdg.dart';
+part of '../visited_menu_category_builder_wdg.dart';
 
-class MenuItemPictureWdg extends StatelessWidget {
-  const MenuItemPictureWdg({
+class VisitedMenuItemPictureWdg extends StatelessWidget {
+  const VisitedMenuItemPictureWdg({
     super.key,
     required this.isEditing,
     required this.item,

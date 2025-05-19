@@ -189,10 +189,10 @@ class _FavoriteItemsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuCategoryItems(List<ItemDM> favoriteFoodItems, String? currency) {
+  Widget _buildMenuCategoryItems(List<ItemDM> favoriteItems, String? currency) {
     return Column(
-      children: favoriteItemDM.favoriteFoodItems
-          .map((item) => MenuItemWdg(
+      children: favoriteItems
+          .map((item) => VisitedMenuItemWdg(
                 item: item,
                 menuCategory: MenuCategory.food,
                 isLastScreenItem: false,

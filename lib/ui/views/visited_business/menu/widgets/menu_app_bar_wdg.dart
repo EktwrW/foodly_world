@@ -4,7 +4,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -17,10 +17,10 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<MenuCubit, MenuState, (PageController?, int)>(
+    return BlocSelector<VisitedMenuCubit, VisitedMenuState, (PageController?, int)>(
       selector: (state) => (state.vm.controller, state.vm.indexView),
       builder: (context, record) {
-        final cubit = context.read<MenuCubit>();
+        final cubit = context.read<VisitedMenuCubit>();
 
         return SliverAppBar(
           primary: false,
@@ -83,7 +83,7 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MenuCubit, MenuState>(
+    return BlocBuilder<VisitedMenuCubit, VisitedMenuState>(
       builder: (context, state) {
         final vm = state.vm;
 

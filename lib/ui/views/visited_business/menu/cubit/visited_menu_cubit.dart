@@ -4,14 +4,14 @@ import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'menu_state.dart';
-part 'menu_cubit.freezed.dart';
+part 'visited_menu_state.dart';
+part 'visited_menu_cubit.freezed.dart';
 
-class MenuCubit extends Cubit<MenuState> {
+class VisitedMenuCubit extends Cubit<VisitedMenuState> {
   MenuVM _vm;
   final BusinessRepo _businessRepo;
 
-  MenuCubit(
+  VisitedMenuCubit(
     BusinessRepo businessRepo, {
     required String? uuid,
     required BusinessDM? businessDM,
@@ -25,7 +25,7 @@ class MenuCubit extends Cubit<MenuState> {
           floatingButtonKey: GlobalKey(),
         ),
         _businessRepo = businessRepo,
-        super(const MenuState.initial(MenuVM())) {
+        super(const VisitedMenuState.initial(MenuVM())) {
     _loadMenu();
   }
 

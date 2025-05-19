@@ -1,7 +1,7 @@
-part of '../menu_category_builder_wdg.dart';
+part of '../visited_menu_category_builder_wdg.dart';
 
-class ItemNameAndDescriptionWdg extends ui.StatelessWidget {
-  const ItemNameAndDescriptionWdg({
+class VisitedItemNameAndDescriptionWdg extends ui.StatelessWidget {
+  const VisitedItemNameAndDescriptionWdg({
     super.key,
     required this.item,
   });

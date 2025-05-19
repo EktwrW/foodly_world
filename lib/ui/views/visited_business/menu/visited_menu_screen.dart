@@ -1,20 +1,20 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_app_bar_wdg.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_category_builder_wdg.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_floating_action_button.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu_category_builder_wdg.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu_floating_action_button.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+class VisitedMenuScreen extends StatefulWidget {
+  const VisitedMenuScreen({super.key});
 
   @override
-  State<MenuScreen> createState() => _MenuScreenState();
+  State<VisitedMenuScreen> createState() => _VisitedMenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMixin {
+class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -76,7 +76,7 @@ class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocConsumer<MenuCubit, MenuState>(
+    return BlocConsumer<VisitedMenuCubit, VisitedMenuState>(
       listener: (context, state) {
         state.whenOrNull(
           loading: (vm) {
@@ -135,12 +135,12 @@ class _MenuScreenState extends State<MenuScreen> with AutomaticKeepAliveClientMi
             controller: vm.controller,
             physics: const PageScrollPhysics(),
             itemCount: MenuCategory.values.length,
-            onPageChanged: (i) => context.read<MenuCubit>().updateView(i),
+            onPageChanged: (i) => context.read<VisitedMenuCubit>().updateView(i),
             itemBuilder: (context, index) {
               final category = MenuCategory.values[index];
 
               return RepaintBoundary(
-                child: MenuCategoryPage(
+                child: VisitedMenuCategoryPage(
                   key: ValueKey(category),
                   categories: vm.menuScreens[category],
                   vm: vm,

@@ -19,7 +19,8 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_snackbars.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_category_builder_wdg.dart' show MenuItemWdg;
+import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu_category_builder_wdg.dart'
+    show VisitedMenuItemWdg;
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:local_hero/local_hero.dart';

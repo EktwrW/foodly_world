@@ -1,4 +1,4 @@
-part of '../menu_category_builder_wdg.dart';
+part of '../visited_menu_category_builder_wdg.dart';
 
 class FavMenuItemBtns extends StatelessWidget {
   const FavMenuItemBtns({

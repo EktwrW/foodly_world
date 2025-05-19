@@ -1,9 +1,9 @@
-part of 'menu_category_builder_wdg.dart';
+part of 'visited_menu_category_builder_wdg.dart';
 
 class SubCategoryWdg extends StatelessWidget {
   final CategoryDM? subCategory;
   final MenuCategory menuCategory;
-  final MenuCubit cubit;
+  final VisitedMenuCubit cubit;
   final bool isLastSubCategory;
 
   const SubCategoryWdg({
@@ -29,7 +29,7 @@ class SubCategoryWdg extends StatelessWidget {
         const SizedBox(height: 30),
         if (subCategory?.items.isNotEmpty ?? false)
           ...subCategory!.items.mapIndexed(
-            (i, item) => MenuItemWdg(
+            (i, item) => VisitedMenuItemWdg(
               key: Key(item.uuid),
               menuCategory: menuCategory,
               vm: vm,

@@ -24,8 +24,8 @@ import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart';
 import 'package:foodly_world/ui/views/user_profile/user_profile_page.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_cubit.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/menu_screen.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/visited_menu_screen.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/cubit/promotions_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
@@ -207,9 +207,7 @@ class AppRouter {
               routes: [
                 _goRouteForStatefulShell(
                   AppRoutes.home,
-                  _goRouteWithTransition(
-                      AppRoutes.favedBusiness,
-                      const MyFavoritesPage(),
+                  _goRouteWithTransition(AppRoutes.favedBusiness, const MyFavoritesPage(),
                       [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
                 ),
               ],
@@ -357,12 +355,12 @@ class AppRouter {
             transitionDuration: Durations.medium4,
             key: state.pageKey,
             child: BlocProvider(
-              create: (context) => MenuCubit(
+              create: (context) => VisitedMenuCubit(
                 di(),
                 uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 businessDM: state.extra as BusinessDM?,
               ),
-              child: const MenuScreen(),
+              child: const VisitedMenuScreen(),
             ),
             transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                 FadeTransition(opacity: animation, child: child),
