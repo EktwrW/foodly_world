@@ -60,6 +60,7 @@ class BusinessListCard extends StatelessWidget {
                       avatarStyle: AvatarStyle.square,
                       height: 60,
                       width: 60,
+                      avatarType: AvatarType.business,
                     ),
                   ),
                   Flexible(
@@ -173,51 +174,47 @@ class BusinessGridCard extends StatelessWidget {
           child: Column(
             spacing: 8,
             children: [
-              Expanded(
-                child: Stack(
-                  children: [
-                    LocalHero(
-                      tag: 'avatar-$heroTagPrefix',
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: AvatarWidget(
-                          avatarUrl: business.logo,
-                          avatarStyle: AvatarStyle.square,
-                          height: double.infinity,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 3,
-                      right: 3,
-                      child: LocalHero(
-                        tag: 'like-$heroTagPrefix',
-                        child: FavoriteButton.forBusinessCard(
-                          key: ValueKey(business.uuid),
-                          diameter: 28,
-                          iconSize: 16,
-                          business: business,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Stack(
                 children: [
-                  Flexible(
-                    child: Text(
+                  LocalHero(
+                    tag: 'avatar-$heroTagPrefix',
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: AvatarWidget(
+                        avatarUrl: business.logo,
+                        avatarStyle: AvatarStyle.square,
+                        height: double.infinity,
+                        width: double.infinity,
+                        avatarType: AvatarType.business,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 3,
+                    right: 3,
+                    child: LocalHero(
+                      tag: 'like-$heroTagPrefix',
+                      child: FavoriteButton.forBusinessCard(
+                        key: ValueKey(business.uuid),
+                        diameter: 28,
+                        iconSize: 16,
+                        business: business,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       business.name ?? '-',
                       style: FoodlyTextStyles.captionPurpleBold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Flexible(
-                    child: Row(
+                    Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
@@ -226,13 +223,13 @@ class BusinessGridCard extends StatelessWidget {
                             style: FoodlyTextStyles.cardsSmallSubtitle,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                          ),
+                          ).paddingBottom(4),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ).paddingBottom(4),
+                  ],
+                ),
+              ),
               Column(
                 spacing: 6,
                 children: [

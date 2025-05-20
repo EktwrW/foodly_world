@@ -105,8 +105,8 @@ class MenuItemPictureWdg extends StatelessWidget {
             }
           : null,
       child: Container(
-        width: 110,
-        height: 100,
+        width: 80,
+        height: 80,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: FoodlyThemes.primaryFoodly.withValues(alpha: isEditing ? .036 : .093)),

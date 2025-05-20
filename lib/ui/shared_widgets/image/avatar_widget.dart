@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 enum AvatarType { generic, user, business }
 
@@ -10,8 +9,8 @@ enum AvatarStyle { square, circle }
 
 class AvatarWidget extends StatelessWidget {
   final String? avatarUrl;
-  final double? width;
-  final double? height;
+  final double width;
+  final double height;
   final bool enabled;
   final AvatarType? avatarType;
   final BoxFit? boxFit;
@@ -43,38 +42,37 @@ class AvatarWidget extends StatelessWidget {
       );
 
   // Placeholders optimizados
-  Widget get userAvatarPlaceholder => Icon(
-        Bootstrap.person_circle,
-        color: enabled ? FoodlyThemes.accentColor : ui.NeumoColors.disabled,
-        size: height,
-      );
-
-  Widget get businessPlaceholder => DecoratedBox(
-        decoration: _baseDecoration.copyWith(color: Colors.grey[200]),
-        child: SizedBox.square(
-          dimension: height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ui.NeumoIcon(
-                FontAwesome.store_solid,
-                style: ui.NeumoStyle(
-                  shape: ui.NeumoShape.concave,
-                  color: ui.NeumoColors.disabled,
-                  depth: enabled ? 2 : 0,
-                ),
-                size: (height ?? 30) / 2,
-              ),
-            ],
+  Widget get userAvatarPlaceholder => CachedNetworkImage(
+        imageUrl: FoodlyStrings.USER_AVATAR_PLACEHOLDER,
+        fit: boxFit,
+        imageBuilder: (context, imageProvider) => Container(
+          constraints: BoxConstraints.tight(Size(width, height)),
+          decoration: _baseDecoration.copyWith(
+            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
           ),
         ),
+        fadeInDuration: Durations.medium3,
+        fadeOutDuration: Durations.medium3,
+      );
+
+  Widget get businessPlaceholder => CachedNetworkImage(
+        imageUrl: FoodlyStrings.LOGO_PLACEHOLDER,
+        fit: boxFit,
+        imageBuilder: (context, imageProvider) => Container(
+          constraints: BoxConstraints.tight(Size(width, height)),
+          decoration: _baseDecoration.copyWith(
+            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          ),
+        ),
+        fadeInDuration: Durations.medium3,
+        fadeOutDuration: Durations.medium3,
       );
 
   Widget get _loadingPlaceholder => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox.square(
-            dimension: height ?? 40,
+            dimension: height,
             child: const CircularProgressIndicator.adaptive(backgroundColor: FoodlyThemes.secondaryFoodly),
           ),
         ],
@@ -96,7 +94,7 @@ class AvatarWidget extends StatelessWidget {
       imageUrl: avatarUrl!,
       fit: boxFit,
       imageBuilder: (context, imageProvider) => Container(
-        constraints: BoxConstraints.tight(Size(width!, height!)),
+        constraints: BoxConstraints.tight(Size(width, height)),
         decoration: _baseDecoration.copyWith(
           image: DecorationImage(
             image: imageProvider,

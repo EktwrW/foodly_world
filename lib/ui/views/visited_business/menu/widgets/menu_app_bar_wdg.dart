@@ -112,7 +112,7 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
           ).paddingSymmetric(vertical: 8, horizontal: 15),
           actions: [
             AvatarWidget(
-              avatarUrl: vm.businessLogo ?? '',
+              avatarUrl: vm.businessLogo,
               height: 45,
               width: 45,
             ).paddingRight(15),

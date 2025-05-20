@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
 
   animated_bottom_navigation_bar: ^1.4.0
-  animated_reorderable_list: ^1.1.5
+  animated_reorderable_list: ^1.3.0
   animate_do: ^4.2.0
   bloc: ^9.0.0
   cached_network_image: ^3.4.1
@@ -34,7 +34,7 @@ dependencies:
   flutter_neumo: ^1.0.2
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.1.0
-  freezed_annotation: ^3.0.0
+  freezed_annotation: ^2.4.4
   geolocator: ^14.0.0
   get_it: ^8.0.3
   google_fonts: ^6.1.0
@@ -73,7 +73,7 @@ dev_dependencies:
 
   build_runner: ^2.4.15
   flutter_lints: ^5.0.0
-  freezed: ^3.0.6
+  freezed: ^2.5.8
   intl_utils: ^2.8.7
   json_serializable: ^6.9.4
   retrofit_generator: ^9.2.0

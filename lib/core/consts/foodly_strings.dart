@@ -54,4 +54,10 @@ class FoodlyStrings {
   static const GPT_4_MODEL = 'gpt-4';
   static const GPT_3_5_TURBO_MODEL = 'gpt-3.5-turbo-1106';
   static const DALL_E_3 = 'dall-e-3';
+
+  // Avatar placeholders
+  static const LOGO_PLACEHOLDER = 'https://foodly.s3.us-east-1.amazonaws.com/images/business-placeholder.png';
+  static const USER_AVATAR_PLACEHOLDER = 'https://foodly.s3.us-east-1.amazonaws.com/images/users-placeholder.png';
+  static const USER_AVATAR_PLACEHOLDER_ALTERNATIVE_1 = 'https://foodly.s3.us-east-1.amazonaws.com/images/user.png';
+  static const USER_AVATAR_PLACEHOLDER_ALTERNATIVE_2 = 'https://foodly.s3.us-east-1.amazonaws.com/images/user-2.png';
 }

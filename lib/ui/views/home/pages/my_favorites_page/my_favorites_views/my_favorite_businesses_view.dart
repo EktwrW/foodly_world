@@ -57,7 +57,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             crossAxisCount: 2,
                             crossAxisSpacing: 2,
                             mainAxisSpacing: 2,
-                            childAspectRatio: 18 / 29,
+                            childAspectRatio: 17 / 29,
                             children: favoriteBusinesses
                                 .map((business) => BusinessGridCard(
                                       key: Key(business.uuid),

@@ -227,7 +227,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
       await _businessRepo.updateLogo(filePath: path, uuid: _vm.currentBusiness?.uuid ?? '').then(
             (response) => response.when(
               success: (businessDM) {
-                if (businessDM.logo?.isNotEmpty ?? false) {
+                if (businessDM.logo.isNotEmpty) {
                   _updateBusinessInCurrentArray(businessDM);
                 }
 

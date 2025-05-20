@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
@@ -17,7 +18,7 @@ class BusinessDM with _$BusinessDM {
 
   const factory BusinessDM({
     @JsonKey(name: 'id') int? intId,
-    @JsonKey(name: 'business_logo') String? logo,
+    @JsonKey(name: 'business_logo') @Default(FoodlyStrings.LOGO_PLACEHOLDER) String logo,
     @JsonKey(name: 'cover_images') @Default([]) List<BusinessCoverImageDM> coverImages,
     @JsonKey(name: 'branches') @Default([]) List<BusinessDM> branches,
     @JsonKey(name: 'business_uuid') @Default('') String uuid,

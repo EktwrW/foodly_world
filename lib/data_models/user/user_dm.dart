@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
@@ -24,7 +25,7 @@ class UserDM with _$UserDM {
     @JsonKey(name: 'zip_code') String? zipCode,
     @JsonKey(name: 'latitude') double? latitude,
     @JsonKey(name: 'longitude') double? longitude,
-    @JsonKey(name: 'photo') String? avatar,
+    @JsonKey(name: 'photo') @Default(FoodlyStrings.USER_AVATAR_PLACEHOLDER) String? avatar,
     @JsonKey(name: 'phone') String? phone,
     @JsonKey(name: 'created_at') DateTime? signUpDate,
     @JsonKey(name: 'updated_at') DateTime? lastUpdated,
