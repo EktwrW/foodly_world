@@ -30,15 +30,16 @@ class MyFavoriteMenusView extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.separated(
-                key: const ValueKey(SearchResultsViewMode.list),
+                key: const Key('my-favs-menus-view'),
                 itemCount: favoriteMenus.length,
+                controller: ScrollController(),
                 padding: _padding,
-                separatorBuilder: (_, __) => const SizedBox(height: 4),
+                separatorBuilder: (_, __) => const SizedBox(height: 6),
                 itemBuilder: (context, index) {
-                  final menuItem = favoriteMenus[index];
+                  final menu = favoriteMenus[index];
                   return _FavoriteMenusCard(
-                    key: Key(menuItem.uuid),
-                    menuItem: menuItem,
+                    key: const Key('my-favs-menus-view'),
+                    menu: menu,
                   );
                 },
               ),
@@ -51,27 +52,28 @@ class MyFavoriteMenusView extends StatelessWidget {
 }
 
 class _FavoriteMenusCard extends StatelessWidget {
-  final MenuDM menuItem;
+  final MenuDM menu;
 
-  const _FavoriteMenusCard({super.key, required this.menuItem});
+  const _FavoriteMenusCard({super.key, required this.menu});
 
   String get _publicMenuUrl {
     final baseUrl = di<BaseConfig>().foodlyBaseUrl;
-    final menuUrl = '$baseUrl${AppRoutes.visitMenu.path.replaceFirst(':id', menuItem.uuid)}';
+    final menuUrl = '$baseUrl${AppRoutes.visitMenu.path.replaceFirst(':id', menu.uuid)}';
     return menuUrl;
   }
 
   @override
   Widget build(BuildContext context) {
-    final business = menuItem.business;
-    final currentDay = menuItem.business?.businessDays.currentDaySchedule;
+    final business = menu.business;
+    final currentDay = menu.business?.businessDays.currentDaySchedule;
 
     return Card(
+      key: Key(menu.uuid),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () => di<AppRouter>().appRouter.goNamed(
               AppRoutes.visitMenu.name,
-              pathParameters: {AppRoutes.routeIdParam: menuItem.uuid},
+              pathParameters: {AppRoutes.routeIdParam: menu.uuid},
               extra: business,
             ),
         child: Column(
@@ -112,13 +114,15 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox.square(
-                      dimension: 33,
-                      child: FavoriteButton.forMenu(
-                        key: ValueKey(menuItem.uuid),
-                        diameter: 18,
-                        iconSize: 16,
-                        menu: menuItem,
+                    RepaintBoundary(
+                      child: SizedBox.square(
+                        dimension: 33,
+                        child: FavoriteButton.forMenu(
+                          key: Key(menu.uuid),
+                          diameter: 18,
+                          iconSize: 16,
+                          menu: menu,
+                        ),
                       ),
                     ),
                   ],
@@ -140,7 +144,7 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                  SizedBox.square(dimension: 28, child: menuItem.business?.category?.avatar ?? const SizedBox.shrink()),
+                  SizedBox.square(dimension: 28, child: menu.business?.category?.avatar ?? const SizedBox.shrink()),
                 ],
               ).paddingHorizontal(3),
             ),

@@ -29,6 +29,7 @@ class MyFavoriteItemsView extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 key: const ValueKey(SearchResultsViewMode.list),
+                controller: ScrollController(),
                 itemCount: favoriteItems.length,
                 padding: _padding,
                 separatorBuilder: (_, __) => const SizedBox(height: 4),
@@ -127,15 +128,27 @@ class _FavoriteItemsCard extends StatelessWidget {
           ),
           if (favoriteItemDM.favoriteFoodItems.isNotEmpty) ...[
             _buildMenuCategoryTitle(MenuCategory.food),
-            _buildMenuCategoryItems(favoriteItemDM.favoriteFoodItems, business?.country?.currencySymbol),
+            _buildMenuCategoryItems(
+              favoriteItemDM.favoriteFoodItems,
+              business?.country?.currencySymbol,
+              MenuCategory.food,
+            ),
           ],
           if (favoriteItemDM.favoriteDrinkItems.isNotEmpty) ...[
             _buildMenuCategoryTitle(MenuCategory.drinks),
-            _buildMenuCategoryItems(favoriteItemDM.favoriteDrinkItems, business?.country?.currencySymbol),
+            _buildMenuCategoryItems(
+              favoriteItemDM.favoriteDrinkItems,
+              business?.country?.currencySymbol,
+              MenuCategory.drinks,
+            ),
           ],
           if (favoriteItemDM.favoriteComboItems.isNotEmpty) ...[
             _buildMenuCategoryTitle(MenuCategory.combos),
-            _buildMenuCategoryItems(favoriteItemDM.favoriteComboItems, business?.country?.currencySymbol),
+            _buildMenuCategoryItems(
+              favoriteItemDM.favoriteComboItems,
+              business?.country?.currencySymbol,
+              MenuCategory.combos,
+            ),
           ],
           Expanded(
             child: Row(
@@ -189,17 +202,28 @@ class _FavoriteItemsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuCategoryItems(List<ItemDM> favoriteItems, String? currency) {
-    return Column(
-      children: favoriteItems
-          .map((item) => VisitedMenuItemWdg(
-                item: item,
-                menuCategory: MenuCategory.food,
-                isLastScreenItem: false,
-                currency: currency,
-                margin: EdgeInsets.zero,
-              ))
-          .toList(),
+  Widget _buildMenuCategoryItems(
+    List<ItemDM> favoriteItems,
+    String? currency,
+    MenuCategory menuCategory,
+  ) {
+    return AnimatedSize(
+      key: ValueKey(menuCategory),
+      duration: Durations.long1,
+      curve: Curves.decelerate,
+      child: Column(
+        key: Key(menuCategory.text),
+        children: favoriteItems
+            .map((item) => VisitedMenuItemWdg(
+                  key: Key(item.uuid),
+                  item: item,
+                  menuCategory: menuCategory,
+                  isLastScreenItem: false,
+                  currency: currency,
+                  margin: EdgeInsets.zero,
+                ))
+            .toList(),
+      ),
     );
   }
 

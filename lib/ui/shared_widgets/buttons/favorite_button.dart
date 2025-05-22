@@ -25,7 +25,7 @@ enum FavoriteItemType {
 }
 
 /// Un widget que encapsula la funcionalidad de favoritos integrándose con el FavoritesCubit
-class FavoriteButton extends StatelessWidget {
+class FavoriteButton extends StatefulWidget {
   /// El tipo de elemento que este botón representa
   final FavoriteItemType type;
 
@@ -294,31 +294,41 @@ class FavoriteButton extends StatelessWidget {
     );
   }
 
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  // Flag para controlar si es el primer montaje del widget
+  bool _isFirstBuild = true;
+  // Flag para mantener el estado previo de favorito
+  bool _wasFavorite = false;
+  
   /// Determina si el elemento actual es favorito basado en su tipo
   bool _isFavorite(FavoritesState state) {
-    if (itemId.isEmpty) return false;
+    if (widget.itemId.isEmpty) return false;
 
     return state.maybeWhen(
-      loaded: (vm) => switch (type) {
-        FavoriteItemType.businessPage || FavoriteItemType.businessCard => vm.favoriteBusinessIds.contains(itemId),
-        FavoriteItemType.menu => vm.favoriteMenuIds.contains(itemId),
-        FavoriteItemType.promotion => vm.savedPromotionIds.contains(itemId),
-        _ => vm.favoriteItemIds.contains(itemId),
+      loaded: (vm) => switch (widget.type) {
+        FavoriteItemType.businessPage || FavoriteItemType.businessCard => vm.favoriteBusinessIds.contains(widget.itemId),
+        FavoriteItemType.menu => vm.favoriteMenuIds.contains(widget.itemId),
+        FavoriteItemType.promotion => vm.savedPromotionIds.contains(widget.itemId),
+        _ => vm.favoriteItemIds.contains(widget.itemId),
       },
       orElse: () => false,
     );
   }
 
   /// Ejecuta la acción de toggle basada en el tipo de elemento
-  void _toggleFavorite(FavoritesCubit favoritesCubit) => switch (type) {
+  void _toggleFavorite(FavoritesCubit favoritesCubit) => switch (widget.type) {
         FavoriteItemType.businessPage ||
         FavoriteItemType.businessCard =>
-          favoritesCubit.toggleBusinessFavorite(item as BusinessDM),
-        FavoriteItemType.menu => favoritesCubit.toggleMenuFavorite(item as MenuDM),
-        FavoriteItemType.foodItem => favoritesCubit.toggleFoodItemFavorite(item as ItemDM),
-        FavoriteItemType.drinkItem => favoritesCubit.toggleDrinkItemFavorite(item as ItemDM),
-        FavoriteItemType.comboItem => favoritesCubit.toggleComboItemFavorite(item as ItemDM),
-        FavoriteItemType.promotion => favoritesCubit.togglePromotionFavorite(item as PromotionDM),
+          favoritesCubit.toggleBusinessFavorite(widget.item as BusinessDM),
+        FavoriteItemType.menu => favoritesCubit.toggleMenuFavorite(widget.item as MenuDM),
+        FavoriteItemType.foodItem => favoritesCubit.toggleFoodItemFavorite(widget.item as ItemDM),
+        FavoriteItemType.drinkItem => favoritesCubit.toggleDrinkItemFavorite(widget.item as ItemDM),
+        FavoriteItemType.comboItem => favoritesCubit.toggleComboItemFavorite(widget.item as ItemDM),
+        FavoriteItemType.promotion => favoritesCubit.togglePromotionFavorite(widget.item as PromotionDM),
       };
 
   @override
@@ -327,44 +337,51 @@ class FavoriteButton extends StatelessWidget {
 
     return BlocBuilder<FavoritesCubit, FavoritesState>(
       buildWhen: (previous, current) {
-        final prevFavorite = previous.maybeWhen(
-          loaded: (vm) => _isFavorite(previous),
-          orElse: () => false,
-        );
-        final currFavorite = current.maybeWhen(
-          loaded: (vm) => _isFavorite(current),
-          orElse: () => false,
-        );
+        final prevFavorite = _isFavorite(previous);
+        final currFavorite = _isFavorite(current);
 
         return prevFavorite != currFavorite;
       },
       builder: (context, state) {
+        // Determinar si el ítem es favorito actualmente
         final isFavorite = _isFavorite(state);
-        final isInitialBuild = context.mounted && !state.vm.hasBeenToggled(itemId);
-
-        final shouldAnimate = isFavorite && !isInitialBuild;
-
+        
+        // Determinar si debemos animar basado en el cambio de estado
+        // Solo animamos cuando:
+        // 1. No es el primer renderizado (evitar animación en la carga inicial)
+        // 2. El elemento es ahora favorito (no animamos al quitar favorito)
+        // 3. No era favorito antes (sólo animamos cuando cambia de no-favorito a favorito)
+        bool shouldAnimate = false;
+        
+        if (!_isFirstBuild && isFavorite && !_wasFavorite) {
+          shouldAnimate = true;
+        }
+        
+        // Actualizamos nuestros flags de estado
+        _wasFavorite = isFavorite;
+        _isFirstBuild = false;
+        
         return UIFavoriteWidget(
-          key: key,
-          addFavoriteIcon: addFavoriteIcon,
-          isFavoriteIcon: isFavoriteIcon,
+          key: widget.key,
+          addFavoriteIcon: widget.addFavoriteIcon,
+          isFavoriteIcon: widget.isFavoriteIcon,
           liked: isFavorite,
           onPressed: () {
             _toggleFavorite(favoritesCubit);
           },
-          iconSize: iconSize,
-          diameter: diameter,
-          likedBackgroundColor: likedBackgroundColor,
-          unlikedBackgroundColor: unlikedBackgroundColor,
-          tooltip: tooltip ?? S.current.addToFavorites,
-          likeColor: likeColor,
-          unlikeColor: unlikeColor,
-          enableShadows: enableShadows,
-          enableBackground: enableBackground,
-          useMenuOrBusinessStyle: type.isMenuOrBusinessPage,
+          iconSize: widget.iconSize,
+          diameter: widget.diameter,
+          likedBackgroundColor: widget.likedBackgroundColor,
+          unlikedBackgroundColor: widget.unlikedBackgroundColor,
+          tooltip: widget.tooltip ?? S.current.addToFavorites,
+          likeColor: widget.likeColor,
+          unlikeColor: widget.unlikeColor,
+          enableShadows: widget.enableShadows,
+          enableBackground: widget.enableBackground,
+          useMenuOrBusinessStyle: widget.type.isMenuOrBusinessPage,
           shouldAnimate: shouldAnimate,
-          alphaOpacity: alphaOpacity,
-          neumorphicDepth: type.isMenuOrBusinessPage ? 2 : 4,
+          alphaOpacity: widget.alphaOpacity,
+          neumorphicDepth: widget.type.isMenuOrBusinessPage ? 2 : 4,
         );
       },
     );

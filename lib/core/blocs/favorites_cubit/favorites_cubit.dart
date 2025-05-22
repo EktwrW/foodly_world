@@ -30,7 +30,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final user = _authService.userSessionDM?.user;
     if (user != null) {
       _vm = FavoritesVM.fromUserDM(user);
-      emit(FavoritesState.loaded(_vm));
     }
   }
 
@@ -70,12 +69,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   void toggleBusinessSortDirection() {
     _vm = _vm.copyWith(isBusinessSortAscending: !_vm.isBusinessSortAscending);
     emit(FavoritesState.loaded(_vm));
-  }
-
-  /// Inicializa la página de favoritos
-  void initFavoritesPage() {
-    initPageController();
-    loadFavoriteObjects();
   }
 
   /// Carga las entidades completas de favoritos (complementa los IDs con objetos)
@@ -473,6 +466,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final isFavorite = _vm.favoriteItemIds.contains(item.uuid);
     final newValue = !isFavorite;
     final uuid = item.uuid;
+    final businessUuid = item.businessUuid ?? '';
 
     // Optimistic update
     List<String> updatedIds;
@@ -508,12 +502,50 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       }
     }
 
+    // Actualizar la lista de favoriteItems cuando se quita un item
+    final List<FavoriteItemDM> updatedFavoriteItems = List<FavoriteItemDM>.from(_vm.favoriteItems);
+    if (!newValue && businessUuid.isNotEmpty) {
+      // Primero, encontramos el índice del negocio al que pertenece el ítem
+      final int businessIndex = updatedFavoriteItems.indexWhere((fi) => fi.businessUuid == businessUuid);
+
+      if (businessIndex >= 0) {
+        final FavoriteItemDM existingItem = updatedFavoriteItems[businessIndex];
+
+        // Crear una versión actualizada del FavoriteItemDM sin el ítem eliminado
+        FavoriteItemDM updatedItem;
+        if (isCombo) {
+          updatedItem = existingItem.copyWith(
+            favoriteComboItems: existingItem.favoriteComboItems.where((i) => i.uuid != uuid).toList(),
+          );
+        } else if (isDrink) {
+          updatedItem = existingItem.copyWith(
+            favoriteDrinkItems: existingItem.favoriteDrinkItems.where((i) => i.uuid != uuid).toList(),
+          );
+        } else {
+          updatedItem = existingItem.copyWith(
+            favoriteFoodItems: existingItem.favoriteFoodItems.where((i) => i.uuid != uuid).toList(),
+          );
+        }
+
+        // Si no quedan ítems de ningún tipo, eliminamos todo el negocio de la lista
+        if (updatedItem.favoriteComboItems.isEmpty &&
+            updatedItem.favoriteDrinkItems.isEmpty &&
+            updatedItem.favoriteFoodItems.isEmpty) {
+          updatedFavoriteItems.removeAt(businessIndex);
+        } else {
+          // Si aún quedan ítems, actualizamos el elemento existente
+          updatedFavoriteItems[businessIndex] = updatedItem;
+        }
+      }
+    }
+
     _vm = _vm
         .copyWith(
           favoriteItemIds: updatedIds,
           favoriteFoodItems: updatedFoodItems,
           favoriteDrinkItems: updatedDrinkItems,
           favoriteComboItems: updatedComboItems,
+          favoriteItems: updatedFavoriteItems,
         )
         .withToggledItem(uuid);
 
@@ -530,6 +562,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         success: (_) {
           // Actualizar el UserDM en AuthSessionService
           _updateUserFavoriteItems(updatedIds);
+
+          // Si se agregó un nuevo ítem como favorito, actualizamos la lista agrupada
+          if (newValue && businessUuid.isNotEmpty) {
+            _populateFavoriteItems();
+          }
         },
         failure: (error) {
           _logger.e('Error toggling item favorite: $error');
@@ -581,11 +618,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       }
     }
 
+    // Revertir también la lista de favoriteItems
+    final List<FavoriteItemDM> originalFavoriteItems = [];
+    for (var item in _vm.favoriteItems) {
+      originalFavoriteItems.add(item);
+    }
+
     _vm = _vm.copyWith(
       favoriteItemIds: updatedIds,
       favoriteFoodItems: updatedFoodItems,
       favoriteDrinkItems: updatedDrinkItems,
       favoriteComboItems: updatedComboItems,
+      favoriteItems: originalFavoriteItems,
     );
   }
 
@@ -721,9 +765,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   // Public methods for checking favorites status
   bool isBusinessFavorite(String? uuid) => uuid != null && _vm.favoriteBusinessIds.contains(uuid);
   bool isMenuFavorite(String? uuid) => uuid != null && _vm.favoriteMenuIds.contains(uuid);
-  bool isFoodItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
-  bool isDrinkItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
-  bool isComboItemFavorite(String? uuid) => uuid != null && _vm.favoriteItemIds.contains(uuid);
   bool isPromotionFavorite(String? uuid) => uuid != null && _vm.savedPromotionIds.contains(uuid);
 
   void clearAllFavorites() {

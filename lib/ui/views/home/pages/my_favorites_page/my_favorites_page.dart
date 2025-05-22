@@ -57,6 +57,7 @@ class MyFavoritesPage extends StatelessWidget {
           actionText: 'My Favorites',
         ),
         body: NestedScrollView(
+          controller: ScrollController(),
           headerSliverBuilder: (_, __) => const [_MyFavoritesToggleSwitch(key: Key('my-favorites-toggle-switch'))],
           body: const _MyFavoritesPageContent(key: Key('my-favorites-content')),
         ),

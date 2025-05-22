@@ -25,7 +25,7 @@ class VisitedMenuItemWdg extends StatefulWidget {
 class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
   // Estado para mantener la versión seleccionada
   late Version _selectedVersion;
-  
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +38,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
       _selectedVersion = Version.regular;
     }
   }
-  
+
   // Método para actualizar la versión seleccionada
   void _updateSelectedVersion(Version? version) {
     if (version != null && version != _selectedVersion) {
@@ -47,7 +47,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
       });
     }
   }
-  
+
   // Obtener el precio de la versión actual seleccionada
   double get _currentPrice {
     if (widget.item.sortedVersions.isEmpty) {
@@ -56,7 +56,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
     }
     return widget.item.getVersionPrice(_selectedVersion);
   }
-  
+
   Widget get _currencyWidget => Text('${widget.vm?.currency ?? widget.currency}:', style: FoodlyTextStyles.label);
   bool get _itemNotAvailable => !widget.item.available;
 
@@ -91,7 +91,11 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                         flex: 9,
                         child: VisitedItemNameAndDescriptionWdg(item: widget.item),
                       ),
-                      FavMenuItemBtns(item: widget.item, menuCategory: widget.menuCategory).paddingAll(2),
+                      FavMenuItemBtns(
+                        key: Key(widget.item.uuid),
+                        item: widget.item,
+                        menuCategory: widget.menuCategory,
+                      ).paddingAll(2),
                     ],
                   ),
                   Row(
@@ -128,13 +132,13 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
       ),
     );
   }
-  
+
   // Método para construir el selector de versiones
   Widget _buildVersionSelector(BuildContext context) {
     if (!widget.item.available) {
       return Text(S.current.temporarilyUnavailable, style: FoodlyTextStyles.errorBodyText).paddingTop(12);
     }
-    
+
     // Si no hay versiones disponibles, mostrar un mensaje o no mostrar nada
     if (widget.item.sortedVersions.isEmpty) {
       return const SizedBox.shrink(); // Widget invisible

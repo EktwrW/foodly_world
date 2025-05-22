@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:animate_do/animate_do.dart' show FadeIn;
+import 'package:animate_do/animate_do.dart' show FadeIn, FadeOutRightBig;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart' show ListExtensions;
 import 'package:flutter_neumo/flutter_neumo.dart' as ui;

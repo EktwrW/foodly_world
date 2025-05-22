@@ -71,9 +71,11 @@ class AvatarWidget extends StatelessWidget {
   Widget get _loadingPlaceholder => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox.square(
-            dimension: height,
-            child: const CircularProgressIndicator.adaptive(backgroundColor: FoodlyThemes.secondaryFoodly),
+          Flexible(
+            child: SizedBox.square(
+              dimension: height,
+              child: const CircularProgressIndicator.adaptive(backgroundColor: FoodlyThemes.secondaryFoodly),
+            ),
           ),
         ],
       );
