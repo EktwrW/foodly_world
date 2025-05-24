@@ -21,6 +21,17 @@ class SavedPromotionsViewCubit extends Cubit<SavedPromotionsViewState> {
         super(const SavedPromotionsViewState.initial(SavedPromotionsViewVM())) {
     emit(_ChangeView(_vm));
   }
+  
+  /// Actualiza las promociones del cubit cuando cambia la lista de favoritos
+  void updatePromotions(List<PromotionDM> currentPromos, List<PromotionDM> upcomingPromos) {
+    // Conservamos el controller y el index view actuales
+    _vm = _vm.copyWith(
+      currentPromos: currentPromos,
+      upcomingPromos: upcomingPromos,
+    );
+    
+    emit(_ChangeView(_vm));
+  }
 
   void changeView(int index) async {
     if (_vm.indexView == index) return;

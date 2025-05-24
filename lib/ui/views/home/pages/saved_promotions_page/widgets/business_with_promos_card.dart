@@ -12,14 +12,25 @@ class _BusinessWithPromosCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // No mostrar la tarjeta de negocio si no tiene promociones
+    if (promos.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 16,
-        children: [
-          Flexible(child: MyFavoritesBusinessMiniCard(business: business)),
-          ...promos.map((p) => Flexible(child: PromotionCard(promo: p, margin: const EdgeInsets.all(8)))),
-        ],
+      child: AnimatedSize(
+        key: ValueKey(business),
+        duration: Durations.long1,
+        curve: Curves.decelerate,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 16,
+          children: [
+            Flexible(child: MyFavoritesBusinessMiniCard(business: business)),
+            ...promos.map((p) => Flexible(
+                key: Key('promo-card-${p.uuid}'), child: PromotionCard(promo: p, margin: const EdgeInsets.all(8)))),
+          ],
+        ),
       ),
     );
   }

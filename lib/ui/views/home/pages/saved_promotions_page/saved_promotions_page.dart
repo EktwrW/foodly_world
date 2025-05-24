@@ -28,9 +28,11 @@ class SavedPromotionsPage extends StatelessWidget {
     return BlocSelector<FavoritesCubit, FavoritesState, List<PromotionDM>>(
       selector: (state) => state.vm.favoritePromotions,
       builder: (context, favoritePromotions) {
+        // Filtramos las promociones en dos categorías
         final currentPromos = favoritePromotions.where((p) => p.isActive).toList();
         final upcomingPromos = favoritePromotions.where((p) => p.isUpcoming).toList();
 
+        // Si no hay promociones guardadas, mostrar placeholder
         if (currentPromos.isEmpty && upcomingPromos.isEmpty) {
           return const _EmptyListPlaceholder(
             text: 'Aun no tienes promociones guardadas',
@@ -38,52 +40,68 @@ class SavedPromotionsPage extends StatelessWidget {
           );
         }
 
+        // Usamos BlocProvider para crear/reutilizar el cubit
         return BlocProvider(
           create: (context) => SavedPromotionsViewCubit(currentPromos, upcomingPromos),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: const SecondaryMainAppBar(
-              key: Key('promotions-app-bar'),
-              actionText: 'Saved Promotions',
-            ),
-            body: BlocBuilder<SavedPromotionsViewCubit, SavedPromotionsViewState>(
-              builder: (context, state) {
-                final cubit = context.read<SavedPromotionsViewCubit>();
-                final vm = state.vm;
+          child: Builder(
+            builder: (context) {
+              // Actualizamos el cubit cuando cambian las promociones favoritas
+              context.read<SavedPromotionsViewCubit>().updatePromotions(currentPromos, upcomingPromos);
 
-                final savedPromotionsViews = [
-                  _SavedPromotionsView(
-                    key: const Key('saved-current-promos'),
-                    businesses: vm.businessesWithCurrentPromos,
-                    promos: vm.currentPromos,
-                    title: 'Estas son tus Promociones Vigentes',
-                  ),
-                  _SavedPromotionsView(
-                    key: const Key('saved-upcoming-promos'),
-                    businesses: vm.businessesWithUpcomingPromos,
-                    promos: vm.upcomingPromos,
-                    title: 'Estas son tus Próximas Promociones',
-                  ),
-                ];
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: const SecondaryMainAppBar(
+                  key: Key('promotions-app-bar'),
+                  actionText: 'Saved Promotions',
+                ),
+                body: BlocBuilder<SavedPromotionsViewCubit, SavedPromotionsViewState>(
+                  builder: (context, state) {
+                    final cubit = context.read<SavedPromotionsViewCubit>();
+                    final vm = state.vm;
 
-                return NestedScrollView(
-                  controller: ScrollController(),
-                  headerSliverBuilder: (_, __) => const [
-                    _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
-                  ],
-                  body: SizedBox.fromSize(
-                    size: Size(context.screenWidth, context.screenHeight),
-                    child: PageView.builder(
-                      controller: vm.controller,
-                      physics: const PageScrollPhysics(),
-                      itemCount: savedPromotionsViews.length,
-                      itemBuilder: (context, index) => savedPromotionsViews[index],
-                      onPageChanged: (i) => cubit.changeView(i),
-                    ),
-                  ),
-                );
-              },
-            ),
+                    // Verificamos si ambas categorías están vacías después de quitar favoritos
+                    if (vm.currentPromos.isEmpty && vm.upcomingPromos.isEmpty) {
+                      return const _EmptyListPlaceholder(
+                        text: 'Aun no tienes promociones guardadas',
+                        key: Key('saved-promos-placeholder'),
+                      );
+                    }
+
+                    final savedPromotionsViews = [
+                      _SavedPromotionsView(
+                        key: Key('saved-current-promos-${vm.currentPromos.length}'),
+                        businesses: vm.businessesWithCurrentPromos,
+                        promos: vm.currentPromos,
+                        title: 'Estas son tus Promociones Vigentes',
+                      ),
+                      _SavedPromotionsView(
+                        key: Key('saved-upcoming-promos-${vm.upcomingPromos.length}'),
+                        businesses: vm.businessesWithUpcomingPromos,
+                        promos: vm.upcomingPromos,
+                        title: 'Estas son tus Próximas Promociones',
+                      ),
+                    ];
+
+                    return NestedScrollView(
+                      controller: ScrollController(),
+                      headerSliverBuilder: (_, __) => const [
+                        _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
+                      ],
+                      body: SizedBox.fromSize(
+                        size: Size(context.screenWidth, context.screenHeight),
+                        child: PageView.builder(
+                          controller: vm.controller,
+                          physics: const PageScrollPhysics(),
+                          itemCount: savedPromotionsViews.length,
+                          itemBuilder: (context, index) => savedPromotionsViews[index],
+                          onPageChanged: (i) => cubit.changeView(i),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         );
       },
@@ -113,7 +131,7 @@ class _EmptyListPlaceholder extends StatelessWidget {
             text,
             style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
             textAlign: TextAlign.center,
-          ),
+          ).paddingHorizontal(24),
         ),
       ],
     ).paddingTop(200);
