@@ -23,8 +23,8 @@ class PromotionsHelper {
 
     showDatePicker(
       context: context,
-      initialDate: initialDateToUse,
-      firstDate: isStartDate ? DateTime.now() : initialDateToUse,
+      initialDate: (vm.newPromo?.isExpired == true) ? DateTime.now() : initialDateToUse,
+      firstDate: isStartDate || (vm.newPromo?.isExpired == true) ? DateTime.now() : initialDateToUse,
       lastDate: DateTime.now().add(const Duration(days: 365)),
     ).then((date) {
       if (date != null) {

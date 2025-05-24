@@ -43,7 +43,7 @@ class MyFavoriteMenusView extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
           ],
         );
       },

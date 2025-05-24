@@ -69,6 +69,7 @@ class AvatarWidget extends StatelessWidget {
       );
 
   Widget get _loadingPlaceholder => Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(

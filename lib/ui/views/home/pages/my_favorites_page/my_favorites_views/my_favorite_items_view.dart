@@ -65,7 +65,6 @@ class _FavoriteItemsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final business = favoriteItemDM.business;
-    final currentDay = favoriteItemDM.business?.businessDays.currentDaySchedule;
 
     return Card(
       margin: const EdgeInsets.only(top: 24),
@@ -81,49 +80,7 @@ class _FavoriteItemsCard extends StatelessWidget {
                     pathParameters: {AppRoutes.routeIdParam: favoriteItemDM.menuUuid},
                     extra: business,
                   ),
-              child: ClayContainer(
-                spread: 2,
-                borderRadius: 6,
-                child: Row(
-                  children: [
-                    AvatarWidget(
-                      avatarUrl: business?.logo,
-                      avatarStyle: AvatarStyle.square,
-                      height: 46,
-                      width: 46,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        spacing: 4,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            business?.name ?? '-',
-                            style: FoodlyTextStyles.actionsBodyBold,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          if (currentDay != null)
-                            Row(
-                              spacing: 8,
-                              children: [
-                                _buildStatusBadge(currentDay.currentStatus),
-                                Text(
-                                  currentDay.formattedHours,
-                                  style: FoodlyTextStyles.labelBoldMini,
-                                ),
-                              ],
-                            ),
-                        ],
-                      ).paddingLeft(8),
-                    ),
-                    const Spacer(),
-                    if (business != null)
-                      SizedBox.square(dimension: 28, child: business.category?.avatar ?? const SizedBox.shrink()),
-                  ],
-                ).paddingAll(6),
-              ).paddingAll(8),
+              child: MyFavoritesBusinessMiniCard(business: business, key: key),
             ),
           ),
           if (favoriteItemDM.favoriteFoodItems.isNotEmpty) ...[
@@ -248,20 +205,4 @@ class _FavoriteItemsCard extends StatelessWidget {
           _divider,
         ],
       ).paddingOnly(top: 8, right: 12, left: 12);
-
-  Widget _buildStatusBadge(BusinessStatus status) {
-    final (text, color) = switch (status) {
-      BusinessStatus.open => ('Open', FoodlyThemes.tertiaryFoodly),
-      BusinessStatus.closed => ('Closed', FoodlyThemes.error),
-      BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
-    };
-
-    return DecoratedBox(
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-      child: Text(text, style: FoodlyTextStyles.labelBoldMini.copyWith(color: color, fontSize: 9.5)).paddingSymmetric(
-        horizontal: 8,
-        vertical: 1,
-      ),
-    );
-  }
 }
