@@ -134,7 +134,9 @@ class UserProfilePage extends StatelessWidget {
                           onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingAddress
                               ? null
                               : () {
-                                  if (vm.currentUser?.country != null) cubit.setUserCountry(vm.currentUser?.country);
+                                  if (vm.currentUser?.principalAddress?.country != null) {
+                                    cubit.setUserCountry(vm.currentUser?.principalAddress?.country);
+                                  }
                                   vm.cityController?.controller?.text = vm.currentUserCity ?? '';
                                   vm.zipCodeController?.controller?.text = vm.currentUserZipCode ?? '';
                                   cubit.updateEditMode(ProfileEditing.location);

@@ -13,7 +13,9 @@ class UserLocation extends StatelessWidget {
       child: TextButton(
         onPressed: vm.loggedUserCanEdit
             ? () {
-                if (vm.currentUser?.country != null) cubit.setUserCountry(vm.currentUser?.country);
+                if (vm.currentUser?.principalAddress?.country != null) {
+                  cubit.setUserCountry(vm.currentUser?.principalAddress?.country);
+                }
                 vm.addressController?.controller?.text = vm.currentUserAddress ?? '';
                 vm.cityController?.controller?.text = vm.currentUserCity ?? '';
                 vm.zipCodeController?.controller?.text = vm.currentUserZipCode ?? '';

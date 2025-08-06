@@ -78,8 +78,8 @@ class SignUpCubit extends Cubit<SignUpState> {
             focusNode: FocusNode(),
           ),
           businessCityController: InputController(
-            controller:
-                TextEditingController(text: authService.userSessionDM?.user.city ?? locationService.currentCity),
+            controller: TextEditingController(
+                text: authService.userSessionDM?.user.principalAddress?.city ?? locationService.currentCity),
             focusNode: FocusNode(),
           ),
           businessAddressController: InputController(
@@ -88,8 +88,8 @@ class SignUpCubit extends Cubit<SignUpState> {
             focusNode: FocusNode(),
           ),
           businessZipCodeController: InputController(
-            controller:
-                TextEditingController(text: authService.userSessionDM?.user.zipCode ?? locationService.currentZipCode),
+            controller: TextEditingController(
+                text: authService.userSessionDM?.user.principalAddress?.zipCode ?? locationService.currentZipCode),
             focusNode: FocusNode(),
           ),
           formKey: GlobalKey<FormState>(),
@@ -99,8 +99,8 @@ class SignUpCubit extends Cubit<SignUpState> {
           placesFocusNode: FocusNode(),
           businessCountryNode: FocusNode(),
           country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode),
-          businessCountry: authService.userSessionDM?.user.country,
-          businessCountryCode: authService.userSessionDM?.user.country?.countryCode,
+          businessCountry: authService.userSessionDM?.user.principalAddress?.country,
+          businessCountryCode: authService.userSessionDM?.user.principalAddress?.country?.countryCode,
           userSessionDM: authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
         ),
         super(const SignUpState.initial()) {
@@ -137,6 +137,28 @@ class SignUpCubit extends Cubit<SignUpState> {
   Future<void> signUpUser() async {
     emit(_Loading(_vm));
 
+    // Crear la dirección "home" por defecto
+    final homeAddressLabel = AddressLabelDM(
+      name: 'home',
+      description: 'Home address',
+      icon: 'home',
+    );
+
+    final homeAddress = AddressDM(
+      id: 0, // Será asignado por el backend
+      uuid: '', // Será asignado por el backend
+      address: _vm.addressController?.controller?.text ?? '',
+      city: _vm.cityController?.controller?.text ?? '',
+      country: _vm.country,
+      zipCode: _vm.zipCodeController?.controller?.text ?? '',
+      latitude: _vm.userLocation?.lat ?? 0.0,
+      longitude: _vm.userLocation?.lng ?? 0.0,
+      addressLabel: homeAddressLabel,
+      principal: true,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
     final registerDTO = UserBodyRegisterDTO(
       userName: _vm.nickNameController?.controller?.text ?? '',
       firstName: _vm.firstNameController?.controller?.text ?? '',
@@ -155,6 +177,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       termsAndContiditionsAccepted: _vm.termsAndContiditionsAccepted,
       latitude: _vm.userLocation?.lat,
       longitude: _vm.userLocation?.lng,
+      addresses: [homeAddress],
     );
 
     await _meRepo

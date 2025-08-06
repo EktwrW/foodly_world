@@ -69,8 +69,8 @@ class LocationService {
   void updateLocationUserDM(UserDM userDM) {
     final newLocation = LocationDetailsDM(
       position: Position(
-        latitude: userDM.latitude ?? 0.0,
-        longitude: userDM.longitude ?? 0.0,
+        latitude: userDM.principalAddress?.latitude ?? 0.0,
+        longitude: userDM.principalAddress?.longitude ?? 0.0,
         timestamp: DateTime.now(),
         accuracy: 0,
         altitude: 0,
@@ -80,11 +80,11 @@ class LocationService {
         altitudeAccuracy: 0,
         headingAccuracy: 0,
       ),
-      address: userDM.address,
-      countryCode: userDM.country?.countryCode,
-      country: userDM.country?.name,
-      city: userDM.city,
-      zipCode: userDM.zipCode,
+      address: userDM.principalAddress?.address,
+      countryCode: userDM.principalAddress?.country?.countryCode,
+      country: userDM.principalAddress?.country?.name,
+      city: userDM.principalAddress?.city,
+      zipCode: userDM.principalAddress?.zipCode,
       serviceEnabled: true,
       permission: _locationDM.permission,
     );

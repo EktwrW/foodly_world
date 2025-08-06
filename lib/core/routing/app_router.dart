@@ -376,6 +376,7 @@ class AppRouter {
             child: BlocProvider(
               create: (context) => PromotionsCubit(
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                state.extra as BusinessDM?,
                 di(),
                 di(),
               ),

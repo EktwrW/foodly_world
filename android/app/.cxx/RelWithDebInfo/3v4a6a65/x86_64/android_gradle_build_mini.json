@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/hectorwaldman/Development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/hectorwaldman/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/hectorwaldman/Development/Foodly Apps/foodly_world/foodly_world/android/app/.cxx/RelWithDebInfo/3v4a6a65/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/hectorwaldman/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/hectorwaldman/Development/Foodly Apps/foodly_world/foodly_world/android/app/.cxx/RelWithDebInfo/3v4a6a65/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

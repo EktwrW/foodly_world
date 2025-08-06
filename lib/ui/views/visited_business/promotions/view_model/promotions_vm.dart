@@ -23,6 +23,7 @@ class PromotionsVM with _$PromotionsVM {
 
   const factory PromotionsVM({
     @Default([]) List<PromotionDM> promotions,
+    @Default('') String businessUuid,
     BusinessDM? businessDM,
     @Default(0) int indexView,
     PageController? controller,

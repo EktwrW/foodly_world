@@ -74,9 +74,10 @@ class LogoutDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Column(
+                  spacing: 24,
                   children: [
                     SizedBox(
-                      height: 48,
+                      height: 46,
                       child: CustomNeumorphicButton(
                           text: S.current.saveAndClose,
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -85,7 +86,7 @@ class LogoutDialog extends StatelessWidget {
                           onPressed: () => di<AuthSessionService>().exit(context)),
                     ),
                     SizedBox(
-                      height: 78,
+                      height: 46,
                       child: CustomNeumorphicButton(
                           text: S.current.endSession,
                           shape: ui.NeumoShape.concave,

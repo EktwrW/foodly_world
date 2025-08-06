@@ -135,7 +135,6 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
             itemBuilder: (context, index) {
               final category = MenuCategory.values[index];
 
-              // Eliminamos el RepaintBoundary para permitir actualizaciones correctas de UI
               return MenuCategoryPage(
                 key: ValueKey(category),
                 categories: vm.menuScreens[category],

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart' show FlutterNativeSplash;
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
 
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
@@ -46,6 +47,7 @@ class StartingCubit extends Cubit<StartingState> {
           // passwordController: TextEditingController(text: 'Niko_2018'),
         ),
         super(const StartingState.initial()) {
+    if (kIsWeb) FlutterNativeSplash.remove();
     setView(StartingPageView.initial);
   }
 

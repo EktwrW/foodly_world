@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart' as itr show IterableExtension;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,10 +14,13 @@ class PromotionsCubit extends Cubit<PromotionsState> {
 
   PromotionsCubit(
     String businessUuid,
+    BusinessDM? business,
     BusinessRepo businessRepo,
     Logger logger,
   )   : _vm = PromotionsVM(
           promotions: [],
+          businessDM: business,
+          businessUuid: businessUuid,
           controller: PageController(),
           activePromosScrollController: ScrollController(debugLabel: 'active'),
           upcomingPromosScrollController: ScrollController(debugLabel: 'upcoming'),
@@ -33,14 +35,14 @@ class PromotionsCubit extends Cubit<PromotionsState> {
   void _loadPromos() async {
     await Future.microtask(() => emit(_Loading(_vm)));
 
-    await _businessRepo.getBusinessPromotions().then((result) {
-      result.when(
-        success: (promotions) => emit(_Loaded(_vm = _vm.copyWith(
-            promotions: promotions,
-            businessDM: itr.IterableExtension(promotions).firstWhereOrNull((p) => p.business != null)?.business))),
-        failure: (e) => _handleError(e.errorMsg),
-      );
-    });
+    if (_vm.businessDM == null) {
+      await _businessRepo.fetchBusinessById(_vm.businessUuid).then(
+            (response) => response.when(
+                success: (data) => _vm = _vm.copyWith(businessDM: data), failure: (e) => _handleError(e.errorMsg)),
+          );
+    }
+
+    emit(_Loaded(_vm = _vm.copyWith(promotions: _vm.businessDM?.promotions ?? [])));
   }
 
   /// Actualiza la vista actual (activas o próximas)

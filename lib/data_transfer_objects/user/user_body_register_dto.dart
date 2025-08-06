@@ -57,6 +57,9 @@ class UserBodyRegisterDTO {
   @JsonKey(name: 'longitude')
   final double? longitude;
 
+  @JsonKey(name: 'addresses')
+  final List<AddressDM>? addresses;
+
   const UserBodyRegisterDTO({
     required this.userName,
     required this.firstName,
@@ -75,6 +78,7 @@ class UserBodyRegisterDTO {
     required this.termsAndContiditionsAccepted,
     required this.latitude,
     required this.longitude,
+    this.addresses,
   });
 
   factory UserBodyRegisterDTO.fromJson(Map<String, dynamic> json) => _$UserBodyRegisterDTOFromJson(json);

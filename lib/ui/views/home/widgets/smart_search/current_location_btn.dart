@@ -143,7 +143,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                       child: PlacesAutocompleteWdg(
                         hintText: S.current.changeSearchPoint,
                         language: authSessionService.lang,
-                        components: loggedUser?.country?.apiComponents,
+                        components: loggedUser?.principalAddress?.country?.apiComponents,
                         onPickedPlaceDetail: _handlePlaceSelected,
                       ),
                     ),
@@ -237,7 +237,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 setState(
                                   () => _selectedPlace = Place(
                                     formattedAddress:
-                                        '${loggedUser?.address ?? '-'}, ${loggedUser?.city ?? '-'}, ${loggedUser?.zipCode ?? '-'}',
+                                        '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
                                   ),
                                 );
                               }
@@ -270,7 +270,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    '${di<AuthSessionService>().userSessionDM?.user.city ?? '-'}, ${di<AuthSessionService>().userSessionDM?.user.zipCode}',
+                                    '${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}',
                                     style: FoodlyTextStyles.addressSmallText,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,

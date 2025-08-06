@@ -68,7 +68,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
           genderNode: FocusNode(),
           dateOfBirthNode: FocusNode(),
           countryNode: FocusNode(),
-          country: authSessionService.userSessionDM?.user.country ??
+          country: authSessionService.userSessionDM?.user.principalAddress?.country ??
               FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode),
         ),
         super(const UserProfileState.initial(UserProfileVM())) {
