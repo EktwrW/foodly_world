@@ -59,12 +59,12 @@
         </intent>
     </queries>
     <application
-        android:label="foodly_world"
+        android:label="Foodly World"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
-		android:roundIcon="@mipmap/ic_launcher_round">
+        android:roundIcon="@mipmap/ic_launcher_round">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDQd8kLET9EaWLZH4MeBDLMhsL_sN0RDyY"/>
