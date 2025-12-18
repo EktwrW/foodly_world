@@ -2,7 +2,7 @@
 
 Become a foodler.
 
-<img src="https://github.com/EktwrW/foodly_world/blob/main/assets/images/simulator_screenshot_55075B0F-39A4-410A-BCD5-748504B808E9.png?raw=true" alt="Logo" width="300"/>
+https://www.linkedin.com/posts/ektwr_flutter-dart-laravel-activity-7336375716986478592-3qCv?utm_source=share&utm_medium=member_desktop&rcm=ACoAADBMLEMB4-sKC1CzkJCQygLDBd5wLVXwImE
 
 ## Getting Started
 
