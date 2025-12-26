@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -60,7 +60,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ui.NeumoColors.decorationMaxWhiteColor,
+      backgroundColor: ui.NeumorphicColors.decorationMaxWhiteColor,
       body: SizedBox(
         height: context.screenHeight,
         width: context.screenWidth,
@@ -158,7 +158,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                       Flexible(
                         child: (_userIsMigratingToManager
                                 ? CustomRoundedNeumorphicButton(
-                                    shape: ui.NeumoShape.concave,
+                                    shape: ui.NeumorphicShape.concave,
                                     iconSize: 24,
                                     iconData: Bootstrap.caret_left_fill,
                                     onPressed: () {
@@ -174,7 +174,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                                     },
                                   )
                                 : CustomRoundedNeumorphicButton(
-                                    shape: ui.NeumoShape.concave,
+                                    shape: ui.NeumorphicShape.concave,
                                     iconSize: 24,
                                     iconData: Bootstrap.door_open_fill,
                                     onPressed: vm.tooltipActive
@@ -265,7 +265,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                         await _signUpcubit.signUpBusiness();
                       }
                     },
-                    shape: ui.NeumoShape.convex,
+                    shape: ui.NeumorphicShape.convex,
                     text: S.current.completeSignUp,
                     disabled: false,
                   ).paddingOnly(top: 20, bottom: 40),

@@ -62,10 +62,10 @@ class MenuItemPictureWdg extends StatelessWidget {
   Widget get _buildPlaceholder => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ui.NeumoIcon(
+          ui.NeumorphicIcon(
             isEditing ? Icons.image_search_rounded : Icons.dining_outlined,
-            style: ui.NeumoStyle(
-              shape: ui.NeumoShape.concave,
+            style: ui.NeumorphicStyle(
+              shape: ui.NeumorphicShape.concave,
               color: FoodlyThemes.accentColor,
               depth: 2,
             ),

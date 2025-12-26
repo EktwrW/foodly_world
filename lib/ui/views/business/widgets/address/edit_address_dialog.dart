@@ -42,7 +42,7 @@ class EditAddressDialog extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: ui.NeumoColors.background,
+                  color: ui.NeumorphicColors.background,
                 ),
                 margin: const EdgeInsets.only(
                   bottom: 50,

@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -63,7 +63,7 @@ class SignUpUserForm extends StatelessWidget {
                       key: const Key('check-username-signup-initial'),
                       visible: state.isInitialState,
                       child: Icon(Bootstrap.search,
-                          size: 20, color: enabled ? FoodlyThemes.primaryFoodly : ui.NeumoColors.disabled),
+                          size: 20, color: enabled ? FoodlyThemes.primaryFoodly : ui.NeumorphicColors.disabled),
                     ),
                     FoodlyAnimatedOpacity(
                       key: const Key('check-username-signup-loading'),
@@ -140,16 +140,16 @@ class SignUpUserForm extends StatelessWidget {
           focusNode: vm.countryNode,
           decoration: InputDecoration(
             prefixIcon: vm.country?.flag?.paddingAll(10) ?? FoodlyInputType.country.icon,
-            prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
+            prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
             hintText: S.current.country,
             contentPadding: const EdgeInsets.only(top: 12),
-            iconColor: enabled ? null : ui.NeumoColors.disabled,
+            iconColor: enabled ? null : ui.NeumorphicColors.disabled,
             enabledBorder: UnderlineInputBorder(
               borderSide:
-                  BorderSide(width: enabled ? 0.7 : 0.35, color: enabled ? Colors.black87 : ui.NeumoColors.disabled),
+                  BorderSide(width: enabled ? 0.7 : 0.35, color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled),
             ),
             hintStyle: TextStyle(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),
@@ -236,7 +236,7 @@ class SignUpUserForm extends StatelessWidget {
                       Icon(
                         Bootstrap.calendar2_event,
                         size: 22,
-                        color: enabled ? Colors.black87 : ui.NeumoColors.disabled,
+                        color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
                       ).paddingSymmetric(horizontal: 12),
                       Text(
                         vm.dateOfBirth?.getStringFormat ?? S.current.dateOfBirth,
@@ -263,7 +263,7 @@ class SignUpUserForm extends StatelessWidget {
           },
         ),
         DropdownButtonFormField<UserGender>(
-          value: vm.gender,
+          initialValue: vm.gender,
           focusNode: vm.genderNode,
           disabledHint: Text(
             S.current.gender,
@@ -272,19 +272,19 @@ class SignUpUserForm extends StatelessWidget {
           hint: Text(
             S.current.gender,
             style: FoodlyTextStyles.hintText.copyWith(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),
           decoration: InputDecoration(
             prefix: const SizedBox.shrink(),
-            prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
+            prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
             hintText: S.current.gender,
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
             ),
             hintStyle: FoodlyTextStyles.hintText.copyWith(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),

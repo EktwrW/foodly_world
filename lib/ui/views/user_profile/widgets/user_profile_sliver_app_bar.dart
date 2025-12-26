@@ -70,7 +70,7 @@ class UserProfileSliverAppBar extends StatelessWidget {
                     const SizedBox(width: 6),
                     Flexible(
                       child: CustomRoundedNeumorphicButton(
-                        shape: ui.NeumoShape.concave,
+                        shape: ui.NeumorphicShape.concave,
                         iconSize: 24,
                         iconData: Bootstrap.caret_left_fill,
                         onPressed: onLeadingPressed,

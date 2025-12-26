@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -46,7 +46,7 @@ class LogoutDialog extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: ui.NeumoColors.background,
+              color: ui.NeumorphicColors.background,
             ),
             margin: const EdgeInsets.only(
               bottom: 50,
@@ -89,7 +89,7 @@ class LogoutDialog extends StatelessWidget {
                       height: 46,
                       child: CustomNeumorphicButton(
                           text: S.current.endSession,
-                          shape: ui.NeumoShape.concave,
+                          shape: ui.NeumorphicShape.concave,
                           verticalMargin: 15,
                           fontSize: 14.5,
                           padding: const EdgeInsets.symmetric(vertical: 10),

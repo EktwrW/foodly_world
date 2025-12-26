@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -34,7 +34,7 @@ class FoodlyMainPage extends StatelessWidget {
             const HomeCategories(),
             Expanded(
               child: ColoredBox(
-                color: ui.NeumoColors.background,
+                color: ui.NeumorphicColors.background,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

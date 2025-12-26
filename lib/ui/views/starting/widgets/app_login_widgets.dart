@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoShape;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
@@ -140,7 +140,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               padding: const EdgeInsets.all(12),
               leading: const Icon(Bootstrap.google, color: FoodlyThemes.primaryFoodly),
               text: S.current.signInWithGoogle,
-              shape: ui.NeumoShape.convex,
+              shape: ui.NeumorphicShape.convex,
               disabled: false,
               type: CustomNeumorphicBtnType.outlined,
               margin: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),

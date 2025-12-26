@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -62,7 +62,7 @@ class PasswordRecoverDialog extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: ui.NeumoColors.background,
+                  color: ui.NeumorphicColors.background,
                 ),
                 margin: const EdgeInsets.only(
                   bottom: 50,
@@ -146,7 +146,7 @@ class PasswordRecoverDialog extends StatelessWidget {
                       onPressed: () => vm.errorRequestingPassword
                           ? context.read<StartingCubit>().restartRecoverPassword()
                           : context.read<StartingCubit>().recoverPassword(),
-                      shape: ui.NeumoShape.concave,
+                      shape: ui.NeumorphicShape.concave,
                     ),
                   ).paddingBottom(6),
               ],

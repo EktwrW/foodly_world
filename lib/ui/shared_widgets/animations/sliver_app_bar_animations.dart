@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show DiagnosticPropertiesBuilder, DiagnosticsProperty, StringProperty;
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/shared_widgets/animations/animated_opacity.dart';
@@ -40,7 +40,7 @@ class SliverAppBarActionWidgets extends StatelessWidget {
                       diameter: buttonDiameter,
                       depth: 3,
                       padding: EdgeInsets.zero,
-                      shape: ui.NeumoShape.concave,
+                      shape: ui.NeumorphicShape.concave,
                       child: Stack(
                         alignment: Alignment.centerRight,
                         children: [
@@ -96,11 +96,11 @@ class SliverAppBarAnimatedTitleText extends StatelessWidget {
       visible: visible,
       key: ValueKey(text),
       child: switch (style) {
-        SliverTitleTextStyle.decorated => ui.NeumoButton(
+        SliverTitleTextStyle.decorated => ui.NeumorphicButton(
             onPressed: onTitlePressed,
-            style: ui.NeumoStyle(
-              shape: ui.NeumoShape.concave,
-              boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(50)),
+            style: ui.NeumorphicStyle(
+              shape: ui.NeumorphicShape.concave,
+              boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(50)),
               depth: 2,
               intensity: 1.2,
               surfaceIntensity: .3,

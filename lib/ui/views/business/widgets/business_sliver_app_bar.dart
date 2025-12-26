@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -49,7 +49,7 @@ class BusinessSliverAppBar extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomRoundedNeumorphicButton(
-                  shape: ui.NeumoShape.concave,
+                  shape: ui.NeumorphicShape.concave,
                   iconSize: 26,
                   diameter: 30,
                   iconData: Bootstrap.caret_left_fill,
@@ -133,8 +133,8 @@ class BusinessSliverAppBar extends StatelessWidget {
                                       iconColor: Colors.white,
                                       iconData: Bootstrap.pencil_square,
                                       iconSize: 28,
-                                      iconShape: ui.NeumoShape.concave,
-                                      shape: ui.NeumoShape.concave,
+                                      iconShape: ui.NeumorphicShape.concave,
+                                      shape: ui.NeumorphicShape.concave,
                                       disableDepth: true,
                                     ),
                                   ).paddingAll(6),

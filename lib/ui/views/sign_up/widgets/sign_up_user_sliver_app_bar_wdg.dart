@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -52,7 +52,7 @@ class SignUpUserSliverAppBar extends StatelessWidget {
           const SizedBox(width: 6),
           Flexible(
             child: CustomRoundedNeumorphicButton(
-              shape: ui.NeumoShape.concave,
+              shape: ui.NeumorphicShape.concave,
               iconSize: 26,
               iconData: Bootstrap.caret_left_fill,
               onPressed: onLeadingPressed,

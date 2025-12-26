@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
@@ -97,7 +97,7 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
           pinned: true,
           shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           leading: CustomRoundedNeumorphicButton(
-            shape: ui.NeumoShape.concave,
+            shape: ui.NeumorphicShape.concave,
             iconSize: 26,
             diameter: 30,
             iconData: Bootstrap.caret_left_fill,
@@ -126,10 +126,10 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(S.current.menu, style: FoodlyTextStyles.secondaryTitle.copyWith(fontSize: 15)).paddingBottom(6),
-                ui.NeumoText(
+                ui.NeumorphicText(
                   vm.businessName ?? '',
-                  style: const ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
-                  textStyle: ui.NeumoTextStyle(
+                  style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
+                  textStyle: ui.NeumorphicTextStyle(
                     fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,

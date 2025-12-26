@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoColors;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -109,11 +109,11 @@ class FoodlyTextStyles {
   static final dialogCloseText = GoogleFonts.quicksand(
     fontSize: 18,
     fontWeight: FontWeight.bold,
-    color: ui.NeumoColors.decorationMaxWhiteColor,
+    color: ui.NeumorphicColors.decorationMaxWhiteColor,
   );
 
   static const disabledText = TextStyle(
-    color: ui.NeumoColors.disabled,
+    color: ui.NeumorphicColors.disabled,
     fontSize: 14,
   );
 
@@ -286,7 +286,7 @@ class FoodlyTextStyles {
   static final snackBarPrimaryButton = GoogleFonts.quicksand(
     fontSize: 15,
     fontWeight: FontWeight.bold,
-    color: ui.NeumoColors.defaultTextColor,
+    color: ui.NeumorphicColors.defaultTextColor,
   );
 
   static final subTitleWhite = GoogleFonts.quicksand(

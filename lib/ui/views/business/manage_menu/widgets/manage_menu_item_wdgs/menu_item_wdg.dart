@@ -31,7 +31,7 @@ class MenuItemWdg extends StatelessWidget {
         children: [
           Card(
             elevation: 2,
-            color: ui.NeumoColors.decorationMaxWhiteColor,
+            color: ui.NeumorphicColors.decorationMaxWhiteColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             margin: const EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedSize(

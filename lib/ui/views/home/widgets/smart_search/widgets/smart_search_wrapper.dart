@@ -31,7 +31,7 @@ class _SmartSearchWrapper extends StatelessWidget {
                     onPressed: () => vsCubit.clearSearch(),
                     diameter: 26,
                     depth: 3,
-                    shape: ui.NeumoShape.concave,
+                    shape: ui.NeumorphicShape.concave,
                     child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
                   ).paddingAll(6),
                   Flexible(
@@ -200,7 +200,7 @@ class _ViewModeToggleButtonState extends State<ViewModeToggleButton> with Single
       onPressed: widget.onPressed,
       diameter: widget.diameter ?? 26,
       depth: 3,
-      shape: ui.NeumoShape.concave,
+      shape: ui.NeumorphicShape.concave,
       child: AnimatedBuilder(
         animation: _rotation,
         builder: (context, child) {

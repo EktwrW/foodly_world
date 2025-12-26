@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart';
@@ -202,7 +202,7 @@ class UserProfilePage extends StatelessWidget {
                           CustomNeumorphicButton(
                             onPressed: () => _showSwitchRoleSnackBar(context),
                             text: S.current.switchToManagerRole,
-                            shape: ui.NeumoShape.concave,
+                            shape: ui.NeumorphicShape.concave,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
                             margin: const EdgeInsets.only(bottom: 20),

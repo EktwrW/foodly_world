@@ -6,7 +6,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+2
 
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.6.01
 
 dependencies:
   flutter:
@@ -31,7 +31,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   flutter_image_slideshow: ^0.1.6
   flutter_native_splash: ^2.4.6
-  flutter_neumo: ^1.0.2
+  flutter_neumorphic_plus: ^3.5.0
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.1.0
   freezed_annotation: ^2.4.4
@@ -46,7 +46,7 @@ dependencies:
   icons_plus: ^5.0.0
   image_cropper: ^9.1.0
   image_picker: ^1.1.2
-  intl: ^0.19.0
+  intl: ^0.20.2
   intl_phone_field: ^3.2.0
   json_annotation: ^4.9.0
   local_auth: ^2.2.0

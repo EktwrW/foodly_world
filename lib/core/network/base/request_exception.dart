@@ -5,7 +5,7 @@ class AppRequestException implements Exception {
   final Object? error;
   final StackTrace? stackTrace;
 
-  AppRequestException({this.error, this.stackTrace});
+  const AppRequestException({this.error, this.stackTrace});
 
   String get errorMsg {
     if (error is DioException) {

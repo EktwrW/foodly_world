@@ -1,7 +1,7 @@
 // //import 'package:animate_do/animate_do.dart' show FadeIn;
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// // import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoShape;
+// // import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 // // import 'package:foodly_world/generated/l10n.dart';
 // // import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 // // import 'package:foodly_world/ui/theme/foodly_text_styles.dart';

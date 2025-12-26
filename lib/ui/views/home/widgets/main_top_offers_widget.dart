@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
@@ -28,7 +28,7 @@ class TopOffersWidget extends StatelessWidget {
           .map(
             (e) => Card(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              color: ui.NeumoColors.decorationMaxWhiteColor,
+              color: ui.NeumorphicColors.decorationMaxWhiteColor,
               child: Stack(
                 children: [
                   Column(
@@ -79,12 +79,12 @@ class TopOffersWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                      ui.Neumo(
+                      ui.Neumorphic(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
-                        style: ui.NeumoStyle(
+                        style: ui.NeumorphicStyle(
                             depth: 1,
                             color: Colors.white.withValues(alpha: .9),
-                            boxShape: ui.NeumoBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
+                            boxShape: ui.NeumorphicBoxShape.roundRect(const BorderRadius.all(Radius.circular(3)))),
                         child: Column(
                           children: [
                             Text(

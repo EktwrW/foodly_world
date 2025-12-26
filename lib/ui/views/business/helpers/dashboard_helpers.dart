@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
@@ -139,8 +139,8 @@ class DashboardHelpers {
         AndroidUiSettings(
           toolbarTitle: S.current.cropImage,
           toolbarColor: FoodlyThemes.primaryFoodly,
-          activeControlsWidgetColor: ui.NeumoColors.accent,
-          toolbarWidgetColor: ui.NeumoColors.background,
+          activeControlsWidgetColor: ui.NeumorphicColors.accent,
+          toolbarWidgetColor: ui.NeumorphicColors.background,
           initAspectRatio: CropAspectRatioPreset.square,
           lockAspectRatio: true,
           showCropGrid: false,

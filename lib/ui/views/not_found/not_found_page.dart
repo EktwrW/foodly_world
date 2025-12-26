@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';

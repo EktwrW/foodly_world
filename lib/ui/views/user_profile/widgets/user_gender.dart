@@ -33,7 +33,7 @@ class _EditUserGenderWdg extends StatelessWidget {
       child: Column(
         children: [
           DropdownButtonFormField<UserGender>(
-            value: vm.gender,
+            initialValue: vm.gender,
             focusNode: vm.genderNode,
             decoration: InputDecoration(
               prefix: const SizedBox.shrink(),

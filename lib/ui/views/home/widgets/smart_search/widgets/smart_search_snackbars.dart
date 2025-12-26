@@ -1,5 +1,5 @@
 import 'package:clay_containers/widgets/clay_text.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -33,7 +33,7 @@ class SmartSearchSnackbars {
                 builder: (_, textValue, __) {
                   final canNotSave = vm.recognizedText.isEmpty && textValue.text.isEmpty;
 
-                  return ui.NeumoButton(
+                  return ui.NeumorphicButton(
                     onPressed: canNotSave
                         ? null
                         : (textValue.text.isNotEmpty)
@@ -56,14 +56,14 @@ class SmartSearchSnackbars {
 
                                 dismiss();
                               },
-                    style: ui.NeumoStyle(
-                      shape: ui.NeumoShape.convex,
-                      boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
+                    style: ui.NeumorphicStyle(
+                      shape: ui.NeumorphicShape.convex,
+                      boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
                       depth: 3,
                       lightSource: ui.LightSource.topRight,
                       intensity: 1.2,
                       surfaceIntensity: .3,
-                      color: ui.NeumoColors.embossMaxWhiteColor,
+                      color: ui.NeumorphicColors.embossMaxWhiteColor,
                     ),
                     padding: const EdgeInsets.all(10),
                     child: FittedBox(
@@ -160,11 +160,11 @@ class _VoiceSearchView extends StatelessWidget {
         ),
         SizedBox(
           width: double.infinity,
-          child: ui.NeumoButton(
+          child: ui.NeumorphicButton(
             onPressed: vm.isListening ? () => cubit.stopListening() : () => cubit.startListening(),
-            style: ui.NeumoStyle(
-              shape: ui.NeumoShape.convex,
-              boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
+            style: ui.NeumorphicStyle(
+              shape: ui.NeumorphicShape.convex,
+              boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
               depth: 3,
               lightSource: ui.LightSource.topRight,
               intensity: 1.2,
@@ -176,7 +176,7 @@ class _VoiceSearchView extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: ClayText(
                 vm.isListening ? S.current.stop : S.current.retryRecording,
-                color: ui.NeumoColors.decorationMaxWhiteColor,
+                color: ui.NeumorphicColors.decorationMaxWhiteColor,
                 spread: 0,
                 style: FoodlyTextStyles.snackBarPrimaryButton,
               ),

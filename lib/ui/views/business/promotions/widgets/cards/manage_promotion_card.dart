@@ -21,9 +21,9 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
     return Card(
       elevation: 3,
       margin: const EdgeInsets.only(right: 12, left: 12, bottom: 30),
-      child: ui.NeumoButton(
+      child: ui.NeumorphicButton(
         padding: EdgeInsets.zero,
-        style: const ui.NeumoStyle(shape: ui.NeumoShape.concave, color: ui.NeumoColors.decorationMaxWhiteColor),
+        style: const ui.NeumorphicStyle(shape: ui.NeumorphicShape.concave, color: ui.NeumorphicColors.decorationMaxWhiteColor),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

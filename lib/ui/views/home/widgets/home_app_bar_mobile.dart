@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -61,7 +61,7 @@ class Home369AppBarMobile extends StatelessWidget {
                     ),
                     CustomRoundedNeumorphicButton(
                       diameter: 31,
-                      shape: ui.NeumoShape.concave,
+                      shape: ui.NeumorphicShape.concave,
                       iconSize: 22,
                       onPressed: () => FoodlyMainScaffold.toggleDrawer(),
                     ).paddingAll(6),

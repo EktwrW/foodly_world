@@ -34,7 +34,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                             onPressed: () => ManagePromotionsSnackbars.showCreatePromoWithAI(context, cubit, vm),
                             padding: const EdgeInsets.all(10),
                             text: S.current.generateWithAI,
-                            shape: ui.NeumoShape.convex,
+                            shape: ui.NeumorphicShape.convex,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
                             margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),

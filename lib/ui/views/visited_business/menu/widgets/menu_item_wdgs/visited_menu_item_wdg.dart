@@ -70,7 +70,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
         children: [
           Card(
             elevation: 2,
-            color: ui.NeumoColors.decorationMaxWhiteColor,
+            color: ui.NeumorphicColors.decorationMaxWhiteColor,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             margin: widget.margin ?? const EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedSize(

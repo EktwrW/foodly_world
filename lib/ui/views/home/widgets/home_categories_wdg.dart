@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
@@ -35,7 +35,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
         children: [
           CarouselSlider(
             items: FoodlyCategories.values
-                .map((e) => ui.NeumoRadio<FoodlyCategories>(
+                .map((e) => ui.NeumorphicRadio<FoodlyCategories>(
                       onChanged: (value) {
                         log('pressed: $e');
                         log('$value');
@@ -43,11 +43,11 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       },
                       value: e,
                       padding: const EdgeInsets.all(4),
-                      style: const ui.NeumoRadioStyle(
-                          shape: ui.NeumoShape.concave,
+                      style: const ui.NeumorphicRadioStyle(
+                          shape: ui.NeumorphicShape.concave,
                           intensity: .6,
                           unselectedDepth: 2,
-                          unselectedColor: ui.NeumoColors.decorationMaxWhiteColor),
+                          unselectedColor: ui.NeumorphicColors.decorationMaxWhiteColor),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -86,7 +86,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                 if (kIsWeb)
                   InkWell(
                     onTap: () => carouselController.previousPage(duration: Durations.medium4, curve: Curves.linear),
-                    child: const Icon(Bootstrap.caret_left_fill, color: ui.NeumoColors.decorationMaxWhiteColor)
+                    child: const Icon(Bootstrap.caret_left_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),
                 ...FoodlyCategories.values.asMap().entries.map(
@@ -127,7 +127,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                 if (kIsWeb)
                   InkWell(
                     onTap: () => carouselController.nextPage(duration: Durations.medium4, curve: Curves.linear),
-                    child: const Icon(Bootstrap.caret_right_fill, color: ui.NeumoColors.decorationMaxWhiteColor)
+                    child: const Icon(Bootstrap.caret_right_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),
               ],

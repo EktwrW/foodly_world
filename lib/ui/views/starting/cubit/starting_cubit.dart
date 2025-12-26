@@ -65,7 +65,7 @@ class StartingCubit extends Cubit<StartingState> {
         final googleAuth = await _vm.googleSignInAccount?.authentication;
         final body = AuthSocialLoginDTO(accessToken: googleAuth?.accessToken ?? '', provider: 'google');
 
-        _meRepo.socialLogin(body).then(
+        await _meRepo.socialLogin(body).then(
           (response) {
             return response.when(
               success: (userSessionDM) => (userSessionDM.user.uuid?.isEmpty ?? true)

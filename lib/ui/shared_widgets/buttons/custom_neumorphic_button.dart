@@ -1,6 +1,6 @@
 import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -16,7 +16,7 @@ class CustomNeumorphicButton extends StatelessWidget {
   final double? verticalMargin;
   final bool disabled;
   final CustomNeumorphicBtnType? type;
-  final ui.NeumoShape? shape;
+  final ui.NeumorphicShape? shape;
   final double? fontSize;
   final double bosShapeRadius;
   final TextStyle? textStyle;
@@ -52,13 +52,13 @@ class CustomNeumorphicButton extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (type) {
       case CustomNeumorphicBtnType.secondary:
-        return ui.NeumoButton(
+        return ui.NeumorphicButton(
           onPressed: !disabled ? onPressed : null,
           margin: margin,
           tooltip: tooltip,
-          style: ui.NeumoStyle(
-            shape: shape ?? ui.NeumoShape.convex,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+          style: ui.NeumorphicStyle(
+            shape: shape ?? ui.NeumorphicShape.convex,
+            boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
             intensity: 1.2,
             color: !disabled ? FoodlyThemes.primaryLighten73 : Colors.grey[200],
@@ -82,15 +82,15 @@ class CustomNeumorphicButton extends StatelessWidget {
         );
 
       case CustomNeumorphicBtnType.outlined:
-        return ui.NeumoButton(
+        return ui.NeumorphicButton(
           onPressed: !disabled ? onPressed : null,
           margin: margin,
           tooltip: tooltip,
-          style: ui.NeumoStyle(
-            shape: shape ?? ui.NeumoShape.flat,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+          style: ui.NeumorphicStyle(
+            shape: shape ?? ui.NeumorphicShape.flat,
+            boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
-            border: ui.NeumoBorder(
+            border: ui.NeumorphicBorder(
               color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
               width: 1.5,
             ),
@@ -118,13 +118,13 @@ class CustomNeumorphicButton extends StatelessWidget {
         );
 
       default:
-        return ui.NeumoButton(
+        return ui.NeumorphicButton(
           margin: margin,
           onPressed: !disabled ? onPressed : null,
           tooltip: tooltip,
-          style: ui.NeumoStyle(
-            shape: shape ?? ui.NeumoShape.convex,
-            boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+          style: ui.NeumorphicStyle(
+            shape: shape ?? ui.NeumorphicShape.convex,
+            boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
             intensity: 1.2,
             color: !disabled ? FoodlyThemes.primaryFoodly : Colors.grey[400],
@@ -138,7 +138,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                 child: Center(
                   child: ClayText(
                     text,
-                    color: foregroundColor ?? ui.NeumoColors.decorationMaxWhiteColor,
+                    color: foregroundColor ?? ui.NeumorphicColors.decorationMaxWhiteColor,
                     spread: 0.2,
                     style: getBaseTextStyle,
                   ),

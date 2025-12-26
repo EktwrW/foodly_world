@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoColors;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
@@ -129,8 +129,8 @@ Future<String> _cropImage(
         cropStyle: cropStyle ?? CropStyle.circle,
         toolbarTitle: S.current.cropImage,
         toolbarColor: FoodlyThemes.primaryFoodly,
-        activeControlsWidgetColor: ui.NeumoColors.accent,
-        toolbarWidgetColor: ui.NeumoColors.background,
+        activeControlsWidgetColor: ui.NeumorphicColors.accent,
+        toolbarWidgetColor: ui.NeumorphicColors.background,
         initAspectRatio: CropAspectRatioPreset.square,
         lockAspectRatio: aspectRatioPresets?.length == 1,
         showCropGrid: false,

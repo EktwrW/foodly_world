@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -50,7 +50,7 @@ class FoodlyDrawer extends StatelessWidget {
       theme: const SidebarXTheme(
         width: 90,
         decoration: BoxDecoration(
-          color: ui.NeumoColors.background,
+          color: ui.NeumorphicColors.background,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20),
             bottomRight: Radius.circular(20),
@@ -77,7 +77,7 @@ class FoodlyDrawer extends StatelessWidget {
         selectedItemTextPadding: EdgeInsets.only(left: 10),
         selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
         decoration: BoxDecoration(
-          color: ui.NeumoColors.background,
+          color: ui.NeumorphicColors.background,
           borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
         ),
       ),

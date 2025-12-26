@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -55,12 +55,12 @@ class PlacesAutocompleteWdg extends StatelessWidget {
       prefixIcon: Icon(
         Bootstrap.geo_alt,
         size: 22,
-        color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
+        color: disabled ? ui.NeumorphicColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(6),
       cancelIcon: Icon(
         Bootstrap.eraser_fill,
         size: 22,
-        color: disabled ? ui.NeumoColors.disabled : FoodlyThemes.primaryFoodly,
+        color: disabled ? ui.NeumorphicColors.disabled : FoodlyThemes.primaryFoodly,
       ).paddingBottom(4),
       autocompleteOnTrailingWhitespace: true,
       detailRequired: true,
@@ -228,7 +228,7 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(
-                    color: ui.NeumoColors.disabled,
+                    color: ui.NeumorphicColors.disabled,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(

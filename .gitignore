@@ -136,7 +136,6 @@ app.*.symbols
 !.vscode/settings.json
 
 # Additional
-.fvm
 secrets.dart
 secrets.json
 /lib/generated/
@@ -150,3 +149,6 @@ secrets.json
 lib/generated/intl/messages_en-US.dart
 secrets.md
 pubspec.lock
+
+# FVM Version Cache
+.fvm/

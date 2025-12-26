@@ -1,4 +1,4 @@
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -45,12 +45,12 @@ class FoodlyPhoneInputText extends StatelessWidget {
               ? S.current.enterAValidPhoneNumber
               : null;
         },
-        dropdownTextStyle: TextStyle(color: !enabled ? ui.NeumoColors.disabled : Colors.black, fontSize: 13),
+        dropdownTextStyle: TextStyle(color: !enabled ? ui.NeumorphicColors.disabled : Colors.black, fontSize: 13),
         onSubmitted: onSubmitted,
         decoration: InputDecoration(
           hintText: hintText ?? FoodlyInputType.businessPhone.text,
           hintStyle: FoodlyTextStyles.hintText
-              .copyWith(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled),
+              .copyWith(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
           border: const UnderlineInputBorder(),
           errorMaxLines: 2,
           errorStyle: FoodlyTextStyles.errorInputText,

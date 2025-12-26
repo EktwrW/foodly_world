@@ -35,15 +35,15 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
                           if (isOpenNow)
                             Row(
                               children: [
-                                ui.NeumoText(
+                                ui.NeumorphicText(
                                   'Open',
-                                  textStyle: ui.NeumoTextStyle(fontSize: 11),
-                                  style: const ui.NeumoStyle(
-                                      color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumoShape.convex),
+                                  textStyle: ui.NeumorphicTextStyle(fontSize: 11),
+                                  style: const ui.NeumorphicStyle(
+                                      color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumorphicShape.convex),
                                 ),
-                                const ui.Neumo(
-                                  padding: EdgeInsets.all(6),
-                                  style: ui.NeumoStyle(color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumoShape.convex),
+                                ui.Neumorphic(
+                                  padding: const EdgeInsets.all(6),
+                                  style: const ui.NeumorphicStyle(color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumorphicShape.convex),
                                 ).paddingOnly(left: 4, right: 10),
                               ],
                             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_regex.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart' show FoodlyInputType;
 import 'package:foodly_world/core/utils/form_validations.dart';
@@ -122,11 +122,11 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 hintText: hintText ?? inputTextType.text,
                 hintStyle: TextStyle(
                   letterSpacing: 0,
-                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
                 prefixIcon: inputTextType.icon,
-                prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
+                prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
                 suffixIcon: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: () => showPassword.value = !showPasswordValue,
@@ -185,7 +185,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           hintText: hintText ?? inputTextType.text,
           hintStyle: TextStyle(
             overflow: TextOverflow.ellipsis,
-            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumoColors.disabled,
+            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
             fontSize: hintTextSize,
           ),
           label: label,
@@ -195,7 +195,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           suffixIcon: trailing,
           border: border ?? const UnderlineInputBorder(),
           focusColor: FoodlyThemes.primaryFoodly,
-          prefixIconColor: enabled ? Colors.black87 : ui.NeumoColors.disabled,
+          prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
           errorMaxLines: 2,
           errorStyle: const TextStyle(fontSize: 10.0),
           contentPadding: contentPadding ?? const EdgeInsets.only(top: 15, right: 6),

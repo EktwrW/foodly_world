@@ -1,6 +1,6 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui show NeumoText, NeumoTextStyle, NeumoStyle;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicText, NeumorphicTextStyle, NeumorphicStyle;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';

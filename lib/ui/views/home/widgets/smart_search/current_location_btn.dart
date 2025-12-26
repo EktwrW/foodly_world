@@ -31,7 +31,7 @@ class CurrentLocationButton extends StatelessWidget {
               highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
               child: DecoratedBox(
                 decoration:
-                    BoxDecoration(color: ui.NeumoColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   spacing: 8,
                   children: [
@@ -111,7 +111,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: ui.NeumoColors.background,
+                color: ui.NeumorphicColors.background,
               ),
               margin: const EdgeInsets.only(
                 bottom: 50,
@@ -135,8 +135,8 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         ),
                       ],
                     ).paddingOnly(top: 24, bottom: 20),
-                    ui.NeumoRadio(
-                      style: const ui.NeumoRadioStyle(
+                    ui.NeumorphicRadio(
+                      style: const ui.NeumorphicRadioStyle(
                         unselectedDepth: 2,
                         unselectedColor: FoodlyThemes.alternativeUnselectedLightColor,
                       ),
@@ -173,7 +173,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                       child: BlocBuilder<LocationBloc, LocationState>(
                         builder: (context, state) {
                           return state.maybeWhen(
-                            locationChecked: (locationDM) => ui.NeumoButton(
+                            locationChecked: (locationDM) => ui.NeumorphicButton(
                               onPressed: () {
                                 locationService.updateLocation(locationDM);
                                 voiceSearchCubit.resetToInitial();
@@ -184,7 +184,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                   ),
                                 );
                               },
-                              style: ui.NeumoStyle(
+                              style: ui.NeumorphicStyle(
                                 color: FoodlyThemes.primaryLighten73,
                                 depth: 2,
                               ),
@@ -229,7 +229,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                       ),
                     ),
                     Flexible(
-                      child: ui.NeumoButton(
+                      child: ui.NeumorphicButton(
                         onPressed: loggedUser != null
                             ? () {
                                 locationService.updateLocationUserDM(loggedUser!);
@@ -242,7 +242,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 );
                               }
                             : null,
-                        style: ui.NeumoStyle(
+                        style: ui.NeumorphicStyle(
                           color: FoodlyThemes.primaryLighten73,
                           depth: 2,
                         ),

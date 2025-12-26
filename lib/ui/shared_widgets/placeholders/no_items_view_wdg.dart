@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -19,10 +19,10 @@ class NoItemsViewWdg extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         (asset ?? const Asset(FoodlyAssets.emptyMenu, height: 70)).paddingBottom(20),
-        ui.NeumoText(
+        ui.NeumorphicText(
           text ?? S.current.noItemsYet,
-          style: const ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
-          textStyle: ui.NeumoTextStyle(
+          style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
+          textStyle: ui.NeumorphicTextStyle(
             fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
             fontSize: 18,
             fontWeight: FontWeight.bold,

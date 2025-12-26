@@ -7,7 +7,7 @@ import 'package:collection/collection.dart' show ListExtensions;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyStrings, FoodlyThemes, S;
 import 'package:foodly_world/core/extensions/iterable_extension.dart';

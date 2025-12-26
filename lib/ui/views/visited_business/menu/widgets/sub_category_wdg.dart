@@ -50,10 +50,10 @@ class SubCategoryWdg extends StatelessWidget {
           Expanded(
             flex: subCategory?.editingName == true ? 4 : 3,
             child: Center(
-              child: ui.NeumoText(
+              child: ui.NeumorphicText(
                 subCategory?.name ?? '',
-                style: const ui.NeumoStyle(color: FoodlyThemes.primaryFoodly),
-                textStyle: ui.NeumoTextStyle(
+                style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
+                textStyle: ui.NeumorphicTextStyle(
                   fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
                   fontSize: FoodlyTextStyles.sectionsTitle.fontSize,
                   fontWeight: FoodlyTextStyles.sectionsTitle.fontWeight,

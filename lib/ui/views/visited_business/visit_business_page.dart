@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:clay_containers/widgets/clay_text.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';

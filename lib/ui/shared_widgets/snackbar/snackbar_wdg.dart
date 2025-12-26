@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumo/flutter_neumo.dart' as ui;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -91,7 +91,7 @@ class SnackBarWdg {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: UIDecorations.SNACKBAR_ROUNDED_BORDER.borderRadius,
-                    color: ui.NeumoColors.background,
+                    color: ui.NeumorphicColors.background,
                   ),
                   margin: const EdgeInsets.only(top: 20),
                   padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB, vertical: 20),
@@ -105,19 +105,19 @@ class SnackBarWdg {
                       (buttonBuilder?.call(handleDismiss) ??
                               SizedBox(
                                 height: 46,
-                                child: ui.NeumoButton(
+                                child: ui.NeumorphicButton(
                                   onPressed: () {
                                     if (onPressed != null) onPressed!();
                                     handleDismiss();
                                   },
-                                  style: ui.NeumoStyle(
-                                    shape: ui.NeumoShape.convex,
-                                    boxShape: ui.NeumoBoxShape.roundRect(BorderRadius.circular(12)),
+                                  style: ui.NeumorphicStyle(
+                                    shape: ui.NeumorphicShape.convex,
+                                    boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
                                     depth: 3,
                                     lightSource: ui.LightSource.topRight,
                                     intensity: 1.2,
                                     surfaceIntensity: .3,
-                                    color: ui.NeumoColors.embossMaxWhiteColor,
+                                    color: ui.NeumorphicColors.embossMaxWhiteColor,
                                   ),
                                   padding: const EdgeInsets.all(8),
                                   child: Row(
@@ -145,7 +145,7 @@ class SnackBarWdg {
                   height: 5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4),
-                    color: ui.NeumoColors.background,
+                    color: ui.NeumorphicColors.background,
                   ),
                   margin: const EdgeInsets.only(top: 8),
                 ),
