@@ -8,7 +8,7 @@
       "args": ["-d", "chrome", "--web-port", "8888"],
       "toolArgs": [
         "--dart-define=ENV=dev",
-        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=DOMAIN=https://be-foodly-137265888722.europe-west1.run.app",
         "--dart-define=API_VERSION=/api",
         "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
         "--dart-define=LOG_PASS=infinite_is_the_limit",
@@ -28,7 +28,7 @@
       "type": "dart",
       "toolArgs": [
         "--dart-define=ENV=dev",
-        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=DOMAIN=https://be-foodly-137265888722.europe-west1.run.app",
         "--dart-define=API_VERSION=/api",
         "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
         "--dart-define=LOG_PASS=infinite_is_the_limit",
@@ -50,7 +50,7 @@
       "args": ["-d", "chrome", "--web-port", "8888"],
       "toolArgs": [
         "--dart-define=ENV=prod",
-        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=DOMAIN=https://be-foodly-137265888722.europe-west1.run.app",
         "--dart-define=API_VERSION=/api",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
@@ -70,7 +70,7 @@
       "flutterMode": "profile",
       "toolArgs": [
         "--dart-define=ENV=prod",
-        "--dart-define=DOMAIN=https://foodly.world",
+        "--dart-define=DOMAIN=https://be-foodly-137265888722.europe-west1.run.app",
         "--dart-define=API_VERSION=/api",
         "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
         "--dart-define=LOG_PASS=infinite_is_the_limit",

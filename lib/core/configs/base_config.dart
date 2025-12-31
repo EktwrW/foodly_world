@@ -8,7 +8,7 @@ abstract class BaseConfig {
   String get foodlyBaseUrl => '';
   String get foodlyAppRoot => '';
   String get foodlyApiVersion => '';
-  String get foodlyApiKey => '';
+
   bool get shouldPrefillLogin => false;
   String get googlePlacesBaseUrl => '';
   String get googleDefaultApiKey => '';
@@ -34,7 +34,7 @@ abstract class BaseConfig {
     final baseUrl = const String.fromEnvironment('DOMAIN').toLowerCase();
     final appRoot = const String.fromEnvironment('APP_ROOT').toLowerCase();
     final apiVersion = const String.fromEnvironment('API_VERSION').toLowerCase();
-    const apiKey = String.fromEnvironment('API_KEY');
+    // API_KEY removed: no longer read from build-time defines
     const testUserEmail = String.fromEnvironment('LOG_EMAIL');
     const testUserPassword = String.fromEnvironment('LOG_PASS');
     const regPrefill = bool.fromEnvironment('REG_PREFILL');
@@ -52,7 +52,6 @@ abstract class BaseConfig {
           envBaseUrl: baseUrl,
           envAppRoot: appRoot,
           envApiVersion: apiVersion,
-          envMain369ApiKey: apiKey,
           regPrefill: regPrefill,
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
@@ -67,7 +66,6 @@ abstract class BaseConfig {
           envBaseUrl: baseUrl,
           envAppRoot: appRoot,
           envApiVersion: apiVersion,
-          envMain369ApiKey: apiKey,
           envLogLevel: logLevel,
           envGooglePlacesBaseUrl: googlePlacesBaseUrl,
           envGoogleDefaultPublicToken: googleDefaultApiKey,
@@ -81,7 +79,6 @@ abstract class BaseConfig {
           envBaseUrl: baseUrl,
           envAppRoot: appRoot,
           envApiVersion: apiVersion,
-          envMain369ApiKey: apiKey,
           testUserEmail: testUserEmail,
           testUserPassword: testUserPassword,
           regPrefill: regPrefill,

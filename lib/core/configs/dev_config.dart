@@ -5,7 +5,7 @@ class DevConfig extends BaseConfig {
   final String envAppRoot;
   final String envBaseUrl;
   final String envApiVersion;
-  final String envMain369ApiKey;
+
   final String? testUserEmail;
   final String? testUserPassword;
   final bool? regPrefill;
@@ -23,7 +23,6 @@ class DevConfig extends BaseConfig {
     required this.envAppRoot,
     required this.envBaseUrl,
     required this.envApiVersion,
-    required this.envMain369ApiKey,
     this.testUserEmail,
     this.testUserPassword,
     this.regPrefill,
@@ -40,9 +39,6 @@ class DevConfig extends BaseConfig {
 
   @override
   String get foodlyApiVersion => envApiVersion;
-
-  @override
-  String get foodlyApiKey => envMain369ApiKey;
 
   @override
   bool get shouldPrefillLogin => regPrefill ?? false;

@@ -5,7 +5,7 @@ class ProdConfig extends BaseConfig {
   final String envBaseUrl;
   final String envAppRoot;
   final String envApiVersion;
-  final String envMain369ApiKey;
+
   final Level envLogLevel;
   final String envGooglePlacesBaseUrl;
   final String envGoogleDefaultPublicToken;
@@ -19,7 +19,6 @@ class ProdConfig extends BaseConfig {
     required this.envBaseUrl,
     required this.envAppRoot,
     required this.envApiVersion,
-    required this.envMain369ApiKey,
     required this.envGooglePlacesBaseUrl,
     required this.envGoogleDefaultPublicToken,
     this.regPrefill,
@@ -36,9 +35,6 @@ class ProdConfig extends BaseConfig {
 
   @override
   String get foodlyApiVersion => envApiVersion;
-
-  @override
-  String get foodlyApiKey => envMain369ApiKey;
 
   @override
   Level get logLevel => envLogLevel;
