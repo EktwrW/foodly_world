@@ -125,6 +125,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
 
       _vm = _vm.copyWith(
         editMenuDM: _vm.editMenuDM?.copyWith(combos: updatedCombos),
+        menuDM: _vm.menuDM?.copyWith(combos: updatedCombos),
       );
     } else {
       final updatedSubCategories = subCategories.map((category) {
@@ -317,7 +318,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
 
   void _updateComboItem(ItemDM item, {bool updateOriginalMenuDM = false}) {
     final updatedItems = _vm.editMenuDM?.combos
-        .map((i) => (i.uuid == item.uuid || i.uuid == FoodlyStrings.NEW_ITEM) ? item : i)
+        .map((i) => (i.uuid == item.uuid || i.isNewItem) ? item : i)
         .toList();
 
     if (updateOriginalMenuDM) {
@@ -390,7 +391,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
   MenuDM? _updateMenuWithItem(ItemDM item, MenuCategory menuCategory, CategoryDM? subCategory, MenuDM? menu) {
     if (menuCategory.isCombos) {
       return menu?.copyWith(
-        combos: menu.combos.map((i) => i.uuid == item.uuid ? item : i).toList(),
+        combos: menu.combos.map((i) => i.uuid == item.uuid || i.isNewItem ? item : i).toList(),
       );
     }
 
@@ -444,7 +445,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     void updateItemData(ItemDM updatedItem) {
       _vm = _vm.copyWith(
         menuDM: _updateMenuWithItem(updatedItem, menuCategory, subCategory, _vm.menuDM),
-        editMenuDM: _updateMenuWithItem(updatedItem, menuCategory, subCategory, _vm.menuDM),
+        editMenuDM: _updateMenuWithItem(updatedItem, menuCategory, subCategory, _vm.editMenuDM),
       );
     }
 
@@ -597,6 +598,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
 
           _vm = _vm.copyWith(
             editMenuDM: _vm.editMenuDM?.copyWith(combos: updatedCombos),
+            menuDM: _vm.menuDM?.copyWith(combos: updatedCombos),
           );
         } else {
           final updatedCategories = _vm.editMenuDM?.subCategories[menuCategory]?.map((category) {

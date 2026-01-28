@@ -44,7 +44,7 @@ dependencies:
   hydrated_bloc: ^10.0.0
   icons_launcher: ^3.0.1
   icons_plus: ^5.0.0
-  image_cropper: ^9.1.0
+  image_cropper: ^10.0.0
   image_picker: ^1.1.2
   intl: ^0.20.2
   intl_phone_field: ^3.2.0
@@ -60,7 +60,7 @@ dependencies:
   share_plus: ^10.1.2
   shared_preferences: ^2.5.3
   sidebarx: ^0.17.1
-  speech_to_text: ^7.0.0
+  speech_to_text: ^7.3.0
   toggle_switch: ^2.3.0
   universal_io: ^2.2.2
   url_launcher: ^6.3.1
