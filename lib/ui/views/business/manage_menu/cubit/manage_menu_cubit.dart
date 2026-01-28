@@ -121,7 +121,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     );
 
     if (menuCategory == MenuCategory.combos) {
-      final updatedCombos = List<ItemDM>.from(_vm.editMenuDM?.combos ?? [])..insert(0, newItem);
+      final updatedCombos = List<ItemDM>.from(_vm.editMenuDM?.combos ?? [])..add(newItem);
 
       _vm = _vm.copyWith(
         editMenuDM: _vm.editMenuDM?.copyWith(combos: updatedCombos),
@@ -131,7 +131,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
       final updatedSubCategories = subCategories.map((category) {
         if (category.uuid != subCategory.uuid) return category;
         return category.copyWith(
-          items: [newItem, ...category.items],
+          items: [...category.items, newItem],
         );
       }).toList();
 
