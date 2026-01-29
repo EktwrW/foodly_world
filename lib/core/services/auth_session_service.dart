@@ -103,6 +103,7 @@ class AuthSessionService {
 
       if (context.mounted) {
         context.read<RootBloc>().add(const RootEvent.userLogout());
+        context.read<SmartSearchCubit>().resetToInitial();
       }
 
       await updateForceToLogin(true);
@@ -111,6 +112,7 @@ class AuthSessionService {
       di<Logger>().e('Error en clearSession: $e');
       // Intentar la navegación directa como fallback
       if (context.mounted) {
+        context.read<SmartSearchCubit>().resetToInitial();
         di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
       }
     }
