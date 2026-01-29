@@ -14,8 +14,13 @@ class AIPromoService {
     required String businessName,
     required String businessUuid,
     required (bool, OpenAIImageStyle) generateImage,
+    String? language,
   }) async {
     late final Uint8List? imageBytes;
+
+    // Detectar idioma del prompt o usar el proporcionado
+    final languageCode = language ?? 'en';
+    final languageName = _getLanguageName(languageCode);
 
     // Retry hasta 3 veces si excede límites
     int attempts = 0;
@@ -42,11 +47,12 @@ class AIPromoService {
 }
 
 CRITICAL RULES:
+- ALL text MUST be in $languageName language
 - Count characters BEFORE responding
 - title: 36 chars MAX (not one more)
 - subtitle: 99 chars MAX (not one more)
 - description: 369 chars MAX (not one more)
-- Use concise, impactful language
+- Use concise, impactful language appropriate for $languageName speakers
 - NO explanations, ONLY the JSON''',
                 ),
               ],
@@ -55,7 +61,7 @@ CRITICAL RULES:
               role: OpenAIChatMessageRole.user,
               content: [
                 OpenAIChatCompletionChoiceMessageContentItemModel.text(
-                  '$prompt\n\nRemember: title≤36, subtitle≤99, description≤369 characters.',
+                  '$prompt\n\nIMPORTANT: Generate ALL content in $languageName. Remember: title≤36, subtitle≤99, description≤369 characters.',
                 ),
               ],
             ),
@@ -66,7 +72,6 @@ CRITICAL RULES:
         final jsonResponse = jsonDecode(messageContent);
 
         if (generateImage.$1) {
-          // Usar Replicate en lugar de DALL-E
           final imageUrl = await _replicateService.generateImage(prompt, businessName, generateImage.$2);
           imageBytes = await _replicateService.downloadImage(imageUrl);
         }
@@ -123,6 +128,26 @@ CRITICAL RULES:
     } else {
       // Si no hay un buen punto de corte, cortar directo y agregar puntos suspensivos
       return '${truncated.substring(0, maxLength - 3).trim()}...';
+    }
+  }
+
+  /// Convierte código de idioma a nombre completo
+  String _getLanguageName(String languageCode) {
+    switch (languageCode.toLowerCase()) {
+      case 'es':
+        return 'Spanish';
+      case 'en':
+        return 'English';
+      case 'pt':
+        return 'Portuguese';
+      case 'fr':
+        return 'French';
+      case 'de':
+        return 'German';
+      case 'it':
+        return 'Italian';
+      default:
+        return 'English'; // Default fallback
     }
   }
 }

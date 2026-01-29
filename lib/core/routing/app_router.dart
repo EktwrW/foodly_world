@@ -320,6 +320,8 @@ class AppRouter {
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 di(),
                 di(),
+                state.extra as BusinessDM?,
+                di(),
               ),
               child: const ManagePromotionsPage(),
             ),

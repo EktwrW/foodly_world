@@ -35,6 +35,7 @@ class BusinessFooterButtons extends StatelessWidget {
               onPressed: () => context.goNamed(
                 AppRoutes.managePromotions.name,
                 pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
+                extra: vm.currentBusiness,
               ),
               dimension: 30,
               iconSize: 30,

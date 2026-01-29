@@ -12,19 +12,26 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
   ManagePromotionsVM _vm;
   final Logger _logger;
   final BusinessRepo _businessRepo;
+  final AuthSessionService _authSessionService;
+  final String _businessUuid;
 
   ManagePromotionsCubit(
     String businessUuid,
     BusinessRepo businessRepo,
     Logger logger,
+    BusinessDM? businessDM,
+    AuthSessionService authSessionService,
   )   : _vm = ManagePromotionsVM(
           promotions: [],
           controller: PageController(),
           activePromosScrollController: ScrollController(debugLabel: 'active'),
           upcomingPromosScrollController: ScrollController(debugLabel: 'upcoming'),
+          businessDM: businessDM,
         ),
         _logger = logger,
         _businessRepo = businessRepo,
+        _authSessionService = authSessionService,
+        _businessUuid = businessUuid,
         super(const ManagePromotionsState.initial(ManagePromotionsVM())) {
     _initializePromos();
   }
@@ -34,9 +41,27 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
 
     await _businessRepo.getBusinessPromotions().then((result) {
       result.when(
-        success: (promotions) => emit(_Loaded(_vm = _vm.copyWith(
-            promotions: promotions,
-            businessDM: itr.IterableExtension(promotions).firstWhereOrNull((p) => p.business != null)?.business))),
+        success: (promotions) {
+          BusinessDM? business;
+
+          if (_vm.businessDM == null) {
+            business = itr.IterableExtension(promotions).firstWhereOrNull((p) => p.business != null)?.business;
+
+            if (business != null) {
+              _vm = _vm.copyWith(businessDM: business);
+            } else {
+              business = itr.IterableExtension(_authSessionService.userSessionDM?.user.business ?? []).firstWhereOrNull(
+                (b) => b.uuid == _businessUuid,
+              );
+              _vm = _vm.copyWith(businessDM: business);
+            }
+          }
+
+          emit(_Loaded(_vm = _vm.copyWith(
+              promotions: promotions,
+              businessDM: _vm.businessDM ??
+                  itr.IterableExtension(promotions).firstWhereOrNull((p) => p.business != null)?.business)));
+        },
         failure: (e) => _handleError(e.errorMsg),
       );
     });
@@ -196,6 +221,7 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
         businessName: _vm.businessDM!.name ?? '',
         businessUuid: _vm.businessDM!.uuid,
         generateImage: generateImage,
+        language: _authSessionService.lang,
       );
 
       _vm.titleCtrl?.controller?.text = response.title;
