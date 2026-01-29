@@ -17,60 +17,112 @@ class AIPromoService {
   }) async {
     late final Uint8List? imageBytes;
 
-    try {
-      final completion = await OpenAI.instance.chat.create(
-        model: FoodlyStrings.GPT_3_5_TURBO_MODEL,
-        user: '$businessName:$businessUuid',
-        responseFormat: {'type': 'json_object'},
-        temperature: 0.8,
-        messages: [
-          OpenAIChatCompletionChoiceMessageModel(
-            role: OpenAIChatMessageRole.system,
-            content: [
-              OpenAIChatCompletionChoiceMessageContentItemModel.text(
-                '''Marketing expert generating ONLY exact JSON:
-                - title: MUST be under 36 chars
-                - subtitle: MUST be under 99 chars
-                - description: MUST be under 369 chars
-                Reject and regenerate if ANY field exceeds limits.''',
-              ),
-            ],
-          ),
-          OpenAIChatCompletionChoiceMessageModel(
-            role: OpenAIChatMessageRole.user,
-            content: [
-              OpenAIChatCompletionChoiceMessageContentItemModel.text(prompt),
-            ],
-          ),
-        ],
-      );
+    // Retry hasta 3 veces si excede límites
+    int attempts = 0;
+    const maxAttempts = 3;
 
-      final messageContent = completion.choices.first.message.content?.first.text ?? '';
-      final jsonResponse = jsonDecode(messageContent);
+    while (attempts < maxAttempts) {
+      try {
+        final completion = await OpenAI.instance.chat.create(
+          model: FoodlyStrings.GPT_3_5_TURBO_MODEL,
+          user: '$businessName:$businessUuid',
+          responseFormat: {'type': 'json_object'},
+          temperature: attempts == 0 ? 0.7 : 0.5, // Reducir temperatura en retries
+          maxTokens: 250, // Limitar tokens totales de la respuesta
+          messages: [
+            OpenAIChatCompletionChoiceMessageModel(
+              role: OpenAIChatMessageRole.system,
+              content: [
+                OpenAIChatCompletionChoiceMessageContentItemModel.text(
+                  '''You are a marketing expert. Generate a JSON with EXACTLY these fields:
+{
+  "title": "max 36 characters",
+  "subtitle": "max 99 characters",
+  "description": "max 369 characters"
+}
 
-      if (generateImage.$1) {
-        // Usar Replicate en lugar de DALL-E
-        final imageUrl = await _replicateService.generateImage(prompt, businessName, generateImage.$2);
-        imageBytes = await _replicateService.downloadImage(imageUrl);
+CRITICAL RULES:
+- Count characters BEFORE responding
+- title: 36 chars MAX (not one more)
+- subtitle: 99 chars MAX (not one more)
+- description: 369 chars MAX (not one more)
+- Use concise, impactful language
+- NO explanations, ONLY the JSON''',
+                ),
+              ],
+            ),
+            OpenAIChatCompletionChoiceMessageModel(
+              role: OpenAIChatMessageRole.user,
+              content: [
+                OpenAIChatCompletionChoiceMessageContentItemModel.text(
+                  '$prompt\n\nRemember: title≤36, subtitle≤99, description≤369 characters.',
+                ),
+              ],
+            ),
+          ],
+        );
+
+        final messageContent = completion.choices.first.message.content?.first.text ?? '';
+        final jsonResponse = jsonDecode(messageContent);
+
+        if (generateImage.$1) {
+          // Usar Replicate en lugar de DALL-E
+          final imageUrl = await _replicateService.generateImage(prompt, businessName, generateImage.$2);
+          imageBytes = await _replicateService.downloadImage(imageUrl);
+        }
+
+        // Obtener y validar campos
+        String title = (jsonResponse['title'] as String).trim();
+        String subtitle = (jsonResponse['subtitle'] as String).trim();
+        String description = (jsonResponse['description'] as String).trim();
+
+        // Truncado inteligente si excede límites (preservando palabras completas)
+        title = title.length > 36 ? _smartTruncate(title, 36) : title;
+        subtitle = subtitle.length > 99 ? _smartTruncate(subtitle, 99) : subtitle;
+        description = description.length > 369 ? _smartTruncate(description, 369) : description;
+
+        // Si aún excede después del truncado, retry
+        if (title.length > 36 || subtitle.length > 99 || description.length > 369) {
+          attempts++;
+          if (attempts >= maxAttempts) {
+            throw Exception('Could not generate content within limits after $maxAttempts attempts');
+          }
+          continue; // Retry
+        }
+
+        return PromoGenerationResponse(
+          title: title,
+          subtitle: subtitle,
+          description: description,
+          imageBytes: imageBytes,
+        );
+      } catch (e) {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          throw Exception('Failed to generate promotion after $maxAttempts attempts: $e');
+        }
+        // Esperar un poco antes de retry
+        await Future.delayed(const Duration(milliseconds: 500));
       }
+    }
 
-      // Validar límites de caracteres
-      final title = jsonResponse['title'] as String;
-      final subtitle = jsonResponse['subtitle'] as String;
-      final description = jsonResponse['description'] as String;
+    throw Exception('Failed to generate promotion');
+  }
 
-      if (title.length > 36 || subtitle.length > 99 || description.length > 369) {
-        throw Exception('Generated content exceeds character limits, please try again.');
-      }
+  /// Trunca texto preservando palabras completas
+  String _smartTruncate(String text, int maxLength) {
+    if (text.length <= maxLength) return text;
 
-      return PromoGenerationResponse(
-        title: title,
-        subtitle: subtitle,
-        description: description,
-        imageBytes: imageBytes,
-      );
-    } catch (e) {
-      throw Exception('Failed to generate promotion: $e');
+    // Truncar en el último espacio antes del límite
+    final truncated = text.substring(0, maxLength);
+    final lastSpace = truncated.lastIndexOf(' ');
+
+    if (lastSpace > maxLength * 0.7) {
+      // Si el último espacio está al menos al 70% del límite, cortar ahí
+      return '${truncated.substring(0, lastSpace).trim()}...';
+    } else {
+      // Si no hay un buen punto de corte, cortar directo y agregar puntos suspensivos
+      return '${truncated.substring(0, maxLength - 3).trim()}...';
     }
   }
 }
