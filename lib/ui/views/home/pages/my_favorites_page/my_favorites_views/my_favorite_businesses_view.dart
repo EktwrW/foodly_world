@@ -52,7 +52,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                     },
                     child: isGridView
                         ? GridView.count(
-                            key: const ValueKey(SearchResultsViewMode.grid),
+                            key: const ValueKey(BusinessResultsViewMode.grid),
                             padding: _gridAndListPadding,
                             crossAxisCount: 2,
                             crossAxisSpacing: 2,
@@ -67,7 +67,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                                 .toList(),
                           )
                         : ListView.separated(
-                            key: const ValueKey(SearchResultsViewMode.list),
+                            key: const ValueKey(BusinessResultsViewMode.list),
                             itemCount: favoriteBusinesses.length,
                             padding: _gridAndListPadding,
                             separatorBuilder: (_, __) => const SizedBox(height: 4),

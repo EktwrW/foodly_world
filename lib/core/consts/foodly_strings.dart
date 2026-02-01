@@ -60,4 +60,7 @@ class FoodlyStrings {
   static const USER_AVATAR_PLACEHOLDER = 'https://foodly.s3.us-east-1.amazonaws.com/images/users-placeholder.png';
   static const USER_AVATAR_PLACEHOLDER_ALTERNATIVE_1 = 'https://foodly.s3.us-east-1.amazonaws.com/images/user.png';
   static const USER_AVATAR_PLACEHOLDER_ALTERNATIVE_2 = 'https://foodly.s3.us-east-1.amazonaws.com/images/user-2.png';
+
+  // Categories
+  static const LAST_CATEGORY_VISITED = 'last_category_visited';
 }

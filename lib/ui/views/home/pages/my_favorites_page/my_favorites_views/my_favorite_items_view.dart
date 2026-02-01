@@ -28,7 +28,7 @@ class MyFavoriteItemsView extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.separated(
-                key: const ValueKey(SearchResultsViewMode.list),
+                key: const ValueKey(BusinessResultsViewMode.list),
                 controller: ScrollController(),
                 itemCount: favoriteItems.length,
                 padding: _padding,

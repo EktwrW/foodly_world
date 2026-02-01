@@ -609,4 +609,24 @@ class BusinessRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  Future<ApiResult<BusinessSearchDM>> fetchNearbyBusinesses({
+    required double latitude,
+    required double longitude,
+    double? radius,
+    int? categoryId,
+    int? limit,
+  }) async {
+    try {
+      return ApiResult.success(await _businessClient.fetchNearbyBusinesses(
+        latitude: latitude,
+        longitude: longitude,
+        radius: radius,
+        categoryId: categoryId,
+        limit: limit,
+      ));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

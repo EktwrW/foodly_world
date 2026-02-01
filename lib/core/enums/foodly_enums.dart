@@ -213,3 +213,10 @@ enum PromotionStatus {
   bool get isNext => this == next;
   bool get isExpired => this == expired;
 }
+
+enum BusinessResultsViewMode {
+  grid,
+  list;
+
+  bool get isGrid => this == grid;
+}

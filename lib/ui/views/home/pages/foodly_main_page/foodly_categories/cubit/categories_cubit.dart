@@ -1,6 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
+import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart'
+    show LocalStorageService, di, FoodlyStrings;
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,22 +15,93 @@ part 'categories_cubit.freezed.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesVM _vm;
+  final BusinessRepo _businessRepo;
 
   CategoriesCubit(
     FoodlyCategories? initialCategory,
+    BusinessRepo businessRepo,
+    double latitude,
+    double longitude,
   )   : _vm = CategoriesVM(
           currentCategory: initialCategory,
           carouselController: CarouselSliderController(),
+          latitude: latitude,
+          longitude: longitude,
         ),
+        _businessRepo = businessRepo,
         super(const CategoriesState.initial(CategoriesVM())) {
-    _initializeCategories();
+    fetchNearbyBusinesses(latitude: _vm.latitude!, longitude: _vm.longitude!);
   }
 
-  void _initializeCategories() async {
+  void changeCategory(FoodlyCategories category) async {
+    await di<LocalStorageService>().saveString(FoodlyStrings.LAST_CATEGORY_VISITED, category.name);
+
+    emit(_Loaded(_vm = _vm.copyWith(currentCategory: category)));
+  }
+
+  Future<void> fetchNearbyBusinesses({
+    required double latitude,
+    required double longitude,
+    double? radius,
+    int? categoryId,
+    int? limit,
+  }) async {
     await Future.microtask(() => emit(_Loading(_vm)));
 
-    await Future.microtask(() => emit(_Loaded(_vm)));
+    if (_vm.currentCategory == null) {
+      await di<LocalStorageService>().getString(FoodlyStrings.LAST_CATEGORY_VISITED).then((lastCategoryViewedName) {
+        if (lastCategoryViewedName != null) {
+          final lastCategoryViewed = FoodlyCategories.values.firstWhere(
+            (category) => category.name == lastCategoryViewedName,
+            orElse: () => FoodlyCategories.international,
+          );
+          _vm = _vm.copyWith(currentCategory: lastCategoryViewed);
+        }
+      });
+    }
+
+    await _businessRepo
+        .fetchNearbyBusinesses(
+      latitude: latitude,
+      longitude: longitude,
+      radius: radius,
+      categoryId: categoryId,
+      limit: limit,
+    )
+        .then((result) {
+      return result.when(
+        success: (data) async {
+          log('${data.business}');
+
+          await Future.microtask(() => emit(_Loaded(_vm = _vm.copyWith(
+                nearbyBusinesses: data.business,
+              ))));
+        },
+        failure: (error) async {
+          await Future.microtask(() => emit(_Error(
+                _vm,
+                error.errorMsg,
+              )));
+        },
+      );
+    });
   }
 
-  void changeCategory(FoodlyCategories category) => emit(_Loaded(_vm = _vm.copyWith(currentCategory: category)));
+  void toggleViewMode() {
+    final newViewMode =
+        _vm.viewMode == BusinessResultsViewMode.grid ? BusinessResultsViewMode.list : BusinessResultsViewMode.grid;
+
+    _vm = _vm.copyWith(viewMode: newViewMode);
+    emit(_Loaded(_vm));
+  }
+
+  void toggleRadiusDistance(double newRadiusInKm) {
+    _vm = _vm.copyWith(radiusDistanceInKm: newRadiusInKm);
+
+    fetchNearbyBusinesses(
+      latitude: _vm.latitude!,
+      longitude: _vm.longitude!,
+      radius: newRadiusInKm,
+    );
+  }
 }

@@ -21,10 +21,12 @@ class _ServicesWdg extends StatelessWidget {
                 ? FadeIn(
                     child: Row(
                       children: [
-                        Text(
-                          S.current.informationNotYetProvidedByTheBusiness,
-                          style: FoodlyTextStyles.visitBusinessBody,
-                        ).paddingAll(8),
+                        Flexible(
+                          child: Text(
+                            S.current.informationNotYetProvidedByTheBusiness,
+                            style: FoodlyTextStyles.visitBusinessBody,
+                          ).paddingAll(8),
+                        ),
                       ],
                     ),
                   )

@@ -1,6 +1,7 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicText, NeumorphicTextStyle, NeumorphicStyle;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui
+    show NeumorphicText, NeumorphicTextStyle, NeumorphicStyle;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
@@ -16,8 +17,8 @@ import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_snackbars.dart';
-import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_page.dart';
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_views/widgets/my_favorites_business_mini_card.dart';
+import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart' show ViewModeToggleButton;
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu_category_builder_wdg.dart'
     show VisitedMenuItemWdg;

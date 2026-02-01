@@ -242,25 +242,35 @@ class AppRouter {
           ],
         ),
         GoRoute(
-          path: AppRoutes.categories.path,
-          name: AppRoutes.categories.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => CategoriesCubit(state.extra as FoodlyCategories?),
-              child: const CategoriesPage(),
-            ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
-          ),
-        ),
+            path: AppRoutes.categories.path,
+            name: AppRoutes.categories.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) {
+              final locationService = di<LocationService>();
+              final categoryIndex = state.extra as int?;
+              final selectedCategory = categoryIndex != null ? FoodlyCategories.values[categoryIndex] : null;
+
+              return CustomTransitionPage<void>(
+                transitionDuration: Durations.medium4,
+                key: state.pageKey,
+                child: BlocProvider(
+                  create: (context) => CategoriesCubit(
+                    selectedCategory,
+                    di(),
+                    locationService.currentLocation.position?.latitude ?? 0.0,
+                    locationService.currentLocation.position?.longitude ?? 0.0,
+                  ),
+                  child: const CategoriesPage(),
+                ),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              );
+            }),
         GoRoute(
           path: AppRoutes.profileScreen.path,
           name: AppRoutes.profileScreen.name,

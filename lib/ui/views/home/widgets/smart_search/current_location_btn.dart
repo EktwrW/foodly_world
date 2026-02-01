@@ -10,7 +10,8 @@ class CurrentLocationButton extends StatelessWidget {
         final locationService = di<LocationService>();
 
         return Tooltip(
-          message: di<AuthSessionService>().userSessionDM?.user.fullAddress,
+          message:
+              '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.',
           child: Material(
             color: Colors.transparent,
             child: InkWell(
@@ -30,18 +31,18 @@ class CurrentLocationButton extends StatelessWidget {
               splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
               highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
               child: DecoratedBox(
-                decoration:
-                    BoxDecoration(color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(
+                    color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   spacing: 8,
                   children: [
                     const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
                     Expanded(
                       child: Text(
-                        '${locationService.currentCity}, ${locationService.currentZipCode}.',
-                        maxLines: 1,
+                        '${locationService.currentAddress}, ${locationService.currentCity}.',
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: FoodlyTextStyles.labelBold,
+                        style: FoodlyTextStyles.captionBold,
                       ),
                     ),
                   ],

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'smart_search_vm.freezed.dart';
-
-enum SearchResultsViewMode {
-  grid,
-  list;
-
-  bool get isGrid => this == grid;
-}
 
 enum SmartSearchMode {
   none,
@@ -31,7 +25,7 @@ class SmartSearchVM with _$SmartSearchVM {
     required bool isListening,
     required String recognizedText,
     @Default([]) List<BusinessDM> searchResults,
-    @Default(SearchResultsViewMode.list) SearchResultsViewMode viewMode,
+    @Default(BusinessResultsViewMode.list) BusinessResultsViewMode viewMode,
     @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
     required InputController inputController,
   }) = _SmartSearchVM;

@@ -207,7 +207,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
   void toggleViewMode() {
     final newViewMode =
-        _vm.viewMode == SearchResultsViewMode.grid ? SearchResultsViewMode.list : SearchResultsViewMode.grid;
+        _vm.viewMode == BusinessResultsViewMode.grid ? BusinessResultsViewMode.list : BusinessResultsViewMode.grid;
 
     _vm = _vm.copyWith(viewMode: newViewMode);
     emit(SmartSearchState.searchComplete(_vm));

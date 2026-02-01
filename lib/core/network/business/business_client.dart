@@ -246,4 +246,13 @@ abstract class BusinessClient {
 
   @POST('/save-promotions/{uuid}')
   Future<void> setFavoritePromotion(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/business/nearby')
+  Future<BusinessSearchDM> fetchNearbyBusinesses({
+    @Query('latitude') required double latitude,
+    @Query('longitude') required double longitude,
+    @Query('radius') double? radius,
+    @Query('category_id') int? categoryId,
+    @Query('limit') int? limit,
+  });
 }

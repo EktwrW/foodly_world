@@ -1,13 +1,8 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
-import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
-import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/core/extensions/screen_size_extension.dart';
-import 'package:foodly_world/core/routing/app_routes.dart';
+import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -39,7 +34,9 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       onChanged: (value) {
                         log('pressed: $e');
                         log('$value');
-                        context.goNamed(AppRoutes.categories.name, extra: e);
+                        context.goNamed(AppRoutes.categories.name, extra: e.index);
+
+                        di<LocalStorageService>().saveString(FoodlyStrings.LAST_CATEGORY_VISITED, e.name);
                       },
                       value: e,
                       padding: const EdgeInsets.all(4),
