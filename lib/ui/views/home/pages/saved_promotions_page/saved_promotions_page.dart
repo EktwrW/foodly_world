@@ -34,9 +34,15 @@ class SavedPromotionsPage extends StatelessWidget {
 
         // Si no hay promociones guardadas, mostrar placeholder
         if (currentPromos.isEmpty && upcomingPromos.isEmpty) {
-          return const _EmptyListPlaceholder(
-            text: 'Aun no tienes promociones guardadas',
-            key: Key('saved-promos-placeholder'),
+          return const Scaffold(
+            appBar: SecondaryMainAppBar(
+              key: Key('promotions-app-bar'),
+              actionText: 'Saved Promotions',
+            ),
+            body: _EmptyListPlaceholder(
+              text: 'Aun no tienes promociones guardadas',
+              key: Key('saved-promos-placeholder'),
+            ),
           );
         }
 
@@ -122,18 +128,22 @@ class _EmptyListPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 24,
-      children: [
-        Asset(assetData, width: 40),
-        Center(
-          child: Text(
-            text,
-            style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-            textAlign: TextAlign.center,
-          ).paddingHorizontal(24),
-        ),
-      ],
-    ).paddingTop(200);
+    return SizedBox(
+      height: context.screenHeight - (kToolbarHeight * 4),
+      child: Column(
+        spacing: 24,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Asset(assetData, width: 40),
+          Center(
+            child: Text(
+              text,
+              style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
+              textAlign: TextAlign.center,
+            ).paddingHorizontal(24),
+          ),
+        ],
+      ),
+    );
   }
 }
