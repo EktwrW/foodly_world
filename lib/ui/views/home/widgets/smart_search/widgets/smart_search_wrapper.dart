@@ -17,23 +17,14 @@ class _SmartSearchWrapper extends StatelessWidget {
         );
       },
       builder: (context, state) {
-        final vsCubit = context.read<SmartSearchCubit>();
-
         return state.maybeWhen(
           searchComplete: (vm) => Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CustomRoundedNeumorphicButton(
-                    onPressed: () => vsCubit.clearSearch(),
-                    diameter: 26,
-                    depth: 3,
-                    shape: ui.NeumorphicShape.concave,
-                    child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
-                  ).paddingAll(6),
                   Flexible(
                     child: Column(
                       children: [
@@ -61,10 +52,6 @@ class _SmartSearchWrapper extends StatelessWidget {
                       ],
                     ).paddingHorizontal(6),
                   ),
-                  ViewModeToggleButton(
-                    isGrid: vm.viewMode.isGrid,
-                    onPressed: vsCubit.toggleViewMode,
-                  ).paddingAll(6),
                 ],
               ),
               Expanded(

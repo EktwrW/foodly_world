@@ -45,8 +45,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     double? radius,
     int? categoryId,
     int? limit,
+    bool switchingRadius = false,
   }) async {
-    await Future.microtask(() => emit(_Loading(_vm)));
+    if (!switchingRadius) {
+      await Future.microtask(() => emit(_Loading(_vm)));
+    } else {
+      emit(_Loaded(_vm = _vm.copyWith(isSwitchingRadius: true)));
+    }
 
     if (_vm.currentCategory == null) {
       await di<LocalStorageService>().getString(FoodlyStrings.LAST_CATEGORY_VISITED).then((lastCategoryViewedName) {
@@ -75,11 +80,12 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
           await Future.microtask(() => emit(_Loaded(_vm = _vm.copyWith(
                 nearbyBusinesses: data.business,
+                isSwitchingRadius: false,
               ))));
         },
         failure: (error) async {
           await Future.microtask(() => emit(_Error(
-                _vm,
+                _vm = _vm.copyWith(isSwitchingRadius: false),
                 error.errorMsg,
               )));
         },
@@ -96,12 +102,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   }
 
   void toggleRadiusDistance(double newRadiusInKm) {
-    _vm = _vm.copyWith(radiusDistanceInKm: newRadiusInKm);
+    _vm = _vm.copyWith(radiusDistanceInKm: newRadiusInKm, isSwitchingRadius: true);
 
     fetchNearbyBusinesses(
       latitude: _vm.latitude!,
       longitude: _vm.longitude!,
       radius: newRadiusInKm,
+      switchingRadius: true,
     );
   }
 }

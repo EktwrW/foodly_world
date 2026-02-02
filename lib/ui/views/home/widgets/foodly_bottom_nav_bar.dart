@@ -3,10 +3,12 @@ part of '../home_page.dart';
 class _FoodlyBottomNavBar extends StatelessWidget {
   final int activeIndex;
   final ValueChanged<int> onTap;
+  final AnimationController hideBottomBarAnimationController;
 
   const _FoodlyBottomNavBar({
     required this.activeIndex,
     required this.onTap,
+    required this.hideBottomBarAnimationController,
   });
 
   @override
@@ -21,6 +23,8 @@ class _FoodlyBottomNavBar extends StatelessWidget {
       onTap: onTap,
       itemCount: UIIconsData.bottomNavigationIcons.length,
       tabBuilder: (int index, bool isActive) => _buildNavBarItem(index: index, isActive: isActive),
+      hideAnimationController: hideBottomBarAnimationController,
+      hideAnimationCurve: Curves.easeInOutCubicEmphasized,
     );
   }
 

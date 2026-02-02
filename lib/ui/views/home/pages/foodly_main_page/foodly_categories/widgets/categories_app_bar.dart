@@ -33,7 +33,7 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      toolbarHeight: 86,
+      toolbarHeight: 68,
       centerTitle: true,
       title: Column(
         spacing: 12,
@@ -51,12 +51,6 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             ],
           ),
-          Text(
-            category?.text ?? '-',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: FoodlyTextStyles.secondaryTitle.copyWith(color: FoodlyThemes.primaryLighten73, fontSize: 14),
-          )
         ],
       ).paddingTop(6),
       backgroundColor: Colors.transparent,
@@ -74,5 +68,5 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(86);
+  Size get preferredSize => const Size.fromHeight(68);
 }

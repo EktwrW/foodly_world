@@ -68,6 +68,7 @@ class CategoriesPage extends StatelessWidget {
     final locationService = di<LocationService>();
 
     return Scaffold(
+      extendBody: true,
       appBar: _CategoriesAppBar(
         key: const Key('categories-app-bar'),
         category: vm.currentCategory,
@@ -75,7 +76,6 @@ class CategoriesPage extends StatelessWidget {
       body: isLoading && vm.businessesInCurrentCategory.isEmpty
           ? const Center(child: CircularProgressIndicator.adaptive())
           : Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
                   child: CarouselSlider(
@@ -129,30 +129,22 @@ class CategoriesPage extends StatelessWidget {
                     ),
                   ).paddingBottom(12),
                 ),
+                Flexible(
+                  child: const Text(
+                    'Radio de distancia para mostrar comercios:',
+                    overflow: TextOverflow.ellipsis,
+                    style: FoodlyTextStyles.captionPurple,
+                  ).paddingVertical(12),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Flexible(
-                            child: Text(
-                              'Distancia desde:',
-                              overflow: TextOverflow.ellipsis,
-                              style: FoodlyTextStyles.captionPurple,
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              '${locationService.currentAddress}, ${locationService.currentCity}.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: FoodlyTextStyles.captionBold,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        '${locationService.currentAddress}, ${locationService.currentCity}.',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: FoodlyTextStyles.captionBold,
                       ).paddingRight(20),
                     ),
                     SegmentedButton<double>(
@@ -191,23 +183,28 @@ class CategoriesPage extends StatelessWidget {
                       ),
                     ),
                   ],
-                ).paddingAll(16),
-                Flexible(
-                  child: BusinessResultsView(
-                    key: const Key('categories-page-business-results-view'),
-                    searchResults: vm.businessesInCurrentCategory,
-                    isGridView: vm.viewMode.isGrid,
-                    noResultsMessage:
-                        'No hay comercios cercanos en esta categoría dentro de ${vm.radiusDistanceInKm} km.',
-                  ).paddingHorizontal(6),
+                ).paddingHorizontal(16),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: Durations.medium2,
+                    child: vm.isSwitchingRadius
+                        ? const Center(child: CircularProgressIndicator.adaptive())
+                        : BusinessResultsView(
+                            key: const Key('categories-page-business-results-view'),
+                            searchResults: vm.businessesInCurrentCategory,
+                            isGridView: vm.viewMode.isGrid,
+                            noResultsMessage:
+                                'No hay comercios cercanos en esta categoría dentro de ${vm.radiusDistanceInKm} km.',
+                          ).paddingOnly(right: 6, left: 6, top: vm.businessesInCurrentCategory.isEmpty ? 100 : 20),
+                  ),
                 ),
               ],
             ).paddingVertical(12),
       floatingActionButton: ViewModeToggleButton(
         isGrid: vm.viewMode.isGrid,
-        onPressed: cubit.toggleViewMode,
+        onPressed: vm.businessesInCurrentCategory.isNotEmpty ? () => cubit.toggleViewMode() : null,
         diameter: 36,
-      ).paddingOnly(bottom: 20, right: 12),
+      ).paddingOnly(bottom: 24, right: 12),
     );
   }
 }

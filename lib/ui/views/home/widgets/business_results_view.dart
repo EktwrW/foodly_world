@@ -36,6 +36,7 @@ class BusinessResultsView extends StatelessWidget {
             style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
             textAlign: TextAlign.center,
           ).paddingHorizontal(context.screenWidth * .1),
+          const SizedBox(height: 48),
         ],
       );
     }
@@ -80,7 +81,7 @@ class BusinessResultsView extends StatelessWidget {
 
 class ViewModeToggleButton extends StatefulWidget {
   final bool isGrid;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? diameter;
 
   const ViewModeToggleButton({
@@ -126,10 +127,12 @@ class _ViewModeToggleButtonState extends State<ViewModeToggleButton> with Single
   @override
   Widget build(BuildContext context) {
     final icon = widget.isGrid ? Bootstrap.list : Bootstrap.grid;
+    final disabled = widget.onPressed == null;
 
     return CustomRoundedNeumorphicButton(
       onPressed: widget.onPressed,
       diameter: widget.diameter ?? 26,
+      disableDepth: disabled,
       depth: 3,
       shape: ui.NeumorphicShape.concave,
       child: AnimatedBuilder(
@@ -137,7 +140,7 @@ class _ViewModeToggleButtonState extends State<ViewModeToggleButton> with Single
         builder: (context, child) {
           return Transform.rotate(
             angle: _rotation.value * 2 * math.pi, // Rotate 360 degrees
-            child: Icon(icon, color: FoodlyThemes.primaryFoodly),
+            child: Icon(icon, color: disabled ? Colors.grey : FoodlyThemes.primaryFoodly),
           );
         },
       ),

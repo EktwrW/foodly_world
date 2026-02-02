@@ -17,6 +17,7 @@ class CategoriesVM with _$CategoriesVM {
     double? longitude,
     @Default(BusinessResultsViewMode.list) BusinessResultsViewMode viewMode,
     @Default(5) double radiusDistanceInKm,
+    @Default(false) bool isSwitchingRadius,
   }) = _CategoriesVM;
 
   List<BusinessDM> get businessesInCurrentCategory {

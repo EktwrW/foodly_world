@@ -218,6 +218,7 @@ class _TextSearchView extends StatelessWidget {
           hideCurrentSnackBarWhenOnTap: false,
           showLeading: false,
           prefixIconConstraints: const BoxConstraints.tightFor(width: 32),
+          autofocus: true,
         ),
       ],
     ).paddingBottom(12);
