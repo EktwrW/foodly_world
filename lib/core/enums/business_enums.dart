@@ -39,7 +39,9 @@ enum BusinessServices {
   @JsonValue(17)
   onSite(BoxIcons.bx_restaurant, 17),
   @JsonValue(18)
-  kidsMenu(Icons.child_care, 18);
+  kidsMenu(Icons.child_care, 18),
+  @JsonValue(19)
+  reservations(Icons.calendar_month, 19);
 
   final IconData iconData;
   final int value;
@@ -65,6 +67,7 @@ enum BusinessServices {
     liveMusic: S.current.liveMusic,
     onSite: S.current.onSite,
     kidsMenu: S.current.kidsMenu,
+    reservations: 'Reservations',
   };
 
   String get text => _textMap[this] ?? '';
