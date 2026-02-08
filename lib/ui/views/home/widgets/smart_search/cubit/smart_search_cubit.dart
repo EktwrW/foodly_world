@@ -1,7 +1,8 @@
 import 'dart:async' show Timer;
 
+import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
+import 'package:foodly_world/data_transfer_objects/nlp_search/nlp_search_request_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
@@ -16,15 +17,15 @@ part 'smart_search_cubit.freezed.dart';
 class SmartSearchCubit extends Cubit<SmartSearchState> {
   final SpeechToText _speechToText;
   Timer? _listenTimer;
-  final BusinessRepo _businessRepo;
+  final NlpSearchRepo _nlpSearchRepo;
   final Logger _logger;
   SmartSearchVM _vm;
 
   SmartSearchCubit(
-    BusinessRepo businessRepo,
+    NlpSearchRepo nlpSearchRepo,
     Logger logger,
   )   : _speechToText = SpeechToText(),
-        _businessRepo = businessRepo,
+        _nlpSearchRepo = nlpSearchRepo,
         _logger = logger,
         _vm = SmartSearchVM.initial(),
         super(SmartSearchState.initial(SmartSearchVM.initial())) {
@@ -156,11 +157,14 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
     Future.microtask(() => emit(SmartSearchState.searching(_vm)));
 
-    final result = await _businessRepo.businessSearch(
-      BusinessSearchBodyDTO(
+    // Use NLP Search Service for smart search
+    final result = await _nlpSearchRepo.search(
+      NlpSearchRequestDTO(
+        query: searchText!,
         latitude: latitude,
         longitude: longitude,
-        voiceText: searchText!,
+        distanceKm: 10, // Default 10km radius
+        limit: 50,
       ),
     );
 

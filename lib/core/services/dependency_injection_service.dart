@@ -1,4 +1,7 @@
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
+import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
+import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -30,13 +33,16 @@ class DependencyInjectionService {
     di
       ..registerLazySingleton(() => MeClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BusinessClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => NlpApiProvider())
+      ..registerLazySingleton(() => NlpSearchClient(di<NlpApiProvider>().dio))
       ..registerLazySingleton(() => ReplicateService())
       ..registerLazySingleton(() => AIPromoService(di()));
 
     /// Register singleton repositories
     di
       ..registerLazySingleton(() => MeRepo(meClient: di()))
-      ..registerLazySingleton(() => BusinessRepo(businessClient: di()));
+      ..registerLazySingleton(() => BusinessRepo(businessClient: di()))
+      ..registerLazySingleton(() => NlpSearchRepo(nlpSearchClient: di()));
 
     /// Register services
     final authService = AuthSessionService(
