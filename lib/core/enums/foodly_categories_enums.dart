@@ -47,7 +47,28 @@ enum FoodlyCategories {
   stores(14),
 
   @JsonValue(15)
-  academy(15);
+  academy(15),
+
+  @JsonValue(16)
+  italian(16),
+
+  @JsonValue(17)
+  argentinian(17),
+
+  @JsonValue(18)
+  seafood(18),
+
+  @JsonValue(19)
+  peruvian(19),
+
+  @JsonValue(20)
+  chinese(20),
+
+  @JsonValue(21)
+  arabic(21),
+
+  @JsonValue(22)
+  venezuelan(22);
 
   final int value;
   const FoodlyCategories(this.value);
@@ -57,6 +78,7 @@ enum FoodlyCategories {
   bool get isBakeryOrCoffee => this == coffee || this == bakery;
   bool get isRestaurant => !isDrinkHouse && !isAcademy && !isBakeryOrCoffee;
 
+  // TODO: Localizar Strings en .arb files
   String get text => switch (this) {
         international => S.current.internationalCuisine,
         american => S.current.fastFood,
@@ -73,6 +95,13 @@ enum FoodlyCategories {
         coffee => S.current.cafesAndBreakfasts,
         stores => S.current.marketsAndStores,
         academy => S.current.cookingSchools,
+        italian => 'Italian',
+        argentinian => 'Argentinian',
+        seafood => 'Seafood',
+        peruvian => 'Peruvian',
+        chinese => 'Chinese',
+        arabic => 'Arabic',
+        venezuelan => 'Venezuelan',
       };
 
   Widget get avatar => AvatarWidget(avatarUrl: avatarUrl, boxFit: BoxFit.contain);
@@ -108,6 +137,20 @@ enum FoodlyCategories {
           'https://foodly.s3.amazonaws.com/public/categories_images/9UrhIE91n2kbClChH8d0zAJ3WHdKv4cQ06fqq2NU.jpg',
         academy =>
           'https://foodly.s3.amazonaws.com/public/categories_images/V5fnkZrKmpVhOPDqHkOs9FJdQE523ENhfdwoTDUN.jpg',
+        italian =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        argentinian =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        seafood =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        peruvian =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        chinese =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/chinese.jpg',
+        arabic =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        venezuelan =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/venezuelan.jpg',
       };
 }
 
