@@ -56,10 +56,10 @@ enum FoodlyCategories {
   argentinian(17),
 
   @JsonValue(18)
-  seafood(18),
+  peruvian(18),
 
   @JsonValue(19)
-  peruvian(19),
+  seaFood(19),
 
   @JsonValue(20)
   chinese(20),
@@ -95,13 +95,13 @@ enum FoodlyCategories {
         coffee => S.current.cafesAndBreakfasts,
         stores => S.current.marketsAndStores,
         academy => S.current.cookingSchools,
-        italian => 'Italian',
-        argentinian => 'Argentinian',
-        seafood => 'Seafood',
-        peruvian => 'Peruvian',
-        chinese => 'Chinese',
-        arabic => 'Arabic',
-        venezuelan => 'Venezuelan',
+        italian => S.current.italian,
+        argentinian => S.current.argentinian,
+        peruvian => S.current.peruvian,
+        seaFood => S.current.seafood,
+        chinese => S.current.chinese,
+        arabic => S.current.arabic,
+        venezuelan => S.current.venezuelan,
       };
 
   Widget get avatar => AvatarWidget(avatarUrl: avatarUrl, boxFit: BoxFit.contain);
@@ -141,16 +141,14 @@ enum FoodlyCategories {
           'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
         argentinian =>
           'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        seafood =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
         peruvian =>
           'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        chinese =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/chinese.jpg',
+        seaFood =>
+          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
+        chinese => 'https://foodly.s3.amazonaws.com/public/categories_images/chinese.jpg',
         arabic =>
           'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        venezuelan =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/venezuelan.jpg',
+        venezuelan => 'https://foodly.s3.amazonaws.com/public/categories_images/venezuelan.jpg',
       };
 }
 

@@ -185,6 +185,7 @@ class CategoriesPage extends StatelessWidget {
                   ],
                 ).paddingHorizontal(16),
                 Expanded(
+                  flex: 7,
                   child: AnimatedSwitcher(
                     duration: Durations.medium2,
                     child: vm.isSwitchingRadius
