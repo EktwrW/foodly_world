@@ -35,6 +35,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => BusinessClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => NlpApiProvider())
       ..registerLazySingleton(() => NlpSearchClient(di<NlpApiProvider>().dio))
+      ..registerLazySingleton(() => NotificationsClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReplicateService())
       ..registerLazySingleton(() => AIPromoService(di()));
 
@@ -42,7 +43,8 @@ class DependencyInjectionService {
     di
       ..registerLazySingleton(() => MeRepo(meClient: di()))
       ..registerLazySingleton(() => BusinessRepo(businessClient: di()))
-      ..registerLazySingleton(() => NlpSearchRepo(nlpSearchClient: di()));
+      ..registerLazySingleton(() => NlpSearchRepo(nlpSearchClient: di()))
+      ..registerLazySingleton(() => NotificationsRepo(notificationsClient: di()));
 
     /// Register services
     final authService = AuthSessionService(
@@ -63,5 +65,16 @@ class DependencyInjectionService {
     di.registerLazySingleton(() => favoritesCubit);
 
     authService.setFavoritesCubit(favoritesCubit);
+
+    /// Register NotificationsCubit
+    final notificationsCubit = NotificationsCubit(
+      notificationsRepo: di(),
+      authService: authService,
+      logger: di(),
+    );
+
+    di.registerLazySingleton(() => notificationsCubit);
+
+    authService.setNotificationsCubit(notificationsCubit);
   }
 }

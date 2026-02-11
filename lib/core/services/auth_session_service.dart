@@ -15,6 +15,7 @@ class AuthSessionService {
   final FoodlyApiProvider _appApiProvider;
   final MeRepo _meRepo;
   FavoritesCubit? _favoritesCubit;
+  NotificationsCubit? _notificationsCubit;
 
   AuthSessionService({
     required BaseConfig config,
@@ -57,12 +58,23 @@ class AuthSessionService {
     _favoritesCubit = cubit;
   }
 
+  void setNotificationsCubit(NotificationsCubit cubit) {
+    _notificationsCubit = cubit;
+  }
+
   void initializeFavorites() {
     if (isLoggedIn && _favoritesCubit != null) {
       _favoritesCubit!
         ..initFromUserDM()
         ..loadFavoriteObjects()
         ..initPageController();
+    }
+  }
+
+  /// Inicializa las notificaciones - llamar después de autenticación
+  void initializeNotifications() {
+    if (isLoggedIn && _notificationsCubit != null) {
+      _notificationsCubit!.initialize();
     }
   }
 
@@ -100,6 +112,7 @@ class AuthSessionService {
       _authHeader = null;
       _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
       _favoritesCubit?.clearAllFavorites();
+      _notificationsCubit?.clear();
 
       if (context.mounted) {
         context.read<RootBloc>().add(const RootEvent.userLogout());

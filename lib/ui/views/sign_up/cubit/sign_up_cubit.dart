@@ -319,7 +319,8 @@ class SignUpCubit extends Cubit<SignUpState> {
           if (_authService.userSessionDM != null) {
             _authService
               ..setSession(_authService.userSessionDM!.copyWith(user: manager))
-              ..initializeFavorites();
+              ..initializeFavorites()
+              ..initializeNotifications();
           }
 
           emit(_BusinessCreationFinished(_vm = _vm.copyWith(

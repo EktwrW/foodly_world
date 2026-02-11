@@ -121,7 +121,8 @@ class StartingCubit extends Cubit<StartingState> {
   void _provideAccessToUser(UserSessionDM userSessionDM) {
     _authSessionService
       ..setSession(userSessionDM)
-      ..initializeFavorites();
+      ..initializeFavorites()
+      ..initializeNotifications();
     if (userSessionDM.user.uuid?.isNotEmpty ?? false) {
       emit(_UserAuthenticated(_vm = _vm.copyWith(userSessionDM: userSessionDM)));
     } else {

@@ -1,0 +1,326 @@
+import 'dart:async';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/blocs/notifications_cubit/notifications_vm.dart';
+import 'package:foodly_world/core/network/notifications/notifications_repo.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
+import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
+
+part 'notifications_state.dart';
+part 'notifications_cubit.freezed.dart';
+
+/// Intervalo de polling en segundos (90 segundos recomendado)
+const int _pollingIntervalSeconds = 90;
+
+class NotificationsCubit extends Cubit<NotificationsState> {
+  NotificationsVM _vm;
+  final NotificationsRepo _notificationsRepo;
+  final AuthSessionService _authService;
+  final Logger _logger;
+  Timer? _pollingTimer;
+
+  NotificationsCubit({
+    required NotificationsRepo notificationsRepo,
+    required AuthSessionService authService,
+    required Logger logger,
+  })  : _notificationsRepo = notificationsRepo,
+        _authService = authService,
+        _logger = logger,
+        _vm = const NotificationsVM(),
+        super(const NotificationsState.initial(NotificationsVM()));
+
+  /// Inicializa el cubit - llamar cuando el usuario se autentica
+  Future<void> initialize() async {
+    if (!_authService.isLoggedIn) {
+      _logger.i('NotificationsCubit: User not logged in, skipping initialization');
+      return;
+    }
+
+    await loadNotifications();
+    _startPolling();
+  }
+
+  /// Carga las notificaciones del usuario
+  Future<void> loadNotifications({bool showLoading = true}) async {
+    if (!_authService.isLoggedIn) return;
+
+    if (showLoading) {
+      emit(NotificationsState.loading(_vm));
+    }
+
+    try {
+      final result = await _notificationsRepo.getNotifications(
+        perPage: _vm.perPage,
+        page: 1,
+      );
+
+      result.when(
+        success: (data) {
+          _vm = _vm.copyWith(
+            notifications: data.notifications,
+            unreadCount: data.meta?.unreadCount ?? 0,
+            currentPage: data.meta?.currentPage ?? 1,
+            lastPage: data.meta?.lastPage ?? 1,
+            total: data.meta?.total ?? 0,
+            hasMorePages: (data.meta?.currentPage ?? 1) < (data.meta?.lastPage ?? 1),
+          );
+          emit(NotificationsState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading notifications: ${error.errorMsg}');
+          emit(NotificationsState.error(_vm, error.errorMsg));
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading notifications: $e');
+      emit(NotificationsState.error(_vm, e.toString()));
+    }
+  }
+
+  /// Carga más notificaciones (paginación)
+  Future<void> loadMoreNotifications() async {
+    if (!_authService.isLoggedIn || !_vm.hasMorePages) return;
+
+    final nextPage = _vm.currentPage + 1;
+
+    try {
+      final result = await _notificationsRepo.getNotifications(
+        perPage: _vm.perPage,
+        page: nextPage,
+      );
+
+      result.when(
+        success: (data) {
+          final allNotifications = [..._vm.notifications, ...data.notifications];
+          _vm = _vm.copyWith(
+            notifications: allNotifications,
+            currentPage: data.meta?.currentPage ?? nextPage,
+            lastPage: data.meta?.lastPage ?? _vm.lastPage,
+            hasMorePages: (data.meta?.currentPage ?? nextPage) < (data.meta?.lastPage ?? _vm.lastPage),
+          );
+          emit(NotificationsState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading more notifications: ${error.errorMsg}');
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading more notifications: $e');
+    }
+  }
+
+  /// Actualiza solo el contador de no leídas (ligero, para polling)
+  Future<void> refreshUnreadCount() async {
+    if (!_authService.isLoggedIn) return;
+
+    try {
+      final result = await _notificationsRepo.getUnreadCount();
+
+      result.when(
+        success: (count) {
+          if (count != _vm.unreadCount) {
+            final oldCount = _vm.unreadCount;
+            _vm = _vm.copyWith(unreadCount: count);
+            emit(NotificationsState.loaded(_vm));
+
+            // Si hay nuevas notificaciones, refrescamos la lista completa
+            if (count > oldCount) {
+              loadNotifications(showLoading: false);
+            }
+          }
+        },
+        failure: (error) {
+          _logger.w('Error refreshing unread count: ${error.errorMsg}');
+        },
+      );
+    } catch (e) {
+      _logger.w('Exception refreshing unread count: $e');
+    }
+  }
+
+  /// Marca una notificación como leída
+  Future<void> markAsRead(String uuid) async {
+    if (!_authService.isLoggedIn) return;
+
+    // Optimistic update
+    final updatedNotifications = _vm.notifications.map((n) {
+      if (n.uuid == uuid) {
+        return NotificationDM(
+          id: n.id,
+          uuid: n.uuid,
+          type: n.type,
+          subType: n.subType,
+          title: n.title,
+          message: n.message,
+          isRead: true,
+          data: n.data,
+          createdAt: n.createdAt,
+          updatedAt: n.updatedAt,
+        );
+      }
+      return n;
+    }).toList();
+
+    final newUnreadCount = _vm.unreadCount > 0 ? _vm.unreadCount - 1 : 0;
+    _vm = _vm.copyWith(
+      notifications: updatedNotifications,
+      unreadCount: newUnreadCount,
+    );
+    emit(NotificationsState.loaded(_vm));
+
+    try {
+      final result = await _notificationsRepo.markAsRead(uuid);
+
+      result.when(
+        success: (_) {
+          _logger.i('Notification $uuid marked as read');
+        },
+        failure: (error) {
+          _logger.e('Error marking notification as read: ${error.errorMsg}');
+          // Revert on error
+          loadNotifications(showLoading: false);
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception marking notification as read: $e');
+      loadNotifications(showLoading: false);
+    }
+  }
+
+  /// Marca todas las notificaciones como leídas
+  Future<void> markAllAsRead() async {
+    if (!_authService.isLoggedIn || _vm.unreadCount == 0) return;
+
+    emit(NotificationsState.loading(_vm));
+
+    // Optimistic update
+    final updatedNotifications = _vm.notifications.map((n) {
+      return NotificationDM(
+        id: n.id,
+        uuid: n.uuid,
+        type: n.type,
+        subType: n.subType,
+        title: n.title,
+        message: n.message,
+        isRead: true,
+        data: n.data,
+        createdAt: n.createdAt,
+        updatedAt: n.updatedAt,
+      );
+    }).toList();
+
+    _vm = _vm.copyWith(
+      notifications: updatedNotifications,
+      unreadCount: 0,
+    );
+    emit(NotificationsState.loaded(_vm));
+
+    try {
+      final result = await _notificationsRepo.markAllAsRead();
+
+      result.when(
+        success: (_) {
+          _logger.i('All notifications marked as read');
+        },
+        failure: (error) {
+          _logger.e('Error marking all notifications as read: ${error.errorMsg}');
+          loadNotifications(showLoading: false);
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception marking all notifications as read: $e');
+      loadNotifications(showLoading: false);
+    }
+  }
+
+  /// Elimina una notificación
+  Future<void> deleteNotification(String uuid) async {
+    if (!_authService.isLoggedIn) return;
+
+    // Optimistic update
+    final wasUnread = _vm.notifications.any((n) => n.uuid == uuid && !n.isRead);
+    final updatedNotifications = _vm.notifications.where((n) => n.uuid != uuid).toList();
+    final newUnreadCount = wasUnread && _vm.unreadCount > 0 ? _vm.unreadCount - 1 : _vm.unreadCount;
+
+    _vm = _vm.copyWith(
+      notifications: updatedNotifications,
+      unreadCount: newUnreadCount,
+      total: _vm.total > 0 ? _vm.total - 1 : 0,
+    );
+    emit(NotificationsState.loaded(_vm));
+
+    try {
+      final result = await _notificationsRepo.deleteNotification(uuid);
+
+      result.when(
+        success: (_) {
+          _logger.i('Notification $uuid deleted');
+        },
+        failure: (error) {
+          _logger.e('Error deleting notification: ${error.errorMsg}');
+          loadNotifications(showLoading: false);
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception deleting notification: $e');
+      loadNotifications(showLoading: false);
+    }
+  }
+
+  /// Inicia el polling periódico
+  void _startPolling() {
+    _stopPolling();
+    _vm = _vm.copyWith(isPolling: true);
+
+    _pollingTimer = Timer.periodic(
+      const Duration(seconds: _pollingIntervalSeconds),
+      (_) => refreshUnreadCount(),
+    );
+
+    _logger.i('NotificationsCubit: Polling started (every $_pollingIntervalSeconds seconds)');
+  }
+
+  /// Detiene el polling
+  void _stopPolling() {
+    _pollingTimer?.cancel();
+    _pollingTimer = null;
+    _vm = _vm.copyWith(isPolling: false);
+  }
+
+  /// Pausa el polling (cuando la app va a background)
+  void pausePolling() {
+    _stopPolling();
+    _logger.i('NotificationsCubit: Polling paused');
+  }
+
+  /// Reanuda el polling (cuando la app vuelve a foreground)
+  void resumePolling() {
+    if (_authService.isLoggedIn) {
+      refreshUnreadCount();
+      _startPolling();
+      _logger.i('NotificationsCubit: Polling resumed');
+    }
+  }
+
+  /// Limpia el estado (logout)
+  void clear() {
+    _stopPolling();
+    _vm = const NotificationsVM();
+    emit(const NotificationsState.initial(NotificationsVM()));
+    _logger.i('NotificationsCubit: State cleared');
+  }
+
+  /// Getter para el contador de no leídas (útil para badges)
+  int get unreadCount => _vm.unreadCount;
+
+  /// Getter para verificar si hay notificaciones no leídas
+  bool get hasUnread => _vm.hasUnread;
+
+  @override
+  Future<void> close() {
+    _stopPolling();
+    return super.close();
+  }
+}

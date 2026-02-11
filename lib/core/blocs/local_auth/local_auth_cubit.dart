@@ -116,7 +116,8 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           success: (userSessionDM) {
             _authSessionService
               ..setSession(userSessionDM)
-              ..initializeFavorites();
+              ..initializeFavorites()
+              ..initializeNotifications();
             emit(_Authenticated(_dto = _dto.copyWith(userSessionDM: userSessionDM, isAuthenticating: false)));
           },
           failure: (e) {

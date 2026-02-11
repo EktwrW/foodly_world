@@ -50,10 +50,31 @@ class _FoodlyBottomNavBar extends StatelessWidget {
       );
     }
 
-    return Icon(
+    final icon = Icon(
       UIIconsData.bottomNavigationIcons[index],
       size: 24,
       color: isActive ? FoodlyThemes.primaryFoodly : Colors.black.withValues(alpha: .75),
     );
+
+    return index == 3
+        ? BlocSelector<NotificationsCubit, NotificationsState, bool>(
+            selector: (state) {
+              return state.vm.hasUnread;
+            },
+            builder: (context, hasUnread) {
+              return Center(
+                child: badges.Badge(
+                  position: badges.BadgePosition.topEnd(top: -2, end: -2),
+                  badgeStyle: const badges.BadgeStyle(
+                    badgeColor: FoodlyThemes.tertiaryFoodly,
+                    padding: EdgeInsets.all(6),
+                  ),
+                  badgeAnimation: const badges.BadgeAnimation.scale(),
+                  child: icon,
+                ),
+              );
+            },
+          )
+        : icon;
   }
 }

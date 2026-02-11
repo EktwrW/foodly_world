@@ -60,7 +60,7 @@ class LoadingWidgetFoodlyIsoState extends State<LoadingWidgetFoodlyIso> with Sin
               (index) => FadeTransition(
                 opacity: _opacityAnimations[index],
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: widget.height ?? 96),
+                  constraints: BoxConstraints(maxHeight: widget.height ?? 80),
                   child: UILoading.FOODLY_ISOS[index],
                 ),
               ),

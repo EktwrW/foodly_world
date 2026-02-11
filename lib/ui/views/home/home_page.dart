@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_icons_data.dart';

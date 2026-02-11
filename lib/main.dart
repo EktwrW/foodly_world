@@ -33,6 +33,7 @@ Future<Widget> buildFoodlyApp() async {
       BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
       BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
       BlocProvider(create: (context) => di<FavoritesCubit>()),
+      BlocProvider(create: (context) => di<NotificationsCubit>()),
     ],
     child: MaterialApp.router(
       title: 'Foodly App',
