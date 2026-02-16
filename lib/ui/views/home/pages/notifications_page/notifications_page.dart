@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer;
 import 'package:foodly_world/core/core_exports.dart'
     show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension;
+import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -109,7 +110,7 @@ class NotificationsPage extends StatelessWidget {
                               children: [
                                 Icon(notification.type?.icon ?? Bootstrap.bell,
                                     size: 16, color: FoodlyThemes.primaryFoodly),
-                                Text(notification.timeAgo, style: FoodlyTextStyles.captionPurple),
+                                Text(notification.createdAt?.timeAgo ?? '', style: FoodlyTextStyles.captionPurple),
                               ],
                             ),
                           ],

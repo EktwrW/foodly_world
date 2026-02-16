@@ -61,6 +61,21 @@ extension DateExtension on DateTime {
   bool get isBeforeNow => DateTime.now().isBefore(toLocal());
 
   bool get isAfterNow => DateTime.now().isAfter(toLocal());
+
+  String get timeAgo {
+    final now = DateTime.now();
+    final difference = now.difference(this);
+
+    if (difference.inSeconds < 60) {
+      return 'Just now';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}m ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}h ago';
+    } else {
+      return '${difference.inDays}d ago';
+    }
+  }
 }
 
 extension BusinessStatusExtension on Day {
@@ -70,12 +85,12 @@ extension BusinessStatusExtension on Day {
 
     final now = DateTime.now();
     final dateFormat = DateFormat('HH:mm');
-    
+
     // Check first period
     if (openA != null) {
       final openTime = dateFormat.parse(openA!);
       var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
-      
+
       // If opening time is in the past today, check if it might be tomorrow's opening time
       if (openDateTime.isBefore(now)) {
         final closeTime = closeA != null ? dateFormat.parse(closeA!) : null;
@@ -88,18 +103,18 @@ extension BusinessStatusExtension on Day {
           }
         }
       }
-      
+
       final difference = openDateTime.difference(now);
       if (difference.inHours <= 1 && difference.inHours >= 0) {
         return BusinessStatus.openingSoon;
       }
     }
-    
+
     // Check second period
     if (openB != null) {
       final openTime = dateFormat.parse(openB!);
       var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
-      
+
       // If opening time is in the past today, check if it might be tomorrow's opening time
       if (openDateTime.isBefore(now)) {
         final closeTime = closeB != null ? dateFormat.parse(closeB!) : null;
@@ -112,7 +127,7 @@ extension BusinessStatusExtension on Day {
           }
         }
       }
-      
+
       final difference = openDateTime.difference(now);
       if (difference.inHours <= 1 && difference.inHours >= 0) {
         return BusinessStatus.openingSoon;
@@ -136,14 +151,14 @@ extension BusinessDaysExtension on BusinessDays {
   Day get currentDaySchedule {
     final now = DateTime.now();
     final currentWeekday = now.weekday % 7; // 0-6, where 0 is Sunday
-    
-    // Map DateTime weekday to our Weekday enum 
+
+    // Map DateTime weekday to our Weekday enum
     // DateTime: 1-7 (Monday-Sunday)
     // Our enum: 0-6 (Sunday-Saturday)
     // To convert: (weekday % 7) gives us 1-6,0 which matches our enum order if we shift
     return switch (currentWeekday) {
-      0 => weekdaysData[Weekday.sunday]!,  // Sunday
-      1 => weekdaysData[Weekday.monday]!,  // Monday
+      0 => weekdaysData[Weekday.sunday]!, // Sunday
+      1 => weekdaysData[Weekday.monday]!, // Monday
       2 => weekdaysData[Weekday.tuesday]!,
       3 => weekdaysData[Weekday.wednesday]!,
       4 => weekdaysData[Weekday.thursday]!,

@@ -352,6 +352,7 @@ class AppRouter {
                 di(),
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 state.extra as BusinessDM?,
+                di(),
               ),
               child: const VisitedBusinessPage(),
             ),

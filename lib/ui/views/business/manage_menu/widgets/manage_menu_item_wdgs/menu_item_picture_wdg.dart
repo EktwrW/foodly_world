@@ -59,26 +59,16 @@ class MenuItemPictureWdg extends StatelessWidget {
     );
   }
 
-  Widget get _buildPlaceholder => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ui.NeumorphicIcon(
-            isEditing ? Icons.image_search_rounded : Icons.dining_outlined,
-            style: ui.NeumorphicStyle(
-              shape: ui.NeumorphicShape.concave,
-              color: FoodlyThemes.accentColor,
-              depth: 2,
-            ),
-            size: 50,
+  Widget get _buildPlaceholder => Center(
+        child: ui.NeumorphicIcon(
+          isEditing ? Icons.add_photo_alternate_outlined : Icons.dining_outlined,
+          style: ui.NeumorphicStyle(
+            shape: ui.NeumorphicShape.concave,
+            color: FoodlyThemes.accentColor,
+            depth: 2,
           ),
-          if (isEditing)
-            Text(
-              S.current.addPhoto,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: FoodlyTextStyles.editableAvatarText,
-            ).paddingSymmetric(horizontal: 10, vertical: 4),
-        ],
+          size: 48,
+        ),
       );
 
   @override

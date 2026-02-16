@@ -102,20 +102,4 @@ class NotificationDM with _$NotificationDM {
 
   /// Business UUID - present in business favorite notifications
   String? get businessUuid => data?.businessUuid;
-
-  String get timeAgo {
-    if (createdAt == null) return '';
-    final now = DateTime.now();
-    final difference = now.difference(createdAt!);
-
-    if (difference.inSeconds < 60) {
-      return 'Just now';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
-    } else {
-      return '${difference.inDays}d ago';
-    }
-  }
 }

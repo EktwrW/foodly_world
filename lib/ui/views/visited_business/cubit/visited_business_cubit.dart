@@ -1,4 +1,6 @@
+import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_transfer_objects/reviews/review_create_dto.dart' show ReviewCreateDTO, ReviewType;
 import 'package:foodly_world/ui/views/visited_business/view_model/visit_business_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +10,7 @@ part 'visited_business_state.dart';
 
 class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   final BusinessRepo _businessRepo;
+  final ReviewRepo _reviewRepo;
   final Logger _logger;
   VisitBusinessVM _vm;
 
@@ -16,7 +19,9 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     Logger logger,
     String businessUuid,
     BusinessDM? business,
+    ReviewRepo reviewRepo,
   )   : _businessRepo = businessRepo,
+        _reviewRepo = reviewRepo,
         _logger = logger,
         _vm = const VisitBusinessVM(),
         super(const _Initial(VisitBusinessVM())) {
@@ -71,5 +76,43 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   Future<void> fetchBusinessReviews(String businessUuid) async {
     // Implement if needed - for now we'll assume reviews come with the business data
     // or would be implemented in a separate cubit
+  }
+
+  void initializeInputForReview() {
+    _vm = _vm.copyWith(
+      reviewTextController: TextEditingController(),
+    );
+
+    Future.microtask(() => emit(_Loaded(_vm)));
+  }
+
+  Future<void> createReview() async {
+    if (_vm.currentBusiness == null) {
+      emit(_Error('No business selected', _vm));
+      return;
+    }
+
+    await Future.microtask(() => emit(_Loading(_vm)));
+
+    final dto = ReviewCreateDTO(
+      rating: _vm.currentReviewStars!,
+      comment: _vm.reviewTextController?.text,
+      businessVisitedAt: _vm.dateOfVisitForReview?.toIso8601String(),
+      businessUuid: _vm.currentBusiness!.uuid,
+      reviewType: ReviewType.business,
+    );
+
+    await _reviewRepo.createReview(dto).then(
+          (response) => response.when(
+            success: (_) {
+              // Optionally, you could refresh the business data to get the new review
+              _fetchBusinessById(_vm.currentBusiness!.uuid);
+            },
+            failure: (error) {
+              _logger.e(error);
+              emit(_Error(error.toString(), _vm));
+            },
+          ),
+        );
   }
 }

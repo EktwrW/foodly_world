@@ -50,6 +50,7 @@ class FoodlyAssets {
   static const AssetData reserveCoffeeTable = AssetData('reserve_coffee_table.png', AssetType.image);
   static const AssetData reserveTable = AssetData('reserve_table.png', AssetType.image);
   static const AssetData reserved = AssetData('reserved.png', AssetType.image);
+  static const AssetData review = AssetData('review.png', AssetType.image);
 
   // eliminar estos assets de pruebas cuando ya no sean utilizados:
   static const AssetData sushiTemp = AssetData('sushi.webp', AssetType.image);

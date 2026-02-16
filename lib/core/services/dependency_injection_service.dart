@@ -2,6 +2,8 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
+import 'package:foodly_world/core/network/reviews/review_client.dart';
+import 'package:foodly_world/core/network/reviews/review_repo.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -36,6 +38,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => NlpApiProvider())
       ..registerLazySingleton(() => NlpSearchClient(di<NlpApiProvider>().dio))
       ..registerLazySingleton(() => NotificationsClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => ReviewClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReplicateService())
       ..registerLazySingleton(() => AIPromoService(di()));
 
@@ -44,7 +47,8 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => MeRepo(meClient: di()))
       ..registerLazySingleton(() => BusinessRepo(businessClient: di()))
       ..registerLazySingleton(() => NlpSearchRepo(nlpSearchClient: di()))
-      ..registerLazySingleton(() => NotificationsRepo(notificationsClient: di()));
+      ..registerLazySingleton(() => NotificationsRepo(notificationsClient: di()))
+      ..registerLazySingleton(() => ReviewRepo(reviewClient: di()));
 
     /// Register services
     final authService = AuthSessionService(
