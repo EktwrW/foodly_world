@@ -49,6 +49,7 @@ class EditHoursWdg extends StatelessWidget {
       height: 48,
       width: 54,
       primaryIcon: const SizedBox.shrink(),
+      iconSize: 0,
       enabled: enabled,
       decoration: _dropdownDecoration,
       onChanged: (hour) async {
@@ -84,111 +85,108 @@ class EditHoursWdg extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<BusinessBloc>();
 
-    return SingleChildScrollView(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              Row(
-                children: [
-                  _buildDropdownButton(
-                    key: 'openA - Day: $i',
-                    enabled: true,
-                    value: day?.openA,
-                    onChanged: (hour) =>
-                        bloc.add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(openA: hour?.value) ?? const Day())),
-                    validator: (p0) => (day?.closeA != null && p0 == null) || (day?.openAAndCloseBHaveConflict ?? false)
-                        ? 'Error'
-                        : null,
-                    hintText: S.current.start,
-                  ),
-                  const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
-                  _buildDropdownButton(
-                    key: 'closeA - Day: $i',
-                    enabled: day?.openA != null,
-                    value: day?.closeA,
-                    onChanged: (hour) => bloc
-                        .add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(closeA: hour?.value) ?? const Day())),
-                    validator: (p0) => (day?.openA != null && p0 == null) || (day?.closeAAndOpenBHaveConflict ?? false)
-                        ? 'Error'
-                        : null,
-                    hintText: S.current.end,
-                  ),
-                  _buildDeleteButton(
-                    onPressed: day?.openA != null || day?.closeA != null
-                        ? () => bloc.add(BusinessEvent.setOpeningHoursDay(
-                            i,
-                            day!.copyWith(
-                              showSecondPeriod: false,
-                              openA: day?.openB,
-                              closeA: day?.closeB,
-                              openB: null,
-                              closeB: null,
-                            )))
-                        : null,
-                  ),
-                ],
-              ),
-              if ((day?.showSecondPeriod ?? false) || (day?.limitPeriodsReached ?? false))
-                FadeIn(
-                  child: Row(
-                    children: [
-                      _buildDropdownButton(
-                        key: 'openB - Day: $i',
-                        enabled: true,
-                        value: day?.openB,
-                        onChanged: (hour) => bloc
-                            .add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(openB: hour?.value) ?? const Day())),
-                        validator: (p0) =>
-                            (day?.closeB != null && p0 == null) || (day?.closeAAndOpenBHaveConflict ?? false)
-                                ? 'Error'
-                                : null,
-                        hintText: S.current.start,
-                      ),
-                      const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
-                      _buildDropdownButton(
-                        key: 'closeB - Day: $i',
-                        enabled: day?.openB != null,
-                        value: day?.closeB,
-                        onChanged: (hour) => bloc.add(
-                            BusinessEvent.setOpeningHoursDay(i, day?.copyWith(closeB: hour?.value) ?? const Day())),
-                        validator: (p0) =>
-                            (day?.openB != null && p0 == null) || (day?.openAAndCloseBHaveConflict ?? false)
-                                ? 'Error'
-                                : null,
-                        hintText: S.current.end,
-                      ),
-                      _buildDeleteButton(
-                        onPressed: day != null
-                            ? () => bloc.add(BusinessEvent.setOpeningHoursDay(
-                                i,
-                                day!.copyWith(
-                                  showSecondPeriod: false,
-                                  openB: null,
-                                  closeB: null,
-                                )))
-                            : null,
-                      ),
-                    ],
-                  ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                _buildDropdownButton(
+                  key: 'openA - Day: $i',
+                  enabled: true,
+                  value: day?.openA,
+                  onChanged: (hour) =>
+                      bloc.add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(openA: hour?.value) ?? const Day())),
+                  validator: (p0) => (day?.closeA != null && p0 == null) || (day?.openAAndCloseBHaveConflict ?? false)
+                      ? 'Error'
+                      : null,
+                  hintText: S.current.start,
                 ),
-            ],
-          ),
-          FadeIn(
-            child: IconButton.filled(
-              onPressed: _enableAddPeriodBtn
-                  ? () => bloc
-                      .add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(showSecondPeriod: true) ?? const Day()))
-                  : null,
-              constraints: BoxConstraints.tight(const Size(22, 22)),
-              tooltip: S.current.addANewTimePeriod,
-              icon: const Icon(Bootstrap.plus_circle, size: 16),
-              padding: const EdgeInsets.all(3),
+                const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
+                _buildDropdownButton(
+                  key: 'closeA - Day: $i',
+                  enabled: day?.openA != null,
+                  value: day?.closeA,
+                  onChanged: (hour) =>
+                      bloc.add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(closeA: hour?.value) ?? const Day())),
+                  validator: (p0) =>
+                      (day?.openA != null && p0 == null) || (day?.closeAAndOpenBHaveConflict ?? false) ? 'Error' : null,
+                  hintText: S.current.end,
+                ),
+                _buildDeleteButton(
+                  onPressed: day?.openA != null || day?.closeA != null
+                      ? () => bloc.add(BusinessEvent.setOpeningHoursDay(
+                          i,
+                          day!.copyWith(
+                            showSecondPeriod: false,
+                            openA: day?.openB,
+                            closeA: day?.closeB,
+                            openB: null,
+                            closeB: null,
+                          )))
+                      : null,
+                ),
+              ],
             ),
+            if ((day?.showSecondPeriod ?? false) || (day?.limitPeriodsReached ?? false))
+              FadeIn(
+                child: Row(
+                  children: [
+                    _buildDropdownButton(
+                      key: 'openB - Day: $i',
+                      enabled: true,
+                      value: day?.openB,
+                      onChanged: (hour) => bloc
+                          .add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(openB: hour?.value) ?? const Day())),
+                      validator: (p0) =>
+                          (day?.closeB != null && p0 == null) || (day?.closeAAndOpenBHaveConflict ?? false)
+                              ? 'Error'
+                              : null,
+                      hintText: S.current.start,
+                    ),
+                    const Text('→', style: FoodlyTextStyles.captionPurpleBold).paddingOnly(right: 12, bottom: 3),
+                    _buildDropdownButton(
+                      key: 'closeB - Day: $i',
+                      enabled: day?.openB != null,
+                      value: day?.closeB,
+                      onChanged: (hour) => bloc
+                          .add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(closeB: hour?.value) ?? const Day())),
+                      validator: (p0) =>
+                          (day?.openB != null && p0 == null) || (day?.openAAndCloseBHaveConflict ?? false)
+                              ? 'Error'
+                              : null,
+                      hintText: S.current.end,
+                    ),
+                    _buildDeleteButton(
+                      onPressed: day != null
+                          ? () => bloc.add(BusinessEvent.setOpeningHoursDay(
+                              i,
+                              day!.copyWith(
+                                showSecondPeriod: false,
+                                openB: null,
+                                closeB: null,
+                              )))
+                          : null,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+        FadeIn(
+          child: IconButton.filled(
+            onPressed: _enableAddPeriodBtn
+                ? () =>
+                    bloc.add(BusinessEvent.setOpeningHoursDay(i, day?.copyWith(showSecondPeriod: true) ?? const Day()))
+                : null,
+            constraints: BoxConstraints.tight(const Size(22, 22)),
+            tooltip: S.current.addANewTimePeriod,
+            icon: const Icon(Bootstrap.plus_circle, size: 16),
+            padding: const EdgeInsets.all(3),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

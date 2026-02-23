@@ -18,9 +18,6 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
                   final day = businessDays?.weekdaysData[w.$2];
                   final isOpenNow =
                       DateTime.now().weekday == (w.$2.dateTimeKey) && (day?.isInOpeningHoursRange ?? false);
-                  log('DateTime.now().weekday: ${DateTime.now().weekday}');
-                  log('dateTimeKey: ${w.$2.dateTimeKey}');
-                  log('record: $w');
 
                   return Column(
                     children: [
@@ -43,7 +40,8 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
                                 ),
                                 ui.Neumorphic(
                                   padding: const EdgeInsets.all(6),
-                                  style: const ui.NeumorphicStyle(color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumorphicShape.convex),
+                                  style: const ui.NeumorphicStyle(
+                                      color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumorphicShape.convex),
                                 ).paddingOnly(left: 4, right: 10),
                               ],
                             ),
