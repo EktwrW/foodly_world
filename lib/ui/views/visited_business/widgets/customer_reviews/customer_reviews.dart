@@ -11,7 +11,7 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
         FoodlySectionsTitle(
           firstText: '${S.current.dashboardReviewsOfOurCustomersText1} ',
           secondText: S.current.dashboardReviewsOfOurCustomersText2,
-        ),
+        ).paddingBottom(8),
         BlocSelector<VisitBusinessCubit, VisitBusinessState, List<ReviewDM>>(
           selector: (state) {
             return state.vm.currentBusinessReviews ?? [];
@@ -44,9 +44,21 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   enlargeStrategy: CenterPageEnlargeStrategy.height,
                 ),
                 items: currentBusinessReviews.map((review) {
-                  return ReviewCard(review: review);
+                  return ReviewCard(
+                    review: review,
+                    onEdit: () {
+                      VisitedBusinessSnackbars.showInputReviewWdg(context, existingReview: review);
+                    },
+                    onDelete: () {
+                      VisitedBusinessSnackbars.showDeleteReviewConfirmation(
+                        context,
+                        context.read<VisitBusinessCubit>(),
+                        review,
+                      );
+                    },
+                  );
                 }).toList(),
-              ).paddingTop(8),
+              ),
             );
           },
         ),

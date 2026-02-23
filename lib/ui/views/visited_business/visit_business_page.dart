@@ -34,6 +34,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_footer_buttons.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_sliver_app_bar.dart';
+import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_snackbars.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:icons_plus/icons_plus.dart' show Clarity;
 

@@ -51,9 +51,14 @@ class VisitBusinessFooterButtons extends StatelessWidget {
             ),
             FooterButton(
               onPressed: () async {
-                await Future.microtask(
-                    () => context.mounted ? context.read<VisitBusinessCubit>().initializeInputForReview() : null);
-                if (context.mounted) {
+                final cubit = context.read<VisitBusinessCubit>();
+                final checkResult = await cubit.checkReview();
+
+                if (!context.mounted) return;
+
+                if (checkResult != null && checkResult.hasReviewed && checkResult.review != null) {
+                  VisitedBusinessSnackbars.showAlreadyReviewedInfo(context, checkResult.review!);
+                } else {
                   VisitedBusinessSnackbars.showInputReviewWdg(context);
                 }
               },

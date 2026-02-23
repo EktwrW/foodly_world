@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
-
-import 'category.dart';
-import 'rating.dart';
+part of './../../business_page.dart';
 
 class CategoryAndRatingWdg extends StatelessWidget {
   const CategoryAndRatingWdg({
     super.key,
-    required this.vm,
   });
-
-  final BusinessVM vm;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(flex: vm.isEditingCategory ? 8 : 3, child: CategoryWdg(vm: vm)),
-        Expanded(child: RatingWdg(vm: vm)),
-      ],
+    return BlocSelector<BusinessBloc, BusinessState, bool>(
+      selector: (state) {
+        return state.vm.isEditingCategory;
+      },
+      builder: (context, isEditingCategory) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(flex: isEditingCategory ? 8 : 3, child: const CategoryWdg()),
+            const Expanded(child: RatingWdg()),
+          ],
+        );
+      },
     );
   }
 }

@@ -13,7 +13,7 @@ class CustomerReviewsWdg extends StatelessWidget {
         FoodlySectionsTitle(
           firstText: '${S.current.dashboardReviewsOfOurCustomersText1} ',
           secondText: S.current.dashboardReviewsOfOurCustomersText2,
-        ),
+        ).paddingBottom(8),
         BlocSelector<BusinessBloc, BusinessState, List<ReviewDM>>(
           selector: (state) {
             return state.vm.currentBusiness?.reviews ?? [];
@@ -48,7 +48,7 @@ class CustomerReviewsWdg extends StatelessWidget {
                 items: currentBusinessReviews.map((review) {
                   return ReviewCard(review: review);
                 }).toList(),
-              ).paddingTop(8),
+              ),
             );
           },
         ),

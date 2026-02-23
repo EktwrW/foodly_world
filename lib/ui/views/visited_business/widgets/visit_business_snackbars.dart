@@ -4,6 +4,7 @@ import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
+import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -20,10 +21,18 @@ class VisitedBusinessSnackbars {
   const VisitedBusinessSnackbars._();
 
   static void showInputReviewWdg(
-    BuildContext context,
-  ) {
+    BuildContext context, {
+    ReviewDM? existingReview,
+  }) {
     final cubit = context.read<VisitBusinessCubit>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final isEditMode = existingReview != null;
+
+    if (isEditMode) {
+      cubit.initializeInputForEditReview(existingReview);
+    } else {
+      cubit.initializeInputForReview();
+    }
 
     final snackBar = SnackBarWdg(
       type: SnackBarType.action,
@@ -36,17 +45,25 @@ class VisitedBusinessSnackbars {
               return ValueListenableBuilder(
                   valueListenable: cubit.state.vm.reviewTextController ?? TextEditingController(),
                   builder: (context, value, child) {
+                    final isCommentChanged = isEditMode && value.text != (existingReview.comment ?? '');
                     return CustomNeumorphicButton(
-                      disabled: !canSubmitReview || value.text.isEmpty,
+                      disabled: value.text.isEmpty || (!canSubmitReview && !isCommentChanged),
                       onPressed: () async {
-                        await cubit.createReview();
+                        if (isEditMode) {
+                          await cubit.updateReview();
+                        } else {
+                          await cubit.createReview();
+                        }
                         scaffoldMessenger.hideCurrentSnackBar();
                         await Future.delayed(Durations.short4);
                         if (context.mounted) {
-                          FoodlySnackbars.successGeneric(context, 'Review submitted successfully!');
+                          FoodlySnackbars.successGeneric(
+                            context,
+                            isEditMode ? 'Review updated successfully!' : 'Review submitted successfully!',
+                          );
                         }
                       },
-                      text: 'Submit Review',
+                      text: isEditMode ? 'Update Review' : 'Submit Review',
                     ).paddingVertical(16);
                   });
             },
@@ -58,19 +75,58 @@ class VisitedBusinessSnackbars {
         child: BlocBuilder<VisitBusinessCubit, VisitBusinessState>(
           builder: (context, state) {
             final vm = state.vm;
+            final currentEditingReview = vm.editingReview;
+            final editingPhotoUrls = currentEditingReview?.photoUrls ?? [];
+            final existingPhotoCount = isEditMode ? editingPhotoUrls.length : 0;
 
             return Column(
               spacing: 12,
               children: [
                 const Asset(FoodlyAssets.review, height: 42, width: 42),
                 Text(
-                  'Write a Review for ${vm.currentBusiness?.name ?? 'this business'}',
+                  isEditMode
+                      ? 'Edit your Review for ${vm.currentBusiness?.name ?? 'this business'}'
+                      : 'Write a Review for ${vm.currentBusiness?.name ?? 'this business'}',
                   style: FoodlyTextStyles.promoTitle.copyWith(fontSize: 16),
                 ).paddingVertical(24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 8,
                   children: [
+                    if (isEditMode && editingPhotoUrls.isNotEmpty)
+                      ...editingPhotoUrls.map((url) => Flexible(
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Image.network(
+                                    url,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 4,
+                                  right: 4,
+                                  child: CustomRoundedNeumorphicButton(
+                                    onPressed: () {
+                                      final reviewPhotoDM =
+                                          currentEditingReview!.photos.firstWhere((p) => p.photoUrl == url);
+                                      if (reviewPhotoDM.photoUuid?.isNotEmpty ?? false) {
+                                        cubit.deleteReviewPhoto(reviewPhotoDM.photoUuid!);
+                                      }
+                                    },
+                                    diameter: 18,
+                                    iconSize: 18,
+                                    padding: const EdgeInsets.all(4),
+                                    iconData: Bootstrap.trash3,
+                                    buttonColor: Colors.black54,
+                                    iconColor: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
                     if (vm.reviewPhotoPaths.isNotEmpty)
                       ...vm.reviewPhotoPaths.map((path) => Flexible(
                             child: Stack(
@@ -104,7 +160,7 @@ class VisitedBusinessSnackbars {
                               ],
                             ),
                           )),
-                    if (vm.reviewPhotoPaths.length < 3)
+                    if (existingPhotoCount + vm.reviewPhotoPaths.length < 3)
                       Flexible(
                         child: CustomRoundedNeumorphicButton(
                           onPressed: () async => await pickImageFile(
@@ -210,5 +266,68 @@ class VisitedBusinessSnackbars {
       ..showSnackBar(snackBar.getSnackBar(context)).closed.then((reason) {
         cubit.resetReviewInput();
       });
+  }
+
+  static void showDeleteReviewConfirmation(
+    BuildContext context,
+    VisitBusinessCubit cubit,
+    ReviewDM review,
+  ) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.hideCurrentSnackBar();
+
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.action,
+      onPressed: () async {
+        await cubit.deleteReview(review.reviewUuid!);
+        await Future.delayed(Durations.short4);
+        if (context.mounted) {
+          FoodlySnackbars.successGeneric(context, 'Review deleted successfully!');
+        }
+      },
+      buttonText: S.current.confirm,
+      content: Text.rich(
+        TextSpan(
+          style: FoodlyTextStyles.snackBarLightBody,
+          children: <TextSpan>[
+            TextSpan(text: '${S.current.delete} '),
+            const TextSpan(text: 'your review?', style: FoodlyTextStyles.actionsBodyBold),
+            TextSpan(text: '\n${S.current.cannotUndone}'),
+          ],
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+
+    scaffoldMessenger.showSnackBar(snackBar.getSnackBar(context));
+  }
+
+  static void showAlreadyReviewedInfo(
+    BuildContext context,
+    ReviewDM existingReview,
+  ) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.hideCurrentSnackBar();
+
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.action,
+      buttonText: 'Edit Review',
+      onPressed: () {
+        if (context.mounted) {
+          Future.delayed(Durations.short4, () {
+            if (context.mounted) {
+              showInputReviewWdg(context, existingReview: existingReview);
+            }
+          });
+        }
+      },
+      content: Text(
+        'You already reviewed this business.\nWould you like to edit your review?',
+        textAlign: TextAlign.center,
+        style: FoodlyTextStyles.snackBarLightBody,
+      ),
+    );
+
+    scaffoldMessenger.showSnackBar(snackBar.getSnackBar(context));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:foodly_world/core/enums/review_enums.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart';
+import 'package:foodly_world/data_transfer_objects/reviews/review_update_dto.dart';
 import 'package:foodly_world/ui/views/visited_business/view_model/visit_business_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -99,7 +101,12 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
 
   void resetReviewInput() {
     _vm.reviewTextController?.clear();
-    _vm = _vm.copyWith(reviewPhotoPaths: [], currentReviewStars: null, dateOfVisitForReview: null);
+    _vm = _vm.copyWith(
+      reviewPhotoPaths: [],
+      currentReviewStars: null,
+      dateOfVisitForReview: null,
+      editingReview: null,
+    );
     Future.microtask(() => emit(_Loaded(_vm)));
   }
 
@@ -147,13 +154,12 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
         )
         .then(
           (response) => response.when(
-            success: (data) {
+            success: (data) async {
               _vm = _vm.copyWith(
                 currentBusinessReviews: List.from(_vm.currentBusinessReviews ?? [])..insert(0, data.review!),
               );
-              resetReviewInput();
 
-              _businessRepo.fetchBusinessById(_vm.currentBusiness!.uuid).then(
+              await _businessRepo.fetchBusinessById(_vm.currentBusiness!.uuid).then(
                     (response) => response.when(
                       success: (business) {
                         _vm = _vm.copyWith(currentBusiness: business);
@@ -165,6 +171,167 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
                       },
                     ),
                   );
+            },
+            failure: (error) {
+              _logger.e(error);
+              emit(_Error(error.toString(), _vm));
+            },
+          ),
+        );
+  }
+
+  Future<ReviewCheckResponseDM?> checkReview() async {
+    if (_vm.currentBusiness == null) return null;
+
+    final result = await _reviewRepo.checkReview(_vm.currentBusiness!.uuid);
+
+    return result.when(
+      success: (data) => data,
+      failure: (error) {
+        _logger.e(error);
+        return null;
+      },
+    );
+  }
+
+  void initializeInputForEditReview(ReviewDM review) {
+    final controller = TextEditingController(text: review.comment ?? '');
+    _vm = _vm.copyWith(
+      reviewTextController: controller,
+      reviewPhotoPaths: [],
+      currentReviewStars: review.rating,
+      dateOfVisitForReview: review.businessVisitedAt,
+      editingReview: review,
+    );
+
+    Future.microtask(() => emit(_Loaded(_vm)));
+  }
+
+  Future<void> updateReview() async {
+    final editingReview = _vm.editingReview;
+    if (editingReview == null || editingReview.reviewUuid == null) {
+      emit(_Error('No review to update', _vm));
+      return;
+    }
+
+    await Future.microtask(() => emit(_Loading(_vm)));
+
+    final dto = ReviewUpdateDTO(
+      rating: _vm.currentReviewStars,
+      reviewType: ReviewType.business,
+      comment: _vm.reviewTextController?.text,
+      businessVisitedAt: _vm.dateOfVisitForReview != null
+          ? '${_vm.dateOfVisitForReview!.year}-${_vm.dateOfVisitForReview!.month.toString().padLeft(2, '0')}-${_vm.dateOfVisitForReview!.day.toString().padLeft(2, '0')}'
+          : null,
+    );
+
+    await _reviewRepo.updateReview(editingReview.reviewUuid!, dto).then(
+          (response) => response.when(
+            success: (data) async {
+              var latestReview = data.review;
+
+              // Upload new photos if any were added
+              if (_vm.reviewPhotoPaths.isNotEmpty) {
+                final photosResult = await _reviewRepo.addPhotos(
+                  reviewUuid: editingReview.reviewUuid!,
+                  photoPaths: _vm.reviewPhotoPaths,
+                );
+                photosResult.when(
+                  success: (photosData) {
+                    if (photosData.review != null) {
+                      latestReview = photosData.review;
+                    }
+                  },
+                  failure: (error) => _logger.e(error),
+                );
+              }
+
+              if (latestReview != null) {
+                final updatedList = (_vm.currentBusinessReviews ?? [])
+                    .map((r) => r.reviewUuid == editingReview.reviewUuid ? latestReview! : r)
+                    .toList();
+                _vm = _vm.copyWith(currentBusinessReviews: updatedList);
+              }
+              resetReviewInput();
+
+              if (_vm.currentBusiness != null) {
+                await _businessRepo.fetchBusinessById(_vm.currentBusiness!.uuid).then(
+                      (response) => response.when(
+                        success: (business) {
+                          _vm = _vm.copyWith(currentBusiness: business);
+                          emit(_Loaded(_vm));
+                        },
+                        failure: (error) {
+                          _logger.e(error);
+                          emit(_Error(error.toString(), _vm));
+                        },
+                      ),
+                    );
+              }
+            },
+            failure: (error) {
+              _logger.e(error);
+              emit(_Error(error.toString(), _vm));
+            },
+          ),
+        );
+  }
+
+  Future<void> deleteReview(String reviewUuid) async {
+    await Future.microtask(() => emit(_Loading(_vm)));
+
+    await _reviewRepo.deleteReview(reviewUuid).then(
+          (response) => response.when(
+            success: (_) async {
+              final updatedList = (_vm.currentBusinessReviews ?? []).where((r) => r.reviewUuid != reviewUuid).toList();
+              _vm = _vm.copyWith(currentBusinessReviews: updatedList);
+
+              if (_vm.currentBusiness != null) {
+                await _businessRepo.fetchBusinessById(_vm.currentBusiness!.uuid).then(
+                      (response) => response.when(
+                        success: (business) {
+                          _vm = _vm.copyWith(currentBusiness: business);
+                          emit(_Loaded(_vm));
+                        },
+                        failure: (error) {
+                          _logger.e(error);
+                          emit(_Error(error.toString(), _vm));
+                        },
+                      ),
+                    );
+              }
+            },
+            failure: (error) {
+              _logger.e(error);
+              emit(_Error(error.toString(), _vm));
+            },
+          ),
+        );
+  }
+
+  Future<void> deleteReviewPhoto(String reviewPhotoUuid) async {
+    final editingReview = _vm.editingReview;
+    if (editingReview == null || editingReview.reviewUuid == null) {
+      emit(_Error('No review to update', _vm));
+      return;
+    }
+
+    await Future.microtask(() => emit(_Loading(_vm)));
+
+    await _reviewRepo.destroyPhoto(reviewPhotoUuid).then(
+          (response) => response.when(
+            success: (_) async {
+              final updatedPhotos =
+                  (_vm.editingReview?.photos ?? []).where((p) => p.photoUuid != reviewPhotoUuid).toList();
+              final updatedReview = _vm.editingReview?.copyWith(photos: updatedPhotos);
+              final updatedList = (_vm.currentBusinessReviews ?? [])
+                  .map((r) => r.reviewUuid == editingReview.reviewUuid ? updatedReview! : r)
+                  .toList();
+              _vm = _vm.copyWith(
+                currentBusinessReviews: updatedList,
+                editingReview: updatedReview,
+              );
+              emit(_Loaded(_vm));
             },
             failure: (error) {
               _logger.e(error);
