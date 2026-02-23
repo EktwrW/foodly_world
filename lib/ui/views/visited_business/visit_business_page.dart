@@ -84,26 +84,35 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
         },
         child: Scaffold(
           persistentFooterButtons: const [VisitBusinessFooterButtons()],
-          body: NestedScrollView(
-            headerSliverBuilder: (_, value) => const [VisitBusinessSliverAppBar()],
-            body: SingleChildScrollView(
-              child: const Column(
-                spacing: 34,
-                children: [
-                  _AddressWdg(key: Key('visited-business-address')),
-                  _CategoryAndRatingWdg(key: Key('visited-business-category-and-rating')),
-                  _AboutUsWdg(key: Key('visited-business-about-us')),
-                  _OpeningHoursWdg(key: Key('visited-business-opening-hours')),
-                  _ServicesWdg(key: Key('visited-business-services')),
-                  _VisitorCustomerReviewsWdg(key: Key('visited-business-customer-reviews')),
-                  _ContactChannelsWdg(key: Key('visited-business-contact-channels')),
-                  _AdditionalInfoWdg(key: Key('visited-business-additional-info')),
-                ],
-              ).paddingSymmetric(
-                horizontal: UIDimens.SCREEN_PADDING_MOB,
-                vertical: 28,
+          body: CustomScrollView(
+            slivers: [
+              const VisitBusinessSliverAppBar(),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UIDimens.SCREEN_PADDING_MOB,
+                  vertical: 28,
+                ),
+                sliver: SliverList.list(
+                  children: const [
+                    _AddressWdg(key: Key('visited-business-address')),
+                    SizedBox(height: 34),
+                    _CategoryAndRatingWdg(key: Key('visited-business-category-and-rating')),
+                    SizedBox(height: 34),
+                    _AboutUsWdg(key: Key('visited-business-about-us')),
+                    SizedBox(height: 34),
+                    _OpeningHoursWdg(key: Key('visited-business-opening-hours')),
+                    SizedBox(height: 34),
+                    _ServicesWdg(key: Key('visited-business-services')),
+                    SizedBox(height: 34),
+                    _VisitorCustomerReviewsWdg(key: Key('visited-business-customer-reviews')),
+                    SizedBox(height: 34),
+                    _ContactChannelsWdg(key: Key('visited-business-contact-channels')),
+                    SizedBox(height: 34),
+                    _AdditionalInfoWdg(key: Key('visited-business-additional-info')),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

@@ -93,26 +93,35 @@ class _BusinessPageState extends State<BusinessPage> {
 
           return Scaffold(
             persistentFooterButtons: const [BusinessFooterButtons()],
-            body: NestedScrollView(
-              headerSliverBuilder: (_, value) => const [BusinessSliverAppBar()],
-              body: SingleChildScrollView(
-                child: Column(
-                  spacing: 40,
-                  children: [
-                    const AddressWdg(),
-                    const CategoryAndRatingWdg(),
-                    AboutUsWdg(vm: vm),
-                    OpeningHoursWdg(vm: vm),
-                    ServicesWdg(vm: vm),
-                    const CustomerReviewsWdg(),
-                    ContactChannelsWdg(vm: vm),
-                    AdditionalInfoWdg(vm: vm),
-                  ],
-                ).paddingSymmetric(
-                  horizontal: UIDimens.SCREEN_PADDING_MOB,
-                  vertical: 28,
+            body: CustomScrollView(
+              slivers: [
+                const BusinessSliverAppBar(),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: UIDimens.SCREEN_PADDING_MOB,
+                    vertical: 28,
+                  ),
+                  sliver: SliverList.list(
+                    children: [
+                      const AddressWdg(),
+                      const SizedBox(height: 40),
+                      const CategoryAndRatingWdg(),
+                      const SizedBox(height: 40),
+                      AboutUsWdg(vm: vm),
+                      const SizedBox(height: 40),
+                      OpeningHoursWdg(vm: vm),
+                      const SizedBox(height: 40),
+                      ServicesWdg(vm: vm),
+                      const SizedBox(height: 40),
+                      const CustomerReviewsWdg(),
+                      const SizedBox(height: 40),
+                      ContactChannelsWdg(vm: vm),
+                      const SizedBox(height: 40),
+                      AdditionalInfoWdg(vm: vm),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           );
         },
