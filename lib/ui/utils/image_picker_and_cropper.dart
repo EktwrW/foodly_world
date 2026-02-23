@@ -77,10 +77,14 @@ Future<String> pickImageFile(
   List<CropAspectRatioPreset>? aspectRatioPresets,
   CropStyle? cropStyle,
   CropAspectRatio? aspectRatio,
+  bool hideCurrentSnackBar = true,
 }) async {
   final imagePicker = ImagePicker();
   BuildContext getContext() => context;
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+  if (hideCurrentSnackBar) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  }
 
   final pickedFile = await imagePicker.pickImage(source: source);
 

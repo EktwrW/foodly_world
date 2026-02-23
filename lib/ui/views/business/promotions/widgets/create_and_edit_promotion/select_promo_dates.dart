@@ -33,9 +33,7 @@ class _StartAndExpiryDatesWdg extends StatelessWidget {
                 isStartDate: true,
               );
             },
-            text: vm.newPromo?.startDate != null
-                ? PromotionsHelper.formatDate(vm.newPromo!.startDate)
-                : S.current.setDate,
+            text: vm.newPromo?.startDate != null ? vm.newPromo!.startDate.getShortFormat : S.current.setDate,
             type: CustomNeumorphicBtnType.outlined,
             shape: ui.NeumorphicShape.flat,
             leading: const Icon(Bootstrap.calendar2_plus),
@@ -77,9 +75,7 @@ class _StartAndExpiryDatesWdg extends StatelessWidget {
                     );
                   }
                 : null,
-            text: vm.newPromo?.expireDate != null
-                ? PromotionsHelper.formatDate(vm.newPromo!.expireDate)
-                : S.current.setDate,
+            text: vm.newPromo?.expireDate != null ? vm.newPromo!.expireDate.getShortFormat : S.current.setDate,
             type: CustomNeumorphicBtnType.outlined,
             shape: ui.NeumorphicShape.flat,
             leading: Icon(Bootstrap.calendar2_range, color: vm.newPromo?.startDate == null ? Colors.grey : null),

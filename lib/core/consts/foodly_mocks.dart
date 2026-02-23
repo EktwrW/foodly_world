@@ -8,9 +8,4 @@ class FoodlyMocks {
     'https://proingra.com/wp-content/uploads/2022/09/08-SEP-BRAHMAN-II.jpg',
     'https://cursoscecati.info/wp-content/uploads/2023/08/Objetivos-del-Curso-de-panaderia-Cecati.jpg',
   ];
-  static const REVIEW_PICTURES_1 = [
-    'https://www.ocu.org/-/media/ocu/images/home/alimentacion/comer%20bien/desayunos_1600x900.jpg?rev=ae8cf847-d131-4c75-acc6-595a9d517b06&mw=660&hash=7FD75359F467CCDACF836163F4E19545',
-    'https://www.divinacocina.es/wp-content/uploads/desayuno-perfecto.jpg',
-    'https://www.clikisalud.net/wp-content/uploads/2014/09/e-desayuno.jpg',
-  ];
 }

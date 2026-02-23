@@ -61,6 +61,16 @@ class ReviewUpdateResponseDM with _$ReviewUpdateResponseDM {
 }
 
 @freezed
+class ReviewPhotoDM with _$ReviewPhotoDM {
+  const factory ReviewPhotoDM({
+    @JsonKey(name: 'photo_uuid') String? photoUuid,
+    @JsonKey(name: 'photo_url') String? photoUrl,
+  }) = _ReviewPhotoDM;
+
+  factory ReviewPhotoDM.fromJson(Map<String, dynamic> json) => _$ReviewPhotoDMFromJson(json);
+}
+
+@freezed
 class ReviewDM with _$ReviewDM {
   const ReviewDM._();
 
@@ -70,6 +80,7 @@ class ReviewDM with _$ReviewDM {
     @JsonKey(name: 'review_type') ReviewType? reviewType,
     @Default(0) int rating,
     String? comment,
+    @Default([]) List<ReviewPhotoDM> photos,
     @JsonKey(name: 'business_uuid') String? businessUuid,
     @JsonKey(name: 'business_name') String? businessName,
     @JsonKey(name: 'business_photo') String? businessPhoto,
@@ -82,4 +93,6 @@ class ReviewDM with _$ReviewDM {
   }) = _ReviewDM;
 
   factory ReviewDM.fromJson(Map<String, dynamic> json) => _$ReviewDMFromJson(json);
+
+  List<String> get photoUrls => photos.where((p) => p.photoUrl != null).map((p) => p.photoUrl!).toList();
 }

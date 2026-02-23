@@ -46,6 +46,18 @@ extension DateExtension on DateTime {
     return _dateStringUS;
   }
 
+  /// Compact numeric date format adapted to the current locale.
+  /// Returns `MM/dd/yyyy` for English/US and `dd/MM/yyyy` for ES, PT and LATAM.
+  String get getShortFormat {
+    final countryCode = di<LocationService>().currentCountryCode;
+    final lang = Intl.getCurrentLocale();
+
+    if (countryCode == 'US' || (lang != FoodlyStrings.ES && countryCode != 'ES' && countryCode != 'PT')) {
+      return DateFormat('MM/dd/yyyy').format(toLocal());
+    }
+    return DateFormat('dd/MM/yyyy').format(toLocal());
+  }
+
   String get getBirthdayFormat {
     final countryCode = di<LocationService>().currentCountryCode;
     final lang = Intl.getCurrentLocale();

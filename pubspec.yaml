@@ -31,6 +31,7 @@ dependencies:
   flick_video_player: ^0.9.0
   flutter_bloc: ^9.1.1
   flutter_image_slideshow: ^0.1.6
+  flutter_linear_calendar: ^2.0.2
   flutter_native_splash: ^2.4.6
   flutter_neumorphic_plus: ^3.5.0
   flutter_rating_bar: ^4.0.1

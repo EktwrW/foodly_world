@@ -80,7 +80,7 @@ class NotificationsPage extends StatelessWidget {
                             ? []
                             : [
                                 BoxShadow(
-                                  color: FoodlyThemes.primaryFoodly.withValues(alpha: .14),
+                                  color: Colors.white.withValues(alpha: .16),
                                   blurRadius: 6,
                                   spreadRadius: 3,
                                   offset: const Offset(0, 2),
@@ -116,23 +116,25 @@ class NotificationsPage extends StatelessWidget {
                           ],
                         ),
                         trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              notification.isRead ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                              child: InkWell(
-                                onTap: () => context.read<NotificationsCubit>().markAsRead(notification.uuid),
-                                splashFactory: InkRipple.splashFactory,
-                                customBorder: const CircleBorder(),
-                                child: const Icon(Bootstrap.check2, size: 24),
+                            if (!notification.isRead)
+                              Flexible(
+                                child: InkWell(
+                                  onTap: () => context.read<NotificationsCubit>().markAsRead(notification.uuid),
+                                  splashFactory: InkRipple.splashFactory,
+                                  customBorder: const CircleBorder(),
+                                  child: const Icon(Bootstrap.check2, size: 24),
+                                ),
                               ),
-                            ),
                             Flexible(
                               child: InkWell(
                                 onTap: () => context.read<NotificationsCubit>().deleteNotification(notification.uuid),
                                 splashFactory: InkRipple.splashFactory,
                                 customBorder: const CircleBorder(),
                                 child: const Icon(Bootstrap.trash, size: 20),
-                              ),
+                              ).paddingRight(notification.isRead ? 2 : 0),
                             ),
                           ],
                         ),

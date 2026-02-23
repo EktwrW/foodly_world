@@ -38,8 +38,8 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_longitude') double? longitude,
     @JsonKey(name: 'category_id') FoodlyCategories? categoryId,
     @JsonKey(name: 'category') CategoryDM? category,
-    @JsonKey(name: 'business_reviews') @Default([]) List<Object>? reviews,
-    @JsonKey(name: 'business_rating') double? rating,
+    @JsonKey(name: 'rating_avg') double? rating,
+    @JsonKey(name: 'ratings_count') int? ratingsCount,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
   }) = _BusinessDM;

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart';
-import 'package:foodly_world/data_transfer_objects/reviews/review_create_dto.dart';
 import 'package:foodly_world/data_transfer_objects/reviews/review_update_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -26,13 +25,31 @@ abstract class ReviewClient {
   Future<ReviewCheckResponseDM> checkReview(@Path('businessUuid') String businessUuid);
 
   @POST('/reviews/store')
-  Future<ReviewCreateResponseDM> createReview(@Body() ReviewCreateDTO body);
+  @MultiPart()
+  Future<ReviewCreateResponseDM> createReview({
+    @Part(name: 'business_uuid') required String businessUuid,
+    @Part(name: 'rating') required int rating,
+    @Part(name: 'review_type') String? reviewType,
+    @Part(name: 'comment') String? comment,
+    @Part(name: 'business_visited_at') String? businessVisitedAt,
+    @Part(name: 'photos[]') List<MultipartFile>? photos,
+  });
 
   @PATCH('/reviews/update/{uuid}')
   Future<ReviewUpdateResponseDM> updateReview(
     @Path('uuid') String uuid,
     @Body() ReviewUpdateDTO body,
   );
+
+  @POST('/reviews/{reviewUuid}/photos')
+  @MultiPart()
+  Future<ReviewCreateResponseDM> addPhotos({
+    @Path('reviewUuid') required String reviewUuid,
+    @Part(name: 'photos[]') required List<MultipartFile> photos,
+  });
+
+  @DELETE('/reviews/photos/{photoUuid}')
+  Future<void> destroyPhoto(@Path('photoUuid') String photoUuid);
 
   @DELETE('/reviews/delete/{uuid}')
   Future<void> deleteReview(@Path('uuid') String uuid);

@@ -69,11 +69,6 @@ class PromotionsHelper {
     return dates;
   }
 
-  static String formatDate(DateTime date) {
-    // Puedes usar intl package para mejor formateo
-    return '${date.day}/${date.month}/${date.year}';
-  }
-
   static Set<Weekday> getSelectedDays(PromoDaysDM? days) {
     if (days == null) return {};
     return {

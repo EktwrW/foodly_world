@@ -16,7 +16,7 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
 class BusinessSliverAppBar extends StatelessWidget {
   const BusinessSliverAppBar({super.key});
 
-  get _userAvatarWdg => AvatarWidget(
+  Widget get _userAvatarWdg => AvatarWidget(
         avatarUrl: di<AuthSessionService>().userSessionDM?.user.avatarUrl,
         height: SliverAppBarActionWidgets.buttonDiameter,
         width: SliverAppBarActionWidgets.buttonDiameter,

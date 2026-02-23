@@ -1,12 +1,30 @@
 import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clay_containers/widgets/clay_text.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/core_exports.dart'
+    show
+        DialogService,
+        FoodlyWrapper,
+        di,
+        PaddingExtension,
+        BlocListener,
+        S,
+        FoodlyThemes,
+        FoodlyCategories,
+        BlocSelector,
+        ReadContext,
+        Weekday,
+        BusinessDays,
+        ScreenSizeExtension;
+import 'package:foodly_world/core/enums/business_enums.dart' show BusinessServices;
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -76,7 +94,7 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
                   _AboutUsWdg(key: Key('visited-business-about-us')),
                   _OpeningHoursWdg(key: Key('visited-business-opening-hours')),
                   _ServicesWdg(key: Key('visited-business-services')),
-                  _CustomerReviewsWdg(key: Key('visited-business-customer-reviews')),
+                  _VisitorCustomerReviewsWdg(key: Key('visited-business-customer-reviews')),
                   _ContactChannelsWdg(key: Key('visited-business-contact-channels')),
                   _AdditionalInfoWdg(key: Key('visited-business-additional-info')),
                 ],

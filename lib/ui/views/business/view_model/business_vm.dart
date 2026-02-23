@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' show Marker, GoogleMapController;
 
@@ -47,6 +48,7 @@ class BusinessVM with _$BusinessVM {
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
     @Default(BusinessDays()) BusinessDays businessDays,
     @Default(false) bool loggedUserCanEdit,
+    @Default([]) List<ReviewDM> reviews,
   }) = _BusinessVM;
 
   bool get isEditingName => dashboardEditing == DashboardEditing.name;

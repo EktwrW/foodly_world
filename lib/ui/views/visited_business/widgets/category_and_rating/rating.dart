@@ -8,21 +8,28 @@ class RatingWdg extends StatelessWidget {
     return FadeInRight(
       duration: Durations.medium3,
       child: FittedBox(
-        child: Column(
-          children: [
-            const Text.rich(TextSpan(children: [
-              TextSpan(text: 'Rating Avg:', style: FoodlyTextStyles.caption),
-              TextSpan(text: ' 4.3', style: FoodlyTextStyles.captionPurpleBold),
-            ])),
-            RatingBar.builder(
-              initialRating: 4.3,
-              itemSize: 18,
-              minRating: 1,
-              allowHalfRating: true,
-              itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 16),
-              onRatingUpdate: (rating) {},
-            ),
-          ],
+        child: BlocSelector<VisitBusinessCubit, VisitBusinessState, double>(
+          selector: (state) {
+            return state.vm.currentBusiness?.rating ?? 0.0;
+          },
+          builder: (context, rating) {
+            return Column(
+              children: [
+                Text.rich(TextSpan(children: [
+                  const TextSpan(text: 'Rating Avg:', style: FoodlyTextStyles.caption),
+                  TextSpan(text: ' $rating', style: FoodlyTextStyles.captionPurpleBold),
+                ])),
+                RatingBar.builder(
+                  initialRating: rating,
+                  itemSize: 18,
+                  minRating: 1,
+                  allowHalfRating: true,
+                  itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 16),
+                  onRatingUpdate: (rating) {},
+                ),
+              ],
+            );
+          },
         ).paddingOnly(right: 4),
       ),
     );
