@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/network/base/request_exception.dart';
+import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
 import 'package:foodly_world/ui/views/business/view_model/business_vm.dart';
@@ -16,15 +17,18 @@ part 'business_state.dart';
 class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   final AuthSessionService _authService;
   final BusinessRepo _businessRepo;
+  final ReviewRepo _reviewRepo;
   final Logger _logger;
   BusinessVM _vm;
 
   BusinessBloc(
     AuthSessionService authService,
     BusinessRepo businessRepo,
+    ReviewRepo reviewRepo,
     Logger logger,
   )   : _authService = authService,
         _businessRepo = businessRepo,
+        _reviewRepo = reviewRepo,
         _logger = logger,
         _vm = BusinessVM(
           nameFormKey: GlobalKey<FormState>(),
@@ -180,7 +184,18 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
       if (business.uuid.isNotEmpty) {
         await _businessRepo.fetchBusinessById(business.uuid).then(
               (response) => response.when(
-                success: (business) => businesses.add(business),
+                success: (business) async {
+                  await _reviewRepo.getBusinessReviews(business.uuid).then((reviewsResponse) => reviewsResponse.when(
+                        success: (data) {
+                          final businessWithReviews = business.copyWith(reviews: data.reviews);
+                          businesses.add(businessWithReviews);
+                        },
+                        failure: (error) {
+                          _logger.e('Error fetching reviews for business ${business.uuid}: $error');
+                          businesses.add(business);
+                        },
+                      ));
+                },
                 failure: (error) => _handleError(error, emit),
               ),
             );

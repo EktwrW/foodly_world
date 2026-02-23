@@ -87,7 +87,7 @@ class ReviewDM with _$ReviewDM {
     @JsonKey(name: 'user_uuid') String? userUuid,
     @JsonKey(name: 'user_name') String? userName,
     @JsonKey(name: 'user_photo') String? userPhoto,
-    @JsonKey(name: 'business_visited_at') String? businessVisitedAt,
+    @JsonKey(name: 'business_visited_at') DateTime? businessVisitedAt,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _ReviewDM;

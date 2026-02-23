@@ -41,7 +41,7 @@ class ReviewRepo {
     required int rating,
     ReviewType? reviewType,
     String? comment,
-    String? businessVisitedAt,
+    DateTime? businessVisitedAt,
     List<String>? photoPaths,
   }) async {
     List<MultipartFile>? multipartPhotos;
@@ -63,7 +63,9 @@ class ReviewRepo {
           rating: rating,
           reviewType: reviewType?.name,
           comment: comment,
-          businessVisitedAt: businessVisitedAt,
+          businessVisitedAt: businessVisitedAt != null
+              ? '${businessVisitedAt.year}-${businessVisitedAt.month.toString().padLeft(2, '0')}-${businessVisitedAt.day.toString().padLeft(2, '0')}'
+              : null,
           photos: multipartPhotos,
         ),
       );

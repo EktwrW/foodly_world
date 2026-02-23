@@ -2,6 +2,7 @@ import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 export 'package:foodly_world/core/enums/business_enums.dart';
@@ -42,6 +43,9 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'ratings_count') int? ratingsCount,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
+
+    // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
+    @Default([]) List<ReviewDM> reviews,
   }) = _BusinessDM;
 
   factory BusinessDM.fromJson(Map<String, dynamic> json) => _$BusinessDMFromJson(json);

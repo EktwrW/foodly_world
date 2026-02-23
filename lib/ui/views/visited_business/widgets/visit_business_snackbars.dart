@@ -1,8 +1,8 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_linear_calendar/flutter_linear_calendar.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
@@ -14,7 +14,6 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart' show FoodlyTextSt
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:intl/intl.dart' show Intl, DateFormat;
 import 'package:universal_io/io.dart' show File;
 
 class VisitedBusinessSnackbars {
@@ -59,7 +58,6 @@ class VisitedBusinessSnackbars {
         child: BlocBuilder<VisitBusinessCubit, VisitBusinessState>(
           builder: (context, state) {
             final vm = state.vm;
-            final locale = Intl.getCurrentLocale();
 
             return Column(
               spacing: 12,
@@ -129,7 +127,7 @@ class VisitedBusinessSnackbars {
                 ),
                 FoodlyPrimaryInputText(
                   controller: vm.reviewTextController,
-                  maxLength: 369,
+                  maxLength: 99,
                   maxLines: 6,
                   minLines: 3,
                   enabled: true,
@@ -179,7 +177,7 @@ class VisitedBusinessSnackbars {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            DateFormat('MMM', locale).format(date).capitalize,
+                            date.getMonthAbreviatedFormat,
                             style: TextStyle(
                               color: isSelected ? Colors.white : Colors.black54,
                               fontSize: 11,
@@ -187,7 +185,7 @@ class VisitedBusinessSnackbars {
                             ),
                           ),
                           Text(
-                            DateFormat('EEE\nd', locale).format(date).capitalize,
+                            date.getDayNumberAndNameAbreviatedFormat,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: isSelected ? Colors.white : Colors.black87,

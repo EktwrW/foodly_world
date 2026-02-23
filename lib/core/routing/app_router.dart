@@ -294,7 +294,12 @@ class AppRouter {
         _goRouteWithTransition(
           AppRoutes.myBusiness,
           BlocProvider(
-            create: (context) => BusinessBloc(di(), di(), di()),
+            create: (context) => BusinessBloc(
+              di(),
+              di(),
+              di(),
+              di(),
+            ),
             child: const BusinessPage(),
           ),
           [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],

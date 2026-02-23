@@ -142,7 +142,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
           rating: _vm.currentReviewStars!,
           reviewType: ReviewType.business,
           comment: _vm.reviewTextController?.text,
-          businessVisitedAt: _vm.dateOfVisitForReview?.toIso8601String(),
+          businessVisitedAt: _vm.dateOfVisitForReview,
           photoPaths: _vm.reviewPhotoPaths.isNotEmpty ? _vm.reviewPhotoPaths : null,
         )
         .then(

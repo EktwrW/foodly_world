@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +20,18 @@ extension DateExtension on DateTime {
       default:
         return 'th';
     }
+  }
+
+  /// Formato de fecha con día abreviado y número, adaptado al idioma actual. Ejemplo: "Mon\n5".
+  String get getDayNumberAndNameAbreviatedFormat {
+    final lang = Intl.getCurrentLocale();
+    return DateFormat('EEE\nd', lang).format(this).capitalize;
+  }
+
+  /// Formato de mes abreviado, adaptado al idioma actual. Ejemplo: "Jan".
+  String get getMonthAbreviatedFormat {
+    final lang = Intl.getCurrentLocale();
+    return DateFormat('MMM', lang).format(this).capitalize;
   }
 
   String get _birthdayStringUS {

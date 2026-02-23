@@ -85,9 +85,10 @@ class ReviewCard extends StatelessWidget {
                                 ).paddingOnly(bottom: 16, left: 4),
                             ],
                           ).paddingOnly(top: 6),
-                          Text(review.createdAt?.timeAgo ?? '', style: FoodlyTextStyles.captionPurpleBold)
-                              .paddingVertical(4),
-                          Text('Visitado el ${review.businessVisitedAt ?? '-'}',
+                          Text(review.createdAt?.timeAgo ?? '',
+                                  style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
+                              .paddingOnly(top: 8),
+                          Text('Visitado el ${review.businessVisitedAt?.getShortFormat ?? '-'}',
                               style: const TextStyle(fontSize: 11.5)),
                         ],
                       ).paddingHorizontal(12),

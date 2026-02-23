@@ -16,7 +16,7 @@ class CustomerReviewsWdg extends StatelessWidget {
         ),
         BlocSelector<BusinessBloc, BusinessState, List<ReviewDM>>(
           selector: (state) {
-            return state.vm.reviews;
+            return state.vm.currentBusiness?.reviews ?? [];
           },
           builder: (context, currentBusinessReviews) {
             return Visibility(
