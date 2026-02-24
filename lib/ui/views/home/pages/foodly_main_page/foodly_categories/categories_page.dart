@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
-import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -10,6 +8,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart';
+import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show CurrentLocationButton;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 part 'widgets/categories_app_bar.dart';
@@ -65,8 +64,6 @@ class CategoriesPage extends StatelessWidget {
     double screenWidth, {
     bool isLoading = false,
   }) {
-    final locationService = di<LocationService>();
-
     return Scaffold(
       extendBody: true,
       appBar: _CategoriesAppBar(
@@ -93,6 +90,15 @@ class CategoriesPage extends StatelessWidget {
                                     dimension: 42,
                                     child: DecoratedBox(
                                         decoration: BoxDecoration(
+                                          boxShadow: e != vm.currentCategory
+                                              ? null
+                                              : [
+                                                  BoxShadow(
+                                                    color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
+                                                    blurRadius: 6,
+                                                    offset: const Offset(0, 3),
+                                                  )
+                                                ],
                                           shape: BoxShape.circle,
                                           color: e == vm.currentCategory
                                               ? FoodlyThemes.primaryFoodly
@@ -127,25 +133,19 @@ class CategoriesPage extends StatelessWidget {
                       viewportFraction: screenWidth <= 320 ? .41 : .25,
                       aspectRatio: 3.0,
                     ),
-                  ).paddingBottom(12),
+                  ).paddingVertical(6),
                 ),
-                Flexible(
-                  child: const Text(
-                    'Radio de distancia para mostrar comercios:',
-                    overflow: TextOverflow.ellipsis,
-                    style: FoodlyTextStyles.captionPurple,
-                  ).paddingVertical(12),
-                ),
+                const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 24),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Flexible(
+                    const Flexible(
                       child: Text(
-                        '${locationService.currentAddress}, ${locationService.currentCity}.',
-                        maxLines: 2,
+                        'Radio de distancia:',
                         overflow: TextOverflow.ellipsis,
-                        style: FoodlyTextStyles.captionBold,
-                      ).paddingRight(20),
+                        style: FoodlyTextStyles.captionPurple,
+                        maxLines: 2,
+                      ),
                     ),
                     SegmentedButton<double>(
                       segments: radiusDistanceOptions

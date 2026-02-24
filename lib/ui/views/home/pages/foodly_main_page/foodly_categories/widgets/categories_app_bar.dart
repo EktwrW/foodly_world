@@ -38,18 +38,11 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Column(
         spacing: 12,
         children: [
-          Row(
-            spacing: 8,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 15, child: Asset(FoodlyAssets.logoWhite)),
-              Text(
-                S.current.categories,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 18),
-              )
-            ],
+          Text(
+            S.current.categories,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 18),
           ),
         ],
       ).paddingTop(6),

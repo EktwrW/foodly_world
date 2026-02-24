@@ -213,7 +213,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          '${locationDM.address ?? ''}, ${locationDM.city ?? ''}',
+                                          '${locationDM.address ?? ''}, ${locationDM.city ?? ''} ${locationDM.zipCode != null ? ', ${locationDM.zipCode}' : ''}',
                                           style: FoodlyTextStyles.addressSmallText,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -271,7 +271,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    '${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}',
+                                    '${authSessionService.userSessionDM?.user.principalAddress?.address ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'} ${authSessionService.userSessionDM?.user.principalAddress?.zipCode != null ? ', ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}' : ''}',
                                     style: FoodlyTextStyles.addressSmallText,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
