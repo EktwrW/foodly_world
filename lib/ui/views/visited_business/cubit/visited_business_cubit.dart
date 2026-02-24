@@ -74,17 +74,52 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
         );
   }
 
-  /// Get business reviews (if needed as a separate operation)
+  static const int _reviewsPerPage = 10;
+
+  /// Get business reviews (first page)
   void _fetchBusinessReviews(String businessUuid) {
-    _reviewRepo.getBusinessReviews(businessUuid).then(
+    _reviewRepo.getBusinessReviews(businessUuid, perPage: _reviewsPerPage).then(
           (response) => response.when(
             success: (reviewsResponse) {
-              _vm = _vm.copyWith(currentBusinessReviews: reviewsResponse.reviews);
+              _vm = _vm.copyWith(
+                currentBusinessReviews: reviewsResponse.reviews,
+                reviewsMeta: reviewsResponse.meta,
+              );
               Future.microtask(() => emit(_Loaded(_vm)));
             },
             failure: (error) {
               _logger.e(error);
               Future.microtask(() => emit(_Error(error.toString(), _vm)));
+            },
+          ),
+        );
+  }
+
+  /// Fetch next page of reviews and append to existing list
+  Future<void> fetchMoreReviews() async {
+    if (!_vm.canLoadMoreReviews || _vm.isLoadingMoreReviews || _vm.currentBusiness == null) return;
+
+    _vm = _vm.copyWith(isLoadingMoreReviews: true);
+    emit(_Loaded(_vm));
+
+    final nextPage = (_vm.reviewsMeta?.currentPage ?? 1) + 1;
+
+    await _reviewRepo
+        .getBusinessReviews(_vm.currentBusiness!.uuid, page: nextPage, perPage: _reviewsPerPage)
+        .then(
+          (response) => response.when(
+            success: (reviewsResponse) {
+              _vm = _vm.copyWith(
+                currentBusinessReviews: [...(_vm.currentBusinessReviews ?? []), ...reviewsResponse.reviews],
+                reviewsMeta: reviewsResponse.meta,
+                isLoadingMoreReviews: false,
+              );
+              emit(_Loaded(_vm));
+            },
+            failure: (error) {
+              _logger.e(error);
+              _vm = _vm.copyWith(isLoadingMoreReviews: false);
+              emit(_Loaded(_vm));
             },
           ),
         );

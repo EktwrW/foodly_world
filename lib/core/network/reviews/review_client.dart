@@ -13,6 +13,7 @@ abstract class ReviewClient {
   Future<ReviewsResponseDM> getBusinessReviews(
     @Path('businessUuid') String businessUuid, {
     @Query('page') int? page,
+    @Query('per_page') int? perPage,
   });
 
   @GET('/reviews/my-reviews')

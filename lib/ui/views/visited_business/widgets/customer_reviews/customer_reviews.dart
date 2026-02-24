@@ -12,11 +12,15 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
           firstText: '${S.current.dashboardReviewsOfOurCustomersText1} ',
           secondText: S.current.dashboardReviewsOfOurCustomersText2,
         ).paddingBottom(8),
-        BlocSelector<VisitBusinessCubit, VisitBusinessState, List<ReviewDM>>(
-          selector: (state) {
-            return state.vm.currentBusinessReviews ?? [];
-          },
-          builder: (context, currentBusinessReviews) {
+        BlocSelector<VisitBusinessCubit, VisitBusinessState, (List<ReviewDM>, bool, bool)>(
+          selector: (state) => (
+            state.vm.currentBusinessReviews ?? [],
+            state.vm.canLoadMoreReviews,
+            state.vm.isLoadingMoreReviews,
+          ),
+          builder: (context, data) {
+            final (currentBusinessReviews, canLoadMoreReviews, isLoadingMoreReviews) = data;
+
             return Visibility(
               visible: currentBusinessReviews.isNotEmpty,
               replacement: Center(
@@ -42,22 +46,36 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   enlargeCenterPage: true,
                   enlargeFactor: .26,
                   enlargeStrategy: CenterPageEnlargeStrategy.height,
+                  onPageChanged: (index, _) {
+                    if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
+                      context.read<VisitBusinessCubit>().fetchMoreReviews();
+                    }
+                  },
                 ),
-                items: currentBusinessReviews.map((review) {
-                  return ReviewCard(
-                    review: review,
-                    onEdit: () {
-                      VisitedBusinessSnackbars.showInputReviewWdg(context, existingReview: review);
-                    },
-                    onDelete: () {
-                      VisitedBusinessSnackbars.showDeleteReviewConfirmation(
-                        context,
-                        context.read<VisitBusinessCubit>(),
-                        review,
-                      );
-                    },
-                  );
-                }).toList(),
+                items: [
+                  ...currentBusinessReviews.map((review) {
+                    return ReviewCard(
+                      review: review,
+                      onEdit: () {
+                        VisitedBusinessSnackbars.showInputReviewWdg(context, existingReview: review);
+                      },
+                      onDelete: () {
+                        VisitedBusinessSnackbars.showDeleteReviewConfirmation(
+                          context,
+                          context.read<VisitBusinessCubit>(),
+                          review,
+                        );
+                      },
+                    );
+                  }),
+                  if (isLoadingMoreReviews)
+                    const Center(
+                      child: SizedBox.square(
+                        dimension: 32,
+                        child: CircularProgressIndicator(strokeWidth: 3, color: FoodlyThemes.primaryFoodly),
+                      ),
+                    ),
+                ],
               ),
             );
           },

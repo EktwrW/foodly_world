@@ -12,9 +12,9 @@ class ReviewRepo {
 
   const ReviewRepo({required ReviewClient reviewClient}) : _reviewClient = reviewClient;
 
-  Future<ApiResult<ReviewsResponseDM>> getBusinessReviews(String businessUuid, {int? page}) async {
+  Future<ApiResult<ReviewsResponseDM>> getBusinessReviews(String businessUuid, {int? page, int? perPage}) async {
     try {
-      return ApiResult.success(await _reviewClient.getBusinessReviews(businessUuid, page: page));
+      return ApiResult.success(await _reviewClient.getBusinessReviews(businessUuid, page: page, perPage: perPage));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

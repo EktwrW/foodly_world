@@ -22,7 +22,12 @@ class VisitBusinessVM with _$VisitBusinessVM {
     DateTime? dateOfVisitForReview,
     @Default([]) List<String> reviewPhotoPaths,
     ReviewDM? editingReview,
+    ReviewsMetaDM? reviewsMeta,
+    @Default(false) bool isLoadingMoreReviews,
   }) = _VisitBusinessVM;
+
+  bool get canLoadMoreReviews =>
+      reviewsMeta != null && reviewsMeta!.currentPage < reviewsMeta!.lastPage;
 
   bool get canSubmitReview {
     final hasBasicFields = currentReviewStars != null && currentReviewStars! > 0 && dateOfVisitForReview != null;
