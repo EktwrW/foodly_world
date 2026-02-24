@@ -7,8 +7,10 @@ import 'package:nova_places_api/nova_places_api.dart';
 
 class LocationService {
   LocationDetailsDM _locationDM = const LocationDetailsDM();
+  bool _hasBeenInitialized = false;
+
   LocationDetailsDM get currentLocation => _locationDM;
-  bool get mustFetchLocation => currentZipCode.isEmpty;
+  bool get mustFetchLocation => !_hasBeenInitialized;
 
   String get currentCountryCode => _locationDM.countryCode ?? FoodlyCountries.USA.countryCode;
   String get currentCountry => _locationDM.country ?? '';
@@ -17,7 +19,10 @@ class LocationService {
   String get currentAddress => _locationDM.address ?? '';
   String get currentZipCode => _locationDM.zipCode ?? '';
 
-  void updateLocation(LocationDetailsDM newValue) => _locationDM = newValue;
+  void updateLocation(LocationDetailsDM newValue) {
+    _locationDM = newValue;
+    _hasBeenInitialized = true;
+  }
 
   void updateLocationFromPlace(Place place) {
     final newLocation = LocationDetailsDM(
