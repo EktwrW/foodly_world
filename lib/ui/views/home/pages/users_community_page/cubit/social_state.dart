@@ -1,6 +1,9 @@
 part of 'social_cubit.dart';
 
-@immutable
-sealed class SocialState {}
-
-final class SocialInitial extends SocialState {}
+@freezed
+class SocialState with _$SocialState {
+  const factory SocialState.initial(SocialVM vm) = _Initial;
+  const factory SocialState.loading(SocialVM vm) = _Loading;
+  const factory SocialState.loaded(SocialVM vm) = _Loaded;
+  const factory SocialState.error(SocialVM vm, String message) = _Error;
+}

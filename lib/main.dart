@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 
 void main() async => runApp(await buildFoodlyApp());
 
@@ -34,6 +35,7 @@ Future<Widget> buildFoodlyApp() async {
       BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
       BlocProvider(create: (context) => di<FavoritesCubit>()),
       BlocProvider(create: (context) => di<NotificationsCubit>()),
+      BlocProvider(create: (context) => di<SocialCubit>()),
     ],
     child: MaterialApp.router(
       title: 'Foodly App',
