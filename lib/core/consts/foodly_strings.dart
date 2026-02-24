@@ -52,8 +52,7 @@ class FoodlyStrings {
 
   // AI models for service configuration:
   static const GPT_4_MODEL = 'gpt-4';
-  static const GPT_3_5_TURBO_MODEL = 'gpt-3.5-turbo-1106';
-  static const DALL_E_3 = 'dall-e-3';
+  static const GPT_4O_MINI_MODEL = 'gpt-4o-mini';
 
   // Avatar placeholders
   static const LOGO_PLACEHOLDER = 'https://foodly.s3.us-east-1.amazonaws.com/images/business-placeholder.png';
