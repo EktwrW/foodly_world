@@ -15,6 +15,7 @@ class AIPromoService {
     required String businessUuid,
     required (bool, OpenAIImageStyle) generateImage,
     String? language,
+    required String businessCategory,
   }) async {
     late final Uint8List? imageBytes;
 
@@ -39,7 +40,7 @@ class AIPromoService {
               role: OpenAIChatMessageRole.system,
               content: [
                 OpenAIChatCompletionChoiceMessageContentItemModel.text(
-                  '''You are a marketing copywriter for a food & beverage app. The user will describe a promotion. Your job is to turn it into attractive marketing copy that ACCURATELY represents the EXACT same deal.
+                  '''You are a marketing copywriter for a food & beverage app. The user will describe a promotion for a business in the "$businessCategory" category. Your job is to turn it into attractive marketing copy that ACCURATELY represents the EXACT same deal.
 
 Generate a JSON with EXACTLY these fields:
 {
@@ -64,8 +65,10 @@ CONTENT RULES:
 
 IMAGE PROMPT RULES:
 - image_prompt: ALWAYS in English, max 120 chars
-- Describe ONLY the visual scene of the food/drinks/products
-- Example: "two cold craft beers with lime wedges on a rustic wooden table, soft warm lighting"
+- Describe ONLY a visual scene appropriate for a "$businessCategory" business
+- The scene must show products/items typical of this category (e.g. cocktails for a bar, pastries for a bakery, coffee for a café, dishes for a restaurant)
+- Example for bar: "two cold craft beers with lime wedges on a rustic wooden counter, moody ambient lighting"
+- Example for café: "latte art cappuccino with a fresh croissant on a marble table, morning sunlight"
 - NO numbers, NO prices, NO deals, NO promotional words, NO text to render, NO brand names
 - Pure visual description of the products and setting
 
@@ -96,7 +99,12 @@ Output ONLY the JSON, nothing else.''',
           // Usar image_prompt generado por GPT (visual-only, sin texto promocional)
           // en lugar del prompt raw del usuario que contiene "2x1", "gratis", etc.
           final imagePrompt = (jsonResponse['image_prompt'] as String?)?.trim() ?? prompt;
-          final imageUrl = await _replicateService.generateImage(imagePrompt, businessName, generateImage.$2);
+          final imageUrl = await _replicateService.generateImage(
+            imagePrompt,
+            businessName,
+            generateImage.$2,
+            businessCategory: businessCategory,
+          );
           imageBytes = await _replicateService.downloadImage(imageUrl);
         }
 
@@ -208,17 +216,20 @@ class ReplicateService {
   Future<String> generateImage(
     String prompt,
     String businessName,
-    OpenAIImageStyle style,
-  ) async {
+    OpenAIImageStyle style, {
+    String? businessCategory,
+  }) async {
     try {
       final stylePrompt = _getStylePrompt(style);
+      final category = businessCategory?.toLowerCase() ?? 'restaurant';
 
       // ✅ Prompt optimizado para z-image-turbo
-      // - El $prompt ahora viene de GPT como image_prompt: escena visual pura en inglés
+      // - El $prompt viene de GPT como image_prompt: escena visual pura en inglés
       // - Sin texto promocional, sin números, sin ofertas — solo descripción visual
-      // - Envuelto en estilo fotográfico profesional
+      // - NO mencionar equipos (camera, DSLR, lens, tripod) — el modelo los renderiza literalmente
+      // - Categoría del negocio para contextualizar la escena
       final promptText =
-          '''$stylePrompt $prompt. Professional food and beverage photography, studio lighting, shallow depth of field, clean background, appetizing presentation, wide landscape composition, shot on DSLR camera, sharp focus, detailed textures. No text, no words, no letters, no numbers, no watermarks, no captions, no titles, no overlay, clean photography only.''';
+          '''$stylePrompt $prompt. $category setting, shallow depth of field, bokeh background, clean uncluttered scene, warm inviting tones, wide landscape composition, sharp focus on products, high detail, photorealistic quality. No text, no words, no letters, no numbers, no watermarks, no captions, no titles, no overlay, no cameras, no equipment, no hands, clean image only.''';
 
       final predictionResponse = await _dio.post(
         '/predictions',

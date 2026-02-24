@@ -79,7 +79,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                                   maxLength: 99,
                                   minLines: 2,
                                   maxLines: 2,
-                                  style: const TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                                 ),
                                 FoodlyPrimaryInputText(
                                   key: const Key('add-promo-description'),

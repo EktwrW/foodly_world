@@ -222,6 +222,7 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
         businessUuid: _vm.businessDM!.uuid,
         generateImage: generateImage,
         language: _authSessionService.lang,
+        businessCategory: _vm.businessDM!.category?.categoryName ?? 'gastronomic establishment',
       );
 
       _vm.titleCtrl?.controller?.text = response.title;
