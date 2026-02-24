@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_main_pa
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_page.dart';
 import 'package:foodly_world/ui/views/home/pages/notifications_page/notifications_page.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
-import 'package:foodly_world/ui/views/home/pages/users_community_page/users_community_page.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
@@ -216,7 +216,7 @@ class AppRouter {
               routes: [
                 _goRouteForStatefulShell(
                   AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.usersCommunity, const UsersCommunityPage(),
+                  _goRouteWithTransition(AppRoutes.usersCommunity, const SocialPage(),
                       [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
                 ),
               ],

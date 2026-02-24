@@ -1,11 +1,11 @@
 import 'package:foodly_world/core/core_exports.dart';
-import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/users_community_vm.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show CurrentLocationButton;
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:toggle_switch/toggle_switch.dart' show ToggleSwitch;
 
-class UsersCommunityPage extends StatelessWidget {
-  const UsersCommunityPage({super.key});
+class SocialPage extends StatelessWidget {
+  const SocialPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class UsersCommunityPage extends StatelessWidget {
         children: [
           const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 24),
           ToggleSwitch(
-            labels: UsersCommunityViews.values.map((e) => e.title).toList(),
+            labels: SocialPageViews.values.map((e) => e.title).toList(),
             initialLabelIndex: 0,
             animate: true,
             animationDuration: 500,
@@ -27,7 +27,7 @@ class UsersCommunityPage extends StatelessWidget {
             cornerRadius: 6.0,
             activeFgColor: Colors.white,
             inactiveBgColor: Colors.white,
-            totalSwitches: UsersCommunityViews.values.length,
+            totalSwitches: SocialPageViews.values.length,
             customTextStyles: const [
               TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
               TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
