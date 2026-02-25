@@ -11,6 +11,8 @@ class NlpSearchRequestDTO {
   final double? distanceKm;
   final int? limit;
   final int? offset;
+  @JsonKey(name: 'user_uuid')
+  final String? userUuid;
 
   const NlpSearchRequestDTO({
     required this.query,
@@ -19,6 +21,7 @@ class NlpSearchRequestDTO {
     this.distanceKm,
     this.limit,
     this.offset,
+    this.userUuid,
   });
 
   factory NlpSearchRequestDTO.fromJson(Map<String, dynamic> json) => _$NlpSearchRequestDTOFromJson(json);

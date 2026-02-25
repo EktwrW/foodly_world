@@ -158,6 +158,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
     Future.microtask(() => emit(SmartSearchState.searching(_vm)));
 
     // Use NLP Search Service for smart search
+    final userUuid = di<AuthSessionService>().uuid;
     final result = await _nlpSearchRepo.search(
       NlpSearchRequestDTO(
         query: searchText!,
@@ -165,6 +166,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         longitude: longitude,
         distanceKm: 10, // Default 10km radius
         limit: 50,
+        userUuid: userUuid,
       ),
     );
 
