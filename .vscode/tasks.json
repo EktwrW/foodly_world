@@ -31,6 +31,7 @@
         "--dart-define=API_VERSION=/api",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=\"https://maps.googleapis.com/maps/api/geocode/json?latlng=\"",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
@@ -49,11 +50,13 @@
         "build",
         "ipa",
         "--release",
+        "--no-codesign",
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://be-foodly-137265888722.europe-west1.run.app",
         "--dart-define=API_VERSION=/api",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=\"https://maps.googleapis.com/maps/api/geocode/json?latlng=\"",
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=561934860792-5f8dpsqiiecuo2mcc1uojeeqiohosua9.apps.googleusercontent.com",
@@ -63,7 +66,7 @@
       "problemMatcher": [],
       "group": "build",
       "label": "Foodly - Build IPA Release",
-      "detail": "Build IPA with production environment"
+      "detail": "Build IPA with production environment (no codesign - open in Xcode to sign)"
     }
   ]
 }
