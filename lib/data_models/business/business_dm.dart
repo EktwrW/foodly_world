@@ -67,7 +67,9 @@ class BusinessDM with _$BusinessDM {
   }
 
   List<BusinessServices> get businessServices =>
-      (services?.isEmpty ?? true) ? [] : List<BusinessServices>.generate(services!.length, (i) => services![i].service)
+      (services?.isEmpty ?? true)
+          ? []
+          : services!.where((s) => s.service != null).map((s) => s.service!).toList()
         ..sort((a, b) => a.value.compareTo(b.value));
 }
 
@@ -87,7 +89,7 @@ class CategoryDM with _$CategoryDM {
 class BusinessServicesDM with _$BusinessServicesDM {
   const BusinessServicesDM._();
   const factory BusinessServicesDM({
-    @JsonKey(name: 'id') required BusinessServices service,
+    @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,
     @JsonKey(name: 'service_uuid') String? uuid,
     @JsonKey(name: 'service_name') String? serviceName,
     @JsonKey(name: 'service_description') String? serviceDescriptio,

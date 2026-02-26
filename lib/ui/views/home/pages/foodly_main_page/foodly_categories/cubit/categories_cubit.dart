@@ -6,7 +6,7 @@ import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show LocalStorageService, di, FoodlyStrings;
+    show LocalStorageService, di, FoodlyStrings, Logger;
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,6 +16,7 @@ part 'categories_cubit.freezed.dart';
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesVM _vm;
   final BusinessRepo _businessRepo;
+  final Logger _logger = di<Logger>();
 
   CategoriesCubit(
     FoodlyCategories? initialCategory,
@@ -88,6 +89,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
                 _vm = _vm.copyWith(isSwitchingRadius: false),
                 error.errorMsg,
               )));
+          _logger.e('Error fetching nearby businesses: ${error.errorMsg}');
         },
       );
     });
