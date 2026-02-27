@@ -12,6 +12,15 @@
     },
     {
       "type": "shell",
+      "command": "flutter",
+      "args": ["clean"],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Foodly - Clean",
+      "detail": "Limpia el caché de build de Flutter y Gradle"
+    },
+    {
+      "type": "shell",
       "command": "sh",
       "args": ["${workspaceFolder}/.vscode/generate_translations.sh"],
       "problemMatcher": [],
@@ -38,10 +47,12 @@
         "--dart-define=OPENAI_API_KEY=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",
         "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
       ],
+      "dependsOn": ["Foodly - Clean"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Foodly - Build APK Release",
-      "detail": "Build APK with production environment"
+      "detail": "Build APK con clean previo (evita caché de artifacts viejos)"
     },
     {
       "type": "shell",
@@ -63,10 +74,12 @@
         "--dart-define=OPENAI_API_KEY=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",
         "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
       ],
+      "dependsOn": ["Foodly - Clean"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Foodly - Build IPA Release",
-      "detail": "Build IPA with production environment (no codesign - open in Xcode to sign)"
+      "detail": "Build IPA con clean previo (evita caché de artifacts viejos)"
     }
   ]
 }
