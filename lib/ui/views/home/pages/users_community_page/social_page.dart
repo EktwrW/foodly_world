@@ -5,8 +5,10 @@ import 'package:foodly_world/core/core_exports.dart'
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/buzz_feed_wdg.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/create_post_dialog.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/posts_feed_wdg.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/users_discovery_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show CurrentLocationButton;
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:toggle_switch/toggle_switch.dart' show ToggleSwitch;
@@ -37,7 +39,7 @@ class _SocialPageState extends State<SocialPage> {
         onPressed: () => CreatePostDialog.show(context),
         backgroundColor: FoodlyThemes.primaryFoodly,
         child: const Icon(Icons.edit, color: Colors.white),
-      ).paddingOnly(bottom: 80, right: 12),
+      ).paddingOnly(bottom: context.screenHeight * .12, right: 12),
       body: BlocConsumer<SocialCubit, SocialState>(
         listener: (context, state) {
           final dialogService = di<DialogService>();
@@ -63,12 +65,13 @@ class _SocialPageState extends State<SocialPage> {
                 animate: true,
                 animationDuration: 500,
                 minHeight: 30,
-                minWidth: (context.screenWidth - 44) / 2,
+                minWidth: (context.screenWidth - 44) / 3,
                 cornerRadius: 6.0,
                 activeFgColor: Colors.white,
                 inactiveBgColor: Colors.white,
                 totalSwitches: SocialPageViews.values.length,
                 customTextStyles: const [
+                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
                 ],
@@ -79,6 +82,7 @@ class _SocialPageState extends State<SocialPage> {
                 ],
                 dividerColor: FoodlyThemes.secondaryFoodly,
                 activeBgColors: const [
+                  [FoodlyThemes.primaryFoodly],
                   [FoodlyThemes.primaryFoodly],
                   [FoodlyThemes.primaryFoodly],
                 ],
@@ -94,7 +98,8 @@ class _SocialPageState extends State<SocialPage> {
                   index: vm.currentView.index,
                   children: const [
                     PostsFeedWidget(),
-                    Center(child: Text('Users - Coming Soon')),
+                    UsersDiscoveryWidget(),
+                    BuzzFeedWidget(),
                   ],
                 ),
               ),

@@ -1,10 +1,15 @@
 import 'dart:async' show Timer;
+import 'dart:developer';
+import 'dart:io' show Platform;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/nlp_search_request_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -38,11 +43,15 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         await _speechToText.stop();
       }
 
-      final available = await _speechToText.initialize(
-        onError: _handleError,
-        onStatus: (status) => _logger.t('Status: $status'),
-        debugLogging: true,
-      );
+      final (available, deviceInfo, platform) = await (
+        _speechToText.initialize(
+          onError: _handleError,
+          onStatus: (status) => _logger.t('Status: $status'),
+          debugLogging: true,
+        ),
+        _buildDeviceInfo(),
+        Future.value(_detectPlatform()),
+      ).wait;
 
       final textController = TextEditingController();
       final focusNode = FocusNode();
@@ -52,6 +61,9 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         isListening: false,
         recognizedText: '',
         smartSearchMode: SmartSearchMode.none,
+        platform: platform,
+        deviceInfo: deviceInfo,
+        // sessionId: null — not yet provided by the backend on login
         inputController: InputController(
           controller: textController,
           focusNode: focusNode,
@@ -67,6 +79,58 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
       _logger.e('Error de inicialización: $e');
       emit(SmartSearchState.error(S.current.speechRecognitionError, _vm));
     }
+  }
+
+  /// Resolves the current [NlpSearchPlatform] using Flutter's built-in platform
+  /// detection. Web is checked first since [Platform] throws on web.
+  NlpSearchPlatform _detectPlatform() {
+    if (kIsWeb) return NlpSearchPlatform.web;
+    if (Platform.isAndroid) return NlpSearchPlatform.android;
+    if (Platform.isIOS) return NlpSearchPlatform.ios;
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) return NlpSearchPlatform.desktop;
+    return NlpSearchPlatform.unknown;
+  }
+
+  /// Builds a [DeviceInfoDTO] with OS version and app version.
+  /// The device model requires `device_info_plus` and is left null until added.
+  Future<DeviceInfoDTO> _buildDeviceInfo() async {
+    String? osVersion;
+    String? appVersion;
+    String? model;
+
+    if (kIsWeb) {
+      model = await DeviceInfoPlugin().webBrowserInfo.then((data) => data.browserName.name);
+    } else if (Platform.isAndroid) {
+      model = await DeviceInfoPlugin().androidInfo.then((data) => data.model);
+    } else if (Platform.isIOS) {
+      model = await DeviceInfoPlugin().iosInfo.then((data) => data.utsname.machine);
+    } else if (Platform.isMacOS) {
+      model = await DeviceInfoPlugin().macOsInfo.then((data) => data.model);
+    } else if (Platform.isWindows) {
+      model = await DeviceInfoPlugin().windowsInfo.then((data) => data.computerName);
+    } else if (Platform.isLinux) {
+      model = await DeviceInfoPlugin().linuxInfo.then((data) => data.name);
+    } else {
+      model = 'Unknown';
+    }
+
+    log('model: $model');
+    log('----------------------------------------------------------------');
+
+    try {
+      osVersion = Platform.operatingSystemVersion;
+    } catch (_) {}
+
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      appVersion = packageInfo.version;
+    } catch (_) {}
+
+    return DeviceInfoDTO(
+      osVersion: osVersion,
+      appVersion: appVersion,
+      model: model,
+    );
   }
 
   void startListening() async {
@@ -167,6 +231,9 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         distanceKm: 10, // Default 10km radius
         limit: 50,
         userUuid: userUuid,
+        sessionId: _vm.sessionId, // null until backend provides it on login
+        platform: _vm.platform,
+        deviceInfo: _vm.deviceInfo,
       ),
     );
 

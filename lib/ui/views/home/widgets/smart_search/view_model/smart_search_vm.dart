@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/controllers/input_controller.dart';
-import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
+import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode, NlpSearchPlatform;
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart' show DeviceInfoDTO;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'smart_search_vm.freezed.dart';
@@ -28,6 +29,9 @@ class SmartSearchVM with _$SmartSearchVM {
     @Default(BusinessResultsViewMode.list) BusinessResultsViewMode viewMode,
     @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
     required InputController inputController,
+    String? sessionId,
+    NlpSearchPlatform? platform,
+    @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo,
   }) = _SmartSearchVM;
 
   factory SmartSearchVM.initial() => SmartSearchVM(

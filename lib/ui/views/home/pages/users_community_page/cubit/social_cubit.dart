@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
+import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
@@ -13,16 +16,22 @@ part 'social_state.dart';
 class SocialCubit extends Cubit<SocialState> {
   SocialVM _vm;
   final PostRepo _postRepo;
+  final UserDiscoveryRepo _userDiscoveryRepo;
+  final BuzzRepo _buzzRepo;
   final AuthSessionService _authService;
   final LocationService _locationService;
   final Logger _logger;
 
   SocialCubit({
     required PostRepo postRepo,
+    required UserDiscoveryRepo userDiscoveryRepo,
+    required BuzzRepo buzzRepo,
     required AuthSessionService authService,
     required LocationService locationService,
     required Logger logger,
   })  : _postRepo = postRepo,
+        _userDiscoveryRepo = userDiscoveryRepo,
+        _buzzRepo = buzzRepo,
         _authService = authService,
         _locationService = locationService,
         _logger = logger,
@@ -239,6 +248,241 @@ class SocialCubit extends Cubit<SocialState> {
   void changeView(SocialPageViews view) {
     _vm = _vm.copyWith(currentView: view);
     emit(SocialState.loaded(_vm));
+
+    // Auto-load data when switching tabs for the first time
+    if (view == SocialPageViews.users && _vm.nearbyUsers.isEmpty && !_vm.isLoadingUsers) {
+      loadNearbyUsers();
+    } else if (view == SocialPageViews.buzz && _vm.buzzItems.isEmpty && !_vm.isLoadingBuzz) {
+      loadBuzz();
+    }
+  }
+
+  // ─── User Discovery ───
+
+  /// Carga usuarios cercanos
+  Future<void> loadNearbyUsers({bool refresh = false}) async {
+    if (!_authService.isLoggedIn) return;
+
+    final position = _locationService.currentLocation.position;
+    if (position == null) {
+      emit(SocialState.error(_vm, 'Location not available'));
+      return;
+    }
+
+    _vm = _vm.copyWith(isLoadingUsers: true);
+    if (refresh) {
+      emit(SocialState.loading(_vm));
+    } else {
+      emit(SocialState.loaded(_vm));
+    }
+
+    try {
+      final result = await _userDiscoveryRepo.getNearbyUsers(
+        latitude: position.latitude,
+        longitude: position.longitude,
+        sort: _vm.userSortMode.name,
+        page: 1,
+        perPage: 20,
+      );
+
+      result.when(
+        success: (data) {
+          _vm = _vm.copyWith(
+            nearbyUsers: data.data,
+            usersMeta: data.meta,
+            isLoadingUsers: false,
+          );
+          emit(SocialState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading nearby users: ${error.errorMsg}');
+          _vm = _vm.copyWith(isLoadingUsers: false);
+          emit(SocialState.error(_vm, error.errorMsg));
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading nearby users: $e');
+      _vm = _vm.copyWith(isLoadingUsers: false);
+      emit(SocialState.error(_vm, e.toString()));
+    }
+  }
+
+  /// Carga más usuarios (paginación)
+  Future<void> loadMoreUsers() async {
+    if (!_authService.isLoggedIn || !_vm.canLoadMoreUsers) return;
+
+    final position = _locationService.currentLocation.position;
+    if (position == null) return;
+
+    _vm = _vm.copyWith(isLoadingMoreUsers: true);
+    emit(SocialState.loaded(_vm));
+
+    final nextPage = _vm.usersCurrentPage + 1;
+
+    try {
+      final result = await _userDiscoveryRepo.getNearbyUsers(
+        latitude: position.latitude,
+        longitude: position.longitude,
+        sort: _vm.userSortMode.name,
+        page: nextPage,
+        perPage: 20,
+      );
+
+      result.when(
+        success: (data) {
+          _vm = _vm.copyWith(
+            nearbyUsers: [..._vm.nearbyUsers, ...data.data],
+            usersMeta: data.meta,
+            isLoadingMoreUsers: false,
+          );
+          emit(SocialState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading more users: ${error.errorMsg}');
+          _vm = _vm.copyWith(isLoadingMoreUsers: false);
+          emit(SocialState.loaded(_vm));
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading more users: $e');
+      _vm = _vm.copyWith(isLoadingMoreUsers: false);
+      emit(SocialState.loaded(_vm));
+    }
+  }
+
+  /// Cambia el modo de ordenamiento y recarga
+  void changeUserSortMode(UserSortMode mode) {
+    if (mode == _vm.userSortMode) return;
+    _vm = _vm.copyWith(userSortMode: mode, nearbyUsers: []);
+    emit(SocialState.loaded(_vm));
+    loadNearbyUsers();
+  }
+
+  /// Toggle follow de un usuario (optimistic)
+  Future<void> toggleFollowUser(String userUuid) async {
+    // Optimistic update
+    final updatedUsers = _vm.nearbyUsers.map((user) {
+      if (user.uuid == userUuid) {
+        final newIsFollowing = !user.isFollowing;
+        return user.copyWith(
+          isFollowing: newIsFollowing,
+          followersCount: newIsFollowing ? user.followersCount + 1 : user.followersCount - 1,
+        );
+      }
+      return user;
+    }).toList();
+
+    _vm = _vm.copyWith(nearbyUsers: updatedUsers);
+    emit(SocialState.loaded(_vm));
+
+    // The actual follow/unfollow is done via UserFollowerController (existing endpoint)
+    // The frontend already has the user-followers toggle endpoint wired up
+  }
+
+  /// Carga perfil público de un usuario
+  Future<UserProfileDM?> loadUserProfile(String uuid) async {
+    try {
+      final result = await _userDiscoveryRepo.getUserProfile(uuid);
+      return result.when(
+        success: (profile) => profile,
+        failure: (error) {
+          _logger.e('Error loading user profile: ${error.errorMsg}');
+          return null;
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading user profile: $e');
+      return null;
+    }
+  }
+
+  // ─── Buzz Feed ───
+
+  /// Carga el feed de buzz (actividad comunitaria)
+  Future<void> loadBuzz({bool refresh = false}) async {
+    if (!_authService.isLoggedIn) return;
+
+    final position = _locationService.currentLocation.position;
+    if (position == null) {
+      emit(SocialState.error(_vm, 'Location not available'));
+      return;
+    }
+
+    _vm = _vm.copyWith(isLoadingBuzz: true);
+    if (refresh) {
+      emit(SocialState.loading(_vm));
+    } else {
+      emit(SocialState.loaded(_vm));
+    }
+
+    try {
+      final result = await _buzzRepo.getBuzz(
+        latitude: position.latitude,
+        longitude: position.longitude,
+        page: 1,
+      );
+
+      result.when(
+        success: (data) {
+          _vm = _vm.copyWith(
+            buzzItems: data.data,
+            buzzMeta: data.meta,
+            isLoadingBuzz: false,
+          );
+          emit(SocialState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading buzz: ${error.errorMsg}');
+          _vm = _vm.copyWith(isLoadingBuzz: false);
+          emit(SocialState.error(_vm, error.errorMsg));
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading buzz: $e');
+      _vm = _vm.copyWith(isLoadingBuzz: false);
+      emit(SocialState.error(_vm, e.toString()));
+    }
+  }
+
+  /// Carga más items de buzz (paginación)
+  Future<void> loadMoreBuzz() async {
+    if (!_authService.isLoggedIn || !_vm.canLoadMoreBuzz) return;
+
+    final position = _locationService.currentLocation.position;
+    if (position == null) return;
+
+    _vm = _vm.copyWith(isLoadingMoreBuzz: true);
+    emit(SocialState.loaded(_vm));
+
+    final nextPage = _vm.buzzCurrentPage + 1;
+
+    try {
+      final result = await _buzzRepo.getBuzz(
+        latitude: position.latitude,
+        longitude: position.longitude,
+        page: nextPage,
+      );
+
+      result.when(
+        success: (data) {
+          _vm = _vm.copyWith(
+            buzzItems: [..._vm.buzzItems, ...data.data],
+            buzzMeta: data.meta,
+            isLoadingMoreBuzz: false,
+          );
+          emit(SocialState.loaded(_vm));
+        },
+        failure: (error) {
+          _logger.e('Error loading more buzz: ${error.errorMsg}');
+          _vm = _vm.copyWith(isLoadingMoreBuzz: false);
+          emit(SocialState.loaded(_vm));
+        },
+      );
+    } catch (e) {
+      _logger.e('Exception loading more buzz: $e');
+      _vm = _vm.copyWith(isLoadingMoreBuzz: false);
+      emit(SocialState.loaded(_vm));
+    }
   }
 
   /// Limpia el estado (logout)

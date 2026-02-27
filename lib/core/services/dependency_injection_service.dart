@@ -1,4 +1,6 @@
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/network/buzz/buzz_client.dart';
+import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
@@ -6,6 +8,8 @@ import 'package:foodly_world/core/network/posts/post_client.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_client.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
+import 'package:foodly_world/core/network/users/user_discovery_client.dart';
+import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 
 import 'package:get_it/get_it.dart';
@@ -43,6 +47,8 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => NotificationsClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReviewClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => PostClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => UserDiscoveryClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => BuzzClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReplicateService())
       ..registerLazySingleton(() => AIPromoService(di()));
 
@@ -53,7 +59,9 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => NlpSearchRepo(nlpSearchClient: di()))
       ..registerLazySingleton(() => NotificationsRepo(notificationsClient: di()))
       ..registerLazySingleton(() => ReviewRepo(reviewClient: di()))
-      ..registerLazySingleton(() => PostRepo(postClient: di()));
+      ..registerLazySingleton(() => PostRepo(postClient: di()))
+      ..registerLazySingleton(() => UserDiscoveryRepo(client: di()))
+      ..registerLazySingleton(() => BuzzRepo(buzzClient: di()));
 
     /// Register services
     final authService = AuthSessionService(
@@ -89,6 +97,8 @@ class DependencyInjectionService {
     /// Register SocialCubit
     di.registerLazySingleton(() => SocialCubit(
           postRepo: di(),
+          userDiscoveryRepo: di(),
+          buzzRepo: di(),
           authService: authService,
           locationService: di(),
           logger: di(),

@@ -16,6 +16,20 @@ enum TokenType {
   unknown;
 }
 
+/// Identifies the platform from which an NLP search request originates.
+@JsonEnum(valueField: 'value')
+enum NlpSearchPlatform {
+  android('android'),
+  ios('ios'),
+  web('web'),
+  desktop('desktop'),
+  unknown('unknown');
+
+  final String value;
+
+  const NlpSearchPlatform(this.value);
+}
+
 enum DeviceSize {
   mobile(start: 0, end: 450, name: MOBILE),
   smallTablet(start: 451, end: 720, name: 'SMALL_TABLET'),
