@@ -1,3 +1,5 @@
+import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart' show FabCircularMenuPlusState;
+import 'package:flutter/material.dart' show GlobalKey;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
@@ -35,7 +37,7 @@ class SocialCubit extends Cubit<SocialState> {
         _authService = authService,
         _locationService = locationService,
         _logger = logger,
-        _vm = const SocialVM(),
+        _vm = SocialVM(floatingButtonKey: GlobalKey<FabCircularMenuPlusState>()),
         super(const SocialState.initial(SocialVM()));
 
   /// Carga el feed de posts (con ubicación si está disponible)

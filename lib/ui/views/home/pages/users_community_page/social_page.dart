@@ -29,43 +29,50 @@ class _SocialPageState extends State<SocialPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SecondaryMainAppBar(
-        key: Key('community-app-bar'),
-        actionText: 'Social Community',
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => CreatePostDialog.show(context),
-        backgroundColor: FoodlyThemes.primaryFoodly,
-        child: const Icon(Icons.edit, color: Colors.white),
-      ).paddingOnly(bottom: context.screenHeight * .12, right: 12),
-      body: BlocConsumer<SocialCubit, SocialState>(
-        listener: (context, state) {
-          final dialogService = di<DialogService>();
+    return BlocConsumer<SocialCubit, SocialState>(
+      listener: (context, state) {
+        final dialogService = di<DialogService>();
 
-          state.whenOrNull(
-            loading: (vm) => dialogService.showLoading(),
-            loaded: (vm) => dialogService.hideLoading(),
-            error: (vm, message) {
-              dialogService.hideLoading();
-              FoodlySnackbars.errorGeneric(context, message);
+        state.whenOrNull(
+          loading: (vm) => dialogService.showLoading(),
+          loaded: (vm) => dialogService.hideLoading(),
+          error: (vm, message) {
+            dialogService.hideLoading();
+            FoodlySnackbars.errorGeneric(context, message);
+          },
+        );
+      },
+      builder: (context, state) {
+        final vm = state.vm;
+
+        return Scaffold(
+          extendBody: true,
+          appBar: const SecondaryMainAppBar(
+            key: Key('community-app-bar'),
+            actionText: 'Socials',
+          ),
+          floatingActionButton: AnimatedSwitcher(
+            duration: Durations.medium1,
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+            child: switch (vm.currentView) {
+              SocialPageViews.posts => const PostsFloatingActionButton(),
+              _ => const SizedBox.shrink(),
             },
-          );
-        },
-        builder: (context, state) {
-          final vm = state.vm;
-
-          return Column(
+          ),
+          body: Column(
+            spacing: 8,
             children: [
-              const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 24),
+              const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 8),
               ToggleSwitch(
                 labels: SocialPageViews.values.map((e) => e.title).toList(),
                 initialLabelIndex: vm.currentView.index,
                 animate: true,
                 animationDuration: 500,
                 minHeight: 30,
-                minWidth: (context.screenWidth - 44) / 3,
+                minWidth: (context.screenWidth - 40) / 3,
                 cornerRadius: 6.0,
                 activeFgColor: Colors.white,
                 inactiveBgColor: Colors.white,
@@ -92,7 +99,6 @@ class _SocialPageState extends State<SocialPage> {
                   }
                 },
               ),
-              const SizedBox(height: 12),
               Expanded(
                 child: IndexedStack(
                   index: vm.currentView.index,
@@ -104,9 +110,25 @@ class _SocialPageState extends State<SocialPage> {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
+  }
+}
+
+class PostsFloatingActionButton extends StatelessWidget {
+  const PostsFloatingActionButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.small(
+      onPressed: () => CreatePostDialog.show(context),
+      backgroundColor: FoodlyThemes.primaryFoodly,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: const Icon(Icons.edit, color: Colors.white),
+    ).paddingAll(16);
   }
 }

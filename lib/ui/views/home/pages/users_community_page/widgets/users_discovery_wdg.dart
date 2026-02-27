@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension;
+import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
@@ -52,7 +53,7 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
 
         return Column(
           children: [
-            _buildSortChips(vm),
+            _buildSortUsersDropdown(vm),
             Expanded(
               child: vm.nearbyUsers.isEmpty && !vm.isLoadingUsers
                   ? _buildEmptyState()
@@ -93,35 +94,22 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
     );
   }
 
-  Widget _buildSortChips(SocialVM vm) {
-    return SizedBox(
+  Widget _buildSortUsersDropdown(SocialVM vm) {
+    return FoodlyDropdownButtonFormField<UserSortMode>(
       height: 40,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        children: UserSortMode.values.map((mode) {
-          final isSelected = vm.userSortMode == mode;
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: ChoiceChip(
-              label: Text(
-                mode.label,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: isSelected ? Colors.white : FoodlyThemes.primaryFoodly,
-                ),
-              ),
-              selected: isSelected,
-              selectedColor: FoodlyThemes.primaryFoodly,
-              backgroundColor: Colors.white,
-              side: const BorderSide(color: FoodlyThemes.primaryFoodly, width: 0.5),
-              onSelected: (_) => context.read<SocialCubit>().changeUserSortMode(mode),
-            ),
-          );
-        }).toList(),
+      items: UserSortMode.values.map((mode) => DropdownMenuItem(value: mode, child: Text(mode.label))).toList(),
+      value: vm.userSortMode,
+      onChanged: (mode) => context.read<SocialCubit>().changeUserSortMode(mode!),
+      enabled: vm.totalUsers > 0,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
+        labelText: 'Sort by',
+        labelStyle: FoodlyTextStyles.caption.copyWith(color: Colors.black54),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: FoodlyThemes.primaryFoodly)),
       ),
-    );
+    ).paddingAll(16);
   }
 
   Widget _buildEmptyState() {

@@ -61,7 +61,7 @@ class _SmartSearchWrapper extends StatelessWidget {
                 ),
               ),
             ],
-          ).paddingSymmetric(horizontal: 6, vertical: 24),
+          ).paddingOnly(right: 6, left: 6, top: 12),
           searching: (_) => const Center(child: LoadingWidgetFoodlyLogo()).paddingHorizontal(context.screenWidth * .3),
           orElse: () => FadeIn(duration: Durations.medium2, child: child),
         );
