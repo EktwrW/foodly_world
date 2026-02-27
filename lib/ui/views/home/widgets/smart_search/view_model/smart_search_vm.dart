@@ -29,6 +29,7 @@ class SmartSearchVM with _$SmartSearchVM {
     @Default(BusinessResultsViewMode.list) BusinessResultsViewMode viewMode,
     @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
     required InputController inputController,
+    @Default(false) bool isBottomBarHidden,
     String? sessionId,
     NlpSearchPlatform? platform,
     @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo,

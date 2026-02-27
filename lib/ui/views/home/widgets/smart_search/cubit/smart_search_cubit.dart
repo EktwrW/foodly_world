@@ -155,6 +155,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
     if (searchText?.isEmpty ?? true) return;
 
+    _vm = _vm.copyWith(isBottomBarHidden: true);
     Future.microtask(() => emit(SmartSearchState.searching(_vm)));
 
     // Device metadata is cached in AuthSessionService at app startup — never null after init.
@@ -178,7 +179,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         _vm = _vm.copyWith(
           searchResults: data.business,
           smartSearchMode: SmartSearchMode.none,
-          // Mantenemos el texto en el controller
+          isBottomBarHidden: true,
           inputController: _vm.inputController.copyWith(
             controller: TextEditingController(text: searchText),
           ),
@@ -188,7 +189,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
       failure: (error) {
         _vm = _vm.copyWith(
           smartSearchMode: SmartSearchMode.none,
-          // Mantenemos el texto en caso de error
+          isBottomBarHidden: false,
           inputController: _vm.inputController.copyWith(
             controller: TextEditingController(text: searchText),
           ),
@@ -205,6 +206,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
     _vm = _vm.copyWith(
       recognizedText: '',
       searchResults: [],
+      isBottomBarHidden: false,
       inputController: InputController(
         controller: newController,
         focusNode: newFocusNode,

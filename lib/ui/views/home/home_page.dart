@@ -27,19 +27,11 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
   late TabController _tabController;
   final uuid = di<AuthSessionService>().userSessionDM?.user.uuid;
   late final AnimationController _hideBottomBarAnimationController;
-  bool _isBottomBarHidden = false;
 
   @override
   void initState() {
     _bottomNavIndex.value = widget.navigationShell.currentIndex;
-    _hideBottomBarAnimationController = AnimationController(vsync: this, duration: Durations.medium2)
-      ..addListener(() {
-        if (_hideBottomBarAnimationController.value == 1 && !_isBottomBarHidden) {
-          _setBottomBarHidden();
-        } else if (_hideBottomBarAnimationController.value == 0 && _isBottomBarHidden) {
-          _setBottomBarHidden();
-        }
-      });
+    _hideBottomBarAnimationController = AnimationController(vsync: this, duration: Durations.medium2);
     _tabController = TabController(
       initialIndex: widget.navigationShell.currentIndex,
       length: widget.children.length,
@@ -84,14 +76,36 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
     }
   }
 
-  void _setBottomBarHidden() => setState(() => _isBottomBarHidden = !_isBottomBarHidden);
-
   @override
   Widget build(BuildContext context) {
     return FoodlyWrapper(
-      child: ValueListenableBuilder(
-        valueListenable: _bottomNavIndex,
-        builder: (_, indexValue, __) => _buildContent(indexValue),
+      child: BlocConsumer<SmartSearchCubit, SmartSearchState>(
+        // Only animate the controller when the flag actually flips.
+        listenWhen: (prev, curr) => prev.vm.isBottomBarHidden != curr.vm.isBottomBarHidden,
+        listener: (_, state) {
+          if (state.vm.isBottomBarHidden) {
+            _hideBottomBarAnimationController.forward();
+          } else {
+            _hideBottomBarAnimationController.reverse();
+          }
+        },
+        builder: (_, state) {
+          final isHidden = state.vm.isBottomBarHidden;
+          // After every build (including post-pop rebuilds where the cubit state
+          // did NOT change), re-assert the controller to its expected position.
+          // The guard prevents snapping while a smooth animation is in progress.
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted || _hideBottomBarAnimationController.isAnimating) return;
+            final expected = isHidden ? 1.0 : 0.0;
+            if ((_hideBottomBarAnimationController.value - expected).abs() > 0.01) {
+              _hideBottomBarAnimationController.value = expected;
+            }
+          });
+          return ValueListenableBuilder(
+            valueListenable: _bottomNavIndex,
+            builder: (_, indexValue, __) => _buildContent(indexValue, isHidden, state.vm),
+          );
+        },
       ),
     );
   }
@@ -104,62 +118,50 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
     );
   }
 
-  Widget _buildContent(int indexValue) {
+  Widget _buildContent(int indexValue, bool isHidden, SmartSearchVM vm) {
     final smartSearchCubit = context.read<SmartSearchCubit>();
-    final smartSeachVM = smartSearchCubit.state.vm;
 
-    return BlocListener<SmartSearchCubit, SmartSearchState>(
-      listener: (context, state) {
-        state.maybeWhen(searchComplete: (vm) {
-          _hideBottomBarAnimationController.forward();
-        }, searching: (vm) {
-          _hideBottomBarAnimationController.forward();
-        }, orElse: () {
-          _hideBottomBarAnimationController.reverse();
-        });
-      },
-      child: Scaffold(
-        body: _buildTabBarView(),
-        extendBody: true,
-        floatingActionButton: _isBottomBarHidden
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 6,
-                children: [
-                  ViewModeToggleButton(
-                    key: const Key('main-page-smart-search-view-mode-toggle-button'),
-                    onPressed: smartSeachVM.searchResults.isNotEmpty ? () => smartSearchCubit.toggleViewMode() : null,
-                    isGrid: smartSeachVM.viewMode.isGrid,
-                  ).paddingAll(6),
-                  CustomRoundedNeumorphicButton(
-                    onPressed: () => smartSearchCubit.clearSearch(),
-                    diameter: 26,
-                    depth: 3,
-                    shape: ui.NeumorphicShape.concave,
-                    child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
-                  ).paddingAll(6),
-                ],
-              ).paddingBottom(16)
-            : FloatingActionButton(
-                splashColor: FoodlyThemes.tertiaryFoodly.withValues(alpha: .5),
-                onPressed: () {
-                  _bottomNavIndex.value = 4;
-                  navigateTo(4);
-                },
-                shape: const CircleBorder(),
-                child: FoodlyIsoIconBehavior(
-                    height: 26, version: indexValue == 4 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
-              ),
-        floatingActionButtonLocation:
-            _isBottomBarHidden ? FloatingActionButtonLocation.endFloat : FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: _FoodlyBottomNavBar(
-          onTap: (index) {
-            _bottomNavIndex.value = index;
-            navigateTo(index);
-          },
-          activeIndex: indexValue,
-          hideBottomBarAnimationController: _hideBottomBarAnimationController,
-        ),
+    return Scaffold(
+      body: _buildTabBarView(),
+      extendBody: true,
+      floatingActionButton: isHidden
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              spacing: 6,
+              children: [
+                ViewModeToggleButton(
+                  key: const Key('main-page-smart-search-view-mode-toggle-button'),
+                  onPressed: vm.searchResults.isNotEmpty ? () => smartSearchCubit.toggleViewMode() : null,
+                  isGrid: vm.viewMode.isGrid,
+                ).paddingAll(6),
+                CustomRoundedNeumorphicButton(
+                  onPressed: () => smartSearchCubit.clearSearch(),
+                  diameter: 26,
+                  depth: 3,
+                  shape: ui.NeumorphicShape.concave,
+                  child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
+                ).paddingAll(6),
+              ],
+            ).paddingBottom(16)
+          : FloatingActionButton(
+              splashColor: FoodlyThemes.tertiaryFoodly.withValues(alpha: .5),
+              onPressed: () {
+                _bottomNavIndex.value = 4;
+                navigateTo(4);
+              },
+              shape: const CircleBorder(),
+              child: FoodlyIsoIconBehavior(
+                  height: 26, version: indexValue == 4 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
+            ),
+      floatingActionButtonLocation:
+          isHidden ? FloatingActionButtonLocation.endFloat : FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: _FoodlyBottomNavBar(
+        onTap: (index) {
+          _bottomNavIndex.value = index;
+          navigateTo(index);
+        },
+        activeIndex: indexValue,
+        hideBottomBarAnimationController: _hideBottomBarAnimationController,
       ),
     );
   }
