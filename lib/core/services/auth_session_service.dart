@@ -1,13 +1,17 @@
 // ignore_for_file: unused_field
 
+import 'dart:io' show Platform;
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:foodly_world/core/core_exports.dart';
-
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AuthSessionService {
   final BaseConfig _config;
@@ -31,6 +35,12 @@ class AuthSessionService {
   Map<String, String>? _authHeader;
   bool requestBiometricAuth = false;
   bool forceToLogin = false;
+
+  /// Device metadata — computed once at startup via [initDeviceMetadata].
+  /// Available app-wide for any feature that needs to enrich API requests.
+  NlpSearchPlatform? platform;
+  DeviceInfoDTO? deviceInfo;
+
   bool get isLoggedIn => userSessionDM != null && (userSessionDM?.user.uuid?.isNotEmpty ?? false);
   bool get userIsManager => userSessionDM?.user.isManager ?? false;
   String get uuid => userSessionDM?.user.uuid ?? '';
@@ -39,6 +49,53 @@ class AuthSessionService {
   // bool get isAccessTokenExpired => isLoggedIn && (userSessionDM?.user.authToken?.isTokenExpired ?? true); //TODO: HW - define the logic to get this value
   bool get isAccessTokenExpired => false; //TODO: HW - define the logic to get this value
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value
+
+  /// Detects and caches platform + device metadata once at app startup.
+  /// Safe to call without await — failures are swallowed to never block startup.
+  Future<void> initDeviceMetadata() async {
+    platform = _resolvePlatform();
+
+    String? model;
+    String? osVersion;
+    String? appVersion;
+
+    try {
+      final plugin = DeviceInfoPlugin();
+      if (kIsWeb) {
+        model = (await plugin.webBrowserInfo).browserName.name;
+      } else if (Platform.isAndroid) {
+        model = (await plugin.androidInfo).model;
+      } else if (Platform.isIOS) {
+        model = (await plugin.iosInfo).utsname.machine;
+      } else if (Platform.isMacOS) {
+        model = (await plugin.macOsInfo).model;
+      } else if (Platform.isWindows) {
+        model = (await plugin.windowsInfo).computerName;
+      } else if (Platform.isLinux) {
+        model = (await plugin.linuxInfo).name;
+      }
+    } catch (_) {}
+
+    if (!kIsWeb) {
+      try {
+        osVersion = Platform.operatingSystemVersion;
+      } catch (_) {}
+    }
+
+    try {
+      appVersion = (await PackageInfo.fromPlatform()).version;
+    } catch (_) {}
+
+    deviceInfo = DeviceInfoDTO(model: model, osVersion: osVersion, appVersion: appVersion);
+  }
+
+  NlpSearchPlatform _resolvePlatform() {
+    if (kIsWeb) return NlpSearchPlatform.web;
+    if (Platform.isAndroid) return NlpSearchPlatform.android;
+    if (Platform.isIOS) return NlpSearchPlatform.ios;
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) return NlpSearchPlatform.desktop;
+    return NlpSearchPlatform.unknown;
+  }
 
   void updateBiometricAuth(bool newValue) => requestBiometricAuth = newValue;
 

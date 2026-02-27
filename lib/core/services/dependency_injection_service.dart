@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/buzz/buzz_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
@@ -11,7 +13,6 @@ import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
-
 import 'package:get_it/get_it.dart';
 
 export 'package:foodly_world/core/core_exports.dart';
@@ -72,6 +73,9 @@ class DependencyInjectionService {
     );
 
     di.registerLazySingleton(() => authService);
+
+    // Fire-and-forget: computes platform + device metadata once at startup.
+    unawaited(authService.initDeviceMetadata());
 
     final favoritesCubit = FavoritesCubit(
       businessRepo: di(),
