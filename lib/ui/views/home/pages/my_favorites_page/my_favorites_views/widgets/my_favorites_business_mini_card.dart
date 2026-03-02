@@ -1,6 +1,5 @@
 import 'package:clay_containers/widgets/clay_container.dart' show ClayContainer;
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart'
     show BusinessDaysExtension, BusinessStatus, BusinessStatusExtension;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
@@ -74,7 +73,10 @@ class MyFavoritesBusinessMiniCard extends StatelessWidget {
           ),
           const Spacer(),
           if (business != null)
-            SizedBox.square(dimension: 28, child: business?.category?.avatar ?? const SizedBox.shrink()),
+            SizedBox.square(
+              dimension: 28,
+              child: business?.categoryAvatar ?? const SizedBox.shrink(),
+            ),
         ],
       ).paddingAll(6),
     ).paddingAll(8);

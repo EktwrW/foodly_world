@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart' show BoxFit, Widget;
+import 'package:flutter/material.dart' show BoxFit, ClipOval, Image, Widget;
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 enum FoodlyCategories {
@@ -8,13 +7,13 @@ enum FoodlyCategories {
   international(1),
 
   @JsonValue(2)
-  american(2),
+  fastFood(2),
 
   @JsonValue(3)
   pizza(3),
 
   @JsonValue(4)
-  japanese(4),
+  sushi(4),
 
   @JsonValue(5)
   steakhouse(5),
@@ -62,7 +61,7 @@ enum FoodlyCategories {
   seaFood(19),
 
   @JsonValue(20)
-  chinese(20),
+  asian(20),
 
   @JsonValue(21)
   arabic(21),
@@ -81,9 +80,9 @@ enum FoodlyCategories {
   // TODO: Localizar Strings en .arb files
   String get text => switch (this) {
         international => S.current.internationalCuisine,
-        american => S.current.fastFood,
+        fastFood => S.current.fastFood,
         pizza => S.current.pizzerias,
-        japanese => S.current.japaneseCuisine,
+        sushi => S.current.sushi,
         steakhouse => S.current.steakhouse,
         fusion => S.current.fusionCuisine,
         vegetarian => S.current.vegetarianCuisine,
@@ -99,56 +98,36 @@ enum FoodlyCategories {
         argentinian => S.current.argentinian,
         peruvian => S.current.peruvian,
         seaFood => S.current.seafood,
-        chinese => S.current.chinese,
+        asian => S.current.asian,
         arabic => S.current.arabic,
         venezuelan => S.current.venezuelan,
       };
 
-  Widget get avatar => AvatarWidget(avatarUrl: avatarUrl, boxFit: BoxFit.contain);
+  Widget get avatar => ClipOval(child: Image.asset(assetPath, fit: BoxFit.contain));
 
-  String get avatarUrl => switch (this) {
-        international =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/oMAAZvmiXpRoIXhPMUgan7o4m6GS0VngGzuExxF4.jpg',
-        american =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/3R7zsx7VXzFekjM2qFz0pktxpYeMnhT6b7fKmTo5.jpg',
-        pizza =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/zy66xbwjltRgitojWuzbUoOxX4OpLfQUmlotimVi.jpg',
-        japanese =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/rEvbOnKbTYnpoz7Qc1Vu0jHXSDt8YMer2WaxqyOz.jpg',
-        steakhouse =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/DXj6PxsVPe9inTs8eDh2u47b1LhgwOpOXyYNV7Gp.jpg',
-        fusion =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/6uT3gxrcugQPiMIxICRVG06cHQbYBOCnPKolRqIh.jpg',
-        vegetarian =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/BpIS39yEA6lpcIRjSbkWC3Tt4lgrp2Pk4NclnMKn.jpg',
-        mexican =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/6rvuMCOXDbQm08Xf5D2snlnBj5sfTIcMF5PeLtcB.jpg',
-        korean =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/FoJ3Uycii6zgFHelMfU6rR5w0A0PHnjcKv8jvMuy.jpg',
-        portuguese =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/OKZVzDcXq0csGYOsBZiSPa16oMrovNzQBr8sYmAT.jpg',
-        bakery =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/eo6lgLdLH87PCLbwjyNVTTuNeXzxW4Jx67EGNDaS.jpg',
-        drinkHouse =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/31DbV0wNR6topTeaVpBBlD8AdtJrSxD26XgC16hQ.jpg',
-        coffee =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/NC2D2vwB28ReT6E9HyBaq1rkJJLGCBodBLdNLvee.jpg',
-        stores =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9UrhIE91n2kbClChH8d0zAJ3WHdKv4cQ06fqq2NU.jpg',
-        academy =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/V5fnkZrKmpVhOPDqHkOs9FJdQE523ENhfdwoTDUN.jpg',
-        italian =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        argentinian =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        peruvian =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        seaFood =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        chinese => 'https://foodly.s3.amazonaws.com/public/categories_images/chinese.jpg',
-        arabic =>
-          'https://foodly.s3.amazonaws.com/public/categories_images/9n7sXl7nqj8Xo9sHhLZt2u5mNl7sXo9sHhLZt2u5mN.jpg',
-        venezuelan => 'https://foodly.s3.amazonaws.com/public/categories_images/venezuelan.jpg',
+  String get assetPath => switch (this) {
+        international => 'assets/images/international.jpg',
+        fastFood => 'assets/images/fast_food.jpg',
+        pizza => 'assets/images/pizzas.jpg',
+        sushi => 'assets/images/sushi_food.jpg',
+        steakhouse => 'assets/images/steakhouse.jpg',
+        fusion => 'assets/images/fusion.jpg',
+        vegetarian => 'assets/images/vegetarian.jpg',
+        mexican => 'assets/images/mexican.jpg',
+        korean => 'assets/images/korean.jpg',
+        portuguese => 'assets/images/portuguese.jpg',
+        bakery => 'assets/images/bakery.jpg',
+        drinkHouse => 'assets/images/drink_house.jpg',
+        coffee => 'assets/images/coffee.jpg',
+        stores => 'assets/images/stores.jpg',
+        academy => 'assets/images/academy.jpg',
+        italian => 'assets/images/italiana.png',
+        argentinian => 'assets/images/argentina.png',
+        peruvian => 'assets/images/peruana.png',
+        seaFood => 'assets/images/seafood.png',
+        asian => 'assets/images/asian.png',
+        arabic => 'assets/images/arabe.png',
+        venezuelan => 'assets/images/venezuelan.png',
       };
 }
 

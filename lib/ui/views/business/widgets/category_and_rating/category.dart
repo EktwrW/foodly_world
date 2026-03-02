@@ -56,7 +56,12 @@ class CategoryWdg extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: Row(
             children: [
-              SizedBox.square(dimension: 30, child: vm.currentBusiness?.category?.avatar ?? const SizedBox.shrink()),
+              SizedBox.square(
+                dimension: 30,
+                child: vm.currentBusiness?.categoryId?.avatar ??
+                    vm.currentBusiness?.category?.id?.avatar ??
+                    const SizedBox.shrink(),
+              ),
               Text(vm.currentBusiness?.category?.id?.text ?? '').paddingLeft(8),
             ],
           ),

@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart' show FadeIn, FadeInRight, FadeOutRig
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart' show RatingBar;
 import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
-import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;

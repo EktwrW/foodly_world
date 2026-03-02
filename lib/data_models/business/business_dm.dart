@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
@@ -67,10 +68,13 @@ class BusinessDM with _$BusinessDM {
   }
 
   List<BusinessServices> get businessServices =>
-      (services?.isEmpty ?? true)
-          ? []
-          : services!.where((s) => s.service != null).map((s) => s.service!).toList()
+      (services?.isEmpty ?? true) ? [] : services!.where((s) => s.service != null).map((s) => s.service!).toList()
         ..sort((a, b) => a.value.compareTo(b.value));
+
+  Widget get categoryAvatar => SizedBox.square(
+        dimension: 28,
+        child: categoryId?.avatar ?? category?.id?.avatar ?? const SizedBox.shrink(),
+      );
 }
 
 @freezed

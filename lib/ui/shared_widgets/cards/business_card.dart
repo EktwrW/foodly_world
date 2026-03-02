@@ -1,4 +1,3 @@
-import 'package:foodly_world/core/extensions/category_extension.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
@@ -119,7 +118,10 @@ class BusinessListCard extends StatelessWidget {
                   const Spacer(),
                   LocalHero(
                     tag: 'category-$heroTagPrefix',
-                    child: SizedBox.square(dimension: 28, child: business.category?.avatar ?? const SizedBox.shrink()),
+                    child: SizedBox.square(
+                      dimension: 28,
+                      child: business.categoryAvatar,
+                    ),
                   ),
                 ],
               ),
@@ -243,8 +245,10 @@ class BusinessGridCard extends StatelessWidget {
                       _buildStatusBadge(currentDay.currentStatus),
                       LocalHero(
                         tag: 'category-$heroTagPrefix',
-                        child:
-                            SizedBox.square(dimension: 28, child: business.category?.avatar ?? const SizedBox.shrink()),
+                        child: SizedBox.square(
+                          dimension: 28,
+                          child: business.categoryAvatar,
+                        ),
                       ),
                     ],
                   ),

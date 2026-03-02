@@ -144,7 +144,10 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                  SizedBox.square(dimension: 28, child: menu.business?.category?.avatar ?? const SizedBox.shrink()),
+                  SizedBox.square(
+                    dimension: 28,
+                    child: menu.business?.categoryAvatar ?? const SizedBox.shrink(),
+                  ),
                 ],
               ).paddingHorizontal(3),
             ),
