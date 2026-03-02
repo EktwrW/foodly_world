@@ -61,7 +61,7 @@ dependencies:
   qr_flutter: ^4.1.0
   responsive_framework: ^1.1.1
   retrofit: ^4.4.1
-  share_plus: ^10.1.2
+  share_plus: ^10.1.4
   shared_preferences: ^2.5.3
   sidebarx: ^0.17.1
   speech_to_text: ^7.3.0

@@ -67,7 +67,12 @@ class _SocialPageState extends State<SocialPage> {
             body: Column(
               spacing: 8,
               children: [
-                const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 8),
+                const CurrentLocationButton().paddingOnly(
+                  top: 16,
+                  bottom: 12,
+                  left: 14,
+                  right: 12,
+                ),
                 ToggleSwitch(
                   labels: SocialPageViews.values.map((e) => e.title).toList(),
                   initialLabelIndex: vm.currentView.index,

@@ -23,7 +23,8 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
       margin: const EdgeInsets.only(right: 12, left: 12, bottom: 30),
       child: ui.NeumorphicButton(
         padding: EdgeInsets.zero,
-        style: const ui.NeumorphicStyle(shape: ui.NeumorphicShape.concave, color: ui.NeumorphicColors.decorationMaxWhiteColor),
+        style: const ui.NeumorphicStyle(
+            shape: ui.NeumorphicShape.concave, color: ui.NeumorphicColors.decorationMaxWhiteColor),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -171,13 +172,22 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
                             ),
                           ),
                         ],
-                      ).paddingVertical(32),
+                      ).paddingTop(24),
                     )
                   else
                     const SizedBox(height: UIDimens.SCREEN_PADDING_MOB)
                 ],
               ).paddingHorizontal(UIDimens.SCREEN_PADDING_MOB),
             ),
+            CustomRoundedNeumorphicButton(
+              onPressed: () => SharePromotionHelper.share(widget.promo),
+              shape: ui.NeumorphicShape.concave,
+              tooltip: 'Share Promotion',
+              iconSize: 24,
+              diameter: 38,
+              depth: 4,
+              iconData: Bootstrap.send_fill,
+            ).paddingVertical(20),
           ],
         ),
       ),
