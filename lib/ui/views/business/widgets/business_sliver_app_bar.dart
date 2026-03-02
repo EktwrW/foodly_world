@@ -55,7 +55,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                   iconData: Bootstrap.caret_left_fill,
                   onPressed: () {
                     context.read<MainDrawerCubit>().goToPreviousIndex();
-                    di<AppRouter>().goBackToLastRoute(context);
+                    di<AppRouter>().goBackToLastRoute();
                   },
                 ).paddingSymmetric(vertical: 8, horizontal: 15),
               ),

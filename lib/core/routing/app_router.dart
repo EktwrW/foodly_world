@@ -58,23 +58,43 @@ class AppRouter {
     await saveLastRoute(state.matchedLocation);
   }
 
-  void goBackToLastRoute(BuildContext context) async {
+  /// Whether the current route is a shell (home tab) route.
+  bool get isOnShellRoute {
+    final loc = currentLocation;
+    return loc.contains('/foodly-main-page') ||
+        loc.contains('/saved-promotions') ||
+        loc.contains('/faved-business') ||
+        loc.contains('/users-community') ||
+        loc.contains('/notifications');
+  }
+
+  void _goToMainPage() {
+    appRouter.goNamed(
+      AppRoutes.foodlyMainPage.name,
+      pathParameters: {AppRoutes.routeIdParam: authSessService.uuid},
+    );
+  }
+
+  void goBackToLastRoute() async {
     if (_routeHistory.length > 2) {
       final lastRoute = _routeHistory[_routeHistory.length - 2];
+      _routeHistory.removeLast();
+      _routeHistory.removeLast();
+
       if (lastRoute == '/' && authSessService.isLoggedIn) {
-        context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authSessService.uuid});
+        _goToMainPage();
+        return;
       }
+
       await saveLastRoute(lastRoute);
       appRouter.go(lastRoute);
-      _routeHistory.removeLast();
-      _routeHistory.removeLast();
       return;
     }
 
     if (authSessService.isLoggedIn) {
-      context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authSessService.uuid});
+      _goToMainPage();
     } else {
-      context.goNamed(AppRoutes.login.name);
+      appRouter.goNamed(AppRoutes.login.name);
     }
   }
 
@@ -115,7 +135,12 @@ class AppRouter {
         return const NotFoundPage();
       },
       redirect: ((_, state) {
-        return state.uri.toString() == appRoute.path ? AppRoutes.notFoundScreen.path : null;
+        // If the parent shell route is hit (e.g., via system back pop), redirect to main page
+        // instead of showing not-found. This is a safety net — PopScope in shell pages should prevent this.
+        if (state.uri.toString() == appRoute.path) {
+          return '${appRoute.path}/${authSessService.uuid}/foodly-main-page';
+        }
+        return null;
       }),
       routes: [route],
     );
@@ -281,6 +306,7 @@ class AppRouter {
             child: BlocProvider(
               create: (context) => UserProfileCubit(
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                di(),
                 di(),
                 di(),
                 di(),

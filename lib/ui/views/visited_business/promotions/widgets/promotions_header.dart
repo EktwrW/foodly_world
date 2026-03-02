@@ -47,7 +47,7 @@ class _PromotionsHeader extends StatelessWidget {
                 di<AppRouter>().removeLastRouteHistory();
                 context.pop();
               } else {
-                di<AppRouter>().goBackToLastRoute(context);
+                di<AppRouter>().goBackToLastRoute();
               }
             },
           ),

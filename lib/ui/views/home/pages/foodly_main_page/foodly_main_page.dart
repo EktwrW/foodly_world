@@ -17,44 +17,47 @@ class FoodlyMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (_, __) => [const Home369AppBarMobile()],
-      body: _SmartSearchWrapper(
-        key: const Key('voice-search-wrapper'),
-        child: Column(
-          children: [
-            const HomeCategories(),
-            Expanded(
-              child: ColoredBox(
-                color: ui.NeumorphicColors.background,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Text(
-                        S.current.mainPromos,
-                        style: FoodlyTextStyles.sectionsTitle,
-                      ).paddingOnly(bottom: 12),
-                      const TopOffersWidget(),
-                      Text(
-                        S.current.news,
-                        style: FoodlyTextStyles.sectionsTitle,
-                      ).paddingOnly(top: 25, bottom: 12),
-                      const NewReleasesCard().paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-                      Text(
-                        S.current.tendencies,
-                        style: FoodlyTextStyles.sectionsTitle,
-                      ).paddingOnly(top: 25),
-                      const Text(
-                              'DEV: Implementar aca carrusel con nuevos comercios y tendencias de las apps del ecosistema 369')
-                          .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-                    ],
-                  ).paddingSymmetric(vertical: 25),
+    return PopScope(
+      canPop: false,
+      child: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (_, __) => [const Home369AppBarMobile()],
+        body: _SmartSearchWrapper(
+          key: const Key('voice-search-wrapper'),
+          child: Column(
+            children: [
+              const HomeCategories(),
+              Expanded(
+                child: ColoredBox(
+                  color: ui.NeumorphicColors.background,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          S.current.mainPromos,
+                          style: FoodlyTextStyles.sectionsTitle,
+                        ).paddingOnly(bottom: 12),
+                        const TopOffersWidget(),
+                        Text(
+                          S.current.news,
+                          style: FoodlyTextStyles.sectionsTitle,
+                        ).paddingOnly(top: 25, bottom: 12),
+                        const NewReleasesCard().paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                        Text(
+                          S.current.tendencies,
+                          style: FoodlyTextStyles.sectionsTitle,
+                        ).paddingOnly(top: 25),
+                        const Text(
+                                'DEV: Implementar aca carrusel con nuevos comercios y tendencias de las apps del ecosistema 369')
+                            .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                      ],
+                    ).paddingSymmetric(vertical: 25),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ).paddingOnly(top: 10),
+            ],
+          ).paddingOnly(top: 10),
+        ),
       ),
     );
   }

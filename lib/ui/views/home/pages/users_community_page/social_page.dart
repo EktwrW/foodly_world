@@ -29,90 +29,93 @@ class _SocialPageState extends State<SocialPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SocialCubit, SocialState>(
-      listener: (context, state) {
-        final dialogService = di<DialogService>();
+    return PopScope(
+      canPop: false,
+      child: BlocConsumer<SocialCubit, SocialState>(
+        listener: (context, state) {
+          final dialogService = di<DialogService>();
 
-        state.whenOrNull(
-          loading: (vm) => dialogService.showLoading(),
-          loaded: (vm) => dialogService.hideLoading(),
-          error: (vm, message) {
-            dialogService.hideLoading();
-            FoodlySnackbars.errorGeneric(context, message);
-          },
-        );
-      },
-      builder: (context, state) {
-        final vm = state.vm;
-
-        return Scaffold(
-          extendBody: true,
-          appBar: const SecondaryMainAppBar(
-            key: Key('community-app-bar'),
-            actionText: 'Socials',
-          ),
-          floatingActionButton: AnimatedSwitcher(
-            duration: Durations.medium1,
-            transitionBuilder: (child, animation) => FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-            child: switch (vm.currentView) {
-              SocialPageViews.posts => const PostsFloatingActionButton(),
-              _ => const SizedBox.shrink(),
+          state.whenOrNull(
+            loading: (vm) => dialogService.showLoading(),
+            loaded: (vm) => dialogService.hideLoading(),
+            error: (vm, message) {
+              dialogService.hideLoading();
+              FoodlySnackbars.errorGeneric(context, message);
             },
-          ),
-          body: Column(
-            spacing: 8,
-            children: [
-              const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 8),
-              ToggleSwitch(
-                labels: SocialPageViews.values.map((e) => e.title).toList(),
-                initialLabelIndex: vm.currentView.index,
-                animate: true,
-                animationDuration: 500,
-                minHeight: 30,
-                minWidth: (context.screenWidth - 40) / 3,
-                cornerRadius: 6.0,
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.white,
-                totalSwitches: SocialPageViews.values.length,
-                customTextStyles: const [
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-                ],
-                borderColor: const [
-                  FoodlyThemes.tertiaryFoodly,
-                  FoodlyThemes.secondaryFoodly,
-                  FoodlyThemes.primaryFoodly,
-                ],
-                dividerColor: FoodlyThemes.secondaryFoodly,
-                activeBgColors: const [
-                  [FoodlyThemes.primaryFoodly],
-                  [FoodlyThemes.primaryFoodly],
-                  [FoodlyThemes.primaryFoodly],
-                ],
-                onToggle: (index) {
-                  if (index != null) {
-                    context.read<SocialCubit>().changeView(SocialPageViews.values[index]);
-                  }
-                },
+          );
+        },
+        builder: (context, state) {
+          final vm = state.vm;
+
+          return Scaffold(
+            extendBody: true,
+            appBar: const SecondaryMainAppBar(
+              key: Key('community-app-bar'),
+              actionText: 'Socials',
+            ),
+            floatingActionButton: AnimatedSwitcher(
+              duration: Durations.medium1,
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: child,
               ),
-              Expanded(
-                child: IndexedStack(
-                  index: vm.currentView.index,
-                  children: const [
-                    PostsFeedWidget(),
-                    UsersDiscoveryWidget(),
-                    BuzzFeedWidget(),
+              child: switch (vm.currentView) {
+                SocialPageViews.posts => const PostsFloatingActionButton(),
+                _ => const SizedBox.shrink(),
+              },
+            ),
+            body: Column(
+              spacing: 8,
+              children: [
+                const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 8),
+                ToggleSwitch(
+                  labels: SocialPageViews.values.map((e) => e.title).toList(),
+                  initialLabelIndex: vm.currentView.index,
+                  animate: true,
+                  animationDuration: 500,
+                  minHeight: 30,
+                  minWidth: (context.screenWidth - 40) / 3,
+                  cornerRadius: 6.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.white,
+                  totalSwitches: SocialPageViews.values.length,
+                  customTextStyles: const [
+                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                    TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
                   ],
+                  borderColor: const [
+                    FoodlyThemes.tertiaryFoodly,
+                    FoodlyThemes.secondaryFoodly,
+                    FoodlyThemes.primaryFoodly,
+                  ],
+                  dividerColor: FoodlyThemes.secondaryFoodly,
+                  activeBgColors: const [
+                    [FoodlyThemes.primaryFoodly],
+                    [FoodlyThemes.primaryFoodly],
+                    [FoodlyThemes.primaryFoodly],
+                  ],
+                  onToggle: (index) {
+                    if (index != null) {
+                      context.read<SocialCubit>().changeView(SocialPageViews.values[index]);
+                    }
+                  },
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+                Expanded(
+                  child: IndexedStack(
+                    index: vm.currentView.index,
+                    children: const [
+                      PostsFeedWidget(),
+                      UsersDiscoveryWidget(),
+                      BuzzFeedWidget(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

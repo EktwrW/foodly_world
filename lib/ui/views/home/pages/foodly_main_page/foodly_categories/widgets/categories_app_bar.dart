@@ -27,7 +27,7 @@ class _CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
               diameter: 30,
               iconData: Bootstrap.caret_left_fill,
               onPressed: () {
-                di<AppRouter>().goBackToLastRoute(context);
+                di<AppRouter>().goBackToLastRoute();
               },
             ).paddingSymmetric(vertical: 8, horizontal: 12),
           ),

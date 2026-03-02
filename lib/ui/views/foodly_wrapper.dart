@@ -11,7 +11,16 @@ class FoodlyWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_, __) => false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        final router = di<AppRouter>();
+
+        // Shell routes are blocked by their own PopScope(canPop: false).
+        // For other routes (categories, visit-business, etc.), navigate back.
+        if (!router.isOnShellRoute) {
+          router.goBackToLastRoute();
+        }
+      },
       child: Scaffold(
         body: BlocConsumer<LocalAuthCubit, LocalAuthState>(
           listener: (context, state) {

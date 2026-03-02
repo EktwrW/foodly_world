@@ -102,7 +102,7 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
       onChanged: (mode) => context.read<SocialCubit>().changeUserSortMode(mode!),
       enabled: vm.totalUsers > 0,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14),
         labelText: 'Sort by',
         labelStyle: FoodlyTextStyles.caption.copyWith(color: Colors.black54),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),

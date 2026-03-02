@@ -1,6 +1,5 @@
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart' show FabCircularMenuPlusState;
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/core_exports.dart' show GlobalKey;
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
 import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';

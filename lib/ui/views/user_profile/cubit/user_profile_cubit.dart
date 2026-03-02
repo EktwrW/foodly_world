@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,12 +14,14 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileVM _vm;
   final AuthSessionService _authService;
   final MeRepo _meRepo;
+  final ReviewRepo _reviewRepo;
   late final String _currentuuid;
 
-  UserProfileCubit(
-      String currentuuid, LocationService locationService, AuthSessionService authSessionService, MeRepo meRepo)
+  UserProfileCubit(String currentuuid, LocationService locationService, AuthSessionService authSessionService,
+      MeRepo meRepo, ReviewRepo reviewRepo)
       : _authService = authSessionService,
         _meRepo = meRepo,
+        _reviewRepo = reviewRepo,
         _currentuuid = currentuuid,
         _vm = UserProfileVM(
           loggedUserCanEdit: authSessionService.uuid == currentuuid,
@@ -73,6 +76,9 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         ),
         super(const UserProfileState.initial(UserProfileVM())) {
     _fetchUser();
+    if (authSessionService.uuid == currentuuid) {
+      loadMyReviews();
+    }
   }
 
   String get currentCountryCode => (_vm.country?.countryCode ?? di<LocationService>().currentCountryCode).toUpperCase();
@@ -237,5 +243,44 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     _vm.cityController?.controller?.clear();
     _vm.zipCodeController?.controller?.clear();
     _vm = _vm.copyWith(userLocation: null);
+  }
+
+  Future<void> loadMyReviews() async {
+    final result = await _reviewRepo.getMyReviews(page: 1);
+    result.when(
+      success: (data) {
+        _vm = _vm.copyWith(
+          myReviews: data.reviews,
+          reviewsMeta: data.meta,
+        );
+        emit(_Loaded(_vm));
+      },
+      failure: (_) {},
+    );
+  }
+
+  Future<void> loadMoreReviews() async {
+    if (!_vm.canLoadMoreReviews) return;
+
+    _vm = _vm.copyWith(isLoadingMoreReviews: true);
+    emit(_Loaded(_vm));
+
+    final nextPage = _vm.reviewsCurrentPage + 1;
+    final result = await _reviewRepo.getMyReviews(page: nextPage);
+
+    result.when(
+      success: (data) {
+        _vm = _vm.copyWith(
+          myReviews: [..._vm.myReviews, ...data.reviews],
+          reviewsMeta: data.meta,
+          isLoadingMoreReviews: false,
+        );
+        emit(_Loaded(_vm));
+      },
+      failure: (_) {
+        _vm = _vm.copyWith(isLoadingMoreReviews: false);
+        emit(_Loaded(_vm));
+      },
+    );
   }
 }

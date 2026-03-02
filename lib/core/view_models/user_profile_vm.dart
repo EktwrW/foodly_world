@@ -3,6 +3,7 @@ import 'package:foodly_world/core/controllers/input_controller.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -86,6 +87,9 @@ class UserProfileVM with _$UserProfileVM {
     UserDM? visitedUser,
     @Default(false) bool termsAndContiditionsAccepted,
     String? importedAvatar,
+    @Default([]) List<ReviewDM> myReviews,
+    ReviewsMetaDM? reviewsMeta,
+    @Default(false) bool isLoadingMoreReviews,
   }) = _UserProfileVM;
 
   List<UserRole> get userTypes => [UserRole.customer, UserRole.owner];
@@ -116,4 +120,11 @@ class UserProfileVM with _$UserProfileVM {
         currentUserZipCode,
         currentUserCountry,
       ].where((element) => element != null && element.isNotEmpty).join(', ');
+
+  bool get canLoadMoreReviews =>
+      !isLoadingMoreReviews && reviewsMeta != null && reviewsMeta!.currentPage < reviewsMeta!.lastPage;
+
+  int get reviewsCurrentPage => reviewsMeta?.currentPage ?? 1;
+  int get reviewsLastPage => reviewsMeta?.lastPage ?? 1;
+  int get reviewsTotal => reviewsMeta?.total ?? 0;
 }

@@ -39,28 +39,31 @@ class MyFavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<FavoritesCubit, FavoritesState>(
-      listener: (context, state) {
-        final dialogService = di<DialogService>();
+    return PopScope(
+      canPop: false,
+      child: BlocListener<FavoritesCubit, FavoritesState>(
+        listener: (context, state) {
+          final dialogService = di<DialogService>();
 
-        state.whenOrNull(
-          loading: (vm) => vm.isInitializing ? null : dialogService.showLoading(),
-          loaded: (_) => dialogService.hideLoading(),
-          error: (_, msg) {
-            dialogService.hideLoading();
-            FoodlySnackbars.errorGeneric(context, msg);
-          },
-        );
-      },
-      child: Scaffold(
-        appBar: const SecondaryMainAppBar(
-          key: Key('my-favorites-app-bar'),
-          actionText: 'My Favorites',
-        ),
-        body: NestedScrollView(
-          controller: ScrollController(),
-          headerSliverBuilder: (_, __) => const [_MyFavoritesToggleSwitch(key: Key('my-favorites-toggle-switch'))],
-          body: const _MyFavoritesPageContent(key: Key('my-favorites-content')),
+          state.whenOrNull(
+            loading: (vm) => vm.isInitializing ? null : dialogService.showLoading(),
+            loaded: (_) => dialogService.hideLoading(),
+            error: (_, msg) {
+              dialogService.hideLoading();
+              FoodlySnackbars.errorGeneric(context, msg);
+            },
+          );
+        },
+        child: Scaffold(
+          appBar: const SecondaryMainAppBar(
+            key: Key('my-favorites-app-bar'),
+            actionText: 'My Favorites',
+          ),
+          body: NestedScrollView(
+            controller: ScrollController(),
+            headerSliverBuilder: (_, __) => const [_MyFavoritesToggleSwitch(key: Key('my-favorites-toggle-switch'))],
+            body: const _MyFavoritesPageContent(key: Key('my-favorites-content')),
+          ),
         ),
       ),
     );

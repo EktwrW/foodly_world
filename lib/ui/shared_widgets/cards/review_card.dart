@@ -148,15 +148,22 @@ class ReviewCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: SizedBox(
-                  height: 102,
-                  child: SingleChildScrollView(
-                    child: Text(review.comment ?? '',
-                        style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic)),
+              SizedBox(
+                height: 102,
+                child: SingleChildScrollView(
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          review.comment ?? '',
+                          style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ],
                   ),
-                ).paddingAll(12),
-              ),
+                ),
+              ).paddingAll(12),
             ],
           ),
         ).paddingOnly(top: 25),
