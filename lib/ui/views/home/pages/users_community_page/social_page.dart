@@ -132,6 +132,6 @@ class PostsFloatingActionButton extends StatelessWidget {
       backgroundColor: FoodlyThemes.primaryFoodly,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: const Icon(Icons.edit, color: Colors.white),
-    ).paddingAll(16);
+    ).paddingOnly(bottom: context.screenWidth * 0.3, right: 16);
   }
 }

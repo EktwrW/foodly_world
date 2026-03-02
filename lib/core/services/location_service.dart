@@ -11,6 +11,7 @@ class LocationService {
 
   LocationDetailsDM get currentLocation => _locationDM;
   bool get mustFetchLocation => !_hasBeenInitialized;
+  bool get hasLocationData => _locationDM.position != null;
 
   String get currentCountryCode => _locationDM.countryCode ?? FoodlyCountries.USA.countryCode;
   String get currentCountry => _locationDM.country ?? '';

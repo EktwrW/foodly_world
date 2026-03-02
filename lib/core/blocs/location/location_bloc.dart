@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'package:foodly_world/core/core_exports.dart' show BaseConfig, Bloc, Emitter, FoodlyStrings, Logger;
+import 'package:foodly_world/core/core_exports.dart' show BaseConfig, Bloc, Emitter, FoodlyStrings, Logger, S;
 
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -29,11 +29,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         _locationDM = const LocationDetailsDM(),
         super(const _Initial()) {
     on<LocationEvent>((event, emit) async {
-      await event
-          .map(
-            checkLocation: (event) async => await determinePosition(emit),
-          )
-          .then((value) => emit(_LocationChecked(_locationDM)));
+      await event.map(
+        checkLocation: (event) async => await determinePosition(emit),
+      );
     });
   }
 
@@ -48,9 +46,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
     await checkLocationServiceEnabled();
 
-    // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
     if (!_locationDM.serviceEnabled) {
-      return Future.error('Los servicios de ubicación están deshabilitados.');
+      emit(_ServiceDisabled(S.current.locationServicesDisabled));
+      return;
     }
 
     final permission = await Geolocator.checkPermission();
@@ -58,27 +56,25 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
     if (_locationDM.permission == LocationPermission.denied) {
       final newPermission = await Geolocator.requestPermission();
-
       _locationDM = _locationDM.copyWith(permission: newPermission);
 
-      // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
       if (_locationDM.permission == LocationPermission.denied) {
-        // Los permisos están denegados, siguiente código.
-        return Future.error('Los permisos de ubicación están denegados');
+        emit(_PermissionDenied(S.current.locationPermissionDenied));
+        return;
       }
     }
 
-    // TODO: VERY IMPORTANT TO HANDLE THIS CASE:
     if (_locationDM.permission == LocationPermission.deniedForever) {
-      // Los permisos están denegados para siempre, manejar apropiadamente.
-      return Future.error('Los permisos de ubicación están permanentemente denegados, no podemos solicitar permisos.');
+      emit(_PermissionPermanentlyDenied(S.current.locationPermissionPermanentlyDenied));
+      return;
     }
 
     final currentPosition = await Geolocator.getCurrentPosition();
-
     _locationDM = _locationDM.copyWith(position: currentPosition);
 
     if (_locationDM.position != null) await getLocationDetailsFromCoordinates();
+
+    emit(_LocationChecked(_locationDM));
   }
 
   Future<void> getLocationDetailsFromCoordinates() async {

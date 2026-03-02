@@ -28,17 +28,18 @@ abstract class DioRequestHandler {
 
   static void dioErrorHandler(DioException e, ErrorInterceptorHandler handler) async {
     final authSessionService = di<AuthSessionService>();
-    final responseMsg = e.response?.data.toString().toLowerCase() ?? '';
+
+    // Handle 401 Unauthenticated — clear session and force login
+    if (e.response?.statusCode == 401) {
+      authSessionService.notifyTokenExpired();
+      return handler.reject(e);
+    }
+
     if (e.response?.statusCode == ApiResponseStatus.internalServerError.code) {
       authSessionService.notifyInternalServerError(e);
       return handler.reject(e);
     }
 
-    await authSessionService.validateAccessToken();
-    if (responseMsg.contains('invalid token') || responseMsg.toLowerCase().contains('no authorization header found')) {
-      authSessionService.notifyTokenExpired();
-      return handler.reject(e);
-    }
     return handler.next(e);
   }
 

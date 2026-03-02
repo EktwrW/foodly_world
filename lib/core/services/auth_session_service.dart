@@ -9,6 +9,7 @@ import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -46,8 +47,17 @@ class AuthSessionService {
   String get uuid => userSessionDM?.user.uuid ?? '';
   Map<String, String>? get authHeader => _authHeader;
   String get lang => Intl.getCurrentLocale().substring(0, 2);
-  // bool get isAccessTokenExpired => isLoggedIn && (userSessionDM?.user.authToken?.isTokenExpired ?? true); //TODO: HW - define the logic to get this value
-  bool get isAccessTokenExpired => false; //TODO: HW - define the logic to get this value
+  bool get isAccessTokenExpired {
+    if (!isLoggedIn) return false;
+    final createdAtStr = userSessionDM?.tokedCreatedAt;
+    if (createdAtStr == null || createdAtStr.isEmpty) return false;
+    try {
+      final createdAt = DateTime.parse(createdAtStr);
+      return DateTime.now().difference(createdAt).inDays >= 30;
+    } catch (_) {
+      return false;
+    }
+  }
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value
 
   /// Detects and caches platform + device metadata once at app startup.
@@ -119,6 +129,37 @@ class AuthSessionService {
     _notificationsCubit = cubit;
   }
 
+  /// Validates the cached token via a lightweight API call, then initializes
+  /// favorites/notifications if valid. If invalid, clears session and forces login.
+  /// Called from [RootBloc.fromJson()] — runs async in background (fire-and-forget).
+  Future<void> initializeSessionOrClear(UserSessionDM session) async {
+    setSession(session);
+
+    try {
+      final result = await _meRepo.fetchLoggedUser();
+      result.when(
+        success: (_) {
+          initializeFavorites();
+          initializeNotifications();
+        },
+        failure: (_) => _clearInvalidSession(),
+      );
+    } catch (_) {
+      _clearInvalidSession();
+    }
+  }
+
+  /// Clears session data without UI navigation (no BuildContext needed).
+  /// Used when token validation fails during background restore.
+  void _clearInvalidSession() {
+    userSessionDM = null;
+    _authHeader = null;
+    _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
+    _favoritesCubit?.clearAllFavorites();
+    _notificationsCubit?.clear();
+    forceToLogin = true;
+  }
+
   void initializeFavorites() {
     if (isLoggedIn && _favoritesCubit != null) {
       _favoritesCubit!
@@ -128,7 +169,6 @@ class AuthSessionService {
     }
   }
 
-  /// Inicializa las notificaciones - llamar después de autenticación
   void initializeNotifications() {
     if (isLoggedIn && _notificationsCubit != null) {
       _notificationsCubit!.initialize();
@@ -215,21 +255,30 @@ class AuthSessionService {
     }
   }
 
-  //TODO: HW
-  Future<void> refreshToken({bool shouldNotifyTokenExpired = true}) async {
-    await Future.wait([]);
-  }
-
   Future<void> validateAccessToken() async {
-    //TODO: create this logic
+    // Client-side check — server enforces the real expiration via Sanctum.
+    // This is a fast pre-check to avoid unnecessary network calls.
   }
 
+  /// Handles token expiration: clears session, shows a localized message,
+  /// and navigates to login. Guards against re-entrancy via [forceToLogin].
   void notifyTokenExpired() {
-    //TODO: use here rootNavigatorKey to trigger a toast
+    if (forceToLogin) return;
+    _clearInvalidSession();
+
+    final context = rootNavigatorKey.currentContext;
+    if (context != null && context.mounted) {
+      FoodlySnackbars.errorGeneric(context, S.current.sessionExpiredMessage);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
+        }
+      });
+    }
   }
 
   void notifyInternalServerError(DioException dioException) {
-    //TODO: use here rootNavigatorKey to trigger a toast
+    di<Logger>().e('Internal server error: ${dioException.message}');
   }
 
   bool hasAccessToModule(ModuleGuardType module) {

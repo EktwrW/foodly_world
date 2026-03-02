@@ -1,4 +1,6 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:geolocator/geolocator.dart' show Geolocator;
 
 class FoodlyLocationWrapper extends StatefulWidget {
   final Widget childWidget;
@@ -40,11 +42,57 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
               FlutterNativeSplash.remove();
             }
           },
+          serviceDisabled: (message) {
+            if (mounted) _dialogService.hideLoading();
+            FlutterNativeSplash.remove();
+            if (mounted) FoodlySnackbars.errorGeneric(context, message);
+          },
+          permissionDenied: (message) {
+            if (mounted) _dialogService.hideLoading();
+            FlutterNativeSplash.remove();
+            if (mounted) _showLocationPermissionDialog(context, message);
+          },
+          permissionPermanentlyDenied: (message) {
+            if (mounted) _dialogService.hideLoading();
+            FlutterNativeSplash.remove();
+            if (mounted) _showLocationPermissionDialog(context, message);
+          },
         );
       },
-      builder: (context, state) => state.maybeWhen(
-        locationChecked: (locationDM) => _buildContent(),
-        orElse: () => const SizedBox.shrink(),
+      builder: (context, state) => _buildContent(),
+    );
+  }
+
+  void _showLocationPermissionDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        title: Text(S.current.locationRationaleTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(message),
+            const SizedBox(height: 12),
+            Text(
+              S.current.locationRationaleBody,
+              style: const TextStyle(fontSize: 13, color: Colors.grey),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Geolocator.openAppSettings();
+            },
+            child: Text(S.current.openSettings),
+          ),
+        ],
       ),
     );
   }

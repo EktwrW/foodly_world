@@ -1,0 +1,9 @@
+/* English - iOS permission descriptions */
+"NSLocationWhenInUseUsageDescription" = "We need access to your location to find nearby restaurants and services.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "We need access to your location to find nearby restaurants and services even when the app is in background.";
+"NSLocationAlwaysUsageDescription" = "We need access to your location to find nearby restaurants and services when the app is in background.";
+"NSFaceIDUsageDescription" = "We need to use Face ID to authenticate you and secure your data.";
+"NSCameraUsageDescription" = "We need access to your camera so you can take photos.";
+"NSPhotoLibraryUsageDescription" = "We need access to your gallery so you can select images.";
+"NSMicrophoneUsageDescription" = "We need access to your microphone so you can search by voice and record videos.";
+"NSSpeechRecognitionUsageDescription" = "This app needs speech recognition permission for voice search.";

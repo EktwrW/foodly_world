@@ -8,14 +8,21 @@ class CurrentLocationButton extends StatelessWidget {
     return BlocBuilder<SmartSearchCubit, SmartSearchState>(
       builder: (context, state) {
         final locationService = di<LocationService>();
+        final hasLocation = locationService.hasLocationData;
 
         return Tooltip(
-          message:
-              '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.',
+          message: hasLocation
+              ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+              : S.current.enableLocationDescription,
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: () async {
+                if (!hasLocation) {
+                  Geolocator.openAppSettings();
+                  return;
+                }
+
                 if (!state.vm.smartSearchMode.isOff) {
                   if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   await Future.delayed(Durations.short2);
@@ -33,20 +40,35 @@ class CurrentLocationButton extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  spacing: 8,
-                  children: [
-                    const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
-                    Expanded(
-                      child: Text(
-                        '${locationService.currentAddress}, ${locationService.currentCity}.',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: FoodlyTextStyles.captionBold,
-                      ),
-                    ),
-                  ],
-                ).paddingAll(8),
+                child: hasLocation
+                    ? Row(
+                        spacing: 8,
+                        children: [
+                          const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
+                          Expanded(
+                            child: Text(
+                              '${locationService.currentAddress}, ${locationService.currentCity}.',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: FoodlyTextStyles.captionBold,
+                            ),
+                          ),
+                        ],
+                      ).paddingAll(8)
+                    : Row(
+                        spacing: 8,
+                        children: [
+                          const Icon(Icons.location_off_outlined, color: Colors.redAccent, size: 22),
+                          Expanded(
+                            child: Text(
+                              S.current.enableLocation,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
+                            ),
+                          ),
+                        ],
+                      ).paddingAll(8),
               ),
             ).paddingRight(6),
           ),

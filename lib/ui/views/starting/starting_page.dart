@@ -62,17 +62,17 @@ class StartingPage369 extends StatelessWidget {
         return DecoratedBox(
           decoration: UIDecorations.BACKGROUND_GRADIENT_1,
           child: state.maybeWhen(
-            loading: (vm) => buildContent(context, vm),
-            welcome: (vm) => buildContent(context, vm),
-            error: (e, vm) => buildContent(context, vm),
-            orElse: () => const SizedBox.shrink(),
+            loading: (vm) => _buildContent(context, vm),
+            welcome: (vm) => _buildContent(context, vm),
+            error: (e, vm) => _buildContent(context, vm),
+            orElse: () => const SizedBox.expand(),
           ),
         );
       },
     );
   }
 
-  Widget buildContent(BuildContext context, StartingVM vm) {
+  Widget _buildContent(BuildContext context, StartingVM vm) {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

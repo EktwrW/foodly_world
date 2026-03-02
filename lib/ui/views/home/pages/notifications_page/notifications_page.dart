@@ -59,7 +59,7 @@ class NotificationsPage extends StatelessWidget {
                     width: 200,
                     child: CustomNeumorphicButton(
                       onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
-                      type: CustomNeumorphicBtnType.secondary,
+                      type: CustomNeumorphicBtnType.outlined,
                       text: 'Mark all as read',
                       fontSize: 14,
                       disabled: !vm.hasUnread,
