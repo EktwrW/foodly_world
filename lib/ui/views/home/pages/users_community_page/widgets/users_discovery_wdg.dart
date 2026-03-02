@@ -64,7 +64,7 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
                           onRefresh: () => context.read<SocialCubit>().loadNearbyUsers(refresh: true),
                           child: ListView.separated(
                             controller: _scrollController,
-                            padding: const EdgeInsets.only(left: 14, right: 14, top: 8, bottom: 100),
+                            padding: const EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 100),
                             itemCount: vm.nearbyUsers.length + (vm.isLoadingMoreUsers ? 1 : 0),
                             separatorBuilder: (_, __) => const SizedBox(height: 10),
                             itemBuilder: (context, index) {

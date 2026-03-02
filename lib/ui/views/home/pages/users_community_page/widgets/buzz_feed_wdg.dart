@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension;
+import 'package:foodly_world/core/core_exports.dart' show AppRouter, AppRoutes, FoodlyThemes, PaddingExtension;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -63,7 +65,7 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
           onRefresh: () => context.read<SocialCubit>().loadBuzz(refresh: true),
           child: ListView.separated(
             controller: _scrollController,
-            padding: const EdgeInsets.only(left: 14, right: 14, top: 8, bottom: 100),
+            padding: const EdgeInsets.only(left: 14, right: 14, top: 20, bottom: 100),
             itemCount: vm.buzzItems.length + (vm.isLoadingMoreBuzz ? 1 : 0),
             separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
@@ -93,12 +95,12 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
           ),
           const SizedBox(height: 16),
           Text(
-            'No buzz nearby yet',
+            S.current.buzzEmptyTitle,
             style: FoodlyTextStyles.label.copyWith(color: Colors.black54),
           ),
           const SizedBox(height: 8),
           Text(
-            'Community activity will appear here',
+            S.current.buzzEmptySubtitle,
             style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
           ),
         ],
@@ -112,62 +114,91 @@ class _BuzzItemCard extends StatelessWidget {
 
   const _BuzzItemCard({required this.item});
 
+  String _buzzMessage() {
+    final name = item.businessName.isNotEmpty ? item.businessName : '?';
+    return switch (item.subType) {
+      'new_review' => S.current.buzzNewReview(name),
+      'new_follower' => S.current.buzzNewFollower(name),
+      'new_promotion' => S.current.buzzNewPromotion(name),
+      'promotion_update' => S.current.buzzPromotionUpdate(name),
+      'new_favorite_menu_item' => S.current.buzzNewFavoriteMenuItem(name),
+      'new_favorite_menu' => S.current.buzzNewFavoriteMenu(name),
+      'new_favorite_promotion' => S.current.buzzNewFavoritePromotion(name),
+      _ => S.current.buzzDefaultActivity(name),
+    };
+  }
+
+  void _navigateToBusiness() {
+    if (item.businessUuid == null) return;
+    di<AppRouter>().appRouter.goNamed(
+      AppRoutes.visitBusiness.name,
+      pathParameters: {AppRoutes.routeIdParam: item.businessUuid!},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final canNavigate = item.businessUuid != null;
+
     return Card(
       elevation: 1,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Row(
-        children: [
-          _buildIcon(),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.message,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 13, color: Colors.black87),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    if (item.businessName.isNotEmpty) ...[
-                      const Icon(Icons.store, size: 12, color: FoodlyThemes.secondaryFoodly),
-                      const SizedBox(width: 4),
-                      Flexible(
-                        child: Text(
-                          item.businessName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11),
+      child: InkWell(
+        onTap: canNavigate ? _navigateToBusiness : null,
+        borderRadius: BorderRadius.circular(12),
+        child: Row(
+          children: [
+            _buildIcon(),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _buzzMessage(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 13, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      if (item.businessName.isNotEmpty) ...[
+                        const Icon(Icons.store, size: 12, color: FoodlyThemes.secondaryFoodly),
+                        const SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            item.businessName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
+                        const SizedBox(width: 8),
+                      ],
+                      if (item.createdAt != null)
+                        Text(
+                          item.createdAt!.timeAgo,
+                          style: const TextStyle(fontSize: 10, color: Colors.black38),
+                        ),
                     ],
-                    if (item.createdAt != null)
-                      Text(
-                        item.createdAt!.timeAgo,
-                        style: const TextStyle(fontSize: 10, color: Colors.black38),
-                      ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 8),
-          if (item.businessPhoto != null)
-            AvatarWidget(
-              avatarUrl: item.businessPhoto,
-              avatarType: AvatarType.business,
-              width: 40,
-              height: 40,
-            ),
-        ],
-      ).paddingAll(12),
+            const SizedBox(width: 8),
+            if (item.businessPhoto != null)
+              AvatarWidget(
+                avatarUrl: item.businessPhoto,
+                avatarType: AvatarType.business,
+                width: 40,
+                height: 40,
+              ),
+            if (canNavigate) const Icon(Icons.chevron_right, size: 18, color: Colors.black26),
+          ],
+        ).paddingAll(12),
+      ),
     );
   }
 
