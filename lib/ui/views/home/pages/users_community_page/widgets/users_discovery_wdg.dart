@@ -63,6 +63,7 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
                           color: FoodlyThemes.primaryFoodly,
                           onRefresh: () => context.read<SocialCubit>().loadNearbyUsers(refresh: true),
                           child: ListView.separated(
+                            physics: const AlwaysScrollableScrollPhysics(),
                             controller: _scrollController,
                             padding: const EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 100),
                             itemCount: vm.nearbyUsers.length + (vm.isLoadingMoreUsers ? 1 : 0),

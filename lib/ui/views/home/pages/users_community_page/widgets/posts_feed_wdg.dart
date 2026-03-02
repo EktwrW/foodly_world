@@ -56,6 +56,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
           color: FoodlyThemes.primaryFoodly,
           onRefresh: () => context.read<SocialCubit>().loadPosts(refresh: true),
           child: ListView.separated(
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: _scrollController,
             padding: const EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 100),
             itemCount: vm.posts.length + (vm.isLoadingMorePosts ? 1 : 0),
