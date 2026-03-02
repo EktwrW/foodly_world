@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/core_exports.dart' show AppRouter, AppRoutes, FoodlyThemes, PaddingExtension;
+import 'package:foodly_world/core/core_exports.dart' show AppRouter, AppRoutes, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -116,36 +115,56 @@ class _BuzzItemCard extends StatelessWidget {
 
   String _buzzMessage() {
     final name = item.businessName.isNotEmpty ? item.businessName : '?';
+    final entity = item.entityName;
     return switch (item.subType) {
       'new_review' => S.current.buzzNewReview(name),
       'new_follower' => S.current.buzzNewFollower(name),
       'new_promotion' => S.current.buzzNewPromotion(name),
       'promotion_update' => S.current.buzzPromotionUpdate(name),
+      'new_favorite_menu_item' when entity != null => S.current.buzzNewFavoriteMenuItemNamed(entity, name),
       'new_favorite_menu_item' => S.current.buzzNewFavoriteMenuItem(name),
+      'new_favorite_menu' when entity != null => S.current.buzzNewFavoriteMenuNamed(entity, name),
       'new_favorite_menu' => S.current.buzzNewFavoriteMenu(name),
+      'new_favorite_promotion' when entity != null => S.current.buzzNewFavoritePromotionNamed(entity, name),
       'new_favorite_promotion' => S.current.buzzNewFavoritePromotion(name),
       _ => S.current.buzzDefaultActivity(name),
     };
   }
 
-  void _navigateToBusiness() {
-    if (item.businessUuid == null) return;
-    di<AppRouter>().appRouter.goNamed(
-      AppRoutes.visitBusiness.name,
-      pathParameters: {AppRoutes.routeIdParam: item.businessUuid!},
-    );
+  void _navigate() {
+    final router = di<AppRouter>().appRouter;
+
+    switch (item.subType) {
+      case 'new_favorite_menu' when item.menuUuid != null:
+        router.goNamed(
+          AppRoutes.visitMenu.name,
+          pathParameters: {AppRoutes.routeIdParam: item.menuUuid!},
+        );
+      case 'new_promotion' || 'promotion_update' || 'new_favorite_promotion' when item.businessUuid != null:
+        router.goNamed(
+          AppRoutes.visitPromotions.name,
+          pathParameters: {AppRoutes.routeIdParam: item.businessUuid!},
+        );
+      default:
+        if (item.businessUuid != null) {
+          router.goNamed(
+            AppRoutes.visitBusiness.name,
+            pathParameters: {AppRoutes.routeIdParam: item.businessUuid!},
+          );
+        }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final canNavigate = item.businessUuid != null;
+    final canNavigate = item.businessUuid != null || item.menuUuid != null;
 
     return Card(
       elevation: 1,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
-        onTap: canNavigate ? _navigateToBusiness : null,
+        onTap: canNavigate ? _navigate : null,
         borderRadius: BorderRadius.circular(12),
         child: Row(
           children: [

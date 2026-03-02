@@ -34,6 +34,8 @@ class BuzzItemDM with _$BuzzItemDM {
     @JsonKey(name: 'business_uuid') String? businessUuid,
     @JsonKey(name: 'business_name') @Default('') String businessName,
     @JsonKey(name: 'business_photo') String? businessPhoto,
+    @JsonKey(name: 'menu_uuid') String? menuUuid,
+    @JsonKey(name: 'entity_name') String? entityName,
     @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _BuzzItemDM;
 
