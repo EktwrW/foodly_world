@@ -20,6 +20,20 @@ abstract class UserDiscoveryClient {
 
   @GET('/users/profile/{uuid}')
   Future<UserProfileResponseDM> getUserProfile(@Path('uuid') String uuid);
+
+  @POST('/user-followers/{userUuid}')
+  Future<ToggleFollowResponseDM> toggleFollow(@Path('userUuid') String userUuid);
+}
+
+/// Wrapper for toggle follow response { is_following: bool }
+class ToggleFollowResponseDM {
+  final bool isFollowing;
+
+  ToggleFollowResponseDM({required this.isFollowing});
+
+  factory ToggleFollowResponseDM.fromJson(Map<String, dynamic> json) {
+    return ToggleFollowResponseDM(isFollowing: json['is_following'] as bool);
+  }
 }
 
 /// Wrapper for the profile endpoint response { success: true, data: {...} }

@@ -40,4 +40,12 @@ class UserDiscoveryRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  Future<ApiResult<ToggleFollowResponseDM>> toggleFollow(String userUuid) async {
+    try {
+      return ApiResult.success(await _client.toggleFollow(userUuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

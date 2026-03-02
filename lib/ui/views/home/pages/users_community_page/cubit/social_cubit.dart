@@ -360,8 +360,10 @@ class SocialCubit extends Cubit<SocialState> {
     loadNearbyUsers();
   }
 
-  /// Toggle follow de un usuario (optimistic)
+  /// Toggle follow de un usuario (optimistic + API call)
   Future<void> toggleFollowUser(String userUuid) async {
+    final previousUsers = List<NearbyUserDM>.from(_vm.nearbyUsers);
+
     // Optimistic update
     final updatedUsers = _vm.nearbyUsers.map((user) {
       if (user.uuid == userUuid) {
@@ -377,8 +379,16 @@ class SocialCubit extends Cubit<SocialState> {
     _vm = _vm.copyWith(nearbyUsers: updatedUsers);
     emit(SocialState.loaded(_vm));
 
-    // The actual follow/unfollow is done via UserFollowerController (existing endpoint)
-    // The frontend already has the user-followers toggle endpoint wired up
+    final result = await _userDiscoveryRepo.toggleFollow(userUuid);
+    result.when(
+      success: (_) {},
+      failure: (error) {
+        _logger.e('Error toggling follow: ${error.errorMsg}');
+        // Revert optimistic update on failure
+        _vm = _vm.copyWith(nearbyUsers: previousUsers);
+        emit(SocialState.loaded(_vm));
+      },
+    );
   }
 
   /// Carga perfil público de un usuario
