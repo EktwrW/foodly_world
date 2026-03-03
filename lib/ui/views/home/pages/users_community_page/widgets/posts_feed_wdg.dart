@@ -49,7 +49,13 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
         final vm = state.vm;
 
         if (vm.posts.isEmpty) {
-          return _buildEmptyState(context);
+          if (state != SocialState.loading(vm)) {
+            return _buildEmptyState(context);
+          } else {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ).paddingBottom(60);
+          }
         }
 
         return RefreshIndicator(
@@ -60,7 +66,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
             controller: _scrollController,
             padding: const EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 100),
             itemCount: vm.posts.length + (vm.isLoadingMorePosts ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, __) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               if (index >= vm.posts.length) {
                 return const Center(

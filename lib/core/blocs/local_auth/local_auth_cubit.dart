@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_transfer_objects/local_auth/local_auth_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -52,6 +54,9 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
         if (_authSessionService.isLoggedIn && biometricAuthEnabled) {
           emit(_NeedAuthentication(_dto));
         } else {
+          // Biometric auth won't happen — complete any deferred services init
+          // that was waiting on the biometric flow to resolve.
+          _authSessionService.completePendingServicesInit();
           emit(_Loaded(_dto));
         }
       },
@@ -82,6 +87,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
   }
 
   Future<void> authenticate() async {
+    if (_dto.isAuthenticating) return;
     _dto = _dto.copyWith(isAuthenticating: true);
     try {
       await auth
@@ -110,6 +116,12 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
   }
 
   Future<void> _checkLoginStatusCall() async {
+    // Guard: pause notifications and suppress 401 handling while the backend
+    // rotates the token (deletes old token, creates new one). Without this,
+    // any in-flight or polling request using the old token would receive 401
+    // and trigger a false "session expired" error.
+    _authSessionService.setBiometricLoginInProgress(true);
+
     await _meRepo.biometricLogin().then(
       (response) {
         return response.when(
@@ -119,8 +131,16 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
               ..initializeFavorites()
               ..initializeNotifications();
             emit(_Authenticated(_dto = _dto.copyWith(userSessionDM: userSessionDM, isAuthenticating: false)));
+            // Clear the biometric-login guard with a grace period so that any
+            // stale in-flight responses (using the old token) that arrive after
+            // this point are still suppressed by the Dio interceptor.
+            Future.delayed(
+              const Duration(seconds: 2),
+              () => _authSessionService.setBiometricLoginInProgress(false),
+            );
           },
           failure: (e) {
+            _authSessionService.setBiometricLoginInProgress(false);
             _logger.e('$e');
             emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
           },

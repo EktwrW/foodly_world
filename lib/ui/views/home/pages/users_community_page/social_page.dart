@@ -132,11 +132,13 @@ class PostsFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.small(
+    return FloatingActionButton(
       onPressed: () => CreatePostDialog.show(context),
-      backgroundColor: FoodlyThemes.primaryFoodly,
+      splashColor: FoodlyThemes.primaryLighten73.withValues(alpha: 0.39),
+      backgroundColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.73),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: const Icon(Icons.edit, color: Colors.white),
-    ).paddingOnly(bottom: context.screenWidth * 0.3, right: 16);
+      elevation: 8.0,
+      child: const Icon(Icons.edit, color: Colors.white, size: 28),
+    ).paddingOnly(bottom: context.screenWidth * 0.3, right: 12);
   }
 }

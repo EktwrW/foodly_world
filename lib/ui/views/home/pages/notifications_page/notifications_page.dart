@@ -39,13 +39,15 @@ class NotificationsPage extends StatelessWidget {
             final vm = state.vm;
 
             if (vm.notifications.isEmpty) {
-              return const Center(
-                child: Column(
+              return Center(
+                child: const Column(
                   spacing: 16,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
                     Text('No notifications yet!'),
                   ],
-                ),
+                ).paddingBottom(48),
               );
             }
 

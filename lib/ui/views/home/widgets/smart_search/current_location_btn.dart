@@ -5,7 +5,10 @@ class CurrentLocationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SmartSearchCubit, SmartSearchState>(
+    // Outer builder: rebuild when LocationBloc emits (e.g., locationChecked
+    // after GPS resolves), so the imperatively-read hasLocationData is current.
+    return BlocBuilder<LocationBloc, LocationState>(
+      builder: (_, __) => BlocBuilder<SmartSearchCubit, SmartSearchState>(
       builder: (context, state) {
         final locationService = di<LocationService>();
         final hasLocation = locationService.hasLocationData;
@@ -74,6 +77,7 @@ class CurrentLocationButton extends StatelessWidget {
           ),
         );
       },
+    ),
     );
   }
 }

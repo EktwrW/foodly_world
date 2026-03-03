@@ -99,7 +99,7 @@ class AppRouter {
   }
 
   Future<void> saveLastRoute(String lastRoute) async {
-    if (lastRoute != '/') {
+    if (lastRoute != '/' && !_isLoginRoute(lastRoute)) {
       await localStorageService.saveString(FoodlyStrings.LAST_PATH, lastRoute);
     }
   }
@@ -171,6 +171,9 @@ class AppRouter {
       debugLogDiagnostics: di<BaseConfig>().isLoggingEnabled,
       navigatorKey: rootNavigatorKey,
       redirect: (context, state) async {
+        // Read the saved route BEFORE updateCurrentRoute overwrites it.
+        // This ensures route restoration works after biometric auth or restart.
+        final lastPath = await localStorageService.getString(FoodlyStrings.LAST_PATH);
         updateCurrentRoute(state);
 
         // Si el usuario está siendo forzado a hacer login
@@ -183,13 +186,12 @@ class AppRouter {
           return AppRoutes.login.path;
         }
 
-        final lastPath = await localStorageService.getString(FoodlyStrings.LAST_PATH);
-
-        // Si el usuario está autenticado y tiene una última ruta válida
-        if (authSessService.isLoggedIn &&
+        // Route restoration: only on the initial app bootstrap (initialLocation
+        // is '/'), so normal in-app navigations are never overridden.
+        if (state.matchedLocation == AppRoutes.start.path &&
+            authSessService.isLoggedIn &&
             lastPath != null &&
-            lastPath != state.matchedLocation &&
-            !_isLoginRoute(state.matchedLocation)) {
+            lastPath != state.matchedLocation) {
           return lastPath;
         }
 

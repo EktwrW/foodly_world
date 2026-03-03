@@ -34,7 +34,11 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
       case AppLifecycleState.inactive:
         notificationsCubit.pausePolling();
       case AppLifecycleState.resumed:
-        notificationsCubit.resumePolling();
+        // Don't resume polling during biometric login — the backend is rotating
+        // the token and any poll with the old token would get 401.
+        if (!di<AuthSessionService>().isBiometricLoginInProgress) {
+          notificationsCubit.resumePolling();
+        }
       case AppLifecycleState.detached:
       case AppLifecycleState.hidden:
         break;
@@ -63,9 +67,19 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
 
             state.whenOrNull(
               needAuthentication: (localAuthDTO) async {
+                // Set the flag BEFORE the biometric dialog opens so that the
+                // lifecycle observer (resumed) won't resume notification polling
+                // while the backend is about to rotate the token.
+                authSessionService.setBiometricLoginInProgress(true);
                 dialogService.showLoading();
                 await context.read<LocalAuthCubit>().authenticate();
-                dialogService.hideLoading();
+                // Hide loading AFTER the next frame so the router has time
+                // to rebuild with the destination page (home). Without this,
+                // the login page flashes briefly between overlay removal and
+                // the GoRouter navigation triggered by FingerprintButtonLogin.
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  dialogService.hideLoading();
+                });
               },
               loaded: (localAuthDTO) async {
                 dialogService.hideLoading();
@@ -76,7 +90,9 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                 }
               },
               authenticated: (localAuthDTO) async {
-                dialogService.hideLoading();
+                // Don't hideLoading() here — the needAuthentication handler
+                // defers it to the next frame so the loading overlay stays
+                // visible until GoRouter has rebuilt with the destination page.
                 await authSessionService.updateForceToLogin(false);
                 if (context.mounted) {
                   context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: localAuthDTO.userSessionDM));

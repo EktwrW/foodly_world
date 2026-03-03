@@ -29,9 +29,14 @@ abstract class DioRequestHandler {
   static void dioErrorHandler(DioException e, ErrorInterceptorHandler handler) async {
     final authSessionService = di<AuthSessionService>();
 
-    // Handle 401 Unauthenticated — clear session and force login
+    // Handle 401 Unauthenticated — clear session and force login.
+    // Suppress during biometric login: the backend rotates the token
+    // (deletes old, creates new), so stale in-flight requests getting
+    // 401 is expected and not a real session expiration.
     if (e.response?.statusCode == 401) {
-      authSessionService.notifyTokenExpired();
+      if (!authSessionService.isBiometricLoginInProgress) {
+        authSessionService.notifyTokenExpired();
+      }
       return handler.reject(e);
     }
 

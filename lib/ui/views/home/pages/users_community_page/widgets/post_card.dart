@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
@@ -24,18 +25,20 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeader(),
-          _buildContent(),
-          if (post.hasPhoto) _buildPhoto(),
-          _buildFooter(),
-        ],
+    return FadeIn(
+      child: Card(
+        elevation: 2,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            _buildContent(),
+            if (post.hasPhoto) _buildPhoto(),
+            _buildFooter(),
+          ],
+        ),
       ),
     );
   }

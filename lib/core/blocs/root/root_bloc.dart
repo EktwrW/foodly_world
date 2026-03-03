@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -39,7 +40,9 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
       // Fire-and-forget: validates token, then initializes favorites/notifications
       // if valid, or clears session and forces login if token is stale/expired.
       _authSessionService.initializeSessionOrClear(cachedState.userSessionDM);
-      _authSessionService.updateBiometricAuth(true);
+      // Only expect biometric auth on native platforms (iOS/Android).
+      // On web, services init proceeds immediately in initializeSessionOrClear.
+      if (!kIsWeb) _authSessionService.updateBiometricAuth(true);
       return cachedState;
     } catch (e) {
       return null;

@@ -36,19 +36,38 @@ class FingerprintButtonLogin extends StatelessWidget {
     return BlocConsumer<LocalAuthCubit, LocalAuthState>(
       listener: (context, state) {
         state.whenOrNull(
-          authenticated: (localAuthDTO) {
+          authenticated: (localAuthDTO) async {
             context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: localAuthDTO.userSessionDM));
             final user = localAuthDTO.userSessionDM.user;
-            di<DialogService>().hideLoading();
 
             if (user.isManager && user.business.isEmpty) {
               context.goNamed(AppRoutes.signUpBusiness.name);
+              WidgetsBinding.instance.addPostFrameCallback((_) => di<DialogService>().hideLoading());
+              return;
+            }
+
+            // Restore the last route the user was on before session close.
+            // Falls back to home if no valid saved route exists.
+            final savedRoute = await di<LocalStorageService>().getString(FoodlyStrings.LAST_PATH);
+            if (!context.mounted) {
+              di<DialogService>().hideLoading();
+              return;
+            }
+
+            if (savedRoute != null &&
+                savedRoute.isNotEmpty &&
+                savedRoute != '/' &&
+                savedRoute != AppRoutes.login.path) {
+              context.go(savedRoute);
             } else {
               context.goNamed(
                 AppRoutes.foodlyMainPage.name,
                 pathParameters: {AppRoutes.routeIdParam: user.uuid ?? ''},
               );
             }
+            // Defer hideLoading so the overlay stays visible until GoRouter
+            // has rebuilt with the destination page (prevents login flash).
+            WidgetsBinding.instance.addPostFrameCallback((_) => di<DialogService>().hideLoading());
           },
           error: (msg, localAuthDTO) => di<DialogService>().hideLoading(),
         );

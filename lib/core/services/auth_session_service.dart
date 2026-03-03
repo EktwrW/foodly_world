@@ -36,6 +36,8 @@ class AuthSessionService {
   Map<String, String>? _authHeader;
   bool requestBiometricAuth = false;
   bool forceToLogin = false;
+  bool _isBiometricLoginInProgress = false;
+  bool _pendingServicesInit = false;
 
   /// Device metadata — computed once at startup via [initDeviceMetadata].
   /// Available app-wide for any feature that needs to enrich API requests.
@@ -107,9 +109,32 @@ class AuthSessionService {
     return NlpSearchPlatform.unknown;
   }
 
+  bool get isBiometricLoginInProgress => _isBiometricLoginInProgress;
+
   void updateBiometricAuth(bool newValue) => requestBiometricAuth = newValue;
 
   Future<void> updateForceToLogin(bool newValue) async => forceToLogin = newValue;
+
+  /// Guards biometric login against 401 race conditions.
+  /// When true, the Dio interceptor suppresses [notifyTokenExpired] because
+  /// the backend is rotating the token (old one deleted, new one in-flight).
+  void setBiometricLoginInProgress(bool value) {
+    _isBiometricLoginInProgress = value;
+    if (value) {
+      _notificationsCubit?.pausePolling();
+    }
+  }
+
+  /// Completes deferred favorites/notifications initialization.
+  /// Called when biometric auth turns out to not be needed (device doesn't
+  /// support it or no biometrics enrolled) but the token was already validated.
+  void completePendingServicesInit() {
+    if (_pendingServicesInit) {
+      _pendingServicesInit = false;
+      initializeFavorites();
+      initializeNotifications();
+    }
+  }
 
   void setSession(UserSessionDM? newUserSessionDM) {
     userSessionDM = newUserSessionDM;
@@ -132,6 +157,13 @@ class AuthSessionService {
   /// Validates the cached token via a lightweight API call, then initializes
   /// favorites/notifications if valid. If invalid, clears session and forces login.
   /// Called from [RootBloc.fromJson()] — runs async in background (fire-and-forget).
+  ///
+  /// When [requestBiometricAuth] is true (native platforms), services initialization
+  /// is deferred to avoid a race condition: the biometric login endpoint rotates the
+  /// token (deletes old, creates new), and any in-flight request using the old token
+  /// would receive 401 → triggering a false "session expired" error.
+  /// Services are started later by [_checkLoginStatusCall] (biometric success) or
+  /// [completePendingServicesInit] (biometric not available).
   Future<void> initializeSessionOrClear(UserSessionDM session) async {
     setSession(session);
 
@@ -139,8 +171,16 @@ class AuthSessionService {
       final result = await _meRepo.fetchLoggedUser();
       result.when(
         success: (_) {
-          initializeFavorites();
-          initializeNotifications();
+          // By the time this callback runs, updateBiometricAuth(true) has
+          // already executed (it's synchronous and called right after this
+          // async method in fromJson). On native, defer services to avoid
+          // the token-rotation race condition during biometric login.
+          if (requestBiometricAuth) {
+            _pendingServicesInit = true;
+          } else {
+            initializeFavorites();
+            initializeNotifications();
+          }
         },
         failure: (_) => _clearInvalidSession(),
       );
@@ -154,6 +194,8 @@ class AuthSessionService {
   void _clearInvalidSession() {
     userSessionDM = null;
     _authHeader = null;
+    _pendingServicesInit = false;
+    _isBiometricLoginInProgress = false;
     _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
     _favoritesCubit?.clearAllFavorites();
     _notificationsCubit?.clear();
@@ -263,7 +305,7 @@ class AuthSessionService {
   /// Handles token expiration: clears session, shows a localized message,
   /// and navigates to login. Guards against re-entrancy via [forceToLogin].
   void notifyTokenExpired() {
-    if (forceToLogin) return;
+    if (forceToLogin || _isBiometricLoginInProgress) return;
     _clearInvalidSession();
 
     final context = rootNavigatorKey.currentContext;
