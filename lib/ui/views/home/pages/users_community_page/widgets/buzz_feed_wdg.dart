@@ -67,7 +67,7 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
             controller: _scrollController,
             padding: const EdgeInsets.only(left: 14, right: 14, top: 20, bottom: 100),
             itemCount: vm.buzzItems.length + (vm.isLoadingMoreBuzz ? 1 : 0),
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, __) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               if (index >= vm.buzzItems.length) {
                 return const Center(

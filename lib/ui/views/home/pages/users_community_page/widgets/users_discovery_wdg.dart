@@ -65,9 +65,9 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
                           child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),
                             controller: _scrollController,
-                            padding: const EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 100),
+                            padding: const EdgeInsets.only(left: 14, right: 14, top: 16, bottom: 100),
                             itemCount: vm.nearbyUsers.length + (vm.isLoadingMoreUsers ? 1 : 0),
-                            separatorBuilder: (_, __) => const SizedBox(height: 10),
+                            separatorBuilder: (_, __) => const SizedBox(height: 16),
                             itemBuilder: (context, index) {
                               if (index >= vm.nearbyUsers.length) {
                                 return const Center(

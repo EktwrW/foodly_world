@@ -1,12 +1,10 @@
 import 'package:clay_containers/widgets/clay_text.dart' show ClayText;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show BlocSelector, FavoritesCubit, FavoritesState;
-import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset, AssetData;
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' show BusinessDM, PromotionDM;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
@@ -14,6 +12,7 @@ import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/cubit/saved_promotions_view_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart' show PromotionCard;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:toggle_switch/toggle_switch.dart' show ToggleSwitch;
 
 part 'widgets/saved_promotions_toggle_switch.dart';
@@ -120,13 +119,10 @@ class SavedPromotionsPage extends StatelessWidget {
 
 class _EmptyListPlaceholder extends StatelessWidget {
   final String text;
-  final AssetData assetData;
 
   const _EmptyListPlaceholder({
     super.key,
     required this.text,
-    // ignore: unused_element_parameter
-    this.assetData = FoodlyAssets.searchBusinessAgain,
   });
 
   @override
@@ -137,7 +133,7 @@ class _EmptyListPlaceholder extends StatelessWidget {
         spacing: 24,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Asset(assetData, width: 40),
+          const Icon(Bootstrap.bookmark_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
           Center(
             child: Text(
               text,

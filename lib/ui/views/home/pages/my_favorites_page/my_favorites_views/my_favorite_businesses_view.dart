@@ -15,15 +15,16 @@ class MyFavoriteBusinessesView extends StatelessWidget {
         if (favoriteBusinesses.isEmpty) {
           return Column(
             spacing: 24,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Asset(FoodlyAssets.searchBusinessAgain, width: 40),
+              const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
               Text(
                 'Aun no tienes negocios en tu lista de favoritos',
                 style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
             ],
-          ).paddingTop(100);
+          ).paddingBottom(100);
         }
 
         return BlocSelector<FavoritesCubit, FavoritesState, bool>(
