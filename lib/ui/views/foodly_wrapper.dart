@@ -101,6 +101,11 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
               },
               error: (msg, localAuthDTO) async {
                 dialogService.hideLoading();
+                // Always dismiss the native splash in the error path.  If the
+                // token is expired (401) FoodlyLocationWrapper will be
+                // unmounted before it can call FlutterNativeSplash.remove(),
+                // which would leave the splash frozen on screen forever.
+                FlutterNativeSplash.remove();
                 await authSessionService.updateForceToLogin(true);
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   try {

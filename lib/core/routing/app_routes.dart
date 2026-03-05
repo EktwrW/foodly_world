@@ -14,6 +14,7 @@ enum AppRoutes {
   savedPromotions('$_routeIdParam/saved-promotions', 'savedPromotions'),
   favedBusiness('$_routeIdParam/faved-business', 'favedBusiness'),
   notifications('$_routeIdParam/notifications', 'notifications'),
+  privacyPolicy('/privacy', 'privacyPolicy'),
   // Business routes
   myBusiness('$mainRoute/$_routeIdParam/my-business', 'myBusiness'),
   manageMenu('/manage-menu/$_routeIdParam', 'manageMenu'),

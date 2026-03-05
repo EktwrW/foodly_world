@@ -305,6 +305,7 @@
   },
   "priceValidation": "Price value must be not null and greater than 0.09",
   "profile": "Profile",
+  "privacyPolicy": "Privacy Policy",
   "profileBirthdayText1": "Birthday",
   "profileBirthdayText2": "Date",
   "profileUserLocation1": "User",

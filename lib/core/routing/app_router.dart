@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/views/home/pages/notifications_page/notification
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
+import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
@@ -351,6 +352,7 @@ class AppRouter {
                 FadeTransition(opacity: animation, child: child),
           ),
         ),
+        _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
         GoRoute(
           path: AppRoutes.managePromotions.path,
           name: AppRoutes.managePromotions.name,

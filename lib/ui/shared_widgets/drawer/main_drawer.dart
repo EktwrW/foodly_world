@@ -1,5 +1,8 @@
+import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
+import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/drawer/view_model/main_drawer_vm.dart';
@@ -7,6 +10,7 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -42,119 +46,195 @@ class FoodlyDrawer extends StatelessWidget {
     final navigator = di<AppRouter>();
     final authService = di<AuthSessionService>();
 
-    return SidebarX(
-      animationDuration: Durations.medium4,
-      controller: vm.sidebarController,
-      collapseIcon: Bootstrap.caret_left_fill,
-      extendIcon: Bootstrap.caret_right_fill,
-      theme: const SidebarXTheme(
-        width: 90,
-        decoration: BoxDecoration(
-          color: ui.NeumorphicColors.background,
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+    return SafeArea(
+      child: SidebarX(
+        animationDuration: Durations.medium4,
+        controller: vm.sidebarController,
+        showToggleButton: false,
+        theme: const SidebarXTheme(
+          width: 100,
+          decoration: BoxDecoration(
+            color: ui.NeumorphicColors.background,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
           ),
         ),
-      ),
-      footerDivider: Column(
-        children: [
-          IconButton(
-            onPressed: () {
+        footerBuilder: (context, extended) {
+          return Column(
+            spacing: 12,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: extended ? MainAxisAlignment.start : MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // Navigate to privacy policy screen (in-app) and close drawer
+                      try {
+                        navigator.appRouter.goNamed(AppRoutes.privacyPolicy.name);
+                      } catch (_) {
+                        // In case of navigation failure, show error snackbar but keep drawer open for retry
+                        FoodlySnackbars.errorGeneric(context, S.current.somethingWentWrong);
+                      }
+                      FoodlyMainScaffold.toggleDrawer();
+                    },
+                    icon: const Icon(Bootstrap.shield_lock, size: 24),
+                    tooltip: S.current.privacyPolicy,
+                  ),
+                  if (extended)
+                    Flexible(
+                      child: FadeIn(
+                        delay: Durations.medium2,
+                        child: Text(
+                          S.current.privacyPolicy,
+                          style: FoodlyTextStyles.label,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12),
+              Flexible(
+                child: IconButton(
+                  onPressed: () => vm.sidebarController.toggleExtended(),
+                  icon: extended
+                      ? const Icon(Bootstrap.caret_left_fill, size: 40)
+                      : const Icon(Bootstrap.caret_right_fill, size: 40),
+                  tooltip: S.current.logout,
+                ),
+              ),
+              Row(
+                spacing: 12,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (extended)
+                    Flexible(
+                      child: FadeIn(
+                        delay: Durations.medium2,
+                        duration: Durations.medium2,
+                        child: const Text(
+                          'Version',
+                          style: FoodlyTextStyles.label,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  Flexible(
+                    child: Text(
+                      authService.deviceInfo?.appVersion ?? '-',
+                      style: FoodlyTextStyles.labelBold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (extended)
+                    Flexible(
+                      child: FadeIn(
+                        delay: Durations.medium2,
+                        duration: Durations.medium2,
+                        child: const Asset(FoodlyAssets.symbol369, width: 20),
+                      ).paddingLeft(8),
+                    ),
+                ],
+              )
+            ],
+          ).paddingBottom(16);
+        },
+        headerDivider: const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12).paddingBottom(12),
+        extendedTheme: const SidebarXTheme(
+          width: 240,
+          itemTextPadding: EdgeInsets.only(left: 12),
+          selectedItemTextPadding: EdgeInsets.only(left: 16),
+          selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
+          decoration: BoxDecoration(
+            color: ui.NeumorphicColors.background,
+            borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+          ),
+        ),
+        headerBuilder: (context, extended) {
+          final Size avatarSize = extended ? UIDimens.AVATAR_DRAWER_BIG_MOB : UIDimens.AVATAR_DRAWER_SMALL_MOB;
+          final double iconSize = extended ? 22 : 0;
+          final double buttonDiameter = extended ? 25 : 0;
+
+          return AnimatedContainer(
+            duration: Durations.medium2,
+            width: extended ? 220 : 90,
+            height: 180,
+            margin: const EdgeInsets.only(top: 40, bottom: 10),
+            child: Column(
+              children: [
+                Expanded(
+                  child: EditableAvatarWdg(
+                    imageUrl: authService.userSessionDM?.user.avatarUrl ?? '',
+                    size: avatarSize,
+                    iconSize: iconSize,
+                    buttonDiameter: buttonDiameter,
+                    paddingAll: 0,
+                    avatarType: AvatarType.user,
+                    onPressed: () async => await pickImage(context)
+                        .then((path) => path.isNotEmpty ? cubit.updateProfilePhoto(path) : null),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        items: [
+          SidebarXItem(
+            onTap: () {
+              navigator.appRouter
+                  .goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
+
+              cubit.updateSelectedIndex(0);
+              FoodlyMainScaffold.toggleDrawer();
+            },
+            iconBuilder: (p1, p2) =>
+                FoodlyIsoIconBehavior(height: 16, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
+            label: 'Home',
+          ),
+          if (authService.userIsManager)
+            SidebarXItem(
+              onTap: () {
+                navigator.appRouter.goNamed(AppRoutes.myBusiness.name, pathParameters: {
+                  AppRoutes.routeIdParam: authService.userSessionDM?.user.business.first.uuid ?? ''
+                });
+
+                cubit.updateSelectedIndex(1);
+                FoodlyMainScaffold.toggleDrawer();
+              },
+              icon: Icons.business_center_rounded,
+              label: S.current.dashboard,
+            ),
+          SidebarXItem(
+            onTap: () {
+              navigator.appRouter
+                  .goNamed(AppRoutes.profileScreen.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
+
+              cubit.updateSelectedIndex(2);
+              FoodlyMainScaffold.toggleDrawer();
+            },
+            icon: Bootstrap.person_vcard_fill,
+            label: S.current.profile,
+          ),
+          SidebarXItem(
+              iconBuilder: (p1, p2) =>
+                  FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
+              label: S.current.about),
+          SidebarXItem(icon: Bootstrap.mailbox2_flag, label: S.current.contactUs),
+          SidebarXItem(icon: Bootstrap.share_fill, label: S.current.recommend),
+          SidebarXItem(
+            onTap: () {
               FoodlyMainScaffold.toggleDrawer();
               authService.logout(rootNavigatorKey.currentContext ?? context);
             },
-            icon: const Icon(Bootstrap.door_open_fill, size: 32),
-            tooltip: S.current.logout,
-          ).paddingOnly(bottom: 6),
-          const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 1),
+            icon: Bootstrap.door_open_fill,
+            label: S.current.logout,
+          ),
         ],
       ),
-      headerDivider: const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 1),
-      extendedTheme: const SidebarXTheme(
-        width: 220,
-        itemTextPadding: EdgeInsets.only(left: 8),
-        selectedItemTextPadding: EdgeInsets.only(left: 10),
-        selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
-        decoration: BoxDecoration(
-          color: ui.NeumorphicColors.background,
-          borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
-        ),
-      ),
-      headerBuilder: (context, extended) {
-        final Size avatarSize = extended ? UIDimens.AVATAR_DRAWER_BIG_MOB : UIDimens.AVATAR_DRAWER_SMALL_MOB;
-        final double iconSize = extended ? 22 : 0;
-        final double buttonDiameter = extended ? 25 : 0;
-
-        return AnimatedContainer(
-          duration: Durations.medium2,
-          width: extended ? 220 : 90,
-          height: 180,
-          margin: const EdgeInsets.only(top: 40, bottom: 10),
-          child: Column(
-            children: [
-              Expanded(
-                child: EditableAvatarWdg(
-                  imageUrl: authService.userSessionDM?.user.avatarUrl ?? '',
-                  size: avatarSize,
-                  iconSize: iconSize,
-                  buttonDiameter: buttonDiameter,
-                  paddingAll: 0,
-                  avatarType: AvatarType.user,
-                  onPressed: () async =>
-                      await pickImage(context).then((path) => path.isNotEmpty ? cubit.updateProfilePhoto(path) : null),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-      items: [
-        SidebarXItem(
-          onTap: () {
-            navigator.appRouter
-                .goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
-
-            cubit.updateSelectedIndex(0);
-            FoodlyMainScaffold.toggleDrawer();
-          },
-          iconBuilder: (p1, p2) =>
-              FoodlyIsoIconBehavior(height: 16, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
-          label: 'Home',
-        ),
-        if (authService.userIsManager)
-          SidebarXItem(
-            onTap: () {
-              navigator.appRouter.goNamed(AppRoutes.myBusiness.name,
-                  pathParameters: {AppRoutes.routeIdParam: authService.userSessionDM?.user.business.first.uuid ?? ''});
-
-              cubit.updateSelectedIndex(1);
-              FoodlyMainScaffold.toggleDrawer();
-            },
-            icon: Icons.business_center_rounded,
-            label: S.current.dashboard,
-          ),
-        SidebarXItem(
-          onTap: () {
-            navigator.appRouter
-                .goNamed(AppRoutes.profileScreen.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
-
-            cubit.updateSelectedIndex(2);
-            FoodlyMainScaffold.toggleDrawer();
-          },
-          icon: Bootstrap.person_vcard_fill,
-          label: S.current.profile,
-        ),
-        SidebarXItem(icon: Bootstrap.house_gear_fill, label: S.current.account),
-        // SidebarXItem(icon: Bootstrap.sliders2, label: S.current.preferences), TODO: move this section to profile page
-        SidebarXItem(icon: Icons.history_outlined, label: S.current.myHistory),
-        SidebarXItem(
-            iconBuilder: (p1, p2) =>
-                FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
-            label: S.current.about),
-        SidebarXItem(icon: Bootstrap.mailbox2_flag, label: S.current.contactUs),
-        SidebarXItem(icon: Bootstrap.share_fill, label: S.current.recommend),
-      ],
     );
   }
 }
