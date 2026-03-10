@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoDatePicker, CupertinoDatePickerMode;
 import 'package:flutter_linear_calendar/flutter_linear_calendar.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
@@ -19,6 +20,12 @@ import 'package:universal_io/io.dart' show File;
 
 class VisitedBusinessSnackbars {
   const VisitedBusinessSnackbars._();
+
+  static DateTime _roundedInitialTime() {
+    final now = DateTime.now();
+    final roundedMinute = (now.minute / 15).ceil() * 15;
+    return DateTime(now.year, now.month, now.day, now.hour + (roundedMinute >= 60 ? 1 : 0), roundedMinute % 60);
+  }
 
   static void showInputReviewWdg(
     BuildContext context, {
@@ -329,5 +336,194 @@ class VisitedBusinessSnackbars {
     );
 
     scaffoldMessenger.showSnackBar(snackBar.getSnackBar(context));
+  }
+
+  static void requestReservation(BuildContext context) {
+    final cubit = context.read<VisitBusinessCubit>();
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    cubit.initializeReservationInput();
+
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.action,
+      buttonBuilder: (dismiss) {
+        return BlocProvider.value(
+          value: cubit,
+          child: BlocSelector<VisitBusinessCubit, VisitBusinessState, bool>(
+            selector: (state) => state.vm.canSubmitReservation,
+            builder: (context, canSubmit) {
+              return SizedBox(
+                height: 50,
+                child: CustomNeumorphicButton(
+                  disabled: !canSubmit,
+                  fontSize: 14,
+                  onPressed: () async {
+                    final successSnack = SnackBarWdg(
+                      type: SnackBarType.success,
+                      content: Text('Reservation request sent!\nYou will be notified once the business confirms it.',
+                          textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
+                      duration: const Duration(seconds: 5),
+                    ).getSnackBar(context);
+                    final errorSnack = SnackBarWdg(
+                      type: SnackBarType.error,
+                      content: Text('Failed to send reservation request.',
+                          textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
+                      duration: const Duration(seconds: 4),
+                    ).getSnackBar(context);
+
+                    final success = await cubit.createReservation();
+                    scaffoldMessenger.hideCurrentSnackBar();
+                    await Future.delayed(Durations.short4);
+                    scaffoldMessenger.showSnackBar(success ? successSnack : errorSnack);
+                  },
+                  text: 'Request Reservation',
+                ),
+              );
+            },
+          ),
+        );
+      },
+      content: BlocProvider.value(
+        value: cubit,
+        child: BlocBuilder<VisitBusinessCubit, VisitBusinessState>(
+          builder: (context, state) {
+            final vm = state.vm;
+            final maxSize = vm.currentBusiness?.reservationsSizeLimit ?? 6;
+
+            return Column(
+              spacing: 12,
+              children: [
+                if (vm.currentBusiness?.bussinessReservationImage != null)
+                  Asset(vm.currentBusiness!.bussinessReservationImage, height: 48),
+                Text(
+                  'Reserve a table at ${vm.currentBusiness?.name ?? 'this business'}',
+                  style: FoodlyTextStyles.promoTitle.copyWith(fontSize: 16),
+                ).paddingVertical(16),
+
+                // Date picker
+                const Text('Select a date:', style: FoodlyTextStyles.captionBold),
+                LinearCalendar(
+                  initialSelectedDate: vm.reservationDateTime,
+                  selectedColor: FoodlyThemes.tertiaryFoodly,
+                  foregroundColor: Colors.black,
+                  onDateChanged: (date) => cubit.setReservationDate(date),
+                  dateBuilder: (context, date, _) {
+                    final isSelected = vm.reservationDateTime != null &&
+                        date.year == vm.reservationDateTime!.year &&
+                        date.month == vm.reservationDateTime!.month &&
+                        date.day == vm.reservationDateTime!.day;
+
+                    return AnimatedContainer(
+                      duration: Durations.medium3,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: isSelected ? FoodlyThemes.tertiaryFoodly : Colors.transparent,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: isSelected ? FoodlyThemes.tertiaryFoodly : FoodlyThemes.secondaryFoodly,
+                          width: .5,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            date.getMonthAbreviatedFormat,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black54,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            date.getDayNumberAndNameAbreviatedFormat,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black87,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+                // Time picker
+                const Text('Select a time:', style: FoodlyTextStyles.captionBold).paddingTop(8),
+                SizedBox(
+                  height: 80,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.time,
+                    initialDateTime: _roundedInitialTime(),
+                    use24hFormat: true,
+                    minuteInterval: 15,
+                    showTimeSeparator: true,
+                    onDateTimeChanged: (dateTime) {
+                      cubit.setReservationTime(
+                        '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}',
+                      );
+                    },
+                  ),
+                ),
+
+                // Party size
+                const Text('Party size:', style: FoodlyTextStyles.captionBold).paddingTop(8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 16,
+                  children: [
+                    CustomRoundedNeumorphicButton(
+                      onPressed: (vm.reservationSize ?? 0) > 1
+                          ? () => cubit.setReservationSize((vm.reservationSize ?? 2) - 1)
+                          : null,
+                      diameter: 20,
+                      iconSize: 20,
+                      iconData: Icons.remove,
+                    ),
+                    Text(
+                      '${vm.reservationSize ?? 1}',
+                      style: FoodlyTextStyles.promoTitle,
+                    ),
+                    CustomRoundedNeumorphicButton(
+                      onPressed: (vm.reservationSize ?? 1) < maxSize
+                          ? () => cubit.setReservationSize((vm.reservationSize ?? 0) + 1)
+                          : null,
+                      diameter: 20,
+                      iconSize: 20,
+                      iconData: Icons.add,
+                    ),
+                  ],
+                ),
+                Text('(max $maxSize)', style: FoodlyTextStyles.captionPurple),
+
+                // Special requests
+                SizedBox(
+                  height: 73,
+                  child: FoodlyPrimaryInputText(
+                    controller: vm.specialRequestsController,
+                    maxLength: 500,
+                    maxLines: 1,
+                    minLines: 1,
+                    enabled: true,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    inputTextType: FoodlyInputType.generic,
+                    hideCurrentSnackBarWhenOnTap: false,
+                    hintText: 'Special requests (optional)',
+                    hintTextSize: 12,
+                  ),
+                ).paddingVertical(12),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+
+    scaffoldMessenger
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar.getSnackBar(context)).closed.then((reason) {
+        cubit.resetReservationInput();
+      });
   }
 }

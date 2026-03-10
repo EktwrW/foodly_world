@@ -16,6 +16,8 @@ class NlpApiProvider {
         FoodlyStrings.ACCEPT: FoodlyStrings.APPLICATION_JSON,
       },
       baseUrl: nlpSearchBaseUrl,
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 30),
     ));
   }
 }

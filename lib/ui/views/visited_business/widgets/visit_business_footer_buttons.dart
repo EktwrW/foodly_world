@@ -41,13 +41,18 @@ class VisitBusinessFooterButtons extends StatelessWidget {
               buttonText: S.current.promotions,
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
-            FooterButton(
-              onPressed: () {},
-              dimension: 30,
-              iconSize: 31,
-              iconData: Icons.table_restaurant_outlined,
-              buttonText: S.current.reservation,
-              textStyle: FoodlyTextStyles.footerButtonSmall,
+            Opacity(
+              opacity: (currentBusiness?.allowReservations ?? false) ? 1.0 : 0.4,
+              child: FooterButton(
+                onPressed: (currentBusiness?.allowReservations ?? false)
+                    ? () => VisitedBusinessSnackbars.requestReservation(context)
+                    : () {},
+                dimension: 30,
+                iconSize: 31,
+                iconData: Icons.table_restaurant_outlined,
+                buttonText: S.current.reservation,
+                textStyle: FoodlyTextStyles.footerButtonSmall,
+              ),
             ),
             FooterButton(
               onPressed: () async {

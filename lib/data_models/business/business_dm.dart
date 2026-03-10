@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show AssetData;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
@@ -13,6 +15,16 @@ export 'package:foodly_world/data_models/business/opening_hours_dm.dart';
 
 part 'business_dm.freezed.dart';
 part 'business_dm.g.dart';
+
+FoodlyCategories? _safeCategoryFromJson(dynamic value) {
+  if (value == null) return null;
+  final id = value is int ? value : int.tryParse(value.toString());
+  if (id == null) return null;
+  return FoodlyCategories.values.cast<FoodlyCategories?>().firstWhere(
+        (c) => c?.value == id,
+        orElse: () => null,
+      );
+}
 
 @freezed
 class BusinessDM with _$BusinessDM {
@@ -38,12 +50,14 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'business_menus') @Default([]) List<MenuDM> menus,
     @JsonKey(name: 'business_latitude') double? latitude,
     @JsonKey(name: 'business_longitude') double? longitude,
-    @JsonKey(name: 'category_id') FoodlyCategories? categoryId,
+    @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson) FoodlyCategories? categoryId,
     @JsonKey(name: 'category') CategoryDM? category,
     @JsonKey(name: 'rating_avg') double? rating,
     @JsonKey(name: 'ratings_count') int? ratingsCount,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
+    @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
+    @JsonKey(name: 'reservations_count') @Default(6) int reservationsSizeLimit,
 
     // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
     @Default([]) List<ReviewDM> reviews,
@@ -75,12 +89,20 @@ class BusinessDM with _$BusinessDM {
         dimension: 28,
         child: categoryId?.avatar ?? category?.id?.avatar ?? const SizedBox.shrink(),
       );
+
+  AssetData get bussinessReservationImage {
+    return switch (categoryId) {
+      FoodlyCategories.coffee || FoodlyCategories.bakery => FoodlyAssets.reserveCoffeeTable,
+      FoodlyCategories.drinkHouse => FoodlyAssets.reserveBar,
+      _ => FoodlyAssets.reserveTable,
+    };
+  }
 }
 
 @freezed
 class CategoryDM with _$CategoryDM {
   const factory CategoryDM({
-    @JsonKey(name: 'id') FoodlyCategories? id,
+    @JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
     @JsonKey(name: 'category_uuid') String? categoryUuid,
     @JsonKey(name: 'category_name') String? categoryName,
     @JsonKey(name: 'category_image_path') String? categoryImagePath,

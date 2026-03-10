@@ -15,6 +15,8 @@ enum AppRoutes {
   favedBusiness('$_routeIdParam/faved-business', 'favedBusiness'),
   notifications('$_routeIdParam/notifications', 'notifications'),
   privacyPolicy('/privacy', 'privacyPolicy'),
+  myReservations('/my-reservations', 'myReservations'),
+  manageReservations('$mainRoute/$_routeIdParam/my-business/manage-reservations', 'manageReservations'),
   // Business routes
   myBusiness('$mainRoute/$_routeIdParam/my-business', 'myBusiness'),
   manageMenu('/manage-menu/$_routeIdParam', 'manageMenu'),

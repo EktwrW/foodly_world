@@ -97,7 +97,7 @@ class FoodlyDrawer extends StatelessWidget {
                     ),
                 ],
               ),
-              const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12),
+              const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 4),
               Flexible(
                 child: IconButton(
                   onPressed: () => vm.sidebarController.toggleExtended(),
@@ -144,12 +144,13 @@ class FoodlyDrawer extends StatelessWidget {
           ).paddingBottom(16);
         },
         headerDivider: const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12).paddingBottom(12),
-        extendedTheme: const SidebarXTheme(
+        extendedTheme: SidebarXTheme(
           width: 240,
-          itemTextPadding: EdgeInsets.only(left: 12),
-          selectedItemTextPadding: EdgeInsets.only(left: 16),
-          selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
-          decoration: BoxDecoration(
+          itemMargin: EdgeInsets.all(context.screenWidth * .005),
+          itemTextPadding: const EdgeInsets.only(left: 12),
+          selectedItemTextPadding: const EdgeInsets.only(left: 16),
+          selectedTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
+          decoration: const BoxDecoration(
             color: ui.NeumorphicColors.background,
             borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
           ),
@@ -163,7 +164,7 @@ class FoodlyDrawer extends StatelessWidget {
             duration: Durations.medium2,
             width: extended ? 220 : 90,
             height: 180,
-            margin: const EdgeInsets.only(top: 40, bottom: 10),
+            margin: const EdgeInsets.only(top: 20, bottom: 10),
             child: Column(
               children: [
                 Expanded(
@@ -220,9 +221,20 @@ class FoodlyDrawer extends StatelessWidget {
             label: S.current.profile,
           ),
           SidebarXItem(
-              iconBuilder: (p1, p2) =>
-                  FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
-              label: S.current.about),
+            onTap: () {
+              navigator.appRouter.goNamed(AppRoutes.myReservations.name);
+
+              cubit.updateSelectedIndex(3);
+              FoodlyMainScaffold.toggleDrawer();
+            },
+            icon: Bootstrap.calendar2_event,
+            label: S.current.myReservations,
+          ),
+          SidebarXItem(
+            iconBuilder: (p1, p2) =>
+                FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
+            label: S.current.about,
+          ),
           SidebarXItem(icon: Bootstrap.mailbox2_flag, label: S.current.contactUs),
           SidebarXItem(icon: Bootstrap.share_fill, label: S.current.recommend),
           SidebarXItem(

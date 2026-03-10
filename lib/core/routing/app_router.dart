@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cub
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
 import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
+import 'package:foodly_world/ui/views/business/reservations/manage_reservations_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
@@ -18,6 +19,7 @@ import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_pro
 import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
+import 'package:foodly_world/ui/views/reservations/my_reservations_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
@@ -353,6 +355,7 @@ class AppRouter {
           ),
         ),
         _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
+        _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
         GoRoute(
           path: AppRoutes.managePromotions.path,
           name: AppRoutes.managePromotions.name,
@@ -375,6 +378,20 @@ class AppRouter {
           ),
         ),
         GoRoute(
+          path: AppRoutes.manageReservations.path,
+          name: AppRoutes.manageReservations.name,
+          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Durations.medium4,
+            key: state.pageKey,
+            child: ManageReservationsPage(
+              businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                FadeTransition(opacity: animation, child: child),
+          ),
+        ),
+        GoRoute(
           path: AppRoutes.visitBusiness.path,
           name: AppRoutes.visitBusiness.name,
           redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
@@ -387,6 +404,7 @@ class AppRouter {
                 di(),
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 state.extra as BusinessDM?,
+                di(),
                 di(),
               ),
               child: const VisitedBusinessPage(),

@@ -86,6 +86,7 @@ enum FoodlyInputType {
 
   // common
   prices(icon: null, textInputType: TextInputType.number),
+  reservationSize(icon: null, textInputType: TextInputType.number),
   youtubeUrl(icon: Icon(Bootstrap.youtube, size: 22), textInputType: TextInputType.url),
   generic(icon: null, textInputType: TextInputType.text);
 

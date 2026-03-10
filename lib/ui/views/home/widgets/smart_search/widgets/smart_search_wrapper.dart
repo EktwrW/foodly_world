@@ -9,8 +9,12 @@ class _SmartSearchWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SmartSearchCubit, SmartSearchState>(
       listener: (context, state) {
+        final dialogService = di<DialogService>();
+
         state.whenOrNull(
+          searchComplete: (_) => dialogService.hideLoading(),
           error: (message, vm) {
+            dialogService.hideLoading();
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             FoodlySnackbars.errorGeneric(context, message);
           },

@@ -16,6 +16,7 @@ import 'package:foodly_world/ui/views/business/view_model/business_vm.dart' show
 import 'package:foodly_world/ui/views/business/widgets/about_us/about_us.dart';
 import 'package:foodly_world/ui/views/business/widgets/additional_info/additional_info.dart';
 import 'package:foodly_world/ui/views/business/widgets/address/address.dart';
+import 'package:foodly_world/ui/views/business/widgets/allow_reservations/allow_reservations.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_footer_buttons.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/business/widgets/contact_channels/contact_channels.dart';
@@ -23,10 +24,10 @@ import 'package:foodly_world/ui/views/business/widgets/edit_cover_images_widgets
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hours.dart';
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
 
-part 'widgets/customer_reviews/customer_reviews.dart';
-part 'widgets/category_and_rating/category_and_rating.dart';
 part 'widgets/category_and_rating/category.dart';
+part 'widgets/category_and_rating/category_and_rating.dart';
 part 'widgets/category_and_rating/rating.dart';
+part 'widgets/customer_reviews/customer_reviews.dart';
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({super.key});
@@ -106,6 +107,7 @@ class _BusinessPageState extends State<BusinessPage> {
                       children: [
                         const AddressWdg(),
                         const CategoryAndRatingWdg(),
+                        const AllowReservations(),
                         AboutUsWdg(vm: vm),
                         OpeningHoursWdg(vm: vm),
                         ServicesWdg(vm: vm),

@@ -32,6 +32,8 @@ enum ModuleGuardType {
         AppRoutes.visitMenu.name: menu,
         AppRoutes.visitPromotions.name: home,
         AppRoutes.profileScreen.name: accountSettings,
+        AppRoutes.myReservations.name: home,
+        AppRoutes.manageReservations.name: home,
         '': unknown,
       };
 }

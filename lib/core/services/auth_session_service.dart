@@ -10,6 +10,7 @@ import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -252,6 +253,7 @@ class AuthSessionService {
       _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
       _favoritesCubit?.clearAllFavorites();
       _notificationsCubit?.clear();
+      di<SocialCubit>().clear();
 
       if (context.mounted) {
         context.read<RootBloc>().add(const RootEvent.userLogout());

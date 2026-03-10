@@ -1,11 +1,15 @@
+import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
+import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_icons_data.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart' show ViewModeToggleButton;
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -40,6 +44,7 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
     );
 
     super.initState();
+    _checkPendingReservations();
   }
 
   @override
@@ -53,6 +58,76 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
     _tabController.dispose();
     _hideBottomBarAnimationController.dispose();
     super.dispose();
+  }
+
+  void _checkPendingReservations() async {
+    final authService = di<AuthSessionService>();
+    if (!authService.userIsManager) return;
+
+    final businesses = authService.userSessionDM?.user.business ?? [];
+    if (businesses.isEmpty) return;
+
+    // Small delay to let the UI settle after login
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (!mounted) return;
+
+    final repo = di<ReservationRepo>();
+    final result = await repo.getPendingCount();
+
+    result.when(
+      success: (response) {
+        if (!mounted || response.pendingCount == 0) return;
+
+        final count = response.pendingCount;
+        final firstBusiness = businesses.first;
+
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) => FadeIn(
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              icon: const Icon(Bootstrap.calendar2_check, size: 40, color: FoodlyThemes.primaryFoodly),
+              title: Text(
+                count == 1 ? 'You have 1 pending reservation' : 'You have $count pending reservations',
+                textAlign: TextAlign.center,
+                style: FoodlyTextStyles.actionsBodyBold,
+              ),
+              content: const Text(
+                'There are reservation requests waiting for your response.',
+                textAlign: TextAlign.center,
+              ),
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(
+                    'I\'ll do it later',
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                CustomNeumorphicButton(
+                  disabled: false,
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    context.goNamed(
+                      AppRoutes.manageReservations.name,
+                      pathParameters: {AppRoutes.routeIdParam: firstBusiness.uuid},
+                      extra: firstBusiness,
+                    );
+                  },
+                  text: S.current.manageReservations,
+                  fontSize: 13,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      failure: (_) {},
+    );
   }
 
   void navigateTo(int index) {
@@ -142,7 +217,7 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
                   child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
                 ).paddingAll(6),
               ],
-            ).paddingBottom(16)
+            ).paddingOnly(bottom: context.screenHeight * .025, right: 12)
           : FloatingActionButton(
               splashColor: FoodlyThemes.tertiaryFoodly.withValues(alpha: .5),
               onPressed: () {

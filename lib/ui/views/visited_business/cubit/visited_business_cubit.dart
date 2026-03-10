@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/enums/review_enums.dart';
+import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart';
@@ -13,6 +14,7 @@ part 'visited_business_state.dart';
 class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   final BusinessRepo _businessRepo;
   final ReviewRepo _reviewRepo;
+  final ReservationRepo _reservationRepo;
   final Logger _logger;
   VisitBusinessVM _vm;
 
@@ -22,8 +24,10 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     String businessUuid,
     BusinessDM? business,
     ReviewRepo reviewRepo,
+    ReservationRepo reservationRepo,
   )   : _businessRepo = businessRepo,
         _reviewRepo = reviewRepo,
+        _reservationRepo = reservationRepo,
         _logger = logger,
         _vm = const VisitBusinessVM(),
         super(const _Initial(VisitBusinessVM())) {
@@ -374,5 +378,77 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
             },
           ),
         );
+  }
+
+  // ── Reservation methods ──────────────────────────────────────────────
+
+  void initializeReservationInput() {
+    _vm = _vm.copyWith(
+      specialRequestsController: TextEditingController(),
+      reservationDateTime: null,
+      reservationTime: null,
+      reservationSize: null,
+      isSubmittingReservation: false,
+    );
+    Future.microtask(() => emit(_Loaded(_vm)));
+  }
+
+  void setReservationDate(DateTime date) {
+    _vm = _vm.copyWith(reservationDateTime: date);
+    emit(_Loaded(_vm));
+  }
+
+  void setReservationTime(String time) {
+    _vm = _vm.copyWith(reservationTime: time);
+    emit(_Loaded(_vm));
+  }
+
+  void setReservationSize(int size) {
+    _vm = _vm.copyWith(reservationSize: size);
+    emit(_Loaded(_vm));
+  }
+
+  void resetReservationInput() {
+    _vm.specialRequestsController?.clear();
+    _vm = _vm.copyWith(
+      reservationDateTime: null,
+      reservationTime: null,
+      reservationSize: null,
+      isSubmittingReservation: false,
+    );
+    Future.microtask(() => emit(_Loaded(_vm)));
+  }
+
+  Future<bool> createReservation() async {
+    final business = _vm.currentBusiness;
+    if (business == null || !_vm.canSubmitReservation) return false;
+
+    _vm = _vm.copyWith(isSubmittingReservation: true);
+    emit(_Loaded(_vm));
+
+    final date =
+        '${_vm.reservationDateTime!.year}-${_vm.reservationDateTime!.month.toString().padLeft(2, '0')}-${_vm.reservationDateTime!.day.toString().padLeft(2, '0')}';
+
+    final result = await _reservationRepo.createReservation(
+      businessUuid: business.uuid,
+      reservationDate: date,
+      reservationTime: _vm.reservationTime!,
+      partySize: _vm.reservationSize!,
+      specialRequests: _vm.specialRequestsController?.text,
+    );
+
+    return result.when(
+      success: (_) {
+        _vm = _vm.copyWith(isSubmittingReservation: false);
+        resetReservationInput();
+        return true;
+      },
+      failure: (error) {
+        _logger.e(error);
+        _vm = _vm.copyWith(isSubmittingReservation: false);
+        emit(_Error(error.toString(), _vm));
+        return false;
+      },
+    );
   }
 }

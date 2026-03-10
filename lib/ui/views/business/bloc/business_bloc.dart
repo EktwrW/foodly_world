@@ -47,6 +47,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
           businessCityCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessZipCodeCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAdditionalInfoCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
+          reservationSizeLimitCtrl: InputController(controller: TextEditingController(text: '6'), focusNode: FocusNode()),
         ),
         super(const _Initial(BusinessVM())) {
     on<BusinessEvent>(
@@ -140,6 +141,10 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
 
           /// Event to call server for updating the business object
           updateBusiness: (_UpdateBusiness value) async => await _callToUpdateBusiness(emit),
+          toggleAllowReservations: (_ToggleAllowReservations value) async =>
+              await _updateReservationSetting(emit, allowReservations: value.value),
+          setReservationSizeLimit: (_SetReservationSizeLimit value) async =>
+              await _updateReservationSetting(emit, reservationSizeLimit: value.value),
         );
       },
     );
@@ -208,7 +213,9 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
       currentBusinessServices: _authService.userSessionDM?.user.business.first.businessServices ?? [],
       loggedUserCanEdit: _authService.userIsManager &&
           (_authService.userSessionDM?.user.business.any((b) => b.uuid == businesses.first.uuid) ?? false),
+      allowReservations: businesses.first.allowReservations,
     );
+    _vm.reservationSizeLimitCtrl?.controller?.text = '${businesses.first.reservationsSizeLimit}';
     _authService.setBusinesses(businesses);
 
     emit(_Loaded(_vm));
@@ -420,6 +427,34 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   }
 
   void _updateBusinessFromPlacesAPI(Place detail) => _vm = DashboardHelpers.setAddressFromPlacesAPI(detail, _vm);
+
+  Future<void> _updateReservationSetting(
+    Emitter emit, {
+    bool? allowReservations,
+    int? reservationSizeLimit,
+  }) async {
+    if (_vm.currentBusiness?.uuid == null) return;
+
+    emit(_Loading(_vm));
+
+    final dto = BusinessUpdateDTO(
+      allowReservations: allowReservations,
+      reservationSizeLimit: reservationSizeLimit,
+    );
+
+    await _businessRepo.updateBusiness(_vm.currentBusiness!.uuid, dto).then(
+          (result) => result.when(
+            success: (updatedBusiness) {
+              _updateBusinessInCurrentArray(updatedBusiness);
+              _vm = _vm.copyWith(
+                allowReservations: updatedBusiness.allowReservations,
+              );
+              emit(_Loaded(_vm));
+            },
+            failure: (error) => _handleError(error, emit),
+          ),
+        );
+  }
 }
 
 // Future<void> fetchPlaceDetails(String placeId) async {

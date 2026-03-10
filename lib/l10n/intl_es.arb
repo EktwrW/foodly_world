@@ -234,6 +234,7 @@
   "mustContainAtLeast3Characters": "Debe contener al menos 3 caracteres",
   "mustContainAtLeastTwoCharacters": "Debe contener al menos 2 caracteres",
   "myHistory": "Mi Historial",
+  "myReservations": "Mis Reservaciones",
   "needBestRecommendations": "¿Necesitas las mejores recomendaciones?",
   "news": "Novedades",
   "newBranch": "Nueva Sucursal",
@@ -468,5 +469,39 @@
   "wifi": "Wifi",
   "zipCode": "Código postal",
   "zipCodeNotAvailable": "Este codigo esta fuera de nuestra area actual de cobertura",
-  "@zipCodeNotAvailable": {}
+  "@zipCodeNotAvailable": {},
+  "manageReservations": "Gestionar Reservas",
+  "noReservationsYet": "Aún no hay reservas.",
+  "noReservationsFound": "No se encontraron reservas.",
+  "reservationRequestSent": "¡Solicitud de reserva enviada!",
+  "reservationCancelled": "Reserva cancelada.",
+  "cancelReservation": "Cancelar Reserva",
+  "cancelReservationConfirm": "¿Estás seguro de que quieres cancelar esta reserva?",
+  "requestReservation": "Solicitar Reserva",
+  "reserveTableAt": "Reservar mesa en {businessName}",
+  "@reserveTableAt": {
+    "placeholders": {
+      "businessName": {}
+    }
+  },
+  "selectDate": "Selecciona una fecha:",
+  "selectTime": "Selecciona una hora:",
+  "tapToSelectTime": "Toca para seleccionar hora",
+  "partySize": "Comensales:",
+  "specialRequestsOptional": "Solicitudes especiales (opcional)",
+  "maxPartySize": "máx. {size}",
+  "@maxPartySize": {
+    "placeholders": {
+      "size": {}
+    }
+  },
+  "allowReservations": "Permitir Reservas",
+  "maxSize": "Máx.",
+  "pending": "Pendiente",
+  "confirmed": "Confirmada",
+  "rejected": "Rechazada",
+  "cancelled": "Cancelada",
+  "completed": "Completada",
+  "noShow": "No asistió",
+  "guests": "comensales"
 }

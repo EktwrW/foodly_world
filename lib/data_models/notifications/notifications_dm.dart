@@ -54,6 +54,7 @@ class NotificationDataDM with _$NotificationDataDM {
     @JsonKey(name: 'combo_uuid') String? comboUuid,
     @JsonKey(name: 'promotion_id') int? promotionId,
     @JsonKey(name: 'promotion_uuid') String? promotionUuid,
+    @JsonKey(name: 'reservation_uuid') String? reservationUuid,
   }) = _NotificationDataDM;
 
   factory NotificationDataDM.fromJson(Map<String, dynamic> json) => _$NotificationDataDMFromJson(json);
@@ -97,9 +98,26 @@ class NotificationDM with _$NotificationDM {
         FoodlyNotificationSubType.newReview => data?.businessUuid,
         FoodlyNotificationSubType.newPromotion => data?.promotionUuid,
         FoodlyNotificationSubType.promotionUpdate => data?.promotionUuid,
+        FoodlyNotificationSubType.newReservationRequest ||
+        FoodlyNotificationSubType.reservationConfirmed ||
+        FoodlyNotificationSubType.reservationRejected ||
+        FoodlyNotificationSubType.reservationCancelled ||
+        FoodlyNotificationSubType.reservationCancelledByBusiness =>
+          data?.reservationUuid,
         _ => null,
       };
 
   /// Business UUID - present in business favorite notifications
   String? get businessUuid => data?.businessUuid;
+
+  /// Reservation UUID - present in reservation notifications
+  String? get reservationUuid => data?.reservationUuid;
+
+  bool get isReservationNotification => const {
+        FoodlyNotificationSubType.newReservationRequest,
+        FoodlyNotificationSubType.reservationConfirmed,
+        FoodlyNotificationSubType.reservationRejected,
+        FoodlyNotificationSubType.reservationCancelled,
+        FoodlyNotificationSubType.reservationCancelledByBusiness,
+      }.contains(subType);
 }

@@ -50,7 +50,7 @@ class BusinessResultsView extends StatelessWidget {
       child: isGridView
           ? GridView.count(
               key: const ValueKey(BusinessResultsViewMode.grid),
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.only(top: 16, bottom: context.screenHeight * .15),
               crossAxisCount: 2,
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
@@ -65,7 +65,7 @@ class BusinessResultsView extends StatelessWidget {
           : ListView.separated(
               key: const ValueKey(BusinessResultsViewMode.list),
               itemCount: searchResults.length,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.only(top: 16, bottom: context.screenHeight * .15),
               separatorBuilder: (_, __) => const SizedBox(height: 4),
               itemBuilder: (context, index) {
                 final business = searchResults[index];

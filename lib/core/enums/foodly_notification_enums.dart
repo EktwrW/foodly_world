@@ -39,7 +39,17 @@ enum FoodlyNotificationSubType {
   @JsonValue('new_favorite_promotion')
   newFavoritePromotion('new_favorite_promotion'),
   @JsonValue('general_update')
-  generalUpdate('general_update');
+  generalUpdate('general_update'),
+  @JsonValue('new_reservation_request')
+  newReservationRequest('new_reservation_request'),
+  @JsonValue('reservation_confirmed')
+  reservationConfirmed('reservation_confirmed'),
+  @JsonValue('reservation_rejected')
+  reservationRejected('reservation_rejected'),
+  @JsonValue('reservation_cancelled')
+  reservationCancelled('reservation_cancelled'),
+  @JsonValue('reservation_cancelled_by_business')
+  reservationCancelledByBusiness('reservation_cancelled_by_business');
 
   final String value;
   const FoodlyNotificationSubType(this.value);

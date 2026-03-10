@@ -187,6 +187,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         emit(SmartSearchState.searchComplete(_vm));
       },
       failure: (error) {
+        _logger.e('Smart search failed', error: error);
         _vm = _vm.copyWith(
           smartSearchMode: SmartSearchMode.none,
           isBottomBarHidden: false,
@@ -194,7 +195,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
             controller: TextEditingController(text: searchText),
           ),
         );
-        emit(SmartSearchState.error(error.toString(), _vm));
+        emit(SmartSearchState.error(S.current.connectionError, _vm));
       },
     );
   }

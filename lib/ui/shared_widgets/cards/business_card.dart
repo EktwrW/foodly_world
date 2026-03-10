@@ -216,18 +216,20 @@ class BusinessGridCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            business.fullAddress,
-                            style: FoodlyTextStyles.cardsSmallSubtitle,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          ).paddingBottom(4),
-                        ),
-                      ],
+                    Flexible(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              business.fullAddress,
+                              style: FoodlyTextStyles.cardsSmallSubtitle,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

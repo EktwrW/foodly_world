@@ -20,4 +20,6 @@ class BusinessEvent with _$BusinessEvent {
   const factory BusinessEvent.setAddressFromPlacesAPI(Place detail) = _SetAddressFromPlacesAPI;
   const factory BusinessEvent.setMapController(GoogleMapController controller) = _SetMapController;
   const factory BusinessEvent.updateBusiness() = _UpdateBusiness;
+  const factory BusinessEvent.toggleAllowReservations(bool value) = _ToggleAllowReservations;
+  const factory BusinessEvent.setReservationSizeLimit(int value) = _SetReservationSizeLimit;
 }

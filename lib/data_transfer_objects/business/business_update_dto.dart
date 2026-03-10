@@ -25,6 +25,8 @@ class BusinessUpdateDTO with _$BusinessUpdateDTO {
     @JsonKey(name: 'business_longitude') double? businessLongitude,
     @JsonKey(name: 'category_id') FoodlyCategories? category,
     @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
+    @JsonKey(name: 'allow_reservations') bool? allowReservations,
+    @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
   }) = _BusinessUpdateDTO;
 
   factory BusinessUpdateDTO.fromJson(Map<String, dynamic> json) => _$BusinessUpdateDTOFromJson(json);

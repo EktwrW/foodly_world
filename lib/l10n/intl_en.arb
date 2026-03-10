@@ -234,6 +234,7 @@
   "mustContainAtLeast3Characters": "Must contain at least 3 characters",
   "mustContainAtLeastTwoCharacters": "Must contain at least 2 characters",
   "myHistory": "My History",
+  "myReservations": "My Reservations",
   "needBestRecommendations": "Need the best recommendations?",
   "news": "News",
   "newBranch": "New Branch",
@@ -468,5 +469,39 @@
   "wifi": "Wifi",
   "zipCode": "Zip Code",
   "zipCodeNotAvailable": "This code is outside our current coverage area",
-  "@zipCodeNotAvailable": {}
+  "@zipCodeNotAvailable": {},
+  "manageReservations": "Manage Reservations",
+  "noReservationsYet": "No reservations yet.",
+  "noReservationsFound": "No reservations found.",
+  "reservationRequestSent": "Reservation request sent!",
+  "reservationCancelled": "Reservation cancelled.",
+  "cancelReservation": "Cancel Reservation",
+  "cancelReservationConfirm": "Are you sure you want to cancel this reservation?",
+  "requestReservation": "Request Reservation",
+  "reserveTableAt": "Reserve a table at {businessName}",
+  "@reserveTableAt": {
+    "placeholders": {
+      "businessName": {}
+    }
+  },
+  "selectDate": "Select a date:",
+  "selectTime": "Select a time:",
+  "tapToSelectTime": "Tap to select time",
+  "partySize": "Party size:",
+  "specialRequestsOptional": "Special requests (optional)",
+  "maxPartySize": "max {size}",
+  "@maxPartySize": {
+    "placeholders": {
+      "size": {}
+    }
+  },
+  "allowReservations": "Allow Reservations",
+  "maxSize": "Max Size",
+  "pending": "Pending",
+  "confirmed": "Confirmed",
+  "rejected": "Rejected",
+  "cancelled": "Cancelled",
+  "completed": "Completed",
+  "noShow": "No Show",
+  "guests": "guests"
 }

@@ -47,6 +47,8 @@ class BusinessVM with _$BusinessVM {
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
     @Default(BusinessDays()) BusinessDays businessDays,
     @Default(false) bool loggedUserCanEdit,
+    InputController? reservationSizeLimitCtrl,
+    @Default(false) bool allowReservations,
   }) = _BusinessVM;
 
   bool get isEditingName => dashboardEditing == DashboardEditing.name;
