@@ -60,6 +60,7 @@ class MyReservationsPage extends StatelessWidget {
                 } else {
                   di<AppRouter>().goBackToLastRoute();
                 }
+                context.read<MainDrawerCubit>().goToPreviousIndex();
               },
             ).paddingSymmetric(vertical: 8, horizontal: 8),
             leadingWidth: 60,

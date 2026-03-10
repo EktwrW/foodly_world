@@ -9,75 +9,85 @@ class CurrentLocationButton extends StatelessWidget {
     // after GPS resolves), so the imperatively-read hasLocationData is current.
     return BlocBuilder<LocationBloc, LocationState>(
       builder: (_, __) => BlocBuilder<SmartSearchCubit, SmartSearchState>(
-      builder: (context, state) {
-        final locationService = di<LocationService>();
-        final hasLocation = locationService.hasLocationData;
+        builder: (context, state) {
+          final locationService = di<LocationService>();
+          final hasLocation = locationService.hasLocationData;
 
-        return Tooltip(
-          message: hasLocation
-              ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
-              : S.current.enableLocationDescription,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () async {
-                if (!hasLocation) {
-                  Geolocator.openAppSettings();
-                  return;
-                }
+          return Tooltip(
+            message: hasLocation
+                ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+                : S.current.enableLocationDescription,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () async {
+                  if (!hasLocation) {
+                    Geolocator.openAppSettings();
+                    return;
+                  }
 
-                if (!state.vm.smartSearchMode.isOff) {
-                  if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  await Future.delayed(Durations.short2);
-                }
+                  if (!state.vm.smartSearchMode.isOff) {
+                    if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    await Future.delayed(Durations.short2);
+                  }
 
-                di<DialogService>().showCustomDialog(
-                  const ChangeLocationDialog(),
-                  2,
-                  onDialogClose: () => context.read<SmartSearchCubit>().resetToInitial(),
-                );
-              },
-              borderRadius: BorderRadius.circular(10),
-              splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
-              highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: ui.NeumorphicColors.embossMaxWhiteColor, borderRadius: BorderRadius.circular(10)),
-                child: hasLocation
-                    ? Row(
-                        spacing: 8,
-                        children: [
-                          const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
-                          Expanded(
-                            child: Text(
-                              '${locationService.currentAddress}, ${locationService.currentCity}.',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: FoodlyTextStyles.captionBold,
+                  di<DialogService>().showCustomDialog(
+                    const ChangeLocationDialog(),
+                    2,
+                    onDialogClose: () => context.read<SmartSearchCubit>().resetToInitial(),
+                  );
+                },
+                borderRadius: BorderRadius.circular(10),
+                splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
+                highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: BackdropFilter(
+                    filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .35),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: hasLocation
+                          ? Row(
+                              spacing: 8,
+                              children: [
+                                const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
+                                Expanded(
+                                  child: Text(
+                                    '${locationService.currentAddress}, ${locationService.currentCity}.',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FoodlyTextStyles.captionBold,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              spacing: 8,
+                              children: [
+                                const Icon(Icons.location_off_outlined, color: Colors.redAccent, size: 22),
+                                Expanded(
+                                  child: Text(
+                                    S.current.enableLocation,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ).paddingAll(8)
-                    : Row(
-                        spacing: 8,
-                        children: [
-                          const Icon(Icons.location_off_outlined, color: Colors.redAccent, size: 22),
-                          Expanded(
-                            child: Text(
-                              S.current.enableLocation,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
-                            ),
-                          ),
-                        ],
-                      ).paddingAll(8),
-              ),
-            ).paddingRight(6),
-          ),
-        );
-      },
-    ),
+                    ),
+                  ),
+                ),
+              ).paddingRight(6),
+            ),
+          );
+        },
+      ),
     );
   }
 }
