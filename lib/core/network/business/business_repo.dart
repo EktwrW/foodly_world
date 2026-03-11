@@ -16,6 +16,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
@@ -605,6 +606,26 @@ class BusinessRepo {
   Future<ApiResult<void>> setFavoritePromotion(String uuid, SetFavoriteBodyDTO body) async {
     try {
       return ApiResult.success(await _businessClient.setFavoritePromotion(uuid, body));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<NearbyPromotionsResponseDM>> fetchNearbyPromotions({
+    required double latitude,
+    required double longitude,
+    double? radius,
+    int? page,
+    int? perPage,
+  }) async {
+    try {
+      return ApiResult.success(await _businessClient.fetchNearbyPromotions(
+        latitude: latitude,
+        longitude: longitude,
+        radius: radius,
+        page: page,
+        perPage: perPage,
+      ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

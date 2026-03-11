@@ -15,6 +15,7 @@ import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 export 'package:foodly_world/core/core_exports.dart';
@@ -108,6 +109,13 @@ class DependencyInjectionService {
           userDiscoveryRepo: di(),
           buzzRepo: di(),
           authService: authService,
+          locationService: di(),
+          logger: di(),
+        ));
+
+    /// Register NearbyPromotionsCubit
+    di.registerLazySingleton(() => NearbyPromotionsCubit(
+          businessRepo: di(),
           locationService: di(),
           logger: di(),
         ));

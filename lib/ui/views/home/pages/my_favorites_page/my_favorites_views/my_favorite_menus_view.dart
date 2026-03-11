@@ -161,14 +161,14 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ? () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
                             pathParameters: {AppRoutes.routeIdParam: business!.uuid}, extra: business)
                         : null,
-                    tooltip: S.current.shareMenu,
+                    tooltip: 'Visitar perfil del negocio',
                     iconSize: 18,
                     diameter: 18,
                     iconData: Bootstrap.shop_window,
                   ),
                   CustomRoundedNeumorphicButton(
                     onPressed: () => MenuSnackbars.showQRCodeSnackBar(context, _publicMenuUrl),
-                    tooltip: S.current.shareMenu,
+                    tooltip: S.current.generateQR,
                     iconSize: 18,
                     diameter: 18,
                     iconData: Bootstrap.qr_code_scan,

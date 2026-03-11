@@ -86,6 +86,7 @@ class NewReleasesCard extends StatelessWidget {
                                   itemSize: 12,
                                   minRating: 1,
                                   allowHalfRating: true,
+                                  ignoreGestures: true,
                                   itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 10),
                                   onRatingUpdate: (rating) {},
                                 ),

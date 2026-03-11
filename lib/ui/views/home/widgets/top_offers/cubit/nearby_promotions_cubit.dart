@@ -1,0 +1,149 @@
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
+import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/view_model/nearby_promotions_vm.dart';
+import 'package:logger/logger.dart';
+
+class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
+  final BusinessRepo _businessRepo;
+  final LocationService _locationService;
+  final Logger _logger;
+
+  NearbyPromotionsVM _vm = const NearbyPromotionsVM();
+
+  static const int _perPage = 10;
+  static const double _radius = 10.0;
+
+  NearbyPromotionsCubit({
+    required BusinessRepo businessRepo,
+    required LocationService locationService,
+    required Logger logger,
+  })  : _businessRepo = businessRepo,
+        _locationService = locationService,
+        _logger = logger,
+        super(const NearbyPromotionsState.initial(NearbyPromotionsVM()));
+
+  NearbyPromotionsVM get vm => _vm;
+
+  /// Initial load — always starts at page 1, replaces current list.
+  Future<void> load() async {
+    final position = _locationService.currentLocation.position;
+    if (position == null) {
+      _vm = _vm.copyWith(error: 'Location not available');
+      emit(NearbyPromotionsState.error(_vm, 'Location not available'));
+      return;
+    }
+
+    _vm = _vm.copyWith(isLoading: true, error: null);
+    emit(NearbyPromotionsState.loading(_vm));
+
+    final result = await _businessRepo.fetchNearbyPromotions(
+      latitude: position.latitude,
+      longitude: position.longitude,
+      radius: _radius,
+      page: 1,
+      perPage: _perPage,
+    );
+
+    result.when(
+      success: (response) {
+        log('NearbyPromotionsCubit.load success: ${response.data.length} items');
+        log('${response.data}');
+
+        _vm = _vm.copyWith(
+          promotions: response.data,
+          hasMore: response.meta.hasMore,
+          currentPage: 1,
+          isLoading: false,
+          error: null,
+        );
+        emit(NearbyPromotionsState.loaded(_vm));
+      },
+      failure: (e) {
+        _logger.e('NearbyPromotionsCubit.load error: $e');
+        _vm = _vm.copyWith(isLoading: false, error: e.toString());
+        emit(NearbyPromotionsState.error(_vm, e.toString()));
+      },
+    );
+  }
+
+  /// Load next page — appends to existing list. Called when carousel nears the end.
+  Future<void> loadMore() async {
+    if (!_vm.hasMore || _vm.isLoadingMore || _vm.isLoading) return;
+
+    final position = _locationService.currentLocation.position;
+    if (position == null) return;
+
+    final nextPage = _vm.currentPage + 1;
+    _vm = _vm.copyWith(isLoadingMore: true);
+    emit(NearbyPromotionsState.loadingMore(_vm));
+
+    final result = await _businessRepo.fetchNearbyPromotions(
+      latitude: position.latitude,
+      longitude: position.longitude,
+      radius: _radius,
+      page: nextPage,
+      perPage: _perPage,
+    );
+
+    result.when(
+      success: (response) {
+        _vm = _vm.copyWith(
+          promotions: [..._vm.promotions, ...response.data],
+          hasMore: response.meta.hasMore,
+          currentPage: nextPage,
+          isLoadingMore: false,
+        );
+        emit(NearbyPromotionsState.loaded(_vm));
+      },
+      failure: (e) {
+        _logger.e('NearbyPromotionsCubit.loadMore error: $e');
+        _vm = _vm.copyWith(isLoadingMore: false);
+        emit(NearbyPromotionsState.loaded(_vm)); // stay on loaded, just no more items
+      },
+    );
+  }
+
+  /// Optimistic favorite toggle with server sync and revert on failure.
+  Future<void> toggleFavorite(String promoUuid) async {
+    final idx = _vm.promotions.indexWhere((p) => p.uuid == promoUuid);
+    if (idx == -1) return;
+
+    final promo = _vm.promotions[idx];
+    final newValue = !promo.isFavorited;
+
+    // Optimistic update
+    final updated = List<NearbyPromotionDM>.from(_vm.promotions);
+    updated[idx] = promo.copyWith(isFavorited: newValue);
+    _vm = _vm.copyWith(promotions: updated);
+    emit(NearbyPromotionsState.loaded(_vm));
+
+    final result = await _businessRepo.setFavoritePromotion(
+      promoUuid,
+      SetFavoriteBodyDTO(isFavorite: newValue),
+    );
+
+    result.when(
+      success: (_) {},
+      failure: (e) {
+        _logger.e('NearbyPromotionsCubit.toggleFavorite error: $e');
+        // Revert on failure
+        final reverted = List<NearbyPromotionDM>.from(_vm.promotions);
+        reverted[idx] = promo;
+        _vm = _vm.copyWith(promotions: reverted);
+        emit(NearbyPromotionsState.loaded(_vm));
+      },
+    );
+  }
+
+  /// Clear state on logout.
+  void clear() {
+    _vm = const NearbyPromotionsVM();
+    emit(const NearbyPromotionsState.initial(NearbyPromotionsVM()));
+  }
+}

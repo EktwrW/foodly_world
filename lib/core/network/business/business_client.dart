@@ -9,6 +9,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
@@ -246,6 +247,15 @@ abstract class BusinessClient {
 
   @POST('/save-promotions/{uuid}')
   Future<void> setFavoritePromotion(@Path('uuid') String uuid, @Body() SetFavoriteBodyDTO body);
+
+  @GET('/promotions/nearby')
+  Future<NearbyPromotionsResponseDM> fetchNearbyPromotions({
+    @Query('latitude') required double latitude,
+    @Query('longitude') required double longitude,
+    @Query('radius') double? radius,
+    @Query('page') int? page,
+    @Query('per_page') int? perPage,
+  });
 
   @GET('/business/nearby')
   Future<BusinessSearchDM> fetchNearbyBusinesses({

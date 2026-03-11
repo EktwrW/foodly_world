@@ -24,8 +24,9 @@ class RatingWdg extends StatelessWidget {
                   itemSize: 18,
                   minRating: 1,
                   allowHalfRating: true,
+                  ignoreGestures: true,
                   itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 16),
-                  onRatingUpdate: (rating) {},
+                  onRatingUpdate: (_) {},
                 ),
               ],
             );
