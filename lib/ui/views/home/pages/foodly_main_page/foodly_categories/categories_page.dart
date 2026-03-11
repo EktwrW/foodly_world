@@ -151,9 +151,9 @@ class CategoriesPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Flexible(
+                      Flexible(
                         child: Text(
-                          'Radio de distancia:',
+                          S.current.radiusDistanceLabel,
                           overflow: TextOverflow.ellipsis,
                           style: FoodlyTextStyles.captionPurple,
                           maxLines: 2,
@@ -206,8 +206,7 @@ class CategoriesPage extends StatelessWidget {
                               key: const Key('categories-page-business-results-view'),
                               searchResults: vm.businessesInCurrentCategory,
                               isGridView: vm.viewMode.isGrid,
-                              noResultsMessage:
-                                  'No hay comercios cercanos en esta categoría dentro de ${vm.radiusDistanceInKm} km.',
+                              noResultsMessage: S.current.noNearbyBusinessesInCategory(vm.radiusDistanceInKm),
                             ).paddingOnly(right: 6, left: 6, top: vm.businessesInCurrentCategory.isEmpty ? 100 : 20),
                     ),
                   ),

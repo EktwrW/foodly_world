@@ -60,6 +60,15 @@
   "businessName": "Nome comercial",
   "businessRegister": "Registar Negócio",
   "buzzDefaultActivity": "Nova atividade em {businessName}",
+  "radiusDistanceLabel": "Radio de distância:",
+  "noNearbyBusinessesInCategory": "Não há comércios próximos nesta categoria dentro de {radius} km.",
+  "@noNearbyBusinessesInCategory": {
+    "placeholders": {
+      "radius": {
+        "type": "double"
+      }
+    }
+  },
   "buzzEmptySubtitle": "A atividade da comunidade aparecerá aqui",
   "buzzEmptyTitle": "Ainda não há novidades por perto",
   "buzzNewFavoriteMenu": "O menu de {businessName} está a chamar a atenção!",
@@ -262,6 +271,7 @@
   "onSite": "No local",
   "openMenuAnyDevice": "\npara abrir o menu em qualquer dispositivo",
   "openSettings": "Abrir Definições",
+  "open": "Aberto",
   "optional": "Opcional",
   "other": "Outro",
   "outdoorSeating": "Assentos ao ar livre",

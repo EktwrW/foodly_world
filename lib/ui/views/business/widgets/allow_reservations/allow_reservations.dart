@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show MaxLengthEnforcement;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' show NeumorphicSwitch, NeumorphicSwitchStyle;
+import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
@@ -27,9 +28,7 @@ class AllowReservations extends StatelessWidget {
           children: [
             NeumorphicSwitch(
               value: allowReservations,
-              onChanged: canEdit
-                  ? (val) => bloc.add(BusinessEvent.toggleAllowReservations(val))
-                  : null,
+              onChanged: canEdit ? (val) => bloc.add(BusinessEvent.toggleAllowReservations(val)) : null,
               height: 32,
               style: const NeumorphicSwitchStyle(
                 activeTrackColor: FoodlyThemes.primaryFoodly,
@@ -38,7 +37,7 @@ class AllowReservations extends StatelessWidget {
                 inactiveThumbColor: FoodlyThemes.secondaryFoodly,
               ),
             ),
-            const Text('Allow Reservations', style: FoodlyTextStyles.actionsBody),
+            Text(S.current.allowReservations, style: FoodlyTextStyles.actionsBody),
             const Spacer(),
             SizedBox(
               width: 84,
@@ -47,13 +46,13 @@ class AllowReservations extends StatelessWidget {
                 controller: state.vm.reservationSizeLimitCtrl?.controller,
                 keyboardType: TextInputType.number,
                 enabled: canEdit && allowReservations,
-                decoration: const InputDecoration(
-                  labelText: 'Max Size',
-                  labelStyle: TextStyle(fontSize: 12),
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.all(8),
-                  counter: SizedBox.shrink(),
-                  suffixIcon: Icon(FontAwesome.people_group_solid, size: 20),
+                decoration: InputDecoration(
+                  labelText: S.current.maxSize,
+                  labelStyle: const TextStyle(fontSize: 12),
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.all(8),
+                  counter: const SizedBox.shrink(),
+                  suffixIcon: const Icon(FontAwesome.people_group_solid, size: 20),
                 ),
                 maxLength: 3,
                 style: FoodlyTextStyles.actionsBody,

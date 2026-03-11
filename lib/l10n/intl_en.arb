@@ -60,6 +60,15 @@
   "businessName": "Business Name",
   "businessRegister": "Register Business",
   "buzzDefaultActivity": "New activity at {businessName}",
+  "radiusDistanceLabel": "Distance radius:",
+  "noNearbyBusinessesInCategory": "No nearby businesses in this category within {radius} km.",
+  "@noNearbyBusinessesInCategory": {
+    "placeholders": {
+      "radius": {
+        "type": "double"
+      }
+    }
+  },
   "buzzEmptySubtitle": "Community activity will appear here",
   "buzzEmptyTitle": "No buzz nearby yet",
   "buzzNewFavoriteMenu": "The menu at {businessName} is getting attention!",
@@ -259,6 +268,7 @@
   "onSite": "On site",
   "openMenuAnyDevice": "\nto open the menu in any device",
   "openSettings": "Open Settings",
+  "open": "Open",
   "optional": "Optional",
   "other": "Other",
   "outdoorSeating": "Outdoor Seating",

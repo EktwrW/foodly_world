@@ -50,7 +50,7 @@ class CurrentOpeningHoursWdg extends StatelessWidget {
                             Row(
                               children: [
                                 ui.NeumorphicText(
-                                  'Open',
+                                  S.current.open,
                                   textStyle: ui.NeumorphicTextStyle(fontSize: 11),
                                   style: const ui.NeumorphicStyle(
                                       color: FoodlyThemes.tertiaryFoodly, shape: ui.NeumorphicShape.convex),
