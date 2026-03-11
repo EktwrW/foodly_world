@@ -15,8 +15,11 @@ enum MyFavoritesView {
   final int indexView;
   const MyFavoritesView(this.indexView);
 
-  String get label =>
-      switch (this) { businesses => S.current.businesses.capitalize, menus => 'Menus', menuItems => 'Items' };
+  String get label => switch (this) {
+        businesses => S.current.businesses.capitalize,
+        menus => S.current.menus.capitalize,
+        menuItems => S.current.items.capitalize
+      };
 }
 
 enum BusinessSortType {
@@ -24,8 +27,8 @@ enum BusinessSortType {
   alphabetical;
 
   String get label => switch (this) {
-        open => 'Open',
-        alphabetical => 'A-Z',
+        open => S.current.open,
+        alphabetical => S.current.alphabetical,
       };
 }
 
