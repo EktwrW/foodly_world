@@ -116,8 +116,8 @@ class FoodlyDrawer extends StatelessWidget {
                       child: FadeIn(
                         delay: Durations.medium2,
                         duration: Durations.medium2,
-                        child: const Text(
-                          'Version',
+                        child: Text(
+                          S.current.version,
                           style: FoodlyTextStyles.label,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -194,7 +194,7 @@ class FoodlyDrawer extends StatelessWidget {
             },
             iconBuilder: (p1, p2) =>
                 FoodlyIsoIconBehavior(height: 16, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
-            label: 'Home',
+            label: S.current.home,
           ),
           if (authService.userIsManager)
             SidebarXItem(

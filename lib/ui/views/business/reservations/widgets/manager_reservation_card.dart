@@ -5,6 +5,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:foodly_world/generated/l10n.dart' show S;
 
 class ManagerReservationCard extends StatelessWidget {
   final ReservationDM reservation;
@@ -54,14 +55,14 @@ class ManagerReservationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        reservation.userName ?? 'Customer',
+                        reservation.userName ?? S.current.customer,
                         style: FoodlyTextStyles.actionsBodyBold,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       if (reservation.createdAt != null)
                         Text(
-                          'Requested ${DateFormat.yMMMd().format(reservation.createdAt!)}',
+                          '${S.current.requested} ${DateFormat.yMMMd().format(reservation.createdAt!)}',
                           style: FoodlyTextStyles.caption,
                         ),
                     ],
@@ -90,17 +91,18 @@ class ManagerReservationCard extends StatelessWidget {
                 if (reservation.reservationDate != null)
                   _InfoChip(
                     icon: Bootstrap.calendar_event,
-                    label: '${DateFormat.MMMd().format(reservation.reservationDate!)} at ${reservation.reservationTime ?? '--:--'}',
+                    label:
+                        '${DateFormat.MMMd().format(reservation.reservationDate!)} ${S.current.at} ${reservation.reservationTime ?? '--:--'}',
                   ),
                 const SizedBox(width: 16),
-                _InfoChip(icon: Bootstrap.people_fill, label: '${reservation.partySize} guests'),
+                _InfoChip(icon: Bootstrap.people_fill, label: '${reservation.partySize} ${S.current.guests}'),
                 const Spacer(),
                 _StatusBadge(status: reservation.status),
               ],
             ),
 
             // Special requests
-            if (reservation.specialRequests != null && reservation.specialRequests!.isNotEmpty) ...[
+            if (reservation.hasSpecialRequests) ...[
               const SizedBox(height: 8),
               Container(
                 width: double.infinity,
@@ -137,14 +139,14 @@ class ManagerReservationCard extends StatelessWidget {
         children: [
           if (onReject != null)
             _ActionButton(
-              label: 'Reject',
+              label: S.current.reject,
               icon: Bootstrap.x_circle,
               color: Colors.red.shade700,
               onPressed: onReject!,
             ),
           if (onConfirm != null)
             _ActionButton(
-              label: 'Confirm',
+              label: S.current.confirm,
               icon: Bootstrap.check_circle,
               color: FoodlyThemes.tertiaryFoodly,
               onPressed: onConfirm!,
@@ -160,21 +162,21 @@ class ManagerReservationCard extends StatelessWidget {
         children: [
           if (onCancel != null)
             _ActionButton(
-              label: 'Cancel',
+              label: S.current.cancel,
               icon: Bootstrap.x_circle,
               color: Colors.orange,
               onPressed: onCancel!,
             ),
           if (onNoShow != null)
             _ActionButton(
-              label: 'No Show',
+              label: S.current.noShow,
               icon: Bootstrap.person_x,
               color: Colors.blueGrey,
               onPressed: onNoShow!,
             ),
           if (onComplete != null)
             _ActionButton(
-              label: 'Complete',
+              label: S.current.complete,
               icon: Bootstrap.check_circle_fill,
               color: FoodlyThemes.primaryFoodly,
               onPressed: onComplete!,
@@ -251,12 +253,12 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (color, label) = switch (status) {
-      ReservationStatus.pending => (Colors.orange, 'Pending'),
-      ReservationStatus.confirmed => (FoodlyThemes.tertiaryFoodly, 'Confirmed'),
-      ReservationStatus.rejected => (Colors.red.shade700, 'Rejected'),
-      ReservationStatus.cancelled => (Colors.grey, 'Cancelled'),
-      ReservationStatus.completed => (FoodlyThemes.primaryFoodly, 'Completed'),
-      ReservationStatus.noShow => (Colors.blueGrey, 'No Show'),
+      ReservationStatus.pending => (Colors.orange, S.current.pending),
+      ReservationStatus.confirmed => (FoodlyThemes.tertiaryFoodly, S.current.confirmed),
+      ReservationStatus.rejected => (Colors.red.shade700, S.current.rejected),
+      ReservationStatus.cancelled => (Colors.grey, S.current.cancelled),
+      ReservationStatus.completed => (FoodlyThemes.primaryFoodly, S.current.completed),
+      ReservationStatus.noShow => (Colors.blueGrey, S.current.noShow),
     };
 
     return Container(

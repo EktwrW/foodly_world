@@ -55,8 +55,7 @@ class ReservationShowResponseDM with _$ReservationShowResponseDM {
     ReservationDM? reservation,
   }) = _ReservationShowResponseDM;
 
-  factory ReservationShowResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ReservationShowResponseDMFromJson(json);
+  factory ReservationShowResponseDM.fromJson(Map<String, dynamic> json) => _$ReservationShowResponseDMFromJson(json);
 }
 
 @freezed
@@ -65,8 +64,7 @@ class PendingReservationsCountDM with _$PendingReservationsCountDM {
     @JsonKey(name: 'pending_count') @Default(0) int pendingCount,
   }) = _PendingReservationsCountDM;
 
-  factory PendingReservationsCountDM.fromJson(Map<String, dynamic> json) =>
-      _$PendingReservationsCountDMFromJson(json);
+  factory PendingReservationsCountDM.fromJson(Map<String, dynamic> json) => _$PendingReservationsCountDMFromJson(json);
 }
 
 enum ReservationStatus {
@@ -123,4 +121,6 @@ class ReservationDM with _$ReservationDM {
   bool get isNoShow => status == ReservationStatus.noShow;
   bool get canBeCancelledByCustomer => isPending || isConfirmed;
   bool get canBeActedOnByManager => isPending;
+
+  bool get hasSpecialRequests => specialRequests != null && specialRequests!.isNotEmpty;
 }

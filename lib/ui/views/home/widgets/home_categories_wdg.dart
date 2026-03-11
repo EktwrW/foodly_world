@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart';
@@ -32,8 +30,6 @@ class _HomeCategoriesState extends State<HomeCategories> {
             items: FoodlyCategories.values
                 .map((e) => ui.NeumorphicRadio<FoodlyCategories>(
                       onChanged: (value) {
-                        log('pressed: $e');
-                        log('$value');
                         context.goNamed(AppRoutes.categories.name, extra: e.index);
 
                         di<LocalStorageService>().saveString(FoodlyStrings.LAST_CATEGORY_VISITED, e.name);

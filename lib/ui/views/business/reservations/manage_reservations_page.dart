@@ -39,7 +39,7 @@ class ManageReservationsPage extends StatelessWidget {
             toolbarHeight: 60,
             actions: [
               Text(
-                'Manage Reservations',
+                S.current.manageReservations,
                 overflow: TextOverflow.ellipsis,
                 style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 20),
               ).paddingOnly(right: 18),
@@ -76,13 +76,13 @@ class ManageReservationsPage extends StatelessWidget {
 class _StatusFilterDropdown extends StatelessWidget {
   const _StatusFilterDropdown();
 
-  static const _items = <(String, ReservationStatus?)>[
-    ('All', null),
-    ('Pending', ReservationStatus.pending),
-    ('Confirmed', ReservationStatus.confirmed),
-    ('Completed', ReservationStatus.completed),
-    ('Cancelled', ReservationStatus.cancelled),
-    ('No Show', ReservationStatus.noShow),
+  static final _items = <(String, ReservationStatus?)>[
+    (S.current.all, null),
+    (S.current.pending, ReservationStatus.pending),
+    (S.current.confirmed, ReservationStatus.confirmed),
+    (S.current.completed, ReservationStatus.completed),
+    (S.current.cancelled, ReservationStatus.cancelled),
+    (S.current.noShow, ReservationStatus.noShow),
   ];
 
   @override
@@ -162,13 +162,13 @@ class _ManagerReservationsList extends StatelessWidget {
           loading: (_) => const Center(child: CircularProgressIndicator()),
           orElse: () {
             if (vm.reservations.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Bootstrap.calendar2_check, size: 64, color: FoodlyThemes.primaryFoodly),
-                    SizedBox(height: 12),
-                    Text('No reservations found.', style: FoodlyTextStyles.label),
+                    const Icon(Bootstrap.calendar2_check, size: 64, color: FoodlyThemes.primaryFoodly),
+                    const SizedBox(height: 12),
+                    Text(S.current.noReservationsFound, style: FoodlyTextStyles.label),
                   ],
                 ),
               );
@@ -201,12 +201,12 @@ class _ManagerReservationsList extends StatelessWidget {
                           ? () => cubit.confirmReservation(reservation.reservationUuid!)
                           : null,
                       onReject: reservation.canBeActedOnByManager
-                          ? () => _showNotesDialog(context, 'Reject Reservation', (notes) {
+                          ? () => _showNotesDialog(context, S.current.rejectReservation, (notes) {
                                 cubit.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
                               })
                           : null,
                       onCancel: reservation.isConfirmed
-                          ? () => _showNotesDialog(context, 'Cancel Reservation', (notes) {
+                          ? () => _showNotesDialog(context, S.current.cancelReservation, (notes) {
                                 cubit.managerCancelReservation(reservation.reservationUuid!, managerNotes: notes);
                               })
                           : null,
@@ -232,21 +232,21 @@ class _ManagerReservationsList extends StatelessWidget {
         title: Text(title),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'Add a note (optional)',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: S.current.addNoteOptional,
+            border: const OutlineInputBorder(),
           ),
           maxLines: 3,
           maxLength: 500,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
               onConfirm(controller.text.isNotEmpty ? controller.text : null);
             },
-            child: const Text('Confirm'),
+            child: Text(S.current.confirm),
           ),
         ],
       ),
