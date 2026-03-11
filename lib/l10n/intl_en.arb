@@ -462,6 +462,55 @@
   "userReviews1": "My",
   "userReviews2": "Reviews",
   "userReviewsPlaceholder": "You haven't left any reviews yet. Remember to rate your experience when visiting a business to improve everyone's experience and stand out in our community.",
+  "reviewUpdatedSuccessfully": "Review updated successfully!",
+  "reviewSubmittedSuccessfully": "Review submitted successfully!",
+  "updateReview": "Update Review",
+  "submitReview": "Submit Review",
+  "editYourReviewFor": "Edit your review for {businessName}",
+  "@editYourReviewFor": {
+    "placeholders": {
+      "businessName": {
+        "type": "String"
+      }
+    }
+  },
+  "writeReviewFor": "Write a review for {businessName}",
+  "@writeReviewFor": {
+    "placeholders": {
+      "businessName": {
+        "type": "String"
+      }
+    }
+  },
+  "thisBusiness": "this business",
+  "writeYourReviewHint": "Write your review here...",
+  "rateYourExperience": "Rate your experience:",
+  "whenDidYouVisit": "When did you visit?",
+  "reviewDeletedSuccessfully": "Review deleted successfully!",
+  "editReview": "Edit Review",
+  "alreadyReviewedPrompt": "You already reviewed this business.\nWould you like to edit your review?",
+  "reservationRequestSent": "Reservation request sent!",
+  "reservationRequestFailed": "Failed to send reservation request.",
+  "requestReservation": "Request Reservation",
+  "reserveTableAt": "Reserve a table at {businessName}",
+  "@reserveTableAt": {
+    "placeholders": {
+      "businessName": {}
+    }
+  },
+  "selectADate": "Select a date:",
+  "selectATime": "Select a time:",
+  "partySize": "Party size:",
+  "maxSize": "Max Size",
+  "maxSizeLabel": "Max",
+  "@maxSize": {
+    "placeholders": {
+      "maxSize": {
+        "type": "int"
+      }
+    }
+  },
+  "specialRequestsOptional": "Special requests (optional)",
   "userSuccessfullyCreated": "User successfully created",
   "userTypeSnackbarTextSpan1": "Please select the",
   "userTypeSnackbarTextSpan2": "user type",
@@ -539,22 +588,12 @@
   "doItLater": "I'll do it later",
   "noReservationsYet": "No reservations yet.",
   "noReservationsFound": "No reservations found.",
-  "reservationRequestSent": "Reservation request sent!",
   "reservationCancelled": "Reservation cancelled.",
   "cancelReservation": "Cancel Reservation",
   "cancelReservationConfirm": "Are you sure you want to cancel this reservation?",
-  "requestReservation": "Request Reservation",
-  "reserveTableAt": "Reserve a table at {businessName}",
-  "@reserveTableAt": {
-    "placeholders": {
-      "businessName": {}
-    }
-  },
   "selectDate": "Select a date:",
   "selectTime": "Select a time:",
   "tapToSelectTime": "Tap to select time",
-  "partySize": "Party size:",
-  "specialRequestsOptional": "Special requests (optional)",
   "maxPartySize": "max {size}",
   "@maxPartySize": {
     "placeholders": {
@@ -562,7 +601,6 @@
     }
   },
   "allowReservations": "Allow Reservations",
-  "maxSize": "Max Size",
   "pending": "Pending",
   "confirmed": "Confirmed",
   "rejected": "Rejected",

@@ -464,6 +464,55 @@
   "userReviews1": "Mis",
   "userReviews2": "Reseñas",
   "userReviewsPlaceholder": "Aún no has dejado reseñas, recuerda calificar tu experiencia al visitar un comercio para mejorar la experiencia de todos los usuarios, y destacar en nuestra comunidad.",
+  "reviewUpdatedSuccessfully": "¡Reseña actualizada correctamente!",
+  "reviewSubmittedSuccessfully": "¡Reseña enviada correctamente!",
+  "updateReview": "Actualizar reseña",
+  "submitReview": "Enviar reseña",
+  "editYourReviewFor": "Editar tu reseña para {businessName}",
+  "@editYourReviewFor": {
+    "placeholders": {
+      "businessName": {
+        "type": "String"
+      }
+    }
+  },
+  "writeReviewFor": "Escribe una reseña para {businessName}",
+  "@writeReviewFor": {
+    "placeholders": {
+      "businessName": {
+        "type": "String"
+      }
+    }
+  },
+  "thisBusiness": "este negocio",
+  "writeYourReviewHint": "Escribe tu reseña aquí...",
+  "rateYourExperience": "Califica tu experiencia:",
+  "whenDidYouVisit": "¿Cuándo nos visitaste?",
+  "reviewDeletedSuccessfully": "Reseña eliminada correctamente",
+  "editReview": "Editar reseña",
+  "alreadyReviewedPrompt": "Ya reseñaste este negocio.\n¿Quieres editar tu reseña?",
+  "reservationRequestSent": "¡Solicitud de reserva enviada!",
+  "reservationRequestFailed": "No se pudo enviar la solicitud de reserva.",
+  "requestReservation": "Solicitar Reserva",
+  "reserveTableAt": "Reservar mesa en {businessName}",
+  "@reserveTableAt": {
+    "placeholders": {
+      "businessName": {}
+    }
+  },
+  "selectADate": "Selecciona una fecha:",
+  "selectATime": "Selecciona una hora:",
+  "partySize": "Comensales:",
+  "maxSize": "Máx.",
+  "maxSizeLabel": "Máx.",
+  "@maxSize": {
+    "placeholders": {
+      "maxSize": {
+        "type": "int"
+      }
+    }
+  },
+  "specialRequestsOptional": "Solicitudes especiales (opcional)",
   "userSuccessfullyCreated": "Usuario creado exitosamente",
   "userTypeSnackbarTextSpan1": "Por favor selecciona el",
   "userTypeSnackbarTextSpan2": "tipo de usuario",
@@ -539,22 +588,12 @@
   "doItLater": "Lo haré más tarde",
   "noReservationsYet": "Aún no hay reservas.",
   "noReservationsFound": "No se encontraron reservas.",
-  "reservationRequestSent": "¡Solicitud de reserva enviada!",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
   "cancelReservationConfirm": "¿Estás seguro de que quieres cancelar esta reserva?",
-  "requestReservation": "Solicitar Reserva",
-  "reserveTableAt": "Reservar mesa en {businessName}",
-  "@reserveTableAt": {
-    "placeholders": {
-      "businessName": {}
-    }
-  },
   "selectDate": "Selecciona una fecha:",
   "selectTime": "Selecciona una hora:",
   "tapToSelectTime": "Toca para seleccionar hora",
-  "partySize": "Comensales:",
-  "specialRequestsOptional": "Solicitudes especiales (opcional)",
   "maxPartySize": "máx. {size}",
   "@maxPartySize": {
     "placeholders": {
@@ -562,7 +601,6 @@
     }
   },
   "allowReservations": "Permitir Reservas",
-  "maxSize": "Máx.",
   "pending": "Pendiente",
   "confirmed": "Confirmada",
   "rejected": "Rechazada",

@@ -47,7 +47,7 @@ class AllowReservations extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 enabled: canEdit && allowReservations,
                 decoration: InputDecoration(
-                  labelText: S.current.maxSize,
+                  labelText: S.current.maxSizeLabel,
                   labelStyle: const TextStyle(fontSize: 12),
                   border: const OutlineInputBorder(),
                   contentPadding: const EdgeInsets.all(8),

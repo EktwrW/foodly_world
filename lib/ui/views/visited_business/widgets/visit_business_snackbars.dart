@@ -66,11 +66,11 @@ class VisitedBusinessSnackbars {
                         if (context.mounted) {
                           FoodlySnackbars.successGeneric(
                             context,
-                            isEditMode ? 'Review updated successfully!' : 'Review submitted successfully!',
+                            isEditMode ? S.current.reviewUpdatedSuccessfully : S.current.reviewSubmittedSuccessfully,
                           );
                         }
                       },
-                      text: isEditMode ? 'Update Review' : 'Submit Review',
+                      text: isEditMode ? S.current.updateReview : S.current.submitReview,
                     ).paddingVertical(16);
                   });
             },
@@ -92,8 +92,8 @@ class VisitedBusinessSnackbars {
                 const Asset(FoodlyAssets.review, height: 42, width: 42),
                 Text(
                   isEditMode
-                      ? 'Edit your Review for ${vm.currentBusiness?.name ?? 'this business'}'
-                      : 'Write a Review for ${vm.currentBusiness?.name ?? 'this business'}',
+                      ? S.current.editYourReviewFor(vm.currentBusiness?.name ?? S.current.thisBusiness)
+                      : S.current.writeReviewFor(vm.currentBusiness?.name ?? S.current.thisBusiness),
                   style: FoodlyTextStyles.promoTitle.copyWith(fontSize: 16),
                 ).paddingVertical(24),
                 Row(
@@ -197,9 +197,9 @@ class VisitedBusinessSnackbars {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   inputTextType: FoodlyInputType.generic,
                   hideCurrentSnackBarWhenOnTap: false,
-                  hintText: 'Write your review here...',
+                  hintText: S.current.writeYourReviewHint,
                 ),
-                const Text('Rate your experience:', style: FoodlyTextStyles.captionBold).paddingTop(16),
+                Text(S.current.rateYourExperience, style: FoodlyTextStyles.captionBold).paddingTop(16),
                 RatingBar.builder(
                   initialRating: vm.currentReviewStars?.toDouble() ?? 0.0,
                   minRating: 1,
@@ -211,7 +211,7 @@ class VisitedBusinessSnackbars {
                   ),
                   onRatingUpdate: (rating) => cubit.setReviewStars(rating.toInt()),
                 ).paddingBottom(24),
-                const Text('When did you visit?', style: FoodlyTextStyles.captionBold),
+                Text(S.current.whenDidYouVisit, style: FoodlyTextStyles.captionBold),
                 LinearCalendar(
                   initialSelectedDate: vm.dateOfVisitForReview,
                   daysBeforeToday: 90,
@@ -289,7 +289,7 @@ class VisitedBusinessSnackbars {
         await cubit.deleteReview(review.reviewUuid!);
         await Future.delayed(Durations.short4);
         if (context.mounted) {
-          FoodlySnackbars.successGeneric(context, 'Review deleted successfully!');
+          FoodlySnackbars.successGeneric(context, S.current.reviewDeletedSuccessfully);
         }
       },
       buttonText: S.current.confirm,
@@ -318,7 +318,7 @@ class VisitedBusinessSnackbars {
 
     final snackBar = SnackBarWdg(
       type: SnackBarType.action,
-      buttonText: 'Edit Review',
+      buttonText: S.current.editReview,
       onPressed: () {
         if (context.mounted) {
           Future.delayed(Durations.short4, () {
@@ -329,7 +329,7 @@ class VisitedBusinessSnackbars {
         }
       },
       content: Text(
-        'You already reviewed this business.\nWould you like to edit your review?',
+        S.current.alreadyReviewedPrompt,
         textAlign: TextAlign.center,
         style: FoodlyTextStyles.snackBarLightBody,
       ),
@@ -359,13 +359,13 @@ class VisitedBusinessSnackbars {
                   onPressed: () async {
                     final successSnack = SnackBarWdg(
                       type: SnackBarType.success,
-                      content: Text('Reservation request sent!\nYou will be notified once the business confirms it.',
+                      content: Text(S.current.reservationRequestSent,
                           textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
                       duration: const Duration(seconds: 5),
                     ).getSnackBar(context);
                     final errorSnack = SnackBarWdg(
                       type: SnackBarType.error,
-                      content: Text('Failed to send reservation request.',
+                      content: Text(S.current.reservationRequestFailed,
                           textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
                       duration: const Duration(seconds: 4),
                     ).getSnackBar(context);
@@ -375,7 +375,7 @@ class VisitedBusinessSnackbars {
                     await Future.delayed(Durations.short4);
                     scaffoldMessenger.showSnackBar(success ? successSnack : errorSnack);
                   },
-                  text: 'Request Reservation',
+                  text: S.current.requestReservation,
                 ),
               );
             },
@@ -395,12 +395,12 @@ class VisitedBusinessSnackbars {
                 if (vm.currentBusiness?.bussinessReservationImage != null)
                   Asset(vm.currentBusiness!.bussinessReservationImage, height: 48),
                 Text(
-                  'Reserve a table at ${vm.currentBusiness?.name ?? 'this business'}',
+                  S.current.reserveTableAt(vm.currentBusiness?.name ?? S.current.thisBusiness),
                   style: FoodlyTextStyles.promoTitle.copyWith(fontSize: 16),
                 ).paddingVertical(16),
 
                 // Date picker
-                const Text('Select a date:', style: FoodlyTextStyles.captionBold),
+                Text(S.current.selectADate, style: FoodlyTextStyles.captionBold),
                 LinearCalendar(
                   initialSelectedDate: vm.reservationDateTime,
                   selectedColor: FoodlyThemes.tertiaryFoodly,
@@ -450,7 +450,7 @@ class VisitedBusinessSnackbars {
                 ),
 
                 // Time picker
-                const Text('Select a time:', style: FoodlyTextStyles.captionBold).paddingTop(8),
+                Text(S.current.selectATime, style: FoodlyTextStyles.captionBold).paddingTop(8),
                 SizedBox(
                   height: 80,
                   child: CupertinoDatePicker(
@@ -468,7 +468,7 @@ class VisitedBusinessSnackbars {
                 ),
 
                 // Party size
-                const Text('Party size:', style: FoodlyTextStyles.captionBold).paddingTop(8),
+                Text(S.current.partySize, style: FoodlyTextStyles.captionBold).paddingTop(8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 16,
@@ -495,7 +495,7 @@ class VisitedBusinessSnackbars {
                     ),
                   ],
                 ),
-                Text('(max $maxSize)', style: FoodlyTextStyles.captionPurple),
+                Text(S.current.maxSize(maxSize), style: FoodlyTextStyles.captionPurple),
 
                 // Special requests
                 SizedBox(
@@ -509,7 +509,7 @@ class VisitedBusinessSnackbars {
                     autovalidateMode: AutovalidateMode.disabled,
                     inputTextType: FoodlyInputType.generic,
                     hideCurrentSnackBarWhenOnTap: false,
-                    hintText: 'Special requests (optional)',
+                    hintText: S.current.specialRequestsOptional,
                     hintTextSize: 12,
                   ),
                 ).paddingVertical(12),
