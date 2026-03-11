@@ -24,6 +24,7 @@ import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promo
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:foodly_world/generated/l10n.dart';
 
 class TopOffersWidget extends StatefulWidget {
   const TopOffersWidget({super.key});
@@ -284,7 +285,7 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                               pathParameters: {AppRoutes.routeIdParam: promo.businessUuid},
                             )
                         : null,
-                    tooltip: 'Visit Business Page',
+                    tooltip: S.current.visitBusinessPage,
                     iconSize: 16,
                     diameter: 16,
                     iconData: Bootstrap.shop_window,
@@ -304,13 +305,14 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 barrierColor: Colors.black45,
                                 builder: (_) => _PromoDetailSheet(promoDM: promo),
                               ),
-                              failure: (e) => FoodlySnackbars.errorGeneric(context, 'Failed to load promotion details'),
+                              failure: (e) =>
+                                  FoodlySnackbars.errorGeneric(context, S.current.failedToLoadPromotionDetails),
                             );
                           });
 
                           Future.microtask(() => setState(() => isLoading = false));
                         },
-                        tooltip: 'View promotion',
+                        tooltip: S.current.viewPromotion,
                         iconSize: 16,
                         diameter: 16,
                         iconData: Bootstrap.arrows_fullscreen,
@@ -356,7 +358,7 @@ class _EmptyOffersWidget extends StatelessWidget {
               ),
             ),
             Text(
-              isError ? 'Could not load promotions' : 'No promotions nearby',
+              isError ? S.current.couldNotLoadPromotions : S.current.noPromotionsNearby,
               style: FoodlyTextStyles.cardsSmallSubtitle,
             ),
             const SizedBox(height: 18),
@@ -366,7 +368,7 @@ class _EmptyOffersWidget extends StatelessWidget {
                 onPressed: onRetry,
                 type: CustomNeumorphicBtnType.outlined,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                text: 'Retry',
+                text: S.current.retry,
                 leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
                 disabled: false,
               ),

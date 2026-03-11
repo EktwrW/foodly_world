@@ -244,6 +244,12 @@
   "noItemsYet": "Aún no hay artículos añadidos",
   "nonEspecified": "No especificado",
   "noPromotionsInSection": "No hay promociones en esta sección",
+  "couldNotLoadPromotions": "No se pudieron cargar las promociones",
+  "noPromotionsNearby": "No hay promociones cerca",
+  "retry": "Reintentar",
+  "visitBusinessPage": "Ver página del negocio",
+  "viewPromotion": "Ver promoción",
+  "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",
   "noRecommendationsFound": "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
   "notFoundPageText": "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
   "notification": "Notificación",
@@ -471,6 +477,17 @@
   "zipCodeNotAvailable": "Este codigo esta fuera de nuestra area actual de cobertura",
   "@zipCodeNotAvailable": {},
   "manageReservations": "Gestionar Reservas",
+  "pendingReservationsAlertOne": "Tienes 1 reservación pendiente",
+  "pendingReservationsAlertMany": "Tienes {count} reservaciones pendientes",
+  "@pendingReservationsAlertMany": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pendingReservationsContent": "Hay solicitudes de reserva esperando tu respuesta.",
+  "doItLater": "Lo haré más tarde",
   "noReservationsYet": "Aún no hay reservas.",
   "noReservationsFound": "No se encontraron reservas.",
   "reservationRequestSent": "¡Solicitud de reserva enviada!",

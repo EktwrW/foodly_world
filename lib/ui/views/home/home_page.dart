@@ -89,12 +89,12 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               icon: const Icon(Bootstrap.calendar2_check, size: 40, color: FoodlyThemes.primaryFoodly),
               title: Text(
-                count == 1 ? 'You have 1 pending reservation' : 'You have $count pending reservations',
+                count == 1 ? S.current.pendingReservationsAlertOne : S.current.pendingReservationsAlertMany(count),
                 textAlign: TextAlign.center,
                 style: FoodlyTextStyles.actionsBodyBold,
               ),
-              content: const Text(
-                'There are reservation requests waiting for your response.',
+              content: Text(
+                S.current.pendingReservationsContent,
                 textAlign: TextAlign.center,
               ),
               actionsAlignment: MainAxisAlignment.center,
@@ -102,7 +102,7 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
                   child: Text(
-                    'I\'ll do it later',
+                    S.current.doItLater,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                 ),
