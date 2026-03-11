@@ -358,8 +358,14 @@ class _LikeOrEditWidget extends StatelessWidget {
         if (vm.loggedUserCanEdit) {
           return PopupMenuButton<String>(
             elevation: 3,
-            icon: const Icon(Icons.more_vert, color: Colors.white),
-            color: Colors.white70,
+            style: vm.hasMediaContent
+                ? ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(FoodlyThemes.primaryFoodly.withValues(alpha: .25)))
+                : const ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.white54)),
+            icon: Icon(
+              Bootstrap.three_dots_vertical,
+              color: vm.hasMediaContent ? Colors.white : FoodlyThemes.primaryFoodly,
+            ),
             onSelected: (value) {
               final cubit = context.read<ManagePromotionsCubit>();
 

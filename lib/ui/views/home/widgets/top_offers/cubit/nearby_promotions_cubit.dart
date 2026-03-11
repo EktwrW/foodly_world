@@ -32,6 +32,12 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
 
   /// Initial load — always starts at page 1, replaces current list.
   Future<void> load() async {
+    // Location may not be ready yet at startup/hot-restart — retry up to 3 s.
+    for (var i = 0; i < 10; i++) {
+      if (_locationService.currentLocation.position != null) break;
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+
     final position = _locationService.currentLocation.position;
     if (position == null) {
       _vm = _vm.copyWith(error: 'Location not available');

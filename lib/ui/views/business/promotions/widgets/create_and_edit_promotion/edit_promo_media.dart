@@ -111,6 +111,7 @@ class _EditPromoMediaWdg extends StatelessWidget {
 
     if (vm.newPromoMediaPath?.$2.mediaFileIsVideo == true) {
       return VideoPreview(
+        key: ValueKey(vm.newPromoMediaPath!.$1),
         filePath: vm.newPromoMediaPath!.$1,
       );
     }
@@ -173,6 +174,8 @@ class _EditPromoMediaWdg extends StatelessWidget {
     }
   }
 
+  static const _maxVideoSizeBytes = 80 * 1024 * 1024; // 80 MB frontend guard
+
   Future<void> _pickVideo(BuildContext context) async {
     final cubit = context.read<ManagePromotionsCubit>();
     cubit.updateEditMode(PromotionEditing.media);
@@ -181,6 +184,14 @@ class _EditPromoMediaWdg extends StatelessWidget {
 
     if (result != null && result.files.isNotEmpty && context.mounted) {
       final file = File(result.files.first.path!);
+
+      // File size guard — give early feedback before even initialising the player
+      if (file.lengthSync() > _maxVideoSizeBytes) {
+        if (context.mounted) {
+          FoodlySnackbars.errorGeneric(context, S.current.videoIsTooLong);
+        }
+        return;
+      }
 
       // Validar duración
       final tempController = VideoPlayerController.file(file);

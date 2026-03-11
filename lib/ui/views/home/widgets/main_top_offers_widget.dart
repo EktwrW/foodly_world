@@ -308,16 +308,15 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                             );
                           });
 
-                          await Future.microtask(() => setState(() => isLoading = false));
+                          Future.microtask(() => setState(() => isLoading = false));
                         },
                         tooltip: 'View promotion',
                         iconSize: 16,
                         diameter: 16,
-                        iconData: Bootstrap.fullscreen,
+                        iconData: Bootstrap.arrows_fullscreen,
                         child: isLoading
-                            ? const SizedBox(
-                                width: 12,
-                                height: 12,
+                            ? const SizedBox.square(
+                                dimension: 16,
                                 child: CircularProgressIndicator.adaptive(strokeWidth: 2),
                               )
                             : null,

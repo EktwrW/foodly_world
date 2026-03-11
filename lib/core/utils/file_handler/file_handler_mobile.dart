@@ -10,16 +10,43 @@ import 'package:path_provider/path_provider.dart';
 import 'file_handler.dart';
 
 class FileHandlerMobile implements FileHandler {
+  static const _videoExtensions = {
+    'mp4',
+    'mov',
+    'webm',
+    'm4v',
+    'mkv',
+    'avi',
+    'wmv',
+    'flv',
+    '3gp',
+    'mpeg',
+    'mpg',
+    'ts',
+  };
+
   @override
   Future<MultipartFile?> getMultipartFile(String? filePath) async {
     if (filePath?.isEmpty ?? true) return null;
     final file = File(filePath!);
-    final fileName = file.path.split('/').last.contains('.${FoodlyStrings.PNG}')
-        ? file.path.split('/').last
-        : '${file.path.split('/').last}.${FoodlyStrings.PNG}';
+    final rawFileName = file.path.split('/').last;
+    final extension = rawFileName.contains('.') ? rawFileName.split('.').last.toLowerCase() : '';
 
-    return MultipartFile.fromFileSync(file.path,
-        contentType: MediaType(FoodlyStrings.IMAGE, FoodlyStrings.PNG), filename: fileName);
+    if (_videoExtensions.contains(extension)) {
+      return MultipartFile.fromFileSync(
+        file.path,
+        contentType: MediaType('video', extension),
+        filename: rawFileName,
+      );
+    }
+
+    // Image: keep existing behaviour (ensure .png extension)
+    final fileName = rawFileName.contains('.${FoodlyStrings.PNG}') ? rawFileName : '$rawFileName.${FoodlyStrings.PNG}';
+    return MultipartFile.fromFileSync(
+      file.path,
+      contentType: MediaType(FoodlyStrings.IMAGE, FoodlyStrings.PNG),
+      filename: fileName,
+    );
   }
 
   @override

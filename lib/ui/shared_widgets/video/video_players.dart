@@ -19,7 +19,8 @@ class VideoPreview extends StatefulWidget {
 }
 
 class _VideoPreviewState extends State<VideoPreview> {
-  FlickManager? flickManager;
+  FlickManager? _flickManager;
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -28,43 +29,60 @@ class _VideoPreviewState extends State<VideoPreview> {
   }
 
   Future<void> _initializePlayer() async {
-    flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.file(
-        File(widget.filePath),
-      ),
-      autoPlay: false,
-    );
-    if (mounted) setState(() {});
+    // Pre-initialize the controller so FlickManager receives a ready controller.
+    // This avoids "VideoPlayerController used after being disposed" races that
+    // occur when the widget is torn down while FlickManager initializes internally.
+    final controller = VideoPlayerController.file(File(widget.filePath));
+    try {
+      await controller.initialize();
+    } catch (_) {
+      controller.dispose();
+      return;
+    }
+
+    if (_isDisposed || !mounted) {
+      controller.dispose();
+      return;
+    }
+
+    final previous = _flickManager;
+    setState(() {
+      _flickManager = FlickManager(videoPlayerController: controller, autoPlay: false);
+    });
+    previous?.dispose();
   }
 
   @override
   void didUpdateWidget(VideoPreview oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.filePath != widget.filePath) {
-      flickManager?.dispose();
-      flickManager = null;
+      final old = _flickManager;
+      _flickManager = null;
+      old?.dispose();
       _initializePlayer();
     }
   }
 
   @override
   void dispose() {
-    flickManager?.dispose();
+    _isDisposed = true;
+    final manager = _flickManager;
+    _flickManager = null;
+    manager?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (flickManager == null) {
-      return const Center(
-        child: LoadingWidgetFoodlyIso(),
-      );
+    if (_flickManager == null) {
+      return const Center(child: LoadingWidgetFoodlyIso());
     }
 
     return FlickVideoPlayer(
-      flickManager: flickManager!,
+      flickManager: _flickManager!,
       flickVideoWithControls: const FlickVideoWithControls(
-        controls: CustomFlickPortraitControls(),
+        controls: CustomFlickPortraitControls(iconSize: 16),
+        playerLoadingFallback: Center(child: LoadingWidgetFoodlyIso(height: 46)),
       ),
     );
   }
@@ -80,7 +98,7 @@ class NetworkVideoPlayer extends StatefulWidget {
 }
 
 class _NetworkVideoPlayerState extends State<NetworkVideoPlayer> {
-  late FlickManager flickManager;
+  late final FlickManager flickManager;
 
   @override
   void initState() {
@@ -104,6 +122,7 @@ class _NetworkVideoPlayerState extends State<NetworkVideoPlayer> {
       flickManager: flickManager,
       flickVideoWithControls: const FlickVideoWithControls(
         controls: CustomFlickPortraitControls(),
+        playerLoadingFallback: Center(child: CircularProgressIndicator.adaptive()),
       ),
     );
   }
@@ -132,9 +151,9 @@ class CustomFlickPortraitControls extends StatelessWidget {
                   child: FlickAutoHideChild(
                     showIfVideoNotInitialized: false,
                     child: FlickPlayToggle(
-                      size: 50,
+                      size: 32,
                       color: Colors.white,
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(40),
@@ -237,8 +256,9 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
     if (videoId != null && !kIsWeb) {
       _controller = YoutubePlayerController(
         initialVideoId: videoId,
-        flags: const YoutubePlayerFlags(
+        flags: YoutubePlayerFlags(
           autoPlay: false,
+          captionLanguage: di<AuthSessionService>().lang,
         ),
       );
     }
