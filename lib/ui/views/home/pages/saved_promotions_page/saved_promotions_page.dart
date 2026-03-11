@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show BlocSelector, FavoritesCubit, FavoritesState;
+    show BlocSelector, FavoritesCubit, FavoritesState, S;
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' show BusinessDM, PromotionDM;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
@@ -35,14 +35,14 @@ class SavedPromotionsPage extends StatelessWidget {
 
           // Si no hay promociones guardadas, mostrar placeholder
           if (currentPromos.isEmpty && upcomingPromos.isEmpty) {
-            return const Scaffold(
+            return Scaffold(
               appBar: SecondaryMainAppBar(
-                key: Key('promotions-app-bar'),
-                actionText: 'Saved Promotions',
+                key: const Key('promotions-app-bar'),
+                actionText: S.current.savedPromotions,
               ),
               body: _EmptyListPlaceholder(
-                text: 'Aun no tienes promociones guardadas',
-                key: Key('saved-promos-placeholder'),
+                key: const Key('saved-promos-placeholder'),
+                text: S.current.noSavedPromotions,
               ),
             );
           }
@@ -57,9 +57,9 @@ class SavedPromotionsPage extends StatelessWidget {
 
                 return Scaffold(
                   backgroundColor: Colors.transparent,
-                  appBar: const SecondaryMainAppBar(
-                    key: Key('promotions-app-bar'),
-                    actionText: 'Saved Promotions',
+                  appBar: SecondaryMainAppBar(
+                    key: const Key('promotions-app-bar'),
+                    actionText: S.current.savedPromotions,
                   ),
                   body: BlocBuilder<SavedPromotionsViewCubit, SavedPromotionsViewState>(
                     builder: (context, state) {
@@ -68,9 +68,9 @@ class SavedPromotionsPage extends StatelessWidget {
 
                       // Verificamos si ambas categorías están vacías después de quitar favoritos
                       if (vm.currentPromos.isEmpty && vm.upcomingPromos.isEmpty) {
-                        return const _EmptyListPlaceholder(
-                          text: 'Aun no tienes promociones guardadas',
-                          key: Key('saved-promos-placeholder'),
+                        return _EmptyListPlaceholder(
+                          text: S.current.noSavedPromotions,
+                          key: const Key('saved-promos-placeholder'),
                         );
                       }
 
@@ -79,13 +79,13 @@ class SavedPromotionsPage extends StatelessWidget {
                           key: Key('saved-current-promos-${vm.currentPromos.length}'),
                           businesses: vm.businessesWithCurrentPromos,
                           promos: vm.currentPromos,
-                          title: 'Estas son tus Promociones Vigentes',
+                          title: S.current.savedPromotionsCurrent,
                         ),
                         _SavedPromotionsView(
                           key: Key('saved-upcoming-promos-${vm.upcomingPromos.length}'),
                           businesses: vm.businessesWithUpcomingPromos,
                           promos: vm.upcomingPromos,
-                          title: 'Estas son tus Próximas Promociones',
+                          title: S.current.savedPromotionsUpcoming,
                         ),
                       ];
 

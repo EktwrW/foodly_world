@@ -5,8 +5,8 @@ enum SavedPromotionsIndexView {
   upcomingPromos;
 
   String get label => switch (this) {
-        currentPromos => 'Vigentes',
-        upcomingPromos => 'Próximas',
+        currentPromos => S.current.savedPromotionsTabCurrent,
+        upcomingPromos => S.current.savedPromotionsTabUpcoming,
       };
 }
 
