@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer;
 import 'package:foodly_world/core/core_exports.dart'
-    show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension;
+    show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
@@ -21,9 +21,9 @@ class NotificationsPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: const SecondaryMainAppBar(
-          key: Key('notifications-app-bar'),
-          actionText: 'Notifications',
+        appBar: SecondaryMainAppBar(
+          key: const Key('notifications-app-bar'),
+          actionText: S.current.notifications,
         ),
         body: BlocConsumer<NotificationsCubit, NotificationsState>(
           listener: (context, state) {
@@ -43,12 +43,12 @@ class NotificationsPage extends StatelessWidget {
 
             if (vm.notifications.isEmpty) {
               return Center(
-                child: const Column(
+                child: Column(
                   spacing: 16,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
-                    Text('No notifications yet!'),
+                    const Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
+                    Text(S.current.noNotificationsYet),
                   ],
                 ).paddingBottom(48),
               );
@@ -65,7 +65,7 @@ class NotificationsPage extends StatelessWidget {
                     child: CustomNeumorphicButton(
                       onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
                       type: CustomNeumorphicBtnType.outlined,
-                      text: 'Mark all as read',
+                      text: S.current.markAllAsRead,
                       fontSize: 14,
                       disabled: !vm.hasUnread,
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -202,8 +202,8 @@ class NotificationsPage extends StatelessWidget {
                         children: [
                           const Icon(Bootstrap.calendar2_event, size: 20, color: FoodlyThemes.primaryFoodly),
                           const SizedBox(width: 10),
-                          const Expanded(
-                            child: Text('Reservation Details', style: FoodlyTextStyles.actionsBodyBold),
+                          Expanded(
+                            child: Text(S.current.reservationDetails, style: FoodlyTextStyles.actionsBodyBold),
                           ),
                           InkWell(
                             onTap: () => Navigator.pop(ctx),
@@ -225,9 +225,10 @@ class NotificationsPage extends StatelessWidget {
                               final actionResult = await repo.confirmReservation(reservation.reservationUuid!);
                               if (context.mounted) {
                                 actionResult.when(
-                                  success: (_) => FoodlySnackbars.successGeneric(context, 'Reservation confirmed.'),
+                                  success: (_) =>
+                                      FoodlySnackbars.successGeneric(context, S.current.reservationConfirmed),
                                   failure: (_) =>
-                                      FoodlySnackbars.errorGeneric(context, 'Failed to confirm reservation.'),
+                                      FoodlySnackbars.errorGeneric(context, S.current.failedToConfirmReservation),
                                 );
                               }
                             }
@@ -235,14 +236,15 @@ class NotificationsPage extends StatelessWidget {
                       onReject: reservation.canBeActedOnByManager
                           ? () {
                               Navigator.pop(ctx);
-                              _showNotesDialog(context, 'Reject Reservation', (notes) async {
+                              _showNotesDialog(context, S.current.rejectReservation, (notes) async {
                                 final actionResult =
                                     await repo.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
                                 if (context.mounted) {
                                   actionResult.when(
-                                    success: (_) => FoodlySnackbars.successGeneric(context, 'Reservation rejected.'),
+                                    success: (_) =>
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationRejected),
                                     failure: (_) =>
-                                        FoodlySnackbars.errorGeneric(context, 'Failed to reject reservation.'),
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToRejectReservation),
                                   );
                                 }
                               });
@@ -251,15 +253,15 @@ class NotificationsPage extends StatelessWidget {
                       onCancel: reservation.isConfirmed
                           ? () {
                               Navigator.pop(ctx);
-                              _showNotesDialog(context, 'Cancel Reservation', (notes) async {
-                                final actionResult = await repo.managerCancelReservation(
-                                    reservation.reservationUuid!,
+                              _showNotesDialog(context, S.current.cancelReservation, (notes) async {
+                                final actionResult = await repo.managerCancelReservation(reservation.reservationUuid!,
                                     managerNotes: notes);
                                 if (context.mounted) {
                                   actionResult.when(
-                                    success: (_) => FoodlySnackbars.successGeneric(context, 'Reservation cancelled.'),
+                                    success: (_) =>
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationCancelled),
                                     failure: (_) =>
-                                        FoodlySnackbars.errorGeneric(context, 'Failed to cancel reservation.'),
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToCancelReservation),
                                   );
                                 }
                               });
@@ -271,8 +273,8 @@ class NotificationsPage extends StatelessWidget {
                               final actionResult = await repo.markNoShow(reservation.reservationUuid!);
                               if (context.mounted) {
                                 actionResult.when(
-                                  success: (_) => FoodlySnackbars.successGeneric(context, 'Marked as no-show.'),
-                                  failure: (_) => FoodlySnackbars.errorGeneric(context, 'Failed to mark no-show.'),
+                                  success: (_) => FoodlySnackbars.successGeneric(context, S.current.markedNoShow),
+                                  failure: (_) => FoodlySnackbars.errorGeneric(context, S.current.failedToMarkNoShow),
                                 );
                               }
                             }
@@ -283,9 +285,10 @@ class NotificationsPage extends StatelessWidget {
                               final actionResult = await repo.markComplete(reservation.reservationUuid!);
                               if (context.mounted) {
                                 actionResult.when(
-                                  success: (_) => FoodlySnackbars.successGeneric(context, 'Reservation completed.'),
+                                  success: (_) =>
+                                      FoodlySnackbars.successGeneric(context, S.current.reservationCompleted),
                                   failure: (_) =>
-                                      FoodlySnackbars.errorGeneric(context, 'Failed to complete reservation.'),
+                                      FoodlySnackbars.errorGeneric(context, S.current.failedToCompleteReservation),
                                 );
                               }
                             }
@@ -300,7 +303,7 @@ class NotificationsPage extends StatelessWidget {
       },
       failure: (_) {
         if (context.mounted) {
-          FoodlySnackbars.errorGeneric(context, 'Could not load reservation details.');
+          FoodlySnackbars.errorGeneric(context, S.current.couldNotLoadReservationDetails);
         }
       },
     );
@@ -322,13 +325,13 @@ class NotificationsPage extends StatelessWidget {
           maxLength: 500,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
               onConfirm(controller.text.isNotEmpty ? controller.text : null);
             },
-            child: const Text('Confirm'),
+            child: Text(S.current.confirm),
           ),
         ],
       ),

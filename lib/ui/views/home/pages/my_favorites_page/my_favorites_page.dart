@@ -52,9 +52,9 @@ class MyFavoritesPage extends StatelessWidget {
           );
         },
         child: Scaffold(
-          appBar: const SecondaryMainAppBar(
-            key: Key('my-favorites-app-bar'),
-            actionText: 'My Favorites',
+          appBar: SecondaryMainAppBar(
+            key: const Key('my-favorites-app-bar'),
+            actionText: S.current.myFavorites,
           ),
           body: NestedScrollView(
             controller: ScrollController(),

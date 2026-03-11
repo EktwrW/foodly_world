@@ -44,13 +44,6 @@ class FoodlyMainPage extends StatelessWidget {
                           style: FoodlyTextStyles.sectionsTitle,
                         ).paddingOnly(top: 25, bottom: 12),
                         const NewReleasesCard().paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-                        Text(
-                          S.current.tendencies,
-                          style: FoodlyTextStyles.sectionsTitle,
-                        ).paddingOnly(top: 25),
-                        const Text(
-                                'DEV: Implementar aca carrusel con nuevos comercios y tendencias de las apps del ecosistema 369')
-                            .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                       ],
                     ).paddingSymmetric(vertical: 25),
                   ),

@@ -19,7 +19,7 @@ class MyFavoriteMenusView extends StatelessWidget {
             children: [
               const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
               Text(
-                'Aun no tienes menús en tu lista de favoritos',
+                S.current.noFavoriteMenus,
                 style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
@@ -99,7 +99,7 @@ class _FavoriteMenusCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            'Ver el menú de',
+                            S.current.viewMenuOf,
                             style: FoodlyTextStyles.homeAppBarSmallSubtitle,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -161,7 +161,7 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ? () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
                             pathParameters: {AppRoutes.routeIdParam: business!.uuid}, extra: business)
                         : null,
-                    tooltip: 'Visitar perfil del negocio',
+                    tooltip: S.current.visitBusinessPage,
                     iconSize: 18,
                     diameter: 18,
                     iconData: Bootstrap.shop_window,
@@ -207,9 +207,9 @@ class _FavoriteMenusCard extends StatelessWidget {
 
   Widget _buildStatusBadge(BusinessStatus status) {
     final (text, color) = switch (status) {
-      BusinessStatus.open => ('Open', FoodlyThemes.tertiaryFoodly),
-      BusinessStatus.closed => ('Closed', FoodlyThemes.error),
-      BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
+      BusinessStatus.open => (S.current.open, FoodlyThemes.tertiaryFoodly),
+      BusinessStatus.closed => (S.current.closed, FoodlyThemes.error),
+      BusinessStatus.openingSoon => (S.current.openSoon, FoodlyThemes.warning),
     };
 
     return DecoratedBox(

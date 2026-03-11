@@ -17,7 +17,7 @@ class MyFavoriteItemsView extends StatelessWidget {
             children: [
               const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
               Text(
-                'Aun no tienes items en tu lista de favoritos',
+                S.current.noFavoriteItems,
                 style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),

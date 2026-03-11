@@ -19,7 +19,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
             children: [
               const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
               Text(
-                'Aun no tienes negocios en tu lista de favoritos',
+                S.current.noFavoriteBusinesses,
                 style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
