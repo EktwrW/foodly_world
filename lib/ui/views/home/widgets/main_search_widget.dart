@@ -11,6 +11,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.d
 import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/smart_search/widgets/smart_search_snackbars.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity, Iconsax;
 import 'package:nova_places_api/models/place.dart';

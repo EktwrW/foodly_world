@@ -22,7 +22,11 @@ class CurrentLocationButton extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   if (!hasLocation) {
-                    Geolocator.openAppSettings();
+                    Geolocator.openAppSettings().then((value) {
+                      if (value) {
+                        di<NearbyPromotionsCubit>().load();
+                      }
+                    });
                     return;
                   }
 
@@ -119,6 +123,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
     setState(() => _selectedPlace = place);
     locationService.updateLocationFromPlace(place);
     voiceSearchCubit.resetToInitial();
+    Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
   }
 
   @override
@@ -220,6 +225,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                         '${locationDM.address ?? '-'}, ${locationDM.city ?? '-'}, ${locationDM.zipCode ?? '-'}',
                                   ),
                                 );
+                                Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
                               },
                               style: ui.NeumorphicStyle(
                                 color: FoodlyThemes.primaryLighten73,
@@ -277,6 +283,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                         '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
                                   ),
                                 );
+                                Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
                               }
                             : null,
                         style: ui.NeumorphicStyle(

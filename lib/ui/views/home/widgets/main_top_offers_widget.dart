@@ -348,7 +348,7 @@ class _EmptyOffersWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(bottom: 16),
               child: Icon(
                 isError ? Bootstrap.wifi_off : Bootstrap.megaphone,
                 size: 36,
@@ -359,7 +359,7 @@ class _EmptyOffersWidget extends StatelessWidget {
               isError ? 'Could not load promotions' : 'No promotions nearby',
               style: FoodlyTextStyles.cardsSmallSubtitle,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 18),
             SizedBox(
               width: 236,
               child: CustomNeumorphicButton(
@@ -372,7 +372,7 @@ class _EmptyOffersWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ).paddingBottom(36),
       ),
     );
   }
