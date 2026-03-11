@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:universal_io/io.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
-
-import 'package:youtube_player_embed/youtube_player_embed.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPreview extends StatefulWidget {
   const VideoPreview({
@@ -201,7 +202,14 @@ class CustomFlickPortraitControls extends StatelessWidget {
   }
 }
 
-class YouTubeVideoPlayer extends StatelessWidget {
+/// Plays a YouTube video inline using [YoutubePlayerController].
+/// On Flutter Web (unsupported by the package), falls back to
+/// thumbnail + external launch via url_launcher.
+///
+/// Exposes [extractVideoId] as a static helper so callers (e.g. the
+/// home carousel) can build thumbnail previews without instantiating
+/// a full player.
+class YouTubeVideoPlayer extends StatefulWidget {
   const YouTubeVideoPlayer({
     super.key,
     required this.url,
@@ -211,39 +219,134 @@ class YouTubeVideoPlayer extends StatelessWidget {
   final String url;
   final String? videoTitle;
 
-  String? _getVideoId(String url) {
-    if (url.contains('youtube.com')) {
-      return Uri.parse(url).queryParameters['v'];
+  /// Extracts the YouTube video ID from any supported URL format,
+  /// including youtube.com/watch?v=, youtu.be/, and bare IDs.
+  static String? extractVideoId(String url) => YoutubePlayer.convertUrlToId(url);
+
+  @override
+  State<YouTubeVideoPlayer> createState() => _YouTubeVideoPlayerState();
+}
+
+class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
+  YoutubePlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final videoId = YouTubeVideoPlayer.extractVideoId(widget.url);
+    if (videoId != null && !kIsWeb) {
+      _controller = YoutubePlayerController(
+        initialVideoId: videoId,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+        ),
+      );
     }
-    if (url.contains('youtu.be')) {
-      return url.split('/').last;
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _launchExternal() async {
+    final uri = Uri.parse(widget.url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
-    if (!url.contains('/') && !url.contains('?')) {
-      return url;
-    }
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final videoId = _getVideoId(url);
+    final videoId = YouTubeVideoPlayer.extractVideoId(widget.url);
 
     if (videoId == null) {
       return Center(child: Text(S.current.invalidYoutubeUrl));
     }
 
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: YoutubePlayerEmbed(
-          key: ValueKey(videoId),
-          videoId: videoId,
-          customVideoTitle: videoTitle ?? '',
-          autoPlay: false,
-          mute: true,
-          aspectRatio: 16 / 9,
-        ),
+    // Web fallback: thumbnail + tap to open externally
+    if (kIsWeb || _controller == null) {
+      return _YoutubeThumbnail(videoId: videoId, onTap: _launchExternal);
+    }
+
+    return YoutubePlayer(
+      controller: _controller!,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: FoodlyThemes.primaryFoodly,
+      progressColors: const ProgressBarColors(
+        playedColor: FoodlyThemes.primaryFoodly,
+        handleColor: FoodlyThemes.primaryFoodly,
+      ),
+    );
+  }
+}
+
+/// Static YouTube thumbnail with a play button overlay.
+/// Used by [YouTubeVideoPlayer] on web and by the home carousel preview.
+class YoutubeThumbnailPreview extends StatelessWidget {
+  final String url;
+  final VoidCallback? onTap;
+
+  const YoutubeThumbnailPreview({super.key, required this.url, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YouTubeVideoPlayer.extractVideoId(url);
+    if (videoId == null) return const SizedBox.shrink();
+    return _YoutubeThumbnail(videoId: videoId, onTap: onTap);
+  }
+}
+
+class _YoutubeThumbnail extends StatelessWidget {
+  final String videoId;
+  final VoidCallback? onTap;
+
+  const _YoutubeThumbnail({required this.videoId, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CachedNetworkImage(
+            imageUrl: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
+            fit: BoxFit.cover,
+            errorWidget: (_, __, ___) => const ColoredBox(
+              color: Colors.black87,
+              child: Center(child: Icon(Icons.play_circle_outline, color: Colors.white, size: 48)),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.55),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 36),
+            ),
+          ),
+          const Positioned(
+            bottom: 8,
+            right: 8,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Color(0xFFFF0000),
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                child: Text(
+                  'YouTube',
+                  style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

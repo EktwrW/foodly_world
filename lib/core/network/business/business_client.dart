@@ -181,7 +181,7 @@ abstract class BusinessClient {
   Future<PromotionDM> createPromotion(@Body() PromotionDTO body);
 
   @GET('/promotions/{uuid}')
-  Future<List<PromotionDM>> getPromotionByUuid(@Path('uuid') String uuid);
+  Future<PromotionDM> getPromotionByUuid(@Path('uuid') String uuid);
 
   @PATCH('/promotions/update/{uuid}')
   Future<PromotionDM> updatePromotion({@Path('uuid') required String uuid, @Body() required PromotionDTO body});

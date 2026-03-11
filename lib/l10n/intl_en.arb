@@ -437,7 +437,7 @@
   "vegetarianCuisine": "Vegetarian",
   "venezuelan": "Venezuelan",
   "verifyingAvailability": "Checking availability",
-  "videoIsTooLong": "Video is too long",
+  "videoIsTooLong": "Video is too long. Maximum duration is 20 seconds.",
   "view": "View",
   "viewEdit": "View/Edit",
   "visitor": "Visitor",

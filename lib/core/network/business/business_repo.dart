@@ -404,7 +404,7 @@ class BusinessRepo {
   Future<ApiResult<PromotionDM>> getPromotionByUuid(String uuid) async {
     try {
       final response = await _businessClient.getPromotionByUuid(uuid);
-      return ApiResult.success(response.first);
+      return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
