@@ -43,7 +43,7 @@ class FoodlyMainPage extends StatelessWidget {
                           S.current.news,
                           style: FoodlyTextStyles.sectionsTitle,
                         ).paddingOnly(top: 25, bottom: 12),
-                        const NewReleasesCard().paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                        const NewReleasesCard().paddingSymmetric(horizontal: 12),
                       ],
                     ).paddingSymmetric(vertical: 25),
                   ),

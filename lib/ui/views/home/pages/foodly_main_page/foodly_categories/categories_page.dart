@@ -93,33 +93,35 @@ class CategoriesPage extends StatelessWidget {
                           .map((e) => TextButton(
                                 onPressed: () => cubit.changeCategory(e),
                                 style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 3),
+                                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
                                 ),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 6,
                                   children: [
-                                    SizedBox.square(
-                                      dimension: 42,
-                                      child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            boxShadow: e != vm.currentCategory
-                                                ? null
-                                                : [
-                                                    BoxShadow(
-                                                      color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
-                                                      blurRadius: 6,
-                                                      offset: const Offset(0, 3),
-                                                    )
-                                                  ],
-                                            shape: BoxShape.circle,
-                                            color: e == vm.currentCategory
-                                                ? FoodlyThemes.primaryFoodly
-                                                : FoodlyThemes.alternativeUnselectedLightColor,
-                                          ),
-                                          child: e.avatar.paddingAll(3)),
+                                    Flexible(
+                                      child: SizedBox.square(
+                                        dimension: 42,
+                                        child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              boxShadow: e != vm.currentCategory
+                                                  ? null
+                                                  : [
+                                                      BoxShadow(
+                                                        color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
+                                                        blurRadius: 6,
+                                                        offset: const Offset(0, 3),
+                                                      )
+                                                    ],
+                                              shape: BoxShape.circle,
+                                              color: e == vm.currentCategory
+                                                  ? FoodlyThemes.primaryFoodly
+                                                  : FoodlyThemes.alternativeUnselectedLightColor,
+                                            ),
+                                            child: e.avatar.paddingAll(3)),
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: 38,
+                                    Flexible(
                                       child: Center(
                                         child: Text(
                                           e.text,
@@ -145,7 +147,7 @@ class CategoriesPage extends StatelessWidget {
                         viewportFraction: screenWidth <= 320 ? .41 : .25,
                         aspectRatio: 3.0,
                       ),
-                    ).paddingVertical(6),
+                    ),
                   ),
                   const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 24),
                   Row(

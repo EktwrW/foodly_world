@@ -15,6 +15,7 @@ import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -118,6 +119,12 @@ class DependencyInjectionService {
           businessRepo: di(),
           locationService: di(),
           logger: di(),
+        ));
+
+    /// Register NewReleasesCubit
+    di.registerLazySingleton(() => NewReleasesCubit(
+          businessRepo: di(),
+          locationService: di(),
         ));
   }
 }

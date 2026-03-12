@@ -80,7 +80,7 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
             autoPlay: true,
             enlargeCenterPage: true,
             enlargeFactor: .15,
-            viewportFraction: context.screenWidth <= 360 ? .85 : .8,
+            viewportFraction: context.screenWidth <= 360 ? .85 : .9,
             onPageChanged: (index, _) => _onPageChanged(index, promotions, vm.hasMore),
           ),
         );

@@ -16,6 +16,8 @@ import 'package:geolocator/geolocator.dart' show Geolocator;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity, Iconsax;
 import 'package:nova_places_api/models/place.dart';
 
+import 'new_releases/cubit/new_releases_cubit.dart';
+
 part 'smart_search/current_location_btn.dart';
 part 'smart_search/text_search_btn.dart';
 part 'smart_search/voice_search_btn.dart';

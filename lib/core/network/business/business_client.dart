@@ -265,4 +265,13 @@ abstract class BusinessClient {
     @Query('category_id') int? categoryId,
     @Query('limit') int? limit,
   });
+
+  @GET('/business/new-releases')
+  Future<BusinessSearchDM> fetchNewReleases({
+    @Query('latitude') required double latitude,
+    @Query('longitude') required double longitude,
+    @Query('radius') double? radius,
+    @Query('limit') int? limit,
+    @Query('days') int? days,
+  });
 }

@@ -123,7 +123,10 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
     setState(() => _selectedPlace = place);
     locationService.updateLocationFromPlace(place);
     voiceSearchCubit.resetToInitial();
-    Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
+    Future.delayed(Durations.short2, () {
+      di<NearbyPromotionsCubit>().load();
+      di<NewReleasesCubit>().load();
+    });
   }
 
   @override
@@ -225,7 +228,10 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                         '${locationDM.address ?? '-'}, ${locationDM.city ?? '-'}, ${locationDM.zipCode ?? '-'}',
                                   ),
                                 );
-                                Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
+                                Future.delayed(Durations.short2, () {
+                                  di<NearbyPromotionsCubit>().load();
+                                  di<NewReleasesCubit>().load();
+                                });
                               },
                               style: ui.NeumorphicStyle(
                                 color: FoodlyThemes.primaryLighten73,
@@ -283,7 +289,10 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                         '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
                                   ),
                                 );
-                                Future.delayed(Durations.short2, () => di<NearbyPromotionsCubit>().load());
+                                Future.delayed(Durations.short2, () {
+                                  di<NearbyPromotionsCubit>().load();
+                                  di<NewReleasesCubit>().load();
+                                });
                               }
                             : null,
                         style: ui.NeumorphicStyle(

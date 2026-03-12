@@ -650,4 +650,24 @@ class BusinessRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  Future<ApiResult<BusinessSearchDM>> fetchNewReleases({
+    required double latitude,
+    required double longitude,
+    double? radius,
+    int? limit,
+    int? days,
+  }) async {
+    try {
+      return ApiResult.success(await _businessClient.fetchNewReleases(
+        latitude: latitude,
+        longitude: longitude,
+        radius: radius,
+        limit: limit,
+        days: days,
+      ));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }
