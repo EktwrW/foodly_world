@@ -99,27 +99,25 @@ class CategoriesPage extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   spacing: 6,
                                   children: [
-                                    Flexible(
-                                      child: SizedBox.square(
-                                        dimension: 42,
-                                        child: DecoratedBox(
-                                            decoration: BoxDecoration(
-                                              boxShadow: e != vm.currentCategory
-                                                  ? null
-                                                  : [
-                                                      BoxShadow(
-                                                        color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
-                                                        blurRadius: 6,
-                                                        offset: const Offset(0, 3),
-                                                      )
-                                                    ],
-                                              shape: BoxShape.circle,
-                                              color: e == vm.currentCategory
-                                                  ? FoodlyThemes.primaryFoodly
-                                                  : FoodlyThemes.alternativeUnselectedLightColor,
-                                            ),
-                                            child: e.avatar.paddingAll(3)),
-                                      ),
+                                    SizedBox.square(
+                                      dimension: 42,
+                                      child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            boxShadow: e != vm.currentCategory
+                                                ? null
+                                                : [
+                                                    BoxShadow(
+                                                      color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
+                                                      blurRadius: 6,
+                                                      offset: const Offset(0, 3),
+                                                    )
+                                                  ],
+                                            shape: BoxShape.circle,
+                                            color: e == vm.currentCategory
+                                                ? FoodlyThemes.primaryFoodly
+                                                : FoodlyThemes.alternativeUnselectedLightColor,
+                                          ),
+                                          child: e.avatar.paddingAll(3)),
                                     ),
                                     Flexible(
                                       child: Center(
