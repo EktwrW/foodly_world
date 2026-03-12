@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, ScreenSizeExtension;
+import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, ScreenSizeExtension, S;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -83,15 +83,15 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
   }
 
   Widget _buildHeader() {
-    return const Row(
+    return Row(
       children: [
         Expanded(
           child: Text(
-            'Create Post',
+            S.current.createPostTitle,
             style: FoodlyTextStyles.profileSectionTitlePurple,
           ),
         ),
-        CloseButton(),
+        const CloseButton(),
       ],
     ).paddingOnly(left: 16, top: 12, right: 8, bottom: 12);
   }
@@ -108,7 +108,7 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
             maxLength: 369,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              hintText: 'What\'s on your mind?',
+              hintText: S.current.whatsOnYourMind,
               hintStyle: FoodlyTextStyles.hintText,
               border: InputBorder.none,
               counterStyle: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
@@ -163,7 +163,7 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
               disabled: !_canPost,
               margin: EdgeInsets.zero,
               padding: EdgeInsets.zero,
-              text: 'Post',
+              text: S.current.post,
               bosShapeRadius: 8,
             ),
           ),

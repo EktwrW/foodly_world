@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
 import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
+import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
@@ -15,9 +16,9 @@ enum SocialPageViews {
 
   String get title {
     return switch (this) {
-      SocialPageViews.posts => 'Posts',
-      SocialPageViews.users => 'Users',
-      SocialPageViews.buzz => 'Buzz',
+      SocialPageViews.posts => S.current.posts,
+      SocialPageViews.users => S.current.users,
+      SocialPageViews.buzz => S.current.buzz,
     };
   }
 }
@@ -29,9 +30,9 @@ enum UserSortMode {
 
   String get label {
     return switch (this) {
-      UserSortMode.active => 'Most Active',
-      UserSortMode.nearest => 'Nearest',
-      UserSortMode.followers => 'Most Followed',
+      UserSortMode.active => S.current.userSortMostActive,
+      UserSortMode.nearest => S.current.userSortNearest,
+      UserSortMode.followers => S.current.userSortMostFollowed,
     };
   }
 

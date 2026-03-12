@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension;
+import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, S;
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -83,7 +83,7 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
         children: [
           Icon(Icons.error_outline, size: 48, color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.5)),
           const SizedBox(height: 12),
-          Text('Could not load profile', style: FoodlyTextStyles.label.copyWith(color: Colors.black54)),
+          Text(S.current.couldNotLoadProfile, style: FoodlyTextStyles.label.copyWith(color: Colors.black54)),
         ],
       ),
     );
@@ -157,7 +157,7 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
         // Recent posts
         if (profile.recentPosts.isNotEmpty) ...[
           Text(
-            'Recent Posts',
+            S.current.recentPosts,
             style: FoodlyTextStyles.labelBold.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 12),
@@ -187,7 +187,7 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
             ),
             child: Text(
-              isFollowing ? 'Following' : 'Follow',
+              isFollowing ? S.current.following : S.current.follow,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -204,11 +204,11 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildStatColumn(Bootstrap.file_earmark_text, '${stats.postsCount}', 'Posts'),
-        _buildStatColumn(Icons.favorite, '${stats.likesReceived}', 'Likes'),
-        _buildStatColumn(Icons.star, '${stats.reviewsCount}', 'Reviews'),
-        _buildStatColumn(Icons.people, '${stats.followersCount}', 'Followers'),
-        _buildStatColumn(Icons.person_add, '${stats.followingCount}', 'Following'),
+        _buildStatColumn(Bootstrap.file_earmark_text, '${stats.postsCount}', S.current.posts),
+        _buildStatColumn(Icons.favorite, '${stats.likesReceived}', S.current.likes),
+        _buildStatColumn(Icons.star, '${stats.reviewsCount}', S.current.reviews),
+        _buildStatColumn(Icons.people, '${stats.followersCount}', S.current.followers),
+        _buildStatColumn(Icons.person_add, '${stats.followingCount}', S.current.following),
       ],
     );
   }

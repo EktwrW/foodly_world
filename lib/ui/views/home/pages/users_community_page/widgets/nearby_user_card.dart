@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension;
+import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, S;
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -114,7 +114,7 @@ class NearbyUserCard extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         child: Text(
-          user.isFollowing ? 'Following' : 'Follow',
+          user.isFollowing ? S.current.following : S.current.follow,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,

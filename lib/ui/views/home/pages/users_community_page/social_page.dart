@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer, ReadContext;
 import 'package:foodly_world/core/core_exports.dart'
-    show FoodlyThemes, PaddingExtension, ScreenSizeExtension, di, DialogService;
+    show FoodlyThemes, PaddingExtension, ScreenSizeExtension, di, DialogService, S;
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
@@ -49,9 +49,9 @@ class _SocialPageState extends State<SocialPage> {
 
           return Scaffold(
             extendBody: true,
-            appBar: const SecondaryMainAppBar(
-              key: Key('community-app-bar'),
-              actionText: 'Socials',
+            appBar: SecondaryMainAppBar(
+              key: const Key('community-app-bar'),
+              actionText: S.current.socials,
             ),
             floatingActionButton: AnimatedSwitcher(
               duration: Durations.medium1,
