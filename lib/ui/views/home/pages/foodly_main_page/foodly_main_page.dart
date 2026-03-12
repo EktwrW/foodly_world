@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart';
@@ -40,9 +39,9 @@ class FoodlyMainPage extends StatelessWidget {
                         ).paddingOnly(bottom: 12),
                         const TopOffersWidget(),
                         Text(
-                          S.current.news,
+                          S.current.newBranch,
                           style: FoodlyTextStyles.sectionsTitle,
-                        ).paddingOnly(top: 25, bottom: 12),
+                        ).paddingOnly(top: 30, bottom: 12),
                         const NewReleasesCard().paddingSymmetric(horizontal: 12),
                       ],
                     ).paddingSymmetric(vertical: 25),

@@ -30,7 +30,8 @@ class UIDecorations {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      const Color(0xFF8F006F).withValues(alpha: 0.9),
+      const Color(0xFFD604A8).withValues(alpha: 0.9),
+      const Color(0xFFA2007F).withValues(alpha: 0.9),
       const Color(0xFF79005D).withValues(alpha: 0.85),
       const Color(0xFF630050).withValues(alpha: 0.8),
     ],

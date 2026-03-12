@@ -28,46 +28,60 @@ class _HomeCategoriesState extends State<HomeCategories> {
         children: [
           CarouselSlider(
             items: FoodlyCategories.values
-                .map((e) => ui.NeumorphicRadio<FoodlyCategories>(
-                      onChanged: (value) {
+                .map((e) => InkWell(
+                      onTap: () {
                         context.goNamed(AppRoutes.categories.name, extra: e.index);
 
                         di<LocalStorageService>().saveString(FoodlyStrings.LAST_CATEGORY_VISITED, e.name);
                       },
-                      value: e,
-                      padding: const EdgeInsets.all(4),
-                      style: const ui.NeumorphicRadioStyle(
-                          shape: ui.NeumorphicShape.concave,
-                          intensity: .6,
-                          unselectedDepth: 2,
-                          unselectedColor: ui.NeumorphicColors.decorationMaxWhiteColor),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox.square(dimension: 48, child: e.avatar).paddingTop(4),
-                          SizedBox(
-                            width: 92,
-                            height: 33,
-                            child: Center(
-                              child: Text(
-                                e.text,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                                softWrap: false,
-                                style: FoodlyTextStyles.categoryButtonText,
+                      splashFactory: InkRipple.splashFactory,
+                      splashColor: Colors.white,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        decoration: BoxDecoration(
+                          color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .36),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            DecoratedBox(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white, width: .5),
+                                shape: BoxShape.circle,
+                              ),
+                              child: SizedBox.square(
+                                dimension: 48,
+                                child: e.avatar.paddingAll(.5),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 92,
+                              child: Center(
+                                child: Text(
+                                  e.text,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  softWrap: false,
+                                  style: FoodlyTextStyles.categoryButtonText.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 10.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ).paddingOnly(top: 6, bottom: 8),
                       ),
-                    ).paddingOnly(top: 10, bottom: 8))
+                    ))
                 .toList(),
             carouselController: carouselController,
             options: CarouselOptions(
               onPageChanged: (index, reason) => current.value = index,
-              height: 118,
-              viewportFraction: context.isFoldableInHalfView ? .41 : .33,
+              height: 110,
+              viewportFraction: context.isFoldableInHalfView ? .41 : .3,
               aspectRatio: 3.0,
             ),
           ),
@@ -101,15 +115,15 @@ class _HomeCategoriesState extends State<HomeCategories> {
                           return AnimatedContainer(
                             key: Key('${entry.key}'),
                             duration: Durations.medium4,
-                            width: thisIsCurrent ? 10 : 7.5,
-                            height: 12,
+                            width: thisIsCurrent ? 16 : 7.5,
+                            height: 7.5,
                             margin: kIsWeb
                                 ? const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0)
                                 : const EdgeInsets.all(7.0),
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
                               color: (Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black)
                                   .withValues(alpha: thisIsCurrent ? 0.8 : 0.3),
+                              borderRadius: thisIsCurrent ? BorderRadius.circular(4) : BorderRadius.circular(10),
                             ),
                           );
                         },

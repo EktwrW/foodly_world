@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
@@ -151,9 +154,10 @@ class CustomFlickPortraitControls extends StatelessWidget {
                   child: FlickAutoHideChild(
                     showIfVideoNotInitialized: false,
                     child: FlickPlayToggle(
+                      replayChild: const Icon(Bootstrap.play_fill, color: Colors.white, size: 24),
                       size: 32,
                       color: Colors.white,
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(40),
@@ -248,6 +252,8 @@ class YouTubeVideoPlayer extends StatefulWidget {
 
 class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
   YoutubePlayerController? _controller;
+  bool _failed = false;
+  Timer? _timeout;
 
   @override
   void initState() {
@@ -260,12 +266,35 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
           autoPlay: false,
           captionLanguage: di<AuthSessionService>().lang,
         ),
-      );
+      )..addListener(_onControllerUpdate);
+
+      // If the player is not ready within 10 s, fall back to thumbnail.
+      // This handles geo-restricted videos, embed-disabled videos, and network glitches
+      // that leave the YoutubePlayer WebView stuck on its internal loading spinner forever.
+      _timeout = Timer(const Duration(seconds: 10), () {
+        if (mounted && !(_controller?.value.isReady ?? false)) {
+          setState(() => _failed = true);
+        }
+      });
+    }
+  }
+
+  void _onControllerUpdate() {
+    final value = _controller?.value;
+    if (value == null) return;
+    if (value.errorCode != 0 && !_failed) {
+      // YouTube error codes: 2=bad param, 5=HTML5 unsupported, 100=not found, 101/150=embed disabled
+      _timeout?.cancel();
+      if (mounted) setState(() => _failed = true);
+    } else if (value.isReady) {
+      _timeout?.cancel();
     }
   }
 
   @override
   void dispose() {
+    _timeout?.cancel();
+    _controller?.removeListener(_onControllerUpdate);
     _controller?.dispose();
     super.dispose();
   }
@@ -285,8 +314,8 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
       return Center(child: Text(S.current.invalidYoutubeUrl));
     }
 
-    // Web fallback: thumbnail + tap to open externally
-    if (kIsWeb || _controller == null) {
+    // Web, null controller, or failed/timed-out player → thumbnail + external link
+    if (kIsWeb || _controller == null || _failed) {
       return _YoutubeThumbnail(videoId: videoId, onTap: _launchExternal);
     }
 
@@ -346,7 +375,7 @@ class _YoutubeThumbnail extends StatelessWidget {
                 color: Colors.black.withValues(alpha: 0.55),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 36),
+              child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 24),
             ),
           ),
           const Positioned(

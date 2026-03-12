@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
@@ -59,10 +60,17 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
           initial: (_) => const SizedBox.shrink(),
           loading: (_) => const _NewReleasesPlaceholder(),
           loaded: (s) {
-            if (s.vm.businesses.isEmpty) return const SizedBox.shrink();
+            if (s.vm.businesses.isEmpty) {
+              return _NewReleasesErrorWidget(
+                onRetry: () => context.read<NewReleasesCubit>().load(),
+                message: '${S.current.noNewBranches}\n${S.current.checkBackLater}',
+              );
+            }
+
             final total = s.vm.businesses.length;
             final idx = _currentIndex.clamp(0, total - 1);
             final business = s.vm.businesses[idx];
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -116,7 +124,10 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               ],
             );
           },
-          error: (_) => const SizedBox.shrink(),
+          error: (_) => _NewReleasesErrorWidget(
+            onRetry: () => context.read<NewReleasesCubit>().load(),
+            iconData: Icons.search_off_rounded,
+          ),
         );
       },
     );
@@ -142,12 +153,32 @@ class _NewReleasesCardContent extends StatelessWidget {
         Card(
           color: FoodlyThemes.primaryFoodly,
           child: SizedBox(
-            height: 60,
+            height: 90,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(S.current.newBranch, style: FoodlyTextStyles.cardsHeader).paddingOnly(top: 3),
+                Column(
+                  spacing: 3,
+                  children: [
+                    Text(
+                      business.name ?? '',
+                      style: FoodlyTextStyles.cardsHeader,
+                      overflow: TextOverflow.ellipsis,
+                    ).paddingOnly(top: 7.3),
+                    RatingBar.builder(
+                      initialRating: business.rating ?? 0.0,
+                      itemSize: 12,
+                      minRating: 1,
+                      allowHalfRating: true,
+                      ignoreGestures: true,
+                      itemBuilder: (_, __) => const Icon(Icons.star, color: Colors.amber, size: 10),
+                      unratedColor: FoodlyThemes.secondaryFoodly,
+                      glowColor: FoodlyThemes.warning,
+                      onRatingUpdate: (_) {},
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -172,57 +203,28 @@ class _NewReleasesCardContent extends StatelessWidget {
                         height: 270,
                         width: context.screenWidth - 32,
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
+                          borderRadius: BorderRadius.circular(10),
                           child: imageUrls.isNotEmpty
                               ? FeedMultipleImageView(imageUrls: imageUrls, radius: 12)
                               : ColoredBox(
                                   color: FoodlyThemes.primaryFoodly.withValues(alpha: .15),
                                   child: const Icon(Bootstrap.shop_window, size: 64, color: Colors.white54),
                                 ),
-                        ),
+                        ).paddingAll(.9),
                       ),
                       // Logo + name overlay
                       Positioned(
                         bottom: 0,
-                        right: 15,
+                        right: 0,
                         left: 0,
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AvatarWidget(
                               avatarUrl: business.logo,
                               width: 100,
                               height: 100,
                               avatarType: AvatarType.business,
-                            ),
-                            SizedBox(
-                              width: context.screenWidth - 170,
-                              height: 54,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    business.name ?? '',
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FoodlyTextStyles.cardSubtitle,
-                                  ),
-                                  RatingBar.builder(
-                                    initialRating: business.rating ?? 0.0,
-                                    itemSize: 12,
-                                    minRating: 1,
-                                    allowHalfRating: true,
-                                    ignoreGestures: true,
-                                    itemBuilder: (_, __) => const Icon(Icons.star, color: Colors.amber, size: 10),
-                                    onRatingUpdate: (_) {},
-                                  ),
-                                ],
-                              ).paddingOnly(left: 12, top: 4),
                             ),
                           ],
                         ),
@@ -237,14 +239,16 @@ class _NewReleasesCardContent extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (business.aboutUs?.isNotEmpty == true)
-                            Text(
-                              business.aboutUs!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          else
-                            const SizedBox(height: 40),
+                          SizedBox(
+                            height: 60,
+                            child: Center(
+                              child: Text(
+                                business.aboutUs ?? '\n \n',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
                           Row(
                             children: [
                               if (category != null) SizedBox.square(dimension: 30, child: category.avatar),
@@ -282,10 +286,58 @@ class _NewReleasesCardContent extends StatelessWidget {
                 ).paddingAll(12),
               ],
             ),
-          ).paddingOnly(top: 25),
+          ).paddingOnly(top: 55),
         ),
       ],
     );
+  }
+}
+
+class _NewReleasesErrorWidget extends StatelessWidget {
+  final VoidCallback onRetry;
+  final String? message;
+  final IconData? iconData;
+
+  const _NewReleasesErrorWidget({
+    required this.onRetry,
+    this.message,
+    this.iconData,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 320,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              iconData ?? Icons.new_releases_outlined,
+              size: 39,
+              color: FoodlyThemes.primaryFoodly.withValues(alpha: .45),
+            ).paddingBottom(16),
+            Text(
+              message ?? S.current.couldNotLoadNewReleases,
+              style: FoodlyTextStyles.cardsSmallSubtitle,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 18),
+            SizedBox(
+              width: 236,
+              child: CustomNeumorphicButton(
+                onPressed: onRetry,
+                type: CustomNeumorphicBtnType.outlined,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                text: S.current.retry,
+                leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+                disabled: false,
+              ),
+            ),
+          ],
+        ).paddingBottom(36),
+      ),
+    ).paddingOnly(top: 25);
   }
 }
 
