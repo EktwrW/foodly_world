@@ -10,6 +10,7 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_te
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class SignUpBusinessForm extends StatelessWidget {
   const SignUpBusinessForm({super.key});
@@ -17,6 +18,8 @@ class SignUpBusinessForm extends StatelessWidget {
   Widget _buildForm(UserProfileVM vm, BuildContext context) {
     final cubit = context.read<SignUpCubit>();
     final enabled = !vm.tooltipActive;
+    final introFocusNode = vm.businessIntroMessageController?.focusNode;
+    final introTooltipKey = GlobalKey<TooltipState>();
 
     return Column(
       children: [
@@ -139,12 +142,72 @@ class SignUpBusinessForm extends StatelessWidget {
         FoodlyPrimaryInputText(
           controller: vm.businessZipCodeController?.controller,
           focusNode: vm.businessZipCodeController?.focusNode,
+          secondaryFocusNode: vm.businessIntroMessageController?.focusNode,
           inputTextType: FoodlyInputType.businessZipCode,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           countryCode: vm.businessCountryCode ?? '',
           showLeading: false,
         ),
+        if (introFocusNode != null)
+          ListenableBuilder(
+            listenable: introFocusNode,
+            builder: (context, child) {
+              final hasFocus = introFocusNode.hasFocus;
+
+              if (hasFocus) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  introTooltipKey.currentState?.ensureTooltipVisible();
+                });
+              }
+
+              return Tooltip(
+                key: introTooltipKey,
+                margin: const EdgeInsets.all(9).copyWith(bottom: 16),
+                preferBelow: false,
+                triggerMode: TooltipTriggerMode.manual,
+                waitDuration: Duration.zero,
+                showDuration: const Duration(seconds: 9),
+                richMessage: TextSpan(text: '${S.current.introMessageTooltip}\n', children: [
+                  const WidgetSpan(
+                      child: Center(
+                    child: Icon(
+                      Bootstrap.chevron_down,
+                      color: Colors.white,
+                    ),
+                  ))
+                ]),
+                child: FoodlyPrimaryInputText(
+                  controller: vm.businessIntroMessageController?.controller,
+                  focusNode: introFocusNode,
+                  inputTextType: FoodlyInputType.businessIntroMessage,
+                  autovalidateMode: vm.autovalidateMode,
+                  enabled: enabled,
+                  maxLines: 6,
+                  height: 96,
+                  maxLength: 369,
+                  showLeading: false,
+                  contentPadding: const EdgeInsets.all(3),
+                  // the bottom padding of the leading icon of this input is defined in the foodly enums file
+                ),
+              );
+            },
+          )
+        else
+          Tooltip(
+            message: S.current.introMessageTooltip,
+            child: FoodlyPrimaryInputText(
+              controller: vm.businessIntroMessageController?.controller,
+              focusNode: vm.businessIntroMessageController?.focusNode,
+              inputTextType: FoodlyInputType.businessIntroMessage,
+              autovalidateMode: vm.autovalidateMode,
+              enabled: enabled,
+              maxLines: 6,
+              minLines: 3,
+              maxLength: 369,
+              showLeading: false,
+            ),
+          ),
       ],
     );
   }

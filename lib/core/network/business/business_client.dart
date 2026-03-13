@@ -70,6 +70,7 @@ abstract class BusinessClient {
     @Part(name: 'business_longitude') required double? businessLongitude,
     @Part(name: 'category_id') required int categoryId,
     @Part(name: 'business_logo') required List<MultipartFile> photo,
+    @Part(name: 'intro_message') String? introMessage,
   });
 
   @POST('/business-menu/store')

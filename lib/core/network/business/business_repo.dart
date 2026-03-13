@@ -70,6 +70,7 @@ class BusinessRepo {
         businessWebsite: registerDTO.businessWebsite,
         categoryId: registerDTO.categoryId.value,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],
+        introMessage: registerDTO.introMessage,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

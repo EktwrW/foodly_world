@@ -39,6 +39,9 @@ class BusinessBodyRegisterDTO {
   @JsonKey(name: 'category_id')
   final FoodlyCategories categoryId;
 
+  @JsonKey(name: 'intro_message')
+  final String? introMessage;
+
   const BusinessBodyRegisterDTO({
     required this.businessName,
     required this.businessEmail,
@@ -51,6 +54,7 @@ class BusinessBodyRegisterDTO {
     required this.businessLatitude,
     required this.businessLongitude,
     required this.categoryId,
+    this.introMessage,
   });
 
   factory BusinessBodyRegisterDTO.fromJson(Map<String, dynamic> json) => _$BusinessBodyRegisterDTOFromJson(json);

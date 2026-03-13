@@ -56,6 +56,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'ratings_count') int? ratingsCount,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
+    @JsonKey(name: 'intro_message') String? introMessage,
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
     @JsonKey(name: 'reservations_count') @Default(6) int reservationsSizeLimit,
 

@@ -203,6 +203,8 @@
   "informationNotYetProvidedByTheBusiness": "Information not yet provided by the business.",
   "internalErrorEmptyPrompt": "Internal error processing request. Prompt text is empty",
   "internationalCuisine": "International",
+  "introMessage": "Brief intro for new visitors",
+  "introMessageTooltip": "You can use this space to welcome customers and highlight what makes your business special.\nWe'll promote it on the main page for about 30 days.",
   "invalidPromoDates": "Start date is after end date",
   "invalidMenuCategory": "Invalid menu category",
   "invalidYoutubeUrl": "Invalid YouTube URL",

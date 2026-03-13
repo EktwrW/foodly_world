@@ -92,6 +92,10 @@ class SignUpCubit extends Cubit<SignUpState> {
                 text: authService.userSessionDM?.user.principalAddress?.zipCode ?? locationService.currentZipCode),
             focusNode: FocusNode(),
           ),
+          businessIntroMessageController: InputController(
+            controller: TextEditingController(),
+            focusNode: FocusNode(),
+          ),
           formKey: GlobalKey<FormState>(),
           dateOfBirthNode: FocusNode(),
           genderNode: FocusNode(),
@@ -310,6 +314,9 @@ class SignUpCubit extends Cubit<SignUpState> {
       businessLatitude: _vm.businessLocation?.lat,
       businessLongitude: _vm.businessLocation?.lng,
       categoryId: _vm.businessCategory!,
+      introMessage: _vm.businessIntroMessageController?.controller?.text.trim().isEmpty == true
+          ? null
+          : _vm.businessIntroMessageController?.controller?.text.trim(),
     );
 
     await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath).then((response) {

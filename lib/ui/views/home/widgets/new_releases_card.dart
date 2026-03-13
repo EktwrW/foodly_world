@@ -143,6 +143,7 @@ class _NewReleasesCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageUrls =
         business.coverImages.map((c) => c.url).whereType<String>().where((url) => url.isNotEmpty).toList();
+    final description = (business.introMessage?.trim().isNotEmpty ?? false) ? business.introMessage : business.aboutUs;
 
     final category = business.categoryId;
 
@@ -243,7 +244,7 @@ class _NewReleasesCardContent extends StatelessWidget {
                             height: 60,
                             child: Center(
                               child: Text(
-                                business.aboutUs ?? '\n \n',
+                                description ?? '\n \n',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),

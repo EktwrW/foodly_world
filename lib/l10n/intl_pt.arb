@@ -203,6 +203,8 @@
   "informationNotYetProvidedByTheBusiness": "Informação ainda não fornecida pelo estabelecimento comercial.",
   "internalErrorEmptyPrompt": "Erro interno ao processar pedido. O texto da mensagem está vazio",
   "internationalCuisine": "Internacional",
+  "introMessage": "Breve apresentação para novos visitantes",
+  "introMessageTooltip": "Pode usar este espaço para dar as boas-vindas aos clientes e destacar o que torna seu negócio especial.\nNós o promoveremos na página principal por cerca de 30 dias.",
   "invalidMenuCategory": "Categoria de menu inválida",
   "invalidPromoDates": "Data de início posterior à data de fim",
   "invalidYoutubeUrl": "URL do YouTube inválido",

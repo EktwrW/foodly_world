@@ -59,6 +59,7 @@ class UserProfileVM with _$UserProfileVM {
     InputController? businessCityController,
     InputController? businessAddressController,
     InputController? businessZipCodeController,
+    InputController? businessIntroMessageController,
     FocusNode? dateOfBirthNode,
     FocusNode? placesFocusNode,
     FocusNode? genderNode,
