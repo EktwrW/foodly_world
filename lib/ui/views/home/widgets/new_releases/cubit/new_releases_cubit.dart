@@ -11,7 +11,7 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
   NewReleasesVM _vm = const NewReleasesVM();
 
   static const double _radius = 20.0;
-  static const int _limit = 6;
+  static const int _limit = 9;
 
   NewReleasesCubit({
     required BusinessRepo businessRepo,
