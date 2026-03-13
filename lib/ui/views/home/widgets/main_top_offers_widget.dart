@@ -73,7 +73,7 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
         }
 
         return CarouselSlider(
-          items: promotions.asMap().entries.map((e) => _PromoCard(promo: e.value)).toList(),
+          items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
           carouselController: _carouselController,
           options: CarouselOptions(
             height: 369,
@@ -89,9 +89,9 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
   }
 }
 
-class _PromoCard extends StatelessWidget {
+class NearbyPromoCard extends StatelessWidget {
   final NearbyPromotionDM promo;
-  const _PromoCard({required this.promo});
+  const NearbyPromoCard({super.key, required this.promo});
 
   @override
   Widget build(BuildContext context) {
@@ -294,6 +294,8 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                     builder: (_, setState) {
                       return CustomRoundedNeumorphicButton(
                         onPressed: () async {
+                          if (isLoading) return;
+
                           await Future.microtask(() => setState(() => isLoading = true));
 
                           await di<BusinessRepo>().getPromotionByUuid(promo.uuid).then((result) {

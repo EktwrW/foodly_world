@@ -1,8 +1,10 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart' show FlexStringExtensions;
 import 'package:flutter/material.dart';
+import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
-import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
+import 'package:foodly_world/data_models/promotions/promotion_dm.dart' show BusinessDM;
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 
@@ -46,7 +48,8 @@ class FavoritesVM {
   final List<ItemDM> favoriteDrinkItems;
   final List<ItemDM> favoriteComboItems;
   final List<FavoriteItemDM> favoriteItems;
-  final List<PromotionDM> favoritePromotions;
+  final List<NearbyPromotionDM> favoritePromotions;
+  final List<SavedPromoBusinessDM> favoritePromoBusinesses;
 
   // Seguimiento de elementos que han sido cambiados explícitamente
   // para controlar la animación
@@ -72,6 +75,7 @@ class FavoritesVM {
     this.favoriteComboItems = const [],
     this.favoriteItems = const [],
     this.favoritePromotions = const [],
+    this.favoritePromoBusinesses = const [],
     this.toggledItemIds = const {},
     this.indexView = 0,
     this.controller,
@@ -105,7 +109,8 @@ class FavoritesVM {
     List<ItemDM>? favoriteDrinkItems,
     List<ItemDM>? favoriteComboItems,
     List<FavoriteItemDM>? favoriteItems,
-    List<PromotionDM>? favoritePromotions,
+    List<NearbyPromotionDM>? favoritePromotions,
+    List<SavedPromoBusinessDM>? favoritePromoBusinesses,
     Set<String>? toggledItemIds,
     int? indexView,
     PageController? controller,
@@ -126,6 +131,7 @@ class FavoritesVM {
       favoriteComboItems: favoriteComboItems ?? this.favoriteComboItems,
       favoriteItems: favoriteItems ?? this.favoriteItems,
       favoritePromotions: favoritePromotions ?? this.favoritePromotions,
+      favoritePromoBusinesses: favoritePromoBusinesses ?? this.favoritePromoBusinesses,
       toggledItemIds: toggledItemIds ?? this.toggledItemIds,
       indexView: indexView ?? this.indexView,
       controller: controller ?? this.controller,

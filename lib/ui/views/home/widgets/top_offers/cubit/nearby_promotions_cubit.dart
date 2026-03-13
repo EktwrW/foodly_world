@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/blocs/favorites_cubit/favorites_cubit.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
@@ -12,6 +13,7 @@ import 'package:logger/logger.dart';
 class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
   final BusinessRepo _businessRepo;
   final LocationService _locationService;
+  final FavoritesCubit _favoritesCubit;
   final Logger _logger;
 
   NearbyPromotionsVM _vm = const NearbyPromotionsVM();
@@ -22,9 +24,11 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
   NearbyPromotionsCubit({
     required BusinessRepo businessRepo,
     required LocationService locationService,
+    required FavoritesCubit favoritesCubit,
     required Logger logger,
   })  : _businessRepo = businessRepo,
         _locationService = locationService,
+        _favoritesCubit = favoritesCubit,
         _logger = logger,
         super(const NearbyPromotionsState.initial(NearbyPromotionsVM()));
 
@@ -135,7 +139,13 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
     );
 
     result.when(
-      success: (_) {},
+      success: (_) {
+        if (newValue) {
+          _favoritesCubit.addNearbyPromoFavorite(updated[idx]);
+        } else {
+          _favoritesCubit.removePromoFavoriteByUuid(promoUuid);
+        }
+      },
       failure: (e) {
         _logger.e('NearbyPromotionsCubit.toggleFavorite error: $e');
         // Revert on failure

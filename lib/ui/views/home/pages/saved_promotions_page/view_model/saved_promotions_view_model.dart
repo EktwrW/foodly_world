@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart' show PageController;
-import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
+import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart' show NearbyPromotionDM;
 
 class SavedPromotionsViewVM {
   final PageController? controller;
   final int indexView;
-  final List<PromotionDM> currentPromos;
-  final List<PromotionDM> upcomingPromos;
-  final List<BusinessDM> businesses;
+  final List<NearbyPromotionDM> currentPromos;
+  final List<NearbyPromotionDM> upcomingPromos;
+  final List<SavedPromoBusinessDM> businesses;
 
   const SavedPromotionsViewVM({
     this.controller,
@@ -19,9 +20,9 @@ class SavedPromotionsViewVM {
   SavedPromotionsViewVM copyWith({
     PageController? controller,
     int? indexView,
-    List<PromotionDM>? currentPromos,
-    List<PromotionDM>? upcomingPromos,
-    List<BusinessDM>? businesses,
+    List<NearbyPromotionDM>? currentPromos,
+    List<NearbyPromotionDM>? upcomingPromos,
+    List<SavedPromoBusinessDM>? businesses,
   }) {
     return SavedPromotionsViewVM(
       controller: controller ?? this.controller,
@@ -32,27 +33,25 @@ class SavedPromotionsViewVM {
     );
   }
 
-  List<BusinessDM> get businessesWithCurrentPromos {
-    final List<BusinessDM> businesses = [];
-
+  List<SavedPromoBusinessDM> get businessesWithCurrentPromos {
+    final result = <SavedPromoBusinessDM>[];
     for (final promo in currentPromos) {
-      if (!businesses.any((b) => b.uuid == promo.business?.uuid)) {
-        if (promo.business != null) businesses.add(promo.business!);
+      if (!result.any((b) => b.uuid == promo.businessUuid)) {
+        final matches = businesses.where((b) => b.uuid == promo.businessUuid);
+        if (matches.isNotEmpty) result.add(matches.first);
       }
     }
-
-    return businesses;
+    return result;
   }
 
-  List<BusinessDM> get businessesWithUpcomingPromos {
-    final List<BusinessDM> businesses = [];
-
+  List<SavedPromoBusinessDM> get businessesWithUpcomingPromos {
+    final result = <SavedPromoBusinessDM>[];
     for (final promo in upcomingPromos) {
-      if (!businesses.any((b) => b.uuid == promo.business?.uuid)) {
-        businesses.add(promo.business!);
+      if (!result.any((b) => b.uuid == promo.businessUuid)) {
+        final matches = businesses.where((b) => b.uuid == promo.businessUuid);
+        if (matches.isNotEmpty) result.add(matches.first);
       }
     }
-
-    return businesses;
+    return result;
   }
 }

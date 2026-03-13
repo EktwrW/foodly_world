@@ -30,7 +30,7 @@ class FoodlyMainPage extends StatelessWidget {
                 child: ColoredBox(
                   color: ui.NeumorphicColors.background,
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 140),
+                    padding: const EdgeInsets.only(bottom: 100),
                     child: Column(
                       children: [
                         Text(

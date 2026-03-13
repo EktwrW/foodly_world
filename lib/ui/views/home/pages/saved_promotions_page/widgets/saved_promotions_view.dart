@@ -1,8 +1,8 @@
 part of '../saved_promotions_page.dart';
 
 class _SavedPromotionsView extends StatelessWidget {
-  final List<BusinessDM> businesses;
-  final List<PromotionDM> promos;
+  final List<SavedPromoBusinessDM> businesses;
+  final List<NearbyPromotionDM> promos;
   final String title;
 
   const _SavedPromotionsView({
@@ -23,12 +23,12 @@ class _SavedPromotionsView extends StatelessWidget {
     }
 
     // Filtramos los negocios para mostrar solo aquellos que tienen promociones
-    final List<BusinessDM> businessesWithPromos = [];
-    final Map<String, List<PromotionDM>> businessPromosMap = {};
+    final List<SavedPromoBusinessDM> businessesWithPromos = [];
+    final Map<String, List<NearbyPromotionDM>> businessPromosMap = {};
 
     // Agrupamos las promociones por negocio
     for (final business in businesses) {
-      final businessPromos = promos.where((p) => p.business?.uuid == business.uuid).toList();
+      final businessPromos = promos.where((p) => p.businessUuid == business.uuid).toList();
 
       // Solo incluimos negocios que tienen al menos una promoción
       if (businessPromos.isNotEmpty) {
@@ -55,7 +55,7 @@ class _SavedPromotionsView extends StatelessWidget {
         ).paddingTop(16),
         Expanded(
           child: ListView.separated(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.only(bottom: 160),
             itemBuilder: (_, i) {
               final business = businessesWithPromos[i];
               final businessPromos = businessPromosMap[business.uuid] ?? [];
@@ -66,7 +66,7 @@ class _SavedPromotionsView extends StatelessWidget {
                 promos: businessPromos,
               );
             },
-            separatorBuilder: (_, i) => const SizedBox(height: 8),
+            separatorBuilder: (_, i) => const SizedBox(height: 16),
             itemCount: businessesWithPromos.length,
           ),
         ),

@@ -1,8 +1,8 @@
 part of '../saved_promotions_page.dart';
 
 class _BusinessWithPromosCard extends StatelessWidget {
-  final BusinessDM business;
-  final List<PromotionDM> promos;
+  final SavedPromoBusinessDM business;
+  final List<NearbyPromotionDM> promos;
 
   const _BusinessWithPromosCard({
     super.key,
@@ -26,11 +26,11 @@ class _BusinessWithPromosCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           spacing: 16,
           children: [
-            Flexible(child: MyFavoritesBusinessMiniCard(business: business)),
+            Flexible(child: MyFavoritesBusinessMiniCard(savedPromoBusiness: business)),
             ...promos.map((p) => Flexible(
-                key: Key('promo-card-${p.uuid}'), child: PromotionCard(promo: p, margin: const EdgeInsets.all(8)))),
+                key: Key('promo-card-${p.uuid}'), child: SizedBox(height: 400, child: NearbyPromoCard(promo: p)))),
           ],
-        ),
+        ).paddingBottom(8),
       ),
     );
   }

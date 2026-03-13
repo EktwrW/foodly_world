@@ -3,10 +3,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'nearby_promotion_dm.freezed.dart';
 part 'nearby_promotion_dm.g.dart';
 
-/// Lightweight promotion model for the home carousel feed.
+/// Lightweight promotion model for the home carousel and saved promotions.
 /// Only contains fields needed to render a promo card.
 @freezed
 class NearbyPromotionDM with _$NearbyPromotionDM {
+  const NearbyPromotionDM._();
+
   const factory NearbyPromotionDM({
     required String uuid,
     required String title,
@@ -19,10 +21,25 @@ class NearbyPromotionDM with _$NearbyPromotionDM {
     @JsonKey(name: 'rating_avg') @Default(0.0) double ratingAvg,
     @JsonKey(name: 'is_favorited') @Default(false) bool isFavorited,
     @JsonKey(name: 'distance_km') double? distanceKm,
+    @JsonKey(name: 'start_date') DateTime? startDate,
+    @JsonKey(name: 'expire_date') DateTime? expireDate,
   }) = _NearbyPromotionDM;
 
   factory NearbyPromotionDM.fromJson(Map<String, dynamic> json) =>
       _$NearbyPromotionDMFromJson(json);
+
+  /// True if the promo is currently running. Defaults to true when dates are absent.
+  bool get isActive {
+    if (startDate == null || expireDate == null) return true;
+    final now = DateTime.now();
+    return !now.isBefore(startDate!) && now.isBefore(expireDate!);
+  }
+
+  /// True if the promo hasn't started yet.
+  bool get isUpcoming {
+    if (startDate == null) return false;
+    return DateTime.now().isBefore(startDate!);
+  }
 }
 
 @freezed

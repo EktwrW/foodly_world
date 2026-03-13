@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show BlocSelector, FavoritesCubit, FavoritesState, S;
-import 'package:foodly_world/data_models/promotions/promotion_dm.dart' show BusinessDM, PromotionDM;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show FavoritesCubit, FavoritesState, S;
+import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart' show NearbyPromotionDM;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_views/widgets/my_favorites_business_mini_card.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/cubit/saved_promotions_view_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart' show NearbyPromoCard;
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
-import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart' show PromotionCard;
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:toggle_switch/toggle_switch.dart' show ToggleSwitch;
 
@@ -26,9 +26,11 @@ class SavedPromotionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: BlocSelector<FavoritesCubit, FavoritesState, List<PromotionDM>>(
-        selector: (state) => state.vm.favoritePromotions,
-        builder: (context, favoritePromotions) {
+      child: BlocBuilder<FavoritesCubit, FavoritesState>(
+        builder: (context, favState) {
+          final favoritePromotions = favState.vm.favoritePromotions;
+          final favoritePromoBusinesses = favState.vm.favoritePromoBusinesses;
+
           // Filtramos las promociones en dos categorías
           final currentPromos = favoritePromotions.where((p) => p.isActive).toList();
           final upcomingPromos = favoritePromotions.where((p) => p.isUpcoming).toList();
@@ -49,11 +51,13 @@ class SavedPromotionsPage extends StatelessWidget {
 
           // Usamos BlocProvider para crear/reutilizar el cubit
           return BlocProvider(
-            create: (context) => SavedPromotionsViewCubit(currentPromos, upcomingPromos),
+            create: (context) => SavedPromotionsViewCubit(currentPromos, upcomingPromos, favoritePromoBusinesses),
             child: Builder(
               builder: (context) {
                 // Actualizamos el cubit cuando cambian las promociones favoritas
-                context.read<SavedPromotionsViewCubit>().updatePromotions(currentPromos, upcomingPromos);
+                context
+                    .read<SavedPromotionsViewCubit>()
+                    .updatePromotions(currentPromos, upcomingPromos, favoritePromoBusinesses);
 
                 return Scaffold(
                   backgroundColor: Colors.transparent,
@@ -89,21 +93,23 @@ class SavedPromotionsPage extends StatelessWidget {
                         ),
                       ];
 
-                      return NestedScrollView(
+                      return CustomScrollView(
                         controller: ScrollController(),
-                        headerSliverBuilder: (_, __) => const [
-                          _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
-                        ],
-                        body: SizedBox.fromSize(
-                          size: Size(context.screenWidth, context.screenHeight),
-                          child: PageView.builder(
-                            controller: vm.controller,
-                            physics: const PageScrollPhysics(),
-                            itemCount: savedPromotionsViews.length,
-                            itemBuilder: (context, index) => savedPromotionsViews[index],
-                            onPageChanged: (i) => cubit.changeView(i),
+                        slivers: [
+                          const _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
+                          SliverToBoxAdapter(
+                            child: SizedBox.fromSize(
+                              size: Size(context.screenWidth, context.screenHeight),
+                              child: PageView.builder(
+                                controller: vm.controller,
+                                physics: const PageScrollPhysics(),
+                                itemCount: savedPromotionsViews.length,
+                                itemBuilder: (context, index) => savedPromotionsViews[index],
+                                onPageChanged: (i) => cubit.changeView(i),
+                              ).paddingBottom(140),
+                            ),
                           ),
-                        ),
+                        ],
                       );
                     },
                   ),

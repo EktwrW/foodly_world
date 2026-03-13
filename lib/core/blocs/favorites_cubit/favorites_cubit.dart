@@ -2,6 +2,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/favorites_vm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -107,7 +108,10 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   Future<void> _getMyFavoritePromotions() async => await _businessRepo.getMyFavoritePromotions().then(
         (result) => result.when(
-          success: (data) => _vm = _vm.copyWith(favoritePromotions: data.savedPromotions),
+          success: (data) => _vm = _vm.copyWith(
+            favoritePromotions: data.data,
+            favoritePromoBusinesses: data.businesses,
+          ),
           failure: (error) => _logger.e('Error loading promotions: $error'),
         ),
       );
@@ -634,6 +638,33 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   // Promotion favorites
+
+  /// Called by [NearbyPromotionsCubit] after a confirmed 200 from the server.
+  void addNearbyPromoFavorite(NearbyPromotionDM promo) {
+    if (_vm.favoritePromotions.any((p) => p.uuid == promo.uuid)) return;
+    final updatedIds = List<String>.from(_vm.savedPromotionIds)..add(promo.uuid);
+    _vm = _vm.copyWith(
+      savedPromotionIds: updatedIds,
+      favoritePromotions: [..._vm.favoritePromotions, promo.copyWith(isFavorited: true)],
+    );
+    emit(FavoritesState.loaded(_vm));
+    _updateUserSavedPromotions(updatedIds);
+    // Background refresh to populate business info
+    _getMyFavoritePromotions().then((_) => emit(FavoritesState.loaded(_vm)));
+  }
+
+  /// Called by [NearbyPromotionsCubit] after a confirmed 200 from the server.
+  void removePromoFavoriteByUuid(String uuid) {
+    final updatedIds = List<String>.from(_vm.savedPromotionIds)..remove(uuid);
+    _vm = _vm.copyWith(
+      savedPromotionIds: updatedIds,
+      favoritePromotions: _vm.favoritePromotions.where((p) => p.uuid != uuid).toList(),
+    );
+    emit(FavoritesState.loaded(_vm));
+    _updateUserSavedPromotions(updatedIds);
+  }
+
+  /// Toggles a promotion favorited from a full [PromotionDM] (e.g. VisitedBusiness page).
   Future<void> togglePromotionFavorite(PromotionDM promotion) async {
     if (!_authService.isLoggedIn || promotion.uuid.isEmpty) return;
 
@@ -641,19 +672,40 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     final newValue = !isFavorite;
     final uuid = promotion.uuid;
 
+    // Convert PromotionDM → NearbyPromotionDM for local list
+    final nearbyPromo = NearbyPromotionDM(
+      uuid: promotion.uuid,
+      title: promotion.title,
+      subTitle: promotion.subTitle,
+      mediaLink: promotion.mediaLink,
+      promoMedia: promotion.promoMedia.isNotEmpty
+          ? PromoMediaLiteDM(
+              uuid: promotion.promoMedia.first.uuid,
+              mediaUrl: promotion.promoMedia.first.mediaUrl,
+              mediaType: promotion.promoMedia.first.isVideo ? 'video' : 'image',
+            )
+          : null,
+      businessUuid: promotion.business?.uuid ?? '',
+      businessName: promotion.business?.name ?? '',
+      businessLogo: promotion.business?.logo,
+      isFavorited: newValue,
+      startDate: promotion.startDate,
+      expireDate: promotion.expireDate,
+    );
+
     // Optimistic update
     List<String> updatedIds;
-    List<PromotionDM> updatedPromotions;
+    List<NearbyPromotionDM> updatedPromotions;
 
     if (newValue) {
       updatedIds = List<String>.from(_vm.savedPromotionIds)..add(uuid);
-      updatedPromotions = List<PromotionDM>.from(_vm.favoritePromotions);
+      updatedPromotions = List<NearbyPromotionDM>.from(_vm.favoritePromotions);
       if (!updatedPromotions.any((p) => p.uuid == uuid)) {
-        updatedPromotions.add(promotion);
+        updatedPromotions.add(nearbyPromo);
       }
     } else {
       updatedIds = List<String>.from(_vm.savedPromotionIds)..remove(uuid);
-      updatedPromotions = List<PromotionDM>.from(_vm.favoritePromotions)..removeWhere((p) => p.uuid == uuid);
+      updatedPromotions = List<NearbyPromotionDM>.from(_vm.favoritePromotions)..removeWhere((p) => p.uuid == uuid);
     }
 
     _vm = _vm
@@ -675,36 +727,40 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       result.when(
         success: (_) {
           _updateUserSavedPromotions(updatedIds);
+          // Refresh businesses companion in background
+          if (newValue) {
+            _getMyFavoritePromotions().then((_) => emit(FavoritesState.loaded(_vm)));
+          }
         },
         failure: (error) {
           _logger.e('Error toggling promotion favorite: $error');
-          _revertPromotionFavorite(promotion, !newValue);
+          _revertPromotionFavorite(nearbyPromo, !newValue);
           emit(FavoritesState.error(_vm, error.toString()));
         },
       );
     } catch (e) {
       _logger.e('Exception toggling promotion favorite: $e');
-      _revertPromotionFavorite(promotion, !newValue);
+      _revertPromotionFavorite(nearbyPromo, !newValue);
       emit(FavoritesState.error(_vm, e.toString()));
     }
   }
 
-  void _revertPromotionFavorite(PromotionDM promotion, bool newValue) {
-    if (promotion.uuid.isEmpty) return;
+  void _revertPromotionFavorite(NearbyPromotionDM promo, bool newValue) {
+    if (promo.uuid.isEmpty) return;
 
-    final uuid = promotion.uuid;
+    final uuid = promo.uuid;
     List<String> updatedIds;
-    List<PromotionDM> updatedPromotions;
+    List<NearbyPromotionDM> updatedPromotions;
 
     if (newValue) {
       updatedIds = List<String>.from(_vm.savedPromotionIds)..add(uuid);
-      updatedPromotions = List<PromotionDM>.from(_vm.favoritePromotions);
+      updatedPromotions = List<NearbyPromotionDM>.from(_vm.favoritePromotions);
       if (!updatedPromotions.any((p) => p.uuid == uuid)) {
-        updatedPromotions.add(promotion);
+        updatedPromotions.add(promo);
       }
     } else {
       updatedIds = List<String>.from(_vm.savedPromotionIds)..remove(uuid);
-      updatedPromotions = List<PromotionDM>.from(_vm.favoritePromotions)..removeWhere((p) => p.uuid == uuid);
+      updatedPromotions = List<NearbyPromotionDM>.from(_vm.favoritePromotions)..removeWhere((p) => p.uuid == uuid);
     }
 
     _vm = _vm.copyWith(

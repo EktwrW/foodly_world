@@ -118,6 +118,7 @@ class DependencyInjectionService {
     di.registerLazySingleton(() => NearbyPromotionsCubit(
           businessRepo: di(),
           locationService: di(),
+          favoritesCubit: favoritesCubit,
           logger: di(),
         ));
 
