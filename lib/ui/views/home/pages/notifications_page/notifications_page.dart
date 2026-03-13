@@ -57,24 +57,26 @@ class NotificationsPage extends StatelessWidget {
             return Column(
               spacing: 16,
               children: [
-                const SizedBox(height: 18),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                    width: 200,
-                    child: CustomNeumorphicButton(
-                      onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
-                      type: CustomNeumorphicBtnType.outlined,
-                      text: S.current.markAllAsRead,
-                      fontSize: 14,
-                      disabled: !vm.hasUnread,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                const SizedBox(height: 9),
+                Row(
+                  children: [
+                    const Spacer(flex: 2),
+                    Flexible(
+                      flex: 3,
+                      child: CustomNeumorphicButton(
+                        onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
+                        type: CustomNeumorphicBtnType.outlined,
+                        text: S.current.markAllAsRead,
+                        fontSize: 14,
+                        disabled: !vm.hasUnread,
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
                 Expanded(
                   child: ListView.separated(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16).copyWith(bottom: 120),
                     itemCount: vm.notifications.length,
                     separatorBuilder: (context, index) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
