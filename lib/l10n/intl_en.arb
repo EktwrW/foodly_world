@@ -635,5 +635,22 @@
   "cancelled": "Cancelled",
   "completed": "Completed",
   "noShow": "No Show",
-  "guests": "guests"
+  "guests": "guests",
+  "verifyPhone": "Verify Phone",
+  "confirmPhoneForVerification": "Confirm the phone number to receive your verification code.",
+  "sendVerificationCode": "Send Verification Code",
+  "enterCodeSentTo": "Enter the code sent to {phone}",
+  "@enterCodeSentTo": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
+  "verify": "Verify",
+  "resendCodeIn": "Resend in {seconds}s",
+  "@resendCodeIn": {
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "resendCode": "Resend Code"
 }

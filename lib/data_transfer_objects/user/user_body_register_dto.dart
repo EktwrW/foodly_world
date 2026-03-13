@@ -60,6 +60,9 @@ class UserBodyRegisterDTO {
   @JsonKey(name: 'addresses')
   final List<AddressDM>? addresses;
 
+  @JsonKey(name: 'firebase_phone_token')
+  final String? firebasePhoneToken;
+
   const UserBodyRegisterDTO({
     required this.userName,
     required this.firstName,
@@ -79,6 +82,7 @@ class UserBodyRegisterDTO {
     required this.latitude,
     required this.longitude,
     this.addresses,
+    this.firebasePhoneToken,
   });
 
   factory UserBodyRegisterDTO.fromJson(Map<String, dynamic> json) => _$UserBodyRegisterDTOFromJson(json);

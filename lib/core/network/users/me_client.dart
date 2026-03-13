@@ -54,6 +54,7 @@ abstract class MeClient {
     @Part(name: 'gender') required String gender,
     @Part(name: 'role_id') required int roleId,
     @Part(name: 'photo') required List<MultipartFile> photo,
+    @Part(name: 'firebase_phone_token') String? firebasePhoneToken,
   });
 
   @POST('/update-profile-photo')

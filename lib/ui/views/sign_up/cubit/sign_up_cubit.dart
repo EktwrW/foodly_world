@@ -118,6 +118,12 @@ class SignUpCubit extends Cubit<SignUpState> {
   Position? get getCurrentPosition => _locationService.currentLocation.position;
   String get lang => _authService.lang;
   String get googleApiKey => di<BaseConfig>().googleDefaultApiKey;
+  bool get isGoogleSignIn => _vm.importedAvatar?.isNotEmpty ?? false;
+
+  bool validateForm() {
+    setAutovalidateMode(AutovalidateMode.always);
+    return _vm.formKey?.currentState?.validate() ?? false;
+  }
 
   void _initializeMarkers() {
     final marker = Marker(
@@ -131,14 +137,10 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> onSignUpUserPressed() async {
-    setAutovalidateMode(AutovalidateMode.always);
-
-    if (_vm.formKey?.currentState?.validate() ?? false) {
-      await signUpUser();
-    }
+    if (validateForm()) await signUpUser();
   }
 
-  Future<void> signUpUser() async {
+  Future<void> signUpUser({String? firebaseToken}) async {
     emit(_Loading(_vm));
 
     // Crear la dirección "home" por defecto
@@ -182,6 +184,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       latitude: _vm.userLocation?.lat,
       longitude: _vm.userLocation?.lng,
       addresses: [homeAddress],
+      firebasePhoneToken: firebaseToken,
     );
 
     await _meRepo

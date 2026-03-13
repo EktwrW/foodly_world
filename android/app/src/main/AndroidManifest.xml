@@ -59,7 +59,7 @@
         </intent>
     </queries>
     <application
-        android:label="Foodly World"
+        android:label="Foodly"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

@@ -1,4 +1,4 @@
-package com.example.foodly_world
+package com.foodlysolutions.app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

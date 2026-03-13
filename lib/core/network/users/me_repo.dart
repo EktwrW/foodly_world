@@ -113,6 +113,7 @@ class MeRepo {
         gender: registerDTO.gender,
         roleId: registerDTO.roleId?.index ?? 4,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],
+        firebasePhoneToken: registerDTO.firebasePhoneToken,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

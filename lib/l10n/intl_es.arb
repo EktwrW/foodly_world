@@ -635,5 +635,22 @@
   "cancelled": "Cancelada",
   "completed": "Completada",
   "noShow": "No asistió",
-  "guests": "comensales"
+  "guests": "comensales",
+  "verifyPhone": "Verificar Teléfono",
+  "confirmPhoneForVerification": "Confirmá el número de teléfono para recibir tu código de verificación.",
+  "sendVerificationCode": "Enviar Código de Verificación",
+  "enterCodeSentTo": "Ingresá el código enviado a {phone}",
+  "@enterCodeSentTo": {
+    "placeholders": {
+      "phone": {}
+    }
+  },
+  "verify": "Verificar",
+  "resendCodeIn": "Reenviar en {seconds}s",
+  "@resendCodeIn": {
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "resendCode": "Reenviar Código"
 }

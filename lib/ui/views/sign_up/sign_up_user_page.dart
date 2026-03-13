@@ -7,7 +7,9 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
+import 'package:foodly_world/ui/views/sign_up/cubit/phone_verification_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
+import 'package:foodly_world/ui/views/sign_up/widgets/phone_verification_modal.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_form.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_sliver_app_bar_wdg.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/terms_privacy_wdg.dart';
@@ -111,6 +113,29 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
         .then((reason) => _isSnackBarVisible = false);
   }
 
+  void _showPhoneVerificationModal(
+    BuildContext context, {
+    String? phoneNumber,
+    String? countryCode,
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => BlocProvider(
+        create: (_) => PhoneVerificationCubit(),
+        child: PhoneVerificationModal(
+          initialPhone: phoneNumber ?? '',
+          countryCode: countryCode ?? '',
+          onVerified: (idToken) {
+            Navigator.of(context).pop();
+            _signUpCubit.signUpUser(firebaseToken: idToken);
+          },
+          onClose: () => Navigator.of(context).pop(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,7 +219,22 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
             CustomNeumorphicButton(
               margin: EdgeInsets.zero,
               onPressed: enabled && vm.termsAndContiditionsAccepted
-                  ? () async => await _signUpCubit.onSignUpUserPressed()
+                  ? () {
+                      if (_signUpCubit.validateForm()) {
+                        if (_signUpCubit.isGoogleSignIn) {
+                          _signUpCubit.signUpUser();
+                        } else {
+                          final phoneNumber = vm.phoneNumberController?.controller?.text;
+                          final countryCode = vm.country?.countryCode;
+
+                          _showPhoneVerificationModal(
+                            context,
+                            phoneNumber: phoneNumber,
+                            countryCode: countryCode,
+                          );
+                        }
+                      }
+                    }
                   : null,
               shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
               text: S.current.createUser,
