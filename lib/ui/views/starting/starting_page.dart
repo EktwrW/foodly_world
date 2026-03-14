@@ -85,8 +85,8 @@ class StartingPage369 extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
                   visible: vm.currentView.isLogin,
-                  replacement: topTextWidget(S.current.welcomeTo),
-                  child: topTextWidget(S.current.loginTo),
+                  replacement: _topTextWidget(S.current.welcomeTo),
+                  child: _topTextWidget(S.current.loginTo),
                 ),
               ),
             ),
@@ -113,7 +113,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .22 : context.screenHeight * .16,
+              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .13,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -124,10 +124,17 @@ class StartingPage369 extends StatelessWidget {
             ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
           ),
           SizedBox(
-            height: context.screenHeight * .04,
+            height: context.screenHeight * .09,
             child: Column(
+              spacing: 3,
               children: [
-                Text(S.current.copyrightText, style: FoodlyTextStyles.copyrightText),
+                Text(S.current.copyrightText(DateTime.now().year), style: FoodlyTextStyles.copyrightText),
+                Flexible(
+                  child: Text(
+                    S.current.termsPrivacyTextSpan4,
+                    style: FoodlyTextStyles.captionPurpleBold,
+                  ).paddingBottom(16),
+                ),
               ],
             ),
           ),
@@ -136,7 +143,7 @@ class StartingPage369 extends StatelessWidget {
     );
   }
 
-  Widget topTextWidget(String text) {
+  Widget _topTextWidget(String text) {
     return FadeIn(
       child: Text(text, style: FoodlyTextStyles.secondaryTitle),
     );

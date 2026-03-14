@@ -111,7 +111,12 @@
   "contactPrivacyNotice": "Only visible to you and businesses where you have an active reservation.",
   "contactUs": "Contact Us",
   "cookingSchools": "Cooking Schools",
-  "copyrightText": "Copyright © 2025 - All rights reserved",
+  "copyrightText": "Copyright © {year} - All rights reserved",
+  "@copyrightText": {
+    "placeholders": {
+      "year": { "type": "int" }
+    }
+  },
   "country": "Country",
   "countryArgentina": "Argentina",
   "countryEcuador": "Ecuador",
