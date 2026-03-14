@@ -130,10 +130,13 @@ class StartingPage369 extends StatelessWidget {
               children: [
                 Text(S.current.copyrightText(DateTime.now().year), style: FoodlyTextStyles.copyrightText),
                 Flexible(
-                  child: Text(
-                    S.current.termsPrivacyTextSpan4,
-                    style: FoodlyTextStyles.captionPurpleBold,
-                  ).paddingBottom(16),
+                  child: InkWell(
+                    onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                    child: Text(
+                      S.current.termsPrivacyTextSpan4,
+                      style: FoodlyTextStyles.captionPurpleBold,
+                    ).paddingBottom(16),
+                  ),
                 ),
               ],
             ),

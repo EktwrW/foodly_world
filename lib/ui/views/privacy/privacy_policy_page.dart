@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show AppRouter, di, PaddingExtension, MainDrawerCubit, ReadContext;
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
@@ -93,26 +95,18 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 6,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          spacing: 10,
           children: [
-            Icon(Icons.shield_outlined, color: colorScheme.primary, size: 28),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'Foodly',
-                style: FoodlyTextStyles.sectionsTitle.copyWith(
-                  color: colorScheme.primary,
-                  fontSize: 22,
-                ),
-              ),
-            ),
+            Icon(Bootstrap.shield_check, color: colorScheme.primary, size: 26),
+            const Asset(FoodlyAssets.logo, height: 23),
           ],
         ),
-        const SizedBox(height: 6),
         Text(
-          'Privacy Policy',
+          S.current.privacyPolicy,
           style: FoodlyTextStyles.label.copyWith(
             fontSize: 13,
             color: colorScheme.onSurface.withValues(alpha: 0.55),
