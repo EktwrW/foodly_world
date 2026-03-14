@@ -1,62 +1,190 @@
 import 'package:flutter/material.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart' show AppRouter, di;
+import 'package:foodly_world/core/services/dependency_injection_service.dart'
+    show AppRouter, di, PaddingExtension, MainDrawerCubit, ReadContext;
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
+    show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/views/privacy/privacy_policy_content.dart';
+import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final langCode = Localizations.localeOf(context).languageCode;
+    final sections = buildPolicyContent(langCode);
+    final colorScheme = Theme.of(context).colorScheme;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (didPop) return;
         final router = di<AppRouter>();
-
-        // Shell routes are blocked by their own PopScope(canPop: false).
-        // For other routes (categories, visit-business, etc.), navigate back.
         if (!router.isOnShellRoute) {
           router.goBackToLastRoute();
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(S.current.privacyPolicy),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  S.current.privacyPolicy,
-                  style: FoodlyTextStyles.sectionsTitle,
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  // Minimal placeholder copy for MVP. Product/legal should provide final text.
-                  'This Privacy Policy describes how we collect and use your information.\n\nFor the first MVP, include the full privacy policy text here or link to the canonical web version.',
-                  style: FoodlyTextStyles.label.copyWith(height: 1.5),
-                ),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () {
-                    // Optionally open external full policy — implement later if needed
-                  },
-                  child: Text(
-                    'Read full Privacy Policy on our website',
-                    style: FoodlyTextStyles.footerButtonNormal.copyWith(
-                      decoration: TextDecoration.underline,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              ],
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
             ),
           ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: 60,
+          actions: [
+            Text(
+              S.current.privacyPolicy,
+              overflow: TextOverflow.ellipsis,
+              style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 20),
+            ).paddingOnly(right: 18),
+          ],
+          leading: CustomRoundedNeumorphicButton(
+            iconSize: 26,
+            diameter: 32,
+            iconData: Bootstrap.caret_left_fill,
+            onPressed: () {
+              if (context.canPop()) {
+                di<AppRouter>().removeLastRouteHistory();
+                context.pop();
+              } else {
+                di<AppRouter>().goBackToLastRoute();
+              }
+              context.read<MainDrawerCubit>().goToPreviousIndex();
+            },
+          ).paddingSymmetric(vertical: 8, horizontal: 8),
+          leadingWidth: 60,
         ),
+        body: SafeArea(
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
+            itemCount: sections.length + 1, // +1 for header
+            separatorBuilder: (_, __) => const Divider(height: 32),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return _Header(colorScheme: colorScheme);
+              }
+              final section = sections[index - 1];
+              final isLast = index == sections.length;
+              return _Section(
+                section: section,
+                colorScheme: colorScheme,
+                isContact: isLast,
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({required this.colorScheme});
+  final ColorScheme colorScheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.shield_outlined, color: colorScheme.primary, size: 28),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'Foodly',
+                style: FoodlyTextStyles.sectionsTitle.copyWith(
+                  color: colorScheme.primary,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Privacy Policy',
+          style: FoodlyTextStyles.label.copyWith(
+            fontSize: 13,
+            color: colorScheme.onSurface.withValues(alpha: 0.55),
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  const _Section({
+    required this.section,
+    required this.colorScheme,
+    this.isContact = false,
+  });
+
+  final PolicySection section;
+  final ColorScheme colorScheme;
+  final bool isContact;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: isContact ? const EdgeInsets.all(14) : EdgeInsets.zero,
+      decoration: isContact
+          ? BoxDecoration(
+              color: colorScheme.primary.withValues(alpha: 0.07),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: colorScheme.primary.withValues(alpha: 0.25),
+              ),
+            )
+          : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 3,
+                height: 16,
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  section.heading,
+                  style: FoodlyTextStyles.label.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: colorScheme.onSurface,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            section.body,
+            style: FoodlyTextStyles.label.copyWith(
+              height: 1.65,
+              fontSize: 13,
+              color: colorScheme.onSurface.withValues(alpha: 0.80),
+            ),
+          ),
+        ],
       ),
     );
   }

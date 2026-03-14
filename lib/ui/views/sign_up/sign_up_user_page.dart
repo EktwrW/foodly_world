@@ -239,7 +239,7 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
               shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
               text: S.current.createUser,
               disabled: !enabled || !vm.termsAndContiditionsAccepted,
-            ).paddingOnly(top: 33, bottom: 66),
+            ).paddingOnly(top: 36, bottom: 99),
           ],
         ),
       ),

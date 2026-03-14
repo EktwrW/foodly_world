@@ -66,36 +66,35 @@ class FoodlyDrawer extends StatelessWidget {
             spacing: 12,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: extended ? MainAxisAlignment.start : MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      // Navigate to privacy policy screen (in-app) and close drawer
-                      try {
-                        navigator.appRouter.goNamed(AppRoutes.privacyPolicy.name);
-                      } catch (_) {
-                        // In case of navigation failure, show error snackbar but keep drawer open for retry
-                        FoodlySnackbars.errorGeneric(context, S.current.somethingWentWrong);
-                      }
-                      FoodlyMainScaffold.toggleDrawer();
-                    },
-                    icon: const Icon(Bootstrap.shield_lock, size: 24),
-                    tooltip: S.current.privacyPolicy,
-                  ),
-                  if (extended)
-                    Flexible(
-                      child: FadeIn(
-                        delay: Durations.medium2,
-                        child: Text(
-                          S.current.privacyPolicy,
-                          style: FoodlyTextStyles.label,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+              InkWell(
+                onTap: () {
+                  // Navigate to privacy policy screen (in-app) and close drawer
+                  try {
+                    navigator.appRouter.goNamed(AppRoutes.privacyPolicy.name);
+                  } catch (_) {
+                    // In case of navigation failure, show error snackbar but keep drawer open for retry
+                    FoodlySnackbars.errorGeneric(context, S.current.somethingWentWrong);
+                  }
+                  FoodlyMainScaffold.toggleDrawer();
+                },
+                child: Row(
+                  mainAxisAlignment: extended ? MainAxisAlignment.start : MainAxisAlignment.center,
+                  children: [
+                    const Icon(Bootstrap.shield_lock, size: 24).paddingHorizontal(9),
+                    if (extended)
+                      Flexible(
+                        child: FadeIn(
+                          delay: Durations.medium2,
+                          child: Text(
+                            S.current.privacyPolicy,
+                            style: FoodlyTextStyles.label,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
               const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 4),
               Flexible(
@@ -145,7 +144,7 @@ class FoodlyDrawer extends StatelessWidget {
         },
         headerDivider: const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12).paddingBottom(12),
         extendedTheme: SidebarXTheme(
-          width: 240,
+          width: 246,
           itemMargin: EdgeInsets.all(context.screenWidth * .005),
           itemTextPadding: const EdgeInsets.only(left: 12),
           selectedItemTextPadding: const EdgeInsets.only(left: 16),

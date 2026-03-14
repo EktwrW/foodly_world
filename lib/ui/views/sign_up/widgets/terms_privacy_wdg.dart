@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/routing/app_routes.dart' show AppRoutes;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show AppRouter, di;
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -44,7 +46,8 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan4,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()..onTap = () => log(S.current.termsPrivacyTextSpan4),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
                   ),
                   const TextSpan(text: '.'),
                 ],

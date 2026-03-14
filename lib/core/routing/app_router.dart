@@ -158,9 +158,10 @@ class AppRouter {
       AppRoutes.login.path,
       AppRoutes.signUp.path,
       AppRoutes.signUpBusiness.path,
+      AppRoutes.privacyPolicy.path,
     ];
 
-    return exactPublicPaths.contains(path) || path.startsWith('/menu/');
+    return exactPublicPaths.contains(path) || path.startsWith('/visit-menu/');
   }
 
   bool _isLoginRoute(String path) => path == AppRoutes.login.path;
