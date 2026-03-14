@@ -671,4 +671,12 @@ class BusinessRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  Future<ApiResult<void>> deleteBusiness(String uuid) async {
+    try {
+      return ApiResult.success(await _businessClient.deleteBusiness(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

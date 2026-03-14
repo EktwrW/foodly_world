@@ -20,6 +20,7 @@ import 'package:foodly_world/ui/views/business/widgets/allow_reservations/allow_
 import 'package:foodly_world/ui/views/business/widgets/business_footer_buttons.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/business/widgets/contact_channels/contact_channels.dart';
+import 'package:foodly_world/ui/views/business/widgets/delete_business_section.dart';
 import 'package:foodly_world/ui/views/business/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hours.dart';
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
@@ -114,6 +115,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         const CustomerReviewsWdg(),
                         ContactChannelsWdg(vm: vm),
                         AdditionalInfoWdg(vm: vm),
+                        const DeleteBusinessSection(),
                       ],
                     ),
                   ),

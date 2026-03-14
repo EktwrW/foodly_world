@@ -171,4 +171,12 @@ class MeRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  Future<ApiResult<void>> deleteAccount() async {
+    try {
+      return ApiResult.success(await _meClient.deleteAccount());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

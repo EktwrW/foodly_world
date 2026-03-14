@@ -652,5 +652,16 @@
       "seconds": {}
     }
   },
-  "resendCode": "Reenviar Código"
+  "resendCode": "Reenviar Código",
+  "deleteAccount": "Eliminar Cuenta",
+  "deleteAccountTitle": "¿Eliminar tu cuenta?",
+  "deleteAccountWarning": "Esta acción es permanente. Tus datos personales serán eliminados y todos tus negocios serán removidos. Serás desconectado inmediatamente.",
+  "deleteAccountConfirm": "Sí, eliminar mi cuenta",
+  "deleteAccountBusinessWarning": "Tienes un negocio activo que también será eliminado permanentemente y no podrá recuperarse.",
+  "deleteBusiness": "Eliminar Negocio",
+  "deleteBusinessTitle": "¿Eliminar este negocio?",
+  "deleteBusinessWarning": "Esta acción es permanente. El negocio y todo su contenido (menú, promociones, reservas) será eliminado.",
+  "deleteBusinessConfirm": "Sí, eliminar negocio",
+  "deleteBusinessSuccess": "Negocio eliminado con éxito",
+  "dangerZone": "Zona de Peligro"
 }

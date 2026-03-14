@@ -9,12 +9,14 @@ class FoodlySectionsTitle extends StatelessWidget {
   final String firstText;
   final String secondText;
   final void Function()? onPressed;
+  final bool isDangerZone;
 
   const FoodlySectionsTitle({
     super.key,
     required this.firstText,
     required this.secondText,
     this.onPressed,
+    this.isDangerZone = false,
   });
 
   @override
@@ -30,7 +32,11 @@ class FoodlySectionsTitle extends StatelessWidget {
             Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: firstText, style: FoodlyTextStyles.profileSectionTitle),
+                  TextSpan(
+                      text: firstText,
+                      style: isDangerZone
+                          ? FoodlyTextStyles.profileSectionTitle.copyWith(color: Colors.red.shade700)
+                          : FoodlyTextStyles.profileSectionTitle),
                   TextSpan(text: secondText, style: FoodlyTextStyles.profileSectionTitlePurple),
                 ],
               ),

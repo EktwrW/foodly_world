@@ -89,4 +89,7 @@ abstract class MeClient {
 
   @GET('/username-available/{username}')
   Future<UsernameDM> checkUsernameAvailability(@Path('username') String username);
+
+  @DELETE('/user/delete-account')
+  Future<void> deleteAccount();
 }

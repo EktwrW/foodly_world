@@ -59,25 +59,33 @@ class _UserReviewsState extends State<_UserReviews> {
           ).paddingVertical(16);
         }
 
-        final itemCount = data.reviews.length + (data.isLoadingMore ? 1 : 0);
-
-        return ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: data.reviews.length == 1 ? 310 : 600),
-          child: ListView.separated(
-            controller: _scrollController,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            shrinkWrap: true,
-            itemCount: itemCount,
-            separatorBuilder: (_, __) => const SizedBox(height: 4),
-            itemBuilder: (context, index) {
-              if (index >= data.reviews.length) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ).paddingAll(16);
+        return CarouselSlider(
+          key: const Key('user-profile-reviews-carousel-slider'),
+          options: CarouselOptions(
+            height: 290,
+            enableInfiniteScroll: false,
+            viewportFraction: 0.93,
+            enlargeCenterPage: true,
+            enlargeFactor: .26,
+            onPageChanged: (index, _) {
+              if (index >= data.reviews.length - 3 && data.canLoadMore && !data.isLoadingMore) {
+                context.read<UserProfileCubit>().loadMoreReviews();
               }
-              return ReviewCard(review: data.reviews[index]);
             },
           ),
+          items: [
+            ...data.reviews.map((review) {
+              return ReviewCard(review: review);
+            }),
+            if (data.isLoadingMore)
+              const Center(
+                child: SizedBox.square(
+                  dimension: 36,
+                  child: CircularProgressIndicator.adaptive(
+                      strokeWidth: 3, valueColor: AlwaysStoppedAnimation<Color>(FoodlyThemes.primaryFoodly)),
+                ),
+              ),
+          ],
         );
       },
     );

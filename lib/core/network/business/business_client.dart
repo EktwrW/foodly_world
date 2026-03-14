@@ -275,4 +275,7 @@ abstract class BusinessClient {
     @Query('limit') int? limit,
     @Query('days') int? days,
   });
+
+  @DELETE('/business-delete/{uuid}')
+  Future<void> deleteBusiness(@Path('uuid') String uuid);
 }

@@ -652,5 +652,16 @@
       "seconds": {}
     }
   },
-  "resendCode": "Resend Code"
+  "resendCode": "Resend Code",
+  "deleteAccount": "Delete Account",
+  "deleteAccountTitle": "Delete your account?",
+  "deleteAccountWarning": "This action is permanent. Your personal data will be erased and all your businesses will be removed. You will be logged out immediately.",
+  "deleteAccountConfirm": "Yes, delete my account",
+  "deleteAccountBusinessWarning": "You have an active business that will also be permanently deleted and cannot be recovered.",
+  "deleteBusiness": "Delete Business",
+  "deleteBusinessTitle": "Delete this business?",
+  "deleteBusinessWarning": "This action is permanent. The business and all its content (menu, promotions, reservations) will be removed.",
+  "deleteBusinessConfirm": "Yes, delete business",
+  "deleteBusinessSuccess": "Business deleted successfully",
+  "dangerZone": "Danger Zone"
 }

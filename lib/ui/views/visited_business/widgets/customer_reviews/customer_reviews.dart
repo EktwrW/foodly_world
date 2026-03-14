@@ -44,8 +44,8 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   enableInfiniteScroll: false,
                   viewportFraction: 0.93,
                   enlargeCenterPage: true,
+                  autoPlay: true,
                   enlargeFactor: .26,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
                   onPageChanged: (index, _) {
                     if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
                       context.read<VisitBusinessCubit>().fetchMoreReviews();
@@ -71,8 +71,9 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   if (isLoadingMoreReviews)
                     const Center(
                       child: SizedBox.square(
-                        dimension: 32,
-                        child: CircularProgressIndicator(strokeWidth: 3, color: FoodlyThemes.primaryFoodly),
+                        dimension: 36,
+                        child: CircularProgressIndicator.adaptive(
+                            strokeWidth: 3, valueColor: AlwaysStoppedAnimation<Color>(FoodlyThemes.primaryFoodly)),
                       ),
                     ),
                 ],

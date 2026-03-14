@@ -43,7 +43,7 @@ class CustomerReviewsWdg extends StatelessWidget {
                   viewportFraction: 0.93,
                   enlargeCenterPage: true,
                   enlargeFactor: .26,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                  autoPlay: true,
                 ),
                 items: currentBusinessReviews.map((review) {
                   return ReviewCard(review: review);

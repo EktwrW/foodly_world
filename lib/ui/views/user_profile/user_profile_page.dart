@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
@@ -42,6 +43,7 @@ part 'widgets/user_profile_section_wrapper.dart';
 part 'widgets/user_profile_sliver_app_bar.dart';
 part 'widgets/user_reviews.dart';
 part 'widgets/username_dialog/edit_username_dialog.dart';
+part 'widgets/delete_account_section.dart';
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
@@ -75,6 +77,10 @@ class UserProfilePage extends StatelessWidget {
           loaded: (_) => dialogService.hideLoading(),
           userUpdated: (vm, msg) {
             dialogService.hideLoading();
+            if (msg == UserProfileCubit.accountDeletedSentinel) {
+              di<AuthSessionService>().endSession(context);
+              return;
+            }
             FoodlySnackbars.successGeneric(context, msg);
           },
           error: (e, vm) {
@@ -208,6 +214,11 @@ class UserProfilePage extends StatelessWidget {
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
                             margin: const EdgeInsets.only(bottom: 20),
+                          ),
+                        if (vm.loggedUserCanEdit)
+                          _DeleteAccountSection(
+                            key: const Key('delete-account-section'),
+                            onDeleteConfirmed: () => cubit.deleteAccount(),
                           ),
                       ],
                     ).paddingOnly(

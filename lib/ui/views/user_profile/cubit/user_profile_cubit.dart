@@ -283,4 +283,16 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       },
     );
   }
+
+  // Sentinel value used by the page listener to detect successful account deletion
+  static const accountDeletedSentinel = '__account_deleted__';
+
+  Future<void> deleteAccount() async {
+    emit(_Loading(_vm));
+    final result = await _meRepo.deleteAccount();
+    result.when(
+      success: (_) => emit(_UserUpdated(_vm, accountDeletedSentinel)),
+      failure: (e) => emit(_Error(e.errorMsg, _vm)),
+    );
+  }
 }
