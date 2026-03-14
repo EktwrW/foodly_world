@@ -137,13 +137,14 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 errorStyle: FoodlyTextStyles.errorInputText,
                 contentPadding: const EdgeInsets.only(top: 15),
               ),
-              validator: (value) {
-                final notValue = value == null || value.isEmpty;
+              validator: validator ??
+                  (value) {
+                    final notValue = value == null || value.isEmpty;
 
-                if (notValue) return S.current.pleaseEnterPassword;
+                    if (notValue) return S.current.pleaseEnterPassword;
 
-                return !FormValidations.isPasswordValid(value) ? S.current.passwordInstructions : null;
-              },
+                    return !FormValidations.isPasswordValid(value) ? S.current.passwordInstructions : null;
+                  },
             ),
           );
         },

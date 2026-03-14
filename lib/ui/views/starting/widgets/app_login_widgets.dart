@@ -72,6 +72,8 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               focusNode: _passwordNode,
               inputTextType: FoodlyInputType.password,
               autovalidateMode: vm.autovalidateMode,
+              validator: (value) =>
+                  (value == null || value.isEmpty) ? S.current.pleaseEnterPassword : null,
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             const Spacer(),
             CustomNeumorphicButton(
