@@ -32,6 +32,7 @@
   "aiPromoImageNatural": "Natural",
   "aiPromoImageVivid": "Vibrante",
   "aiPromoTitle": "Gerador de Promoções IA",
+  "analytics": "Análises",
   "and": "e",
   "andCreateContentToThese": "e gerir conteúdo, promoções e mais",
   "arabic": "Árabe",
@@ -114,7 +115,9 @@
   "copyrightText": "Direitos de Autor © {year} - Todos os direitos reservados",
   "@copyrightText": {
     "placeholders": {
-      "year": { "type": "int" }
+      "year": {
+        "type": "int"
+      }
     }
   },
   "country": "País",

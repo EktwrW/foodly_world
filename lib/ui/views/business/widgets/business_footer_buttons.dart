@@ -59,17 +59,30 @@ class BusinessFooterButtons extends StatelessWidget {
             ),
             FooterButton(
               onPressed: () => context.goNamed(
-                AppRoutes.visitBusiness.name,
+                AppRoutes.businessAnalytics.name,
                 pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
                 extra: vm.currentBusiness,
               ),
               dimension: 30,
               iconSize: 30,
-              iconData: Icons.rate_review_outlined,
+              iconData: Bootstrap.file_bar_graph,
               buttonText: S.current.view,
-              secondButtonText: S.current.review,
+              secondButtonText: S.current.analytics,
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
+            // FooterButton(
+            //   onPressed: () => context.goNamed(
+            //     AppRoutes.visitBusiness.name,
+            //     pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
+            //     extra: vm.currentBusiness,
+            //   ),
+            //   dimension: 30,
+            //   iconSize: 30,
+            //   iconData: Icons.rate_review_outlined,
+            //   buttonText: S.current.view,
+            //   secondButtonText: S.current.review,
+            //   textStyle: FoodlyTextStyles.footerButtonSmall,
+            // ),
           ],
         ).paddingHorizontal(6);
       },
