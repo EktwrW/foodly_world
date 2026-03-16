@@ -64,7 +64,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
           child: ListView.separated(
             physics: const AlwaysScrollableScrollPhysics(),
             controller: _scrollController,
-            padding: const EdgeInsets.only(left: 14, right: 14, top: 16, bottom: 100),
+            padding: const EdgeInsets.only(left: 14, right: 14, top: 16, bottom: 150),
             itemCount: vm.posts.length + (vm.isLoadingMorePosts ? 1 : 0),
             separatorBuilder: (_, __) => const SizedBox(height: 16),
             itemBuilder: (context, index) {

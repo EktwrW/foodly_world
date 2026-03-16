@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -13,10 +16,34 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 part 'widgets/categories_app_bar.dart';
 
-class CategoriesPage extends StatelessWidget {
+class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
 
+  @override
+  State<CategoriesPage> createState() => _CategoriesPageState();
+}
+
+class _CategoriesPageState extends State<CategoriesPage> {
   static const radiusDistanceOptions = <double>[5, 10, 15, 25];
+
+  StreamSubscription<LocationDetailsDM>? _locationSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _locationSub = di<LocationService>().locationChanged.listen((locationDM) {
+      final pos = locationDM.position;
+      if (pos != null && mounted) {
+        context.read<CategoriesCubit>().refreshWithNewLocation(pos.latitude, pos.longitude);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _locationSub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

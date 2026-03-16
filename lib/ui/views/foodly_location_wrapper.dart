@@ -1,5 +1,7 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 
 class FoodlyLocationWrapper extends StatefulWidget {
@@ -11,7 +13,7 @@ class FoodlyLocationWrapper extends StatefulWidget {
   State<FoodlyLocationWrapper> createState() => _FoodlyLocationWrapperState();
 }
 
-class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
+class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with WidgetsBindingObserver {
   late final LocationService _locationService;
   late final DialogService _dialogService;
 
@@ -20,8 +22,24 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
     super.initState();
     _locationService = di<LocationService>();
     _dialogService = di<DialogService>();
+    WidgetsBinding.instance.addObserver(this);
 
     if (_locationService.mustFetchLocation) {
+      context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // When the user returns from system settings after granting location,
+    // re-run the location check so the button and feeds update automatically.
+    if (state == AppLifecycleState.resumed && !_locationService.hasLocationData) {
       context.read<LocationBloc>().add(const LocationEvent.checkLocation());
     }
   }
@@ -33,6 +51,8 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
         state.whenOrNull(
           checkingLocation: () => mounted ? _dialogService.showLoading() : null,
           locationChecked: (locationDM) {
+            // updateLocation also fires the locationChanged stream, which
+            // CategoriesPage subscribes to for its own refresh.
             _locationService.updateLocation(locationDM);
 
             final favsState = context.read<FavoritesCubit>().state;
@@ -41,6 +61,11 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
               if (mounted) _dialogService.hideLoading();
               FlutterNativeSplash.remove();
             }
+
+            // Reload location-based home feeds (handles both initial startup
+            // and the case where permission was granted after denial).
+            di<NearbyPromotionsCubit>().load();
+            di<NewReleasesCubit>().load();
           },
           serviceDisabled: (message) {
             if (mounted) _dialogService.hideLoading();
@@ -64,6 +89,9 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
   }
 
   void _showLocationPermissionDialog(BuildContext context, String message) {
+    final savedUser = di<AuthSessionService>().userSessionDM?.user;
+    final hasSavedAddress = savedUser?.principalAddress?.latitude != null;
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -85,6 +113,16 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
           ),
+          if (hasSavedAddress)
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _locationService.updateLocationUserDM(savedUser!);
+                di<NearbyPromotionsCubit>().load();
+                di<NewReleasesCubit>().load();
+              },
+              child: Text(S.current.useSavedLocation),
+            ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();

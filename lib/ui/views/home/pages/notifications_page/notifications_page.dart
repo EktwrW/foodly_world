@@ -76,7 +76,7 @@ class NotificationsPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    padding: const EdgeInsets.all(16).copyWith(bottom: 120),
+                    padding: const EdgeInsets.all(16).copyWith(bottom: 150),
                     itemCount: vm.notifications.length,
                     separatorBuilder: (context, index) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {

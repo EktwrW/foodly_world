@@ -95,6 +95,11 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     });
   }
 
+  void refreshWithNewLocation(double latitude, double longitude) {
+    _vm = _vm.copyWith(latitude: latitude, longitude: longitude);
+    fetchNearbyBusinesses(latitude: latitude, longitude: longitude);
+  }
+
   void toggleViewMode() {
     final newViewMode =
         _vm.viewMode == BusinessResultsViewMode.grid ? BusinessResultsViewMode.list : BusinessResultsViewMode.grid;

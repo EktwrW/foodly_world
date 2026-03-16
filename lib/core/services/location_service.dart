@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
@@ -8,6 +10,13 @@ import 'package:nova_places_api/nova_places_api.dart';
 class LocationService {
   LocationDetailsDM _locationDM = const LocationDetailsDM();
   bool _hasBeenInitialized = false;
+
+  final _locationChangedController = StreamController<LocationDetailsDM>.broadcast();
+
+  /// Fires every time location is updated (GPS grant, manual change, or saved address).
+  Stream<LocationDetailsDM> get locationChanged => _locationChangedController.stream;
+
+  void dispose() => _locationChangedController.close();
 
   LocationDetailsDM get currentLocation => _locationDM;
   bool get mustFetchLocation => !_hasBeenInitialized;
@@ -23,6 +32,7 @@ class LocationService {
   void updateLocation(LocationDetailsDM newValue) {
     _locationDM = newValue;
     _hasBeenInitialized = true;
+    _locationChangedController.add(newValue);
   }
 
   void updateLocationFromPlace(Place place) {
