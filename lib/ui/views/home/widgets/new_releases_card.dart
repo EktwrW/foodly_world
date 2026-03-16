@@ -58,7 +58,10 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
       builder: (context, state) {
         return state.map(
           initial: (_) => const SizedBox.shrink(),
-          loading: (_) => const _NewReleasesPlaceholder(),
+          loading: (_) => const SizedBox(
+            height: 320,
+            child: Center(child: CircularProgressIndicator.adaptive()),
+          ),
           loaded: (s) {
             if (s.vm.businesses.isEmpty) {
               return _NewReleasesErrorWidget(
@@ -339,37 +342,5 @@ class _NewReleasesErrorWidget extends StatelessWidget {
         ).paddingBottom(36),
       ),
     ).paddingOnly(top: 25);
-  }
-}
-
-class _NewReleasesPlaceholder extends StatelessWidget {
-  const _NewReleasesPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        Card(
-          color: FoodlyThemes.primaryFoodly,
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(S.current.newBranch, style: FoodlyTextStyles.cardsHeader).paddingOnly(top: 3),
-              ],
-            ),
-          ),
-        ),
-        const Card(
-          child: SizedBox(
-            height: 320,
-            child: Center(child: CircularProgressIndicator.adaptive()),
-          ),
-        ).paddingOnly(top: 25),
-      ],
-    );
   }
 }
