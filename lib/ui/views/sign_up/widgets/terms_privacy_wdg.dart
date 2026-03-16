@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +21,8 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = di<AppRouter>();
+
     return AnimatedOpacity(
       duration: Durations.medium2,
       opacity: enabled ? 1.0 : .3,
@@ -40,14 +40,15 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan2,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()..onTap = () => log(S.current.termsPrivacyTextSpan2),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.termsConditions.name),
                   ),
                   TextSpan(text: '${S.current.termsPrivacyTextSpan3} '),
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan4,
                     style: FoodlyTextStyles.primaryBodyBold,
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.privacyPolicy.name),
                   ),
                   const TextSpan(text: '.'),
                 ],

@@ -346,6 +346,8 @@
   "priceValidation": "O preço não pode estar vazio e deve ser superior a 0.09",
   "profile": "Perfil",
   "privacyPolicy": "Política de Privacidade",
+  "termsConditions": "Termos e Condições",
+  "termsConditionsShort": "T&C",
   "profileBirthdayText1": "Data de",
   "profileBirthdayText2": "Aniversário",
   "profileUserLocation1": "Localização",

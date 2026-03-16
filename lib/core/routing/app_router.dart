@@ -24,6 +24,7 @@ import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
+import 'package:foodly_world/ui/views/terms/terms_conditions_page.dart';
 import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart';
 import 'package:foodly_world/ui/views/user_profile/user_profile_page.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
@@ -159,6 +160,7 @@ class AppRouter {
       AppRoutes.signUp.path,
       AppRoutes.signUpBusiness.path,
       AppRoutes.privacyPolicy.path,
+      AppRoutes.termsConditions.path,
     ];
 
     return exactPublicPaths.contains(path) || path.startsWith('/visit-menu/');
@@ -356,6 +358,7 @@ class AppRouter {
           ),
         ),
         _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
+        _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
         _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
         GoRoute(
           path: AppRoutes.managePromotions.path,

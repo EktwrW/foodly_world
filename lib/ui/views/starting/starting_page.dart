@@ -130,13 +130,21 @@ class StartingPage369 extends StatelessWidget {
               children: [
                 Text(S.current.copyrightText(DateTime.now().year), style: FoodlyTextStyles.copyrightText),
                 Flexible(
-                  child: InkWell(
-                    onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
-                    child: Text(
-                      S.current.termsPrivacyTextSpan4,
-                      style: FoodlyTextStyles.captionPurpleBold,
-                    ).paddingBottom(16),
-                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 9,
+                    children: [
+                      InkWell(
+                        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.termsConditions.name),
+                        child: Text(S.current.termsConditionsShort, style: FoodlyTextStyles.captionPurpleBold),
+                      ),
+                      const Text('-', style: FoodlyTextStyles.captionPurpleBold),
+                      InkWell(
+                        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                        child: Text(S.current.termsPrivacyTextSpan4, style: FoodlyTextStyles.captionPurpleBold),
+                      ),
+                    ],
+                  ).paddingBottom(16),
                 ),
               ],
             ),
