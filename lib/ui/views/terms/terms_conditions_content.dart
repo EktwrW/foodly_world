@@ -168,10 +168,13 @@ const _en = [
     body: 'For questions, legal notices, or intellectual property claims:\n\n'
         'Foodly — Legal & Privacy\n'
         'Email: privacy@foodly.solutions\n\n'
-        'For EU residents — supervisory authority:\n'
+        'For EU / Portuguese residents — supervisory authority:\n'
         'Comissão Nacional de Proteção de Dados (CNPD) — www.cnpd.pt\n\n'
         'For Argentine residents — consumer protection:\n'
-        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor',
+        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor\n\n'
+        'For Venezuelan residents — consumer protection:\n'
+        'SUNDDE — www.sundde.gob.ve\n\n'
+        'For users in other countries: please contact your local data protection or consumer protection authority.',
   ),
 ];
 
@@ -317,13 +320,16 @@ const _es = [
   ),
   TermsSection(
     heading: 'Contacto',
-    body: 'Para consultas legales, avisos o reclamaciones de propiedad intelectual:\n\n'
+    body: 'Para consultas, avisos legales o reclamaciones de propiedad intelectual:\n\n'
         'Foodly — Legal y Privacidad\n'
         'Correo: privacy@foodly.solutions\n\n'
-        'Residentes en Portugal / UE:\n'
+        'Residentes en Portugal / UE — autoridad supervisora:\n'
         'Comissão Nacional de Proteção de Dados (CNPD) — www.cnpd.pt\n\n'
         'Residentes en Argentina — defensa del consumidor:\n'
-        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor',
+        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor\n\n'
+        'Residentes en Venezuela — defensa del consumidor:\n'
+        'SUNDDE — www.sundde.gob.ve\n\n'
+        'Residentes en otros países: contacta con tu autoridad local de protección al consumidor o de datos personales.',
   ),
 ];
 
@@ -469,12 +475,15 @@ const _pt = [
   ),
   TermsSection(
     heading: 'Contacto',
-    body: 'Para questões legais, avisos ou reclamações de propriedade intelectual:\n\n'
+    body: 'Para questões, avisos legais ou reclamações de propriedade intelectual:\n\n'
         'Foodly — Legal e Privacidade\n'
         'E-mail: privacy@foodly.solutions\n\n'
-        'Residentes em Portugal / UE:\n'
+        'Residentes em Portugal / UE — autoridade supervisora:\n'
         'Comissão Nacional de Proteção de Dados (CNPD) — www.cnpd.pt\n\n'
         'Residentes na Argentina — defesa do consumidor:\n'
-        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor',
+        'Secretaría de Comercio Interior — www.argentina.gob.ar/produccion/defensadeconsumidor\n\n'
+        'Residentes na Venezuela — defesa do consumidor:\n'
+        'SUNDDE — www.sundde.gob.ve\n\n'
+        'Utilizadores noutros países: contacte a sua autoridade local de proteção de dados ou defesa do consumidor.',
   ),
 ];
