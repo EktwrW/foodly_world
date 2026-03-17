@@ -26,7 +26,7 @@ The app targets iOS and Android (deployed to the App Store and Google Play).
 - **State Management**: BLoC / Cubit (Freezed states)
 - **Networking**: Dio + Retrofit (generated clients)
 - **DI**: GetIt
-- **Backend**: Laravel API on Google Cloud Run → [be-foodly](https://be-foodly-137265888722.europe-west1.run.app)
+- **Backend**: Laravel API on Google Cloud Run → [be-foodly](https://api.foodly.solutions)
 
 ## Prerequisites
 
