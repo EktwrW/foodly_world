@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, S;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/event_tracking_service.dart';
+import 'package:foodly_world/core/utils/scroll_tracker.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/post_card.dart';
@@ -14,15 +17,23 @@ class PostsFeedWidget extends StatefulWidget {
 
 class _PostsFeedWidgetState extends State<PostsFeedWidget> {
   final _scrollController = ScrollController();
+  late final ScrollTracker _scrollTracker;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _scrollTracker = ScrollTracker(
+      tracker: di<EventTrackingService>(),
+      sourceModule: 'PostsFeedWidget',
+      page: 'community',
+    );
+    _scrollTracker.attach(_scrollController);
   }
 
   @override
   void dispose() {
+    _scrollTracker.dispose();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();

@@ -21,6 +21,7 @@ import 'package:foodly_world/core/core_exports.dart'
         BusinessDays,
         ScreenSizeExtension;
 import 'package:foodly_world/core/enums/business_enums.dart' show BusinessServices;
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -57,11 +58,23 @@ class VisitedBusinessPage extends StatefulWidget {
 
 class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
   late final DialogService _dialogService;
+  final DateTime _openedAt = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     _dialogService = di<DialogService>();
+  }
+
+  @override
+  void dispose() {
+    di<EventTrackingService>().track(
+      'engagement.page_time',
+      'VisitedBusinessPage',
+      page: 'business',
+      durationMs: DateTime.now().difference(_openedAt).inMilliseconds,
+    );
+    super.dispose();
   }
 
   @override

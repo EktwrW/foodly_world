@@ -5,6 +5,7 @@ import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
@@ -23,6 +24,7 @@ class SocialCubit extends Cubit<SocialState> {
   final AuthSessionService _authService;
   final LocationService _locationService;
   final Logger _logger;
+  final EventTrackingService _tracker;
 
   SocialCubit({
     required PostRepo postRepo,
@@ -31,12 +33,14 @@ class SocialCubit extends Cubit<SocialState> {
     required AuthSessionService authService,
     required LocationService locationService,
     required Logger logger,
+    required EventTrackingService tracker,
   })  : _postRepo = postRepo,
         _userDiscoveryRepo = userDiscoveryRepo,
         _buzzRepo = buzzRepo,
         _authService = authService,
         _locationService = locationService,
         _logger = logger,
+        _tracker = tracker,
         _vm = SocialVM(floatingButtonKey: GlobalKey<FabCircularMenuPlusState>()),
         super(const SocialState.initial(SocialVM()));
 
@@ -46,6 +50,7 @@ class SocialCubit extends Cubit<SocialState> {
 
     if (refresh) {
       emit(SocialState.loading(_vm));
+      _tracker.track('social.feed_view', 'SocialCubit', page: 'community');
     }
 
     final position = _locationService.currentLocation.position;
@@ -199,6 +204,11 @@ class SocialCubit extends Cubit<SocialState> {
   /// Toggle like (optimistic update)
   Future<void> toggleLike(String uuid) async {
     if (!_authService.isLoggedIn) return;
+
+    final isLiking = _vm.posts.any((p) => p.uuid == uuid && !p.isLiked);
+    if (isLiking) {
+      _tracker.track('social.like', 'SocialCubit', targetUuid: uuid, targetType: 'post');
+    }
 
     // Optimistic toggle
     final updatedPosts = _vm.posts.map((post) {

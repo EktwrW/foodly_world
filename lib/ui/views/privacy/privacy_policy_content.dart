@@ -51,7 +51,8 @@ const _en = [
         '• Voice and audio: with your permission, for voice search. Audio is transcribed and the resulting text query is sent to our search service. Raw audio is not stored on our servers.\n'
         '• Device information: app version, operating system, and device model — sent with search requests to improve result relevance.\n'
         '• Crash and diagnostic data: technical error reports via Firebase Crashlytics to identify and fix bugs. This data does not personally identify you.\n'
-        '• Usage analytics: anonymous app interactions via Firebase Analytics to understand usage patterns and improve the App. You can opt out via your device settings.\n\n'
+        '• Usage analytics: anonymous app interactions via Firebase Analytics to understand usage patterns and improve the App. You can opt out via your device settings.\n'
+        '• First-party behavioural analytics: anonymised interaction events (screen views, feature usage, session duration) are sent to Foodly\'s own servers to power performance and engagement insights shown to business owners. These events do not contain personally identifiable information.\n\n'
         'DATA FROM THIRD-PARTY AUTHENTICATION\n\n'
         '• Google Sign-In: if you sign in with Google we receive your Google email, display name, and profile photo. We do not receive your Google password.',
   ),
@@ -190,7 +191,8 @@ const _es = [
         '• Voz y audio: con tu permiso, para la búsqueda por voz. El audio se transcribe y la consulta de texto resultante se envía a nuestro servicio de búsqueda. No se almacenan grabaciones de audio en nuestros servidores.\n'
         '• Información del dispositivo: versión de la app, sistema operativo y modelo del dispositivo — enviados con solicitudes de búsqueda para mejorar la relevancia de los resultados.\n'
         '• Datos de fallos y diagnóstico: informes técnicos de errores mediante Firebase Crashlytics para identificar y corregir problemas. Estos datos no te identifican personalmente.\n'
-        '• Analítica de uso: interacciones anónimas con la app mediante Firebase Analytics para entender patrones de uso y mejorar la App. Puedes desactivarlo en la configuración de tu dispositivo.\n\n'
+        '• Analítica de uso: interacciones anónimas con la app mediante Firebase Analytics para entender patrones de uso y mejorar la App. Puedes desactivarlo en la configuración de tu dispositivo.\n'
+        '• Analítica de comportamiento propia: eventos de interacción anonimizados (vistas de pantalla, uso de funciones, duración de sesión) se envían a los servidores de Foodly para generar informes de rendimiento e impacto mostrados a los gestores de negocios. Estos eventos no contienen información de identificación personal.\n\n'
         'DATOS DE AUTENTICACIÓN CON TERCEROS\n\n'
         '• Inicio de sesión con Google: si usas Google para iniciar sesión, recibimos tu correo electrónico de Google, nombre para mostrar y foto de perfil. No recibimos tu contraseña de Google.',
   ),
@@ -329,7 +331,8 @@ const _pt = [
         '• Voz e áudio: com a sua permissão, para pesquisa por voz. O áudio é transcrito e a consulta de texto resultante é enviada para o nosso serviço de pesquisa. Não são armazenadas gravações de áudio nos nossos servidores.\n'
         '• Informações do dispositivo: versão da app, sistema operativo e modelo do dispositivo — enviados com pedidos de pesquisa para melhorar a relevância dos resultados.\n'
         '• Dados de falhas e diagnóstico: relatórios técnicos de erros via Firebase Crashlytics para identificar e corrigir problemas. Estes dados não o identificam pessoalmente.\n'
-        '• Análise de utilização: interações anónimas com a app via Firebase Analytics para compreender padrões de utilização e melhorar a App. Pode desativar via definições do dispositivo.\n\n'
+        '• Análise de utilização: interações anónimas com a app via Firebase Analytics para compreender padrões de utilização e melhorar a App. Pode desativar via definições do dispositivo.\n'
+        '• Análise comportamental própria: eventos de interação anonimizados (visualizações de ecrã, utilização de funcionalidades, duração da sessão) são enviados para os servidores da Foodly para gerar relatórios de desempenho e engagement apresentados aos gestores de negócios. Estes eventos não contêm informação de identificação pessoal.\n\n'
         'DADOS DE AUTENTICAÇÃO COM TERCEIROS\n\n'
         '• Início de sessão com Google: se iniciar sessão com o Google, recebemos o seu e-mail Google, nome de apresentação e fotografia de perfil. Não recebemos a sua palavra-passe Google.',
   ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
@@ -176,6 +177,7 @@ class AppRouter {
     appRouter = GoRouter(
       debugLogDiagnostics: di<BaseConfig>().isLoggingEnabled,
       navigatorKey: rootNavigatorKey,
+      observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
       redirect: (context, state) async {
         // Read the saved route BEFORE updateCurrentRoute overwrites it.
         // This ensures route restoration works after biometric auth or restart.
@@ -408,6 +410,7 @@ class AppRouter {
                 di(),
                 state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 state.extra as BusinessDM?,
+                di(),
                 di(),
                 di(),
               ),

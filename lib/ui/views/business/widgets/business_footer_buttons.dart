@@ -58,11 +58,12 @@ class BusinessFooterButtons extends StatelessWidget {
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
             FooterButton(
-              onPressed: () => context.goNamed(
-                AppRoutes.businessAnalytics.name,
-                pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
-                extra: vm.currentBusiness,
-              ),
+              onPressed: () {},
+              // onPressed: () => context.goNamed(
+              //   AppRoutes.businessAnalytics.name,
+              //   pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
+              //   extra: vm.currentBusiness,
+              // ),
               dimension: 30,
               iconSize: 30,
               iconData: Bootstrap.file_bar_graph,

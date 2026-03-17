@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer, ReadContext;
 import 'package:foodly_world/core/core_exports.dart'
     show FoodlyThemes, PaddingExtension, ScreenSizeExtension, di, DialogService, S;
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
@@ -21,10 +22,23 @@ class SocialPage extends StatefulWidget {
 }
 
 class _SocialPageState extends State<SocialPage> {
+  final DateTime _openedAt = DateTime.now();
+
   @override
   void initState() {
     super.initState();
     context.read<SocialCubit>().loadPosts(refresh: true);
+  }
+
+  @override
+  void dispose() {
+    di<EventTrackingService>().track(
+      'engagement.page_time',
+      'SocialPage',
+      page: 'community',
+      durationMs: DateTime.now().difference(_openedAt).inMilliseconds,
+    );
+    super.dispose();
   }
 
   @override

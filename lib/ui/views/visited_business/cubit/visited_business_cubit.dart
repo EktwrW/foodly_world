@@ -2,6 +2,7 @@ import 'package:foodly_world/core/enums/review_enums.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart';
 import 'package:foodly_world/data_transfer_objects/reviews/review_update_dto.dart';
 import 'package:foodly_world/ui/views/visited_business/view_model/visit_business_vm.dart';
@@ -16,6 +17,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   final ReviewRepo _reviewRepo;
   final ReservationRepo _reservationRepo;
   final Logger _logger;
+  final EventTrackingService _tracker;
   VisitBusinessVM _vm;
 
   VisitBusinessCubit(
@@ -25,10 +27,12 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     BusinessDM? business,
     ReviewRepo reviewRepo,
     ReservationRepo reservationRepo,
+    EventTrackingService tracker,
   )   : _businessRepo = businessRepo,
         _reviewRepo = reviewRepo,
         _reservationRepo = reservationRepo,
         _logger = logger,
+        _tracker = tracker,
         _vm = const VisitBusinessVM(),
         super(const _Initial(VisitBusinessVM())) {
     _initializeVisitBusiness(businessUuid, business);
@@ -68,6 +72,8 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
           (response) => response.when(
             success: (business) {
               _vm = _vm.copyWith(currentBusiness: business);
+              _tracker.track('business.open', 'VisitBusinessCubit',
+                  targetUuid: business.uuid, targetType: 'business');
               emit(_Loaded(_vm));
             },
             failure: (error) {
@@ -422,6 +428,9 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   Future<bool> createReservation() async {
     final business = _vm.currentBusiness;
     if (business == null || !_vm.canSubmitReservation) return false;
+
+    _tracker.track('business.reserve_click', 'VisitBusinessCubit',
+        targetUuid: business.uuid, targetType: 'business');
 
     _vm = _vm.copyWith(isSubmittingReservation: true);
     emit(_Loaded(_vm));

@@ -2,6 +2,7 @@ import 'dart:async' show Timer;
 
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/nlp_search_request_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
@@ -167,6 +168,13 @@ class SmartSearchCubit extends Cubit<SmartSearchState> with WidgetsBindingObserv
     }
 
     if (searchText?.isEmpty ?? true) return;
+
+    di<EventTrackingService>().track(
+      'ui.click',
+      'SmartSearchCubit',
+      section: 'smart_search',
+      query: searchText,
+    );
 
     _vm = _vm.copyWith(isBottomBarHidden: true);
     Future.microtask(() => emit(SmartSearchState.searching(_vm)));
