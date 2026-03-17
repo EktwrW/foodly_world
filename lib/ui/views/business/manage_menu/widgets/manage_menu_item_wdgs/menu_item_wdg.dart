@@ -8,6 +8,7 @@ class MenuItemWdg extends StatelessWidget {
     required this.vm,
     required this.item,
     required this.isLastScreenItem,
+    this.dragIconWdg,
   });
 
   final CategoryDM subCategory;
@@ -15,6 +16,7 @@ class MenuItemWdg extends StatelessWidget {
   final ManageMenuVM vm;
   final ItemDM item;
   final bool isLastScreenItem;
+  final Widget? dragIconWdg;
 
   Widget get _currencyWidget => Text('${vm.currency}:', style: FoodlyTextStyles.label);
   bool get _itemNotAvailable => !item.available && !vm.editMode;
@@ -58,8 +60,13 @@ class MenuItemWdg extends StatelessWidget {
                           subCategory: subCategory,
                         ),
                       ),
-                      FavAndEditItemBtns(subCategory: subCategory, item: item, menuCategory: menuCategory)
-                          .paddingAll(2),
+                      Column(
+                        children: [
+                          FavAndEditItemBtns(subCategory: subCategory, item: item, menuCategory: menuCategory)
+                              .paddingAll(2),
+                          if (dragIconWdg != null) dragIconWdg!.paddingOnly(top: 3),
+                        ],
+                      ),
                     ],
                   ),
                   if (item.isEditing)

@@ -24,6 +24,7 @@ import 'package:foodly_world/data_transfer_objects/business_search/business_sear
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/menu/item_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
 import 'package:universal_io/io.dart';
@@ -380,6 +381,30 @@ class BusinessRepo {
   Future<ApiResult<void>> deleteComboItem(String uuid) async {
     try {
       return ApiResult.success(await _businessClient.deleteComboItem(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> reorderItems(MenuCategory menuCategory, List<ItemDM> orderedItems) async {
+    try {
+      final body = ReorderItemsDTO(
+        items: orderedItems
+            .asMap()
+            .entries
+            .map((e) => ItemReorderDTO(uuid: e.value.uuid, sortOrder: e.key))
+            .toList(),
+      );
+
+      switch (menuCategory) {
+        case MenuCategory.food:
+          await _businessClient.reorderFoodItems(body);
+        case MenuCategory.drinks:
+          await _businessClient.reorderDrinkItems(body);
+        case MenuCategory.combos:
+          await _businessClient.reorderCombos(body);
+      }
+      return const ApiResult.success(null);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

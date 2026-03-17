@@ -617,6 +617,60 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     );
   }
 
+  void reorderItems(CategoryDM subCategory, MenuCategory menuCategory, int oldIndex, int newIndex) {
+    // ReorderableListView fires newIndex relative to the original list length,
+    // but after the item at oldIndex has been "removed". Adjust accordingly.
+    if (newIndex > oldIndex) newIndex -= 1;
+
+    List<ItemDM> reordered;
+
+    if (menuCategory.isCombos) {
+      reordered = List<ItemDM>.from(_vm.editMenuDM?.combos ?? []);
+    } else {
+      reordered = List<ItemDM>.from(subCategory.items);
+    }
+
+    final item = reordered.removeAt(oldIndex);
+    reordered.insert(newIndex, item);
+
+    // Stamp each item with its new 0-based sort_order.
+    final stamped = reordered.asMap().entries.map((e) => e.value.copyWith(sortOrder: e.key)).toList();
+
+    if (menuCategory.isCombos) {
+      _vm = _vm.copyWith(
+        editMenuDM: _vm.editMenuDM?.copyWith(combos: stamped),
+        menuDM: _vm.menuDM?.copyWith(combos: stamped),
+      );
+    } else {
+      final updatedEdit = (_vm.editMenuDM?.subCategories[menuCategory] ?? [])
+          .map((cat) => cat.uuid == subCategory.uuid ? cat.copyWith(items: stamped) : cat)
+          .toList();
+      final updatedOriginal = (_vm.menuDM?.subCategories[menuCategory] ?? [])
+          .map((cat) => cat.uuid == subCategory.uuid ? cat.copyWith(items: stamped) : cat)
+          .toList();
+
+      _updateFoodOrDrinkCategory(updatedEdit, menuCategory);
+      if (menuCategory.isFood) {
+        _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(foodCategories: updatedOriginal));
+      } else {
+        _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(drinkCategories: updatedOriginal));
+      }
+    }
+
+    emit(_Loaded(_vm));
+
+    // Persist to backend asynchronously — optimistic update, revert on failure.
+    _businessRepo.reorderItems(menuCategory, stamped).then((result) {
+      result.when(
+        success: (_) {},
+        failure: (error) {
+          di<Logger>().e('Error reordering items: ${error.errorMsg}');
+          emit(_Error(error.errorMsg, _vm));
+        },
+      );
+    });
+  }
+
   Future<void> deleteItemPhotos(ItemDM item, MenuCategory menuCategory, String subCategoryUuid) async {
     _vm = _vm.copyWith(avoidFocus: true);
     emit(_Loading(_vm));

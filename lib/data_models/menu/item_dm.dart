@@ -31,6 +31,7 @@ class ItemDM with _$ItemDM {
     @JsonKey(name: 'business_menu_id') int? comboCategoryId,
     @Default(true) bool available,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
+    @JsonKey(name: 'sort_order') @Default(0) int sortOrder,
 
     // Attributes for editing and rendering
 

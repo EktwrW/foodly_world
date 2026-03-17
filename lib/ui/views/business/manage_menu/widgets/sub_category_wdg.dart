@@ -91,16 +91,51 @@ class SubCategoryWdg extends StatelessWidget {
         else
           const SizedBox(height: 30),
         if (subCategory?.items.isNotEmpty ?? false)
-          ...subCategory!.items.mapIndexed(
-            (i, item) => MenuItemWdg(
-              key: Key(item.uuid),
-              subCategory: subCategory!,
-              menuCategory: menuCategory,
-              vm: vm,
-              item: item,
-              isLastScreenItem: isLastSubCategory && ((subCategory!.items.length - 1) == i),
+          if (vm.editMode && vm.enableEditCategoryBtns && (subCategory!.items.length) > 1)
+            ReorderableListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              buildDefaultDragHandles: false,
+              // Remove the default white Material elevation on the dragged item
+              proxyDecorator: (child, index, animation) => child,
+              itemCount: subCategory!.items.length,
+              onReorder: (oldIndex, newIndex) {
+                cubit.reorderItems(subCategory!, menuCategory, oldIndex, newIndex);
+              },
+              itemBuilder: (context, i) {
+                final item = subCategory!.items[i];
+                // BlocProvider.value re-scopes the cubit for the drag overlay,
+                // which renders outside the original BlocProvider tree.
+                return BlocProvider.value(
+                  key: Key(item.uuid),
+                  value: cubit,
+                  child: ReorderableDragStartListener(
+                    index: i,
+                    child: MenuItemWdg(
+                      subCategory: subCategory!,
+                      menuCategory: menuCategory,
+                      vm: vm,
+                      item: item,
+                      // Never show the bottom spacer while reordering — it
+                      // would travel with the dragged item and look broken.
+                      isLastScreenItem: false,
+                      dragIconWdg: const Icon(Icons.drag_handle, color: FoodlyThemes.primaryFoodly, size: 29),
+                    ),
+                  ),
+                );
+              },
+            )
+          else
+            ...subCategory!.items.mapIndexed(
+              (i, item) => MenuItemWdg(
+                key: Key(item.uuid),
+                subCategory: subCategory!,
+                menuCategory: menuCategory,
+                vm: vm,
+                item: item,
+                isLastScreenItem: isLastSubCategory && ((subCategory!.items.length - 1) == i),
+              ),
             ),
-          ),
       ],
     ).paddingBottom(20);
   }

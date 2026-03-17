@@ -16,6 +16,7 @@ import 'package:foodly_world/data_transfer_objects/business_search/business_sear
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/menu/item_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -97,6 +98,9 @@ abstract class BusinessClient {
   @DELETE('/business-food-item/delete/{uuid}')
   Future<void> deleteFoodItem(@Path('uuid') String uuid);
 
+  @POST('/business-food-item/reorder')
+  Future<void> reorderFoodItems(@Body() ReorderItemsDTO body);
+
   @POST('/business-food-item-photos/store')
   @MultiPart()
   Future<MenuItemPhotoResponse> storeFoodItemPhotos({
@@ -132,6 +136,9 @@ abstract class BusinessClient {
   @DELETE('/business-drink-item/delete/{uuid}')
   Future<void> deleteDrinkItem(@Path('uuid') String uuid);
 
+  @POST('/business-drink-item/reorder')
+  Future<void> reorderDrinkItems(@Body() ReorderItemsDTO body);
+
   @POST('/business-drink-item-photos/store')
   @MultiPart()
   Future<MenuItemPhotoResponse> storeDrinkItemPhotos({
@@ -157,6 +164,9 @@ abstract class BusinessClient {
 
   @DELETE('/business-combos/delete/{uuid}')
   Future<void> deleteComboItem(@Path('uuid') String uuid);
+
+  @POST('/business-combos/reorder')
+  Future<void> reorderCombos(@Body() ReorderItemsDTO body);
 
   @POST('/business-combos-photos/store')
   @MultiPart()
