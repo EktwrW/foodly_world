@@ -66,6 +66,7 @@ const _en = [
         '• Generate AI-assisted promotional text (managers only — your prompts are sent to OpenAI).\n'
         '• Generate AI promotional images (managers only — your prompts are sent to Replicate).\n'
         '• Improve app stability via crash reports and anonymised analytics.\n'
+        '• Provide business owners with anonymised engagement insights (profile views, feature interactions, reservation conversion rates) derived from aggregated user interactions with their listing, to help them evaluate and improve their business performance.\n'
         '• Comply with applicable legal obligations.\n'
         '• Respond to your support requests.\n\n'
         'We do NOT use your data for advertising profiling, do NOT sell your data to third parties, and do NOT apply automated decision-making that has legal effects on you.',
@@ -206,6 +207,7 @@ const _es = [
         '• Generar texto promocional asistido por IA (solo gestores — tus prompts se envían a OpenAI).\n'
         '• Generar imágenes promocionales con IA (solo gestores — tus prompts se envían a Replicate).\n'
         '• Mejorar la estabilidad de la app mediante informes de fallos y analítica anónima.\n'
+        '• Proporcionar a los gestores de negocios informes de interacción anonimizados (vistas de perfil, uso de funciones, tasa de conversión de reservaciones) derivados de interacciones agregadas de usuarios con su listado, para ayudarles a evaluar y mejorar el rendimiento de su negocio.\n'
         '• Cumplir con las obligaciones legales aplicables.\n'
         '• Atender tus solicitudes de soporte.\n\n'
         'NO usamos tus datos para perfilado publicitario, NO vendemos tus datos a terceros, y NO aplicamos toma de decisiones automatizada que tenga efectos jurídicos sobre ti.',
@@ -346,6 +348,7 @@ const _pt = [
         '• Gerar texto promocional assistido por IA (apenas gestores — os seus prompts são enviados para a OpenAI).\n'
         '• Gerar imagens promocionais com IA (apenas gestores — os seus prompts são enviados para a Replicate).\n'
         '• Melhorar a estabilidade da app através de relatórios de falhas e análise anónima.\n'
+        '• Fornecer aos gestores de negócios relatórios de interação anonimizados (visualizações de perfil, utilização de funcionalidades, taxa de conversão de reservas) derivados de interações agregadas de utilizadores com a sua listagem, para os ajudar a avaliar e melhorar o desempenho do seu negócio.\n'
         '• Cumprir as obrigações legais aplicáveis.\n'
         '• Responder aos seus pedidos de suporte.\n\n'
         'NÃO utilizamos os seus dados para criação de perfis publicitários, NÃO vendemos os seus dados a terceiros e NÃO aplicamos tomada de decisão automatizada com efeitos jurídicos sobre si.',

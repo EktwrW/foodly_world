@@ -60,7 +60,9 @@ const _en = [
         '• Your business complies with all applicable local laws and regulations.\n\n'
         'Foodly reserves the right to remove or suspend any business listing that contains false or misleading information.\n\n'
         'REGARDING RESERVATIONS\n\n'
-        'By enabling reservations, you agree to honour confirmed bookings in good faith. Foodly is not liable for disputes between customers and businesses regarding reservations or no-shows.',
+        'By enabling reservations, you agree to honour confirmed bookings in good faith. Foodly is not liable for disputes between customers and businesses regarding reservations or no-shows.\n\n'
+        'ANALYTICS & BUSINESS INSIGHTS\n\n'
+        'As a Manager, you will have access to anonymised engagement metrics about your business listing — such as profile views, feature interactions, and reservation conversion rates. These metrics are derived from aggregated, anonymised interactions of Foodly users with your listing and do not identify individual users. Metrics are indicative only; Foodly does not guarantee any specific level of visibility, traffic, or business performance.',
   ),
   TermsSection(
     heading: 'Reservation System',
@@ -220,7 +222,9 @@ const _es = [
         '• Tu negocio cumple con todas las leyes y regulaciones locales aplicables.\n\n'
         'Foodly se reserva el derecho de eliminar o suspender listados que contengan información falsa o engañosa.\n\n'
         'SOBRE LAS RESERVACIONES\n\n'
-        'Al habilitar la función de reservaciones, te comprometes a honrar las reservaciones confirmadas de buena fe. Foodly no se hace responsable de disputas entre clientes y negocios.',
+        'Al habilitar la función de reservaciones, te comprometes a honrar las reservaciones confirmadas de buena fe. Foodly no se hace responsable de disputas entre clientes y negocios.\n\n'
+        'ANALÍTICA E INFORMES DE NEGOCIO\n\n'
+        'Como Manager, tendrás acceso a métricas de interacción anonimizadas sobre tu listado de negocio — como vistas de perfil, uso de funciones y tasa de conversión de reservaciones. Estas métricas se derivan de interacciones agregadas y anonimizadas de los usuarios de Foodly con tu listado y no identifican a usuarios individuales. Las métricas son orientativas; Foodly no garantiza ningún nivel específico de visibilidad, tráfico o rendimiento comercial.',
   ),
   TermsSection(
     heading: 'Sistema de Reservaciones',
@@ -375,7 +379,9 @@ const _pt = [
         '• O seu negócio cumpre todas as leis e regulamentos locais aplicáveis.\n\n'
         'A Foodly reserva-se o direito de remover ou suspender listagens que contenham informação falsa ou enganosa.\n\n'
         'SOBRE AS RESERVAS\n\n'
-        'Ao ativar as reservas, compromete-se a honrá-las de boa-fé. A Foodly não se responsabiliza por disputas entre clientes e negócios.',
+        'Ao ativar as reservas, compromete-se a honrá-las de boa-fé. A Foodly não se responsabiliza por disputas entre clientes e negócios.\n\n'
+        'ANÁLISE E RELATÓRIOS DE NEGÓCIO\n\n'
+        'Enquanto Manager, terá acesso a métricas de interação anonimizadas sobre a sua listagem de negócio — como visualizações de perfil, utilização de funcionalidades e taxa de conversão de reservas. Estas métricas são derivadas de interações agregadas e anonimizadas dos utilizadores da Foodly com a sua listagem e não identificam utilizadores individuais. As métricas são meramente indicativas; a Foodly não garante qualquer nível específico de visibilidade, tráfego ou desempenho comercial.',
   ),
   TermsSection(
     heading: 'Sistema de Reservas',
