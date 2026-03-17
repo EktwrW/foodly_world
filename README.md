@@ -1,92 +1,109 @@
-# foodly.world
+# foodly.solutions
 
 Become a foodler.
 
-https://www.linkedin.com/posts/ektwr_flutter-dart-laravel-activity-7336375716986478592-3qCv?utm_source=share&utm_medium=member_desktop&rcm=ACoAADBMLEMB4-sKC1CzkJCQygLDBd5wLVXwImE
+## Overview
 
-## Getting Started
+Foodly is a Flutter application for discovering and engaging with food & beverage businesses. It serves two audiences: **customers** who discover and interact with nearby places, and **business owners** who manage their presence and reservations.
 
-Welcome to Foodly, a Flutter application designed to showcase a robust architecture model for developing modern, feature-rich mobile apps. Foodly integrates a variety of powerful tools and features to provide an enhanced experience for both business owners and customers in the food and beverage industry, as well as cooking schools.
+The app targets iOS and Android (deployed to the App Store and Google Play).
 
 ## Key Features
 
-Google Maps Integration: Seamlessly navigate and discover locations with Google Maps.
-Geolocation Services: Utilize advanced geolocation to find and promote nearby businesses.
-Artificial Intelligence: Leverage AI for personalized recommendations and smart features.
-Social Feed: Engage with the community through a dynamic social feed.
-Comprehensive Business Tools: Provide business owners with tools to manage and grow their establishments.
+- **Smart Search**: NLP-powered voice and text search with multilingual support (EN/ES/PT), finds nearby businesses by category, name, or natural-language query
+- **Location-Based Discovery**: Nearby businesses carousel, new releases section, and promotions feed — all powered by real-time GPS
+- **Reservations System**: Customers request table reservations; managers confirm or reject with in-app notifications
+- **Buzz Feed**: Anonymous community activity feed showing recent interactions at nearby businesses
+- **Social Posts**: Users and businesses share posts with photos; community feed with likes
+- **Business Management**: Owners manage their business profile, menu, photos, promotions, combos, and reservations
+- **Multi-language**: Full localization in English, Spanish, and Portuguese
+- **AI Features**: OpenAI integration for promo image generation and smart recommendations
+- **Notifications**: In-app polling notification system for reservations, reviews, favorites, and business activity
+
+## Tech Stack
+
+- **Framework**: Flutter (Dart `^3.6.0`)
+- **State Management**: BLoC / Cubit (Freezed states)
+- **Networking**: Dio + Retrofit (generated clients)
+- **DI**: GetIt
+- **Backend**: Laravel API on Google Cloud Run → [be-foodly](https://be-foodly-137265888722.europe-west1.run.app)
 
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
-
-- Flutter SDK 3.27.1 or higher installed on your development machine
+- Flutter SDK 3.27.1 or higher
+- Dart SDK `^3.6.0`
 - Google Maps API Key
-- iOS 14.0 or higher for iOS development
-- Android SDK with minimum SDK version 19 for Android development
+- iOS 14.0+ for iOS development
+- Android SDK — `minSdkVersion 21`, `targetSdkVersion 36`
 
-### Installation
+## Installation
 
-- Clone the repository
-  `git clone https://github.com/EktwrW/foodly_world.git`
+```bash
+# Clone the repository
+git clone https://github.com/EktwrW/foodly_world.git
+cd foodly_world
 
-- Navigate to the project directory
-  `cd foodly_world`
+# Install dependencies
+flutter pub get
 
-- Install dependencies
-  `flutter pub get`
+# Generate serialization code
+dart run build_runner build --delete-conflicting-outputs
+```
 
-- Configure Google Maps API Key
-  Add your API key to the android/app/src/main/AndroidManifest.xml and ios/Runner/Info.plist files.
+### Configure API keys
 
-- Run the app
-  `flutter run`
+Add your Google Maps API key to:
 
-### Platform-Specific Setup
+- `android/app/src/main/AndroidManifest.xml`
+- `ios/Runner/Info.plist`
 
-#### iOS Configuration
+### Run
 
-1. Update your Podfile to specify iOS 14.0:
+```bash
+flutter run
+```
+
+## Useful Scripts
+
+```bash
+# Regenerate serialization / Retrofit clients
+dart run build_runner build --delete-conflicting-outputs
+
+# Generate localization files
+flutter pub global activate intl_utils
+flutter pub global run intl_utils:generate
+
+# Regenerate launcher icons
+dart run icons_launcher:create --icons_launcher.yaml
+
+# Regenerate native splash screen
+dart run flutter_native_splash:create
+```
+
+## Platform-Specific Setup
+
+### iOS
+
+Minimum deployment target: **iOS 14.0**
 
 ```ruby
+# Podfile
 platform :ios, '14.0'
 ```
 
-### Useful Scripts
+### Android
 
-- Serialize files:
-  `dart run build_runner build --delete-conflicting-outputs`
+```gradle
+minSdkVersion 21
+targetSdkVersion 36
+```
 
-- Activate dictionaries:
-  `flutter pub global activate intl_utils`
+The release keystore (`foodly-release.jks`) and `key.properties` are gitignored — required for signed builds.
 
-- Update dictionaries:
-  `flutter pub global run intl_utils:generate`
+## API Documentation
 
-- Generate launch icons:
-  `dart run icons_launcher:create --icons_launcher.yaml`
+[API Documentation](https://foodly.solutions/api/documentation#/)
 
-- Generate native splash screen:
-  `dart run flutter_native_splash:create`
+## Credits
 
-### API Documentation
-
-For detailed API documentation, visit [API Documentation](https://foodly.world/api/documentation#/).
-
-Explore Foodly and see how it can be adapted and extended to meet the needs of various businesses in the culinary world.
-
-### Coming up for Improvement
-
-- Documentation: Enhance the README.md with more detailed setup instructions, examples of usage, and a section for contributing guidelines.
-
-- Code Comments: Add more comments and documentation within the code to explain the logic, especially for complex functions and classes.
-
-- Unit Tests: test coverage for all features and components. This will help maintain code quality and reliability.
-
-- Security: Implement a SECURITY.md file to define security policies and procedures for reporting vulnerabilities.
-
-## Credits and Attribution
-
-We would like to express our gratitude to [Freepik](https://www.freepik.es/autor/freepik/iconos/flat-circular-flat_9?t=f#from_element=families) for providing the icons used in our application. Specifically, the icons for business categories and some dialogue boxes in the app are attributed to the Circular Flat icon family by Freepik.
-
-Freepik's contribution has been essential in enhancing the visual appearance and user experience of our application. We appreciate the excellent work of Freepik's designers and creators and their generosity in sharing it with the community.
+Business category icons and some UI assets by [Freepik](https://www.freepik.es/autor/freepik/iconos/flat-circular-flat_9?t=f#from_element=families) — Circular Flat icon family.
