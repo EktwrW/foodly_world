@@ -15,6 +15,9 @@ class _SmartSearchWrapper extends StatelessWidget {
           searchComplete: (_) => dialogService.hideLoading(),
           error: (message, vm) {
             dialogService.hideLoading();
+            // Mic permission denied is handled by the voice button — it shows
+            // a richer snackbar with an Open Settings action. Skip generic error.
+            if (vm.micPermissionDenied) return;
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             FoodlySnackbars.errorGeneric(context, message);
           },

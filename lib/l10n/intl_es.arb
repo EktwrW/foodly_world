@@ -434,6 +434,7 @@
   "signUpBusinessTooltipTextSpan9": "a tus clientes.",
   "smokingArea": "Área de Fumadores",
   "somethingWentWrong": "Ocurrió un error",
+  "micPermissionDeniedMessage": "La búsqueda por voz usa el micrófono para encontrar lugares cercanos. Activa el acceso en Ajustes para explorar con tu voz.",
   "speechRecognitionError": "Error al iniciar el reconocimiento de voz.",
   "speechRecognitionUnavailable": "El reconocimiento de voz no está disponible en este dispositivo.",
   "state": "Estado",

@@ -30,6 +30,7 @@ class SmartSearchVM with _$SmartSearchVM {
     @Default(SmartSearchMode.none) SmartSearchMode smartSearchMode,
     required InputController inputController,
     @Default(false) bool isBottomBarHidden,
+    @Default(false) bool micPermissionDenied,
     String? sessionId,
     NlpSearchPlatform? platform,
     @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo,

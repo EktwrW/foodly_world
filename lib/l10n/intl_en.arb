@@ -432,6 +432,7 @@
   "signUpBusinessTooltipTextSpan9": "to your customers.",
   "smokingArea": "Smoking Area",
   "somethingWentWrong": "An error occurred",
+  "micPermissionDeniedMessage": "Voice Search uses your microphone to find great places nearby. Grant microphone access in Settings to start exploring with your voice.",
   "speechRecognitionError": "Error starting speech recognition.",
   "speechRecognitionUnavailable": "Speech recognition is not available on this device.",
   "state": "State",

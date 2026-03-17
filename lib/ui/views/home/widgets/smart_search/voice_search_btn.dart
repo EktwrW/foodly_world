@@ -13,6 +13,11 @@ class VoiceSearchButton extends StatelessWidget {
             onPressed: state.vm.smartSearchMode.isVoice
                 ? null
                 : () async {
+                    if (state.vm.micPermissionDenied) {
+                      if (context.mounted) SmartSearchSnackbars.showMicPermissionDenied(context);
+                      return;
+                    }
+
                     if (state.vm.smartSearchMode.isOff) {
                       if (context.mounted) SmartSearchSnackbars.showInputSearchWdg(context);
                     }

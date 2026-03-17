@@ -8,9 +8,52 @@ import 'package:foodly_world/ui/shared_widgets/animations/icon_pulsing.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:icons_plus/icons_plus.dart' show Iconsax;
 
 class SmartSearchSnackbars {
   const SmartSearchSnackbars._();
+
+  static void showMicPermissionDenied(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.action,
+      buttonBuilder: (dismiss) => SizedBox(
+        width: double.infinity,
+        child: ui.NeumorphicButton(
+          onPressed: () {
+            dismiss();
+            Geolocator.openAppSettings();
+          },
+          style: ui.NeumorphicStyle(
+            shape: ui.NeumorphicShape.convex,
+            boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+            depth: 3,
+            lightSource: ui.LightSource.topRight,
+            intensity: 1.2,
+            surfaceIntensity: .3,
+            color: FoodlyThemes.primaryFoodly,
+          ),
+          padding: const EdgeInsets.all(10),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: ClayText(
+              S.current.openSettings,
+              color: ui.NeumorphicColors.decorationMaxWhiteColor,
+              spread: 0,
+              style: FoodlyTextStyles.snackBarPrimaryButton,
+            ),
+          ),
+        ),
+      ),
+      content: _MicPermissionContent(),
+    );
+
+    scaffoldMessenger
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar.getSnackBar(context));
+  }
 
   static void showInputSearchWdg(
     BuildContext context,
@@ -222,6 +265,20 @@ class _TextSearchView extends StatelessWidget {
         ),
       ],
     ).paddingBottom(12);
+  }
+}
+
+class _MicPermissionContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: 16,
+      children: [
+        const Icon(Iconsax.microphone_slash_outline, size: 48, color: FoodlyThemes.primaryFoodly),
+        _TextWdg(text: S.current.micPermissionDeniedMessage),
+      ],
+    ).paddingVertical(8);
   }
 }
 

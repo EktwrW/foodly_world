@@ -14,7 +14,7 @@ export 'package:foodly_world/ui/views/home/widgets/smart_search/view_model/smart
 part 'smart_search_state.dart';
 part 'smart_search_cubit.freezed.dart';
 
-class SmartSearchCubit extends Cubit<SmartSearchState> {
+class SmartSearchCubit extends Cubit<SmartSearchState> with WidgetsBindingObserver {
   final SpeechToText _speechToText;
   Timer? _listenTimer;
   final NlpSearchRepo _nlpSearchRepo;
@@ -29,7 +29,16 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         _logger = logger,
         _vm = SmartSearchVM.initial(),
         super(SmartSearchState.initial(SmartSearchVM.initial())) {
+    WidgetsBinding.instance.addObserver(this);
     _initialize();
+  }
+
+  // Re-check mic permission when the user returns from the Settings app.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _vm.micPermissionDenied) {
+      _initialize();
+    }
   }
 
   Future<void> _initialize() async {
@@ -59,8 +68,12 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
       );
 
       if (available) {
+        _vm = _vm.copyWith(micPermissionDenied: false);
         emit(SmartSearchState.initial(_vm));
       } else {
+        _vm = _vm.copyWith(micPermissionDenied: true);
+        // Emit error so the wrapper knows, but the wrapper will NOT show a
+        // generic snackbar for this case — the voice button handles the UX.
         emit(SmartSearchState.error(S.current.speechRecognitionUnavailable, _vm));
       }
     } on Exception catch (e) {
@@ -312,6 +325,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
   @override
   Future<void> close() async {
+    WidgetsBinding.instance.removeObserver(this);
     _listenTimer?.cancel();
     await _speechToText.stop();
     return super.close();
