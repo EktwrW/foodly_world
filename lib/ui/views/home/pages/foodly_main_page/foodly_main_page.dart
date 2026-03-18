@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/views/home/widgets/home_app_bar_mobile.dart';
 import 'package:foodly_world/ui/views/home/widgets/home_categories_wdg.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
+import 'package:foodly_world/ui/views/home/widgets/smart_search/widgets/smart_search_snackbars.dart';
 
 part '../../widgets/smart_search/widgets/smart_search_wrapper.dart';
 

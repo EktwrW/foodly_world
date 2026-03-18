@@ -41,7 +41,7 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
                               promoMedia: widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
                               title: widget.promo.title,
                             )
-                          : const PromoPlaceholder(),
+                          : const Asset(FoodlyAssets.promoPlaceholder, fit: BoxFit.none),
                     ),
                   ),
                   Positioned(
@@ -222,123 +222,6 @@ class PromoMedia extends StatelessWidget {
         radius: 8,
       );
     }
-  }
-}
-
-class PromoPlaceholder extends StatefulWidget {
-  const PromoPlaceholder({super.key});
-
-  @override
-  State<PromoPlaceholder> createState() => _PromoPlaceholderState();
-}
-
-class _PromoPlaceholderState extends State<PromoPlaceholder> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  int _currentIconIndex = 0;
-
-  static const List<IconData> _icons = [
-    FontAwesome.gifts_solid,
-    Bootstrap.ticket_perforated,
-    Bootstrap.shop,
-    Bootstrap.alarm,
-    Bootstrap.percent,
-    Bootstrap.cup_hot_fill,
-    Bootstrap.gift_fill,
-    Bootstrap.currency_dollar,
-    Bootstrap.tag_fill,
-    FontAwesome.utensils_solid,
-    Clarity.savings_line,
-    LineAwesome.gift_solid,
-    LineAwesome.store_solid,
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _startAnimation();
-  }
-
-  void _startAnimation() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          setState(() => _currentIconIndex = (_currentIconIndex + 1) % _icons.length);
-          _controller
-            ..reset()
-            ..forward();
-        }
-      });
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
-            FoodlyThemes.primaryFoodly.withValues(alpha: 0.05),
-            FoodlyThemes.primaryFoodly.withValues(alpha: 0.01),
-          ],
-        ),
-      ),
-      child: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            final scaleAnimation = Tween<double>(
-              begin: 0.5,
-              end: 1.0,
-            ).animate(CurvedAnimation(
-              parent: _controller,
-              curve: Curves.easeOutBack,
-            ));
-
-            final opacityAnimation = Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).animate(CurvedAnimation(
-              parent: _controller,
-              curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
-            ));
-
-            final fadeOutAnimation = Tween<double>(
-              begin: 1.0,
-              end: 0.0,
-            ).animate(CurvedAnimation(
-              parent: _controller,
-              curve: const Interval(0.8, 1.0, curve: Curves.easeOut),
-            ));
-
-            return ScaleTransition(
-              scale: scaleAnimation,
-              child: AnimatedOpacity(
-                duration: Durations.medium3,
-                opacity: opacityAnimation.value * fadeOutAnimation.value,
-                child: Icon(
-                  _icons[_currentIconIndex],
-                  size: 80,
-                  color: FoodlyThemes.tertiaryFoodly,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
   }
 }
 

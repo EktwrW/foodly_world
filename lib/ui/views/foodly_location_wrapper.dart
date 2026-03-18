@@ -1,3 +1,5 @@
+import 'dart:async' show Timer;
+
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
@@ -16,6 +18,9 @@ class FoodlyLocationWrapper extends StatefulWidget {
 class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with WidgetsBindingObserver {
   late final LocationService _locationService;
   late final DialogService _dialogService;
+  bool _splashRemoved = false;
+  bool _dialogShowing = false;
+  Timer? _safetyTimer;
 
   @override
   void initState() {
@@ -24,24 +29,51 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     _dialogService = di<DialogService>();
     WidgetsBinding.instance.addObserver(this);
 
+    // Delay location check to after the first frame so biometric auth
+    // (which is initialized in LocalAuthCubit's constructor) has a chance to
+    // set isBiometricLoginInProgress. On Android, two system dialogs can't
+    // coexist — requesting location permission while biometric is showing
+    // would dismiss the biometric dialog.
     if (_locationService.mustFetchLocation) {
-      context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        if (di<AuthSessionService>().isBiometricLoginInProgress) return;
+        context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+      });
     }
+
+    // Safety net: force-remove splash after 8 seconds regardless of state.
+    _safetyTimer = Timer(const Duration(seconds: 8), _tryRemoveSplash);
   }
 
   @override
   void dispose() {
+    _safetyTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // When the user returns from system settings after granting location,
-    // re-run the location check so the button and feeds update automatically.
-    if (state == AppLifecycleState.resumed && !_locationService.hasLocationData) {
+    // Re-check location ONLY when the user explicitly tapped "Open Settings"
+    // and returns. This prevents infinite loops caused by checkLocation()
+    // opening a system dialog, which backgrounds the app, which triggers
+    // resumed, which fires checkLocation() again.
+    if (state == AppLifecycleState.resumed && _locationService.awaitingSettingsReturn) {
+      _locationService.awaitingSettingsReturn = false;
       context.read<LocationBloc>().add(const LocationEvent.checkLocation());
     }
+  }
+
+  /// Single point of splash + loading dismissal. Idempotent — safe to call
+  /// from multiple listeners. The 2 calls in foodly_wrapper.dart (LocalAuth
+  /// error paths) remain independent since this widget may be unmounted.
+  void _tryRemoveSplash() {
+    if (_splashRemoved) return;
+    _splashRemoved = true;
+    _safetyTimer?.cancel();
+    if (mounted) _dialogService.hideLoading();
+    FlutterNativeSplash.remove();
   }
 
   @override
@@ -51,35 +83,31 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
         state.whenOrNull(
           checkingLocation: () => mounted ? _dialogService.showLoading() : null,
           locationChecked: (locationDM) {
-            // updateLocation also fires the locationChanged stream, which
-            // CategoriesPage subscribes to for its own refresh.
             _locationService.updateLocation(locationDM);
+            _tryRemoveSplash();
+            // Always dismiss loading — showLoading() can fire multiple times
+            // (e.g. after returning from settings) but _tryRemoveSplash() only
+            // runs once.
+            if (mounted) _dialogService.hideLoading();
 
-            final favsState = context.read<FavoritesCubit>().state;
-
-            if (favsState == FavoritesState.loaded(favsState.vm)) {
-              if (mounted) _dialogService.hideLoading();
-              FlutterNativeSplash.remove();
-            }
-
-            // Reload location-based home feeds (handles both initial startup
-            // and the case where permission was granted after denial).
             di<NearbyPromotionsCubit>().load();
             di<NewReleasesCubit>().load();
           },
           serviceDisabled: (message) {
+            _tryRemoveSplash();
             if (mounted) _dialogService.hideLoading();
-            FlutterNativeSplash.remove();
             if (mounted) FoodlySnackbars.errorGeneric(context, message);
           },
           permissionDenied: (message) {
+            _locationService.markInitialized();
+            _tryRemoveSplash();
             if (mounted) _dialogService.hideLoading();
-            FlutterNativeSplash.remove();
             if (mounted) _showLocationPermissionDialog(context, message);
           },
           permissionPermanentlyDenied: (message) {
+            _locationService.markInitialized();
+            _tryRemoveSplash();
             if (mounted) _dialogService.hideLoading();
-            FlutterNativeSplash.remove();
             if (mounted) _showLocationPermissionDialog(context, message);
           },
         );
@@ -89,11 +117,20 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
   }
 
   void _showLocationPermissionDialog(BuildContext context, String message) {
+    if (_dialogShowing) return;
+    _dialogShowing = true;
+
+    final navContext = rootNavigatorKey.currentContext;
+    if (navContext == null) {
+      _dialogShowing = false;
+      return;
+    }
+
     final savedUser = di<AuthSessionService>().userSessionDM?.user;
     final hasSavedAddress = savedUser?.principalAddress?.latitude != null;
 
     showDialog(
-      context: context,
+      context: navContext,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
         title: Text(S.current.locationRationaleTitle),
@@ -110,14 +147,17 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+            onPressed: () => Navigator.of(navContext).pop(),
+            child: Text(MaterialLocalizations.of(navContext).cancelButtonLabel),
           ),
           if (hasSavedAddress)
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(navContext).pop();
                 _locationService.updateLocationUserDM(savedUser!);
+                context.read<LocationBloc>().add(
+                      LocationEvent.setManualLocation(_locationService.currentLocation),
+                    );
                 di<NearbyPromotionsCubit>().load();
                 di<NewReleasesCubit>().load();
               },
@@ -125,30 +165,21 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
             ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              _locationService.awaitingSettingsReturn = true;
+              Navigator.of(navContext).pop();
               Geolocator.openAppSettings();
             },
             child: Text(S.current.openSettings),
           ),
         ],
       ),
-    );
+    ).then((_) => _dialogShowing = false);
   }
 
   Widget _buildContent() => BlocListener<FavoritesCubit, FavoritesState>(
         listener: (context, state) {
           state.whenOrNull(
-            loaded: (vm) async {
-              if (!_locationService.mustFetchLocation) {
-                if (mounted) _dialogService.hideLoading();
-                FlutterNativeSplash.remove();
-              } else {
-                await Future.delayed(const Duration(seconds: 10), () {
-                  if (mounted) _dialogService.hideLoading();
-                  FlutterNativeSplash.remove();
-                });
-              }
-            },
+            loaded: (_) => _tryRemoveSplash(),
           );
         },
         child: SingleChildScrollView(

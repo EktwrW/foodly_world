@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' hide PromotionStatus;
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';

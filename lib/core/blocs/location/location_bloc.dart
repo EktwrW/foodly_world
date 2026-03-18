@@ -31,6 +31,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     on<LocationEvent>((event, emit) async {
       await event.map(
         checkLocation: (event) async => await determinePosition(emit),
+        setManualLocation: (event) async {
+          _locationDM = event.locationDM;
+          emit(_LocationChecked(_locationDM));
+        },
       );
     });
   }

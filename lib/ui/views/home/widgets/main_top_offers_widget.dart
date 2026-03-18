@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -151,17 +153,7 @@ class NearbyPromoCard extends StatelessWidget {
       return CachedNetworkImage(imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
     }
 
-    // Business logo fallback
-    if (promo.businessLogo?.isNotEmpty == true) {
-      return CachedNetworkImage(imageUrl: promo.businessLogo!, fit: BoxFit.cover);
-    }
-
-    return const ColoredBox(
-      color: FoodlyThemes.primaryFoodly,
-      child: Center(
-        child: Icon(Bootstrap.megaphone_fill, color: Colors.white, size: 40),
-      ),
-    );
+    return const Asset(FoodlyAssets.promoPlaceholder, fit: BoxFit.scaleDown);
   }
 }
 

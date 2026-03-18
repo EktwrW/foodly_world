@@ -51,6 +51,8 @@ class FoodlyAssets {
   static const AssetData reserveTable = AssetData('reserve_table.png', AssetType.image);
   static const AssetData reserved = AssetData('reserved.png', AssetType.image);
   static const AssetData review = AssetData('review.png', AssetType.image);
+  static const AssetData newBusinessPlaceholder = AssetData('new_business_placeholder.jpg', AssetType.image);
+  static const AssetData promoPlaceholder = AssetData('promo_placeholder.webp', AssetType.image);
 
   // eliminar estos assets de pruebas cuando ya no sean utilizados:
   static const AssetData sushiTemp = AssetData('sushi.webp', AssetType.image);
@@ -59,5 +61,4 @@ class FoodlyAssets {
   static const AssetData panaderia2 = AssetData('panaderia2.jpg', AssetType.image);
   static const AssetData panaderia3 = AssetData('panaderia3.jpg', AssetType.image);
   static const AssetData panaderia4 = AssetData('panaderia4.jpg', AssetType.image);
-  static const AssetData logoRamalha = AssetData('logo_ramalha.jpg', AssetType.image);
 }

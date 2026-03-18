@@ -24,9 +24,7 @@ class VoiceSearchButton extends StatelessWidget {
 
                     await Future.microtask(() {
                       if (context.mounted) {
-                        context.read<SmartSearchCubit>()
-                          ..setVoiceSearchMode()
-                          ..startListening();
+                        context.read<SmartSearchCubit>().setVoiceSearchMode();
                       }
                     });
                   },

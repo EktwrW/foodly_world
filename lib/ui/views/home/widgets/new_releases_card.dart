@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -210,10 +212,7 @@ class _NewReleasesCardContent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           child: imageUrls.isNotEmpty
                               ? FeedMultipleImageView(imageUrls: imageUrls, radius: 12)
-                              : ColoredBox(
-                                  color: FoodlyThemes.primaryFoodly.withValues(alpha: .15),
-                                  child: const Icon(Bootstrap.shop_window, size: 64, color: Colors.white54),
-                                ),
+                              : const Asset(FoodlyAssets.newBusinessPlaceholder, fit: BoxFit.cover),
                         ).paddingAll(.9),
                       ),
                       // Logo + name overlay

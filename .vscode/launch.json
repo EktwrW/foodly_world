@@ -19,7 +19,8 @@
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
       ]
     },
     {
@@ -39,7 +40,8 @@
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
       ]
     },
     {
@@ -59,7 +61,8 @@
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
       ]
     },
     {
@@ -81,7 +84,8 @@
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn"
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
       ]
     }
   ]

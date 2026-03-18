@@ -18,9 +18,17 @@ class LocationService {
 
   void dispose() => _locationChangedController.close();
 
+  /// Set to `true` before calling `Geolocator.openAppSettings()`.
+  /// FoodlyLocationWrapper re-checks location on resume ONLY when this is true.
+  bool awaitingSettingsReturn = false;
+
   LocationDetailsDM get currentLocation => _locationDM;
   bool get mustFetchLocation => !_hasBeenInitialized;
   bool get hasLocationData => _locationDM.position != null;
+
+  /// Mark that a location check was attempted (even if denied).
+  /// Prevents re-triggering checkLocation() on widget recreation.
+  void markInitialized() => _hasBeenInitialized = true;
 
   String get currentCountryCode => _locationDM.countryCode ?? FoodlyCountries.USA.countryCode;
   String get currentCountry => _locationDM.country ?? '';

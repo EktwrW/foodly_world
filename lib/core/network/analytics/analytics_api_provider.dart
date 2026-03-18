@@ -7,15 +7,15 @@ class AnalyticsApiProvider {
   Dio get dio => _dio!;
 
   /// Analytics ingest service (Mateo's FastAPI on Cloud Run).
-  /// URL will be updated once the service is deployed.
-  /// Auth: endpoint is currently open; no Authorization header is sent.
-  static const String analyticsBaseUrl = 'https://placeholder-analytics-service.run.app';
+  static const String analyticsBaseUrl = 'https://nlp-search-service-r4khhqj4mq-ew.a.run.app';
+  static const String _analyticsToken = String.fromEnvironment('ANALYTICS_TOKEN');
 
   AnalyticsApiProvider() {
     _dio = Dio(BaseOptions(
       headers: {
         FoodlyStrings.CONTENT_TYPE: FoodlyStrings.APPLICATION_JSON,
         FoodlyStrings.ACCEPT: FoodlyStrings.APPLICATION_JSON,
+        if (_analyticsToken.isNotEmpty) 'Authorization': 'Bearer $_analyticsToken',
       },
       baseUrl: analyticsBaseUrl,
       connectTimeout: const Duration(seconds: 10),

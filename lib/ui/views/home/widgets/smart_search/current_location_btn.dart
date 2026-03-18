@@ -22,8 +22,7 @@ class CurrentLocationButton extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   if (!hasLocation) {
-                    // The lifecycle observer in FoodlyLocationWrapper will
-                    // re-check location and reload feeds when the user returns.
+                    locationService.awaitingSettingsReturn = true;
                     Geolocator.openAppSettings();
                     return;
                   }

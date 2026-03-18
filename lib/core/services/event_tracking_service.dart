@@ -15,8 +15,7 @@ class EventTrackingService with WidgetsBindingObserver {
   final String _sessionId = const Uuid().v4();
   final List<EventDTO> _queue = [];
   Timer? _flushTimer;
-  // Set to true once Mateo's /events and /events/batch endpoints are live.
-  bool _enabled = false;
+  bool _enabled = true;
 
   static const int _flushThreshold = 20;
   static const int _maxQueueSize = 50;
