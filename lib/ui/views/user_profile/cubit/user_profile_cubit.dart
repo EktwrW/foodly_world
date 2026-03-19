@@ -1,7 +1,6 @@
 import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
@@ -320,8 +319,12 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     final completer = Completer<void>();
     final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }

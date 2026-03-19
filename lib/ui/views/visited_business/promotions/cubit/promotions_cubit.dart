@@ -1,7 +1,6 @@
 import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -76,8 +75,12 @@ class PromotionsCubit extends Cubit<PromotionsState> {
     final completer = Completer<void>();
     final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }
