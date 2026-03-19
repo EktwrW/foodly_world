@@ -1,3 +1,6 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/enums/review_enums.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
@@ -70,13 +73,13 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
 
     await _businessRepo.fetchBusinessById(businessUuid).then(
           (response) => response.when(
-            success: (business) {
+            success: (business) async {
               _vm = _vm.copyWith(currentBusiness: business);
-              _tracker.track('business.open', 'VisitBusinessCubit',
-                  targetUuid: business.uuid, targetType: 'business');
+              _tracker.track('business.open', 'VisitBusinessCubit', targetUuid: business.uuid, targetType: 'business');
+              await _precacheBusiness(business);
               emit(_Loaded(_vm));
             },
-            failure: (error) {
+            failure: (error) async {
               _logger.e(error);
               emit(_Error(error.toString(), _vm));
             },
@@ -90,14 +93,15 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
   void _fetchBusinessReviews(String businessUuid) {
     _reviewRepo.getBusinessReviews(businessUuid, perPage: _reviewsPerPage).then(
           (response) => response.when(
-            success: (reviewsResponse) {
+            success: (reviewsResponse) async {
               _vm = _vm.copyWith(
                 currentBusinessReviews: reviewsResponse.reviews,
                 reviewsMeta: reviewsResponse.meta,
               );
+              await _precacheReviews(reviewsResponse.reviews);
               Future.microtask(() => emit(_Loaded(_vm)));
             },
-            failure: (error) {
+            failure: (error) async {
               _logger.e(error);
               Future.microtask(() => emit(_Error(error.toString(), _vm)));
             },
@@ -114,9 +118,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
 
     final nextPage = (_vm.reviewsMeta?.currentPage ?? 1) + 1;
 
-    await _reviewRepo
-        .getBusinessReviews(_vm.currentBusiness!.uuid, page: nextPage, perPage: _reviewsPerPage)
-        .then(
+    await _reviewRepo.getBusinessReviews(_vm.currentBusiness!.uuid, page: nextPage, perPage: _reviewsPerPage).then(
           (response) => response.when(
             success: (reviewsResponse) {
               _vm = _vm.copyWith(
@@ -125,6 +127,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
                 isLoadingMoreReviews: false,
               );
               emit(_Loaded(_vm));
+              _precacheReviews(reviewsResponse.reviews);
             },
             failure: (error) {
               _logger.e(error);
@@ -425,12 +428,58 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     Future.microtask(() => emit(_Loaded(_vm)));
   }
 
+  Future<void> _precacheBusiness(BusinessDM business) {
+    final futures = <Future<void>>[];
+    final f = _precacheUrlFuture(business.logo);
+    if (f != null) futures.add(f);
+    for (final img in business.coverImages) {
+      final f2 = _precacheUrlFuture(img.url);
+      if (f2 != null) futures.add(f2);
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void> _precacheReviews(List<ReviewDM> reviews) {
+    final futures = <Future<void>>[];
+    for (final r in reviews) {
+      final f1 = _precacheUrlFuture(r.userPhoto);
+      final f2 = _precacheUrlFuture(r.businessPhoto);
+      if (f1 != null) futures.add(f1);
+      if (f2 != null) futures.add(f2);
+      for (final url in r.photoUrls) {
+        final f3 = _precacheUrlFuture(url);
+        if (f3 != null) futures.add(f3);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+    ));
+    return completer.future;
+  }
+
   Future<bool> createReservation() async {
     final business = _vm.currentBusiness;
     if (business == null || !_vm.canSubmitReservation) return false;
 
-    _tracker.track('business.reserve_click', 'VisitBusinessCubit',
-        targetUuid: business.uuid, targetType: 'business');
+    _tracker.track('business.reserve_click', 'VisitBusinessCubit', targetUuid: business.uuid, targetType: 'business');
 
     _vm = _vm.copyWith(isSubmittingReservation: true);
     emit(_Loaded(_vm));

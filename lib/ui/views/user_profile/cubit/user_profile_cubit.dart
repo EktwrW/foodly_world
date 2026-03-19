@@ -1,6 +1,11 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
+import 'package:foodly_world/data_models/reviews/review_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nova_places_api/nova_places_api.dart';
@@ -247,16 +252,21 @@ class UserProfileCubit extends Cubit<UserProfileState> {
 
   Future<void> loadMyReviews() async {
     final result = await _reviewRepo.getMyReviews(page: 1);
+    List<ReviewDM>? toCache;
     result.when(
       success: (data) {
         _vm = _vm.copyWith(
           myReviews: data.reviews,
           reviewsMeta: data.meta,
         );
-        emit(_Loaded(_vm));
+        toCache = data.reviews;
       },
       failure: (_) {},
     );
+    if (toCache != null) {
+      await _precacheReviews(toCache!);
+      emit(_Loaded(_vm));
+    }
   }
 
   Future<void> loadMoreReviews() async {
@@ -276,12 +286,44 @@ class UserProfileCubit extends Cubit<UserProfileState> {
           isLoadingMoreReviews: false,
         );
         emit(_Loaded(_vm));
+        _precacheReviews(data.reviews);
       },
       failure: (_) {
         _vm = _vm.copyWith(isLoadingMoreReviews: false);
         emit(_Loaded(_vm));
       },
     );
+  }
+
+  Future<void> _precacheReviews(List<ReviewDM> reviews) {
+    final futures = <Future<void>>[];
+    for (final r in reviews) {
+      final f1 = _precacheUrlFuture(r.userPhoto);
+      if (f1 != null) futures.add(f1);
+      final f2 = _precacheUrlFuture(r.businessPhoto);
+      if (f2 != null) futures.add(f2);
+      for (final url in r.photoUrls) {
+        final f3 = _precacheUrlFuture(url);
+        if (f3 != null) futures.add(f3);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 
   // Sentinel value used by the page listener to detect successful account deletion

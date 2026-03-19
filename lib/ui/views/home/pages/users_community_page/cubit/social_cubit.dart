@@ -1,5 +1,9 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart' show FabCircularMenuPlusState;
 import 'package:flutter/material.dart' show GlobalKey;
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
@@ -7,6 +11,8 @@ import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
+import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -65,15 +71,16 @@ class SocialCubit extends Cubit<SocialState> {
         longitude: longitude,
       );
 
-      result.when(
-        success: (data) {
+      await result.when(
+        success: (data) async {
           _vm = _vm.copyWith(
             posts: data.posts,
             postsMeta: data.meta,
           );
+          await _precachePostImages(data.posts);
           emit(SocialState.loaded(_vm));
         },
-        failure: (error) {
+        failure: (error) async {
           _logger.e('Error loading posts: ${error.errorMsg}');
           emit(SocialState.error(_vm, error.errorMsg));
         },
@@ -111,6 +118,7 @@ class SocialCubit extends Cubit<SocialState> {
             isLoadingMorePosts: false,
           );
           emit(SocialState.loaded(_vm));
+          _precachePostImages(data.posts);
         },
         failure: (error) {
           _logger.e('Error loading more posts: ${error.errorMsg}');
@@ -297,16 +305,17 @@ class SocialCubit extends Cubit<SocialState> {
         perPage: 20,
       );
 
-      result.when(
-        success: (data) {
+      await result.when(
+        success: (data) async {
           _vm = _vm.copyWith(
             nearbyUsers: data.data,
             usersMeta: data.meta,
             isLoadingUsers: false,
           );
+          await _precacheUserImages(data.data);
           emit(SocialState.loaded(_vm));
         },
-        failure: (error) {
+        failure: (error) async {
           _logger.e('Error loading nearby users: ${error.errorMsg}');
           _vm = _vm.copyWith(isLoadingUsers: false);
           emit(SocialState.error(_vm, error.errorMsg));
@@ -348,6 +357,7 @@ class SocialCubit extends Cubit<SocialState> {
             isLoadingMoreUsers: false,
           );
           emit(SocialState.loaded(_vm));
+          _precacheUserImages(data.data);
         },
         failure: (error) {
           _logger.e('Error loading more users: ${error.errorMsg}');
@@ -444,16 +454,17 @@ class SocialCubit extends Cubit<SocialState> {
         page: 1,
       );
 
-      result.when(
-        success: (data) {
+      await result.when(
+        success: (data) async {
           _vm = _vm.copyWith(
             buzzItems: data.data,
             buzzMeta: data.meta,
             isLoadingBuzz: false,
           );
+          await _precacheBuzzImages(data.data);
           emit(SocialState.loaded(_vm));
         },
-        failure: (error) {
+        failure: (error) async {
           _logger.e('Error loading buzz: ${error.errorMsg}');
           _vm = _vm.copyWith(isLoadingBuzz: false);
           emit(SocialState.error(_vm, error.errorMsg));
@@ -493,6 +504,7 @@ class SocialCubit extends Cubit<SocialState> {
             isLoadingMoreBuzz: false,
           );
           emit(SocialState.loaded(_vm));
+          _precacheBuzzImages(data.data);
         },
         failure: (error) {
           _logger.e('Error loading more buzz: ${error.errorMsg}');
@@ -505,6 +517,45 @@ class SocialCubit extends Cubit<SocialState> {
       _vm = _vm.copyWith(isLoadingMoreBuzz: false);
       emit(SocialState.loaded(_vm));
     }
+  }
+
+  Future<void> _precachePostImages(List<PostDM> posts) {
+    final futures = <Future<void>>[];
+    for (final p in posts) {
+      final f1 = _precacheUrlFuture(p.userPhoto);
+      final f2 = _precacheUrlFuture(p.photoUrl);
+      if (f1 != null) futures.add(f1);
+      if (f2 != null) futures.add(f2);
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void> _precacheUserImages(List<NearbyUserDM> users) {
+    final futures = users.map((u) => _precacheUrlFuture(u.photo)).whereType<Future<void>>().toList();
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void> _precacheBuzzImages(List<BuzzItemDM> items) {
+    final futures = items.map((b) => _precacheUrlFuture(b.businessPhoto)).whereType<Future<void>>().toList();
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 
   /// Limpia el estado (logout)

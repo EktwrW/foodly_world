@@ -131,10 +131,18 @@ class FoodlyMainScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: const FoodlyDrawer(),
-      body: child,
+    return BlocBuilder<RootBloc, RootState>(
+      buildWhen: (prev, curr) =>
+          prev.maybeWhen(cachedState: (_) => true, orElse: () => false) !=
+          curr.maybeWhen(cachedState: (_) => true, orElse: () => false),
+      builder: (context, state) {
+        final isAuthenticated = state.maybeWhen(cachedState: (_) => true, orElse: () => false);
+        return Scaffold(
+          key: _scaffoldKey,
+          drawer: isAuthenticated ? const FoodlyDrawer() : null,
+          body: child,
+        );
+      },
     );
   }
 }

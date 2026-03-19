@@ -1,6 +1,11 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/view_model/new_releases_vm.dart';
 
@@ -46,16 +51,17 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
       limit: _limit,
     );
 
-    result.when(
-      success: (response) {
+    await result.when(
+      success: (response) async {
         _vm = _vm.copyWith(
           businesses: response.business,
           isLoading: false,
           error: null,
         );
+        await _precacheImages(response.business);
         emit(NewReleasesState.loaded(_vm));
       },
-      failure: (e) {
+      failure: (e) async {
         _vm = _vm.copyWith(isLoading: false, error: e.toString());
         emit(NewReleasesState.error(_vm, e.toString()));
       },
@@ -65,5 +71,34 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
   void clear() {
     _vm = const NewReleasesVM();
     emit(const NewReleasesState.initial(NewReleasesVM()));
+  }
+
+  Future<void> _precacheImages(List<BusinessDM> businesses) {
+    final futures = <Future<void>>[];
+    for (final business in businesses) {
+      final f = _precacheUrlFuture(business.logo);
+      if (f != null) futures.add(f);
+      for (final img in business.coverImages) {
+        final f2 = _precacheUrlFuture(img.url);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 }

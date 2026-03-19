@@ -1,5 +1,6 @@
-import 'dart:async' show Timer;
+import 'dart:async' show Completer, Timer;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
@@ -195,8 +196,8 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
       ),
     );
 
-    result.when(
-      success: (data) {
+    await result.when(
+      success: (data) async {
         _vm = _vm.copyWith(
           searchResults: data.business,
           smartSearchMode: SmartSearchMode.none,
@@ -205,9 +206,10 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
             controller: TextEditingController(text: searchText),
           ),
         );
+        await _precacheBusinessImages(data.business);
         emit(SmartSearchState.searchComplete(_vm));
       },
-      failure: (error) {
+      failure: (error) async {
         _logger.e('Smart search failed', error: error);
         _vm = _vm.copyWith(
           smartSearchMode: SmartSearchMode.none,
@@ -219,6 +221,39 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         emit(SmartSearchState.error(S.current.connectionError, _vm));
       },
     );
+  }
+
+  Future<void> _precacheBusinessImages(List<BusinessDM> businesses) {
+    final futures = <Future<void>>[];
+    for (final b in businesses) {
+      final f = _precacheUrlFuture(b.logo);
+      if (f != null) futures.add(f);
+      for (final img in b.coverImages) {
+        final f2 = _precacheUrlFuture(img.url);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+    ));
+    return completer.future;
   }
 
   void clearSearch() {

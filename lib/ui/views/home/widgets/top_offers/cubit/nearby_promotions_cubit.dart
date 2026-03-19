@@ -1,5 +1,7 @@
-import 'dart:developer';
+import 'dart:async' show Completer;
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/favorites_cubit/favorites_cubit.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
@@ -60,11 +62,8 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
       perPage: _perPage,
     );
 
-    result.when(
-      success: (response) {
-        log('NearbyPromotionsCubit.load success: ${response.data.length} items');
-        log('${response.data}');
-
+    await result.when(
+      success: (response) async {
         _vm = _vm.copyWith(
           promotions: response.data,
           hasMore: response.meta.hasMore,
@@ -72,9 +71,10 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
           isLoading: false,
           error: null,
         );
+        await _precacheImages(response.data);
         emit(NearbyPromotionsState.loaded(_vm));
       },
-      failure: (e) {
+      failure: (e) async {
         _logger.e('NearbyPromotionsCubit.load error: $e');
         _vm = _vm.copyWith(isLoading: false, error: e.toString());
         emit(NearbyPromotionsState.error(_vm, e.toString()));
@@ -110,6 +110,7 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
           isLoadingMore: false,
         );
         emit(NearbyPromotionsState.loaded(_vm));
+        _precacheImages(response.data); // fire-and-forget for pagination
       },
       failure: (e) {
         _logger.e('NearbyPromotionsCubit.loadMore error: $e');
@@ -161,5 +162,34 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
   void clear() {
     _vm = const NearbyPromotionsVM();
     emit(const NearbyPromotionsState.initial(NearbyPromotionsVM()));
+  }
+
+  Future<void> _precacheImages(List<NearbyPromotionDM> promos) {
+    final futures = <Future<void>>[];
+    for (final promo in promos) {
+      final f1 = _precacheUrlFuture(promo.businessLogo);
+      if (f1 != null) futures.add(f1);
+      if (promo.promoMedia?.isImage == true) {
+        final f2 = _precacheUrlFuture(promo.promoMedia?.mediaUrl);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 }

@@ -1,12 +1,15 @@
+import 'dart:async' show Completer;
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show LocalStorageService, di, FoodlyStrings, Logger;
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -79,6 +82,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         success: (data) async {
           log('${data.business}');
 
+          await _precacheBusinessImages(data.business);
           await Future.microtask(() => emit(_Loaded(_vm = _vm.copyWith(
                 nearbyBusinesses: data.business,
                 isSwitchingRadius: false,
@@ -106,6 +110,39 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
     _vm = _vm.copyWith(viewMode: newViewMode);
     emit(_Loaded(_vm));
+  }
+
+  Future<void> _precacheBusinessImages(List<BusinessDM> businesses) {
+    final futures = <Future<void>>[];
+    for (final b in businesses) {
+      final f = _precacheUrlFuture(b.logo);
+      if (f != null) futures.add(f);
+      for (final img in b.coverImages) {
+        final f2 = _precacheUrlFuture(img.url);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+    ));
+    return completer.future;
   }
 
   void toggleRadiusDistance(double newRadiusInKm) {

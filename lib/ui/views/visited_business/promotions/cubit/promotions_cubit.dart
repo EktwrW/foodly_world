@@ -1,3 +1,7 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -42,11 +46,41 @@ class PromotionsCubit extends Cubit<PromotionsState> {
           );
     }
 
-    emit(_Loaded(_vm = _vm.copyWith(promotions: _vm.businessDM?.promotions ?? [])));
+    final promos = _vm.businessDM?.promotions ?? [];
+    _vm = _vm.copyWith(promotions: promos);
+    await _precachePromoImages(promos);
+    emit(_Loaded(_vm));
   }
 
   /// Actualiza la vista actual (activas o próximas)
   void updateView(int index) => emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
+
+  Future<void> _precachePromoImages(List<PromotionDM> promos) {
+    final futures = <Future<void>>[];
+    for (final promo in promos) {
+      for (final media in promo.promoMedia) {
+        final f = _precacheUrlFuture(media.mediaUrl);
+        if (f != null) futures.add(f);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
+  }
 
   /// Maneja los errores que puedan ocurrir durante la carga de promociones
   void _handleError(Object e) {

@@ -28,7 +28,7 @@ import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotion
 import 'package:foodly_world/ui/views/business/promotions/helper/promotions_helper.dart';
 import 'package:foodly_world/ui/views/business/promotions/view_model/manage_promotions_vm.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity, FontAwesome, LineAwesome;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
 import 'package:intl/intl.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:universal_io/io.dart';

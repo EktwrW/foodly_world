@@ -1,3 +1,7 @@
+import 'dart:async' show Completer;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/favorites_vm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
@@ -106,15 +110,21 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     }
   }
 
-  Future<void> _getMyFavoritePromotions() async => await _businessRepo.getMyFavoritePromotions().then(
-        (result) => result.when(
-          success: (data) => _vm = _vm.copyWith(
-            favoritePromotions: data.data,
-            favoritePromoBusinesses: data.businesses,
-          ),
-          failure: (error) => _logger.e('Error loading promotions: $error'),
-        ),
-      );
+  Future<void> _getMyFavoritePromotions() async {
+    final result = await _businessRepo.getMyFavoritePromotions();
+    List<NearbyPromotionDM>? promos;
+    result.when(
+      success: (data) {
+        _vm = _vm.copyWith(
+          favoritePromotions: data.data,
+          favoritePromoBusinesses: data.businesses,
+        );
+        promos = data.data;
+      },
+      failure: (error) => _logger.e('Error loading promotions: $error'),
+    );
+    if (promos != null) await _precachePromoImages(promos!);
+  }
 
   Future<void> _getMyFavoriteComboItems() async => await _businessRepo.getMyFavoriteComboItems().then(
         (result) => result.when(
@@ -174,12 +184,18 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     );
   }
 
-  Future<void> _getMyFavoriteBusinesses() async => await _businessRepo.getMyFavoriteBusinesses().then(
-        (result) => result.when(
-          success: (data) => _vm = _vm.copyWith(favoriteBusinesses: data.favoriteBusinesses),
-          failure: (error) => _logger.e('Error loading businesses: $error'),
-        ),
-      );
+  Future<void> _getMyFavoriteBusinesses() async {
+    final result = await _businessRepo.getMyFavoriteBusinesses();
+    List<BusinessDM>? businesses;
+    result.when(
+      success: (data) {
+        _vm = _vm.copyWith(favoriteBusinesses: data.favoriteBusinesses);
+        businesses = data.favoriteBusinesses;
+      },
+      failure: (error) => _logger.e('Error loading businesses: $error'),
+    );
+    if (businesses != null) await _precacheBusinessImages(businesses!);
+  }
 
   Future<void> _populateFavoriteItems() async {
     try {
@@ -831,6 +847,49 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   void _handleError(String errorMessage) {
     _logger.e(errorMessage);
     emit(_Error(_vm, errorMessage));
+  }
+
+  Future<void> _precacheBusinessImages(List<BusinessDM> businesses) {
+    final futures = <Future<void>>[];
+    for (final b in businesses) {
+      final f = _precacheUrlFuture(b.logo);
+      if (f != null) futures.add(f);
+      for (final img in b.coverImages) {
+        final f2 = _precacheUrlFuture(img.url);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void> _precachePromoImages(List<NearbyPromotionDM> promos) {
+    final futures = <Future<void>>[];
+    for (final promo in promos) {
+      final f1 = _precacheUrlFuture(promo.businessLogo);
+      if (f1 != null) futures.add(f1);
+      if (promo.promoMedia?.isImage == true) {
+        final f2 = _precacheUrlFuture(promo.promoMedia?.mediaUrl);
+        if (f2 != null) futures.add(f2);
+      }
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 
   @override

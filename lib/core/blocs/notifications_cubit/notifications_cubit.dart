@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/notifications_cubit/notifications_vm.dart';
 import 'package:foodly_world/core/network/notifications/notifications_repo.dart';
@@ -56,6 +58,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         page: 1,
       );
 
+      List<NotificationDM>? toCache;
       result.when(
         success: (data) {
           _vm = _vm.copyWith(
@@ -66,13 +69,17 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             total: data.meta?.total ?? 0,
             hasMorePages: (data.meta?.currentPage ?? 1) < (data.meta?.lastPage ?? 1),
           );
-          emit(NotificationsState.loaded(_vm));
+          toCache = data.notifications;
         },
         failure: (error) {
           _logger.e('Error loading notifications: ${error.errorMsg}');
           emit(NotificationsState.error(_vm, error.errorMsg));
         },
       );
+      if (toCache != null) {
+        await _precacheNotificationImages(toCache!);
+        emit(NotificationsState.loaded(_vm));
+      }
     } catch (e) {
       _logger.e('Exception loading notifications: $e');
       emit(NotificationsState.error(_vm, e.toString()));
@@ -101,6 +108,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             hasMorePages: (data.meta?.currentPage ?? nextPage) < (data.meta?.lastPage ?? _vm.lastPage),
           );
           emit(NotificationsState.loaded(_vm));
+          _precacheNotificationImages(data.notifications);
         },
         failure: (error) {
           _logger.e('Error loading more notifications: ${error.errorMsg}');
@@ -310,6 +318,31 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     _vm = const NotificationsVM();
     emit(const NotificationsState.initial(NotificationsVM()));
     _logger.i('NotificationsCubit: State cleared');
+  }
+
+  Future<void> _precacheNotificationImages(List<NotificationDM> notifications) {
+    final futures = <Future<void>>[];
+    for (final n in notifications) {
+      final f = _precacheUrlFuture(n.actorPhotoUrl);
+      if (f != null) futures.add(f);
+    }
+    if (futures.isEmpty) return Future.value();
+    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+  }
+
+  Future<void>? _precacheUrlFuture(String? url) {
+    if (url == null) return null;
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.path.length <= 1) return null;
+    final lp = uri.path.toLowerCase();
+    if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
+    final completer = Completer<void>();
+    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (_, __) { if (!completer.isCompleted) completer.complete(); },
+      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+    ));
+    return completer.future;
   }
 
   /// Getter para el contador de no leídas (útil para badges)

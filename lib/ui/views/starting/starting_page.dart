@@ -106,7 +106,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .38 : context.screenHeight * .335,
+              height: vm.currentView.isLogin ? context.screenHeight * .38 : context.screenHeight * .33,
               child: const AppLoginWidgets(),
             ),
           ),
