@@ -82,6 +82,106 @@
       "group": "build",
       "label": "Foodly - Build IPA Release",
       "detail": "Build IPA con clean previo (evita caché de artifacts viejos)"
+    },
+    {
+      "type": "shell",
+      "command": "shorebird",
+      "args": [
+        "release",
+        "android",
+        "--",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Shorebird - Release Android (Play Store)",
+      "detail": "Genera el APK/AAB de release para Play Store con Shorebird tracking. Usar en lugar de 'Build APK Release' al publicar."
+    },
+    {
+      "type": "shell",
+      "command": "shorebird",
+      "args": [
+        "patch",
+        "android",
+        "--",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Shorebird - Patch Android (OTA)",
+      "detail": "Envía un OTA patch a Android sin pasar por Play Store. Solo cambios Dart."
+    },
+    {
+      "type": "shell",
+      "command": "shorebird",
+      "args": [
+        "release",
+        "ios",
+        "--",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Shorebird - Release iOS (App Store)",
+      "detail": "Genera el IPA de release para App Store con Shorebird tracking. Usar en lugar de 'Build IPA Release' al publicar."
+    },
+    {
+      "type": "shell",
+      "command": "shorebird",
+      "args": [
+        "patch",
+        "ios",
+        "--",
+        "--dart-define=ENV=prod",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Shorebird - Patch iOS (OTA)",
+      "detail": "Envía un OTA patch a iOS sin pasar por App Store. Solo cambios Dart."
     }
   ]
 }

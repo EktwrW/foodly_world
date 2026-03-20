@@ -145,10 +145,8 @@ secrets.json
 /lib/**/*.freezed.dart
 
 # Exclusions
-!pubspec.lock
 lib/generated/intl/messages_en-US.dart
 secrets.md
-pubspec.lock
 
 # FVM Version Cache
 .fvm/

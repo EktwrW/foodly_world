@@ -66,6 +66,7 @@ dependencies:
   responsive_framework: ^1.1.1
   retrofit: ^4.4.1
   share_plus: ^10.1.4
+  shorebird_code_push: ^2.0.5
   shared_preferences: ^2.5.4
   sidebarx: ^0.17.1
   sms_autofill: ^2.4.1
@@ -98,6 +99,7 @@ flutter:
     - assets/sounds/speech_to_text_listening.m4r
     - assets/sounds/speech_to_text_cancel.m4r
     - assets/sounds/speech_to_text_stop.m4r
+    - shorebird.yaml
 
 flutter_intl:
   enabled: true
