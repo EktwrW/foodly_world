@@ -35,6 +35,17 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
 
   void initializeLocalAuth() async {
     emit(_Loading(_dto));
+
+    // Set the guard SYNCHRONOUSLY before any await so that
+    // FoodlyLocationWrapper's postFrameCallback (fires after frame 1, ~16ms)
+    // sees the flag and defers the location check. Without this, the location
+    // permission dialog appears while the biometric dialog is being prepared,
+    // causing the OS to dismiss the biometric dialog. Cleared below when
+    // biometrics turn out to not be available.
+    if (_authSessionService.isLoggedIn) {
+      _authSessionService.setBiometricLoginInProgress(true);
+    }
+
     await auth.isDeviceSupported().then(
       (isSupported) async {
         if (_authSessionService.isLoggedIn && isSupported == false) {
@@ -54,6 +65,11 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
         if (_authSessionService.isLoggedIn && biometricAuthEnabled) {
           emit(_NeedAuthentication(_dto));
         } else {
+          // Biometrics not available — clear the speculative guard set above
+          // so FoodlyLocationWrapper's deferred subscription can fire.
+          if (_authSessionService.isLoggedIn) {
+            _authSessionService.setBiometricLoginInProgress(false);
+          }
           // Biometric auth won't happen — complete any deferred services init
           // that was waiting on the biometric flow to resolve.
           _authSessionService.completePendingServicesInit();
@@ -102,6 +118,9 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           if (authenticated) {
             await _checkLoginStatusCall();
           } else {
+            // Biometric was denied/cancelled. Clear the guard so that location
+            // checks and notification polling can resume normally.
+            _authSessionService.setBiometricLoginInProgress(false);
             _logger.e(S.current.unauthorizedAccess);
             emit(_Error(S.current.unauthorizedAccess, _dto.copyWith(isAuthenticating: false)));
           }

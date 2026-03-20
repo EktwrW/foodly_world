@@ -47,7 +47,8 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
           businessCityCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessZipCodeCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
           businessAdditionalInfoCtrl: InputController(controller: TextEditingController(), focusNode: FocusNode()),
-          reservationSizeLimitCtrl: InputController(controller: TextEditingController(text: '6'), focusNode: FocusNode()),
+          reservationSizeLimitCtrl:
+              InputController(controller: TextEditingController(text: '6'), focusNode: FocusNode()),
         ),
         super(const _Initial(BusinessVM())) {
     on<BusinessEvent>(
@@ -289,6 +290,8 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
   }
 
   Future<void> _deleteCoverImage(Emitter<BusinessState> emit, BusinessCoverImageDM coverImageDM) async {
+    if (state is _UpdatingPictures) return;
+
     if (_vm.targetForDelete?.imageId?.isNotEmpty ?? false) {
       emit(_UpdatingPictures(_vm));
       await _businessRepo.deleteCoverImageById(coverImageDM.imageId ?? '').then((result) {
@@ -301,9 +304,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
             );
 
             _updateBusinessInCurrentArray(updatedBusiness);
-            emit(_PictureDeleted(_vm));
-            await Future.delayed(const Duration(milliseconds: 2500));
-            emit(_Loaded(_vm = _vm.copyWith(targetForDelete: null, picturesPath: currentPics)));
+            emit(_PictureDeleted(_vm = _vm.copyWith(targetForDelete: null, picturesPath: currentPics)));
           },
           failure: (error) => _handleError(error, emit),
         );

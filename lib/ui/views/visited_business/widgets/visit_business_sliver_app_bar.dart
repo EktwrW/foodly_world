@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
@@ -9,7 +11,7 @@ import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class VisitBusinessSliverAppBar extends StatelessWidget {
   const VisitBusinessSliverAppBar({super.key});
@@ -23,7 +25,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
           centerTitle: true,
           toolbarHeight: 70,
           leadingWidth: 62,
-          expandedHeight: 340,
+          expandedHeight: 370,
           collapsedHeight: 74,
           shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           pinned: true,
@@ -79,7 +81,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                 children: [
                   Flexible(
                     child: SizedBox(
-                      height: 330,
+                      height: 370,
                       child: Stack(
                         children: [
                           ClipRRect(
@@ -87,7 +89,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                             child: ColoredBox(
                               color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
                               child: SizedBox(
-                                height: 165,
+                                height: 209,
                                 width: double.infinity,
                                 child: (currentBusiness?.coverImages.isNotEmpty ?? false)
                                     ? ImageSliderFade(
@@ -104,8 +106,10 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                                             )
                                             .toList(),
                                       )
-                                    : Icon(Clarity.picture_solid,
-                                        color: FoodlyThemes.primaryFoodly.withValues(alpha: .75), size: 140),
+                                    : const Asset(
+                                        FoodlyAssets.newBusinessPlaceholder,
+                                        fit: BoxFit.fitWidth,
+                                      ),
                               ),
                             ),
                           ),
@@ -116,7 +120,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                               size: const Size.square(100),
                               paddingAll: 0,
                               imageUrl: currentBusiness?.logo,
-                            ),
+                            ).paddingBottom(16),
                           ),
                         ],
                       ).paddingOnly(top: 80),

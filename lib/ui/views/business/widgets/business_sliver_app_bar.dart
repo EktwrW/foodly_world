@@ -35,7 +35,7 @@ class BusinessSliverAppBar extends StatelessWidget {
           centerTitle: true,
           toolbarHeight: 70,
           leadingWidth: 76,
-          expandedHeight: vm.isEditingName ? 420 : 350,
+          expandedHeight: vm.isEditingName ? 450 : 380,
           collapsedHeight: vm.isEditingName ? 200 : 110,
           shape: UIDecorations.SLIVER_APP_BAR_BOTTOM_SHAPE,
           pinned: true,
@@ -92,7 +92,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                     children: [
                       Flexible(
                         child: SizedBox(
-                          height: 296,
+                          height: 326,
                           child: Stack(
                             children: [
                               ClipRRect(
@@ -100,7 +100,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                                 child: ColoredBox(
                                   color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
                                   child: SizedBox(
-                                    height: 165,
+                                    height: 209,
                                     width: double.infinity,
                                     child: (vm.currentBusiness?.coverImages.isNotEmpty ?? false)
                                         ? ImageSliderFade(

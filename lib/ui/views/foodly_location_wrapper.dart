@@ -1,4 +1,4 @@
-import 'dart:async' show Timer;
+import 'dart:async' show StreamSubscription, Timer;
 
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -21,6 +21,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
   bool _splashRemoved = false;
   bool _dialogShowing = false;
   Timer? _safetyTimer;
+  StreamSubscription<LocalAuthState>? _localAuthSub;
 
   @override
   void initState() {
@@ -29,16 +30,44 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     _dialogService = di<DialogService>();
     WidgetsBinding.instance.addObserver(this);
 
-    // Delay location check to after the first frame so biometric auth
-    // (which is initialized in LocalAuthCubit's constructor) has a chance to
-    // set isBiometricLoginInProgress. On Android, two system dialogs can't
-    // coexist — requesting location permission while biometric is showing
-    // would dismiss the biometric dialog.
+    // Defer location check until after biometric auth resolves.
+    // LocalAuthCubit sets isBiometricLoginInProgress=true synchronously in its
+    // constructor for logged-in users, so the flag is visible by the time this
+    // postFrameCallback fires (~16ms / frame 1). Without this deferral the OS
+    // would show the location-permission dialog on top of the biometric dialog,
+    // cancelling the fingerprint/Face ID prompt.
     if (_locationService.mustFetchLocation) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        if (di<AuthSessionService>().isBiometricLoginInProgress) return;
-        context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+        // Guard: defer location check if biometric auth is active OR if
+        // LocalAuthCubit is still mid-initialization (loading/needAuthentication).
+        // Checking BOTH the service flag AND the cubit state handles the edge
+        // case where isBiometricLoginInProgress was not yet set (e.g. the
+        // async detection chain is still running when this callback fires).
+        final localAuthCubit = context.read<LocalAuthCubit>();
+        final biometricActive = di<AuthSessionService>().isBiometricLoginInProgress ||
+            (localAuthCubit.state.whenOrNull(
+                  loading: (_) => true,
+                  needAuthentication: (_) => true,
+                ) ??
+                false);
+
+        if (!biometricActive) {
+          context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+        } else {
+          // Subscribe to LocalAuthCubit and fire the location check once auth
+          // resolves. This covers both outcomes:
+          //   • loaded        — biometrics not available; guard already cleared.
+          //   • authenticated — biometric succeeded; safe to request location.
+          // error state is intentionally omitted: FoodlyWrapper handles it by
+          // navigating to login, so a location dialog would be wrong UX there.
+          _localAuthSub = localAuthCubit.stream.listen((state) {
+            state.whenOrNull(
+              loaded: (_) => _fireLocationCheckAfterAuth(),
+              authenticated: (_) => _fireLocationCheckAfterAuth(),
+            );
+          });
+        }
       });
     }
 
@@ -49,8 +78,16 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
   @override
   void dispose() {
     _safetyTimer?.cancel();
+    _localAuthSub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void _fireLocationCheckAfterAuth() {
+    _localAuthSub?.cancel();
+    _localAuthSub = null;
+    if (!mounted) return;
+    context.read<LocationBloc>().add(const LocationEvent.checkLocation());
   }
 
   @override
