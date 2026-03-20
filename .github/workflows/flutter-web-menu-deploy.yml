@@ -3,6 +3,7 @@ name: Deploy Flutter Web — Public Menu
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy-web-menu:
