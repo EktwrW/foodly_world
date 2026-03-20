@@ -138,9 +138,9 @@ app.*.symbols
 # Additional
 secrets.dart
 secrets.json
-/lib/generated/
-/lib/generated/l10n.dart
-/lib/generated/intl
+# /lib/generated/
+# /lib/generated/l10n.dart
+# /lib/generated/intl
 /lib/**/*.g.dart
 /lib/**/*.freezed.dart
 
