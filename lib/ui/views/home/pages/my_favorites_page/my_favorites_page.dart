@@ -21,7 +21,6 @@ import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu
     show VisitedMenuItemWdg;
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 import 'package:icons_plus/icons_plus.dart';
-import 'package:local_hero/local_hero.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 

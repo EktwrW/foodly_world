@@ -3,7 +3,6 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:local_hero/local_hero.dart';
 
 class BusinessListCard extends StatelessWidget {
   final BusinessDM business;
@@ -22,14 +21,11 @@ class BusinessListCard extends StatelessWidget {
       BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
     };
 
-    return LocalHero(
-      tag: 'status-$heroTagPrefix',
-      child: DecoratedBox(
-        decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-        child: Text(text, style: FoodlyTextStyles.labelBoldMini.copyWith(color: color)).paddingSymmetric(
-          horizontal: 8,
-          vertical: 2,
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+      child: Text(text, style: FoodlyTextStyles.labelBoldMini.copyWith(color: color)).paddingSymmetric(
+        horizontal: 8,
+        vertical: 2,
       ),
     );
   }
@@ -52,15 +48,12 @@ class BusinessListCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10,
                 children: [
-                  LocalHero(
-                    tag: 'avatar-$heroTagPrefix',
-                    child: AvatarWidget(
-                      avatarUrl: business.logo,
-                      avatarStyle: AvatarStyle.square,
-                      height: 60,
-                      width: 60,
-                      avatarType: AvatarType.business,
-                    ),
+                  AvatarWidget(
+                    avatarUrl: business.logo,
+                    avatarStyle: AvatarStyle.square,
+                    height: 60,
+                    width: 60,
+                    avatarType: AvatarType.business,
                   ),
                   Flexible(
                     fit: FlexFit.tight,
@@ -94,14 +87,11 @@ class BusinessListCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  LocalHero(
-                    tag: 'like-$heroTagPrefix',
-                    child: FavoriteButton.forBusinessCard(
-                      key: ValueKey(business.uuid),
-                      diameter: 28,
-                      iconSize: 16,
-                      business: business,
-                    ),
+                  FavoriteButton.forBusinessCard(
+                    key: ValueKey(business.uuid),
+                    diameter: 28,
+                    iconSize: 16,
+                    business: business,
                   ),
                 ],
               ),
@@ -116,12 +106,9 @@ class BusinessListCard extends StatelessWidget {
                     style: FoodlyTextStyles.labelBoldMini,
                   ),
                   const Spacer(),
-                  LocalHero(
-                    tag: 'category-$heroTagPrefix',
-                    child: SizedBox.square(
-                      dimension: 28,
-                      child: business.categoryAvatar,
-                    ),
+                  SizedBox.square(
+                    dimension: 28,
+                    child: business.categoryAvatar,
                   ),
                 ],
               ),
@@ -150,14 +137,11 @@ class BusinessGridCard extends StatelessWidget {
       BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
     };
 
-    return LocalHero(
-      tag: 'status-$heroTagPrefix',
-      child: DecoratedBox(
-        decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-        child: Text(text, style: FoodlyTextStyles.labelBoldMini.copyWith(color: color)).paddingSymmetric(
-          horizontal: 8,
-          vertical: 2,
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+      child: Text(text, style: FoodlyTextStyles.labelBoldMini.copyWith(color: color)).paddingSymmetric(
+        horizontal: 8,
+        vertical: 2,
       ),
     );
   }
@@ -178,30 +162,24 @@ class BusinessGridCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  LocalHero(
-                    tag: 'avatar-$heroTagPrefix',
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: AvatarWidget(
-                        avatarUrl: business.logo,
-                        avatarStyle: AvatarStyle.square,
-                        height: double.infinity,
-                        width: double.infinity,
-                        avatarType: AvatarType.business,
-                      ),
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: AvatarWidget(
+                      avatarUrl: business.logo,
+                      avatarStyle: AvatarStyle.square,
+                      height: double.infinity,
+                      width: double.infinity,
+                      avatarType: AvatarType.business,
                     ),
                   ),
                   Positioned(
                     top: 3,
                     right: 3,
-                    child: LocalHero(
-                      tag: 'like-$heroTagPrefix',
-                      child: FavoriteButton.forBusinessCard(
-                        key: ValueKey(business.uuid),
-                        diameter: 28,
-                        iconSize: 16,
-                        business: business,
-                      ),
+                    child: FavoriteButton.forBusinessCard(
+                      key: ValueKey(business.uuid),
+                      diameter: 28,
+                      iconSize: 16,
+                      business: business,
                     ),
                   ),
                 ],
@@ -245,12 +223,9 @@ class BusinessGridCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildStatusBadge(currentDay.currentStatus),
-                      LocalHero(
-                        tag: 'category-$heroTagPrefix',
-                        child: SizedBox.square(
-                          dimension: 28,
-                          child: business.categoryAvatar,
-                        ),
+                      SizedBox.square(
+                        dimension: 28,
+                        child: business.categoryAvatar,
                       ),
                     ],
                   ),

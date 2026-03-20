@@ -31,31 +31,35 @@ class MyFavoriteBusinessesView extends StatelessWidget {
           ).paddingBottom(120);
         }
 
-        return LocalHeroScope(
-          key: const Key('favorites-businesses-local-hero-scope'),
-          curve: Curves.fastEaseInToSlowEaseOut,
-          duration: Durations.extralong2,
-          createRectTween: (begin, end) {
-            return MaterialRectCenterArcTween(begin: begin, end: end);
-          },
-          child: BlocSelector<FavoritesCubit, FavoritesState, bool>(
-            selector: (state) => state.vm.isGridView,
-            builder: (context, isGridView) {
-              final cubit = di<FavoritesCubit>();
+        return BlocSelector<FavoritesCubit, FavoritesState, bool>(
+          selector: (state) => state.vm.isGridView,
+          builder: (context, isGridView) {
+            final cubit = di<FavoritesCubit>();
 
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const _BusinessSortSelector(key: Key('business-sort-selector')),
-                      ViewModeToggleButton(
-                        isGrid: isGridView,
-                        onPressed: cubit.toggleViewMode,
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const _BusinessSortSelector(key: Key('business-sort-selector')),
+                    ViewModeToggleButton(
+                      isGrid: isGridView,
+                      onPressed: cubit.toggleViewMode,
+                    ),
+                  ],
+                ).paddingAll(16),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: Durations.medium2,
+                    transitionBuilder: (child, animation) => FadeTransition(
+                      opacity: animation,
+                      child: ScaleTransition(
+                        scale: Tween<double>(begin: 0.97, end: 1.0).animate(
+                          CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                        ),
+                        child: child,
                       ),
-                    ],
-                  ).paddingAll(16),
-                  Expanded(
+                    ),
                     child: isGridView
                         ? GridView.count(
                             key: const ValueKey(BusinessResultsViewMode.grid),
@@ -87,10 +91,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             },
                           ),
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         );
       },
     );
