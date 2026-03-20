@@ -1,1 +1,22 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:android:4e4a035d1c752c7ba71f92","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"foodly-solutions","configurations":{"android":"1:275754925527:android:4e4a035d1c752c7ba71f92","ios":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","macos":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","web":"1:275754925527:web:caccc645a30be3afa71f92","windows":"1:275754925527:web:d5b5649ecb76339ba71f92"}}}}}}
+{
+  "hosting": {
+    "target": "menu",
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }],
+    "headers": [
+      {
+        "source": "**/*.@(js|css|wasm)",
+        "headers": [{ "key": "Cache-Control", "value": "max-age=31536000, immutable" }]
+      },
+      {
+        "source": "flutter.js",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      },
+      {
+        "source": "index.html",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      }
+    ]
+  },
+  "flutter":{"platforms":{"android":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:android:4e4a035d1c752c7ba71f92","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"foodly-solutions","appId":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"foodly-solutions","configurations":{"android":"1:275754925527:android:4e4a035d1c752c7ba71f92","ios":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","macos":"1:275754925527:ios:bbbd9b4c6e8854e7a71f92","web":"1:275754925527:web:caccc645a30be3afa71f92","windows":"1:275754925527:web:d5b5649ecb76339ba71f92"}}}}}}

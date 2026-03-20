@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "foodly-solutions"
+  },
+  "targets": {
+    "foodly-solutions": {
+      "hosting": {
+        "menu": ["foodly-menu"]
+      }
+    }
+  }
+}
