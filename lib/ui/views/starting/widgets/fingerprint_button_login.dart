@@ -13,6 +13,7 @@ class FingerprintButtonLogin extends StatelessWidget {
   void _showBiometricSnackBar(BuildContext context) {
     final snackBar = SnackBarWdg(
       type: SnackBarType.warning,
+      duration: const Duration(seconds: 6),
       content: Text.rich(
         TextSpan(
           style: FoodlyTextStyles.snackBarLightBody,

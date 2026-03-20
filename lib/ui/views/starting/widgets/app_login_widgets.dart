@@ -37,19 +37,19 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
     return BlocBuilder<StartingCubit, StartingState>(
       builder: (context, state) {
         return state.maybeWhen(
-          loading: (vm) => buildLoginWidgets(vm),
-          welcome: (vm) => buildLoginWidgets(vm),
-          error: (e, vm) => buildLoginWidgets(vm),
+          loading: (vm) => _buildLoginWidgets(vm),
+          welcome: (vm) => _buildLoginWidgets(vm),
+          error: (e, vm) => _buildLoginWidgets(vm),
           orElse: () => const SizedBox.shrink(),
         );
       },
     );
   }
 
-  Widget buildLoginWidgets(StartingVM vm) =>
-      vm.currentView == StartingPageView.initial ? buildLogicAndGetStartedButtons() : buildLoginForm(vm);
+  Widget _buildLoginWidgets(StartingVM vm) =>
+      vm.currentView == StartingPageView.initial ? _buildLogicAndGetStartedButtons() : _buildLoginForm(vm);
 
-  Widget buildLoginForm(StartingVM vm) {
+  Widget _buildLoginForm(StartingVM vm) {
     return FadeIn(
       duration: const Duration(milliseconds: 450),
       child: Form(
@@ -72,8 +72,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               focusNode: _passwordNode,
               inputTextType: FoodlyInputType.password,
               autovalidateMode: vm.autovalidateMode,
-              validator: (value) =>
-                  (value == null || value.isEmpty) ? S.current.pleaseEnterPassword : null,
+              validator: (value) => (value == null || value.isEmpty) ? S.current.pleaseEnterPassword : null,
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             const Spacer(),
             CustomNeumorphicButton(
@@ -112,13 +111,16 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
     );
   }
 
-  Widget buildLogicAndGetStartedButtons() => Column(
+  Widget _buildLogicAndGetStartedButtons() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FadeIn(
             delay: Durations.short3,
             child: CustomNeumorphicButton(
-              onPressed: () => cubit.setView(StartingPageView.login),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                cubit.setView(StartingPageView.login);
+              },
               text: S.current.login,
               disabled: false,
             ),
@@ -126,7 +128,10 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
           FadeIn(
             delay: Durations.medium2,
             child: CustomNeumorphicButton(
-              onPressed: () => context.goNamed(AppRoutes.signUp.name),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                context.goNamed(AppRoutes.signUp.name);
+              },
               margin: const EdgeInsets.fromLTRB(
                   UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, 0),
               text: S.current.signup,
@@ -138,7 +143,10 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
             delay: Durations.long3,
             child: CustomNeumorphicButton(
               key: const Key('google-sign-in-btn'),
-              onPressed: () => cubit.googleSignIn(),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                cubit.googleSignIn();
+              },
               padding: const EdgeInsets.all(12),
               leading: const Icon(Bootstrap.google, color: FoodlyThemes.primaryFoodly),
               text: S.current.signInWithGoogle,
