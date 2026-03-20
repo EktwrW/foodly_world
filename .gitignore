@@ -141,8 +141,6 @@ secrets.json
 # /lib/generated/
 # /lib/generated/l10n.dart
 # /lib/generated/intl
-/lib/**/*.g.dart
-/lib/**/*.freezed.dart
 
 # Exclusions
 lib/generated/intl/messages_en-US.dart
