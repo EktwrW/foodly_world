@@ -24,6 +24,50 @@
       ]
     },
     {
+      "name": "iOS 18.6 - iPhone 16e (dev mode)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "8E983487-90D5-4EC0-B933-AE0ACE6D8021"],
+      "toolArgs": [
+        "--dart-define=ENV=dev",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
+        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ]
+    },
+    {
+      "name": "iOS 18.6 - iPhone 16 Pro (dev mode)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "897408C4-3A21-4CB4-ABC7-2882482D3538"],
+      "toolArgs": [
+        "--dart-define=ENV=dev",
+        "--dart-define=DOMAIN=https://api.foodly.solutions",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
+        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
+        "--dart-define=OPENAI_API_KEY=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",
+        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
+        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+      ]
+    },
+    {
       "name": "app-main-mobile (dev mode)",
       "request": "launch",
       "type": "dart",
