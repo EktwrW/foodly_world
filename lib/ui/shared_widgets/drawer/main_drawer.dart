@@ -5,6 +5,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/contact/contact_bottom_sheet.dart' show showContactBottomSheet;
 import 'package:foodly_world/ui/shared_widgets/drawer/view_model/main_drawer_vm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
@@ -234,7 +235,19 @@ class FoodlyDrawer extends StatelessWidget {
                 FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
             label: S.current.about,
           ),
-          SidebarXItem(icon: Bootstrap.mailbox2_flag, label: S.current.contactUs),
+          SidebarXItem(
+            onTap: () {
+              if (rootNavigatorKey.currentContext != null) {
+                FoodlyMainScaffold.toggleDrawer();
+                showContactBottomSheet(rootNavigatorKey.currentContext!);
+              } else {
+                FoodlySnackbars.errorGeneric(context, S.current.somethingWentWrong);
+              }
+            },
+            icon: Bootstrap.mailbox2_flag,
+            label: S.current.contactUs,
+            selectable: false,
+          ),
           SidebarXItem(icon: Bootstrap.share_fill, label: S.current.recommend),
           SidebarXItem(
             onTap: () {
@@ -243,6 +256,7 @@ class FoodlyDrawer extends StatelessWidget {
             },
             icon: Bootstrap.door_open_fill,
             label: S.current.logout,
+            selectable: false,
           ),
         ],
       ),

@@ -92,4 +92,13 @@ abstract class MeClient {
 
   @DELETE('/user/delete-account')
   Future<void> deleteAccount();
+
+  @POST('/contact')
+  @MultiPart()
+  Future<void> sendContact({
+    @Part(name: 'recipient') required String recipient,
+    @Part(name: 'subject') required String subject,
+    @Part(name: 'message') required String message,
+    @Part(name: 'attachment') List<MultipartFile>? attachment,
+  });
 }

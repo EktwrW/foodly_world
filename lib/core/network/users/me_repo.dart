@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' show MultipartFile;
 import 'package:foodly_world/core/core_exports.dart' show Logger, di;
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
@@ -175,6 +176,32 @@ class MeRepo {
   Future<ApiResult<void>> deleteAccount() async {
     try {
       return ApiResult.success(await _meClient.deleteAccount());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> sendContact({
+    required String recipient,
+    required String subject,
+    required String message,
+    String? attachmentPath,
+  }) async {
+    final fileHandler = getFileHandler();
+    List<MultipartFile>? attachment;
+
+    if (attachmentPath != null) {
+      final file = await fileHandler.getMultipartFile(attachmentPath);
+      if (file != null) attachment = [file];
+    }
+
+    try {
+      return ApiResult.success(await _meClient.sendContact(
+        recipient: recipient,
+        subject: subject,
+        message: message,
+        attachment: attachment,
+      ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
