@@ -3,7 +3,7 @@ part of '../my_favorites_page.dart';
 class MyFavoriteItemsView extends StatelessWidget {
   const MyFavoriteItemsView({super.key});
 
-  static const _padding = EdgeInsets.only(right: 8, left: 8, bottom: 44, top: 4);
+  static const _padding = EdgeInsets.only(right: 8, left: 8, bottom: 150, top: 4);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class MyFavoriteItemsView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
             ],
-          ).paddingBottom(100);
+          ).paddingBottom(120);
         }
 
         return Column(
@@ -33,7 +33,7 @@ class MyFavoriteItemsView extends StatelessWidget {
                 controller: ScrollController(),
                 itemCount: favoriteItems.length,
                 padding: _padding,
-                separatorBuilder: (_, __) => const SizedBox(height: 4),
+                separatorBuilder: (_, __) => const SizedBox(height: 6),
                 itemBuilder: (context, index) {
                   final favoriteItemDM = favoriteItems[index];
                   return _FavoriteItemsCard(

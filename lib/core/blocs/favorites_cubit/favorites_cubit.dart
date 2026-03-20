@@ -29,6 +29,8 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         _vm = FavoritesVM.fromUserDM(authService.userSessionDM?.user),
         super(FavoritesState.initial(FavoritesVM.fromUserDM(authService.userSessionDM?.user)));
 
+  bool get isStartingFavorites => state is _Loading || state is _Initial;
+
   /// Inicializa o actualiza el estado de favoritos desde el UserDM actual
   void initFromUserDM() {
     final user = _authService.userSessionDM?.user;
@@ -82,7 +84,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       return;
     }
 
-    emit(FavoritesState.loading(_vm));
+    await Future.microtask(() => emit(FavoritesState.loading(_vm)));
 
     try {
       if (_vm.favoriteBusinessIds.isNotEmpty) await _getMyFavoriteBusinesses();

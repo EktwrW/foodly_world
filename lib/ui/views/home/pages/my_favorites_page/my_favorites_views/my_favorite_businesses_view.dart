@@ -5,7 +5,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
     super.key,
   });
 
-  static const _gridAndListPadding = EdgeInsets.only(right: 8, left: 8, bottom: 44, top: 4);
+  static const _gridAndListPadding = EdgeInsets.only(right: 8, left: 8, bottom: 150, top: 4);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
       selector: (state) => state.vm.sortedFavoriteBusinesses,
       builder: (context, favoriteBusinesses) {
         if (favoriteBusinesses.isEmpty) {
+          if (context.read<FavoritesCubit>().isStartingFavorites) {
+            return const Center(child: CircularProgressIndicator.adaptive()).paddingBottom(120);
+          }
+
           return Column(
             spacing: 24,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -24,33 +28,34 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
             ],
-          ).paddingBottom(100);
+          ).paddingBottom(120);
         }
 
-        return BlocSelector<FavoritesCubit, FavoritesState, bool>(
-          selector: (state) => state.vm.isGridView,
-          builder: (context, isGridView) {
-            final cubit = di<FavoritesCubit>();
+        return LocalHeroScope(
+          key: const Key('favorites-businesses-local-hero-scope'),
+          curve: Curves.fastEaseInToSlowEaseOut,
+          duration: Durations.extralong2,
+          createRectTween: (begin, end) {
+            return MaterialRectCenterArcTween(begin: begin, end: end);
+          },
+          child: BlocSelector<FavoritesCubit, FavoritesState, bool>(
+            selector: (state) => state.vm.isGridView,
+            builder: (context, isGridView) {
+              final cubit = di<FavoritesCubit>();
 
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const _BusinessSortSelector(key: Key('business-sort-selector')),
-                    ViewModeToggleButton(
-                      isGrid: isGridView,
-                      onPressed: cubit.toggleViewMode,
-                    ),
-                  ],
-                ).paddingAll(16),
-                Expanded(
-                  child: LocalHeroScope(
-                    curve: Curves.fastEaseInToSlowEaseOut,
-                    duration: Durations.extralong2,
-                    createRectTween: (begin, end) {
-                      return MaterialRectCenterArcTween(begin: begin, end: end);
-                    },
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const _BusinessSortSelector(key: Key('business-sort-selector')),
+                      ViewModeToggleButton(
+                        isGrid: isGridView,
+                        onPressed: cubit.toggleViewMode,
+                      ),
+                    ],
+                  ).paddingAll(16),
+                  Expanded(
                     child: isGridView
                         ? GridView.count(
                             key: const ValueKey(BusinessResultsViewMode.grid),
@@ -71,7 +76,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             key: const ValueKey(BusinessResultsViewMode.list),
                             itemCount: favoriteBusinesses.length,
                             padding: _gridAndListPadding,
-                            separatorBuilder: (_, __) => const SizedBox(height: 4),
+                            separatorBuilder: (_, __) => const SizedBox(height: 6),
                             itemBuilder: (context, index) {
                               final business = favoriteBusinesses[index];
                               return BusinessListCard(
@@ -82,10 +87,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                             },
                           ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         );
       },
     );

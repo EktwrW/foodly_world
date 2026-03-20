@@ -3,7 +3,7 @@ part of '../my_favorites_page.dart';
 class MyFavoriteMenusView extends StatelessWidget {
   const MyFavoriteMenusView({super.key});
 
-  static const _padding = EdgeInsets.only(right: 8, left: 8, bottom: 44, top: 4);
+  static const _padding = EdgeInsets.only(right: 8, left: 8, bottom: 150, top: 4);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class MyFavoriteMenusView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ).paddingHorizontal(context.screenWidth * .1),
             ],
-          ).paddingBottom(100);
+          ).paddingBottom(120);
         }
 
         return Column(

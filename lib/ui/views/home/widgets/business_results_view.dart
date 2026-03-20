@@ -66,7 +66,7 @@ class BusinessResultsView extends StatelessWidget {
               key: const ValueKey(BusinessResultsViewMode.list),
               itemCount: searchResults.length,
               padding: EdgeInsets.only(top: 16, bottom: context.screenHeight * .15),
-              separatorBuilder: (_, __) => const SizedBox(height: 4),
+              separatorBuilder: (_, __) => const SizedBox(height: 6),
               itemBuilder: (context, index) {
                 final business = searchResults[index];
                 return BusinessListCard(
