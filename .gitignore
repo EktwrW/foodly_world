@@ -143,7 +143,6 @@ secrets.json
 # /lib/generated/intl
 
 # Exclusions
-lib/generated/intl/messages_en-US.dart
 secrets.md
 
 # FVM Version Cache

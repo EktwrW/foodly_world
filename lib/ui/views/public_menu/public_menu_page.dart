@@ -13,7 +13,7 @@ import 'package:foodly_world/ui/views/public_menu/cubit/public_menu_state.dart';
 ///     GoRoute(path: '/:businessUuid',
 ///       builder: (ctx, state) => PublicMenuPage(
 ///         businessUuid: state.pathParameters['businessUuid']!,
-///         dio: di<Dio>(),
+///         dio: di&lt;Dio&gt;(),
 ///       ))
 ///   }
 class PublicMenuPage extends StatelessWidget {
