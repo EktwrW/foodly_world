@@ -33,8 +33,14 @@ import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_c
 import 'package:foodly_world/ui/views/visited_business/menu/visited_menu_screen.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/cubit/promotions_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
+import 'package:dio/dio.dart';
+import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
+
+/// True when the app is running on the menu.foodly.solutions subdomain.
+/// Evaluated once at startup — bypasses all auth and shows only the public menu.
+final _isMenuSubdomain = Uri.base.host.startsWith('menu.');
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -179,6 +185,9 @@ class AppRouter {
       navigatorKey: rootNavigatorKey,
       observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
       redirect: (context, state) async {
+        // Public menu subdomain — no auth, no session, no redirects.
+        if (_isMenuSubdomain) return null;
+
         // Read the saved route BEFORE updateCurrentRoute overwrites it.
         // This ensures route restoration works after biometric auth or restart.
         final lastPath = await localStorageService.getString(FoodlyStrings.LAST_PATH);
@@ -212,6 +221,16 @@ class AppRouter {
       },
       initialLocation: AppRoutes.start.path,
       routes: [
+        if (_isMenuSubdomain)
+          GoRoute(
+            path: AppRoutes.publicMenu.path,
+            name: AppRoutes.publicMenu.name,
+            builder: (ctx, state) => PublicMenuPage(
+              businessUuid: state.pathParameters['businessUuid']!,
+              dio: di<Dio>(),
+            ),
+          ),
+        if (!_isMenuSubdomain) ...[
         _goRouteWithTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
         _goRouteWithTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),
             [RedirectRoute.requiresAppInitial]),
@@ -460,6 +479,7 @@ class AppRouter {
           ),
         ),
       ],
+        ], // end if (!_isMenuSubdomain)
       errorPageBuilder: (context, state) => const MaterialPage(child: NotFoundPage()),
     );
   }

@@ -29,6 +29,7 @@ enum AppRoutes {
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //
+  publicMenu('/:businessUuid', 'publicMenu'),
   noAccess('/no-access', 'noAccess'),
   notFoundScreen('/not-found', 'notFoundScreen'),
   error('/error', 'error'),
