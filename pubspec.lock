@@ -36,10 +36,11 @@ packages:
   animated_bottom_navigation_bar:
     dependency: "direct main"
     description:
-      name: animated_bottom_navigation_bar
-      sha256: "94971fdfd53acd443acd0d17ce1cb5219ad833f20c75b50c55b205e54a5d6117"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: "876392cd06afbaf1f777a6428fb0ed7823d0a967"
+      resolved-ref: "876392cd06afbaf1f777a6428fb0ed7823d0a967"
+      url: "https://github.com/TijnvandenEijnde/animated-bottom-navigation-bar-flutter.git"
+    source: git
     version: "1.4.0"
   animated_reorderable_list:
     dependency: "direct main"

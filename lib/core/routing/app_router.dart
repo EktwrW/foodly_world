@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/views/business/business_page.dart';
@@ -20,6 +21,7 @@ import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_pro
 import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
+import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
 import 'package:foodly_world/ui/views/reservations/my_reservations_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
@@ -33,14 +35,13 @@ import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_c
 import 'package:foodly_world/ui/views/visited_business/menu/visited_menu_screen.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/cubit/promotions_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
-import 'package:dio/dio.dart';
-import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
 
 /// True when the app is running on the menu.foodly.solutions subdomain.
-/// Evaluated once at startup — bypasses all auth and shows only the public menu.
-final _isMenuSubdomain = Uri.base.host.startsWith('menu.');
+/// Uses --dart-define=IS_MENU_SUBDOMAIN=true in the CI build as primary signal,
+/// with Uri.base.host as fallback for local development.
+final _isMenuSubdomain = const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.');
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -231,255 +232,255 @@ class AppRouter {
             ),
           ),
         if (!_isMenuSubdomain) ...[
-        _goRouteWithTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
-        _goRouteWithTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),
-            [RedirectRoute.requiresAppInitial]),
-        _goRouteWithTransition(
-            AppRoutes.signUp,
-            BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpUserPage()),
-            [RedirectRoute.requiresAppInitial]),
-        _goRouteWithTransition(
-            AppRoutes.signUpBusiness,
-            BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpBusinessPage()),
-            [RedirectRoute.requiresAppInitial]),
-        StatefulShellRoute(
-          navigatorContainerBuilder: (context, navigationShell, children) => FadeIn(
-              duration: Durations.medium2,
-              child: HomePage369(navigationShell: navigationShell, children: _getChildrenFadeTransition(children))),
-          builder: (_, __, navigationShell) => navigationShell,
-          branches: [
-            StatefulShellBranch(
-              routes: [
-                _goRouteForStatefulShell(
-                  AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.savedPromotions, const SavedPromotionsPage(),
-                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                _goRouteForStatefulShell(
-                  AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.favedBusiness, const MyFavoritesPage(),
-                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                _goRouteForStatefulShell(
-                  AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.usersCommunity, const SocialPage(),
-                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                _goRouteForStatefulShell(
-                  AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.notifications, const NotificationsPage(),
-                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                _goRouteForStatefulShell(
-                  AppRoutes.home,
-                  _goRouteWithTransition(AppRoutes.foodlyMainPage, const FoodlyMainPage(),
-                      [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
-                ),
-              ],
-            ),
-          ],
-        ),
-        GoRoute(
-            path: AppRoutes.categories.path,
-            name: AppRoutes.categories.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-            pageBuilder: (context, state) {
-              final locationService = di<LocationService>();
-              final categoryIndex = state.extra as int?;
-              final selectedCategory = categoryIndex != null ? FoodlyCategories.values[categoryIndex] : null;
-
-              return CustomTransitionPage<void>(
-                transitionDuration: Durations.medium4,
-                key: state.pageKey,
-                child: BlocProvider(
-                  create: (context) => CategoriesCubit(
-                    selectedCategory,
-                    di(),
-                    locationService.currentLocation.position?.latitude ?? 0.0,
-                    locationService.currentLocation.position?.longitude ?? 0.0,
+          _goRouteWithTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
+          _goRouteWithTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),
+              [RedirectRoute.requiresAppInitial]),
+          _goRouteWithTransition(
+              AppRoutes.signUp,
+              BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpUserPage()),
+              [RedirectRoute.requiresAppInitial]),
+          _goRouteWithTransition(
+              AppRoutes.signUpBusiness,
+              BlocProvider(create: (context) => SignUpCubit(di(), di(), di(), di()), child: const SignUpBusinessPage()),
+              [RedirectRoute.requiresAppInitial]),
+          StatefulShellRoute(
+            navigatorContainerBuilder: (context, navigationShell, children) => FadeIn(
+                duration: Durations.medium2,
+                child: HomePage369(navigationShell: navigationShell, children: _getChildrenFadeTransition(children))),
+            builder: (_, __, navigationShell) => navigationShell,
+            branches: [
+              StatefulShellBranch(
+                routes: [
+                  _goRouteForStatefulShell(
+                    AppRoutes.home,
+                    _goRouteWithTransition(AppRoutes.savedPromotions, const SavedPromotionsPage(),
+                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
                   ),
-                  child: const CategoriesPage(),
+                ],
+              ),
+              StatefulShellBranch(
+                routes: [
+                  _goRouteForStatefulShell(
+                    AppRoutes.home,
+                    _goRouteWithTransition(AppRoutes.favedBusiness, const MyFavoritesPage(),
+                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                routes: [
+                  _goRouteForStatefulShell(
+                    AppRoutes.home,
+                    _goRouteWithTransition(AppRoutes.usersCommunity, const SocialPage(),
+                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                routes: [
+                  _goRouteForStatefulShell(
+                    AppRoutes.home,
+                    _goRouteWithTransition(AppRoutes.notifications, const NotificationsPage(),
+                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                  ),
+                ],
+              ),
+              StatefulShellBranch(
+                routes: [
+                  _goRouteForStatefulShell(
+                    AppRoutes.home,
+                    _goRouteWithTransition(AppRoutes.foodlyMainPage, const FoodlyMainPage(),
+                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          GoRoute(
+              path: AppRoutes.categories.path,
+              name: AppRoutes.categories.name,
+              redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+              pageBuilder: (context, state) {
+                final locationService = di<LocationService>();
+                final categoryIndex = state.extra as int?;
+                final selectedCategory = categoryIndex != null ? FoodlyCategories.values[categoryIndex] : null;
+
+                return CustomTransitionPage<void>(
+                  transitionDuration: Durations.medium4,
+                  key: state.pageKey,
+                  child: BlocProvider(
+                    create: (context) => CategoriesCubit(
+                      selectedCategory,
+                      di(),
+                      locationService.currentLocation.position?.latitude ?? 0.0,
+                      locationService.currentLocation.position?.longitude ?? 0.0,
+                    ),
+                    child: const CategoriesPage(),
+                  ),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ),
+                );
+              }),
+          GoRoute(
+            path: AppRoutes.profileScreen.path,
+            name: AppRoutes.profileScreen.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => UserProfileCubit(
+                  state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  di(),
+                  di(),
+                  di(),
+                  di(),
                 ),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) => SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(1.0, 0.0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
+                child: const UserProfilePage(),
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          _goRouteWithTransition(
+            AppRoutes.myBusiness,
+            BlocProvider(
+              create: (context) => BusinessBloc(
+                di(),
+                di(),
+                di(),
+                di(),
+              ),
+              child: const BusinessPage(),
+            ),
+            [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
+          ),
+          GoRoute(
+            path: AppRoutes.manageMenu.path,
+            name: AppRoutes.manageMenu.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => ManageMenuCubit(
+                  di(),
+                  uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  businessDM: state.extra as BusinessDM?,
                 ),
-              );
-            }),
-        GoRoute(
-          path: AppRoutes.profileScreen.path,
-          name: AppRoutes.profileScreen.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => UserProfileCubit(
-                state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                di(),
-                di(),
-                di(),
-                di(),
+                child: const ManageMenuScreen(),
               ),
-              child: const UserProfilePage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-        _goRouteWithTransition(
-          AppRoutes.myBusiness,
-          BlocProvider(
-            create: (context) => BusinessBloc(
-              di(),
-              di(),
-              di(),
-              di(),
-            ),
-            child: const BusinessPage(),
-          ),
-          [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
-        ),
-        GoRoute(
-          path: AppRoutes.manageMenu.path,
-          name: AppRoutes.manageMenu.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => ManageMenuCubit(
-                di(),
-                uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                businessDM: state.extra as BusinessDM?,
+          _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
+          _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
+          _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
+          GoRoute(
+            path: AppRoutes.managePromotions.path,
+            name: AppRoutes.managePromotions.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => ManagePromotionsCubit(
+                  state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  di(),
+                  di(),
+                  state.extra as BusinessDM?,
+                  di(),
+                ),
+                child: const ManagePromotionsPage(),
               ),
-              child: const ManageMenuScreen(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-        _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
-        _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
-        _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
-        GoRoute(
-          path: AppRoutes.managePromotions.path,
-          name: AppRoutes.managePromotions.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => ManagePromotionsCubit(
-                state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                di(),
-                di(),
-                state.extra as BusinessDM?,
-                di(),
+          GoRoute(
+            path: AppRoutes.manageReservations.path,
+            name: AppRoutes.manageReservations.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: ManageReservationsPage(
+                businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
               ),
-              child: const ManagePromotionsPage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-        GoRoute(
-          path: AppRoutes.manageReservations.path,
-          name: AppRoutes.manageReservations.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: ManageReservationsPage(
-              businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
-            ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
-          ),
-        ),
-        GoRoute(
-          path: AppRoutes.visitBusiness.path,
-          name: AppRoutes.visitBusiness.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => VisitBusinessCubit(
-                di(),
-                di(),
-                state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                state.extra as BusinessDM?,
-                di(),
-                di(),
-                di(),
+          GoRoute(
+            path: AppRoutes.visitBusiness.path,
+            name: AppRoutes.visitBusiness.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => VisitBusinessCubit(
+                  di(),
+                  di(),
+                  state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  state.extra as BusinessDM?,
+                  di(),
+                  di(),
+                  di(),
+                ),
+                child: const VisitedBusinessPage(),
               ),
-              child: const VisitedBusinessPage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-        GoRoute(
-          path: AppRoutes.visitMenu.path,
-          name: AppRoutes.visitMenu.name,
-          redirect: Redirector([]).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => VisitedMenuCubit(
-                di(),
-                uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                businessDM: state.extra as BusinessDM?,
+          GoRoute(
+            path: AppRoutes.visitMenu.path,
+            name: AppRoutes.visitMenu.name,
+            redirect: Redirector([]).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => VisitedMenuCubit(
+                  di(),
+                  uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  businessDM: state.extra as BusinessDM?,
+                ),
+                child: const VisitedMenuScreen(),
               ),
-              child: const VisitedMenuScreen(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-        GoRoute(
-          path: AppRoutes.visitPromotions.path,
-          name: AppRoutes.visitPromotions.name,
-          redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Durations.medium4,
-            key: state.pageKey,
-            child: BlocProvider(
-              create: (context) => PromotionsCubit(
-                state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                state.extra as BusinessDM?,
-                di(),
-                di(),
+          GoRoute(
+            path: AppRoutes.visitPromotions.path,
+            name: AppRoutes.visitPromotions.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => PromotionsCubit(
+                  state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  state.extra as BusinessDM?,
+                  di(),
+                  di(),
+                ),
+                child: const PromotionsPage(),
               ),
-              child: const PromotionsPage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
             ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                FadeTransition(opacity: animation, child: child),
           ),
-        ),
-      ],
-        ], // end if (!_isMenuSubdomain)
+        ],
+      ], // end if (!_isMenuSubdomain)
       errorPageBuilder: (context, state) => const MaterialPage(child: NotFoundPage()),
     );
   }

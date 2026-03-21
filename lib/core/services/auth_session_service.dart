@@ -63,6 +63,7 @@ class AuthSessionService {
       return false;
     }
   }
+
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value
 
   /// Detects and caches platform + device metadata once at app startup.
@@ -143,7 +144,9 @@ class AuthSessionService {
     userSessionDM = newUserSessionDM;
     _authHeader = {FoodlyStrings.AUTHORIZATION: '${newUserSessionDM?.tokenType} ${newUserSessionDM?.token}'};
     di<FoodlyApiProvider>().setAuthToken('${newUserSessionDM?.tokenType} ${newUserSessionDM?.token}');
-    FirebaseCrashlytics.instance.setUserIdentifier(newUserSessionDM?.user.uuid ?? 'anonymous');
+    if (!kIsWeb) {
+      FirebaseCrashlytics.instance.setUserIdentifier(newUserSessionDM?.user.uuid ?? 'anonymous');
+    }
   }
 
   void setBusinesses(List<BusinessDM> businesses) => userSessionDM != null

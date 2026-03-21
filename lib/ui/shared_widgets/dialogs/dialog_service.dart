@@ -11,6 +11,8 @@ part '../loading/loading_iso_wdg.dart';
 class DialogService {
   var _isLoadingShown = false;
 
+  bool get isDialogShown => _isLoadingShown;
+
   void showLoading() {
     final context = rootNavigatorKey.currentContext;
     if (context != null && !_isLoadingShown) {

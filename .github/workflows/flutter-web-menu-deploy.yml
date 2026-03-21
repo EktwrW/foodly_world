@@ -21,6 +21,7 @@ jobs:
       - name: Build Flutter Web (Public Menu)
         run: |
           flutter build web --release \
+            --dart-define=IS_MENU_SUBDOMAIN=true \
             --dart-define=ENV=prod \
             --dart-define=DOMAIN=https://api.foodly.solutions \
             --dart-define=API_VERSION=/api \

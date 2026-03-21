@@ -43,7 +43,7 @@ class _PublicMenuView extends StatelessWidget {
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator.adaptive()),
             error: (msg) => Center(child: Text(msg)),
             loaded: (business, menu) {
               // TODO: build your UI here — business + menu data are ready.

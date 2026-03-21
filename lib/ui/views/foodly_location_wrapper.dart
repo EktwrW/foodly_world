@@ -72,7 +72,13 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     }
 
     // Safety net: force-remove splash after 8 seconds regardless of state.
-    _safetyTimer = Timer(const Duration(seconds: 8), _tryRemoveSplash);
+    // Also calls hideLoading() directly in case _splashRemoved was already set
+    // (e.g. FavoritesCubit.loaded fired before checkingLocation), which makes
+    // _tryRemoveSplash() a no-op but leaves the spinner stuck on web.
+    _safetyTimer = Timer(const Duration(seconds: 8), () {
+      _tryRemoveSplash();
+      if (mounted) _dialogService.hideLoading();
+    });
   }
 
   @override
@@ -88,6 +94,26 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     _localAuthSub = null;
     if (!mounted) return;
     context.read<LocationBloc>().add(const LocationEvent.checkLocation());
+  }
+
+  /// Hides the loading overlay once both home cubits have finished their
+  /// initial load (or after a 5-second safety timeout). Must be called
+  /// BEFORE [NearbyPromotionsCubit.load] / [NewReleasesCubit.load] so the
+  /// stream subscriptions are set up before the loading states are emitted.
+  Future<void> _hideLoadingAfterCubits() async {
+    try {
+      await Future.wait([
+        di<NearbyPromotionsCubit>()
+            .stream
+            .firstWhere((s) => s.maybeWhen(loading: (_) => false, orElse: () => true))
+            .timeout(const Duration(seconds: 5)),
+        di<NewReleasesCubit>()
+            .stream
+            .firstWhere((s) => s.maybeWhen(loading: (_) => false, orElse: () => true))
+            .timeout(const Duration(seconds: 5)),
+      ]);
+    } catch (_) {}
+    if (mounted) _dialogService.hideLoading();
   }
 
   @override
@@ -122,11 +148,10 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
           locationChecked: (locationDM) {
             _locationService.updateLocation(locationDM);
             _tryRemoveSplash();
-            // Always dismiss loading — showLoading() can fire multiple times
-            // (e.g. after returning from settings) but _tryRemoveSplash() only
-            // runs once.
-            if (mounted) _dialogService.hideLoading();
-
+            // Subscribe to cubit streams BEFORE calling load() so we don't miss
+            // the loading→loaded transition. The spinner stays visible until both
+            // cubits finish, preventing the 1-second home-page flash.
+            _hideLoadingAfterCubits();
             di<NearbyPromotionsCubit>().load();
             di<NewReleasesCubit>().load();
           },
