@@ -686,5 +686,6 @@
   "deleteBusinessWarning": "This action is permanent. The business and all its content (menu, promotions, reservations) will be removed.",
   "deleteBusinessConfirm": "Yes, delete business",
   "deleteBusinessSuccess": "Business deleted successfully",
-  "dangerZone": "Danger Zone"
+  "dangerZone": "Danger Zone",
+  "downloadApp": "Get the app"
 }

@@ -4758,6 +4758,11 @@ class S {
   String get dangerZone {
     return Intl.message('Danger Zone', name: 'dangerZone', desc: '', args: []);
   }
+
+  /// `Get the app`
+  String get downloadApp {
+    return Intl.message('Get the app', name: 'downloadApp', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

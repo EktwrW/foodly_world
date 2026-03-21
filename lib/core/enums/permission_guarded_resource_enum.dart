@@ -35,6 +35,8 @@ enum ModuleGuardType {
         AppRoutes.myReservations.name: home,
         AppRoutes.manageReservations.name: home,
         AppRoutes.privacyPolicy.name: menu,
+        AppRoutes.publicMenu.name: menu,
+        AppRoutes.termsConditions.name: menu,
         '': unknown,
       };
 }

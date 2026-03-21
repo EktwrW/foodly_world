@@ -39,9 +39,11 @@ import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart'
 import 'package:go_router/go_router.dart';
 
 /// True when the app is running on the menu.foodly.solutions subdomain.
-/// Uses --dart-define=IS_MENU_SUBDOMAIN=true in the CI build as primary signal,
-/// with Uri.base.host as fallback for local development.
-final _isMenuSubdomain = const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.');
+/// Production: Uri.base.host starts with 'menu.'
+/// CI build: --dart-define=IS_MENU_SUBDOMAIN=true
+/// Local dev: port 8889 (see launch.json "public-menu-web" config)
+final _isMenuSubdomain =
+    const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.') || Uri.base.port == 8889;
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -222,7 +224,12 @@ class AppRouter {
       },
       initialLocation: AppRoutes.start.path,
       routes: [
-        if (_isMenuSubdomain)
+        if (_isMenuSubdomain) ...[
+          // Root path: redirect to the path param version when UUID is missing.
+          GoRoute(
+            path: '/',
+            redirect: (_, __) => '/${const String.fromEnvironment('MENU_DEV_UUID')}',
+          ),
           GoRoute(
             path: AppRoutes.publicMenu.path,
             name: AppRoutes.publicMenu.name,
@@ -231,6 +238,7 @@ class AppRouter {
               dio: di<Dio>(),
             ),
           ),
+        ],
         if (!_isMenuSubdomain) ...[
           _goRouteWithTransition(AppRoutes.start, const StartingPage369(), [RedirectRoute.requiresAppInitial]),
           _goRouteWithTransition(AppRoutes.login, const StartingPage369(currentView: StartingPageView.login),

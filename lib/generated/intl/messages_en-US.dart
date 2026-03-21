@@ -407,6 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "doYouWantToDeleteThisCoverImage": MessageLookupByLibrary.simpleMessage(
       "Do you want to delete this cover image?",
     ),
+    "downloadApp": MessageLookupByLibrary.simpleMessage("Get the app"),
     "drinks": MessageLookupByLibrary.simpleMessage("Drinks"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "editCoverImages": MessageLookupByLibrary.simpleMessage(

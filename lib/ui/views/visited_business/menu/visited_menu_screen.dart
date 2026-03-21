@@ -120,7 +120,6 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
           menu: vm.menuDM,
           floatingButtonKey: vm.floatingButtonKey,
           menuUrl: _publicMenuUrl,
-          logger: di(),
         ),
       ),
       body: NestedScrollView(

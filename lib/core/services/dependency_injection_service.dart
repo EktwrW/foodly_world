@@ -1,5 +1,6 @@
 import 'dart:async' show unawaited;
 
+import 'package:dio/dio.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/analytics/analytics_api_provider.dart';
 import 'package:foodly_world/core/network/analytics/events_client.dart';
@@ -20,7 +21,6 @@ import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 export 'package:foodly_world/core/core_exports.dart';

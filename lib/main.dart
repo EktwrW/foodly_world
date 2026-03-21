@@ -40,19 +40,26 @@ Future<Widget> buildFoodlyApp() async {
 
   OpenAI.apiKey = baseConfig.openaiApiKey;
 
+  final isMenuSubdomain =
+      const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.') || Uri.base.port == 8889;
+
+  if (isMenuSubdomain) FlutterNativeSplash.remove();
+
   return MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => rootBloc),
-      BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
-      BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
-      BlocProvider(create: (context) => LocationBloc(di(), di())),
-      BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
-      BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
-      BlocProvider(create: (context) => di<FavoritesCubit>()),
-      BlocProvider(create: (context) => di<NotificationsCubit>()),
-      BlocProvider(create: (context) => di<SocialCubit>()),
-      BlocProvider(create: (context) => di<NearbyPromotionsCubit>()),
-      BlocProvider(create: (context) => di<NewReleasesCubit>()),
+      if (!isMenuSubdomain) ...[
+        BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
+        BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
+        BlocProvider(create: (context) => LocationBloc(di(), di())),
+        BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
+        BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
+        BlocProvider(create: (context) => di<FavoritesCubit>()),
+        BlocProvider(create: (context) => di<NotificationsCubit>()),
+        BlocProvider(create: (context) => di<SocialCubit>()),
+        BlocProvider(create: (context) => di<NearbyPromotionsCubit>()),
+        BlocProvider(create: (context) => di<NewReleasesCubit>()),
+      ],
     ],
     child: MaterialApp.router(
       title: 'Foodly App',
@@ -80,6 +87,11 @@ Future<Widget> buildFoodlyApp() async {
       darkTheme: FoodlyThemes.darkTheme(),
       themeMode: ThemeMode.light,
       builder: (context, childWidget) {
+        // Public menu subdomain: render directly, skip auth/location wrappers.
+        final isPublicMenu = const bool.fromEnvironment('IS_MENU_SUBDOMAIN') ||
+            Uri.base.host.startsWith('menu.') ||
+            Uri.base.port == 8889;
+
         final mediaQuery = MediaQuery.of(context);
         final width = mediaQuery.size.width;
 
@@ -102,9 +114,11 @@ Future<Widget> buildFoodlyApp() async {
             initialEntries: [
               OverlayEntry(
                 builder: (context) => ResponsiveBreakpoints.builder(
-                  child: FoodlyWrapper(
-                    child: FoodlyMainScaffold(child: childWidget),
-                  ),
+                  child: isPublicMenu
+                      ? childWidget ?? const SizedBox.shrink()
+                      : FoodlyWrapper(
+                          child: FoodlyMainScaffold(child: childWidget),
+                        ),
                   breakpoints: DeviceSize.breakpoints,
                 ),
               ),
