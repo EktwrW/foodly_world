@@ -92,6 +92,38 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "about": MessageLookupByLibrary.simpleMessage("Sobre"),
+    "aboutEvolving": MessageLookupByLibrary.simpleMessage(
+      "Estamos apenas a comecar. O Foodly foi concebido para evoluir ao lado dos negocios e comunidades que serve. A sua opiniao define o que vem a seguir.",
+    ),
+    "aboutEvolvingTitle": MessageLookupByLibrary.simpleMessage(
+      "Feito para Evoluir",
+    ),
+    "aboutForBusiness": MessageLookupByLibrary.simpleMessage(
+      "Apresente o seu menu, lance promocoes, gerencie reservas, fidelize os seus clientes e deixe que o descubram de forma natural — tudo a partir de um unico lugar, sem custo.\n\nO Foodly cresce consigo. Metricas, estatisticas e encomendas na app estao a caminho.",
+    ),
+    "aboutForBusinessTitle": MessageLookupByLibrary.simpleMessage(
+      "Para Negocios",
+    ),
+    "aboutForCustomers": MessageLookupByLibrary.simpleMessage(
+      "Explore o que ha por perto, descubra novos favoritos, guarde as melhores promocoes, reserve mesa em segundos e apoie os negocios que tornam a sua cidade unica.",
+    ),
+    "aboutForCustomersTitle": MessageLookupByLibrary.simpleMessage(
+      "Para Clientes",
+    ),
+    "aboutFree": MessageLookupByLibrary.simpleMessage(
+      "O Foodly e gratuito — para negocios e clientes. No futuro, uma pequena comissao em encomendas feitas atraves da app sera o unico custo. Sem subscricoes, sem taxas ocultas.",
+    ),
+    "aboutFreeTitle": MessageLookupByLibrary.simpleMessage("Gratis para Todos"),
+    "aboutMission": MessageLookupByLibrary.simpleMessage(
+      "O Foodly nasceu de uma convicao simples: cada negocio — seja uma cozinha familiar, uma franquia em crescimento ou uma padaria de bairro — merece ferramentas poderosas para se conectar com a sua comunidade.\n\nEstamos a construir a ponte entre os negocios e as pessoas que amam o que oferecem.",
+    ),
+    "aboutMissionTitle": MessageLookupByLibrary.simpleMessage("Porque Foodly?"),
+    "aboutTagline": MessageLookupByLibrary.simpleMessage(
+      "Onde cada sabor encontra o seu publico.",
+    ),
+    "aboutVideoPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "Guia da App — Em Breve",
+    ),
     "accessiblePMR": MessageLookupByLibrary.simpleMessage("Acessível PMR"),
     "account": MessageLookupByLibrary.simpleMessage("Conta"),
     "addADescription": MessageLookupByLibrary.simpleMessage(
@@ -952,6 +984,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "A sua sessão expirou. Por favor, faça login novamente.",
     ),
     "setDate": MessageLookupByLibrary.simpleMessage("Definir data"),
+    "shareAppMessage": MessageLookupByLibrary.simpleMessage(
+      "Descubra os melhores locais perto de si com o Foodly — explore menus, aproveite promocoes e reserve mesa, tudo numa unica app!",
+    ),
     "shareMenu": MessageLookupByLibrary.simpleMessage("Partilhar este menu"),
     "shareMenuError": MessageLookupByLibrary.simpleMessage(
       "Ups... Algo correu mal! \n\nNão foi possível partilhar o menu.",
@@ -960,6 +995,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareMenuSubject": MessageLookupByLibrary.simpleMessage(
       "Partilho contigo um menu!",
     ),
+    "shareOnAndroid": MessageLookupByLibrary.simpleMessage(
+      "Partilhar para Android",
+    ),
+    "shareOnIOS": MessageLookupByLibrary.simpleMessage("Partilhar para iOS"),
     "signInWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Iniciar sessão com o Google",
     ),

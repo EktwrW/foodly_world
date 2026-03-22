@@ -37,8 +37,10 @@ class VisitedItemNameAndDescriptionWdg extends ui.StatelessWidget {
                   item.description,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: FoodlyTextStyles.caption
-                      .copyWith(fontStyle: item.description.isEmpty && item.isEditing ? FontStyle.italic : null),
+                  style: FoodlyTextStyles.caption.copyWith(
+                    fontStyle: item.description.isEmpty && item.isEditing ? FontStyle.italic : null,
+                    fontSize: 11.6,
+                  ),
                 ).paddingVertical(5),
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
@@ -173,7 +174,16 @@ class AppRouter {
       AppRoutes.termsConditions.path,
     ];
 
-    return exactPublicPaths.contains(path) || path.startsWith('/visit-menu/');
+    if (exactPublicPaths.contains(path) || path.startsWith('/visit-menu/')) return true;
+
+    // Deep link: /{businessUuid} from menu.foodly.solutions App/Universal Links.
+    final segment = path.startsWith('/') ? path.substring(1) : path;
+    if (RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', caseSensitive: false)
+        .hasMatch(segment)) {
+      return true;
+    }
+
+    return false;
   }
 
   bool _isLoginRoute(String path) => path == AppRoutes.login.path;
@@ -390,6 +400,7 @@ class AppRouter {
           _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
           _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
           _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
+          _goRouteWithTransition(AppRoutes.about, const AboutPage(), [RedirectRoute.requiresLogin]),
           GoRoute(
             path: AppRoutes.managePromotions.path,
             name: AppRoutes.managePromotions.name,
@@ -485,6 +496,15 @@ class AppRouter {
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          // Deep link handler: menu.foodly.solutions/{uuid} opens public menu in-app.
+          // GoRouter prioritizes literal paths over parameterized — no conflict with named routes.
+          GoRoute(
+            path: AppRoutes.publicMenu.path,
+            builder: (ctx, state) => PublicMenuPage(
+              businessUuid: state.pathParameters['businessUuid']!,
+              dio: di<Dio>(),
             ),
           ),
         ],

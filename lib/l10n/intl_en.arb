@@ -687,5 +687,20 @@
   "deleteBusinessConfirm": "Yes, delete business",
   "deleteBusinessSuccess": "Business deleted successfully",
   "dangerZone": "Danger Zone",
-  "downloadApp": "Get the app"
+  "downloadApp": "Get the app",
+  "aboutTagline": "Where every flavor finds its audience.",
+  "aboutMissionTitle": "Why Foodly?",
+  "aboutMission": "Foodly was born from a simple belief: every business — whether a family kitchen, a growing franchise, or a neighborhood bakery — deserves powerful tools to connect with its community.\n\nWe're building the bridge between businesses and the people who love what they offer.",
+  "aboutForBusinessTitle": "For Businesses",
+  "aboutForBusiness": "Showcase your menu, launch promotions, manage reservations, build a loyal following, and let your customers discover you naturally — all from one place, at no cost.\n\nFoodly grows with you. Metrics, insights, and in-app ordering are coming soon.",
+  "aboutForCustomersTitle": "For Customers",
+  "aboutForCustomers": "Explore what's nearby, find new favorites, save the best promotions, reserve a table in seconds, and support the businesses that make your city unique.",
+  "aboutFreeTitle": "Free for Everyone",
+  "aboutFree": "Foodly is free to use — for businesses and customers alike. In the future, a small commission on in-app orders will be the only cost. No subscriptions, no hidden fees.",
+  "aboutEvolvingTitle": "Built to Evolve",
+  "aboutEvolving": "We're just getting started. Foodly is designed to evolve alongside the businesses and communities it serves. Your feedback shapes what comes next.",
+  "aboutVideoPlaceholder": "App Guide — Coming Soon",
+  "shareAppMessage": "Discover the best food spots near you with Foodly — explore menus, grab promotions, and book tables, all in one app!",
+  "shareOnAndroid": "Share for Android",
+  "shareOnIOS": "Share for iOS"
 }

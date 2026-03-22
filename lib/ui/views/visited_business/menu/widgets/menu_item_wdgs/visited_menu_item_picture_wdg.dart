@@ -3,12 +3,10 @@ part of '../visited_menu_category_builder_wdg.dart';
 class VisitedMenuItemPictureWdg extends StatelessWidget {
   const VisitedMenuItemPictureWdg({
     super.key,
-    required this.isEditing,
     required this.item,
     required this.menuCategory,
   });
 
-  final bool isEditing;
   final ItemDM item;
   final MenuCategory menuCategory;
 
@@ -61,7 +59,7 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ui.NeumorphicIcon(
-            isEditing ? Icons.image_search_rounded : Icons.dining_outlined,
+            Icons.dining_outlined,
             style: ui.NeumorphicStyle(
               shape: ui.NeumorphicShape.concave,
               color: FoodlyThemes.accentColor,
@@ -69,13 +67,6 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
             ),
             size: 50,
           ),
-          if (isEditing)
-            Text(
-              S.current.addPhoto,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: FoodlyTextStyles.editableAvatarText,
-            ).paddingSymmetric(horizontal: 10, vertical: 4),
         ],
       );
 
@@ -85,8 +76,7 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: FoodlyThemes.primaryFoodly.withValues(alpha: isEditing ? .036 : .093)),
+          borderRadius: BorderRadius.circular(8), color: FoodlyThemes.primaryFoodly.withValues(alpha: .093)),
       clipBehavior: Clip.hardEdge,
       child:
           (item.referencePhotos?.isEmpty ?? true) && (item.imagePaths.isEmpty) ? _buildPlaceholder : _buildImageWidget,

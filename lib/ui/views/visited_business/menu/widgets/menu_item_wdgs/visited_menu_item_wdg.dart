@@ -83,7 +83,6 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       VisitedMenuItemPictureWdg(
-                        isEditing: widget.item.isEditing,
                         item: widget.item,
                         menuCategory: widget.menuCategory,
                       ),

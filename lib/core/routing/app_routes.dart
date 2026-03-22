@@ -17,6 +17,7 @@ enum AppRoutes {
   privacyPolicy('/privacy', 'privacyPolicy'),
   termsConditions('/terms', 'termsConditions'),
   myReservations('/my-reservations', 'myReservations'),
+  about('/about', 'about'),
   manageReservations('$mainRoute/$_routeIdParam/my-business/manage-reservations', 'manageReservations'),
   // Business routes
   myBusiness('$mainRoute/$_routeIdParam/my-business', 'myBusiness'),

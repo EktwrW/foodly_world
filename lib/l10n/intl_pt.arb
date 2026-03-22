@@ -687,5 +687,20 @@
   "deleteBusinessConfirm": "Sim, eliminar negócio",
   "deleteBusinessSuccess": "Negócio eliminado com sucesso",
   "dangerZone": "Zona de Perigo",
-  "downloadApp": "Obter a app"
+  "downloadApp": "Obter a app",
+  "aboutTagline": "Onde cada sabor encontra o seu publico.",
+  "aboutMissionTitle": "Porque Foodly?",
+  "aboutMission": "O Foodly nasceu de uma convicao simples: cada negocio — seja uma cozinha familiar, uma franquia em crescimento ou uma padaria de bairro — merece ferramentas poderosas para se conectar com a sua comunidade.\n\nEstamos a construir a ponte entre os negocios e as pessoas que amam o que oferecem.",
+  "aboutForBusinessTitle": "Para Negocios",
+  "aboutForBusiness": "Apresente o seu menu, lance promocoes, gerencie reservas, fidelize os seus clientes e deixe que o descubram de forma natural — tudo a partir de um unico lugar, sem custo.\n\nO Foodly cresce consigo. Metricas, estatisticas e encomendas na app estao a caminho.",
+  "aboutForCustomersTitle": "Para Clientes",
+  "aboutForCustomers": "Explore o que ha por perto, descubra novos favoritos, guarde as melhores promocoes, reserve mesa em segundos e apoie os negocios que tornam a sua cidade unica.",
+  "aboutFreeTitle": "Gratis para Todos",
+  "aboutFree": "O Foodly e gratuito — para negocios e clientes. No futuro, uma pequena comissao em encomendas feitas atraves da app sera o unico custo. Sem subscricoes, sem taxas ocultas.",
+  "aboutEvolvingTitle": "Feito para Evoluir",
+  "aboutEvolving": "Estamos apenas a comecar. O Foodly foi concebido para evoluir ao lado dos negocios e comunidades que serve. A sua opiniao define o que vem a seguir.",
+  "aboutVideoPlaceholder": "Guia da App — Em Breve",
+  "shareAppMessage": "Descubra os melhores locais perto de si com o Foodly — explore menus, aproveite promocoes e reserve mesa, tudo numa unica app!",
+  "shareOnAndroid": "Partilhar para Android",
+  "shareOnIOS": "Partilhar para iOS"
 }

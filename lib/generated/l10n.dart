@@ -4763,6 +4763,156 @@ class S {
   String get downloadApp {
     return Intl.message('Get the app', name: 'downloadApp', desc: '', args: []);
   }
+
+  /// `Where every flavor finds its audience.`
+  String get aboutTagline {
+    return Intl.message(
+      'Where every flavor finds its audience.',
+      name: 'aboutTagline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Why Foodly?`
+  String get aboutMissionTitle {
+    return Intl.message(
+      'Why Foodly?',
+      name: 'aboutMissionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foodly was born from a simple belief: every business — whether a family kitchen, a growing franchise, or a neighborhood bakery — deserves powerful tools to connect with its community.\n\nWe're building the bridge between businesses and the people who love what they offer.`
+  String get aboutMission {
+    return Intl.message(
+      'Foodly was born from a simple belief: every business — whether a family kitchen, a growing franchise, or a neighborhood bakery — deserves powerful tools to connect with its community.\n\nWe\'re building the bridge between businesses and the people who love what they offer.',
+      name: 'aboutMission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For Businesses`
+  String get aboutForBusinessTitle {
+    return Intl.message(
+      'For Businesses',
+      name: 'aboutForBusinessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Showcase your menu, launch promotions, manage reservations, build a loyal following, and let your customers discover you naturally — all from one place, at no cost.\n\nFoodly grows with you. Metrics, insights, and in-app ordering are coming soon.`
+  String get aboutForBusiness {
+    return Intl.message(
+      'Showcase your menu, launch promotions, manage reservations, build a loyal following, and let your customers discover you naturally — all from one place, at no cost.\n\nFoodly grows with you. Metrics, insights, and in-app ordering are coming soon.',
+      name: 'aboutForBusiness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For Customers`
+  String get aboutForCustomersTitle {
+    return Intl.message(
+      'For Customers',
+      name: 'aboutForCustomersTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore what's nearby, find new favorites, save the best promotions, reserve a table in seconds, and support the businesses that make your city unique.`
+  String get aboutForCustomers {
+    return Intl.message(
+      'Explore what\'s nearby, find new favorites, save the best promotions, reserve a table in seconds, and support the businesses that make your city unique.',
+      name: 'aboutForCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free for Everyone`
+  String get aboutFreeTitle {
+    return Intl.message(
+      'Free for Everyone',
+      name: 'aboutFreeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foodly is free to use — for businesses and customers alike. In the future, a small commission on in-app orders will be the only cost. No subscriptions, no hidden fees.`
+  String get aboutFree {
+    return Intl.message(
+      'Foodly is free to use — for businesses and customers alike. In the future, a small commission on in-app orders will be the only cost. No subscriptions, no hidden fees.',
+      name: 'aboutFree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Built to Evolve`
+  String get aboutEvolvingTitle {
+    return Intl.message(
+      'Built to Evolve',
+      name: 'aboutEvolvingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We're just getting started. Foodly is designed to evolve alongside the businesses and communities it serves. Your feedback shapes what comes next.`
+  String get aboutEvolving {
+    return Intl.message(
+      'We\'re just getting started. Foodly is designed to evolve alongside the businesses and communities it serves. Your feedback shapes what comes next.',
+      name: 'aboutEvolving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Guide — Coming Soon`
+  String get aboutVideoPlaceholder {
+    return Intl.message(
+      'App Guide — Coming Soon',
+      name: 'aboutVideoPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discover the best food spots near you with Foodly — explore menus, grab promotions, and book tables, all in one app!`
+  String get shareAppMessage {
+    return Intl.message(
+      'Discover the best food spots near you with Foodly — explore menus, grab promotions, and book tables, all in one app!',
+      name: 'shareAppMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share for Android`
+  String get shareOnAndroid {
+    return Intl.message(
+      'Share for Android',
+      name: 'shareOnAndroid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share for iOS`
+  String get shareOnIOS {
+    return Intl.message(
+      'Share for iOS',
+      name: 'shareOnIOS',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

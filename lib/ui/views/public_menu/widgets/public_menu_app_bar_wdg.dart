@@ -50,16 +50,26 @@ class PublicPrimaryMenuSliverAppBar extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(S.current.menu, style: FoodlyTextStyles.secondaryTitle.copyWith(fontSize: 15)).paddingBottom(6),
-                  ui.NeumorphicText(
-                    business.name ?? '',
-                    style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
-                    textStyle: ui.NeumorphicTextStyle(
-                      fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
-                      fontSize: context.isMobile ? 13 : 15,
-                      fontWeight: FontWeight.bold,
+                  Flexible(
+                    child: Text(S.current.menu, style: FoodlyTextStyles.secondaryTitle.copyWith(fontSize: 15))
+                        .paddingBottom(6),
+                  ),
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ui.NeumorphicText(
+                          business.name ?? '',
+                          style: const ui.NeumorphicStyle(color: FoodlyThemes.primaryFoodly),
+                          textStyle: ui.NeumorphicTextStyle(
+                            fontFamily: GoogleFonts.poppinsTextTheme().bodyLarge?.fontFamily,
+                            fontSize: context.isMobile ? 12.3 : 14.9,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ).paddingBottom(6),
+                      ],
                     ),
-                  ).paddingBottom(6),
+                  ),
                 ],
               ),
             ],
@@ -92,7 +102,7 @@ class _DownloadAppButton extends StatelessWidget {
       tooltip: S.current.downloadApp,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-      color: Colors.transparent,
+      color: Colors.white,
       elevation: 4,
       onSelected: (store) => _launch(
         store == _AppStore.googlePlay ? _googlePlayUrl : _appStoreUrl,
@@ -142,48 +152,50 @@ class PublicSecondaryMenuSliverAppBar extends StatelessWidget {
           primary: false,
           pinned: true,
           backgroundColor: Colors.transparent,
-          expandedHeight: 60,
-          collapsedHeight: 60,
+          expandedHeight: 56,
+          collapsedHeight: 56,
           surfaceTintColor: Colors.transparent,
           automaticallyImplyLeading: false,
           title: LayoutBuilder(builder: (context, constraints) {
             final padding = context.isMobile ? 0.0 : constraints.maxWidth * 0.19;
 
-            return ToggleSwitch(
-              initialLabelIndex: index,
-              onToggle: (i) {
-                pageController.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
-                indexNotifier.value = i ?? 0;
-              },
-              animate: true,
-              animationDuration: 500,
-              minHeight: 32,
-              labels: MenuCategory.values.map((c) => c.text).toList(),
-              minWidth: constraints.maxWidth * 0.3,
-              cornerRadius: 6.0,
-              activeFgColor: Colors.white,
-              inactiveBgColor: Colors.white,
-              totalSwitches: MenuCategory.values.length,
-              customTextStyles: [
-                FoodlyTextStyles.toogleButtonText,
-                FoodlyTextStyles.toogleButtonText,
-                FoodlyTextStyles.toogleButtonText,
-              ],
-              borderWidth: 1.5,
-              borderColor: const [
-                FoodlyThemes.primaryFoodly,
-                FoodlyThemes.primaryFoodly,
-                FoodlyThemes.tertiaryFoodly,
-                FoodlyThemes.primaryFoodly,
-                FoodlyThemes.primaryFoodly,
-              ],
-              dividerColor: FoodlyThemes.secondaryFoodly,
-              activeBgColors: const [
-                [FoodlyThemes.primaryFoodly],
-                [FoodlyThemes.primaryFoodly],
-                [FoodlyThemes.primaryFoodly],
-              ],
-            ).paddingHorizontal(padding);
+            return Center(
+              child: ToggleSwitch(
+                initialLabelIndex: index,
+                onToggle: (i) {
+                  pageController.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
+                  indexNotifier.value = i ?? 0;
+                },
+                animate: true,
+                animationDuration: 500,
+                minHeight: 32,
+                labels: MenuCategory.values.map((c) => c.text).toList(),
+                minWidth: constraints.maxWidth * 0.3,
+                cornerRadius: 6.0,
+                activeFgColor: Colors.white,
+                inactiveBgColor: Colors.white,
+                totalSwitches: MenuCategory.values.length,
+                customTextStyles: [
+                  FoodlyTextStyles.toogleButtonText,
+                  FoodlyTextStyles.toogleButtonText,
+                  FoodlyTextStyles.toogleButtonText,
+                ],
+                borderWidth: 1.5,
+                borderColor: const [
+                  FoodlyThemes.primaryFoodly,
+                  FoodlyThemes.primaryFoodly,
+                  FoodlyThemes.tertiaryFoodly,
+                  FoodlyThemes.primaryFoodly,
+                  FoodlyThemes.primaryFoodly,
+                ],
+                dividerColor: FoodlyThemes.secondaryFoodly,
+                activeBgColors: const [
+                  [FoodlyThemes.primaryFoodly],
+                  [FoodlyThemes.primaryFoodly],
+                  [FoodlyThemes.primaryFoodly],
+                ],
+              ).paddingHorizontal(padding),
+            );
           }),
         );
       },

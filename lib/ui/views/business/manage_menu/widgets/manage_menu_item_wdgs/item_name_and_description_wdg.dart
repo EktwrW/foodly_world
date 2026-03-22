@@ -179,8 +179,10 @@ class _ItemNameAndDescriptionWdgState extends State<ItemNameAndDescriptionWdg> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: FoodlyTextStyles.caption.copyWith(
-                              fontStyle:
-                                  widget.item.description.isEmpty && widget.item.isEditing ? FontStyle.italic : null),
+                            fontStyle:
+                                widget.item.description.isEmpty && widget.item.isEditing ? FontStyle.italic : null,
+                            fontSize: 11.6,
+                          ),
                         ).paddingVertical(5),
                       ),
                     ),

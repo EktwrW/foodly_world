@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.foodlysolutions.app",
+      "sha256_cert_fingerprints": [
+        "66:4E:D4:26:AE:4C:4E:1A:42:2D:76:77:7C:FF:ED:5A:AE:87:79:10:1D:D2:62:C4:4A:DC:F2:1E:D9:5E:6D:6C"
+      ]
+    }
+  }
+]

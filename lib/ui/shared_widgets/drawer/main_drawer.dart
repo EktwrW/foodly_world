@@ -231,6 +231,14 @@ class FoodlyDrawer extends StatelessWidget {
             label: S.current.myReservations,
           ),
           SidebarXItem(
+            onTap: () {
+              final navigator = di<AppRouter>();
+              navigator.appRouter.goNamed(AppRoutes.about.name);
+
+              cubit.updateSelectedIndex(4);
+              FoodlyMainScaffold.toggleDrawer();
+            },
+            selectable: false,
             iconBuilder: (p1, p2) =>
                 FoodlyLogoIconBehavior(height: 8, version: p1 ? FoodlyLogoVersion.original : FoodlyLogoVersion.black),
             label: S.current.about,
@@ -248,7 +256,6 @@ class FoodlyDrawer extends StatelessWidget {
             label: S.current.contactUs,
             selectable: false,
           ),
-          SidebarXItem(icon: Bootstrap.share_fill, label: S.current.recommend),
           SidebarXItem(
             onTap: () {
               FoodlyMainScaffold.toggleDrawer();
