@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/firebase_options.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 
-void main() async => runApp(await buildFoodlyApp());
+void main() async {
+  usePathUrlStrategy();
+  runApp(await buildFoodlyApp());
+}
 
 Future<Widget> buildFoodlyApp() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
