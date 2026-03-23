@@ -42,7 +42,8 @@ class ManageMenuVM with _$ManageMenuVM {
         MenuCategory.food: editMenuDM?.foodCategories,
         MenuCategory.drinks: editMenuDM?.drinkCategories,
         MenuCategory.combos: [
-          CategoryDM(items: editMenuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
+          CategoryDM(
+              items: editMenuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
         ],
       };
 
@@ -61,12 +62,12 @@ class ManageMenuVM with _$ManageMenuVM {
               ?.expand((category) => category.items)
               .any((item) => item.isEditing) ??
           false;
-  bool get isAnyCategoryEditing => currentMenuCategory.isCombos
-      ? false // combos no tienen categorías editables
-      : editMenuDM?.subCategories[currentMenuCategory]?.any((category) => category.editingName) ?? false;
+  bool get isAnyCategoryEditing =>
+      editMenuDM?.subCategories[currentMenuCategory]?.any((category) => category.editingName) ?? false;
 
   bool get menuIsEditing => isAnyItemEditing || isAnyCategoryEditing;
   bool get menuIsEditingFood => menuIsEditing && indexView == 0;
   bool get menuIsEditingDrinks => menuIsEditing && indexView == 1;
-  bool get menuIsEditingCombos => menuIsEditing && indexView == 2;
+  bool get menuIsEditingCombos => editMode && indexView == 2;
+  bool get canEditCombosLabel => currentMenuCategory.isCombos && !menuIsEditingCombos;
 }

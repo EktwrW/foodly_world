@@ -65,15 +65,16 @@ class SubCategoryWdg extends StatelessWidget {
                 iconData: FontAwesome.square_plus,
                 isSubCategory: true,
               ),
-              _CategoryEditButtons(
-                key: const Key('edit-category-name'),
-                editMode: true,
-                canAdd: vm.enableEditCategoryBtns,
-                onPressed: () => cubit.editSubCategoryName(menuCategory, true, subCategory?.uuid ?? ''),
-                text: S.current.editTitle,
-                iconData: EvaIcons.edit_2,
-                isSubCategory: true,
-              ),
+              if (menuCategory != MenuCategory.combos)
+                _CategoryEditButtons(
+                  key: const Key('edit-category-name'),
+                  editMode: true,
+                  canAdd: vm.enableEditCategoryBtns,
+                  onPressed: () => cubit.editSubCategoryName(menuCategory, true, subCategory?.uuid ?? ''),
+                  text: S.current.editTitle,
+                  iconData: EvaIcons.edit_2,
+                  isSubCategory: true,
+                ),
               if (menuCategory != MenuCategory.combos)
                 _CategoryEditButtons(
                   key: const Key('delete-this-category'),
@@ -109,17 +110,17 @@ class SubCategoryWdg extends StatelessWidget {
                 return BlocProvider.value(
                   key: Key(item.uuid),
                   value: cubit,
-                  child: ReorderableDragStartListener(
-                    index: i,
-                    child: MenuItemWdg(
-                      subCategory: subCategory!,
-                      menuCategory: menuCategory,
-                      vm: vm,
-                      item: item,
-                      // Never show the bottom spacer while reordering — it
-                      // would travel with the dragged item and look broken.
-                      isLastScreenItem: false,
-                      dragIconWdg: const Icon(Icons.drag_handle, color: FoodlyThemes.primaryFoodly, size: 29),
+                  child: MenuItemWdg(
+                    subCategory: subCategory!,
+                    menuCategory: menuCategory,
+                    vm: vm,
+                    item: item,
+                    // Never show the bottom spacer while reordering — it
+                    // would travel with the dragged item and look broken.
+                    isLastScreenItem: false,
+                    dragIconWdg: ReorderableDragStartListener(
+                      index: i,
+                      child: const Icon(Icons.drag_handle, color: FoodlyThemes.primaryFoodly, size: 30),
                     ),
                   ),
                 );

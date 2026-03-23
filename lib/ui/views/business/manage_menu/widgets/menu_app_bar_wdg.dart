@@ -50,7 +50,7 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
                                 cubit.updateView(i ?? 0);
                               },
                         animate: true,
-                        animationDuration: 500,
+                        animationDuration: 369,
                         minHeight: 32,
                         labels: vm.tabLabels,
                         minWidth: context.screenWidth * 0.86,
@@ -90,20 +90,22 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (vm.currentMenuCategory.isCombos && vm.loggerUserCanEdit && !vm.menuIsEditing)
+                  if (vm.currentMenuCategory.isCombos)
                     FadeInRight(
                       child: InkWell(
-                        onTap: () => showCombosLabelSnackBar(
-                          context,
-                          currentLabel: vm.combosLabel,
-                          onSave: (value) => cubit.updateCombosLabel(value.isEmpty ? null : value),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 9),
+                        onTap: vm.canEditCombosLabel
+                            ? () => showCombosLabelSnackBar(
+                                  context,
+                                  currentLabel: vm.combosLabel,
+                                  onSave: (value) => cubit.updateCombosLabel(value.isEmpty ? null : value),
+                                )
+                            : null,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 9),
                           child: Icon(
                             Bootstrap.pencil_square,
-                            size: 19,
-                            color: FoodlyThemes.primaryFoodly,
+                            size: 19.96,
+                            color: vm.canEditCombosLabel ? FoodlyThemes.primaryFoodly : Colors.grey[500],
                           ),
                         ),
                       ),
