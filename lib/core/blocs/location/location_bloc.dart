@@ -63,13 +63,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       _locationDM = _locationDM.copyWith(permission: newPermission);
 
       if (_locationDM.permission == LocationPermission.denied) {
-        emit(_PermissionDenied(S.current.locationPermissionDenied));
+        await Future.microtask(() => emit(_PermissionDenied(S.current.locationPermissionDenied)));
         return;
       }
     }
 
     if (_locationDM.permission == LocationPermission.deniedForever) {
-      emit(_PermissionPermanentlyDenied(S.current.locationPermissionPermanentlyDenied));
+      await Future.microtask(() => emit(_PermissionPermanentlyDenied(S.current.locationPermissionPermanentlyDenied)));
       return;
     }
 

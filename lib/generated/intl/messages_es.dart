@@ -184,6 +184,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ya reseñaste este negocio.\n¿Quieres editar tu reseña?",
     ),
     "analytics": MessageLookupByLibrary.simpleMessage("Analíticas"),
+    "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
+      "Panel de Analíticas — Próximamente\nConoce el rendimiento real de tu negocio: visitas, platos más pedidos, tendencias de clientes e ingresos. Todo en un solo lugar.",
+    ),
     "and": MessageLookupByLibrary.simpleMessage("y"),
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(
       "y gestionar contenido, promociones y más",
@@ -550,6 +553,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "followers": MessageLookupByLibrary.simpleMessage("Seguidores"),
     "following": MessageLookupByLibrary.simpleMessage("Siguiendo"),
     "food": MessageLookupByLibrary.simpleMessage("Platos"),
+    "foodTrucks": MessageLookupByLibrary.simpleMessage("Food Trucks y Puestos"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "¿Olvidaste la contraseña?",
     ),

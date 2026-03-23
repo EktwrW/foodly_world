@@ -9,6 +9,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
@@ -60,10 +61,7 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
       builder: (context, state) {
         return state.map(
           initial: (_) => const SizedBox.shrink(),
-          loading: (_) => const SizedBox(
-            height: 320,
-            child: Center(child: CircularProgressIndicator.adaptive()),
-          ),
+          loading: (_) => const NewReleaseShimmer(),
           loaded: (s) {
             if (s.vm.businesses.isEmpty) {
               return _NewReleasesErrorWidget(
@@ -330,7 +328,7 @@ class _NewReleasesErrorWidget extends StatelessWidget {
               width: 236,
               child: CustomNeumorphicButton(
                 onPressed: onRetry,
-                type: CustomNeumorphicBtnType.outlined,
+                type: CustomNeumorphicBtnType.tertiary,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 text: S.current.retry,
                 leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),

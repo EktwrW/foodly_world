@@ -58,12 +58,9 @@ class SliverAppBarActionWidgets extends StatelessWidget {
                     Positioned(
                       bottom: 0,
                       right: 0,
-                      child: FoodlyAnimatedOpacity(
-                        visible: !isExpanded,
-                        child: DecoratedBox(
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
-                            child: const Icon(Bootstrap.menu_button_wide_fill, size: 12).paddingAll(3)),
-                      ),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4)),
+                          child: const Icon(Bootstrap.menu_button_wide_fill, size: 12).paddingAll(3)),
                     )
                   ],
                 )

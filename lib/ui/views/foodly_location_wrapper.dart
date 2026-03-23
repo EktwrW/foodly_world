@@ -75,7 +75,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     // Also calls hideLoading() directly in case _splashRemoved was already set
     // (e.g. FavoritesCubit.loaded fired before checkingLocation), which makes
     // _tryRemoveSplash() a no-op but leaves the spinner stuck on web.
-    _safetyTimer = Timer(const Duration(seconds: 8), () {
+    _safetyTimer = Timer(const Duration(seconds: 16), () {
       _tryRemoveSplash();
       if (mounted) _dialogService.hideLoading();
     });
@@ -106,11 +106,11 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
         di<NearbyPromotionsCubit>()
             .stream
             .firstWhere((s) => s.maybeWhen(loading: (_) => false, orElse: () => true))
-            .timeout(const Duration(seconds: 5)),
+            .timeout(const Duration(seconds: 9)),
         di<NewReleasesCubit>()
             .stream
             .firstWhere((s) => s.maybeWhen(loading: (_) => false, orElse: () => true))
-            .timeout(const Duration(seconds: 5)),
+            .timeout(const Duration(seconds: 9)),
       ]);
     } catch (_) {}
     if (mounted) _dialogService.hideLoading();
@@ -135,7 +135,6 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     if (_splashRemoved) return;
     _splashRemoved = true;
     _safetyTimer?.cancel();
-    if (mounted) _dialogService.hideLoading();
     FlutterNativeSplash.remove();
   }
 
@@ -144,32 +143,35 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     return BlocConsumer<LocationBloc, LocationState>(
       listener: (context, state) {
         state.whenOrNull(
-          checkingLocation: () => mounted ? _dialogService.showLoading() : null,
-          locationChecked: (locationDM) {
+          initial: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
+          checkingLocation: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
+          locationChecked: (locationDM) async {
             _locationService.updateLocation(locationDM);
-            _tryRemoveSplash();
             // Subscribe to cubit streams BEFORE calling load() so we don't miss
             // the loading→loaded transition. The spinner stays visible until both
             // cubits finish, preventing the 1-second home-page flash.
             _hideLoadingAfterCubits();
-            di<NearbyPromotionsCubit>().load();
-            di<NewReleasesCubit>().load();
+            await Future.wait([
+              di<NearbyPromotionsCubit>().load(),
+              di<NewReleasesCubit>().load(),
+            ]);
+            _tryRemoveSplash();
           },
           serviceDisabled: (message) {
             _tryRemoveSplash();
-            if (mounted) _dialogService.hideLoading();
+            if (_dialogService.isDialogShown) _dialogService.hideLoading();
             if (mounted) FoodlySnackbars.errorGeneric(context, message);
           },
           permissionDenied: (message) {
             _locationService.markInitialized();
             _tryRemoveSplash();
-            if (mounted) _dialogService.hideLoading();
+            if (_dialogService.isDialogShown) _dialogService.hideLoading();
             if (mounted) _showLocationPermissionDialog(context, message);
           },
           permissionPermanentlyDenied: (message) {
             _locationService.markInitialized();
             _tryRemoveSplash();
-            if (mounted) _dialogService.hideLoading();
+            if (_dialogService.isDialogShown) _dialogService.hideLoading();
             if (mounted) _showLocationPermissionDialog(context, message);
           },
         );
@@ -180,11 +182,11 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
 
   void _showLocationPermissionDialog(BuildContext context, String message) {
     if (_dialogShowing) return;
-    _dialogShowing = true;
+    setState(() => _dialogShowing = true);
 
     final navContext = rootNavigatorKey.currentContext;
     if (navContext == null) {
-      _dialogShowing = false;
+      setState(() => _dialogShowing = false);
       return;
     }
 
@@ -194,6 +196,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     showDialog(
       context: navContext,
       barrierDismissible: false,
+      barrierColor: Colors.black.withValues(alpha: .69),
       builder: (_) => AlertDialog(
         title: Text(S.current.locationRationaleTitle),
         content: Column(
@@ -235,7 +238,9 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
           ),
         ],
       ),
-    ).then((_) => _dialogShowing = false);
+    ).whenComplete(() {
+      setState(() => _dialogShowing = false);
+    });
   }
 
   Widget _buildContent() => BlocListener<FavoritesCubit, FavoritesState>(

@@ -1,7 +1,9 @@
 part of '../main_search_widget.dart';
 
 class CurrentLocationButton extends StatelessWidget {
-  const CurrentLocationButton({super.key});
+  final bool isSocialFeature;
+
+  const CurrentLocationButton({super.key, this.isSocialFeature = false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,9 @@ class CurrentLocationButton extends StatelessWidget {
 
           return Tooltip(
             message: hasLocation
-                ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+                ? locationService.currentAddress.isNotEmpty == true
+                    ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+                    : '${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
                 : S.current.enableLocationDescription,
             child: Material(
               color: Colors.transparent,
@@ -33,7 +37,7 @@ class CurrentLocationButton extends StatelessWidget {
                   }
 
                   di<DialogService>().showCustomDialog(
-                    const ChangeLocationDialog(),
+                    ChangeLocationDialog(isSocialFeature: isSocialFeature),
                     2,
                     onDialogClose: () => context.read<SmartSearchCubit>().resetToInitial(),
                   );
@@ -59,7 +63,9 @@ class CurrentLocationButton extends StatelessWidget {
                                 const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
                                 Expanded(
                                   child: Text(
-                                    '${locationService.currentAddress}, ${locationService.currentCity}.',
+                                    locationService.currentAddress.isNotEmpty == true
+                                        ? '${locationService.currentAddress}, ${locationService.currentCity}.'
+                                        : '${locationService.currentCity} ${locationService.currentZipCode}.',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: FoodlyTextStyles.captionBold,
@@ -94,7 +100,9 @@ class CurrentLocationButton extends StatelessWidget {
 }
 
 class ChangeLocationDialog extends StatefulWidget {
-  const ChangeLocationDialog({super.key});
+  final bool isSocialFeature;
+
+  const ChangeLocationDialog({super.key, this.isSocialFeature = false});
 
   @override
   State<ChangeLocationDialog> createState() => _ChangeLocationDialogState();
@@ -123,6 +131,12 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
     Future.delayed(Durations.short2, () {
       di<NearbyPromotionsCubit>().load();
       di<NewReleasesCubit>().load();
+      if (widget.isSocialFeature) {
+        di<SocialCubit>()
+          ..loadPosts()
+          ..loadBuzz()
+          ..loadNearbyUsers();
+      }
     });
   }
 

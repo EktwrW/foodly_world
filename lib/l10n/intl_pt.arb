@@ -378,6 +378,7 @@
   "savedPromotionsTabUpcoming": "Próximas",
   "savedPromotionsCurrent": "Estas são as suas promoções atuais",
   "savedPromotionsUpcoming": "Estas são as suas próximas promoções",
+  "foodTrucks": "Food Trucks e Stands",
   "pubsAndWineBars": "Pubs e Vinharias",
   "readyToListen": "Pronto para ouvir",
   "retryRecording": "Tentar novamente gravar",
@@ -716,5 +717,6 @@
   "combosLabelSpecials": "Especiais",
   "combosLabelSetMeals": "Pratos Completos",
   "combosLabelPlatters": "Travessas",
-  "combosLabelCustom": "Personalizado"
+  "combosLabelCustom": "Personalizado",
+  "analyticsComingSoon": "Painel de Análises — Em Breve\nDescubra o desempenho real do seu negócio: visitas, pratos mais pedidos, tendências de clientes e receita. Tudo num só lugar."
 }

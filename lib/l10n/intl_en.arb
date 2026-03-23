@@ -375,6 +375,7 @@
   "savedPromotionsTabUpcoming": "Upcoming",
   "savedPromotionsCurrent": "These are your current promotions",
   "savedPromotionsUpcoming": "These are your upcoming promotions",
+  "foodTrucks": "Food Trucks & Stalls",
   "pubsAndWineBars": "Pubs and Wine Bars",
   "readyToListen": "Ready to listen",
   "retryRecording": "Retry recording",
@@ -716,5 +717,6 @@
   "combosLabelSpecials": "Specials",
   "combosLabelSetMeals": "Set Meals",
   "combosLabelPlatters": "Platters",
-  "combosLabelCustom": "Custom"
+  "combosLabelCustom": "Custom",
+  "analyticsComingSoon": "Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned."
 }

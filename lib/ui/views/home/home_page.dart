@@ -153,35 +153,33 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return FoodlyWrapper(
-      child: BlocConsumer<SmartSearchCubit, SmartSearchState>(
-        // Only animate the controller when the flag actually flips.
-        listenWhen: (prev, curr) => prev.vm.isBottomBarHidden != curr.vm.isBottomBarHidden,
-        listener: (_, state) {
-          if (state.vm.isBottomBarHidden) {
-            _hideBottomBarAnimationController.forward();
-          } else {
-            _hideBottomBarAnimationController.reverse();
+    return BlocConsumer<SmartSearchCubit, SmartSearchState>(
+      // Only animate the controller when the flag actually flips.
+      listenWhen: (prev, curr) => prev.vm.isBottomBarHidden != curr.vm.isBottomBarHidden,
+      listener: (_, state) {
+        if (state.vm.isBottomBarHidden) {
+          _hideBottomBarAnimationController.forward();
+        } else {
+          _hideBottomBarAnimationController.reverse();
+        }
+      },
+      builder: (_, state) {
+        final isHidden = state.vm.isBottomBarHidden;
+        // After every build (including post-pop rebuilds where the cubit state
+        // did NOT change), re-assert the controller to its expected position.
+        // The guard prevents snapping while a smooth animation is in progress.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted || _hideBottomBarAnimationController.isAnimating) return;
+          final expected = isHidden ? 1.0 : 0.0;
+          if ((_hideBottomBarAnimationController.value - expected).abs() > 0.01) {
+            _hideBottomBarAnimationController.value = expected;
           }
-        },
-        builder: (_, state) {
-          final isHidden = state.vm.isBottomBarHidden;
-          // After every build (including post-pop rebuilds where the cubit state
-          // did NOT change), re-assert the controller to its expected position.
-          // The guard prevents snapping while a smooth animation is in progress.
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!mounted || _hideBottomBarAnimationController.isAnimating) return;
-            final expected = isHidden ? 1.0 : 0.0;
-            if ((_hideBottomBarAnimationController.value - expected).abs() > 0.01) {
-              _hideBottomBarAnimationController.value = expected;
-            }
-          });
-          return ValueListenableBuilder(
-            valueListenable: _bottomNavIndex,
-            builder: (_, indexValue, __) => _buildContent(indexValue, isHidden, state.vm),
-          );
-        },
-      ),
+        });
+        return ValueListenableBuilder(
+          valueListenable: _bottomNavIndex,
+          builder: (_, indexValue, __) => _buildContent(indexValue, isHidden, state.vm),
+        );
+      },
     );
   }
 

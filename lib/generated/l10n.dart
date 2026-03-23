@@ -2734,6 +2734,16 @@ class S {
     );
   }
 
+  /// `Food Trucks & Stalls`
+  String get foodTrucks {
+    return Intl.message(
+      'Food Trucks & Stalls',
+      name: 'foodTrucks',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pubs and Wine Bars`
   String get pubsAndWineBars {
     return Intl.message(
@@ -4974,6 +4984,16 @@ class S {
     return Intl.message(
       'Custom',
       name: 'combosLabelCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned.`
+  String get analyticsComingSoon {
+    return Intl.message(
+      'Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned.',
+      name: 'analyticsComingSoon',
       desc: '',
       args: [],
     );

@@ -74,4 +74,5 @@ const _$FoodlyCategoriesEnumMap = {
   FoodlyCategories.asian: 20,
   FoodlyCategories.arabic: 21,
   FoodlyCategories.venezuelan: 22,
+  FoodlyCategories.foodTrucks: 25,
 };

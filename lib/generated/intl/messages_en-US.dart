@@ -174,6 +174,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "You already reviewed this business.\nWould you like to edit your review?",
     ),
     "analytics": MessageLookupByLibrary.simpleMessage("Analytics"),
+    "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
+      "Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned.",
+    ),
     "and": MessageLookupByLibrary.simpleMessage("and"),
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(
       "and manage content, promotions, and more",
@@ -522,6 +525,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "followers": MessageLookupByLibrary.simpleMessage("Followers"),
     "following": MessageLookupByLibrary.simpleMessage("Following"),
     "food": MessageLookupByLibrary.simpleMessage("Food"),
+    "foodTrucks": MessageLookupByLibrary.simpleMessage("Food Trucks & Stalls"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "fusionCuisine": MessageLookupByLibrary.simpleMessage("Fusion"),
     "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),

@@ -184,6 +184,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Você já avaliou este estabelecimento.\nDeseja editar sua avaliação?",
     ),
     "analytics": MessageLookupByLibrary.simpleMessage("Análises"),
+    "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
+      "Painel de Análises — Em Breve\nDescubra o desempenho real do seu negócio: visitas, pratos mais pedidos, tendências de clientes e receita. Tudo num só lugar.",
+    ),
     "and": MessageLookupByLibrary.simpleMessage("e"),
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(
       "e gerir conteúdo, promoções e mais",
@@ -546,6 +549,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "followers": MessageLookupByLibrary.simpleMessage("Seguidores"),
     "following": MessageLookupByLibrary.simpleMessage("Seguindo"),
     "food": MessageLookupByLibrary.simpleMessage("Pratos"),
+    "foodTrucks": MessageLookupByLibrary.simpleMessage("Food Trucks e Stands"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Esqueceu-se da senha?",
     ),

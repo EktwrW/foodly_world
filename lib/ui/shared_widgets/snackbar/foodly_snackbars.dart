@@ -22,6 +22,21 @@ class FoodlySnackbars {
     }
   }
 
+  static void infoGeneric(BuildContext context, String? message, {Duration duration = const Duration(seconds: 7)}) {
+    if (context.mounted) {
+      final snackBar = SnackBarWdg(
+        content: Text(
+          message ?? '',
+          textAlign: TextAlign.center,
+          style: FoodlyTextStyles.snackBarLightBody,
+        ),
+        duration: duration,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));
+    }
+  }
+
   static void errorGeneric(BuildContext context, String? errorMsg) {
     if (context.mounted) {
       final snackBar = SnackBarWdg(

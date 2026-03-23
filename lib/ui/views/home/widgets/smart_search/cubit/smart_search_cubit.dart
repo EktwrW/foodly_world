@@ -62,7 +62,6 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         isInitialized: available,
         isListening: false,
         recognizedText: '',
-        smartSearchMode: SmartSearchMode.none,
         inputController: InputController(
           controller: textController,
           focusNode: focusNode,

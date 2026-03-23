@@ -99,13 +99,17 @@ class CustomNeumorphicButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: Center(
-                  child: ClayText(
-                    text,
-                    color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
-                    spread: 0.16,
-                    style: getBaseTextStyle,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (leading != null) leading!.paddingRight(12),
+                    ClayText(
+                      text,
+                      color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
+                      spread: 0.16,
+                      style: getBaseTextStyle,
+                    ),
+                  ],
                 ),
               ),
             ],

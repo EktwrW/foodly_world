@@ -40,7 +40,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   flutter_image_slideshow: ^0.1.6
   flutter_linear_calendar: ^2.0.2
-  flutter_native_splash: ^2.4.6
+  flutter_native_splash: ^2.4.7
   flutter_neumorphic_plus: ^3.5.0
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.1.0
@@ -69,6 +69,7 @@ dependencies:
   responsive_framework: ^1.1.1
   retrofit: ^4.4.1
   share_plus: ^10.1.4
+  shimmer: ^3.0.0
   shorebird_code_push: ^2.0.5
   shared_preferences: ^2.5.4
   sidebarx: ^0.17.1

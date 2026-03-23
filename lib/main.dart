@@ -14,6 +14,7 @@ void main() async {
 
 Future<Widget> buildFoodlyApp() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   try {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     // Catch Flutter framework errors and send to Crashlytics.
@@ -25,7 +26,6 @@ Future<Widget> buildFoodlyApp() async {
     };
   } catch (_) {}
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   final config = BaseConfig.initConfig();
   DependencyInjectionService.registerDependencies(config);
   HydratedBloc.storage = await HydratedStorage.build(

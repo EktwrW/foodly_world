@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -60,10 +61,7 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
 
         // Loading skeleton
         if (vm.isLoading && promotions.isEmpty) {
-          return const SizedBox(
-            height: 369,
-            child: Center(child: CircularProgressIndicator.adaptive()),
-          );
+          return const PromoCarouselShimmer();
         }
 
         // Error / empty state — keep the carousel height to avoid layout jump
@@ -360,7 +358,7 @@ class _EmptyOffersWidget extends StatelessWidget {
               width: 236,
               child: CustomNeumorphicButton(
                 onPressed: onRetry,
-                type: CustomNeumorphicBtnType.outlined,
+                type: CustomNeumorphicBtnType.tertiary,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 text: S.current.retry,
                 leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),

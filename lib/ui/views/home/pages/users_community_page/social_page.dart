@@ -81,7 +81,9 @@ class _SocialPageState extends State<SocialPage> {
             body: Column(
               spacing: 8,
               children: [
-                const CurrentLocationButton().paddingOnly(
+                const CurrentLocationButton(
+                  isSocialFeature: true,
+                ).paddingOnly(
                   top: 16,
                   bottom: 12,
                   left: 14,
