@@ -702,5 +702,19 @@
   "aboutVideoPlaceholder": "Guia de la App — Proximamente",
   "shareAppMessage": "Descubre los mejores locales cerca de ti con Foodly — explora menus, aprovecha promociones y reserva mesa, todo en una sola app!",
   "shareOnAndroid": "Compartir para Android",
-  "shareOnIOS": "Compartir para iOS"
+  "shareOnIOS": "Compartir para iOS",
+  "combosLabelTitle": "Renombrar sección \"{currentLabel}\"",
+  "@combosLabelTitle": {
+    "placeholders": {
+      "currentLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "combosLabelHint": "Selecciona o crea la etiqueta que mejor se adapte a tu negocio",
+  "combosLabelMenus": "Menus",
+  "combosLabelSpecials": "Especiales",
+  "combosLabelSetMeals": "Platos Completos",
+  "combosLabelPlatters": "Bandejas",
+  "combosLabelCustom": "Personalizado"
 }

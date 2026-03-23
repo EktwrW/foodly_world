@@ -55,6 +55,8 @@ mixin _$BusinessUpdateDTO {
   bool? get allowReservations => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservation_size_limit')
   int? get reservationSizeLimit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'combos_label')
+  String? get combosLabel => throw _privateConstructorUsedError;
 
   /// Serializes this BusinessUpdateDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -90,7 +92,8 @@ abstract class $BusinessUpdateDTOCopyWith<$Res> {
       @JsonKey(name: 'category_id') FoodlyCategories? category,
       @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') bool? allowReservations,
-      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit});
+      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+      @JsonKey(name: 'combos_label') String? combosLabel});
 
   $BusinessDaysCopyWith<$Res>? get businessDays;
 }
@@ -127,6 +130,7 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
     Object? businessDays = freezed,
     Object? allowReservations = freezed,
     Object? reservationSizeLimit = freezed,
+    Object? combosLabel = freezed,
   }) {
     return _then(_value.copyWith(
       businessName: freezed == businessName
@@ -197,6 +201,10 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
           ? _value.reservationSizeLimit
           : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
               as int?,
+      combosLabel: freezed == combosLabel
+          ? _value.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -241,7 +249,8 @@ abstract class _$$BusinessUpdateDTOImplCopyWith<$Res>
       @JsonKey(name: 'category_id') FoodlyCategories? category,
       @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') bool? allowReservations,
-      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit});
+      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+      @JsonKey(name: 'combos_label') String? combosLabel});
 
   @override
   $BusinessDaysCopyWith<$Res>? get businessDays;
@@ -277,6 +286,7 @@ class __$$BusinessUpdateDTOImplCopyWithImpl<$Res>
     Object? businessDays = freezed,
     Object? allowReservations = freezed,
     Object? reservationSizeLimit = freezed,
+    Object? combosLabel = freezed,
   }) {
     return _then(_$BusinessUpdateDTOImpl(
       businessName: freezed == businessName
@@ -347,6 +357,10 @@ class __$$BusinessUpdateDTOImplCopyWithImpl<$Res>
           ? _value.reservationSizeLimit
           : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
               as int?,
+      combosLabel: freezed == combosLabel
+          ? _value.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -372,7 +386,8 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
       @JsonKey(name: 'category_id') this.category,
       @JsonKey(name: 'business_opening_hours') this.businessDays,
       @JsonKey(name: 'allow_reservations') this.allowReservations,
-      @JsonKey(name: 'reservation_size_limit') this.reservationSizeLimit})
+      @JsonKey(name: 'reservation_size_limit') this.reservationSizeLimit,
+      @JsonKey(name: 'combos_label') this.combosLabel})
       : _businessServices = businessServices;
 
   factory _$BusinessUpdateDTOImpl.fromJson(Map<String, dynamic> json) =>
@@ -438,10 +453,13 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
   @override
   @JsonKey(name: 'reservation_size_limit')
   final int? reservationSizeLimit;
+  @override
+  @JsonKey(name: 'combos_label')
+  final String? combosLabel;
 
   @override
   String toString() {
-    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit)';
+    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, combosLabel: $combosLabel)';
   }
 
   @override
@@ -482,7 +500,9 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
             (identical(other.allowReservations, allowReservations) ||
                 other.allowReservations == allowReservations) &&
             (identical(other.reservationSizeLimit, reservationSizeLimit) ||
-                other.reservationSizeLimit == reservationSizeLimit));
+                other.reservationSizeLimit == reservationSizeLimit) &&
+            (identical(other.combosLabel, combosLabel) ||
+                other.combosLabel == combosLabel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -505,7 +525,8 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
       category,
       businessDays,
       allowReservations,
-      reservationSizeLimit);
+      reservationSizeLimit,
+      combosLabel);
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -544,8 +565,9 @@ abstract class _BusinessUpdateDTO implements BusinessUpdateDTO {
       @JsonKey(name: 'category_id') final FoodlyCategories? category,
       @JsonKey(name: 'business_opening_hours') final BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') final bool? allowReservations,
-      @JsonKey(name: 'reservation_size_limit')
-      final int? reservationSizeLimit}) = _$BusinessUpdateDTOImpl;
+      @JsonKey(name: 'reservation_size_limit') final int? reservationSizeLimit,
+      @JsonKey(name: 'combos_label')
+      final String? combosLabel}) = _$BusinessUpdateDTOImpl;
 
   factory _BusinessUpdateDTO.fromJson(Map<String, dynamic> json) =
       _$BusinessUpdateDTOImpl.fromJson;
@@ -601,6 +623,9 @@ abstract class _BusinessUpdateDTO implements BusinessUpdateDTO {
   @override
   @JsonKey(name: 'reservation_size_limit')
   int? get reservationSizeLimit;
+  @override
+  @JsonKey(name: 'combos_label')
+  String? get combosLabel;
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.

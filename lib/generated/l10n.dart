@@ -4913,6 +4913,71 @@ class S {
       args: [],
     );
   }
+
+  /// `Rename "{currentLabel}" section`
+  String combosLabelTitle(String currentLabel) {
+    return Intl.message(
+      'Rename "$currentLabel" section',
+      name: 'combosLabelTitle',
+      desc: '',
+      args: [currentLabel],
+    );
+  }
+
+  /// `Pick or create the label that best fits your business`
+  String get combosLabelHint {
+    return Intl.message(
+      'Pick or create the label that best fits your business',
+      name: 'combosLabelHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Menus`
+  String get combosLabelMenus {
+    return Intl.message('Menus', name: 'combosLabelMenus', desc: '', args: []);
+  }
+
+  /// `Specials`
+  String get combosLabelSpecials {
+    return Intl.message(
+      'Specials',
+      name: 'combosLabelSpecials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set Meals`
+  String get combosLabelSetMeals {
+    return Intl.message(
+      'Set Meals',
+      name: 'combosLabelSetMeals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Platters`
+  String get combosLabelPlatters {
+    return Intl.message(
+      'Platters',
+      name: 'combosLabelPlatters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom`
+  String get combosLabelCustom {
+    return Intl.message(
+      'Custom',
+      name: 'combosLabelCustom',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

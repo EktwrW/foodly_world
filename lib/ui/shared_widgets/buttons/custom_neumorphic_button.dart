@@ -6,7 +6,7 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
-enum CustomNeumorphicBtnType { primary, secondary, outlined }
+enum CustomNeumorphicBtnType { primary, secondary, tertiary, outlined }
 
 class CustomNeumorphicButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -37,7 +37,7 @@ class CustomNeumorphicButton extends StatelessWidget {
     this.verticalMargin,
     this.shape,
     this.fontSize,
-    this.bosShapeRadius = 10,
+    this.bosShapeRadius = 9,
     this.textStyle,
     this.backgroundColor,
     this.depth = 3,
@@ -62,6 +62,37 @@ class CustomNeumorphicButton extends StatelessWidget {
             depth: depth,
             intensity: 1.2,
             color: !disabled ? FoodlyThemes.primaryLighten73 : Colors.grey[200],
+          ),
+          padding: padding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Center(
+                  child: ClayText(
+                    text,
+                    color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
+                    spread: 0.16,
+                    style: getBaseTextStyle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+
+      case CustomNeumorphicBtnType.tertiary:
+        return ui.NeumorphicButton(
+          onPressed: !disabled ? onPressed : null,
+          margin: margin,
+          tooltip: tooltip,
+          style: ui.NeumorphicStyle(
+            shape: ui.NeumorphicShape.convex,
+            boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
+            depth: 3,
+            intensity: 1.2,
+            surfaceIntensity: .3,
+            color: !disabled ? ui.NeumorphicColors.embossMaxWhiteColor : Colors.grey[200],
           ),
           padding: padding,
           child: Row(

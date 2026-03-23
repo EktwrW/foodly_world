@@ -164,7 +164,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
       children: widget.item.sortedVersions
           .map((v) => Text(
                 v.text,
-                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
               ).paddingHorizontal(4))
           .toList(),
     );

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart' show FadeInRight;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -5,6 +6,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
+import 'package:foodly_world/ui/views/business/manage_menu/widgets/combos_label_bottom_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -33,53 +35,80 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
           title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AbsorbPointer(
-                absorbing: vm.menuIsEditing,
-                child: ToggleSwitch(
-                  initialLabelIndex: vm.indexView,
-                  onToggle: vm.menuIsEditing
-                      ? null
-                      : (i) {
-                          vm.controller?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
-                          cubit.updateView(i ?? 0);
-                        },
-                  animate: true,
-                  animationDuration: 500,
-                  minHeight: 32,
-                  labels: MenuCategory.values.map((c) => c.text).toList(),
-                  minWidth: context.screenWidth,
-                  cornerRadius: 6.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.white,
-                  totalSwitches: MenuCategory.values.length,
-                  icons: [
-                    vm.menuIsEditingFood ? Icons.lock_outline : null,
-                    vm.menuIsEditingDrinks ? Icons.lock_outline : null,
-                    vm.menuIsEditingCombos ? Icons.lock_outline : null,
-                  ],
-                  customTextStyles: [
-                    FoodlyTextStyles.toogleButtonText.copyWith(
-                        color: (vm.menuIsEditing && !vm.menuIsEditingFood) ? FoodlyThemes.secondaryFoodly : null),
-                    FoodlyTextStyles.toogleButtonText.copyWith(
-                        color: (vm.menuIsEditing && !vm.menuIsEditingDrinks) ? FoodlyThemes.secondaryFoodly : null),
-                    FoodlyTextStyles.toogleButtonText.copyWith(
-                        color: (vm.menuIsEditing && !vm.menuIsEditingCombos) ? FoodlyThemes.secondaryFoodly : null),
-                  ],
-                  borderWidth: 1.5,
-                  borderColor: const [
-                    FoodlyThemes.primaryFoodly,
-                    FoodlyThemes.primaryFoodly,
-                    FoodlyThemes.tertiaryFoodly,
-                    FoodlyThemes.primaryFoodly,
-                    FoodlyThemes.primaryFoodly,
-                  ],
-                  dividerColor: FoodlyThemes.secondaryFoodly,
-                  activeBgColors: const [
-                    [FoodlyThemes.primaryFoodly],
-                    [FoodlyThemes.primaryFoodly],
-                    [FoodlyThemes.primaryFoodly],
-                  ],
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: AbsorbPointer(
+                      absorbing: vm.menuIsEditing,
+                      child: ToggleSwitch(
+                        initialLabelIndex: vm.indexView,
+                        onToggle: vm.menuIsEditing
+                            ? null
+                            : (i) {
+                                vm.controller
+                                    ?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
+                                cubit.updateView(i ?? 0);
+                              },
+                        animate: true,
+                        animationDuration: 500,
+                        minHeight: 32,
+                        labels: vm.tabLabels,
+                        minWidth: context.screenWidth * 0.86,
+                        cornerRadius: 6.0,
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: Colors.white,
+                        totalSwitches: MenuCategory.values.length,
+                        icons: [
+                          vm.menuIsEditingFood ? Icons.lock_outline : null,
+                          vm.menuIsEditingDrinks ? Icons.lock_outline : null,
+                          vm.menuIsEditingCombos ? Icons.lock_outline : null,
+                        ],
+                        customTextStyles: [
+                          FoodlyTextStyles.toogleButtonText.copyWith(
+                              color: (vm.menuIsEditing && !vm.menuIsEditingFood) ? FoodlyThemes.secondaryFoodly : null),
+                          FoodlyTextStyles.toogleButtonText.copyWith(
+                              color:
+                                  (vm.menuIsEditing && !vm.menuIsEditingDrinks) ? FoodlyThemes.secondaryFoodly : null),
+                          FoodlyTextStyles.toogleButtonText.copyWith(
+                              color:
+                                  (vm.menuIsEditing && !vm.menuIsEditingCombos) ? FoodlyThemes.secondaryFoodly : null),
+                        ],
+                        borderWidth: 1.5,
+                        borderColor: const [
+                          FoodlyThemes.primaryFoodly,
+                          FoodlyThemes.primaryFoodly,
+                          FoodlyThemes.tertiaryFoodly,
+                          FoodlyThemes.primaryFoodly,
+                          FoodlyThemes.primaryFoodly,
+                        ],
+                        dividerColor: FoodlyThemes.secondaryFoodly,
+                        activeBgColors: const [
+                          [FoodlyThemes.primaryFoodly],
+                          [FoodlyThemes.primaryFoodly],
+                          [FoodlyThemes.primaryFoodly],
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (vm.currentMenuCategory.isCombos && vm.loggerUserCanEdit && !vm.menuIsEditing)
+                    FadeInRight(
+                      child: InkWell(
+                        onTap: () => showCombosLabelSnackBar(
+                          context,
+                          currentLabel: vm.combosLabel,
+                          onSave: (value) => cubit.updateCombosLabel(value.isEmpty ? null : value),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 9),
+                          child: Icon(
+                            Bootstrap.pencil_square,
+                            size: 19,
+                            color: FoodlyThemes.primaryFoodly,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ],
           ),

@@ -306,7 +306,9 @@ class _PublicMenuItemWdgState extends State<PublicMenuItemWdg> {
                   widget.item.description,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: FoodlyTextStyles.caption,
+                  style: FoodlyTextStyles.caption.copyWith(
+                    fontSize: 11.6,
+                  ),
                 ).paddingVertical(5),
               ),
             ),
@@ -337,7 +339,7 @@ class _PublicMenuItemWdgState extends State<PublicMenuItemWdg> {
       color: Colors.black,
       children: widget.item.sortedVersions
           .map((v) =>
-              Text(v.text, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)).paddingHorizontal(4))
+              Text(v.text, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11)).paddingHorizontal(4))
           .toList(),
     );
   }

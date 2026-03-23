@@ -33,6 +33,7 @@ _$BusinessUpdateDTOImpl _$$BusinessUpdateDTOImplFromJson(
               json['business_opening_hours'] as Map<String, dynamic>),
       allowReservations: json['allow_reservations'] as bool?,
       reservationSizeLimit: (json['reservation_size_limit'] as num?)?.toInt(),
+      combosLabel: json['combos_label'] as String?,
     );
 
 Map<String, dynamic> _$$BusinessUpdateDTOImplToJson(
@@ -68,6 +69,7 @@ Map<String, dynamic> _$$BusinessUpdateDTOImplToJson(
         'allow_reservations': value,
       if (instance.reservationSizeLimit case final value?)
         'reservation_size_limit': value,
+      if (instance.combosLabel case final value?) 'combos_label': value,
     };
 
 const _$BusinessServicesEnumMap = {

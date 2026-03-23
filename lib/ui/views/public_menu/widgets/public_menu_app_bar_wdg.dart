@@ -136,11 +136,13 @@ class _DownloadAppButton extends StatelessWidget {
 class PublicSecondaryMenuSliverAppBar extends StatelessWidget {
   final PageController pageController;
   final ValueNotifier<int> indexNotifier;
+  final String? combosLabel;
 
   const PublicSecondaryMenuSliverAppBar({
     super.key,
     required this.pageController,
     required this.indexNotifier,
+    this.combosLabel,
   });
 
   @override
@@ -169,7 +171,7 @@ class PublicSecondaryMenuSliverAppBar extends StatelessWidget {
                 animate: true,
                 animationDuration: 500,
                 minHeight: 32,
-                labels: MenuCategory.values.map((c) => c.text).toList(),
+                labels: MenuCategory.values.map((c) => c.textWith(combosLabel: combosLabel)).toList(),
                 minWidth: constraints.maxWidth * 0.3,
                 cornerRadius: 6.0,
                 activeFgColor: Colors.white,

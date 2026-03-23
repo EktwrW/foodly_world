@@ -30,11 +30,16 @@ class MenuVM with _$MenuVM {
   String get currency => menuDM?.business?.country?.currencySymbol ?? '\$';
   String? get businessLogo => menuDM?.business?.logo;
   String? get businessName => menuDM?.business?.name;
+  String? get combosLabel => menuDM?.business?.combosLabel;
+
+  List<String> get tabLabels => MenuCategory.values.map((c) => c.textWith(combosLabel: combosLabel)).toList();
 
   Map<MenuCategory, List<CategoryDM>?> get menuScreens => {
         MenuCategory.food: menuDM?.foodCategories,
         MenuCategory.drinks: menuDM?.drinkCategories,
-        MenuCategory.combos: [CategoryDM(items: menuDM?.combos ?? [], name: MenuCategory.combos.text, uuid: '')],
+        MenuCategory.combos: [
+          CategoryDM(items: menuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
+        ],
       };
 
   MenuCategory get currentMenuCategory => MenuCategory.values[indexView];

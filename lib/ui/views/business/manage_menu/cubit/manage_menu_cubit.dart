@@ -7,6 +7,7 @@ import 'package:foodly_world/core/network/business/business_repo.dart' show Busi
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show Logger, di;
 import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM, FoodlyCategories;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -93,6 +94,29 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
   }
 
   void updateView(int index) => emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
+
+  Future<void> updateCombosLabel(String? label) async {
+    final uuid = _vm.menuDM?.business?.uuid;
+    if (uuid == null) return;
+
+    emit(_Loading(_vm));
+
+    final dto = BusinessUpdateDTO(combosLabel: label ?? '');
+    final result = await _businessRepo.updateBusiness(uuid, dto);
+    result.when(
+      success: (updated) {
+        final newMenu = _vm.editMenuDM?.copyWith(business: updated);
+        _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(business: updated), editMenuDM: newMenu);
+        emit(_ShowSnackbar(_vm, S.current.success));
+        emit(_Loaded(_vm));
+      },
+      failure: (e) {
+        di<Logger>().e('Error updating combos label: ${e.errorMsg}');
+        emit(_Error(e.errorMsg, _vm));
+        emit(_Loaded(_vm));
+      },
+    );
+  }
 
   void updateEditMode() => emit(_Loaded(_vm = _vm.copyWith(editMode: !_vm.editMode, editMenuDM: _vm.menuDM)));
 

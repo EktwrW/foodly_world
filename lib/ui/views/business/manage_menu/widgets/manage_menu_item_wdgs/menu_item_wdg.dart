@@ -96,7 +96,7 @@ class MenuItemWdg extends StatelessWidget {
                                 children: [
                                   ...Version.values.map((v) => Text(
                                         v.text,
-                                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
                                       ).paddingHorizontal(4)),
                                 ],
                               ),

@@ -183,31 +183,16 @@ enum MenuCategory {
   drinks,
   combos;
 
-//TODO: CONSIDERAR ESTAS POSIBILIDADES:
-// Opción 1 (Más casual/estándar):
+  String get text => switch (this) {
+        food => S.current.food,
+        drinks => S.current.drinks,
+        combos => S.current.combos,
+      };
 
-// Food (Comidas)
-// Drinks (Bebidas)
-// Combos (Combos)
-
-// Opción 2 (Ligeramente más formal):
-
-// Meals (Comidas)
-// Beverages (Bebidas)
-// Meal Deals (Combos)
-
-// Opción 3 (Para restaurantes de servicio completo):
-
-// Main Courses (Comidas)
-// Beverages (Bebidas)
-// Set Menus (Combos)
-  static final _texts = {
-    food: S.current.food,
-    drinks: S.current.drinks,
-    combos: S.current.combos,
-  };
-
-  String get text => _texts[this] ?? '';
+  /// Returns [combosLabel] for the combos tab when non-null/non-empty,
+  /// otherwise falls back to the default l10n text.
+  String textWith({String? combosLabel}) =>
+      (this == combos && combosLabel != null && combosLabel.isNotEmpty) ? combosLabel : text;
 
   bool get isFood => this == food;
   bool get isDrinks => this == drinks;

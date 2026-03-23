@@ -56,6 +56,7 @@ _$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
       introMessage: json['intro_message'] as String?,
       allowReservations: json['allow_reservations'] as bool? ?? false,
       reservationsSizeLimit: (json['reservations_count'] as num?)?.toInt() ?? 6,
+      combosLabel: json['combos_label'] as String?,
       reviews: (json['reviews'] as List<dynamic>?)
               ?.map((e) => ReviewDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -98,6 +99,7 @@ Map<String, dynamic> _$$BusinessDMImplToJson(_$BusinessDMImpl instance) =>
       if (instance.introMessage case final value?) 'intro_message': value,
       'allow_reservations': instance.allowReservations,
       'reservations_count': instance.reservationsSizeLimit,
+      if (instance.combosLabel case final value?) 'combos_label': value,
       'reviews': instance.reviews.map((e) => e.toJson()).toList(),
     };
 

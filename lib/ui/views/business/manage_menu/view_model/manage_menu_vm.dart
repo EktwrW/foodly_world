@@ -34,11 +34,16 @@ class ManageMenuVM with _$ManageMenuVM {
   String get currency => editMenuDM?.business?.country?.currencySymbol ?? '\$';
   String? get businessLogo => editMenuDM?.business?.logo;
   String? get businessName => editMenuDM?.business?.name;
+  String? get combosLabel => editMenuDM?.business?.combosLabel;
+
+  List<String> get tabLabels => MenuCategory.values.map((c) => c.textWith(combosLabel: combosLabel)).toList();
 
   Map<MenuCategory, List<CategoryDM>?> get menuScreens => {
         MenuCategory.food: editMenuDM?.foodCategories,
         MenuCategory.drinks: editMenuDM?.drinkCategories,
-        MenuCategory.combos: [CategoryDM(items: editMenuDM?.combos ?? [], name: MenuCategory.combos.text, uuid: '')],
+        MenuCategory.combos: [
+          CategoryDM(items: editMenuDM?.combos ?? [], name: MenuCategory.combos.textWith(combosLabel: combosLabel), uuid: '')
+        ],
       };
 
   bool get _anyItemIsEditing =>

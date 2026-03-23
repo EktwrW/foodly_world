@@ -46,7 +46,7 @@ class AdaptiveItemVersionSelector extends StatelessWidget {
       children: item.sortedVersions
           .map((v) => Text(
                 v.text,
-                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
               ).paddingHorizontal(4))
           .toList(),
     );

@@ -76,7 +76,9 @@ mixin _$BusinessDM {
   @JsonKey(name: 'allow_reservations')
   bool get allowReservations => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit =>
+  int get reservationsSizeLimit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'combos_label')
+  String? get combosLabel =>
       throw _privateConstructorUsedError; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   List<ReviewDM> get reviews => throw _privateConstructorUsedError;
 
@@ -126,6 +128,7 @@ abstract class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+      @JsonKey(name: 'combos_label') String? combosLabel,
       List<ReviewDM> reviews});
 
   $CategoryDMCopyWith<$Res>? get category;
@@ -175,6 +178,7 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? introMessage = freezed,
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
+    Object? combosLabel = freezed,
     Object? reviews = null,
   }) {
     return _then(_value.copyWith(
@@ -290,6 +294,10 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
           ? _value.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
               as int,
+      combosLabel: freezed == combosLabel
+          ? _value.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       reviews: null == reviews
           ? _value.reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -360,6 +368,7 @@ abstract class _$$BusinessDMImplCopyWith<$Res>
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+      @JsonKey(name: 'combos_label') String? combosLabel,
       List<ReviewDM> reviews});
 
   @override
@@ -409,6 +418,7 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
     Object? introMessage = freezed,
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
+    Object? combosLabel = freezed,
     Object? reviews = null,
   }) {
     return _then(_$BusinessDMImpl(
@@ -524,6 +534,10 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
           ? _value.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
               as int,
+      combosLabel: freezed == combosLabel
+          ? _value.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       reviews: null == reviews
           ? _value._reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -569,6 +583,7 @@ class _$BusinessDMImpl extends _BusinessDM {
       @JsonKey(name: 'intro_message') this.introMessage,
       @JsonKey(name: 'allow_reservations') this.allowReservations = false,
       @JsonKey(name: 'reservations_count') this.reservationsSizeLimit = 6,
+      @JsonKey(name: 'combos_label') this.combosLabel,
       final List<ReviewDM> reviews = const []})
       : _coverImages = coverImages,
         _branches = branches,
@@ -699,6 +714,9 @@ class _$BusinessDMImpl extends _BusinessDM {
   @override
   @JsonKey(name: 'reservations_count')
   final int reservationsSizeLimit;
+  @override
+  @JsonKey(name: 'combos_label')
+  final String? combosLabel;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   final List<ReviewDM> _reviews;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
@@ -712,7 +730,7 @@ class _$BusinessDMImpl extends _BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, reviews: $reviews)';
   }
 
   @override
@@ -762,6 +780,8 @@ class _$BusinessDMImpl extends _BusinessDM {
                 other.allowReservations == allowReservations) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
+            (identical(other.combosLabel, combosLabel) ||
+                other.combosLabel == combosLabel) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews));
   }
 
@@ -797,6 +817,7 @@ class _$BusinessDMImpl extends _BusinessDM {
         introMessage,
         allowReservations,
         reservationsSizeLimit,
+        combosLabel,
         const DeepCollectionEquality().hash(_reviews)
       ]);
 
@@ -849,6 +870,7 @@ abstract class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'intro_message') final String? introMessage,
       @JsonKey(name: 'allow_reservations') final bool allowReservations,
       @JsonKey(name: 'reservations_count') final int reservationsSizeLimit,
+      @JsonKey(name: 'combos_label') final String? combosLabel,
       final List<ReviewDM> reviews}) = _$BusinessDMImpl;
   const _BusinessDM._() : super._();
 
@@ -938,7 +960,11 @@ abstract class _BusinessDM extends BusinessDM {
   bool get allowReservations;
   @override
   @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
+  int get reservationsSizeLimit;
+  @override
+  @JsonKey(name: 'combos_label')
+  String?
+      get combosLabel; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   @override
   List<ReviewDM> get reviews;
 

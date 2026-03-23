@@ -59,6 +59,7 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'intro_message') String? introMessage,
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
     @JsonKey(name: 'reservations_count') @Default(6) int reservationsSizeLimit,
+    @JsonKey(name: 'combos_label') String? combosLabel,
 
     // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
     @Default([]) List<ReviewDM> reviews,

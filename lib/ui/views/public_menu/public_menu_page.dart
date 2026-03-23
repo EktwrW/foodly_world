@@ -123,7 +123,7 @@ class _PublicMenuViewState extends State<_PublicMenuView> with AutomaticKeepAliv
     final menuScreens = <MenuCategory, List<CategoryDM>?>{
       MenuCategory.food: menu.foodCategories,
       MenuCategory.drinks: menu.drinkCategories,
-      MenuCategory.combos: [CategoryDM(items: menu.combos, name: MenuCategory.combos.text, uuid: '')],
+      MenuCategory.combos: [CategoryDM(items: menu.combos, name: MenuCategory.combos.textWith(combosLabel: business.combosLabel), uuid: '')],
     };
 
     return Scaffold(
@@ -146,6 +146,7 @@ class _PublicMenuViewState extends State<_PublicMenuView> with AutomaticKeepAliv
           PublicSecondaryMenuSliverAppBar(
             pageController: _pageController,
             indexNotifier: _tabIndex,
+            combosLabel: business.combosLabel,
           ),
         ],
         body: GestureDetector(

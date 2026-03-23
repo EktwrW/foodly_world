@@ -17,8 +17,8 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<VisitedMenuCubit, VisitedMenuState, (PageController?, int)>(
-      selector: (state) => (state.vm.controller, state.vm.indexView),
+    return BlocSelector<VisitedMenuCubit, VisitedMenuState, (PageController?, int, List<String>)>(
+      selector: (state) => (state.vm.controller, state.vm.indexView, state.vm.tabLabels),
       builder: (context, record) {
         final cubit = context.read<VisitedMenuCubit>();
 
@@ -42,7 +42,7 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
                 animate: true,
                 animationDuration: 500,
                 minHeight: 32,
-                labels: MenuCategory.values.map((c) => c.text).toList(),
+                labels: record.$3,
                 minWidth: context.screenWidth,
                 cornerRadius: 6.0,
                 activeFgColor: Colors.white,
