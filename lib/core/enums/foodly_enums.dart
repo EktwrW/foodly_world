@@ -77,9 +77,11 @@ enum FoodlyInputType {
   businessAddress(icon: Icon(Clarity.map_marker_solid, size: 22), textInputType: TextInputType.streetAddress),
   businessZipCode(icon: Icon(Bootstrap.postage_fill, size: 22), textInputType: TextInputType.text),
   businessIntroMessage(
-      icon: Padding(
-        padding: EdgeInsets.only(bottom: 46),
-        child: Icon(Bootstrap.text_paragraph, size: 22),
+      icon: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Bootstrap.text_paragraph, size: 22),
+        ],
       ),
       textInputType: TextInputType.multiline),
 

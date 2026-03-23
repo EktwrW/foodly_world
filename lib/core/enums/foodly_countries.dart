@@ -16,10 +16,10 @@ enum FoodlyCountries {
   PORTUGAL('PT', 'Portugal', '€'),
   @JsonValue('United States')
   USA('US', 'United States', '\$'),
-  @JsonValue('Ecuador')
-  ECUADOR('EC', 'Ecuador', '\$');
-  // @JsonValue('Venezuela')
-  // VENEZUELA('VE', 'Venezuela', 'Bs');
+  // @JsonValue('Ecuador')
+  // ECUADOR('EC', 'Ecuador', '\$');
+  @JsonValue('Venezuela')
+  VENEZUELA('VE', 'Venezuela', 'Bs');
 
   final String countryCode;
   final String value;
@@ -33,8 +33,8 @@ enum FoodlyCountries {
     FoodlyCountries.SPAIN: (S.current.countrySpain, Flag(Flags.spain, size: 24)),
     FoodlyCountries.PORTUGAL: (S.current.countryPortugal, Flag(Flags.portugal, size: 24)),
     FoodlyCountries.USA: (S.current.countryUsa, Flag(Flags.united_states_of_america, size: 24)),
-    FoodlyCountries.ECUADOR: (S.current.countryEcuador, Flag(Flags.ecuador, size: 24)),
-    // FoodlyCountries.VENEZUELA: (S.current.countryVenezuela, Flag(Flags.venezuela, size: 24)),
+    //FoodlyCountries.ECUADOR: (S.current.countryEcuador, Flag(Flags.ecuador, size: 24)),
+    FoodlyCountries.VENEZUELA: (S.current.countryVenezuela, Flag(Flags.venezuela, size: 24)),
   };
 
   String get name => _countriesMap[this]?.$1 ?? '';

@@ -135,7 +135,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               margin: const EdgeInsets.fromLTRB(
                   UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, 0),
               text: S.current.signup,
-              type: CustomNeumorphicBtnType.secondary,
+              type: CustomNeumorphicBtnType.tertiary,
               disabled: false,
             ),
           ),

@@ -213,8 +213,8 @@ class UserProfilePage extends StatelessWidget {
                             shape: ui.NeumorphicShape.concave,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
-                            margin: const EdgeInsets.only(bottom: 20),
-                          ),
+                            margin: const EdgeInsets.only(bottom: 46),
+                          ).paddingHorizontal(27),
                         if (vm.loggedUserCanEdit)
                           _DeleteAccountSection(
                             key: const Key('delete-account-section'),

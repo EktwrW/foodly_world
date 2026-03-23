@@ -63,7 +63,7 @@ const _$FoodlyCountriesEnumMap = {
   FoodlyCountries.SPAIN: 'Spain',
   FoodlyCountries.PORTUGAL: 'Portugal',
   FoodlyCountries.USA: 'United States',
-  FoodlyCountries.ECUADOR: 'Ecuador',
+  FoodlyCountries.VENEZUELA: 'Venezuela',
 };
 
 const _$UserRoleEnumMap = {

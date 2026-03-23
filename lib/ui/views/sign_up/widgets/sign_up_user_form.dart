@@ -38,6 +38,7 @@ class SignUpUserForm extends StatelessWidget {
     final enabled = vm.roleId != null;
 
     return Column(
+      spacing: 9,
       children: [
         BlocProvider(
           create: (context) => CheckAvailabilitiesCubit(),
@@ -95,6 +96,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.firstName,
         ),
         FoodlyPrimaryInputText(
           controller: vm.lastNameController!.controller!,
@@ -104,6 +106,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.lastName,
         ),
         FoodlyPrimaryInputText(
           controller: vm.emailController!.controller!,
@@ -113,6 +116,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.email,
         ),
         FoodlyPrimaryInputText(
           controller: vm.passwordController!.controller!,
@@ -122,6 +126,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           obscureText: true,
           enabled: enabled,
+          labelText: S.current.password,
         ),
         PlacesAutocompleteWdg(
           key: const Key('find-user-location'),
@@ -134,20 +139,17 @@ class SignUpUserForm extends StatelessWidget {
             di<LocationService>().updateLocationFromPlace(place);
           },
           hintText: S.current.findAndCompleteAddress,
-        ).paddingOnly(top: 12, bottom: 20),
+        ).paddingOnly(bottom: 20),
         FoodlyDropdownButtonFormField(
           value: vm.country,
           focusNode: vm.countryNode,
           decoration: InputDecoration(
+            enabled: enabled,
             prefixIcon: vm.country?.flag?.paddingAll(10) ?? FoodlyInputType.country.icon,
             prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
             hintText: S.current.country,
-            contentPadding: const EdgeInsets.only(top: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             iconColor: enabled ? null : ui.NeumorphicColors.disabled,
-            enabledBorder: UnderlineInputBorder(
-              borderSide:
-                  BorderSide(width: enabled ? 0.7 : 0.35, color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled),
-            ),
             hintStyle: TextStyle(
               color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
               fontSize: 14,
@@ -176,6 +178,7 @@ class SignUpUserForm extends StatelessWidget {
           enabled: enabled,
           maxLines: 1,
           showLeading: false,
+          labelText: S.current.address,
         ),
         FoodlyPrimaryInputText(
           controller: vm.cityController!.controller!,
@@ -185,6 +188,7 @@ class SignUpUserForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.city,
         ),
         FoodlyPrimaryInputText(
           controller: vm.zipCodeController!.controller!,
@@ -195,6 +199,7 @@ class SignUpUserForm extends StatelessWidget {
           enabled: enabled,
           countryCode: cubit.currentCountryCode.toUpperCase(),
           showLeading: false,
+          labelText: S.current.zipCode,
         ),
         FoodlyPhoneInputText(
           key: Key('phone_input_${cubit.currentCountryCode}'),
@@ -205,62 +210,66 @@ class SignUpUserForm extends StatelessWidget {
           onSubmitted: (value) => vm.dateOfBirthNode?.requestFocus(),
           initialCountryCode: cubit.currentCountryCode.toUpperCase(),
         ),
-        StatefulBuilder(
-          builder: (_, setState) {
-            var isOpen = false;
-            return InkWell(
-              onFocusChange: (enabled && vm.dateOfBirth == null)
-                  ? (val) async {
-                      if ((vm.dateOfBirthNode?.hasFocus ?? false) && !isOpen) {
-                        setState(() => isOpen = true);
-                        await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
-                      }
-                    }
-                  : null,
-              onTap: isOpen
-                  ? null
-                  : enabled
-                      ? () async {
-                          setState(() => isOpen = true);
-                          await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
-                        }
-                      : null,
-              focusColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              focusNode: vm.dateOfBirthNode,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Bootstrap.calendar2_event,
-                        size: 22,
-                        color: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
-                      ).paddingSymmetric(horizontal: 12),
-                      Text(
-                        vm.dateOfBirth?.getStringFormat ?? S.current.dateOfBirth,
-                        style: !enabled
-                            ? FoodlyTextStyles.disabledText
-                            : vm.dateOfBirth != null
-                                ? FoodlyTextStyles.inputTextValue
-                                : FoodlyTextStyles.hintText,
-                      ).paddingOnly(top: 6)
-                    ],
-                  ),
-                  Divider(
-                    color: (vm.dateOfBirthNode?.hasFocus ?? false)
-                        ? FoodlyThemes.primaryFoodly
-                        : !enabled
-                            ? Colors.black12
-                            : FoodlyThemes.secondaryFoodly,
-                    height: 20,
-                    thickness: (vm.dateOfBirthNode?.hasFocus ?? false) ? 2 : 1,
-                  ),
-                ],
-              ).paddingOnly(top: 8, bottom: 10),
-            );
-          },
+        SizedBox(
+          height: 70,
+          child: StatefulBuilder(
+            builder: (_, setState) {
+              var isOpen = false;
+              if (vm.dateOfBirthNode == null) return const SizedBox.shrink();
+              return ListenableBuilder(
+                listenable: vm.dateOfBirthNode!,
+                builder: (context, _) {
+                  final hasFocus = vm.dateOfBirthNode!.hasFocus;
+                  return InkWell(
+                    onFocusChange: (enabled && vm.dateOfBirth == null)
+                        ? (val) async {
+                            if (hasFocus && !isOpen) {
+                              setState(() => isOpen = true);
+                              await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
+                            }
+                          }
+                        : null,
+                    onTap: isOpen
+                        ? null
+                        : enabled
+                            ? () async {
+                                setState(() => isOpen = true);
+                                await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
+                              }
+                            : null,
+                    focusColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    focusNode: vm.dateOfBirthNode,
+                    child: InputDecorator(
+                      isFocused: hasFocus,
+                      isEmpty: vm.dateOfBirth == null,
+                      decoration: InputDecoration(
+                        hintText: S.current.dateOfBirth,
+                        hintStyle: TextStyle(
+                          color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                          fontSize: 14,
+                        ),
+                        prefixIcon: const Icon(Bootstrap.calendar2_event, size: 22),
+                        prefixIconColor: hasFocus
+                            ? FoodlyThemes.primaryFoodly
+                            : enabled
+                                ? Colors.black87
+                                : ui.NeumorphicColors.disabled,
+                        enabled: enabled,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      ),
+                      child: vm.dateOfBirth != null
+                          ? Text(
+                              vm.dateOfBirth!.getStringFormat,
+                              style: !enabled ? FoodlyTextStyles.disabledText : FoodlyTextStyles.inputTextValue,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
         DropdownButtonFormField<UserGender>(
           initialValue: vm.gender,
@@ -277,12 +286,11 @@ class SignUpUserForm extends StatelessWidget {
             ),
           ),
           decoration: InputDecoration(
+            enabled: enabled,
             prefix: const SizedBox.shrink(),
             prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             hintText: S.current.gender,
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
-            ),
             hintStyle: FoodlyTextStyles.hintText.copyWith(
               color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
               fontSize: 14,

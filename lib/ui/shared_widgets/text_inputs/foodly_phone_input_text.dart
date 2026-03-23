@@ -13,6 +13,8 @@ class FoodlyPhoneInputText extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final String? initialCountryCode;
   final String? hintText;
+  final EdgeInsetsGeometry? contentPadding;
+  final double hintTextSize;
 
   const FoodlyPhoneInputText({
     super.key,
@@ -24,6 +26,8 @@ class FoodlyPhoneInputText extends StatelessWidget {
     this.onSubmitted,
     this.initialCountryCode,
     this.hintText,
+    this.contentPadding,
+    this.hintTextSize = 14,
   });
 
   @override
@@ -45,16 +49,40 @@ class FoodlyPhoneInputText extends StatelessWidget {
               ? S.current.enterAValidPhoneNumber
               : null;
         },
-        dropdownTextStyle: TextStyle(color: !enabled ? ui.NeumorphicColors.disabled : Colors.black, fontSize: 13),
+        dropdownTextStyle: TextStyle(
+          color: !enabled ? ui.NeumorphicColors.disabled : Colors.black,
+          fontSize: 12.3,
+        ),
+        flagsButtonPadding: const EdgeInsets.only(left: 8, right: 4),
         onSubmitted: onSubmitted,
         decoration: InputDecoration(
+          fillColor: Colors.transparent,
           hintText: hintText ?? FoodlyInputType.businessPhone.text,
-          hintStyle: FoodlyTextStyles.hintText
-              .copyWith(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
-          border: const UnderlineInputBorder(),
+          hintStyle: TextStyle(
+            letterSpacing: 0,
+            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+            fontSize: hintTextSize,
+          ),
+          labelStyle: TextStyle(
+            color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+            fontSize: hintTextSize,
+          ),
+          prefixIcon: FoodlyInputType.businessPhone.icon,
+          prefixIconColor: WidgetStateColor.resolveWith((states) {
+            if (states.contains(WidgetState.error)) return FoodlyThemes.error;
+            if (states.contains(WidgetState.focused)) return FoodlyThemes.primaryFoodly;
+            if (states.contains(WidgetState.disabled)) return ui.NeumorphicColors.disabled;
+            return Colors.black87;
+          }),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: const BorderSide(color: FoodlyThemes.primaryFoodly),
+          ),
+          focusColor: FoodlyThemes.primaryFoodly,
           errorMaxLines: 2,
           errorStyle: FoodlyTextStyles.errorInputText,
-          contentPadding: const EdgeInsets.only(top: 15),
+          contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         ),
         initialCountryCode: initialCountryCode ?? di<LocationService>().currentCountryCode,
       ),

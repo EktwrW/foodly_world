@@ -23,6 +23,7 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
   final String? Function(T?)? validator;
   final EdgeInsetsGeometry? padding;
   final double? iconSize;
+  final EdgeInsetsGeometry? contentPadding;
 
   const FoodlyDropdownButtonFormField({
     super.key,
@@ -38,12 +39,13 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
     this.focusNode,
     this.decorationIcon,
     this.primaryIcon,
-    this.height = 65,
+    this.height = 73,
     this.width,
     this.validator,
     this.padding,
     this.iconSize,
     this.hint,
+    this.contentPadding,
   });
 
   @override
@@ -60,16 +62,18 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
         hint: hint,
         decoration: decoration ??
             InputDecoration(
+              enabled: enabled,
               prefixIcon: prefixIcon,
               prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
               hintText: hintText,
               icon: decorationIcon,
               errorStyle: FoodlyTextStyles.errorInputText,
-              enabledBorder: enabledBorder ??
-                  UnderlineInputBorder(
-                    borderSide: BorderSide(width: enabled ? 0.75 : 0.5, color: enabled ? Colors.black87 : Colors.grey),
-                  ),
-              hintStyle: TextStyle(color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled),
+              enabledBorder: enabledBorder,
+              hintStyle: TextStyle(
+                color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                fontSize: 12,
+              ),
+              contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             ),
         onChanged: enabled ? onChanged : null,
         items: items,

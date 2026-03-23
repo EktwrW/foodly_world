@@ -64,6 +64,26 @@ class FoodlyThemes {
         ),
       ),
       progressIndicatorTheme: const ProgressIndicatorThemeData(strokeCap: StrokeCap.round),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: primaryFoodly),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: error),
+        ),
+      ),
     );
   }
 
@@ -102,6 +122,26 @@ class FoodlyThemes {
         ),
       ),
       progressIndicatorTheme: const ProgressIndicatorThemeData(strokeCap: StrokeCap.round),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: primaryFoodly),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: Color(0xFFE0E0E0)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          borderSide: BorderSide(color: error),
+        ),
+      ),
     );
   }
 }

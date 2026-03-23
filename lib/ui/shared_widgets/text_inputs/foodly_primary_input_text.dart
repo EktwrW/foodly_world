@@ -98,7 +98,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
         valueListenable: showPassword,
         builder: (_, showPasswordValue, __) {
           return SizedBox(
-            height: height ?? 70,
+            height: height ?? 73,
             child: TextFormField(
               enabled: enabled,
               keyboardType: inputTextType.textInputType,
@@ -125,17 +125,24 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                   color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
+                labelStyle: TextStyle(
+                  color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+                  fontSize: hintTextSize,
+                ),
                 prefixIcon: inputTextType.icon,
-                prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+                prefixIconColor: WidgetStateColor.resolveWith((states) {
+                  if (states.contains(WidgetState.error)) return FoodlyThemes.error;
+                  if (states.contains(WidgetState.focused)) return FoodlyThemes.primaryFoodly;
+                  if (states.contains(WidgetState.disabled)) return ui.NeumorphicColors.disabled;
+                  return Colors.black87;
+                }),
                 suffixIcon: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: () => showPassword.value = !showPasswordValue,
                     child: Icon(showPasswordValue ? AntDesign.eye_invisible_fill : AntDesign.eye_fill)),
-                border: const UnderlineInputBorder(),
-                focusColor: FoodlyThemes.primaryFoodly,
                 errorMaxLines: 2,
                 errorStyle: FoodlyTextStyles.errorInputText,
-                contentPadding: const EdgeInsets.only(top: 15),
+                contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
               validator: validator ??
                   (value) {
@@ -189,17 +196,24 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
             fontSize: hintTextSize,
           ),
+          labelStyle: TextStyle(
+            color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+            fontSize: hintTextSize,
+          ),
           label: label,
           labelText: labelText,
           prefixIcon: showLeading ? leading : inputTextType.icon,
           suffixIconConstraints: suffixIconConstraints,
           suffixIcon: trailing,
-          border: border ?? const UnderlineInputBorder(),
-          focusColor: FoodlyThemes.primaryFoodly,
-          prefixIconColor: enabled ? Colors.black87 : ui.NeumorphicColors.disabled,
+          prefixIconColor: WidgetStateColor.resolveWith((states) {
+            if (states.contains(WidgetState.error)) return FoodlyThemes.error;
+            if (states.contains(WidgetState.focused)) return FoodlyThemes.primaryFoodly;
+            if (states.contains(WidgetState.disabled)) return ui.NeumorphicColors.disabled;
+            return Colors.black87;
+          }),
           errorMaxLines: 2,
           errorStyle: const TextStyle(fontSize: 10.0),
-          contentPadding: contentPadding ?? const EdgeInsets.only(top: 15, right: 6),
+          contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           counter: counter,
           prefixIconConstraints: prefixIconConstraints,
         ),

@@ -22,6 +22,7 @@ class SignUpBusinessForm extends StatelessWidget {
     final introTooltipKey = GlobalKey<TooltipState>();
 
     return Column(
+      spacing: 9,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +61,10 @@ class SignUpBusinessForm extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox.square(dimension: 30, child: category.avatar).paddingSymmetric(horizontal: 10),
-                  Text(category.text),
+                  Text(
+                    category.text,
+                    style: const TextStyle(fontSize: 13),
+                  ),
                 ],
               ),
             );
@@ -78,6 +82,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.businessName,
         ),
         FoodlyPrimaryInputText(
           controller: vm.businessEmailController?.controller,
@@ -87,6 +92,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: S.current.contactEmail,
         ),
         FoodlyPhoneInputText(
           key: Key('phone_input_${vm.businessCountryCode}'),
@@ -128,6 +134,7 @@ class SignUpBusinessForm extends StatelessWidget {
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
+          labelText: FoodlyInputType.businessCity.text,
         ),
         FoodlyPrimaryInputText(
           controller: vm.businessAddressController?.controller,
@@ -138,6 +145,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
           maxLines: 1,
           showLeading: false,
+          labelText: FoodlyInputType.businessAddress.text,
         ),
         FoodlyPrimaryInputText(
           controller: vm.businessZipCodeController?.controller,
@@ -148,6 +156,7 @@ class SignUpBusinessForm extends StatelessWidget {
           enabled: enabled,
           countryCode: vm.businessCountryCode ?? '',
           showLeading: false,
+          labelText: FoodlyInputType.businessZipCode.text,
         ),
         if (introFocusNode != null)
           ListenableBuilder(
@@ -188,6 +197,8 @@ class SignUpBusinessForm extends StatelessWidget {
                   maxLength: 369,
                   showLeading: false,
                   contentPadding: const EdgeInsets.all(3),
+                  labelText: FoodlyInputType.businessIntroMessage.text,
+
                   // the bottom padding of the leading icon of this input is defined in the foodly enums file
                 ),
               );
@@ -206,6 +217,7 @@ class SignUpBusinessForm extends StatelessWidget {
               minLines: 3,
               maxLength: 369,
               showLeading: false,
+              labelText: FoodlyInputType.businessIntroMessage.text,
             ),
           ),
       ],
