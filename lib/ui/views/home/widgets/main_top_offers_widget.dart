@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
@@ -54,35 +55,46 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NearbyPromotionsCubit, NearbyPromotionsState>(
-      builder: (context, state) {
-        final vm = state.vm;
-        final promotions = vm.promotions;
+    return BlocBuilder<LocationBloc, LocationState>(
+      buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+      builder: (context, locationState) {
+        final isCheckingLocation = locationState.maybeWhen(
+          initial: () => true,
+          checkingLocation: () => true,
+          orElse: () => false,
+        );
 
-        // Loading skeleton
-        if (vm.isLoading && promotions.isEmpty) {
-          return const PromoCarouselShimmer();
-        }
+        return BlocBuilder<NearbyPromotionsCubit, NearbyPromotionsState>(
+          builder: (context, state) {
+            final vm = state.vm;
+            final promotions = vm.promotions;
 
-        // Error / empty state — keep the carousel height to avoid layout jump
-        if (promotions.isEmpty) {
-          return _EmptyOffersWidget(
-            isError: vm.error != null,
-            onRetry: () => context.read<NearbyPromotionsCubit>().load(),
-          );
-        }
+            // Show shimmer while location is resolving or while fetching data
+            if (isCheckingLocation || (vm.isLoading && promotions.isEmpty)) {
+              return const PromoCarouselShimmer();
+            }
 
-        return CarouselSlider(
-          items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
-          carouselController: _carouselController,
-          options: CarouselOptions(
-            height: 369,
-            autoPlay: true,
-            enlargeCenterPage: true,
-            enlargeFactor: .15,
-            viewportFraction: context.screenWidth <= 360 ? .85 : .9,
-            onPageChanged: (index, _) => _onPageChanged(index, promotions, vm.hasMore),
-          ),
+            // Error / empty state — keep the carousel height to avoid layout jump
+            if (promotions.isEmpty) {
+              return _EmptyOffersWidget(
+                isError: vm.error != null,
+                onRetry: () => context.read<NearbyPromotionsCubit>().load(),
+              );
+            }
+
+            return CarouselSlider(
+              items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
+              carouselController: _carouselController,
+              options: CarouselOptions(
+                height: 369,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                enlargeFactor: .15,
+                viewportFraction: context.screenWidth <= 360 ? .85 : .9,
+                onPageChanged: (index, _) => _onPageChanged(index, promotions, vm.hasMore),
+              ),
+            );
+          },
         );
       },
     );

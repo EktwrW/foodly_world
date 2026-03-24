@@ -158,6 +158,9 @@ class UserProfilePage extends StatelessWidget {
                               EditUsersLocationWidgets(vm: vm, key: ValueKey('Edit-${vm.currentUserFullAddress}')),
                         ),
                         _UserProfileSectionWdg(
+                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingDateOfBirth
+                              ? null
+                              : () => cubit.selectBirthday(context),
                           key: const Key('Birthday-date'),
                           titleFirstText: '${S.current.profileBirthdayText1} ',
                           titleSecondText: S.current.profileBirthdayText2,

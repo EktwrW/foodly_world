@@ -90,26 +90,34 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!_hasValidUrl) {
-      return isBusiness ? businessPlaceholder : userAvatarPlaceholder;
+      return SizedBox(
+        width: width,
+        height: height,
+        child: isBusiness ? businessPlaceholder : userAvatarPlaceholder,
+      );
     }
 
-    return CachedNetworkImage(
-      imageUrl: avatarUrl!,
-      fit: boxFit,
-      imageBuilder: (context, imageProvider) => Container(
-        constraints: BoxConstraints.tight(Size(width, height)),
-        decoration: _baseDecoration.copyWith(
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.cover,
+    return SizedBox(
+      width: width,
+      height: height,
+      child: CachedNetworkImage(
+        imageUrl: avatarUrl!,
+        fit: boxFit,
+        imageBuilder: (context, imageProvider) => Container(
+          constraints: BoxConstraints.tight(Size(width, height)),
+          decoration: _baseDecoration.copyWith(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
+        errorWidget: (_, __, ___) => isBusiness ? businessPlaceholder : userAvatarPlaceholder,
+        placeholder: _buildPlaceholder,
+        fadeInDuration: Durations.medium3,
+        fadeOutDuration: Durations.medium3,
+        placeholderFadeInDuration: Durations.medium3,
       ),
-      errorWidget: (_, __, ___) => isBusiness ? businessPlaceholder : userAvatarPlaceholder,
-      placeholder: _buildPlaceholder,
-      fadeInDuration: Durations.medium3,
-      fadeOutDuration: Durations.medium3,
-      placeholderFadeInDuration: Durations.medium3,
     );
   }
 }

@@ -103,10 +103,12 @@
         "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
         "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
       ],
+      "dependsOn": ["Foodly - Clean"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Shorebird - Release Android (Play Store)",
-      "detail": "Genera el APK/AAB de release para Play Store con Shorebird tracking. Usar en lugar de 'Build APK Release' al publicar."
+      "detail": "⬆️ SUBIR A PLAY STORE: genera AAB firmado en build/app/outputs/bundle/release/app-release.aab y registra el release en Shorebird. Usar cuando hay cambios nativos (plugins, permisos, manifest). Para cambios solo Dart usar 'Patch Android (OTA)'."
     },
     {
       "type": "shell",

@@ -57,11 +57,20 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewReleasesCubit, NewReleasesState>(
-      builder: (context, state) {
-        return state.map(
-          initial: (_) => const SizedBox.shrink(),
-          loading: (_) => const NewReleaseShimmer(),
+    return BlocBuilder<LocationBloc, LocationState>(
+      buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+      builder: (context, locationState) {
+        final isCheckingLocation = locationState.maybeWhen(
+          initial: () => true,
+          checkingLocation: () => true,
+          orElse: () => false,
+        );
+
+        return BlocBuilder<NewReleasesCubit, NewReleasesState>(
+          builder: (context, state) {
+            return state.map(
+              initial: (_) => isCheckingLocation ? const NewReleaseShimmer() : const SizedBox.shrink(),
+              loading: (_) => const NewReleaseShimmer(),
           loaded: (s) {
             if (s.vm.businesses.isEmpty) {
               return _NewReleasesErrorWidget(
@@ -127,10 +136,14 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               ],
             );
           },
-          error: (_) => _NewReleasesErrorWidget(
-            onRetry: () => context.read<NewReleasesCubit>().load(),
-            iconData: Icons.search_off_rounded,
-          ),
+              error: (_) => isCheckingLocation
+                  ? const NewReleaseShimmer()
+                  : _NewReleasesErrorWidget(
+                      onRetry: () => context.read<NewReleasesCubit>().load(),
+                      iconData: Icons.search_off_rounded,
+                    ),
+            );
+          },
         );
       },
     );

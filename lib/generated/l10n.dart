@@ -2049,6 +2049,16 @@ class S {
     );
   }
 
+  /// `Checking location...`
+  String get checkingLocation {
+    return Intl.message(
+      'Checking location...',
+      name: 'checkingLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `New Password`
   String get newPassword {
     return Intl.message(

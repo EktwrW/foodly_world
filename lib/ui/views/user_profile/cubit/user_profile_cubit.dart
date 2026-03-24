@@ -192,6 +192,21 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   void setUserCountry(FoodlyCountries? country) =>
       country != null ? emit(_Loaded(_vm = _vm.copyWith(country: country))) : null;
 
+  Future<void> selectBirthday(BuildContext context) async {
+    final locale = Locale(lang, currentCountryCode);
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDatePickerMode: DatePickerMode.year,
+      initialDate: _vm.currentUser?.dateOfBirth ?? _vm.dateOfBirth ?? DateTime(1990),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      locale: locale,
+    );
+    if (picked == null) return;
+    _vm = _vm.copyWith(dateOfBirth: picked, edition: ProfileEditing.dateOfBirth);
+    await callToUpdateProfile();
+  }
+
   void setAutovalidateMode(AutovalidateMode newMode) => emit(_Loaded(_vm = _vm.copyWith(autovalidateMode: newMode)));
 
   void updateProfilePhoto(String path) async {

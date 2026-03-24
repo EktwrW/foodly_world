@@ -278,6 +278,7 @@
   "newBranch": "New on Foodly",
   "noNewBranches": "No new businesses in your area yet",
   "checkBackLater": "Check back soon!",
+  "checkingLocation": "Checking location...",
   "newPassword": "New Password",
   "nickName": "Username",
   "noAudioDetected": "No audio detected. Please try again.",

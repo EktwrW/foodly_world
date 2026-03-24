@@ -300,6 +300,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Cambiar nombre de usuario",
     ),
     "checkBackLater": MessageLookupByLibrary.simpleMessage("¡Vuelve pronto!"),
+    "checkingLocation": MessageLookupByLibrary.simpleMessage(
+      "Verificando ubicación...",
+    ),
     "city": MessageLookupByLibrary.simpleMessage("Ciudad"),
     "clear": MessageLookupByLibrary.simpleMessage("Limpiar"),
     "close": MessageLookupByLibrary.simpleMessage("Cerrar"),

@@ -288,6 +288,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "changeUsername": MessageLookupByLibrary.simpleMessage("Change username"),
     "checkBackLater": MessageLookupByLibrary.simpleMessage("Check back soon!"),
+    "checkingLocation": MessageLookupByLibrary.simpleMessage(
+      "Checking location...",
+    ),
     "city": MessageLookupByLibrary.simpleMessage("City"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
