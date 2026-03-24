@@ -71,71 +71,71 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
             return state.map(
               initial: (_) => isCheckingLocation ? const NewReleaseShimmer() : const SizedBox.shrink(),
               loading: (_) => const NewReleaseShimmer(),
-          loaded: (s) {
-            if (s.vm.businesses.isEmpty) {
-              return _NewReleasesErrorWidget(
-                onRetry: () => context.read<NewReleasesCubit>().load(),
-                message: '${S.current.noNewBranches}\n${S.current.checkBackLater}',
-              );
-            }
+              loaded: (s) {
+                if (s.vm.businesses.isEmpty) {
+                  return _NewReleasesErrorWidget(
+                    onRetry: () => context.read<NewReleasesCubit>().load(),
+                    message: '${S.current.noNewBranches}\n${S.current.checkBackLater}',
+                  );
+                }
 
-            final total = s.vm.businesses.length;
-            final idx = _currentIndex.clamp(0, total - 1);
-            final business = s.vm.businesses[idx];
+                final total = s.vm.businesses.length;
+                final idx = _currentIndex.clamp(0, total - 1);
+                final business = s.vm.businesses[idx];
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AnimatedSwitcher(
-                  duration: Durations.long2,
-                  transitionBuilder: (child, animation) => FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  ),
-                  child: _NewReleasesCardContent(
-                    key: ValueKey(business.uuid),
-                    business: business,
-                  ),
-                ),
-                if (total > 1)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 8,
-                    children: [
-                      CustomRoundedNeumorphicButton(
-                        onPressed: () => _navigate(-1, total),
-                        iconData: Bootstrap.chevron_left,
-                        diameter: 20,
-                        iconSize: 20,
-                        shape: ui.NeumorphicShape.concave,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedSwitcher(
+                      duration: Durations.long2,
+                      transitionBuilder: (child, animation) => FadeTransition(
+                        opacity: animation,
+                        child: child,
                       ),
-                      ...List.generate(
-                        total,
-                        (i) => AnimatedContainer(
-                          duration: Durations.short3,
-                          width: i == idx ? 18 : 7,
-                          height: 7,
-                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: i == idx
-                                ? FoodlyThemes.primaryFoodly
-                                : FoodlyThemes.primaryFoodly.withValues(alpha: .25),
+                      child: _NewReleasesCardContent(
+                        key: ValueKey(business.uuid),
+                        business: business,
+                      ),
+                    ),
+                    if (total > 1)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8,
+                        children: [
+                          CustomRoundedNeumorphicButton(
+                            onPressed: () => _navigate(-1, total),
+                            iconData: Bootstrap.chevron_left,
+                            diameter: 20,
+                            iconSize: 20,
+                            shape: ui.NeumorphicShape.concave,
                           ),
-                        ),
-                      ),
-                      CustomRoundedNeumorphicButton(
-                        onPressed: () => _navigate(1, total),
-                        iconData: Bootstrap.chevron_right,
-                        diameter: 20,
-                        iconSize: 20,
-                        shape: ui.NeumorphicShape.concave,
-                      ),
-                    ],
-                  ).paddingSymmetric(vertical: 10),
-              ],
-            );
-          },
+                          ...List.generate(
+                            total,
+                            (i) => AnimatedContainer(
+                              duration: Durations.short3,
+                              width: i == idx ? 18 : 7,
+                              height: 7,
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: i == idx
+                                    ? FoodlyThemes.primaryFoodly
+                                    : FoodlyThemes.primaryFoodly.withValues(alpha: .25),
+                              ),
+                            ),
+                          ),
+                          CustomRoundedNeumorphicButton(
+                            onPressed: () => _navigate(1, total),
+                            iconData: Bootstrap.chevron_right,
+                            diameter: 20,
+                            iconSize: 20,
+                            shape: ui.NeumorphicShape.concave,
+                          ),
+                        ],
+                      ).paddingSymmetric(vertical: 10),
+                  ],
+                );
+              },
               error: (_) => isCheckingLocation
                   ? const NewReleaseShimmer()
                   : _NewReleasesErrorWidget(
@@ -338,7 +338,7 @@ class _NewReleasesErrorWidget extends StatelessWidget {
             ),
             const SizedBox(height: 18),
             SizedBox(
-              width: 236,
+              width: 239,
               child: CustomNeumorphicButton(
                 onPressed: onRetry,
                 type: CustomNeumorphicBtnType.tertiary,
@@ -346,6 +346,8 @@ class _NewReleasesErrorWidget extends StatelessWidget {
                 text: S.current.retry,
                 leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
                 disabled: false,
+                fontSize: 12.3,
+                bosShapeRadius: 3.9,
               ),
             ),
           ],

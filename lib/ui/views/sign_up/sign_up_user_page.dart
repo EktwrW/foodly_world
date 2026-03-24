@@ -224,8 +224,16 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
                         if (_signUpCubit.isGoogleSignIn) {
                           _signUpCubit.signUpUser();
                         } else {
-                          final phoneNumber = vm.phoneNumberController?.controller?.text;
-                          final countryCode = vm.country?.countryCode;
+                          // Prefer the complete international number (+XX...) stored via
+                          // onChanged — avoids double-prefix bugs from raw controller text.
+                          // Fall back to raw text only if the user never interacted with
+                          // the phone field (edge case).
+                          final phoneNumber = _signUpCubit.completePhone.isNotEmpty
+                              ? _signUpCubit.completePhone
+                              : vm.phoneNumberController?.controller?.text;
+                          final countryCode = _signUpCubit.phoneIsoCode.isNotEmpty
+                              ? _signUpCubit.phoneIsoCode
+                              : vm.country?.countryCode.toUpperCase();
 
                           _showPhoneVerificationModal(
                             context,

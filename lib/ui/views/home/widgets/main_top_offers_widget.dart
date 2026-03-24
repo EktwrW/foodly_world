@@ -367,7 +367,7 @@ class _EmptyOffersWidget extends StatelessWidget {
             ),
             const SizedBox(height: 18),
             SizedBox(
-              width: 236,
+              width: 239,
               child: CustomNeumorphicButton(
                 onPressed: onRetry,
                 type: CustomNeumorphicBtnType.tertiary,
@@ -375,6 +375,8 @@ class _EmptyOffersWidget extends StatelessWidget {
                 text: S.current.retry,
                 leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
                 disabled: false,
+                fontSize: 12.3,
+                bosShapeRadius: 3.9,
               ),
             ),
           ],

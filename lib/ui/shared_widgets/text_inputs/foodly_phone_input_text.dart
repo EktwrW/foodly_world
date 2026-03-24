@@ -3,6 +3,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class FoodlyPhoneInputText extends StatelessWidget {
   final bool enabled;
@@ -11,6 +12,7 @@ class FoodlyPhoneInputText extends StatelessWidget {
   final FocusNode? focusNode;
   final AutovalidateMode? autovalidateMode;
   final void Function(String)? onSubmitted;
+  final void Function(PhoneNumber)? onChanged;
   final String? initialCountryCode;
   final String? hintText;
   final EdgeInsetsGeometry? contentPadding;
@@ -24,6 +26,7 @@ class FoodlyPhoneInputText extends StatelessWidget {
     this.focusNode,
     this.autovalidateMode,
     this.onSubmitted,
+    this.onChanged,
     this.initialCountryCode,
     this.hintText,
     this.contentPadding,
@@ -40,12 +43,21 @@ class FoodlyPhoneInputText extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         autovalidateMode: autovalidateMode,
+        disableLengthCheck: true,
         invalidNumberMessage: S.current.enterAValidPhoneNumber,
         validator: (p0) {
           if (p0?.number.isEmpty ?? true) return S.current.pleaseEnterPhoneNumber;
 
+          // p0.countryCode is the dial code (e.g. '54'), not the ISO code ('AR').
+          // Resolve to ISO so the regex map key matches.
+          final isoCode = FoodlyRegex.dialCodeToIso[p0?.countryCode];
+          if (isoCode == null) {
+            // Country not in our supported list — skip our regex, accept the number.
+            return null;
+          }
+
           return !FormValidations.validateFormWithCountryCode(
-                  p0?.number ?? '', p0?.countryCode ?? '', FoodlyRegex.phoneNumberRegex)
+                  p0?.number ?? '', isoCode, FoodlyRegex.phoneNumberRegex)
               ? S.current.enterAValidPhoneNumber
               : null;
         },
@@ -55,6 +67,7 @@ class FoodlyPhoneInputText extends StatelessWidget {
         ),
         flagsButtonPadding: const EdgeInsets.only(left: 8, right: 4),
         onSubmitted: onSubmitted,
+        onChanged: onChanged,
         decoration: InputDecoration(
           fillColor: Colors.transparent,
           hintText: hintText ?? FoodlyInputType.businessPhone.text,

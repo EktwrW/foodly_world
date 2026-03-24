@@ -38,15 +38,40 @@ class _PhoneVerificationModalState extends State<PhoneVerificationModal> {
   int _secondsLeft = 60;
   Timer? _timer;
 
+  // Derived display values for the IntlPhoneField
+  late String _displayIsoCode;
+  late String _displayNationalNumber;
+
   @override
   void initState() {
     super.initState();
     _otpController = TextEditingController();
-    final country = countries.firstWhere(
-      (c) => c.code == (widget.countryCode ?? 'PT'),
-      orElse: () => countries.firstWhere((c) => c.code == 'PT'),
-    );
-    _completePhone = '+${country.dialCode}${widget.initialPhone}';
+
+    final rawPhone = widget.initialPhone.trim();
+
+    if (rawPhone.startsWith('+')) {
+      // Already a complete international number from onChanged — use directly.
+      // Parse it to extract the ISO code and national number for the display field.
+      _completePhone = rawPhone;
+      try {
+        final parsed = PhoneNumber.fromCompleteNumber(completeNumber: rawPhone);
+        _displayIsoCode = parsed.countryISOCode;
+        _displayNationalNumber = parsed.number;
+      } catch (_) {
+        _displayIsoCode = widget.countryCode ?? 'PT';
+        _displayNationalNumber = rawPhone;
+      }
+    } else {
+      // Fallback: raw national number — build complete number from country + digits.
+      final isoCode = widget.countryCode?.isNotEmpty == true ? widget.countryCode! : 'PT';
+      final country = countries.firstWhere(
+        (c) => c.code == isoCode,
+        orElse: () => countries.firstWhere((c) => c.code == 'PT'),
+      );
+      _displayIsoCode = isoCode;
+      _displayNationalNumber = rawPhone;
+      _completePhone = '+${country.dialCode}$rawPhone';
+    }
   }
 
   @override
@@ -143,8 +168,8 @@ class _PhoneVerificationModalState extends State<PhoneVerificationModal> {
                   ),
                   const SizedBox(height: 30),
                   IntlPhoneField(
-                    initialValue: widget.initialPhone,
-                    initialCountryCode: widget.countryCode ?? 'PT',
+                    initialValue: _displayNationalNumber,
+                    initialCountryCode: _displayIsoCode,
                     onChanged: _onPhoneChanged,
                     decoration: InputDecoration(
                       labelText: S.current.phoneNumber,

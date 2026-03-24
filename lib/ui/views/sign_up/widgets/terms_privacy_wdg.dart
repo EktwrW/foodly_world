@@ -43,7 +43,7 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.termsConditions.name),
                   ),
-                  TextSpan(text: '${S.current.termsPrivacyTextSpan3} '),
+                  TextSpan(text: ', ${S.current.termsPrivacyTextSpan3} '),
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan4,
                     style: FoodlyTextStyles.primaryBodyBold,

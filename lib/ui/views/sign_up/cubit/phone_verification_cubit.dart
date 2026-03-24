@@ -27,7 +27,7 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
       },
       verificationFailed: (FirebaseAuthException e) {
         final msg = switch (e.code) {
-          'invalid-phone-number' => 'Invalid phone number. Include country code (e.g. +351...).',
+          'invalid-phone-number' => 'Invalid phone number. Include country code (e.g. +1, +34, +351...).',
           'too-many-requests' => 'Too many requests. Please try again later.',
           'quota-exceeded' => 'SMS quota exceeded. Please try again later.',
           _ => e.message ?? 'Verification failed. Please try again.',

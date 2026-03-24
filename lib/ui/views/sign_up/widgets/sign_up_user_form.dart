@@ -208,6 +208,10 @@ class SignUpUserForm extends StatelessWidget {
           focusNode: vm.phoneNumberController?.focusNode,
           autovalidateMode: vm.autovalidateMode,
           onSubmitted: (value) => vm.dateOfBirthNode?.requestFocus(),
+          onChanged: (phone) {
+            cubit.setPhoneIsoCode(phone.countryISOCode);
+            cubit.setCompletePhone(phone.completeNumber);
+          },
           initialCountryCode: cubit.currentCountryCode.toUpperCase(),
         ),
         SizedBox(

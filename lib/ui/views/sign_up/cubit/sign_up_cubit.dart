@@ -120,6 +120,15 @@ class SignUpCubit extends Cubit<SignUpState> {
   String get googleApiKey => di<BaseConfig>().googleDefaultApiKey;
   bool get isGoogleSignIn => _vm.importedAvatar?.isNotEmpty ?? false;
 
+  // Tracks the ISO code and complete number from the phone field's onChanged.
+  // Using completeNumber avoids double-prefix bugs when the controller only stores the national part.
+  String _phoneIsoCode = '';
+  String _completePhone = '';
+  String get phoneIsoCode => _phoneIsoCode;
+  String get completePhone => _completePhone;
+  void setPhoneIsoCode(String isoCode) => _phoneIsoCode = isoCode.toUpperCase();
+  void setCompletePhone(String phone) => _completePhone = phone;
+
   bool validateForm() {
     setAutovalidateMode(AutovalidateMode.always);
     return _vm.formKey?.currentState?.validate() ?? false;

@@ -85,7 +85,7 @@
     },
     {
       "type": "shell",
-      "command": "shorebird",
+      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
       "args": [
         "release",
         "android",
@@ -96,7 +96,7 @@
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=LOGGER_LEVEL=ALL",
-        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
@@ -112,7 +112,7 @@
     },
     {
       "type": "shell",
-      "command": "shorebird",
+      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
       "args": [
         "patch",
         "android",
@@ -123,7 +123,7 @@
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=LOGGER_LEVEL=ALL",
-        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
@@ -137,7 +137,7 @@
     },
     {
       "type": "shell",
-      "command": "shorebird",
+      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
       "args": [
         "release",
         "ios",
@@ -148,7 +148,7 @@
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=LOGGER_LEVEL=ALL",
-        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",
@@ -162,7 +162,7 @@
     },
     {
       "type": "shell",
-      "command": "shorebird",
+      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
       "args": [
         "patch",
         "ios",
@@ -173,7 +173,7 @@
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=LOGGER_LEVEL=ALL",
-        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=275754925527-ha025q0em1lhl09e9r5ec6oph0ue3m48.apps.googleusercontent.com",
         "--dart-define=OPENAI_API_KEY=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",

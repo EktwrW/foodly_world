@@ -37,12 +37,25 @@ class FoodlyRegex {
     FoodlyCountries.PORTUGAL.countryCode: r'^\d{4}(-\d{3})?$',
   };
 
+  /// Maps dial codes (as provided by IntlPhoneField's PhoneNumber.countryCode)
+  /// to ISO codes (used as keys in phoneNumberRegex / postalCodeRegex).
+  /// Must be kept in sync with phoneNumberRegex.
+  static const Map<String, String> dialCodeToIso = {
+    '1': 'US',    // United States
+    '34': 'ES',   // Spain
+    '54': 'AR',   // Argentina
+    '58': 'VE',   // Venezuela
+    '351': 'PT',  // Portugal
+  };
+
   static final phoneNumberRegex = {
     /// United States: 3 digits for the area code, followed by 3 digits, then 4 digits, optionally separated by dashes:
     FoodlyCountries.USA.countryCode: r'^\d{3}-?\d{3}-?\d{4}$',
 
-    /// Argentina: Between 2 and 4 digits for the area code, followed by 6 to 8 digits for the local number, with or without a dash:
-    FoodlyCountries.ARGENTINA.countryCode: r'^(\d{2,4})-?\d{6,8}$',
+    /// Argentina: area code (2–4 digits) + local number (6–8 digits), with or without dash.
+    /// Covers both landlines (10 digits: e.g. 11-XXXX-XXXX) and mobiles
+    /// (11 digits with leading 9: e.g. 9-11-XXXX-XXXX).
+    FoodlyCountries.ARGENTINA.countryCode: r'^9?(\d{2,4})-?\d{6,8}$',
 
     /// Ecuador: 2 digits for area code (starting with 0), followed by 8 digits for the local number, with or without a dash:
     // FoodlyCountries.ECUADOR.countryCode: r'^0\d{1}-?\d{8}$',
