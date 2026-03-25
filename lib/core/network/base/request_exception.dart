@@ -9,7 +9,13 @@ class AppRequestException implements Exception {
 
   String get errorMsg {
     if (error is DioException) {
-      return '${(error as DioException).response?.statusMessage} error code: ${(error as DioException).response?.statusCode}';
+      final dio = error as DioException;
+      final data = dio.response?.data;
+      if (data is Map) {
+        final msg = data['message'] as String?;
+        if (msg != null && msg.isNotEmpty) return msg;
+      }
+      return '${dio.response?.statusMessage} error code: ${dio.response?.statusCode}';
     }
 
     return '${di<BaseConfig>().isDev ? error : 'An error occurred, please contact admin.'}';

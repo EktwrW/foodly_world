@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -8,11 +10,13 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 class BusinessEmailAndPhoneWdg extends StatelessWidget {
   final String email;
   final String phoneNumber;
+  final String? businessUuid;
 
   const BusinessEmailAndPhoneWdg({
     super.key,
     required this.email,
     required this.phoneNumber,
+    this.businessUuid,
   });
 
   @override
@@ -23,7 +27,19 @@ class BusinessEmailAndPhoneWdg extends StatelessWidget {
         if (email.isNotEmpty)
           FadeIn(
             child: TextButton.icon(
-              onPressed: () => UrlLauncher.launchEmail(email),
+              onPressed: () {
+                if (businessUuid != null) {
+                  di<EventTrackingService>().track(
+                    'business.cta_clicked',
+                    'business_detail_page',
+                    page: 'business_detail',
+                    targetType: 'business',
+                    targetUuid: businessUuid,
+                    data: {'cta_type': 'email'},
+                  );
+                }
+                UrlLauncher.launchEmail(email);
+              },
               icon: const Icon(Bootstrap.envelope_at),
               label: Text(
                 email,
@@ -34,7 +50,19 @@ class BusinessEmailAndPhoneWdg extends StatelessWidget {
         if (phoneNumber.isNotEmpty)
           FadeIn(
             child: TextButton.icon(
-              onPressed: () => UrlLauncher.launchPhone(phoneNumber),
+              onPressed: () {
+                if (businessUuid != null) {
+                  di<EventTrackingService>().track(
+                    'business.cta_clicked',
+                    'business_detail_page',
+                    page: 'business_detail',
+                    targetType: 'business',
+                    targetUuid: businessUuid,
+                    data: {'cta_type': 'call'},
+                  );
+                }
+                UrlLauncher.launchPhone(phoneNumber);
+              },
               icon: const Icon(Bootstrap.phone_vibrate),
               label: Text(
                 phoneNumber,

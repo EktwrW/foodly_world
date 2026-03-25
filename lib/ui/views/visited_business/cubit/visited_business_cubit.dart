@@ -75,7 +75,14 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
           (response) => response.when(
             success: (business) async {
               _vm = _vm.copyWith(currentBusiness: business);
-              _tracker.track('business.open', 'VisitBusinessCubit', targetUuid: business.uuid, targetType: 'business');
+              _tracker.track(
+                'business.open',
+                'business_detail_page',
+                page: 'business_detail',
+                targetUuid: business.uuid,
+                targetType: 'business',
+                data: {'business_name': business.name},
+              );
               await _precacheBusiness(business);
               emit(_Loaded(_vm));
             },
@@ -399,6 +406,14 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
       reservationSize: null,
       isSubmittingReservation: false,
     );
+    _tracker.track(
+      'reservation.started',
+      'reservation_flow',
+      page: 'reservation_form',
+      targetUuid: _vm.currentBusiness?.uuid,
+      targetType: 'business',
+      data: {'source_page': 'business_detail'},
+    );
     Future.microtask(() => emit(_Loaded(_vm)));
   }
 
@@ -479,13 +494,24 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     final business = _vm.currentBusiness;
     if (business == null || !_vm.canSubmitReservation) return false;
 
-    _tracker.track('business.reserve_click', 'VisitBusinessCubit', targetUuid: business.uuid, targetType: 'business');
-
     _vm = _vm.copyWith(isSubmittingReservation: true);
     emit(_Loaded(_vm));
 
     final date =
         '${_vm.reservationDateTime!.year}-${_vm.reservationDateTime!.month.toString().padLeft(2, '0')}-${_vm.reservationDateTime!.day.toString().padLeft(2, '0')}';
+
+    _tracker.track(
+      'reservation.submitted',
+      'reservation_flow',
+      page: 'reservation_form',
+      targetUuid: business.uuid,
+      targetType: 'business',
+      data: {
+        'party_size': _vm.reservationSize,
+        'reservation_date': date,
+        'reservation_time': _vm.reservationTime,
+      },
+    );
 
     final result = await _reservationRepo.createReservation(
       businessUuid: business.uuid,
@@ -496,13 +522,35 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     );
 
     return result.when(
-      success: (_) {
+      success: (response) {
+        _tracker.track(
+          'reservation.succeeded',
+          'reservation_flow',
+          page: 'reservation_success',
+          targetUuid: business.uuid,
+          targetType: 'business',
+          data: {
+            'reservation_uuid': response.reservation?.reservationUuid,
+            'party_size': _vm.reservationSize,
+          },
+        );
         _vm = _vm.copyWith(isSubmittingReservation: false);
         resetReservationInput();
         return true;
       },
       failure: (error) {
         _logger.e(error);
+        _tracker.track(
+          'reservation.failed',
+          'reservation_flow',
+          page: 'reservation_form',
+          targetUuid: business.uuid,
+          targetType: 'business',
+          data: {
+            'error_code': error.toString(),
+            'error_stage': 'backend',
+          },
+        );
         _vm = _vm.copyWith(isSubmittingReservation: false);
         emit(_Error(error.toString(), _vm));
         return false;

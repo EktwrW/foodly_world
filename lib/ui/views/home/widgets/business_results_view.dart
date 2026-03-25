@@ -14,12 +14,14 @@ class BusinessResultsView extends StatelessWidget {
   final List<BusinessDM> searchResults;
   final bool isGridView;
   final String? noResultsMessage;
+  final String? searchQuery;
 
   const BusinessResultsView({
     super.key,
     required this.searchResults,
     required this.isGridView,
     this.noResultsMessage,
+    this.searchQuery,
   });
 
   @override
@@ -59,12 +61,15 @@ class BusinessResultsView extends StatelessWidget {
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
               childAspectRatio: 18 / 29,
-              children: searchResults
-                  .map((result) => BusinessGridCard(
-                        business: result,
-                        heroTagPrefix: result.uuid,
-                      ))
-                  .toList(),
+              children: [
+                for (int i = 0; i < searchResults.length; i++)
+                  BusinessGridCard(
+                    business: searchResults[i],
+                    heroTagPrefix: searchResults[i].uuid,
+                    searchPosition: i,
+                    searchQuery: searchQuery,
+                  ),
+              ],
             )
           : ListView.separated(
               key: const ValueKey(BusinessResultsViewMode.list),
@@ -76,6 +81,8 @@ class BusinessResultsView extends StatelessWidget {
                 return BusinessListCard(
                   business: business,
                   heroTagPrefix: business.uuid,
+                  searchPosition: index,
+                  searchQuery: searchQuery,
                 );
               },
             ),

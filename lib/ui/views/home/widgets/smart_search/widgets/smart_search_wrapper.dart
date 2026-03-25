@@ -66,6 +66,7 @@ class _SmartSearchWrapper extends StatelessWidget {
                 child: BusinessResultsView(
                   searchResults: vm.searchResults,
                   isGridView: vm.viewMode.isGrid,
+                  searchQuery: vm.inputController.text,
                 ),
               ),
             ],

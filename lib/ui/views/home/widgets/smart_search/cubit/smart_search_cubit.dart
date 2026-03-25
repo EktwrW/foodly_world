@@ -188,8 +188,8 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         longitude: longitude,
         distanceKm: 10,
         limit: 50,
-        userUuid: authService.uuid,
-        // sessionId: null, // not yet provided by the backend on login
+        userUuid: authService.uuid.isNotEmpty ? authService.uuid : null,
+        sessionId: di<EventTrackingService>().sessionId,
         platform: authService.platform,
         deviceInfo: authService.deviceInfo,
       ),
@@ -207,6 +207,18 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         );
         await _precacheBusinessImages(data.business);
         emit(SmartSearchState.searchComplete(_vm));
+        di<EventTrackingService>().track(
+          'search.results_viewed',
+          'search_results_page',
+          page: 'search_results',
+          query: searchText,
+          data: {
+            'results_count': data.business.length,
+            'distance_km': 10,
+            'offset': 0,
+            'limit': 50,
+          },
+        );
       },
       failure: (error) async {
         _logger.e('Smart search failed', error: error);

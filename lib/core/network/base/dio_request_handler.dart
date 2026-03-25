@@ -30,11 +30,17 @@ abstract class DioRequestHandler {
     final authSessionService = di<AuthSessionService>();
 
     // Handle 401 Unauthenticated — clear session and force login.
-    // Suppress during biometric login: the backend rotates the token
-    // (deletes old, creates new), so stale in-flight requests getting
-    // 401 is expected and not a real session expiration.
+    // Skip for auth endpoints (login, register, social login): a 401 from
+    // those means wrong credentials, not an expired session — the cubit
+    // already handles the error and showing a second "session expired"
+    // modal would confuse the user.
+    // Also suppress during biometric login (token rotation race condition).
     if (e.response?.statusCode == 401) {
-      if (!authSessionService.isBiometricLoginInProgress) {
+      final path = e.requestOptions.path;
+      final isAuthEndpoint = path.endsWith('/login') ||
+          path.endsWith('/register') ||
+          path.endsWith('/social-login');
+      if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint) {
         authSessionService.notifyTokenExpired();
       }
       return handler.reject(e);

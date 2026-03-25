@@ -35,7 +35,18 @@ abstract class GoRouterRedirector {
         String? path;
         rootBloc.state.whenOrNull(
           initial: () => path = null,
-          cachedState: (_) => path = !authSessionService.isLoggedIn ? AppRoutes.login.path : null,
+          cachedState: (_) {
+            if (!authSessionService.isLoggedIn) {
+              // Allow sign-up routes — they are pre-auth and always accessible.
+              // Without this, a stale cachedState (HydratedBloc restore) would
+              // redirect sign-up to /login, which looks identical to /start,
+              // making the button appear broken on any device with prior session.
+              final loc = state.matchedLocation;
+              final isSignUpRoute =
+                  loc == AppRoutes.signUp.path || loc == AppRoutes.signUpBusiness.path;
+              path = isSignUpRoute ? null : AppRoutes.login.path;
+            }
+          },
         );
         return path;
       };

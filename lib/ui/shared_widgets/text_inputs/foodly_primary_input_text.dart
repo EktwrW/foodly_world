@@ -175,7 +175,18 @@ class FoodlyPrimaryInputText extends StatelessWidget {
           }
           if (hideCurrentSnackBarWhenOnTap) ScaffoldMessenger.of(context).hideCurrentSnackBar();
         },
-        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+          if (controller != null) {
+            final trimmed = controller!.text.trim();
+            if (trimmed != controller!.text) {
+              controller!.value = controller!.value.copyWith(
+                text: trimmed,
+                selection: TextSelection.collapsed(offset: trimmed.length),
+              );
+            }
+          }
+        },
         maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
         onFieldSubmitted: (value) {
           onFieldSubmitted?.call(value);
@@ -240,20 +251,22 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 case FoodlyInputType.firstName:
                   if (notValue) return S.current.pleaseEnterYourName;
 
-                  if (value.length < 2) {
+                  final trimmedFirst = value.trim();
+                  if (trimmedFirst.length < 2) {
                     return S.current.mustContainAtLeastTwoCharacters;
                   }
 
-                  return !FormValidations.isNameValid(value) ? S.current.onlyContainLetters : null;
+                  return !FormValidations.isNameValid(trimmedFirst) ? S.current.onlyContainLetters : null;
 
                 case FoodlyInputType.lastName:
                   if (notValue) return S.current.pleaseEnterYourLastName;
 
-                  if (value.length < 2) {
+                  final trimmedLast = value.trim();
+                  if (trimmedLast.length < 2) {
                     return S.current.mustContainAtLeastTwoCharacters;
                   }
 
-                  return !FormValidations.isNameValid(value) ? S.current.onlyContainLetters : null;
+                  return !FormValidations.isNameValid(trimmedLast) ? S.current.onlyContainLetters : null;
 
                 case FoodlyInputType.email:
                   if (notValue) return S.current.pleaseEnterEmail;

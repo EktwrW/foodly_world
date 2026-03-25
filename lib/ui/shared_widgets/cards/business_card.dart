@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -7,11 +8,15 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 class BusinessListCard extends StatelessWidget {
   final BusinessDM business;
   final String heroTagPrefix;
+  final int? searchPosition;
+  final String? searchQuery;
 
   const BusinessListCard({
     super.key,
     required this.business,
     required this.heroTagPrefix,
+    this.searchPosition,
+    this.searchQuery,
   });
 
   Widget _buildStatusBadge(BusinessStatus status) {
@@ -37,8 +42,22 @@ class BusinessListCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
-            pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business),
+        onTap: () {
+          if (searchPosition != null) {
+            di<EventTrackingService>().track(
+              'search.result_clicked',
+              'search_results_list',
+              page: 'search_results',
+              targetType: 'business',
+              targetUuid: business.uuid,
+              position: searchPosition,
+              query: searchQuery,
+              data: {'business_name': business.name},
+            );
+          }
+          di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
+              pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           spacing: 8,
@@ -123,11 +142,15 @@ class BusinessListCard extends StatelessWidget {
 class BusinessGridCard extends StatelessWidget {
   final BusinessDM business;
   final String heroTagPrefix;
+  final int? searchPosition;
+  final String? searchQuery;
 
   const BusinessGridCard({
     super.key,
     required this.business,
     required this.heroTagPrefix,
+    this.searchPosition,
+    this.searchQuery,
   });
 
   Widget _buildStatusBadge(BusinessStatus status) {
@@ -155,8 +178,22 @@ class BusinessGridCard extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () => di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
-              pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business),
+          onTap: () {
+            if (searchPosition != null) {
+              di<EventTrackingService>().track(
+                'search.result_clicked',
+                'search_results_list',
+                page: 'search_results',
+                targetType: 'business',
+                targetUuid: business.uuid,
+                position: searchPosition,
+                query: searchQuery,
+                data: {'business_name': business.name},
+              );
+            }
+            di<AppRouter>().appRouter.goNamed(AppRoutes.visitBusiness.name,
+                pathParameters: {AppRoutes.routeIdParam: business.uuid}, extra: business);
+          },
           child: Column(
             spacing: 8,
             children: [

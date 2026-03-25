@@ -5,6 +5,7 @@ class EventDTO {
   final String sourceModule;
   final String sessionId;
   final String platform;
+  final String? userUuid;
   final String? page;
   final String? section;
   final String? targetType;
@@ -14,6 +15,8 @@ class EventDTO {
   final int? scrollPercent;
   final String? query;
   final List<String>? categories;
+  final Map<String, dynamic>? data;
+  final Map<String, dynamic>? deviceInfo;
 
   const EventDTO({
     required this.eventClientId,
@@ -22,6 +25,7 @@ class EventDTO {
     required this.sourceModule,
     required this.sessionId,
     required this.platform,
+    this.userUuid,
     this.page,
     this.section,
     this.targetType,
@@ -31,6 +35,8 @@ class EventDTO {
     this.scrollPercent,
     this.query,
     this.categories,
+    this.data,
+    this.deviceInfo,
   });
 
   Map<String, dynamic> toJson() => {
@@ -40,6 +46,7 @@ class EventDTO {
         'source_module': sourceModule,
         'session_id': sessionId,
         'platform': platform,
+        if (userUuid != null) 'user_uuid': userUuid,
         if (page != null) 'page': page,
         if (section != null) 'section': section,
         if (targetType != null) 'target_type': targetType,
@@ -49,6 +56,8 @@ class EventDTO {
         if (scrollPercent != null) 'scroll_percent': scrollPercent,
         if (query != null) 'query': query,
         if (categories != null) 'categories': categories,
+        if (data != null) 'data': data,
+        if (deviceInfo != null) 'device_info': deviceInfo,
       };
 }
 
