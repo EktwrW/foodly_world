@@ -30,7 +30,9 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
           'invalid-phone-number' => 'Invalid phone number. Include country code (e.g. +1, +34, +351...).',
           'too-many-requests' => 'Too many requests. Please try again later.',
           'quota-exceeded' => 'SMS quota exceeded. Please try again later.',
-          _ => e.message ?? 'Verification failed. Please try again.',
+          'app-not-authorized' => '[${e.code}] App not authorized. SHA-1 may be missing in Firebase.',
+          'missing-app-credential' => '[${e.code}] Missing app credential. Check Firebase Phone Auth setup.',
+          _ => '[${e.code}] ${e.message ?? 'Verification failed. Please try again.'}',
         };
         emit(PhoneVerError(message: msg));
       },
