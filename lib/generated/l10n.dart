@@ -3749,9 +3749,14 @@ class S {
     return Intl.message('Party size:', name: 'partySize', desc: '', args: []);
   }
 
-  /// `Max Size`
+  /// `Max Size: {maxSize}`
   String maxSize(int maxSize) {
-    return Intl.message('Max Size', name: 'maxSize', desc: '', args: [maxSize]);
+    return Intl.message(
+      'Max Size: $maxSize',
+      name: 'maxSize',
+      desc: '',
+      args: [maxSize],
+    );
   }
 
   /// `Max`

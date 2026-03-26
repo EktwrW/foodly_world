@@ -531,7 +531,7 @@
   "selectADate": "Select a date:",
   "selectATime": "Select a time:",
   "partySize": "Party size:",
-  "maxSize": "Max Size",
+  "maxSize": "Max Size: {maxSize}",
   "maxSizeLabel": "Max",
   "@maxSize": {
     "placeholders": {

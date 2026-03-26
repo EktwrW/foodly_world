@@ -533,7 +533,7 @@
   "selectADate": "Selecciona una fecha:",
   "selectATime": "Selecciona una hora:",
   "partySize": "Comensales:",
-  "maxSize": "Máx.",
+  "maxSize": "Máx. {maxSize}",
   "maxSizeLabel": "Máx.",
   "@maxSize": {
     "placeholders": {

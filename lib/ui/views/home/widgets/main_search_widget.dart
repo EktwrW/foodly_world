@@ -14,7 +14,7 @@ import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/soci
 import 'package:foodly_world/ui/views/home/widgets/smart_search/widgets/smart_search_snackbars.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity, Iconsax;
+import 'package:icons_plus/icons_plus.dart';
 import 'package:nova_places_api/models/place.dart';
 
 import 'new_releases/cubit/new_releases_cubit.dart';
@@ -29,12 +29,11 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(
-      spacing: 8,
+      spacing: 13,
       children: [
         Expanded(child: CurrentLocationButton()),
         TextSmartSearchButton(),
         VoiceSearchButton(),
-        Icon(Bootstrap.search, color: FoodlyThemes.primaryFoodly, size: 18),
       ],
     ).paddingSymmetric(horizontal: 12, vertical: 6);
   }

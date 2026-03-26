@@ -63,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m17(size) => "max ${size}";
 
-  static String m18(maxSize) => "Max Size";
+  static String m18(maxSize) => "Max Size: ${maxSize}";
 
   static String m19(radius) =>
       "No nearby businesses in this category within ${radius} km.";

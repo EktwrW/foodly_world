@@ -31,7 +31,10 @@ class TextSmartSearchButton extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll(Colors.white),
               padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
             ),
-            child: const Icon(Iconsax.text_outline, size: 24),
+            child: const Icon(
+              FontAwesome.keyboard,
+              size: 23,
+            ),
           ),
         );
       },

@@ -70,6 +70,7 @@ class _FoodlyBottomNavBar extends StatelessWidget {
                     padding: EdgeInsets.all(6),
                   ),
                   badgeAnimation: const badges.BadgeAnimation.scale(),
+                  showBadge: hasUnread,
                   child: icon,
                 ),
               );

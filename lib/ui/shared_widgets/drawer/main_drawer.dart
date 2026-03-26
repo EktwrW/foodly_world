@@ -49,12 +49,13 @@ class FoodlyDrawer extends StatelessWidget {
 
     return SafeArea(
       child: SidebarX(
-        animationDuration: Durations.medium4,
+        animationDuration: Durations.medium1,
         controller: vm.sidebarController,
         showToggleButton: false,
-        theme: const SidebarXTheme(
+        theme: SidebarXTheme(
           width: 100,
-          decoration: BoxDecoration(
+          itemMargin: EdgeInsets.all(context.screenWidth * .005),
+          decoration: const BoxDecoration(
             color: ui.NeumorphicColors.background,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),

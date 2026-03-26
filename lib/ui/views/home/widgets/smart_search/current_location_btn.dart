@@ -56,68 +56,70 @@ class CurrentLocationButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
                   highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: BackdropFilter(
-                      filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .35),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: isChecking
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .39),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                    child: isChecking
+                        ? Row(
+                            spacing: 9,
+                            children: [
+                              const SizedBox.square(
+                                dimension: 19,
+                                child: CircularProgressIndicator.adaptive(strokeWidth: 1.5),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  S.current.checkingLocation,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FoodlyTextStyles.captionBold,
+                                ),
+                              ),
+                            ],
+                          )
+                        : hasLocation
                             ? Row(
-                                spacing: 8,
+                                spacing: 9,
                                 children: [
-                                  const SizedBox.square(
-                                    dimension: 18,
-                                    child: CircularProgressIndicator.adaptive(strokeWidth: 1.5),
+                                  const Icon(
+                                    Icons.edit_location_outlined,
+                                    color: FoodlyThemes.primaryFoodly,
+                                    size: 23,
                                   ),
                                   Expanded(
                                     child: Text(
-                                      S.current.checkingLocation,
+                                      locationService.currentAddress.isNotEmpty == true
+                                          ? '${locationService.currentAddress}, ${locationService.currentCity}.'
+                                          : '${locationService.currentCity} ${locationService.currentZipCode}.',
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: FoodlyTextStyles.captionBold,
+                                      style: FoodlyTextStyles.captionBold.copyWith(fontSize: 11.3),
                                     ),
                                   ),
                                 ],
                               )
-                            : hasLocation
-                                ? Row(
-                                    spacing: 8,
-                                    children: [
-                                      const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 22),
-                                      Expanded(
-                                        child: Text(
-                                          locationService.currentAddress.isNotEmpty == true
-                                              ? '${locationService.currentAddress}, ${locationService.currentCity}.'
-                                              : '${locationService.currentCity} ${locationService.currentZipCode}.',
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FoodlyTextStyles.captionBold,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    spacing: 8,
-                                    children: [
-                                      const Icon(Icons.location_off_outlined, color: Colors.redAccent, size: 22),
-                                      Expanded(
-                                        child: Text(
-                                          S.current.enableLocation,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
-                                        ),
-                                      ),
-                                    ],
+                            : Row(
+                                spacing: 9,
+                                children: [
+                                  const Icon(
+                                    Icons.location_off_outlined,
+                                    color: Colors.redAccent,
+                                    size: 23,
                                   ),
-                      ),
-                    ),
+                                  Expanded(
+                                    child: Text(
+                                      S.current.enableLocation,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
+                                    ),
+                                  ),
+                                ],
+                              ),
                   ),
                 ).paddingRight(6),
               ),

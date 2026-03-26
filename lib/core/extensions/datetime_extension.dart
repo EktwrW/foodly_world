@@ -25,6 +25,12 @@ extension DateExtension on DateTime {
   /// Formato de fecha con día abreviado y número, adaptado al idioma actual. Ejemplo: "Mon\n5".
   String get getDayNumberAndNameAbreviatedFormat {
     final lang = Intl.getCurrentLocale();
+    // The intl package's 'pt' CLDR data returns full day names (e.g. 'segunda-feira')
+    // for the EEE (abbreviated) pattern — hardcode PT abbreviations to work around it.
+    if (lang.startsWith('pt')) {
+      const ptAbbr = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+      return '${ptAbbr[weekday % 7]}\n$day';
+    }
     return DateFormat('EEE\nd', lang).format(this).capitalize;
   }
 

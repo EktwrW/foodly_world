@@ -108,9 +108,10 @@ class BusinessSliverAppBar extends StatelessWidget {
                                                 .map(
                                                   (e) => CachedNetworkImage(
                                                     imageUrl: e,
+                                                    height: 209,
                                                     width: double.infinity,
                                                     fadeInDuration: Durations.medium2,
-                                                    fit: BoxFit.fitWidth,
+                                                    fit: BoxFit.cover,
                                                     progressIndicatorBuilder: (context, url, progress) =>
                                                         const LoadingWidgetFoodlyIso().paddingAll(24),
                                                   ),

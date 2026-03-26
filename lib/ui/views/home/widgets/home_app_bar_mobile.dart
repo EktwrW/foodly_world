@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
-import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -18,13 +16,13 @@ class Home369AppBarMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 144,
+      expandedHeight: 149,
       surfaceTintColor: Colors.transparent,
       pinned: true,
       backgroundColor: Colors.transparent,
       toolbarHeight: 85,
       leadingWidth: 0,
-      collapsedHeight: 144,
+      collapsedHeight: 149,
       automaticallyImplyLeading: false,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
@@ -45,17 +43,15 @@ class Home369AppBarMobile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: context.screenWidth * .7,
+                          width: context.screenWidth * .73,
                           child: FittedBox(
-                              alignment: Alignment.centerLeft,
-                              fit: BoxFit.scaleDown,
-                              child: GreetingWidget(
-                                  userName: di<AuthSessionService>().userSessionDM?.user.username, titleFontSize: 24)),
-                        ),
-                        Text(
-                          S.current.whatAreYouCravingToday,
-                          overflow: TextOverflow.ellipsis,
-                          style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                            alignment: Alignment.centerLeft,
+                            fit: BoxFit.scaleDown,
+                            child: GreetingWidget(
+                              userName: di<AuthSessionService>().userSessionDM?.user.firstName?.split(' ').first,
+                              titleFontSize: 24,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -64,9 +60,14 @@ class Home369AppBarMobile extends StatelessWidget {
                       shape: ui.NeumorphicShape.concave,
                       iconSize: 22,
                       onPressed: () => FoodlyMainScaffold.toggleDrawer(),
-                    ).paddingAll(6),
+                    ).paddingHorizontal(6),
                   ],
-                ).paddingOnly(left: 12, right: 6),
+                ).paddingOnly(left: 12, right: 6, bottom: 3),
+                Text(
+                  S.current.whatAreYouCravingToday,
+                  overflow: TextOverflow.ellipsis,
+                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                ).paddingVertical(3),
                 const SearchWidget().paddingBottom(12),
               ],
             ),
@@ -97,23 +98,6 @@ class Home369AppBarMobile extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3),
-                      ),
-                    ),
-                    Positioned(
-                      left: -35,
-                      bottom: -10,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
-                        child: AnimatedOpacity(
-                          duration: Duration.zero,
-                          opacity: .15,
-                          child: Asset(
-                            FoodlyAssets.isoFoodlyWhite,
-                            fit: BoxFit.fitHeight,
-                            height: context.screenHeight / 4.3,
-                          ),
-                        ),
                       ),
                     ),
                   ],

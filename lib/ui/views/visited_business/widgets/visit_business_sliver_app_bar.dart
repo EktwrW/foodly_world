@@ -97,9 +97,10 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                                             .map(
                                               (e) => CachedNetworkImage(
                                                 imageUrl: e,
+                                                height: 209,
                                                 width: double.infinity,
                                                 fadeInDuration: Durations.medium2,
-                                                fit: BoxFit.fitWidth,
+                                                fit: BoxFit.cover,
                                                 progressIndicatorBuilder: (context, url, progress) =>
                                                     const LoadingWidgetFoodlyIso().paddingAll(24),
                                               ),
@@ -108,7 +109,8 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                                       )
                                     : const Asset(
                                         FoodlyAssets.newBusinessPlaceholder,
-                                        fit: BoxFit.fitWidth,
+                                        height: 209,
+                                        fit: BoxFit.cover,
                                       ),
                               ),
                             ),

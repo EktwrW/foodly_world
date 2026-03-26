@@ -32,7 +32,7 @@ class VoiceSearchButton extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll(Colors.white),
               padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
             ),
-            child: const Icon(Iconsax.microphone_2_outline, size: 24),
+            child: const Icon(FontAwesome.microphone_lines_solid, size: 23),
           ),
         );
       },

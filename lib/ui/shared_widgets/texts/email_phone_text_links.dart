@@ -1,6 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
-import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
