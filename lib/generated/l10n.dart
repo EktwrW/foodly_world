@@ -2199,6 +2199,11 @@ class S {
     );
   }
 
+  /// `Note`
+  String get note {
+    return Intl.message('Note', name: 'note', desc: '', args: []);
+  }
+
   /// `The requested route does not exist, or you do not have permission to access it.`
   String get notFoundPageText {
     return Intl.message(

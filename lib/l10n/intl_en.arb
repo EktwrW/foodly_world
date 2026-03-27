@@ -294,6 +294,7 @@
   "retry": "Retry",
   "failedToLoadPromotionDetails": "Failed to load promotion details",
   "noRecommendationsFound": "We didn't find any recommendations for your search. \nTry other terms or try a different location.",
+  "note": "Note",
   "notFoundPageText": "The requested route does not exist, or you do not have permission to access it.",
   "notification": "Notification",
   "okGo": "Ok, Let's go!",

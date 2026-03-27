@@ -119,6 +119,7 @@ class MenuItemWdg extends StatelessWidget {
                                                     item, menuCategory, subCategory.uuid, v, price);
                                               }
                                             },
+                                            isUnderlineStyle: true,
                                             onFieldSubmitted: (p0) {
                                               if (i < 2) {
                                                 final nextVersion = item.sortedVersions.elementAtOrNull(i + 1);

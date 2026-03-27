@@ -253,6 +253,7 @@ class _TextSearchView extends StatelessWidget {
         FoodlyPrimaryInputText(
           minLines: 2,
           maxLines: 3,
+          isUnderlineStyle: true,
           inputTextType: FoodlyInputType.search,
           autovalidateMode: AutovalidateMode.onUnfocus,
           controller: vm.inputController.controller,

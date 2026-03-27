@@ -1,5 +1,3 @@
-import 'dart:ui' as dart_ui show ImageFilter;
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';

@@ -29,7 +29,7 @@ class TextSmartSearchButton extends StatelessWidget {
                   },
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.white),
-              padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
+              padding: WidgetStatePropertyAll(EdgeInsets.only(top: 6, bottom: 6, left: 6, right: 9)),
             ),
             child: const Icon(
               FontAwesome.keyboard,

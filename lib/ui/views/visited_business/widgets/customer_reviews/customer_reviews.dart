@@ -40,12 +40,12 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
               child: CarouselSlider(
                 key: const Key('visited-business-reviews-carousel-slider'),
                 options: CarouselOptions(
-                  height: 290,
+                  height: 273,
                   enableInfiniteScroll: false,
-                  viewportFraction: 0.93,
-                  enlargeCenterPage: true,
                   autoPlay: true,
-                  enlargeFactor: .26,
+                  viewportFraction: 0.99,
+                  enlargeCenterPage: true,
+                  enlargeFactor: .33,
                   onPageChanged: (index, _) {
                     if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
                       context.read<VisitBusinessCubit>().fetchMoreReviews();

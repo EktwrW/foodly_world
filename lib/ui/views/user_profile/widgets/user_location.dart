@@ -70,10 +70,7 @@ class EditUsersLocationWidgets extends StatelessWidget {
               prefixIcon: vm.country?.flag?.paddingAll(10) ?? FoodlyInputType.country.icon,
               prefixIconColor: Colors.black87,
               hintText: S.current.country,
-              contentPadding: const EdgeInsets.only(top: 10),
-              enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(width: 0.75, color: Colors.black87),
-              ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 10),
               hintStyle: const TextStyle(color: FoodlyThemes.secondaryFoodly),
             ),
             enabled: true,

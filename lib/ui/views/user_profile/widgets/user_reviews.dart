@@ -62,11 +62,12 @@ class _UserReviewsState extends State<_UserReviews> {
         return CarouselSlider(
           key: const Key('user-profile-reviews-carousel-slider'),
           options: CarouselOptions(
-            height: 290,
+            height: 269,
             enableInfiniteScroll: false,
-            viewportFraction: 0.93,
+            autoPlay: true,
+            viewportFraction: 0.99,
             enlargeCenterPage: true,
-            enlargeFactor: .26,
+            enlargeFactor: .33,
             onPageChanged: (index, _) {
               if (index >= data.reviews.length - 3 && data.canLoadMore && !data.isLoadingMore) {
                 context.read<UserProfileCubit>().loadMoreReviews();

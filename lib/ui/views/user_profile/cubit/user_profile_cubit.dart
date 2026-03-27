@@ -55,7 +55,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
             focusNode: FocusNode(),
           ),
           phoneNumberController: InputController(
-            controller: TextEditingController(),
+            controller: TextEditingController(text: authSessionService.userSessionDM?.user.phone),
             focusNode: FocusNode(),
           ),
           addressController: InputController(

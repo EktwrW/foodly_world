@@ -76,6 +76,6 @@ class _EditUsersPassword extends StatelessWidget {
             },
           )
       ],
-    );
+    ).paddingTop(9);
   }
 }

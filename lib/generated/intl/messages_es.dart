@@ -769,6 +769,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notFoundPageText": MessageLookupByLibrary.simpleMessage(
       "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
     ),
+    "note": MessageLookupByLibrary.simpleMessage("Nota"),
     "notification": MessageLookupByLibrary.simpleMessage("Notificación"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Vamos!"),

@@ -38,12 +38,12 @@ class CustomerReviewsWdg extends StatelessWidget {
               child: CarouselSlider(
                 key: const Key('business-reviews-carousel-slider'),
                 options: CarouselOptions(
-                  height: 290,
+                  height: 273,
                   enableInfiniteScroll: false,
-                  viewportFraction: 0.93,
-                  enlargeCenterPage: true,
-                  enlargeFactor: .26,
                   autoPlay: true,
+                  viewportFraction: 0.99,
+                  enlargeCenterPage: true,
+                  enlargeFactor: .33,
                 ),
                 items: currentBusinessReviews.map((review) {
                   return ReviewCard(review: review);

@@ -39,9 +39,7 @@ class _EditUserGenderWdg extends StatelessWidget {
               prefix: const SizedBox.shrink(),
               prefixIconColor: Colors.black87,
               hintText: S.current.gender,
-              enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(width: 0.75, color: Colors.black87),
-              ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               hintStyle: const TextStyle(
                 color: FoodlyThemes.secondaryFoodly,
               ),
@@ -65,7 +63,7 @@ class _EditUserGenderWdg extends StatelessWidget {
             },
           ),
         ],
-      ),
+      ).paddingTop(9),
     );
   }
 }

@@ -54,6 +54,7 @@ class ProfileNameWdg extends StatelessWidget {
                           child: FoodlyPrimaryInputText(
                             key: ValueKey(vm.userSessionDM.user.firstName),
                             controller: vm.firstNameController?.controller,
+                            isUnderlineStyle: true,
                             focusNode: vm.firstNameController?.focusNode,
                             inputTextType: FoodlyInputType.firstName,
                             autovalidateMode: vm.autovalidateMode,
@@ -72,6 +73,7 @@ class ProfileNameWdg extends StatelessWidget {
                             key: ValueKey(vm.userSessionDM.user.lastName),
                             controller: vm.lastNameController?.controller,
                             focusNode: vm.lastNameController?.focusNode,
+                            isUnderlineStyle: true,
                             inputTextType: FoodlyInputType.lastName,
                             autovalidateMode: vm.autovalidateMode,
                             maxLength: 18,

@@ -4,6 +4,7 @@ import 'package:foodly_world/core/core_exports.dart'
     show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -11,6 +12,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/reservations/widgets/manager_reservation_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
+import 'package:foodly_world/ui/views/reservations/widgets/reservation_card.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class NotificationsPage extends StatelessWidget {
@@ -186,7 +188,8 @@ class NotificationsPage extends StatelessWidget {
           context: context,
           builder: (ctx) {
             return Dialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+              backgroundColor: reservation.isConfirmed ? Colors.white : null,
+              insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 13),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: SingleChildScrollView(
                 child: Column(
@@ -218,84 +221,90 @@ class NotificationsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Reservation card (without outer Card margin)
-                    ManagerReservationCard(
-                      reservation: reservation,
-                      onConfirm: reservation.canBeActedOnByManager
-                          ? () async {
-                              Navigator.pop(ctx);
-                              final actionResult = await repo.confirmReservation(reservation.reservationUuid!);
-                              if (context.mounted) {
-                                actionResult.when(
-                                  success: (_) =>
-                                      FoodlySnackbars.successGeneric(context, S.current.reservationConfirmed),
-                                  failure: (_) =>
-                                      FoodlySnackbars.errorGeneric(context, S.current.failedToConfirmReservation),
-                                );
-                              }
-                            }
-                          : null,
-                      onReject: reservation.canBeActedOnByManager
-                          ? () {
-                              Navigator.pop(ctx);
-                              _showNotesDialog(context, S.current.rejectReservation, (notes) async {
-                                final actionResult =
-                                    await repo.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
+                    if (reservation.userUuid == di<AuthSessionService>().userSessionDM?.user.uuid)
+                      ReservationCard(
+                        reservation: reservation,
+                        returnOnlyContent: true,
+                      )
+                    else
+                      ManagerReservationCard(
+                        reservation: reservation,
+                        returnOnlyContent: true,
+                        onConfirm: reservation.canBeActedOnByManager
+                            ? () async {
+                                Navigator.pop(ctx);
+                                final actionResult = await repo.confirmReservation(reservation.reservationUuid!);
                                 if (context.mounted) {
                                   actionResult.when(
                                     success: (_) =>
-                                        FoodlySnackbars.successGeneric(context, S.current.reservationRejected),
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationConfirmed),
                                     failure: (_) =>
-                                        FoodlySnackbars.errorGeneric(context, S.current.failedToRejectReservation),
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToConfirmReservation),
                                   );
                                 }
-                              });
-                            }
-                          : null,
-                      onCancel: reservation.isConfirmed
-                          ? () {
-                              Navigator.pop(ctx);
-                              _showNotesDialog(context, S.current.cancelReservation, (notes) async {
-                                final actionResult = await repo.managerCancelReservation(reservation.reservationUuid!,
-                                    managerNotes: notes);
+                              }
+                            : null,
+                        onReject: reservation.canBeActedOnByManager
+                            ? () {
+                                Navigator.pop(ctx);
+                                _showNotesDialog(context, S.current.rejectReservation, (notes) async {
+                                  final actionResult =
+                                      await repo.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
+                                  if (context.mounted) {
+                                    actionResult.when(
+                                      success: (_) =>
+                                          FoodlySnackbars.successGeneric(context, S.current.reservationRejected),
+                                      failure: (_) =>
+                                          FoodlySnackbars.errorGeneric(context, S.current.failedToRejectReservation),
+                                    );
+                                  }
+                                });
+                              }
+                            : null,
+                        onCancel: reservation.isConfirmed
+                            ? () {
+                                Navigator.pop(ctx);
+                                _showNotesDialog(context, S.current.cancelReservation, (notes) async {
+                                  final actionResult = await repo.managerCancelReservation(reservation.reservationUuid!,
+                                      managerNotes: notes);
+                                  if (context.mounted) {
+                                    actionResult.when(
+                                      success: (_) =>
+                                          FoodlySnackbars.successGeneric(context, S.current.reservationCancelled),
+                                      failure: (_) =>
+                                          FoodlySnackbars.errorGeneric(context, S.current.failedToCancelReservation),
+                                    );
+                                  }
+                                });
+                              }
+                            : null,
+                        onNoShow: reservation.isConfirmed
+                            ? () async {
+                                Navigator.pop(ctx);
+                                final actionResult = await repo.markNoShow(reservation.reservationUuid!);
+                                if (context.mounted) {
+                                  actionResult.when(
+                                    success: (_) => FoodlySnackbars.successGeneric(context, S.current.markedNoShow),
+                                    failure: (_) => FoodlySnackbars.errorGeneric(context, S.current.failedToMarkNoShow),
+                                  );
+                                }
+                              }
+                            : null,
+                        onComplete: reservation.isConfirmed
+                            ? () async {
+                                Navigator.pop(ctx);
+                                final actionResult = await repo.markComplete(reservation.reservationUuid!);
                                 if (context.mounted) {
                                   actionResult.when(
                                     success: (_) =>
-                                        FoodlySnackbars.successGeneric(context, S.current.reservationCancelled),
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationCompleted),
                                     failure: (_) =>
-                                        FoodlySnackbars.errorGeneric(context, S.current.failedToCancelReservation),
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToCompleteReservation),
                                   );
                                 }
-                              });
-                            }
-                          : null,
-                      onNoShow: reservation.isConfirmed
-                          ? () async {
-                              Navigator.pop(ctx);
-                              final actionResult = await repo.markNoShow(reservation.reservationUuid!);
-                              if (context.mounted) {
-                                actionResult.when(
-                                  success: (_) => FoodlySnackbars.successGeneric(context, S.current.markedNoShow),
-                                  failure: (_) => FoodlySnackbars.errorGeneric(context, S.current.failedToMarkNoShow),
-                                );
                               }
-                            }
-                          : null,
-                      onComplete: reservation.isConfirmed
-                          ? () async {
-                              Navigator.pop(ctx);
-                              final actionResult = await repo.markComplete(reservation.reservationUuid!);
-                              if (context.mounted) {
-                                actionResult.when(
-                                  success: (_) =>
-                                      FoodlySnackbars.successGeneric(context, S.current.reservationCompleted),
-                                  failure: (_) =>
-                                      FoodlySnackbars.errorGeneric(context, S.current.failedToCompleteReservation),
-                                );
-                              }
-                            }
-                          : null,
-                    ),
+                            : null,
+                      ).paddingAll(13),
                   ],
                 ),
               ),
@@ -319,9 +328,9 @@ class NotificationsPage extends StatelessWidget {
         title: Text(title),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'Add a note (optional)',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: S.current.addNoteOptional,
+            border: const OutlineInputBorder(),
           ),
           maxLines: 3,
           maxLength: 500,

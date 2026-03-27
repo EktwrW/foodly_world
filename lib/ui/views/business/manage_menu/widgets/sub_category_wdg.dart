@@ -153,6 +153,7 @@ class SubCategoryWdg extends StatelessWidget {
                 FoodlyPrimaryInputText(
                   controller: controller,
                   height: 60,
+                  isUnderlineStyle: true,
                   onFieldSubmitted: (_) => _handleSaveCategory(controllerValue.text),
                   enabled: subCategory?.editingName ?? false,
                   showLeading: false,

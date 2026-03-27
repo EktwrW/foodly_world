@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
-import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,6 +12,7 @@ class ManagerReservationCard extends StatelessWidget {
   final VoidCallback? onCancel;
   final VoidCallback? onNoShow;
   final VoidCallback? onComplete;
+  final bool returnOnlyContent;
 
   const ManagerReservationCard({
     super.key,
@@ -23,110 +22,132 @@ class ManagerReservationCard extends StatelessWidget {
     this.onCancel,
     this.onNoShow,
     this.onComplete,
+    this.returnOnlyContent = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header: user info + status
+        Row(
+          children: [
+            if (reservation.userPhoto != null)
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(reservation.userPhoto!),
+              )
+            else
+              const CircleAvatar(
+                radius: 20,
+                child: Icon(Bootstrap.person_fill, size: 20),
+              ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    reservation.userName ?? S.current.customer,
+                    style: FoodlyTextStyles.actionsBodyBold,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (reservation.createdAt != null)
+                    Text(
+                      '${S.current.requested} ${DateFormat.yMMMd().format(reservation.createdAt!)}',
+                      style: FoodlyTextStyles.caption,
+                    ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              spacing: 6,
+              children: [
+                _StatusBadge(status: reservation.status),
+                Row(
+                  spacing: 3,
+                  children: [
+                    // Contact icon buttons
+                    if (reservation.userPhone != null && reservation.userPhone!.isNotEmpty)
+                      _ContactIconButton(
+                        icon: Bootstrap.telephone_fill,
+                        tooltip: reservation.userPhone!,
+                        onPressed: () => launchUrl(Uri(scheme: 'tel', path: reservation.userPhone)),
+                      ),
+                    if (reservation.userEmail != null && reservation.userEmail!.isNotEmpty)
+                      _ContactIconButton(
+                        icon: Bootstrap.envelope_fill,
+                        tooltip: reservation.userEmail!,
+                        onPressed: () => launchUrl(Uri(scheme: 'mailto', path: reservation.userEmail)),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+
+        // Details: date+time next to guests + status badge
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (reservation.reservationDate != null)
+              _InfoChip(
+                icon: Bootstrap.calendar_event,
+                label:
+                    '${DateFormat.MMMd().format(reservation.reservationDate!)} ${S.current.at} ${reservation.reservationTime ?? '--:--'}',
+              ),
+            const SizedBox(width: 16),
+            _InfoChip(
+              icon: FontAwesome.people_group_solid,
+              label: '${reservation.partySize} ${S.current.guests}',
+            ),
+          ],
+        ).paddingHorizontal(6),
+
+        // Special requests
+        if (reservation.hasSpecialRequests) ...[
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 13),
+            padding: const EdgeInsets.all(9),
+            decoration: BoxDecoration(
+              color: Colors.amber.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              reservation.specialRequests!,
+              style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+
+        // Action buttons
+        if (reservation.canBeActedOnByManager || reservation.isConfirmed) ...[
+          const SizedBox(height: 12),
+          _buildActionButtons(),
+        ],
+      ],
+    );
+
+    if (returnOnlyContent) {
+      return content;
+    }
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: reservation.isConfirmed ? Colors.white : null,
       child: Padding(
         padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header: user info + status
-            Row(
-              children: [
-                if (reservation.userPhoto != null)
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(reservation.userPhoto!),
-                  )
-                else
-                  const CircleAvatar(
-                    radius: 20,
-                    child: Icon(Bootstrap.person_fill, size: 20),
-                  ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        reservation.userName ?? S.current.customer,
-                        style: FoodlyTextStyles.actionsBodyBold,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (reservation.createdAt != null)
-                        Text(
-                          '${S.current.requested} ${DateFormat.yMMMd().format(reservation.createdAt!)}',
-                          style: FoodlyTextStyles.caption,
-                        ),
-                    ],
-                  ),
-                ),
-                // Contact icon buttons
-                if (reservation.userPhone != null && reservation.userPhone!.isNotEmpty)
-                  _ContactIconButton(
-                    icon: Bootstrap.telephone_fill,
-                    tooltip: reservation.userPhone!,
-                    onPressed: () => launchUrl(Uri(scheme: 'tel', path: reservation.userPhone)),
-                  ),
-                if (reservation.userEmail != null && reservation.userEmail!.isNotEmpty)
-                  _ContactIconButton(
-                    icon: Bootstrap.envelope_fill,
-                    tooltip: reservation.userEmail!,
-                    onPressed: () => launchUrl(Uri(scheme: 'mailto', path: reservation.userEmail)),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 10),
-
-            // Details: date+time next to guests + status badge
-            Row(
-              children: [
-                if (reservation.reservationDate != null)
-                  _InfoChip(
-                    icon: Bootstrap.calendar_event,
-                    label:
-                        '${DateFormat.MMMd().format(reservation.reservationDate!)} ${S.current.at} ${reservation.reservationTime ?? '--:--'}',
-                  ),
-                const SizedBox(width: 16),
-                _InfoChip(icon: Bootstrap.people_fill, label: '${reservation.partySize} ${S.current.guests}'),
-                const Spacer(),
-                _StatusBadge(status: reservation.status),
-              ],
-            ),
-
-            // Special requests
-            if (reservation.hasSpecialRequests) ...[
-              const SizedBox(height: 8),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.amber.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  reservation.specialRequests!,
-                  style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-
-            // Action buttons
-            if (reservation.canBeActedOnByManager || reservation.isConfirmed) ...[
-              const SizedBox(height: 12),
-              _buildActionButtons(),
-            ],
-          ],
-        ),
+        child: content,
       ),
     );
   }
@@ -157,7 +178,7 @@ class ManagerReservationCard extends StatelessWidget {
 
     if (reservation.isConfirmed) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         spacing: 8,
         children: [
           if (onCancel != null)
@@ -286,7 +307,7 @@ class _InfoChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      spacing: 4,
+      spacing: 6,
       children: [
         Icon(icon, size: 14, color: FoodlyThemes.secondaryFoodly),
         Text(label, style: FoodlyTextStyles.caption),

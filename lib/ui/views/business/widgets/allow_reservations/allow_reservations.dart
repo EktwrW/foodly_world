@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show MaxLengthEnforcement;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' show NeumorphicSwitch, NeumorphicSwitchStyle;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart'
+    show LightSource, NeumorphicShape, NeumorphicSwitch, NeumorphicSwitchStyle;
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
@@ -28,13 +29,17 @@ class AllowReservations extends StatelessWidget {
           children: [
             NeumorphicSwitch(
               value: allowReservations,
+              duration: Durations.medium2,
+              curve: Curves.decelerate,
               onChanged: canEdit ? (val) => bloc.add(BusinessEvent.toggleAllowReservations(val)) : null,
               height: 32,
-              style: const NeumorphicSwitchStyle(
-                activeTrackColor: FoodlyThemes.primaryFoodly,
+              style: NeumorphicSwitchStyle(
+                activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
                 inactiveTrackColor: Colors.black12,
                 activeThumbColor: FoodlyThemes.success,
                 inactiveThumbColor: FoodlyThemes.secondaryFoodly,
+                thumbShape: NeumorphicShape.convex,
+                lightSource: LightSource.topRight,
               ),
             ),
             Text(S.current.allowReservations, style: FoodlyTextStyles.actionsBody),

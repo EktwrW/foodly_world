@@ -53,6 +53,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                                   onTap: () {
                                     cubit.updateEditMode(PromotionEditing.title);
                                   },
+                                  isUnderlineStyle: true,
                                   enabled: vm.isEditing,
                                   controller: vm.titleCtrl?.controller,
                                   focusNode: vm.titleCtrl?.focusNode,
@@ -68,6 +69,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                                   onTap: () {
                                     cubit.updateEditMode(PromotionEditing.subtitle);
                                   },
+                                  isUnderlineStyle: true,
                                   enabled: vm.isEditing,
                                   controller: vm.subtitleCtrl?.controller,
                                   focusNode: vm.subtitleCtrl?.focusNode,
@@ -86,6 +88,7 @@ class CreateOrEditPromotionWdg extends StatelessWidget {
                                   onTap: () {
                                     cubit.updateEditMode(PromotionEditing.description);
                                   },
+                                  isUnderlineStyle: true,
                                   enabled: vm.isEditing,
                                   controller: vm.descriptionCtrl?.controller,
                                   focusNode: vm.descriptionCtrl?.focusNode,

@@ -296,6 +296,7 @@
   "viewPromotion": "Ver promoción",
   "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",
   "noRecommendationsFound": "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
+  "note": "Nota",
   "notFoundPageText": "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
   "notification": "Notificación",
   "okGo": "Ok, Vamos!",

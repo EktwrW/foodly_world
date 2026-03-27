@@ -40,7 +40,7 @@ class ReviewCard extends StatelessWidget {
               elevation: 0,
               color: FoodlyThemes.primaryFoodly,
               child: SizedBox(
-                height: 50,
+                height: 46,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +63,9 @@ class ReviewCard extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 120,
+                  height: 103,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (review.photoUrls.isNotEmpty)
                         Flexible(
@@ -76,16 +77,18 @@ class ReviewCard extends StatelessWidget {
                               topRight: Radius.circular(6),
                               bottomRight: Radius.circular(6),
                             ),
-                            child: FeedMultipleImageView(
-                              imageUrls: review.photoUrls,
-                              radius: 4,
+                            child: AspectRatio(
+                              aspectRatio: 4 / 3,
+                              child: FeedMultipleImageView(
+                                imageUrls: review.photoUrls,
+                                radius: 4,
+                              ),
                             ),
                           ),
                         ),
                       Expanded(
                         flex: 4,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
@@ -149,41 +152,38 @@ class ReviewCard extends StatelessWidget {
                                     ],
                                   ).paddingOnly(bottom: 16, left: 4),
                               ],
-                            ).paddingOnly(top: 6),
+                            ),
                             Text(review.createdAt?.timeAgo ?? '',
                                     style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
-                                .paddingOnly(top: 8),
+                                .paddingOnly(top: 3),
                             Text('Visitado el ${review.businessVisitedAt?.getShortFormat ?? '-'}',
                                 style: const TextStyle(fontSize: 11.5)),
                           ],
-                        ).paddingOnly(left: 12, right: 8),
+                        ).paddingOnly(left: 12, right: 6),
                       ),
                     ],
                   ),
                 ),
                 Flexible(
-                  child: SizedBox(
-                    height: 102,
-                    child: SingleChildScrollView(
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              review.comment ?? '',
-                              style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic),
-                              textAlign: TextAlign.left,
-                            ),
+                  child: SingleChildScrollView(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            review.comment ?? '',
+                            style: FoodlyTextStyles.caption.copyWith(fontStyle: FontStyle.italic),
+                            textAlign: TextAlign.left,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ).paddingAll(12),
+                  ).paddingOnly(left: 12, right: 12, bottom: 13, top: 9),
                 ),
               ],
             ),
           ).paddingOnly(top: 25),
         ],
       ),
-    ).paddingTop(10);
+    ).paddingSymmetric(vertical: 13);
   }
 }

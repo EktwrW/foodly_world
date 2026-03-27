@@ -63,6 +63,7 @@ class BusinessNameWdg extends StatelessWidget {
                         inputTextType: FoodlyInputType.businessName,
                         autovalidateMode: vm.autovalidateMode,
                         autofocus: true,
+                        isUnderlineStyle: true,
                         maxLength: 33,
                         enabled: vm.isEditingName,
                         hintText: vm.currentBusiness?.name,
