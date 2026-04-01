@@ -60,10 +60,11 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
     _isFabVisible.value = true;
   }
 
-  String get _publicMenuUrl {
-    final baseUrl = di<BaseConfig>().foodlyBaseUrl;
-    final cleanLocation = di<AppRouter>().currentLocation.replaceAll('/main', '');
-    return '$baseUrl$cleanLocation';
+  static const _menuBaseUrl = 'https://menu.foodly.solutions';
+
+  String _publicMenuUrl(MenuVM vm) {
+    final uuid = vm.menuDM?.business?.uuid ?? '';
+    return uuid.isEmpty ? '' : '$_menuBaseUrl/$uuid';
   }
 
   @override
@@ -121,7 +122,7 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
         child: MenuFloatingActionButton(
           menu: vm.menuDM,
           floatingButtonKey: vm.floatingButtonKey,
-          menuUrl: _publicMenuUrl,
+          menuUrl: _publicMenuUrl(vm),
         ),
       ),
       body: NestedScrollView(

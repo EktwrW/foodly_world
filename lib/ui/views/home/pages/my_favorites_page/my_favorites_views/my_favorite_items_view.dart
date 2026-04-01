@@ -56,9 +56,8 @@ class _FavoriteItemsCard extends StatelessWidget {
   const _FavoriteItemsCard({super.key, required this.favoriteItemDM});
 
   String get _publicMenuUrl {
-    final baseUrl = di<BaseConfig>().foodlyBaseUrl;
-    final menuUrl = '$baseUrl${AppRoutes.visitMenu.path.replaceFirst(':id', favoriteItemDM.menuUuid)}';
-    return menuUrl;
+    final uuid = favoriteItemDM.business?.uuid ?? '';
+    return uuid.isEmpty ? '' : 'https://menu.foodly.solutions/$uuid';
   }
 
   static const _divider = Expanded(child: Divider(color: FoodlyThemes.primaryFoodly, thickness: 1.8));

@@ -58,9 +58,8 @@ class _FavoriteMenusCard extends StatelessWidget {
   const _FavoriteMenusCard({super.key, required this.menu});
 
   String get _publicMenuUrl {
-    final baseUrl = di<BaseConfig>().foodlyBaseUrl;
-    final menuUrl = '$baseUrl${AppRoutes.visitMenu.path.replaceFirst(':id', menu.uuid)}';
-    return menuUrl;
+    final uuid = menu.business?.uuid ?? '';
+    return uuid.isEmpty ? '' : 'https://menu.foodly.solutions/$uuid';
   }
 
   @override

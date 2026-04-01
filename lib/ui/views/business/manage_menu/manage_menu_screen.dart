@@ -58,10 +58,11 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
     _isFabVisible.value = true;
   }
 
-  String get _publicMenuUrl {
-    final baseUrl = di<BaseConfig>().foodlyBaseUrl;
-    final cleanLocation = di<AppRouter>().currentLocation.replaceAll('/main', '');
-    return '$baseUrl$cleanLocation';
+  static const _menuBaseUrl = 'https://menu.foodly.solutions';
+
+  String _publicMenuUrl(ManageMenuVM vm) {
+    final uuid = vm.menuDM?.business?.uuid ?? '';
+    return uuid.isEmpty ? '' : '$_menuBaseUrl/$uuid';
   }
 
   @override
@@ -117,7 +118,7 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
           menu: vm.menuDM,
           floatingButtonKey: vm.floatingButtonKey,
           loggedUserCanEdit: vm.loggerUserCanEdit,
-          menuUrl: _publicMenuUrl,
+          menuUrl: _publicMenuUrl(vm),
         ),
       ),
       body: NestedScrollView(
