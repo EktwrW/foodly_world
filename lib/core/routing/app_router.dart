@@ -498,10 +498,18 @@ class AppRouter {
                   FadeTransition(opacity: animation, child: child),
             ),
           ),
-          // Deep link handler: menu.foodly.solutions/{uuid} opens public menu in-app.
-          // GoRouter prioritizes literal paths over parameterized — no conflict with named routes.
+          // Deep link handler: menu.foodly.solutions/{uuid}
+          // Logged-in users → visited business (full experience).
+          // Not logged-in → public menu (read-only).
           GoRoute(
             path: AppRoutes.publicMenu.path,
+            redirect: (context, state) {
+              if (authSessService.isLoggedIn) {
+                final uuid = state.pathParameters['businessUuid'] ?? '';
+                return AppRoutes.visitBusiness.path.replaceFirst(':id', uuid);
+              }
+              return null;
+            },
             builder: (ctx, state) => PublicMenuPage(
               businessUuid: state.pathParameters['businessUuid']!,
               dio: di<Dio>(),

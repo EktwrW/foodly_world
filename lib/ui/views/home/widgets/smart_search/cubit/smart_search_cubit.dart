@@ -117,6 +117,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
           onResult: _onSpeechResult,
           localeId: Intl.getCurrentLocale(),
           listenFor: const Duration(seconds: 30),
+          pauseFor: const Duration(seconds: 3),
           listenOptions: SpeechListenOptions(
             listenMode: ListenMode.search,
             cancelOnError: true,
