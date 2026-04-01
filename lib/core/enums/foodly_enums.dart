@@ -129,7 +129,7 @@ enum FoodlyInputType {
     businessAboutUs: S.current.addADescription,
     businessAdditionalInfo: S.current.addAdditionalInformation,
     youtubeUrl: 'https://www.youtube.com/watch?v=...',
-    search: 'Descubre lugares increíbles para comer y beber...',
+    search: S.current.searchPlaceholder,
   };
 
   String get text => _texts[this] ?? '';

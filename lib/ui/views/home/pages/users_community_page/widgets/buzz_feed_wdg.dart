@@ -5,6 +5,7 @@ import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 
@@ -52,7 +53,7 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
         final vm = state.vm;
 
         if (vm.isLoadingBuzz && vm.buzzItems.isEmpty) {
-          return const Center(child: CircularProgressIndicator.adaptive());
+          return const BuzzFeedShimmer();
         }
 
         if (vm.buzzItems.isEmpty) {

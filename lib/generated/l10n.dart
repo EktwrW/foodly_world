@@ -2984,6 +2984,16 @@ class S {
     );
   }
 
+  /// `Discover great places to eat and drink nearby...`
+  String get searchPlaceholder {
+    return Intl.message(
+      'Discover great places to eat and drink nearby...',
+      name: 'searchPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Let OS provide secure authentication.`
   String get secureAuthentication {
     return Intl.message(

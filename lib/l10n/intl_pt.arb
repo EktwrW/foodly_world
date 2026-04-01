@@ -409,6 +409,7 @@
   "seafood": "Marisco",
   "searchBusinessOrAddress": "Procurar negócio ou endereço",
   "searchInCity": "Procurar em {city}...",
+  "searchPlaceholder": "Descubra excelentes lugares para comer e beber perto de si...",
   "secureAuthentication": "Permitir que o sistema operativo forneça autenticação segura.",
   "sessionExpiredMessage": "A sua sessão expirou. Por favor, faça login novamente.",
   "selectedPlace": "Local selecionado",

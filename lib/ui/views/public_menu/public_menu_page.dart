@@ -10,6 +10,7 @@ import 'package:foodly_world/core/network/public_menu/public_menu_repo.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/views/public_menu/cubit/public_menu_cubit.dart';
 import 'package:foodly_world/ui/views/public_menu/cubit/public_menu_state.dart';
 import 'package:foodly_world/ui/views/public_menu/widgets/public_menu_app_bar_wdg.dart';
@@ -111,7 +112,7 @@ class _PublicMenuViewState extends State<_PublicMenuView> with AutomaticKeepAliv
     return BlocBuilder<PublicMenuCubit, PublicMenuState>(
       builder: (context, state) => state.when(
         initial: () => const SizedBox.shrink(),
-        loading: () => const Scaffold(body: Center(child: CircularProgressIndicator.adaptive())),
+        loading: () => const Scaffold(body: MenuShimmer()),
         error: (msg) => Scaffold(body: Center(child: Text(msg))),
         loaded: (business, menu) => _buildMenuWdg(context, business, menu),
       ),

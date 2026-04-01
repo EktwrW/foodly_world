@@ -3,6 +3,7 @@ import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/reservations/cubit/manage_reservations_cubit.dart';
@@ -159,7 +160,7 @@ class _ManagerReservationsList extends StatelessWidget {
         final vm = state.vm;
 
         return state.maybeMap(
-          loading: (_) => const Center(child: CircularProgressIndicator()),
+          loading: (_) => const ReservationsShimmer(isManager: true),
           orElse: () {
             if (vm.reservations.isEmpty) {
               return Center(

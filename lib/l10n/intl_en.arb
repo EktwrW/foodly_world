@@ -406,6 +406,7 @@
   "seafood": "Seafood",
   "searchBusinessOrAddress": "Search Business or Address",
   "searchInCity": "Search in {city}...",
+  "searchPlaceholder": "Discover great places to eat and drink nearby...",
   "secureAuthentication": "Let OS provide secure authentication.",
   "sessionExpiredMessage": "Your session has expired. Please log in again.",
   "selectedPlace": "Selected place",

@@ -62,4 +62,7 @@ class FoodlyStrings {
 
   // Categories
   static const LAST_CATEGORY_VISITED = 'last_category_visited';
+
+  // View mode preference
+  static const PREFERRED_VIEW_MODE = 'preferred_view_mode';
 }

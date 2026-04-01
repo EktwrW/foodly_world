@@ -6,6 +6,7 @@ import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/scroll_tracker.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/post_card.dart';
 
 class PostsFeedWidget extends StatefulWidget {
@@ -60,13 +61,10 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
         final vm = state.vm;
 
         if (vm.posts.isEmpty) {
-          if (state != SocialState.loading(vm)) {
-            return _buildEmptyState(context);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ).paddingBottom(60);
+          if (state == SocialState.loading(vm)) {
+            return const PostsFeedShimmer();
           }
+          return _buildEmptyState(context);
         }
 
         return RefreshIndicator(

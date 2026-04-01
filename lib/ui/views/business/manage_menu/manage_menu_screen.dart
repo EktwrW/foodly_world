@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
@@ -76,7 +77,7 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
       listener: (context, state) {
         state.whenOrNull(
           loading: (vm) {
-            _dialogService.showLoading();
+            if (vm.menuDM != null) _dialogService.showLoading();
           },
           loaded: (vm) => _dialogService.hideLoading(),
           showSnackbar: (vm, msg) {
@@ -91,7 +92,7 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
       },
       builder: (context, state) {
         return state.maybeWhen(
-          loading: (vm) => _buildMenuWdg(context, vm),
+          loading: (vm) => vm.menuDM == null ? const MenuShimmer() : _buildMenuWdg(context, vm),
           loaded: (vm) => _buildMenuWdg(context, vm),
           showSnackbar: (vm, _) => _buildMenuWdg(context, vm),
           error: (e, vm) => _buildMenuWdg(context, vm),

@@ -27,15 +27,26 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         _logger = logger,
         _authService = authService,
         _vm = FavoritesVM.fromUserDM(authService.userSessionDM?.user),
-        super(FavoritesState.initial(FavoritesVM.fromUserDM(authService.userSessionDM?.user)));
+        super(FavoritesState.initial(FavoritesVM.fromUserDM(authService.userSessionDM?.user))) {
+    _initViewMode();
+  }
 
   bool get isStartingFavorites => state is _Loading || state is _Initial;
+
+  Future<void> _initViewMode() async {
+    final saved = await di<LocalStorageService>().getString(FoodlyStrings.PREFERRED_VIEW_MODE);
+    if (saved == BusinessResultsViewMode.grid.name) {
+      _vm = _vm.copyWith(isGridView: true);
+      emit(FavoritesState.loaded(_vm));
+    }
+  }
 
   /// Inicializa o actualiza el estado de favoritos desde el UserDM actual
   void initFromUserDM() {
     final user = _authService.userSessionDM?.user;
     if (user != null) {
-      _vm = FavoritesVM.fromUserDM(user);
+      final preservedIsGrid = _vm.isGridView;
+      _vm = FavoritesVM.fromUserDM(user).copyWith(isGridView: preservedIsGrid);
     }
   }
 
@@ -59,8 +70,13 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   /// Alterna entre vista de cuadrícula y lista para negocios
   void toggleViewMode() {
-    _vm = _vm.copyWith(isGridView: !_vm.isGridView);
+    final newIsGrid = !_vm.isGridView;
+    _vm = _vm.copyWith(isGridView: newIsGrid);
     emit(FavoritesState.loaded(_vm));
+    di<LocalStorageService>().saveString(
+      FoodlyStrings.PREFERRED_VIEW_MODE,
+      newIsGrid ? BusinessResultsViewMode.grid.name : BusinessResultsViewMode.list.name,
+    );
   }
 
   /// Cambia el tipo de ordenamiento de negocios favoritos

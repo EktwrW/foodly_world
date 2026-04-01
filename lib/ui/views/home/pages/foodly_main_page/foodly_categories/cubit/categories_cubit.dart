@@ -34,7 +34,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         ),
         _businessRepo = businessRepo,
         super(const CategoriesState.initial(CategoriesVM())) {
-    fetchNearbyBusinesses(latitude: _vm.latitude!, longitude: _vm.longitude!);
+    _initViewMode().then((_) {
+      fetchNearbyBusinesses(latitude: _vm.latitude!, longitude: _vm.longitude!);
+    });
+  }
+
+  Future<void> _initViewMode() async {
+    final saved = await di<LocalStorageService>().getString(FoodlyStrings.PREFERRED_VIEW_MODE);
+    if (saved == BusinessResultsViewMode.grid.name) {
+      _vm = _vm.copyWith(viewMode: BusinessResultsViewMode.grid);
+    }
   }
 
   void changeCategory(FoodlyCategories category) async {
@@ -110,6 +119,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
     _vm = _vm.copyWith(viewMode: newViewMode);
     emit(_Loaded(_vm));
+    di<LocalStorageService>().saveString(FoodlyStrings.PREFERRED_VIEW_MODE, newViewMode.name);
   }
 
   Future<void> _precacheBusinessImages(List<BusinessDM> businesses) {

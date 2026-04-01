@@ -30,7 +30,16 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
         _nlpSearchRepo = nlpSearchRepo,
         _logger = logger,
         _vm = SmartSearchVM.initial(),
-        super(SmartSearchState.initial(SmartSearchVM.initial()));
+        super(SmartSearchState.initial(SmartSearchVM.initial())) {
+    _initViewMode();
+  }
+
+  Future<void> _initViewMode() async {
+    final saved = await di<LocalStorageService>().getString(FoodlyStrings.PREFERRED_VIEW_MODE);
+    if (saved == BusinessResultsViewMode.grid.name) {
+      _vm = _vm.copyWith(viewMode: BusinessResultsViewMode.grid);
+    }
+  }
 
   // Speech recognition is initialized ONLY when the user taps the mic button
   // (via startListening → _initialize). No WidgetsBindingObserver, no automatic
@@ -290,6 +299,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
 
     _vm = _vm.copyWith(viewMode: newViewMode);
     emit(SmartSearchState.searchComplete(_vm));
+    di<LocalStorageService>().saveString(FoodlyStrings.PREFERRED_VIEW_MODE, newViewMode.name);
   }
 
   void setTextSearchMode() async {
@@ -356,6 +366,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
       isInitialized: _speechToText.isAvailable,
       isListening: false,
       recognizedText: '',
+      viewMode: _vm.viewMode,
       inputController: InputController(
         controller: TextEditingController(),
         focusNode: FocusNode(),

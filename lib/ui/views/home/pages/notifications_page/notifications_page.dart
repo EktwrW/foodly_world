@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer;
 import 'package:foodly_world/core/core_exports.dart'
     show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S;
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -29,18 +30,17 @@ class NotificationsPage extends StatelessWidget {
         ),
         body: BlocConsumer<NotificationsCubit, NotificationsState>(
           listener: (context, state) {
-            final dialogService = di<DialogService>();
-
             state.whenOrNull(
-              loading: (vm) => dialogService.showLoading(),
-              loaded: (vm) => dialogService.hideLoading(),
               error: (vm, message) {
-                dialogService.hideLoading();
                 FoodlySnackbars.errorGeneric(context, message);
               },
             );
           },
           builder: (context, state) {
+            if (state.vm.notifications.isEmpty && state.maybeMap(loading: (_) => true, orElse: () => false)) {
+              return const NotificationsShimmer();
+            }
+
             final vm = state.vm;
 
             if (vm.notifications.isEmpty) {

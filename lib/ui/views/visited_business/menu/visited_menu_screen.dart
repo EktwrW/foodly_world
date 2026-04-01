@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
@@ -80,7 +81,8 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
       listener: (context, state) {
         state.whenOrNull(
           loading: (vm) {
-            _dialogService.showLoading();
+            // Only show dialog overlay for subsequent loads (menu already has data)
+            if (vm.menuDM != null) _dialogService.showLoading();
           },
           loaded: (vm) => _dialogService.hideLoading(),
           showSnackbar: (vm, msg) {
@@ -95,7 +97,7 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
       },
       builder: (context, state) {
         return state.maybeWhen(
-          loading: (vm) => _buildMenuWdg(context, vm),
+          loading: (vm) => vm.menuDM == null ? const MenuShimmer() : _buildMenuWdg(context, vm),
           loaded: (vm) => _buildMenuWdg(context, vm),
           showSnackbar: (vm, _) => _buildMenuWdg(context, vm),
           error: (e, vm) => _buildMenuWdg(context, vm),

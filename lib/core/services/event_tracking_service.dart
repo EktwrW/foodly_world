@@ -143,7 +143,7 @@ class EventTrackingService with WidgetsBindingObserver {
           final count = (data?['results_count'] as int?) ?? 0;
           fa.logEvent(name: 'search_results_viewed', parameters: {
             'results_count': count,
-            'has_results': count > 0,
+            'has_results': count > 0 ? 1 : 0,
           });
         case 'search.result_clicked':
           fa.logEvent(name: 'search_result_click', parameters: {

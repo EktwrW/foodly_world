@@ -1004,6 +1004,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Buscar negocio o dirección",
     ),
     "searchInCity": m25,
+    "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "Descubre excelentes lugares para comer y beber cerca de ti...",
+    ),
     "secureAuthentication": MessageLookupByLibrary.simpleMessage(
       "Permitir que el sistema operativo proporcione autenticación segura.",
     ),

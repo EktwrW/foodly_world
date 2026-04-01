@@ -222,12 +222,15 @@ class _CombosLabelButtonsState extends State<_CombosLabelButtons> {
                   ),
                 ),
                 Expanded(
-                  child: CustomNeumorphicButton(
-                    onPressed: (_isCustom && _controller.text.trim().isEmpty) ? null : _submit,
-                    padding: const EdgeInsets.all(8),
-                    text: S.current.save,
-                    disabled: (_isCustom && _controller.text.trim().isEmpty),
-                    fontSize: 12.9,
+                  child: SizedBox(
+                    height: 36,
+                    child: CustomNeumorphicButton(
+                      onPressed: (_isCustom && _controller.text.trim().isEmpty) ? null : _submit,
+                      padding: const EdgeInsets.all(8),
+                      text: S.current.save,
+                      disabled: (_isCustom && _controller.text.trim().isEmpty),
+                      fontSize: 12.9,
+                    ),
                   ),
                 ),
               ],

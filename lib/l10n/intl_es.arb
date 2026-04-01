@@ -406,6 +406,7 @@
   "saveMenu": "Guardar este menú",
   "searchBusinessOrAddress": "Buscar negocio o dirección",
   "scanQRCode": "Escanea este código QR",
+  "searchPlaceholder": "Descubre excelentes lugares para comer y beber cerca de ti...",
   "seafood": "Mariscos",
   "searchInCity": "Search in {city}...",
   "secureAuthentication": "Permitir que el sistema operativo proporcione autenticación segura.",

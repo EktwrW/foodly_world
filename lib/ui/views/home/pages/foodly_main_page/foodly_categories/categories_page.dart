@@ -6,6 +6,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
@@ -110,7 +111,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           category: vm.currentCategory,
         ),
         body: isLoading && vm.businessesInCurrentCategory.isEmpty
-            ? const Center(child: CircularProgressIndicator.adaptive())
+            ? (vm.viewMode.isGrid ? const BusinessGridShimmer() : const BusinessListShimmer())
             : Column(
                 children: [
                   Flexible(
@@ -228,7 +229,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     child: AnimatedSwitcher(
                       duration: Durations.medium2,
                       child: vm.isSwitchingRadius
-                          ? const Center(child: CircularProgressIndicator.adaptive())
+                          ? (vm.viewMode.isGrid ? const BusinessGridShimmer() : const BusinessListShimmer())
                           : BusinessResultsView(
                               key: const Key('categories-page-business-results-view'),
                               searchResults: vm.businessesInCurrentCategory,
