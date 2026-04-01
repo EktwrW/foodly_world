@@ -9,20 +9,21 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-void showContactBottomSheet(BuildContext context) {
+void showContactBottomSheet(BuildContext context, {String? prefilledSubject}) {
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (_) => BlocProvider(
       create: (_) => ContactCubit(di<MeRepo>()),
-      child: const _ContactBottomSheet(),
+      child: _ContactBottomSheet(prefilledSubject: prefilledSubject),
     ),
   );
 }
 
 class _ContactBottomSheet extends StatefulWidget {
-  const _ContactBottomSheet();
+  final String? prefilledSubject;
+  const _ContactBottomSheet({this.prefilledSubject});
 
   @override
   State<_ContactBottomSheet> createState() => _ContactBottomSheetState();
@@ -30,7 +31,7 @@ class _ContactBottomSheet extends StatefulWidget {
 
 class _ContactBottomSheetState extends State<_ContactBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  final _subjectController = TextEditingController();
+  late final TextEditingController _subjectController;
   final _messageController = TextEditingController();
   int _messageLength = 0;
 
@@ -39,6 +40,7 @@ class _ContactBottomSheetState extends State<_ContactBottomSheet> {
   @override
   void initState() {
     super.initState();
+    _subjectController = TextEditingController(text: widget.prefilledSubject);
     _messageController.addListener(() {
       setState(() => _messageLength = _messageController.text.length);
     });

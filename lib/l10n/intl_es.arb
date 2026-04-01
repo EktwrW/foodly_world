@@ -121,6 +121,12 @@
   "contactRemoveImage": "Eliminar",
   "contactSentSuccess": "¡Tu mensaje fue enviado con éxito!",
   "contactFileTooLarge": "La imagen debe ser menor a 3 MB",
+  "foodlyCoverage": "Cobertura Foodly",
+  "foodlyCoverageDescription": "Foodly está disponible actualmente en los siguientes países:",
+  "notInYourCountry": "¿Aún no está en tu país?",
+  "suggestFoodlyInYourCountry": "Sugerir Foodly en tu país",
+  "suggestFoodlySubject": "Traigan Foodly a mi país",
+  "outsideCoverage": "Tu ubicación está fuera de la cobertura actual de Foodly",
   "cookingSchools": "Escuelas de Cocina",
   "copyrightText": "Copyright © {year} - Todos los derechos reservados",
   "@copyrightText": {

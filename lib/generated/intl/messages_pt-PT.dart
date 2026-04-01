@@ -553,6 +553,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "following": MessageLookupByLibrary.simpleMessage("Seguindo"),
     "food": MessageLookupByLibrary.simpleMessage("Pratos"),
     "foodTrucks": MessageLookupByLibrary.simpleMessage("Food Trucks e Stands"),
+    "foodlyCoverage": MessageLookupByLibrary.simpleMessage("Cobertura Foodly"),
+    "foodlyCoverageDescription": MessageLookupByLibrary.simpleMessage(
+      "Foodly está disponível atualmente nos seguintes países:",
+    ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Esqueceu-se da senha?",
     ),
@@ -763,6 +767,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "notFoundPageText": MessageLookupByLibrary.simpleMessage(
       "A rota solicitada não existe, ou não tem permissão para aceder a ela.",
     ),
+    "notInYourCountry": MessageLookupByLibrary.simpleMessage(
+      "Ainda não está no seu país?",
+    ),
     "note": MessageLookupByLibrary.simpleMessage("Nota"),
     "notification": MessageLookupByLibrary.simpleMessage("Notificação"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificações"),
@@ -784,6 +791,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "other": MessageLookupByLibrary.simpleMessage("Outro"),
     "outdoorSeating": MessageLookupByLibrary.simpleMessage(
       "Assentos ao ar livre",
+    ),
+    "outsideCoverage": MessageLookupByLibrary.simpleMessage(
+      "A sua localização está fora da cobertura atual do Foodly",
     ),
     "owner": MessageLookupByLibrary.simpleMessage("Proprietário"),
     "parking": MessageLookupByLibrary.simpleMessage("Estacionamento"),
@@ -1082,6 +1092,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "success": MessageLookupByLibrary.simpleMessage("Sucesso"),
     "successfullyDeleted": MessageLookupByLibrary.simpleMessage(
       "Eliminado com sucesso!",
+    ),
+    "suggestFoodlyInYourCountry": MessageLookupByLibrary.simpleMessage(
+      "Sugerir Foodly no seu país",
+    ),
+    "suggestFoodlySubject": MessageLookupByLibrary.simpleMessage(
+      "Tragam Foodly para o meu país",
     ),
     "sushi": MessageLookupByLibrary.simpleMessage("Sushi"),
     "switchToManagerRole": MessageLookupByLibrary.simpleMessage(

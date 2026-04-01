@@ -133,7 +133,6 @@ class SignUpUserForm extends StatelessWidget {
           language: cubit.lang,
           disabled: !enabled,
           focusNode: vm.placesFocusNode,
-          components: FoodlyCountries.USA.apiComponents,
           onPickedPlaceDetail: (place) {
             cubit.updateUserLocationFromPlacesAPI(place);
             di<LocationService>().updateLocationFromPlace(place);

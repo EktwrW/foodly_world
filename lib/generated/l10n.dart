@@ -954,6 +954,66 @@ class S {
     );
   }
 
+  /// `Foodly Coverage`
+  String get foodlyCoverage {
+    return Intl.message(
+      'Foodly Coverage',
+      name: 'foodlyCoverage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foodly is currently available in the following countries:`
+  String get foodlyCoverageDescription {
+    return Intl.message(
+      'Foodly is currently available in the following countries:',
+      name: 'foodlyCoverageDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not in your country yet?`
+  String get notInYourCountry {
+    return Intl.message(
+      'Not in your country yet?',
+      name: 'notInYourCountry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suggest Foodly in your country`
+  String get suggestFoodlyInYourCountry {
+    return Intl.message(
+      'Suggest Foodly in your country',
+      name: 'suggestFoodlyInYourCountry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bring Foodly to my country`
+  String get suggestFoodlySubject {
+    return Intl.message(
+      'Bring Foodly to my country',
+      name: 'suggestFoodlySubject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your location is outside Foodly's current coverage`
+  String get outsideCoverage {
+    return Intl.message(
+      'Your location is outside Foodly\'s current coverage',
+      name: 'outsideCoverage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cooking Schools`
   String get cookingSchools {
     return Intl.message(

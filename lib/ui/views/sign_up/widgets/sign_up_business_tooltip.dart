@@ -90,7 +90,6 @@ class SignUpBusinessTooltip extends StatelessWidget {
             absorbing: vm.tooltipActive,
             child: PlacesAutocompleteWdg(
               language: cubit.lang,
-              components: FoodlyCountries.USA.apiComponents,
               autofocus: !vm.tooltipActive,
               onPickedPlaceDetail: (detail) {
                 cubit.updateBusinessFromPlacesAPI(detail);

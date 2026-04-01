@@ -42,6 +42,17 @@ class CurrentLocationButton extends StatelessWidget {
                             return;
                           }
 
+                          // Check if user is outside Foodly coverage and it matches their principal address
+                          final outsideCoverage = !FoodlyCountries.hasCoverage(locationService.currentCountryCode);
+                          final principalCountry =
+                              di<AuthSessionService>().userSessionDM?.user.principalAddress?.country?.countryCode;
+                          if (outsideCoverage &&
+                              principalCountry != null &&
+                              principalCountry.toUpperCase() == locationService.currentCountryCode.toUpperCase()) {
+                            showFoodlyCoverageBottomSheet();
+                            return;
+                          }
+
                           if (!state.vm.smartSearchMode.isOff) {
                             if (context.mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             await Future.delayed(Durations.short2);
@@ -82,32 +93,47 @@ class CurrentLocationButton extends StatelessWidget {
                             ],
                           )
                         : hasLocation
-                            ? Row(
-                                spacing: 9,
-                                children: [
-                                  const Icon(
-                                    Icons.edit_location_outlined,
-                                    color: FoodlyThemes.primaryFoodly,
-                                    size: 23,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      locationService.currentAddress.isNotEmpty == true
-                                          ? '${locationService.currentAddress}, ${locationService.currentCity}.'
-                                          : '${locationService.currentCity} ${locationService.currentZipCode}.',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: FoodlyTextStyles.captionBold.copyWith(fontSize: 11.3),
+                            ? Builder(builder: (_) {
+                                final isOutsideCoverage =
+                                    !FoodlyCountries.hasCoverage(locationService.currentCountryCode);
+                                final userCountryCode =
+                                    di<AuthSessionService>().userSessionDM?.user.principalAddress?.country?.countryCode;
+                                final matchesPrincipal = userCountryCode != null &&
+                                    userCountryCode.toUpperCase() == locationService.currentCountryCode.toUpperCase();
+                                final showCoverageInfo = isOutsideCoverage && matchesPrincipal;
+
+                                return Row(
+                                  spacing: 9,
+                                  children: [
+                                    Icon(
+                                      showCoverageInfo ? Bootstrap.info_circle : Icons.edit_location_outlined,
+                                      color: showCoverageInfo ? FoodlyThemes.error : FoodlyThemes.primaryFoodly,
+                                      size: 23,
                                     ),
-                                  ),
-                                ],
-                              )
+                                    Expanded(
+                                      child: Text(
+                                        showCoverageInfo
+                                            ? S.current.outsideCoverage
+                                            : locationService.currentAddress.isNotEmpty == true
+                                                ? '${locationService.currentAddress}, ${locationService.currentCity}.'
+                                                : '${locationService.currentCity} ${locationService.currentZipCode}.',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: FoodlyTextStyles.captionBold.copyWith(
+                                          fontSize: 11.3,
+                                          color: showCoverageInfo ? FoodlyThemes.error : null,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              })
                             : Row(
                                 spacing: 9,
                                 children: [
                                   const Icon(
                                     Icons.location_off_outlined,
-                                    color: Colors.redAccent,
+                                    color: FoodlyThemes.error,
                                     size: 23,
                                   ),
                                   Expanded(
@@ -115,7 +141,7 @@ class CurrentLocationButton extends StatelessWidget {
                                       S.current.enableLocation,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.redAccent),
+                                      style: FoodlyTextStyles.captionBold.copyWith(color: FoodlyThemes.error),
                                     ),
                                   ),
                                 ],

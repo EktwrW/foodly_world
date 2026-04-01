@@ -557,6 +557,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "following": MessageLookupByLibrary.simpleMessage("Siguiendo"),
     "food": MessageLookupByLibrary.simpleMessage("Platos"),
     "foodTrucks": MessageLookupByLibrary.simpleMessage("Food Trucks y Puestos"),
+    "foodlyCoverage": MessageLookupByLibrary.simpleMessage("Cobertura Foodly"),
+    "foodlyCoverageDescription": MessageLookupByLibrary.simpleMessage(
+      "Foodly está disponible actualmente en los siguientes países:",
+    ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "¿Olvidaste la contraseña?",
     ),
@@ -769,6 +773,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "notFoundPageText": MessageLookupByLibrary.simpleMessage(
       "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
     ),
+    "notInYourCountry": MessageLookupByLibrary.simpleMessage(
+      "¿Aún no está en tu país?",
+    ),
     "note": MessageLookupByLibrary.simpleMessage("Nota"),
     "notification": MessageLookupByLibrary.simpleMessage("Notificación"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
@@ -790,6 +797,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "other": MessageLookupByLibrary.simpleMessage("Otro"),
     "outdoorSeating": MessageLookupByLibrary.simpleMessage(
       "Asientos al aire libre",
+    ),
+    "outsideCoverage": MessageLookupByLibrary.simpleMessage(
+      "Tu ubicación está fuera de la cobertura actual de Foodly",
     ),
     "owner": MessageLookupByLibrary.simpleMessage("Propietario"),
     "parking": MessageLookupByLibrary.simpleMessage("Estacionamiento"),
@@ -1104,6 +1114,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "success": MessageLookupByLibrary.simpleMessage("Éxito"),
     "successfullyDeleted": MessageLookupByLibrary.simpleMessage(
       "¡Eliminado con éxito!",
+    ),
+    "suggestFoodlyInYourCountry": MessageLookupByLibrary.simpleMessage(
+      "Sugerir Foodly en tu país",
+    ),
+    "suggestFoodlySubject": MessageLookupByLibrary.simpleMessage(
+      "Traigan Foodly a mi país",
     ),
     "sushi": MessageLookupByLibrary.simpleMessage("Sushi"),
     "switchToManagerRole": MessageLookupByLibrary.simpleMessage(
