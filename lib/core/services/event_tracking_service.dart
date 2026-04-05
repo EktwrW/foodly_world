@@ -123,7 +123,6 @@ class EventTrackingService with WidgetsBindingObserver {
       await _client.trackBatch(BatchEventsDTO(events: batch));
     } catch (e) {
       _logger.w('[Analytics] Batch flush failed — re-queuing ${batch.length} events: $e');
-      // Re-prepend to queue for retry; drop overflow if queue is already full
       final available = _maxQueueSize - _queue.length;
       if (available > 0) {
         _queue.insertAll(0, batch.take(available));

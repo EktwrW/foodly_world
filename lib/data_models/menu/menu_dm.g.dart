@@ -64,6 +64,7 @@ _$CategoryDMImpl _$$CategoryDMImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       uuid: json['uuid'] as String,
       id: (json['id'] as num?)?.toInt(),
+      sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
       items: (json['items'] as List<dynamic>)
           .map((e) => ItemDM.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -74,5 +75,6 @@ Map<String, dynamic> _$$CategoryDMImplToJson(_$CategoryDMImpl instance) =>
       'name': instance.name,
       'uuid': instance.uuid,
       if (instance.id case final value?) 'id': value,
+      'sort_order': instance.sortOrder,
       'items': instance.items.map((e) => e.toJson()).toList(),
     };

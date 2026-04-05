@@ -20,6 +20,8 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart' show LoadingWidgetFoodlyIso;
+import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart' show ImageViewer;
+import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -109,6 +111,8 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                     cubit: cubit,
                     subCategory: subCategory,
                     isLastSubCategory: isLastSubCategory,
+                    categoryIndex: index,
+                    totalCategories: widget.categories?.length ?? 0,
                   );
                 },
               ),
@@ -127,12 +131,16 @@ class SubCategoryWdgKeepAlive extends StatefulWidget {
     required this.cubit,
     required this.subCategory,
     required this.isLastSubCategory,
+    required this.categoryIndex,
+    required this.totalCategories,
   });
 
   final MenuCategory menuCategory;
   final ManageMenuCubit cubit;
   final CategoryDM? subCategory;
   final bool isLastSubCategory;
+  final int categoryIndex;
+  final int totalCategories;
 
   @override
   State<SubCategoryWdgKeepAlive> createState() => _SubCategoryWdgKeepAliveState();
@@ -153,6 +161,8 @@ class _SubCategoryWdgKeepAliveState extends State<SubCategoryWdgKeepAlive> with 
         cubit: widget.cubit,
         subCategory: widget.subCategory,
         isLastSubCategory: widget.isLastSubCategory,
+        categoryIndex: widget.categoryIndex,
+        totalCategories: widget.totalCategories,
       ),
     );
   }

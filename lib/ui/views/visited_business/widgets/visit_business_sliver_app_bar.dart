@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
@@ -84,34 +85,39 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                       height: 370,
                       child: Stack(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: ColoredBox(
-                              color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
-                              child: SizedBox(
-                                height: 209,
-                                width: double.infinity,
-                                child: (currentBusiness?.coverImages.isNotEmpty ?? false)
-                                    ? ImageSliderFade(
-                                        imageList: currentBusiness!.coverImageUrls
-                                            .map(
-                                              (e) => CachedNetworkImage(
-                                                imageUrl: e,
-                                                height: 209,
-                                                width: double.infinity,
-                                                fadeInDuration: Durations.medium2,
-                                                fit: BoxFit.cover,
-                                                progressIndicatorBuilder: (context, url, progress) =>
-                                                    const LoadingWidgetFoodlyIso().paddingAll(24),
-                                              ),
-                                            )
-                                            .toList(),
-                                      )
-                                    : const Asset(
-                                        FoodlyAssets.newBusinessPlaceholder,
-                                        height: 209,
-                                        fit: BoxFit.cover,
-                                      ),
+                          GestureDetector(
+                            onTap: (currentBusiness?.coverImages.isNotEmpty ?? false)
+                                ? () => ImageViewer.open(context, currentBusiness!.coverImageUrls)
+                                : null,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: ColoredBox(
+                                color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
+                                child: SizedBox(
+                                  height: 209,
+                                  width: double.infinity,
+                                  child: (currentBusiness?.coverImages.isNotEmpty ?? false)
+                                      ? ImageSliderFade(
+                                          imageList: currentBusiness!.coverImageUrls
+                                              .map(
+                                                (e) => CachedNetworkImage(
+                                                  imageUrl: e,
+                                                  height: 209,
+                                                  width: double.infinity,
+                                                  fadeInDuration: Durations.medium2,
+                                                  fit: BoxFit.cover,
+                                                  progressIndicatorBuilder: (context, url, progress) =>
+                                                      const LoadingWidgetFoodlyIso().paddingAll(24),
+                                                ),
+                                              )
+                                              .toList(),
+                                        )
+                                      : const Asset(
+                                          FoodlyAssets.newBusinessPlaceholder,
+                                          height: 209,
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
                               ),
                             ),
                           ),

@@ -83,13 +83,13 @@ class MyReservationsPage extends StatelessWidget {
 class _StatusFilterDropdown extends StatelessWidget {
   const _StatusFilterDropdown();
 
-  static const _items = <(String, ReservationStatus?)>[
-    ('All', null),
-    ('Pending', ReservationStatus.pending),
-    ('Confirmed', ReservationStatus.confirmed),
-    ('Completed', ReservationStatus.completed),
-    ('Cancelled', ReservationStatus.cancelled),
-  ];
+  static List<(String, ReservationStatus?)> get _items => [
+        (S.current.all, null),
+        (S.current.pending, ReservationStatus.pending),
+        (S.current.confirmed, ReservationStatus.confirmed),
+        (S.current.completed, ReservationStatus.completed),
+        (S.current.cancelled, ReservationStatus.cancelled),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -168,13 +168,13 @@ class _ReservationsList extends StatelessWidget {
           loading: (_) => const ReservationsShimmer(),
           orElse: () {
             if (vm.reservations.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Bootstrap.calendar2_event, size: 64, color: FoodlyThemes.primaryFoodly),
-                    SizedBox(height: 12),
-                    Text('No reservations yet.', style: FoodlyTextStyles.label),
+                    const Icon(Bootstrap.calendar2_event, size: 64, color: FoodlyThemes.primaryFoodly),
+                    const SizedBox(height: 12),
+                    Text(S.current.noReservationsYet, style: FoodlyTextStyles.label),
                   ],
                 ),
               );
@@ -221,10 +221,10 @@ class _ReservationsList extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancel Reservation'),
-        content: const Text('Are you sure you want to cancel this reservation?'),
+        title: Text(S.current.cancelReservation),
+        content: Text(S.current.areYouSureCancelReservation),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('No')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
           TextButton(
             onPressed: () async {
               Navigator.pop(ctx);
@@ -232,11 +232,11 @@ class _ReservationsList extends StatelessWidget {
               if (context.mounted) {
                 FoodlySnackbars.successGeneric(
                   context,
-                  success ? 'Reservation cancelled.' : 'Failed to cancel reservation.',
+                  success ? S.current.reservationCancelled : S.current.failedToCancelReservation,
                 );
               }
             },
-            child: Text('Yes, cancel', style: TextStyle(color: Colors.red.shade700)),
+            child: Text(S.current.yesCancel, style: TextStyle(color: Colors.red.shade700)),
           ),
         ],
       ),

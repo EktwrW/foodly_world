@@ -285,9 +285,9 @@ class _NewReleasesCardContent extends StatelessWidget {
                                 ).paddingAll(3),
                               ).paddingOnly(left: 4),
                               const Spacer(),
-                              const Text.rich(
+                              Text.rich(
                                 TextSpan(
-                                  text: '+ info',
+                                  text: S.current.moreInfo,
                                   style: FoodlyTextStyles.cardTextButtonBlue,
                                 ),
                               ).paddingOnly(right: 10),

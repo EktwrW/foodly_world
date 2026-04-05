@@ -70,10 +70,12 @@ class ReservationRepo {
     int? page,
     int? perPage,
     String? status,
+    String? date,
   }) async {
     try {
       return ApiResult.success(
-        await _reservationClient.getBusinessReservations(businessUuid, page: page, perPage: perPage, status: status),
+        await _reservationClient.getBusinessReservations(businessUuid,
+            page: page, perPage: perPage, status: status, date: date),
       );
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

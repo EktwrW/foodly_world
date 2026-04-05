@@ -156,7 +156,7 @@ class ReviewCard extends StatelessWidget {
                             Text(review.createdAt?.timeAgo ?? '',
                                     style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
                                 .paddingOnly(top: 3),
-                            Text('Visitado el ${review.businessVisitedAt?.getShortFormat ?? '-'}',
+                            Text(S.current.visitedOn(review.businessVisitedAt?.getShortFormat ?? '-'),
                                 style: const TextStyle(fontSize: 11.5)),
                           ],
                         ).paddingOnly(left: 12, right: 6),

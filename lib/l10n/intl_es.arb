@@ -171,6 +171,8 @@
   },
   "deleteAllCategoryItems": "\n\nEsta acción eliminará permanentemente todos los items de esta categoría.",
   "deleteCategory": "Eliminar categoría",
+  "moveUp": "Subir",
+  "moveDown": "Bajar",
   "delivery": "Delivery",
   "doYouWantToDeleteThisCoverImage": "¿Deseas eliminar esta imagen de portada?",
   "drinks": "Bebidas",
@@ -648,6 +650,7 @@
   "doItLater": "Lo haré más tarde",
   "noReservationsYet": "Aún no hay reservas.",
   "noReservationsFound": "No se encontraron reservas.",
+  "reservationsForToday": "Reservas para hoy",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
   "cancelReservationConfirm": "¿Estás seguro de que quieres cancelar esta reserva?",
@@ -727,5 +730,19 @@
   "combosLabelSetMeals": "Platos Completos",
   "combosLabelPlatters": "Bandejas",
   "combosLabelCustom": "Personalizado",
-  "analyticsComingSoon": "Panel de Analíticas — Próximamente\nConoce el rendimiento real de tu negocio: visitas, platos más pedidos, tendencias de clientes e ingresos. Todo en un solo lugar."
+  "analyticsComingSoon": "Panel de Analíticas — Próximamente\nConoce el rendimiento real de tu negocio: visitas, platos más pedidos, tendencias de clientes e ingresos. Todo en un solo lugar.",
+  "visitedOn": "Visitado el {date}",
+  "@visitedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingAvg": "Calificación Prom:",
+  "moreInfo": "+ info",
+  "sharePromotion": "Compartir Promoción",
+  "areYouSureCancelReservation": "¿Estás seguro de que deseas cancelar esta reservación?",
+  "yesCancel": "Sí, cancelar",
+  "contactAdmin": "Ocurrió un error, por favor contacta al administrador."
 }

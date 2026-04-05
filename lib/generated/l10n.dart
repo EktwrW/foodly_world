@@ -1274,6 +1274,16 @@ class S {
     );
   }
 
+  /// `Move Up`
+  String get moveUp {
+    return Intl.message('Move Up', name: 'moveUp', desc: '', args: []);
+  }
+
+  /// `Move Down`
+  String get moveDown {
+    return Intl.message('Move Down', name: 'moveDown', desc: '', args: []);
+  }
+
   /// `Delivery`
   String get delivery {
     return Intl.message('Delivery', name: 'delivery', desc: '', args: []);
@@ -4574,6 +4584,16 @@ class S {
     );
   }
 
+  /// `Today's Reservations`
+  String get reservationsForToday {
+    return Intl.message(
+      'Today\'s Reservations',
+      name: 'reservationsForToday',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Reservation cancelled.`
   String get reservationCancelled {
     return Intl.message(
@@ -5084,6 +5104,61 @@ class S {
     return Intl.message(
       'Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned.',
       name: 'analyticsComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Visited on {date}`
+  String visitedOn(String date) {
+    return Intl.message(
+      'Visited on $date',
+      name: 'visitedOn',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Rating Avg:`
+  String get ratingAvg {
+    return Intl.message('Rating Avg:', name: 'ratingAvg', desc: '', args: []);
+  }
+
+  /// `+ info`
+  String get moreInfo {
+    return Intl.message('+ info', name: 'moreInfo', desc: '', args: []);
+  }
+
+  /// `Share Promotion`
+  String get sharePromotion {
+    return Intl.message(
+      'Share Promotion',
+      name: 'sharePromotion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to cancel this reservation?`
+  String get areYouSureCancelReservation {
+    return Intl.message(
+      'Are you sure you want to cancel this reservation?',
+      name: 'areYouSureCancelReservation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes, cancel`
+  String get yesCancel {
+    return Intl.message('Yes, cancel', name: 'yesCancel', desc: '', args: []);
+  }
+
+  /// `An error occurred, please contact admin.`
+  String get contactAdmin {
+    return Intl.message(
+      'An error occurred, please contact admin.',
+      name: 'contactAdmin',
       desc: '',
       args: [],
     );

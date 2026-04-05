@@ -87,7 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m26(businessName, appName, menuUrl) =>
       "🍽️ Échale un vistazo al menú de ${businessName} en 🌟 ${appName}: \n${menuUrl}";
 
-  static String m27(businessName) => "Escribe una reseña para ${businessName}";
+  static String m27(date) => "Visitado el ${date}";
+
+  static String m28(businessName) => "Escribe una reseña para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -192,6 +194,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "y gestionar contenido, promociones y más",
     ),
     "arabic": MessageLookupByLibrary.simpleMessage("Árabe"),
+    "areYouSureCancelReservation": MessageLookupByLibrary.simpleMessage(
+      "¿Estás seguro de que deseas cancelar esta reservación?",
+    ),
     "argentinian": MessageLookupByLibrary.simpleMessage("Argentina"),
     "asian": MessageLookupByLibrary.simpleMessage("Asiática"),
     "askRecommendationsByTextSmart": MessageLookupByLibrary.simpleMessage(
@@ -335,6 +340,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmed": MessageLookupByLibrary.simpleMessage("Confirmada"),
     "connectionError": MessageLookupByLibrary.simpleMessage(
       "Error de conexión. Verifica tu internet e intenta de nuevo.",
+    ),
+    "contactAdmin": MessageLookupByLibrary.simpleMessage(
+      "Ocurrió un error, por favor contacta al administrador.",
     ),
     "contactAttachImage": MessageLookupByLibrary.simpleMessage(
       "Adjuntar imagen (opcional, máx. 3 MB)",
@@ -708,6 +716,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "mockTextNewReleasesCard": MessageLookupByLibrary.simpleMessage(
       "La red Ramalha a través de la ciudad de Covilhã sigue creciendo. Después de ampliar el año pasado a la ciudad de Fundão, esta vez la panadería/pastelería abrió su segundo espacio en Covilhã Shopping, en espacio interior en su zona frontal, en planta 0 y con una amplia explanada.",
     ),
+    "moreInfo": MessageLookupByLibrary.simpleMessage("+ info"),
+    "moveDown": MessageLookupByLibrary.simpleMessage("Bajar"),
+    "moveUp": MessageLookupByLibrary.simpleMessage("Subir"),
     "multilanguage": MessageLookupByLibrary.simpleMessage("Multilingüe"),
     "mustContainAtLeast3Characters": MessageLookupByLibrary.simpleMessage(
       "Debe contener al menos 3 caracteres",
@@ -904,6 +915,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "rateYourExperience": MessageLookupByLibrary.simpleMessage(
       "Califica tu experiencia:",
     ),
+    "ratingAvg": MessageLookupByLibrary.simpleMessage("Calificación Prom:"),
     "readyToListen": MessageLookupByLibrary.simpleMessage(
       "Listo para escuchar",
     ),
@@ -967,6 +979,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "¡Solicitud de reserva enviada!",
     ),
     "reservations": MessageLookupByLibrary.simpleMessage("Reservaciones"),
+    "reservationsForToday": MessageLookupByLibrary.simpleMessage(
+      "Reservas para hoy",
+    ),
     "reserveTableAt": m24,
     "resilience": MessageLookupByLibrary.simpleMessage("Resilience"),
     "resultsFor": MessageLookupByLibrary.simpleMessage("Resultados para"),
@@ -1055,6 +1070,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Compartir para Android",
     ),
     "shareOnIOS": MessageLookupByLibrary.simpleMessage("Compartir para iOS"),
+    "sharePromotion": MessageLookupByLibrary.simpleMessage(
+      "Compartir Promoción",
+    ),
     "signInWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Iniciar sesión con Google",
     ),
@@ -1245,6 +1263,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página del negocio",
     ),
+    "visitedOn": m27,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1294,10 +1313,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Cuándo nos visitaste?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m27,
+    "writeReviewFor": m28,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escribe tu reseña aquí...",
     ),
+    "yesCancel": MessageLookupByLibrary.simpleMessage("Sí, cancelar"),
     "zipCode": MessageLookupByLibrary.simpleMessage("Código postal"),
     "zipCodeNotAvailable": MessageLookupByLibrary.simpleMessage(
       "Este codigo esta fuera de nuestra area actual de cobertura",

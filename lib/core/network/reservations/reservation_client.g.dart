@@ -181,12 +181,14 @@ class _ReservationClient implements ReservationClient {
     int? page,
     int? perPage,
     String? status,
+    String? date,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'per_page': perPage,
       r'status': status,
+      r'date': date,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

@@ -72,14 +72,18 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: FoodlyThemes.primaryFoodly.withValues(alpha: .093)),
-      clipBehavior: Clip.hardEdge,
-      child:
-          (item.referencePhotos?.isEmpty ?? true) && (item.imagePaths.isEmpty) ? _buildPlaceholder : _buildImageWidget,
+    final hasPhoto = (item.referencePhotos?.isNotEmpty ?? false) || item.imagePaths.isNotEmpty;
+
+    return GestureDetector(
+      onTap: hasPhoto && _imageSource.isNotEmpty ? () => ImageViewer.open(context, [_imageSource]) : null,
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), color: FoodlyThemes.primaryFoodly.withValues(alpha: .093)),
+        clipBehavior: Clip.hardEdge,
+        child: !hasPhoto ? _buildPlaceholder : _buildImageWidget,
+      ),
     ).paddingOnly(top: 10, left: 10);
   }
 }

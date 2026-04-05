@@ -171,6 +171,8 @@
   },
   "deleteAllCategoryItems": "\n\nEsta ação eliminará permanentemente todos os itens desta categoria.",
   "deleteCategory": "Eliminar categoria",
+  "moveUp": "Subir",
+  "moveDown": "Descer",
   "delivery": "Entrega ao Domicílio",
   "doYouWantToDeleteThisCoverImage": "Deseja eliminar esta imagem de capa?",
   "drinks": "Bebidas",
@@ -648,6 +650,7 @@
   "doItLater": "Vou fazer isto mais tarde",
   "noReservationsYet": "Ainda não há reservas.",
   "noReservationsFound": "Nenhuma reserva encontrada.",
+  "reservationsForToday": "Reservas para hoje",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
   "cancelReservationConfirm": "Tem a certeza de que deseja cancelar esta reserva?",
@@ -727,5 +730,19 @@
   "combosLabelSetMeals": "Pratos Completos",
   "combosLabelPlatters": "Travessas",
   "combosLabelCustom": "Personalizado",
-  "analyticsComingSoon": "Painel de Análises — Em Breve\nDescubra o desempenho real do seu negócio: visitas, pratos mais pedidos, tendências de clientes e receita. Tudo num só lugar."
+  "analyticsComingSoon": "Painel de Análises — Em Breve\nDescubra o desempenho real do seu negócio: visitas, pratos mais pedidos, tendências de clientes e receita. Tudo num só lugar.",
+  "visitedOn": "Visitado em {date}",
+  "@visitedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingAvg": "Avaliação Média:",
+  "moreInfo": "+ info",
+  "sharePromotion": "Partilhar Promoção",
+  "areYouSureCancelReservation": "Tem a certeza de que deseja cancelar esta reserva?",
+  "yesCancel": "Sim, cancelar",
+  "contactAdmin": "Ocorreu um erro, por favor contacte o administrador."
 }

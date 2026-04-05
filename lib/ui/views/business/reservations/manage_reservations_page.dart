@@ -13,8 +13,9 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class ManageReservationsPage extends StatelessWidget {
   final String businessUuid;
+  final String? initialFilter;
 
-  const ManageReservationsPage({super.key, required this.businessUuid});
+  const ManageReservationsPage({super.key, required this.businessUuid, this.initialFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class ManageReservationsPage extends StatelessWidget {
         reservationRepo: di(),
         logger: di(),
         businessUuid: businessUuid,
+        initialFilter: initialFilter,
       ),
       child: PopScope(
         canPop: false,
@@ -77,21 +79,26 @@ class ManageReservationsPage extends StatelessWidget {
 class _StatusFilterDropdown extends StatelessWidget {
   const _StatusFilterDropdown();
 
-  static final _items = <(String, ReservationStatus?)>[
-    (S.current.all, null),
-    (S.current.pending, ReservationStatus.pending),
-    (S.current.confirmed, ReservationStatus.confirmed),
-    (S.current.completed, ReservationStatus.completed),
-    (S.current.cancelled, ReservationStatus.cancelled),
-    (S.current.noShow, ReservationStatus.noShow),
-  ];
+  /// Filter items: (label, filterKey).
+  /// `null` = all, `'today'` = today's reservations,
+  /// otherwise a [ReservationStatus] name.
+  static List<(String, String?)> get _items => [
+        (S.current.all, null),
+        (S.current.reservationsForToday, 'today'),
+        (S.current.pending, ReservationStatus.pending.name),
+        (S.current.confirmed, ReservationStatus.confirmed.name),
+        (S.current.completed, ReservationStatus.completed.name),
+        (S.current.cancelled, ReservationStatus.cancelled.name),
+        (S.current.noShow, ReservationStatus.noShow.name),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ManageReservationsCubit, ManageReservationsState, ReservationStatus?>(
-      selector: (state) => state.vm.statusFilter,
-      builder: (context, activeFilter) {
+    return BlocBuilder<ManageReservationsCubit, ManageReservationsState>(
+      builder: (context, state) {
         final cubit = context.read<ManageReservationsCubit>();
+        final activeFilter = cubit.activeFilterKey;
+        final items = _items;
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -102,14 +109,14 @@ class _StatusFilterDropdown extends StatelessWidget {
               color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.05),
             ),
             child: DropdownButtonHideUnderline(
-              child: DropdownButton<ReservationStatus?>(
+              child: DropdownButton<String?>(
                 value: activeFilter,
                 isExpanded: true,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 borderRadius: BorderRadius.circular(12),
                 icon: const Icon(Bootstrap.chevron_down, size: 14, color: FoodlyThemes.primaryFoodly),
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
-                selectedItemBuilder: (context) => _items
+                selectedItemBuilder: (context) => items
                     .map((item) => Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -122,8 +129,8 @@ class _StatusFilterDropdown extends StatelessWidget {
                           ),
                         ))
                     .toList(),
-                items: _items
-                    .map((item) => DropdownMenuItem<ReservationStatus?>(
+                items: items
+                    .map((item) => DropdownMenuItem<String?>(
                           value: item.$2,
                           child: Text(
                             item.$1,
@@ -134,7 +141,7 @@ class _StatusFilterDropdown extends StatelessWidget {
                           ),
                         ))
                     .toList(),
-                onChanged: (value) => cubit.setStatusFilter(value),
+                onChanged: (value) => cubit.setFilter(value),
               ),
             ),
           ),

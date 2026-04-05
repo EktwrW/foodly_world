@@ -23,6 +23,7 @@ import 'package:foodly_world/data_transfer_objects/business/business_update_dto.
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/menu/category_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
@@ -209,6 +210,30 @@ class BusinessRepo {
     }
   }
 
+  Future<ApiResult<void>> reorderCategories(MenuCategory menuCategory, List<CategoryDM> orderedCategories) async {
+    try {
+      final body = ReorderCategoriesDTO(
+        categories: orderedCategories
+            .asMap()
+            .entries
+            .map((e) => CategoryReorderDTO(uuid: e.value.uuid, sortOrder: e.key))
+            .toList(),
+      );
+
+      switch (menuCategory) {
+        case MenuCategory.food:
+          await _businessClient.reorderFoodCategories(body);
+        case MenuCategory.drinks:
+          await _businessClient.reorderDrinkCategories(body);
+        case MenuCategory.combos:
+          break; // Combos don't have subcategories
+      }
+      return const ApiResult.success(null);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<ItemDM>> createItem(
     ItemDM item,
     MenuCategory menuCategory, {
@@ -389,11 +414,7 @@ class BusinessRepo {
   Future<ApiResult<void>> reorderItems(MenuCategory menuCategory, List<ItemDM> orderedItems) async {
     try {
       final body = ReorderItemsDTO(
-        items: orderedItems
-            .asMap()
-            .entries
-            .map((e) => ItemReorderDTO(uuid: e.value.uuid, sortOrder: e.key))
-            .toList(),
+        items: orderedItems.asMap().entries.map((e) => ItemReorderDTO(uuid: e.value.uuid, sortOrder: e.key)).toList(),
       );
 
       switch (menuCategory) {

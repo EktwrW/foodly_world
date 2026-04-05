@@ -5,6 +5,8 @@ class SubCategoryWdg extends StatelessWidget {
   final MenuCategory menuCategory;
   final ManageMenuCubit cubit;
   final bool isLastSubCategory;
+  final int categoryIndex;
+  final int totalCategories;
 
   const SubCategoryWdg({
     super.key,
@@ -12,6 +14,8 @@ class SubCategoryWdg extends StatelessWidget {
     required this.menuCategory,
     required this.cubit,
     required this.isLastSubCategory,
+    required this.categoryIndex,
+    required this.totalCategories,
   });
 
   Future<void> _handleSaveCategory(String text) async {
@@ -87,6 +91,27 @@ class SubCategoryWdg extends StatelessWidget {
                   iconData: Bootstrap.trash3,
                   isSubCategory: true,
                 ),
+              if (menuCategory != MenuCategory.combos && totalCategories > 1) ...[
+                const SizedBox(width: 6),
+                _CategoryEditButtons(
+                  key: const Key('move-category-up'),
+                  editMode: true,
+                  canAdd: vm.enableEditCategoryBtns && categoryIndex > 0,
+                  onPressed: () => cubit.moveCategoryByOne(menuCategory, subCategory?.uuid ?? '', -1),
+                  text: S.current.moveUp,
+                  iconData: Bootstrap.arrow_up_circle,
+                  isSubCategory: true,
+                ),
+                _CategoryEditButtons(
+                  key: const Key('move-category-down'),
+                  editMode: true,
+                  canAdd: vm.enableEditCategoryBtns && categoryIndex < totalCategories - 1,
+                  onPressed: () => cubit.moveCategoryByOne(menuCategory, subCategory?.uuid ?? '', 1),
+                  text: S.current.moveDown,
+                  iconData: Bootstrap.arrow_down_circle,
+                  isSubCategory: true,
+                ),
+              ],
             ],
           ).paddingBottom(20)
         else

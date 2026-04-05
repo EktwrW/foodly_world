@@ -431,6 +431,7 @@ class AppRouter {
               key: state.pageKey,
               child: ManageReservationsPage(
                 businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                initialFilter: state.uri.queryParameters['filter'],
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),

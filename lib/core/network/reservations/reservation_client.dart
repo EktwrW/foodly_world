@@ -39,6 +39,7 @@ abstract class ReservationClient {
     @Query('page') int? page,
     @Query('per_page') int? perPage,
     @Query('status') String? status,
+    @Query('date') String? date,
   });
 
   @PATCH('/reservations/confirm/{uuid}')

@@ -408,6 +408,26 @@ class _BusinessClient implements BusinessClient {
   }
 
   @override
+  Future<void> reorderFoodCategories(ReorderCategoriesDTO body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<void>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/business-food-categories/reorder',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
   Future<ItemDM> createFoodItem(FoodItemRegisterDTO body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -671,6 +691,26 @@ class _BusinessClient implements BusinessClient {
           .compose(
             _dio.options,
             '/business-drink-categories/delete/${uuid}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> reorderDrinkCategories(ReorderCategoriesDTO body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<void>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/business-drink-categories/reorder',
             queryParameters: queryParameters,
             data: _data,
           )

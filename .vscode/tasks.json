@@ -162,6 +162,15 @@
     },
     {
       "type": "shell",
+      "command": "sh",
+      "args": ["${workspaceFolder}/.vscode/upload_dsyms.sh"],
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Firebase - Upload iOS dSYMs",
+      "detail": "Sube dSYMs a Firebase Crashlytics para desimbolizar crash reports. Ejecutar después de cualquier build iOS."
+    },
+    {
+      "type": "shell",
       "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
       "args": [
         "patch",

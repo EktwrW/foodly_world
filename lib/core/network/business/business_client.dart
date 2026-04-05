@@ -15,6 +15,7 @@ import 'package:foodly_world/data_transfer_objects/business/business_update_dto.
 import 'package:foodly_world/data_transfer_objects/business_search/business_search_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/menu/category_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/item_reorder_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
@@ -89,6 +90,9 @@ abstract class BusinessClient {
   @DELETE('/business-food-categories/delete/{uuid}')
   Future<void> deleteFoodCategory(@Path('uuid') String uuid);
 
+  @POST('/business-food-categories/reorder')
+  Future<void> reorderFoodCategories(@Body() ReorderCategoriesDTO body);
+
   @POST('/business-food-item/store')
   Future<ItemDM> createFoodItem(@Body() FoodItemRegisterDTO body);
 
@@ -126,6 +130,9 @@ abstract class BusinessClient {
 
   @DELETE('/business-drink-categories/delete/{uuid}')
   Future<void> deleteDrinkCategory(@Path('uuid') String uuid);
+
+  @POST('/business-drink-categories/reorder')
+  Future<void> reorderDrinkCategories(@Body() ReorderCategoriesDTO body);
 
   @POST('/business-drink-item/store')
   Future<ItemDM> createDrinkItem(@Body() DrinkItemRegisterDTO body);

@@ -610,6 +610,8 @@ mixin _$CategoryDM {
   String get name => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sort_order')
+  int get sortOrder => throw _privateConstructorUsedError;
   List<ItemDM> get items => throw _privateConstructorUsedError;
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool get editingName => throw _privateConstructorUsedError;
@@ -634,6 +636,7 @@ abstract class $CategoryDMCopyWith<$Res> {
       {String name,
       String uuid,
       int? id,
+      @JsonKey(name: 'sort_order') int sortOrder,
       List<ItemDM> items,
       @JsonKey(includeFromJson: false, includeToJson: false) bool editingName});
 }
@@ -656,6 +659,7 @@ class _$CategoryDMCopyWithImpl<$Res, $Val extends CategoryDM>
     Object? name = null,
     Object? uuid = null,
     Object? id = freezed,
+    Object? sortOrder = null,
     Object? items = null,
     Object? editingName = null,
   }) {
@@ -672,6 +676,10 @@ class _$CategoryDMCopyWithImpl<$Res, $Val extends CategoryDM>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -696,6 +704,7 @@ abstract class _$$CategoryDMImplCopyWith<$Res>
       {String name,
       String uuid,
       int? id,
+      @JsonKey(name: 'sort_order') int sortOrder,
       List<ItemDM> items,
       @JsonKey(includeFromJson: false, includeToJson: false) bool editingName});
 }
@@ -716,6 +725,7 @@ class __$$CategoryDMImplCopyWithImpl<$Res>
     Object? name = null,
     Object? uuid = null,
     Object? id = freezed,
+    Object? sortOrder = null,
     Object? items = null,
     Object? editingName = null,
   }) {
@@ -732,6 +742,10 @@ class __$$CategoryDMImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -751,6 +765,7 @@ class _$CategoryDMImpl extends _CategoryDM {
       {required this.name,
       required this.uuid,
       this.id,
+      @JsonKey(name: 'sort_order') this.sortOrder = 0,
       required final List<ItemDM> items,
       @JsonKey(includeFromJson: false, includeToJson: false)
       this.editingName = false})
@@ -766,6 +781,9 @@ class _$CategoryDMImpl extends _CategoryDM {
   final String uuid;
   @override
   final int? id;
+  @override
+  @JsonKey(name: 'sort_order')
+  final int sortOrder;
   final List<ItemDM> _items;
   @override
   List<ItemDM> get items {
@@ -780,7 +798,7 @@ class _$CategoryDMImpl extends _CategoryDM {
 
   @override
   String toString() {
-    return 'CategoryDM(name: $name, uuid: $uuid, id: $id, items: $items, editingName: $editingName)';
+    return 'CategoryDM(name: $name, uuid: $uuid, id: $id, sortOrder: $sortOrder, items: $items, editingName: $editingName)';
   }
 
   @override
@@ -791,6 +809,8 @@ class _$CategoryDMImpl extends _CategoryDM {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.sortOrder, sortOrder) ||
+                other.sortOrder == sortOrder) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.editingName, editingName) ||
                 other.editingName == editingName));
@@ -798,7 +818,7 @@ class _$CategoryDMImpl extends _CategoryDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, uuid, id,
+  int get hashCode => Object.hash(runtimeType, name, uuid, id, sortOrder,
       const DeepCollectionEquality().hash(_items), editingName);
 
   /// Create a copy of CategoryDM
@@ -822,6 +842,7 @@ abstract class _CategoryDM extends CategoryDM {
       {required final String name,
       required final String uuid,
       final int? id,
+      @JsonKey(name: 'sort_order') final int sortOrder,
       required final List<ItemDM> items,
       @JsonKey(includeFromJson: false, includeToJson: false)
       final bool editingName}) = _$CategoryDMImpl;
@@ -836,6 +857,9 @@ abstract class _CategoryDM extends CategoryDM {
   String get uuid;
   @override
   int? get id;
+  @override
+  @JsonKey(name: 'sort_order')
+  int get sortOrder;
   @override
   List<ItemDM> get items;
   @override

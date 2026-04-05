@@ -47,6 +47,7 @@ class CategoryDM with _$CategoryDM {
     required String name,
     required String uuid,
     int? id,
+    @JsonKey(name: 'sort_order') @Default(0) int sortOrder,
     required List<ItemDM> items,
     @JsonKey(includeFromJson: false, includeToJson: false) @Default(false) bool editingName,
   }) = _CategoryDM;

@@ -114,6 +114,7 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
                     context.goNamed(
                       AppRoutes.manageReservations.name,
                       pathParameters: {AppRoutes.routeIdParam: firstBusiness.uuid},
+                      queryParameters: {'filter': 'pending'},
                       extra: firstBusiness,
                     );
                   },

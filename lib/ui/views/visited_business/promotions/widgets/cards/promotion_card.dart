@@ -188,7 +188,7 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
             CustomRoundedNeumorphicButton(
               onPressed: () => SharePromotionHelper.share(widget.promo),
               shape: ui.NeumorphicShape.concave,
-              tooltip: 'Share Promotion',
+              tooltip: S.current.sharePromotion,
               iconSize: 24,
               diameter: 38,
               depth: 4,

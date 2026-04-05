@@ -171,6 +171,8 @@
   },
   "deleteAllCategoryItems": "\n\nThis action will permanently delete all items in this category.",
   "deleteCategory": "Delete Category",
+  "moveUp": "Move Up",
+  "moveDown": "Move Down",
   "delivery": "Delivery",
   "doYouWantToDeleteThisCoverImage": "Do you want to delete this cover image?",
   "drinks": "Drinks",
@@ -648,6 +650,7 @@
   "doItLater": "I'll do it later",
   "noReservationsYet": "No reservations yet.",
   "noReservationsFound": "No reservations found.",
+  "reservationsForToday": "Today's Reservations",
   "reservationCancelled": "Reservation cancelled.",
   "cancelReservation": "Cancel Reservation",
   "cancelReservationConfirm": "Are you sure you want to cancel this reservation?",
@@ -727,5 +730,19 @@
   "combosLabelSetMeals": "Set Meals",
   "combosLabelPlatters": "Platters",
   "combosLabelCustom": "Custom",
-  "analyticsComingSoon": "Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned."
+  "analyticsComingSoon": "Analytics Dashboard — Coming Soon\nGet deep insights into your traffic, top dishes, customer trends, and revenue — all in one place. Stay tuned.",
+  "visitedOn": "Visited on {date}",
+  "@visitedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingAvg": "Rating Avg:",
+  "moreInfo": "+ info",
+  "sharePromotion": "Share Promotion",
+  "areYouSureCancelReservation": "Are you sure you want to cancel this reservation?",
+  "yesCancel": "Yes, cancel",
+  "contactAdmin": "An error occurred, please contact admin."
 }

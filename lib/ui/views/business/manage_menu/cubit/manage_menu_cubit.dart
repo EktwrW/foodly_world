@@ -695,6 +695,65 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     });
   }
 
+  void reorderCategories(MenuCategory menuCategory, int oldIndex, int newIndex) {
+    // ReorderableListView fires newIndex relative to the original list length,
+    // but after the item at oldIndex has been "removed". Adjust accordingly.
+    if (newIndex > oldIndex) newIndex -= 1;
+
+    // Snapshot the current state for rollback on failure.
+    final previousCategories = List<CategoryDM>.from(_vm.editMenuDM?.subCategories[menuCategory] ?? []);
+
+    final reordered = List<CategoryDM>.from(previousCategories);
+    final cat = reordered.removeAt(oldIndex);
+    reordered.insert(newIndex, cat);
+
+    // Stamp each category with its new 0-based sort_order.
+    final stamped = reordered.asMap().entries.map((e) => e.value.copyWith(sortOrder: e.key)).toList();
+
+    // Optimistic update for both editMenuDM and menuDM
+    _updateFoodOrDrinkCategory(stamped, menuCategory);
+    if (menuCategory.isFood) {
+      _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(foodCategories: stamped));
+    } else {
+      _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(drinkCategories: stamped));
+    }
+
+    emit(_Loaded(_vm));
+
+    // Persist to backend asynchronously — revert on failure.
+    _businessRepo.reorderCategories(menuCategory, stamped).then((result) {
+      result.when(
+        success: (_) {},
+        failure: (error) {
+          di<Logger>().e('Error reordering categories: ${error.errorMsg}');
+          // Rollback to the previous order
+          _updateFoodOrDrinkCategory(previousCategories, menuCategory);
+          if (menuCategory.isFood) {
+            _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(foodCategories: previousCategories));
+          } else {
+            _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(drinkCategories: previousCategories));
+          }
+          emit(_Error(error.errorMsg, _vm));
+        },
+      );
+    });
+  }
+
+  /// Moves a subcategory up or down one position in the list.
+  /// [direction] should be -1 (move up) or +1 (move down).
+  void moveCategoryByOne(MenuCategory menuCategory, String categoryUuid, int direction) {
+    final categories = _vm.editMenuDM?.subCategories[menuCategory] ?? [];
+    final currentIndex = categories.indexWhere((c) => c.uuid == categoryUuid);
+    if (currentIndex == -1) return;
+
+    final targetIndex = currentIndex + direction;
+    if (targetIndex < 0 || targetIndex >= categories.length) return;
+
+    // Use the same reorder logic (adjust for ReorderableListView convention)
+    final adjustedNew = direction > 0 ? targetIndex + 1 : targetIndex;
+    reorderCategories(menuCategory, currentIndex, adjustedNew);
+  }
+
   Future<void> deleteItemPhotos(ItemDM item, MenuCategory menuCategory, String subCategoryUuid) async {
     _vm = _vm.copyWith(avoidFocus: true);
     emit(_Loading(_vm));

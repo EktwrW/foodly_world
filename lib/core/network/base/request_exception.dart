@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
+import 'package:foodly_world/generated/l10n.dart';
 
 class AppRequestException implements Exception {
   final Object? error;
@@ -18,7 +19,7 @@ class AppRequestException implements Exception {
       return '${dio.response?.statusMessage} error code: ${dio.response?.statusCode}';
     }
 
-    return '${di<BaseConfig>().isDev ? error : 'An error occurred, please contact admin.'}';
+    return '${di<BaseConfig>().isDev ? error : S.current.contactAdmin}';
   }
 
   @override

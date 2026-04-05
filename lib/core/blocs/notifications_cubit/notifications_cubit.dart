@@ -23,6 +23,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   final Logger _logger;
   Timer? _pollingTimer;
 
+  /// IDs of reservation notifications for which we have already shown (or
+  /// attempted to show) a proactive dialog in this session.  Prevents the
+  /// same notification from re-triggering the dialog on subsequent polls.
+  final Set<int> _dialogShownForIds = {};
+
+  /// Holds the most recent unread reservation notification that has not yet
+  /// been shown in a proactive dialog.  The global BlocListener in
+  /// FoodlyWrapper reads this, shows the dialog, then calls
+  /// [clearPendingReservationNotification] to consume it.
+  NotificationDM? _pendingReservationNotification;
+
+  /// Getter for the pending reservation notification (read by UI).
+  NotificationDM? get pendingReservationNotification =>
+      _pendingReservationNotification;
+
+  /// Called by the UI after it has shown the proactive dialog.
+  void clearPendingReservationNotification() {
+    _pendingReservationNotification = null;
+  }
+
   NotificationsCubit({
     required NotificationsRepo notificationsRepo,
     required AuthSessionService authService,
@@ -77,6 +97,36 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         },
       );
       if (toCache != null) {
+        // Detect unread reservation notifications we haven't shown a dialog for yet.
+        // Works on first load AND subsequent polling cycles.
+        final reservationNotifs = toCache!.where((n) => n.isReservationNotification).toList();
+        _logger.i(
+          'NotificationsCubit: ${toCache!.length} notifications loaded, '
+          '${reservationNotifs.length} are reservation-type, '
+          'dialogShownForIds=${_dialogShownForIds.length}',
+        );
+        for (final n in reservationNotifs) {
+          _logger.i(
+            '  → id=${n.id} subType=${n.subType} isRead=${n.isRead} '
+            'alreadyShown=${_dialogShownForIds.contains(n.id)}',
+          );
+        }
+
+        for (final n in toCache!) {
+          if (n.isReservationNotification &&
+              !n.isRead &&
+              !_dialogShownForIds.contains(n.id)) {
+            _pendingReservationNotification = n;
+            _dialogShownForIds.add(n.id);
+            _logger.i('NotificationsCubit: SET pendingReservationNotification id=${n.id}');
+            break; // show one at a time
+          }
+        }
+
+        if (_pendingReservationNotification == null) {
+          _logger.i('NotificationsCubit: No pending reservation notification to show');
+        }
+
         await _precacheNotificationImages(toCache!);
         emit(NotificationsState.loaded(_vm));
       }
@@ -315,6 +365,8 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   /// Limpia el estado (logout)
   void clear() {
     _stopPolling();
+    _dialogShownForIds.clear();
+    _pendingReservationNotification = null;
     _vm = const NotificationsVM();
     emit(const NotificationsState.initial(NotificationsVM()));
     _logger.i('NotificationsCubit: State cleared');

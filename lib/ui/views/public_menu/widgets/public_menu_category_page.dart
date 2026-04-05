@@ -6,6 +6,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart' hide CategoryDM;
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -408,30 +409,33 @@ class _PublicMenuItemPictureWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 80,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: FoodlyThemes.primaryFoodly.withValues(alpha: .093),
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: photoUrl.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ui.NeumorphicIcon(
-                  Icons.dining_outlined,
-                  style: ui.NeumorphicStyle(
-                    shape: ui.NeumorphicShape.concave,
-                    color: FoodlyThemes.accentColor,
-                    depth: 2,
+    return GestureDetector(
+      onTap: photoUrl.isNotEmpty ? () => ImageViewer.open(context, [photoUrl]) : null,
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: FoodlyThemes.primaryFoodly.withValues(alpha: .093),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: photoUrl.isEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ui.NeumorphicIcon(
+                    Icons.dining_outlined,
+                    style: ui.NeumorphicStyle(
+                      shape: ui.NeumorphicShape.concave,
+                      color: FoodlyThemes.accentColor,
+                      depth: 2,
+                    ),
+                    size: 50,
                   ),
-                  size: 50,
-                ),
-              ],
-            )
-          : _imageWidget,
+                ],
+              )
+            : _imageWidget,
+      ),
     ).paddingOnly(top: 10, left: 10);
   }
 }

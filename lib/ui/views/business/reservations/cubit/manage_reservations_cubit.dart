@@ -13,19 +13,39 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
   final Logger _logger;
   ManageReservationsVM _vm;
 
+  /// Unified filter key used by the dropdown.
+  /// `null` = all, `'today'` = today's reservations,
+  /// otherwise matches a [ReservationStatus] name (e.g. `'pending'`).
+  String? _activeFilterKey;
+
+  String? get activeFilterKey => _activeFilterKey;
+
   ManageReservationsCubit({
     required ReservationRepo reservationRepo,
     required Logger logger,
     required String businessUuid,
+    String? initialFilter,
   })  : _reservationRepo = reservationRepo,
         _logger = logger,
-        _vm = ManageReservationsVM(businessUuid: businessUuid),
+        _activeFilterKey = initialFilter,
+        _vm = ManageReservationsVM(
+          businessUuid: businessUuid,
+          statusFilter: initialFilter != null && initialFilter != 'today'
+              ? ReservationStatus.values.where((s) => s.name == initialFilter).firstOrNull
+              : null,
+        ),
         super(ManageReservationsState.initial(ManageReservationsVM(businessUuid: businessUuid))) {
     fetchReservations();
   }
 
-  void setStatusFilter(ReservationStatus? status) {
-    _vm = _vm.copyWith(statusFilter: status);
+  void setFilter(String? filterKey) {
+    _activeFilterKey = filterKey;
+    if (filterKey == null || filterKey == 'today') {
+      _vm = _vm.copyWith(statusFilter: null);
+    } else {
+      final status = ReservationStatus.values.where((s) => s.name == filterKey).firstOrNull;
+      _vm = _vm.copyWith(statusFilter: status);
+    }
     fetchReservations();
   }
 
@@ -37,6 +57,7 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
     final result = await _reservationRepo.getBusinessReservations(
       _vm.businessUuid!,
       status: _vm.statusFilter?.name,
+      date: _activeFilterKey == 'today' ? 'today' : null,
     );
 
     result.when(
@@ -66,6 +87,7 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
     final result = await _reservationRepo.getBusinessReservations(
       _vm.businessUuid!,
       status: _vm.statusFilter?.name,
+      date: _activeFilterKey == 'today' ? 'today' : null,
       page: nextPage,
     );
 

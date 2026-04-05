@@ -16,7 +16,7 @@ class RatingWdg extends StatelessWidget {
             return Column(
               children: [
                 Text.rich(TextSpan(children: [
-                  const TextSpan(text: 'Rating Avg:', style: FoodlyTextStyles.caption),
+                  TextSpan(text: S.current.ratingAvg, style: FoodlyTextStyles.caption),
                   TextSpan(text: ' $rating', style: FoodlyTextStyles.captionPurpleBold),
                 ])),
                 RatingBar.builder(

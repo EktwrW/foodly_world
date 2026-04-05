@@ -73,6 +73,8 @@ class MenuItemPictureWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasPhoto = (item.referencePhotos?.isNotEmpty ?? false) || item.imagePaths.isNotEmpty;
+
     return InkWell(
       onTap: item.isEditing
           ? () async {
@@ -93,7 +95,9 @@ class MenuItemPictureWdg extends StatelessWidget {
                     : null);
               }
             }
-          : null,
+          : hasPhoto && _imageSource.isNotEmpty
+              ? () => ImageViewer.open(context, [_imageSource])
+              : null,
       child: Container(
         width: 80,
         height: 80,
