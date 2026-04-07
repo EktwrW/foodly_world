@@ -71,7 +71,7 @@
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>We need access to your gallery so you can select images</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
-		<string>This application needs the speech recognition permission</string>
+		<string>Foodly uses speech recognition to convert your voice into text for searching restaurants and menu items</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UIBackgroundModes</key>

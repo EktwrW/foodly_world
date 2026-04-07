@@ -41,53 +41,53 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDzQazJMQpIBXLz3tJYfBhAxMKnYBtP58U',
-    appId: '1:275754925527:web:caccc645a30be3afa71f92',
-    messagingSenderId: '275754925527',
-    projectId: 'foodly-solutions',
-    authDomain: 'foodly-solutions.firebaseapp.com',
-    storageBucket: 'foodly-solutions.firebasestorage.app',
-    measurementId: 'G-7SF6YSF7PG',
+    apiKey: 'AIzaSyAo6O6EOWhYoyiVgO6TmJvki09U4cQBDc8',
+    appId: '1:951890938827:web:47dc682e6476d1ed8f044e',
+    messagingSenderId: '951890938827',
+    projectId: 'apps-369',
+    authDomain: 'apps-369.firebaseapp.com',
+    storageBucket: 'apps-369.firebasestorage.app',
+    measurementId: 'G-HK9C5PPPFK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDZcjWJNl6EWgWLLAnoB-5ma653ysEJ8gg',
-    appId: '1:275754925527:android:4e4a035d1c752c7ba71f92',
-    messagingSenderId: '275754925527',
-    projectId: 'foodly-solutions',
-    storageBucket: 'foodly-solutions.firebasestorage.app',
+    apiKey: 'AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4',
+    appId: '1:951890938827:android:8a8a42d77aefe8ee8f044e',
+    messagingSenderId: '951890938827',
+    projectId: 'apps-369',
+    storageBucket: 'apps-369.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDeVxMOCJA25C30pRKEatHq-2HcaIRWgCw',
-    appId: '1:275754925527:ios:bbbd9b4c6e8854e7a71f92',
-    messagingSenderId: '275754925527',
-    projectId: 'foodly-solutions',
-    storageBucket: 'foodly-solutions.firebasestorage.app',
-    androidClientId: '275754925527-b6b5bume1ljmn2e723mvifp26cf73hoh.apps.googleusercontent.com',
-    iosClientId: '275754925527-bm3d1di90qvct31m1ltbvc5nnash0bjg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAjOEscriIGOl3RtyhUjZwfcc2kOdqsbxA',
+    appId: '1:951890938827:ios:49b0cb3813b687208f044e',
+    messagingSenderId: '951890938827',
+    projectId: 'apps-369',
+    storageBucket: 'apps-369.firebasestorage.app',
+    androidClientId: '951890938827-7635tf8epn103l226oo2el998f4i019t.apps.googleusercontent.com',
+    iosClientId: '951890938827-2hgpslnumba6gmm17ainu8flp4q5ctl4.apps.googleusercontent.com',
     iosBundleId: 'com.foodlysolutions.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDeVxMOCJA25C30pRKEatHq-2HcaIRWgCw',
-    appId: '1:275754925527:ios:bbbd9b4c6e8854e7a71f92',
-    messagingSenderId: '275754925527',
-    projectId: 'foodly-solutions',
-    storageBucket: 'foodly-solutions.firebasestorage.app',
-    androidClientId: '275754925527-b6b5bume1ljmn2e723mvifp26cf73hoh.apps.googleusercontent.com',
-    iosClientId: '275754925527-bm3d1di90qvct31m1ltbvc5nnash0bjg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAjOEscriIGOl3RtyhUjZwfcc2kOdqsbxA',
+    appId: '1:951890938827:ios:49b0cb3813b687208f044e',
+    messagingSenderId: '951890938827',
+    projectId: 'apps-369',
+    storageBucket: 'apps-369.firebasestorage.app',
+    androidClientId: '951890938827-7635tf8epn103l226oo2el998f4i019t.apps.googleusercontent.com',
+    iosClientId: '951890938827-2hgpslnumba6gmm17ainu8flp4q5ctl4.apps.googleusercontent.com',
     iosBundleId: 'com.foodlysolutions.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDzQazJMQpIBXLz3tJYfBhAxMKnYBtP58U',
-    appId: '1:275754925527:web:d5b5649ecb76339ba71f92',
-    messagingSenderId: '275754925527',
-    projectId: 'foodly-solutions',
-    authDomain: 'foodly-solutions.firebaseapp.com',
-    storageBucket: 'foodly-solutions.firebasestorage.app',
-    measurementId: 'G-XERW9H3W8H',
+    apiKey: 'AIzaSyAo6O6EOWhYoyiVgO6TmJvki09U4cQBDc8',
+    appId: '1:951890938827:web:1dc08f395d416ed68f044e',
+    messagingSenderId: '951890938827',
+    projectId: 'apps-369',
+    authDomain: 'apps-369.firebaseapp.com',
+    storageBucket: 'apps-369.firebasestorage.app',
+    measurementId: 'G-HKGX3MXJJK',
   );
 
 }

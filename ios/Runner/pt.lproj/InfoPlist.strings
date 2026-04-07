@@ -6,4 +6,4 @@
 "NSCameraUsageDescription" = "Precisamos de acesso à sua câmara para que possa tirar fotos.";
 "NSPhotoLibraryUsageDescription" = "Precisamos de acesso à sua galeria para que possa selecionar imagens.";
 "NSMicrophoneUsageDescription" = "Precisamos de acesso ao seu microfone para que possa pesquisar por voz e gravar vídeos.";
-"NSSpeechRecognitionUsageDescription" = "Esta app precisa de permissão de reconhecimento de voz para pesquisa por voz.";
+"NSSpeechRecognitionUsageDescription" = "O Foodly utiliza o reconhecimento de voz para converter a sua voz em texto ao pesquisar restaurantes e itens do menu.";

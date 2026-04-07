@@ -1,0 +1,117 @@
+# Foodly iOS - Fastlane Lanes
+# Usage:
+#   bundle exec fastlane beta          → Build + upload to TestFlight
+#   bundle exec fastlane beta_upload   → Upload existing IPA to TestFlight (skip build)
+#   bundle exec fastlane release       → Build + submit to App Store Review
+
+default_platform(:ios)
+
+# Dart defines shared across all build lanes
+DART_DEFINES = [
+  "ENV=prod",
+  "DOMAIN=https://api.foodly.solutions",
+  "API_VERSION=/api",
+  "REG_PREFILL=true",
+  "APP_ROOT=/app/",
+  "LOGGER_LEVEL=ALL",
+  'GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=',
+  "GOOGLE_MAPS_API_KEY=#{ENV['GOOGLE_MAPS_API_KEY'] || 'AIzaSyCdFACGaW5-9vVZjnrfYb51MS0Mp3gB5o4'}",
+  "GOOGLE_SIGN_IN_CLIENT_ID=#{ENV['GOOGLE_SIGN_IN_CLIENT_ID'] || '951890938827-saea2rkuh40g4qs64oamlr2ljuu3qqkv.apps.googleusercontent.com'}",
+  "OPENAI_API_KEY=#{ENV['OPENAI_API_KEY']}",
+  "REPLICATE_API_KEY=#{ENV['REPLICATE_API_KEY']}",
+  "ANALYTICS_TOKEN=#{ENV['ANALYTICS_TOKEN']}",
+].freeze
+
+platform :ios do
+
+  desc "Build Flutter IPA and upload to TestFlight"
+  lane :beta do
+    # Step 1: Clean Flutter build
+    Dir.chdir("../..") do
+      sh("flutter", "clean")
+      sh("flutter", "pub", "get")
+    end
+
+    # Step 2: Pod install
+    cocoapods(
+      podfile: "./Podfile",
+      repo_update: true,
+    )
+
+    # Step 3: Build IPA via Flutter
+    dart_define_args = DART_DEFINES.map { |d| "--dart-define=#{d}" }
+    Dir.chdir("../..") do
+      sh("flutter", "build", "ipa", "--release", *dart_define_args)
+    end
+
+    # Step 4: Find the built IPA
+    ipa_path = Dir.glob("../../build/ios/ipa/*.ipa").first
+    UI.user_error!("No IPA found in build/ios/ipa/") unless ipa_path
+    ipa_path = File.expand_path(ipa_path)
+    UI.message("Found IPA: #{ipa_path}")
+
+    # Step 5: Upload to TestFlight
+    upload_to_testflight(
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true,
+      changelog: ENV["CHANGELOG"] || "New beta build for testing",
+    )
+
+    UI.success("✅ Build uploaded to TestFlight successfully!")
+  end
+
+  desc "Upload an existing IPA to TestFlight (skip build)"
+  lane :beta_upload do
+    ipa_path = ENV["IPA_PATH"] || Dir.glob("../../build/ios/ipa/*.ipa").first
+    UI.user_error!("No IPA found. Build first or set IPA_PATH.") unless ipa_path
+    ipa_path = File.expand_path(ipa_path)
+
+    upload_to_testflight(
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true,
+      changelog: ENV["CHANGELOG"] || "New beta build for testing",
+    )
+
+    UI.success("✅ IPA uploaded to TestFlight successfully!")
+  end
+
+  desc "Build and submit to App Store for review"
+  lane :release do
+    # Step 1: Clean Flutter build
+    Dir.chdir("../..") do
+      sh("flutter", "clean")
+      sh("flutter", "pub", "get")
+    end
+
+    # Step 2: Pod install
+    cocoapods(
+      podfile: "./Podfile",
+      repo_update: true,
+    )
+
+    # Step 3: Build IPA via Flutter
+    dart_define_args = DART_DEFINES.map { |d| "--dart-define=#{d}" }
+    Dir.chdir("../..") do
+      sh("flutter", "build", "ipa", "--release", *dart_define_args)
+    end
+
+    # Step 4: Find the built IPA
+    ipa_path = Dir.glob("../../build/ios/ipa/*.ipa").first
+    UI.user_error!("No IPA found in build/ios/ipa/") unless ipa_path
+    ipa_path = File.expand_path(ipa_path)
+
+    # Step 5: Upload to App Store
+    upload_to_app_store(
+      ipa: ipa_path,
+      skip_screenshots: true,
+      skip_metadata: true,
+      submit_for_review: false, # Set to true when ready to auto-submit
+      automatic_release: false,
+      precheck_include_in_app_purchases: false,
+    )
+
+    UI.success("✅ Build uploaded to App Store Connect!")
+    UI.important("⚠️  Remember to submit for review manually in App Store Connect")
+  end
+
+end

@@ -1,12 +1,15 @@
 {
   "projects": {
-    "default": "foodly-solutions"
+    "default": "apps-369"
   },
   "targets": {
-    "foodly-solutions": {
+    "apps-369": {
       "hosting": {
-        "menu": ["foodly-menu"]
+        "menu": [
+          "foodly-public-menu"
+        ]
       }
     }
-  }
+  },
+  "etags": {}
 }

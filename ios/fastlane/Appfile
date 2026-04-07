@@ -1,0 +1,8 @@
+# Foodly iOS - Fastlane Configuration
+# For more info: https://docs.fastlane.tools/advanced/Appfile/
+
+app_identifier("com.foodlysolutions.app")
+apple_id(ENV["APPLE_ID"] || "owentours@gmail.com")
+team_id(ENV["TEAM_ID"] || "V76AZLAYJ4")
+
+itc_team_id(ENV["ITC_TEAM_ID"] || "V76AZLAYJ4")

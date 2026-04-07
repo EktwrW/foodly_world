@@ -147,3 +147,11 @@ secrets.md
 
 # FVM Version Cache
 .fvm/
+
+# Fastlane
+**/ios/fastlane/.env
+**/ios/fastlane/report.xml
+**/ios/fastlane/Preview.html
+**/ios/fastlane/screenshots/
+**/ios/fastlane/test_output/
+**/ios/fastlane/README.md

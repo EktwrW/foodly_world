@@ -218,4 +218,64 @@ Puedes utilizar estos comandos para obtener ayuda específica:
 
 ---
 
+## iOS Deployment & TestFlight
+
+### Apple Developer Account
+- **Apple ID:** owentours@gmail.com
+- **Team ID:** V76AZLAYJ4
+- **Bundle ID:** com.foodlysolutions.app
+- **App Store Connect App ID:** 6761689908 (App name: "Foodly Solutions")
+- **SKU:** foodly_ios_app
+- **Min iOS:** 15.0
+
+> **Note:** There is an old app record "Foodly World" (ID: 6741719812) with bundle ID `world.foodly.mobile` — this is deprecated and should not be used. The active app uses `com.foodlysolutions.app`.
+
+### Fastlane Setup (Local)
+Fastlane is configured in `ios/fastlane/` for automated builds and uploads:
+
+```bash
+cd ios/
+bundle exec fastlane beta          # Clean build + upload to TestFlight
+bundle exec fastlane beta_upload   # Upload existing IPA only (skip build)
+bundle exec fastlane release       # Build + upload to App Store (manual submit)
+```
+
+**Configuration files:**
+- `ios/Gemfile` — Ruby dependencies (fastlane, cocoapods)
+- `ios/fastlane/Appfile` — App identifier, Apple ID, Team ID
+- `ios/fastlane/Fastfile` — Build and upload lanes
+- `ios/fastlane/.env` — API keys and app-specific password (**NOT in git**)
+- `ios/fastlane/.env.default` — Template for `.env` (safe to commit)
+
+**Environment variables required in `.env`:**
+- `OPENAI_API_KEY`, `REPLICATE_API_KEY`, `ANALYTICS_TOKEN` — dart-define values
+- `FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD` — Generated at account.apple.com > Sign-In and Security > App-Specific Passwords
+
+### iOS Build (without Fastlane)
+Existing VS Code tasks also work:
+- "Shorebird - Release iOS (App Store)" — Generates IPA with Shorebird tracking
+- "Shorebird - Patch iOS (OTA)" — Dart-only OTA patch via Shorebird
+- "Foodly - Build IPA Release" — Vanilla Flutter IPA build
+
+### Signing
+- **Automatic signing** via Xcode with Team V76AZLAYJ4
+- Provisioning profiles are managed automatically by Xcode
+- Capabilities enabled: Associated Domains, Push Notifications
+
+### App Store Metadata
+Prepared metadata (descriptions, keywords, release notes) in 3 languages (EN/ES/PT) is in `ios/fastlane/metadata/app-store-metadata.md`.
+
+### Localized Permission Strings
+iOS permission descriptions are localized in:
+- `ios/Runner/en.lproj/InfoPlist.strings`
+- `ios/Runner/es.lproj/InfoPlist.strings`
+- `ios/Runner/pt.lproj/InfoPlist.strings`
+
+### Security Notes
+- API keys are currently hardcoded in `.vscode/tasks.json` — plan to migrate to `.env` files
+- `android/key.properties` and `android/app/foodly-release.jks` are committed to repo despite being in `.gitignore` — need to rotate and clean git history
+- `NSAllowsArbitraryLoads` is set to `true` in Info.plist (needed for some image URLs) — may need justification during App Review
+
+---
+
 Estoy aquí para ayudarte a desarrollar aplicaciones Flutter de alta calidad siguiendo las mejores prácticas de ingeniería de software. Te asistirá como un compañero de desarrollo senior especializado en Flutter 3.38 y Dart 3.7.
