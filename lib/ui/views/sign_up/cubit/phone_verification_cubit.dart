@@ -15,13 +15,16 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async {
         // Android auto-verification — fires when SMS is auto-read
+        if (isClosed) return;
         emit(const PhoneVerVerifying());
         try {
           final result = await _auth.signInWithCredential(credential);
           final idToken = await result.user?.getIdToken() ?? '';
           await _auth.signOut();
+          if (isClosed) return;
           emit(PhoneVerVerified(idToken: idToken));
         } catch (e) {
+          if (isClosed) return;
           emit(PhoneVerError(message: e.toString()));
         }
       },
@@ -59,7 +62,9 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         'session-expired' => 'Code expired. Please request a new one.',
         _ => e.message ?? 'Verification failed.',
       };
-      emit(PhoneVerError(message: msg));
+      if (!isClosed) emit(PhoneVerError(message: msg));
+    } catch (e) {
+      if (!isClosed) emit(PhoneVerError(message: e.toString()));
     }
   }
 

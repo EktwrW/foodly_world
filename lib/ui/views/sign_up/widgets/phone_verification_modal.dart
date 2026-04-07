@@ -127,7 +127,7 @@ class _PhoneVerificationModalState extends State<PhoneVerificationModal> {
             if (mounted) _otpFocusNode.requestFocus();
           });
         } else if (state is PhoneVerVerified) {
-          widget.onVerified(state.idToken);
+          if (mounted) widget.onVerified(state.idToken);
         }
       },
       builder: (context, state) {

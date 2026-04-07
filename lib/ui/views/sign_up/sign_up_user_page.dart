@@ -127,10 +127,12 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
           initialPhone: phoneNumber ?? '',
           countryCode: countryCode ?? '',
           onVerified: (idToken) {
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
             _signUpCubit.signUpUser(firebaseToken: idToken);
           },
-          onClose: () => Navigator.of(context).pop(),
+          onClose: () {
+            if (context.mounted) Navigator.of(context).pop();
+          },
         ),
       ),
     );
