@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart' show MultipartFile;
-import 'package:foodly_world/core/core_exports.dart' show Logger, di;
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/users/me_client.dart';
