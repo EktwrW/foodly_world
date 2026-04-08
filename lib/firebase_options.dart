@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '951890938827',
     projectId: 'apps-369',
     storageBucket: 'apps-369.firebasestorage.app',
-    androidClientId: '951890938827-6t6jq4dot91q6fc599a7aj2abt309i5j.apps.googleusercontent.com',
+    androidClientId: '951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com',
     iosClientId: '951890938827-2hgpslnumba6gmm17ainu8flp4q5ctl4.apps.googleusercontent.com',
     iosBundleId: 'com.foodlysolutions.app',
   );
@@ -75,7 +75,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '951890938827',
     projectId: 'apps-369',
     storageBucket: 'apps-369.firebasestorage.app',
-    androidClientId: '951890938827-6t6jq4dot91q6fc599a7aj2abt309i5j.apps.googleusercontent.com',
+    androidClientId: '951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com',
     iosClientId: '951890938827-2hgpslnumba6gmm17ainu8flp4q5ctl4.apps.googleusercontent.com',
     iosBundleId: 'com.foodlysolutions.app',
   );

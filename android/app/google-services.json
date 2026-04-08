@@ -20,6 +20,22 @@
             "package_name": "com.foodlysolutions.app",
             "certificate_hash": "0f53697ed8b6abc36909c68f83a2fa0439525237"
           }
+        },
+        {
+          "client_id": "951890938827-nee1ebnfjhiggpp836ahroksb528onku.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodlysolutions.app",
+            "certificate_hash": "4afcc1473fa3f1bdd4223692cc3e06aa19e5ea89"
+          }
+        },
+        {
+          "client_id": "951890938827-vvv975bjr62gsvhu2cp9fmsk421nh8k9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodlysolutions.app",
+            "certificate_hash": "f6be9e224c0cda37b31ae964731a1295ad06972c"
+          }
         }
       ],
       "api_key": [

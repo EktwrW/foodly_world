@@ -25,8 +25,15 @@ class StartingCubit extends Cubit<StartingState> {
   final AuthSessionService _authSessionService;
   final Logger _logger;
   final MeRepo _meRepo;
+  // Web: clientId = Web OAuth client (from dart-define).
+  // Android/iOS: clientId = null (Android uses google-services.json,
+  //   iOS uses GoogleService-Info.plist CLIENT_ID).
+  // serverClientId: Web OAuth client — needed by Android & iOS to obtain
+  //   idToken/serverAuthCode. Explicit here so we never depend on
+  //   auto-discovery from config files.
   final _googleSignIn = GoogleSignIn(
     clientId: kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
+    serverClientId: kIsWeb ? null : di<BaseConfig>().googleSignInClientId,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
   );
 
