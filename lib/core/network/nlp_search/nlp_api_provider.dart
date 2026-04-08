@@ -7,7 +7,7 @@ class NlpApiProvider {
   Dio get dio => _dio!;
 
   /// NLP Search Service standalone URL on Cloud Run
-  static const String nlpSearchBaseUrl = 'https://nlp-search-service-r4khhqj4mq-ew.a.run.app';
+  static const String nlpSearchBaseUrl = 'https://nlp-search-service-951890938827.europe-west1.run.app';
 
   NlpApiProvider() {
     _dio = Dio(BaseOptions(

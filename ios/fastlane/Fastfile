@@ -50,7 +50,22 @@ platform :ios do
     ipa_path = File.expand_path(ipa_path)
     UI.message("Found IPA: #{ipa_path}")
 
-    # Step 5: Upload to TestFlight
+    # Step 5: Upload dSYMs to Firebase Crashlytics
+    dsym_path = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
+    if dsym_path && File.directory?(File.expand_path(dsym_path))
+      dsym_path = File.expand_path(dsym_path)
+      UI.message("Uploading dSYMs from: #{dsym_path}")
+      upload_symbols_to_crashlytics(
+        dsym_path: dsym_path,
+        gsp_path: "./Runner/GoogleService-Info.plist",
+        binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
+      )
+      UI.success("✅ dSYMs uploaded to Crashlytics!")
+    else
+      UI.important("⚠️  No dSYMs directory found — skipping Crashlytics upload")
+    end
+
+    # Step 6: Upload to TestFlight
     upload_to_testflight(
       ipa: ipa_path,
       skip_waiting_for_build_processing: true,
@@ -100,7 +115,22 @@ platform :ios do
     UI.user_error!("No IPA found in build/ios/ipa/") unless ipa_path
     ipa_path = File.expand_path(ipa_path)
 
-    # Step 5: Upload to App Store
+    # Step 5: Upload dSYMs to Firebase Crashlytics
+    dsym_path = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
+    if dsym_path && File.directory?(File.expand_path(dsym_path))
+      dsym_path = File.expand_path(dsym_path)
+      UI.message("Uploading dSYMs from: #{dsym_path}")
+      upload_symbols_to_crashlytics(
+        dsym_path: dsym_path,
+        gsp_path: "./Runner/GoogleService-Info.plist",
+        binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
+      )
+      UI.success("✅ dSYMs uploaded to Crashlytics!")
+    else
+      UI.important("⚠️  No dSYMs directory found — skipping Crashlytics upload")
+    end
+
+    # Step 6: Upload to App Store
     upload_to_app_store(
       ipa: ipa_path,
       skip_screenshots: true,

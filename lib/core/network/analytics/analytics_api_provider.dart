@@ -7,7 +7,7 @@ class AnalyticsApiProvider {
   Dio get dio => _dio!;
 
   /// Analytics ingest service (Mateo's FastAPI on Cloud Run).
-  static const String analyticsBaseUrl = 'https://nlp-search-service-r4khhqj4mq-ew.a.run.app';
+  static const String analyticsBaseUrl = 'https://nlp-search-service-951890938827.europe-west1.run.app';
   static const String _analyticsToken = String.fromEnvironment('ANALYTICS_TOKEN');
 
   AnalyticsApiProvider() {

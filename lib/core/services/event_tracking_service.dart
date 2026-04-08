@@ -23,6 +23,9 @@ class EventTrackingService with WidgetsBindingObserver {
   static const int _flushThreshold = 20;
   static const int _maxQueueSize = 50;
   static const Duration _flushInterval = Duration(seconds: 5);
+  static const int _maxRetries = 5;
+
+  int _consecutiveFailures = 0;
 
   EventTrackingService({
     required EventsClient client,
@@ -116,19 +119,37 @@ class EventTrackingService with WidgetsBindingObserver {
   Future<void> _flush() async {
     if (_queue.isEmpty) return;
 
+    // Exponential backoff: skip flush cycles based on consecutive failures
+    if (_consecutiveFailures > 0) {
+      final backoffCycles = 1 << (_consecutiveFailures.clamp(0, _maxRetries));
+      _backoffCounter ??= 0;
+      _backoffCounter = _backoffCounter! + 1;
+      if (_backoffCounter! < backoffCycles) return;
+      _backoffCounter = 0;
+    }
+
     final batch = List<EventDTO>.from(_queue);
     _queue.clear();
 
     try {
       await _client.trackBatch(BatchEventsDTO(events: batch));
+      _consecutiveFailures = 0;
     } catch (e) {
-      _logger.w('[Analytics] Batch flush failed — re-queuing ${batch.length} events: $e');
-      final available = _maxQueueSize - _queue.length;
-      if (available > 0) {
-        _queue.insertAll(0, batch.take(available));
+      _consecutiveFailures++;
+      if (_consecutiveFailures <= _maxRetries) {
+        _logger.w('[Analytics] Batch flush failed (attempt $_consecutiveFailures/$_maxRetries) — re-queuing ${batch.length} events');
+        final available = _maxQueueSize - _queue.length;
+        if (available > 0) {
+          _queue.insertAll(0, batch.take(available));
+        }
+      } else {
+        _logger.e('[Analytics] Batch flush failed $_consecutiveFailures times — dropping ${batch.length} events');
+        // Don't re-queue: drop events to stop infinite retry loop
       }
     }
   }
+
+  int? _backoffCounter;
 
   void _mirrorToFirebase(
     String eventType, {
