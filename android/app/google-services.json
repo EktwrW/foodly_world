@@ -14,8 +14,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "951890938827-saea2rkuh40g4qs64oamlr2ljuu3qqkv.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "951890938827-6t6jq4dot91q6fc599a7aj2abt309i5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodlysolutions.app",
+            "certificate_hash": "0f53697ed8b6abc36909c68f83a2fa0439525237"
+          }
         }
       ],
       "api_key": [
@@ -27,7 +31,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "951890938827-saea2rkuh40g4qs64oamlr2ljuu3qqkv.apps.googleusercontent.com",
+              "client_id": "951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
               "client_type": 3
             },
             {
