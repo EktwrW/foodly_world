@@ -16,7 +16,7 @@ DART_DEFINES = [
   "LOGGER_LEVEL=ALL",
   'GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=',
   "GOOGLE_MAPS_API_KEY=#{ENV['GOOGLE_MAPS_API_KEY'] || 'AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4'}",
-  "GOOGLE_SIGN_IN_CLIENT_ID=#{ENV['GOOGLE_SIGN_IN_CLIENT_ID'] || '951890938827-saea2rkuh40g4qs64oamlr2ljuu3qqkv.apps.googleusercontent.com'}",
+  "GOOGLE_SIGN_IN_CLIENT_ID=#{ENV['GOOGLE_SIGN_IN_CLIENT_ID'] || '951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com'}",
   "OPENAI_API_KEY=#{ENV['OPENAI_API_KEY']}",
   "REPLICATE_API_KEY=#{ENV['REPLICATE_API_KEY']}",
   "ANALYTICS_TOKEN=#{ENV['ANALYTICS_TOKEN']}",

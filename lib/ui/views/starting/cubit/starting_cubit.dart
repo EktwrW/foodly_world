@@ -26,7 +26,7 @@ class StartingCubit extends Cubit<StartingState> {
   final Logger _logger;
   final MeRepo _meRepo;
   final _googleSignIn = GoogleSignIn(
-    clientId: Platform.isIOS || kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
+    clientId: kIsWeb ? di<BaseConfig>().googleSignInClientId : null,
     scopes: FoodlyStrings.GOOGLE_SIGN_IN_SCOPES,
   );
 
