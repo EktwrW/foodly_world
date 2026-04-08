@@ -51,12 +51,17 @@ platform :ios do
     UI.message("Found IPA: #{ipa_path}")
 
     # Step 5: Upload dSYMs to Firebase Crashlytics
-    dsym_path = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
-    if dsym_path && File.directory?(File.expand_path(dsym_path))
-      dsym_path = File.expand_path(dsym_path)
-      UI.message("Uploading dSYMs from: #{dsym_path}")
+    dsyms_dir = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
+    if dsyms_dir && File.directory?(File.expand_path(dsyms_dir))
+      dsyms_dir = File.expand_path(dsyms_dir)
+      dsym_zip = File.join(File.dirname(dsyms_dir), "dSYMs.zip")
+      UI.message("Zipping dSYMs from: #{dsyms_dir}")
+      Dir.chdir(dsyms_dir) do
+        sh("zip", "-r", dsym_zip, ".")
+      end
+      UI.message("Uploading dSYMs zip: #{dsym_zip}")
       upload_symbols_to_crashlytics(
-        dsym_path: dsym_path,
+        dsym_path: dsym_zip,
         gsp_path: "./Runner/GoogleService-Info.plist",
         binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
       )
@@ -116,12 +121,17 @@ platform :ios do
     ipa_path = File.expand_path(ipa_path)
 
     # Step 5: Upload dSYMs to Firebase Crashlytics
-    dsym_path = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
-    if dsym_path && File.directory?(File.expand_path(dsym_path))
-      dsym_path = File.expand_path(dsym_path)
-      UI.message("Uploading dSYMs from: #{dsym_path}")
+    dsyms_dir = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
+    if dsyms_dir && File.directory?(File.expand_path(dsyms_dir))
+      dsyms_dir = File.expand_path(dsyms_dir)
+      dsym_zip = File.join(File.dirname(dsyms_dir), "dSYMs.zip")
+      UI.message("Zipping dSYMs from: #{dsyms_dir}")
+      Dir.chdir(dsyms_dir) do
+        sh("zip", "-r", dsym_zip, ".")
+      end
+      UI.message("Uploading dSYMs zip: #{dsym_zip}")
       upload_symbols_to_crashlytics(
-        dsym_path: dsym_path,
+        dsym_path: dsym_zip,
         gsp_path: "./Runner/GoogleService-Info.plist",
         binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
       )
