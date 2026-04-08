@@ -108,6 +108,12 @@ class SignUpCubit extends Cubit<SignUpState> {
           userSessionDM: authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
         ),
         super(const SignUpState.initial()) {
+    // Initialize userLocation from GPS if available, so pre-filled addresses
+    // retain their coordinates even without Places autocomplete selection.
+    if (_locationService.hasLocationData) {
+      final pos = _locationService.currentLocation.position!;
+      _vm = _vm.copyWith(userLocation: LatLngLiteral(lat: pos.latitude, lng: pos.longitude));
+    }
     _initializeMarkers();
     emit(_Loaded(_vm));
   }
@@ -166,8 +172,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       city: _vm.cityController?.controller?.text ?? '',
       country: _vm.country,
       zipCode: _vm.zipCodeController?.controller?.text ?? '',
-      latitude: _vm.userLocation?.lat ?? 0.0,
-      longitude: _vm.userLocation?.lng ?? 0.0,
+      latitude: _vm.userLocation?.lat ?? getCurrentPosition?.latitude ?? 0.0,
+      longitude: _vm.userLocation?.lng ?? getCurrentPosition?.longitude ?? 0.0,
       addressLabel: homeAddressLabel,
       principal: true,
       createdAt: DateTime.now(),
@@ -190,8 +196,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       gender: _vm.userGender.key,
       roleId: _vm.roleId,
       termsAndContiditionsAccepted: _vm.termsAndContiditionsAccepted,
-      latitude: _vm.userLocation?.lat,
-      longitude: _vm.userLocation?.lng,
+      latitude: _vm.userLocation?.lat ?? getCurrentPosition?.latitude,
+      longitude: _vm.userLocation?.lng ?? getCurrentPosition?.longitude,
       addresses: [homeAddress],
       firebasePhoneToken: firebaseToken,
     );

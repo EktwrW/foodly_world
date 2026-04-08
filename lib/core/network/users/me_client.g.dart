@@ -219,6 +219,8 @@ class _MeClient implements MeClient {
     required int roleId,
     required List<MultipartFile> photo,
     String? firebasePhoneToken,
+    double? latitude,
+    double? longitude,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -250,6 +252,12 @@ class _MeClient implements MeClient {
     _data.files.addAll(photo.map((i) => MapEntry('photo', i)));
     if (firebasePhoneToken != null) {
       _data.fields.add(MapEntry('firebase_phone_token', firebasePhoneToken));
+    }
+    if (latitude != null) {
+      _data.fields.add(MapEntry('latitude', latitude.toString()));
+    }
+    if (longitude != null) {
+      _data.fields.add(MapEntry('longitude', longitude.toString()));
     }
     final _options = _setStreamType<UserSessionDM>(
       Options(

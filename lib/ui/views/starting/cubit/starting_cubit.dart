@@ -16,7 +16,6 @@ import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
-import 'package:universal_io/io.dart';
 
 part 'starting_cubit.freezed.dart';
 part 'starting_state.dart';

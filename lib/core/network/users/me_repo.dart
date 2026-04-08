@@ -86,18 +86,6 @@ class MeRepo {
         : await fileHandler.getMultipartFile(filePath);
 
     try {
-      // Debug: log photo multipart info to help diagnose web upload issues
-      try {
-        // Use dynamic logging to avoid import cycles; `di<Logger>()` is available in the project
-        final logger = di<Logger>();
-        if (photoMultipartFile != null) {
-          logger.w(
-              'MeRepo.register: photo filename=${photoMultipartFile.filename}, contentType=${photoMultipartFile.contentType}, headers=${photoMultipartFile.headers}');
-        } else {
-          logger.e('MeRepo.register: photoMultipartFile is null (no file)');
-        }
-      } catch (_) {}
-
       return ApiResult.success(await _meClient.register(
         name: registerDTO.firstName,
         lastName: registerDTO.lastName,
@@ -115,6 +103,8 @@ class MeRepo {
         roleId: registerDTO.roleId?.index ?? 4,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],
         firebasePhoneToken: registerDTO.firebasePhoneToken,
+        latitude: registerDTO.latitude,
+        longitude: registerDTO.longitude,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

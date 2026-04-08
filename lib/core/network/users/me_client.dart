@@ -55,6 +55,8 @@ abstract class MeClient {
     @Part(name: 'role_id') required int roleId,
     @Part(name: 'photo') required List<MultipartFile> photo,
     @Part(name: 'firebase_phone_token') String? firebasePhoneToken,
+    @Part(name: 'latitude') double? latitude,
+    @Part(name: 'longitude') double? longitude,
   });
 
   @POST('/update-profile-photo')
