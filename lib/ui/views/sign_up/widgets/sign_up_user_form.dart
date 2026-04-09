@@ -206,7 +206,9 @@ class SignUpUserForm extends StatelessWidget {
           controller: vm.phoneNumberController?.controller,
           focusNode: vm.phoneNumberController?.focusNode,
           autovalidateMode: vm.autovalidateMode,
-          onSubmitted: (value) => vm.dateOfBirthNode?.requestFocus(),
+          onSubmitted: (value) async {
+            await _selectDate(context, vm, cubit);
+          },
           onChanged: (phone) {
             cubit.setPhoneIsoCode(phone.countryISOCode);
             cubit.setCompletePhone(phone.completeNumber);
@@ -215,64 +217,49 @@ class SignUpUserForm extends StatelessWidget {
         ),
         SizedBox(
           height: 70,
-          child: StatefulBuilder(
-            builder: (_, setState) {
-              var isOpen = false;
-              if (vm.dateOfBirthNode == null) return const SizedBox.shrink();
-              return ListenableBuilder(
-                listenable: vm.dateOfBirthNode!,
-                builder: (context, _) {
-                  final hasFocus = vm.dateOfBirthNode!.hasFocus;
-                  return InkWell(
-                    onFocusChange: (enabled && vm.dateOfBirth == null)
-                        ? (val) async {
-                            if (hasFocus && !isOpen) {
-                              setState(() => isOpen = true);
-                              await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
+          child: vm.dateOfBirthNode == null
+              ? const SizedBox.shrink()
+              : ListenableBuilder(
+                  listenable: vm.dateOfBirthNode!,
+                  builder: (context, _) {
+                    final hasFocus = vm.dateOfBirthNode!.hasFocus;
+                    return InkWell(
+                      onTap: enabled
+                          ? () async {
+                              await _selectDate(context, vm, cubit);
                             }
-                          }
-                        : null,
-                    onTap: isOpen
-                        ? null
-                        : enabled
-                            ? () async {
-                                setState(() => isOpen = true);
-                                await _selectDate(context, vm, cubit).then((value) => setState(() => isOpen = false));
-                              }
-                            : null,
-                    focusColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    focusNode: vm.dateOfBirthNode,
-                    child: InputDecorator(
-                      isFocused: hasFocus,
-                      isEmpty: vm.dateOfBirth == null,
-                      decoration: InputDecoration(
-                        hintText: S.current.dateOfBirth,
-                        hintStyle: TextStyle(
-                          color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
-                          fontSize: 14,
+                          : null,
+                      focusColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      focusNode: vm.dateOfBirthNode,
+                      child: InputDecorator(
+                        isFocused: hasFocus,
+                        isEmpty: vm.dateOfBirth == null,
+                        decoration: InputDecoration(
+                          hintText: S.current.dateOfBirth,
+                          hintStyle: TextStyle(
+                            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                            fontSize: 14,
+                          ),
+                          prefixIcon: const Icon(Bootstrap.calendar2_event, size: 22),
+                          prefixIconColor: hasFocus
+                              ? FoodlyThemes.primaryFoodly
+                              : enabled
+                                  ? Colors.black87
+                                  : ui.NeumorphicColors.disabled,
+                          enabled: enabled,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                         ),
-                        prefixIcon: const Icon(Bootstrap.calendar2_event, size: 22),
-                        prefixIconColor: hasFocus
-                            ? FoodlyThemes.primaryFoodly
-                            : enabled
-                                ? Colors.black87
-                                : ui.NeumorphicColors.disabled,
-                        enabled: enabled,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        child: vm.dateOfBirth != null
+                            ? Text(
+                                vm.dateOfBirth!.getStringFormat,
+                                style: !enabled ? FoodlyTextStyles.disabledText : FoodlyTextStyles.inputTextValue,
+                              )
+                            : const SizedBox.shrink(),
                       ),
-                      child: vm.dateOfBirth != null
-                          ? Text(
-                              vm.dateOfBirth!.getStringFormat,
-                              style: !enabled ? FoodlyTextStyles.disabledText : FoodlyTextStyles.inputTextValue,
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+                    );
+                  },
+                ),
         ),
         DropdownButtonFormField<UserGender>(
           initialValue: vm.gender,

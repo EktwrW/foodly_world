@@ -27,7 +27,6 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   final GlobalKey _tooltipKey = GlobalKey();
   late dynamic tooltip;
   late final LocalStorageService _localStorageService;
-  late final AuthSessionService _authService;
   late final DialogService _dialogService;
   bool _userIsMigratingToManager = false;
   late final SignUpCubit _signUpcubit;
@@ -38,7 +37,6 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
   void initState() {
     super.initState();
     _localStorageService = di<LocalStorageService>();
-    _authService = di<AuthSessionService>();
     _dialogService = di<DialogService>();
     _signUpcubit = context.read<SignUpCubit>();
 
@@ -69,12 +67,25 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
             state.whenOrNull(
               loading: (signUpVM) => _dialogService.showLoading(),
               loaded: (signUpVM) => _dialogService.hideLoading(),
-              businessCreationFinished: (vm) {
-                context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+              businessCreationFinished: (vm) async {
+                if (context.mounted) {
+                  context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+                }
                 _dialogService.hideLoading();
 
-                context.goNamed(AppRoutes.foodlyMainPage.name,
-                    pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.uuid ?? ''});
+                if (context.mounted) {
+                  if (_userIsMigratingToManager &&
+                      di<AuthSessionService>().userSessionDM?.user.business.isNotEmpty == true) {
+                    context.goNamed(AppRoutes.myBusiness.name, pathParameters: {
+                      AppRoutes.routeIdParam: di<AuthSessionService>().userSessionDM?.user.business.first.uuid ?? ''
+                    });
+
+                    context.read<MainDrawerCubit>().updateSelectedIndex(1);
+                  } else {
+                    context.goNamed(AppRoutes.foodlyMainPage.name,
+                        pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.uuid ?? ''});
+                  }
+                }
               },
               error: (e, vm) async {
                 _dialogService.hideLoading();
@@ -140,7 +151,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     children: [
                       Flexible(
                         child: AvatarWidget(
-                          avatarUrl: _authService.userSessionDM?.user.avatarUrl,
+                          avatarUrl: di<AuthSessionService>().userSessionDM?.user.avatarUrl,
                           height: 45,
                           width: 45,
                         ),
@@ -180,8 +191,8 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                                     onPressed: vm.tooltipActive
                                         ? null
                                         : () {
-                                            if (_authService.isLoggedIn) {
-                                              _authService.logout(context);
+                                            if (di<AuthSessionService>().isLoggedIn) {
+                                              di<AuthSessionService>().logout(context);
                                             }
                                           },
                                   ))

@@ -337,16 +337,43 @@ class SignUpCubit extends Cubit<SignUpState> {
           : _vm.businessIntroMessageController?.controller?.text.trim(),
     );
 
-    await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath).then((response) {
+    await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath).then((response) async {
       return response.when(
-        success: (businessDM) {
-          final manager = _authService.userSessionDM!.user.copyWith(business: [businessDM]);
-          if (_authService.userSessionDM != null) {
-            _authService
-              ..setSession(_authService.userSessionDM!.copyWith(user: manager))
-              ..initializeFavorites()
-              ..initializeNotifications();
+        success: (businessDM) async {
+          final currentSession = _authService.userSessionDM;
+          if (currentSession == null) {
+            emit(_Error('Missing auth session after business registration', _vm));
+            return;
           }
+
+          await _meRepo.fetchLoggedUser().then((result) {
+            result.when(
+              success: (freshUser) {
+                final userWithBusiness =
+                    freshUser.business.isNotEmpty ? freshUser : freshUser.copyWith(business: [businessDM]);
+
+                _authService
+                  ..setSession(currentSession.copyWith(user: userWithBusiness))
+                  ..initializeFavorites()
+                  ..initializeNotifications();
+              },
+              failure: (e) {
+                di<Logger>().w('Could not refresh logged user after business creation: ${e.errorMsg}');
+
+                // Fallback to keep UX consistent when the refresh call fails.
+                final optimisticManager = currentSession.user.copyWith(
+                  business: [businessDM],
+                  roleId: UserRole.owner,
+                  userRole: 'Manager',
+                );
+
+                _authService
+                  ..setSession(currentSession.copyWith(user: optimisticManager))
+                  ..initializeFavorites()
+                  ..initializeNotifications();
+              },
+            );
+          });
 
           emit(_BusinessCreationFinished(_vm = _vm.copyWith(
               userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''))));
