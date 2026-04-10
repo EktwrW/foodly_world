@@ -68,23 +68,35 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
               loading: (signUpVM) => _dialogService.showLoading(),
               loaded: (signUpVM) => _dialogService.hideLoading(),
               businessCreationFinished: (vm) async {
-                if (context.mounted) {
-                  context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
-                }
                 _dialogService.hideLoading();
+                if (!context.mounted) return;
 
-                if (context.mounted) {
-                  if (_userIsMigratingToManager &&
-                      di<AuthSessionService>().userSessionDM?.user.business.isNotEmpty == true) {
-                    context.goNamed(AppRoutes.myBusiness.name, pathParameters: {
-                      AppRoutes.routeIdParam: di<AuthSessionService>().userSessionDM?.user.business.first.uuid ?? ''
-                    });
+                context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: vm.userSessionDM));
+                await Future.delayed(const Duration(milliseconds: 100));
+                if (!context.mounted) return;
 
+                final authService = di<AuthSessionService>();
+                final userHasBusiness = authService.userSessionDM?.user.business.isNotEmpty ?? false;
+                final isManager = authService.userIsManager;
+
+                di<Logger>().i(
+                    'Business creation finished: migrating=$_userIsMigratingToManager, hasBusiness=$userHasBusiness, isManager=$isManager');
+
+                if (_userIsMigratingToManager && userHasBusiness) {
+                  final businessUuid = authService.userSessionDM?.user.business.first.uuid;
+                  di<Logger>().i('Navigating to business dashboard: $businessUuid');
+
+                  if (businessUuid != null && businessUuid.isNotEmpty) {
+                    context.goNamed(AppRoutes.myBusiness.name, pathParameters: {AppRoutes.routeIdParam: businessUuid});
                     context.read<MainDrawerCubit>().updateSelectedIndex(1);
                   } else {
+                    di<Logger>().w('Business UUID is null or empty, navigating to home');
                     context.goNamed(AppRoutes.foodlyMainPage.name,
                         pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.uuid ?? ''});
                   }
+                } else {
+                  context.goNamed(AppRoutes.foodlyMainPage.name,
+                      pathParameters: {AppRoutes.routeIdParam: vm.userSessionDM.user.uuid ?? ''});
                 }
               },
               error: (e, vm) async {
@@ -279,7 +291,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     shape: ui.NeumorphicShape.convex,
                     text: S.current.completeSignUp,
                     disabled: false,
-                  ).paddingOnly(top: 20, bottom: 40),
+                  ).paddingOnly(top: 36, bottom: 73),
                 ],
               ),
             ),

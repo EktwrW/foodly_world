@@ -337,53 +337,55 @@ class SignUpCubit extends Cubit<SignUpState> {
           : _vm.businessIntroMessageController?.controller?.text.trim(),
     );
 
-    await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath).then((response) async {
-      return response.when(
-        success: (businessDM) async {
-          final currentSession = _authService.userSessionDM;
-          if (currentSession == null) {
-            emit(_Error('Missing auth session after business registration', _vm));
-            return;
-          }
+    final registerResult = await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath);
 
-          await _meRepo.fetchLoggedUser().then((result) {
-            result.when(
-              success: (freshUser) {
-                final userWithBusiness =
-                    freshUser.business.isNotEmpty ? freshUser : freshUser.copyWith(business: [businessDM]);
+    await registerResult.when(
+      success: (businessDM) async {
+        final currentSession = _authService.userSessionDM;
+        if (currentSession == null) {
+          emit(_Error('Missing auth session after business registration', _vm));
+          return;
+        }
 
-                _authService
-                  ..setSession(currentSession.copyWith(user: userWithBusiness))
-                  ..initializeFavorites()
-                  ..initializeNotifications();
-              },
-              failure: (e) {
-                di<Logger>().w('Could not refresh logged user after business creation: ${e.errorMsg}');
+        final fetchResult = await _meRepo.fetchLoggedUser();
 
-                // Fallback to keep UX consistent when the refresh call fails.
-                final optimisticManager = currentSession.user.copyWith(
-                  business: [businessDM],
-                  roleId: UserRole.owner,
-                  userRole: 'Manager',
-                );
+        await fetchResult.when(
+          success: (freshUser) async {
+            final userWithBusiness =
+                freshUser.business.isNotEmpty ? freshUser : freshUser.copyWith(business: [businessDM]);
 
-                _authService
-                  ..setSession(currentSession.copyWith(user: optimisticManager))
-                  ..initializeFavorites()
-                  ..initializeNotifications();
-              },
+            _authService
+              ..setSession(currentSession.copyWith(user: userWithBusiness))
+              ..initializeFavorites()
+              ..initializeNotifications();
+
+            emit(_BusinessCreationFinished(_vm = _vm.copyWith(
+                userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''))));
+          },
+          failure: (e) async {
+            di<Logger>().w('Could not refresh logged user after business creation: ${e.errorMsg}');
+
+            final optimisticManager = currentSession.user.copyWith(
+              business: [businessDM],
+              roleId: UserRole.owner,
+              userRole: 'Manager',
             );
-          });
 
-          emit(_BusinessCreationFinished(_vm = _vm.copyWith(
-              userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''))));
-        },
-        failure: (e) {
-          di<Logger>().e(e.errorMsg);
-          emit(_Error(e.errorMsg, _vm));
-        },
-      );
-    });
+            _authService
+              ..setSession(currentSession.copyWith(user: optimisticManager))
+              ..initializeFavorites()
+              ..initializeNotifications();
+
+            emit(_BusinessCreationFinished(_vm = _vm.copyWith(
+                userSessionDM: _authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''))));
+          },
+        );
+      },
+      failure: (e) async {
+        di<Logger>().e('Business registration failed: ${e.errorMsg}');
+        emit(_Error(e.errorMsg, _vm));
+      },
+    );
   }
 
   void onMapCreated(GoogleMapController controller) => emit(_Loaded(_vm = _vm.copyWith(mapController: controller)));

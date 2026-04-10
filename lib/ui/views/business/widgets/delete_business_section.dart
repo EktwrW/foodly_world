@@ -18,26 +18,47 @@ class DeleteBusinessSection extends StatelessWidget {
 
     if (!context.mounted) return;
 
-    result.when(
+    await result.when(
       success: (_) async {
+        di<Logger>().i('Business deleted successfully: $businessUuid');
+
         // Refresh user session so role reverts to Customer
         final refreshResult = await di<MeRepo>().fetchLoggedUser();
-        if (context.mounted) {
-          refreshResult.whenOrNull(
-            success: (userDM) {
-              final current = di<AuthSessionService>().userSessionDM;
-              if (current != null) {
-                final updated = current.copyWith(user: userDM);
-                di<AuthSessionService>().setSession(updated);
-                context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: updated));
-              }
-            },
-          );
-          FoodlySnackbars.successGeneric(context, S.current.deleteBusinessSuccess);
-          context.goNamed(AppRoutes.home.name);
-        }
+
+        if (!context.mounted) return;
+
+        await refreshResult.when(
+          success: (userDM) async {
+            di<Logger>().i('User refreshed after deletion, business count: ${userDM.business.length}');
+
+            final current = di<AuthSessionService>().userSessionDM;
+            if (current != null) {
+              final updated = current.copyWith(user: userDM);
+              di<AuthSessionService>().setSession(updated);
+              context.read<RootBloc>().add(RootEvent.cacheAuthSession(userSessionDM: updated));
+            }
+          },
+          failure: (error) async {
+            di<Logger>().w('Could not refresh user after business deletion: ${error.errorMsg}');
+          },
+        );
+
+        if (!context.mounted) return;
+
+        FoodlySnackbars.successGeneric(context, S.current.deleteBusinessSuccess);
+
+        // Wait for session update to complete
+        await Future.delayed(const Duration(milliseconds: 100));
+
+        if (!context.mounted) return;
+
+        di<Logger>().i('Navigating to home after business deletion');
+        context.goNamed(AppRoutes.home.name);
       },
-      failure: (e) => FoodlySnackbars.errorGeneric(context, e.errorMsg),
+      failure: (e) async {
+        di<Logger>().e('Failed to delete business: ${e.errorMsg}');
+        FoodlySnackbars.errorGeneric(context, e.errorMsg);
+      },
     );
   }
 

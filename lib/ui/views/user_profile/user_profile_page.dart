@@ -78,7 +78,7 @@ class UserProfilePage extends StatelessWidget {
           userUpdated: (vm, msg) {
             dialogService.hideLoading();
             if (msg == UserProfileCubit.accountDeletedSentinel) {
-              di<AuthSessionService>().endSession(context);
+              di<AuthSessionService>().endSession(context, redirectToStart: true);
               return;
             }
             FoodlySnackbars.successGeneric(context, msg);

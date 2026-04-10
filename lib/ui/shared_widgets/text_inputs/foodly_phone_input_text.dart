@@ -56,8 +56,7 @@ class FoodlyPhoneInputText extends StatelessWidget {
             return null;
           }
 
-          return !FormValidations.validateFormWithCountryCode(
-                  p0?.number ?? '', isoCode, FoodlyRegex.phoneNumberRegex)
+          return !FormValidations.validateFormWithCountryCode(p0?.number ?? '', isoCode, FoodlyRegex.phoneNumberRegex)
               ? S.current.enterAValidPhoneNumber
               : null;
         },
@@ -66,6 +65,7 @@ class FoodlyPhoneInputText extends StatelessWidget {
           fontSize: 12.3,
         ),
         flagsButtonPadding: const EdgeInsets.only(left: 8, right: 4),
+        textInputAction: TextInputAction.next,
         onSubmitted: onSubmitted,
         onChanged: onChanged,
         decoration: InputDecoration(

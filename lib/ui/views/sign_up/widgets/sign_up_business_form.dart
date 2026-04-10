@@ -157,52 +157,48 @@ class SignUpBusinessForm extends StatelessWidget {
           countryCode: vm.businessCountryCode ?? '',
           showLeading: false,
           labelText: FoodlyInputType.businessZipCode.text,
+          onFieldSubmitted: (_) {
+            introFocusNode?.requestFocus();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              introTooltipKey.currentState?.ensureTooltipVisible();
+            });
+          },
         ),
         if (introFocusNode != null)
-          ListenableBuilder(
-            listenable: introFocusNode,
-            builder: (context, child) {
-              final hasFocus = introFocusNode.hasFocus;
-
-              if (hasFocus) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  introTooltipKey.currentState?.ensureTooltipVisible();
-                });
-              }
-
-              return Tooltip(
-                key: introTooltipKey,
-                margin: const EdgeInsets.all(9).copyWith(bottom: 16),
-                preferBelow: false,
-                triggerMode: TooltipTriggerMode.manual,
-                waitDuration: Duration.zero,
-                showDuration: const Duration(seconds: 9),
-                richMessage: TextSpan(text: '${S.current.introMessageTooltip}\n', children: [
-                  const WidgetSpan(
-                      child: Center(
-                    child: Icon(
-                      Bootstrap.chevron_down,
-                      color: Colors.white,
-                    ),
-                  ))
-                ]),
-                child: FoodlyPrimaryInputText(
-                  controller: vm.businessIntroMessageController?.controller,
-                  focusNode: introFocusNode,
-                  inputTextType: FoodlyInputType.businessIntroMessage,
-                  autovalidateMode: vm.autovalidateMode,
-                  enabled: enabled,
-                  maxLines: 6,
-                  height: 96,
-                  maxLength: 369,
-                  showLeading: false,
-                  contentPadding: const EdgeInsets.all(3),
-                  labelText: FoodlyInputType.businessIntroMessage.text,
-
-                  // the bottom padding of the leading icon of this input is defined in the foodly enums file
+          Tooltip(
+            key: introTooltipKey,
+            margin: const EdgeInsets.all(9).copyWith(bottom: 16),
+            preferBelow: false,
+            triggerMode: TooltipTriggerMode.manual,
+            waitDuration: Duration.zero,
+            showDuration: const Duration(seconds: 7),
+            richMessage: TextSpan(text: '${S.current.introMessageTooltip}\n', children: [
+              const WidgetSpan(
+                  child: Center(
+                child: Icon(
+                  Bootstrap.chevron_down,
+                  color: Colors.white,
                 ),
-              );
-            },
+              ))
+            ]),
+            child: FoodlyPrimaryInputText(
+              controller: vm.businessIntroMessageController?.controller,
+              focusNode: introFocusNode,
+              inputTextType: FoodlyInputType.businessIntroMessage,
+              autovalidateMode: vm.autovalidateMode,
+              enabled: enabled,
+              maxLines: 6,
+              height: 96,
+              maxLength: 369,
+              showLeading: false,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 3, vertical: 13),
+              labelText: FoodlyInputType.businessIntroMessage.text,
+              onTap: () {
+                introFocusNode.requestFocus();
+              },
+
+              // the bottom padding of the leading icon of this input is defined in the foodly enums file
+            ),
           )
         else
           Tooltip(

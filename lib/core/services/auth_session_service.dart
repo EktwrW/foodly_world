@@ -232,27 +232,27 @@ class AuthSessionService {
     }
   }
 
-  void endSession(BuildContext context) async {
+  void endSession(BuildContext context, {bool redirectToStart = false}) async {
     di<DialogService>().showLoading();
     final authToken = userSessionDM?.token ?? '';
 
     if (isLoggedIn && authToken.isNotEmpty) {
       await _meRepo.logout().then((value) {
         return value.when(
-          success: (_) => clearSession(context),
+          success: (_) => clearSession(context, redirectToStart: redirectToStart),
           failure: (e) {
             di<Logger>().e('$e');
-            clearSession(context);
+            clearSession(context, redirectToStart: redirectToStart);
           },
         );
       });
     } else {
-      clearSession(context);
+      clearSession(context, redirectToStart: redirectToStart);
     }
     di<DialogService>().hideLoading();
   }
 
-  Future<void> clearSession(BuildContext context) async {
+  Future<void> clearSession(BuildContext context, {bool redirectToStart = false}) async {
     try {
       userSessionDM = null;
       _authHeader = null;
@@ -268,18 +268,18 @@ class AuthSessionService {
       }
 
       await updateForceToLogin(true);
-      if (context.mounted) exit(context);
+      if (context.mounted) exit(context, redirectToStart: redirectToStart);
     } catch (e) {
       di<Logger>().e('Error en clearSession: $e');
       // Intentar la navegación directa como fallback
       if (context.mounted) {
         context.read<SmartSearchCubit>().resetToInitial();
-        di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
+        di<AppRouter>().appRouter.goNamed(redirectToStart ? AppRoutes.start.name : AppRoutes.login.name);
       }
     }
   }
 
-  void exit(BuildContext context) {
+  void exit(BuildContext context, {bool redirectToStart = false}) {
     try {
       // Limpiar el estado de autenticación
       context.read<MainDrawerCubit>().updateSelectedIndex(0);
@@ -291,7 +291,7 @@ class AuthSessionService {
         // de que todos los estados se hayan actualizado
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (context.mounted) {
-            di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
+            di<AppRouter>().appRouter.goNamed(redirectToStart ? AppRoutes.start.name : AppRoutes.login.name);
           }
         });
       });
@@ -299,7 +299,7 @@ class AuthSessionService {
       di<Logger>().e('Error en exit: $e');
       // Intentar navegar directamente si algo falla
       try {
-        di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
+        di<AppRouter>().appRouter.goNamed(redirectToStart ? AppRoutes.start.name : AppRoutes.login.name);
       } catch (e) {
         di<Logger>().e('Error al navegar al login: $e');
       }
