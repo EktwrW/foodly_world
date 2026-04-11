@@ -59,6 +59,13 @@ class ManagePromotionsPage extends StatelessWidget {
               dialogService.hideLoading();
               FoodlySnackbars.errorGeneric(context, e);
             },
+            aiQuotaExhausted: (vm) {
+              dialogService.hideLoading();
+              ManagePromotionsSnackbars.showAiPromoQuotaExhausted(
+                context,
+                vm.businessDM?.aiPromoMonthlyLimit ?? 6,
+              );
+            },
           );
         },
         builder: (context, state) {

@@ -60,6 +60,8 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
     @JsonKey(name: 'reservations_count') @Default(6) int reservationsSizeLimit,
     @JsonKey(name: 'combos_label') String? combosLabel,
+    @JsonKey(name: 'ai_promo_monthly_limit') @Default(6) int aiPromoMonthlyLimit,
+    @JsonKey(name: 'ai_promos_used_this_month') @Default(0) int aiPromosUsedThisMonth,
 
     // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
     @Default([]) List<ReviewDM> reviews,
@@ -82,6 +84,9 @@ class BusinessDM with _$BusinessDM {
     }
     return [];
   }
+
+  int get aiPromoRemaining => (aiPromoMonthlyLimit - aiPromosUsedThisMonth).clamp(0, aiPromoMonthlyLimit);
+  bool get aiPromoQuotaExhausted => aiPromoRemaining <= 0;
 
   List<BusinessServices> get businessServices =>
       (services?.isEmpty ?? true) ? [] : services!.where((s) => s.service != null).map((s) => s.service!).toList()

@@ -1,6 +1,6 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'categories_vm.freezed.dart';
@@ -11,7 +11,7 @@ class CategoriesVM with _$CategoriesVM {
 
   const factory CategoriesVM({
     FoodlyCategories? currentCategory,
-    CarouselSliderController? carouselController,
+    FoodlyCarouselController? carouselController,
     @Default([]) List<BusinessDM> nearbyBusinesses,
     double? latitude,
     double? longitude,

@@ -37,21 +37,17 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   ],
                 ).paddingVertical(16),
               ),
-              child: CarouselSlider(
-                key: const Key('visited-business-reviews-carousel-slider'),
-                options: CarouselOptions(
-                  height: 273,
-                  enableInfiniteScroll: false,
-                  autoPlay: true,
-                  viewportFraction: 0.99,
-                  enlargeCenterPage: true,
-                  enlargeFactor: .33,
-                  onPageChanged: (index, _) {
-                    if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
-                      context.read<VisitBusinessCubit>().fetchMoreReviews();
-                    }
-                  },
-                ),
+              child: FoodlyCarousel(
+                key: const Key('visited-business-reviews-carousel'),
+                height: 273,
+                enableInfiniteScroll: false,
+                autoPlay: true,
+                viewportFraction: 0.99,
+                onPageChanged: (index) {
+                  if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
+                    context.read<VisitBusinessCubit>().fetchMoreReviews();
+                  }
+                },
                 items: [
                   ...currentBusinessReviews.map((review) {
                     return ReviewCard(

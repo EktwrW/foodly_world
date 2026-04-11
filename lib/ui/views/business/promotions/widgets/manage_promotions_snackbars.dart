@@ -30,7 +30,7 @@ class ManagePromotionsSnackbars {
             ],
           ).paddingBottom(24),
           Text(
-            S.current.aiPromoContent(3),
+            S.current.aiPromoContent(vm.businessDM?.aiPromoRemaining ?? 0),
             style: FoodlyTextStyles.snackBarLightBody,
           ),
           FoodlyPrimaryInputText(
@@ -90,6 +90,36 @@ class ManagePromotionsSnackbars {
                 visualDensity: VisualDensity.compact,
               ),
             ).paddingTop(8),
+          ),
+        ],
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));
+  }
+
+  static void showAiPromoQuotaExhausted(BuildContext context, int limit) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    final snackBar = SnackBarWdg(
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  S.current.aiPromoQuotaExhaustedTitle,
+                  style: FoodlyTextStyles.promoTitle.copyWith(fontSize: 16),
+                ),
+              ),
+              const Asset(FoodlyAssets.ai, height: 40, width: 40),
+            ],
+          ).paddingBottom(16),
+          Text(
+            S.current.aiPromoQuotaExhaustedContent(limit),
+            style: FoodlyTextStyles.snackBarLightBody,
           ),
         ],
       ),

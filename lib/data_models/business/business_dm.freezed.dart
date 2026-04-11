@@ -78,7 +78,11 @@ mixin _$BusinessDM {
   @JsonKey(name: 'reservations_count')
   int get reservationsSizeLimit => throw _privateConstructorUsedError;
   @JsonKey(name: 'combos_label')
-  String? get combosLabel =>
+  String? get combosLabel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ai_promo_monthly_limit')
+  int get aiPromoMonthlyLimit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ai_promos_used_this_month')
+  int get aiPromosUsedThisMonth =>
       throw _privateConstructorUsedError; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   List<ReviewDM> get reviews => throw _privateConstructorUsedError;
 
@@ -129,6 +133,8 @@ abstract class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
       @JsonKey(name: 'combos_label') String? combosLabel,
+      @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+      @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
       List<ReviewDM> reviews});
 
   $CategoryDMCopyWith<$Res>? get category;
@@ -179,6 +185,8 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
     Object? combosLabel = freezed,
+    Object? aiPromoMonthlyLimit = null,
+    Object? aiPromosUsedThisMonth = null,
     Object? reviews = null,
   }) {
     return _then(_value.copyWith(
@@ -298,6 +306,14 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
               as String?,
+      aiPromoMonthlyLimit: null == aiPromoMonthlyLimit
+          ? _value.aiPromoMonthlyLimit
+          : aiPromoMonthlyLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      aiPromosUsedThisMonth: null == aiPromosUsedThisMonth
+          ? _value.aiPromosUsedThisMonth
+          : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
+              as int,
       reviews: null == reviews
           ? _value.reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -369,6 +385,8 @@ abstract class _$$BusinessDMImplCopyWith<$Res>
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
       @JsonKey(name: 'combos_label') String? combosLabel,
+      @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+      @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
       List<ReviewDM> reviews});
 
   @override
@@ -419,6 +437,8 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
     Object? combosLabel = freezed,
+    Object? aiPromoMonthlyLimit = null,
+    Object? aiPromosUsedThisMonth = null,
     Object? reviews = null,
   }) {
     return _then(_$BusinessDMImpl(
@@ -538,6 +558,14 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
               as String?,
+      aiPromoMonthlyLimit: null == aiPromoMonthlyLimit
+          ? _value.aiPromoMonthlyLimit
+          : aiPromoMonthlyLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      aiPromosUsedThisMonth: null == aiPromosUsedThisMonth
+          ? _value.aiPromosUsedThisMonth
+          : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
+              as int,
       reviews: null == reviews
           ? _value._reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -584,6 +612,9 @@ class _$BusinessDMImpl extends _BusinessDM {
       @JsonKey(name: 'allow_reservations') this.allowReservations = false,
       @JsonKey(name: 'reservations_count') this.reservationsSizeLimit = 6,
       @JsonKey(name: 'combos_label') this.combosLabel,
+      @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 6,
+      @JsonKey(name: 'ai_promos_used_this_month')
+      this.aiPromosUsedThisMonth = 0,
       final List<ReviewDM> reviews = const []})
       : _coverImages = coverImages,
         _branches = branches,
@@ -717,6 +748,12 @@ class _$BusinessDMImpl extends _BusinessDM {
   @override
   @JsonKey(name: 'combos_label')
   final String? combosLabel;
+  @override
+  @JsonKey(name: 'ai_promo_monthly_limit')
+  final int aiPromoMonthlyLimit;
+  @override
+  @JsonKey(name: 'ai_promos_used_this_month')
+  final int aiPromosUsedThisMonth;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   final List<ReviewDM> _reviews;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
@@ -730,7 +767,7 @@ class _$BusinessDMImpl extends _BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, reviews: $reviews)';
   }
 
   @override
@@ -782,6 +819,10 @@ class _$BusinessDMImpl extends _BusinessDM {
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
             (identical(other.combosLabel, combosLabel) ||
                 other.combosLabel == combosLabel) &&
+            (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
+                other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
+            (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
+                other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews));
   }
 
@@ -818,6 +859,8 @@ class _$BusinessDMImpl extends _BusinessDM {
         allowReservations,
         reservationsSizeLimit,
         combosLabel,
+        aiPromoMonthlyLimit,
+        aiPromosUsedThisMonth,
         const DeepCollectionEquality().hash(_reviews)
       ]);
 
@@ -871,6 +914,9 @@ abstract class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'allow_reservations') final bool allowReservations,
       @JsonKey(name: 'reservations_count') final int reservationsSizeLimit,
       @JsonKey(name: 'combos_label') final String? combosLabel,
+      @JsonKey(name: 'ai_promo_monthly_limit') final int aiPromoMonthlyLimit,
+      @JsonKey(name: 'ai_promos_used_this_month')
+      final int aiPromosUsedThisMonth,
       final List<ReviewDM> reviews}) = _$BusinessDMImpl;
   const _BusinessDM._() : super._();
 
@@ -963,8 +1009,13 @@ abstract class _BusinessDM extends BusinessDM {
   int get reservationsSizeLimit;
   @override
   @JsonKey(name: 'combos_label')
-  String?
-      get combosLabel; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
+  String? get combosLabel;
+  @override
+  @JsonKey(name: 'ai_promo_monthly_limit')
+  int get aiPromoMonthlyLimit;
+  @override
+  @JsonKey(name: 'ai_promos_used_this_month')
+  int get aiPromosUsedThisMonth; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   @override
   List<ReviewDM> get reviews;
 

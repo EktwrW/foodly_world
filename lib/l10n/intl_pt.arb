@@ -31,6 +31,15 @@
   "aiPromoImageLabel": "Incluir imagem promocional (16:9)",
   "aiPromoImageNatural": "Natural",
   "aiPromoImageVivid": "Vibrante",
+  "aiPromoQuotaExhaustedTitle": "Quota Mensal Atingida",
+  "aiPromoQuotaExhaustedContent": "Utilizou todas as {limit} promoções geradas por IA disponíveis este mês. A sua quota será renovada no dia 1 do próximo mês.",
+  "@aiPromoQuotaExhaustedContent": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
   "aiPromoTitle": "Gerador de Promoções IA",
   "analytics": "Análises",
   "and": "e",

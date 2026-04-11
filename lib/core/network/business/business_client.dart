@@ -9,6 +9,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
@@ -206,6 +207,9 @@ abstract class BusinessClient {
 
   @DELETE('/promotions/delete/{uuid}')
   Future<void> deletePromotion(@Path('uuid') String uuid);
+
+  @POST('/promotions/ai-quota-use')
+  Future<AiPromoQuotaResponse> useAiPromoQuota(@Body() Map<String, String> body);
 
   @POST('/promotions-media/store')
   @MultiPart()

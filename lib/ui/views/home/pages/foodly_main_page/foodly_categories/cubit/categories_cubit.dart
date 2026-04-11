@@ -3,18 +3,18 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show LocalStorageService, di, FoodlyStrings, Logger;
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'categories_state.dart';
 part 'categories_cubit.freezed.dart';
+part 'categories_state.dart';
 
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesVM _vm;
@@ -28,7 +28,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     double longitude,
   )   : _vm = CategoriesVM(
           currentCategory: initialCategory,
-          carouselController: CarouselSliderController(),
+          carouselController: FoodlyCarouselController(),
           latitude: latitude,
           longitude: longitude,
         ),

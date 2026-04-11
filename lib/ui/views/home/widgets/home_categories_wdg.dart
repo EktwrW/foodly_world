@@ -1,8 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -17,7 +17,7 @@ class HomeCategories extends StatefulWidget {
 }
 
 class _HomeCategoriesState extends State<HomeCategories> {
-  final carouselController = CarouselSliderController();
+  final carouselController = FoodlyCarouselController();
   final current = ValueNotifier(0);
 
   @override
@@ -26,7 +26,12 @@ class _HomeCategoriesState extends State<HomeCategories> {
       decoration: BoxDecoration(gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT),
       child: Column(
         children: [
-          CarouselSlider(
+          FoodlyCarousel(
+            controller: carouselController,
+            onPageChanged: (index) => current.value = index,
+            height: 106,
+            viewportFraction: context.isFoldableInHalfView ? .41 : .3,
+            itemSpacing: 6,
             items: FoodlyCategories.values
                 .map((e) => InkWell(
                       onTap: () {
@@ -38,7 +43,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       splashColor: Colors.white,
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 6),
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
                         decoration: BoxDecoration(
                           color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .36),
                           borderRadius: BorderRadius.circular(8),
@@ -52,12 +57,12 @@ class _HomeCategoriesState extends State<HomeCategories> {
                                 shape: BoxShape.circle,
                               ),
                               child: SizedBox.square(
-                                dimension: 48,
+                                dimension: 46,
                                 child: e.avatar.paddingAll(.5),
                               ),
                             ),
                             SizedBox(
-                              width: 92,
+                              width: 93,
                               child: Center(
                                 child: Text(
                                   e.text,
@@ -69,7 +74,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                                     color: Colors.white,
                                     fontSize: 10.5,
                                   ),
-                                ),
+                                ).paddingTop(1),
                               ),
                             ),
                           ],
@@ -77,13 +82,6 @@ class _HomeCategoriesState extends State<HomeCategories> {
                       ),
                     ))
                 .toList(),
-            carouselController: carouselController,
-            options: CarouselOptions(
-              onPageChanged: (index, reason) => current.value = index,
-              height: 110,
-              viewportFraction: context.isFoldableInHalfView ? .41 : .3,
-              aspectRatio: 3.0,
-            ),
           ),
           FittedBox(
             fit: BoxFit.scaleDown,
@@ -92,7 +90,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
               children: [
                 if (kIsWeb)
                   InkWell(
-                    onTap: () => carouselController.previousPage(duration: Durations.medium4, curve: Curves.linear),
+                    onTap: () => carouselController.previousPage(),
                     child: const Icon(Bootstrap.caret_left_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),
@@ -103,7 +101,6 @@ class _HomeCategoriesState extends State<HomeCategories> {
                         carouselController.animateToPage(
                           entry.key,
                           duration: Durations.long2,
-                          curve: Curves.decelerate,
                         );
                         current.value = entry.key;
                       },
@@ -133,7 +130,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                 ),
                 if (kIsWeb)
                   InkWell(
-                    onTap: () => carouselController.nextPage(duration: Durations.medium4, curve: Curves.linear),
+                    onTap: () => carouselController.nextPage(),
                     child: const Icon(Bootstrap.caret_right_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),

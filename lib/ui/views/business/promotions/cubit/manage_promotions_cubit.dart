@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart' as itr show IterableExtension;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
 import 'package:foodly_world/ui/views/business/promotions/view_model/manage_promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -215,6 +216,33 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
         _handleError(S.current.internalErrorEmptyPrompt);
         return;
       }
+
+      // Check and decrement AI promo quota via backend.
+      final quotaResult = await _businessRepo.useAiPromoQuota(_businessUuid);
+      final quotaGranted = quotaResult.when(
+        success: (AiPromoQuotaResponse quota) {
+          // Update local businessDM with fresh quota values.
+          _vm = _vm.copyWith(
+            businessDM: _vm.businessDM?.copyWith(
+              aiPromoMonthlyLimit: quota.aiPromoMonthlyLimit,
+              aiPromosUsedThisMonth: quota.aiPromosUsedThisMonth,
+            ),
+          );
+
+          if (!quota.granted) {
+            emit(_AiQuotaExhausted(_vm));
+            return false;
+          }
+          return true;
+        },
+        failure: (e) {
+          _logger.e('AI promo quota check failed: $e');
+          // On network error, allow generation (fail-open) so user isn't blocked.
+          return true;
+        },
+      );
+
+      if (!quotaGranted) return;
 
       final response = await di<AIPromoService>().generatePromotion(
         _vm.promptCtrl?.text ?? '',

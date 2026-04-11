@@ -59,21 +59,17 @@ class _UserReviewsState extends State<_UserReviews> {
           ).paddingVertical(16);
         }
 
-        return CarouselSlider(
-          key: const Key('user-profile-reviews-carousel-slider'),
-          options: CarouselOptions(
-            height: 269,
-            enableInfiniteScroll: false,
-            autoPlay: true,
-            viewportFraction: 0.99,
-            enlargeCenterPage: true,
-            enlargeFactor: .33,
-            onPageChanged: (index, _) {
-              if (index >= data.reviews.length - 3 && data.canLoadMore && !data.isLoadingMore) {
-                context.read<UserProfileCubit>().loadMoreReviews();
-              }
-            },
-          ),
+        return FoodlyCarousel(
+          key: const Key('user-profile-reviews-carousel'),
+          height: 269,
+          enableInfiniteScroll: false,
+          autoPlay: true,
+          viewportFraction: 0.99,
+          onPageChanged: (index) {
+            if (index >= data.reviews.length - 3 && data.canLoadMore && !data.isLoadingMore) {
+              context.read<UserProfileCubit>().loadMoreReviews();
+            }
+          },
           items: [
             ...data.reviews.map((review) {
               return ReviewCard(review: review);

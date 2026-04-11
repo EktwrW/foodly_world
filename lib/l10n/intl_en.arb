@@ -31,6 +31,15 @@
   "aiPromoImageLabel": "Include promotional image (16:9)",
   "aiPromoImageNatural": "Natural",
   "aiPromoImageVivid": "Vivid",
+  "aiPromoQuotaExhaustedTitle": "Monthly Quota Reached",
+  "aiPromoQuotaExhaustedContent": "You have used all {limit} AI-generated promotions for this month. Your quota will reset on the 1st of next month.",
+  "@aiPromoQuotaExhaustedContent": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
   "aiPromoTitle": "AI Promotion Generator",
   "analytics": "Analytics",
   "and": "and",

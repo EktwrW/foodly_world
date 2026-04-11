@@ -1,7 +1,6 @@
 import 'dart:ui' as dart_ui show ImageFilter;
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
@@ -20,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart';
@@ -38,7 +38,7 @@ class TopOffersWidget extends StatefulWidget {
 }
 
 class _TopOffersWidgetState extends State<TopOffersWidget> {
-  static final _carouselController = CarouselSliderController();
+  static final _carouselController = FoodlyCarouselController();
 
   @override
   void initState() {
@@ -82,17 +82,13 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
               );
             }
 
-            return CarouselSlider(
+            return FoodlyCarousel(
+              controller: _carouselController,
+              height: 369,
+              autoPlay: true,
+              viewportFraction: context.screenWidth <= 360 ? .85 : .9,
+              onPageChanged: (index) => _onPageChanged(index, promotions, vm.hasMore),
               items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
-              carouselController: _carouselController,
-              options: CarouselOptions(
-                height: 369,
-                autoPlay: true,
-                enlargeCenterPage: true,
-                enlargeFactor: .15,
-                viewportFraction: context.screenWidth <= 360 ? .85 : .9,
-                onPageChanged: (index, _) => _onPageChanged(index, promotions, vm.hasMore),
-              ),
             );
           },
         );

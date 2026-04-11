@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
@@ -26,6 +25,7 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/email_phone_text_links.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart';
@@ -38,16 +38,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:icons_plus/icons_plus.dart' show Clarity;
 
 part '../visited_business/widgets/about_us/about_us.dart';
+part '../visited_business/widgets/additional_info/additional_info.dart';
 part '../visited_business/widgets/address/address.dart';
 part '../visited_business/widgets/category_and_rating/category.dart';
 part '../visited_business/widgets/category_and_rating/category_and_rating.dart';
 part '../visited_business/widgets/category_and_rating/rating.dart';
+part '../visited_business/widgets/contact_channels/contact_channels.dart';
+part '../visited_business/widgets/customer_reviews/customer_reviews.dart';
 part '../visited_business/widgets/opening_hours/current_opening_hours_wdg.dart';
 part '../visited_business/widgets/opening_hours/opening_hours.dart';
 part '../visited_business/widgets/services/services.dart';
-part '../visited_business/widgets/customer_reviews/customer_reviews.dart';
-part '../visited_business/widgets/contact_channels/contact_channels.dart';
-part '../visited_business/widgets/additional_info/additional_info.dart';
 
 class VisitedBusinessPage extends StatefulWidget {
   const VisitedBusinessPage({super.key});

@@ -16,6 +16,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
@@ -471,6 +472,15 @@ class BusinessRepo {
   Future<ApiResult<void>> deletePromotion(String uuid) async {
     try {
       return ApiResult.success(await _businessClient.deletePromotion(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<AiPromoQuotaResponse>> useAiPromoQuota(String businessUuid) async {
+    try {
+      final response = await _businessClient.useAiPromoQuota({'business_uuid': businessUuid});
+      return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

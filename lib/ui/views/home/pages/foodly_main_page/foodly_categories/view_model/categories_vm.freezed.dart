@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CategoriesVM {
   FoodlyCategories? get currentCategory => throw _privateConstructorUsedError;
-  CarouselSliderController? get carouselController =>
+  FoodlyCarouselController? get carouselController =>
       throw _privateConstructorUsedError;
   List<BusinessDM> get nearbyBusinesses => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $CategoriesVMCopyWith<$Res> {
   @useResult
   $Res call(
       {FoodlyCategories? currentCategory,
-      CarouselSliderController? carouselController,
+      FoodlyCarouselController? carouselController,
       List<BusinessDM> nearbyBusinesses,
       double? latitude,
       double? longitude,
@@ -82,7 +82,7 @@ class _$CategoriesVMCopyWithImpl<$Res, $Val extends CategoriesVM>
       carouselController: freezed == carouselController
           ? _value.carouselController
           : carouselController // ignore: cast_nullable_to_non_nullable
-              as CarouselSliderController?,
+              as FoodlyCarouselController?,
       nearbyBusinesses: null == nearbyBusinesses
           ? _value.nearbyBusinesses
           : nearbyBusinesses // ignore: cast_nullable_to_non_nullable
@@ -121,7 +121,7 @@ abstract class _$$CategoriesVMImplCopyWith<$Res>
   @useResult
   $Res call(
       {FoodlyCategories? currentCategory,
-      CarouselSliderController? carouselController,
+      FoodlyCarouselController? carouselController,
       List<BusinessDM> nearbyBusinesses,
       double? latitude,
       double? longitude,
@@ -160,7 +160,7 @@ class __$$CategoriesVMImplCopyWithImpl<$Res>
       carouselController: freezed == carouselController
           ? _value.carouselController
           : carouselController // ignore: cast_nullable_to_non_nullable
-              as CarouselSliderController?,
+              as FoodlyCarouselController?,
       nearbyBusinesses: null == nearbyBusinesses
           ? _value._nearbyBusinesses
           : nearbyBusinesses // ignore: cast_nullable_to_non_nullable
@@ -207,7 +207,7 @@ class _$CategoriesVMImpl extends _CategoriesVM {
   @override
   final FoodlyCategories? currentCategory;
   @override
-  final CarouselSliderController? carouselController;
+  final FoodlyCarouselController? carouselController;
   final List<BusinessDM> _nearbyBusinesses;
   @override
   @JsonKey()
@@ -284,7 +284,7 @@ class _$CategoriesVMImpl extends _CategoriesVM {
 abstract class _CategoriesVM extends CategoriesVM {
   const factory _CategoriesVM(
       {final FoodlyCategories? currentCategory,
-      final CarouselSliderController? carouselController,
+      final FoodlyCarouselController? carouselController,
       final List<BusinessDM> nearbyBusinesses,
       final double? latitude,
       final double? longitude,
@@ -296,7 +296,7 @@ abstract class _CategoriesVM extends CategoriesVM {
   @override
   FoodlyCategories? get currentCategory;
   @override
-  CarouselSliderController? get carouselController;
+  FoodlyCarouselController? get carouselController;
   @override
   List<BusinessDM> get nearbyBusinesses;
   @override

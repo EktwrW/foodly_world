@@ -23,6 +23,7 @@ mixin _$ManagePromotionsState {
     required TResult Function(ManagePromotionsVM vm) loading,
     required TResult Function(ManagePromotionsVM vm) loaded,
     required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,6 +32,7 @@ mixin _$ManagePromotionsState {
     TResult? Function(ManagePromotionsVM vm)? loading,
     TResult? Function(ManagePromotionsVM vm)? loaded,
     TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +41,7 @@ mixin _$ManagePromotionsState {
     TResult Function(ManagePromotionsVM vm)? loading,
     TResult Function(ManagePromotionsVM vm)? loaded,
     TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +51,7 @@ mixin _$ManagePromotionsState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +60,7 @@ mixin _$ManagePromotionsState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +69,7 @@ mixin _$ManagePromotionsState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -208,6 +214,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(ManagePromotionsVM vm) loading,
     required TResult Function(ManagePromotionsVM vm) loaded,
     required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
   }) {
     return initial(vm);
   }
@@ -219,6 +226,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(ManagePromotionsVM vm)? loading,
     TResult? Function(ManagePromotionsVM vm)? loaded,
     TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
   }) {
     return initial?.call(vm);
   }
@@ -230,6 +238,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(ManagePromotionsVM vm)? loading,
     TResult Function(ManagePromotionsVM vm)? loaded,
     TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -245,6 +254,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) {
     return initial(this);
   }
@@ -256,6 +266,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
   }) {
     return initial?.call(this);
   }
@@ -267,6 +278,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -375,6 +387,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function(ManagePromotionsVM vm) loading,
     required TResult Function(ManagePromotionsVM vm) loaded,
     required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
   }) {
     return loading(vm);
   }
@@ -386,6 +399,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function(ManagePromotionsVM vm)? loading,
     TResult? Function(ManagePromotionsVM vm)? loaded,
     TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
   }) {
     return loading?.call(vm);
   }
@@ -397,6 +411,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function(ManagePromotionsVM vm)? loading,
     TResult Function(ManagePromotionsVM vm)? loaded,
     TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -412,6 +427,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) {
     return loading(this);
   }
@@ -423,6 +439,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
   }) {
     return loading?.call(this);
   }
@@ -434,6 +451,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -542,6 +560,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     required TResult Function(ManagePromotionsVM vm) loading,
     required TResult Function(ManagePromotionsVM vm) loaded,
     required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
   }) {
     return loaded(vm);
   }
@@ -553,6 +572,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     TResult? Function(ManagePromotionsVM vm)? loading,
     TResult? Function(ManagePromotionsVM vm)? loaded,
     TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
   }) {
     return loaded?.call(vm);
   }
@@ -564,6 +584,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     TResult Function(ManagePromotionsVM vm)? loading,
     TResult Function(ManagePromotionsVM vm)? loaded,
     TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -579,6 +600,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) {
     return loaded(this);
   }
@@ -590,6 +612,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
   }) {
     return loaded?.call(this);
   }
@@ -601,6 +624,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -718,6 +742,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function(ManagePromotionsVM vm) loading,
     required TResult Function(ManagePromotionsVM vm) loaded,
     required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
   }) {
     return error(message, vm);
   }
@@ -729,6 +754,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function(ManagePromotionsVM vm)? loading,
     TResult? Function(ManagePromotionsVM vm)? loaded,
     TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
   }) {
     return error?.call(message, vm);
   }
@@ -740,6 +766,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function(ManagePromotionsVM vm)? loading,
     TResult Function(ManagePromotionsVM vm)? loaded,
     TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -755,6 +782,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) {
     return error(this);
   }
@@ -766,6 +794,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
   }) {
     return error?.call(this);
   }
@@ -777,6 +806,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -799,5 +829,183 @@ abstract class _Error implements ManagePromotionsState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AiQuotaExhaustedImplCopyWith<$Res>
+    implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$$AiQuotaExhaustedImplCopyWith(_$AiQuotaExhaustedImpl value,
+          $Res Function(_$AiQuotaExhaustedImpl) then) =
+      __$$AiQuotaExhaustedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ManagePromotionsVM vm});
+
+  @override
+  $ManagePromotionsVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$$AiQuotaExhaustedImplCopyWithImpl<$Res>
+    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$AiQuotaExhaustedImpl>
+    implements _$$AiQuotaExhaustedImplCopyWith<$Res> {
+  __$$AiQuotaExhaustedImplCopyWithImpl(_$AiQuotaExhaustedImpl _value,
+      $Res Function(_$AiQuotaExhaustedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_$AiQuotaExhaustedImpl(
+      null == vm
+          ? _value.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as ManagePromotionsVM,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AiQuotaExhaustedImpl
+    with DiagnosticableTreeMixin
+    implements _AiQuotaExhausted {
+  const _$AiQuotaExhaustedImpl(this.vm);
+
+  @override
+  final ManagePromotionsVM vm;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.aiQuotaExhausted(vm: $vm)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'ManagePromotionsState.aiQuotaExhausted'))
+      ..add(DiagnosticsProperty('vm', vm));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AiQuotaExhaustedImpl &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AiQuotaExhaustedImplCopyWith<_$AiQuotaExhaustedImpl> get copyWith =>
+      __$$AiQuotaExhaustedImplCopyWithImpl<_$AiQuotaExhaustedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ManagePromotionsVM vm) initial,
+    required TResult Function(ManagePromotionsVM vm) loading,
+    required TResult Function(ManagePromotionsVM vm) loaded,
+    required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
+  }) {
+    return aiQuotaExhausted(vm);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ManagePromotionsVM vm)? initial,
+    TResult? Function(ManagePromotionsVM vm)? loading,
+    TResult? Function(ManagePromotionsVM vm)? loaded,
+    TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
+  }) {
+    return aiQuotaExhausted?.call(vm);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ManagePromotionsVM vm)? initial,
+    TResult Function(ManagePromotionsVM vm)? loading,
+    TResult Function(ManagePromotionsVM vm)? loaded,
+    TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
+    required TResult orElse(),
+  }) {
+    if (aiQuotaExhausted != null) {
+      return aiQuotaExhausted(vm);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
+  }) {
+    return aiQuotaExhausted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
+  }) {
+    return aiQuotaExhausted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
+    required TResult orElse(),
+  }) {
+    if (aiQuotaExhausted != null) {
+      return aiQuotaExhausted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AiQuotaExhausted implements ManagePromotionsState {
+  const factory _AiQuotaExhausted(final ManagePromotionsVM vm) =
+      _$AiQuotaExhaustedImpl;
+
+  @override
+  ManagePromotionsVM get vm;
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AiQuotaExhaustedImplCopyWith<_$AiQuotaExhaustedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

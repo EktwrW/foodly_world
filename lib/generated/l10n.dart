@@ -249,6 +249,26 @@ class S {
     return Intl.message('Vivid', name: 'aiPromoImageVivid', desc: '', args: []);
   }
 
+  /// `Monthly Quota Reached`
+  String get aiPromoQuotaExhaustedTitle {
+    return Intl.message(
+      'Monthly Quota Reached',
+      name: 'aiPromoQuotaExhaustedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have used all {limit} AI-generated promotions for this month. Your quota will reset on the 1st of next month.`
+  String aiPromoQuotaExhaustedContent(int limit) {
+    return Intl.message(
+      'You have used all $limit AI-generated promotions for this month. Your quota will reset on the 1st of next month.',
+      name: 'aiPromoQuotaExhaustedContent',
+      desc: '',
+      args: [limit],
+    );
+  }
+
   /// `AI Promotion Generator`
   String get aiPromoTitle {
     return Intl.message(

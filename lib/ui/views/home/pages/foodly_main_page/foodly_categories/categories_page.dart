@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -64,7 +64,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
             WidgetsBinding.instance.addPostFrameCallback((_) => vm.carouselController?.animateToPage(
                   vm.currentCategory?.index ?? 0,
                   duration: Durations.extralong1,
-                  curve: Curves.decelerate,
                 ));
 
             dialogService.hideLoading();
@@ -114,68 +113,62 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ? (vm.viewMode.isGrid ? const BusinessGridShimmer() : const BusinessListShimmer())
             : Column(
                 children: [
-                  Flexible(
-                    child: CarouselSlider(
-                      key: const Key('categories-page-carousel-slider'),
-                      items: FoodlyCategories.values
-                          .map((e) => TextButton(
-                                onPressed: () => cubit.changeCategory(e),
-                                style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  spacing: 6,
-                                  children: [
-                                    SizedBox.square(
-                                      dimension: 42,
-                                      child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            boxShadow: e != vm.currentCategory
-                                                ? null
-                                                : [
-                                                    BoxShadow(
-                                                      color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
-                                                      blurRadius: 6,
-                                                      offset: const Offset(0, 3),
-                                                    )
-                                                  ],
-                                            shape: BoxShape.circle,
-                                            color: e == vm.currentCategory
-                                                ? FoodlyThemes.primaryFoodly
-                                                : FoodlyThemes.alternativeUnselectedLightColor,
-                                          ),
-                                          child: e.avatar.paddingAll(3)),
-                                    ),
-                                    Flexible(
-                                      child: Center(
-                                        child: Text(
-                                          e.text,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          softWrap: false,
-                                          style: FoodlyTextStyles.categoryButtonText.copyWith(
-                                            color: FoodlyThemes.primaryFoodly,
-                                            fontWeight: e == vm.currentCategory ? FontWeight.w600 : null,
-                                          ),
+                  FoodlyCarousel(
+                    key: const Key('categories-page-carousel'),
+                    controller: vm.carouselController,
+                    height: 90,
+                    viewportFraction: screenWidth <= 320 ? .41 : .25,
+                    itemSpacing: 3,
+                    items: FoodlyCategories.values
+                        .map((e) => TextButton(
+                              onPressed: () => cubit.changeCategory(e),
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox.square(
+                                    dimension: 42,
+                                    child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          boxShadow: e != vm.currentCategory
+                                              ? null
+                                              : [
+                                                  BoxShadow(
+                                                    color: FoodlyThemes.primaryFoodly.withValues(alpha: .3),
+                                                    blurRadius: 6,
+                                                    offset: const Offset(0, 3),
+                                                  )
+                                                ],
+                                          shape: BoxShape.circle,
+                                          color: e == vm.currentCategory
+                                              ? FoodlyThemes.primaryFoodly
+                                              : FoodlyThemes.alternativeUnselectedLightColor,
+                                        ),
+                                        child: e.avatar.paddingAll(3)),
+                                  ),
+                                  Flexible(
+                                    child: Center(
+                                      child: Text(
+                                        e.text,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        softWrap: false,
+                                        style: FoodlyTextStyles.categoryButtonText.copyWith(
+                                          color: FoodlyThemes.primaryFoodly,
+                                          fontWeight: e == vm.currentCategory ? FontWeight.w600 : null,
                                         ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ).paddingHorizontal(3))
-                          .toList(),
-                      carouselController: vm.carouselController,
-                      options: CarouselOptions(
-                        onPageChanged: (index, reason) {},
-                        height: 90,
-                        viewportFraction: screenWidth <= 320 ? .41 : .25,
-                        aspectRatio: 3.0,
-                      ),
-                    ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ))
+                        .toList(),
                   ),
-                  const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 24),
+                  const CurrentLocationButton().paddingSymmetric(horizontal: 12, vertical: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

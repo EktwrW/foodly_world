@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/blocs/check_availabilities/check_availabilities_cubit.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
@@ -15,6 +14,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
@@ -33,6 +33,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+part 'widgets/delete_account_section.dart';
 part 'widgets/user_birthday_date.dart';
 part 'widgets/user_contacts.dart';
 part 'widgets/user_gender.dart';
@@ -43,7 +44,6 @@ part 'widgets/user_profile_section_wrapper.dart';
 part 'widgets/user_profile_sliver_app_bar.dart';
 part 'widgets/user_reviews.dart';
 part 'widgets/username_dialog/edit_username_dialog.dart';
-part 'widgets/delete_account_section.dart';
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
