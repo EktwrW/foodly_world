@@ -196,7 +196,7 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
           onTap: () => _showUserRoleSnackBar(context),
           enabled: vm.roleId != null,
           imagePath: vm.imagePath,
-          imageUrl: importedAvatar ?? '',
+          imageUrl: vm.imagePath.isNotEmpty ? '' : (importedAvatar ?? ''),
         ),
         SliverToBoxAdapter(child: _buildSignUpContent(vm, context)),
       ],

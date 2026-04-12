@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/utils/calendar_helper.dart';
+import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show FontAwesome;
+import 'package:icons_plus/icons_plus.dart' show Brand, Brands, FontAwesome;
 import 'package:intl/intl.dart';
 
 class ReservationCard extends StatelessWidget {
@@ -91,6 +93,56 @@ class ReservationCard extends StatelessWidget {
               maxLines: 6,
               overflow: TextOverflow.ellipsis,
             ).paddingAll(9),
+          ],
+
+          // Action row: Calendar + Waze + Google Maps (confirmed only)
+          if (reservation.isConfirmed) ...[
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () => CalendarHelper.addReservationToCalendar(reservation),
+                  tooltip: 'Add to calendar',
+                  icon: const Icon(Icons.calendar_month_rounded, size: 20, color: Colors.white),
+                  style: IconButton.styleFrom(
+                    backgroundColor: FoodlyThemes.tertiaryFoodly,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    minimumSize: const Size(36, 36),
+                  ),
+                ),
+                if (reservation.businessLatitude != null && reservation.businessLongitude != null) ...[
+                  const SizedBox(width: 6),
+                  IconButton(
+                    onPressed: () => UrlLauncher.launchWazeDirections(
+                      reservation.businessLatitude!,
+                      reservation.businessLongitude!,
+                    ),
+                    tooltip: 'Waze',
+                    icon: Brand(Brands.waze, size: 20),
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white.withValues(alpha: 0.15),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      minimumSize: const Size(36, 36),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  IconButton(
+                    onPressed: () => UrlLauncher.launchGoogleMapsDirections(
+                      reservation.businessLatitude!,
+                      reservation.businessLongitude!,
+                    ),
+                    tooltip: 'Google Maps',
+                    icon: Brand(Brands.google_maps_old, size: 20),
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white.withValues(alpha: 0.15),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      minimumSize: const Size(36, 36),
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ],
 
           // Cancel button

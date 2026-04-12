@@ -53,7 +53,11 @@ class DeleteBusinessSection extends StatelessWidget {
         if (!context.mounted) return;
 
         di<Logger>().i('Navigating to home after business deletion');
-        context.goNamed(AppRoutes.home.name);
+        final userUuid = di<AuthSessionService>().uuid;
+        context.goNamed(
+          AppRoutes.foodlyMainPage.name,
+          pathParameters: {AppRoutes.routeIdParam: userUuid},
+        );
       },
       failure: (e) async {
         di<Logger>().e('Failed to delete business: ${e.errorMsg}');

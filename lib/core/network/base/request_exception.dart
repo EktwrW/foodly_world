@@ -13,6 +13,17 @@ class AppRequestException implements Exception {
       final dio = error as DioException;
       final data = dio.response?.data;
       if (data is Map) {
+        // If there are field-level validation errors, surface them.
+        final errors = data['errors'];
+        if (errors is Map && errors.isNotEmpty) {
+          final details = errors.entries.map((e) {
+            final msgs = e.value is List ? (e.value as List).join(', ') : '${e.value}';
+            return '${e.key}: $msgs';
+          }).join('\n');
+          final msg = data['message'] as String? ?? '';
+          return msg.isNotEmpty ? '$msg\n$details' : details;
+        }
+
         final msg = data['message'] as String?;
         if (msg != null && msg.isNotEmpty) return msg;
       }

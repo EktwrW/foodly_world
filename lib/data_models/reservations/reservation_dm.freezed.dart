@@ -1256,6 +1256,12 @@ mixin _$ReservationDM {
   String? get businessName => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_photo')
   String? get businessPhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'business_latitude')
+  double? get businessLatitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'business_longitude')
+  double? get businessLongitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'business_address')
+  String? get businessAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_uuid')
   String? get userUuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
@@ -1303,6 +1309,9 @@ abstract class $ReservationDMCopyWith<$Res> {
       @JsonKey(name: 'business_uuid') String? businessUuid,
       @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'business_photo') String? businessPhoto,
+      @JsonKey(name: 'business_latitude') double? businessLatitude,
+      @JsonKey(name: 'business_longitude') double? businessLongitude,
+      @JsonKey(name: 'business_address') String? businessAddress,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
@@ -1342,6 +1351,9 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
     Object? businessUuid = freezed,
     Object? businessName = freezed,
     Object? businessPhoto = freezed,
+    Object? businessLatitude = freezed,
+    Object? businessLongitude = freezed,
+    Object? businessAddress = freezed,
     Object? userUuid = freezed,
     Object? userName = freezed,
     Object? userPhoto = freezed,
@@ -1411,6 +1423,18 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
           ? _value.businessPhoto
           : businessPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessLatitude: freezed == businessLatitude
+          ? _value.businessLatitude
+          : businessLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessLongitude: freezed == businessLongitude
+          ? _value.businessLongitude
+          : businessLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessAddress: freezed == businessAddress
+          ? _value.businessAddress
+          : businessAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       userUuid: freezed == userUuid
           ? _value.userUuid
           : userUuid // ignore: cast_nullable_to_non_nullable
@@ -1467,6 +1491,9 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
       @JsonKey(name: 'business_uuid') String? businessUuid,
       @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'business_photo') String? businessPhoto,
+      @JsonKey(name: 'business_latitude') double? businessLatitude,
+      @JsonKey(name: 'business_longitude') double? businessLongitude,
+      @JsonKey(name: 'business_address') String? businessAddress,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
@@ -1504,6 +1531,9 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? businessUuid = freezed,
     Object? businessName = freezed,
     Object? businessPhoto = freezed,
+    Object? businessLatitude = freezed,
+    Object? businessLongitude = freezed,
+    Object? businessAddress = freezed,
     Object? userUuid = freezed,
     Object? userName = freezed,
     Object? userPhoto = freezed,
@@ -1573,6 +1603,18 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
           ? _value.businessPhoto
           : businessPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessLatitude: freezed == businessLatitude
+          ? _value.businessLatitude
+          : businessLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessLongitude: freezed == businessLongitude
+          ? _value.businessLongitude
+          : businessLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessAddress: freezed == businessAddress
+          ? _value.businessAddress
+          : businessAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       userUuid: freezed == userUuid
           ? _value.userUuid
           : userUuid // ignore: cast_nullable_to_non_nullable
@@ -1624,6 +1666,9 @@ class _$ReservationDMImpl extends _ReservationDM {
       @JsonKey(name: 'business_uuid') this.businessUuid,
       @JsonKey(name: 'business_name') this.businessName,
       @JsonKey(name: 'business_photo') this.businessPhoto,
+      @JsonKey(name: 'business_latitude') this.businessLatitude,
+      @JsonKey(name: 'business_longitude') this.businessLongitude,
+      @JsonKey(name: 'business_address') this.businessAddress,
       @JsonKey(name: 'user_uuid') this.userUuid,
       @JsonKey(name: 'user_name') this.userName,
       @JsonKey(name: 'user_photo') this.userPhoto,
@@ -1682,6 +1727,15 @@ class _$ReservationDMImpl extends _ReservationDM {
   @JsonKey(name: 'business_photo')
   final String? businessPhoto;
   @override
+  @JsonKey(name: 'business_latitude')
+  final double? businessLatitude;
+  @override
+  @JsonKey(name: 'business_longitude')
+  final double? businessLongitude;
+  @override
+  @JsonKey(name: 'business_address')
+  final String? businessAddress;
+  @override
   @JsonKey(name: 'user_uuid')
   final String? userUuid;
   @override
@@ -1705,7 +1759,7 @@ class _$ReservationDMImpl extends _ReservationDM {
 
   @override
   String toString() {
-    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -1742,6 +1796,12 @@ class _$ReservationDMImpl extends _ReservationDM {
                 other.businessName == businessName) &&
             (identical(other.businessPhoto, businessPhoto) ||
                 other.businessPhoto == businessPhoto) &&
+            (identical(other.businessLatitude, businessLatitude) ||
+                other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) ||
+                other.businessLongitude == businessLongitude) &&
+            (identical(other.businessAddress, businessAddress) ||
+                other.businessAddress == businessAddress) &&
             (identical(other.userUuid, userUuid) ||
                 other.userUuid == userUuid) &&
             (identical(other.userName, userName) ||
@@ -1777,6 +1837,9 @@ class _$ReservationDMImpl extends _ReservationDM {
         businessUuid,
         businessName,
         businessPhoto,
+        businessLatitude,
+        businessLongitude,
+        businessAddress,
         userUuid,
         userName,
         userPhoto,
@@ -1819,6 +1882,9 @@ abstract class _ReservationDM extends ReservationDM {
           @JsonKey(name: 'business_uuid') final String? businessUuid,
           @JsonKey(name: 'business_name') final String? businessName,
           @JsonKey(name: 'business_photo') final String? businessPhoto,
+          @JsonKey(name: 'business_latitude') final double? businessLatitude,
+          @JsonKey(name: 'business_longitude') final double? businessLongitude,
+          @JsonKey(name: 'business_address') final String? businessAddress,
           @JsonKey(name: 'user_uuid') final String? userUuid,
           @JsonKey(name: 'user_name') final String? userName,
           @JsonKey(name: 'user_photo') final String? userPhoto,
@@ -1876,6 +1942,15 @@ abstract class _ReservationDM extends ReservationDM {
   @override
   @JsonKey(name: 'business_photo')
   String? get businessPhoto;
+  @override
+  @JsonKey(name: 'business_latitude')
+  double? get businessLatitude;
+  @override
+  @JsonKey(name: 'business_longitude')
+  double? get businessLongitude;
+  @override
+  @JsonKey(name: 'business_address')
+  String? get businessAddress;
   @override
   @JsonKey(name: 'user_uuid')
   String? get userUuid;

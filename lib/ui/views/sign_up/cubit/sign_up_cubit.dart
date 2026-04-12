@@ -218,7 +218,11 @@ class SignUpCubit extends Cubit<SignUpState> {
     });
   }
 
-  void processImagePath(String? imagePath) async => emit(_Loaded(_vm = _vm.copyWith(imagePath: imagePath ?? '')));
+  void processImagePath(String? imagePath) async => emit(_Loaded(_vm = _vm.copyWith(
+        imagePath: imagePath ?? '',
+        // Clear provider avatar so the gallery photo is used at registration
+        importedAvatar: (imagePath?.isNotEmpty == true) ? null : _vm.importedAvatar,
+      )));
 
   void processImportedAvatar(String? importedAvatar) async =>
       emit(_Loaded(_vm = _vm.copyWith(importedAvatar: importedAvatar)));
