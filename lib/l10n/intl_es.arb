@@ -753,5 +753,30 @@
   "sharePromotion": "Compartir Promoción",
   "areYouSureCancelReservation": "¿Estás seguro de que deseas cancelar esta reservación?",
   "yesCancel": "Sí, cancelar",
-  "contactAdmin": "Ocurrió un error, por favor contacta al administrador."
+  "contactAdmin": "Ocurrió un error, por favor contacta al administrador.",
+  "timeAgoJustNow": "Ahora mismo",
+  "timeAgoMinutes": "hace {count}m",
+  "@timeAgoMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoHours": "hace {count}h",
+  "@timeAgoHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoDays": "hace {count}d",
+  "@timeAgoDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

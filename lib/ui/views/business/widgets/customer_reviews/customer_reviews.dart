@@ -35,12 +35,11 @@ class CustomerReviewsWdg extends StatelessWidget {
                   ],
                 ).paddingVertical(16),
               ),
-              child: FoodlyCarousel(
+              child: FoodlyCarouselBasic(
                 key: const Key('business-reviews-carousel'),
                 height: 273,
                 enableInfiniteScroll: false,
                 autoPlay: true,
-                viewportFraction: 0.99,
                 items: currentBusinessReviews.map((review) {
                   return ReviewCard(review: review);
                 }).toList(),

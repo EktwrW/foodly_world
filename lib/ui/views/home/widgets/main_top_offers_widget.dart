@@ -9,7 +9,6 @@ import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
@@ -84,9 +83,8 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
 
             return FoodlyCarousel(
               controller: _carouselController,
-              height: 369,
+              height: 333,
               autoPlay: true,
-              viewportFraction: context.screenWidth <= 360 ? .85 : .9,
               onPageChanged: (index) => _onPageChanged(index, promotions, vm.hasMore),
               items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
             );
@@ -226,6 +224,11 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            const Icon(
+                              Bootstrap.megaphone_fill,
+                              color: FoodlyThemes.tertiaryFoodly,
+                              size: 16,
+                            ).paddingTop(3),
                             Flexible(
                               child: Text(
                                 promo.subTitle,
@@ -235,11 +238,6 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const Icon(
-                              Bootstrap.megaphone_fill,
-                              color: FoodlyThemes.tertiaryFoodly,
-                              size: 16,
-                            ).paddingTop(3)
                           ],
                         ),
                       ),

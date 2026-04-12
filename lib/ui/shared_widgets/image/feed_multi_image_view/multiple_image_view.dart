@@ -10,16 +10,6 @@ class MultipleImageView extends StatelessWidget {
     this.radius = 10,
   });
 
-  BorderRadius get getTopLeftBottomLeftRadius =>
-      BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius));
-
-  BorderRadius get getTopRightBottomRightRadius =>
-      BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius));
-
-  BorderRadius get topRightRadius => BorderRadius.only(topRight: Radius.circular(radius));
-
-  BorderRadius get bottomRightRadius => BorderRadius.only(bottomRight: Radius.circular(radius));
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -52,7 +42,6 @@ class MultipleImageView extends StatelessWidget {
     return [
       MultiImageExpandedWdg(
         imageUrl: imageUrls.first,
-        borderRadius: BorderRadius.circular(radius),
       ),
     ];
   }
@@ -61,12 +50,9 @@ class MultipleImageView extends StatelessWidget {
     return [
       MultiImageExpandedWdg(
         imageUrl: imageUrls.first,
-        borderRadius: getTopLeftBottomLeftRadius,
       ),
-      const SizedBox(width: 5),
       MultiImageExpandedWdg(
         imageUrl: imageUrls.last,
-        borderRadius: getTopRightBottomRightRadius,
       ),
     ];
   }
@@ -75,17 +61,14 @@ class MultipleImageView extends StatelessWidget {
     return [
       MultiImageExpandedWdg(
         imageUrl: imageUrls[0],
-        borderRadius: getTopLeftBottomLeftRadius,
       ),
-      const SizedBox(width: 5),
       Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            MultiImageExpandedWdg(imageUrl: imageUrls[1], borderRadius: topRightRadius),
-            const SizedBox(height: 5),
-            MultiImageExpandedWdg(imageUrl: imageUrls[2], borderRadius: bottomRightRadius),
+            MultiImageExpandedWdg(imageUrl: imageUrls[1]),
+            MultiImageExpandedWdg(imageUrl: imageUrls[2]),
           ],
         ),
       ),
@@ -97,9 +80,7 @@ class MultipleImageView extends StatelessWidget {
       MultiImageExpandedWdg(
         imageUrl: imageUrls[0],
         flex: 2,
-        borderRadius: getTopLeftBottomLeftRadius,
       ),
-      const SizedBox(width: 5),
       Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,14 +88,12 @@ class MultipleImageView extends StatelessWidget {
           children: [
             MultiImageExpandedWdg(
               imageUrl: imageUrls[1],
-              borderRadius: topRightRadius,
             ),
-            const SizedBox(height: 5),
-            MultiImageExpandedWdg(imageUrl: imageUrls[2]),
-            const SizedBox(height: 5),
+            MultiImageExpandedWdg(
+              imageUrl: imageUrls[2],
+            ),
             MultiImageExpandedWdg(
               imageUrl: imageUrls[3],
-              borderRadius: bottomRightRadius,
             ),
           ],
         ),
@@ -127,9 +106,7 @@ class MultipleImageView extends StatelessWidget {
       MultiImageExpandedWdg(
         imageUrl: imageUrls[0],
         flex: 2,
-        borderRadius: getTopLeftBottomLeftRadius,
       ),
-      const SizedBox(width: 5),
       Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,18 +114,14 @@ class MultipleImageView extends StatelessWidget {
           children: [
             MultiImageExpandedWdg(
               imageUrl: imageUrls[1],
-              borderRadius: topRightRadius,
             ),
-            const SizedBox(height: 5),
             MultiImageExpandedWdg(imageUrl: imageUrls[2]),
-            const SizedBox(height: 5),
             Expanded(
               child: Stack(
                 alignment: Alignment.center,
                 fit: StackFit.expand,
                 children: [
                   ClipRRect(
-                    borderRadius: bottomRightRadius,
                     child: PostImageWidget(
                       imageUrls[3],
                       fit: BoxFit.cover,
@@ -158,8 +131,9 @@ class MultipleImageView extends StatelessWidget {
                   Positioned.fill(
                     child: Container(
                       alignment: Alignment.center,
-                      decoration:
-                          BoxDecoration(color: Colors.black.withValues(alpha: 0.5), borderRadius: bottomRightRadius),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.5),
+                      ),
                       child: Text(
                         '+${imageUrls.length - 4}',
                         style: FoodlyTextStyles.multiImageItemsLeft,

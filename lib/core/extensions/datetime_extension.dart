@@ -96,15 +96,16 @@ extension DateExtension on DateTime {
   String get timeAgo {
     final now = DateTime.now();
     final difference = now.difference(this);
+    final s = S.current;
 
     if (difference.inSeconds < 60) {
-      return 'Just now';
+      return s.timeAgoJustNow;
     } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
+      return s.timeAgoMinutes(difference.inMinutes);
     } else if (difference.inHours < 24) {
-      return '${difference.inHours}h ago';
+      return s.timeAgoHours(difference.inHours);
     } else {
-      return '${difference.inDays}d ago';
+      return s.timeAgoDays(difference.inDays);
     }
   }
 }

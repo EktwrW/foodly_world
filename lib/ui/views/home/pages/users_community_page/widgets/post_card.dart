@@ -1,13 +1,20 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:universal_io/io.dart' as uni_io;
+import 'package:url_launcher/url_launcher.dart';
 
 class PostCard extends StatelessWidget {
   final PostDM post;
@@ -23,27 +30,35 @@ class PostCard extends StatelessWidget {
 
   bool get _isAuthor => post.userUuid == di<AuthSessionService>().uuid;
 
+  /// First URL found in the post content (if any).
+  String? get _linkUrl => extractFirstUrl(post.content);
+
   @override
   Widget build(BuildContext context) {
     return FadeIn(
       child: Card(
-        elevation: 2,
+        elevation: 1,
+        shadowColor: Colors.black26,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
-            _buildContent(),
+            _buildHeader(context),
+            _buildContent(context),
+            if (_linkUrl != null) _buildLinkPreview(),
             if (post.hasPhoto) _buildPhoto(),
-            _buildFooter(),
+            const Divider(height: 1, indent: 14, endIndent: 14),
+            _buildFooter(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
+  // ── Header ──
+
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         AvatarWidget(
@@ -64,7 +79,7 @@ class PostCard extends StatelessWidget {
               ),
               Text(
                 post.createdAt?.timeAgo ?? '',
-                style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11),
+                style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11),
               ),
             ],
           ).paddingOnly(left: 10),
@@ -74,22 +89,19 @@ class PostCard extends StatelessWidget {
             elevation: 3,
             icon: const Icon(Icons.more_vert, color: FoodlyThemes.primaryFoodly, size: 22),
             constraints: const BoxConstraints(maxWidth: 120),
-            color: Colors.white.withValues(alpha: 0.9),
+            color: Colors.white.withValues(alpha: 0.95),
             padding: EdgeInsets.zero,
             onSelected: (value) {
               if (value == 'delete') onDelete?.call();
             },
-            itemBuilder: (context) => [
+            itemBuilder: (_) => [
               PopupMenuItem(
                 height: 36,
                 value: 'delete',
                 child: Row(
                   children: [
                     const Icon(Bootstrap.trash3, size: 16, color: FoodlyThemes.primaryFoodly),
-                    Text(
-                      S.current.delete,
-                      style: const TextStyle(color: FoodlyThemes.primaryFoodly),
-                    ).paddingLeft(8),
+                    Text(S.current.delete, style: const TextStyle(color: FoodlyThemes.primaryFoodly)).paddingLeft(8),
                   ],
                 ),
               ),
@@ -99,32 +111,66 @@ class PostCard extends StatelessWidget {
     ).paddingOnly(left: 14, right: 4, top: 12);
   }
 
-  Widget _buildContent() {
-    return Text(
-      post.content,
-      style: FoodlyTextStyles.label,
+  // ── Content (rendered as Markdown) ──
+
+  Widget _buildContent(BuildContext context) {
+    return MarkdownBody(
+      data: post.content,
+      selectable: true,
+      softLineBreak: true,
+      styleSheet: MarkdownStyleSheet(
+        p: FoodlyTextStyles.label.copyWith(height: 1.45),
+        a: FoodlyTextStyles.label.copyWith(color: FoodlyThemes.primaryFoodly, decoration: TextDecoration.underline),
+        strong: FoodlyTextStyles.labelBold,
+        em: FoodlyTextStyles.label.copyWith(fontStyle: FontStyle.italic),
+        blockquotePadding: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
+        blockquoteDecoration: BoxDecoration(
+          border: Border(left: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.4), width: 3)),
+        ),
+        listBulletPadding: const EdgeInsets.only(right: 4),
+      ),
+      onTapLink: (_, href, __) {
+        if (href == null) return;
+        final uri = Uri.tryParse(href);
+        if (uri != null) launchUrl(uri, mode: LaunchMode.externalApplication);
+      },
     ).paddingSymmetric(horizontal: 14, vertical: 10);
   }
 
-  Widget _buildPhoto() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: CachedNetworkImage(
-        imageUrl: post.photoUrl!,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        placeholder: (_, __) => const SizedBox(
-          height: 200,
-          child: Center(child: CircularProgressIndicator.adaptive()),
-        ),
-        errorWidget: (_, __, ___) => const SizedBox.shrink(),
-      ),
-    ).paddingSymmetric(horizontal: 14);
+  // ── Link preview ──
+
+  Widget _buildLinkPreview() {
+    return LinkPreviewCard(url: _linkUrl!).paddingOnly(left: 14, right: 14, bottom: 10);
   }
 
-  Widget _buildFooter() {
+  // ── Photo ──
+
+  Widget _buildPhoto() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 280),
+        child: CachedNetworkImage(
+          imageUrl: post.photoUrl!,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          placeholder: (_, __) => Container(
+            height: 140,
+            color: Colors.grey.shade100,
+            child: const Center(child: CircularProgressIndicator.adaptive(strokeWidth: 2)),
+          ),
+          errorWidget: (_, __, ___) => const SizedBox.shrink(),
+        ),
+      ),
+    ).paddingOnly(left: 14, right: 14, bottom: 6);
+  }
+
+  // ── Footer: Like + Share ──
+
+  Widget _buildFooter(BuildContext context) {
     return Row(
       children: [
+        // Like button
         InkWell(
           onTap: onLike,
           borderRadius: BorderRadius.circular(20),
@@ -133,25 +179,65 @@ class PostCard extends StatelessWidget {
             children: [
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
+                transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
                 child: Icon(
                   post.isLiked ? Icons.favorite : Icons.favorite_border,
                   key: ValueKey(post.isLiked),
-                  color: post.isLiked ? Colors.redAccent : FoodlyThemes.secondaryFoodly,
-                  size: 22,
+                  color: post.isLiked ? Colors.redAccent : Colors.grey.shade400,
+                  size: 20,
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 5),
               Text(
                 '${post.likesCount}',
-                style: FoodlyTextStyles.captionBold.copyWith(
-                  color: post.isLiked ? Colors.redAccent : Colors.black54,
+                style: FoodlyTextStyles.caption.copyWith(
+                  color: post.isLiked ? Colors.redAccent : Colors.grey.shade500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
-          ).paddingAll(8),
+          ).paddingSymmetric(horizontal: 8, vertical: 8),
+        ),
+
+        const Spacer(),
+
+        // Share button
+        InkWell(
+          onTap: () => _sharePost(context),
+          borderRadius: BorderRadius.circular(20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Icon(Icons.share_outlined, size: 18, color: Colors.grey.shade400),
+          ),
         ),
       ],
-    ).paddingOnly(left: 6, bottom: 4);
+    ).paddingOnly(left: 6, right: 6, top: 2, bottom: 4);
+  }
+
+  Future<void> _sharePost(BuildContext context) async {
+    final text = post.content;
+    final url = _linkUrl;
+    final shareText = url != null ? '$text\n$url' : text;
+
+    // If the post has a photo, download it to a temp file and share with image.
+    if (post.hasPhoto) {
+      try {
+        final dir = await getTemporaryDirectory();
+        final file = uni_io.File('${dir.path}/post_${post.uuid}.jpg');
+        await Dio().download(post.photoUrl!, file.path);
+        // ignore: deprecated_member_use
+        await Share.shareXFiles([XFile(file.path)], text: shareText);
+        file.deleteSync();
+      } catch (_) {
+        // Fallback to text-only if download fails.
+        // ignore: deprecated_member_use
+        await Share.share(shareText);
+      }
+      return;
+    }
+
+    // Text-only share.
+    // ignore: deprecated_member_use
+    await Share.share(shareText);
   }
 }

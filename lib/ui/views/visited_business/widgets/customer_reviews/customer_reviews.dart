@@ -37,12 +37,11 @@ class _VisitorCustomerReviewsWdg extends StatelessWidget {
                   ],
                 ).paddingVertical(16),
               ),
-              child: FoodlyCarousel(
+              child: FoodlyCarouselBasic(
                 key: const Key('visited-business-reviews-carousel'),
                 height: 273,
                 enableInfiniteScroll: false,
                 autoPlay: true,
-                viewportFraction: 0.99,
                 onPageChanged: (index) {
                   if (index >= currentBusinessReviews.length - 3 && canLoadMoreReviews) {
                     context.read<VisitBusinessCubit>().fetchMoreReviews();

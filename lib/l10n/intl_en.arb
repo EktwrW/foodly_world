@@ -753,5 +753,30 @@
   "sharePromotion": "Share Promotion",
   "areYouSureCancelReservation": "Are you sure you want to cancel this reservation?",
   "yesCancel": "Yes, cancel",
-  "contactAdmin": "An error occurred, please contact admin."
+  "contactAdmin": "An error occurred, please contact admin.",
+  "timeAgoJustNow": "Just now",
+  "timeAgoMinutes": "{count}m ago",
+  "@timeAgoMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoHours": "{count}h ago",
+  "@timeAgoHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoDays": "{count}d ago",
+  "@timeAgoDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -5183,6 +5183,41 @@ class S {
       args: [],
     );
   }
+
+  /// `Just now`
+  String get timeAgoJustNow {
+    return Intl.message('Just now', name: 'timeAgoJustNow', desc: '', args: []);
+  }
+
+  /// `{count}m ago`
+  String timeAgoMinutes(int count) {
+    return Intl.message(
+      '${count}m ago',
+      name: 'timeAgoMinutes',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count}h ago`
+  String timeAgoHours(int count) {
+    return Intl.message(
+      '${count}h ago',
+      name: 'timeAgoHours',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count}d ago`
+  String timeAgoDays(int count) {
+    return Intl.message(
+      '${count}d ago',
+      name: 'timeAgoDays',
+      desc: '',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

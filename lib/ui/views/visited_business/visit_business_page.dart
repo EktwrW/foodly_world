@@ -25,7 +25,7 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
-import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel_basic.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/email_phone_text_links.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart';

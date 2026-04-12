@@ -90,9 +90,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m27(businessName, appName, menuUrl) =>
       "🍽️ Échale un vistazo al menú de ${businessName} en 🌟 ${appName}: \n${menuUrl}";
 
-  static String m28(date) => "Visitado el ${date}";
+  static String m28(count) => "hace ${count}d";
 
-  static String m29(businessName) => "Escribe una reseña para ${businessName}";
+  static String m29(count) => "hace ${count}h";
+
+  static String m30(count) => "hace ${count}m";
+
+  static String m31(date) => "Visitado el ${date}";
+
+  static String m32(businessName) => "Escribe una reseña para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1188,6 +1194,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aun no hay valoraciones de clientes",
     ),
     "thisBusiness": MessageLookupByLibrary.simpleMessage("este negocio"),
+    "timeAgoDays": m28,
+    "timeAgoHours": m29,
+    "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Ahora mismo"),
+    "timeAgoMinutes": m30,
     "tryAgain": MessageLookupByLibrary.simpleMessage("Intentar de nuevo"),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Acceso no autorizado.",
@@ -1270,7 +1280,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página del negocio",
     ),
-    "visitedOn": m28,
+    "visitedOn": m31,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1320,7 +1330,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Cuándo nos visitaste?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m29,
+    "writeReviewFor": m32,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escribe tu reseña aquí...",
     ),

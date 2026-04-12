@@ -37,6 +37,8 @@ dependencies:
   flex_color_scheme: ^8.2.0
   flick_video_player: ^0.9.0
   flutter_bloc: ^9.1.1
+  flutter_markdown: ^0.7.6
+  any_link_preview: ^3.0.2
   flutter_image_slideshow: ^0.1.6
   flutter_linear_calendar: ^2.0.2
   flutter_native_splash: ^2.4.7

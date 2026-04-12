@@ -59,12 +59,11 @@ class _UserReviewsState extends State<_UserReviews> {
           ).paddingVertical(16);
         }
 
-        return FoodlyCarousel(
+        return FoodlyCarouselBasic(
           key: const Key('user-profile-reviews-carousel'),
           height: 269,
           enableInfiniteScroll: false,
           autoPlay: true,
-          viewportFraction: 0.99,
           onPageChanged: (index) {
             if (index >= data.reviews.length - 3 && data.canLoadMore && !data.isLoadingMore) {
               context.read<UserProfileCubit>().loadMoreReviews();

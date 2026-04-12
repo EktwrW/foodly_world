@@ -46,7 +46,7 @@ class CustomNeumorphicButton extends StatelessWidget {
     this.tooltip,
   });
 
-  TextStyle get getBaseTextStyle => textStyle ?? FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 17);
+  TextStyle get getBaseTextStyle => textStyle ?? FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 16);
 
   @override
   Widget build(BuildContext context) {

@@ -91,9 +91,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m27(businessName, appName, menuUrl) =>
       "🍽️ Vê o menu de ${businessName} em 🌟 ${appName}: \n${menuUrl}";
 
-  static String m28(date) => "Visitado em ${date}";
+  static String m28(count) => "há ${count}d";
 
-  static String m29(businessName) =>
+  static String m29(count) => "há ${count}h";
+
+  static String m30(count) => "há ${count}m";
+
+  static String m31(date) => "Visitado em ${date}";
+
+  static String m32(businessName) =>
       "Escreva uma avaliação para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1166,6 +1172,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisBusiness": MessageLookupByLibrary.simpleMessage(
       "este estabelecimento",
     ),
+    "timeAgoDays": m28,
+    "timeAgoHours": m29,
+    "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Agora mesmo"),
+    "timeAgoMinutes": m30,
     "tryAgain": MessageLookupByLibrary.simpleMessage("Tentar novamente"),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Acesso não autorizado.",
@@ -1248,7 +1258,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página do estabelecimento",
     ),
-    "visitedOn": m28,
+    "visitedOn": m31,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitalidade"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1298,7 +1308,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Quando você visitou?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m29,
+    "writeReviewFor": m32,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escreva sua avaliação aqui...",
     ),

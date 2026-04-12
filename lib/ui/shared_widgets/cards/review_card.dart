@@ -77,25 +77,23 @@ class ReviewCard extends StatelessWidget {
                               topRight: Radius.circular(6),
                               bottomRight: Radius.circular(6),
                             ),
-                            child: AspectRatio(
-                              aspectRatio: 4 / 3,
-                              child: FeedMultipleImageView(
-                                imageUrls: review.photoUrls,
-                                radius: 4,
-                              ),
+                            child: FeedMultipleImageView(
+                              imageUrls: review.photoUrls,
+                              radius: 4,
                             ),
                           ),
                         ),
                       Expanded(
                         flex: 4,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
                                 AvatarWidget(
                                   avatarUrl: review.userPhoto,
-                                ),
+                                ).paddingTop(3),
                                 Expanded(
                                   child: Text(
                                     review.userName ?? '',
@@ -104,12 +102,26 @@ class ReviewCard extends StatelessWidget {
                                     style: FoodlyTextStyles.labelBold,
                                   ).paddingOnly(left: 6),
                                 ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(review.createdAt?.timeAgo ?? '',
+                                        style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
+                                    .paddingOnly(top: 3),
                                 if (review.userUuid == di<AuthSessionService>().userSessionDM?.user.uuid)
                                   PopupMenuButton<String>(
                                     elevation: 3,
-                                    icon: const Icon(Icons.more_vert, color: FoodlyThemes.primaryFoodly, size: 22),
+                                    icon: const Icon(Bootstrap.pencil_square,
+                                        color: FoodlyThemes.primaryFoodly, size: 16),
                                     constraints: const BoxConstraints(maxWidth: 120),
                                     color: Colors.white.withValues(alpha: 0.9),
+                                    style: const ButtonStyle(
+                                      fixedSize: WidgetStatePropertyAll(Size(24, 24)),
+                                      padding: WidgetStatePropertyAll(EdgeInsets.zero),
+                                      iconSize: WidgetStatePropertyAll(16),
+                                    ),
                                     padding: EdgeInsets.zero,
                                     onSelected: (value) {
                                       switch (value) {
@@ -150,16 +162,16 @@ class ReviewCard extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  ).paddingOnly(bottom: 16, left: 4),
+                                  ).paddingOnly(left: 3),
                               ],
                             ),
-                            Text(review.createdAt?.timeAgo ?? '',
-                                    style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
-                                .paddingOnly(top: 3),
-                            Text(S.current.visitedOn(review.businessVisitedAt?.getShortFormat ?? '-'),
-                                style: const TextStyle(fontSize: 11.5)),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(S.current.visitedOn(review.businessVisitedAt?.getShortFormat ?? '-'),
+                                  style: const TextStyle(fontSize: 11)),
+                            ),
                           ],
-                        ).paddingOnly(left: 12, right: 6),
+                        ).paddingOnly(left: 10, right: 6),
                       ),
                     ],
                   ),

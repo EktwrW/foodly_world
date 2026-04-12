@@ -88,9 +88,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m27(businessName, appName, menuUrl) =>
       "🍽️ Check out ${businessName}\'s menu on 🌟 ${appName}: \n${menuUrl}";
 
-  static String m28(date) => "Visited on ${date}";
+  static String m28(count) => "${count}d ago";
 
-  static String m29(businessName) => "Write a review for ${businessName}";
+  static String m29(count) => "${count}h ago";
+
+  static String m30(count) => "${count}m ago";
+
+  static String m31(date) => "Visited on ${date}";
+
+  static String m32(businessName) => "Write a review for ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1114,6 +1120,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "There are no customer reviews yet",
     ),
     "thisBusiness": MessageLookupByLibrary.simpleMessage("this business"),
+    "timeAgoDays": m28,
+    "timeAgoHours": m29,
+    "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Just now"),
+    "timeAgoMinutes": m30,
     "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Unauthorized access.",
@@ -1196,7 +1206,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Visit Business Page",
     ),
-    "visitedOn": m28,
+    "visitedOn": m31,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitor"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1246,7 +1256,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "When did you visit?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m29,
+    "writeReviewFor": m32,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Write your review here...",
     ),
