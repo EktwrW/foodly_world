@@ -1,5 +1,6 @@
 import 'package:add_2_calendar_new/add_2_calendar_new.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
+import 'package:foodly_world/generated/l10n.dart' show S;
 
 class CalendarHelper {
   const CalendarHelper._();
@@ -18,13 +19,13 @@ class CalendarHelper {
     final endDate = startDate.add(const Duration(hours: 2));
 
     final event = Event(
-      title: '${reservation.businessName ?? 'Reservation'} — Foodly',
+      title: '${reservation.businessName ?? S.current.reservation} — Foodly',
       description: [
-        if (reservation.partySize > 1) 'Party size: ${reservation.partySize}',
+        if (reservation.partySize > 1) S.current.partySizeCount(reservation.partySize),
         if (reservation.specialRequests != null && reservation.specialRequests!.isNotEmpty)
-          'Special requests: ${reservation.specialRequests}',
+          S.current.specialRequestsLabel(reservation.specialRequests!),
         if (reservation.managerNotes != null && reservation.managerNotes!.isNotEmpty)
-          'Notes: ${reservation.managerNotes}',
+          S.current.notesLabel(reservation.managerNotes!),
       ].join('\n'),
       location: reservation.businessAddress ?? '',
       startDate: startDate,

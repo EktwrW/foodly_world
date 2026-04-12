@@ -171,8 +171,10 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
       if (instance.businessUuid case final value?) 'business_uuid': value,
       if (instance.businessName case final value?) 'business_name': value,
       if (instance.businessPhoto case final value?) 'business_photo': value,
-      if (instance.businessLatitude case final value?) 'business_latitude': value,
-      if (instance.businessLongitude case final value?) 'business_longitude': value,
+      if (instance.businessLatitude case final value?)
+        'business_latitude': value,
+      if (instance.businessLongitude case final value?)
+        'business_longitude': value,
       if (instance.businessAddress case final value?) 'business_address': value,
       if (instance.userUuid case final value?) 'user_uuid': value,
       if (instance.userName case final value?) 'user_name': value,

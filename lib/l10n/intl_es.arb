@@ -308,7 +308,6 @@
   "couldNotLoadPromotions": "No se pudieron cargar las promociones",
   "couldNotLoadNewReleases": "No se pudieron cargar los recién abiertos",
   "noPromotionsNearby": "No hay promociones cerca",
-  "retry": "Reintentar",
   "visitBusinessPage": "Ver página del negocio",
   "viewPromotion": "Ver promoción",
   "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",
@@ -778,5 +777,44 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Analíticas",
+  "dailyTrends": "Tendencias diarias",
+  "conversionFunnel": "Embudo de conversión",
+  "topEvents": "Eventos principales",
+  "successRate": "Tasa de éxito",
+  "avgRating": "Calificación prom.",
+  "uniqueUsers": "Usuarios únicos",
+  "totalEvents": "Total de eventos",
+  "couldNotLoadAnalytics": "No se pudieron cargar las analíticas",
+  "retry": "Reintentar",
+  "addToCalendar": "Agregar al calendario",
+  "partySizeCount": "Comensales: {count}",
+  "@partySizeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "specialRequestsLabel": "Solicitudes especiales: {text}",
+  "@specialRequestsLabel": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "notesLabel": "Notas: {text}",
+  "@notesLabel": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites": "Favoritos",
+  "viewToInteract": "Vista → Interacción",
+  "interactToReserve": "Interacción → Reserva",
+  "reserveToComplete": "Reserva → Completada"
 }

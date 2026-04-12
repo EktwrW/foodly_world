@@ -5218,6 +5218,161 @@ class S {
       args: [count],
     );
   }
+
+  /// `Analytics`
+  String get analyticsTitle {
+    return Intl.message(
+      'Analytics',
+      name: 'analyticsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily trends`
+  String get dailyTrends {
+    return Intl.message(
+      'Daily trends',
+      name: 'dailyTrends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversion funnel`
+  String get conversionFunnel {
+    return Intl.message(
+      'Conversion funnel',
+      name: 'conversionFunnel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top events`
+  String get topEvents {
+    return Intl.message('Top events', name: 'topEvents', desc: '', args: []);
+  }
+
+  /// `Success rate`
+  String get successRate {
+    return Intl.message(
+      'Success rate',
+      name: 'successRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Avg. rating`
+  String get avgRating {
+    return Intl.message('Avg. rating', name: 'avgRating', desc: '', args: []);
+  }
+
+  /// `Unique users`
+  String get uniqueUsers {
+    return Intl.message(
+      'Unique users',
+      name: 'uniqueUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total events`
+  String get totalEvents {
+    return Intl.message(
+      'Total events',
+      name: 'totalEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not load analytics`
+  String get couldNotLoadAnalytics {
+    return Intl.message(
+      'Could not load analytics',
+      name: 'couldNotLoadAnalytics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add to calendar`
+  String get addToCalendar {
+    return Intl.message(
+      'Add to calendar',
+      name: 'addToCalendar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Party size: {count}`
+  String partySizeCount(int count) {
+    return Intl.message(
+      'Party size: $count',
+      name: 'partySizeCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Special requests: {text}`
+  String specialRequestsLabel(String text) {
+    return Intl.message(
+      'Special requests: $text',
+      name: 'specialRequestsLabel',
+      desc: '',
+      args: [text],
+    );
+  }
+
+  /// `Notes: {text}`
+  String notesLabel(String text) {
+    return Intl.message(
+      'Notes: $text',
+      name: 'notesLabel',
+      desc: '',
+      args: [text],
+    );
+  }
+
+  /// `Favorites`
+  String get favorites {
+    return Intl.message('Favorites', name: 'favorites', desc: '', args: []);
+  }
+
+  /// `View → Interact`
+  String get viewToInteract {
+    return Intl.message(
+      'View → Interact',
+      name: 'viewToInteract',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interact → Reserve`
+  String get interactToReserve {
+    return Intl.message(
+      'Interact → Reserve',
+      name: 'interactToReserve',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reserve → Complete`
+  String get reserveToComplete {
+    return Intl.message(
+      'Reserve → Complete',
+      name: 'reserveToComplete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

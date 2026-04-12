@@ -3,6 +3,8 @@ import 'dart:async' show unawaited;
 import 'package:dio/dio.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/analytics/analytics_api_provider.dart';
+import 'package:foodly_world/core/network/analytics/dashboard_client.dart';
+import 'package:foodly_world/core/network/analytics/dashboard_repo.dart';
 import 'package:foodly_world/core/network/analytics/events_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
@@ -64,6 +66,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ReservationClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
+      ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
       ..registerLazySingleton(() => ReplicateService())
       ..registerLazySingleton(() => AIPromoService(di()));
 
@@ -77,7 +80,8 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => PostRepo(postClient: di()))
       ..registerLazySingleton(() => UserDiscoveryRepo(client: di()))
       ..registerLazySingleton(() => BuzzRepo(buzzClient: di()))
-      ..registerLazySingleton(() => ReservationRepo(reservationClient: di()));
+      ..registerLazySingleton(() => ReservationRepo(reservationClient: di()))
+      ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()));
 
     /// Register services
     final authService = AuthSessionService(

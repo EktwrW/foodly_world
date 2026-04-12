@@ -778,5 +778,43 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyticsTitle": "Analytics",
+  "dailyTrends": "Daily trends",
+  "conversionFunnel": "Conversion funnel",
+  "topEvents": "Top events",
+  "successRate": "Success rate",
+  "avgRating": "Avg. rating",
+  "uniqueUsers": "Unique users",
+  "totalEvents": "Total events",
+  "couldNotLoadAnalytics": "Could not load analytics",
+  "addToCalendar": "Add to calendar",
+  "partySizeCount": "Party size: {count}",
+  "@partySizeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "specialRequestsLabel": "Special requests: {text}",
+  "@specialRequestsLabel": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "notesLabel": "Notes: {text}",
+  "@notesLabel": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites": "Favorites",
+  "viewToInteract": "View → Interact",
+  "interactToReserve": "Interact → Reserve",
+  "reserveToComplete": "Reserve → Complete"
 }

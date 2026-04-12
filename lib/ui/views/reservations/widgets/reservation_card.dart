@@ -7,7 +7,7 @@ import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show Brand, Brands, FontAwesome;
+import 'package:icons_plus/icons_plus.dart' show Brand, Brands, FontAwesome, Bootstrap;
 import 'package:intl/intl.dart';
 
 class ReservationCard extends StatelessWidget {
@@ -103,8 +103,8 @@ class ReservationCard extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () => CalendarHelper.addReservationToCalendar(reservation),
-                  tooltip: 'Add to calendar',
-                  icon: const Icon(Icons.calendar_month_rounded, size: 20, color: Colors.white),
+                  tooltip: S.current.addToCalendar,
+                  icon: const Icon(Bootstrap.calendar2_event, size: 20, color: Colors.white),
                   style: IconButton.styleFrom(
                     backgroundColor: FoodlyThemes.tertiaryFoodly,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

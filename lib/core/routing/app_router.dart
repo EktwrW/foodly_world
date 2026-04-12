@@ -6,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
+import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
+import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
@@ -432,6 +434,25 @@ class AppRouter {
               child: ManageReservationsPage(
                 businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 initialFilter: state.uri.queryParameters['filter'],
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          GoRoute(
+            path: AppRoutes.businessAnalytics.path,
+            name: AppRoutes.businessAnalytics.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (_) => AnalyticsCubit(
+                  dashboardRepo: di(),
+                  logger: di(),
+                  businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                ),
+                child: const AnalyticsDashboardPage(),
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
