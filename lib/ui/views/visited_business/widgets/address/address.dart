@@ -25,6 +25,7 @@ class _AddressWdg extends StatelessWidget {
                 aspectRatio: 2.6,
                 child: GoogleMap(
                   key: const Key('visit-business-map'),
+                  mapToolbarEnabled: false,
                   onMapCreated: (controller) => context.read<VisitBusinessCubit>().setMapcontroller(controller),
                   liteModeEnabled: true,
                   initialCameraPosition: CameraPosition(
@@ -39,21 +40,51 @@ class _AddressWdg extends StatelessWidget {
               );
             },
           ),
-          Row(
-            children: [
-              const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16).paddingLeft(6),
-              Expanded(
-                child: BlocSelector<VisitBusinessCubit, VisitBusinessState, String>(
-                  selector: (state) => state.vm.currentBusiness?.fullAddress ?? '',
-                  builder: (context, fullAddress) => Text(
-                    fullAddress,
-                    maxLines: 5,
-                    style: FoodlyTextStyles.bodyWhiteSemibold,
+          BlocSelector<VisitBusinessCubit, VisitBusinessState, (String, double?, double?)>(
+            selector: (state) {
+              final b = state.vm.currentBusiness;
+              return (b?.fullAddress ?? '', b?.latitude, b?.longitude);
+            },
+            builder: (context, record) {
+              final (fullAddress, lat, lng) = record;
+
+              return Row(
+                children: [
+                  const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16).paddingLeft(6),
+                  Expanded(
+                    child: Text(
+                      fullAddress,
+                      maxLines: 5,
+                      style: FoodlyTextStyles.bodyWhiteSemibold,
+                    ).paddingLeft(8),
                   ),
-                ).paddingLeft(8),
-              ),
-            ],
-          ).paddingAll(6),
+                  if (lat != null && lng != null) ...[
+                    IconButton(
+                      onPressed: () => UrlLauncher.launchWazeDirections(lat, lng),
+                      tooltip: 'Waze',
+                      icon: Brand(Brands.waze, size: 20),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.white.withValues(alpha: 0.15),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        minimumSize: const Size(36, 36),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      onPressed: () => UrlLauncher.launchGoogleMapsDirections(lat, lng),
+                      tooltip: 'Google Maps',
+                      icon: Brand(Brands.google_maps_old, size: 20),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.white.withValues(alpha: 0.15),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        minimumSize: const Size(36, 36),
+                      ),
+                    ),
+                  ],
+                ],
+              ).paddingAll(6);
+            },
+          ),
         ],
       ),
     );

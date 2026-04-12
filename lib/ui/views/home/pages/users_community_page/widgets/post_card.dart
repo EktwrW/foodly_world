@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
@@ -10,7 +11,6 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:universal_io/io.dart' as uni_io;

@@ -83,7 +83,7 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
 
             return FoodlyCarousel(
               controller: _carouselController,
-              height: 333,
+              height: 363,
               autoPlay: true,
               onPageChanged: (index) => _onPageChanged(index, promotions, vm.hasMore),
               items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
@@ -177,10 +177,10 @@ class _BackdropRoundedRectangle extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: BackdropFilter(
-              filter: dart_ui.ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+              filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
               child: Container(
                 decoration: BoxDecoration(
-                  color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .39),
+                  color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.all(6),
@@ -200,7 +200,7 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 promo.title,
                                 style: FoodlyTextStyles.secondaryTitle.copyWith(
                                   color: FoodlyThemes.primaryFoodly,
-                                  fontSize: 16,
+                                  fontSize: 17,
                                   shadows: [
                                     const Shadow(
                                       color: Colors.white,
@@ -224,15 +224,10 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const Icon(
-                              Bootstrap.megaphone_fill,
-                              color: FoodlyThemes.tertiaryFoodly,
-                              size: 16,
-                            ).paddingTop(3),
                             Flexible(
                               child: Text(
                                 promo.subTitle,
-                                style: FoodlyTextStyles.cardsSmallSubtitle,
+                                style: FoodlyTextStyles.homeAppBarSmallSubtitle,
                                 maxLines: 3,
                                 textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,

@@ -23,4 +23,26 @@ class UrlLauncher {
       di<Logger>().e('Could not launch $phoneUri');
     }
   }
+
+  /// Opens Google Maps directions to the given coordinates.
+  static Future<void> launchGoogleMapsDirections(double latitude, double longitude) async {
+    final uri = Uri.parse('https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      di<Logger>().e('Could not launch Google Maps directions to $latitude,$longitude');
+    }
+  }
+
+  /// Opens Waze navigation to the given coordinates.
+  static Future<void> launchWazeDirections(double latitude, double longitude) async {
+    final uri = Uri.parse('https://waze.com/ul?ll=$latitude,$longitude&navigate=yes');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      di<Logger>().e('Could not launch Waze directions to $latitude,$longitude');
+    }
+  }
 }
