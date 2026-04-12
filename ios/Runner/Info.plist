@@ -46,6 +46,8 @@
 			<string>sms</string>
 			<string>tel</string>
 			<string>mailto</string>
+			<string>waze</string>
+			<string>comgooglemaps</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
@@ -56,6 +58,8 @@
 		</dict>
 		<key>io.flutter.embedded_views_preview</key>
 		<true/>
+		<key>NSCalendarsUsageDescription</key>
+		<string>Foodly needs access to your calendar to add reservation reminders so you never miss a booking</string>
 		<key>NSCameraUsageDescription</key>
 		<string>We need access to your camera so you can take photos</string>
 		<key>NSFaceIDUsageDescription</key>
