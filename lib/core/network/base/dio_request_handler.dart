@@ -12,6 +12,21 @@ abstract class DioRequestHandler {
     final authSessionService = di<AuthSessionService>();
     await authSessionService.validateAccessToken();
 
+    // Auth endpoints (login, social-login, register) must NEVER be blocked
+    // by stale token checks. These endpoints are unauthenticated on the
+    // backend but Dio's base headers may carry a stale Bearer token from a
+    // previous session. Strip the auth header and let them through.
+    final path = options.path;
+    final isAuthEndpoint = path.endsWith('/login') ||
+        path.endsWith('/social-login') ||
+        path.endsWith('/register') ||
+        path.endsWith('/forgot-password');
+
+    if (isAuthEndpoint) {
+      options.headers.remove(FoodlyStrings.AUTHORIZATION);
+      return handler.next(options);
+    }
+
     // If the access token looks expired client-side, try a silent refresh
     // before sending the request. This avoids a guaranteed 401 round-trip.
     if (authHeader.isNotEmpty &&

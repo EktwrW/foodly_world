@@ -278,4 +278,115 @@ iOS permission descriptions are localized in:
 
 ---
 
+## Dual Token Authentication System (2026-04-12)
+
+### Architecture
+
+The app uses a **dual token system**: short-lived access token (24h) + long-lived refresh token (180 days). This enables biometric login to work after weeks of inactivity without requiring the user to re-authenticate.
+
+### Token Flow
+
+1. **Login/Register/Social Login** → Backend returns both `access_token` and `refresh_token`
+2. **Normal API calls** → Use `access_token` as Bearer header
+3. **Access token expires (23h client threshold)** → Proactive silent refresh using `refresh_token`
+4. **401 response on any API call** → Reactive silent refresh + retry original request
+5. **Refresh token expires (180d)** → Session cleared, user must re-authenticate
+
+### Key Files
+
+-   **`lib/core/services/auth_session_service.dart`**: Central session manager. Stores `_refreshToken` in memory, delegates persistence to `SecureTokenService`. Methods:
+    -   `setSession(UserSessionDM)` — stores both tokens, persists to secure storage
+    -   `silentRefresh()` — exchanges refresh token for new pair via `POST /token/refresh`. Temporarily injects refresh token as Bearer header, restores access token on success.
+    -   `initializeSessionOrClear()` — on app startup, tries silent refresh if access token is expired
+    -   `restoreTokensFromSecureStorage()` — restores tokens from encrypted storage on cold start + one-time migration from HydratedBloc
+    -   `isAccessTokenExpired` — uses 23h threshold (backend access token is 24h)
+    -   `clearSession()` — wipes `_refreshToken` and `SecureTokenService.clearAll()`
+
+-   **`lib/core/services/secure_token_service.dart`**: Wraps `flutter_secure_storage` v10. Stores access token, refresh token, token type, and creation timestamp in encrypted platform storage (Keychain on iOS, AES-GCM on Android).
+    -   Keys: `foodly_access_token`, `foodly_refresh_token`, `foodly_token_type`, `foodly_token_created_at`
+    -   Android: Default `AndroidOptions()` — v10 uses AES-GCM with RSA OAEP key wrapping automatically (no `encryptedSharedPreferences` flag needed, it's deprecated)
+    -   iOS: `IOSOptions(accessibility: KeychainAccessibility.first_unlock)`
+
+-   **`lib/core/network/base/dio_request_handler.dart`**: Dio interceptor with:
+    -   **Request interceptor (proactive)**: Before sending any request, checks `isAccessTokenExpired`. If expired and not already refreshing, calls `silentRefresh()` and updates the header.
+    -   **Error interceptor (reactive)**: On 401, attempts `silentRefresh()` + retries original request once. If refresh fails, calls `notifyTokenExpired()`.
+    -   **Exclusion list**: `/token/refresh`, `/login`, `/register`, `/social-login` — these endpoints skip the refresh interceptor to prevent infinite loops.
+
+-   **`lib/core/blocs/root/root_bloc.dart`**: HydratedBloc persistence. `toJson()` strips `token`, `access_token`, `refresh_token` before writing to SharedPreferences (plaintext). `fromJson()` restores session from secure storage via `unawaited(_restoreAndInitialize())`.
+
+-   **`lib/core/network/users/me_client.dart`**: Retrofit endpoint `POST /token/refresh → UserSessionDM`
+
+-   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
+
+### One-Time Migration
+
+Existing users who upgrade from the old single-token system are transparently migrated: `restoreTokensFromSecureStorage()` checks if tokens exist in secure storage. If not but a session exists in HydratedBloc, it copies the legacy `token` to secure storage as the access token.
+
+### Dependencies
+
+-   `flutter_secure_storage: ^10.0.0` in `pubspec.yaml`
+-   `SecureTokenService` registered as lazy singleton in `dependency_injection_service.dart`
+-   `AuthSessionService` constructor receives `secureTokenService: di()`
+
+---
+
+## Business Analytics Dashboard (2026-04-13)
+
+### Architecture
+
+Manager-only feature showing business performance metrics. Data comes from the NLP microservice (`GET /nlp-service/business/{uuid}/overview?days=30`).
+
+### Key Frontend Files
+
+-   **Data models**: `lib/data_models/analytics/business_overview_dm.dart` — Freezed models: `BusinessOverviewResponseDM`, `BusinessOverviewDataDM`, `KpisDM`, `FunnelDM`, `FunnelStepDM`, `FunnelConversionDM`, `DailySeriesDM`, `DailyPointDM`, `BreakdownsDM`, `BreakdownItemDM`
+-   **Generated files**: `business_overview_dm.g.dart` has **custom deserialization** helpers (not standard Freezed output):
+    -   `_parseFunnelSteps()` — converts backend Map `{"key": value}` → `List<FunnelStepDM>`
+    -   `_parseBreakdownMapOrList()` — converts backend Map `{"status": count}` → `List<BreakdownItemDM>`
+    -   `_parseEventTypes()` — maps `event_type`→`label`, `count`→`value` from backend format
+-   **Cubit**: `lib/ui/views/analytics/cubit/` — fetches data from NLP service
+-   **Widgets**:
+    -   `funnel_chart.dart` — Horizontal bar funnel with gradient bars
+    -   `daily_trends_chart.dart` — Line chart (fl_chart) showing reservations + events over time
+    -   `top_events_bar.dart` — Bar chart of most common event types
+    -   `reservations_donut.dart` — Pie chart of reservation statuses with color-coded legend
+-   **Label humanizer**: `lib/ui/views/analytics/helpers/analytics_label_helper.dart` — Converts raw backend keys (`business_open`, `cta_clicked`, `reservation_started`, etc.) into localized user-friendly labels via `S.current.*`. Three methods: `funnelStep()`, `eventType()`, `reservationStatus()`. Has fallback that replaces `_`/`.` with spaces + capitalizes.
+
+### Backend JSON ↔ Frontend Model Mapping
+
+| Backend JSON key | Frontend Dart field | Notes |
+|---|---|---|
+| `funnel.steps` (Map) | `FunnelDM.steps` (List<FunnelStepDM>) | Custom `_parseFunnelSteps()` in `.g.dart` |
+| `funnel.conversion.open_to_cta_rate` | `FunnelConversionDM.openToCtaRate` | |
+| `funnel.conversion.open_to_reservation_rate` | `FunnelConversionDM.openToReservationRate` | |
+| `funnel.conversion.cta_to_reservation_rate` | `FunnelConversionDM.ctaToReservationRate` | |
+| `series.*_daily[].value` | `DailyPointDM.value` | |
+| `breakdowns.reservations_by_status` (Map) | `BreakdownsDM.reservationsByStatus` (List) | Custom `_parseBreakdownMapOrList()` |
+| `breakdowns.top_event_types[].event_type` | `BreakdownItemDM.label` | Custom `_parseEventTypes()` |
+| `breakdowns.top_event_types[].count` | `BreakdownItemDM.value` | Custom `_parseEventTypes()` |
+
+### l10n Keys (analytics labels)
+
+Added 22 keys to all 3 `.arb` files (EN/ES/PT): `analyticsLabelBusinessOpen`, `analyticsLabelCtaClicked`, `analyticsLabelCtaWhatsapp`, `analyticsLabelCtaPhone`, `analyticsLabelCtaWebsite`, `analyticsLabelCtaDirections`, `analyticsLabelCtaInstagram`, `analyticsLabelSearchResult`, `analyticsLabelReservationStarted`, `analyticsLabelReservationSubmitted`, `analyticsLabelReservationSucceeded`, `analyticsLabelFavoriteAdded`, `analyticsLabelFavoriteRemoved`, `analyticsLabelReviewCreated`, `analyticsLabelMenuViewed`, `analyticsLabelShare`, `analyticsStatusConfirmed`, `analyticsStatusCompleted`, `analyticsStatusPending`, `analyticsStatusCancelled`, `analyticsStatusRejected`, `analyticsStatusNoShow`.
+
+**Important**: After editing `.arb` files, run the l10n generator to update `lib/generated/`.
+
+### Route Guard
+
+`businessAnalytics` route is registered in `permission_guarded_resource_enum.dart` → `_appModulesMap` mapped to `ModuleGuardType.business`, so only managers with an active business can access it.
+
+---
+
+## Visited Business Mode (2026-04-12)
+
+### Two-Page Architecture
+
+-   `BusinessPage` — Owner/manager view with edit controls (accessed from "My Business" in drawer)
+-   `VisitedBusinessPage` — Visitor view, read-only (accessed from categories, search, favorites, Buzz)
+
+When a manager visits their OWN business via categories/search/favorites, they see `VisitedBusinessPage` (visitor mode) — no edit buttons, no management controls. This is by design: the visited business module has NO dependency on `BusinessBloc` or ownership state.
+
+**Dead code removed** (2026-04-12): `business_name.dart` widget in visited business module (imported `BusinessBloc`/`BusinessVM` from owner module and had edit `onTap`), and dead `loggedUserCanEdit` / `loggerUserCanEdit` getters in `promotions_vm.dart` and `menu_vm.dart`.
+
+---
+
 Estoy aquí para ayudarte a desarrollar aplicaciones Flutter de alta calidad siguiendo las mejores prácticas de ingeniería de software. Te asistirá como un compañero de desarrollo senior especializado en Flutter 3.38 y Dart 3.7.

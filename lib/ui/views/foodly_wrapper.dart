@@ -63,8 +63,7 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
           // as a client at a *different* business, show it normally.
           final authService = di<AuthSessionService>();
           if (authService.userIsManager && pending.businessUuid != null) {
-            final ownBusinessUuids =
-                (authService.userSessionDM?.user.business ?? []).map((b) => b.uuid).toSet();
+            final ownBusinessUuids = (authService.userSessionDM?.user.business ?? []).map((b) => b.uuid).toSet();
             if (ownBusinessUuids.contains(pending.businessUuid)) {
               di<Logger>().i(
                 'Proactive reservation dialog: skipped for own-business notification ${pending.uuid}',
@@ -131,10 +130,10 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
           return;
         }
 
+        final loggedUser = di<AuthSessionService>().userSessionDM?.user;
         // Determine if current user is the reservation requester (client view)
         // or the business manager receiving the request.
-        final isClientView =
-            reservation.userUuid == di<AuthSessionService>().userSessionDM?.user.uuid;
+        final isClientView = reservation.userUuid == loggedUser?.uuid;
 
         showDialog(
           context: context,
@@ -183,7 +182,7 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                         child: Row(
                           children: [
                             AvatarWidget(
-                              avatarUrl: notification.actorPhotoUrl,
+                              avatarUrl: notification.actorPhotoUrl ?? (isClientView ? loggedUser?.avatarUrl : null),
                               width: 28,
                               height: 28,
                             ),
@@ -213,14 +212,13 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                         onConfirm: reservation.canBeActedOnByManager
                             ? () async {
                                 Navigator.pop(ctx);
-                                final actionResult =
-                                    await repo.confirmReservation(reservation.reservationUuid!);
+                                final actionResult = await repo.confirmReservation(reservation.reservationUuid!);
                                 if (context.mounted) {
                                   actionResult.when(
-                                    success: (_) => FoodlySnackbars.successGeneric(
-                                        context, S.current.reservationConfirmed),
-                                    failure: (_) => FoodlySnackbars.errorGeneric(
-                                        context, S.current.failedToConfirmReservation),
+                                    success: (_) =>
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationConfirmed),
+                                    failure: (_) =>
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToConfirmReservation),
                                   );
                                 }
                               }
@@ -229,15 +227,14 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                             ? () {
                                 Navigator.pop(ctx);
                                 _showNotesDialog(context, S.current.rejectReservation, (notes) async {
-                                  final actionResult = await repo.rejectReservation(
-                                      reservation.reservationUuid!,
-                                      managerNotes: notes);
+                                  final actionResult =
+                                      await repo.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
                                   if (context.mounted) {
                                     actionResult.when(
-                                      success: (_) => FoodlySnackbars.successGeneric(
-                                          context, S.current.reservationRejected),
-                                      failure: (_) => FoodlySnackbars.errorGeneric(
-                                          context, S.current.failedToRejectReservation),
+                                      success: (_) =>
+                                          FoodlySnackbars.successGeneric(context, S.current.reservationRejected),
+                                      failure: (_) =>
+                                          FoodlySnackbars.errorGeneric(context, S.current.failedToRejectReservation),
                                     );
                                   }
                                 });
@@ -247,15 +244,14 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                             ? () {
                                 Navigator.pop(ctx);
                                 _showNotesDialog(context, S.current.cancelReservation, (notes) async {
-                                  final actionResult = await repo.managerCancelReservation(
-                                      reservation.reservationUuid!,
+                                  final actionResult = await repo.managerCancelReservation(reservation.reservationUuid!,
                                       managerNotes: notes);
                                   if (context.mounted) {
                                     actionResult.when(
-                                      success: (_) => FoodlySnackbars.successGeneric(
-                                          context, S.current.reservationCancelled),
-                                      failure: (_) => FoodlySnackbars.errorGeneric(
-                                          context, S.current.failedToCancelReservation),
+                                      success: (_) =>
+                                          FoodlySnackbars.successGeneric(context, S.current.reservationCancelled),
+                                      failure: (_) =>
+                                          FoodlySnackbars.errorGeneric(context, S.current.failedToCancelReservation),
                                     );
                                   }
                                 });
@@ -264,14 +260,11 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                         onNoShow: reservation.isConfirmed
                             ? () async {
                                 Navigator.pop(ctx);
-                                final actionResult =
-                                    await repo.markNoShow(reservation.reservationUuid!);
+                                final actionResult = await repo.markNoShow(reservation.reservationUuid!);
                                 if (context.mounted) {
                                   actionResult.when(
-                                    success: (_) =>
-                                        FoodlySnackbars.successGeneric(context, S.current.markedNoShow),
-                                    failure: (_) =>
-                                        FoodlySnackbars.errorGeneric(context, S.current.failedToMarkNoShow),
+                                    success: (_) => FoodlySnackbars.successGeneric(context, S.current.markedNoShow),
+                                    failure: (_) => FoodlySnackbars.errorGeneric(context, S.current.failedToMarkNoShow),
                                   );
                                 }
                               }
@@ -279,14 +272,13 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
                         onComplete: reservation.isConfirmed
                             ? () async {
                                 Navigator.pop(ctx);
-                                final actionResult =
-                                    await repo.markComplete(reservation.reservationUuid!);
+                                final actionResult = await repo.markComplete(reservation.reservationUuid!);
                                 if (context.mounted) {
                                   actionResult.when(
-                                    success: (_) => FoodlySnackbars.successGeneric(
-                                        context, S.current.reservationCompleted),
-                                    failure: (_) => FoodlySnackbars.errorGeneric(
-                                        context, S.current.failedToCompleteReservation),
+                                    success: (_) =>
+                                        FoodlySnackbars.successGeneric(context, S.current.reservationCompleted),
+                                    failure: (_) =>
+                                        FoodlySnackbars.errorGeneric(context, S.current.failedToCompleteReservation),
                                   );
                                 }
                               }

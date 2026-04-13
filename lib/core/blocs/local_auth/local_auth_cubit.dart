@@ -36,19 +36,25 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
   void initializeLocalAuth() async {
     emit(_Loading(_dto));
 
+    // Use hasSessionOrPending instead of isLoggedIn: after the dual-token
+    // refactor, tokens are restored asynchronously from secure storage, so
+    // isLoggedIn is still false at this point. hasSessionOrPending is set
+    // synchronously in fromJson() and indicates a cached session exists.
+    final hasSession = _authSessionService.hasSessionOrPending;
+
     // Set the guard SYNCHRONOUSLY before any await so that
     // FoodlyLocationWrapper's postFrameCallback (fires after frame 1, ~16ms)
     // sees the flag and defers the location check. Without this, the location
     // permission dialog appears while the biometric dialog is being prepared,
     // causing the OS to dismiss the biometric dialog. Cleared below when
     // biometrics turn out to not be available.
-    if (_authSessionService.isLoggedIn) {
+    if (hasSession) {
       _authSessionService.setBiometricLoginInProgress(true);
     }
 
     await auth.isDeviceSupported().then(
       (isSupported) async {
-        if (_authSessionService.isLoggedIn && isSupported == false) {
+        if (hasSession && isSupported == false) {
           await _checkLoginStatusCall();
         }
 
@@ -62,12 +68,12 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           await _getAvailableBiometrics();
         }
 
-        if (_authSessionService.isLoggedIn && biometricAuthEnabled) {
+        if (hasSession && biometricAuthEnabled) {
           emit(_NeedAuthentication(_dto));
         } else {
           // Biometrics not available — clear the speculative guard set above
           // so FoodlyLocationWrapper's deferred subscription can fire.
-          if (_authSessionService.isLoggedIn) {
+          if (hasSession) {
             _authSessionService.setBiometricLoginInProgress(false);
           }
           // Biometric auth won't happen — complete any deferred services init

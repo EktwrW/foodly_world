@@ -40,6 +40,12 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
     try {
       final cachedState = _CachedState.fromJson(json);
 
+      // Signal that a session restore is in progress BEFORE the async call.
+      // This lets LocalAuthCubit.initializeLocalAuth() detect a restorable
+      // session and activate the biometric guard even though setSession()
+      // hasn't been called yet (isLoggedIn is still false at this point).
+      _authSessionService.hasPendingSessionRestore = true;
+
       // Restore tokens from secure storage (Keychain / EncryptedSharedPrefs)
       // into the session, then validate. This is async but fire-and-forget
       // because the UI doesn't depend on the token being ready synchronously
@@ -62,6 +68,7 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
       _authSessionService.initializeSessionOrClear(restoredSession);
     } else {
       // No tokens found — session is invalid.
+      _authSessionService.hasPendingSessionRestore = false;
       _authSessionService.notifyTokenExpired();
     }
   }

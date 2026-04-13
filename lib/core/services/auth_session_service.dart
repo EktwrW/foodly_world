@@ -47,12 +47,24 @@ class AuthSessionService {
   bool _pendingServicesInit = false;
   bool _isRefreshingToken = false;
 
+  /// True when HydratedBloc found a cached session and async token restoration
+  /// is in progress. Set synchronously in [RootBloc.fromJson] so that
+  /// [LocalAuthCubit.initializeLocalAuth] can detect a restorable session
+  /// before [setSession] has been called (which sets [userSessionDM]).
+  /// Cleared when [initializeSessionOrClear] completes (success or failure).
+  bool hasPendingSessionRestore = false;
+
   /// Device metadata — computed once at startup via [initDeviceMetadata].
   /// Available app-wide for any feature that needs to enrich API requests.
   NlpSearchPlatform? platform;
   DeviceInfoDTO? deviceInfo;
 
   bool get isLoggedIn => userSessionDM != null && (userSessionDM?.user.uuid?.isNotEmpty ?? false);
+
+  /// Whether there is a session being restored OR already active.
+  /// Use this for early checks (biometric guard) where [isLoggedIn] would
+  /// return false because [setSession] hasn't been called yet.
+  bool get hasSessionOrPending => isLoggedIn || hasPendingSessionRestore;
   bool get userIsManager => userSessionDM?.user.isManager ?? false;
   String get uuid => userSessionDM?.user.uuid ?? '';
   Map<String, String>? get authHeader => _authHeader;
@@ -213,6 +225,7 @@ class AuthSessionService {
     if (isAccessTokenExpired && hasRefreshToken) {
       final refreshed = await silentRefresh();
       if (!refreshed) {
+        hasPendingSessionRestore = false;
         _clearInvalidSession();
         return;
       }
@@ -222,6 +235,7 @@ class AuthSessionService {
       final result = await _meRepo.fetchLoggedUser();
       result.when(
         success: (_) {
+          hasPendingSessionRestore = false;
           // By the time this callback runs, updateBiometricAuth(true) has
           // already executed (it's synchronous and called right after this
           // async method in fromJson). On native, defer services to avoid
@@ -233,9 +247,13 @@ class AuthSessionService {
             initializeNotifications();
           }
         },
-        failure: (_) => _clearInvalidSession(),
+        failure: (_) {
+          hasPendingSessionRestore = false;
+          _clearInvalidSession();
+        },
       );
     } catch (_) {
+      hasPendingSessionRestore = false;
       _clearInvalidSession();
     }
   }
