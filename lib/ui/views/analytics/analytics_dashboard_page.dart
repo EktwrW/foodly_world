@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
+import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
+    show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
@@ -10,6 +14,8 @@ import 'package:foodly_world/ui/views/analytics/widgets/kpi_row.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/period_selector.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/reservations_donut.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/top_events_bar.dart';
+import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 class AnalyticsDashboardPage extends StatefulWidget {
   const AnalyticsDashboardPage({super.key});
@@ -29,10 +35,37 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.current.analyticsTitle, style: FoodlyTextStyles.actionsBodyBold.copyWith(color: Colors.white)),
-        backgroundColor: FoodlyThemes.primaryFoodly,
-        foregroundColor: Colors.white,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+            borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
         elevation: 0,
+        toolbarHeight: 60,
+        actions: [
+          Text(
+            S.current.analyticsTitle,
+            overflow: TextOverflow.ellipsis,
+            style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 20),
+          ).paddingOnly(right: 18),
+        ],
+        leading: CustomRoundedNeumorphicButton(
+          iconSize: 26,
+          diameter: 32,
+          iconData: Bootstrap.caret_left_fill,
+          onPressed: () {
+            if (context.canPop()) {
+              di<AppRouter>().removeLastRouteHistory();
+              context.pop();
+            } else {
+              di<AppRouter>().goBackToLastRoute();
+            }
+            context.read<MainDrawerCubit>().goToPreviousIndex();
+          },
+        ).paddingSymmetric(vertical: 8, horizontal: 8),
+        leadingWidth: 60,
       ),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
         builder: (context, state) {
@@ -142,7 +175,7 @@ class _ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

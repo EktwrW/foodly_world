@@ -1,7 +1,6 @@
 import 'package:fab_circular_menu_plus/fab_circular_menu_plus.dart' show FabCircularMenuPlusState;
 import 'package:flutter/material.dart' show GlobalKey, PageController;
 import 'package:foodly_world/core/enums/foodly_enums.dart' show MenuCategory;
-import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, AuthSessionService;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -23,9 +22,6 @@ class MenuVM with _$MenuVM {
   bool get foodCategoryIsNull => menuDM?.foodCategories == null;
   bool get drinkCategoryIsNull => menuDM?.drinkCategories == null;
   bool get combosIsEmpty => menuDM?.combos.isEmpty ?? true;
-
-  bool get loggerUserCanEdit =>
-      di<AuthSessionService>().userSessionDM?.user.business.any((b) => b.uuid == menuDM?.business?.uuid) ?? false;
 
   String get currency => menuDM?.business?.country?.currencySymbol ?? '\$';
   String? get businessLogo => menuDM?.business?.logo;

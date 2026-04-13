@@ -37,30 +37,34 @@ class KpiCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, size: 18, color: color),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: FoodlyTextStyles.actionsBodyBold.copyWith(
-              fontSize: 20,
-              color: color,
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(icon, size: 18, color: color),
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          Flexible(
+            child: Text(
+              value,
+              style: FoodlyTextStyles.actionsBodyBold.copyWith(
+                fontSize: 20,
+                color: color,
+              ),
+            ),
+          ),
+          Flexible(
+            child: Text(
+              label,
+              style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

@@ -22,6 +22,7 @@ class AuthSessionService {
   final LocalStorageService _localStorageService;
   final FoodlyApiProvider _appApiProvider;
   final MeRepo _meRepo;
+  final SecureTokenService _secureTokenService;
   FavoritesCubit? _favoritesCubit;
   NotificationsCubit? _notificationsCubit;
 
@@ -30,17 +31,21 @@ class AuthSessionService {
     required MeRepo meRepo,
     required LocalStorageService localStorageService,
     required FoodlyApiProvider appApiProvider,
+    required SecureTokenService secureTokenService,
   })  : _config = config,
         _appApiProvider = appApiProvider,
         _meRepo = meRepo,
-        _localStorageService = localStorageService;
+        _localStorageService = localStorageService,
+        _secureTokenService = secureTokenService;
 
   UserSessionDM? userSessionDM;
   Map<String, String>? _authHeader;
+  String? _refreshToken;
   bool requestBiometricAuth = false;
   bool forceToLogin = false;
   bool _isBiometricLoginInProgress = false;
   bool _pendingServicesInit = false;
+  bool _isRefreshingToken = false;
 
   /// Device metadata — computed once at startup via [initDeviceMetadata].
   /// Available app-wide for any feature that needs to enrich API requests.
@@ -58,11 +63,16 @@ class AuthSessionService {
     if (createdAtStr == null || createdAtStr.isEmpty) return false;
     try {
       final createdAt = DateTime.parse(createdAtStr);
-      return DateTime.now().difference(createdAt).inDays >= 30;
+      // Access token lives 24h (server-side). Use 23h client-side to
+      // trigger refresh before the server rejects the token.
+      return DateTime.now().difference(createdAt).inHours >= 23;
     } catch (_) {
       return false;
     }
   }
+
+  bool get hasRefreshToken => _refreshToken != null && _refreshToken!.isNotEmpty;
+  bool get isRefreshingToken => _isRefreshingToken;
 
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value
 
@@ -142,8 +152,31 @@ class AuthSessionService {
 
   void setSession(UserSessionDM? newUserSessionDM) {
     userSessionDM = newUserSessionDM;
-    _authHeader = {FoodlyStrings.AUTHORIZATION: '${newUserSessionDM?.tokenType} ${newUserSessionDM?.token}'};
-    di<FoodlyApiProvider>().setAuthToken('${newUserSessionDM?.tokenType} ${newUserSessionDM?.token}');
+
+    // Prefer access_token (new dual-token field); fall back to token (legacy).
+    final activeToken = newUserSessionDM?.accessToken ?? newUserSessionDM?.token;
+    final tokenType = newUserSessionDM?.tokenType ?? 'Bearer';
+
+    _authHeader = {FoodlyStrings.AUTHORIZATION: '$tokenType $activeToken'};
+    di<FoodlyApiProvider>().setAuthToken('$tokenType $activeToken');
+
+    // Store the refresh token separately — it must survive session copyWith
+    // operations that don't carry it (e.g. user profile updates).
+    if (newUserSessionDM?.refreshToken != null && newUserSessionDM!.refreshToken!.isNotEmpty) {
+      _refreshToken = newUserSessionDM.refreshToken;
+    }
+
+    // Persist tokens to secure storage (Keychain / EncryptedSharedPreferences).
+    // Fire-and-forget — failures are non-fatal for the current session.
+    if (activeToken != null && activeToken.isNotEmpty) {
+      _secureTokenService.saveTokens(
+        accessToken: activeToken,
+        refreshToken: _refreshToken ?? '',
+        tokenType: tokenType,
+        tokenCreatedAt: newUserSessionDM?.tokedCreatedAt,
+      );
+    }
+
     if (!kIsWeb) {
       FirebaseCrashlytics.instance.setUserIdentifier(newUserSessionDM?.user.uuid ?? 'anonymous');
     }
@@ -174,6 +207,17 @@ class AuthSessionService {
   Future<void> initializeSessionOrClear(UserSessionDM session) async {
     setSession(session);
 
+    // If access token looks expired client-side, try a silent refresh first
+    // using the long-lived refresh token (180 days). This is the key path
+    // that keeps biometric login working after weeks of inactivity.
+    if (isAccessTokenExpired && hasRefreshToken) {
+      final refreshed = await silentRefresh();
+      if (!refreshed) {
+        _clearInvalidSession();
+        return;
+      }
+    }
+
     try {
       final result = await _meRepo.fetchLoggedUser();
       result.when(
@@ -201,9 +245,12 @@ class AuthSessionService {
   void _clearInvalidSession() {
     userSessionDM = null;
     _authHeader = null;
+    _refreshToken = null;
     _pendingServicesInit = false;
     _isBiometricLoginInProgress = false;
+    _isRefreshingToken = false;
     _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
+    _secureTokenService.clearAll(); // fire-and-forget
     _favoritesCubit?.clearAllFavorites();
     _notificationsCubit?.clear();
     forceToLogin = true;
@@ -256,7 +303,9 @@ class AuthSessionService {
     try {
       userSessionDM = null;
       _authHeader = null;
+      _refreshToken = null;
       _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
+      await _secureTokenService.clearAll();
       _favoritesCubit?.clearAllFavorites();
       _notificationsCubit?.clear();
       di<SocialCubit>().clear();
@@ -306,9 +355,79 @@ class AuthSessionService {
     }
   }
 
+  /// Restores tokens from secure storage into an existing [UserSessionDM].
+  /// Called from [RootBloc.fromJson()] when HydratedBloc restores user data
+  /// but the persisted JSON no longer contains tokens (stripped in toJson).
+  /// Also handles one-time migration from HydratedBloc plaintext tokens to
+  /// secure storage for users upgrading from a pre-Phase-3 build.
+  Future<UserSessionDM?> restoreTokensFromSecureStorage(UserSessionDM session) async {
+    final storedAccess = await _secureTokenService.accessToken;
+    final storedRefresh = await _secureTokenService.refreshToken;
+    final storedType = await _secureTokenService.tokenType;
+    final storedCreatedAt = await _secureTokenService.tokenCreatedAt;
+
+    if (storedAccess != null && storedAccess.isNotEmpty) {
+      // Tokens found in secure storage — restore them into the session.
+      return session.copyWith(
+        token: storedAccess,
+        accessToken: storedAccess,
+        refreshToken: storedRefresh,
+        tokenType: storedType ?? session.tokenType ?? 'Bearer',
+        tokedCreatedAt: storedCreatedAt ?? session.tokedCreatedAt,
+      );
+    }
+
+    // One-time migration: tokens still in HydratedBloc (plaintext), not yet
+    // in secure storage. Move them over and return the session as-is.
+    if (session.token != null && session.token!.isNotEmpty) {
+      await _secureTokenService.saveTokens(
+        accessToken: session.accessToken ?? session.token!,
+        refreshToken: session.refreshToken ?? session.token!,
+        tokenType: session.tokenType ?? 'Bearer',
+        tokenCreatedAt: session.tokedCreatedAt,
+      );
+      _refreshToken = session.refreshToken ?? session.token;
+      return session;
+    }
+
+    // No tokens anywhere — session is invalid.
+    return null;
+  }
+
   Future<void> validateAccessToken() async {
     // Client-side check — server enforces the real expiration via Sanctum.
     // This is a fast pre-check to avoid unnecessary network calls.
+  }
+
+  /// Silently refreshes the access token using the stored refresh token.
+  /// Returns true on success, false on failure (refresh token also expired).
+  /// Prevents concurrent refresh attempts via [_isRefreshingToken] guard.
+  Future<bool> silentRefresh() async {
+    if (_isRefreshingToken) return false;
+    if (!hasRefreshToken) return false;
+
+    _isRefreshingToken = true;
+    try {
+      // Temporarily set the refresh token as the active auth header so the
+      // /token/refresh endpoint receives it as the Bearer token.
+      final tokenType = userSessionDM?.tokenType ?? 'Bearer';
+      di<FoodlyApiProvider>().setAuthToken('$tokenType $_refreshToken');
+
+      final result = await _meRepo.refreshToken();
+      return result.when(
+        success: (newSession) {
+          setSession(newSession);
+          return true;
+        },
+        failure: (_) {
+          return false;
+        },
+      );
+    } catch (_) {
+      return false;
+    } finally {
+      _isRefreshingToken = false;
+    }
   }
 
   /// Handles token expiration: clears session, shows a localized message,

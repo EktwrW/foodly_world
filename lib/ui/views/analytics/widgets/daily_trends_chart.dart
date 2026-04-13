@@ -17,7 +17,7 @@ class DailyTrendsChart extends StatelessWidget {
   });
 
   List<FlSpot> _toSpots(List<DailyPointDM> points) {
-    return points.asMap().entries.map((e) => FlSpot(e.key.toDouble(), e.value.count.toDouble())).toList();
+    return points.asMap().entries.map((e) => FlSpot(e.key.toDouble(), e.value.value.toDouble())).toList();
   }
 
   @override
@@ -26,8 +26,8 @@ class DailyTrendsChart extends StatelessWidget {
     final reservationsSpots = _toSpots(reservationsDaily);
 
     final maxY = [
-      ...eventsDaily.map((e) => e.count),
-      ...reservationsDaily.map((e) => e.count),
+      ...eventsDaily.map((e) => e.value),
+      ...reservationsDaily.map((e) => e.value),
       1, // avoid maxY = 0
     ].reduce((a, b) => a > b ? a : b).toDouble();
 

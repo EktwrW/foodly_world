@@ -1163,12 +1163,12 @@ FunnelConversionDM _$FunnelConversionDMFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FunnelConversionDM {
-  @JsonKey(name: 'view_to_interact')
-  double get viewToInteract => throw _privateConstructorUsedError;
-  @JsonKey(name: 'interact_to_reserve')
-  double get interactToReserve => throw _privateConstructorUsedError;
-  @JsonKey(name: 'reserve_to_complete')
-  double get reserveToComplete => throw _privateConstructorUsedError;
+  @JsonKey(name: 'open_to_cta_rate')
+  double get openToCtaRate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'open_to_reservation_rate')
+  double get openToReservationRate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'cta_to_reservation_rate')
+  double get ctaToReservationRate => throw _privateConstructorUsedError;
 
   /// Serializes this FunnelConversionDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1187,9 +1187,9 @@ abstract class $FunnelConversionDMCopyWith<$Res> {
       _$FunnelConversionDMCopyWithImpl<$Res, FunnelConversionDM>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'view_to_interact') double viewToInteract,
-      @JsonKey(name: 'interact_to_reserve') double interactToReserve,
-      @JsonKey(name: 'reserve_to_complete') double reserveToComplete});
+      {@JsonKey(name: 'open_to_cta_rate') double openToCtaRate,
+      @JsonKey(name: 'open_to_reservation_rate') double openToReservationRate,
+      @JsonKey(name: 'cta_to_reservation_rate') double ctaToReservationRate});
 }
 
 /// @nodoc
@@ -1207,22 +1207,22 @@ class _$FunnelConversionDMCopyWithImpl<$Res, $Val extends FunnelConversionDM>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? viewToInteract = null,
-    Object? interactToReserve = null,
-    Object? reserveToComplete = null,
+    Object? openToCtaRate = null,
+    Object? openToReservationRate = null,
+    Object? ctaToReservationRate = null,
   }) {
     return _then(_value.copyWith(
-      viewToInteract: null == viewToInteract
-          ? _value.viewToInteract
-          : viewToInteract // ignore: cast_nullable_to_non_nullable
+      openToCtaRate: null == openToCtaRate
+          ? _value.openToCtaRate
+          : openToCtaRate // ignore: cast_nullable_to_non_nullable
               as double,
-      interactToReserve: null == interactToReserve
-          ? _value.interactToReserve
-          : interactToReserve // ignore: cast_nullable_to_non_nullable
+      openToReservationRate: null == openToReservationRate
+          ? _value.openToReservationRate
+          : openToReservationRate // ignore: cast_nullable_to_non_nullable
               as double,
-      reserveToComplete: null == reserveToComplete
-          ? _value.reserveToComplete
-          : reserveToComplete // ignore: cast_nullable_to_non_nullable
+      ctaToReservationRate: null == ctaToReservationRate
+          ? _value.ctaToReservationRate
+          : ctaToReservationRate // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -1237,9 +1237,9 @@ abstract class _$$FunnelConversionDMImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'view_to_interact') double viewToInteract,
-      @JsonKey(name: 'interact_to_reserve') double interactToReserve,
-      @JsonKey(name: 'reserve_to_complete') double reserveToComplete});
+      {@JsonKey(name: 'open_to_cta_rate') double openToCtaRate,
+      @JsonKey(name: 'open_to_reservation_rate') double openToReservationRate,
+      @JsonKey(name: 'cta_to_reservation_rate') double ctaToReservationRate});
 }
 
 /// @nodoc
@@ -1255,22 +1255,22 @@ class __$$FunnelConversionDMImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? viewToInteract = null,
-    Object? interactToReserve = null,
-    Object? reserveToComplete = null,
+    Object? openToCtaRate = null,
+    Object? openToReservationRate = null,
+    Object? ctaToReservationRate = null,
   }) {
     return _then(_$FunnelConversionDMImpl(
-      viewToInteract: null == viewToInteract
-          ? _value.viewToInteract
-          : viewToInteract // ignore: cast_nullable_to_non_nullable
+      openToCtaRate: null == openToCtaRate
+          ? _value.openToCtaRate
+          : openToCtaRate // ignore: cast_nullable_to_non_nullable
               as double,
-      interactToReserve: null == interactToReserve
-          ? _value.interactToReserve
-          : interactToReserve // ignore: cast_nullable_to_non_nullable
+      openToReservationRate: null == openToReservationRate
+          ? _value.openToReservationRate
+          : openToReservationRate // ignore: cast_nullable_to_non_nullable
               as double,
-      reserveToComplete: null == reserveToComplete
-          ? _value.reserveToComplete
-          : reserveToComplete // ignore: cast_nullable_to_non_nullable
+      ctaToReservationRate: null == ctaToReservationRate
+          ? _value.ctaToReservationRate
+          : ctaToReservationRate // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -1280,26 +1280,26 @@ class __$$FunnelConversionDMImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FunnelConversionDMImpl implements _FunnelConversionDM {
   const _$FunnelConversionDMImpl(
-      {@JsonKey(name: 'view_to_interact') this.viewToInteract = 0.0,
-      @JsonKey(name: 'interact_to_reserve') this.interactToReserve = 0.0,
-      @JsonKey(name: 'reserve_to_complete') this.reserveToComplete = 0.0});
+      {@JsonKey(name: 'open_to_cta_rate') this.openToCtaRate = 0.0,
+      @JsonKey(name: 'open_to_reservation_rate') this.openToReservationRate = 0.0,
+      @JsonKey(name: 'cta_to_reservation_rate') this.ctaToReservationRate = 0.0});
 
   factory _$FunnelConversionDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$FunnelConversionDMImplFromJson(json);
 
   @override
-  @JsonKey(name: 'view_to_interact')
-  final double viewToInteract;
+  @JsonKey(name: 'open_to_cta_rate')
+  final double openToCtaRate;
   @override
-  @JsonKey(name: 'interact_to_reserve')
-  final double interactToReserve;
+  @JsonKey(name: 'open_to_reservation_rate')
+  final double openToReservationRate;
   @override
-  @JsonKey(name: 'reserve_to_complete')
-  final double reserveToComplete;
+  @JsonKey(name: 'cta_to_reservation_rate')
+  final double ctaToReservationRate;
 
   @override
   String toString() {
-    return 'FunnelConversionDM(viewToInteract: $viewToInteract, interactToReserve: $interactToReserve, reserveToComplete: $reserveToComplete)';
+    return 'FunnelConversionDM(openToCtaRate: $openToCtaRate, openToReservationRate: $openToReservationRate, ctaToReservationRate: $ctaToReservationRate)';
   }
 
   @override
@@ -1307,18 +1307,18 @@ class _$FunnelConversionDMImpl implements _FunnelConversionDM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FunnelConversionDMImpl &&
-            (identical(other.viewToInteract, viewToInteract) ||
-                other.viewToInteract == viewToInteract) &&
-            (identical(other.interactToReserve, interactToReserve) ||
-                other.interactToReserve == interactToReserve) &&
-            (identical(other.reserveToComplete, reserveToComplete) ||
-                other.reserveToComplete == reserveToComplete));
+            (identical(other.openToCtaRate, openToCtaRate) ||
+                other.openToCtaRate == openToCtaRate) &&
+            (identical(other.openToReservationRate, openToReservationRate) ||
+                other.openToReservationRate == openToReservationRate) &&
+            (identical(other.ctaToReservationRate, ctaToReservationRate) ||
+                other.ctaToReservationRate == ctaToReservationRate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, viewToInteract, interactToReserve, reserveToComplete);
+      runtimeType, openToCtaRate, openToReservationRate, ctaToReservationRate);
 
   /// Create a copy of FunnelConversionDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1339,23 +1339,23 @@ class _$FunnelConversionDMImpl implements _FunnelConversionDM {
 
 abstract class _FunnelConversionDM implements FunnelConversionDM {
   const factory _FunnelConversionDM(
-      {@JsonKey(name: 'view_to_interact') final double viewToInteract,
-      @JsonKey(name: 'interact_to_reserve') final double interactToReserve,
-      @JsonKey(name: 'reserve_to_complete')
-      final double reserveToComplete}) = _$FunnelConversionDMImpl;
+      {@JsonKey(name: 'open_to_cta_rate') final double openToCtaRate,
+      @JsonKey(name: 'open_to_reservation_rate') final double openToReservationRate,
+      @JsonKey(name: 'cta_to_reservation_rate')
+      final double ctaToReservationRate}) = _$FunnelConversionDMImpl;
 
   factory _FunnelConversionDM.fromJson(Map<String, dynamic> json) =
       _$FunnelConversionDMImpl.fromJson;
 
   @override
-  @JsonKey(name: 'view_to_interact')
-  double get viewToInteract;
+  @JsonKey(name: 'open_to_cta_rate')
+  double get openToCtaRate;
   @override
-  @JsonKey(name: 'interact_to_reserve')
-  double get interactToReserve;
+  @JsonKey(name: 'open_to_reservation_rate')
+  double get openToReservationRate;
   @override
-  @JsonKey(name: 'reserve_to_complete')
-  double get reserveToComplete;
+  @JsonKey(name: 'cta_to_reservation_rate')
+  double get ctaToReservationRate;
 
   /// Create a copy of FunnelConversionDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1643,7 +1643,7 @@ DailyPointDM _$DailyPointDMFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DailyPointDM {
   String get date => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
+  int get value => throw _privateConstructorUsedError;
 
   /// Serializes this DailyPointDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1661,7 +1661,7 @@ abstract class $DailyPointDMCopyWith<$Res> {
           DailyPointDM value, $Res Function(DailyPointDM) then) =
       _$DailyPointDMCopyWithImpl<$Res, DailyPointDM>;
   @useResult
-  $Res call({String date, int count});
+  $Res call({String date, int value});
 }
 
 /// @nodoc
@@ -1680,16 +1680,16 @@ class _$DailyPointDMCopyWithImpl<$Res, $Val extends DailyPointDM>
   @override
   $Res call({
     Object? date = null,
-    Object? count = null,
+    Object? value = null,
   }) {
     return _then(_value.copyWith(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -1703,7 +1703,7 @@ abstract class _$$DailyPointDMImplCopyWith<$Res>
       __$$DailyPointDMImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String date, int count});
+  $Res call({String date, int value});
 }
 
 /// @nodoc
@@ -1720,16 +1720,16 @@ class __$$DailyPointDMImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? date = null,
-    Object? count = null,
+    Object? value = null,
   }) {
     return _then(_$DailyPointDMImpl(
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      count: null == count
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1738,7 +1738,7 @@ class __$$DailyPointDMImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DailyPointDMImpl implements _DailyPointDM {
-  const _$DailyPointDMImpl({this.date = '', this.count = 0});
+  const _$DailyPointDMImpl({this.date = '', this.value = 0});
 
   factory _$DailyPointDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyPointDMImplFromJson(json);
@@ -1748,11 +1748,11 @@ class _$DailyPointDMImpl implements _DailyPointDM {
   final String date;
   @override
   @JsonKey()
-  final int count;
+  final int value;
 
   @override
   String toString() {
-    return 'DailyPointDM(date: $date, count: $count)';
+    return 'DailyPointDM(date: $date, value: $value)';
   }
 
   @override
@@ -1761,12 +1761,12 @@ class _$DailyPointDMImpl implements _DailyPointDM {
         (other.runtimeType == runtimeType &&
             other is _$DailyPointDMImpl &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.count, count) || other.count == count));
+            (identical(other.value, value) || other.value == value));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, date, count);
+  int get hashCode => Object.hash(runtimeType, date, value);
 
   /// Create a copy of DailyPointDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1785,7 +1785,7 @@ class _$DailyPointDMImpl implements _DailyPointDM {
 }
 
 abstract class _DailyPointDM implements DailyPointDM {
-  const factory _DailyPointDM({final String date, final int count}) =
+  const factory _DailyPointDM({final String date, final int value}) =
       _$DailyPointDMImpl;
 
   factory _DailyPointDM.fromJson(Map<String, dynamic> json) =
@@ -1794,7 +1794,7 @@ abstract class _DailyPointDM implements DailyPointDM {
   @override
   String get date;
   @override
-  int get count;
+  int get value;
 
   /// Create a copy of DailyPointDM
   /// with the given fields replaced by the non-null parameter values.

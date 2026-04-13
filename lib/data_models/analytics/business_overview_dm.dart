@@ -49,6 +49,8 @@ class KpisDM with _$KpisDM {
 @freezed
 class FunnelDM with _$FunnelDM {
   const factory FunnelDM({
+    /// Backend sends steps as a Map {"business_open": 29, ...}.
+    /// Converted to a List in the custom fromJson in .g.dart.
     @Default([]) List<FunnelStepDM> steps,
     FunnelConversionDM? conversion,
   }) = _FunnelDM;
@@ -69,9 +71,9 @@ class FunnelStepDM with _$FunnelStepDM {
 @freezed
 class FunnelConversionDM with _$FunnelConversionDM {
   const factory FunnelConversionDM({
-    @JsonKey(name: 'view_to_interact') @Default(0.0) double viewToInteract,
-    @JsonKey(name: 'interact_to_reserve') @Default(0.0) double interactToReserve,
-    @JsonKey(name: 'reserve_to_complete') @Default(0.0) double reserveToComplete,
+    @JsonKey(name: 'open_to_cta_rate') @Default(0.0) double openToCtaRate,
+    @JsonKey(name: 'open_to_reservation_rate') @Default(0.0) double openToReservationRate,
+    @JsonKey(name: 'cta_to_reservation_rate') @Default(0.0) double ctaToReservationRate,
   }) = _FunnelConversionDM;
 
   factory FunnelConversionDM.fromJson(Map<String, dynamic> json) =>
@@ -97,7 +99,7 @@ class DailySeriesDM with _$DailySeriesDM {
 class DailyPointDM with _$DailyPointDM {
   const factory DailyPointDM({
     @Default('') String date,
-    @Default(0) int count,
+    @Default(0) int value,
   }) = _DailyPointDM;
 
   factory DailyPointDM.fromJson(Map<String, dynamic> json) => _$DailyPointDMFromJson(json);

@@ -30,6 +30,10 @@ mixin _$UserSessionDM {
   String? get token => throw _privateConstructorUsedError;
   @JsonKey(name: 'token_type')
   String? get tokenType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'refresh_token')
+  String? get refreshToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'access_token')
+  String? get accessToken => throw _privateConstructorUsedError;
 
   /// Serializes this UserSessionDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,7 +56,9 @@ abstract class $UserSessionDMCopyWith<$Res> {
       @JsonKey(name: 'message') String? welcomeMessage,
       @JsonKey(name: 'token_created_at') String? tokedCreatedAt,
       @JsonKey(name: 'token') String? token,
-      @JsonKey(name: 'token_type') String? tokenType});
+      @JsonKey(name: 'token_type') String? tokenType,
+      @JsonKey(name: 'refresh_token') String? refreshToken,
+      @JsonKey(name: 'access_token') String? accessToken});
 
   $UserDMCopyWith<$Res> get user;
 }
@@ -77,6 +83,8 @@ class _$UserSessionDMCopyWithImpl<$Res, $Val extends UserSessionDM>
     Object? tokedCreatedAt = freezed,
     Object? token = freezed,
     Object? tokenType = freezed,
+    Object? refreshToken = freezed,
+    Object? accessToken = freezed,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -98,6 +106,14 @@ class _$UserSessionDMCopyWithImpl<$Res, $Val extends UserSessionDM>
       tokenType: freezed == tokenType
           ? _value.tokenType
           : tokenType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -126,7 +142,9 @@ abstract class _$$UserSessionDMImplCopyWith<$Res>
       @JsonKey(name: 'message') String? welcomeMessage,
       @JsonKey(name: 'token_created_at') String? tokedCreatedAt,
       @JsonKey(name: 'token') String? token,
-      @JsonKey(name: 'token_type') String? tokenType});
+      @JsonKey(name: 'token_type') String? tokenType,
+      @JsonKey(name: 'refresh_token') String? refreshToken,
+      @JsonKey(name: 'access_token') String? accessToken});
 
   @override
   $UserDMCopyWith<$Res> get user;
@@ -150,6 +168,8 @@ class __$$UserSessionDMImplCopyWithImpl<$Res>
     Object? tokedCreatedAt = freezed,
     Object? token = freezed,
     Object? tokenType = freezed,
+    Object? refreshToken = freezed,
+    Object? accessToken = freezed,
   }) {
     return _then(_$UserSessionDMImpl(
       user: null == user
@@ -172,6 +192,14 @@ class __$$UserSessionDMImplCopyWithImpl<$Res>
           ? _value.tokenType
           : tokenType // ignore: cast_nullable_to_non_nullable
               as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -184,7 +212,9 @@ class _$UserSessionDMImpl extends _UserSessionDM {
       @JsonKey(name: 'message') this.welcomeMessage,
       @JsonKey(name: 'token_created_at') this.tokedCreatedAt,
       @JsonKey(name: 'token') required this.token,
-      @JsonKey(name: 'token_type') this.tokenType})
+      @JsonKey(name: 'token_type') this.tokenType,
+      @JsonKey(name: 'refresh_token') this.refreshToken,
+      @JsonKey(name: 'access_token') this.accessToken})
       : super._();
 
   factory _$UserSessionDMImpl.fromJson(Map<String, dynamic> json) =>
@@ -205,10 +235,16 @@ class _$UserSessionDMImpl extends _UserSessionDM {
   @override
   @JsonKey(name: 'token_type')
   final String? tokenType;
+  @override
+  @JsonKey(name: 'refresh_token')
+  final String? refreshToken;
+  @override
+  @JsonKey(name: 'access_token')
+  final String? accessToken;
 
   @override
   String toString() {
-    return 'UserSessionDM(user: $user, welcomeMessage: $welcomeMessage, tokedCreatedAt: $tokedCreatedAt, token: $token, tokenType: $tokenType)';
+    return 'UserSessionDM(user: $user, welcomeMessage: $welcomeMessage, tokedCreatedAt: $tokedCreatedAt, token: $token, tokenType: $tokenType, refreshToken: $refreshToken, accessToken: $accessToken)';
   }
 
   @override
@@ -223,13 +259,17 @@ class _$UserSessionDMImpl extends _UserSessionDM {
                 other.tokedCreatedAt == tokedCreatedAt) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.tokenType, tokenType) ||
-                other.tokenType == tokenType));
+                other.tokenType == tokenType) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, user, welcomeMessage, tokedCreatedAt, token, tokenType);
+  int get hashCode => Object.hash(runtimeType, user, welcomeMessage,
+      tokedCreatedAt, token, tokenType, refreshToken, accessToken);
 
   /// Create a copy of UserSessionDM
   /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +293,9 @@ abstract class _UserSessionDM extends UserSessionDM {
           @JsonKey(name: 'message') final String? welcomeMessage,
           @JsonKey(name: 'token_created_at') final String? tokedCreatedAt,
           @JsonKey(name: 'token') required final String? token,
-          @JsonKey(name: 'token_type') final String? tokenType}) =
+          @JsonKey(name: 'token_type') final String? tokenType,
+          @JsonKey(name: 'refresh_token') final String? refreshToken,
+          @JsonKey(name: 'access_token') final String? accessToken}) =
       _$UserSessionDMImpl;
   const _UserSessionDM._() : super._();
 
@@ -275,6 +317,12 @@ abstract class _UserSessionDM extends UserSessionDM {
   @override
   @JsonKey(name: 'token_type')
   String? get tokenType;
+  @override
+  @JsonKey(name: 'refresh_token')
+  String? get refreshToken;
+  @override
+  @JsonKey(name: 'access_token')
+  String? get accessToken;
 
   /// Create a copy of UserSessionDM
   /// with the given fields replaced by the non-null parameter values.

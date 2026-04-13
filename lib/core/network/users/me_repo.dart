@@ -42,6 +42,14 @@ class MeRepo {
     }
   }
 
+  Future<ApiResult<UserSessionDM>> refreshToken() async {
+    try {
+      return ApiResult.success(await _meClient.refreshToken());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<UserSessionDM>> login({required UserBodyLoginDTO loginDTO}) async {
     try {
       return ApiResult.success(await _meClient.login(loginDTO));

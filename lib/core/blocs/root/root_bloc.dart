@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
@@ -37,9 +39,13 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
   RootState? fromJson(Map<String, dynamic> json) {
     try {
       final cachedState = _CachedState.fromJson(json);
-      // Fire-and-forget: validates token, then initializes favorites/notifications
-      // if valid, or clears session and forces login if token is stale/expired.
-      _authSessionService.initializeSessionOrClear(cachedState.userSessionDM);
+
+      // Restore tokens from secure storage (Keychain / EncryptedSharedPrefs)
+      // into the session, then validate. This is async but fire-and-forget
+      // because the UI doesn't depend on the token being ready synchronously
+      // — the biometric login flow will handle re-auth if needed.
+      unawaited(_restoreAndInitialize(cachedState.userSessionDM));
+
       // Only expect biometric auth on native platforms (iOS/Android).
       // On web, services init proceeds immediately in initializeSessionOrClear.
       if (!kIsWeb) _authSessionService.updateBiometricAuth(true);
@@ -49,6 +55,32 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
     }
   }
 
+  /// Restores tokens from secure storage, then validates the session.
+  Future<void> _restoreAndInitialize(UserSessionDM session) async {
+    final restoredSession = await _authSessionService.restoreTokensFromSecureStorage(session);
+    if (restoredSession != null) {
+      _authSessionService.initializeSessionOrClear(restoredSession);
+    } else {
+      // No tokens found — session is invalid.
+      _authSessionService.notifyTokenExpired();
+    }
+  }
+
   @override
-  Map<String, dynamic>? toJson(RootState state) => state.toJson();
+  Map<String, dynamic>? toJson(RootState state) {
+    final json = state.toJson();
+    // Strip sensitive token fields from the persisted state.
+    // Tokens are now stored in SecureTokenService (Keychain / EncryptedSharedPrefs)
+    // and restored via restoreTokensFromSecureStorage() in fromJson().
+    if (json.containsKey('userSessionDM')) {
+      final sessionMap = json['userSessionDM'];
+      if (sessionMap is Map<String, dynamic>) {
+        sessionMap.remove('token');
+        sessionMap.remove('access_token');
+        sessionMap.remove('refresh_token');
+        // Keep token_type and token_created_at — they're non-sensitive metadata.
+      }
+    }
+    return json;
+  }
 }

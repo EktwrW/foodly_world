@@ -47,7 +47,8 @@ class DependencyInjectionService {
     di
       ..registerLazySingleton(() => LocationService())
       ..registerSingleton<DialogService>(DialogService())
-      ..registerLazySingleton(() => LocalStorageService());
+      ..registerLazySingleton(() => LocalStorageService())
+      ..registerLazySingleton(() => SecureTokenService());
 
     /// Register Dio instance (shared, same as FoodlyApiProvider.dio)
     di.registerLazySingleton<Dio>(() => di<FoodlyApiProvider>().dio);
@@ -89,6 +90,7 @@ class DependencyInjectionService {
       meRepo: di(),
       localStorageService: di(),
       appApiProvider: di(),
+      secureTokenService: di(),
     );
 
     di.registerLazySingleton(() => authService);

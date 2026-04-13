@@ -816,5 +816,29 @@
   "favorites": "Favoritos",
   "viewToInteract": "Vista → Interacción",
   "interactToReserve": "Interacción → Reserva",
-  "reserveToComplete": "Reserva → Completada"
+  "reserveToComplete": "Reserva → Completada",
+
+  "analyticsLabelBusinessOpen": "Visitas al negocio",
+  "analyticsLabelCtaClicked": "Toques de contacto",
+  "analyticsLabelCtaWhatsapp": "WhatsApp",
+  "analyticsLabelCtaPhone": "Llamadas",
+  "analyticsLabelCtaWebsite": "Visitas al sitio web",
+  "analyticsLabelCtaDirections": "Cómo llegar",
+  "analyticsLabelCtaInstagram": "Instagram",
+  "analyticsLabelSearchResult": "Apariciones en búsqueda",
+  "analyticsLabelReservationStarted": "Reservas iniciadas",
+  "analyticsLabelReservationSubmitted": "Reservas enviadas",
+  "analyticsLabelReservationSucceeded": "Reservas completadas",
+  "analyticsLabelFavoriteAdded": "Agregado a favoritos",
+  "analyticsLabelFavoriteRemoved": "Quitado de favoritos",
+  "analyticsLabelReviewCreated": "Reseñas recibidas",
+  "analyticsLabelMenuViewed": "Vistas del menú",
+  "analyticsLabelShare": "Compartidos",
+
+  "analyticsStatusConfirmed": "Confirmada",
+  "analyticsStatusCompleted": "Completada",
+  "analyticsStatusPending": "Pendiente",
+  "analyticsStatusCancelled": "Cancelada",
+  "analyticsStatusRejected": "Rechazada",
+  "analyticsStatusNoShow": "No asistió"
 }

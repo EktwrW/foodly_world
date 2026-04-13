@@ -4,6 +4,7 @@ import 'package:foodly_world/data_models/analytics/business_overview_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/analytics/helpers/analytics_label_helper.dart';
 
 class TopEventsBar extends StatelessWidget {
   final List<BreakdownItemDM> items;
@@ -45,9 +46,9 @@ class TopEventsBar extends StatelessWidget {
                     getTooltipColor: (_) => Colors.white,
                     tooltipBorder: BorderSide(color: Colors.grey.shade300),
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      final label = groupIndex < items.length ? items[groupIndex].label : '';
+                      final rawLabel = groupIndex < items.length ? items[groupIndex].label : '';
                       return BarTooltipItem(
-                        '$label\n${rod.toY.toInt()}',
+                        '${AnalyticsLabelHelper.eventType(rawLabel)}\n${rod.toY.toInt()}',
                         const TextStyle(fontSize: 11, color: Colors.black87),
                       );
                     },
@@ -64,9 +65,9 @@ class TopEventsBar extends StatelessWidget {
                       getTitlesWidget: (value, _) {
                         final idx = value.toInt();
                         if (idx < 0 || idx >= items.length) return const SizedBox.shrink();
-                        final label = items[idx].label;
+                        final label = AnalyticsLabelHelper.eventType(items[idx].label);
                         // Shorten long labels
-                        final short = label.length > 10 ? '${label.substring(0, 8)}…' : label;
+                        final short = label.length > 12 ? '${label.substring(0, 10)}…' : label;
                         return Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: Text(short, style: const TextStyle(fontSize: 9, color: Colors.grey)),

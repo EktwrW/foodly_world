@@ -11,16 +11,32 @@ abstract class DioRequestHandler {
         : '';
     final authSessionService = di<AuthSessionService>();
     await authSessionService.validateAccessToken();
+
+    // If the access token looks expired client-side, try a silent refresh
+    // before sending the request. This avoids a guaranteed 401 round-trip.
     if (authHeader.isNotEmpty &&
         authHeader.startsWith(TokenType.bearer.name) &&
         authSessionService.isAccessTokenExpired &&
         authSessionService.isLoggedIn) {
-      authSessionService.notifyTokenExpired();
-      return;
+      if (authSessionService.hasRefreshToken) {
+        final refreshed = await authSessionService.silentRefresh();
+        if (!refreshed) {
+          authSessionService.notifyTokenExpired();
+          return;
+        }
+        // After refresh, fall through to use the new access token below.
+      } else {
+        authSessionService.notifyTokenExpired();
+        return;
+      }
     }
 
+    // Always inject the latest access token into the request header.
     if (authHeader.isNotEmpty && authHeader.startsWith(TokenType.bearer.name)) {
-      options.headers[FoodlyStrings.AUTHORIZATION] = authSessionService.userSessionDM?.token;
+      final activeToken = authSessionService.userSessionDM?.accessToken ??
+          authSessionService.userSessionDM?.token;
+      options.headers[FoodlyStrings.AUTHORIZATION] =
+          '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
     }
 
     return handler.next(options);
@@ -39,9 +55,31 @@ abstract class DioRequestHandler {
       final path = e.requestOptions.path;
       final isAuthEndpoint = path.endsWith('/login') ||
           path.endsWith('/register') ||
-          path.endsWith('/social-login');
+          path.endsWith('/social-login') ||
+          path.endsWith('/token/refresh');
+
       if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint) {
-        authSessionService.notifyTokenExpired();
+        // Attempt a silent refresh before declaring the session dead.
+        if (authSessionService.hasRefreshToken && !authSessionService.isRefreshingToken) {
+          final refreshed = await authSessionService.silentRefresh();
+          if (refreshed) {
+            // Retry the original request with the fresh access token.
+            try {
+              final activeToken = authSessionService.userSessionDM?.accessToken ??
+                  authSessionService.userSessionDM?.token;
+              e.requestOptions.headers[FoodlyStrings.AUTHORIZATION] =
+                  '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
+              final response = await di<FoodlyApiProvider>().dio.fetch(e.requestOptions);
+              return handler.resolve(response);
+            } catch (retryError) {
+              // Retry failed — fall through to reject.
+            }
+          }
+          // Refresh failed — session is truly expired.
+          authSessionService.notifyTokenExpired();
+        } else {
+          authSessionService.notifyTokenExpired();
+        }
       }
       return handler.reject(e);
     }

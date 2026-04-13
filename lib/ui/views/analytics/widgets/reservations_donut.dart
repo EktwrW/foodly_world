@@ -4,6 +4,7 @@ import 'package:foodly_world/data_models/analytics/business_overview_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/analytics/helpers/analytics_label_helper.dart';
 
 class ReservationsDonut extends StatelessWidget {
   final List<BreakdownItemDM> items;
@@ -74,7 +75,7 @@ class ReservationsDonut extends StatelessWidget {
                 children: [
                   Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
                   const SizedBox(width: 4),
-                  Text('${item.label} (${item.value})', style: FoodlyTextStyles.caption.copyWith(fontSize: 10)),
+                  Text('${AnalyticsLabelHelper.reservationStatus(item.label)} (${item.value})', style: FoodlyTextStyles.caption.copyWith(fontSize: 10)),
                 ],
               );
             }).toList(),

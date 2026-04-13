@@ -26,6 +26,7 @@ enum ModuleGuardType {
         AppRoutes.favedBusiness.name: home,
         AppRoutes.usersCommunity.name: home,
         AppRoutes.myBusiness.name: business,
+        AppRoutes.businessAnalytics.name: business,
         AppRoutes.manageMenu.name: menu,
         AppRoutes.managePromotions.name: business,
         AppRoutes.visitBusiness.name: home,

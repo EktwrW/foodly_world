@@ -14,6 +14,8 @@ class UserSessionDM with _$UserSessionDM {
     @JsonKey(name: 'token_created_at') String? tokedCreatedAt,
     @JsonKey(name: 'token') required String? token,
     @JsonKey(name: 'token_type') String? tokenType,
+    @JsonKey(name: 'refresh_token') String? refreshToken,
+    @JsonKey(name: 'access_token') String? accessToken,
   }) = _UserSessionDM;
 
   factory UserSessionDM.fromJson(Map<String, dynamic> json) => _$UserSessionDMFromJson(json);

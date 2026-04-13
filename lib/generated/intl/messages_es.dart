@@ -211,6 +211,64 @@ class MessageLookup extends MessageLookupByLibrary {
     "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
       "Panel de Analíticas — Próximamente\nConoce el rendimiento real de tu negocio: visitas, platos más pedidos, tendencias de clientes e ingresos. Todo en un solo lugar.",
     ),
+    "analyticsLabelBusinessOpen": MessageLookupByLibrary.simpleMessage(
+      "Visitas al negocio",
+    ),
+    "analyticsLabelCtaClicked": MessageLookupByLibrary.simpleMessage(
+      "Toques de contacto",
+    ),
+    "analyticsLabelCtaDirections": MessageLookupByLibrary.simpleMessage(
+      "Cómo llegar",
+    ),
+    "analyticsLabelCtaInstagram": MessageLookupByLibrary.simpleMessage(
+      "Instagram",
+    ),
+    "analyticsLabelCtaPhone": MessageLookupByLibrary.simpleMessage("Llamadas"),
+    "analyticsLabelCtaWebsite": MessageLookupByLibrary.simpleMessage(
+      "Visitas al sitio web",
+    ),
+    "analyticsLabelCtaWhatsapp": MessageLookupByLibrary.simpleMessage(
+      "WhatsApp",
+    ),
+    "analyticsLabelFavoriteAdded": MessageLookupByLibrary.simpleMessage(
+      "Agregado a favoritos",
+    ),
+    "analyticsLabelFavoriteRemoved": MessageLookupByLibrary.simpleMessage(
+      "Quitado de favoritos",
+    ),
+    "analyticsLabelMenuViewed": MessageLookupByLibrary.simpleMessage(
+      "Vistas del menú",
+    ),
+    "analyticsLabelReservationStarted": MessageLookupByLibrary.simpleMessage(
+      "Reservas iniciadas",
+    ),
+    "analyticsLabelReservationSubmitted": MessageLookupByLibrary.simpleMessage(
+      "Reservas enviadas",
+    ),
+    "analyticsLabelReservationSucceeded": MessageLookupByLibrary.simpleMessage(
+      "Reservas completadas",
+    ),
+    "analyticsLabelReviewCreated": MessageLookupByLibrary.simpleMessage(
+      "Reseñas recibidas",
+    ),
+    "analyticsLabelSearchResult": MessageLookupByLibrary.simpleMessage(
+      "Apariciones en búsqueda",
+    ),
+    "analyticsLabelShare": MessageLookupByLibrary.simpleMessage("Compartidos"),
+    "analyticsStatusCancelled": MessageLookupByLibrary.simpleMessage(
+      "Cancelada",
+    ),
+    "analyticsStatusCompleted": MessageLookupByLibrary.simpleMessage(
+      "Completada",
+    ),
+    "analyticsStatusConfirmed": MessageLookupByLibrary.simpleMessage(
+      "Confirmada",
+    ),
+    "analyticsStatusNoShow": MessageLookupByLibrary.simpleMessage("No asistió"),
+    "analyticsStatusPending": MessageLookupByLibrary.simpleMessage("Pendiente"),
+    "analyticsStatusRejected": MessageLookupByLibrary.simpleMessage(
+      "Rechazada",
+    ),
     "analyticsTitle": MessageLookupByLibrary.simpleMessage("Analíticas"),
     "and": MessageLookupByLibrary.simpleMessage("y"),
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(

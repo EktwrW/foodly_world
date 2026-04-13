@@ -39,6 +39,7 @@ export 'package:foodly_world/core/services/auth_session_service.dart';
 export 'package:foodly_world/core/services/dependency_injection_service.dart';
 export 'package:foodly_world/core/services/local_storage_service.dart';
 export 'package:foodly_world/core/services/location_service.dart';
+export 'package:foodly_world/core/services/secure_token_service.dart';
 export 'package:foodly_world/core/utils/app_log_filter.dart';
 export 'package:foodly_world/generated/l10n.dart';
 export 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart';

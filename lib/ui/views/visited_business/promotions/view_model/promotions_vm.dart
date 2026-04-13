@@ -34,10 +34,6 @@ class PromotionsVM with _$PromotionsVM {
   /// URL del logo del negocio
   String get businessLogo => businessDM?.logo ?? '';
 
-  /// Verifica si el usuario loggeado puede editar las promociones
-  bool get loggedUserCanEdit =>
-      di<AuthSessionService>().userSessionDM?.user.business.any((b) => b.uuid == businessDM?.uuid) ?? false;
-
   /// Obtiene las promociones según el estado seleccionado
   List<PromotionDM> promotionsForRender(PromotionStatus status) {
     return switch (status) {

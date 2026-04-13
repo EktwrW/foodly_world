@@ -3,6 +3,7 @@ import 'package:foodly_world/data_models/analytics/business_overview_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/analytics/helpers/analytics_label_helper.dart';
 
 class FunnelChart extends StatelessWidget {
   final FunnelDM funnel;
@@ -47,9 +48,9 @@ class FunnelChart extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2, bottom: 12),
               child: Text(
-                '${S.current.viewToInteract}: ${funnel.conversion!.viewToInteract.toStringAsFixed(1)}%  •  '
-                '${S.current.interactToReserve}: ${funnel.conversion!.interactToReserve.toStringAsFixed(1)}%  •  '
-                '${S.current.reserveToComplete}: ${funnel.conversion!.reserveToComplete.toStringAsFixed(1)}%',
+                '${S.current.viewToInteract}: ${funnel.conversion!.openToCtaRate.toStringAsFixed(1)}%  •  '
+                '${S.current.interactToReserve}: ${funnel.conversion!.openToReservationRate.toStringAsFixed(1)}%  •  '
+                '${S.current.reserveToComplete}: ${funnel.conversion!.ctaToReservationRate.toStringAsFixed(1)}%',
                 style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
               ),
             )
@@ -71,7 +72,7 @@ class FunnelChart extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          step.label,
+                          AnalyticsLabelHelper.funnelStep(step.label),
                           style: FoodlyTextStyles.caption.copyWith(fontWeight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis,
                         ),

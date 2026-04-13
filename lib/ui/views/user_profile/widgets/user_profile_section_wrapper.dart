@@ -29,14 +29,10 @@ class _UserProfileSectionWdg extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                FoodlySectionsTitle(
-                  firstText: titleFirstText,
-                  secondText: titleSecondText,
-                  onPressed: onEditBtnPressed,
-                ),
-              ],
+            FoodlySectionsTitle(
+              firstText: titleFirstText,
+              secondText: titleSecondText,
+              onPressed: onEditBtnPressed,
             ),
             !editing ? readOnlyWidget : editingWidget,
             if ((footerText?.isNotEmpty ?? false) && !editing) FoodlySectionsFooterText(footerText: footerText!),

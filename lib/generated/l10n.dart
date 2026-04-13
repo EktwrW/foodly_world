@@ -5373,6 +5373,226 @@ class S {
       args: [],
     );
   }
+
+  /// `Business views`
+  String get analyticsLabelBusinessOpen {
+    return Intl.message(
+      'Business views',
+      name: 'analyticsLabelBusinessOpen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact taps`
+  String get analyticsLabelCtaClicked {
+    return Intl.message(
+      'Contact taps',
+      name: 'analyticsLabelCtaClicked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp`
+  String get analyticsLabelCtaWhatsapp {
+    return Intl.message(
+      'WhatsApp',
+      name: 'analyticsLabelCtaWhatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone calls`
+  String get analyticsLabelCtaPhone {
+    return Intl.message(
+      'Phone calls',
+      name: 'analyticsLabelCtaPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Website visits`
+  String get analyticsLabelCtaWebsite {
+    return Intl.message(
+      'Website visits',
+      name: 'analyticsLabelCtaWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get directions`
+  String get analyticsLabelCtaDirections {
+    return Intl.message(
+      'Get directions',
+      name: 'analyticsLabelCtaDirections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Instagram`
+  String get analyticsLabelCtaInstagram {
+    return Intl.message(
+      'Instagram',
+      name: 'analyticsLabelCtaInstagram',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search appearances`
+  String get analyticsLabelSearchResult {
+    return Intl.message(
+      'Search appearances',
+      name: 'analyticsLabelSearchResult',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservations started`
+  String get analyticsLabelReservationStarted {
+    return Intl.message(
+      'Reservations started',
+      name: 'analyticsLabelReservationStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservations sent`
+  String get analyticsLabelReservationSubmitted {
+    return Intl.message(
+      'Reservations sent',
+      name: 'analyticsLabelReservationSubmitted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservations completed`
+  String get analyticsLabelReservationSucceeded {
+    return Intl.message(
+      'Reservations completed',
+      name: 'analyticsLabelReservationSucceeded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Added to favorites`
+  String get analyticsLabelFavoriteAdded {
+    return Intl.message(
+      'Added to favorites',
+      name: 'analyticsLabelFavoriteAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Removed from favorites`
+  String get analyticsLabelFavoriteRemoved {
+    return Intl.message(
+      'Removed from favorites',
+      name: 'analyticsLabelFavoriteRemoved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reviews received`
+  String get analyticsLabelReviewCreated {
+    return Intl.message(
+      'Reviews received',
+      name: 'analyticsLabelReviewCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Menu views`
+  String get analyticsLabelMenuViewed {
+    return Intl.message(
+      'Menu views',
+      name: 'analyticsLabelMenuViewed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shares`
+  String get analyticsLabelShare {
+    return Intl.message(
+      'Shares',
+      name: 'analyticsLabelShare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmed`
+  String get analyticsStatusConfirmed {
+    return Intl.message(
+      'Confirmed',
+      name: 'analyticsStatusConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed`
+  String get analyticsStatusCompleted {
+    return Intl.message(
+      'Completed',
+      name: 'analyticsStatusCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get analyticsStatusPending {
+    return Intl.message(
+      'Pending',
+      name: 'analyticsStatusPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get analyticsStatusCancelled {
+    return Intl.message(
+      'Cancelled',
+      name: 'analyticsStatusCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rejected`
+  String get analyticsStatusRejected {
+    return Intl.message(
+      'Rejected',
+      name: 'analyticsStatusRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No show`
+  String get analyticsStatusNoShow {
+    return Intl.message(
+      'No show',
+      name: 'analyticsStatusNoShow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -13,6 +13,8 @@ _$UserSessionDMImpl _$$UserSessionDMImplFromJson(Map<String, dynamic> json) =>
       tokedCreatedAt: json['token_created_at'] as String?,
       token: json['token'] as String?,
       tokenType: json['token_type'] as String?,
+      refreshToken: json['refresh_token'] as String?,
+      accessToken: json['access_token'] as String?,
     );
 
 Map<String, dynamic> _$$UserSessionDMImplToJson(_$UserSessionDMImpl instance) =>
@@ -22,4 +24,6 @@ Map<String, dynamic> _$$UserSessionDMImplToJson(_$UserSessionDMImpl instance) =>
       if (instance.tokedCreatedAt case final value?) 'token_created_at': value,
       if (instance.token case final value?) 'token': value,
       if (instance.tokenType case final value?) 'token_type': value,
+      if (instance.refreshToken case final value?) 'refresh_token': value,
+      if (instance.accessToken case final value?) 'access_token': value,
     };

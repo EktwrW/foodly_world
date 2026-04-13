@@ -27,6 +27,9 @@ abstract class MeClient {
   @POST('/biometric-login')
   Future<UserSessionDM> biometricLogin();
 
+  @POST('/token/refresh')
+  Future<UserSessionDM> refreshToken();
+
   @POST('/logout')
   Future<LogoutDM> logout();
 
