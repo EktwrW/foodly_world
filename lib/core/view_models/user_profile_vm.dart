@@ -87,6 +87,7 @@ class UserProfileVM with _$UserProfileVM {
     @Default(ProfileEditing.none) ProfileEditing edition,
     UserDM? visitedUser,
     @Default(false) bool termsAndContiditionsAccepted,
+    @Default(false) bool businessTermsAndContiditionsAccepted,
     String? importedAvatar,
     @Default([]) List<ReviewDM> myReviews,
     ReviewsMetaDM? reviewsMeta,

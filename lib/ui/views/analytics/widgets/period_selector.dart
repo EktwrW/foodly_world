@@ -27,11 +27,13 @@ class PeriodSelector extends StatelessWidget {
         mainAxisAlignment: showBusinessName ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
         children: [
           if (showBusinessName)
-            Text(
-              businessName,
-              maxLines: 2,
-              style: FoodlyTextStyles.labelPurpleBold,
-            ).paddingHorizontal(9),
+            Flexible(
+              child: Text(
+                businessName,
+                maxLines: 2,
+                style: FoodlyTextStyles.labelPurpleBold,
+              ).paddingHorizontal(9),
+            ),
           SegmentedButton<int>(
             showSelectedIcon: false,
             segments: _options

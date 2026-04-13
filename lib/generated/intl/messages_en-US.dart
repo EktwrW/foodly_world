@@ -1194,6 +1194,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "termsPrivacyTextSpan1": MessageLookupByLibrary.simpleMessage(
       "By creating an account, you acknowledge that you have read and agree to our",
     ),
+    "termsPrivacyTextSpan1forBusiness": MessageLookupByLibrary.simpleMessage(
+      "By creating a business account, you acknowledge that you have read and agree to our",
+    ),
     "termsPrivacyTextSpan2": MessageLookupByLibrary.simpleMessage(
       "Terms and Conditions",
     ),

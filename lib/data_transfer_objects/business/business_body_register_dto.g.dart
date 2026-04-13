@@ -22,6 +22,7 @@ BusinessBodyRegisterDTO _$BusinessBodyRegisterDTOFromJson(
       businessLongitude: (json['business_longitude'] as num?)?.toDouble(),
       categoryId: $enumDecode(_$FoodlyCategoriesEnumMap, json['category_id']),
       introMessage: json['intro_message'] as String?,
+      termsAccepted: json['terms_accepted'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$BusinessBodyRegisterDTOToJson(
@@ -41,6 +42,7 @@ Map<String, dynamic> _$BusinessBodyRegisterDTOToJson(
         'business_longitude': value,
       'category_id': _$FoodlyCategoriesEnumMap[instance.categoryId]!,
       if (instance.introMessage case final value?) 'intro_message': value,
+      'terms_accepted': instance.termsAccepted,
     };
 
 const _$FoodlyCountriesEnumMap = {

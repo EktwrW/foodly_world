@@ -26,7 +26,7 @@ const _en = [
     body:
         'Foodly is a platform that connects users with local food businesses, restaurants, and related gastronomy services. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use the Foodly mobile application ("App").\n\n'
         'By using Foodly you agree to this Privacy Policy. If you do not agree, please stop using the App and delete your account.\n\n'
-        'Last updated: March 14, 2026',
+        'Last updated: April 13, 2026',
   ),
   PolicySection(
     heading: 'Who We Are (Data Controller)',
@@ -70,6 +70,25 @@ const _en = [
         '• Comply with applicable legal obligations.\n'
         '• Respond to your support requests.\n\n'
         'We do NOT use your data for advertising profiling, do NOT sell your data to third parties, and do NOT apply automated decision-making that has legal effects on you.',
+  ),
+  PolicySection(
+    heading: 'Business Data & Manager Accounts',
+    body: 'When you register a business on Foodly and become a Manager, we collect and process additional data specific to business operations.\n\n'
+        'BUSINESS DATA COLLECTED\n\n'
+        '• Business identity information: legal business name, trade name, address, category, contact channels, and opening hours.\n'
+        '• Business media: logo, cover images, menu photos, and promotional content.\n'
+        '• Operational data: menus, prices, reservation settings, and service descriptions.\n'
+        '• Engagement metrics: aggregated, anonymised interaction data (profile views, feature usage, reservation conversion rates) derived from user interactions with your listing.\n\n'
+        'IDENTITY VERIFICATION DOCUMENTS\n\n'
+        'Foodly may request documentary proof of your authority to represent a business. Documents you may be asked to provide include: business registration certificates, tax identification numbers, lease agreements, or powers of attorney. These documents are used solely to verify your relationship to the business and are stored securely. Verification documents are retained only for the duration necessary to complete verification and are deleted within 90 days of successful verification, unless retention is required by law.\n\n'
+        'BUSINESS DATA RETENTION\n\n'
+        'Business profile data (name, description, menus, media) is retained while the business listing is active. When a business is deactivated or deleted:\n\n'
+        '• Business media (logo, images) is deleted from cloud storage.\n'
+        '• Business profile data is anonymised.\n'
+        '• Historical reservation records are retained in anonymised form for data integrity purposes.\n'
+        '• Engagement metrics, which are already anonymised, may be retained for analytical purposes.\n\n'
+        'MANAGER-SPECIFIC DATA HANDLING\n\n'
+        'As a Manager, your personal account data (name, email, phone) is linked to your business listing(s). If you delete your personal account, your businesses are also deactivated and the anonymisation process described above applies to both your personal and business data.',
   ),
   PolicySection(
     heading: 'Legal Bases for Processing (GDPR)',
@@ -167,7 +186,7 @@ const _es = [
     body:
         'Foodly es una plataforma que conecta a usuarios con negocios gastronómicos locales, restaurantes y servicios relacionados. Esta Política de Privacidad explica cómo recopilamos, usamos, almacenamos y protegemos tu información personal cuando usas la aplicación móvil Foodly ("App").\n\n'
         'Al usar Foodly aceptas esta Política de Privacidad. Si no estás de acuerdo, deja de usar la App y elimina tu cuenta.\n\n'
-        'Última actualización: 14 de marzo de 2026',
+        'Última actualización: 13 de abril de 2026',
   ),
   PolicySection(
     heading: 'Quiénes Somos (Responsable del Tratamiento)',
@@ -211,6 +230,25 @@ const _es = [
         '• Cumplir con las obligaciones legales aplicables.\n'
         '• Atender tus solicitudes de soporte.\n\n'
         'NO usamos tus datos para perfilado publicitario, NO vendemos tus datos a terceros, y NO aplicamos toma de decisiones automatizada que tenga efectos jurídicos sobre ti.',
+  ),
+  PolicySection(
+    heading: 'Datos de Negocio y Cuentas Manager',
+    body: 'Cuando registras un negocio en Foodly y te conviertes en Manager, recopilamos y procesamos datos adicionales específicos de las operaciones del negocio.\n\n'
+        'DATOS DE NEGOCIO RECOPILADOS\n\n'
+        '• Información de identidad del negocio: razón social, nombre comercial, dirección, categoría, canales de contacto y horarios.\n'
+        '• Medios del negocio: logotipo, imágenes de portada, fotos de menú y contenido promocional.\n'
+        '• Datos operativos: menús, precios, configuración de reservaciones y descripciones de servicios.\n'
+        '• Métricas de interacción: datos de interacción agregados y anonimizados (vistas de perfil, uso de funciones, tasa de conversión de reservaciones) derivados de las interacciones de los usuarios con tu listado.\n\n'
+        'DOCUMENTOS DE VERIFICACIÓN DE IDENTIDAD\n\n'
+        'Foodly puede solicitar prueba documental de tu autoridad para representar un negocio. Los documentos que se pueden solicitar incluyen: certificados de registro mercantil, números de identificación fiscal, contratos de arrendamiento o poderes notariales. Estos documentos se utilizan únicamente para verificar tu relación con el negocio y se almacenan de forma segura. Los documentos de verificación se conservan solo durante el tiempo necesario para completar la verificación y se eliminan dentro de los 90 días posteriores a la verificación exitosa, salvo que la ley requiera su retención.\n\n'
+        'RETENCIÓN DE DATOS DE NEGOCIO\n\n'
+        'Los datos del perfil del negocio (nombre, descripción, menús, medios) se conservan mientras el listado del negocio esté activo. Cuando un negocio se desactiva o elimina:\n\n'
+        '• Los medios del negocio (logotipo, imágenes) se eliminan del almacenamiento en la nube.\n'
+        '• Los datos del perfil del negocio se anonimizan.\n'
+        '• Los registros históricos de reservaciones se conservan en forma anonimizada por integridad de datos.\n'
+        '• Las métricas de interacción, que ya son anónimas, pueden conservarse con fines analíticos.\n\n'
+        'MANEJO DE DATOS ESPECÍFICO PARA MANAGERS\n\n'
+        'Como Manager, tus datos personales (nombre, correo, teléfono) están vinculados a tu(s) listado(s) de negocio. Si eliminas tu cuenta personal, tus negocios también se desactivan y el proceso de anonimización descrito anteriormente se aplica tanto a tus datos personales como a los del negocio.',
   ),
   PolicySection(
     heading: 'Bases Legales del Tratamiento (RGPD)',
@@ -308,7 +346,7 @@ const _pt = [
     body:
         'A Foodly é uma plataforma que liga utilizadores a negócios gastronómicos locais, restaurantes e serviços relacionados. Esta Política de Privacidade explica como recolhemos, utilizamos, armazenamos e protegemos as suas informações pessoais quando utiliza a aplicação móvel Foodly ("App").\n\n'
         'Ao utilizar a Foodly, aceita esta Política de Privacidade. Se não concordar, por favor deixe de utilizar a App e elimine a sua conta.\n\n'
-        'Última atualização: 14 de março de 2026',
+        'Última atualização: 13 de abril de 2026',
   ),
   PolicySection(
     heading: 'Quem Somos (Responsável pelo Tratamento)',
@@ -352,6 +390,25 @@ const _pt = [
         '• Cumprir as obrigações legais aplicáveis.\n'
         '• Responder aos seus pedidos de suporte.\n\n'
         'NÃO utilizamos os seus dados para criação de perfis publicitários, NÃO vendemos os seus dados a terceiros e NÃO aplicamos tomada de decisão automatizada com efeitos jurídicos sobre si.',
+  ),
+  PolicySection(
+    heading: 'Dados de Negócio e Contas Manager',
+    body: 'Quando regista um negócio na Foodly e se torna Manager, recolhemos e processamos dados adicionais específicos das operações do negócio.\n\n'
+        'DADOS DE NEGÓCIO RECOLHIDOS\n\n'
+        '• Informação de identidade do negócio: denominação social, nome comercial, morada, categoria, canais de contacto e horários.\n'
+        '• Multimédia do negócio: logótipo, imagens de capa, fotografias de menus e conteúdo promocional.\n'
+        '• Dados operacionais: menus, preços, configurações de reservas e descrições de serviços.\n'
+        '• Métricas de interação: dados de interação agregados e anonimizados (visualizações de perfil, utilização de funcionalidades, taxa de conversão de reservas) derivados das interações dos utilizadores com a sua listagem.\n\n'
+        'DOCUMENTOS DE VERIFICAÇÃO DE IDENTIDADE\n\n'
+        'A Foodly pode solicitar prova documental da sua autoridade para representar um negócio. Os documentos que podem ser solicitados incluem: certidões de registo comercial, números de identificação fiscal, contratos de arrendamento ou procurações. Estes documentos são utilizados exclusivamente para verificar a sua relação com o negócio e são armazenados de forma segura. Os documentos de verificação são conservados apenas durante o tempo necessário para concluir a verificação e são eliminados no prazo de 90 dias após a verificação bem-sucedida, salvo se a lei exigir a sua retenção.\n\n'
+        'RETENÇÃO DE DADOS DE NEGÓCIO\n\n'
+        'Os dados do perfil do negócio (nome, descrição, menus, multimédia) são conservados enquanto a listagem do negócio estiver ativa. Quando um negócio é desativado ou eliminado:\n\n'
+        '• A multimédia do negócio (logótipo, imagens) é eliminada do armazenamento cloud.\n'
+        '• Os dados do perfil do negócio são anonimizados.\n'
+        '• Os registos históricos de reservas são conservados em formato anonimizado por integridade dos dados.\n'
+        '• As métricas de interação, que já são anónimas, podem ser conservadas para fins analíticos.\n\n'
+        'TRATAMENTO DE DADOS ESPECÍFICO PARA MANAGERS\n\n'
+        'Enquanto Manager, os seus dados pessoais (nome, e-mail, telefone) estão associados à(s) sua(s) listagem(ns) de negócio. Se eliminar a sua conta pessoal, os seus negócios são também desativados e o processo de anonimização descrito acima aplica-se tanto aos seus dados pessoais como aos do negócio.',
   ),
   PolicySection(
     heading: 'Bases Legais do Tratamento (RGPD)',

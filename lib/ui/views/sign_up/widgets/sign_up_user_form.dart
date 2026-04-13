@@ -163,7 +163,7 @@ class SignUpUserForm extends StatelessWidget {
               .map<DropdownMenuItem<FoodlyCountries>>(
                 (FoodlyCountries country) => DropdownMenuItem<FoodlyCountries>(
                   value: country,
-                  child: Text(country.value, style: FoodlyTextStyles.actionsBody),
+                  child: Text(country.name, style: FoodlyTextStyles.actionsBody),
                 ),
               )
               .toList(),

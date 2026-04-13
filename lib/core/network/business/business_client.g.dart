@@ -217,6 +217,7 @@ class _BusinessClient implements BusinessClient {
     required int categoryId,
     required List<MultipartFile> photo,
     String? introMessage,
+    required bool termsAccepted,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -248,6 +249,7 @@ class _BusinessClient implements BusinessClient {
     if (introMessage != null) {
       _data.fields.add(MapEntry('intro_message', introMessage));
     }
+    _data.fields.add(MapEntry('terms_accepted', termsAccepted.toString()));
     final _options = _setStreamType<BusinessDM>(
       Options(
         method: 'POST',

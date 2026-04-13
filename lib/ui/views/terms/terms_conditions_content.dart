@@ -25,7 +25,7 @@ const _en = [
     heading: 'Acceptance of Terms',
     body: 'Welcome to Foodly. By downloading, installing, or using the Foodly mobile application ("App"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, do not use the App.\n\n'
         'These Terms constitute a legally binding agreement between you and Hector Waldman ("Foodly", "we", "us", "our"), an independent commercial operator based in Portugal.\n\n'
-        'Last updated: March 15, 2026',
+        'Last updated: April 13, 2026',
   ),
   TermsSection(
     heading: 'Description of the Service',
@@ -54,10 +54,19 @@ const _en = [
   TermsSection(
     heading: 'Business Listings (Manager Accounts)',
     body: 'If you register a business on Foodly, you represent and warrant that:\n\n'
-        '• You are authorised to represent the business.\n'
+        '• You are the legal owner, operator, or an authorised representative of the business with documented authority to act on its behalf.\n'
         '• All information you provide (name, address, category, hours, menus, prices, photos) is accurate and up to date.\n'
         '• You will keep your business profile current and promptly update any changes.\n'
-        '• Your business complies with all applicable local laws and regulations.\n\n'
+        '• Your business complies with all applicable local laws and regulations.\n'
+        '• The business identity you claim is genuine and has not been fabricated, impersonated, or usurped from another entity.\n\n'
+        'IDENTITY VERIFICATION & ANTI-FRAUD\n\n'
+        'Foodly may, at any time, request documentary proof of your authority to represent a business (e.g., business registration certificate, tax identification, lease agreement, or power of attorney). Failure to provide adequate documentation within the requested timeframe may result in immediate suspension of the business listing.\n\n'
+        'The following activities are strictly prohibited and may result in immediate and permanent account termination:\n\n'
+        '• Registering a business you do not own or operate (identity usurpation).\n'
+        '• Impersonating another business, brand, or establishment.\n'
+        '• Uploading false documentation to claim business ownership.\n'
+        '• Creating duplicate listings of an existing business to mislead users.\n\n'
+        'If you believe your business has been fraudulently listed by an unauthorised third party, contact us immediately at privacy@foodly.solutions with supporting documentation.\n\n'
         'Foodly reserves the right to remove or suspend any business listing that contains false or misleading information.\n\n'
         'REGARDING RESERVATIONS\n\n'
         'By enabling reservations, you agree to honour confirmed bookings in good faith. Foodly is not liable for disputes between customers and businesses regarding reservations or no-shows.\n\n'
@@ -188,7 +197,7 @@ const _es = [
     heading: 'Aceptación de los Términos',
     body: 'Bienvenido/a a Foodly. Al descargar, instalar o usar la aplicación móvil Foodly ("App"), aceptas estar sujeto/a a estos Términos y Condiciones ("Términos"). Si no estás de acuerdo, no uses la App.\n\n'
         'Estos Términos constituyen un acuerdo legalmente vinculante entre tú y Hector Waldman ("Foodly"), operador comercial independiente con actividad registrada en Portugal.\n\n'
-        'Última actualización: 15 de marzo de 2026',
+        'Última actualización: 13 de abril de 2026',
   ),
   TermsSection(
     heading: 'Descripción del Servicio',
@@ -217,9 +226,18 @@ const _es = [
   TermsSection(
     heading: 'Listados de Negocios (Cuentas Manager)',
     body: 'Si registras un negocio en Foodly, declaras y garantizas que:\n\n'
-        '• Estás autorizado/a para representar al negocio.\n'
+        '• Eres el propietario legal, operador o representante autorizado del negocio con documentación que acredite tu autoridad.\n'
         '• Toda la información que proporcionas (nombre, dirección, categoría, horarios, menús, precios, fotos) es precisa y está actualizada.\n'
-        '• Tu negocio cumple con todas las leyes y regulaciones locales aplicables.\n\n'
+        '• Tu negocio cumple con todas las leyes y regulaciones locales aplicables.\n'
+        '• La identidad comercial que declaras es genuina y no ha sido fabricada, suplantada ni usurpada de otra entidad.\n\n'
+        'VERIFICACIÓN DE IDENTIDAD Y ANTIFRAUDE\n\n'
+        'Foodly puede, en cualquier momento, solicitar prueba documental de tu autoridad para representar un negocio (por ejemplo, certificado de registro mercantil, identificación fiscal, contrato de arrendamiento o poder notarial). La falta de documentación adecuada puede resultar en la suspensión inmediata del listado.\n\n'
+        'Las siguientes actividades están estrictamente prohibidas y pueden resultar en la terminación inmediata y permanente de la cuenta:\n\n'
+        '• Registrar un negocio que no posees ni operas (usurpación de identidad).\n'
+        '• Suplantar la identidad de otro negocio, marca o establecimiento.\n'
+        '• Cargar documentación falsa para reclamar la titularidad de un negocio.\n'
+        '• Crear listados duplicados de un negocio existente para engañar a los usuarios.\n\n'
+        'Si crees que tu negocio ha sido listado fraudulentamente por un tercero no autorizado, contáctanos de inmediato en privacy@foodly.solutions con documentación de respaldo.\n\n'
         'Foodly se reserva el derecho de eliminar o suspender listados que contengan información falsa o engañosa.\n\n'
         'SOBRE LAS RESERVACIONES\n\n'
         'Al habilitar la función de reservaciones, te comprometes a honrar las reservaciones confirmadas de buena fe. Foodly no se hace responsable de disputas entre clientes y negocios.\n\n'
@@ -345,7 +363,7 @@ const _pt = [
     heading: 'Aceitação dos Termos',
     body: 'Bem-vindo/a à Foodly. Ao descarregar, instalar ou utilizar a aplicação móvel Foodly ("App"), aceita ficar vinculado/a a estes Termos e Condições ("Termos"). Se não concordar, não utilize a App.\n\n'
         'Estes Termos constituem um acordo legalmente vinculativo entre si e Hector Waldman ("Foodly"), operador comercial independente com atividade registada em Portugal.\n\n'
-        'Última atualização: 15 de março de 2026',
+        'Última atualização: 13 de abril de 2026',
   ),
   TermsSection(
     heading: 'Descrição do Serviço',
@@ -374,9 +392,18 @@ const _pt = [
   TermsSection(
     heading: 'Listagens de Negócios (Contas Manager)',
     body: 'Se registar um negócio na Foodly, declara e garante que:\n\n'
-        '• Está autorizado/a a representar o negócio.\n'
+        '• É o proprietário legal, operador ou representante autorizado do negócio, com documentação que comprove a sua autoridade.\n'
         '• Toda a informação que fornece (nome, morada, categoria, horários, menus, preços, fotos) é precisa e está atualizada.\n'
-        '• O seu negócio cumpre todas as leis e regulamentos locais aplicáveis.\n\n'
+        '• O seu negócio cumpre todas as leis e regulamentos locais aplicáveis.\n'
+        '• A identidade comercial que declara é genuína e não foi fabricada, usurpada ou falsificada de outra entidade.\n\n'
+        'VERIFICAÇÃO DE IDENTIDADE E ANTIFRAUDE\n\n'
+        'A Foodly pode, a qualquer momento, solicitar prova documental da sua autoridade para representar um negócio (por exemplo, certidão de registo comercial, identificação fiscal, contrato de arrendamento ou procuração). A falta de documentação adequada pode resultar na suspensão imediata da listagem.\n\n'
+        'As seguintes atividades são estritamente proibidas e podem resultar na cessação imediata e permanente da conta:\n\n'
+        '• Registar um negócio que não possui nem opera (usurpação de identidade).\n'
+        '• Fazer-se passar por outro negócio, marca ou estabelecimento.\n'
+        '• Carregar documentação falsa para reclamar a titularidade de um negócio.\n'
+        '• Criar listagens duplicadas de um negócio existente para enganar utilizadores.\n\n'
+        'Se acredita que o seu negócio foi listado fraudulentamente por um terceiro não autorizado, contacte-nos imediatamente em privacy@foodly.solutions com documentação de suporte.\n\n'
         'A Foodly reserva-se o direito de remover ou suspender listagens que contenham informação falsa ou enganosa.\n\n'
         'SOBRE AS RESERVAS\n\n'
         'Ao ativar as reservas, compromete-se a honrá-las de boa-fé. A Foodly não se responsabiliza por disputas entre clientes e negócios.\n\n'

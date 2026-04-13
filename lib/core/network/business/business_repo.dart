@@ -74,6 +74,7 @@ class BusinessRepo {
         categoryId: registerDTO.categoryId.value,
         photo: photoMultipartFile != null ? [photoMultipartFile] : [],
         introMessage: registerDTO.introMessage,
+        termsAccepted: registerDTO.termsAccepted,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

@@ -74,6 +74,7 @@ abstract class BusinessClient {
     @Part(name: 'category_id') required int categoryId,
     @Part(name: 'business_logo') required List<MultipartFile> photo,
     @Part(name: 'intro_message') String? introMessage,
+    @Part(name: 'terms_accepted') required bool termsAccepted,
   });
 
   @POST('/business-menu/store')

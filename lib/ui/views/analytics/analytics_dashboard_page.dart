@@ -2,6 +2,7 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart' show AnalyticsDashboardShimmer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/daily_trends_chart.dart';
@@ -52,13 +53,22 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
           diameter: 32,
           iconData: Bootstrap.caret_left_fill,
           onPressed: () {
+            final router = di<AppRouter>();
+
             if (context.canPop()) {
-              di<AppRouter>().removeLastRouteHistory();
+              // Normal navigation: pop back to the previous page.
+              router.removeLastRouteHistory();
               context.pop();
             } else {
-              di<AppRouter>().goBackToLastRoute();
+              // Cold start or deep-link: no stack to pop.
+              // Analytics is always a child of myBusiness, so navigate
+              // there directly instead of relying on route history.
+              final uuid = di<AuthSessionService>().uuid;
+              router.appRouter.goNamed(
+                AppRoutes.myBusiness.name,
+                pathParameters: {AppRoutes.routeIdParam: uuid},
+              );
             }
-            context.read<MainDrawerCubit>().goToPreviousIndex();
           },
         ).paddingSymmetric(vertical: 8, horizontal: 8),
         leadingWidth: 60,
@@ -68,7 +78,7 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
           final vm = state.vm;
 
           return state.maybeWhen(
-            loading: (_) => const Center(child: CircularProgressIndicator()),
+            loading: (_) => const AnalyticsDashboardShimmer(),
             error: (_, message) => _ErrorView(
               message: message,
               onRetry: () => context.read<AnalyticsCubit>().fetchOverview(),
@@ -76,7 +86,7 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
             orElse: () {
               final overview = vm.overview;
               if (overview == null) {
-                return const Center(child: CircularProgressIndicator());
+                return const AnalyticsDashboardShimmer();
               }
 
               return RefreshIndicator(

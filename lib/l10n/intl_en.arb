@@ -488,6 +488,7 @@
   "tapToAddPrompt": "Tap here to add a new prompt",
   "tendencies": "Trends",
   "termsPrivacyTextSpan1": "By creating an account, you acknowledge that you have read and agree to our",
+  "termsPrivacyTextSpan1forBusiness": "By creating a business account, you acknowledge that you have read and agree to our",
   "termsPrivacyTextSpan2": "Terms and Conditions",
   "termsPrivacyTextSpan3": "and the",
   "termsPrivacyTextSpan4": "Privacy Policy",
@@ -817,7 +818,6 @@
   "viewToInteract": "View → Interact",
   "interactToReserve": "Interact → Reserve",
   "reserveToComplete": "Reserve → Complete",
-
   "analyticsLabelBusinessOpen": "Business views",
   "analyticsLabelCtaClicked": "Contact taps",
   "analyticsLabelCtaWhatsapp": "WhatsApp",
@@ -834,7 +834,6 @@
   "analyticsLabelReviewCreated": "Reviews received",
   "analyticsLabelMenuViewed": "Menu views",
   "analyticsLabelShare": "Shares",
-
   "analyticsStatusConfirmed": "Confirmed",
   "analyticsStatusCompleted": "Completed",
   "analyticsStatusPending": "Pending",

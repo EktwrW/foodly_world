@@ -42,6 +42,9 @@ class BusinessBodyRegisterDTO {
   @JsonKey(name: 'intro_message')
   final String? introMessage;
 
+  @JsonKey(name: 'terms_accepted')
+  final bool termsAccepted;
+
   const BusinessBodyRegisterDTO({
     required this.businessName,
     required this.businessEmail,
@@ -55,6 +58,7 @@ class BusinessBodyRegisterDTO {
     required this.businessLongitude,
     required this.categoryId,
     this.introMessage,
+    this.termsAccepted = false,
   });
 
   factory BusinessBodyRegisterDTO.fromJson(Map<String, dynamic> json) => _$BusinessBodyRegisterDTOFromJson(json);

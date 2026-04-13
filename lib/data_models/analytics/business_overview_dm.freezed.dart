@@ -799,6 +799,7 @@ FunnelDM _$FunnelDMFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FunnelDM {
+  @JsonKey(fromJson: parseFunnelSteps)
   List<FunnelStepDM> get steps => throw _privateConstructorUsedError;
   FunnelConversionDM? get conversion => throw _privateConstructorUsedError;
 
@@ -817,7 +818,9 @@ abstract class $FunnelDMCopyWith<$Res> {
   factory $FunnelDMCopyWith(FunnelDM value, $Res Function(FunnelDM) then) =
       _$FunnelDMCopyWithImpl<$Res, FunnelDM>;
   @useResult
-  $Res call({List<FunnelStepDM> steps, FunnelConversionDM? conversion});
+  $Res call(
+      {@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
+      FunnelConversionDM? conversion});
 
   $FunnelConversionDMCopyWith<$Res>? get conversion;
 }
@@ -875,7 +878,9 @@ abstract class _$$FunnelDMImplCopyWith<$Res>
       __$$FunnelDMImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<FunnelStepDM> steps, FunnelConversionDM? conversion});
+  $Res call(
+      {@JsonKey(fromJson: parseFunnelSteps) List<FunnelStepDM> steps,
+      FunnelConversionDM? conversion});
 
   @override
   $FunnelConversionDMCopyWith<$Res>? get conversion;
@@ -914,7 +919,9 @@ class __$$FunnelDMImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FunnelDMImpl implements _FunnelDM {
   const _$FunnelDMImpl(
-      {final List<FunnelStepDM> steps = const [], this.conversion})
+      {@JsonKey(fromJson: parseFunnelSteps)
+      final List<FunnelStepDM> steps = const [],
+      this.conversion})
       : _steps = steps;
 
   factory _$FunnelDMImpl.fromJson(Map<String, dynamic> json) =>
@@ -922,7 +929,7 @@ class _$FunnelDMImpl implements _FunnelDM {
 
   final List<FunnelStepDM> _steps;
   @override
-  @JsonKey()
+  @JsonKey(fromJson: parseFunnelSteps)
   List<FunnelStepDM> get steps {
     if (_steps is EqualUnmodifiableListView) return _steps;
     // ignore: implicit_dynamic_type
@@ -970,13 +977,14 @@ class _$FunnelDMImpl implements _FunnelDM {
 
 abstract class _FunnelDM implements FunnelDM {
   const factory _FunnelDM(
-      {final List<FunnelStepDM> steps,
+      {@JsonKey(fromJson: parseFunnelSteps) final List<FunnelStepDM> steps,
       final FunnelConversionDM? conversion}) = _$FunnelDMImpl;
 
   factory _FunnelDM.fromJson(Map<String, dynamic> json) =
       _$FunnelDMImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: parseFunnelSteps)
   List<FunnelStepDM> get steps;
   @override
   FunnelConversionDM? get conversion;
@@ -1281,8 +1289,10 @@ class __$$FunnelConversionDMImplCopyWithImpl<$Res>
 class _$FunnelConversionDMImpl implements _FunnelConversionDM {
   const _$FunnelConversionDMImpl(
       {@JsonKey(name: 'open_to_cta_rate') this.openToCtaRate = 0.0,
-      @JsonKey(name: 'open_to_reservation_rate') this.openToReservationRate = 0.0,
-      @JsonKey(name: 'cta_to_reservation_rate') this.ctaToReservationRate = 0.0});
+      @JsonKey(name: 'open_to_reservation_rate')
+      this.openToReservationRate = 0.0,
+      @JsonKey(name: 'cta_to_reservation_rate')
+      this.ctaToReservationRate = 0.0});
 
   factory _$FunnelConversionDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$FunnelConversionDMImplFromJson(json);
@@ -1340,7 +1350,8 @@ class _$FunnelConversionDMImpl implements _FunnelConversionDM {
 abstract class _FunnelConversionDM implements FunnelConversionDM {
   const factory _FunnelConversionDM(
       {@JsonKey(name: 'open_to_cta_rate') final double openToCtaRate,
-      @JsonKey(name: 'open_to_reservation_rate') final double openToReservationRate,
+      @JsonKey(name: 'open_to_reservation_rate')
+      final double openToReservationRate,
       @JsonKey(name: 'cta_to_reservation_rate')
       final double ctaToReservationRate}) = _$FunnelConversionDMImpl;
 
@@ -1810,10 +1821,10 @@ BreakdownsDM _$BreakdownsDMFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BreakdownsDM {
-  @JsonKey(name: 'reservations_by_status')
+  @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
   List<BreakdownItemDM> get reservationsByStatus =>
       throw _privateConstructorUsedError;
-  @JsonKey(name: 'top_event_types')
+  @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
   List<BreakdownItemDM> get topEventTypes => throw _privateConstructorUsedError;
 
   /// Serializes this BreakdownsDM to a JSON map.
@@ -1833,9 +1844,11 @@ abstract class $BreakdownsDMCopyWith<$Res> {
       _$BreakdownsDMCopyWithImpl<$Res, BreakdownsDM>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'reservations_by_status')
+      {@JsonKey(
+          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       List<BreakdownItemDM> reservationsByStatus,
-      @JsonKey(name: 'top_event_types') List<BreakdownItemDM> topEventTypes});
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
+      List<BreakdownItemDM> topEventTypes});
 }
 
 /// @nodoc
@@ -1878,9 +1891,11 @@ abstract class _$$BreakdownsDMImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'reservations_by_status')
+      {@JsonKey(
+          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       List<BreakdownItemDM> reservationsByStatus,
-      @JsonKey(name: 'top_event_types') List<BreakdownItemDM> topEventTypes});
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
+      List<BreakdownItemDM> topEventTypes});
 }
 
 /// @nodoc
@@ -1916,9 +1931,10 @@ class __$$BreakdownsDMImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BreakdownsDMImpl implements _BreakdownsDM {
   const _$BreakdownsDMImpl(
-      {@JsonKey(name: 'reservations_by_status')
+      {@JsonKey(
+          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       final List<BreakdownItemDM> reservationsByStatus = const [],
-      @JsonKey(name: 'top_event_types')
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
       final List<BreakdownItemDM> topEventTypes = const []})
       : _reservationsByStatus = reservationsByStatus,
         _topEventTypes = topEventTypes;
@@ -1928,7 +1944,7 @@ class _$BreakdownsDMImpl implements _BreakdownsDM {
 
   final List<BreakdownItemDM> _reservationsByStatus;
   @override
-  @JsonKey(name: 'reservations_by_status')
+  @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
   List<BreakdownItemDM> get reservationsByStatus {
     if (_reservationsByStatus is EqualUnmodifiableListView)
       return _reservationsByStatus;
@@ -1938,7 +1954,7 @@ class _$BreakdownsDMImpl implements _BreakdownsDM {
 
   final List<BreakdownItemDM> _topEventTypes;
   @override
-  @JsonKey(name: 'top_event_types')
+  @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
   List<BreakdownItemDM> get topEventTypes {
     if (_topEventTypes is EqualUnmodifiableListView) return _topEventTypes;
     // ignore: implicit_dynamic_type
@@ -1986,19 +2002,20 @@ class _$BreakdownsDMImpl implements _BreakdownsDM {
 
 abstract class _BreakdownsDM implements BreakdownsDM {
   const factory _BreakdownsDM(
-      {@JsonKey(name: 'reservations_by_status')
+      {@JsonKey(
+          name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
       final List<BreakdownItemDM> reservationsByStatus,
-      @JsonKey(name: 'top_event_types')
+      @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
       final List<BreakdownItemDM> topEventTypes}) = _$BreakdownsDMImpl;
 
   factory _BreakdownsDM.fromJson(Map<String, dynamic> json) =
       _$BreakdownsDMImpl.fromJson;
 
   @override
-  @JsonKey(name: 'reservations_by_status')
+  @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList)
   List<BreakdownItemDM> get reservationsByStatus;
   @override
-  @JsonKey(name: 'top_event_types')
+  @JsonKey(name: 'top_event_types', fromJson: parseEventTypes)
   List<BreakdownItemDM> get topEventTypes;
 
   /// Create a copy of BreakdownsDM

@@ -3474,6 +3474,16 @@ class S {
     );
   }
 
+  /// `By creating a business account, you acknowledge that you have read and agree to our`
+  String get termsPrivacyTextSpan1forBusiness {
+    return Intl.message(
+      'By creating a business account, you acknowledge that you have read and agree to our',
+      name: 'termsPrivacyTextSpan1forBusiness',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Terms and Conditions`
   String get termsPrivacyTextSpan2 {
     return Intl.message(

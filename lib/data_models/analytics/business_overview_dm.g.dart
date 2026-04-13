@@ -72,26 +72,12 @@ Map<String, dynamic> _$$KpisDMImplToJson(_$KpisDMImpl instance) =>
 
 _$FunnelDMImpl _$$FunnelDMImplFromJson(Map<String, dynamic> json) =>
     _$FunnelDMImpl(
-      steps: _parseFunnelSteps(json['steps']),
+      steps: json['steps'] == null ? const [] : parseFunnelSteps(json['steps']),
       conversion: json['conversion'] == null
           ? null
           : FunnelConversionDM.fromJson(
               json['conversion'] as Map<String, dynamic>),
     );
-
-/// Backend sends steps as a Map {"business_open": 29, ...} — convert to List.
-List<FunnelStepDM> _parseFunnelSteps(dynamic raw) {
-  if (raw == null) return const [];
-  if (raw is List) {
-    return raw.map((e) => FunnelStepDM.fromJson(e as Map<String, dynamic>)).toList();
-  }
-  if (raw is Map) {
-    return raw.entries
-        .map((e) => FunnelStepDM(label: e.key as String, value: (e.value as num).toInt()))
-        .toList();
-  }
-  return const [];
-}
 
 Map<String, dynamic> _$$FunnelDMImplToJson(_$FunnelDMImpl instance) =>
     <String, dynamic>{
@@ -173,38 +159,13 @@ Map<String, dynamic> _$$DailyPointDMImplToJson(_$DailyPointDMImpl instance) =>
 
 _$BreakdownsDMImpl _$$BreakdownsDMImplFromJson(Map<String, dynamic> json) =>
     _$BreakdownsDMImpl(
-      reservationsByStatus: _parseBreakdownMapOrList(json['reservations_by_status']),
-      topEventTypes: _parseEventTypes(json['top_event_types']),
+      reservationsByStatus: json['reservations_by_status'] == null
+          ? const []
+          : parseBreakdownMapOrList(json['reservations_by_status']),
+      topEventTypes: json['top_event_types'] == null
+          ? const []
+          : parseEventTypes(json['top_event_types']),
     );
-
-/// Backend sends reservations_by_status as Map {"confirmed": 1, ...} — convert to List.
-List<BreakdownItemDM> _parseBreakdownMapOrList(dynamic raw) {
-  if (raw == null) return const [];
-  if (raw is List) {
-    return raw.map((e) => BreakdownItemDM.fromJson(e as Map<String, dynamic>)).toList();
-  }
-  if (raw is Map) {
-    return raw.entries
-        .map((e) => BreakdownItemDM(label: e.key as String, value: (e.value as num).toInt()))
-        .toList();
-  }
-  return const [];
-}
-
-/// Backend sends top_event_types as [{"event_type": "cta_whatsapp", "count": 7}, ...].
-List<BreakdownItemDM> _parseEventTypes(dynamic raw) {
-  if (raw == null) return const [];
-  if (raw is List) {
-    return raw.map((e) {
-      final map = e as Map<String, dynamic>;
-      return BreakdownItemDM(
-        label: (map['event_type'] ?? map['label'] ?? '') as String,
-        value: ((map['count'] ?? map['value'] ?? 0) as num).toInt(),
-      );
-    }).toList();
-  }
-  return const [];
-}
 
 Map<String, dynamic> _$$BreakdownsDMImplToJson(_$BreakdownsDMImpl instance) =>
     <String, dynamic>{

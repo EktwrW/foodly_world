@@ -488,7 +488,8 @@
   "temporarilyUnavailable": "Temporalmente no disponible",
   "tapToAddPrompt": "Toca aquí para añadir un nuevo prompt",
   "tendencies": "Tendencias",
-  "termsPrivacyTextSpan1": "Al crear una cuenta, has leído y aceptas nuestros",
+  "termsPrivacyTextSpan1": "Al crear una cuenta, afirmas que has leído y aceptas nuestros",
+  "termsPrivacyTextSpan1forBusiness": "Al crear una cuenta de negocio, confirmas que has leído y aceptas nuestros",
   "termsPrivacyTextSpan2": "Términos y Condiciones",
   "termsPrivacyTextSpan3": " y la",
   "termsPrivacyTextSpan4": "Política de Privacidad",
@@ -817,7 +818,6 @@
   "viewToInteract": "Vista → Interacción",
   "interactToReserve": "Interacción → Reserva",
   "reserveToComplete": "Reserva → Completada",
-
   "analyticsLabelBusinessOpen": "Visitas al negocio",
   "analyticsLabelCtaClicked": "Toques de contacto",
   "analyticsLabelCtaWhatsapp": "WhatsApp",
@@ -834,7 +834,6 @@
   "analyticsLabelReviewCreated": "Reseñas recibidas",
   "analyticsLabelMenuViewed": "Vistas del menú",
   "analyticsLabelShare": "Compartidos",
-
   "analyticsStatusConfirmed": "Confirmada",
   "analyticsStatusCompleted": "Completada",
   "analyticsStatusPending": "Pendiente",

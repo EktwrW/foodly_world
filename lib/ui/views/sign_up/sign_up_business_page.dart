@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_form.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_tooltip.dart';
+import 'package:foodly_world/ui/views/sign_up/widgets/terms_privacy_wdg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -280,6 +281,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                           ),
                         ).paddingSymmetric(vertical: 25)
                       : const SizedBox(height: 25),
+                  TermsAndPrivacyPolicyBusinessWdg(enabled: !vm.tooltipActive, vm: vm),
                   CustomNeumorphicButton(
                     margin: EdgeInsets.zero,
                     onPressed: () async {
@@ -290,7 +292,7 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
                     },
                     shape: ui.NeumorphicShape.convex,
                     text: S.current.completeSignUp,
-                    disabled: false,
+                    disabled: !vm.businessTermsAndContiditionsAccepted,
                   ).paddingOnly(top: 36, bottom: 73),
                 ],
               ),

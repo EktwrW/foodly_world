@@ -60,3 +60,55 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
     );
   }
 }
+
+class TermsAndPrivacyPolicyBusinessWdg extends StatelessWidget {
+  const TermsAndPrivacyPolicyBusinessWdg({
+    super.key,
+    required this.enabled,
+    required this.vm,
+  });
+
+  final bool enabled;
+  final UserProfileVM vm;
+
+  @override
+  Widget build(BuildContext context) {
+    final appRouter = di<AppRouter>();
+
+    return AnimatedOpacity(
+      duration: Durations.medium2,
+      opacity: enabled ? 1.0 : .3,
+      child: Row(
+        children: [
+          Checkbox(
+            value: vm.businessTermsAndContiditionsAccepted,
+            onChanged: enabled ? (value) => context.read<SignUpCubit>().setBusinessTermsAndContiditions(value!) : null,
+          ),
+          Expanded(
+            child: Text.rich(
+              TextSpan(
+                children: <TextSpan>[
+                  TextSpan(text: '${S.current.termsPrivacyTextSpan1forBusiness} '),
+                  TextSpan(
+                    text: S.current.termsPrivacyTextSpan2,
+                    style: FoodlyTextStyles.primaryBodyBold,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.termsConditions.name),
+                  ),
+                  TextSpan(text: ', ${S.current.termsPrivacyTextSpan3} '),
+                  TextSpan(
+                    text: S.current.termsPrivacyTextSpan4,
+                    style: FoodlyTextStyles.primaryBodyBold,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
+            ),
+          )
+        ],
+      ).paddingOnly(top: 30),
+    );
+  }
+}

@@ -70,6 +70,8 @@ mixin _$UserProfileVM {
   ProfileEditing get edition => throw _privateConstructorUsedError;
   UserDM? get visitedUser => throw _privateConstructorUsedError;
   bool get termsAndContiditionsAccepted => throw _privateConstructorUsedError;
+  bool get businessTermsAndContiditionsAccepted =>
+      throw _privateConstructorUsedError;
   String? get importedAvatar => throw _privateConstructorUsedError;
   List<ReviewDM> get myReviews => throw _privateConstructorUsedError;
   ReviewsMetaDM? get reviewsMeta => throw _privateConstructorUsedError;
@@ -133,6 +135,7 @@ abstract class $UserProfileVMCopyWith<$Res> {
       ProfileEditing edition,
       UserDM? visitedUser,
       bool termsAndContiditionsAccepted,
+      bool businessTermsAndContiditionsAccepted,
       String? importedAvatar,
       List<ReviewDM> myReviews,
       ReviewsMetaDM? reviewsMeta,
@@ -219,6 +222,7 @@ class _$UserProfileVMCopyWithImpl<$Res, $Val extends UserProfileVM>
     Object? edition = null,
     Object? visitedUser = freezed,
     Object? termsAndContiditionsAccepted = null,
+    Object? businessTermsAndContiditionsAccepted = null,
     Object? importedAvatar = freezed,
     Object? myReviews = null,
     Object? reviewsMeta = freezed,
@@ -400,6 +404,11 @@ class _$UserProfileVMCopyWithImpl<$Res, $Val extends UserProfileVM>
       termsAndContiditionsAccepted: null == termsAndContiditionsAccepted
           ? _value.termsAndContiditionsAccepted
           : termsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      businessTermsAndContiditionsAccepted: null ==
+              businessTermsAndContiditionsAccepted
+          ? _value.businessTermsAndContiditionsAccepted
+          : businessTermsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
       importedAvatar: freezed == importedAvatar
           ? _value.importedAvatar
@@ -761,6 +770,7 @@ abstract class _$$UserProfileVMImplCopyWith<$Res>
       ProfileEditing edition,
       UserDM? visitedUser,
       bool termsAndContiditionsAccepted,
+      bool businessTermsAndContiditionsAccepted,
       String? importedAvatar,
       List<ReviewDM> myReviews,
       ReviewsMetaDM? reviewsMeta,
@@ -865,6 +875,7 @@ class __$$UserProfileVMImplCopyWithImpl<$Res>
     Object? edition = null,
     Object? visitedUser = freezed,
     Object? termsAndContiditionsAccepted = null,
+    Object? businessTermsAndContiditionsAccepted = null,
     Object? importedAvatar = freezed,
     Object? myReviews = null,
     Object? reviewsMeta = freezed,
@@ -1047,6 +1058,11 @@ class __$$UserProfileVMImplCopyWithImpl<$Res>
           ? _value.termsAndContiditionsAccepted
           : termsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
+      businessTermsAndContiditionsAccepted: null ==
+              businessTermsAndContiditionsAccepted
+          ? _value.businessTermsAndContiditionsAccepted
+          : businessTermsAndContiditionsAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
       importedAvatar: freezed == importedAvatar
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
@@ -1115,6 +1131,7 @@ class _$UserProfileVMImpl extends _UserProfileVM {
       this.edition = ProfileEditing.none,
       this.visitedUser,
       this.termsAndContiditionsAccepted = false,
+      this.businessTermsAndContiditionsAccepted = false,
       this.importedAvatar,
       final List<ReviewDM> myReviews = const [],
       this.reviewsMeta,
@@ -1235,6 +1252,9 @@ class _$UserProfileVMImpl extends _UserProfileVM {
   @JsonKey()
   final bool termsAndContiditionsAccepted;
   @override
+  @JsonKey()
+  final bool businessTermsAndContiditionsAccepted;
+  @override
   final String? importedAvatar;
   final List<ReviewDM> _myReviews;
   @override
@@ -1253,7 +1273,7 @@ class _$UserProfileVMImpl extends _UserProfileVM {
 
   @override
   String toString() {
-    return 'UserProfileVM(nickNameController: $nickNameController, firstNameController: $firstNameController, lastNameController: $lastNameController, emailController: $emailController, passwordController: $passwordController, newPasswordController: $newPasswordController, phoneNumberController: $phoneNumberController, addressController: $addressController, cityController: $cityController, zipCodeController: $zipCodeController, businessNameController: $businessNameController, businessPhoneNumberController: $businessPhoneNumberController, businessEmailController: $businessEmailController, businessCityController: $businessCityController, businessAddressController: $businessAddressController, businessZipCodeController: $businessZipCodeController, businessIntroMessageController: $businessIntroMessageController, dateOfBirthNode: $dateOfBirthNode, placesFocusNode: $placesFocusNode, genderNode: $genderNode, country: $country, countryNode: $countryNode, businessCountry: $businessCountry, businessCountryNode: $businessCountryNode, formKey: $formKey, gender: $gender, roleId: $roleId, autovalidateMode: $autovalidateMode, userSessionDM: $userSessionDM, business: $business, dateOfBirth: $dateOfBirth, businessCategory: $businessCategory, imagePath: $imagePath, logoPath: $logoPath, tooltipActive: $tooltipActive, mapController: $mapController, markers: $markers, businessLocation: $businessLocation, userLocation: $userLocation, businessCountryCode: $businessCountryCode, loggedUserCanEdit: $loggedUserCanEdit, edition: $edition, visitedUser: $visitedUser, termsAndContiditionsAccepted: $termsAndContiditionsAccepted, importedAvatar: $importedAvatar, myReviews: $myReviews, reviewsMeta: $reviewsMeta, isLoadingMoreReviews: $isLoadingMoreReviews)';
+    return 'UserProfileVM(nickNameController: $nickNameController, firstNameController: $firstNameController, lastNameController: $lastNameController, emailController: $emailController, passwordController: $passwordController, newPasswordController: $newPasswordController, phoneNumberController: $phoneNumberController, addressController: $addressController, cityController: $cityController, zipCodeController: $zipCodeController, businessNameController: $businessNameController, businessPhoneNumberController: $businessPhoneNumberController, businessEmailController: $businessEmailController, businessCityController: $businessCityController, businessAddressController: $businessAddressController, businessZipCodeController: $businessZipCodeController, businessIntroMessageController: $businessIntroMessageController, dateOfBirthNode: $dateOfBirthNode, placesFocusNode: $placesFocusNode, genderNode: $genderNode, country: $country, countryNode: $countryNode, businessCountry: $businessCountry, businessCountryNode: $businessCountryNode, formKey: $formKey, gender: $gender, roleId: $roleId, autovalidateMode: $autovalidateMode, userSessionDM: $userSessionDM, business: $business, dateOfBirth: $dateOfBirth, businessCategory: $businessCategory, imagePath: $imagePath, logoPath: $logoPath, tooltipActive: $tooltipActive, mapController: $mapController, markers: $markers, businessLocation: $businessLocation, userLocation: $userLocation, businessCountryCode: $businessCountryCode, loggedUserCanEdit: $loggedUserCanEdit, edition: $edition, visitedUser: $visitedUser, termsAndContiditionsAccepted: $termsAndContiditionsAccepted, businessTermsAndContiditionsAccepted: $businessTermsAndContiditionsAccepted, importedAvatar: $importedAvatar, myReviews: $myReviews, reviewsMeta: $reviewsMeta, isLoadingMoreReviews: $isLoadingMoreReviews)';
   }
 
   @override
@@ -1335,6 +1355,7 @@ class _$UserProfileVMImpl extends _UserProfileVM {
             (identical(other.edition, edition) || other.edition == edition) &&
             (identical(other.visitedUser, visitedUser) || other.visitedUser == visitedUser) &&
             (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) || other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
+            (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) || other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
             (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
             const DeepCollectionEquality().equals(other._myReviews, _myReviews) &&
             (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
@@ -1388,6 +1409,7 @@ class _$UserProfileVMImpl extends _UserProfileVM {
         edition,
         visitedUser,
         termsAndContiditionsAccepted,
+        businessTermsAndContiditionsAccepted,
         importedAvatar,
         const DeepCollectionEquality().hash(_myReviews),
         reviewsMeta,
@@ -1449,6 +1471,7 @@ abstract class _UserProfileVM extends UserProfileVM {
       final ProfileEditing edition,
       final UserDM? visitedUser,
       final bool termsAndContiditionsAccepted,
+      final bool businessTermsAndContiditionsAccepted,
       final String? importedAvatar,
       final List<ReviewDM> myReviews,
       final ReviewsMetaDM? reviewsMeta,
@@ -1543,6 +1566,8 @@ abstract class _UserProfileVM extends UserProfileVM {
   UserDM? get visitedUser;
   @override
   bool get termsAndContiditionsAccepted;
+  @override
+  bool get businessTermsAndContiditionsAccepted;
   @override
   String? get importedAvatar;
   @override

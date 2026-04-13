@@ -263,6 +263,9 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void setTermsAndContiditions(bool value) => emit(_Loaded(_vm = _vm.copyWith(termsAndContiditionsAccepted: value)));
 
+  void setBusinessTermsAndContiditions(bool value) =>
+      emit(_Loaded(_vm = _vm.copyWith(businessTermsAndContiditionsAccepted: value)));
+
   void userCreated() => emit(_UserCreated(_vm));
 
   void updateDateOfBirth(DateTime? picked) => emit(_Loaded(_vm = _vm.copyWith(dateOfBirth: picked)));
@@ -339,6 +342,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       introMessage: _vm.businessIntroMessageController?.controller?.text.trim().isEmpty == true
           ? null
           : _vm.businessIntroMessageController?.controller?.text.trim(),
+      termsAccepted: _vm.businessTermsAndContiditionsAccepted,
     );
 
     final registerResult = await _businessRepo.register(registerDTO: bodyRegisterDTO, filePath: _vm.logoPath);

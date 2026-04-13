@@ -1025,6 +1025,189 @@ class _ReservationCardSkeleton extends StatelessWidget {
   }
 }
 
+// ─── Analytics Dashboard Shimmer ─────────────────────────────────────────────
+
+/// Skeleton for [AnalyticsDashboardPage] while loading.
+/// Mimics the full dashboard: period selector + KPI cards row + line chart +
+/// funnel + breakdown cards.
+class AnalyticsDashboardShimmer extends StatelessWidget {
+  const AnalyticsDashboardShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: _kBaseColor,
+      highlightColor: _kHighlightColor,
+      child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.only(top: 16, bottom: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Period selector: business name + segmented button
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _Rect(width: 130, height: 14),
+                  _Rect(width: 170, height: 32, radius: 16),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // KPI cards row (horizontal scroll)
+            SizedBox(
+              height: 120,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: 4,
+                separatorBuilder: (_, __) => const SizedBox(width: 10),
+                itemBuilder: (_, __) => const _KpiCardSkeleton(),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Daily trends chart placeholder
+            const _ChartSkeleton(height: 220),
+            const SizedBox(height: 20),
+
+            // Funnel chart placeholder
+            const _ChartSkeleton(height: 180),
+            const SizedBox(height: 20),
+
+            // Breakdown cards (donut + bar side by side)
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _BreakdownCardSkeleton()),
+                  SizedBox(width: 12),
+                  Expanded(child: _BreakdownCardSkeleton()),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Mimics [KpiCard]: icon box + value + label inside a 140-wide container.
+class _KpiCardSkeleton extends StatelessWidget {
+  const _KpiCardSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 140,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _Rect(width: 30, height: 30, radius: 8),
+          _Rect(width: 60, height: 20),
+          _Rect(width: 90, height: 11),
+        ],
+      ),
+    );
+  }
+}
+
+/// Generic chart placeholder: card with title line + a series of horizontal bars.
+class _ChartSkeleton extends StatelessWidget {
+  final double height;
+  const _ChartSkeleton({required this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        height: height,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _Rect(width: 120, height: 14),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(7, (i) {
+                  // Vary bar heights to look like a chart
+                  final heights = [0.4, 0.6, 0.5, 0.8, 0.65, 0.75, 0.55];
+                  return Expanded(
+                    child: FractionallySizedBox(
+                      heightFactor: heights[i],
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEAEAEA),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Placeholder for a breakdown card (donut or bar chart).
+class _BreakdownCardSkeleton extends StatelessWidget {
+  const _BreakdownCardSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 170,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _Rect(width: 100, height: 12),
+          SizedBox(height: 14),
+          Center(child: _Circle(size: 90)),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _Rect(width: 40, height: 10),
+              _Rect(width: 40, height: 10),
+              _Rect(width: 40, height: 10),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
 class _Rect extends StatelessWidget {
