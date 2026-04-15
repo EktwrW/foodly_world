@@ -94,30 +94,29 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
                               child: ColoredBox(
                                 color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
                                 child: SizedBox(
-                                  height: 209,
-                                  width: double.infinity,
-                                  child: (currentBusiness?.coverImages.isNotEmpty ?? false)
-                                      ? ImageSliderFade(
-                                          imageList: currentBusiness!.coverImageUrls
-                                              .map(
-                                                (e) => CachedNetworkImage(
-                                                  imageUrl: e,
-                                                  height: 209,
-                                                  width: double.infinity,
-                                                  fadeInDuration: Durations.medium2,
-                                                  fit: BoxFit.cover,
-                                                  progressIndicatorBuilder: (context, url, progress) =>
-                                                      const LoadingWidgetFoodlyIso().paddingAll(24),
-                                                ),
-                                              )
-                                              .toList(),
-                                        )
-                                      : const Asset(
-                                          FoodlyAssets.newBusinessPlaceholder,
-                                          height: 209,
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
+                                    height: 209,
+                                    width: double.infinity,
+                                    child: (currentBusiness?.coverImages.isNotEmpty ?? false)
+                                        ? ImageSliderFade(
+                                            imageList: currentBusiness!.coverImageUrls
+                                                .map(
+                                                  (e) => CachedNetworkImage(
+                                                    imageUrl: e,
+                                                    height: 209,
+                                                    width: double.infinity,
+                                                    fadeInDuration: Durations.medium2,
+                                                    fit: BoxFit.cover,
+                                                    progressIndicatorBuilder: (context, url, progress) =>
+                                                        const LoadingWidgetFoodlyIso().paddingAll(24),
+                                                  ),
+                                                )
+                                                .toList(),
+                                          )
+                                        : (currentBusiness?.categoryId?.isDrinkHouse == true)
+                                            ? const Asset(FoodlyAssets.newBarPlaceholder,
+                                                height: 209, fit: BoxFit.cover)
+                                            : const Asset(FoodlyAssets.newBusinessPlaceholder,
+                                                height: 209, fit: BoxFit.cover)),
                               ),
                             ),
                           ),

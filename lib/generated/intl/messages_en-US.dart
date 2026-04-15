@@ -290,6 +290,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "bakeryAndDesserts": MessageLookupByLibrary.simpleMessage(
       "Bakery and Desserts",
     ),
+    "barsAndPubs": MessageLookupByLibrary.simpleMessage("Bars & Pubs"),
     "big": MessageLookupByLibrary.simpleMessage("Big"),
     "biometricSnackbarTextSpanA": MessageLookupByLibrary.simpleMessage(
       "This device\'s operating system does not support or has not configured biometric or pattern accesses.",
@@ -949,9 +950,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "promoTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
-    "pubsAndWineBars": MessageLookupByLibrary.simpleMessage(
-      "Pubs and Wine Bars",
-    ),
     "radiusDistanceLabel": MessageLookupByLibrary.simpleMessage(
       "Distance radius:",
     ),
@@ -1083,6 +1081,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Your session has expired. Please log in again.",
     ),
     "setDate": MessageLookupByLibrary.simpleMessage("Set date"),
+    "setPassword": MessageLookupByLibrary.simpleMessage("Set password"),
+    "setPasswordSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Enable email + password sign-in in addition to your social account.",
+    ),
     "shareAppMessage": MessageLookupByLibrary.simpleMessage(
       "Discover the best food spots near you with Foodly — explore menus, grab promotions, and book tables, all in one app!",
     ),

@@ -29,6 +29,8 @@ UserBodyRegisterDTO _$UserBodyRegisterDTOFromJson(Map<String, dynamic> json) =>
           ?.map((e) => AddressDM.fromJson(e as Map<String, dynamic>))
           .toList(),
       firebasePhoneToken: json['firebase_phone_token'] as String?,
+      provider: json['provider'] as String?,
+      providerId: json['provider_id'] as String?,
     );
 
 Map<String, dynamic> _$UserBodyRegisterDTOToJson(
@@ -56,6 +58,8 @@ Map<String, dynamic> _$UserBodyRegisterDTOToJson(
         'addresses': value,
       if (instance.firebasePhoneToken case final value?)
         'firebase_phone_token': value,
+      if (instance.provider case final value?) 'provider': value,
+      if (instance.providerId case final value?) 'provider_id': value,
     };
 
 const _$FoodlyCountriesEnumMap = {

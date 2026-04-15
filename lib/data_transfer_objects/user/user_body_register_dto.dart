@@ -63,6 +63,15 @@ class UserBodyRegisterDTO {
   @JsonKey(name: 'firebase_phone_token')
   final String? firebasePhoneToken;
 
+  /// When set, tells the backend that this sign-up originated from a verified
+  /// social provider (Google, etc.) and the password requirement is waived.
+  @JsonKey(name: 'provider')
+  final String? provider;
+
+  /// Stable user id issued by the social provider.
+  @JsonKey(name: 'provider_id')
+  final String? providerId;
+
   const UserBodyRegisterDTO({
     required this.userName,
     required this.firstName,
@@ -83,6 +92,8 @@ class UserBodyRegisterDTO {
     required this.longitude,
     this.addresses,
     this.firebasePhoneToken,
+    this.provider,
+    this.providerId,
   });
 
   factory UserBodyRegisterDTO.fromJson(Map<String, dynamic> json) => _$UserBodyRegisterDTOFromJson(json);

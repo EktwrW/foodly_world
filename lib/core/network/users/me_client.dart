@@ -5,6 +5,7 @@ import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_recover_password_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -60,6 +61,8 @@ abstract class MeClient {
     @Part(name: 'firebase_phone_token') String? firebasePhoneToken,
     @Part(name: 'latitude') double? latitude,
     @Part(name: 'longitude') double? longitude,
+    @Part(name: 'provider') String? provider,
+    @Part(name: 'provider_id') String? providerId,
   });
 
   @POST('/update-profile-photo')
@@ -70,6 +73,11 @@ abstract class MeClient {
 
   @POST('/update-password')
   Future<void> updatePassword(@Body() UserBodyUpdateDTO updateDTO);
+
+  /// First-time password setup for social-login users (password is NULL).
+  /// Backend rejects with 409 if a password is already set.
+  @POST('/set-password')
+  Future<void> setPassword(@Body() UserBodySetPasswordDTO setPasswordDTO);
 
   @POST('/update-profile')
   @MultiPart()

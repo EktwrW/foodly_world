@@ -73,7 +73,32 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       return;
     }
 
-    final currentPosition = await Geolocator.getCurrentPosition();
+    // Geolocator.getCurrentPosition() has no implicit timeout — on a cold GPS
+    // (first login, indoor signal, fresh boot) it can hang for 30 s+ or never
+    // resolve, leaving the bloc stuck in _CheckingLocation. The home cubits
+    // and the "Verificando ubicación..." button both depend on _LocationChecked
+    // being emitted, so we MUST always reach it.
+    //
+    // Strategy: try a fast fix with a 10 s timeLimit; if it times out or
+    // throws, fall back to the device's last known position; if that's also
+    // null, emit _LocationChecked with a null position and let downstream
+    // listeners (cubits) handle it gracefully via the locationChanged stream.
+    Position? currentPosition;
+    try {
+      currentPosition = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: Duration(seconds: 10),
+        ),
+      );
+    } catch (e) {
+      _logger.w('Geolocator.getCurrentPosition timed out / failed: $e — falling back to lastKnownPosition');
+      try {
+        currentPosition = await Geolocator.getLastKnownPosition();
+      } catch (e2) {
+        _logger.e('Geolocator.getLastKnownPosition also failed: $e2');
+      }
+    }
     _locationDM = _locationDM.copyWith(position: currentPosition);
 
     if (_locationDM.position != null) await getLocationDetailsFromCoordinates();

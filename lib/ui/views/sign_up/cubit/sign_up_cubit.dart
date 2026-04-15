@@ -180,13 +180,18 @@ class SignUpCubit extends Cubit<SignUpState> {
       updatedAt: DateTime.now(),
     );
 
+    // For social sign-ups the provider verified the identity, so we don't
+    // send a password (the backend waives the requirement when `provider`
+    // and `provider_id` are present).
+    final password = isGoogleSignIn ? '' : (_vm.passwordController?.controller?.text ?? '');
+
     final registerDTO = UserBodyRegisterDTO(
       userName: _vm.nickNameController?.controller?.text ?? '',
       firstName: _vm.firstNameController?.controller?.text ?? '',
       lastName: _vm.lastNameController?.controller?.text ?? '',
       email: _vm.emailController?.controller?.text ?? '',
-      password: _vm.passwordController?.controller?.text ?? '',
-      passwordConfirmation: _vm.passwordController?.controller?.text ?? '',
+      password: password,
+      passwordConfirmation: password,
       phone: _vm.phoneNumberController?.controller?.text ?? '',
       dateOfBirth: _vm.dateOfBirth?.toUtc() ?? DateTime.now().toUtc(),
       address: _vm.addressController?.controller?.text ?? '',
@@ -200,6 +205,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       longitude: _vm.userLocation?.lng ?? getCurrentPosition?.longitude,
       addresses: [homeAddress],
       firebasePhoneToken: firebaseToken,
+      provider: _vm.provider,
+      providerId: _vm.providerId,
     );
 
     await _meRepo
@@ -226,6 +233,17 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void processImportedAvatar(String? importedAvatar) async =>
       emit(_Loaded(_vm = _vm.copyWith(importedAvatar: importedAvatar)));
+
+  /// Persist the provider context received from `/social-login` so that the
+  /// `/register` call can forward it to the backend and skip password.
+  void processSocialSignUpData({String? avatar, String? provider, String? providerId}) async {
+    _vm = _vm.copyWith(
+      importedAvatar: avatar ?? _vm.importedAvatar,
+      provider: provider,
+      providerId: providerId,
+    );
+    emit(_Loaded(_vm));
+  }
 
   void setUserCountry(FoodlyCountries? country) =>
       country != null ? emit(_Loaded(_vm = _vm.copyWith(country: country))) : null;

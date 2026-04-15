@@ -67,7 +67,13 @@ mixin _$UserDM {
   @JsonKey(name: 'provider_id')
   String? get providerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'provider_avatar')
-  String? get providerAvatar => throw _privateConstructorUsedError;
+  String? get providerAvatar =>
+      throw _privateConstructorUsedError; // True when the user has an email/password credential set. False for
+// social-only users (Google/FB). Drives the profile UI between "Set
+// password" and "Change password". Nullable for backward-compat with
+// older payloads that don't include the field.
+  @JsonKey(name: 'has_password')
+  bool? get hasPassword => throw _privateConstructorUsedError;
   @JsonKey(name: 'addresses')
   List<AddressDM> get addresses => throw _privateConstructorUsedError;
   @JsonKey(name: 'favorite_businesses')
@@ -127,6 +133,7 @@ abstract class $UserDMCopyWith<$Res> {
       @JsonKey(name: 'provider') String? provider,
       @JsonKey(name: 'provider_id') String? providerId,
       @JsonKey(name: 'provider_avatar') String? providerAvatar,
+      @JsonKey(name: 'has_password') bool? hasPassword,
       @JsonKey(name: 'addresses') List<AddressDM> addresses,
       @JsonKey(name: 'favorite_businesses') List<String> favoriteBusiness,
       @JsonKey(name: 'favorite_menus') List<String> favoriteMenus,
@@ -179,6 +186,7 @@ class _$UserDMCopyWithImpl<$Res, $Val extends UserDM>
     Object? provider = freezed,
     Object? providerId = freezed,
     Object? providerAvatar = freezed,
+    Object? hasPassword = freezed,
     Object? addresses = null,
     Object? favoriteBusiness = null,
     Object? favoriteMenus = null,
@@ -283,6 +291,10 @@ class _$UserDMCopyWithImpl<$Res, $Val extends UserDM>
           ? _value.providerAvatar
           : providerAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPassword: freezed == hasPassword
+          ? _value.hasPassword
+          : hasPassword // ignore: cast_nullable_to_non_nullable
+              as bool?,
       addresses: null == addresses
           ? _value.addresses
           : addresses // ignore: cast_nullable_to_non_nullable
@@ -372,6 +384,7 @@ abstract class _$$UserDMImplCopyWith<$Res> implements $UserDMCopyWith<$Res> {
       @JsonKey(name: 'provider') String? provider,
       @JsonKey(name: 'provider_id') String? providerId,
       @JsonKey(name: 'provider_avatar') String? providerAvatar,
+      @JsonKey(name: 'has_password') bool? hasPassword,
       @JsonKey(name: 'addresses') List<AddressDM> addresses,
       @JsonKey(name: 'favorite_businesses') List<String> favoriteBusiness,
       @JsonKey(name: 'favorite_menus') List<String> favoriteMenus,
@@ -423,6 +436,7 @@ class __$$UserDMImplCopyWithImpl<$Res>
     Object? provider = freezed,
     Object? providerId = freezed,
     Object? providerAvatar = freezed,
+    Object? hasPassword = freezed,
     Object? addresses = null,
     Object? favoriteBusiness = null,
     Object? favoriteMenus = null,
@@ -527,6 +541,10 @@ class __$$UserDMImplCopyWithImpl<$Res>
           ? _value.providerAvatar
           : providerAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPassword: freezed == hasPassword
+          ? _value.hasPassword
+          : hasPassword // ignore: cast_nullable_to_non_nullable
+              as bool?,
       addresses: null == addresses
           ? _value._addresses
           : addresses // ignore: cast_nullable_to_non_nullable
@@ -600,6 +618,7 @@ class _$UserDMImpl extends _UserDM {
       @JsonKey(name: 'provider') this.provider,
       @JsonKey(name: 'provider_id') this.providerId,
       @JsonKey(name: 'provider_avatar') this.providerAvatar,
+      @JsonKey(name: 'has_password') this.hasPassword,
       @JsonKey(name: 'addresses') final List<AddressDM> addresses = const [],
       @JsonKey(name: 'favorite_businesses')
       final List<String> favoriteBusiness = const [],
@@ -715,6 +734,13 @@ class _$UserDMImpl extends _UserDM {
   @override
   @JsonKey(name: 'provider_avatar')
   final String? providerAvatar;
+// True when the user has an email/password credential set. False for
+// social-only users (Google/FB). Drives the profile UI between "Set
+// password" and "Change password". Nullable for backward-compat with
+// older payloads that don't include the field.
+  @override
+  @JsonKey(name: 'has_password')
+  final bool? hasPassword;
   final List<AddressDM> _addresses;
   @override
   @JsonKey(name: 'addresses')
@@ -797,7 +823,7 @@ class _$UserDMImpl extends _UserDM {
 
   @override
   String toString() {
-    return 'UserDM(id: $id, uuid: $uuid, email: $email, username: $username, firstName: $firstName, lastName: $lastName, avatar: $avatar, phone: $phone, signUpDate: $signUpDate, lastUpdated: $lastUpdated, deletedAt: $deletedAt, dateOfBirth: $dateOfBirth, gender: $gender, roleId: $roleId, userRole: $userRole, termsAndConditions: $termsAndConditions, business: $business, userPrefs: $userPrefs, socialProvider: $socialProvider, emailVerifiedAt: $emailVerifiedAt, provider: $provider, providerId: $providerId, providerAvatar: $providerAvatar, addresses: $addresses, favoriteBusiness: $favoriteBusiness, favoriteMenus: $favoriteMenus, favoriteItems: $favoriteItems, favoriteCombos: $favoriteCombos, savedPromotions: $savedPromotions, followers: $followers, followersLength: $followersLength, following: $following, followingLength: $followingLength)';
+    return 'UserDM(id: $id, uuid: $uuid, email: $email, username: $username, firstName: $firstName, lastName: $lastName, avatar: $avatar, phone: $phone, signUpDate: $signUpDate, lastUpdated: $lastUpdated, deletedAt: $deletedAt, dateOfBirth: $dateOfBirth, gender: $gender, roleId: $roleId, userRole: $userRole, termsAndConditions: $termsAndConditions, business: $business, userPrefs: $userPrefs, socialProvider: $socialProvider, emailVerifiedAt: $emailVerifiedAt, provider: $provider, providerId: $providerId, providerAvatar: $providerAvatar, hasPassword: $hasPassword, addresses: $addresses, favoriteBusiness: $favoriteBusiness, favoriteMenus: $favoriteMenus, favoriteItems: $favoriteItems, favoriteCombos: $favoriteCombos, savedPromotions: $savedPromotions, followers: $followers, followersLength: $followersLength, following: $following, followingLength: $followingLength)';
   }
 
   @override
@@ -843,6 +869,8 @@ class _$UserDMImpl extends _UserDM {
                 other.providerId == providerId) &&
             (identical(other.providerAvatar, providerAvatar) ||
                 other.providerAvatar == providerAvatar) &&
+            (identical(other.hasPassword, hasPassword) ||
+                other.hasPassword == hasPassword) &&
             const DeepCollectionEquality()
                 .equals(other._addresses, _addresses) &&
             const DeepCollectionEquality()
@@ -892,6 +920,7 @@ class _$UserDMImpl extends _UserDM {
         provider,
         providerId,
         providerAvatar,
+        hasPassword,
         const DeepCollectionEquality().hash(_addresses),
         const DeepCollectionEquality().hash(_favoriteBusiness),
         const DeepCollectionEquality().hash(_favoriteMenus),
@@ -946,6 +975,7 @@ abstract class _UserDM extends UserDM {
       @JsonKey(name: 'provider') final String? provider,
       @JsonKey(name: 'provider_id') final String? providerId,
       @JsonKey(name: 'provider_avatar') final String? providerAvatar,
+      @JsonKey(name: 'has_password') final bool? hasPassword,
       @JsonKey(name: 'addresses') final List<AddressDM> addresses,
       @JsonKey(name: 'favorite_businesses') final List<String> favoriteBusiness,
       @JsonKey(name: 'favorite_menus') final List<String> favoriteMenus,
@@ -1030,7 +1060,14 @@ abstract class _UserDM extends UserDM {
   String? get providerId;
   @override
   @JsonKey(name: 'provider_avatar')
-  String? get providerAvatar;
+  String?
+      get providerAvatar; // True when the user has an email/password credential set. False for
+// social-only users (Google/FB). Drives the profile UI between "Set
+// password" and "Change password". Nullable for backward-compat with
+// older payloads that don't include the field.
+  @override
+  @JsonKey(name: 'has_password')
+  bool? get hasPassword;
   @override
   @JsonKey(name: 'addresses')
   List<AddressDM> get addresses;

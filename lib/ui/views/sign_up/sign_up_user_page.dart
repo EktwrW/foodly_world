@@ -9,6 +9,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/phone_verification_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
+import 'package:foodly_world/ui/views/sign_up/social_sign_up_data.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/phone_verification_modal.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_form.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_user_sliver_app_bar_wdg.dart';
@@ -39,10 +40,22 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
     _signUpCubit = context.read<SignUpCubit>();
     _dialogService = di<DialogService>();
 
-    importedAvatar = di<AppRouter>().currentRoute.extra as String?;
-
-    if (importedAvatar?.isNotEmpty ?? false) {
-      _signUpCubit.processImportedAvatar(importedAvatar);
+    // `extra` is [SocialSignUpData] for social sign-ups (Google/FB). A plain
+    // String? is still accepted for backward compat with any call site that
+    // only carries the avatar URL.
+    final extra = di<AppRouter>().currentRoute.extra;
+    if (extra is SocialSignUpData) {
+      importedAvatar = extra.avatar;
+      _signUpCubit.processSocialSignUpData(
+        avatar: extra.avatar,
+        provider: extra.provider,
+        providerId: extra.providerId,
+      );
+    } else if (extra is String) {
+      importedAvatar = extra;
+      if (importedAvatar?.isNotEmpty ?? false) {
+        _signUpCubit.processImportedAvatar(importedAvatar);
+      }
     }
   }
 

@@ -48,6 +48,7 @@ _$UserDMImpl _$$UserDMImplFromJson(Map<String, dynamic> json) => _$UserDMImpl(
       provider: json['provider'] as String?,
       providerId: json['provider_id'] as String?,
       providerAvatar: json['provider_avatar'] as String?,
+      hasPassword: json['has_password'] as bool?,
       addresses: (json['addresses'] as List<dynamic>?)
               ?.map((e) => AddressDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -118,6 +119,7 @@ Map<String, dynamic> _$$UserDMImplToJson(_$UserDMImpl instance) =>
       if (instance.provider case final value?) 'provider': value,
       if (instance.providerId case final value?) 'provider_id': value,
       if (instance.providerAvatar case final value?) 'provider_avatar': value,
+      if (instance.hasPassword case final value?) 'has_password': value,
       'addresses': instance.addresses.map((e) => e.toJson()).toList(),
       'favorite_businesses': instance.favoriteBusiness,
       'favorite_menus': instance.favoriteMenus,

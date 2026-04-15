@@ -201,7 +201,7 @@ class _PublicMenuItemWdgState extends State<PublicMenuItemWdg> {
     if (version != null && version != _selectedVersion) setState(() => _selectedVersion = version);
   }
 
-  double get _currentPrice =>
+  double? get _currentPrice =>
       widget.item.sortedVersions.isEmpty ? widget.item.prices.regular : widget.item.getVersionPrice(_selectedVersion);
 
   bool get _itemNotAvailable => !widget.item.available;

@@ -60,6 +60,11 @@ class UserDM with _$UserDM {
     @JsonKey(name: 'provider') String? provider,
     @JsonKey(name: 'provider_id') String? providerId,
     @JsonKey(name: 'provider_avatar') String? providerAvatar,
+    // True when the user has an email/password credential set. False for
+    // social-only users (Google/FB). Drives the profile UI between "Set
+    // password" and "Change password". Nullable for backward-compat with
+    // older payloads that don't include the field.
+    @JsonKey(name: 'has_password') bool? hasPassword,
     @JsonKey(name: 'addresses') @Default([]) List<AddressDM> addresses,
     @JsonKey(name: 'favorite_businesses') @Default([]) List<String> favoriteBusiness,
     @JsonKey(name: 'favorite_menus') @Default([]) List<String> favoriteMenus,

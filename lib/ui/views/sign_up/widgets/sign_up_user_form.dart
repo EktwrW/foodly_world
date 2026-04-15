@@ -108,26 +108,32 @@ class SignUpUserForm extends StatelessWidget {
           showLeading: false,
           labelText: S.current.lastName,
         ),
+        // Social sign-ups (Google, etc.) already have their identity verified
+        // by the provider — asking them to invent a password creates friction
+        // and leads to forgotten credentials. Skip the password field and
+        // focus-chain directly from email → places.
         FoodlyPrimaryInputText(
           controller: vm.emailController!.controller!,
           focusNode: vm.emailController?.focusNode,
-          secondaryFocusNode: vm.passwordController?.focusNode,
+          secondaryFocusNode:
+              cubit.isGoogleSignIn ? vm.placesFocusNode : vm.passwordController?.focusNode,
           inputTextType: FoodlyInputType.email,
           autovalidateMode: vm.autovalidateMode,
           enabled: enabled,
           showLeading: false,
           labelText: S.current.email,
         ),
-        FoodlyPrimaryInputText(
-          controller: vm.passwordController!.controller!,
-          focusNode: vm.passwordController?.focusNode,
-          secondaryFocusNode: vm.placesFocusNode,
-          inputTextType: FoodlyInputType.password,
-          autovalidateMode: vm.autovalidateMode,
-          obscureText: true,
-          enabled: enabled,
-          labelText: S.current.password,
-        ),
+        if (!cubit.isGoogleSignIn)
+          FoodlyPrimaryInputText(
+            controller: vm.passwordController!.controller!,
+            focusNode: vm.passwordController?.focusNode,
+            secondaryFocusNode: vm.placesFocusNode,
+            inputTextType: FoodlyInputType.password,
+            autovalidateMode: vm.autovalidateMode,
+            obscureText: true,
+            enabled: enabled,
+            labelText: S.current.password,
+          ),
         PlacesAutocompleteWdg(
           key: const Key('find-user-location'),
           language: cubit.lang,

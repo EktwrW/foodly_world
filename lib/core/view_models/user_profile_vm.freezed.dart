@@ -72,7 +72,12 @@ mixin _$UserProfileVM {
   bool get termsAndContiditionsAccepted => throw _privateConstructorUsedError;
   bool get businessTermsAndContiditionsAccepted =>
       throw _privateConstructorUsedError;
-  String? get importedAvatar => throw _privateConstructorUsedError;
+  String? get importedAvatar =>
+      throw _privateConstructorUsedError; // Social provider context populated when the user arrives at sign-up from
+// a social login (e.g. Google). Forwarded to /register so the backend can
+// waive the password requirement for provider-verified sign-ups.
+  String? get provider => throw _privateConstructorUsedError;
+  String? get providerId => throw _privateConstructorUsedError;
   List<ReviewDM> get myReviews => throw _privateConstructorUsedError;
   ReviewsMetaDM? get reviewsMeta => throw _privateConstructorUsedError;
   bool get isLoadingMoreReviews => throw _privateConstructorUsedError;
@@ -137,6 +142,8 @@ abstract class $UserProfileVMCopyWith<$Res> {
       bool termsAndContiditionsAccepted,
       bool businessTermsAndContiditionsAccepted,
       String? importedAvatar,
+      String? provider,
+      String? providerId,
       List<ReviewDM> myReviews,
       ReviewsMetaDM? reviewsMeta,
       bool isLoadingMoreReviews});
@@ -224,6 +231,8 @@ class _$UserProfileVMCopyWithImpl<$Res, $Val extends UserProfileVM>
     Object? termsAndContiditionsAccepted = null,
     Object? businessTermsAndContiditionsAccepted = null,
     Object? importedAvatar = freezed,
+    Object? provider = freezed,
+    Object? providerId = freezed,
     Object? myReviews = null,
     Object? reviewsMeta = freezed,
     Object? isLoadingMoreReviews = null,
@@ -413,6 +422,14 @@ class _$UserProfileVMCopyWithImpl<$Res, $Val extends UserProfileVM>
       importedAvatar: freezed == importedAvatar
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerId: freezed == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
               as String?,
       myReviews: null == myReviews
           ? _value.myReviews
@@ -772,6 +789,8 @@ abstract class _$$UserProfileVMImplCopyWith<$Res>
       bool termsAndContiditionsAccepted,
       bool businessTermsAndContiditionsAccepted,
       String? importedAvatar,
+      String? provider,
+      String? providerId,
       List<ReviewDM> myReviews,
       ReviewsMetaDM? reviewsMeta,
       bool isLoadingMoreReviews});
@@ -877,6 +896,8 @@ class __$$UserProfileVMImplCopyWithImpl<$Res>
     Object? termsAndContiditionsAccepted = null,
     Object? businessTermsAndContiditionsAccepted = null,
     Object? importedAvatar = freezed,
+    Object? provider = freezed,
+    Object? providerId = freezed,
     Object? myReviews = null,
     Object? reviewsMeta = freezed,
     Object? isLoadingMoreReviews = null,
@@ -1067,6 +1088,14 @@ class __$$UserProfileVMImplCopyWithImpl<$Res>
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      provider: freezed == provider
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerId: freezed == providerId
+          ? _value.providerId
+          : providerId // ignore: cast_nullable_to_non_nullable
+              as String?,
       myReviews: null == myReviews
           ? _value._myReviews
           : myReviews // ignore: cast_nullable_to_non_nullable
@@ -1133,6 +1162,8 @@ class _$UserProfileVMImpl extends _UserProfileVM {
       this.termsAndContiditionsAccepted = false,
       this.businessTermsAndContiditionsAccepted = false,
       this.importedAvatar,
+      this.provider,
+      this.providerId,
       final List<ReviewDM> myReviews = const [],
       this.reviewsMeta,
       this.isLoadingMoreReviews = false})
@@ -1256,6 +1287,13 @@ class _$UserProfileVMImpl extends _UserProfileVM {
   final bool businessTermsAndContiditionsAccepted;
   @override
   final String? importedAvatar;
+// Social provider context populated when the user arrives at sign-up from
+// a social login (e.g. Google). Forwarded to /register so the backend can
+// waive the password requirement for provider-verified sign-ups.
+  @override
+  final String? provider;
+  @override
+  final String? providerId;
   final List<ReviewDM> _myReviews;
   @override
   @JsonKey()
@@ -1273,7 +1311,7 @@ class _$UserProfileVMImpl extends _UserProfileVM {
 
   @override
   String toString() {
-    return 'UserProfileVM(nickNameController: $nickNameController, firstNameController: $firstNameController, lastNameController: $lastNameController, emailController: $emailController, passwordController: $passwordController, newPasswordController: $newPasswordController, phoneNumberController: $phoneNumberController, addressController: $addressController, cityController: $cityController, zipCodeController: $zipCodeController, businessNameController: $businessNameController, businessPhoneNumberController: $businessPhoneNumberController, businessEmailController: $businessEmailController, businessCityController: $businessCityController, businessAddressController: $businessAddressController, businessZipCodeController: $businessZipCodeController, businessIntroMessageController: $businessIntroMessageController, dateOfBirthNode: $dateOfBirthNode, placesFocusNode: $placesFocusNode, genderNode: $genderNode, country: $country, countryNode: $countryNode, businessCountry: $businessCountry, businessCountryNode: $businessCountryNode, formKey: $formKey, gender: $gender, roleId: $roleId, autovalidateMode: $autovalidateMode, userSessionDM: $userSessionDM, business: $business, dateOfBirth: $dateOfBirth, businessCategory: $businessCategory, imagePath: $imagePath, logoPath: $logoPath, tooltipActive: $tooltipActive, mapController: $mapController, markers: $markers, businessLocation: $businessLocation, userLocation: $userLocation, businessCountryCode: $businessCountryCode, loggedUserCanEdit: $loggedUserCanEdit, edition: $edition, visitedUser: $visitedUser, termsAndContiditionsAccepted: $termsAndContiditionsAccepted, businessTermsAndContiditionsAccepted: $businessTermsAndContiditionsAccepted, importedAvatar: $importedAvatar, myReviews: $myReviews, reviewsMeta: $reviewsMeta, isLoadingMoreReviews: $isLoadingMoreReviews)';
+    return 'UserProfileVM(nickNameController: $nickNameController, firstNameController: $firstNameController, lastNameController: $lastNameController, emailController: $emailController, passwordController: $passwordController, newPasswordController: $newPasswordController, phoneNumberController: $phoneNumberController, addressController: $addressController, cityController: $cityController, zipCodeController: $zipCodeController, businessNameController: $businessNameController, businessPhoneNumberController: $businessPhoneNumberController, businessEmailController: $businessEmailController, businessCityController: $businessCityController, businessAddressController: $businessAddressController, businessZipCodeController: $businessZipCodeController, businessIntroMessageController: $businessIntroMessageController, dateOfBirthNode: $dateOfBirthNode, placesFocusNode: $placesFocusNode, genderNode: $genderNode, country: $country, countryNode: $countryNode, businessCountry: $businessCountry, businessCountryNode: $businessCountryNode, formKey: $formKey, gender: $gender, roleId: $roleId, autovalidateMode: $autovalidateMode, userSessionDM: $userSessionDM, business: $business, dateOfBirth: $dateOfBirth, businessCategory: $businessCategory, imagePath: $imagePath, logoPath: $logoPath, tooltipActive: $tooltipActive, mapController: $mapController, markers: $markers, businessLocation: $businessLocation, userLocation: $userLocation, businessCountryCode: $businessCountryCode, loggedUserCanEdit: $loggedUserCanEdit, edition: $edition, visitedUser: $visitedUser, termsAndContiditionsAccepted: $termsAndContiditionsAccepted, businessTermsAndContiditionsAccepted: $businessTermsAndContiditionsAccepted, importedAvatar: $importedAvatar, provider: $provider, providerId: $providerId, myReviews: $myReviews, reviewsMeta: $reviewsMeta, isLoadingMoreReviews: $isLoadingMoreReviews)';
   }
 
   @override
@@ -1357,6 +1395,8 @@ class _$UserProfileVMImpl extends _UserProfileVM {
             (identical(other.termsAndContiditionsAccepted, termsAndContiditionsAccepted) || other.termsAndContiditionsAccepted == termsAndContiditionsAccepted) &&
             (identical(other.businessTermsAndContiditionsAccepted, businessTermsAndContiditionsAccepted) || other.businessTermsAndContiditionsAccepted == businessTermsAndContiditionsAccepted) &&
             (identical(other.importedAvatar, importedAvatar) || other.importedAvatar == importedAvatar) &&
+            (identical(other.provider, provider) || other.provider == provider) &&
+            (identical(other.providerId, providerId) || other.providerId == providerId) &&
             const DeepCollectionEquality().equals(other._myReviews, _myReviews) &&
             (identical(other.reviewsMeta, reviewsMeta) || other.reviewsMeta == reviewsMeta) &&
             (identical(other.isLoadingMoreReviews, isLoadingMoreReviews) || other.isLoadingMoreReviews == isLoadingMoreReviews));
@@ -1411,6 +1451,8 @@ class _$UserProfileVMImpl extends _UserProfileVM {
         termsAndContiditionsAccepted,
         businessTermsAndContiditionsAccepted,
         importedAvatar,
+        provider,
+        providerId,
         const DeepCollectionEquality().hash(_myReviews),
         reviewsMeta,
         isLoadingMoreReviews
@@ -1473,6 +1515,8 @@ abstract class _UserProfileVM extends UserProfileVM {
       final bool termsAndContiditionsAccepted,
       final bool businessTermsAndContiditionsAccepted,
       final String? importedAvatar,
+      final String? provider,
+      final String? providerId,
       final List<ReviewDM> myReviews,
       final ReviewsMetaDM? reviewsMeta,
       final bool isLoadingMoreReviews}) = _$UserProfileVMImpl;
@@ -1569,7 +1613,14 @@ abstract class _UserProfileVM extends UserProfileVM {
   @override
   bool get businessTermsAndContiditionsAccepted;
   @override
-  String? get importedAvatar;
+  String?
+      get importedAvatar; // Social provider context populated when the user arrives at sign-up from
+// a social login (e.g. Google). Forwarded to /register so the backend can
+// waive the password requirement for provider-verified sign-ups.
+  @override
+  String? get provider;
+  @override
+  String? get providerId;
   @override
   List<ReviewDM> get myReviews;
   @override

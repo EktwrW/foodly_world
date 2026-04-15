@@ -119,7 +119,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     height: 90,
                     viewportFraction: screenWidth <= 320 ? .41 : .25,
                     itemSpacing: 3,
-                    items: FoodlyCategories.values
+                    items: FoodlyCategories.activeCategories
                         .map((e) => TextButton(
                               onPressed: () => cubit.changeCategory(e),
                               style: TextButton.styleFrom(

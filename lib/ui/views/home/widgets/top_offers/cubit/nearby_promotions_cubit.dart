@@ -1,4 +1,4 @@
-import 'dart:async' show Completer;
+import 'dart:async' show Completer, StreamSubscription;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
@@ -20,6 +20,8 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
 
   NearbyPromotionsVM _vm = const NearbyPromotionsVM();
 
+  StreamSubscription<dynamic>? _locationSub;
+
   static const int _perPage = 10;
   static const double _radius = 10.0;
 
@@ -32,9 +34,30 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
         _locationService = locationService,
         _favoritesCubit = favoritesCubit,
         _logger = logger,
-        super(const NearbyPromotionsState.initial(NearbyPromotionsVM()));
+        super(const NearbyPromotionsState.initial(NearbyPromotionsVM())) {
+    // Auto-retry when the location finally arrives. Without this, if load()
+    // fires before LocationService has resolved a position (cold GPS, slow
+    // geocoding, first login on a physical device), the cubit emits "Location
+    // not available" once and stays stuck — the user sees an empty section
+    // forever until they manually reopen the app.
+    _locationSub = _locationService.locationChanged.listen((locationDM) {
+      if (locationDM.position == null) return;
+      // Only retry when we have nothing useful yet — don't spam reloads after
+      // a successful load just because the user changed their location pin
+      // (manual location changes have their own refresh path).
+      final hasData = _vm.promotions.isNotEmpty;
+      if (hasData || _vm.isLoading) return;
+      load();
+    });
+  }
 
   NearbyPromotionsVM get vm => _vm;
+
+  @override
+  Future<void> close() {
+    _locationSub?.cancel();
+    return super.close();
+  }
 
   /// Initial load — always starts at page 1, replaces current list.
   Future<void> load() async {

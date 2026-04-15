@@ -55,7 +55,7 @@ class SignUpBusinessForm extends StatelessWidget {
             vm.businessNameController?.focusNode?.requestFocus();
           },
           enabled: enabled,
-          items: FoodlyCategories.values.map<DropdownMenuItem<FoodlyCategories>>((category) {
+          items: FoodlyCategories.activeCategories.map<DropdownMenuItem<FoodlyCategories>>((category) {
             return DropdownMenuItem<FoodlyCategories>(
               value: category,
               child: Row(

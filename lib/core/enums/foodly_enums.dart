@@ -112,7 +112,7 @@ enum FoodlyInputType {
     country: S.current.country,
     city: S.current.city,
     zipCode: S.current.zipCode,
-    prices: '',
+    prices: '0.0',
     generic: '',
     nickName: S.current.nickName,
     firstName: S.current.firstName,

@@ -80,6 +80,25 @@ enum FoodlyCategories {
   bool get isBakeryOrCoffee => this == coffee || this == bakery;
   bool get isRestaurant => !isDrinkHouse && !isAcademy && !isBakeryOrCoffee;
 
+  /// Categories currently active in the product — shown in both
+  /// business-picking UIs (sign-up, edit-category) AND discovery surfaces
+  /// (home carousel, categories page).
+  ///
+  /// TEMPORARY: [stores] (markets) and [academy] (cooking schools) are
+  /// hidden for the initial launch because their vertical-specific Showcase
+  /// feature (product catalog / class schedule) is not yet implemented —
+  /// a business onboarding under these categories today would not have a
+  /// usable menu equivalent, and browsing them would only show empty pages.
+  ///
+  /// Restore to [values] once Phase 2/3 of the expansion plan ships.
+  /// See `be-foodly/docs/markets-academies-expansion-plan.md`.
+  ///
+  /// NOTE: JSON-parsing and display-of-existing-category code paths (business
+  /// DM deserializer, favorites mini-card) MUST keep using [values] — this
+  /// getter is only for UI-level listing/picking surfaces.
+  static List<FoodlyCategories> get activeCategories =>
+      values.where((c) => c != stores && c != academy).toList(growable: false);
+
   // TODO: Localizar Strings en .arb files
   String get text => switch (this) {
         international => S.current.internationalCuisine,
@@ -93,7 +112,7 @@ enum FoodlyCategories {
         korean => S.current.koreanCuisine,
         portuguese => S.current.portugueseCuisine,
         bakery => S.current.bakeryAndDesserts,
-        drinkHouse => S.current.pubsAndWineBars,
+        drinkHouse => S.current.barsAndPubs,
         coffee => S.current.cafesAndBreakfasts,
         stores => S.current.marketsAndStores,
         academy => S.current.cookingSchools,

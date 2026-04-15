@@ -52,5 +52,6 @@ class FoodlyAssets {
   static const AssetData reserved = AssetData('reserved.png', AssetType.image);
   static const AssetData review = AssetData('review.png', AssetType.image);
   static const AssetData newBusinessPlaceholder = AssetData('new_business_placeholder.png', AssetType.image);
+  static const AssetData newBarPlaceholder = AssetData('new_bar_placeholder.jpeg', AssetType.image);
   static const AssetData promoPlaceholder = AssetData('promo_placeholder.webp', AssetType.image);
 }

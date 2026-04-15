@@ -23,7 +23,7 @@ class CategoryWdg extends StatelessWidget {
                   onChanged: (FoodlyCategories? category) =>
                       category != null ? bloc.add(BusinessEvent.setCategory(category)) : null,
                   enabled: vm.isEditingCategory,
-                  items: FoodlyCategories.values.map<DropdownMenuItem<FoodlyCategories>>((category) {
+                  items: FoodlyCategories.activeCategories.map<DropdownMenuItem<FoodlyCategories>>((category) {
                     return DropdownMenuItem<FoodlyCategories>(
                       value: category,
                       child: Row(

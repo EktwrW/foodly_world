@@ -205,7 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "alphabetical": MessageLookupByLibrary.simpleMessage("A-Z"),
     "alreadyReviewedPrompt": MessageLookupByLibrary.simpleMessage(
-      "Você já avaliou este estabelecimento.\nDeseja editar sua avaliação?",
+      "Já avaliou este estabelecimento.\nDeseja editar a sua avaliação?",
     ),
     "analytics": MessageLookupByLibrary.simpleMessage("Análises"),
     "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
@@ -304,6 +304,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "bakeryAndDesserts": MessageLookupByLibrary.simpleMessage(
       "Pastelaria e Sobremesas",
     ),
+    "barsAndPubs": MessageLookupByLibrary.simpleMessage("Bares e Pubs"),
     "big": MessageLookupByLibrary.simpleMessage("Grande"),
     "biometricSnackbarTextSpanA": MessageLookupByLibrary.simpleMessage(
       "O sistema operativo deste dispositivo não suporta ou não tem configurados, os acessos de tipo padrão ou biométricos.",
@@ -999,7 +1000,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "promoTabUpcoming": MessageLookupByLibrary.simpleMessage("Próximas"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Dias de promoção"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promoções"),
-    "pubsAndWineBars": MessageLookupByLibrary.simpleMessage("Pubs e Vinharias"),
     "radiusDistanceLabel": MessageLookupByLibrary.simpleMessage(
       "Radio de distância:",
     ),
@@ -1133,6 +1133,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "A sua sessão expirou. Por favor, faça login novamente.",
     ),
     "setDate": MessageLookupByLibrary.simpleMessage("Definir data"),
+    "setPassword": MessageLookupByLibrary.simpleMessage(
+      "Definir palavra-passe",
+    ),
+    "setPasswordSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Ativa o início de sessão com email e palavra-passe além da tua conta social.",
+    ),
     "shareAppMessage": MessageLookupByLibrary.simpleMessage(
       "Descubra os melhores locais perto de si com o Foodly — explore menus, aproveite promocoes e reserve mesa, tudo numa unica app!",
     ),
@@ -1246,10 +1252,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "termsConditionsShort": MessageLookupByLibrary.simpleMessage("T&C"),
     "termsPrivacyTextSpan1": MessageLookupByLibrary.simpleMessage(
-      "Ao criar uma conta, você leu e aceita os nossos",
+      "Ao criar uma conta, declara que leu e aceita os nossos",
     ),
     "termsPrivacyTextSpan1forBusiness": MessageLookupByLibrary.simpleMessage(
-      "Ao criar uma conta empresarial, você leu e aceita os nossos",
+      "Ao criar uma conta empresarial, declara que leu e aceita os nossos",
     ),
     "termsPrivacyTextSpan2": MessageLookupByLibrary.simpleMessage(
       "Termos e Condições",
@@ -1400,9 +1406,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "whatsOnYourMind": MessageLookupByLibrary.simpleMessage(
       "Em que estás a pensar?",
     ),
-    "whenDidYouVisit": MessageLookupByLibrary.simpleMessage(
-      "Quando você visitou?",
-    ),
+    "whenDidYouVisit": MessageLookupByLibrary.simpleMessage("Quando visitou?"),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
     "writeReviewFor": m35,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(

@@ -53,22 +53,16 @@ class SubCategoryWdg extends StatelessWidget {
             duration: Durations.medium3,
           ),
         ),
-        if (vm.editMode && subCategory?.uuid != FoodlyStrings.NEW_CATEGORY && subCategory?.editingName == false)
+        // Row of subcategory-level buttons (edit name / delete / move). Hidden
+        // entirely for combos — they don't have user-managed subcategories, so
+        // this Row would render empty.
+        if (vm.editMode &&
+            menuCategory != MenuCategory.combos &&
+            subCategory?.uuid != FoodlyStrings.NEW_CATEGORY &&
+            subCategory?.editingName == false)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _CategoryEditButtons(
-                key: const Key('add-new-item'),
-                editMode: true,
-                canAdd: vm.enableEditCategoryBtns,
-                onPressed: () {
-                  cubit.addNewItem(subCategory!, menuCategory);
-                  ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
-                },
-                text: S.current.addNewItem,
-                iconData: FontAwesome.square_plus,
-                isSubCategory: true,
-              ),
               if (menuCategory != MenuCategory.combos)
                 _CategoryEditButtons(
                   key: const Key('edit-category-name'),
@@ -162,6 +156,21 @@ class SubCategoryWdg extends StatelessWidget {
                 isLastScreenItem: isLastSubCategory && ((subCategory!.items.length - 1) == i),
               ),
             ),
+        // "Add item" button placed AFTER the items list so adding several
+        // items in a row doesn't require scrolling back up after each save.
+        // Same visibility rules as the row of edit/delete/move buttons above.
+        if (vm.editMode && subCategory?.uuid != FoodlyStrings.NEW_CATEGORY && subCategory?.editingName == false)
+          _CategoryEditButtons(
+            key: const Key('add-new-item'),
+            editMode: true,
+            canAdd: vm.enableEditCategoryBtns,
+            onPressed: () {
+              cubit.addNewItem(subCategory!, menuCategory);
+              ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
+            },
+            text: S.current.addNewItem,
+            iconData: Bootstrap.plus_circle_fill,
+          ),
       ],
     ).paddingBottom(20);
   }

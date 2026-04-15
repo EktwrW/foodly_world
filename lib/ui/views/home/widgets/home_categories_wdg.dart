@@ -32,7 +32,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
             height: 106,
             viewportFraction: context.isFoldableInHalfView ? .41 : .3,
             itemSpacing: 6,
-            items: FoodlyCategories.values
+            items: FoodlyCategories.activeCategories
                 .map((e) => InkWell(
                       onTap: () {
                         context.goNamed(AppRoutes.categories.name, extra: e.index);
@@ -94,7 +94,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                     child: const Icon(Bootstrap.caret_left_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),
-                ...FoodlyCategories.values.asMap().entries.map(
+                ...FoodlyCategories.activeCategories.asMap().entries.map(
                   (entry) {
                     return GestureDetector(
                       onTap: () {

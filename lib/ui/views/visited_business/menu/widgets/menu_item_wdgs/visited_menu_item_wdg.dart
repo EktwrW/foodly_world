@@ -54,7 +54,7 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
       // Si no hay versiones disponibles, usar el precio regular o 0
       return widget.item.prices.regular;
     }
-    return widget.item.getVersionPrice(_selectedVersion);
+    return widget.item.getVersionPrice(_selectedVersion) ?? 0;
   }
 
   Widget get _currencyWidget => Text('${widget.vm?.currency ?? widget.currency}:', style: FoodlyTextStyles.label);

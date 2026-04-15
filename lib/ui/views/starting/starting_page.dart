@@ -6,6 +6,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/views/sign_up/social_sign_up_data.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
@@ -50,7 +51,17 @@ class StartingPage369 extends StatelessWidget {
           },
           isNewUser: (vm) {
             di<DialogService>().hideLoading();
-            context.goNamed(AppRoutes.signUp.name, extra: vm.importedAvatar);
+            // Carry provider context (for Google/Facebook sign-ups) through to
+            // the sign-up form so /register can skip the password requirement.
+            final providerUser = vm.userSessionDM.user;
+            context.goNamed(
+              AppRoutes.signUp.name,
+              extra: SocialSignUpData(
+                avatar: vm.importedAvatar,
+                provider: providerUser.provider,
+                providerId: providerUser.providerId,
+              ),
+            );
           },
           error: (msg, vm) {
             di<DialogService>().hideLoading();

@@ -146,21 +146,11 @@ class PrimaryMenuSliverAppBar extends StatelessWidget {
             diameter: 30,
             iconData: Bootstrap.caret_left_fill,
             onPressed: () {
-              final router = di<AppRouter>();
-
               if (context.canPop()) {
-                // Normal navigation: pop back to the previous page.
-                router.removeLastRouteHistory();
+                di<AppRouter>().removeLastRouteHistory();
                 context.pop();
               } else {
-                // Cold start or deep-link: no stack to pop.
-                // Analytics is always a child of myBusiness, so navigate
-                // there directly instead of relying on route history.
-                final uuid = di<AuthSessionService>().uuid;
-                router.appRouter.goNamed(
-                  AppRoutes.myBusiness.name,
-                  pathParameters: {AppRoutes.routeIdParam: uuid},
-                );
+                di<AppRouter>().goBackToLastRoute();
               }
             },
           ).paddingSymmetric(vertical: 8, horizontal: 15),

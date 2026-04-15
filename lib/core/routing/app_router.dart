@@ -69,6 +69,21 @@ class AppRouter {
   void updateCurrentRoute(GoRouterState state) async {
     _currentRoute = state;
 
+    // Persist the business UUID when visiting a business page. Routes like
+    // /visit-menu/:id carry the MENU UUID (not the business UUID), so
+    // back-navigation after cold start needs this to reconstruct the correct
+    // parent (/main/<businessUuid>/visit-business).
+    final loc = state.matchedLocation;
+    if (loc.contains('/visit-business')) {
+      final bizUuid = state.pathParameters[AppRoutes.routeIdParam];
+      if (bizUuid != null && bizUuid.isNotEmpty) {
+        await localStorageService.saveString(
+          FoodlyStrings.LAST_VISITED_BUSINESS_UUID,
+          bizUuid,
+        );
+      }
+    }
+
     if (_routeHistory.length >= 100) _routeHistory.removeAt(0);
     _routeHistory.add(state.uri.toString());
 
@@ -92,27 +107,121 @@ class AppRouter {
     );
   }
 
+  /// Returns true when [route] is a navigation child of [potentialParent].
+  /// Used by the ping-pong guard to detect back-button loops.
+  bool _isNavigationChildOf(String route, String potentialParent) {
+    // Synchronous parent derivation covers most cases.
+    final parent = _deriveParentRoute(route);
+    if (parent != null) return parent == potentialParent;
+
+    // visit-menu's parent is resolved asynchronously (the URL carries the
+    // menu UUID, not the business UUID). We know it's always a child of a
+    // visit-business route, so match structurally.
+    if (route.startsWith('/visit-menu/') && potentialParent.contains('/visit-business')) {
+      return true;
+    }
+
+    return false;
+  }
+
   void goBackToLastRoute() async {
     if (_routeHistory.length > 2) {
       final lastRoute = _routeHistory[_routeHistory.length - 2];
-      _routeHistory.removeLast();
-      _routeHistory.removeLast();
 
-      if (lastRoute == '/' && authSessService.isLoggedIn) {
-        _goToMainPage();
+      // Ping-pong guard: if the previous route is a child of the current
+      // location, the user arrived here by pressing "back" from that child.
+      // Going back again must continue upward to the logical parent — not
+      // return to the child we just left (e.g. analytics ↔ myBusiness,
+      // visit-menu ↔ visit-business).
+      if (!_isNavigationChildOf(lastRoute, currentLocation)) {
+        // Normal history-based back.
+        _routeHistory.removeLast();
+        _routeHistory.removeLast();
+
+        if (lastRoute == '/' && authSessService.isLoggedIn) {
+          _goToMainPage();
+          return;
+        }
+
+        await saveLastRoute(lastRoute);
+        appRouter.go(lastRoute);
         return;
       }
-
-      await saveLastRoute(lastRoute);
-      appRouter.go(lastRoute);
-      return;
+      // Ping-pong detected — fall through to _deriveParentRoute below.
     }
 
+    // No sufficient route history (cold start, deep link, route restoration),
+    // or previous route was a child (ping-pong avoidance).
+    // Derive the logical parent from the current path so the user lands on a
+    // sensible screen instead of login or a blank main page.
     if (authSessService.isLoggedIn) {
-      _goToMainPage();
+      // visit-menu carries the MENU UUID in the URL, not the business UUID.
+      // _deriveParentRoute returns null for it, so we resolve the parent
+      // asynchronously from the persisted business UUID.
+      String? parent;
+      if (currentLocation.startsWith('/visit-menu/')) {
+        final bizUuid = await localStorageService.getString(
+          FoodlyStrings.LAST_VISITED_BUSINESS_UUID,
+        );
+        if (bizUuid != null && bizUuid.isNotEmpty) {
+          parent = '${AppRoutes.mainRoute}/$bizUuid/visit-business';
+        }
+      }
+      parent ??= _deriveParentRoute(currentLocation);
+
+      if (parent != null) {
+        await saveLastRoute(parent);
+        appRouter.go(parent);
+      } else {
+        _goToMainPage();
+      }
     } else {
       appRouter.goNamed(AppRoutes.login.name);
     }
+  }
+
+  /// Derives the logical parent route from [path] based on the app's route
+  /// hierarchy.  Returns `null` when no specific parent can be determined —
+  /// the caller should fall back to [_goToMainPage].
+  ///
+  /// Route tree covered:
+  ///   /main/:id/my-business/analytics          → /main/:id/my-business
+  ///   /main/:id/my-business/manage-reservations → /main/:id/my-business
+  ///   /main/:id/my-business/manage-promotions   → /main/:id/my-business
+  ///   /main/:id/visit-business/visit-promotions → /main/:id/visit-business
+  ///   /manage-menu/:id                          → /main/{userUuid}/my-business
+  ///   /visit-menu/:id                           → null (async — resolved in goBackToLastRoute)
+  ///   /main/:id/my-business                     → null (→ main page)
+  ///   /main/:id/visit-business                  → null (→ main page)
+  ///   everything else                           → null (→ main page)
+  String? _deriveParentRoute(String path) {
+    // Children of my-business or visit-business:
+    //   /main/<uuid>/my-business/<child>    → /main/<uuid>/my-business
+    //   /main/<uuid>/visit-business/<child> → /main/<uuid>/visit-business
+    final nestedChild = RegExp(
+      r'^(/main/[^/]+/(?:my-business|visit-business))/[^/]+$',
+    );
+    final nestedMatch = nestedChild.firstMatch(path);
+    if (nestedMatch != null) return nestedMatch.group(1);
+
+    // /manage-menu/<businessUuid> → manager's own business page.
+    // The myBusiness route uses the *user* UUID, not the business UUID.
+    if (path.startsWith('/manage-menu/')) {
+      return '${AppRoutes.mainRoute}/${authSessService.uuid}/my-business';
+    }
+
+    // /visit-menu/:id — the :id is the MENU UUID, not the business UUID.
+    // The correct parent is /main/<businessUuid>/visit-business, but the
+    // business UUID isn't in the URL. goBackToLastRoute() resolves this
+    // asynchronously via LAST_VISITED_BUSINESS_UUID in LocalStorage.
+    // Returning null here makes _deriveParentRoute stay synchronous and
+    // lets goBackToLastRoute() handle the async lookup.
+    if (path.startsWith('/visit-menu/')) return null;
+
+    // All other routes (myBusiness itself, visitBusiness itself, standalone
+    // pages like /about, /privacy, /terms, /my-reservations, profile, etc.)
+    // → no specific parent; caller falls back to _goToMainPage().
+    return null;
   }
 
   Future<void> saveLastRoute(String lastRoute) async {
@@ -209,17 +318,31 @@ class AppRouter {
         updateCurrentRoute(state);
 
         // Si el usuario está siendo forzado a hacer login
-        if (di<AuthSessionService>().forceToLogin) {
+        if (authSessService.forceToLogin) {
           return AppRoutes.login.path;
         }
 
-        // Si el usuario no está autenticado y no está en una ruta pública
-        if (!authSessService.isLoggedIn && !_isPublicRoute(state.matchedLocation)) {
+        // Allow navigation while a session is being restored asynchronously
+        // (tokens are loaded from secure storage in background by RootBloc).
+        // The biometric guard / token validation will handle protection.
+        // Without this, the redirect fires before setSession() completes,
+        // sees isLoggedIn == false, and incorrectly sends the user to login.
+        if (!authSessService.isLoggedIn &&
+            !authSessService.hasPendingSessionRestore &&
+            !_isPublicRoute(state.matchedLocation)) {
           return AppRoutes.login.path;
         }
 
         // Route restoration: only on the initial app bootstrap (initialLocation
         // is '/'), so normal in-app navigations are never overridden.
+        // Use isLoggedIn (NOT hasSessionOrPending) because during cold start
+        // the session hasn't been fully restored yet — tokens are still loading
+        // async from secure storage. If we redirect now, the destination route's
+        // requiresAccess() redirector will fail (userSessionDM is null) and send
+        // the user to /no-access, which falls through to /:businessUuid catch-all.
+        // Instead, let the app stay on the start page so biometric/auto-login can
+        // complete first; fingerprint_button_login.dart handles route restoration
+        // after authentication succeeds.
         if (state.matchedLocation == AppRoutes.start.path &&
             authSessService.isLoggedIn &&
             lastPath != null &&
@@ -519,6 +642,14 @@ class AppRouter {
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
             ),
+          ),
+          // Safety net: noAccess must be registered ABOVE the /:businessUuid
+          // catch-all so that /no-access doesn't match publicMenu with
+          // businessUuid='no-access'. Redirects to login as a safe fallback.
+          GoRoute(
+            path: AppRoutes.noAccess.path,
+            redirect: (_, __) => AppRoutes.login.path,
+            builder: (_, __) => const SizedBox.shrink(), // never reached
           ),
           // Deep link handler: menu.foodly.solutions/{uuid}
           // Logged-in users → visited business (full experience).

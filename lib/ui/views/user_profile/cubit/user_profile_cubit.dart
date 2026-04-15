@@ -5,6 +5,7 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart';
+import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nova_places_api/nova_places_api.dart';
@@ -179,6 +180,44 @@ class UserProfileCubit extends Cubit<UserProfileState> {
           } else {
             _updateCurrentUser((userSessionDM as UserSessionDM).user);
           }
+        },
+        failure: (e) => emit(_Error(e.errorMsg, _vm)),
+      );
+    });
+
+    setAutovalidateMode(AutovalidateMode.disabled);
+  }
+
+  /// First-time password setup for social-login users (their stored password
+  /// is NULL). Routed to the dedicated `/set-password` endpoint instead of
+  /// `/update-password` — the separation guarantees a bug in one path can't
+  /// bypass current-password verification in the other.
+  ///
+  /// After success we refresh the user session so that `user.hasPassword`
+  /// flips to `true` and the UI transitions to "Change password" mode.
+  Future<void> callToSetPassword() async {
+    setAutovalidateMode(AutovalidateMode.always);
+    if (_vm.formKey?.currentState?.validate() == false) return;
+
+    final newPassword = _vm.newPasswordController?.controller?.text ?? '';
+    if (newPassword.isEmpty) return;
+
+    emit(_Loading(_vm));
+
+    final dto = UserBodySetPasswordDTO(newPassword: newPassword);
+
+    await _meRepo.setPassword(dto).then((result) {
+      result.when(
+        success: (_) {
+          // Optimistically mark hasPassword=true so the UI transitions to
+          // "Change password" immediately; the next profile refresh confirms.
+          final updatedUser = _vm.userSessionDM.user.copyWith(hasPassword: true);
+          _vm = _vm.copyWith(
+            userSessionDM: _vm.userSessionDM.copyWith(user: updatedUser),
+            edition: ProfileEditing.none,
+          );
+          _authService.setSession(_vm.userSessionDM);
+          emit(_UserUpdated(_vm, S.current.userPasswordUpdated));
         },
         failure: (e) => emit(_Error(e.errorMsg, _vm)),
       );

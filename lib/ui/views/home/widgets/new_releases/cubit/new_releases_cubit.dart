@@ -1,4 +1,4 @@
-import 'dart:async' show Completer;
+import 'dart:async' show Completer, StreamSubscription;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
@@ -15,6 +15,8 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
 
   NewReleasesVM _vm = const NewReleasesVM();
 
+  StreamSubscription<dynamic>? _locationSub;
+
   static const double _radius = 20.0;
   static const int _limit = 9;
 
@@ -23,9 +25,25 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
     required LocationService locationService,
   })  : _businessRepo = businessRepo,
         _locationService = locationService,
-        super(const NewReleasesState.initial(NewReleasesVM()));
+        super(const NewReleasesState.initial(NewReleasesVM())) {
+    // Auto-retry when location arrives — see NearbyPromotionsCubit for full
+    // rationale. Same race condition: load() fires before LocationService
+    // resolves, cubit gives up after 3 s, never recovers.
+    _locationSub = _locationService.locationChanged.listen((locationDM) {
+      if (locationDM.position == null) return;
+      final hasData = _vm.businesses.isNotEmpty;
+      if (hasData || _vm.isLoading) return;
+      load();
+    });
+  }
 
   NewReleasesVM get vm => _vm;
+
+  @override
+  Future<void> close() {
+    _locationSub?.cancel();
+    return super.close();
+  }
 
   Future<void> load() async {
     // Location may not be ready yet at startup — retry up to 3 s.

@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
@@ -48,15 +49,39 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
     });
   }
 
-  Future<void> _hideFab() async {
-    if (!mounted || !_isFabVisible.value) return;
-    _isFabVisible.value = false;
+  /// Mutates [_isFabVisible] safely.
+  ///
+  /// These setters are called from a [NotificationListener<ScrollNotification>]
+  /// that can fire DURING layout — for example, when a [TextField] gains focus
+  /// and triggers `RenderEditable.performLayout` → `goBallistic` →
+  /// `dispatchScrollStartNotification`. Mutating the [ValueNotifier]
+  /// synchronously in that situation calls `setState` on the
+  /// [ValueListenableBuilder] mid-layout, which trips the
+  /// "Build scheduled during frame" assertion.
+  ///
+  /// During a build/layout/paint phase we defer to a post-frame callback;
+  /// otherwise we mutate immediately to keep FAB toggles snappy.
+  void _setFabVisible(bool value) {
+    if (!mounted || _isFabVisible.value == value) return;
+
+    final phase = SchedulerBinding.instance.schedulerPhase;
+    final inFrame = phase == SchedulerPhase.persistentCallbacks ||
+        phase == SchedulerPhase.midFrameMicrotasks ||
+        phase == SchedulerPhase.postFrameCallbacks;
+
+    if (inFrame) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || _isFabVisible.value == value) return;
+        _isFabVisible.value = value;
+      });
+    } else {
+      _isFabVisible.value = value;
+    }
   }
 
-  Future<void> _showFab() async {
-    if (!mounted || _isFabVisible.value) return;
-    _isFabVisible.value = true;
-  }
+  Future<void> _hideFab() async => _setFabVisible(false);
+
+  Future<void> _showFab() async => _setFabVisible(true);
 
   static const _menuBaseUrl = 'https://menu.foodly.solutions';
 

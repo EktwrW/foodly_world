@@ -155,6 +155,10 @@ class _NewReleasesCardContent extends StatelessWidget {
 
   const _NewReleasesCardContent({required this.business, super.key});
 
+  Widget get _placeholderImage => (business.categoryId?.isDrinkHouse == true)
+      ? const Asset(FoodlyAssets.newBarPlaceholder, fit: BoxFit.cover)
+      : const Asset(FoodlyAssets.newBusinessPlaceholder, fit: BoxFit.cover);
+
   @override
   Widget build(BuildContext context) {
     final imageUrls =
@@ -223,7 +227,7 @@ class _NewReleasesCardContent extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           child: imageUrls.isNotEmpty
                               ? FeedMultipleImageView(imageUrls: imageUrls, radius: 12)
-                              : const Asset(FoodlyAssets.newBusinessPlaceholder, fit: BoxFit.cover),
+                              : _placeholderImage,
                         ).paddingAll(.9),
                       ),
                       // Logo + name overlay

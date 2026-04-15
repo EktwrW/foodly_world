@@ -248,6 +248,8 @@ class _MeClient implements MeClient {
     String? firebasePhoneToken,
     double? latitude,
     double? longitude,
+    String? provider,
+    String? providerId,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -285,6 +287,12 @@ class _MeClient implements MeClient {
     }
     if (longitude != null) {
       _data.fields.add(MapEntry('longitude', longitude.toString()));
+    }
+    if (provider != null) {
+      _data.fields.add(MapEntry('provider', provider));
+    }
+    if (providerId != null) {
+      _data.fields.add(MapEntry('provider_id', providerId));
     }
     final _options = _setStreamType<UserSessionDM>(
       Options(
@@ -348,6 +356,25 @@ class _MeClient implements MeClient {
           .compose(
             _dio.options,
             '/update-password',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> setPassword(UserBodySetPasswordDTO setPasswordDTO) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = setPasswordDTO;
+    final _options = _setStreamType<void>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/set-password',
             queryParameters: queryParameters,
             data: _data,
           )

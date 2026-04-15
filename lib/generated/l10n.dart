@@ -2849,14 +2849,9 @@ class S {
     );
   }
 
-  /// `Pubs and Wine Bars`
-  String get pubsAndWineBars {
-    return Intl.message(
-      'Pubs and Wine Bars',
-      name: 'pubsAndWineBars',
-      desc: '',
-      args: [],
-    );
+  /// `Bars & Pubs`
+  String get barsAndPubs {
+    return Intl.message('Bars & Pubs', name: 'barsAndPubs', desc: '', args: []);
   }
 
   /// `Ready to listen`
@@ -3639,6 +3634,26 @@ class S {
     return Intl.message(
       'Password successfully updated',
       name: 'userPasswordUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set password`
+  String get setPassword {
+    return Intl.message(
+      'Set password',
+      name: 'setPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable email + password sign-in in addition to your social account.`
+  String get setPasswordSubtitle {
+    return Intl.message(
+      'Enable email + password sign-in in addition to your social account.',
+      name: 'setPasswordSubtitle',
       desc: '',
       args: [],
     );

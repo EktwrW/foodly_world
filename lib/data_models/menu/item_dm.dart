@@ -68,8 +68,8 @@ class ItemDM with _$ItemDM {
       };
   Version get getSelectedVersion => selectedVersion ?? sortedVersions.first;
 
-  double get currentPrice => _pricesMap[getSelectedVersion] ?? 0;
-  double getVersionPrice(Version version) => _pricesMap[version] ?? 0;
+  double? get currentPrice => _pricesMap[getSelectedVersion] ;
+  double? getVersionPrice(Version version) => _pricesMap[version];
   bool checkIfVersionCanBeSaved(Version version) => _pricesMap[version] != null && ((_pricesMap[version] ?? 0) > 0);
   bool showAddPriceWarning(Version v) => versions.contains(v) && !checkIfVersionCanBeSaved(v);
   bool get canBeSaved =>

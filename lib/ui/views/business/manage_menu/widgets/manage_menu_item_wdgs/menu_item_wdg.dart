@@ -139,16 +139,18 @@ class MenuItemWdg extends StatelessWidget {
                                             counter: const SizedBox.shrink(),
                                             prefixIconConstraints: const BoxConstraints.tightFor(width: 28, height: 32),
                                             enabled: item.sortedVersions.contains(v),
-                                            initialValue: '${item.getVersionPrice(v)}',
+                                            initialValue:
+                                                '${item.getVersionPrice(v) == 0.0 ? '' : item.getVersionPrice(v)}',
                                             inputTextType: FoodlyInputType.prices,
                                             autovalidateMode: AutovalidateMode.onUserInteraction,
                                             height: 32,
                                             leading: _currencyWidget.paddingTop(10),
-                                            contentPadding: EdgeInsetsDirectional.zero,
+                                            contentPadding: const EdgeInsetsDirectional.only(bottom: 3.9),
                                             focusNode: v.focusNode,
                                             hintText: S.current.price,
+                                            hintTextSize: 12,
                                             style: FoodlyTextStyles.bodyWhiteSemibold.copyWith(
-                                              fontSize: 16.5,
+                                              fontSize: 14,
                                               color: !item.sortedVersions.contains(v)
                                                   ? FoodlyThemes.secondaryFoodly
                                                   : item.sortedVersions.contains(v) && !item.checkIfVersionCanBeSaved(v)

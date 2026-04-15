@@ -10,6 +10,7 @@ import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_register_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_recover_password_dto.dart';
 
@@ -112,6 +113,8 @@ class MeRepo {
         firebasePhoneToken: registerDTO.firebasePhoneToken,
         latitude: registerDTO.latitude,
         longitude: registerDTO.longitude,
+        provider: registerDTO.provider,
+        providerId: registerDTO.providerId,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
@@ -134,6 +137,17 @@ class MeRepo {
   Future<ApiResult<void>> updatePassword(UserBodyUpdateDTO updateDTO) async {
     try {
       return ApiResult.success(await _meClient.updatePassword(updateDTO));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// First-time password set — for social-login users whose password is NULL.
+  /// Paired with the BE's `/set-password` endpoint, which rejects with 409 if
+  /// a password is already set (in that case use [updatePassword] instead).
+  Future<ApiResult<void>> setPassword(UserBodySetPasswordDTO setPasswordDTO) async {
+    try {
+      return ApiResult.success(await _meClient.setPassword(setPasswordDTO));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

@@ -89,6 +89,11 @@ class UserProfileVM with _$UserProfileVM {
     @Default(false) bool termsAndContiditionsAccepted,
     @Default(false) bool businessTermsAndContiditionsAccepted,
     String? importedAvatar,
+    // Social provider context populated when the user arrives at sign-up from
+    // a social login (e.g. Google). Forwarded to /register so the backend can
+    // waive the password requirement for provider-verified sign-ups.
+    String? provider,
+    String? providerId,
     @Default([]) List<ReviewDM> myReviews,
     ReviewsMetaDM? reviewsMeta,
     @Default(false) bool isLoadingMoreReviews,

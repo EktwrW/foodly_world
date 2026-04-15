@@ -17,6 +17,7 @@ class FoodlyStrings {
 
   // Local storage keys:
   static const LAST_PATH = 'lastPath';
+  static const LAST_VISITED_BUSINESS_UUID = 'lastVisitedBusinessUuid';
 
   // Utils strings:
   static const FIRST_NAME = 'firstName';
