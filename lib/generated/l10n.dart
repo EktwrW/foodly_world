@@ -3659,6 +3659,66 @@ class S {
     );
   }
 
+  /// `Your`
+  String get emailSectionTitle1 {
+    return Intl.message('Your', name: 'emailSectionTitle1', desc: '', args: []);
+  }
+
+  /// `Email`
+  String get emailSectionTitle2 {
+    return Intl.message(
+      'Email',
+      name: 'emailSectionTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your`
+  String get phoneSectionTitle1 {
+    return Intl.message('Your', name: 'phoneSectionTitle1', desc: '', args: []);
+  }
+
+  /// `Phone`
+  String get phoneSectionTitle2 {
+    return Intl.message(
+      'Phone',
+      name: 'phoneSectionTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm your password`
+  String get confirmPasswordTitle {
+    return Intl.message(
+      'Confirm your password',
+      name: 'confirmPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For security, please enter your current password to change your email.`
+  String get confirmPasswordForEmailChange {
+    return Intl.message(
+      'For security, please enter your current password to change your email.',
+      name: 'confirmPasswordForEmailChange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First set a password for your account, then you can change your email.`
+  String get emailChangeBlockedForSocialUser {
+    return Intl.message(
+      'First set a password for your account, then you can change your email.',
+      name: 'emailChangeBlockedForSocialUser',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `User data successfully updated`
   String get userProfileUpdated {
     return Intl.message(

@@ -415,6 +415,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "composure": MessageLookupByLibrary.simpleMessage("Compostura"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
     "confirmPassword": MessageLookupByLibrary.simpleMessage("Confirmar senha"),
+    "confirmPasswordForEmailChange": MessageLookupByLibrary.simpleMessage(
+      "Por segurança, introduz a tua palavra-passe atual para alterar o teu email.",
+    ),
+    "confirmPasswordTitle": MessageLookupByLibrary.simpleMessage(
+      "Confirma a tua palavra-passe",
+    ),
     "confirmPhoneForVerification": MessageLookupByLibrary.simpleMessage(
       "Confirma o número de telefone para receber o teu código de verificação.",
     ),
@@ -588,6 +594,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "editTitle": MessageLookupByLibrary.simpleMessage("Editar título"),
     "editYourReviewFor": m15,
     "email": MessageLookupByLibrary.simpleMessage("Correio eletrónico"),
+    "emailChangeBlockedForSocialUser": MessageLookupByLibrary.simpleMessage(
+      "Primeiro define uma palavra-passe para a tua conta, depois poderás alterar o teu email.",
+    ),
+    "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("O teu"),
+    "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
     "enableLocation": MessageLookupByLibrary.simpleMessage(
       "Ativar localização",
     ),
@@ -925,6 +936,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "peruvian": MessageLookupByLibrary.simpleMessage("Peruana"),
     "petFriendly": MessageLookupByLibrary.simpleMessage("Aceita Animais"),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Número de telefone"),
+    "phoneSectionTitle1": MessageLookupByLibrary.simpleMessage("O teu"),
+    "phoneSectionTitle2": MessageLookupByLibrary.simpleMessage("Telefone"),
     "photosDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Fotos do item eliminadas com sucesso",
     ),

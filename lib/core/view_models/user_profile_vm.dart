@@ -22,7 +22,12 @@ enum ProfileEditing {
   none,
   userName,
   nickName,
+  // `contact` is deprecated in favor of `email` + `phone` separately — email
+  // changes require re-authentication (it's an account-recovery vector), phone
+  // changes don't. Kept in the enum for backward-compat with any stale state.
   contact,
+  email,
+  phone,
   location,
   gender,
   password,
@@ -32,6 +37,8 @@ enum ProfileEditing {
   bool get isEditingName => this == userName;
   bool get isEditingNickName => this == nickName;
   bool get isEditingContact => this == contact;
+  bool get isEditingEmail => this == email;
+  bool get isEditingPhone => this == phone;
   bool get isEditingAddress => this == location;
   bool get isEditingGender => this == gender;
   bool get isEditingPassword => this == password;

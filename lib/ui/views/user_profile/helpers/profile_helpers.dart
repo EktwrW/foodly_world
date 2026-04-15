@@ -18,6 +18,22 @@ class ProfileHelpers {
     return list;
   }
 
+  static List<(TextEditingController, String)> emailFieldControllers(UserProfileVM vm) {
+    final list = <(TextEditingController, String)>[];
+    if (vm.emailController?.controller != null && vm.currentUserEmail != null) {
+      list.add((vm.emailController!.controller!, vm.currentUserEmail!));
+    }
+    return list;
+  }
+
+  static List<(TextEditingController, String)> phoneFieldControllers(UserProfileVM vm) {
+    final list = <(TextEditingController, String)>[];
+    if (vm.phoneNumberController?.controller != null && vm.currentUserPhoneNumber != null) {
+      list.add((vm.phoneNumberController!.controller!, vm.currentUserPhoneNumber!));
+    }
+    return list;
+  }
+
   static List<(TextEditingController, String)> addressFieldControllers(UserProfileVM vm) {
     final list = <(TextEditingController, String)>[];
 

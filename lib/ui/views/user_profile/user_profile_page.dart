@@ -15,6 +15,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel_basic.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/password_confirmation_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
@@ -23,7 +24,6 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_text.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
-import 'package:foodly_world/ui/shared_widgets/texts/email_phone_text_links.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -185,21 +185,39 @@ class UserProfilePage extends StatelessWidget {
                           readOnlyWidget: _UsersGender(vm: vm, key: ValueKey(vm.currentUserGender)),
                           editingWidget: _EditUserGenderWdg(vm: vm, key: ValueKey('Edit-${vm.currentUserGender}')),
                         ),
+                        // Email and phone used to live in a single "Contact" section.
+                        // Email is now isolated because changing it requires re-auth
+                        // (it's an account-recovery vector — silent email change
+                        // would enable takeover via forgot-password).
                         _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingContact
+                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingEmail
+                              ? null
+                              : () {
+                                  vm.emailController?.controller?.text = vm.currentUserEmail ?? '';
+                                  context.read<UserProfileCubit>().updateEditMode(ProfileEditing.email);
+                                },
+                          key: const Key('Email'),
+                          titleFirstText: '${S.current.emailSectionTitle1} ',
+                          titleSecondText: S.current.emailSectionTitle2,
+                          footerText: '(${S.current.contactPrivacyNotice})',
+                          editing: vm.edition.isEditingEmail,
+                          readOnlyWidget: _EmailWdg(vm: vm, key: const Key('Email-read-only')),
+                          editingWidget: _EmailEditingWdg(vm: vm, key: const Key('Email-editing')),
+                        ),
+                        _UserProfileSectionWdg(
+                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingPhone
                               ? null
                               : () {
                                   vm.phoneNumberController?.controller?.text = vm.currentUserPhoneNumber ?? '';
-                                  vm.emailController?.controller?.text = vm.currentUserEmail ?? '';
-                                  context.read<UserProfileCubit>().updateEditMode(ProfileEditing.contact);
+                                  context.read<UserProfileCubit>().updateEditMode(ProfileEditing.phone);
                                 },
-                          key: const Key('Contact'),
-                          titleFirstText: '${S.current.dashboardContactText1} ',
-                          titleSecondText: S.current.dashboardContactText2,
+                          key: const Key('Phone'),
+                          titleFirstText: '${S.current.phoneSectionTitle1} ',
+                          titleSecondText: S.current.phoneSectionTitle2,
                           footerText: '(${S.current.contactPrivacyNotice})',
-                          editing: vm.edition.isEditingContact,
-                          readOnlyWidget: _ContactWdg(vm: vm, key: const Key('Contact-read-only')),
-                          editingWidget: _ContactEditingWdg(vm: vm, key: const Key('Contact-editing')),
+                          editing: vm.edition.isEditingPhone,
+                          readOnlyWidget: _PhoneWdg(vm: vm, key: const Key('Phone-read-only')),
+                          editingWidget: _PhoneEditingWdg(vm: vm, key: const Key('Phone-editing')),
                         ),
                         _UserProfileSectionWdg(
                           key: const Key('User-reviews'),

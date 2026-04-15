@@ -417,6 +417,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmPassword": MessageLookupByLibrary.simpleMessage(
       "Confirmar contraseña",
     ),
+    "confirmPasswordForEmailChange": MessageLookupByLibrary.simpleMessage(
+      "Por seguridad, ingresá tu contraseña actual para cambiar tu email.",
+    ),
+    "confirmPasswordTitle": MessageLookupByLibrary.simpleMessage(
+      "Confirmá tu contraseña",
+    ),
     "confirmPhoneForVerification": MessageLookupByLibrary.simpleMessage(
       "Confirmá el número de teléfono para recibir tu código de verificación.",
     ),
@@ -592,6 +598,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "editTitle": MessageLookupByLibrary.simpleMessage("Editar título"),
     "editYourReviewFor": m15,
     "email": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
+    "emailChangeBlockedForSocialUser": MessageLookupByLibrary.simpleMessage(
+      "Primero establecé una contraseña para tu cuenta y luego podrás cambiar tu email.",
+    ),
+    "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("Tu"),
+    "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Activar ubicación"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
       "Toca para activar el acceso a la ubicación",
@@ -929,6 +940,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "peruvian": MessageLookupByLibrary.simpleMessage("Peruana"),
     "petFriendly": MessageLookupByLibrary.simpleMessage("Acepta Mascotas"),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Número de teléfono"),
+    "phoneSectionTitle1": MessageLookupByLibrary.simpleMessage("Tu"),
+    "phoneSectionTitle2": MessageLookupByLibrary.simpleMessage("Teléfono"),
     "photosDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Fotos del artículo eliminadas correctamente",
     ),

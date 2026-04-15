@@ -164,8 +164,13 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       ProfileEditing.gender: dto.copyWith(
         gender: _vm.gender?.key,
       ),
+      // `.contact` is deprecated — kept for backward-compat only. The active
+      // flows use `.email` (with re-auth via callToUpdateEmail) and `.phone`.
       ProfileEditing.contact: dto.copyWith(
         email: _vm.emailController?.controller?.text,
+        phone: _vm.phoneNumberController?.controller?.text,
+      ),
+      ProfileEditing.phone: dto.copyWith(
         phone: _vm.phoneNumberController?.controller?.text,
       ),
     };
@@ -186,6 +191,30 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     });
 
     setAutovalidateMode(AutovalidateMode.disabled);
+  }
+
+  /// Email change with sudo-mode verification.
+  ///
+  /// Email is an account-recovery vector — a silent email change via a hijacked
+  /// session token leads to full account takeover (attacker requests
+  /// forgot-password on the new email, intercepts temp password, locks owner
+  /// out). The backend enforces `current_password` verification for email
+  /// changes; this method just plumbs the password collected by the
+  /// [PasswordConfirmationDialog] into the update payload.
+  Future<void> callToUpdateEmail({required String newEmail, required String currentPassword}) async {
+    emit(_Loading(_vm));
+
+    final dto = UserBodyUpdateDTO(
+      email: newEmail,
+      password: currentPassword,
+    );
+
+    await _meRepo.updateProfile(dto).then((result) {
+      result.when(
+        success: (userSessionDM) => _updateCurrentUser((userSessionDM).user),
+        failure: (e) => emit(_Error(e.errorMsg, _vm)),
+      );
+    });
   }
 
   /// First-time password setup for social-login users (their stored password
