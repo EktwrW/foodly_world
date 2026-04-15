@@ -1,13 +1,28 @@
 buildscript {
-    ext.agp_version = '8.9.0'
-    
+    // AGP 8.9.1 is the minimum required by transitively-resolved AndroidX deps
+    // (androidx.core 1.18, androidx.activity 1.12.4, androidx.browser 1.9,
+    // androidx.navigationevent 1.0.2). Older AGP fails checkReleaseAarMetadata.
+    ext.agp_version = '8.9.1'
+
+    // Kotlin 2.3.0 canonical version for sub-projects (Flutter plugins whose
+    // Android modules apply `kotlin-android` without a version specifier read
+    // from here). Must stay in sync with the `org.jetbrains.kotlin.android`
+    // plugin version declared in settings.gradle.
+    //
+    // Why this matters: without this, plugins pick up Flutter's built-in
+    // default Kotlin version (~2.1.0 on Flutter 3.41), which then fails to
+    // read jetified stdlib 2.3.10 metadata and emits noisy `e:` log lines
+    // even when the main build succeeds.
+    ext.kotlin_version = '2.3.0'
+
     repositories {
         google()
         mavenCentral()
     }
-    
+
     dependencies {
         classpath "com.android.tools.build:gradle:$agp_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
