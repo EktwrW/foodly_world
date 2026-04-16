@@ -17,6 +17,8 @@ import 'package:foodly_world/core/network/reservations/reservation_client.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_client.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
+import 'package:foodly_world/core/network/service_packages/service_package_client.dart';
+import 'package:foodly_world/core/network/service_packages/service_package_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
@@ -65,6 +67,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => UserDiscoveryClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BuzzClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReservationClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => ServicePackageClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
       ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
@@ -82,6 +85,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => UserDiscoveryRepo(client: di()))
       ..registerLazySingleton(() => BuzzRepo(buzzClient: di()))
       ..registerLazySingleton(() => ReservationRepo(reservationClient: di()))
+      ..registerLazySingleton(() => ServicePackageRepo(client: di()))
       ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()));
 
     /// Register services
