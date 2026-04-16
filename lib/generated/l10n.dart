@@ -5678,6 +5678,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Catering & Chefs`
+  String get cateringAndChefs {
+    return Intl.message(
+      'Catering & Chefs',
+      name: 'cateringAndChefs',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

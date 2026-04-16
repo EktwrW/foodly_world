@@ -368,6 +368,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Category Title updated successfully",
     ),
     "catering": MessageLookupByLibrary.simpleMessage("Catering"),
+    "cateringAndChefs": MessageLookupByLibrary.simpleMessage(
+      "Catering & Chefs",
+    ),
     "changeLocation": MessageLookupByLibrary.simpleMessage("Change Location"),
     "changeSearchPoint": MessageLookupByLibrary.simpleMessage(
       "Change the search point for recommendations",

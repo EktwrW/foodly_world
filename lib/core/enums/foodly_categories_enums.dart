@@ -70,7 +70,10 @@ enum FoodlyCategories {
   venezuelan(22),
 
   @JsonValue(25)
-  foodTrucks(25);
+  foodTrucks(25),
+
+  @JsonValue(26)
+  cateringAndChefs(26);
 
   final int value;
   const FoodlyCategories(this.value);
@@ -78,7 +81,8 @@ enum FoodlyCategories {
   bool get isDrinkHouse => this == drinkHouse;
   bool get isAcademy => this == academy;
   bool get isBakeryOrCoffee => this == coffee || this == bakery;
-  bool get isRestaurant => !isDrinkHouse && !isAcademy && !isBakeryOrCoffee;
+  bool get isRestaurant => !isDrinkHouse && !isAcademy && !isBakeryOrCoffee && !isCateringOrChefs;
+  bool get isCateringOrChefs => this == cateringAndChefs;
 
   /// Categories currently active in the product — shown in both
   /// business-picking UIs (sign-up, edit-category) AND discovery surfaces
@@ -124,6 +128,7 @@ enum FoodlyCategories {
         arabic => S.current.arabic,
         venezuelan => S.current.venezuelan,
         foodTrucks => S.current.foodTrucks,
+        cateringAndChefs => S.current.cateringAndChefs,
       };
 
   Widget get avatar => ClipOval(child: Image.asset(assetPath, fit: BoxFit.contain));
@@ -144,14 +149,15 @@ enum FoodlyCategories {
         coffee => 'assets/images/coffee.jpg',
         stores => 'assets/images/stores.jpg',
         academy => 'assets/images/academy.jpg',
+        seaFood => 'assets/images/seafood.png',
         italian => 'assets/images/italiana.png',
+        asian => 'assets/images/asian.png',
         argentinian => 'assets/images/argentina.png',
         peruvian => 'assets/images/peruana.png',
-        seaFood => 'assets/images/seafood.png',
-        asian => 'assets/images/asian.png',
-        arabic => 'assets/images/arabe.png',
         venezuelan => 'assets/images/venezuelan.png',
+        arabic => 'assets/images/arabe.png',
         foodTrucks => 'assets/images/stand.png',
+        cateringAndChefs => 'assets/images/catering_chefs.png',
       };
 }
 

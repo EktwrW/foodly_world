@@ -848,5 +848,6 @@
   "analyticsStatusPending": "Pendente",
   "analyticsStatusCancelled": "Cancelada",
   "analyticsStatusRejected": "Rejeitada",
-  "analyticsStatusNoShow": "Não compareceu"
+  "analyticsStatusNoShow": "Não compareceu",
+  "cateringAndChefs": "Catering & Chefs"
 }
