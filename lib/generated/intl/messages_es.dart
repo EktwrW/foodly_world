@@ -145,6 +145,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "accessiblePMR": MessageLookupByLibrary.simpleMessage("Accesible PMR"),
     "account": MessageLookupByLibrary.simpleMessage("Cuenta"),
+    "active": MessageLookupByLibrary.simpleMessage("Activo"),
+    "activePackageHint": MessageLookupByLibrary.simpleMessage(
+      "Los paquetes activos son visibles para los clientes",
+    ),
     "addADescription": MessageLookupByLibrary.simpleMessage(
       "Añadir una descripción",
     ),
@@ -154,9 +158,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "addAdditionalInformation": MessageLookupByLibrary.simpleMessage(
       "Agrega información adicional",
     ),
+    "addCertification": MessageLookupByLibrary.simpleMessage(
+      "Agregar certificación",
+    ),
     "addContact": MessageLookupByLibrary.simpleMessage(
       "Agregar canales de contacto",
     ),
+    "addCuisine": MessageLookupByLibrary.simpleMessage("Agregar cocina"),
+    "addItem": MessageLookupByLibrary.simpleMessage("Agregar ítem"),
+    "addLanguage": MessageLookupByLibrary.simpleMessage("Agregar idioma"),
     "addName": MessageLookupByLibrary.simpleMessage("Añadir nombre"),
     "addNewCategory": MessageLookupByLibrary.simpleMessage(
       "Añadir nueva categoría",
@@ -170,6 +180,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "addPhoto": MessageLookupByLibrary.simpleMessage("Añadir foto"),
     "addServices": MessageLookupByLibrary.simpleMessage("Agregar Servicios"),
+    "addSpecialtiesAndDetails": MessageLookupByLibrary.simpleMessage(
+      "Agrega tus especialidades y detalles",
+    ),
+    "addSpecialty": MessageLookupByLibrary.simpleMessage(
+      "Agregar especialidad",
+    ),
     "addTagline": MessageLookupByLibrary.simpleMessage(
       "Agrega una frase destacada",
     ),
@@ -310,7 +326,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "biometricSnackbarTextSpanB": MessageLookupByLibrary.simpleMessage(
       "La sesión ha caducado, debes ingresar con tu usuario y contraseña, o acceder con la red social de tu preferencia.",
     ),
+    "birthday": MessageLookupByLibrary.simpleMessage("Cumpleaños"),
+    "bookingPricing": MessageLookupByLibrary.simpleMessage(
+      "Reservas y precios",
+    ),
     "brands": MessageLookupByLibrary.simpleMessage("marcas"),
+    "brunch": MessageLookupByLibrary.simpleMessage("Brunch"),
     "business": MessageLookupByLibrary.simpleMessage("Negocio"),
     "businessAccountUpgradeInfo": MessageLookupByLibrary.simpleMessage(
       "Te dirigiremos al formulario de registro empresarial. Tu solicitud será revisada para verificación en la plataforma. Ten en cuenta que la creación de negocios falsos, apropiación indebida o suplantación de marcas y establecimientos puede acarrear consecuencias legales.",
@@ -365,6 +386,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancelReservationConfirm": MessageLookupByLibrary.simpleMessage(
       "¿Estás seguro de que quieres cancelar esta reserva?",
     ),
+    "cancellationDetails": MessageLookupByLibrary.simpleMessage(
+      "Detalles de cancelación",
+    ),
+    "cancellationDetailsHint": MessageLookupByLibrary.simpleMessage(
+      "Describe los términos de cancelación",
+    ),
+    "cancellationPolicy": MessageLookupByLibrary.simpleMessage(
+      "Política de cancelación",
+    ),
     "cancelled": MessageLookupByLibrary.simpleMessage("Cancelada"),
     "cannotUndone": MessageLookupByLibrary.simpleMessage(
       "\nEsta acción no se puede deshacer.",
@@ -383,6 +413,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "cateringAndChefs": MessageLookupByLibrary.simpleMessage(
       "Catering & Chefs",
     ),
+    "certificationExample": MessageLookupByLibrary.simpleMessage("Ej: HACCP"),
+    "certifications": MessageLookupByLibrary.simpleMessage("Certificaciones"),
     "changeLocation": MessageLookupByLibrary.simpleMessage("Cambiar Ubicación"),
     "changeSearchPoint": MessageLookupByLibrary.simpleMessage(
       "Cambia el punto de búsqueda para recomendaciones",
@@ -398,6 +430,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "clear": MessageLookupByLibrary.simpleMessage("Limpiar"),
     "close": MessageLookupByLibrary.simpleMessage("Cerrar"),
     "closed": MessageLookupByLibrary.simpleMessage("Cerrado"),
+    "cocktail": MessageLookupByLibrary.simpleMessage("Cóctel"),
     "combos": MessageLookupByLibrary.simpleMessage("Combos"),
     "combosLabelCustom": MessageLookupByLibrary.simpleMessage("Personalizado"),
     "combosLabelHint": MessageLookupByLibrary.simpleMessage(
@@ -475,10 +508,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "conversionFunnel": MessageLookupByLibrary.simpleMessage(
       "Embudo de conversión",
     ),
+    "cookingClass": MessageLookupByLibrary.simpleMessage("Clase de cocina"),
     "cookingSchools": MessageLookupByLibrary.simpleMessage(
       "Escuelas de Cocina",
     ),
     "copyrightText": m14,
+    "corporate": MessageLookupByLibrary.simpleMessage("Corporativo"),
     "couldNotLoadAnalytics": MessageLookupByLibrary.simpleMessage(
       "No se pudieron cargar las analíticas",
     ),
@@ -509,11 +544,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "createNewPromotion": MessageLookupByLibrary.simpleMessage(
       "Crear nueva promoción",
     ),
+    "createPackage": MessageLookupByLibrary.simpleMessage("Crear paquete"),
     "createPostTitle": MessageLookupByLibrary.simpleMessage(
       "Crear publicación",
     ),
     "createUser": MessageLookupByLibrary.simpleMessage("Crear Usuario"),
     "cropImage": MessageLookupByLibrary.simpleMessage("Recortar imagen"),
+    "cuisineExample": MessageLookupByLibrary.simpleMessage("Ej: Mediterránea"),
+    "cuisines": MessageLookupByLibrary.simpleMessage("Cocinas"),
+    "currency": MessageLookupByLibrary.simpleMessage("Moneda"),
+    "custom": MessageLookupByLibrary.simpleMessage("Personalizado"),
     "customer": MessageLookupByLibrary.simpleMessage("Cliente"),
     "dailyTrends": MessageLookupByLibrary.simpleMessage("Tendencias diarias"),
     "dangerZone": MessageLookupByLibrary.simpleMessage("Zona de Peligro"),
@@ -578,6 +618,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteCategory": MessageLookupByLibrary.simpleMessage(
       "Eliminar categoría",
     ),
+    "deletePackage": MessageLookupByLibrary.simpleMessage("Eliminar paquete"),
+    "deletePackageConfirmation": MessageLookupByLibrary.simpleMessage(
+      "¿Seguro que deseas eliminar este paquete? Esta acción no se puede deshacer.",
+    ),
     "deletePostConfirm": MessageLookupByLibrary.simpleMessage(
       "¿Seguro que quieres eliminar esta publicación?",
     ),
@@ -585,18 +629,28 @@ class MessageLookup extends MessageLookupByLibrary {
       "Eliminar publicación",
     ),
     "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
+    "depositPercentage": MessageLookupByLibrary.simpleMessage(
+      "Porcentaje de depósito",
+    ),
+    "depositRequired": MessageLookupByLibrary.simpleMessage(
+      "Requiere depósito",
+    ),
+    "descriptionLabel": MessageLookupByLibrary.simpleMessage("Descripción"),
+    "dinner": MessageLookupByLibrary.simpleMessage("Cena"),
     "doItLater": MessageLookupByLibrary.simpleMessage("Lo haré más tarde"),
     "doYouWantToDeleteThisCoverImage": MessageLookupByLibrary.simpleMessage(
       "¿Deseas eliminar esta imagen de portada?",
     ),
     "downloadApp": MessageLookupByLibrary.simpleMessage("Obtener la app"),
     "drinks": MessageLookupByLibrary.simpleMessage("Bebidas"),
+    "durationHours": MessageLookupByLibrary.simpleMessage("Duración (horas)"),
     "edit": MessageLookupByLibrary.simpleMessage("Editar"),
     "editCoverImages": MessageLookupByLibrary.simpleMessage(
       "Editar Imágenes de Portada",
     ),
     "editLocation": MessageLookupByLibrary.simpleMessage("Editar Ubicación"),
     "editMenu": MessageLookupByLibrary.simpleMessage("Editar menú"),
+    "editPackage": MessageLookupByLibrary.simpleMessage("Editar paquete"),
     "editReview": MessageLookupByLibrary.simpleMessage("Editar reseña"),
     "editTitle": MessageLookupByLibrary.simpleMessage("Editar título"),
     "editYourReviewFor": m15,
@@ -657,7 +711,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "fastFood": MessageLookupByLibrary.simpleMessage("Comida Rápida"),
     "favorites": MessageLookupByLibrary.simpleMessage("Favoritos"),
+    "featured": MessageLookupByLibrary.simpleMessage("Destacado"),
+    "featuredPackageHint": MessageLookupByLibrary.simpleMessage(
+      "Los paquetes destacados aparecen primero",
+    ),
     "female": MessageLookupByLibrary.simpleMessage("Femenino"),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage(
+      "Este campo es obligatorio",
+    ),
     "findAndCompleteAddress": MessageLookupByLibrary.simpleMessage(
       "Encuentra y completa fácilmente tu dirección",
     ),
@@ -665,6 +726,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Finalizar modo edición",
     ),
     "firstName": MessageLookupByLibrary.simpleMessage("Nombre"),
+    "fixed": MessageLookupByLibrary.simpleMessage("Fijo"),
+    "flexible": MessageLookupByLibrary.simpleMessage("Flexible"),
     "follow": MessageLookupByLibrary.simpleMessage("Seguir"),
     "followers": MessageLookupByLibrary.simpleMessage("Seguidores"),
     "following": MessageLookupByLibrary.simpleMessage("Siguiendo"),
@@ -688,11 +751,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "guests": MessageLookupByLibrary.simpleMessage("comensales"),
     "happyBirthday": MessageLookupByLibrary.simpleMessage("Feliz Cumpleaños"),
     "happyHours": MessageLookupByLibrary.simpleMessage("Happy Hours"),
+    "hasInsurance": MessageLookupByLibrary.simpleMessage("Tiene seguro"),
     "hi": MessageLookupByLibrary.simpleMessage("Hola"),
     "home": MessageLookupByLibrary.simpleMessage("Inicio"),
     "imageSizeLessThan10mb": MessageLookupByLibrary.simpleMessage(
       "El tamaño de la imagen debe ser inferior a 10MB",
     ),
+    "includeItemHint": MessageLookupByLibrary.simpleMessage(
+      "Ej: Entrada, plato principal, postre",
+    ),
+    "includes": MessageLookupByLibrary.simpleMessage("Incluye"),
     "incompletePromotionCreateInfo": MessageLookupByLibrary.simpleMessage(
       "Información incompleta para crear la promoción",
     ),
@@ -703,6 +771,9 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage(
           "Información aún no proporcionada por el comercio.",
         ),
+    "insuranceHint": MessageLookupByLibrary.simpleMessage(
+      "Cobertura de responsabilidad civil",
+    ),
     "interactToReserve": MessageLookupByLibrary.simpleMessage(
       "Interacción → Reserva",
     ),
@@ -724,6 +795,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidPromoDates": MessageLookupByLibrary.simpleMessage(
       "Fecha de inicio posterior a fecha de expiración",
     ),
+    "invalidValue": MessageLookupByLibrary.simpleMessage("Valor inválido"),
     "invalidYoutubeUrl": MessageLookupByLibrary.simpleMessage(
       "URL de YouTube inválida",
     ),
@@ -750,6 +822,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Área de Juegos Infantiles",
     ),
     "koreanCuisine": MessageLookupByLibrary.simpleMessage("Koreana"),
+    "languageExample": MessageLookupByLibrary.simpleMessage("Ej: Español"),
+    "languages": MessageLookupByLibrary.simpleMessage("Idiomas"),
     "lastName": MessageLookupByLibrary.simpleMessage("Apellido"),
     "likes": MessageLookupByLibrary.simpleMessage("Me gusta"),
     "listening": MessageLookupByLibrary.simpleMessage("Escuchando"),
@@ -794,6 +868,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "logoutDialogTitle": MessageLookupByLibrary.simpleMessage(
       "¿Deseas cerrar sesión?",
     ),
+    "longPressToDrag": MessageLookupByLibrary.simpleMessage(
+      "Mantén presionado y arrastra para reordenar",
+    ),
+    "lunch": MessageLookupByLibrary.simpleMessage("Almuerzo"),
     "mainPromos": MessageLookupByLibrary.simpleMessage(
       "Promociones Destacadas",
     ),
@@ -810,6 +888,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "marketsAndStores": MessageLookupByLibrary.simpleMessage(
       "Mercados y Tiendas",
     ),
+    "maxGuests": MessageLookupByLibrary.simpleMessage("Máx. invitados"),
     "maxPartySize": m18,
     "maxSize": m19,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Máx."),
@@ -821,9 +900,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "micPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
       "La búsqueda por voz usa el micrófono para encontrar lugares cercanos. Activa el acceso en Ajustes para explorar con tu voz.",
     ),
+    "minBookingAmount": MessageLookupByLibrary.simpleMessage("Monto mínimo"),
+    "minGuests": MessageLookupByLibrary.simpleMessage("Mín. invitados"),
     "mockTextNewReleasesCard": MessageLookupByLibrary.simpleMessage(
       "La red Ramalha a través de la ciudad de Covilhã sigue creciendo. Después de ampliar el año pasado a la ciudad de Fundão, esta vez la panadería/pastelería abrió su segundo espacio en Covilhã Shopping, en espacio interior en su zona frontal, en planta 0 y con una amplia explanada.",
     ),
+    "moderate": MessageLookupByLibrary.simpleMessage("Moderada"),
+    "more": MessageLookupByLibrary.simpleMessage("más"),
     "moreInfo": MessageLookupByLibrary.simpleMessage("+ info"),
     "moveDown": MessageLookupByLibrary.simpleMessage("Bajar"),
     "moveUp": MessageLookupByLibrary.simpleMessage("Subir"),
@@ -866,6 +949,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNotificationsYet": MessageLookupByLibrary.simpleMessage(
       "Aún no hay notificaciones",
     ),
+    "noPackagesYet": MessageLookupByLibrary.simpleMessage(
+      "Aún no hay paquetes",
+    ),
     "noPromotionsInSection": MessageLookupByLibrary.simpleMessage(
       "No hay promociones en esta sección",
     ),
@@ -900,6 +986,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notification": MessageLookupByLibrary.simpleMessage("Notificación"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Vamos!"),
+    "onQuote": MessageLookupByLibrary.simpleMessage("Bajo cotización"),
     "onSite": MessageLookupByLibrary.simpleMessage("En el local"),
     "onlyContainLetters": MessageLookupByLibrary.simpleMessage(
       "Solo puede contener letras y un espacio entre palabras",
@@ -922,6 +1009,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tu ubicación está fuera de la cobertura actual de Foodly",
     ),
     "owner": MessageLookupByLibrary.simpleMessage("Propietario"),
+    "packageDescriptionHint": MessageLookupByLibrary.simpleMessage(
+      "Describe qué incluye este paquete",
+    ),
+    "packageTitleHint": MessageLookupByLibrary.simpleMessage(
+      "Ej: Cena gourmet para 20 personas",
+    ),
+    "packages": MessageLookupByLibrary.simpleMessage("Paquetes"),
     "parking": MessageLookupByLibrary.simpleMessage("Estacionamiento"),
     "partySize": MessageLookupByLibrary.simpleMessage("Comensales:"),
     "partySizeCount": m22,
@@ -940,6 +1034,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "pendingReservationsContent": MessageLookupByLibrary.simpleMessage(
       "Hay solicitudes de reserva esperando tu respuesta.",
     ),
+    "perHour": MessageLookupByLibrary.simpleMessage("Por hora"),
+    "perPerson": MessageLookupByLibrary.simpleMessage("Por persona"),
     "peruvian": MessageLookupByLibrary.simpleMessage("Peruana"),
     "petFriendly": MessageLookupByLibrary.simpleMessage("Acepta Mascotas"),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Número de teléfono"),
@@ -989,6 +1085,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseSelectBusinessCategory": MessageLookupByLibrary.simpleMessage(
       "Por favor selecciona la categoria de tu negocio",
     ),
+    "portfolioVideoUrl": MessageLookupByLibrary.simpleMessage(
+      "URL de video/portfolio",
+    ),
     "portugueseCuisine": MessageLookupByLibrary.simpleMessage("Portuguesa"),
     "post": MessageLookupByLibrary.simpleMessage("Publicar"),
     "posts": MessageLookupByLibrary.simpleMessage("Publicaciones"),
@@ -1004,11 +1103,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "preferences": MessageLookupByLibrary.simpleMessage("Preferencias"),
     "pressToAddPhotosUpToMaxImages": m25,
     "price": MessageLookupByLibrary.simpleMessage("Precio"),
+    "priceType": MessageLookupByLibrary.simpleMessage("Tipo de precio"),
     "priceValidation": MessageLookupByLibrary.simpleMessage(
       "El precio no puede estar vacío y debe ser mayor a 0.09",
     ),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "Política de Privacidad",
+    ),
+    "professionalProfile": MessageLookupByLibrary.simpleMessage(
+      "Perfil profesional",
     ),
     "profile": MessageLookupByLibrary.simpleMessage("Perfil"),
     "profileBirthdayText1": MessageLookupByLibrary.simpleMessage("Fecha de"),
@@ -1023,6 +1126,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "radiusDistanceLabel": MessageLookupByLibrary.simpleMessage(
       "Radio de distancia:",
     ),
+    "radiusKm": MessageLookupByLibrary.simpleMessage("Radio (km)"),
     "rateYourExperience": MessageLookupByLibrary.simpleMessage(
       "Califica tu experiencia:",
     ),
@@ -1060,6 +1164,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Eliminar este periodo de tiempo",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remover video"),
+    "reorder": MessageLookupByLibrary.simpleMessage("Reordenar"),
     "request": MessageLookupByLibrary.simpleMessage("Solicitar"),
     "requestReservation": MessageLookupByLibrary.simpleMessage(
       "Solicitar Reserva",
@@ -1165,6 +1270,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendVerificationCode": MessageLookupByLibrary.simpleMessage(
       "Enviar Código de Verificación",
     ),
+    "serviceArea": MessageLookupByLibrary.simpleMessage("Área de servicio"),
+    "servicePackages": MessageLookupByLibrary.simpleMessage(
+      "Paquetes de servicio",
+    ),
+    "serviceType": MessageLookupByLibrary.simpleMessage("Tipo de servicio"),
     "sessionExpiredMessage": MessageLookupByLibrary.simpleMessage(
       "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.",
     ),
@@ -1174,6 +1284,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "setPasswordSubtitle": MessageLookupByLibrary.simpleMessage(
       "Habilita el inicio de sesión con email y contraseña además de tu cuenta social.",
+    ),
+    "setupProfessionalProfile": MessageLookupByLibrary.simpleMessage(
+      "Configura tu perfil profesional",
     ),
     "shareAppMessage": MessageLookupByLibrary.simpleMessage(
       "Descubre los mejores locales cerca de ti con Foodly — explora menus, aprovecha promociones y reserva mesa, todo en una sola app!",
@@ -1226,6 +1339,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "signup": MessageLookupByLibrary.simpleMessage("Registrarse"),
     "smokingArea": MessageLookupByLibrary.simpleMessage("Área de Fumadores"),
     "socials": MessageLookupByLibrary.simpleMessage("Sociales"),
+    "solo": MessageLookupByLibrary.simpleMessage("Solo"),
     "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "Ocurrió un error",
     ),
@@ -1233,6 +1347,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "specialRequestsLabel": m30,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Solicitudes especiales (opcional)",
+    ),
+    "specialties": MessageLookupByLibrary.simpleMessage("Especialidades"),
+    "specialtyExample": MessageLookupByLibrary.simpleMessage(
+      "Ej: Cocina molecular",
     ),
     "speechRecognitionError": MessageLookupByLibrary.simpleMessage(
       "Error al iniciar el reconocimiento de voz.",
@@ -1247,6 +1365,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "steakhouse": MessageLookupByLibrary.simpleMessage("Carnes y Parrillas"),
     "stop": MessageLookupByLibrary.simpleMessage("Detener"),
     "stress": MessageLookupByLibrary.simpleMessage("Stress"),
+    "strict": MessageLookupByLibrary.simpleMessage("Estricta"),
     "subject": MessageLookupByLibrary.simpleMessage("Asunto"),
     "submit": MessageLookupByLibrary.simpleMessage("Enviar"),
     "submitReview": MessageLookupByLibrary.simpleMessage("Enviar reseña"),
@@ -1275,12 +1394,16 @@ class MessageLookup extends MessageLookupByLibrary {
       " aquí",
     ),
     "takeAway": MessageLookupByLibrary.simpleMessage("Take Away"),
+    "tapPlusToCreate": MessageLookupByLibrary.simpleMessage(
+      "Toca + para crear tu primer paquete",
+    ),
     "tapToAddPrompt": MessageLookupByLibrary.simpleMessage(
       "Toca aquí para añadir un nuevo prompt",
     ),
     "tapToSelectTime": MessageLookupByLibrary.simpleMessage(
       "Toca para seleccionar hora",
     ),
+    "teamSize": MessageLookupByLibrary.simpleMessage("Tamaño del equipo"),
     "temporarilyUnavailable": MessageLookupByLibrary.simpleMessage(
       "Temporalmente no disponible",
     ),
@@ -1310,8 +1433,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeAgoHours": m32,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Ahora mismo"),
     "timeAgoMinutes": m33,
+    "title": MessageLookupByLibrary.simpleMessage("Título"),
     "topEvents": MessageLookupByLibrary.simpleMessage("Eventos principales"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total de eventos"),
+    "travelFeeKm": MessageLookupByLibrary.simpleMessage("Tarifa viaje/km"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("Intentar de nuevo"),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Acceso no autorizado.",
@@ -1404,6 +1529,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
       "Verificaremos disponibilidad",
     ),
+    "wedding": MessageLookupByLibrary.simpleMessage("Boda"),
     "weekday1": MessageLookupByLibrary.simpleMessage("Domingo"),
     "weekday2": MessageLookupByLibrary.simpleMessage("Lunes"),
     "weekday3": MessageLookupByLibrary.simpleMessage("Martes"),
@@ -1451,6 +1577,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeReviewFor": m35,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escribe tu reseña aquí...",
+    ),
+    "yearsExperience": MessageLookupByLibrary.simpleMessage(
+      "Años de experiencia",
     ),
     "yesCancel": MessageLookupByLibrary.simpleMessage("Sí, cancelar"),
     "zipCode": MessageLookupByLibrary.simpleMessage("Código postal"),

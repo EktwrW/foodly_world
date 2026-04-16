@@ -5688,6 +5688,606 @@ class S {
       args: [],
     );
   }
+
+  /// `Service packages`
+  String get servicePackages {
+    return Intl.message(
+      'Service packages',
+      name: 'servicePackages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Packages`
+  String get packages {
+    return Intl.message('Packages', name: 'packages', desc: '', args: []);
+  }
+
+  /// `No packages yet`
+  String get noPackagesYet {
+    return Intl.message(
+      'No packages yet',
+      name: 'noPackagesYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap + to create your first package`
+  String get tapPlusToCreate {
+    return Intl.message(
+      'Tap + to create your first package',
+      name: 'tapPlusToCreate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set up your professional profile`
+  String get setupProfessionalProfile {
+    return Intl.message(
+      'Set up your professional profile',
+      name: 'setupProfessionalProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add your specialties and details`
+  String get addSpecialtiesAndDetails {
+    return Intl.message(
+      'Add your specialties and details',
+      name: 'addSpecialtiesAndDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Professional profile`
+  String get professionalProfile {
+    return Intl.message(
+      'Professional profile',
+      name: 'professionalProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create package`
+  String get createPackage {
+    return Intl.message(
+      'Create package',
+      name: 'createPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit package`
+  String get editPackage {
+    return Intl.message(
+      'Edit package',
+      name: 'editPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete package`
+  String get deletePackage {
+    return Intl.message(
+      'Delete package',
+      name: 'deletePackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this package? This action cannot be undone.`
+  String get deletePackageConfirmation {
+    return Intl.message(
+      'Are you sure you want to delete this package? This action cannot be undone.',
+      name: 'deletePackageConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Long press and drag to reorder`
+  String get longPressToDrag {
+    return Intl.message(
+      'Long press and drag to reorder',
+      name: 'longPressToDrag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reorder`
+  String get reorder {
+    return Intl.message('Reorder', name: 'reorder', desc: '', args: []);
+  }
+
+  /// `Featured`
+  String get featured {
+    return Intl.message('Featured', name: 'featured', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `Active packages are visible to customers`
+  String get activePackageHint {
+    return Intl.message(
+      'Active packages are visible to customers',
+      name: 'activePackageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Featured packages appear first`
+  String get featuredPackageHint {
+    return Intl.message(
+      'Featured packages appear first',
+      name: 'featuredPackageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Service type`
+  String get serviceType {
+    return Intl.message(
+      'Service type',
+      name: 'serviceType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price type`
+  String get priceType {
+    return Intl.message('Price type', name: 'priceType', desc: '', args: []);
+  }
+
+  /// `Dinner`
+  String get dinner {
+    return Intl.message('Dinner', name: 'dinner', desc: '', args: []);
+  }
+
+  /// `Lunch`
+  String get lunch {
+    return Intl.message('Lunch', name: 'lunch', desc: '', args: []);
+  }
+
+  /// `Brunch`
+  String get brunch {
+    return Intl.message('Brunch', name: 'brunch', desc: '', args: []);
+  }
+
+  /// `Cocktail`
+  String get cocktail {
+    return Intl.message('Cocktail', name: 'cocktail', desc: '', args: []);
+  }
+
+  /// `Wedding`
+  String get wedding {
+    return Intl.message('Wedding', name: 'wedding', desc: '', args: []);
+  }
+
+  /// `Corporate`
+  String get corporate {
+    return Intl.message('Corporate', name: 'corporate', desc: '', args: []);
+  }
+
+  /// `Birthday`
+  String get birthday {
+    return Intl.message('Birthday', name: 'birthday', desc: '', args: []);
+  }
+
+  /// `Cooking class`
+  String get cookingClass {
+    return Intl.message(
+      'Cooking class',
+      name: 'cookingClass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom`
+  String get custom {
+    return Intl.message('Custom', name: 'custom', desc: '', args: []);
+  }
+
+  /// `Fixed`
+  String get fixed {
+    return Intl.message('Fixed', name: 'fixed', desc: '', args: []);
+  }
+
+  /// `Per person`
+  String get perPerson {
+    return Intl.message('Per person', name: 'perPerson', desc: '', args: []);
+  }
+
+  /// `Per hour`
+  String get perHour {
+    return Intl.message('Per hour', name: 'perHour', desc: '', args: []);
+  }
+
+  /// `On quote`
+  String get onQuote {
+    return Intl.message('On quote', name: 'onQuote', desc: '', args: []);
+  }
+
+  /// `Includes`
+  String get includes {
+    return Intl.message('Includes', name: 'includes', desc: '', args: []);
+  }
+
+  /// `more`
+  String get more {
+    return Intl.message('more', name: 'more', desc: '', args: []);
+  }
+
+  /// `Currency`
+  String get currency {
+    return Intl.message('Currency', name: 'currency', desc: '', args: []);
+  }
+
+  /// `Duration (hours)`
+  String get durationHours {
+    return Intl.message(
+      'Duration (hours)',
+      name: 'durationHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Min. guests`
+  String get minGuests {
+    return Intl.message('Min. guests', name: 'minGuests', desc: '', args: []);
+  }
+
+  /// `Max. guests`
+  String get maxGuests {
+    return Intl.message('Max. guests', name: 'maxGuests', desc: '', args: []);
+  }
+
+  /// `This field is required`
+  String get fieldRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'fieldRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid value`
+  String get invalidValue {
+    return Intl.message(
+      'Invalid value',
+      name: 'invalidValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: Gourmet dinner for 20 guests`
+  String get packageTitleHint {
+    return Intl.message(
+      'E.g.: Gourmet dinner for 20 guests',
+      name: 'packageTitleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe what this package includes`
+  String get packageDescriptionHint {
+    return Intl.message(
+      'Describe what this package includes',
+      name: 'packageDescriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add item`
+  String get addItem {
+    return Intl.message('Add item', name: 'addItem', desc: '', args: []);
+  }
+
+  /// `E.g.: Starter, main course, dessert`
+  String get includeItemHint {
+    return Intl.message(
+      'E.g.: Starter, main course, dessert',
+      name: 'includeItemHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Specialties`
+  String get specialties {
+    return Intl.message('Specialties', name: 'specialties', desc: '', args: []);
+  }
+
+  /// `Cuisines`
+  String get cuisines {
+    return Intl.message('Cuisines', name: 'cuisines', desc: '', args: []);
+  }
+
+  /// `Certifications`
+  String get certifications {
+    return Intl.message(
+      'Certifications',
+      name: 'certifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Languages`
+  String get languages {
+    return Intl.message('Languages', name: 'languages', desc: '', args: []);
+  }
+
+  /// `Add specialty`
+  String get addSpecialty {
+    return Intl.message(
+      'Add specialty',
+      name: 'addSpecialty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add cuisine`
+  String get addCuisine {
+    return Intl.message('Add cuisine', name: 'addCuisine', desc: '', args: []);
+  }
+
+  /// `Add certification`
+  String get addCertification {
+    return Intl.message(
+      'Add certification',
+      name: 'addCertification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add language`
+  String get addLanguage {
+    return Intl.message(
+      'Add language',
+      name: 'addLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: Molecular gastronomy`
+  String get specialtyExample {
+    return Intl.message(
+      'E.g.: Molecular gastronomy',
+      name: 'specialtyExample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: Mediterranean`
+  String get cuisineExample {
+    return Intl.message(
+      'E.g.: Mediterranean',
+      name: 'cuisineExample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: HACCP`
+  String get certificationExample {
+    return Intl.message(
+      'E.g.: HACCP',
+      name: 'certificationExample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: English`
+  String get languageExample {
+    return Intl.message(
+      'E.g.: English',
+      name: 'languageExample',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years of experience`
+  String get yearsExperience {
+    return Intl.message(
+      'Years of experience',
+      name: 'yearsExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Team size`
+  String get teamSize {
+    return Intl.message('Team size', name: 'teamSize', desc: '', args: []);
+  }
+
+  /// `Solo`
+  String get solo {
+    return Intl.message('Solo', name: 'solo', desc: '', args: []);
+  }
+
+  /// `Service area`
+  String get serviceArea {
+    return Intl.message(
+      'Service area',
+      name: 'serviceArea',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Radius (km)`
+  String get radiusKm {
+    return Intl.message('Radius (km)', name: 'radiusKm', desc: '', args: []);
+  }
+
+  /// `Travel fee/km`
+  String get travelFeeKm {
+    return Intl.message(
+      'Travel fee/km',
+      name: 'travelFeeKm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking & pricing`
+  String get bookingPricing {
+    return Intl.message(
+      'Booking & pricing',
+      name: 'bookingPricing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum amount`
+  String get minBookingAmount {
+    return Intl.message(
+      'Minimum amount',
+      name: 'minBookingAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deposit required`
+  String get depositRequired {
+    return Intl.message(
+      'Deposit required',
+      name: 'depositRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deposit percentage`
+  String get depositPercentage {
+    return Intl.message(
+      'Deposit percentage',
+      name: 'depositPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancellation policy`
+  String get cancellationPolicy {
+    return Intl.message(
+      'Cancellation policy',
+      name: 'cancellationPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancellation details`
+  String get cancellationDetails {
+    return Intl.message(
+      'Cancellation details',
+      name: 'cancellationDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe the cancellation terms`
+  String get cancellationDetailsHint {
+    return Intl.message(
+      'Describe the cancellation terms',
+      name: 'cancellationDetailsHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flexible`
+  String get flexible {
+    return Intl.message('Flexible', name: 'flexible', desc: '', args: []);
+  }
+
+  /// `Moderate`
+  String get moderate {
+    return Intl.message('Moderate', name: 'moderate', desc: '', args: []);
+  }
+
+  /// `Strict`
+  String get strict {
+    return Intl.message('Strict', name: 'strict', desc: '', args: []);
+  }
+
+  /// `Has insurance`
+  String get hasInsurance {
+    return Intl.message(
+      'Has insurance',
+      name: 'hasInsurance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Liability insurance coverage`
+  String get insuranceHint {
+    return Intl.message(
+      'Liability insurance coverage',
+      name: 'insuranceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Portfolio/video URL`
+  String get portfolioVideoUrl {
+    return Intl.message(
+      'Portfolio/video URL',
+      name: 'portfolioVideoUrl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message('Title', name: 'title', desc: '', args: []);
+  }
+
+  /// `Description`
+  String get descriptionLabel {
+    return Intl.message(
+      'Description',
+      name: 'descriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
