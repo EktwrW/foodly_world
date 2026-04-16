@@ -23,6 +23,8 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loggedUserIsAuthor = review.userUuid == di<AuthSessionService>().userSessionDM?.user.uuid;
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -93,7 +95,7 @@ class ReviewCard extends StatelessWidget {
                               children: [
                                 AvatarWidget(
                                   avatarUrl: review.userPhoto,
-                                ).paddingTop(3),
+                                ).paddingTop(loggedUserIsAuthor ? 6 : 3),
                                 Expanded(
                                   child: Text(
                                     review.userName ?? '',
@@ -110,7 +112,7 @@ class ReviewCard extends StatelessWidget {
                                 Text(review.createdAt?.timeAgo ?? '',
                                         style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 11))
                                     .paddingOnly(top: 3),
-                                if (review.userUuid == di<AuthSessionService>().userSessionDM?.user.uuid)
+                                if (loggedUserIsAuthor)
                                   PopupMenuButton<String>(
                                     elevation: 3,
                                     icon: const Icon(Bootstrap.pencil_square,

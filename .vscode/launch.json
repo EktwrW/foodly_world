@@ -10,17 +10,17 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
-        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -32,17 +32,17 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
-        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -54,17 +54,17 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
-        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -75,17 +75,17 @@
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
-        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -102,11 +102,11 @@
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -121,12 +121,12 @@
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=APP_ROOT=/",
         "--dart-define=IS_MENU_SUBDOMAIN=true",
-        "--dart-define=MENU_DEV_UUID=79108e91-c9bc-471b-9468-3dba3b7b26b6",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=MENU_DEV_UUID=${env:MENU_DEV_UUID}",
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     },
     {
@@ -139,17 +139,17 @@
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
         "--dart-define=API_VERSION=/api",
-        "--dart-define=LOG_EMAIL=hwaldmann@mailinator.com",
-        "--dart-define=LOG_PASS=infinite_is_the_limit",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
         "--dart-define=LOGGER_LEVEL=ALL",
         "--dart-define=REG_PREFILL=true",
         "--dart-define=APP_ROOT=/app/",
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
-        "--dart-define=GOOGLE_MAPS_API_KEY=AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4",
-        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com",
-        "--dart-define=OPENAI_API_KEY=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",
-        "--dart-define=REPLICATE_API_KEY=r8_TzzoSpJko72XoqyWJgockul4H57ahSb26kxZn",
-        "--dart-define=ANALYTICS_TOKEN=4r95T1G9mVLywU-EQkzzpQ58GU9IbftSJBCvqwGn5Jo"
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
     }
   ]
