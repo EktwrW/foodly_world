@@ -104,20 +104,22 @@ class ServicePackageRepo {
 
   // ── Service Package Photos ─────────────────────────────────
 
-  Future<ApiResult<PhotoUploadResponseDM>> uploadPhotos(
-    String servicePackageUuid,
-    List<MultipartFile> photos,
-  ) async {
+  Future<ApiResult<PhotoUploadResponseDM>> uploadPhotos({
+    required String servicePackageUuid,
+    required List<MultipartFile> photos,
+  }) async {
     try {
-      return ApiResult.success(await _client.uploadPhotos(servicePackageUuid, photos));
+      return ApiResult.success(
+        await _client.uploadPhotos(servicePackageUuid: servicePackageUuid, photos: photos),
+      );
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
 
-  Future<ApiResult<GenericSuccessResponseDM>> updatePhoto(String uuid, MultipartFile photo) async {
+  Future<ApiResult<GenericSuccessResponseDM>> updatePhoto(String uuid, List<MultipartFile> photo) async {
     try {
-      return ApiResult.success(await _client.updatePhoto(uuid, photo));
+      return ApiResult.success(await _client.updatePhoto(uuid, photo: photo));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

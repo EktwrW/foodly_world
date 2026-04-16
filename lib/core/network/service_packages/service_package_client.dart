@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
+import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'service_package_client.g.dart';
@@ -74,17 +74,17 @@ abstract class ServicePackageClient {
 
   @POST('/service-package-photos/store')
   @MultiPart()
-  Future<PhotoUploadResponseDM> uploadPhotos(
-    @Part(name: 'service_package_uuid') String servicePackageUuid,
-    @Part(name: 'photos[]') List<MultipartFile> photos,
-  );
+  Future<PhotoUploadResponseDM> uploadPhotos({
+    @Part(name: 'service_package_uuid') required String servicePackageUuid,
+    @Part(name: 'photos[]') required List<MultipartFile> photos,
+  });
 
   @POST('/service-package-photos/update/{uuid}')
   @MultiPart()
   Future<GenericSuccessResponseDM> updatePhoto(
-    @Path('uuid') String uuid,
-    @Part(name: 'photo') MultipartFile photo,
-  );
+    @Path('uuid') String uuid, {
+    @Part(name: 'photo') required List<MultipartFile> photo,
+  });
 
   @DELETE('/service-package-photos/delete/{uuid}')
   Future<GenericSuccessResponseDM> deletePhoto(
