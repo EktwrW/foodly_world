@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/reservations/cubit/my_reservations_cubit.dart';
 import 'package:foodly_world/ui/views/reservations/widgets/reservation_card.dart';
+import 'package:foodly_world/ui/views/reservations/widgets/reservation_messages_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
@@ -69,6 +70,7 @@ class MyReservationsPage extends StatelessWidget {
           body: const SafeArea(
             child: Column(
               children: [
+                _BookingTypeFilter(),
                 _StatusFilterDropdown(),
                 Expanded(child: _ReservationsList()),
               ],
@@ -80,12 +82,64 @@ class MyReservationsPage extends StatelessWidget {
   }
 }
 
+class _BookingTypeFilter extends StatelessWidget {
+  const _BookingTypeFilter();
+
+  static List<(String, BookingType?)> get _items => [
+        (S.current.allBookings, null),
+        (S.current.tableReservations, BookingType.table),
+        (S.current.serviceRequests, BookingType.service),
+      ];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<MyReservationsCubit, MyReservationsState, BookingType?>(
+      selector: (state) => state.vm.bookingTypeFilter,
+      builder: (context, activeType) {
+        final cubit = context.read<MyReservationsCubit>();
+
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: 8,
+              children: _items.map((item) {
+                final selected = activeType == item.$2;
+                return ChoiceChip(
+                  label: Text(item.$1),
+                  selected: selected,
+                  onSelected: (_) => cubit.setBookingTypeFilter(item.$2),
+                  selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.18),
+                  labelStyle: TextStyle(
+                    color: selected ? FoodlyThemes.primaryFoodly : Colors.black87,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                    fontSize: 13,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      color: selected ? FoodlyThemes.primaryFoodly : Colors.black12,
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class _StatusFilterDropdown extends StatelessWidget {
   const _StatusFilterDropdown();
 
   static List<(String, ReservationStatus?)> get _items => [
         (S.current.all, null),
         (S.current.pending, ReservationStatus.pending),
+        (S.current.quoted, ReservationStatus.quoted),
         (S.current.confirmed, ReservationStatus.confirmed),
         (S.current.completed, ReservationStatus.completed),
         (S.current.cancelled, ReservationStatus.cancelled),
@@ -206,6 +260,16 @@ class _ReservationsList extends StatelessWidget {
                       onCancel: reservation.canBeCancelledByCustomer
                           ? () => _confirmCancel(context, cubit, reservation)
                           : null,
+                      onApproveQuote: reservation.canApproveQuote
+                          ? () => _confirmApproveQuote(context, cubit, reservation)
+                          : null,
+                      onOpenMessages: reservation.isServiceBooking && reservation.reservationUuid != null
+                          ? () => showReservationMessagesSheet(
+                                context,
+                                reservationUuid: reservation.reservationUuid!,
+                                title: reservation.businessName ?? reservation.servicePackageTitle ?? '',
+                              )
+                          : null,
                     );
                   },
                 ),
@@ -237,6 +301,57 @@ class _ReservationsList extends StatelessWidget {
               }
             },
             child: Text(S.current.yesCancel, style: TextStyle(color: Colors.red.shade700)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmApproveQuote(BuildContext context, MyReservationsCubit cubit, ReservationDM reservation) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(S.current.confirmApproveQuote),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(S.current.confirmApproveQuoteMessage),
+            if (reservation.hasQuote) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${S.current.quotedAmount}: €${reservation.quotedAmount!.toStringAsFixed(2)}',
+                  style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.deepPurple),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                S.current.paymentOffPlatform,
+                style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade600),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(ctx);
+              final success = await cubit.approveQuote(reservation.reservationUuid!);
+              if (context.mounted) {
+                FoodlySnackbars.successGeneric(
+                  context,
+                  success ? S.current.quoteApproved : S.current.somethingWentWrong,
+                );
+              }
+            },
+            child: Text(S.current.approveQuote, style: const TextStyle(color: Colors.deepPurple)),
           ),
         ],
       ),

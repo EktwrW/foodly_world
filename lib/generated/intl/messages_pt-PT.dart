@@ -1166,6 +1166,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Notas do orçamento (opcional)",
     ),
     "quoteReceived": MessageLookupByLibrary.simpleMessage("Orçamento recebido"),
+    "quoteSent": MessageLookupByLibrary.simpleMessage("Cotação enviada"),
     "quoted": MessageLookupByLibrary.simpleMessage("Orçamentado"),
     "quotedAmount": MessageLookupByLibrary.simpleMessage("Valor orçamentado"),
     "quotedStatus": MessageLookupByLibrary.simpleMessage("Orçamento enviado"),

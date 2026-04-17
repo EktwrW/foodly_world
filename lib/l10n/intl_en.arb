@@ -975,5 +975,6 @@
   "time": "Time",
   "minimum": "Minimum",
   "maximum": "Maximum",
-  "specialRequests": "Special requests"
+  "specialRequests": "Special requests",
+  "quoteSent": "Quote sent"
 }

@@ -975,5 +975,6 @@
   "time": "Hora",
   "minimum": "Mínimo",
   "maximum": "Máximo",
-  "specialRequests": "Pedidos especiais"
+  "specialRequests": "Pedidos especiais",
+  "quoteSent": "Cotação enviada"
 }

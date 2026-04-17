@@ -1178,6 +1178,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "quoteReceived": MessageLookupByLibrary.simpleMessage(
       "Cotización recibida",
     ),
+    "quoteSent": MessageLookupByLibrary.simpleMessage("Cotización enviada"),
     "quoted": MessageLookupByLibrary.simpleMessage("Cotizado"),
     "quotedAmount": MessageLookupByLibrary.simpleMessage("Monto cotizado"),
     "quotedStatus": MessageLookupByLibrary.simpleMessage("Cotización enviada"),

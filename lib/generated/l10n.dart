@@ -6668,6 +6668,11 @@ class S {
       args: [],
     );
   }
+
+  /// `Quote sent`
+  String get quoteSent {
+    return Intl.message('Quote sent', name: 'quoteSent', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1104,6 +1104,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Quote notes (optional)",
     ),
     "quoteReceived": MessageLookupByLibrary.simpleMessage("Quote received"),
+    "quoteSent": MessageLookupByLibrary.simpleMessage("Quote sent"),
     "quoted": MessageLookupByLibrary.simpleMessage("Quoted"),
     "quotedAmount": MessageLookupByLibrary.simpleMessage("Quoted amount"),
     "quotedStatus": MessageLookupByLibrary.simpleMessage("Quote sent"),

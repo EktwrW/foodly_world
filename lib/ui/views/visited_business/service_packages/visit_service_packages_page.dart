@@ -6,10 +6,12 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/visit_service_packages_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/service_packages/widgets/service_booking_request_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
@@ -154,6 +156,7 @@ class _LoadedContent extends StatelessWidget {
     double h = 160; // base (title + type badge + price row)
     if (hasPhotos) h += 200;
     if (hasIncludes) h += 100;
+    h += 60; // Request Service CTA
     return h;
   }
 }
@@ -463,6 +466,26 @@ class _VisitorPackageCard extends StatelessWidget {
                         ),
                     ],
                   ),
+
+                // Request Service CTA
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomNeumorphicButton(
+                    text: S.current.requestService,
+                    disabled: false,
+                    margin: EdgeInsets.zero,
+                    leading: const Icon(Bootstrap.calendar2_plus, size: 16, color: Colors.white),
+                    onPressed: () {
+                      final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
+                      showServiceBookingRequestSheet(
+                        context,
+                        businessUuid: businessUuid,
+                        package: package,
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

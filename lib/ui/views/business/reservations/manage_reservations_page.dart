@@ -8,6 +8,8 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/reservations/cubit/manage_reservations_cubit.dart';
 import 'package:foodly_world/ui/views/business/reservations/widgets/manager_reservation_card.dart';
+import 'package:foodly_world/ui/views/business/reservations/widgets/quote_send_sheet.dart';
+import 'package:foodly_world/ui/views/reservations/widgets/reservation_messages_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
@@ -65,6 +67,7 @@ class ManageReservationsPage extends StatelessWidget {
           body: const SafeArea(
             child: Column(
               children: [
+                _BookingTypeFilter(),
                 _StatusFilterDropdown(),
                 Expanded(child: _ManagerReservationsList()),
               ],
@@ -72,6 +75,57 @@ class ManageReservationsPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _BookingTypeFilter extends StatelessWidget {
+  const _BookingTypeFilter();
+
+  static List<(String, BookingType?)> get _items => [
+        (S.current.allBookings, null),
+        (S.current.tableReservations, BookingType.table),
+        (S.current.serviceRequests, BookingType.service),
+      ];
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<ManageReservationsCubit, ManageReservationsState, BookingType?>(
+      selector: (state) => state.vm.bookingTypeFilter,
+      builder: (context, activeType) {
+        final cubit = context.read<ManageReservationsCubit>();
+
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: 8,
+              children: _items.map((item) {
+                final selected = activeType == item.$2;
+                return ChoiceChip(
+                  label: Text(item.$1),
+                  selected: selected,
+                  onSelected: (_) => cubit.setBookingTypeFilter(item.$2),
+                  selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.18),
+                  labelStyle: TextStyle(
+                    color: selected ? FoodlyThemes.primaryFoodly : Colors.black87,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                    fontSize: 13,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      color: selected ? FoodlyThemes.primaryFoodly : Colors.black12,
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -86,6 +140,7 @@ class _StatusFilterDropdown extends StatelessWidget {
         (S.current.all, null),
         (S.current.reservationsForToday, 'today'),
         (S.current.pending, ReservationStatus.pending.name),
+        (S.current.quoted, ReservationStatus.quoted.name),
         (S.current.confirmed, ReservationStatus.confirmed.name),
         (S.current.completed, ReservationStatus.completed.name),
         (S.current.cancelled, ReservationStatus.cancelled.name),
@@ -203,9 +258,14 @@ class _ManagerReservationsList extends StatelessWidget {
                     }
 
                     final reservation = vm.reservations[index];
+                    // Table bookings: manager confirms directly.
+                    // Service bookings: manager sends a quote (not a direct confirm).
+                    final canDirectConfirm = reservation.canBeActedOnByManager && !reservation.isServiceBooking;
+                    final canCancel = reservation.isConfirmed || reservation.isQuoted;
+
                     return ManagerReservationCard(
                       reservation: reservation,
-                      onConfirm: reservation.canBeActedOnByManager
+                      onConfirm: canDirectConfirm
                           ? () => cubit.confirmReservation(reservation.reservationUuid!)
                           : null,
                       onReject: reservation.canBeActedOnByManager
@@ -213,7 +273,7 @@ class _ManagerReservationsList extends StatelessWidget {
                                 cubit.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
                               })
                           : null,
-                      onCancel: reservation.isConfirmed
+                      onCancel: canCancel
                           ? () => _showNotesDialog(context, S.current.cancelReservation, (notes) {
                                 cubit.managerCancelReservation(reservation.reservationUuid!, managerNotes: notes);
                               })
@@ -221,6 +281,16 @@ class _ManagerReservationsList extends StatelessWidget {
                       onNoShow: reservation.isConfirmed ? () => cubit.markNoShow(reservation.reservationUuid!) : null,
                       onComplete:
                           reservation.isConfirmed ? () => cubit.markComplete(reservation.reservationUuid!) : null,
+                      onSendQuote: reservation.canReceiveQuote
+                          ? () => _sendQuote(context, cubit, reservation)
+                          : null,
+                      onOpenMessages: reservation.isServiceBooking && reservation.reservationUuid != null
+                          ? () => showReservationMessagesSheet(
+                                context,
+                                reservationUuid: reservation.reservationUuid!,
+                                title: reservation.userName ?? reservation.servicePackageTitle ?? '',
+                              )
+                          : null,
                     );
                   },
                 ),
@@ -230,6 +300,34 @@ class _ManagerReservationsList extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _sendQuote(
+    BuildContext context,
+    ManageReservationsCubit cubit,
+    ReservationDM reservation,
+  ) async {
+    final result = await showQuoteSendSheet(
+      context,
+      packageTitle: reservation.servicePackageTitle ?? '',
+      guestCount: reservation.guestCount ?? 0,
+      budgetEstimate: reservation.budgetEstimate,
+    );
+
+    if (result == null || !context.mounted) return;
+
+    final success = await cubit.sendQuote(
+      reservation.reservationUuid!,
+      quotedAmount: result.quotedAmount,
+      managerNotes: result.managerNotes,
+    );
+
+    if (context.mounted) {
+      FoodlySnackbars.successGeneric(
+        context,
+        success ? S.current.quoteSent : S.current.somethingWentWrong,
+      );
+    }
   }
 
   void _showNotesDialog(BuildContext context, String title, void Function(String?) onConfirm) {
