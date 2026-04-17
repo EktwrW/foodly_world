@@ -9,6 +9,7 @@ class ManageReservationsVM with _$ManageReservationsVM {
     @Default([]) List<ReservationDM> reservations,
     ReservationsMetaDM? meta,
     ReservationStatus? statusFilter,
+    BookingType? bookingTypeFilter,
     @Default(false) bool isLoadingMore,
     String? businessUuid,
   }) = _ManageReservationsVM;

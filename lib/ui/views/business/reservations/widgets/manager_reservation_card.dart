@@ -275,6 +275,7 @@ class _StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final (color, label) = switch (status) {
       ReservationStatus.pending => (Colors.orange, S.current.pending),
+      ReservationStatus.quoted => (Colors.deepPurple, S.current.quoted),
       ReservationStatus.confirmed => (FoodlyThemes.tertiaryFoodly, S.current.confirmed),
       ReservationStatus.rejected => (Colors.red.shade700, S.current.rejected),
       ReservationStatus.cancelled => (Colors.grey, S.current.cancelled),

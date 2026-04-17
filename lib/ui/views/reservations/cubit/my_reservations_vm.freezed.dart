@@ -19,6 +19,7 @@ mixin _$MyReservationsVM {
   List<ReservationDM> get reservations => throw _privateConstructorUsedError;
   ReservationsMetaDM? get meta => throw _privateConstructorUsedError;
   ReservationStatus? get statusFilter => throw _privateConstructorUsedError;
+  BookingType? get bookingTypeFilter => throw _privateConstructorUsedError;
   bool get isLoadingMore => throw _privateConstructorUsedError;
 
   /// Create a copy of MyReservationsVM
@@ -38,6 +39,7 @@ abstract class $MyReservationsVMCopyWith<$Res> {
       {List<ReservationDM> reservations,
       ReservationsMetaDM? meta,
       ReservationStatus? statusFilter,
+      BookingType? bookingTypeFilter,
       bool isLoadingMore});
 
   $ReservationsMetaDMCopyWith<$Res>? get meta;
@@ -61,6 +63,7 @@ class _$MyReservationsVMCopyWithImpl<$Res, $Val extends MyReservationsVM>
     Object? reservations = null,
     Object? meta = freezed,
     Object? statusFilter = freezed,
+    Object? bookingTypeFilter = freezed,
     Object? isLoadingMore = null,
   }) {
     return _then(_value.copyWith(
@@ -76,6 +79,10 @@ class _$MyReservationsVMCopyWithImpl<$Res, $Val extends MyReservationsVM>
           ? _value.statusFilter
           : statusFilter // ignore: cast_nullable_to_non_nullable
               as ReservationStatus?,
+      bookingTypeFilter: freezed == bookingTypeFilter
+          ? _value.bookingTypeFilter
+          : bookingTypeFilter // ignore: cast_nullable_to_non_nullable
+              as BookingType?,
       isLoadingMore: null == isLoadingMore
           ? _value.isLoadingMore
           : isLoadingMore // ignore: cast_nullable_to_non_nullable
@@ -110,6 +117,7 @@ abstract class _$$MyReservationsVMImplCopyWith<$Res>
       {List<ReservationDM> reservations,
       ReservationsMetaDM? meta,
       ReservationStatus? statusFilter,
+      BookingType? bookingTypeFilter,
       bool isLoadingMore});
 
   @override
@@ -132,6 +140,7 @@ class __$$MyReservationsVMImplCopyWithImpl<$Res>
     Object? reservations = null,
     Object? meta = freezed,
     Object? statusFilter = freezed,
+    Object? bookingTypeFilter = freezed,
     Object? isLoadingMore = null,
   }) {
     return _then(_$MyReservationsVMImpl(
@@ -147,6 +156,10 @@ class __$$MyReservationsVMImplCopyWithImpl<$Res>
           ? _value.statusFilter
           : statusFilter // ignore: cast_nullable_to_non_nullable
               as ReservationStatus?,
+      bookingTypeFilter: freezed == bookingTypeFilter
+          ? _value.bookingTypeFilter
+          : bookingTypeFilter // ignore: cast_nullable_to_non_nullable
+              as BookingType?,
       isLoadingMore: null == isLoadingMore
           ? _value.isLoadingMore
           : isLoadingMore // ignore: cast_nullable_to_non_nullable
@@ -162,6 +175,7 @@ class _$MyReservationsVMImpl implements _MyReservationsVM {
       {final List<ReservationDM> reservations = const [],
       this.meta,
       this.statusFilter,
+      this.bookingTypeFilter,
       this.isLoadingMore = false})
       : _reservations = reservations;
 
@@ -179,12 +193,14 @@ class _$MyReservationsVMImpl implements _MyReservationsVM {
   @override
   final ReservationStatus? statusFilter;
   @override
+  final BookingType? bookingTypeFilter;
+  @override
   @JsonKey()
   final bool isLoadingMore;
 
   @override
   String toString() {
-    return 'MyReservationsVM(reservations: $reservations, meta: $meta, statusFilter: $statusFilter, isLoadingMore: $isLoadingMore)';
+    return 'MyReservationsVM(reservations: $reservations, meta: $meta, statusFilter: $statusFilter, bookingTypeFilter: $bookingTypeFilter, isLoadingMore: $isLoadingMore)';
   }
 
   @override
@@ -197,6 +213,8 @@ class _$MyReservationsVMImpl implements _MyReservationsVM {
             (identical(other.meta, meta) || other.meta == meta) &&
             (identical(other.statusFilter, statusFilter) ||
                 other.statusFilter == statusFilter) &&
+            (identical(other.bookingTypeFilter, bookingTypeFilter) ||
+                other.bookingTypeFilter == bookingTypeFilter) &&
             (identical(other.isLoadingMore, isLoadingMore) ||
                 other.isLoadingMore == isLoadingMore));
   }
@@ -207,6 +225,7 @@ class _$MyReservationsVMImpl implements _MyReservationsVM {
       const DeepCollectionEquality().hash(_reservations),
       meta,
       statusFilter,
+      bookingTypeFilter,
       isLoadingMore);
 
   /// Create a copy of MyReservationsVM
@@ -224,6 +243,7 @@ abstract class _MyReservationsVM implements MyReservationsVM {
       {final List<ReservationDM> reservations,
       final ReservationsMetaDM? meta,
       final ReservationStatus? statusFilter,
+      final BookingType? bookingTypeFilter,
       final bool isLoadingMore}) = _$MyReservationsVMImpl;
 
   @override
@@ -232,6 +252,8 @@ abstract class _MyReservationsVM implements MyReservationsVM {
   ReservationsMetaDM? get meta;
   @override
   ReservationStatus? get statusFilter;
+  @override
+  BookingType? get bookingTypeFilter;
   @override
   bool get isLoadingMore;
 

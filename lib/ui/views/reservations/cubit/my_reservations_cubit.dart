@@ -26,11 +26,17 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
     fetchReservations();
   }
 
+  void setBookingTypeFilter(BookingType? bookingType) {
+    _vm = _vm.copyWith(bookingTypeFilter: bookingType);
+    fetchReservations();
+  }
+
   Future<void> fetchReservations() async {
     emit(MyReservationsState.loading(_vm));
 
     final result = await _reservationRepo.getMyReservations(
       status: _vm.statusFilter?.name,
+      bookingType: _vm.bookingTypeFilter?.name,
     );
 
     result.when(
@@ -59,6 +65,7 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
 
     final result = await _reservationRepo.getMyReservations(
       status: _vm.statusFilter?.name,
+      bookingType: _vm.bookingTypeFilter?.name,
       page: nextPage,
     );
 
@@ -83,6 +90,30 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
     emit(MyReservationsState.loading(_vm));
 
     final result = await _reservationRepo.cancelReservation(uuid);
+
+    return result.when(
+      success: (response) {
+        if (response.reservation != null) {
+          final updated = _vm.reservations
+              .map((r) => r.reservationUuid == uuid ? response.reservation! : r)
+              .toList();
+          _vm = _vm.copyWith(reservations: updated);
+        }
+        emit(MyReservationsState.loaded(_vm));
+        return true;
+      },
+      failure: (error) {
+        _logger.e(error);
+        emit(MyReservationsState.error(_vm, error.toString()));
+        return false;
+      },
+    );
+  }
+
+  Future<bool> approveQuote(String uuid) async {
+    emit(MyReservationsState.loading(_vm));
+
+    final result = await _reservationRepo.approveQuote(uuid);
 
     return result.when(
       success: (response) {

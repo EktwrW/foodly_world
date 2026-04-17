@@ -202,6 +202,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI Promotion Generator",
     ),
     "all": MessageLookupByLibrary.simpleMessage("All"),
+    "allBookings": MessageLookupByLibrary.simpleMessage("All"),
     "allowReservations": MessageLookupByLibrary.simpleMessage(
       "Allow Reservations",
     ),
@@ -276,6 +277,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(
       "and manage content, promotions, and more",
     ),
+    "approveQuote": MessageLookupByLibrary.simpleMessage("Approve quote"),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "areYouSureCancelReservation": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to cancel this reservation?",
@@ -297,6 +299,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Error processing audio. Please try again.",
     ),
     "avgRating": MessageLookupByLibrary.simpleMessage("Avg. rating"),
+    "awaitingQuote": MessageLookupByLibrary.simpleMessage("Awaiting quote"),
     "babyChangingStation": MessageLookupByLibrary.simpleMessage(
       "Baby Changing Station",
     ),
@@ -313,9 +316,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "The session has expired, you must log in with your username and password, or access via your preferred social network.",
     ),
     "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
+    "bookingDetail": MessageLookupByLibrary.simpleMessage("Booking detail"),
+    "bookingMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "bookingPricing": MessageLookupByLibrary.simpleMessage("Booking & pricing"),
     "brands": MessageLookupByLibrary.simpleMessage("brands"),
     "brunch": MessageLookupByLibrary.simpleMessage("Brunch"),
+    "budgetEstimate": MessageLookupByLibrary.simpleMessage("Budget estimate"),
     "business": MessageLookupByLibrary.simpleMessage("Business"),
     "businessAccountUpgradeInfo": MessageLookupByLibrary.simpleMessage(
       "We\'ll redirect you to the business registration form. Your submission will be reviewed for platform verification. Please note that creating false businesses, misappropriation, or impersonation of brands and establishments may result in legal consequences.",
@@ -430,6 +436,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "completed": MessageLookupByLibrary.simpleMessage("Completed"),
     "composure": MessageLookupByLibrary.simpleMessage("Composure"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "confirmApproveQuote": MessageLookupByLibrary.simpleMessage(
+      "Approve this quote?",
+    ),
+    "confirmApproveQuoteMessage": MessageLookupByLibrary.simpleMessage(
+      "By approving, you confirm the booking. Payment is handled outside the platform.",
+    ),
     "confirmPassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
     "confirmPasswordForEmailChange": MessageLookupByLibrary.simpleMessage(
       "For security, please enter your current password to change your email.",
@@ -604,6 +616,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "depositRequired": MessageLookupByLibrary.simpleMessage("Deposit required"),
     "descriptionLabel": MessageLookupByLibrary.simpleMessage("Description"),
+    "dietaryNotes": MessageLookupByLibrary.simpleMessage("Dietary notes"),
     "dinner": MessageLookupByLibrary.simpleMessage("Dinner"),
     "doItLater": MessageLookupByLibrary.simpleMessage("I\'ll do it later"),
     "doYouWantToDeleteThisCoverImage": MessageLookupByLibrary.simpleMessage(
@@ -648,6 +661,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter a name for this category",
     ),
     "enterCodeSentTo": m16,
+    "enterQuoteAmount": MessageLookupByLibrary.simpleMessage(
+      "Enter quote amount",
+    ),
     "error": MessageLookupByLibrary.simpleMessage("Error"),
     "errorLoadingVideo": MessageLookupByLibrary.simpleMessage(
       "Error loading video",
@@ -658,6 +674,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorUploadingPromotionMedia": MessageLookupByLibrary.simpleMessage(
       "Error uploading promotion media",
     ),
+    "eventAddress": MessageLookupByLibrary.simpleMessage("Event address"),
+    "eventCity": MessageLookupByLibrary.simpleMessage("Event city"),
+    "eventLocation": MessageLookupByLibrary.simpleMessage("Event location"),
+    "eventType": MessageLookupByLibrary.simpleMessage("Event type"),
+    "eventTypeBirthday": MessageLookupByLibrary.simpleMessage("Birthday"),
+    "eventTypeBrunch": MessageLookupByLibrary.simpleMessage("Brunch"),
+    "eventTypeCocktail": MessageLookupByLibrary.simpleMessage("Cocktail"),
+    "eventTypeCorporate": MessageLookupByLibrary.simpleMessage("Corporate"),
+    "eventTypeCustom": MessageLookupByLibrary.simpleMessage("Custom"),
+    "eventTypeDinner": MessageLookupByLibrary.simpleMessage("Dinner"),
+    "eventTypeWedding": MessageLookupByLibrary.simpleMessage("Wedding"),
     "failedDeletePhotos": m17,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(
       "Failed to cancel reservation.",
@@ -712,6 +739,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "goodAfternoon": MessageLookupByLibrary.simpleMessage("Good Afternoon"),
     "goodEvening": MessageLookupByLibrary.simpleMessage("Good Evening"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Good Morning"),
+    "guestCount": MessageLookupByLibrary.simpleMessage("Guest count"),
     "guests": MessageLookupByLibrary.simpleMessage("guests"),
     "happyBirthday": MessageLookupByLibrary.simpleMessage("Happy Birthday"),
     "happyHours": MessageLookupByLibrary.simpleMessage("Happy Hours"),
@@ -848,6 +876,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "menu": MessageLookupByLibrary.simpleMessage("Menu"),
     "menus": MessageLookupByLibrary.simpleMessage("Menus"),
     "message": MessageLookupByLibrary.simpleMessage("Message"),
+    "messageThread": MessageLookupByLibrary.simpleMessage("Message thread"),
     "mexicanCuisine": MessageLookupByLibrary.simpleMessage("Mexican"),
     "micPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
       "Voice Search uses your microphone to find great places nearby. Grant microphone access in Settings to start exploring with your voice.",
@@ -894,6 +923,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noItemsYet": MessageLookupByLibrary.simpleMessage(
       "There are no items added yet",
     ),
+    "noMessagesYet": MessageLookupByLibrary.simpleMessage("No messages yet"),
     "noNearbyBusinessesInCategory": m20,
     "noNewBranches": MessageLookupByLibrary.simpleMessage(
       "No new businesses in your area yet",
@@ -973,6 +1003,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "passwordSent": MessageLookupByLibrary.simpleMessage(
       "Temporary password sent",
+    ),
+    "paymentOffPlatform": MessageLookupByLibrary.simpleMessage(
+      "Payment outside the platform",
     ),
     "pending": MessageLookupByLibrary.simpleMessage("Pending"),
     "pendingReservationsAlertMany": m23,
@@ -1063,6 +1096,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "promoTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
+    "quoteApproved": MessageLookupByLibrary.simpleMessage("Quote approved"),
+    "quoteNotes": MessageLookupByLibrary.simpleMessage(
+      "Quote notes (optional)",
+    ),
+    "quoteReceived": MessageLookupByLibrary.simpleMessage("Quote received"),
+    "quoted": MessageLookupByLibrary.simpleMessage("Quoted"),
+    "quotedAmount": MessageLookupByLibrary.simpleMessage("Quoted amount"),
+    "quotedStatus": MessageLookupByLibrary.simpleMessage("Quote sent"),
     "radiusDistanceLabel": MessageLookupByLibrary.simpleMessage(
       "Distance radius:",
     ),
@@ -1100,9 +1141,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remove video"),
     "reorder": MessageLookupByLibrary.simpleMessage("Reorder"),
     "request": MessageLookupByLibrary.simpleMessage("Request"),
+    "requestQuote": MessageLookupByLibrary.simpleMessage("Request quote"),
     "requestReservation": MessageLookupByLibrary.simpleMessage(
       "Request Reservation",
     ),
+    "requestService": MessageLookupByLibrary.simpleMessage("Request service"),
     "requested": MessageLookupByLibrary.simpleMessage("Requested"),
     "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
     "resendCodeIn": m26,
@@ -1189,11 +1232,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectUserType": MessageLookupByLibrary.simpleMessage("Select User Type"),
     "selectedPlace": MessageLookupByLibrary.simpleMessage("Selected place"),
     "send": MessageLookupByLibrary.simpleMessage("Send"),
+    "sendMessage": MessageLookupByLibrary.simpleMessage("Send message"),
+    "sendQuote": MessageLookupByLibrary.simpleMessage("Send quote"),
     "sendVerificationCode": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
     ),
     "serviceArea": MessageLookupByLibrary.simpleMessage("Service area"),
+    "serviceBookingDetail": MessageLookupByLibrary.simpleMessage(
+      "Service request detail",
+    ),
+    "serviceBookingRequest": MessageLookupByLibrary.simpleMessage(
+      "Service request",
+    ),
     "servicePackages": MessageLookupByLibrary.simpleMessage("Service packages"),
+    "serviceRequests": MessageLookupByLibrary.simpleMessage("Service requests"),
     "serviceType": MessageLookupByLibrary.simpleMessage("Service type"),
     "sessionExpiredMessage": MessageLookupByLibrary.simpleMessage(
       "Your session has expired. Please log in again.",
@@ -1305,6 +1357,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "click",
     ),
     "switchUserCategoryTextSpan3": MessageLookupByLibrary.simpleMessage("here"),
+    "tableReservations": MessageLookupByLibrary.simpleMessage(
+      "Table reservations",
+    ),
     "takeAway": MessageLookupByLibrary.simpleMessage("Take Away"),
     "tapPlusToCreate": MessageLookupByLibrary.simpleMessage(
       "Tap + to create your first package",
@@ -1350,6 +1405,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total events"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Travel fee/km"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
+    "typeMessage": MessageLookupByLibrary.simpleMessage("Type a message..."),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Unauthorized access.",
     ),

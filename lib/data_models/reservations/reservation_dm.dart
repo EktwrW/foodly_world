@@ -70,6 +70,8 @@ class PendingReservationsCountDM with _$PendingReservationsCountDM {
 enum ReservationStatus {
   @JsonValue('pending')
   pending,
+  @JsonValue('quoted')
+  quoted,
   @JsonValue('confirmed')
   confirmed,
   @JsonValue('rejected')
@@ -82,6 +84,30 @@ enum ReservationStatus {
   noShow;
 }
 
+enum BookingType {
+  @JsonValue('table')
+  table,
+  @JsonValue('service')
+  service;
+}
+
+enum EventType {
+  @JsonValue('dinner')
+  dinner,
+  @JsonValue('wedding')
+  wedding,
+  @JsonValue('corporate')
+  corporate,
+  @JsonValue('birthday')
+  birthday,
+  @JsonValue('brunch')
+  brunch,
+  @JsonValue('cocktail')
+  cocktail,
+  @JsonValue('custom')
+  custom;
+}
+
 @freezed
 class ReservationDM with _$ReservationDM {
   const ReservationDM._();
@@ -90,6 +116,7 @@ class ReservationDM with _$ReservationDM {
     @JsonKey(name: 'reservation_id') int? reservationId,
     @JsonKey(name: 'reservation_uuid') String? reservationUuid,
     @Default(ReservationStatus.pending) ReservationStatus status,
+    @JsonKey(name: 'booking_type') @Default(BookingType.table) BookingType bookingType,
     @JsonKey(name: 'reservation_date') DateTime? reservationDate,
     @JsonKey(name: 'reservation_time') String? reservationTime,
     @JsonKey(name: 'party_size') @Default(1) int partySize,
@@ -99,31 +126,63 @@ class ReservationDM with _$ReservationDM {
     @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
     @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
     @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+    // Business info
     @JsonKey(name: 'business_uuid') String? businessUuid,
     @JsonKey(name: 'business_name') String? businessName,
     @JsonKey(name: 'business_photo') String? businessPhoto,
     @JsonKey(name: 'business_latitude') double? businessLatitude,
     @JsonKey(name: 'business_longitude') double? businessLongitude,
     @JsonKey(name: 'business_address') String? businessAddress,
+    // User info
     @JsonKey(name: 'user_uuid') String? userUuid,
     @JsonKey(name: 'user_name') String? userName,
     @JsonKey(name: 'user_photo') String? userPhoto,
     @JsonKey(name: 'user_email') String? userEmail,
     @JsonKey(name: 'user_phone') String? userPhone,
+    // Service booking fields (only present when booking_type = service)
+    @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+    @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+    @JsonKey(name: 'event_address') String? eventAddress,
+    @JsonKey(name: 'event_city') String? eventCity,
+    @JsonKey(name: 'event_latitude') double? eventLatitude,
+    @JsonKey(name: 'event_longitude') double? eventLongitude,
+    @JsonKey(name: 'event_type') EventType? eventType,
+    @JsonKey(name: 'guest_count') int? guestCount,
+    @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+    @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+    @JsonKey(name: 'quoted_amount') double? quotedAmount,
+    @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+    @JsonKey(name: 'messages_count') @Default(0) int messagesCount,
+    // Timestamps
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _ReservationDM;
 
   factory ReservationDM.fromJson(Map<String, dynamic> json) => _$ReservationDMFromJson(json);
 
+  // Status helpers
   bool get isPending => status == ReservationStatus.pending;
+  bool get isQuoted => status == ReservationStatus.quoted;
   bool get isConfirmed => status == ReservationStatus.confirmed;
   bool get isRejected => status == ReservationStatus.rejected;
   bool get isCancelled => status == ReservationStatus.cancelled;
   bool get isCompleted => status == ReservationStatus.completed;
   bool get isNoShow => status == ReservationStatus.noShow;
-  bool get canBeCancelledByCustomer => isPending || isConfirmed;
-  bool get canBeActedOnByManager => isPending;
 
+  // Booking type helpers
+  bool get isServiceBooking => bookingType == BookingType.service;
+  bool get isTableBooking => bookingType == BookingType.table;
+
+  // Action eligibility
+  bool get canBeCancelledByCustomer => isPending || isConfirmed || isQuoted;
+  bool get canBeActedOnByManager => isPending;
+  bool get canReceiveQuote => isServiceBooking && isPending;
+  bool get canApproveQuote => isServiceBooking && isQuoted;
+  bool get hasQuote => quotedAmount != null && quotedAmount! > 0;
+
+  // Content helpers
   bool get hasSpecialRequests => specialRequests != null && specialRequests!.isNotEmpty;
+  bool get hasDietaryNotes => dietaryNotes != null && dietaryNotes!.isNotEmpty;
+  bool get hasEventLocation => eventAddress != null && eventAddress!.isNotEmpty;
+  bool get hasMessages => messagesCount > 0;
 }

@@ -114,6 +114,9 @@ _$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
       reservationUuid: json['reservation_uuid'] as String?,
       status: $enumDecodeNullable(_$ReservationStatusEnumMap, json['status']) ??
           ReservationStatus.pending,
+      bookingType:
+          $enumDecodeNullable(_$BookingTypeEnumMap, json['booking_type']) ??
+              BookingType.table,
       reservationDate: json['reservation_date'] == null
           ? null
           : DateTime.parse(json['reservation_date'] as String),
@@ -142,6 +145,21 @@ _$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
       userPhoto: json['user_photo'] as String?,
       userEmail: json['user_email'] as String?,
       userPhone: json['user_phone'] as String?,
+      servicePackageUuid: json['service_package_uuid'] as String?,
+      servicePackageTitle: json['service_package_title'] as String?,
+      eventAddress: json['event_address'] as String?,
+      eventCity: json['event_city'] as String?,
+      eventLatitude: (json['event_latitude'] as num?)?.toDouble(),
+      eventLongitude: (json['event_longitude'] as num?)?.toDouble(),
+      eventType: $enumDecodeNullable(_$EventTypeEnumMap, json['event_type']),
+      guestCount: (json['guest_count'] as num?)?.toInt(),
+      dietaryNotes: json['dietary_notes'] as String?,
+      budgetEstimate: (json['budget_estimate'] as num?)?.toDouble(),
+      quotedAmount: (json['quoted_amount'] as num?)?.toDouble(),
+      quotedAt: json['quoted_at'] == null
+          ? null
+          : DateTime.parse(json['quoted_at'] as String),
+      messagesCount: (json['messages_count'] as num?)?.toInt() ?? 0,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -155,6 +173,7 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
       if (instance.reservationId case final value?) 'reservation_id': value,
       if (instance.reservationUuid case final value?) 'reservation_uuid': value,
       'status': _$ReservationStatusEnumMap[instance.status]!,
+      'booking_type': _$BookingTypeEnumMap[instance.bookingType]!,
       if (instance.reservationDate?.toIso8601String() case final value?)
         'reservation_date': value,
       if (instance.reservationTime case final value?) 'reservation_time': value,
@@ -181,6 +200,23 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
       if (instance.userPhoto case final value?) 'user_photo': value,
       if (instance.userEmail case final value?) 'user_email': value,
       if (instance.userPhone case final value?) 'user_phone': value,
+      if (instance.servicePackageUuid case final value?)
+        'service_package_uuid': value,
+      if (instance.servicePackageTitle case final value?)
+        'service_package_title': value,
+      if (instance.eventAddress case final value?) 'event_address': value,
+      if (instance.eventCity case final value?) 'event_city': value,
+      if (instance.eventLatitude case final value?) 'event_latitude': value,
+      if (instance.eventLongitude case final value?) 'event_longitude': value,
+      if (_$EventTypeEnumMap[instance.eventType] case final value?)
+        'event_type': value,
+      if (instance.guestCount case final value?) 'guest_count': value,
+      if (instance.dietaryNotes case final value?) 'dietary_notes': value,
+      if (instance.budgetEstimate case final value?) 'budget_estimate': value,
+      if (instance.quotedAmount case final value?) 'quoted_amount': value,
+      if (instance.quotedAt?.toIso8601String() case final value?)
+        'quoted_at': value,
+      'messages_count': instance.messagesCount,
       if (instance.createdAt?.toIso8601String() case final value?)
         'created_at': value,
       if (instance.updatedAt?.toIso8601String() case final value?)
@@ -189,9 +225,25 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
 
 const _$ReservationStatusEnumMap = {
   ReservationStatus.pending: 'pending',
+  ReservationStatus.quoted: 'quoted',
   ReservationStatus.confirmed: 'confirmed',
   ReservationStatus.rejected: 'rejected',
   ReservationStatus.cancelled: 'cancelled',
   ReservationStatus.completed: 'completed',
   ReservationStatus.noShow: 'no_show',
+};
+
+const _$BookingTypeEnumMap = {
+  BookingType.table: 'table',
+  BookingType.service: 'service',
+};
+
+const _$EventTypeEnumMap = {
+  EventType.dinner: 'dinner',
+  EventType.wedding: 'wedding',
+  EventType.corporate: 'corporate',
+  EventType.birthday: 'birthday',
+  EventType.brunch: 'brunch',
+  EventType.cocktail: 'cocktail',
+  EventType.custom: 'custom',
 };

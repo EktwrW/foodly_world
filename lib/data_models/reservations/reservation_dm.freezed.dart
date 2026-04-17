@@ -1232,6 +1232,8 @@ mixin _$ReservationDM {
   @JsonKey(name: 'reservation_uuid')
   String? get reservationUuid => throw _privateConstructorUsedError;
   ReservationStatus get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'booking_type')
+  BookingType get bookingType => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservation_date')
   DateTime? get reservationDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservation_time')
@@ -1249,7 +1251,8 @@ mixin _$ReservationDM {
   @JsonKey(name: 'confirmed_at')
   DateTime? get confirmedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'rejected_at')
-  DateTime? get rejectedAt => throw _privateConstructorUsedError;
+  DateTime? get rejectedAt =>
+      throw _privateConstructorUsedError; // Business info
   @JsonKey(name: 'business_uuid')
   String? get businessUuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_name')
@@ -1261,7 +1264,8 @@ mixin _$ReservationDM {
   @JsonKey(name: 'business_longitude')
   double? get businessLongitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_address')
-  String? get businessAddress => throw _privateConstructorUsedError;
+  String? get businessAddress =>
+      throw _privateConstructorUsedError; // User info
   @JsonKey(name: 'user_uuid')
   String? get userUuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
@@ -1271,7 +1275,34 @@ mixin _$ReservationDM {
   @JsonKey(name: 'user_email')
   String? get userEmail => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_phone')
-  String? get userPhone => throw _privateConstructorUsedError;
+  String? get userPhone =>
+      throw _privateConstructorUsedError; // Service booking fields (only present when booking_type = service)
+  @JsonKey(name: 'service_package_uuid')
+  String? get servicePackageUuid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'service_package_title')
+  String? get servicePackageTitle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'event_address')
+  String? get eventAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'event_city')
+  String? get eventCity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'event_latitude')
+  double? get eventLatitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'event_longitude')
+  double? get eventLongitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'event_type')
+  EventType? get eventType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'guest_count')
+  int? get guestCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dietary_notes')
+  String? get dietaryNotes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'budget_estimate')
+  double? get budgetEstimate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quoted_amount')
+  double? get quotedAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quoted_at')
+  DateTime? get quotedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'messages_count')
+  int get messagesCount => throw _privateConstructorUsedError; // Timestamps
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -1297,6 +1328,7 @@ abstract class $ReservationDMCopyWith<$Res> {
       {@JsonKey(name: 'reservation_id') int? reservationId,
       @JsonKey(name: 'reservation_uuid') String? reservationUuid,
       ReservationStatus status,
+      @JsonKey(name: 'booking_type') BookingType bookingType,
       @JsonKey(name: 'reservation_date') DateTime? reservationDate,
       @JsonKey(name: 'reservation_time') String? reservationTime,
       @JsonKey(name: 'party_size') int partySize,
@@ -1317,6 +1349,19 @@ abstract class $ReservationDMCopyWith<$Res> {
       @JsonKey(name: 'user_photo') String? userPhoto,
       @JsonKey(name: 'user_email') String? userEmail,
       @JsonKey(name: 'user_phone') String? userPhone,
+      @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+      @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+      @JsonKey(name: 'event_address') String? eventAddress,
+      @JsonKey(name: 'event_city') String? eventCity,
+      @JsonKey(name: 'event_latitude') double? eventLatitude,
+      @JsonKey(name: 'event_longitude') double? eventLongitude,
+      @JsonKey(name: 'event_type') EventType? eventType,
+      @JsonKey(name: 'guest_count') int? guestCount,
+      @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+      @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+      @JsonKey(name: 'quoted_amount') double? quotedAmount,
+      @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+      @JsonKey(name: 'messages_count') int messagesCount,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
@@ -1339,6 +1384,7 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
     Object? reservationId = freezed,
     Object? reservationUuid = freezed,
     Object? status = null,
+    Object? bookingType = null,
     Object? reservationDate = freezed,
     Object? reservationTime = freezed,
     Object? partySize = null,
@@ -1359,6 +1405,19 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
     Object? userPhoto = freezed,
     Object? userEmail = freezed,
     Object? userPhone = freezed,
+    Object? servicePackageUuid = freezed,
+    Object? servicePackageTitle = freezed,
+    Object? eventAddress = freezed,
+    Object? eventCity = freezed,
+    Object? eventLatitude = freezed,
+    Object? eventLongitude = freezed,
+    Object? eventType = freezed,
+    Object? guestCount = freezed,
+    Object? dietaryNotes = freezed,
+    Object? budgetEstimate = freezed,
+    Object? quotedAmount = freezed,
+    Object? quotedAt = freezed,
+    Object? messagesCount = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -1375,6 +1434,10 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ReservationStatus,
+      bookingType: null == bookingType
+          ? _value.bookingType
+          : bookingType // ignore: cast_nullable_to_non_nullable
+              as BookingType,
       reservationDate: freezed == reservationDate
           ? _value.reservationDate
           : reservationDate // ignore: cast_nullable_to_non_nullable
@@ -1455,6 +1518,58 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
           ? _value.userPhone
           : userPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      servicePackageUuid: freezed == servicePackageUuid
+          ? _value.servicePackageUuid
+          : servicePackageUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageTitle: freezed == servicePackageTitle
+          ? _value.servicePackageTitle
+          : servicePackageTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventAddress: freezed == eventAddress
+          ? _value.eventAddress
+          : eventAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventCity: freezed == eventCity
+          ? _value.eventCity
+          : eventCity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventLatitude: freezed == eventLatitude
+          ? _value.eventLatitude
+          : eventLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventLongitude: freezed == eventLongitude
+          ? _value.eventLongitude
+          : eventLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventType: freezed == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as EventType?,
+      guestCount: freezed == guestCount
+          ? _value.guestCount
+          : guestCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dietaryNotes: freezed == dietaryNotes
+          ? _value.dietaryNotes
+          : dietaryNotes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      budgetEstimate: freezed == budgetEstimate
+          ? _value.budgetEstimate
+          : budgetEstimate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAmount: freezed == quotedAmount
+          ? _value.quotedAmount
+          : quotedAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAt: freezed == quotedAt
+          ? _value.quotedAt
+          : quotedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      messagesCount: null == messagesCount
+          ? _value.messagesCount
+          : messagesCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1479,6 +1594,7 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
       {@JsonKey(name: 'reservation_id') int? reservationId,
       @JsonKey(name: 'reservation_uuid') String? reservationUuid,
       ReservationStatus status,
+      @JsonKey(name: 'booking_type') BookingType bookingType,
       @JsonKey(name: 'reservation_date') DateTime? reservationDate,
       @JsonKey(name: 'reservation_time') String? reservationTime,
       @JsonKey(name: 'party_size') int partySize,
@@ -1499,6 +1615,19 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
       @JsonKey(name: 'user_photo') String? userPhoto,
       @JsonKey(name: 'user_email') String? userEmail,
       @JsonKey(name: 'user_phone') String? userPhone,
+      @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+      @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+      @JsonKey(name: 'event_address') String? eventAddress,
+      @JsonKey(name: 'event_city') String? eventCity,
+      @JsonKey(name: 'event_latitude') double? eventLatitude,
+      @JsonKey(name: 'event_longitude') double? eventLongitude,
+      @JsonKey(name: 'event_type') EventType? eventType,
+      @JsonKey(name: 'guest_count') int? guestCount,
+      @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+      @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+      @JsonKey(name: 'quoted_amount') double? quotedAmount,
+      @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+      @JsonKey(name: 'messages_count') int messagesCount,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
@@ -1519,6 +1648,7 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? reservationId = freezed,
     Object? reservationUuid = freezed,
     Object? status = null,
+    Object? bookingType = null,
     Object? reservationDate = freezed,
     Object? reservationTime = freezed,
     Object? partySize = null,
@@ -1539,6 +1669,19 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? userPhoto = freezed,
     Object? userEmail = freezed,
     Object? userPhone = freezed,
+    Object? servicePackageUuid = freezed,
+    Object? servicePackageTitle = freezed,
+    Object? eventAddress = freezed,
+    Object? eventCity = freezed,
+    Object? eventLatitude = freezed,
+    Object? eventLongitude = freezed,
+    Object? eventType = freezed,
+    Object? guestCount = freezed,
+    Object? dietaryNotes = freezed,
+    Object? budgetEstimate = freezed,
+    Object? quotedAmount = freezed,
+    Object? quotedAt = freezed,
+    Object? messagesCount = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -1555,6 +1698,10 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ReservationStatus,
+      bookingType: null == bookingType
+          ? _value.bookingType
+          : bookingType // ignore: cast_nullable_to_non_nullable
+              as BookingType,
       reservationDate: freezed == reservationDate
           ? _value.reservationDate
           : reservationDate // ignore: cast_nullable_to_non_nullable
@@ -1635,6 +1782,58 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
           ? _value.userPhone
           : userPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      servicePackageUuid: freezed == servicePackageUuid
+          ? _value.servicePackageUuid
+          : servicePackageUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageTitle: freezed == servicePackageTitle
+          ? _value.servicePackageTitle
+          : servicePackageTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventAddress: freezed == eventAddress
+          ? _value.eventAddress
+          : eventAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventCity: freezed == eventCity
+          ? _value.eventCity
+          : eventCity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventLatitude: freezed == eventLatitude
+          ? _value.eventLatitude
+          : eventLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventLongitude: freezed == eventLongitude
+          ? _value.eventLongitude
+          : eventLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventType: freezed == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as EventType?,
+      guestCount: freezed == guestCount
+          ? _value.guestCount
+          : guestCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dietaryNotes: freezed == dietaryNotes
+          ? _value.dietaryNotes
+          : dietaryNotes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      budgetEstimate: freezed == budgetEstimate
+          ? _value.budgetEstimate
+          : budgetEstimate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAmount: freezed == quotedAmount
+          ? _value.quotedAmount
+          : quotedAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAt: freezed == quotedAt
+          ? _value.quotedAt
+          : quotedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      messagesCount: null == messagesCount
+          ? _value.messagesCount
+          : messagesCount // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1654,6 +1853,7 @@ class _$ReservationDMImpl extends _ReservationDM {
       {@JsonKey(name: 'reservation_id') this.reservationId,
       @JsonKey(name: 'reservation_uuid') this.reservationUuid,
       this.status = ReservationStatus.pending,
+      @JsonKey(name: 'booking_type') this.bookingType = BookingType.table,
       @JsonKey(name: 'reservation_date') this.reservationDate,
       @JsonKey(name: 'reservation_time') this.reservationTime,
       @JsonKey(name: 'party_size') this.partySize = 1,
@@ -1674,6 +1874,19 @@ class _$ReservationDMImpl extends _ReservationDM {
       @JsonKey(name: 'user_photo') this.userPhoto,
       @JsonKey(name: 'user_email') this.userEmail,
       @JsonKey(name: 'user_phone') this.userPhone,
+      @JsonKey(name: 'service_package_uuid') this.servicePackageUuid,
+      @JsonKey(name: 'service_package_title') this.servicePackageTitle,
+      @JsonKey(name: 'event_address') this.eventAddress,
+      @JsonKey(name: 'event_city') this.eventCity,
+      @JsonKey(name: 'event_latitude') this.eventLatitude,
+      @JsonKey(name: 'event_longitude') this.eventLongitude,
+      @JsonKey(name: 'event_type') this.eventType,
+      @JsonKey(name: 'guest_count') this.guestCount,
+      @JsonKey(name: 'dietary_notes') this.dietaryNotes,
+      @JsonKey(name: 'budget_estimate') this.budgetEstimate,
+      @JsonKey(name: 'quoted_amount') this.quotedAmount,
+      @JsonKey(name: 'quoted_at') this.quotedAt,
+      @JsonKey(name: 'messages_count') this.messagesCount = 0,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt})
       : super._();
@@ -1690,6 +1903,9 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey()
   final ReservationStatus status;
+  @override
+  @JsonKey(name: 'booking_type')
+  final BookingType bookingType;
   @override
   @JsonKey(name: 'reservation_date')
   final DateTime? reservationDate;
@@ -1717,6 +1933,7 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey(name: 'rejected_at')
   final DateTime? rejectedAt;
+// Business info
   @override
   @JsonKey(name: 'business_uuid')
   final String? businessUuid;
@@ -1735,6 +1952,7 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey(name: 'business_address')
   final String? businessAddress;
+// User info
   @override
   @JsonKey(name: 'user_uuid')
   final String? userUuid;
@@ -1750,6 +1968,47 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey(name: 'user_phone')
   final String? userPhone;
+// Service booking fields (only present when booking_type = service)
+  @override
+  @JsonKey(name: 'service_package_uuid')
+  final String? servicePackageUuid;
+  @override
+  @JsonKey(name: 'service_package_title')
+  final String? servicePackageTitle;
+  @override
+  @JsonKey(name: 'event_address')
+  final String? eventAddress;
+  @override
+  @JsonKey(name: 'event_city')
+  final String? eventCity;
+  @override
+  @JsonKey(name: 'event_latitude')
+  final double? eventLatitude;
+  @override
+  @JsonKey(name: 'event_longitude')
+  final double? eventLongitude;
+  @override
+  @JsonKey(name: 'event_type')
+  final EventType? eventType;
+  @override
+  @JsonKey(name: 'guest_count')
+  final int? guestCount;
+  @override
+  @JsonKey(name: 'dietary_notes')
+  final String? dietaryNotes;
+  @override
+  @JsonKey(name: 'budget_estimate')
+  final double? budgetEstimate;
+  @override
+  @JsonKey(name: 'quoted_amount')
+  final double? quotedAmount;
+  @override
+  @JsonKey(name: 'quoted_at')
+  final DateTime? quotedAt;
+  @override
+  @JsonKey(name: 'messages_count')
+  final int messagesCount;
+// Timestamps
   @override
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -1759,7 +2018,7 @@ class _$ReservationDMImpl extends _ReservationDM {
 
   @override
   String toString() {
-    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -1772,6 +2031,8 @@ class _$ReservationDMImpl extends _ReservationDM {
             (identical(other.reservationUuid, reservationUuid) ||
                 other.reservationUuid == reservationUuid) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.bookingType, bookingType) ||
+                other.bookingType == bookingType) &&
             (identical(other.reservationDate, reservationDate) ||
                 other.reservationDate == reservationDate) &&
             (identical(other.reservationTime, reservationTime) ||
@@ -1812,6 +2073,32 @@ class _$ReservationDMImpl extends _ReservationDM {
                 other.userEmail == userEmail) &&
             (identical(other.userPhone, userPhone) ||
                 other.userPhone == userPhone) &&
+            (identical(other.servicePackageUuid, servicePackageUuid) ||
+                other.servicePackageUuid == servicePackageUuid) &&
+            (identical(other.servicePackageTitle, servicePackageTitle) ||
+                other.servicePackageTitle == servicePackageTitle) &&
+            (identical(other.eventAddress, eventAddress) ||
+                other.eventAddress == eventAddress) &&
+            (identical(other.eventCity, eventCity) ||
+                other.eventCity == eventCity) &&
+            (identical(other.eventLatitude, eventLatitude) ||
+                other.eventLatitude == eventLatitude) &&
+            (identical(other.eventLongitude, eventLongitude) ||
+                other.eventLongitude == eventLongitude) &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.guestCount, guestCount) ||
+                other.guestCount == guestCount) &&
+            (identical(other.dietaryNotes, dietaryNotes) ||
+                other.dietaryNotes == dietaryNotes) &&
+            (identical(other.budgetEstimate, budgetEstimate) ||
+                other.budgetEstimate == budgetEstimate) &&
+            (identical(other.quotedAmount, quotedAmount) ||
+                other.quotedAmount == quotedAmount) &&
+            (identical(other.quotedAt, quotedAt) ||
+                other.quotedAt == quotedAt) &&
+            (identical(other.messagesCount, messagesCount) ||
+                other.messagesCount == messagesCount) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -1825,6 +2112,7 @@ class _$ReservationDMImpl extends _ReservationDM {
         reservationId,
         reservationUuid,
         status,
+        bookingType,
         reservationDate,
         reservationTime,
         partySize,
@@ -1845,6 +2133,19 @@ class _$ReservationDMImpl extends _ReservationDM {
         userPhoto,
         userEmail,
         userPhone,
+        servicePackageUuid,
+        servicePackageTitle,
+        eventAddress,
+        eventCity,
+        eventLatitude,
+        eventLongitude,
+        eventType,
+        guestCount,
+        dietaryNotes,
+        budgetEstimate,
+        quotedAmount,
+        quotedAt,
+        messagesCount,
         createdAt,
         updatedAt
       ]);
@@ -1867,32 +2168,46 @@ class _$ReservationDMImpl extends _ReservationDM {
 
 abstract class _ReservationDM extends ReservationDM {
   const factory _ReservationDM(
-          {@JsonKey(name: 'reservation_id') final int? reservationId,
-          @JsonKey(name: 'reservation_uuid') final String? reservationUuid,
-          final ReservationStatus status,
-          @JsonKey(name: 'reservation_date') final DateTime? reservationDate,
-          @JsonKey(name: 'reservation_time') final String? reservationTime,
-          @JsonKey(name: 'party_size') final int partySize,
-          @JsonKey(name: 'special_requests') final String? specialRequests,
-          @JsonKey(name: 'manager_notes') final String? managerNotes,
-          @JsonKey(name: 'cancelled_by') final String? cancelledBy,
-          @JsonKey(name: 'cancelled_at') final DateTime? cancelledAt,
-          @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt,
-          @JsonKey(name: 'rejected_at') final DateTime? rejectedAt,
-          @JsonKey(name: 'business_uuid') final String? businessUuid,
-          @JsonKey(name: 'business_name') final String? businessName,
-          @JsonKey(name: 'business_photo') final String? businessPhoto,
-          @JsonKey(name: 'business_latitude') final double? businessLatitude,
-          @JsonKey(name: 'business_longitude') final double? businessLongitude,
-          @JsonKey(name: 'business_address') final String? businessAddress,
-          @JsonKey(name: 'user_uuid') final String? userUuid,
-          @JsonKey(name: 'user_name') final String? userName,
-          @JsonKey(name: 'user_photo') final String? userPhoto,
-          @JsonKey(name: 'user_email') final String? userEmail,
-          @JsonKey(name: 'user_phone') final String? userPhone,
-          @JsonKey(name: 'created_at') final DateTime? createdAt,
-          @JsonKey(name: 'updated_at') final DateTime? updatedAt}) =
-      _$ReservationDMImpl;
+      {@JsonKey(name: 'reservation_id') final int? reservationId,
+      @JsonKey(name: 'reservation_uuid') final String? reservationUuid,
+      final ReservationStatus status,
+      @JsonKey(name: 'booking_type') final BookingType bookingType,
+      @JsonKey(name: 'reservation_date') final DateTime? reservationDate,
+      @JsonKey(name: 'reservation_time') final String? reservationTime,
+      @JsonKey(name: 'party_size') final int partySize,
+      @JsonKey(name: 'special_requests') final String? specialRequests,
+      @JsonKey(name: 'manager_notes') final String? managerNotes,
+      @JsonKey(name: 'cancelled_by') final String? cancelledBy,
+      @JsonKey(name: 'cancelled_at') final DateTime? cancelledAt,
+      @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt,
+      @JsonKey(name: 'rejected_at') final DateTime? rejectedAt,
+      @JsonKey(name: 'business_uuid') final String? businessUuid,
+      @JsonKey(name: 'business_name') final String? businessName,
+      @JsonKey(name: 'business_photo') final String? businessPhoto,
+      @JsonKey(name: 'business_latitude') final double? businessLatitude,
+      @JsonKey(name: 'business_longitude') final double? businessLongitude,
+      @JsonKey(name: 'business_address') final String? businessAddress,
+      @JsonKey(name: 'user_uuid') final String? userUuid,
+      @JsonKey(name: 'user_name') final String? userName,
+      @JsonKey(name: 'user_photo') final String? userPhoto,
+      @JsonKey(name: 'user_email') final String? userEmail,
+      @JsonKey(name: 'user_phone') final String? userPhone,
+      @JsonKey(name: 'service_package_uuid') final String? servicePackageUuid,
+      @JsonKey(name: 'service_package_title') final String? servicePackageTitle,
+      @JsonKey(name: 'event_address') final String? eventAddress,
+      @JsonKey(name: 'event_city') final String? eventCity,
+      @JsonKey(name: 'event_latitude') final double? eventLatitude,
+      @JsonKey(name: 'event_longitude') final double? eventLongitude,
+      @JsonKey(name: 'event_type') final EventType? eventType,
+      @JsonKey(name: 'guest_count') final int? guestCount,
+      @JsonKey(name: 'dietary_notes') final String? dietaryNotes,
+      @JsonKey(name: 'budget_estimate') final double? budgetEstimate,
+      @JsonKey(name: 'quoted_amount') final double? quotedAmount,
+      @JsonKey(name: 'quoted_at') final DateTime? quotedAt,
+      @JsonKey(name: 'messages_count') final int messagesCount,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
+      @JsonKey(name: 'updated_at')
+      final DateTime? updatedAt}) = _$ReservationDMImpl;
   const _ReservationDM._() : super._();
 
   factory _ReservationDM.fromJson(Map<String, dynamic> json) =
@@ -1906,6 +2221,9 @@ abstract class _ReservationDM extends ReservationDM {
   String? get reservationUuid;
   @override
   ReservationStatus get status;
+  @override
+  @JsonKey(name: 'booking_type')
+  BookingType get bookingType;
   @override
   @JsonKey(name: 'reservation_date')
   DateTime? get reservationDate;
@@ -1932,7 +2250,7 @@ abstract class _ReservationDM extends ReservationDM {
   DateTime? get confirmedAt;
   @override
   @JsonKey(name: 'rejected_at')
-  DateTime? get rejectedAt;
+  DateTime? get rejectedAt; // Business info
   @override
   @JsonKey(name: 'business_uuid')
   String? get businessUuid;
@@ -1950,7 +2268,7 @@ abstract class _ReservationDM extends ReservationDM {
   double? get businessLongitude;
   @override
   @JsonKey(name: 'business_address')
-  String? get businessAddress;
+  String? get businessAddress; // User info
   @override
   @JsonKey(name: 'user_uuid')
   String? get userUuid;
@@ -1965,7 +2283,47 @@ abstract class _ReservationDM extends ReservationDM {
   String? get userEmail;
   @override
   @JsonKey(name: 'user_phone')
-  String? get userPhone;
+  String?
+      get userPhone; // Service booking fields (only present when booking_type = service)
+  @override
+  @JsonKey(name: 'service_package_uuid')
+  String? get servicePackageUuid;
+  @override
+  @JsonKey(name: 'service_package_title')
+  String? get servicePackageTitle;
+  @override
+  @JsonKey(name: 'event_address')
+  String? get eventAddress;
+  @override
+  @JsonKey(name: 'event_city')
+  String? get eventCity;
+  @override
+  @JsonKey(name: 'event_latitude')
+  double? get eventLatitude;
+  @override
+  @JsonKey(name: 'event_longitude')
+  double? get eventLongitude;
+  @override
+  @JsonKey(name: 'event_type')
+  EventType? get eventType;
+  @override
+  @JsonKey(name: 'guest_count')
+  int? get guestCount;
+  @override
+  @JsonKey(name: 'dietary_notes')
+  String? get dietaryNotes;
+  @override
+  @JsonKey(name: 'budget_estimate')
+  double? get budgetEstimate;
+  @override
+  @JsonKey(name: 'quoted_amount')
+  double? get quotedAmount;
+  @override
+  @JsonKey(name: 'quoted_at')
+  DateTime? get quotedAt;
+  @override
+  @JsonKey(name: 'messages_count')
+  int get messagesCount; // Timestamps
   @override
   @JsonKey(name: 'created_at')
   DateTime? get createdAt;

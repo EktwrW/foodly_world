@@ -49,6 +49,11 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
     fetchReservations();
   }
 
+  void setBookingTypeFilter(BookingType? bookingType) {
+    _vm = _vm.copyWith(bookingTypeFilter: bookingType);
+    fetchReservations();
+  }
+
   Future<void> fetchReservations() async {
     if (_vm.businessUuid == null) return;
 
@@ -58,6 +63,7 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
       _vm.businessUuid!,
       status: _vm.statusFilter?.name,
       date: _activeFilterKey == 'today' ? 'today' : null,
+      bookingType: _vm.bookingTypeFilter?.name,
     );
 
     result.when(
@@ -88,6 +94,7 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
       _vm.businessUuid!,
       status: _vm.statusFilter?.name,
       date: _activeFilterKey == 'today' ? 'today' : null,
+      bookingType: _vm.bookingTypeFilter?.name,
       page: nextPage,
     );
 
@@ -126,6 +133,13 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
 
   Future<bool> markComplete(String uuid) async {
     return _performAction(uuid, (uuid) => _reservationRepo.markComplete(uuid));
+  }
+
+  Future<bool> sendQuote(String uuid, {required double quotedAmount, String? managerNotes}) async {
+    return _performAction(
+      uuid,
+      (uuid) => _reservationRepo.sendQuote(uuid, quotedAmount: quotedAmount, managerNotes: managerNotes),
+    );
   }
 
   Future<bool> _performAction(

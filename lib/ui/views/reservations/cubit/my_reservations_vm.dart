@@ -9,6 +9,7 @@ class MyReservationsVM with _$MyReservationsVM {
     @Default([]) List<ReservationDM> reservations,
     ReservationsMetaDM? meta,
     ReservationStatus? statusFilter,
+    BookingType? bookingTypeFilter,
     @Default(false) bool isLoadingMore,
   }) = _MyReservationsVM;
 }

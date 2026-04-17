@@ -6288,6 +6288,356 @@ class S {
       args: [],
     );
   }
+
+  /// `Service request`
+  String get serviceBookingRequest {
+    return Intl.message(
+      'Service request',
+      name: 'serviceBookingRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table reservations`
+  String get tableReservations {
+    return Intl.message(
+      'Table reservations',
+      name: 'tableReservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Service requests`
+  String get serviceRequests {
+    return Intl.message(
+      'Service requests',
+      name: 'serviceRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get allBookings {
+    return Intl.message('All', name: 'allBookings', desc: '', args: []);
+  }
+
+  /// `Quoted`
+  String get quoted {
+    return Intl.message('Quoted', name: 'quoted', desc: '', args: []);
+  }
+
+  /// `Quote sent`
+  String get quotedStatus {
+    return Intl.message('Quote sent', name: 'quotedStatus', desc: '', args: []);
+  }
+
+  /// `Send quote`
+  String get sendQuote {
+    return Intl.message('Send quote', name: 'sendQuote', desc: '', args: []);
+  }
+
+  /// `Approve quote`
+  String get approveQuote {
+    return Intl.message(
+      'Approve quote',
+      name: 'approveQuote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quoted amount`
+  String get quotedAmount {
+    return Intl.message(
+      'Quoted amount',
+      name: 'quotedAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Budget estimate`
+  String get budgetEstimate {
+    return Intl.message(
+      'Budget estimate',
+      name: 'budgetEstimate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Guest count`
+  String get guestCount {
+    return Intl.message('Guest count', name: 'guestCount', desc: '', args: []);
+  }
+
+  /// `Event address`
+  String get eventAddress {
+    return Intl.message(
+      'Event address',
+      name: 'eventAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event city`
+  String get eventCity {
+    return Intl.message('Event city', name: 'eventCity', desc: '', args: []);
+  }
+
+  /// `Event type`
+  String get eventType {
+    return Intl.message('Event type', name: 'eventType', desc: '', args: []);
+  }
+
+  /// `Dietary notes`
+  String get dietaryNotes {
+    return Intl.message(
+      'Dietary notes',
+      name: 'dietaryNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dinner`
+  String get eventTypeDinner {
+    return Intl.message('Dinner', name: 'eventTypeDinner', desc: '', args: []);
+  }
+
+  /// `Wedding`
+  String get eventTypeWedding {
+    return Intl.message(
+      'Wedding',
+      name: 'eventTypeWedding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Corporate`
+  String get eventTypeCorporate {
+    return Intl.message(
+      'Corporate',
+      name: 'eventTypeCorporate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birthday`
+  String get eventTypeBirthday {
+    return Intl.message(
+      'Birthday',
+      name: 'eventTypeBirthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Brunch`
+  String get eventTypeBrunch {
+    return Intl.message('Brunch', name: 'eventTypeBrunch', desc: '', args: []);
+  }
+
+  /// `Cocktail`
+  String get eventTypeCocktail {
+    return Intl.message(
+      'Cocktail',
+      name: 'eventTypeCocktail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom`
+  String get eventTypeCustom {
+    return Intl.message('Custom', name: 'eventTypeCustom', desc: '', args: []);
+  }
+
+  /// `Request service`
+  String get requestService {
+    return Intl.message(
+      'Request service',
+      name: 'requestService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request quote`
+  String get requestQuote {
+    return Intl.message(
+      'Request quote',
+      name: 'requestQuote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quote approved`
+  String get quoteApproved {
+    return Intl.message(
+      'Quote approved',
+      name: 'quoteApproved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quote received`
+  String get quoteReceived {
+    return Intl.message(
+      'Quote received',
+      name: 'quoteReceived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Awaiting quote`
+  String get awaitingQuote {
+    return Intl.message(
+      'Awaiting quote',
+      name: 'awaitingQuote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Messages`
+  String get bookingMessages {
+    return Intl.message(
+      'Messages',
+      name: 'bookingMessages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send message`
+  String get sendMessage {
+    return Intl.message(
+      'Send message',
+      name: 'sendMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type a message...`
+  String get typeMessage {
+    return Intl.message(
+      'Type a message...',
+      name: 'typeMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No messages yet`
+  String get noMessagesYet {
+    return Intl.message(
+      'No messages yet',
+      name: 'noMessagesYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message thread`
+  String get messageThread {
+    return Intl.message(
+      'Message thread',
+      name: 'messageThread',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter quote amount`
+  String get enterQuoteAmount {
+    return Intl.message(
+      'Enter quote amount',
+      name: 'enterQuoteAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quote notes (optional)`
+  String get quoteNotes {
+    return Intl.message(
+      'Quote notes (optional)',
+      name: 'quoteNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Approve this quote?`
+  String get confirmApproveQuote {
+    return Intl.message(
+      'Approve this quote?',
+      name: 'confirmApproveQuote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By approving, you confirm the booking. Payment is handled outside the platform.`
+  String get confirmApproveQuoteMessage {
+    return Intl.message(
+      'By approving, you confirm the booking. Payment is handled outside the platform.',
+      name: 'confirmApproveQuoteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment outside the platform`
+  String get paymentOffPlatform {
+    return Intl.message(
+      'Payment outside the platform',
+      name: 'paymentOffPlatform',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event location`
+  String get eventLocation {
+    return Intl.message(
+      'Event location',
+      name: 'eventLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking detail`
+  String get bookingDetail {
+    return Intl.message(
+      'Booking detail',
+      name: 'bookingDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Service request detail`
+  String get serviceBookingDetail {
+    return Intl.message(
+      'Service request detail',
+      name: 'serviceBookingDetail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
