@@ -15,21 +15,37 @@ class VisitBusinessFooterButtons extends StatelessWidget {
     return BlocSelector<VisitBusinessCubit, VisitBusinessState, BusinessDM?>(
       selector: (state) => state.vm.currentBusiness,
       builder: (context, currentBusiness) {
+        final isCatering = currentBusiness?.categoryId?.isCateringOrChefs ?? false;
+
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            FooterButton(
-              onPressed: () => context.goNamed(
-                AppRoutes.visitMenu.name,
-                pathParameters: {AppRoutes.routeIdParam: currentBusiness?.menus.firstOrNull?.uuid ?? '-'},
-                extra: currentBusiness,
+            if (isCatering)
+              FooterButton(
+                onPressed: () => context.goNamed(
+                  AppRoutes.visitServicePackages.name,
+                  pathParameters: {AppRoutes.routeIdParam: currentBusiness?.uuid ?? '-'},
+                  extra: currentBusiness,
+                ),
+                dimension: 30,
+                iconSize: 30,
+                iconData: Bootstrap.briefcase,
+                buttonText: S.current.packages,
+                textStyle: FoodlyTextStyles.footerButtonSmall,
+              )
+            else
+              FooterButton(
+                onPressed: () => context.goNamed(
+                  AppRoutes.visitMenu.name,
+                  pathParameters: {AppRoutes.routeIdParam: currentBusiness?.menus.firstOrNull?.uuid ?? '-'},
+                  extra: currentBusiness,
+                ),
+                dimension: 30,
+                iconSize: 30,
+                iconData: BoxIcons.bx_food_menu,
+                buttonText: S.current.menu,
+                textStyle: FoodlyTextStyles.footerButtonSmall,
               ),
-              dimension: 30,
-              iconSize: 30,
-              iconData: BoxIcons.bx_food_menu,
-              buttonText: S.current.menu,
-              textStyle: FoodlyTextStyles.footerButtonSmall,
-            ),
             FooterButton(
               onPressed: () => context.goNamed(
                 AppRoutes.visitPromotions.name,

@@ -12,25 +12,40 @@ class BusinessFooterButtons extends StatelessWidget {
     return BlocBuilder<BusinessBloc, BusinessState>(
       builder: (context, state) {
         final vm = state.vm;
+        final isCatering = vm.currentBusiness?.categoryId?.isCateringOrChefs ?? false;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FooterButton(
-              onPressed: () => context.goNamed(
-                AppRoutes.manageMenu.name,
-                pathParameters: {
-                  AppRoutes.routeIdParam: vm.currentBusiness?.menus.firstOrNull?.uuid ?? FoodlyStrings.NEW_MENU
-                },
-                extra: vm.currentBusiness,
+            if (isCatering)
+              FooterButton(
+                onPressed: () => context.goNamed(
+                  AppRoutes.manageServicePackages.name,
+                  pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
+                ),
+                dimension: 30,
+                iconSize: 30,
+                iconData: Bootstrap.briefcase,
+                buttonText: S.current.viewEdit,
+                secondButtonText: S.current.packages,
+                textStyle: FoodlyTextStyles.footerButtonSmall,
+              )
+            else
+              FooterButton(
+                onPressed: () => context.goNamed(
+                  AppRoutes.manageMenu.name,
+                  pathParameters: {
+                    AppRoutes.routeIdParam: vm.currentBusiness?.menus.firstOrNull?.uuid ?? FoodlyStrings.NEW_MENU
+                  },
+                  extra: vm.currentBusiness,
+                ),
+                dimension: 30,
+                iconSize: 30,
+                iconData: BoxIcons.bx_food_menu,
+                buttonText: S.current.viewEdit,
+                secondButtonText: S.current.menu,
+                textStyle: FoodlyTextStyles.footerButtonSmall,
               ),
-              dimension: 30,
-              iconSize: 30,
-              iconData: BoxIcons.bx_food_menu,
-              buttonText: S.current.viewEdit,
-              secondButtonText: S.current.menu,
-              textStyle: FoodlyTextStyles.footerButtonSmall,
-            ),
             FooterButton(
               onPressed: () => context.goNamed(
                 AppRoutes.managePromotions.name,
