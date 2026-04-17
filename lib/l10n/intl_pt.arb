@@ -970,5 +970,10 @@
   "paymentOffPlatform": "Pagamento fora da plataforma",
   "eventLocation": "Localização do evento",
   "bookingDetail": "Detalhe da reserva",
-  "serviceBookingDetail": "Detalhe do pedido"
+  "serviceBookingDetail": "Detalhe do pedido",
+  "date": "Data",
+  "time": "Hora",
+  "minimum": "Mínimo",
+  "maximum": "Máximo",
+  "specialRequests": "Pedidos especiais"
 }

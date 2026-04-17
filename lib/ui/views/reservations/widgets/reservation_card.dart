@@ -13,12 +13,16 @@ import 'package:intl/intl.dart';
 class ReservationCard extends StatelessWidget {
   final ReservationDM reservation;
   final VoidCallback? onCancel;
+  final VoidCallback? onApproveQuote;
+  final VoidCallback? onOpenMessages;
   final bool returnOnlyContent;
 
   const ReservationCard({
     super.key,
     required this.reservation,
     this.onCancel,
+    this.onApproveQuote,
+    this.onOpenMessages,
     this.returnOnlyContent = false,
   });
 
@@ -93,6 +97,53 @@ class ReservationCard extends StatelessWidget {
               maxLines: 6,
               overflow: TextOverflow.ellipsis,
             ).paddingAll(9),
+          ],
+
+          // Service booking details
+          if (reservation.isServiceBooking) ...[
+            const SizedBox(height: 10),
+            _ServiceBookingDetails(reservation: reservation),
+          ],
+
+          // Approve quote button (customer side, quoted status)
+          if (reservation.canApproveQuote && onApproveQuote != null) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton.icon(
+                onPressed: onApproveQuote,
+                icon: const Icon(Bootstrap.check_circle_fill, size: 16),
+                label: Text(S.current.approveQuote),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+            ),
+          ],
+
+          // Messages shortcut
+          if (reservation.isServiceBooking && onOpenMessages != null) ...[
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: onOpenMessages,
+                icon: const Icon(Bootstrap.chat_left_text, size: 14),
+                label: Text(
+                  '${S.current.bookingMessages}${reservation.hasMessages ? ' (${reservation.messagesCount})' : ''}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor: FoodlyThemes.secondaryFoodly,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+              ),
+            ),
           ],
 
           // Action row: Calendar + Waze + Google Maps (confirmed only)
@@ -228,6 +279,123 @@ class _InfoChip extends StatelessWidget {
       children: [
         Icon(icon, size: 14, color: FoodlyThemes.secondaryFoodly),
         Text(label, style: FoodlyTextStyles.caption),
+      ],
+    );
+  }
+}
+
+class _ServiceBookingDetails extends StatelessWidget {
+  final ReservationDM reservation;
+
+  const _ServiceBookingDetails({required this.reservation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.deepPurple.withValues(alpha: 0.15)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 6,
+        children: [
+          // Package title
+          if (reservation.servicePackageTitle != null)
+            Row(
+              children: [
+                const Icon(Bootstrap.box_seam, size: 14, color: Colors.deepPurple),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    reservation.servicePackageTitle!,
+                    style: FoodlyTextStyles.caption.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+          // Guest count
+          if (reservation.guestCount != null)
+            _ServiceDetailRow(
+              icon: FontAwesome.people_group_solid,
+              label: '${S.current.guestCount}: ${reservation.guestCount}',
+            ),
+
+          // Event type
+          if (reservation.eventType != null)
+            _ServiceDetailRow(
+              icon: Bootstrap.calendar_event,
+              label: '${S.current.eventType}: ${reservation.eventType!.name}',
+            ),
+
+          // Event location
+          if (reservation.hasEventLocation)
+            _ServiceDetailRow(
+              icon: Bootstrap.geo_alt,
+              label: '${reservation.eventAddress}${reservation.eventCity != null ? ', ${reservation.eventCity}' : ''}',
+            ),
+
+          // Quoted amount
+          if (reservation.hasQuote)
+            Row(
+              children: [
+                const Icon(Bootstrap.currency_euro, size: 14, color: Colors.deepPurple),
+                const SizedBox(width: 6),
+                Text(
+                  '${S.current.quotedAmount}: €${reservation.quotedAmount!.toStringAsFixed(2)}',
+                  style: FoodlyTextStyles.caption.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+              ],
+            ),
+
+          // Awaiting quote indicator
+          if (reservation.isPending && reservation.isServiceBooking)
+            Row(
+              children: [
+                Icon(Bootstrap.hourglass_split, size: 13, color: Colors.orange.shade700),
+                const SizedBox(width: 6),
+                Text(
+                  S.current.awaitingQuote,
+                  style: FoodlyTextStyles.caption.copyWith(color: Colors.orange.shade700),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ServiceDetailRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _ServiceDetailRow({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 13, color: FoodlyThemes.secondaryFoodly),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            label,
+            style: FoodlyTextStyles.caption,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }

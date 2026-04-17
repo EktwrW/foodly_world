@@ -12,6 +12,8 @@ class ManagerReservationCard extends StatelessWidget {
   final VoidCallback? onCancel;
   final VoidCallback? onNoShow;
   final VoidCallback? onComplete;
+  final VoidCallback? onSendQuote;
+  final VoidCallback? onOpenMessages;
   final bool returnOnlyContent;
 
   const ManagerReservationCard({
@@ -22,6 +24,8 @@ class ManagerReservationCard extends StatelessWidget {
     this.onCancel,
     this.onNoShow,
     this.onComplete,
+    this.onSendQuote,
+    this.onOpenMessages,
     this.returnOnlyContent = false,
   });
 
@@ -109,6 +113,12 @@ class ManagerReservationCard extends StatelessWidget {
           ],
         ).paddingHorizontal(6),
 
+        // Service booking details
+        if (reservation.isServiceBooking) ...[
+          const SizedBox(height: 10),
+          _ServiceBookingDetails(reservation: reservation),
+        ],
+
         // Special requests
         if (reservation.hasSpecialRequests) ...[
           Container(
@@ -128,8 +138,30 @@ class ManagerReservationCard extends StatelessWidget {
           ),
         ],
 
+        // Messages shortcut
+        if (reservation.isServiceBooking && onOpenMessages != null) ...[
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: onOpenMessages,
+              icon: const Icon(Bootstrap.chat_left_text, size: 14),
+              label: Text(
+                '${S.current.bookingMessages}${reservation.hasMessages ? ' (${reservation.messagesCount})' : ''}',
+                style: const TextStyle(fontSize: 12),
+              ),
+              style: TextButton.styleFrom(
+                foregroundColor: FoodlyThemes.secondaryFoodly,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ),
+          ),
+        ],
+
         // Action buttons
-        if (reservation.canBeActedOnByManager || reservation.isConfirmed) ...[
+        if (reservation.canBeActedOnByManager || reservation.isConfirmed || reservation.isQuoted) ...[
           const SizedBox(height: 12),
           _buildActionButtons(),
         ],
@@ -154,6 +186,31 @@ class ManagerReservationCard extends StatelessWidget {
 
   Widget _buildActionButtons() {
     if (reservation.isPending) {
+      // Service bookings: show Send Quote + Reject
+      if (reservation.isServiceBooking) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          spacing: 8,
+          children: [
+            if (onReject != null)
+              _ActionButton(
+                label: S.current.reject,
+                icon: Bootstrap.x_circle,
+                color: Colors.red.shade700,
+                onPressed: onReject!,
+              ),
+            if (onSendQuote != null)
+              _ActionButton(
+                label: S.current.sendQuote,
+                icon: Bootstrap.cash_coin,
+                color: Colors.deepPurple,
+                onPressed: onSendQuote!,
+              ),
+          ],
+        );
+      }
+
+      // Table bookings: Confirm / Reject
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 8,
@@ -172,6 +229,27 @@ class ManagerReservationCard extends StatelessWidget {
               color: FoodlyThemes.tertiaryFoodly,
               onPressed: onConfirm!,
             ),
+        ],
+      );
+    }
+
+    // Quoted: waiting for customer approval, manager can cancel
+    if (reservation.isQuoted) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 8,
+        children: [
+          if (onCancel != null)
+            _ActionButton(
+              label: S.current.cancel,
+              icon: Bootstrap.x_circle,
+              color: Colors.orange,
+              onPressed: onCancel!,
+            ),
+          _InfoChip(
+            icon: Bootstrap.hourglass_split,
+            label: S.current.awaitingQuote,
+          ),
         ],
       );
     }
@@ -312,6 +390,124 @@ class _InfoChip extends StatelessWidget {
       children: [
         Icon(icon, size: 14, color: FoodlyThemes.secondaryFoodly),
         Text(label, style: FoodlyTextStyles.caption),
+      ],
+    );
+  }
+}
+
+class _ServiceBookingDetails extends StatelessWidget {
+  final ReservationDM reservation;
+
+  const _ServiceBookingDetails({required this.reservation});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.deepPurple.withValues(alpha: 0.15)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 6,
+        children: [
+          // Package title
+          if (reservation.servicePackageTitle != null)
+            Row(
+              children: [
+                const Icon(Bootstrap.box_seam, size: 14, color: Colors.deepPurple),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    reservation.servicePackageTitle!,
+                    style: FoodlyTextStyles.caption.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+          // Guest count
+          if (reservation.guestCount != null)
+            _ServiceDetailRow(
+              icon: FontAwesome.people_group_solid,
+              label: '${S.current.guestCount}: ${reservation.guestCount}',
+            ),
+
+          // Event type
+          if (reservation.eventType != null)
+            _ServiceDetailRow(
+              icon: Bootstrap.calendar_event,
+              label: '${S.current.eventType}: ${reservation.eventType!.name}',
+            ),
+
+          // Event location
+          if (reservation.hasEventLocation)
+            _ServiceDetailRow(
+              icon: Bootstrap.geo_alt,
+              label: '${reservation.eventAddress}${reservation.eventCity != null ? ', ${reservation.eventCity}' : ''}',
+            ),
+
+          // Budget estimate
+          if (reservation.budgetEstimate != null)
+            _ServiceDetailRow(
+              icon: Bootstrap.cash_coin,
+              label: '${S.current.budgetEstimate}: €${reservation.budgetEstimate!.toStringAsFixed(2)}',
+            ),
+
+          // Dietary notes
+          if (reservation.hasDietaryNotes)
+            _ServiceDetailRow(
+              icon: Bootstrap.egg,
+              label: '${S.current.dietaryNotes}: ${reservation.dietaryNotes}',
+            ),
+
+          // Quoted amount (if already quoted)
+          if (reservation.hasQuote)
+            Row(
+              children: [
+                const Icon(Bootstrap.currency_euro, size: 14, color: Colors.deepPurple),
+                const SizedBox(width: 6),
+                Text(
+                  '${S.current.quotedAmount}: €${reservation.quotedAmount!.toStringAsFixed(2)}',
+                  style: FoodlyTextStyles.caption.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ServiceDetailRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _ServiceDetailRow({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 13, color: FoodlyThemes.secondaryFoodly),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            label,
+            style: FoodlyTextStyles.caption,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }

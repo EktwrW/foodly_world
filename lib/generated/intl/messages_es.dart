@@ -600,6 +600,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dashboardServicesAtText2": MessageLookupByLibrary.simpleMessage(
       "Establecimiento",
     ),
+    "date": MessageLookupByLibrary.simpleMessage("Fecha"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("Fecha de nacimiento"),
     "delete": MessageLookupByLibrary.simpleMessage("Eliminar"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Eliminar Cuenta"),
@@ -928,6 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "maxPartySize": m18,
     "maxSize": m19,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Máx."),
+    "maximum": MessageLookupByLibrary.simpleMessage("Máximo"),
     "medium": MessageLookupByLibrary.simpleMessage("Mediano"),
     "menu": MessageLookupByLibrary.simpleMessage("Menú"),
     "menus": MessageLookupByLibrary.simpleMessage("Menús"),
@@ -939,6 +941,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "minBookingAmount": MessageLookupByLibrary.simpleMessage("Monto mínimo"),
     "minGuests": MessageLookupByLibrary.simpleMessage("Mín. invitados"),
+    "minimum": MessageLookupByLibrary.simpleMessage("Mínimo"),
     "mockTextNewReleasesCard": MessageLookupByLibrary.simpleMessage(
       "La red Ramalha a través de la ciudad de Covilhã sigue creciendo. Después de ampliar el año pasado a la ciudad de Fundão, esta vez la panadería/pastelería abrió su segundo espacio en Covilhã Shopping, en espacio interior en su zona frontal, en planta 0 y con una amplia explanada.",
     ),
@@ -1416,6 +1419,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ocurrió un error",
     ),
     "sortBy": MessageLookupByLibrary.simpleMessage("Ordenar por"),
+    "specialRequests": MessageLookupByLibrary.simpleMessage(
+      "Solicitudes especiales",
+    ),
     "specialRequestsLabel": m30,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Solicitudes especiales (opcional)",
@@ -1504,6 +1510,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aun no hay valoraciones de clientes",
     ),
     "thisBusiness": MessageLookupByLibrary.simpleMessage("este negocio"),
+    "time": MessageLookupByLibrary.simpleMessage("Hora"),
     "timeAgoDays": m31,
     "timeAgoHours": m32,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Ahora mismo"),

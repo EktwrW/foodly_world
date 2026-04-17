@@ -592,6 +592,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dashboardServicesAtText2": MessageLookupByLibrary.simpleMessage(
       "Estabelecimento",
     ),
+    "date": MessageLookupByLibrary.simpleMessage("Data"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("Data de nascimento"),
     "delete": MessageLookupByLibrary.simpleMessage("Eliminar"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Eliminar Conta"),
@@ -918,6 +919,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "maxPartySize": m18,
     "maxSize": m19,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Máx."),
+    "maximum": MessageLookupByLibrary.simpleMessage("Máximo"),
     "medium": MessageLookupByLibrary.simpleMessage("Médio"),
     "menu": MessageLookupByLibrary.simpleMessage("Menu"),
     "menus": MessageLookupByLibrary.simpleMessage("Menus"),
@@ -929,6 +931,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "minBookingAmount": MessageLookupByLibrary.simpleMessage("Valor mínimo"),
     "minGuests": MessageLookupByLibrary.simpleMessage("Mín. convidados"),
+    "minimum": MessageLookupByLibrary.simpleMessage("Mínimo"),
     "mockTextNewReleasesCard": MessageLookupByLibrary.simpleMessage(
       "A rede Ramalha através da cidade de Covilhã continua a crescer. Após expandir no último ano para a cidade de Fundão, desta vez a pastelaria abriu o seu segundo espaço no Covilhã Shopping, numa área interior na sua zona frontal, no piso 0 com uma ampla esplanada.",
     ),
@@ -1384,6 +1387,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ocorreu um erro",
     ),
     "sortBy": MessageLookupByLibrary.simpleMessage("Ordenar por"),
+    "specialRequests": MessageLookupByLibrary.simpleMessage(
+      "Pedidos especiais",
+    ),
     "specialRequestsLabel": m30,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Pedidos especiais (opcional)",
@@ -1472,6 +1478,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisBusiness": MessageLookupByLibrary.simpleMessage(
       "este estabelecimento",
     ),
+    "time": MessageLookupByLibrary.simpleMessage("Hora"),
     "timeAgoDays": m31,
     "timeAgoHours": m32,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Agora mesmo"),

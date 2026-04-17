@@ -6638,6 +6638,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Date`
+  String get date {
+    return Intl.message('Date', name: 'date', desc: '', args: []);
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message('Time', name: 'time', desc: '', args: []);
+  }
+
+  /// `Minimum`
+  String get minimum {
+    return Intl.message('Minimum', name: 'minimum', desc: '', args: []);
+  }
+
+  /// `Maximum`
+  String get maximum {
+    return Intl.message('Maximum', name: 'maximum', desc: '', args: []);
+  }
+
+  /// `Special requests`
+  String get specialRequests {
+    return Intl.message(
+      'Special requests',
+      name: 'specialRequests',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

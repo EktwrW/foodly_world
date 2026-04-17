@@ -570,6 +570,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dashboardServicesAtText2": MessageLookupByLibrary.simpleMessage(
       "Establishment",
     ),
+    "date": MessageLookupByLibrary.simpleMessage("Date"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
@@ -872,6 +873,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "maxPartySize": m18,
     "maxSize": m19,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Max"),
+    "maximum": MessageLookupByLibrary.simpleMessage("Maximum"),
     "medium": MessageLookupByLibrary.simpleMessage("Medium"),
     "menu": MessageLookupByLibrary.simpleMessage("Menu"),
     "menus": MessageLookupByLibrary.simpleMessage("Menus"),
@@ -883,6 +885,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "minBookingAmount": MessageLookupByLibrary.simpleMessage("Minimum amount"),
     "minGuests": MessageLookupByLibrary.simpleMessage("Min. guests"),
+    "minimum": MessageLookupByLibrary.simpleMessage("Minimum"),
     "mockTextNewReleasesCard": MessageLookupByLibrary.simpleMessage(
       "The Ramalha network across the city of Covilhã continues to grow. After expanding last year to the city of Fundão, this time the bakery/patisserie opened its second space in Covilhã Shopping, in an interior space in its front area, on floor 0 with a wide esplanade.",
     ),
@@ -1310,6 +1313,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "An error occurred",
     ),
     "sortBy": MessageLookupByLibrary.simpleMessage("Sort by"),
+    "specialRequests": MessageLookupByLibrary.simpleMessage("Special requests"),
     "specialRequestsLabel": m30,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Special requests (optional)",
@@ -1396,6 +1400,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "There are no customer reviews yet",
     ),
     "thisBusiness": MessageLookupByLibrary.simpleMessage("this business"),
+    "time": MessageLookupByLibrary.simpleMessage("Time"),
     "timeAgoDays": m31,
     "timeAgoHours": m32,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Just now"),
