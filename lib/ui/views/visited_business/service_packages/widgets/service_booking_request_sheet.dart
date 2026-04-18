@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
+import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
@@ -53,12 +54,81 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
   EventType? _eventType;
   bool _isSending = false;
 
+  // ── Availability state ──────────────────────────────────────────
+  bool _isLoadingAvailability = true;
+  bool _availabilityLoadFailed = false;
+  // Dates that are 100% blocked (full-day). Stored as `yyyy-MM-dd` strings
+  // so `Set.contains` is O(1) regardless of the DateTime instance.
+  final Set<String> _fullDayBlockedDates = <String>{};
+  // Partially-blocked dates — the customer can still pick them, we just
+  // show an informational snackbar after they submit so they know the
+  // manager may ask to adjust the time window.
+  final Set<String> _partiallyBlockedDates = <String>{};
+  // We fetch 180 days forward; the date-picker's lastDate stays at 365 to
+  // keep the option to request far-future events, but beyond 180d we
+  // treat everything as "available" since we don't have signal.
+  static const int _availabilityHorizonDays = 180;
+
   @override
   void initState() {
     super.initState();
     if (widget.package.minGuests != null) {
       _guestCountController.text = widget.package.minGuests.toString();
     }
+    _loadAvailability();
+  }
+
+  Future<void> _loadAvailability() async {
+    final repo = di<BusinessAvailabilityRepo>();
+    final now = DateTime.now();
+    final from = DateTime(now.year, now.month, now.day);
+    final to = from.add(const Duration(days: _availabilityHorizonDays));
+
+    final result = await repo.getPublicAvailability(
+      widget.businessUuid,
+      from: DateFormat('yyyy-MM-dd').format(from),
+      to: DateFormat('yyyy-MM-dd').format(to),
+    );
+
+    if (!mounted) return;
+
+    result.when(
+      success: (response) {
+        _fullDayBlockedDates.clear();
+        _partiallyBlockedDates.clear();
+        for (final slot in response.availability) {
+          final d = slot.date;
+          if (d == null) continue;
+          final key = DateFormat('yyyy-MM-dd').format(d);
+          if (slot.isFullDay) {
+            _fullDayBlockedDates.add(key);
+          } else {
+            _partiallyBlockedDates.add(key);
+          }
+        }
+        setState(() {
+          _isLoadingAvailability = false;
+          _availabilityLoadFailed = false;
+        });
+      },
+      failure: (_) {
+        // Fail open: if we can't load availability, don't block the user.
+        setState(() {
+          _isLoadingAvailability = false;
+          _availabilityLoadFailed = true;
+        });
+      },
+    );
+  }
+
+  bool _isDateFullyBlocked(DateTime date) {
+    final key = DateFormat('yyyy-MM-dd').format(date);
+    return _fullDayBlockedDates.contains(key);
+  }
+
+  bool _isDatePartiallyBlocked(DateTime date) {
+    final key = DateFormat('yyyy-MM-dd').format(date);
+    return _partiallyBlockedDates.contains(key);
   }
 
   @override
@@ -73,14 +143,39 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
   }
 
   Future<void> _selectDate() async {
+    // Don't open the picker until availability has loaded — otherwise the
+    // user could pick a blocked date and only find out on submit.
+    if (_isLoadingAvailability) {
+      FoodlySnackbars.infoGeneric(context, S.current.loadingAvailability);
+      return;
+    }
+
+    final now = DateTime.now();
+    // Propose 7 days out, but skip forward if that day happens to be blocked.
+    DateTime initial = now.add(const Duration(days: 7));
+    int guard = 0;
+    while (_isDateFullyBlocked(initial) && guard < 30) {
+      initial = initial.add(const Duration(days: 1));
+      guard++;
+    }
+
     final picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().add(const Duration(days: 7)),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      initialDate: initial,
+      firstDate: now,
+      lastDate: now.add(const Duration(days: 365)),
+      selectableDayPredicate: (date) => !_isDateFullyBlocked(date),
+      helpText: S.current.selectDate,
     );
     if (picked != null) {
       setState(() => _selectedDate = picked);
+
+      // Gentle heads-up when the customer picks a day where the manager
+      // has a partial block — they can still submit, but we set
+      // expectations so the manager isn't surprised.
+      if (_isDatePartiallyBlocked(picked) && mounted) {
+        FoodlySnackbars.infoGeneric(context, S.current.datePartiallyBlockedInfo);
+      }
     }
   }
 
@@ -122,6 +217,16 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     if (!_formKey.currentState!.validate()) return;
     if (_selectedDate == null) {
       FoodlySnackbars.errorGeneric(context, S.current.selectDate);
+      return;
+    }
+
+    // Race condition guard: someone could have created a block between the
+    // initial fetch and the moment the customer hits "Request". Re-check
+    // against our (possibly stale) cache; if it's flagged, refuse the
+    // submission instead of letting the BE bounce it with a generic error.
+    if (_isDateFullyBlocked(_selectedDate!)) {
+      FoodlySnackbars.errorGeneric(context, S.current.dateUnavailable);
+      setState(() => _selectedDate = null);
       return;
     }
 
@@ -185,6 +290,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
                       children: [
                         _buildTitle(),
                         _buildPackageInfo(),
+                        _buildAvailabilityHint(),
                         _buildDateTimeRow(),
                         _buildGuestCountField(),
                         _buildEventTypeSelector(),
@@ -261,6 +367,65 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
               style: FoodlyTextStyles.caption,
             ),
           ],
+        ],
+      ),
+    );
+  }
+
+  /// Small row above the date picker that tells the customer whether we
+  /// know which days are taken. Three states:
+  ///   - loading: "Cargando disponibilidad…" with a spinner
+  ///   - loaded + has blocks: "Días en gris no están disponibles"
+  ///   - load failed: silent (we fail open — don't alarm the customer)
+  ///   - loaded + no blocks: silent (nothing useful to say)
+  Widget _buildAvailabilityHint() {
+    if (_isLoadingAvailability) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.10),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 14,
+              height: 14,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: FoodlyThemes.primaryFoodly,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                S.current.loadingAvailability,
+                style: FoodlyTextStyles.caption,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    if (_availabilityLoadFailed || _fullDayBlockedDates.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          const Icon(Bootstrap.info_circle, size: 14, color: FoodlyThemes.primaryFoodly),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              S.current.unavailableDaysHint,
+              style: FoodlyTextStyles.caption,
+            ),
+          ),
         ],
       ),
     );

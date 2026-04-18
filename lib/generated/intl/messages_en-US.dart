@@ -154,6 +154,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addAdditionalInformation": MessageLookupByLibrary.simpleMessage(
       "Add additional information",
     ),
+    "addAnotherBlock": MessageLookupByLibrary.simpleMessage(
+      "Add another block",
+    ),
     "addCertification": MessageLookupByLibrary.simpleMessage(
       "Add certification",
     ),
@@ -278,6 +281,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "and manage content, promotions, and more",
     ),
     "approveQuote": MessageLookupByLibrary.simpleMessage("Approve quote"),
+    "april": MessageLookupByLibrary.simpleMessage("April"),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
     "areYouSureCancelReservation": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to cancel this reservation?",
@@ -298,6 +302,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "audioProcessingError": MessageLookupByLibrary.simpleMessage(
       "Error processing audio. Please try again.",
     ),
+    "august": MessageLookupByLibrary.simpleMessage("August"),
+    "availability": MessageLookupByLibrary.simpleMessage("Availability"),
+    "availabilityCalendar": MessageLookupByLibrary.simpleMessage(
+      "Availability calendar",
+    ),
     "avgRating": MessageLookupByLibrary.simpleMessage("Avg. rating"),
     "awaitingQuote": MessageLookupByLibrary.simpleMessage("Awaiting quote"),
     "babyChangingStation": MessageLookupByLibrary.simpleMessage(
@@ -316,6 +325,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "The session has expired, you must log in with your username and password, or access via your preferred social network.",
     ),
     "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
+    "blockAction": MessageLookupByLibrary.simpleMessage("Block"),
+    "blockDate": MessageLookupByLibrary.simpleMessage("Block date"),
+    "blocksOn": MessageLookupByLibrary.simpleMessage("Blocks on"),
     "bookingDetail": MessageLookupByLibrary.simpleMessage("Booking detail"),
     "bookingMessages": MessageLookupByLibrary.simpleMessage("Messages"),
     "bookingPricing": MessageLookupByLibrary.simpleMessage("Booking & pricing"),
@@ -571,7 +583,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Establishment",
     ),
     "date": MessageLookupByLibrary.simpleMessage("Date"),
+    "dateBlocked": MessageLookupByLibrary.simpleMessage("Date blocked"),
     "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
+    "datePartiallyBlockedInfo": MessageLookupByLibrary.simpleMessage(
+      "That day has partially booked time slots. We may ask you to adjust the time.",
+    ),
+    "dateUnavailable": MessageLookupByLibrary.simpleMessage(
+      "That date was just blocked. Please pick another one.",
+    ),
+    "december": MessageLookupByLibrary.simpleMessage("December"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
     "deleteAccountBusinessWarning": MessageLookupByLibrary.simpleMessage(
@@ -588,6 +608,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "deleteAllCategoryItems": MessageLookupByLibrary.simpleMessage(
       "\n\nThis action will permanently delete all items in this category.",
+    ),
+    "deleteBlock": MessageLookupByLibrary.simpleMessage("Delete block"),
+    "deleteBlockConfirm": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this block? This cannot be undone.",
     ),
     "deleteBusiness": MessageLookupByLibrary.simpleMessage("Delete Business"),
     "deleteBusinessConfirm": MessageLookupByLibrary.simpleMessage(
@@ -649,6 +673,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "end": MessageLookupByLibrary.simpleMessage("End"),
     "endDate": MessageLookupByLibrary.simpleMessage("End date"),
     "endSession": MessageLookupByLibrary.simpleMessage("End Session"),
+    "endTime": MessageLookupByLibrary.simpleMessage("End time"),
     "enterAValidEmail": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid email address",
     ),
@@ -711,6 +736,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "featuredPackageHint": MessageLookupByLibrary.simpleMessage(
       "Featured packages appear first",
     ),
+    "february": MessageLookupByLibrary.simpleMessage("February"),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage(
       "This field is required",
@@ -732,6 +758,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Foodly is currently available in the following countries:",
     ),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+    "fromReservation": MessageLookupByLibrary.simpleMessage("Reservation"),
+    "fullDay": MessageLookupByLibrary.simpleMessage("Full day"),
     "fusionCuisine": MessageLookupByLibrary.simpleMessage("Fusion"),
     "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -807,6 +835,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Item updated successfully",
     ),
     "items": MessageLookupByLibrary.simpleMessage("Items"),
+    "january": MessageLookupByLibrary.simpleMessage("January"),
+    "july": MessageLookupByLibrary.simpleMessage("July"),
+    "june": MessageLookupByLibrary.simpleMessage("June"),
     "kidChairs": MessageLookupByLibrary.simpleMessage("Kid Chairs"),
     "kidsMenu": MessageLookupByLibrary.simpleMessage("Kids menu"),
     "kidsPlayArea": MessageLookupByLibrary.simpleMessage("Kids Play Area"),
@@ -814,10 +845,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageExample": MessageLookupByLibrary.simpleMessage("E.g.: English"),
     "languages": MessageLookupByLibrary.simpleMessage("Languages"),
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+    "legendAutoReservation": MessageLookupByLibrary.simpleMessage(
+      "Reservation",
+    ),
+    "legendFullDayBlock": MessageLookupByLibrary.simpleMessage("Full day"),
+    "legendPartialBlock": MessageLookupByLibrary.simpleMessage("Partial"),
     "likes": MessageLookupByLibrary.simpleMessage("Likes"),
     "listening": MessageLookupByLibrary.simpleMessage("Listening"),
     "liveMusic": MessageLookupByLibrary.simpleMessage("Live Music"),
     "loadLogo": MessageLookupByLibrary.simpleMessage("Load Logo"),
+    "loadingAvailability": MessageLookupByLibrary.simpleMessage(
+      "Loading availability…",
+    ),
     "locationPermissionDenied": MessageLookupByLibrary.simpleMessage(
       "Location permission denied. We need your location to show nearby restaurants.",
     ),
@@ -864,6 +903,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Manage Reservations",
     ),
+    "march": MessageLookupByLibrary.simpleMessage("March"),
     "markAllAsRead": MessageLookupByLibrary.simpleMessage("Mark all as read"),
     "markedNoShow": MessageLookupByLibrary.simpleMessage("Marked as no-show."),
     "marketsAndStores": MessageLookupByLibrary.simpleMessage(
@@ -874,6 +914,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "maxSize": m19,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Max"),
     "maximum": MessageLookupByLibrary.simpleMessage("Maximum"),
+    "may": MessageLookupByLibrary.simpleMessage("May"),
     "medium": MessageLookupByLibrary.simpleMessage("Medium"),
     "menu": MessageLookupByLibrary.simpleMessage("Menu"),
     "menus": MessageLookupByLibrary.simpleMessage("Menus"),
@@ -910,6 +951,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBranch": MessageLookupByLibrary.simpleMessage("New on Foodly"),
     "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
     "news": MessageLookupByLibrary.simpleMessage("News"),
+    "nextMonth": MessageLookupByLibrary.simpleMessage("Next month"),
     "nickName": MessageLookupByLibrary.simpleMessage("Username"),
     "noAudioDetected": MessageLookupByLibrary.simpleMessage(
       "No audio detected. Please try again.",
@@ -968,6 +1010,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "notesLabel": m21,
     "notification": MessageLookupByLibrary.simpleMessage("Notification"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "november": MessageLookupByLibrary.simpleMessage("November"),
+    "october": MessageLookupByLibrary.simpleMessage("October"),
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Let\'s go!"),
     "onQuote": MessageLookupByLibrary.simpleMessage("On quote"),
     "onSite": MessageLookupByLibrary.simpleMessage("On site"),
@@ -1080,6 +1124,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "preferNotToSay": MessageLookupByLibrary.simpleMessage("Prefer not to say"),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
     "pressToAddPhotosUpToMaxImages": m25,
+    "previousMonth": MessageLookupByLibrary.simpleMessage("Previous month"),
     "price": MessageLookupByLibrary.simpleMessage("Price"),
     "priceType": MessageLookupByLibrary.simpleMessage("Price type"),
     "priceValidation": MessageLookupByLibrary.simpleMessage(
@@ -1117,6 +1162,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ratingAvg": MessageLookupByLibrary.simpleMessage("Rating Avg:"),
     "readyToListen": MessageLookupByLibrary.simpleMessage("Ready to listen"),
+    "reasonHint": MessageLookupByLibrary.simpleMessage(
+      "E.g. Vacation, maintenance",
+    ),
+    "reasonOptional": MessageLookupByLibrary.simpleMessage("Reason (optional)"),
     "recentPosts": MessageLookupByLibrary.simpleMessage("Recent Posts"),
     "recommend": MessageLookupByLibrary.simpleMessage("Recommend"),
     "recoverPassword": MessageLookupByLibrary.simpleMessage("Recover Password"),
@@ -1241,6 +1290,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendVerificationCode": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
     ),
+    "september": MessageLookupByLibrary.simpleMessage("September"),
     "serviceArea": MessageLookupByLibrary.simpleMessage("Service area"),
     "serviceBookingDetail": MessageLookupByLibrary.simpleMessage(
       "Service request detail",
@@ -1331,6 +1381,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "start": MessageLookupByLibrary.simpleMessage("Start"),
     "startDate": MessageLookupByLibrary.simpleMessage("Start date"),
+    "startTime": MessageLookupByLibrary.simpleMessage("Start time"),
     "startups": MessageLookupByLibrary.simpleMessage("Startups"),
     "state": MessageLookupByLibrary.simpleMessage("State"),
     "steakhouse": MessageLookupByLibrary.simpleMessage("Steakhouse"),
@@ -1407,6 +1458,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Just now"),
     "timeAgoMinutes": m33,
     "title": MessageLookupByLibrary.simpleMessage("Title"),
+    "today": MessageLookupByLibrary.simpleMessage("Today"),
     "topEvents": MessageLookupByLibrary.simpleMessage("Top events"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total events"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Travel fee/km"),
@@ -1414,6 +1466,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "typeMessage": MessageLookupByLibrary.simpleMessage("Type a message..."),
     "unauthorizedAccess": MessageLookupByLibrary.simpleMessage(
       "Unauthorized access.",
+    ),
+    "unavailableDaysHint": MessageLookupByLibrary.simpleMessage(
+      "Days in grey are not available.",
     ),
     "uniqueUsers": MessageLookupByLibrary.simpleMessage("Unique users"),
     "updateReview": MessageLookupByLibrary.simpleMessage("Update Review"),

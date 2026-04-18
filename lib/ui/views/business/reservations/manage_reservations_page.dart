@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
@@ -43,6 +44,14 @@ class ManageReservationsPage extends StatelessWidget {
             elevation: 0,
             toolbarHeight: 60,
             actions: [
+              IconButton(
+                tooltip: S.current.availabilityCalendar,
+                icon: const Icon(Bootstrap.calendar2_week, color: Colors.white, size: 22),
+                onPressed: () => context.pushNamed(
+                  AppRoutes.manageAvailability.name,
+                  pathParameters: {AppRoutes.routeIdParam: businessUuid},
+                ),
+              ),
               Text(
                 S.current.manageReservations,
                 overflow: TextOverflow.ellipsis,

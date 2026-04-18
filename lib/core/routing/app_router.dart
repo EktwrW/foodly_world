@@ -8,6 +8,8 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
+import 'package:foodly_world/ui/views/business/availability/cubit/availability_cubit.dart';
+import 'package:foodly_world/ui/views/business/availability/manage_availability_page.dart';
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
@@ -580,6 +582,27 @@ class AppRouter {
             ),
           ),
           GoRoute(
+            path: AppRoutes.manageAvailability.path,
+            name: AppRoutes.manageAvailability.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (_) => AvailabilityCubit(
+                  repo: di(),
+                  logger: di(),
+                  businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                ),
+                child: ManageAvailabilityPage(
+                  businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                ),
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          GoRoute(
             path: AppRoutes.businessAnalytics.path,
             name: AppRoutes.businessAnalytics.name,
             redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
@@ -684,7 +707,7 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.noAccess.path,
             redirect: (_, __) => AppRoutes.login.path,
-            builder: (_, __) => const SizedBox.shrink(), // never reached
+            builder: (_, __) => const NotFoundPage(), // never reached
           ),
           // Deep link handler: menu.foodly.solutions/{uuid}
           // Logged-in users → visited business (full experience).

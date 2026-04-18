@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BlocConsumer, FoodlyThemes, S, ReadContext;
+import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -117,7 +118,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                             _buildDurationField(isSaving),
                             _buildIncludesSection(isSaving),
                             _buildToggles(isSaving),
-                            _buildButtons(context, isSaving),
+                            _buildButtons(context, isSaving).paddingTop(30),
                           ],
                         ),
                       ),
@@ -481,7 +482,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
         Expanded(
           child: CustomNeumorphicButton(
             onPressed: isSaving ? null : () => _submit(context),
-            text: isSaving ? '...' : S.current.save,
+            text: S.current.save,
             disabled: isSaving,
             padding: const EdgeInsets.all(9),
           ),

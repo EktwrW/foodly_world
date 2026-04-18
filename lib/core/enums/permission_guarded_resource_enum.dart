@@ -29,6 +29,8 @@ enum ModuleGuardType {
         AppRoutes.businessAnalytics.name: business,
         AppRoutes.manageMenu.name: menu,
         AppRoutes.managePromotions.name: business,
+        AppRoutes.manageServicePackages.name: business,
+        AppRoutes.manageAvailability.name: business,
         AppRoutes.visitBusiness.name: home,
         AppRoutes.visitMenu.name: menu,
         AppRoutes.visitPromotions.name: home,

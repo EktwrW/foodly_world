@@ -24,6 +24,7 @@ enum AppRoutes {
   manageMenu('/manage-menu/$_routeIdParam', 'manageMenu'),
   managePromotions('$mainRoute/$_routeIdParam/my-business/manage-promotions', 'managePromotions'),
   manageServicePackages('$mainRoute/$_routeIdParam/my-business/service-packages', 'manageServicePackages'),
+  manageAvailability('$mainRoute/$_routeIdParam/my-business/manage-availability', 'manageAvailability'),
   businessAnalytics('$mainRoute/$_routeIdParam/my-business/analytics', 'businessAnalytics'),
   visitBusiness('$mainRoute/$_routeIdParam/visit-business', 'visitBusiness'),
   visitMenu('/visit-menu/$_routeIdParam', 'visitMenu'),

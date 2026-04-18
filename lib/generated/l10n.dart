@@ -6673,6 +6673,276 @@ class S {
   String get quoteSent {
     return Intl.message('Quote sent', name: 'quoteSent', desc: '', args: []);
   }
+
+  /// `Availability calendar`
+  String get availabilityCalendar {
+    return Intl.message(
+      'Availability calendar',
+      name: 'availabilityCalendar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Availability`
+  String get availability {
+    return Intl.message(
+      'Availability',
+      name: 'availability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Block date`
+  String get blockDate {
+    return Intl.message('Block date', name: 'blockDate', desc: '', args: []);
+  }
+
+  /// `Block`
+  String get blockAction {
+    return Intl.message('Block', name: 'blockAction', desc: '', args: []);
+  }
+
+  /// `Date blocked`
+  String get dateBlocked {
+    return Intl.message(
+      'Date blocked',
+      name: 'dateBlocked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full day`
+  String get fullDay {
+    return Intl.message('Full day', name: 'fullDay', desc: '', args: []);
+  }
+
+  /// `Start time`
+  String get startTime {
+    return Intl.message('Start time', name: 'startTime', desc: '', args: []);
+  }
+
+  /// `End time`
+  String get endTime {
+    return Intl.message('End time', name: 'endTime', desc: '', args: []);
+  }
+
+  /// `Reason (optional)`
+  String get reasonOptional {
+    return Intl.message(
+      'Reason (optional)',
+      name: 'reasonOptional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g. Vacation, maintenance`
+  String get reasonHint {
+    return Intl.message(
+      'E.g. Vacation, maintenance',
+      name: 'reasonHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message('Today', name: 'today', desc: '', args: []);
+  }
+
+  /// `Previous month`
+  String get previousMonth {
+    return Intl.message(
+      'Previous month',
+      name: 'previousMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next month`
+  String get nextMonth {
+    return Intl.message('Next month', name: 'nextMonth', desc: '', args: []);
+  }
+
+  /// `Blocks on`
+  String get blocksOn {
+    return Intl.message('Blocks on', name: 'blocksOn', desc: '', args: []);
+  }
+
+  /// `Add another block`
+  String get addAnotherBlock {
+    return Intl.message(
+      'Add another block',
+      name: 'addAnotherBlock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete block`
+  String get deleteBlock {
+    return Intl.message(
+      'Delete block',
+      name: 'deleteBlock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this block? This cannot be undone.`
+  String get deleteBlockConfirm {
+    return Intl.message(
+      'Are you sure you want to delete this block? This cannot be undone.',
+      name: 'deleteBlockConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full day`
+  String get legendFullDayBlock {
+    return Intl.message(
+      'Full day',
+      name: 'legendFullDayBlock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partial`
+  String get legendPartialBlock {
+    return Intl.message(
+      'Partial',
+      name: 'legendPartialBlock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservation`
+  String get legendAutoReservation {
+    return Intl.message(
+      'Reservation',
+      name: 'legendAutoReservation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reservation`
+  String get fromReservation {
+    return Intl.message(
+      'Reservation',
+      name: 'fromReservation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `January`
+  String get january {
+    return Intl.message('January', name: 'january', desc: '', args: []);
+  }
+
+  /// `February`
+  String get february {
+    return Intl.message('February', name: 'february', desc: '', args: []);
+  }
+
+  /// `March`
+  String get march {
+    return Intl.message('March', name: 'march', desc: '', args: []);
+  }
+
+  /// `April`
+  String get april {
+    return Intl.message('April', name: 'april', desc: '', args: []);
+  }
+
+  /// `May`
+  String get may {
+    return Intl.message('May', name: 'may', desc: '', args: []);
+  }
+
+  /// `June`
+  String get june {
+    return Intl.message('June', name: 'june', desc: '', args: []);
+  }
+
+  /// `July`
+  String get july {
+    return Intl.message('July', name: 'july', desc: '', args: []);
+  }
+
+  /// `August`
+  String get august {
+    return Intl.message('August', name: 'august', desc: '', args: []);
+  }
+
+  /// `September`
+  String get september {
+    return Intl.message('September', name: 'september', desc: '', args: []);
+  }
+
+  /// `October`
+  String get october {
+    return Intl.message('October', name: 'october', desc: '', args: []);
+  }
+
+  /// `November`
+  String get november {
+    return Intl.message('November', name: 'november', desc: '', args: []);
+  }
+
+  /// `December`
+  String get december {
+    return Intl.message('December', name: 'december', desc: '', args: []);
+  }
+
+  /// `Loading availability…`
+  String get loadingAvailability {
+    return Intl.message(
+      'Loading availability…',
+      name: 'loadingAvailability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Days in grey are not available.`
+  String get unavailableDaysHint {
+    return Intl.message(
+      'Days in grey are not available.',
+      name: 'unavailableDaysHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That date was just blocked. Please pick another one.`
+  String get dateUnavailable {
+    return Intl.message(
+      'That date was just blocked. Please pick another one.',
+      name: 'dateUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `That day has partially booked time slots. We may ask you to adjust the time.`
+  String get datePartiallyBlockedInfo {
+    return Intl.message(
+      'That day has partially booked time slots. We may ask you to adjust the time.',
+      name: 'datePartiallyBlockedInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
