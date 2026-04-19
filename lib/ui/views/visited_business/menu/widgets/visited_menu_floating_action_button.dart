@@ -39,7 +39,7 @@ class MenuFloatingActionButton extends StatelessWidget {
         builder: (context) => FabCircularMenuPlus(
           // Cannot be `Alignment.center`
           key: floatingButtonKey,
-          ringColor: FoodlyThemes.primaryFoodly.withAlpha(40),
+          ringColor: FoodlyThemes.primaryFoodly.withAlpha(69),
           ringDiameter: 400.0,
           ringWidth: 100.0,
           fabSize: 54,
