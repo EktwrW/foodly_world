@@ -707,9 +707,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "eventTypeBirthday": MessageLookupByLibrary.simpleMessage("Birthday"),
     "eventTypeBrunch": MessageLookupByLibrary.simpleMessage("Brunch"),
     "eventTypeCocktail": MessageLookupByLibrary.simpleMessage("Cocktail"),
+    "eventTypeCookingClassPrivate": MessageLookupByLibrary.simpleMessage(
+      "Private cooking class",
+    ),
     "eventTypeCorporate": MessageLookupByLibrary.simpleMessage("Corporate"),
     "eventTypeCustom": MessageLookupByLibrary.simpleMessage("Custom"),
     "eventTypeDinner": MessageLookupByLibrary.simpleMessage("Dinner"),
+    "eventTypeLunch": MessageLookupByLibrary.simpleMessage("Lunch"),
     "eventTypeWedding": MessageLookupByLibrary.simpleMessage("Wedding"),
     "failedDeletePhotos": m17,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(

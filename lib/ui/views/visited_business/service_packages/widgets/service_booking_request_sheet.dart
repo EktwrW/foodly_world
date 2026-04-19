@@ -3,12 +3,11 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 import 'package:intl/intl.dart';
 
 void showServiceBookingRequestSheet(
@@ -327,7 +326,13 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(pkg.title, style: FoodlyTextStyles.actionsBodyBold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(child: Text(pkg.title, maxLines: 2, style: FoodlyTextStyles.actionsBodyBold)),
+              _buildServiceTypeChip(pkg.serviceType),
+            ],
+          ),
           if (pkg.hasPrice) ...[
             const SizedBox(height: 4),
             Text(
@@ -350,6 +355,39 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
           ],
         ],
       ),
+    );
+  }
+
+  /// Small read-only chip showing the service type of the package
+  /// (Wedding, Birthday, Dinner, etc.) — derived from `package.service_type`.
+  /// The customer cannot edit it; it's shown so they know which kind of
+  /// event this booking will be classified as.
+  Widget _buildServiceTypeChip(ServiceType type) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.3),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: FoodlyThemes.primaryFoodly,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            type.icon,
+            size: 13,
+            color: FoodlyThemes.primaryFoodly,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            type.label,
+            style: FoodlyTextStyles.choiceChipBold.copyWith(
+              color: FoodlyThemes.primaryFoodly,
+            ),
+          ),
+        ],
+      ).paddingSymmetric(horizontal: 9, vertical: 3),
     );
   }
 
@@ -450,7 +488,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     return TextFormField(
       controller: _guestCountController,
       enabled: !_isSending,
-      decoration: _inputDecoration(S.current.guestCount, prefixIcon: Bootstrap.people_fill),
+      decoration: _inputDecoration(S.current.guestCount, prefixIcon: FontAwesome.people_group_solid),
       keyboardType: TextInputType.number,
       validator: (v) {
         if (v == null || v.isEmpty) return S.current.fieldRequired;

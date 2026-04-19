@@ -5,7 +5,7 @@ import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
 part 'social_vm.freezed.dart';
 
@@ -38,7 +38,7 @@ enum UserSortMode {
 
   IconData get icon {
     return switch (this) {
-      UserSortMode.active => Bootstrap.people_fill,
+      UserSortMode.active => FontAwesome.people_group_solid,
       UserSortMode.nearest => Bootstrap.geo_alt_fill,
       UserSortMode.followers => Bootstrap.star_fill,
     };

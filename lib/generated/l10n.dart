@@ -6409,6 +6409,11 @@ class S {
     return Intl.message('Dinner', name: 'eventTypeDinner', desc: '', args: []);
   }
 
+  /// `Lunch`
+  String get eventTypeLunch {
+    return Intl.message('Lunch', name: 'eventTypeLunch', desc: '', args: []);
+  }
+
   /// `Wedding`
   String get eventTypeWedding {
     return Intl.message(
@@ -6449,6 +6454,16 @@ class S {
     return Intl.message(
       'Cocktail',
       name: 'eventTypeCocktail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Private cooking class`
+  String get eventTypeCookingClassPrivate {
+    return Intl.message(
+      'Private cooking class',
+      name: 'eventTypeCookingClassPrivate',
       desc: '',
       args: [],
     );

@@ -13,7 +13,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/visit_service_packages_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/widgets/service_booking_request_sheet.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
 class VisitServicePackagesPage extends StatelessWidget {
   const VisitServicePackagesPage({super.key});
@@ -257,7 +257,8 @@ class _ProfileHeader extends StatelessWidget {
       if (profile.cuisines.isNotEmpty) _TagRow(label: S.current.cuisines, tags: profile.cuisines),
       if (profile.yearsExperience != null)
         _InfoChip(icon: Bootstrap.clock_history, text: '${profile.yearsExperience} ${S.current.yearsExperience}'),
-      if (profile.teamSize != null) _InfoChip(icon: Bootstrap.people, text: _teamSizeLabel(profile.teamSize!)),
+      if (profile.teamSize != null)
+        _InfoChip(icon: FontAwesome.people_group_solid, text: _teamSizeLabel(profile.teamSize!)),
       if (profile.serviceRadiusKm != null) _InfoChip(icon: Bootstrap.geo_alt, text: '${profile.serviceRadiusKm} km'),
       if (profile.certifications.isNotEmpty) _TagRow(label: S.current.certifications, tags: profile.certifications),
       if (profile.languagesSpoken.isNotEmpty) _TagRow(label: S.current.languages, tags: profile.languagesSpoken),
@@ -415,17 +416,31 @@ class _VisitorPackageCard extends StatelessWidget {
                 ),
 
                 // Service type badge
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                DecoratedBox(
                   decoration: BoxDecoration(
-                    color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(16),
+                    color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
                   ),
-                  child: Text(
-                    _serviceTypeLabel(package.serviceType),
-                    style:
-                        const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: FoodlyThemes.primaryFoodly),
-                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        package.serviceType.icon,
+                        size: 13,
+                        color: FoodlyThemes.primaryFoodly,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        package.serviceType.label,
+                        style: FoodlyTextStyles.choiceChipBold.copyWith(
+                          color: FoodlyThemes.primaryFoodly,
+                        ),
+                      ),
+                    ],
+                  ).paddingSymmetric(horizontal: 9, vertical: 3),
                 ),
 
                 // Description
@@ -448,10 +463,11 @@ class _VisitorPackageCard extends StatelessWidget {
                       _InfoChip(
                         icon: Bootstrap.cash,
                         text:
-                            '${package.currency ?? "€"} ${package.price!.toStringAsFixed(2)} ${_priceTypeLabel(package.priceType)}',
+                            '${package.currency ?? "€"} ${package.price!.toStringAsFixed(2)} ${package.priceType.priceTypeLabel}',
                       ),
                     if (package.hasGuestRange)
-                      _InfoChip(icon: Bootstrap.people, text: '${package.guestRangeText} ${S.current.guests}'),
+                      _InfoChip(
+                          icon: FontAwesome.people_group_solid, text: '${package.guestRangeText} ${S.current.guests}'),
                     if (package.durationHours != null)
                       _InfoChip(icon: Bootstrap.clock, text: '${package.durationHours}h'),
                   ],
@@ -506,28 +522,5 @@ class _VisitorPackageCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _serviceTypeLabel(ServiceType type) {
-    return switch (type) {
-      ServiceType.dinner => S.current.dinner,
-      ServiceType.lunch => S.current.lunch,
-      ServiceType.brunch => S.current.brunch,
-      ServiceType.cocktail => S.current.cocktail,
-      ServiceType.wedding => S.current.wedding,
-      ServiceType.corporate => S.current.corporate,
-      ServiceType.birthday => S.current.birthday,
-      ServiceType.cookingClassPrivate => S.current.cookingClass,
-      ServiceType.custom => S.current.custom,
-    };
-  }
-
-  String _priceTypeLabel(PriceType type) {
-    return switch (type) {
-      PriceType.fixed => '',
-      PriceType.perPerson => '/ ${S.current.perPerson.toLowerCase()}',
-      PriceType.perHour => '/ ${S.current.perHour.toLowerCase()}',
-      PriceType.onQuote => '',
-    };
   }
 }

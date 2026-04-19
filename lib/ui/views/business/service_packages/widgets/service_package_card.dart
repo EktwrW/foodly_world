@@ -1,7 +1,7 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
 class ServicePackageCard extends StatelessWidget {
   final ServicePackageDM package;
@@ -92,7 +92,8 @@ class ServicePackageCard extends StatelessWidget {
                     if (package.hasPrice)
                       _InfoChip(
                         icon: Bootstrap.currency_exchange,
-                        label: '${package.currency ?? '€'}${package.price!.toStringAsFixed(2)} / ${_priceTypeLabel(package.priceType)}',
+                        label:
+                            '${package.currency ?? '€'}${package.price!.toStringAsFixed(2)} / ${_priceTypeLabel(package.priceType)}',
                       )
                     else if (package.isOnQuote)
                       _InfoChip(
@@ -101,7 +102,7 @@ class ServicePackageCard extends StatelessWidget {
                       ),
                     if (package.hasGuestRange)
                       _InfoChip(
-                        icon: Bootstrap.people_fill,
+                        icon: FontAwesome.people_group_solid,
                         label: '${package.guestRangeText} ${S.current.guests}',
                       ),
                     if (package.durationHours != null)
@@ -126,7 +127,8 @@ class ServicePackageCard extends StatelessWidget {
                               const Icon(Bootstrap.check2, size: 12, color: FoodlyThemes.tertiaryFoodly),
                               const SizedBox(width: 6),
                               Expanded(
-                                child: Text(item, style: FoodlyTextStyles.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                child: Text(item,
+                                    style: FoodlyTextStyles.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
                               ),
                             ],
                           ),

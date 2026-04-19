@@ -1,4 +1,7 @@
+import 'package:flutter/widgets.dart' show IconData;
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 part 'service_package_dm.freezed.dart';
 part 'service_package_dm.g.dart';
@@ -27,8 +30,7 @@ class ServicePackagesResponseDM with _$ServicePackagesResponseDM {
     @JsonKey(name: 'service_packages') @Default([]) List<ServicePackageDM> servicePackages,
   }) = _ServicePackagesResponseDM;
 
-  factory ServicePackagesResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$ServicePackagesResponseDMFromJson(json);
+  factory ServicePackagesResponseDM.fromJson(Map<String, dynamic> json) => _$ServicePackagesResponseDMFromJson(json);
 }
 
 @freezed
@@ -50,8 +52,7 @@ class GenericSuccessResponseDM with _$GenericSuccessResponseDM {
     @Default('') String message,
   }) = _GenericSuccessResponseDM;
 
-  factory GenericSuccessResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$GenericSuccessResponseDMFromJson(json);
+  factory GenericSuccessResponseDM.fromJson(Map<String, dynamic> json) => _$GenericSuccessResponseDMFromJson(json);
 }
 
 @freezed
@@ -62,8 +63,7 @@ class PhotoUploadResponseDM with _$PhotoUploadResponseDM {
     @Default([]) List<ServicePackagePhotoDM> photos,
   }) = _PhotoUploadResponseDM;
 
-  factory PhotoUploadResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$PhotoUploadResponseDMFromJson(json);
+  factory PhotoUploadResponseDM.fromJson(Map<String, dynamic> json) => _$PhotoUploadResponseDMFromJson(json);
 }
 
 // ── Enums ────────────────────────────────────────────────────
@@ -87,6 +87,33 @@ enum ServiceType {
   cookingClassPrivate,
   @JsonValue('custom')
   custom;
+
+  /// Localized label for display in the UI (chips, badges, list items).
+  String get label => switch (this) {
+        dinner => S.current.eventTypeDinner,
+        lunch => S.current.eventTypeLunch,
+        brunch => S.current.eventTypeBrunch,
+        cocktail => S.current.eventTypeCocktail,
+        wedding => S.current.eventTypeWedding,
+        corporate => S.current.eventTypeCorporate,
+        birthday => S.current.eventTypeBirthday,
+        cookingClassPrivate => S.current.eventTypeCookingClassPrivate,
+        custom => S.current.eventTypeCustom,
+      };
+
+  /// Distinctive Bootstrap icon per service type — used alongside [label]
+  /// in chips/pills throughout the app.
+  IconData get icon => switch (this) {
+        dinner => Bootstrap.moon_stars,
+        lunch => Bootstrap.sun,
+        brunch => Bootstrap.cup_hot,
+        cocktail => Bootstrap.cup_straw,
+        wedding => Bootstrap.heart,
+        corporate => Bootstrap.briefcase,
+        birthday => Bootstrap.gift,
+        cookingClassPrivate => Bootstrap.mortarboard,
+        custom => Bootstrap.stars,
+      };
 }
 
 enum PriceType {
@@ -98,6 +125,15 @@ enum PriceType {
   perHour,
   @JsonValue('on_quote')
   onQuote;
+
+  String get priceTypeLabel {
+    return switch (this) {
+      PriceType.fixed => '',
+      PriceType.perPerson => '/ ${S.current.perPerson.toLowerCase()}',
+      PriceType.perHour => '/ ${S.current.perHour.toLowerCase()}',
+      PriceType.onQuote => '',
+    };
+  }
 }
 
 // ── Main data model ──────────────────────────────────────────
@@ -129,8 +165,7 @@ class ServicePackageDM with _$ServicePackageDM {
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
   }) = _ServicePackageDM;
 
-  factory ServicePackageDM.fromJson(Map<String, dynamic> json) =>
-      _$ServicePackageDMFromJson(json);
+  factory ServicePackageDM.fromJson(Map<String, dynamic> json) => _$ServicePackageDMFromJson(json);
 
   bool get hasPrice => price != null && price! > 0;
   bool get isOnQuote => priceType == PriceType.onQuote;
@@ -155,6 +190,5 @@ class ServicePackagePhotoDM with _$ServicePackagePhotoDM {
     @JsonKey(name: 'sort_order') @Default(0) int sortOrder,
   }) = _ServicePackagePhotoDM;
 
-  factory ServicePackagePhotoDM.fromJson(Map<String, dynamic> json) =>
-      _$ServicePackagePhotoDMFromJson(json);
+  factory ServicePackagePhotoDM.fromJson(Map<String, dynamic> json) => _$ServicePackagePhotoDMFromJson(json);
 }
