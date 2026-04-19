@@ -91,11 +91,11 @@ _$ServicePackageDMImpl _$$ServicePackageDMImplFromJson(
               ServiceType.custom,
       priceType: $enumDecodeNullable(_$PriceTypeEnumMap, json['price_type']) ??
           PriceType.onQuote,
-      price: (json['price'] as num?)?.toDouble(),
+      price: _doubleFromJson(json['price']),
       currency: json['currency'] as String?,
       minGuests: (json['min_guests'] as num?)?.toInt(),
       maxGuests: (json['max_guests'] as num?)?.toInt(),
-      durationHours: (json['duration_hours'] as num?)?.toDouble(),
+      durationHours: _doubleFromJson(json['duration_hours']),
       includes: (json['includes'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??

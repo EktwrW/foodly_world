@@ -153,7 +153,9 @@ class ReservationRepo {
     String? eventCity,
     double? eventLatitude,
     double? eventLongitude,
-    String? eventType,
+    // `eventType` removed: BE derives it from service_package.service_type
+    // so the reservation's event_type can never drift from the package's
+    // declared service_type.
     required int guestCount,
     String? dietaryNotes,
     double? budgetEstimate,
@@ -170,7 +172,6 @@ class ReservationRepo {
           eventCity: eventCity,
           eventLatitude: eventLatitude,
           eventLongitude: eventLongitude,
-          eventType: eventType,
           guestCount: guestCount,
           dietaryNotes: dietaryNotes,
           budgetEstimate: budgetEstimate,

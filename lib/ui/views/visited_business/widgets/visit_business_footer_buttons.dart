@@ -58,29 +58,36 @@ class VisitBusinessFooterButtons extends StatelessWidget {
               buttonText: S.current.promotions,
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
-            Opacity(
-              opacity: (currentBusiness?.allowReservations ?? false) ? 1.0 : 0.4,
-              child: FooterButton(
-                onPressed: (currentBusiness?.allowReservations ?? false)
-                    ? () {
-                        di<EventTrackingService>().track(
-                          'business.cta_clicked',
-                          'business_detail_page',
-                          page: 'business_detail',
-                          targetType: 'business',
-                          targetUuid: currentBusiness?.uuid,
-                          data: {'cta_type': 'reserve'},
-                        );
-                        VisitedBusinessSnackbars.requestReservation(context);
-                      }
-                    : () {},
-                dimension: 30,
-                iconSize: 31,
-                iconData: Icons.table_restaurant_outlined,
-                buttonText: S.current.reservation,
-                textStyle: FoodlyTextStyles.footerButtonSmall,
+            // Table reservation is only relevant for verticals that actually
+            // have tables (restaurants, bars, cafés). Catering & chefs take
+            // bookings exclusively via the service-packages flow ("Paquetes"
+            // button above) — they don't have tables to reserve. Showing this
+            // button on a catering profile would also expose the old
+            // LinearCalendar modal which has no availability filtering.
+            if (!isCatering)
+              Opacity(
+                opacity: (currentBusiness?.allowReservations ?? false) ? 1.0 : 0.4,
+                child: FooterButton(
+                  onPressed: (currentBusiness?.allowReservations ?? false)
+                      ? () {
+                          di<EventTrackingService>().track(
+                            'business.cta_clicked',
+                            'business_detail_page',
+                            page: 'business_detail',
+                            targetType: 'business',
+                            targetUuid: currentBusiness?.uuid,
+                            data: {'cta_type': 'reserve'},
+                          );
+                          VisitedBusinessSnackbars.requestReservation(context);
+                        }
+                      : () {},
+                  dimension: 30,
+                  iconSize: 31,
+                  iconData: Icons.table_restaurant_outlined,
+                  buttonText: S.current.reservation,
+                  textStyle: FoodlyTextStyles.footerButtonSmall,
+                ),
               ),
-            ),
             FooterButton(
               onPressed: () async {
                 final cubit = context.read<VisitBusinessCubit>();

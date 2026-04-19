@@ -3,6 +3,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'service_package_dm.freezed.dart';
 part 'service_package_dm.g.dart';
 
+// ── JSON helpers ─────────────────────────────────────────────
+//
+// Defensive double parser — see professional_profile_dm.dart for the full
+// rationale. Tolerates num, String (e.g. "99.00" from Laravel decimal cast),
+// empty strings, and null without throwing.
+double? _doubleFromJson(dynamic value) {
+  if (value == null) return null;
+  if (value is num) return value.toDouble();
+  if (value is String) {
+    if (value.isEmpty) return null;
+    return double.tryParse(value);
+  }
+  return null;
+}
+
 // ── Response wrappers ────────────────────────────────────────
 
 @freezed
@@ -99,11 +114,11 @@ class ServicePackageDM with _$ServicePackageDM {
     String? description,
     @JsonKey(name: 'service_type') @Default(ServiceType.custom) ServiceType serviceType,
     @JsonKey(name: 'price_type') @Default(PriceType.onQuote) PriceType priceType,
-    double? price,
+    @JsonKey(fromJson: _doubleFromJson) double? price,
     String? currency,
     @JsonKey(name: 'min_guests') int? minGuests,
     @JsonKey(name: 'max_guests') int? maxGuests,
-    @JsonKey(name: 'duration_hours') double? durationHours,
+    @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson) double? durationHours,
     @Default([]) List<String> includes,
     @JsonKey(name: 'add_ons') @Default([]) List<String> addOns,
     @JsonKey(name: 'is_featured') @Default(false) bool isFeatured,

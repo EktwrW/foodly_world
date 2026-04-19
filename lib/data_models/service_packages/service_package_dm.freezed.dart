@@ -839,13 +839,14 @@ mixin _$ServicePackageDM {
   ServiceType get serviceType => throw _privateConstructorUsedError;
   @JsonKey(name: 'price_type')
   PriceType get priceType => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _doubleFromJson)
   double? get price => throw _privateConstructorUsedError;
   String? get currency => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_guests')
   int? get minGuests => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_guests')
   int? get maxGuests => throw _privateConstructorUsedError;
-  @JsonKey(name: 'duration_hours')
+  @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
   double? get durationHours => throw _privateConstructorUsedError;
   List<String> get includes => throw _privateConstructorUsedError;
   @JsonKey(name: 'add_ons')
@@ -886,11 +887,12 @@ abstract class $ServicePackageDMCopyWith<$Res> {
       String? description,
       @JsonKey(name: 'service_type') ServiceType serviceType,
       @JsonKey(name: 'price_type') PriceType priceType,
-      double? price,
+      @JsonKey(fromJson: _doubleFromJson) double? price,
       String? currency,
       @JsonKey(name: 'min_guests') int? minGuests,
       @JsonKey(name: 'max_guests') int? maxGuests,
-      @JsonKey(name: 'duration_hours') double? durationHours,
+      @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+      double? durationHours,
       List<String> includes,
       @JsonKey(name: 'add_ons') List<String> addOns,
       @JsonKey(name: 'is_featured') bool isFeatured,
@@ -1038,11 +1040,12 @@ abstract class _$$ServicePackageDMImplCopyWith<$Res>
       String? description,
       @JsonKey(name: 'service_type') ServiceType serviceType,
       @JsonKey(name: 'price_type') PriceType priceType,
-      double? price,
+      @JsonKey(fromJson: _doubleFromJson) double? price,
       String? currency,
       @JsonKey(name: 'min_guests') int? minGuests,
       @JsonKey(name: 'max_guests') int? maxGuests,
-      @JsonKey(name: 'duration_hours') double? durationHours,
+      @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+      double? durationHours,
       List<String> includes,
       @JsonKey(name: 'add_ons') List<String> addOns,
       @JsonKey(name: 'is_featured') bool isFeatured,
@@ -1183,11 +1186,12 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
       this.description,
       @JsonKey(name: 'service_type') this.serviceType = ServiceType.custom,
       @JsonKey(name: 'price_type') this.priceType = PriceType.onQuote,
-      this.price,
+      @JsonKey(fromJson: _doubleFromJson) this.price,
       this.currency,
       @JsonKey(name: 'min_guests') this.minGuests,
       @JsonKey(name: 'max_guests') this.maxGuests,
-      @JsonKey(name: 'duration_hours') this.durationHours,
+      @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+      this.durationHours,
       final List<String> includes = const [],
       @JsonKey(name: 'add_ons') final List<String> addOns = const [],
       @JsonKey(name: 'is_featured') this.isFeatured = false,
@@ -1223,6 +1227,7 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
   @JsonKey(name: 'price_type')
   final PriceType priceType;
   @override
+  @JsonKey(fromJson: _doubleFromJson)
   final double? price;
   @override
   final String? currency;
@@ -1233,7 +1238,7 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
   @JsonKey(name: 'max_guests')
   final int? maxGuests;
   @override
-  @JsonKey(name: 'duration_hours')
+  @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
   final double? durationHours;
   final List<String> _includes;
   @override
@@ -1375,11 +1380,12 @@ abstract class _ServicePackageDM extends ServicePackageDM {
           final String? description,
           @JsonKey(name: 'service_type') final ServiceType serviceType,
           @JsonKey(name: 'price_type') final PriceType priceType,
-          final double? price,
+          @JsonKey(fromJson: _doubleFromJson) final double? price,
           final String? currency,
           @JsonKey(name: 'min_guests') final int? minGuests,
           @JsonKey(name: 'max_guests') final int? maxGuests,
-          @JsonKey(name: 'duration_hours') final double? durationHours,
+          @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+          final double? durationHours,
           final List<String> includes,
           @JsonKey(name: 'add_ons') final List<String> addOns,
           @JsonKey(name: 'is_featured') final bool isFeatured,
@@ -1412,6 +1418,7 @@ abstract class _ServicePackageDM extends ServicePackageDM {
   @JsonKey(name: 'price_type')
   PriceType get priceType;
   @override
+  @JsonKey(fromJson: _doubleFromJson)
   double? get price;
   @override
   String? get currency;
@@ -1422,7 +1429,7 @@ abstract class _ServicePackageDM extends ServicePackageDM {
   @JsonKey(name: 'max_guests')
   int? get maxGuests;
   @override
-  @JsonKey(name: 'duration_hours')
+  @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
   double? get durationHours;
   @override
   List<String> get includes;

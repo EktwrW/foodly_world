@@ -31,11 +31,18 @@ enum NlpSearchPlatform {
 }
 
 enum DeviceSize {
-  mobile(start: 0, end: 450, name: MOBILE),
-  smallTablet(start: 451, end: 720, name: 'SMALL_TABLET'),
-  tablet(start: 721, end: 960, name: TABLET),
-  smallDesktop(start: 961, end: 1200, name: 'SMALL_DESKTOP'),
-  desktop(start: 1201, end: double.infinity, name: DESKTOP);
+  /// All phones in portrait: iPhone SE (375), Razr 50 Ultra (485),
+  /// Galaxy S24 Ultra (480), foldables folded, etc.
+  mobile(start: 0, end: 599, name: MOBILE),
+
+  /// Small tablets & foldables unfolded: iPad Mini (744), Galaxy Z Fold open (674).
+  smallTablet(start: 600, end: 767, name: 'SMALL_TABLET'),
+
+  /// Full-size tablets: iPad Air/10th (820), iPad Pro 11" (834).
+  tablet(start: 768, end: 1023, name: TABLET),
+
+  /// iPad Pro 12.9" landscape, laptops, desktops, monitors.
+  desktop(start: 1024, end: double.infinity, name: DESKTOP);
 
   final double start;
   final double end;
@@ -48,7 +55,6 @@ enum DeviceSize {
         Breakpoint(start: mobile.start, end: mobile.end, name: mobile.name),
         Breakpoint(start: smallTablet.start, end: smallTablet.end, name: smallTablet.name),
         Breakpoint(start: tablet.start, end: tablet.end, name: tablet.name),
-        Breakpoint(start: smallDesktop.start, end: smallDesktop.end, name: smallDesktop.name),
         Breakpoint(start: desktop.start, end: desktop.end, name: desktop.name),
       ];
 }

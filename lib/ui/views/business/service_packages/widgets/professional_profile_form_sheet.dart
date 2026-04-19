@@ -4,6 +4,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BlocConsumer, FoodlyThemes, PaddingExtension, ReadContext, S;
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/service_packages/cubit/service_packages_cubit.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -49,7 +50,9 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
     _serviceRadiusController = TextEditingController(text: profile?.serviceRadiusKm?.toString() ?? '');
     _travelFeeController = TextEditingController(text: profile?.travelFeePerKm?.toString() ?? '');
     _minBookingController = TextEditingController(text: profile?.minBookingAmount?.toString() ?? '');
-    _minBookingCurrencyController = TextEditingController(text: profile?.minBookingCurrency ?? '€');
+    // Default to ISO 4217 code (EUR) — BE validator requires `size:3`, so a
+    // symbol like `€` would 422. Users in AR/VE/BR can change to ARS/VES/BRL.
+    _minBookingCurrencyController = TextEditingController(text: profile?.minBookingCurrency ?? 'EUR');
     _depositPercentageController = TextEditingController(text: profile?.depositPercentage?.toString() ?? '');
     _cancellationTextController = TextEditingController(text: profile?.cancellationPolicyText ?? '');
     _portfolioUrlController = TextEditingController(text: profile?.portfolioVideoUrl ?? '');
@@ -85,6 +88,11 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
       listener: (context, state) {
         state.mapOrNull(
           saved: (_) => Navigator.of(context).pop(),
+          // Surface BE validation/save errors so the user doesn't think the
+          // save succeeded when it actually 422'd (e.g. `url` validator
+          // rejecting a URL without scheme). Without this, the sheet stays
+          // open and the user assumes everything is fine.
+          error: (e) => FoodlySnackbars.errorGeneric(context, e.message),
         );
       },
       builder: (context, state) {
@@ -113,7 +121,7 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
                           children: [
-                            _buildTitle(),
+                            _buildTitle().paddingVertical(9),
 
                             // ── Tags: specialties, cuisines, certifications, languages ──
                             _buildTagSectionSelector(isSaving),
@@ -221,7 +229,7 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
                 Text(
                   _tagSectionLabel(section),
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
                   ),
@@ -385,8 +393,12 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
             controller: _minBookingCurrencyController,
             enabled: !isSaving,
             maxLength: 3,
+            // ISO 4217 codes are uppercase (EUR, USD, ARS, VES, BRL). BE
+            // validates `size:3` — a lowercase `eur` still passes, but
+            // Stripe/MP layers assume uppercase downstream.
+            textCapitalization: TextCapitalization.characters,
             style: FoodlyTextStyles.inputTextValue,
-            decoration: _inputDecoration(label: S.current.currency, hint: '€', counterText: ''),
+            decoration: _inputDecoration(label: S.current.currency, hint: 'EUR', counterText: ''),
           ),
         ),
         Expanded(
@@ -407,14 +419,13 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
 
   Widget _buildDepositSection(bool isSaving) {
     return Column(
+      spacing: 16,
       children: [
-        SwitchListTile(
-          title: Text(S.current.depositRequired, style: FoodlyTextStyles.actionsBody),
+        _buildNeumorphicSwitchRow(
+          label: S.current.depositRequired,
           value: _depositRequired,
-          onChanged: isSaving ? null : (v) => setState(() => _depositRequired = v),
-          activeThumbColor: FoodlyThemes.tertiaryFoodly,
-          contentPadding: EdgeInsets.zero,
-          dense: true,
+          isSaving: isSaving,
+          onChanged: (v) => setState(() => _depositRequired = v),
         ),
         if (_depositRequired)
           TextFormField(
@@ -476,14 +487,64 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
   // ── Insurance ─────────────────────────────────────────────────
 
   Widget _buildInsuranceToggle(bool isSaving) {
-    return SwitchListTile(
-      title: Text(S.current.hasInsurance, style: FoodlyTextStyles.actionsBody),
-      subtitle: Text(S.current.insuranceHint, style: FoodlyTextStyles.caption),
+    return _buildNeumorphicSwitchRow(
+      label: S.current.hasInsurance,
+      subtitle: S.current.insuranceHint,
       value: _hasInsurance,
-      onChanged: isSaving ? null : (v) => setState(() => _hasInsurance = v),
-      activeThumbColor: FoodlyThemes.tertiaryFoodly,
-      contentPadding: EdgeInsets.zero,
-      dense: true,
+      isSaving: isSaving,
+      onChanged: (v) => setState(() => _hasInsurance = v),
+    );
+  }
+
+  // ── Neumorphic Switch Row (shared) ────────────────────────────
+  //
+  // Mirrors the `AllowReservations` widget in
+  // `business/widgets/allow_reservations/allow_reservations.dart` so all
+  // boolean toggles in the business-management surface share the same look.
+  // Do NOT use Material `SwitchListTile` here — it breaks visual consistency
+  // with the rest of the Foodly neumorphic UI.
+
+  Widget _buildNeumorphicSwitchRow({
+    required String label,
+    required bool value,
+    required bool isSaving,
+    required ValueChanged<bool> onChanged,
+    String? subtitle,
+  }) {
+    final switchStyle = ui.NeumorphicSwitchStyle(
+      activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
+      inactiveTrackColor: Colors.black12,
+      activeThumbColor: FoodlyThemes.success,
+      inactiveThumbColor: FoodlyThemes.secondaryFoodly,
+      thumbShape: ui.NeumorphicShape.convex,
+      lightSource: ui.LightSource.topRight,
+    );
+
+    return Row(
+      spacing: 16,
+      children: [
+        ui.NeumorphicSwitch(
+          value: value,
+          duration: Durations.medium2,
+          curve: Curves.decelerate,
+          onChanged: isSaving ? null : onChanged,
+          height: 32,
+          style: switchStyle,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(label, style: FoodlyTextStyles.actionsBody),
+              if (subtitle != null && subtitle.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(subtitle, style: FoodlyTextStyles.caption),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -535,6 +596,16 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
   void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
+    // Normalize portfolio URL: Laravel's `url` validator requires a scheme,
+    // so inputs like "youtube.com/xyz" would 422. If the user omitted the
+    // scheme, auto-prepend https:// before sending. Empty string stays null.
+    final rawUrl = _portfolioUrlController.text.trim();
+    final portfolioUrl = rawUrl.isEmpty
+        ? null
+        : (rawUrl.startsWith('http://') || rawUrl.startsWith('https://'))
+            ? rawUrl
+            : 'https://$rawUrl';
+
     final data = <String, dynamic>{
       'specialties': _specialties,
       'cuisines': _cuisines,
@@ -543,7 +614,7 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
       'cancellation_policy_text': _cancellationTextController.text.trim(),
       'has_insurance': _hasInsurance,
       'deposit_required': _depositRequired,
-      'portfolio_video_url': _portfolioUrlController.text.trim(),
+      'portfolio_video_url': portfolioUrl,
     };
 
     if (_yearsExpController.text.isNotEmpty) {
@@ -560,7 +631,9 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
     }
     if (_minBookingController.text.isNotEmpty) {
       data['min_booking_amount'] = double.tryParse(_minBookingController.text.trim());
-      data['min_booking_currency'] = _minBookingCurrencyController.text.trim();
+      // Normalize to uppercase ISO 4217 (EUR/USD/ARS/VES/BRL). BE validates
+      // `size:3` — the `€` symbol default had been triggering 422s.
+      data['min_booking_currency'] = _minBookingCurrencyController.text.trim().toUpperCase();
     }
     if (_depositRequired && _depositPercentageController.text.isNotEmpty) {
       data['deposit_percentage'] = double.tryParse(_depositPercentageController.text.trim());

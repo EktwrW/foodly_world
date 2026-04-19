@@ -1,4 +1,3 @@
-import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
@@ -274,9 +273,7 @@ class _ManagerReservationsList extends StatelessWidget {
 
                     return ManagerReservationCard(
                       reservation: reservation,
-                      onConfirm: canDirectConfirm
-                          ? () => cubit.confirmReservation(reservation.reservationUuid!)
-                          : null,
+                      onConfirm: canDirectConfirm ? () => cubit.confirmReservation(reservation.reservationUuid!) : null,
                       onReject: reservation.canBeActedOnByManager
                           ? () => _showNotesDialog(context, S.current.rejectReservation, (notes) {
                                 cubit.rejectReservation(reservation.reservationUuid!, managerNotes: notes);
@@ -290,9 +287,7 @@ class _ManagerReservationsList extends StatelessWidget {
                       onNoShow: reservation.isConfirmed ? () => cubit.markNoShow(reservation.reservationUuid!) : null,
                       onComplete:
                           reservation.isConfirmed ? () => cubit.markComplete(reservation.reservationUuid!) : null,
-                      onSendQuote: reservation.canReceiveQuote
-                          ? () => _sendQuote(context, cubit, reservation)
-                          : null,
+                      onSendQuote: reservation.canReceiveQuote ? () => _sendQuote(context, cubit, reservation) : null,
                       onOpenMessages: reservation.isServiceBooking && reservation.reservationUuid != null
                           ? () => showReservationMessagesSheet(
                                 context,

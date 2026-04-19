@@ -237,7 +237,6 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
 
   Widget _buildButtons() {
     return Row(
-      spacing: 12,
       children: [
         Expanded(
           child: CustomNeumorphicButton(
@@ -245,6 +244,8 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
             onPressed: () => Navigator.of(context).pop(),
             type: CustomNeumorphicBtnType.secondary,
             disabled: false,
+            fontSize: 14,
+            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
           ),
         ),
         Expanded(
@@ -252,6 +253,8 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
             text: S.current.sendQuote,
             onPressed: _submit,
             disabled: false,
+            fontSize: 14,
+            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
           ),
         ),
       ],

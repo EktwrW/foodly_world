@@ -272,17 +272,17 @@ mixin _$ProfessionalProfileDM {
   List<String> get languagesSpoken => throw _privateConstructorUsedError;
   @JsonKey(name: 'team_size')
   TeamSize? get teamSize => throw _privateConstructorUsedError;
-  @JsonKey(name: 'service_radius_km')
+  @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
   double? get serviceRadiusKm => throw _privateConstructorUsedError;
-  @JsonKey(name: 'travel_fee_per_km')
+  @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
   double? get travelFeePerKm => throw _privateConstructorUsedError;
-  @JsonKey(name: 'min_booking_amount')
+  @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
   double? get minBookingAmount => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_booking_currency')
   String? get minBookingCurrency => throw _privateConstructorUsedError;
   @JsonKey(name: 'deposit_required')
   bool get depositRequired => throw _privateConstructorUsedError;
-  @JsonKey(name: 'deposit_percentage')
+  @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
   double? get depositPercentage => throw _privateConstructorUsedError;
   @JsonKey(name: 'cancellation_policy')
   CancellationPolicy? get cancellationPolicy =>
@@ -330,12 +330,16 @@ abstract class $ProfessionalProfileDMCopyWith<$Res> {
       List<String> certifications,
       @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
       @JsonKey(name: 'team_size') TeamSize? teamSize,
-      @JsonKey(name: 'service_radius_km') double? serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km') double? travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount') double? minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
+      double? serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
+      double? travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
+      double? minBookingAmount,
       @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
       @JsonKey(name: 'deposit_required') bool depositRequired,
-      @JsonKey(name: 'deposit_percentage') double? depositPercentage,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
+      double? depositPercentage,
       @JsonKey(name: 'cancellation_policy')
       CancellationPolicy? cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
@@ -509,12 +513,16 @@ abstract class _$$ProfessionalProfileDMImplCopyWith<$Res>
       List<String> certifications,
       @JsonKey(name: 'languages_spoken') List<String> languagesSpoken,
       @JsonKey(name: 'team_size') TeamSize? teamSize,
-      @JsonKey(name: 'service_radius_km') double? serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km') double? travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount') double? minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
+      double? serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
+      double? travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
+      double? minBookingAmount,
       @JsonKey(name: 'min_booking_currency') String? minBookingCurrency,
       @JsonKey(name: 'deposit_required') bool depositRequired,
-      @JsonKey(name: 'deposit_percentage') double? depositPercentage,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
+      double? depositPercentage,
       @JsonKey(name: 'cancellation_policy')
       CancellationPolicy? cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') String? cancellationPolicyText,
@@ -681,12 +689,16 @@ class _$ProfessionalProfileDMImpl extends _ProfessionalProfileDM {
       @JsonKey(name: 'languages_spoken')
       final List<String> languagesSpoken = const [],
       @JsonKey(name: 'team_size') this.teamSize,
-      @JsonKey(name: 'service_radius_km') this.serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km') this.travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount') this.minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
+      this.serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
+      this.travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
+      this.minBookingAmount,
       @JsonKey(name: 'min_booking_currency') this.minBookingCurrency,
       @JsonKey(name: 'deposit_required') this.depositRequired = false,
-      @JsonKey(name: 'deposit_percentage') this.depositPercentage,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
+      this.depositPercentage,
       @JsonKey(name: 'cancellation_policy') this.cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text') this.cancellationPolicyText,
       @JsonKey(name: 'has_insurance') this.hasInsurance = false,
@@ -757,13 +769,13 @@ class _$ProfessionalProfileDMImpl extends _ProfessionalProfileDM {
   @JsonKey(name: 'team_size')
   final TeamSize? teamSize;
   @override
-  @JsonKey(name: 'service_radius_km')
+  @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
   final double? serviceRadiusKm;
   @override
-  @JsonKey(name: 'travel_fee_per_km')
+  @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
   final double? travelFeePerKm;
   @override
-  @JsonKey(name: 'min_booking_amount')
+  @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
   final double? minBookingAmount;
   @override
   @JsonKey(name: 'min_booking_currency')
@@ -772,7 +784,7 @@ class _$ProfessionalProfileDMImpl extends _ProfessionalProfileDM {
   @JsonKey(name: 'deposit_required')
   final bool depositRequired;
   @override
-  @JsonKey(name: 'deposit_percentage')
+  @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
   final double? depositPercentage;
   @override
   @JsonKey(name: 'cancellation_policy')
@@ -923,12 +935,16 @@ abstract class _ProfessionalProfileDM extends ProfessionalProfileDM {
       final List<String> certifications,
       @JsonKey(name: 'languages_spoken') final List<String> languagesSpoken,
       @JsonKey(name: 'team_size') final TeamSize? teamSize,
-      @JsonKey(name: 'service_radius_km') final double? serviceRadiusKm,
-      @JsonKey(name: 'travel_fee_per_km') final double? travelFeePerKm,
-      @JsonKey(name: 'min_booking_amount') final double? minBookingAmount,
+      @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
+      final double? serviceRadiusKm,
+      @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
+      final double? travelFeePerKm,
+      @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
+      final double? minBookingAmount,
       @JsonKey(name: 'min_booking_currency') final String? minBookingCurrency,
       @JsonKey(name: 'deposit_required') final bool depositRequired,
-      @JsonKey(name: 'deposit_percentage') final double? depositPercentage,
+      @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
+      final double? depositPercentage,
       @JsonKey(name: 'cancellation_policy')
       final CancellationPolicy? cancellationPolicy,
       @JsonKey(name: 'cancellation_policy_text')
@@ -969,13 +985,13 @@ abstract class _ProfessionalProfileDM extends ProfessionalProfileDM {
   @JsonKey(name: 'team_size')
   TeamSize? get teamSize;
   @override
-  @JsonKey(name: 'service_radius_km')
+  @JsonKey(name: 'service_radius_km', fromJson: _doubleFromJson)
   double? get serviceRadiusKm;
   @override
-  @JsonKey(name: 'travel_fee_per_km')
+  @JsonKey(name: 'travel_fee_per_km', fromJson: _doubleFromJson)
   double? get travelFeePerKm;
   @override
-  @JsonKey(name: 'min_booking_amount')
+  @JsonKey(name: 'min_booking_amount', fromJson: _doubleFromJson)
   double? get minBookingAmount;
   @override
   @JsonKey(name: 'min_booking_currency')
@@ -984,7 +1000,7 @@ abstract class _ProfessionalProfileDM extends ProfessionalProfileDM {
   @JsonKey(name: 'deposit_required')
   bool get depositRequired;
   @override
-  @JsonKey(name: 'deposit_percentage')
+  @JsonKey(name: 'deposit_percentage', fromJson: _doubleFromJson)
   double? get depositPercentage;
   @override
   @JsonKey(name: 'cancellation_policy')

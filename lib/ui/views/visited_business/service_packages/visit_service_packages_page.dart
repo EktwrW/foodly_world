@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart' show FadeIn, FadeInUp;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, S;
+import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, S, AppRouter, di, PaddingExtension;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
@@ -31,7 +31,20 @@ class VisitServicePackagesPage extends StatelessWidget {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
-        leading: CustomRoundedNeumorphicButton(onPressed: () => context.pop()),
+        leading: CustomRoundedNeumorphicButton(
+          iconSize: 26,
+          diameter: 32,
+          iconData: Bootstrap.caret_left_fill,
+          onPressed: () {
+            if (context.canPop()) {
+              di<AppRouter>().removeLastRouteHistory();
+              context.pop();
+            } else {
+              di<AppRouter>().goBackToLastRoute();
+            }
+          },
+        ).paddingSymmetric(vertical: 6, horizontal: 8),
+        leadingWidth: 60,
         title: Text(
           S.current.servicePackages,
           style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 20),
@@ -174,9 +187,9 @@ class _ProfileHeader extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(isMobile ? 16 : 24),
       decoration: BoxDecoration(
-        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.04),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3)),
       ),
       child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
     );
@@ -185,7 +198,7 @@ class _ProfileHeader extends StatelessWidget {
   Widget _buildMobileLayout() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
+      spacing: 16,
       children: [
         _buildHeader(),
         ..._buildInfoWidgets(),
@@ -229,11 +242,11 @@ class _ProfileHeader extends StatelessWidget {
   Widget _buildHeader() {
     return Row(
       spacing: 8,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Bootstrap.person_badge, size: 20, color: FoodlyThemes.primaryFoodly),
         Text(S.current.professionalProfile, style: FoodlyTextStyles.labelPurpleBold),
-        if (profile.isVerified)
-          const Icon(Bootstrap.patch_check_fill, size: 16, color: FoodlyThemes.tertiaryFoodly),
+        if (profile.isVerified) const Icon(Bootstrap.patch_check_fill, size: 16, color: FoodlyThemes.tertiaryFoodly),
       ],
     );
   }
@@ -289,7 +302,7 @@ class _TagRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 4,
       children: [
-        Text(label, style: FoodlyTextStyles.caption.copyWith(color: Colors.black54)),
+        Text(label, style: FoodlyTextStyles.captionBold),
         Wrap(
           spacing: 6,
           runSpacing: 4,
@@ -324,7 +337,7 @@ class _InfoChip extends StatelessWidget {
       spacing: 6,
       children: [
         Icon(icon, size: 14, color: FoodlyThemes.primaryFoodly),
-        Flexible(child: Text(text, style: FoodlyTextStyles.caption)),
+        Flexible(child: Text(text, style: FoodlyTextStyles.captionBold)),
       ],
     );
   }
@@ -410,7 +423,8 @@ class _VisitorPackageCard extends StatelessWidget {
                   ),
                   child: Text(
                     _serviceTypeLabel(package.serviceType),
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: FoodlyThemes.primaryFoodly),
+                    style:
+                        const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: FoodlyThemes.primaryFoodly),
                   ),
                 ),
 
@@ -438,7 +452,8 @@ class _VisitorPackageCard extends StatelessWidget {
                       ),
                     if (package.hasGuestRange)
                       _InfoChip(icon: Bootstrap.people, text: '${package.guestRangeText} ${S.current.guests}'),
-                    if (package.durationHours != null) _InfoChip(icon: Bootstrap.clock, text: '${package.durationHours}h'),
+                    if (package.durationHours != null)
+                      _InfoChip(icon: Bootstrap.clock, text: '${package.durationHours}h'),
                   ],
                 ),
 
@@ -474,8 +489,7 @@ class _VisitorPackageCard extends StatelessWidget {
                   child: CustomNeumorphicButton(
                     text: S.current.requestService,
                     disabled: false,
-                    margin: EdgeInsets.zero,
-                    leading: const Icon(Bootstrap.calendar2_plus, size: 16, color: Colors.white),
+                    fontSize: 14.6,
                     onPressed: () {
                       final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
                       showServiceBookingRequestSheet(

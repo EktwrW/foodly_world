@@ -240,10 +240,12 @@ const _$BookingTypeEnumMap = {
 
 const _$EventTypeEnumMap = {
   EventType.dinner: 'dinner',
+  EventType.lunch: 'lunch',
+  EventType.brunch: 'brunch',
+  EventType.cocktail: 'cocktail',
   EventType.wedding: 'wedding',
   EventType.corporate: 'corporate',
   EventType.birthday: 'birthday',
-  EventType.brunch: 'brunch',
-  EventType.cocktail: 'cocktail',
+  EventType.cookingClassPrivate: 'cooking_class_private',
   EventType.custom: 'custom',
 };

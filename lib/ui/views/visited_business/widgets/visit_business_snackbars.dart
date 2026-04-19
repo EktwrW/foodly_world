@@ -357,23 +357,27 @@ class VisitedBusinessSnackbars {
                   disabled: !canSubmit,
                   fontSize: 14,
                   onPressed: () async {
+                    // Only own the SUCCESS path here. Errors emitted by the
+                    // cubit are surfaced by the global BlocListener on
+                    // VisitBusinessPage (see visit_business_page.dart:85),
+                    // which shows the real BE error (e.g. "La fecha no está
+                    // disponible"). If we also show a local errorSnack we end
+                    // up with two stacked snackbars — one generic ("no se pudo
+                    // hacer la reserva") and one specific — confusing the
+                    // user. Keep a single, informative error surface.
                     final successSnack = SnackBarWdg(
                       type: SnackBarType.success,
                       content: Text(S.current.reservationRequestSent,
                           textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
                       duration: const Duration(seconds: 5),
                     ).getSnackBar(context);
-                    final errorSnack = SnackBarWdg(
-                      type: SnackBarType.error,
-                      content: Text(S.current.reservationRequestFailed,
-                          textAlign: TextAlign.center, style: FoodlyTextStyles.snackBarLightBody),
-                      duration: const Duration(seconds: 4),
-                    ).getSnackBar(context);
 
                     final success = await cubit.createReservation();
                     scaffoldMessenger.hideCurrentSnackBar();
-                    await Future.delayed(Durations.short4);
-                    scaffoldMessenger.showSnackBar(success ? successSnack : errorSnack);
+                    if (success) {
+                      await Future.delayed(Durations.short4);
+                      scaffoldMessenger.showSnackBar(successSnack);
+                    }
                   },
                   text: S.current.requestReservation,
                 ),

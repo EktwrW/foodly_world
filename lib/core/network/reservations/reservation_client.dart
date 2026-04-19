@@ -80,7 +80,7 @@ abstract class ReservationClient {
     @Field('event_city') String? eventCity,
     @Field('event_latitude') double? eventLatitude,
     @Field('event_longitude') double? eventLongitude,
-    @Field('event_type') String? eventType,
+    // `event_type` removed: server derives it from service_package.service_type.
     @Field('guest_count') required int guestCount,
     @Field('dietary_notes') String? dietaryNotes,
     @Field('budget_estimate') double? budgetEstimate,

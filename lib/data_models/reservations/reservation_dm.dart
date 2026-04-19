@@ -91,19 +91,29 @@ enum BookingType {
   service;
 }
 
+// `EventType` on a reservation is now DERIVED server-side from the selected
+// service_package's `service_type`. The customer no longer picks it. For
+// that reason this enum must stay in sync with `ServiceType` in
+// service_package_dm.dart — same JsonValue strings. Adding a value here
+// without adding it to `ServiceType` (or vice versa) will break
+// deserialization of existing reservations.
 enum EventType {
   @JsonValue('dinner')
   dinner,
+  @JsonValue('lunch')
+  lunch,
+  @JsonValue('brunch')
+  brunch,
+  @JsonValue('cocktail')
+  cocktail,
   @JsonValue('wedding')
   wedding,
   @JsonValue('corporate')
   corporate,
   @JsonValue('birthday')
   birthday,
-  @JsonValue('brunch')
-  brunch,
-  @JsonValue('cocktail')
-  cocktail,
+  @JsonValue('cooking_class_private')
+  cookingClassPrivate,
   @JsonValue('custom')
   custom;
 }

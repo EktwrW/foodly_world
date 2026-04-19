@@ -50,12 +50,12 @@ _$ProfessionalProfileDMImpl _$$ProfessionalProfileDMImplFromJson(
               .toList() ??
           const [],
       teamSize: $enumDecodeNullable(_$TeamSizeEnumMap, json['team_size']),
-      serviceRadiusKm: (json['service_radius_km'] as num?)?.toDouble(),
-      travelFeePerKm: (json['travel_fee_per_km'] as num?)?.toDouble(),
-      minBookingAmount: (json['min_booking_amount'] as num?)?.toDouble(),
+      serviceRadiusKm: _doubleFromJson(json['service_radius_km']),
+      travelFeePerKm: _doubleFromJson(json['travel_fee_per_km']),
+      minBookingAmount: _doubleFromJson(json['min_booking_amount']),
       minBookingCurrency: json['min_booking_currency'] as String?,
       depositRequired: json['deposit_required'] as bool? ?? false,
-      depositPercentage: (json['deposit_percentage'] as num?)?.toDouble(),
+      depositPercentage: _doubleFromJson(json['deposit_percentage']),
       cancellationPolicy: $enumDecodeNullable(
           _$CancellationPolicyEnumMap, json['cancellation_policy']),
       cancellationPolicyText: json['cancellation_policy_text'] as String?,

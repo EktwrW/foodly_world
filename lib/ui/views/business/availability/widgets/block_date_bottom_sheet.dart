@@ -95,9 +95,7 @@ class _BlockDateBottomSheetState extends State<BlockDateBottomSheet> {
       isFullDay: _isFullDay,
       startTime: _isFullDay ? null : _formatTime(_startTime!),
       endTime: _isFullDay ? null : _formatTime(_endTime!),
-      reason: _reasonController.text.trim().isEmpty
-          ? null
-          : _reasonController.text.trim(),
+      reason: _reasonController.text.trim().isEmpty ? null : _reasonController.text.trim(),
     ));
   }
 
@@ -158,8 +156,7 @@ class _BlockDateBottomSheetState extends State<BlockDateBottomSheet> {
   Widget _buildTitle() {
     return Row(
       children: [
-        const Icon(Bootstrap.calendar_x,
-            color: FoodlyThemes.primaryFoodly, size: 22),
+        const Icon(Bootstrap.calendar_x, color: FoodlyThemes.primaryFoodly, size: 22),
         const SizedBox(width: 10),
         Text(S.current.blockDate, style: FoodlyTextStyles.menuTitle),
       ],
@@ -199,7 +196,7 @@ class _BlockDateBottomSheetState extends State<BlockDateBottomSheet> {
         ),
         Switch.adaptive(
           value: _isFullDay,
-          activeColor: FoodlyThemes.primaryFoodly,
+          activeThumbColor: FoodlyThemes.primaryFoodly,
           onChanged: (v) => setState(() => _isFullDay = v),
         ),
       ],
@@ -240,7 +237,7 @@ class _BlockDateBottomSheetState extends State<BlockDateBottomSheet> {
         counterText: '',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: FoodlyThemes.secondaryFoodly),
+          borderSide: const BorderSide(color: FoodlyThemes.secondaryFoodly),
         ),
       ),
     );
@@ -253,7 +250,7 @@ class _BlockDateBottomSheetState extends State<BlockDateBottomSheet> {
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 14),
-              side: BorderSide(color: FoodlyThemes.secondaryFoodly),
+              side: const BorderSide(color: FoodlyThemes.secondaryFoodly),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -320,8 +317,7 @@ class _TimeField extends StatelessWidget {
             const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Bootstrap.clock,
-                    size: 14, color: FoodlyThemes.primaryFoodly),
+                const Icon(Bootstrap.clock, size: 14, color: FoodlyThemes.primaryFoodly),
                 const SizedBox(width: 6),
                 Text(
                   value == null ? '--:--' : _format(value!),

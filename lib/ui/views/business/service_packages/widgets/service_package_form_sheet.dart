@@ -47,7 +47,9 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
     _titleController = TextEditingController(text: pkg?.title ?? '');
     _descriptionController = TextEditingController(text: pkg?.description ?? '');
     _priceController = TextEditingController(text: pkg?.price?.toStringAsFixed(2) ?? '');
-    _currencyController = TextEditingController(text: pkg?.currency ?? '€');
+    // Default to ISO 4217 code (EUR) — BE validator requires `size:3`, so a
+    // symbol like `€` would 422. Users in AR/VE/BR can change to ARS/VES/BRL.
+    _currencyController = TextEditingController(text: pkg?.currency ?? 'EUR');
     _minGuestsController = TextEditingController(text: pkg?.minGuests?.toString() ?? '');
     _maxGuestsController = TextEditingController(text: pkg?.maxGuests?.toString() ?? '');
     _durationController = TextEditingController(text: pkg?.durationHours?.toString() ?? '');
@@ -108,7 +110,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
                           children: [
-                            _buildTitle(),
+                            _buildTitle().paddingVertical(9),
                             _buildTitleField(isSaving),
                             _buildDescriptionField(isSaving),
                             _buildServiceTypeSelector(isSaving),
@@ -118,7 +120,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                             _buildDurationField(isSaving),
                             _buildIncludesSection(isSaving),
                             _buildToggles(isSaving),
-                            _buildButtons(context, isSaving).paddingTop(30),
+                            _buildButtons(context, isSaving).paddingTop(36),
                           ],
                         ),
                       ),
@@ -300,9 +302,13 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
             controller: _currencyController,
             enabled: !isSaving,
             maxLength: 3,
+            // ISO 4217 codes are uppercase (EUR, USD, ARS, VES, BRL). BE
+            // validates `size:3` — a lowercase `eur` still passes, but the
+            // BE/stripe/mp layers assume uppercase downstream.
+            textCapitalization: TextCapitalization.characters,
             textInputAction: TextInputAction.next,
             style: FoodlyTextStyles.inputTextValue,
-            decoration: _inputDecoration(label: S.current.currency, hint: '€', counterText: ''),
+            decoration: _inputDecoration(label: S.current.currency, hint: 'EUR', counterText: ''),
           ),
         ),
         Expanded(
@@ -441,24 +447,77 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
 
   Widget _buildToggles(bool isSaving) {
     return Column(
+      spacing: 16,
       children: [
-        SwitchListTile(
-          title: Text(S.current.active, style: FoodlyTextStyles.actionsBody),
-          subtitle: Text(S.current.activePackageHint, style: FoodlyTextStyles.caption),
+        _buildNeumorphicSwitchRow(
+          label: S.current.active,
+          subtitle: S.current.activePackageHint,
           value: _isActive,
-          onChanged: isSaving ? null : (v) => setState(() => _isActive = v),
-          activeThumbColor: FoodlyThemes.tertiaryFoodly,
-          contentPadding: EdgeInsets.zero,
-          dense: true,
+          isSaving: isSaving,
+          onChanged: (v) => setState(() => _isActive = v),
         ),
-        SwitchListTile(
-          title: Text(S.current.featured, style: FoodlyTextStyles.actionsBody),
-          subtitle: Text(S.current.featuredPackageHint, style: FoodlyTextStyles.caption),
+        _buildNeumorphicSwitchRow(
+          label: S.current.featured,
+          subtitle: S.current.featuredPackageHint,
           value: _isFeatured,
-          onChanged: isSaving ? null : (v) => setState(() => _isFeatured = v),
+          isSaving: isSaving,
+          onChanged: (v) => setState(() => _isFeatured = v),
+          // Featured stays visually distinct with the gold thumb — same
+          // semantic as the previous SwitchListTile's amber thumb.
           activeThumbColor: Colors.amber,
-          contentPadding: EdgeInsets.zero,
-          dense: true,
+        ),
+      ],
+    );
+  }
+
+  // ── Neumorphic Switch Row (shared) ────────────────────────────
+  //
+  // Mirrors the `AllowReservations` widget in
+  // `business/widgets/allow_reservations/allow_reservations.dart` so all
+  // boolean toggles in the business-management surface share the same look.
+  // Do NOT use Material `SwitchListTile` here — it breaks visual consistency
+  // with the rest of the Foodly neumorphic UI.
+
+  Widget _buildNeumorphicSwitchRow({
+    required String label,
+    required bool value,
+    required bool isSaving,
+    required ValueChanged<bool> onChanged,
+    String? subtitle,
+    Color? activeThumbColor,
+  }) {
+    final switchStyle = ui.NeumorphicSwitchStyle(
+      activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
+      inactiveTrackColor: Colors.black12,
+      activeThumbColor: activeThumbColor ?? FoodlyThemes.success,
+      inactiveThumbColor: FoodlyThemes.secondaryFoodly,
+      thumbShape: ui.NeumorphicShape.convex,
+      lightSource: ui.LightSource.topRight,
+    );
+
+    return Row(
+      spacing: 16,
+      children: [
+        ui.NeumorphicSwitch(
+          value: value,
+          duration: Durations.medium2,
+          curve: Curves.decelerate,
+          onChanged: isSaving ? null : onChanged,
+          height: 32,
+          style: switchStyle,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(label, style: FoodlyTextStyles.actionsBody),
+              if (subtitle != null && subtitle.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Text(subtitle, style: FoodlyTextStyles.caption),
+              ],
+            ],
+          ),
         ),
       ],
     );
@@ -509,7 +568,9 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
 
     if (_priceType != PriceType.onQuote && _priceController.text.isNotEmpty) {
       data['price'] = double.tryParse(_priceController.text.trim());
-      data['currency'] = _currencyController.text.trim();
+      // Normalize to uppercase ISO 4217 (EUR/USD/ARS/VES/BRL). BE validates
+      // `size:3` — forgetting this is how `€` slipped through before.
+      data['currency'] = _currencyController.text.trim().toUpperCase();
     }
     if (_minGuestsController.text.isNotEmpty) {
       data['min_guests'] = int.tryParse(_minGuestsController.text.trim());

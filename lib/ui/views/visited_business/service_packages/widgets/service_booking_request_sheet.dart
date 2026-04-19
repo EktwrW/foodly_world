@@ -51,8 +51,12 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
 
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
-  EventType? _eventType;
   bool _isSending = false;
+  // Note: we no longer expose an event-type selector to the customer. The
+  // `event_type` on the reservation is now derived from
+  // `service_package.service_type` server-side — one source of truth. See
+  // memory note "Opción A: paquete manda" in
+  // project_catering_chefs_vertical.md.
 
   // ── Availability state ──────────────────────────────────────────
   bool _isLoadingAvailability = true;
@@ -189,30 +193,6 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     }
   }
 
-  String _eventTypeToString(EventType type) {
-    return switch (type) {
-      EventType.dinner => 'dinner',
-      EventType.wedding => 'wedding',
-      EventType.corporate => 'corporate',
-      EventType.birthday => 'birthday',
-      EventType.brunch => 'brunch',
-      EventType.cocktail => 'cocktail',
-      EventType.custom => 'custom',
-    };
-  }
-
-  String _eventTypeLabel(EventType type) {
-    return switch (type) {
-      EventType.dinner => S.current.eventTypeDinner,
-      EventType.wedding => S.current.eventTypeWedding,
-      EventType.corporate => S.current.eventTypeCorporate,
-      EventType.birthday => S.current.eventTypeBirthday,
-      EventType.brunch => S.current.eventTypeBrunch,
-      EventType.cocktail => S.current.eventTypeCocktail,
-      EventType.custom => S.current.eventTypeCustom,
-    };
-  }
-
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedDate == null) {
@@ -242,7 +222,9 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
           : null,
       eventAddress: _addressController.text.isNotEmpty ? _addressController.text : null,
       eventCity: _cityController.text.isNotEmpty ? _cityController.text : null,
-      eventType: _eventType != null ? _eventTypeToString(_eventType!) : null,
+      // `event_type` is intentionally NOT sent. BE derives it from the
+      // selected service_package's service_type. Keeping a second source
+      // of truth was the whole bug we just fixed.
       guestCount: int.parse(_guestCountController.text),
       dietaryNotes: _dietaryController.text.isNotEmpty ? _dietaryController.text : null,
       budgetEstimate: _budgetController.text.isNotEmpty ? double.tryParse(_budgetController.text) : null,
@@ -288,12 +270,11 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       spacing: 16,
                       children: [
-                        _buildTitle(),
+                        _buildTitle().paddingVertical(9),
                         _buildPackageInfo(),
                         _buildAvailabilityHint(),
                         _buildDateTimeRow(),
                         _buildGuestCountField(),
-                        _buildEventTypeSelector(),
                         _buildAddressFields(),
                         _buildDietaryField(),
                         _buildBudgetField(),
@@ -486,33 +467,6 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     );
   }
 
-  Widget _buildEventTypeSelector() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(S.current.eventType, style: FoodlyTextStyles.caption),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: EventType.values.map((type) {
-            final isSelected = _eventType == type;
-            return ChoiceChip(
-              label: Text(_eventTypeLabel(type)),
-              selected: isSelected,
-              selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
-              onSelected: _isSending
-                  ? null
-                  : (selected) {
-                      setState(() => _eventType = selected ? type : null);
-                    },
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
   Widget _buildAddressFields() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -563,7 +517,6 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
 
   Widget _buildButtons() {
     return Row(
-      spacing: 12,
       children: [
         Expanded(
           child: CustomNeumorphicButton(
@@ -571,6 +524,8 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
             onPressed: _isSending ? null : () => Navigator.of(context).pop(),
             type: CustomNeumorphicBtnType.secondary,
             disabled: _isSending,
+            fontSize: 14,
+            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
           ),
         ),
         Expanded(
@@ -578,6 +533,8 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
             text: S.current.requestService,
             onPressed: _isSending ? null : _submit,
             disabled: _isSending,
+            fontSize: 14,
+            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
           ),
         ),
       ],

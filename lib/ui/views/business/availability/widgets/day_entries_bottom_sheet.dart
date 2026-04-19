@@ -80,7 +80,7 @@ class DayEntriesBottomSheet extends StatelessWidget {
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 14),
-                          side: BorderSide(color: FoodlyThemes.secondaryFoodly),
+                          side: const BorderSide(color: FoodlyThemes.secondaryFoodly),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
