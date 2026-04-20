@@ -17,12 +17,18 @@ part 'device_token_client.g.dart';
 /// pushes. When [FirebaseMessaging.deleteToken] is also called the backend
 /// will further clean up on the next send attempt (UNREGISTERED response
 /// triggers a soft-delete server-side).
+/// NOTE on return type (`dynamic` instead of `Map<String, dynamic>`):
+/// the `retrofit_generator` has a long-standing bug where a typed map
+/// return emits `dynamic.fromJson(v)` inside the generated `.g.dart`
+/// (invalid Dart, fails `flutter build web`). Using `dynamic` bypasses the
+/// generator's deserialization loop and returns `_result.data` raw. The
+/// repo then casts to `Map<String, dynamic>` and reads the field it needs.
 @RestApi()
 abstract class DeviceTokenClient {
   factory DeviceTokenClient(Dio dio) = _DeviceTokenClient;
 
   @POST('/device-tokens/register')
-  Future<Map<String, dynamic>> register({
+  Future<dynamic> register({
     @Field('fcm_token') required String fcmToken,
     @Field('platform') required String platform, // 'ios' | 'android' | 'web'
     @Field('device_name') String? deviceName,
@@ -33,7 +39,7 @@ abstract class DeviceTokenClient {
 
   /// Retrofit's @DELETE doesn't support @Field, so we use a Map body.
   @DELETE('/device-tokens/unregister')
-  Future<Map<String, dynamic>> unregister({
+  Future<dynamic> unregister({
     @Body() required Map<String, dynamic> body,
   });
 }

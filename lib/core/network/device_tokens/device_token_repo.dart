@@ -29,7 +29,12 @@ class DeviceTokenRepo {
         appVersion: appVersion,
         locale: locale,
       );
-      return ApiResult.success(response['device_token_uuid'] as String?);
+      // `response` is `dynamic` (see NOTE in DeviceTokenClient) — cast to
+      // the shape the BE returns: {'device_token_uuid': String, ...}.
+      final map = response is Map<String, dynamic>
+          ? response
+          : (response is Map ? Map<String, dynamic>.from(response) : const <String, dynamic>{});
+      return ApiResult.success(map['device_token_uuid'] as String?);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
