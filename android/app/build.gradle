@@ -21,6 +21,10 @@ android {
     ndkVersion = "28.2.13676358"
 
     compileOptions {
+        // Required by flutter_local_notifications ^21 — enables backport of
+        // java.time APIs (used by the timezone package it depends on) to
+        // pre-API-26 Android devices via D8 desugaring.
+        coreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -59,4 +63,11 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Pair with `coreLibraryDesugaringEnabled = true` above. 2.1.4 is the
+    // minimum required by flutter_local_notifications ^21 — bumping to a
+    // lower version will fail at build time with the same AAR metadata error.
+    coreLibraryDesugaring 'com.android.tools.build:desugar_jdk_libs:2.1.4'
 }
