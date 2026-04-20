@@ -51,6 +51,21 @@ class PushNotificationService {
   StreamSubscription<RemoteMessage>? _onMessageSub;
   StreamSubscription<RemoteMessage>? _onMessageOpenedAppSub;
 
+  /// Completes as soon as the OS-level notification permission dialog flow
+  /// is finished (user approved, denied, or the platform had nothing to ask).
+  /// Other parts of the app — specifically [FoodlyLocationWrapper] — MUST
+  /// await this before requesting additional runtime permissions. Android
+  /// does not queue permission dialogs: a second `requestPermission` call
+  /// while the POST_NOTIFICATIONS dialog is still on screen is silently
+  /// denied without ever showing the second dialog, which is what bricked
+  /// the location flow on fresh installs during the 2026-04-20 smoke tests.
+  final Completer<void> _permissionFlowCompleter = Completer<void>();
+  Future<void> get permissionFlowComplete => _permissionFlowCompleter.future;
+
+  void _completePermissionFlow() {
+    if (!_permissionFlowCompleter.isCompleted) _permissionFlowCompleter.complete();
+  }
+
   /// Android foreground notification channel. Must match the channel id the
   /// BE (or the Notification SDK) puts in the payload.
   static const AndroidNotificationChannel _androidChannel = AndroidNotificationChannel(
@@ -72,11 +87,17 @@ class PushNotificationService {
 
   /// Idempotent — safe to call multiple times. Subsequent calls return early.
   Future<void> initialize() async {
-    if (_initialized) return;
+    if (_initialized) {
+      // Defensive: a second call before the first one settled the completer
+      // (unlikely but possible if main() races) must still unblock awaiters.
+      _completePermissionFlow();
+      return;
+    }
     if (kIsWeb) {
       // Web push is possible but requires a VAPID key + service worker
       // registration. Phase 2 — no-op for now.
       _initialized = true;
+      _completePermissionFlow();
       return;
     }
 
@@ -109,6 +130,14 @@ class PushNotificationService {
             .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
             ?.createNotificationChannel(_androidChannel);
       }
+
+      // Permission dialog flow is now finished on both platforms. Signal
+      // BEFORE the remaining wiring (local_notifications.initialize,
+      // listeners, onTokenRefresh, getInitialMessage) so the location
+      // permission prompt can unblock as soon as possible — those later
+      // steps don't surface any OS dialog and can finish asynchronously
+      // while the user deals with the location dialog.
+      _completePermissionFlow();
 
       // v21 API — initialize() takes all named parameters; `settings` (not
       // the old positional InitializationSettings) is now required.
@@ -166,6 +195,10 @@ class PushNotificationService {
       // Swallow: push is best-effort. In-app notification remains source of truth.
       _logger.w('PushNotificationService.initialize failed', error: e, stackTrace: s);
       _initialized = true; // don't retry — most failures are permanent (missing entitlement etc.)
+      // Must still release awaiters (location wrapper) — otherwise a broken
+      // Firebase setup would freeze the "verificando ubicación" button
+      // until the 5s timeout on the wrapper fires.
+      _completePermissionFlow();
     }
   }
 

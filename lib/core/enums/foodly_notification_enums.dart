@@ -49,7 +49,33 @@ enum FoodlyNotificationSubType {
   @JsonValue('reservation_cancelled')
   reservationCancelled('reservation_cancelled'),
   @JsonValue('reservation_cancelled_by_business')
-  reservationCancelledByBusiness('reservation_cancelled_by_business');
+  reservationCancelledByBusiness('reservation_cancelled_by_business'),
+  // --------------------------------------------------------------------
+  // Catering & Chefs service bookings (vertical launched Apr 2026).
+  // Emitted by BE ReservationController + ReservationMessageController
+  // and gated by NotificationController::PUSH_ELIGIBLE_SUBTYPES. These
+  // notifications carry the reservation_uuid in `data` because service
+  // bookings live in the same `reservations` table as dine-in/events.
+  //
+  // Adding a new subtype here requires:
+  //   1. matching string in BE Notification::SUBTYPE_SERVICE_* const
+  //   2. i18n entry in lang/{en,es,pt}/notifications.php
+  //   3. update to entityUuid / isServiceBookingNotification in
+  //      notifications_dm.dart so the tap-to-navigate works.
+  // The @JsonKey(unknownEnumValue: generalUpdate) on NotificationDM.subType
+  // prevents a missing entry here from breaking the whole list (it
+  // degrades silently to generalUpdate). Do not remove that safety net.
+  // --------------------------------------------------------------------
+  @JsonValue('service_booking_requested')
+  serviceBookingRequested('service_booking_requested'),
+  @JsonValue('service_quote_received')
+  serviceQuoteReceived('service_quote_received'),
+  @JsonValue('service_quote_approved')
+  serviceQuoteApproved('service_quote_approved'),
+  @JsonValue('service_quote_rejected')
+  serviceQuoteRejected('service_quote_rejected'),
+  @JsonValue('service_message_new')
+  serviceMessageNew('service_message_new');
 
   final String value;
   const FoodlyNotificationSubType(this.value);

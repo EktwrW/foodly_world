@@ -1,6 +1,7 @@
 import 'dart:async' show StreamSubscription, Timer;
 
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
@@ -30,14 +31,43 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     _dialogService = di<DialogService>();
     WidgetsBinding.instance.addObserver(this);
 
-    // Defer location check until after biometric auth resolves.
-    // LocalAuthCubit sets isBiometricLoginInProgress=true synchronously in its
-    // constructor for logged-in users, so the flag is visible by the time this
-    // postFrameCallback fires (~16ms / frame 1). Without this deferral the OS
-    // would show the location-permission dialog on top of the biometric dialog,
-    // cancelling the fingerprint/Face ID prompt.
+    // Defer location check until after BOTH permission flows that precede
+    // it have resolved:
+    //   1. Push notification permission (Android 13+ POST_NOTIFICATIONS +
+    //      iOS authorizationStatus). Fired fire-and-forget from main.dart
+    //      at startup. Android does not queue permission dialogs — asking
+    //      for location while the push dialog is still on screen is
+    //      silently denied without ever showing the location dialog.
+    //      Saw this live on fresh installs during the 2026-04-20 smoke
+    //      tests: "pide permiso de notificaciones, apruebo, y luego no
+    //      me pide permiso de localizacion".
+    //   2. Biometric auth. LocalAuthCubit sets isBiometricLoginInProgress
+    //      synchronously in its constructor for logged-in users, so the
+    //      flag is visible by the time the postFrameCallback fires
+    //      (~16ms / frame 1). Without this deferral the OS would show the
+    //      location-permission dialog on top of the biometric dialog,
+    //      cancelling the fingerprint/Face ID prompt.
     if (_locationService.mustFetchLocation) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        // 5s ceiling on the push permission wait. Covers the degenerate
+        // case where PushNotificationService.initialize() hangs (e.g.
+        // Firebase.initializeApp silently failed and the Completer is
+        // never settled — even though initialize() has a catch that
+        // releases the completer, we belt-and-suspenders with a timeout
+        // so the location button is NEVER stuck on "verificando
+        // ubicación" because of push). 5s is comfortably longer than a
+        // user tapping "Allow" on the push dialog.
+        try {
+          await di<PushNotificationService>()
+              .permissionFlowComplete
+              .timeout(const Duration(seconds: 5));
+        } catch (_) {
+          // Timeout or service missing — fall through; Android will either
+          // show both dialogs now that the race window is past, or the
+          // location dialog will surface first and push prompts on next
+          // launch.
+        }
         if (!mounted) return;
         // Guard: defer location check if biometric auth is active OR if
         // LocalAuthCubit is still mid-initialization (loading/needAuthentication).

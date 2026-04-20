@@ -68,7 +68,16 @@ class NotificationDM with _$NotificationDM {
     required int id,
     required String uuid,
     FoodlyNotificationType? type,
-    @JsonKey(name: 'sub_type') FoodlyNotificationSubType? subType,
+    // Defensive parsing: if the BE ships a subType the FE enum doesn't know
+    // about (e.g. a new vertical rolled out ahead of the FE patch), fall
+    // back to `generalUpdate` instead of throwing ArgumentError. Without
+    // this, a single unknown subtype in a page of results aborts the whole
+    // `fromJson` of NotificationsResponseDM and the user sees an empty
+    // list + the generic Dio error modal. Seen live on 2026-04-20 when the
+    // BE started emitting service_booking_* subtypes for the Catering &
+    // Chefs vertical before this enum was updated.
+    @JsonKey(name: 'sub_type', unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+    FoodlyNotificationSubType? subType,
     @Default('') String title,
     @Default('') String message,
     @JsonKey(name: 'is_read') @Default(false) bool isRead,
@@ -102,7 +111,17 @@ class NotificationDM with _$NotificationDM {
         FoodlyNotificationSubType.reservationConfirmed ||
         FoodlyNotificationSubType.reservationRejected ||
         FoodlyNotificationSubType.reservationCancelled ||
-        FoodlyNotificationSubType.reservationCancelledByBusiness =>
+        FoodlyNotificationSubType.reservationCancelledByBusiness ||
+        // Service bookings share the `reservations` table with dine-in so
+        // the tap-through target is the same (my-reservations / manage-
+        // reservations). The BE populates data.reservation_uuid for all of
+        // these — see ReservationController::createServiceBookingNotification
+        // and NotificationController::createNotification.
+        FoodlyNotificationSubType.serviceBookingRequested ||
+        FoodlyNotificationSubType.serviceQuoteReceived ||
+        FoodlyNotificationSubType.serviceQuoteApproved ||
+        FoodlyNotificationSubType.serviceQuoteRejected ||
+        FoodlyNotificationSubType.serviceMessageNew =>
           data?.reservationUuid,
         _ => null,
       };
@@ -119,5 +138,17 @@ class NotificationDM with _$NotificationDM {
         FoodlyNotificationSubType.reservationRejected,
         FoodlyNotificationSubType.reservationCancelled,
         FoodlyNotificationSubType.reservationCancelledByBusiness,
+      }.contains(subType);
+
+  /// Catering & Chefs service-booking notifications. Kept separate from
+  /// [isReservationNotification] so the UI can show a different icon /
+  /// copy if needed (e.g. a chef hat instead of a fork), even though both
+  /// groups deep-link to the reservations screens.
+  bool get isServiceBookingNotification => const {
+        FoodlyNotificationSubType.serviceBookingRequested,
+        FoodlyNotificationSubType.serviceQuoteReceived,
+        FoodlyNotificationSubType.serviceQuoteApproved,
+        FoodlyNotificationSubType.serviceQuoteRejected,
+        FoodlyNotificationSubType.serviceMessageNew,
       }.contains(subType);
 }

@@ -105,7 +105,8 @@ _$NotificationDMImpl _$$NotificationDMImplFromJson(Map<String, dynamic> json) =>
       uuid: json['uuid'] as String,
       type: $enumDecodeNullable(_$FoodlyNotificationTypeEnumMap, json['type']),
       subType: $enumDecodeNullable(
-          _$FoodlyNotificationSubTypeEnumMap, json['sub_type']),
+          _$FoodlyNotificationSubTypeEnumMap, json['sub_type'],
+          unknownValue: FoodlyNotificationSubType.generalUpdate),
       title: json['title'] as String? ?? '',
       message: json['message'] as String? ?? '',
       isRead: json['is_read'] as bool? ?? false,
@@ -160,4 +161,10 @@ const _$FoodlyNotificationSubTypeEnumMap = {
   FoodlyNotificationSubType.reservationCancelled: 'reservation_cancelled',
   FoodlyNotificationSubType.reservationCancelledByBusiness:
       'reservation_cancelled_by_business',
+  FoodlyNotificationSubType.serviceBookingRequested:
+      'service_booking_requested',
+  FoodlyNotificationSubType.serviceQuoteReceived: 'service_quote_received',
+  FoodlyNotificationSubType.serviceQuoteApproved: 'service_quote_approved',
+  FoodlyNotificationSubType.serviceQuoteRejected: 'service_quote_rejected',
+  FoodlyNotificationSubType.serviceMessageNew: 'service_message_new',
 };

@@ -1171,8 +1171,18 @@ NotificationDM _$NotificationDMFromJson(Map<String, dynamic> json) {
 mixin _$NotificationDM {
   int get id => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
-  FoodlyNotificationType? get type => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sub_type')
+  FoodlyNotificationType? get type =>
+      throw _privateConstructorUsedError; // Defensive parsing: if the BE ships a subType the FE enum doesn't know
+// about (e.g. a new vertical rolled out ahead of the FE patch), fall
+// back to `generalUpdate` instead of throwing ArgumentError. Without
+// this, a single unknown subtype in a page of results aborts the whole
+// `fromJson` of NotificationsResponseDM and the user sees an empty
+// list + the generic Dio error modal. Seen live on 2026-04-20 when the
+// BE started emitting service_booking_* subtypes for the Catering &
+// Chefs vertical before this enum was updated.
+  @JsonKey(
+      name: 'sub_type',
+      unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
   FoodlyNotificationSubType? get subType => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
@@ -1204,7 +1214,10 @@ abstract class $NotificationDMCopyWith<$Res> {
       {int id,
       String uuid,
       FoodlyNotificationType? type,
-      @JsonKey(name: 'sub_type') FoodlyNotificationSubType? subType,
+      @JsonKey(
+          name: 'sub_type',
+          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+      FoodlyNotificationSubType? subType,
       String title,
       String message,
       @JsonKey(name: 'is_read') bool isRead,
@@ -1312,7 +1325,10 @@ abstract class _$$NotificationDMImplCopyWith<$Res>
       {int id,
       String uuid,
       FoodlyNotificationType? type,
-      @JsonKey(name: 'sub_type') FoodlyNotificationSubType? subType,
+      @JsonKey(
+          name: 'sub_type',
+          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+      FoodlyNotificationSubType? subType,
       String title,
       String message,
       @JsonKey(name: 'is_read') bool isRead,
@@ -1400,7 +1416,10 @@ class _$NotificationDMImpl extends _NotificationDM {
       {required this.id,
       required this.uuid,
       this.type,
-      @JsonKey(name: 'sub_type') this.subType,
+      @JsonKey(
+          name: 'sub_type',
+          unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+      this.subType,
       this.title = '',
       this.message = '',
       @JsonKey(name: 'is_read') this.isRead = false,
@@ -1418,8 +1437,18 @@ class _$NotificationDMImpl extends _NotificationDM {
   final String uuid;
   @override
   final FoodlyNotificationType? type;
+// Defensive parsing: if the BE ships a subType the FE enum doesn't know
+// about (e.g. a new vertical rolled out ahead of the FE patch), fall
+// back to `generalUpdate` instead of throwing ArgumentError. Without
+// this, a single unknown subtype in a page of results aborts the whole
+// `fromJson` of NotificationsResponseDM and the user sees an empty
+// list + the generic Dio error modal. Seen live on 2026-04-20 when the
+// BE started emitting service_booking_* subtypes for the Catering &
+// Chefs vertical before this enum was updated.
   @override
-  @JsonKey(name: 'sub_type')
+  @JsonKey(
+      name: 'sub_type',
+      unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
   final FoodlyNotificationSubType? subType;
   @override
   @JsonKey()
@@ -1490,7 +1519,10 @@ abstract class _NotificationDM extends NotificationDM {
           {required final int id,
           required final String uuid,
           final FoodlyNotificationType? type,
-          @JsonKey(name: 'sub_type') final FoodlyNotificationSubType? subType,
+          @JsonKey(
+              name: 'sub_type',
+              unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
+          final FoodlyNotificationSubType? subType,
           final String title,
           final String message,
           @JsonKey(name: 'is_read') final bool isRead,
@@ -1508,9 +1540,19 @@ abstract class _NotificationDM extends NotificationDM {
   @override
   String get uuid;
   @override
-  FoodlyNotificationType? get type;
+  FoodlyNotificationType?
+      get type; // Defensive parsing: if the BE ships a subType the FE enum doesn't know
+// about (e.g. a new vertical rolled out ahead of the FE patch), fall
+// back to `generalUpdate` instead of throwing ArgumentError. Without
+// this, a single unknown subtype in a page of results aborts the whole
+// `fromJson` of NotificationsResponseDM and the user sees an empty
+// list + the generic Dio error modal. Seen live on 2026-04-20 when the
+// BE started emitting service_booking_* subtypes for the Catering &
+// Chefs vertical before this enum was updated.
   @override
-  @JsonKey(name: 'sub_type')
+  @JsonKey(
+      name: 'sub_type',
+      unknownEnumValue: FoodlyNotificationSubType.generalUpdate)
   FoodlyNotificationSubType? get subType;
   @override
   String get title;
