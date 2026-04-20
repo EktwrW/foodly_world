@@ -1,6 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Push notifications: Android 13+ (API 33+) requires POST_NOTIFICATIONS
+         declared in the manifest AND requested at runtime via
+         FirebaseMessaging.instance.requestPermission(). Without this, FCM
+         payloads still arrive (in-app logic fires on open) but the OS
+         silently drops the tray notification — matching the "no push on
+         Android phone/tablet but in-app dialog works" bug seen in
+         PT-launch smoke tests. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- Para login: -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
