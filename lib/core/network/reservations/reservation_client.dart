@@ -97,12 +97,25 @@ abstract class ReservationClient {
   @POST('/reservations/{uuid}/approve-quote')
   Future<ReservationActionResponseDM> approveQuote(@Path('uuid') String uuid);
 
+  @POST('/reservations/{uuid}/reject-quote')
+  Future<ReservationActionResponseDM> rejectQuote(
+    @Path('uuid') String uuid, {
+    @Field('rejection_reason') String? rejectionReason,
+  });
+
   // ── Reservation messages ───────────────────────────────────────
 
+  /// Fetch the message thread.
+  ///
+  /// When [since] is null the server returns the full thread (initial load).
+  /// When [since] is an ISO8601 string, the server returns only messages with
+  /// `created_at > since` (poll delta). Use the `server_now` field from the
+  /// previous response as the next [since] — never the client clock.
   @GET('/reservations/{reservationUuid}/messages')
   Future<ReservationMessagesResponseDM> getMessages(
-    @Path('reservationUuid') String reservationUuid,
-  );
+    @Path('reservationUuid') String reservationUuid, {
+    @Query('since') String? since,
+  });
 
   @POST('/reservations/{reservationUuid}/messages')
   Future<ReservationMessageCreateResponseDM> sendMessage(

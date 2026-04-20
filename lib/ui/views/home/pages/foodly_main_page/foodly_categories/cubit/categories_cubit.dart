@@ -9,6 +9,7 @@ import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show LocalStorageService, di, FoodlyStrings, Logger;
 import 'package:foodly_world/data_models/business/business_dm.dart';
+import 'package:foodly_world/data_models/service_packages/service_package_dm.dart' show ServiceType;
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -49,7 +50,44 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   void changeCategory(FoodlyCategories category) async {
     await di<LocalStorageService>().saveString(FoodlyStrings.LAST_CATEGORY_VISITED, category.name);
 
-    emit(_Loaded(_vm = _vm.copyWith(currentCategory: category)));
+    // Switching AWAY from catering clears the service_type/ordering filters so
+    // they don't persist silently when the user comes back. Reuse defaults.
+    final leavingCatering = _vm.isCateringCategory && !category.isCateringOrChefs;
+
+    _vm = _vm.copyWith(
+      currentCategory: category,
+      selectedServiceType: leavingCatering ? null : _vm.selectedServiceType,
+      ordering: leavingCatering ? DiscoveryOrdering.distance : _vm.ordering,
+    );
+
+    emit(_Loaded(_vm));
+  }
+
+  /// Catering & Chefs — toggle the active service_type chip. Passing the
+  /// currently selected type clears the filter ("All" behaviour).
+  void selectServiceType(ServiceType? type) {
+    final newType = (_vm.selectedServiceType == type) ? null : type;
+    _vm = _vm.copyWith(selectedServiceType: newType, isSwitchingRadius: true);
+    emit(_Loaded(_vm));
+    fetchNearbyBusinesses(
+      latitude: _vm.latitude!,
+      longitude: _vm.longitude!,
+      radius: _vm.radiusDistanceInKm,
+      switchingRadius: true,
+    );
+  }
+
+  /// Catering & Chefs — switch between distance / price_asc / rating_desc.
+  void changeOrdering(DiscoveryOrdering ordering) {
+    if (_vm.ordering == ordering) return;
+    _vm = _vm.copyWith(ordering: ordering, isSwitchingRadius: true);
+    emit(_Loaded(_vm));
+    fetchNearbyBusinesses(
+      latitude: _vm.latitude!,
+      longitude: _vm.longitude!,
+      radius: _vm.radiusDistanceInKm,
+      switchingRadius: true,
+    );
   }
 
   Future<void> fetchNearbyBusinesses({
@@ -78,6 +116,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       });
     }
 
+    // Catering-only filters: the BE ignores these when the category is not
+    // Catering, but we still guard here so we don't spam the network with
+    // values that are about to be discarded.
+    final isCatering = _vm.isCateringCategory;
+    final serviceTypeParam = isCatering ? _vm.selectedServiceType?.apiValue : null;
+    final orderingParam = isCatering && _vm.ordering != DiscoveryOrdering.distance ? _vm.ordering.apiValue : null;
+
     await _businessRepo
         .fetchNearbyBusinesses(
       latitude: latitude,
@@ -85,6 +130,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       radius: radius,
       categoryId: categoryId,
       limit: limit,
+      serviceType: serviceTypeParam,
+      ordering: orderingParam,
     )
         .then((result) {
       return result.when(

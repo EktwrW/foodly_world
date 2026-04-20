@@ -83,6 +83,13 @@ mixin _$BusinessDM {
   int get aiPromoMonthlyLimit => throw _privateConstructorUsedError;
   @JsonKey(name: 'ai_promos_used_this_month')
   int get aiPromosUsedThisMonth =>
+      throw _privateConstructorUsedError; // Catering & Chefs vertical — MIN price across ACTIVE service_packages
+// for this business (EUR). Only populated by endpoints that join the
+// subselect (currently: GET /business/nearby). Null when the business has
+// no priced active package (restaurants without packages, or catering
+// providers that only offer on-quote packages).
+  @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+  double? get minServicePrice =>
       throw _privateConstructorUsedError; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   List<ReviewDM> get reviews => throw _privateConstructorUsedError;
 
@@ -135,6 +142,8 @@ abstract class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+      double? minServicePrice,
       List<ReviewDM> reviews});
 
   $CategoryDMCopyWith<$Res>? get category;
@@ -187,6 +196,7 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? combosLabel = freezed,
     Object? aiPromoMonthlyLimit = null,
     Object? aiPromosUsedThisMonth = null,
+    Object? minServicePrice = freezed,
     Object? reviews = null,
   }) {
     return _then(_value.copyWith(
@@ -314,6 +324,10 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
           ? _value.aiPromosUsedThisMonth
           : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
               as int,
+      minServicePrice: freezed == minServicePrice
+          ? _value.minServicePrice
+          : minServicePrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       reviews: null == reviews
           ? _value.reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -387,6 +401,8 @@ abstract class _$$BusinessDMImplCopyWith<$Res>
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+      double? minServicePrice,
       List<ReviewDM> reviews});
 
   @override
@@ -439,6 +455,7 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
     Object? combosLabel = freezed,
     Object? aiPromoMonthlyLimit = null,
     Object? aiPromosUsedThisMonth = null,
+    Object? minServicePrice = freezed,
     Object? reviews = null,
   }) {
     return _then(_$BusinessDMImpl(
@@ -566,6 +583,10 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
           ? _value.aiPromosUsedThisMonth
           : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
               as int,
+      minServicePrice: freezed == minServicePrice
+          ? _value.minServicePrice
+          : minServicePrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       reviews: null == reviews
           ? _value._reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -615,6 +636,8 @@ class _$BusinessDMImpl extends _BusinessDM {
       @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 6,
       @JsonKey(name: 'ai_promos_used_this_month')
       this.aiPromosUsedThisMonth = 0,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+      this.minServicePrice,
       final List<ReviewDM> reviews = const []})
       : _coverImages = coverImages,
         _branches = branches,
@@ -754,6 +777,14 @@ class _$BusinessDMImpl extends _BusinessDM {
   @override
   @JsonKey(name: 'ai_promos_used_this_month')
   final int aiPromosUsedThisMonth;
+// Catering & Chefs vertical — MIN price across ACTIVE service_packages
+// for this business (EUR). Only populated by endpoints that join the
+// subselect (currently: GET /business/nearby). Null when the business has
+// no priced active package (restaurants without packages, or catering
+// providers that only offer on-quote packages).
+  @override
+  @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+  final double? minServicePrice;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   final List<ReviewDM> _reviews;
 // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
@@ -767,7 +798,7 @@ class _$BusinessDMImpl extends _BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 
   @override
@@ -823,6 +854,8 @@ class _$BusinessDMImpl extends _BusinessDM {
                 other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
             (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
                 other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
+            (identical(other.minServicePrice, minServicePrice) ||
+                other.minServicePrice == minServicePrice) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews));
   }
 
@@ -861,6 +894,7 @@ class _$BusinessDMImpl extends _BusinessDM {
         combosLabel,
         aiPromoMonthlyLimit,
         aiPromosUsedThisMonth,
+        minServicePrice,
         const DeepCollectionEquality().hash(_reviews)
       ]);
 
@@ -917,6 +951,8 @@ abstract class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'ai_promo_monthly_limit') final int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month')
       final int aiPromosUsedThisMonth,
+      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+      final double? minServicePrice,
       final List<ReviewDM> reviews}) = _$BusinessDMImpl;
   const _BusinessDM._() : super._();
 
@@ -1015,7 +1051,15 @@ abstract class _BusinessDM extends BusinessDM {
   int get aiPromoMonthlyLimit;
   @override
   @JsonKey(name: 'ai_promos_used_this_month')
-  int get aiPromosUsedThisMonth; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
+  int get aiPromosUsedThisMonth; // Catering & Chefs vertical — MIN price across ACTIVE service_packages
+// for this business (EUR). Only populated by endpoints that join the
+// subselect (currently: GET /business/nearby). Null when the business has
+// no priced active package (restaurants without packages, or catering
+// providers that only offer on-quote packages).
+  @override
+  @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+  double?
+      get minServicePrice; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
   @override
   List<ReviewDM> get reviews;
 

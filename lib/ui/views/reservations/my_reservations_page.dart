@@ -263,6 +263,9 @@ class _ReservationsList extends StatelessWidget {
                       onApproveQuote: reservation.canApproveQuote
                           ? () => _confirmApproveQuote(context, cubit, reservation)
                           : null,
+                      onRejectQuote: reservation.canRejectQuote
+                          ? () => _confirmRejectQuote(context, cubit, reservation)
+                          : null,
                       onOpenMessages: reservation.isServiceBooking && reservation.reservationUuid != null
                           ? () => showReservationMessagesSheet(
                                 context,
@@ -303,6 +306,28 @@ class _ReservationsList extends StatelessWidget {
             child: Text(S.current.yesCancel, style: TextStyle(color: Colors.red.shade700)),
           ),
         ],
+      ),
+    );
+  }
+
+  void _confirmRejectQuote(BuildContext context, MyReservationsCubit cubit, ReservationDM reservation) {
+    showDialog(
+      context: context,
+      builder: (ctx) => _RejectQuoteDialog(
+        reservation: reservation,
+        onSubmit: (reason) async {
+          Navigator.pop(ctx);
+          final success = await cubit.rejectQuote(
+            reservation.reservationUuid!,
+            rejectionReason: reason,
+          );
+          if (context.mounted) {
+            FoodlySnackbars.successGeneric(
+              context,
+              success ? S.current.quoteRejected : S.current.somethingWentWrong,
+            );
+          }
+        },
       ),
     );
   }
@@ -355,6 +380,88 @@ class _ReservationsList extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Confirmation dialog for rejecting a quote. Collects an optional
+/// `rejection_reason` (<= 500 chars) the business side will see appended to
+/// manager_notes. Reject is a terminal action — the reservation moves to
+/// STATUS_REJECTED and cannot be re-quoted without a new booking request.
+class _RejectQuoteDialog extends StatefulWidget {
+  final ReservationDM reservation;
+  final ValueChanged<String?> onSubmit;
+
+  const _RejectQuoteDialog({
+    required this.reservation,
+    required this.onSubmit,
+  });
+
+  @override
+  State<_RejectQuoteDialog> createState() => _RejectQuoteDialogState();
+}
+
+class _RejectQuoteDialogState extends State<_RejectQuoteDialog> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(S.current.confirmRejectQuote),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(S.current.confirmRejectQuoteMessage),
+          if (widget.reservation.hasQuote) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.06),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                '${S.current.quotedAmount}: €${widget.reservation.quotedAmount!.toStringAsFixed(2)}',
+                style: TextStyle(fontWeight: FontWeight.w600, color: Colors.red.shade700),
+              ),
+            ),
+          ],
+          const SizedBox(height: 14),
+          TextField(
+            controller: _controller,
+            maxLines: 3,
+            maxLength: 500,
+            textInputAction: TextInputAction.newline,
+            decoration: InputDecoration(
+              labelText: S.current.rejectionReasonOptional,
+              hintText: S.current.rejectionReasonHint,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(S.current.cancel),
+        ),
+        TextButton(
+          onPressed: () {
+            final reason = _controller.text.trim();
+            widget.onSubmit(reason.isEmpty ? null : reason);
+          },
+          style: TextButton.styleFrom(foregroundColor: Colors.red.shade700),
+          child: Text(S.current.rejectQuote),
+        ),
+      ],
     );
   }
 }

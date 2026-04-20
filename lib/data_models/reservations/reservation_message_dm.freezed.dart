@@ -22,6 +22,8 @@ ReservationMessagesResponseDM _$ReservationMessagesResponseDMFromJson(
 /// @nodoc
 mixin _$ReservationMessagesResponseDM {
   List<ReservationMessageDM> get messages => throw _privateConstructorUsedError;
+  @JsonKey(name: 'server_now')
+  DateTime? get serverNow => throw _privateConstructorUsedError;
 
   /// Serializes this ReservationMessagesResponseDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +43,9 @@ abstract class $ReservationMessagesResponseDMCopyWith<$Res> {
       _$ReservationMessagesResponseDMCopyWithImpl<$Res,
           ReservationMessagesResponseDM>;
   @useResult
-  $Res call({List<ReservationMessageDM> messages});
+  $Res call(
+      {List<ReservationMessageDM> messages,
+      @JsonKey(name: 'server_now') DateTime? serverNow});
 }
 
 /// @nodoc
@@ -61,12 +65,17 @@ class _$ReservationMessagesResponseDMCopyWithImpl<$Res,
   @override
   $Res call({
     Object? messages = null,
+    Object? serverNow = freezed,
   }) {
     return _then(_value.copyWith(
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<ReservationMessageDM>,
+      serverNow: freezed == serverNow
+          ? _value.serverNow
+          : serverNow // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -80,7 +89,9 @@ abstract class _$$ReservationMessagesResponseDMImplCopyWith<$Res>
       __$$ReservationMessagesResponseDMImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ReservationMessageDM> messages});
+  $Res call(
+      {List<ReservationMessageDM> messages,
+      @JsonKey(name: 'server_now') DateTime? serverNow});
 }
 
 /// @nodoc
@@ -99,12 +110,17 @@ class __$$ReservationMessagesResponseDMImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? messages = null,
+    Object? serverNow = freezed,
   }) {
     return _then(_$ReservationMessagesResponseDMImpl(
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<ReservationMessageDM>,
+      serverNow: freezed == serverNow
+          ? _value.serverNow
+          : serverNow // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -114,7 +130,8 @@ class __$$ReservationMessagesResponseDMImplCopyWithImpl<$Res>
 class _$ReservationMessagesResponseDMImpl
     implements _ReservationMessagesResponseDM {
   const _$ReservationMessagesResponseDMImpl(
-      {final List<ReservationMessageDM> messages = const []})
+      {final List<ReservationMessageDM> messages = const [],
+      @JsonKey(name: 'server_now') this.serverNow})
       : _messages = messages;
 
   factory _$ReservationMessagesResponseDMImpl.fromJson(
@@ -131,8 +148,12 @@ class _$ReservationMessagesResponseDMImpl
   }
 
   @override
+  @JsonKey(name: 'server_now')
+  final DateTime? serverNow;
+
+  @override
   String toString() {
-    return 'ReservationMessagesResponseDM(messages: $messages)';
+    return 'ReservationMessagesResponseDM(messages: $messages, serverNow: $serverNow)';
   }
 
   @override
@@ -140,13 +161,15 @@ class _$ReservationMessagesResponseDMImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReservationMessagesResponseDMImpl &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            const DeepCollectionEquality().equals(other._messages, _messages) &&
+            (identical(other.serverNow, serverNow) ||
+                other.serverNow == serverNow));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_messages));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_messages), serverNow);
 
   /// Create a copy of ReservationMessagesResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -169,7 +192,8 @@ class _$ReservationMessagesResponseDMImpl
 abstract class _ReservationMessagesResponseDM
     implements ReservationMessagesResponseDM {
   const factory _ReservationMessagesResponseDM(
-          {final List<ReservationMessageDM> messages}) =
+          {final List<ReservationMessageDM> messages,
+          @JsonKey(name: 'server_now') final DateTime? serverNow}) =
       _$ReservationMessagesResponseDMImpl;
 
   factory _ReservationMessagesResponseDM.fromJson(Map<String, dynamic> json) =
@@ -177,6 +201,9 @@ abstract class _ReservationMessagesResponseDM
 
   @override
   List<ReservationMessageDM> get messages;
+  @override
+  @JsonKey(name: 'server_now')
+  DateTime? get serverNow;
 
   /// Create a copy of ReservationMessagesResponseDM
   /// with the given fields replaced by the non-null parameter values.

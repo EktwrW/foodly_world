@@ -10,6 +10,8 @@ import 'package:foodly_world/core/network/business_availability/business_availab
 import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
 import 'package:foodly_world/core/network/buzz/buzz_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
+import 'package:foodly_world/core/network/device_tokens/device_token_client.dart';
+import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
@@ -24,6 +26,7 @@ import 'package:foodly_world/core/network/service_packages/service_package_repo.
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
+import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
@@ -71,6 +74,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ReservationClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BusinessAvailabilityClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ServicePackageClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => DeviceTokenClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
       ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
@@ -90,6 +94,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ReservationRepo(reservationClient: di()))
       ..registerLazySingleton(() => BusinessAvailabilityRepo(client: di()))
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))
+      ..registerLazySingleton(() => DeviceTokenRepo(client: di()))
       ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()));
 
     /// Register services
@@ -105,6 +110,17 @@ class DependencyInjectionService {
 
     // Fire-and-forget: computes platform + device metadata once at startup.
     unawaited(authService.initDeviceMetadata());
+
+    /// Push notifications (FCM). Service is a singleton — [initialize] is
+    /// called in main.dart right after Firebase.initializeApp, and
+    /// [registerCurrentToken] / [unregisterCurrentToken] are invoked by
+    /// AuthSessionService on login/session-restore and logout respectively.
+    final pushService = PushNotificationService(
+      deviceTokenRepo: di(),
+      logger: di(),
+    );
+    di.registerSingleton<PushNotificationService>(pushService);
+    authService.setPushNotificationService(pushService);
 
     di.registerLazySingleton(() => EventTrackingService(
           client: di(),

@@ -1,7 +1,10 @@
+import 'dart:async' show unawaited;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/firebase_options.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
@@ -28,6 +31,11 @@ Future<Widget> buildFoodlyApp() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   final config = BaseConfig.initConfig();
   DependencyInjectionService.registerDependencies(config);
+
+  // Initialize FCM push notifications once DI is wired. The service itself
+  // is silent-failure-by-design — if credentials are missing or permissions
+  // denied, it logs and moves on without blocking startup.
+  unawaited(di<PushNotificationService>().initialize());
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory:
         kIsWeb ? HydratedStorageDirectory.web : HydratedStorageDirectory((await getTemporaryDirectory()).path),

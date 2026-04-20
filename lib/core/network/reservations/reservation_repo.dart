@@ -205,11 +205,37 @@ class ReservationRepo {
     }
   }
 
+  Future<ApiResult<ReservationActionResponseDM>> rejectQuote(
+    String uuid, {
+    String? rejectionReason,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _reservationClient.rejectQuote(uuid, rejectionReason: rejectionReason),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   // ── Reservation messages ───────────────────────────────────────
 
-  Future<ApiResult<ReservationMessagesResponseDM>> getMessages(String reservationUuid) async {
+  /// Fetch the reservation message thread.
+  ///
+  /// [since] — when non-null, requests only messages created AFTER that
+  /// timestamp. Pass the `serverNow` from the previous response here so the
+  /// server clock is the source of truth (see ReservationMessagesResponseDM).
+  Future<ApiResult<ReservationMessagesResponseDM>> getMessages(
+    String reservationUuid, {
+    DateTime? since,
+  }) async {
     try {
-      return ApiResult.success(await _reservationClient.getMessages(reservationUuid));
+      return ApiResult.success(
+        await _reservationClient.getMessages(
+          reservationUuid,
+          since: since?.toIso8601String(),
+        ),
+      );
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

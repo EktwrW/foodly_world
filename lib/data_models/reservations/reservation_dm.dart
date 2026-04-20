@@ -188,6 +188,7 @@ class ReservationDM with _$ReservationDM {
   bool get canBeActedOnByManager => isPending;
   bool get canReceiveQuote => isServiceBooking && isPending;
   bool get canApproveQuote => isServiceBooking && isQuoted;
+  bool get canRejectQuote => isServiceBooking && isQuoted;
   bool get hasQuote => quotedAmount != null && quotedAmount! > 0;
 
   // Content helpers

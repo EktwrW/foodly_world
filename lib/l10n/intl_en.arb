@@ -955,6 +955,21 @@
   "eventTypeCocktail": "Cocktail",
   "eventTypeCookingClassPrivate": "Private cooking class",
   "eventTypeCustom": "Custom",
+  "serviceTypeAll": "All",
+  "orderingLabel": "Sort by",
+  "orderingDistance": "Distance",
+  "orderingPriceAsc": "Price",
+  "orderingRatingDesc": "Rating",
+  "priceFromBadge": "from €{price}",
+  "@priceFromBadge": {
+    "description": "Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "150"
+      }
+    }
+  },
   "requestService": "Request service",
   "requestQuote": "Request quote",
   "quoteApproved": "Quote approved",
@@ -965,10 +980,22 @@
   "typeMessage": "Type a message...",
   "noMessagesYet": "No messages yet",
   "messageThread": "Message thread",
+  "reconnecting": "Reconnecting…",
+  "oneNewMessage": "1 new message",
+  "nNewMessages": "{count} new messages",
+  "@nNewMessages": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "enterQuoteAmount": "Enter quote amount",
   "quoteNotes": "Quote notes (optional)",
   "confirmApproveQuote": "Approve this quote?",
   "confirmApproveQuoteMessage": "By approving, you confirm the booking. Payment is handled outside the platform.",
+  "rejectQuote": "Reject",
+  "quoteRejected": "Quote rejected",
+  "confirmRejectQuote": "Reject this quote?",
+  "confirmRejectQuoteMessage": "Rejecting closes this request and notifies the business. This action can't be undone.",
+  "rejectionReasonOptional": "Reason (optional)",
+  "rejectionReasonHint": "Help the business understand why the booking didn't go through",
   "paymentOffPlatform": "Payment outside the platform",
   "eventLocation": "Event location",
   "bookingDetail": "Booking detail",

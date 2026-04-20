@@ -61,6 +61,7 @@ _$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
           (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 6,
       aiPromosUsedThisMonth:
           (json['ai_promos_used_this_month'] as num?)?.toInt() ?? 0,
+      minServicePrice: _doubleFromJson(json['min_service_price']),
       reviews: (json['reviews'] as List<dynamic>?)
               ?.map((e) => ReviewDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -106,6 +107,8 @@ Map<String, dynamic> _$$BusinessDMImplToJson(_$BusinessDMImpl instance) =>
       if (instance.combosLabel case final value?) 'combos_label': value,
       'ai_promo_monthly_limit': instance.aiPromoMonthlyLimit,
       'ai_promos_used_this_month': instance.aiPromosUsedThisMonth,
+      if (instance.minServicePrice case final value?)
+        'min_service_price': value,
       'reviews': instance.reviews.map((e) => e.toJson()).toList(),
     };
 

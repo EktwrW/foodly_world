@@ -695,6 +695,9 @@ class BusinessRepo {
     double? radius,
     int? categoryId,
     int? limit,
+    String? serviceType,
+    String? ordering,
+    double? maxPrice,
   }) async {
     try {
       return ApiResult.success(await _businessClient.fetchNearbyBusinesses(
@@ -703,6 +706,9 @@ class BusinessRepo {
         radius: radius,
         categoryId: categoryId,
         limit: limit,
+        serviceType: serviceType,
+        ordering: ordering,
+        maxPrice: maxPrice,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

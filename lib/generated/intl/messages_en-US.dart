@@ -68,41 +68,45 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m19(maxSize) => "Max Size: ${maxSize}";
 
-  static String m20(radius) =>
+  static String m20(count) => "${count} new messages";
+
+  static String m21(radius) =>
       "No nearby businesses in this category within ${radius} km.";
 
-  static String m21(text) => "Notes: ${text}";
+  static String m22(text) => "Notes: ${text}";
 
-  static String m22(count) => "Party size: ${count}";
+  static String m23(count) => "Party size: ${count}";
 
-  static String m23(count) => "You have ${count} pending reservations";
+  static String m24(count) => "You have ${count} pending reservations";
 
-  static String m24(action, errorMsg) =>
+  static String m25(action, errorMsg) =>
       "Something went wrong when ${action} the item photo(s): ${errorMsg}";
 
-  static String m25(maxImages) =>
+  static String m26(maxImages) =>
       "Press to add photos, up to a maximum of ${maxImages} images";
 
-  static String m26(seconds) => "Resend in ${seconds}s";
+  static String m27(price) => "from €${price}";
 
-  static String m27(businessName) => "Reserve a table at ${businessName}";
+  static String m28(seconds) => "Resend in ${seconds}s";
 
-  static String m28(city) => "Search in ${city}...";
+  static String m29(businessName) => "Reserve a table at ${businessName}";
 
-  static String m29(businessName, appName, menuUrl) =>
+  static String m30(city) => "Search in ${city}...";
+
+  static String m31(businessName, appName, menuUrl) =>
       "🍽️ Check out ${businessName}\'s menu on 🌟 ${appName}: \n${menuUrl}";
 
-  static String m30(text) => "Special requests: ${text}";
+  static String m32(text) => "Special requests: ${text}";
 
-  static String m31(count) => "${count}d ago";
+  static String m33(count) => "${count}d ago";
 
-  static String m32(count) => "${count}h ago";
+  static String m34(count) => "${count}h ago";
 
-  static String m33(count) => "${count}m ago";
+  static String m35(count) => "${count}m ago";
 
-  static String m34(date) => "Visited on ${date}";
+  static String m36(date) => "Visited on ${date}";
 
-  static String m35(businessName) => "Write a review for ${businessName}";
+  static String m37(businessName) => "Write a review for ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -463,6 +467,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "confirmPhoneForVerification": MessageLookupByLibrary.simpleMessage(
       "Confirm the phone number to receive your verification code.",
+    ),
+    "confirmRejectQuote": MessageLookupByLibrary.simpleMessage(
+      "Reject this quote?",
+    ),
+    "confirmRejectQuoteMessage": MessageLookupByLibrary.simpleMessage(
+      "Rejecting closes this request and notifies the business. This action can\'t be undone.",
     ),
     "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
     "connectionError": MessageLookupByLibrary.simpleMessage(
@@ -949,6 +959,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "myFavorites": MessageLookupByLibrary.simpleMessage("My Favorites"),
     "myHistory": MessageLookupByLibrary.simpleMessage("My History"),
     "myReservations": MessageLookupByLibrary.simpleMessage("My Reservations"),
+    "nNewMessages": m20,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "Need the best recommendations?",
     ),
@@ -973,7 +984,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "There are no items added yet",
     ),
     "noMessagesYet": MessageLookupByLibrary.simpleMessage("No messages yet"),
-    "noNearbyBusinessesInCategory": m20,
+    "noNearbyBusinessesInCategory": m21,
     "noNewBranches": MessageLookupByLibrary.simpleMessage(
       "No new businesses in your area yet",
     ),
@@ -1011,7 +1022,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Not in your country yet?",
     ),
     "note": MessageLookupByLibrary.simpleMessage("Note"),
-    "notesLabel": m21,
+    "notesLabel": m22,
     "notification": MessageLookupByLibrary.simpleMessage("Notification"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "november": MessageLookupByLibrary.simpleMessage("November"),
@@ -1019,6 +1030,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Let\'s go!"),
     "onQuote": MessageLookupByLibrary.simpleMessage("On quote"),
     "onSite": MessageLookupByLibrary.simpleMessage("On site"),
+    "oneNewMessage": MessageLookupByLibrary.simpleMessage("1 new message"),
     "onlyContainLetters": MessageLookupByLibrary.simpleMessage(
       "Can only contain letters and one space between words",
     ),
@@ -1032,6 +1044,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "openSettings": MessageLookupByLibrary.simpleMessage("Open Settings"),
     "openSoon": MessageLookupByLibrary.simpleMessage("Open soon"),
     "optional": MessageLookupByLibrary.simpleMessage("Optional"),
+    "orderingDistance": MessageLookupByLibrary.simpleMessage("Distance"),
+    "orderingLabel": MessageLookupByLibrary.simpleMessage("Sort by"),
+    "orderingPriceAsc": MessageLookupByLibrary.simpleMessage("Price"),
+    "orderingRatingDesc": MessageLookupByLibrary.simpleMessage("Rating"),
     "other": MessageLookupByLibrary.simpleMessage("Other"),
     "outdoorSeating": MessageLookupByLibrary.simpleMessage("Outdoor Seating"),
     "outsideCoverage": MessageLookupByLibrary.simpleMessage(
@@ -1047,7 +1063,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "packages": MessageLookupByLibrary.simpleMessage("Packages"),
     "parking": MessageLookupByLibrary.simpleMessage("Parking"),
     "partySize": MessageLookupByLibrary.simpleMessage("Party size:"),
-    "partySizeCount": m22,
+    "partySizeCount": m23,
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordInstructions": MessageLookupByLibrary.simpleMessage(
       "The password must be at least 8 characters long, include a number, a lowercase letter, and an uppercase letter",
@@ -1059,7 +1075,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Payment outside the platform",
     ),
     "pending": MessageLookupByLibrary.simpleMessage("Pending"),
-    "pendingReservationsAlertMany": m23,
+    "pendingReservationsAlertMany": m24,
     "pendingReservationsAlertOne": MessageLookupByLibrary.simpleMessage(
       "You have 1 pending reservation",
     ),
@@ -1076,7 +1092,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "photosDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Item photos deleted successfully",
     ),
-    "photosSaveError": m24,
+    "photosSaveError": m25,
     "pizzerias": MessageLookupByLibrary.simpleMessage("Pizzerias"),
     "platformError": MessageLookupByLibrary.simpleMessage("Platform Error"),
     "pleaseAddYourBusinessAddress": MessageLookupByLibrary.simpleMessage(
@@ -1127,9 +1143,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "postsFeedNoPosts": MessageLookupByLibrary.simpleMessage("No posts yet"),
     "preferNotToSay": MessageLookupByLibrary.simpleMessage("Prefer not to say"),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
-    "pressToAddPhotosUpToMaxImages": m25,
+    "pressToAddPhotosUpToMaxImages": m26,
     "previousMonth": MessageLookupByLibrary.simpleMessage("Previous month"),
     "price": MessageLookupByLibrary.simpleMessage("Price"),
+    "priceFromBadge": m27,
     "priceType": MessageLookupByLibrary.simpleMessage("Price type"),
     "priceValidation": MessageLookupByLibrary.simpleMessage(
       "Price value must be not null and greater than 0.09",
@@ -1153,6 +1170,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Quote notes (optional)",
     ),
     "quoteReceived": MessageLookupByLibrary.simpleMessage("Quote received"),
+    "quoteRejected": MessageLookupByLibrary.simpleMessage("Quote rejected"),
     "quoteSent": MessageLookupByLibrary.simpleMessage("Quote sent"),
     "quoted": MessageLookupByLibrary.simpleMessage("Quoted"),
     "quotedAmount": MessageLookupByLibrary.simpleMessage("Quoted amount"),
@@ -1172,6 +1190,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reasonOptional": MessageLookupByLibrary.simpleMessage("Reason (optional)"),
     "recentPosts": MessageLookupByLibrary.simpleMessage("Recent Posts"),
     "recommend": MessageLookupByLibrary.simpleMessage("Recommend"),
+    "reconnecting": MessageLookupByLibrary.simpleMessage("Reconnecting…"),
     "recoverPassword": MessageLookupByLibrary.simpleMessage("Recover Password"),
     "recoverPasswordErrorMsg": MessageLookupByLibrary.simpleMessage(
       "Oops, something went wrong. Please try again, and if the error persists, check if the email is correct or try later.",
@@ -1187,10 +1206,17 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "regular": MessageLookupByLibrary.simpleMessage("Regular"),
     "reject": MessageLookupByLibrary.simpleMessage("Reject"),
+    "rejectQuote": MessageLookupByLibrary.simpleMessage("Reject"),
     "rejectReservation": MessageLookupByLibrary.simpleMessage(
       "Reject Reservation",
     ),
     "rejected": MessageLookupByLibrary.simpleMessage("Rejected"),
+    "rejectionReasonHint": MessageLookupByLibrary.simpleMessage(
+      "Help the business understand why the booking didn\'t go through",
+    ),
+    "rejectionReasonOptional": MessageLookupByLibrary.simpleMessage(
+      "Reason (optional)",
+    ),
     "removePhotos": MessageLookupByLibrary.simpleMessage("Remove photos"),
     "removeThisTimePeriod": MessageLookupByLibrary.simpleMessage(
       "Remove this time period",
@@ -1205,7 +1231,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "requestService": MessageLookupByLibrary.simpleMessage("Request service"),
     "requested": MessageLookupByLibrary.simpleMessage("Requested"),
     "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
-    "resendCodeIn": m26,
+    "resendCodeIn": m28,
     "reservation": MessageLookupByLibrary.simpleMessage("Reservation"),
     "reservationCancelled": MessageLookupByLibrary.simpleMessage(
       "Reservation cancelled.",
@@ -1232,7 +1258,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Today\'s Reservations",
     ),
-    "reserveTableAt": m27,
+    "reserveTableAt": m29,
     "reserveToComplete": MessageLookupByLibrary.simpleMessage(
       "Reserve → Complete",
     ),
@@ -1275,7 +1301,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchBusinessOrAddress": MessageLookupByLibrary.simpleMessage(
       "Search Business or Address",
     ),
-    "searchInCity": m28,
+    "searchInCity": m30,
     "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Discover great places to eat and drink nearby...",
     ),
@@ -1305,6 +1331,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "servicePackages": MessageLookupByLibrary.simpleMessage("Service packages"),
     "serviceRequests": MessageLookupByLibrary.simpleMessage("Service requests"),
     "serviceType": MessageLookupByLibrary.simpleMessage("Service type"),
+    "serviceTypeAll": MessageLookupByLibrary.simpleMessage("All"),
     "sessionExpiredMessage": MessageLookupByLibrary.simpleMessage(
       "Your session has expired. Please log in again.",
     ),
@@ -1323,7 +1350,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareMenuError": MessageLookupByLibrary.simpleMessage(
       "Oops... Something went wrong! \n\nCouldn\'t share the menu.",
     ),
-    "shareMenuMessage": m29,
+    "shareMenuMessage": m31,
     "shareMenuSubject": MessageLookupByLibrary.simpleMessage(
       "Sharing a menu with you!",
     ),
@@ -1369,7 +1396,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sortBy": MessageLookupByLibrary.simpleMessage("Sort by"),
     "specialRequests": MessageLookupByLibrary.simpleMessage("Special requests"),
-    "specialRequestsLabel": m30,
+    "specialRequestsLabel": m32,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Special requests (optional)",
     ),
@@ -1457,10 +1484,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "thisBusiness": MessageLookupByLibrary.simpleMessage("this business"),
     "time": MessageLookupByLibrary.simpleMessage("Time"),
-    "timeAgoDays": m31,
-    "timeAgoHours": m32,
+    "timeAgoDays": m33,
+    "timeAgoHours": m34,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Just now"),
-    "timeAgoMinutes": m33,
+    "timeAgoMinutes": m35,
     "title": MessageLookupByLibrary.simpleMessage("Title"),
     "today": MessageLookupByLibrary.simpleMessage("Today"),
     "topEvents": MessageLookupByLibrary.simpleMessage("Top events"),
@@ -1554,7 +1581,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Visit Business Page",
     ),
-    "visitedOn": m34,
+    "visitedOn": m36,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitor"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -1605,7 +1632,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "When did you visit?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m35,
+    "writeReviewFor": m37,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Write your review here...",
     ),

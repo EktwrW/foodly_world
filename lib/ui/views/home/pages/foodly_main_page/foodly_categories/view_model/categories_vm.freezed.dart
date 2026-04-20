@@ -24,7 +24,11 @@ mixin _$CategoriesVM {
   double? get longitude => throw _privateConstructorUsedError;
   BusinessResultsViewMode get viewMode => throw _privateConstructorUsedError;
   double get radiusDistanceInKm => throw _privateConstructorUsedError;
-  bool get isSwitchingRadius => throw _privateConstructorUsedError;
+  bool get isSwitchingRadius =>
+      throw _privateConstructorUsedError; // Catering & Chefs — active service_type chip (null = "All").
+  ServiceType? get selectedServiceType =>
+      throw _privateConstructorUsedError; // Discovery ordering (distance | priceAsc | ratingDesc).
+  DiscoveryOrdering get ordering => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoriesVM
   /// with the given fields replaced by the non-null parameter values.
@@ -47,7 +51,9 @@ abstract class $CategoriesVMCopyWith<$Res> {
       double? longitude,
       BusinessResultsViewMode viewMode,
       double radiusDistanceInKm,
-      bool isSwitchingRadius});
+      bool isSwitchingRadius,
+      ServiceType? selectedServiceType,
+      DiscoveryOrdering ordering});
 }
 
 /// @nodoc
@@ -73,6 +79,8 @@ class _$CategoriesVMCopyWithImpl<$Res, $Val extends CategoriesVM>
     Object? viewMode = null,
     Object? radiusDistanceInKm = null,
     Object? isSwitchingRadius = null,
+    Object? selectedServiceType = freezed,
+    Object? ordering = null,
   }) {
     return _then(_value.copyWith(
       currentCategory: freezed == currentCategory
@@ -107,6 +115,14 @@ class _$CategoriesVMCopyWithImpl<$Res, $Val extends CategoriesVM>
           ? _value.isSwitchingRadius
           : isSwitchingRadius // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedServiceType: freezed == selectedServiceType
+          ? _value.selectedServiceType
+          : selectedServiceType // ignore: cast_nullable_to_non_nullable
+              as ServiceType?,
+      ordering: null == ordering
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
+              as DiscoveryOrdering,
     ) as $Val);
   }
 }
@@ -127,7 +143,9 @@ abstract class _$$CategoriesVMImplCopyWith<$Res>
       double? longitude,
       BusinessResultsViewMode viewMode,
       double radiusDistanceInKm,
-      bool isSwitchingRadius});
+      bool isSwitchingRadius,
+      ServiceType? selectedServiceType,
+      DiscoveryOrdering ordering});
 }
 
 /// @nodoc
@@ -151,6 +169,8 @@ class __$$CategoriesVMImplCopyWithImpl<$Res>
     Object? viewMode = null,
     Object? radiusDistanceInKm = null,
     Object? isSwitchingRadius = null,
+    Object? selectedServiceType = freezed,
+    Object? ordering = null,
   }) {
     return _then(_$CategoriesVMImpl(
       currentCategory: freezed == currentCategory
@@ -185,6 +205,14 @@ class __$$CategoriesVMImplCopyWithImpl<$Res>
           ? _value.isSwitchingRadius
           : isSwitchingRadius // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedServiceType: freezed == selectedServiceType
+          ? _value.selectedServiceType
+          : selectedServiceType // ignore: cast_nullable_to_non_nullable
+              as ServiceType?,
+      ordering: null == ordering
+          ? _value.ordering
+          : ordering // ignore: cast_nullable_to_non_nullable
+              as DiscoveryOrdering,
     ));
   }
 }
@@ -200,7 +228,9 @@ class _$CategoriesVMImpl extends _CategoriesVM {
       this.longitude,
       this.viewMode = BusinessResultsViewMode.list,
       this.radiusDistanceInKm = 5,
-      this.isSwitchingRadius = false})
+      this.isSwitchingRadius = false,
+      this.selectedServiceType,
+      this.ordering = DiscoveryOrdering.distance})
       : _nearbyBusinesses = nearbyBusinesses,
         super._();
 
@@ -231,10 +261,17 @@ class _$CategoriesVMImpl extends _CategoriesVM {
   @override
   @JsonKey()
   final bool isSwitchingRadius;
+// Catering & Chefs — active service_type chip (null = "All").
+  @override
+  final ServiceType? selectedServiceType;
+// Discovery ordering (distance | priceAsc | ratingDesc).
+  @override
+  @JsonKey()
+  final DiscoveryOrdering ordering;
 
   @override
   String toString() {
-    return 'CategoriesVM(currentCategory: $currentCategory, carouselController: $carouselController, nearbyBusinesses: $nearbyBusinesses, latitude: $latitude, longitude: $longitude, viewMode: $viewMode, radiusDistanceInKm: $radiusDistanceInKm, isSwitchingRadius: $isSwitchingRadius)';
+    return 'CategoriesVM(currentCategory: $currentCategory, carouselController: $carouselController, nearbyBusinesses: $nearbyBusinesses, latitude: $latitude, longitude: $longitude, viewMode: $viewMode, radiusDistanceInKm: $radiusDistanceInKm, isSwitchingRadius: $isSwitchingRadius, selectedServiceType: $selectedServiceType, ordering: $ordering)';
   }
 
   @override
@@ -257,7 +294,11 @@ class _$CategoriesVMImpl extends _CategoriesVM {
             (identical(other.radiusDistanceInKm, radiusDistanceInKm) ||
                 other.radiusDistanceInKm == radiusDistanceInKm) &&
             (identical(other.isSwitchingRadius, isSwitchingRadius) ||
-                other.isSwitchingRadius == isSwitchingRadius));
+                other.isSwitchingRadius == isSwitchingRadius) &&
+            (identical(other.selectedServiceType, selectedServiceType) ||
+                other.selectedServiceType == selectedServiceType) &&
+            (identical(other.ordering, ordering) ||
+                other.ordering == ordering));
   }
 
   @override
@@ -270,7 +311,9 @@ class _$CategoriesVMImpl extends _CategoriesVM {
       longitude,
       viewMode,
       radiusDistanceInKm,
-      isSwitchingRadius);
+      isSwitchingRadius,
+      selectedServiceType,
+      ordering);
 
   /// Create a copy of CategoriesVM
   /// with the given fields replaced by the non-null parameter values.
@@ -290,7 +333,9 @@ abstract class _CategoriesVM extends CategoriesVM {
       final double? longitude,
       final BusinessResultsViewMode viewMode,
       final double radiusDistanceInKm,
-      final bool isSwitchingRadius}) = _$CategoriesVMImpl;
+      final bool isSwitchingRadius,
+      final ServiceType? selectedServiceType,
+      final DiscoveryOrdering ordering}) = _$CategoriesVMImpl;
   const _CategoriesVM._() : super._();
 
   @override
@@ -308,7 +353,13 @@ abstract class _CategoriesVM extends CategoriesVM {
   @override
   double get radiusDistanceInKm;
   @override
-  bool get isSwitchingRadius;
+  bool
+      get isSwitchingRadius; // Catering & Chefs — active service_type chip (null = "All").
+  @override
+  ServiceType?
+      get selectedServiceType; // Discovery ordering (distance | priceAsc | ratingDesc).
+  @override
+  DiscoveryOrdering get ordering;
 
   /// Create a copy of CategoriesVM
   /// with the given fields replaced by the non-null parameter values.

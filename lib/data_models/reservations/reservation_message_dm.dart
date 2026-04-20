@@ -3,10 +3,17 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'reservation_message_dm.freezed.dart';
 part 'reservation_message_dm.g.dart';
 
+/// Response from the `/reservations/{uuid}/messages` endpoint.
+///
+/// Blocker #5 — [serverNow] is the server's clock at the moment the response
+/// was built. The FE uses it as the next `since=` value when polling. This
+/// lets us trust ONE clock (server) across customer + manager devices and
+/// sidesteps device clock drift.
 @freezed
 class ReservationMessagesResponseDM with _$ReservationMessagesResponseDM {
   const factory ReservationMessagesResponseDM({
     @Default([]) List<ReservationMessageDM> messages,
+    @JsonKey(name: 'server_now') DateTime? serverNow,
   }) = _ReservationMessagesResponseDM;
 
   factory ReservationMessagesResponseDM.fromJson(Map<String, dynamic> json) =>

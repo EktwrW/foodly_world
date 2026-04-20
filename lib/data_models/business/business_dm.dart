@@ -26,6 +26,16 @@ FoodlyCategories? _safeCategoryFromJson(dynamic value) {
       );
 }
 
+/// Same defensive helper used in ServicePackageDM/ProfessionalProfileDM:
+/// the BE can serialise decimals as either floats ("65.0") or — for edge
+/// cases like column casts or an old row — strings ("65.00"). The default
+/// json_serializable `(json as num?)?.toDouble()` throws on strings.
+double? _doubleFromJson(dynamic value) {
+  if (value == null) return null;
+  if (value is num) return value.toDouble();
+  return double.tryParse(value.toString());
+}
+
 @freezed
 class BusinessDM with _$BusinessDM {
   const BusinessDM._();
@@ -62,6 +72,12 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'combos_label') String? combosLabel,
     @JsonKey(name: 'ai_promo_monthly_limit') @Default(6) int aiPromoMonthlyLimit,
     @JsonKey(name: 'ai_promos_used_this_month') @Default(0) int aiPromosUsedThisMonth,
+    // Catering & Chefs vertical — MIN price across ACTIVE service_packages
+    // for this business (EUR). Only populated by endpoints that join the
+    // subselect (currently: GET /business/nearby). Null when the business has
+    // no priced active package (restaurants without packages, or catering
+    // providers that only offer on-quote packages).
+    @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson) double? minServicePrice,
 
     // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
     @Default([]) List<ReviewDM> reviews,

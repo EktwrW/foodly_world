@@ -482,11 +482,45 @@ class _ReservationClient implements ReservationClient {
   }
 
   @override
-  Future<ReservationMessagesResponseDM> getMessages(
-    String reservationUuid,
-  ) async {
+  Future<ReservationActionResponseDM> rejectQuote(
+    String uuid, {
+    String? rejectionReason,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {'rejection_reason': rejectionReason};
+    _data.removeWhere((k, v) => v == null);
+    final _options = _setStreamType<ReservationActionResponseDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/reservations/${uuid}/reject-quote',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ReservationActionResponseDM _value;
+    try {
+      _value = ReservationActionResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ReservationMessagesResponseDM> getMessages(
+    String reservationUuid, {
+    String? since,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'since': since};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ReservationMessagesResponseDM>(

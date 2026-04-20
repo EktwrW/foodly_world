@@ -133,4 +133,28 @@ class MyReservationsCubit extends Cubit<MyReservationsState> {
       },
     );
   }
+
+  Future<bool> rejectQuote(String uuid, {String? rejectionReason}) async {
+    emit(MyReservationsState.loading(_vm));
+
+    final result = await _reservationRepo.rejectQuote(uuid, rejectionReason: rejectionReason);
+
+    return result.when(
+      success: (response) {
+        if (response.reservation != null) {
+          final updated = _vm.reservations
+              .map((r) => r.reservationUuid == uuid ? response.reservation! : r)
+              .toList();
+          _vm = _vm.copyWith(reservations: updated);
+        }
+        emit(MyReservationsState.loaded(_vm));
+        return true;
+      },
+      failure: (error) {
+        _logger.e(error);
+        emit(MyReservationsState.error(_vm, error.toString()));
+        return false;
+      },
+    );
+  }
 }

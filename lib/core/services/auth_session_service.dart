@@ -1,11 +1,13 @@
 // ignore_for_file: unused_field
 
+import 'dart:async' show unawaited;
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
@@ -25,6 +27,7 @@ class AuthSessionService {
   final SecureTokenService _secureTokenService;
   FavoritesCubit? _favoritesCubit;
   NotificationsCubit? _notificationsCubit;
+  PushNotificationService? _pushService;
 
   AuthSessionService({
     required BaseConfig config,
@@ -206,6 +209,12 @@ class AuthSessionService {
     _notificationsCubit = cubit;
   }
 
+  /// Register the push notification service so login/logout can drive the
+  /// FCM token registration lifecycle. Registered at DI time.
+  void setPushNotificationService(PushNotificationService service) {
+    _pushService = service;
+  }
+
   /// Validates the cached token via a lightweight API call, then initializes
   /// favorites/notifications if valid. If invalid, clears session and forces login.
   /// Called from [RootBloc.fromJson()] — runs async in background (fire-and-forget).
@@ -287,6 +296,11 @@ class AuthSessionService {
     if (isLoggedIn && _notificationsCubit != null) {
       _notificationsCubit!.initialize();
     }
+    // Register current FCM token with the BE so this session can receive push.
+    // Fire-and-forget — silent-failure-by-design (see PushNotificationService).
+    if (isLoggedIn && _pushService != null) {
+      unawaited(_pushService!.registerCurrentToken());
+    }
   }
 
   void logout(BuildContext context) {
@@ -301,6 +315,14 @@ class AuthSessionService {
     di<DialogService>().showLoading();
     final authToken = userSessionDM?.token ?? '';
 
+    // Unregister the FCM token BEFORE hitting the logout endpoint — the
+    // DELETE /device-tokens/unregister call needs the still-valid Bearer
+    // token to authenticate. Order matters: if we cleared the header first,
+    // the BE would return 401 and the token row would linger server-side.
+    if (isLoggedIn && _pushService != null) {
+      await _pushService!.unregisterCurrentToken();
+    }
+
     if (isLoggedIn && authToken.isNotEmpty) {
       await _meRepo.logout().then((value) {
         return value.when(
@@ -312,7 +334,9 @@ class AuthSessionService {
         );
       });
     } else {
-      clearSession(context, redirectToStart: redirectToStart);
+      if (context.mounted) {
+        clearSession(context, redirectToStart: redirectToStart);
+      }
     }
     di<DialogService>().hideLoading();
   }

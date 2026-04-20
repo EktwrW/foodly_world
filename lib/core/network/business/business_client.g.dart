@@ -1759,6 +1759,9 @@ class _BusinessClient implements BusinessClient {
     double? radius,
     int? categoryId,
     int? limit,
+    String? serviceType,
+    String? ordering,
+    double? maxPrice,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -1767,6 +1770,9 @@ class _BusinessClient implements BusinessClient {
       r'radius': radius,
       r'category_id': categoryId,
       r'limit': limit,
+      r'service_type': serviceType,
+      r'ordering': ordering,
+      r'max_price': maxPrice,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

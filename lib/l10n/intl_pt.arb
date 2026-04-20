@@ -955,6 +955,21 @@
   "eventTypeCocktail": "Cocktail",
   "eventTypeCookingClassPrivate": "Aula de culinária privada",
   "eventTypeCustom": "Personalizado",
+  "serviceTypeAll": "Todos",
+  "orderingLabel": "Ordenar",
+  "orderingDistance": "Distância",
+  "orderingPriceAsc": "Preço",
+  "orderingRatingDesc": "Avaliação",
+  "priceFromBadge": "desde €{price}",
+  "@priceFromBadge": {
+    "description": "Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "150"
+      }
+    }
+  },
   "requestService": "Pedir serviço",
   "requestQuote": "Pedir orçamento",
   "quoteApproved": "Orçamento aprovado",
@@ -965,10 +980,22 @@
   "typeMessage": "Escreva uma mensagem...",
   "noMessagesYet": "Ainda sem mensagens",
   "messageThread": "Fio de mensagens",
+  "reconnecting": "A reconectar…",
+  "oneNewMessage": "1 nova mensagem",
+  "nNewMessages": "{count} mensagens novas",
+  "@nNewMessages": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "enterQuoteAmount": "Introduza o valor do orçamento",
   "quoteNotes": "Notas do orçamento (opcional)",
   "confirmApproveQuote": "Aprovar este orçamento?",
   "confirmApproveQuoteMessage": "Ao aprovar, confirma a reserva. O pagamento é feito fora da plataforma.",
+  "rejectQuote": "Rejeitar",
+  "quoteRejected": "Orçamento rejeitado",
+  "confirmRejectQuote": "Rejeitar este orçamento?",
+  "confirmRejectQuoteMessage": "Ao rejeitar, esta solicitação é encerrada e o estabelecimento será notificado. Esta ação não pode ser desfeita.",
+  "rejectionReasonOptional": "Motivo (opcional)",
+  "rejectionReasonHint": "Ajude o estabelecimento a entender por que a reserva não avançou",
   "paymentOffPlatform": "Pagamento fora da plataforma",
   "eventLocation": "Localização do evento",
   "bookingDetail": "Detalhe da reserva",

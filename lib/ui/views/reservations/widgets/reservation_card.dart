@@ -14,6 +14,7 @@ class ReservationCard extends StatelessWidget {
   final ReservationDM reservation;
   final VoidCallback? onCancel;
   final VoidCallback? onApproveQuote;
+  final VoidCallback? onRejectQuote;
   final VoidCallback? onOpenMessages;
   final bool returnOnlyContent;
 
@@ -22,6 +23,7 @@ class ReservationCard extends StatelessWidget {
     required this.reservation,
     this.onCancel,
     this.onApproveQuote,
+    this.onRejectQuote,
     this.onOpenMessages,
     this.returnOnlyContent = false,
   });
@@ -105,22 +107,42 @@ class ReservationCard extends StatelessWidget {
             _ServiceBookingDetails(reservation: reservation),
           ],
 
-          // Approve quote button (customer side, quoted status)
-          if (reservation.canApproveQuote && onApproveQuote != null) ...[
+          // Quote actions (customer side, quoted status): Reject + Approve
+          if (reservation.canApproveQuote && (onApproveQuote != null || onRejectQuote != null)) ...[
             const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton.icon(
-                onPressed: onApproveQuote,
-                icon: const Icon(Bootstrap.check_circle_fill, size: 16),
-                label: Text(S.current.approveQuote),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.deepPurple,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
+            Row(
+              children: [
+                if (onRejectQuote != null)
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: onRejectQuote,
+                      icon: const Icon(Bootstrap.x_circle, size: 15),
+                      label: Text(S.current.rejectQuote),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.red.shade700,
+                        side: BorderSide(color: Colors.red.shade400),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+                if (onRejectQuote != null && onApproveQuote != null) const SizedBox(width: 8),
+                if (onApproveQuote != null)
+                  Expanded(
+                    flex: 2,
+                    child: TextButton.icon(
+                      onPressed: onApproveQuote,
+                      icon: const Icon(Bootstrap.check_circle_fill, size: 16),
+                      label: Text(S.current.approveQuote),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepPurple,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ],
 

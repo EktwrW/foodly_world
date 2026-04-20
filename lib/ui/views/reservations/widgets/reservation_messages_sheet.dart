@@ -1,4 +1,6 @@
-import 'package:animate_do/animate_do.dart' show FadeIn;
+import 'dart:async';
+
+import 'package:animate_do/animate_do.dart' show FadeIn, FadeInUp;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -9,6 +11,9 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:intl/intl.dart';
 
 /// Shows a bottom sheet with the message thread for a reservation.
+///
+/// Blocker #5 — the sheet now polls the server for new messages while it's
+/// open (see [_ReservationMessagesSheetState] for the adaptive cadence).
 void showReservationMessagesSheet(
   BuildContext context, {
   required String reservationUuid,
@@ -38,7 +43,26 @@ class _ReservationMessagesSheet extends StatefulWidget {
   State<_ReservationMessagesSheet> createState() => _ReservationMessagesSheetState();
 }
 
-class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
+/// Adaptive polling state.
+///
+/// We poll fast (3 s) during active conversation — the user opened the sheet
+/// recently, just sent a message, just received a message, or just came back
+/// from background. After [_activeWindow] without any of those, we drop to
+/// slow polling (8 s) to save battery + server requests.
+///
+/// This mirrors the cadence of common chat apps (WhatsApp Web, Intercom,
+/// Slack) and gives near-real-time perception when the user is actively
+/// chatting without hammering Cloud Run when the thread is idle.
+class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> with WidgetsBindingObserver {
+  static const Duration _activePollInterval = Duration(seconds: 3);
+  static const Duration _idlePollInterval = Duration(seconds: 8);
+  // How long to stay "active" after the last activity before downshifting.
+  static const Duration _activeWindow = Duration(seconds: 60);
+  // Number of consecutive poll failures before surfacing a "reconnecting…" hint.
+  static const int _maxSilentFailures = 3;
+  // Pixels from the bottom we still consider "near the bottom" for auto-scroll.
+  static const double _nearBottomThreshold = 80;
+
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
   final _repo = di<ReservationRepo>();
@@ -47,20 +71,49 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
   bool _isLoading = true;
   bool _isSending = false;
 
+  Timer? _pollTimer;
+  DateTime? _lastServerNow;
+  DateTime _lastActivityAt = DateTime.now();
+  int _consecutiveFailures = 0;
+  bool _isReconnecting = false;
+  // Number of new messages received while user scrolled up. Shown as a badge.
+  int _unseenBelow = 0;
+
   @override
   void initState() {
     super.initState();
-    _loadMessages();
+    WidgetsBinding.instance.addObserver(this);
+    _scrollController.addListener(_onScrollChanged);
+    _loadInitial();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _scrollController.removeListener(_onScrollChanged);
+    _stopPolling();
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
 
-  Future<void> _loadMessages() async {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pause polling in background to save battery + avoid pointless requests.
+    // Resume with an immediate poll so the user sees any missed messages the
+    // instant they come back.
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
+      _stopPolling();
+    } else if (state == AppLifecycleState.resumed && mounted && !_isLoading) {
+      _markActivity();
+      _pollOnce();
+      _startPolling();
+    }
+  }
+
+  // ── Load / poll ──────────────────────────────────────────────────
+
+  Future<void> _loadInitial() async {
     final result = await _repo.getMessages(widget.reservationUuid);
 
     if (!mounted) return;
@@ -69,9 +122,11 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
       success: (response) {
         setState(() {
           _messages = response.messages;
+          _lastServerNow = response.serverNow;
           _isLoading = false;
         });
-        _scrollToBottom();
+        _scrollToBottom(animated: false);
+        _startPolling();
       },
       failure: (error) {
         setState(() => _isLoading = false);
@@ -79,6 +134,107 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
       },
     );
   }
+
+  void _startPolling() {
+    _stopPolling();
+    final interval = _isInActiveWindow() ? _activePollInterval : _idlePollInterval;
+    _pollTimer = Timer.periodic(interval, (_) => _pollOnce());
+  }
+
+  void _stopPolling() {
+    _pollTimer?.cancel();
+    _pollTimer = null;
+  }
+
+  bool _isInActiveWindow() {
+    return DateTime.now().difference(_lastActivityAt) <= _activeWindow;
+  }
+
+  /// Restart the timer with the appropriate cadence. Called whenever we
+  /// transition between active and idle windows, or right after activity.
+  void _retuneTimer() {
+    if (_pollTimer == null) return; // polling is paused (background / loading)
+    _startPolling();
+  }
+
+  /// Mark "something happened" — extends the active window.
+  void _markActivity() {
+    _lastActivityAt = DateTime.now();
+  }
+
+  Future<void> _pollOnce() async {
+    if (!mounted) return;
+
+    final result = await _repo.getMessages(widget.reservationUuid, since: _lastServerNow);
+
+    if (!mounted) return;
+
+    result.when(
+      success: (response) {
+        _consecutiveFailures = 0;
+        final wasReconnecting = _isReconnecting;
+
+        final incoming = response.messages;
+        if (incoming.isEmpty) {
+          // Even with no new messages we advance serverNow so the next poll
+          // window narrows as tight as possible.
+          setState(() {
+            _lastServerNow = response.serverNow ?? _lastServerNow;
+            if (wasReconnecting) _isReconnecting = false;
+          });
+          // Downshift from active → idle if we've been quiet long enough.
+          if (!_isInActiveWindow()) _retuneTimer();
+          return;
+        }
+
+        // Dedupe: strip anything we already have. Guards against the race
+        // where a message sent by this client arrives back from the server
+        // between _sendMessage's optimistic insert and the next poll.
+        final existingUuids = _messages.map((m) => m.messageUuid).whereType<String>().toSet();
+        final fresh = incoming.where((m) {
+          final uuid = m.messageUuid;
+          return uuid == null || !existingUuids.contains(uuid);
+        }).toList();
+
+        if (fresh.isEmpty) {
+          setState(() {
+            _lastServerNow = response.serverNow ?? _lastServerNow;
+            if (wasReconnecting) _isReconnecting = false;
+          });
+          return;
+        }
+
+        final wasNearBottom = _isNearBottom();
+
+        setState(() {
+          _messages = [..._messages, ...fresh];
+          _lastServerNow = response.serverNow ?? _lastServerNow;
+          if (wasReconnecting) _isReconnecting = false;
+          if (!wasNearBottom) _unseenBelow += fresh.length;
+        });
+
+        // New activity bumps us back into the fast-poll window.
+        _markActivity();
+        _retuneTimer();
+
+        if (wasNearBottom) {
+          _scrollToBottom();
+        }
+      },
+      failure: (_) {
+        // Silent failure by design. Poll errors are usually transient
+        // (flaky Wi-Fi, Cloudflare hiccup). A snackbar per poll would be
+        // unbearable. After a few in a row, we show a subtle banner so the
+        // user knows why nothing is updating.
+        _consecutiveFailures++;
+        if (_consecutiveFailures >= _maxSilentFailures && !_isReconnecting) {
+          setState(() => _isReconnecting = true);
+        }
+      },
+    );
+  }
+
+  // ── Send ─────────────────────────────────────────────────────────
 
   Future<void> _sendMessage() async {
     final body = _messageController.text.trim();
@@ -98,6 +254,9 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
             _messages = [..._messages, response.data!];
             _isSending = false;
           });
+          // Sending counts as activity → fast-poll window.
+          _markActivity();
+          _retuneTimer();
           _scrollToBottom();
         } else {
           setState(() => _isSending = false);
@@ -110,17 +269,38 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
     );
   }
 
-  void _scrollToBottom() {
+  // ── Scroll helpers ───────────────────────────────────────────────
+
+  void _onScrollChanged() {
+    if (_unseenBelow > 0 && _isNearBottom()) {
+      setState(() => _unseenBelow = 0);
+    }
+  }
+
+  bool _isNearBottom() {
+    if (!_scrollController.hasClients) return true;
+    final position = _scrollController.position;
+    return (position.maxScrollExtent - position.pixels) <= _nearBottomThreshold;
+  }
+
+  void _scrollToBottom({bool animated = true}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
+      if (!_scrollController.hasClients) return;
+      final target = _scrollController.position.maxScrollExtent;
+      if (animated) {
         _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
+          target,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
+      } else {
+        _scrollController.jumpTo(target);
       }
+      if (_unseenBelow > 0) setState(() => _unseenBelow = 0);
     });
   }
+
+  // ── Build ────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +317,21 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
           children: [
             _buildHandle(),
             _buildHeader(),
+            if (_isReconnecting) _buildReconnectingBanner(),
             const Divider(height: 1),
-            Flexible(child: _buildMessageList()),
+            Flexible(
+              child: Stack(
+                children: [
+                  _buildMessageList(),
+                  if (_unseenBelow > 0)
+                    Positioned(
+                      right: 16,
+                      bottom: 12,
+                      child: _buildUnseenBadge(),
+                    ),
+                ],
+              ),
+            ),
             const Divider(height: 1),
             _buildInputBar(),
           ],
@@ -195,6 +388,32 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
     );
   }
 
+  /// Subtle banner shown after [_maxSilentFailures] consecutive failed polls.
+  /// We don't want an aggressive red snackbar for transient network blips,
+  /// but the user deserves to know why nothing is updating after a while.
+  Widget _buildReconnectingBanner() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      color: Colors.amber.withValues(alpha: 0.15),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            width: 12,
+            height: 12,
+            child: CircularProgressIndicator(strokeWidth: 1.5, color: Colors.amber),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            S.current.reconnecting,
+            style: FoodlyTextStyles.caption.copyWith(fontSize: 11, color: Colors.amber.shade900),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildMessageList() {
     if (_isLoading) {
       return const Center(
@@ -232,6 +451,45 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> {
       itemCount: _messages.length,
       shrinkWrap: true,
       itemBuilder: (_, index) => _MessageBubble(message: _messages[index]),
+    );
+  }
+
+  /// "N new ↓" pill that appears when messages arrive while the user is
+  /// scrolled up reading older ones. Tapping jumps to the bottom. Goes away
+  /// automatically when the user scrolls near the bottom themselves.
+  Widget _buildUnseenBadge() {
+    return FadeInUp(
+      duration: const Duration(milliseconds: 180),
+      from: 12,
+      child: Material(
+        color: FoodlyThemes.primaryFoodly,
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: _scrollToBottom,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _unseenBelow == 1
+                      ? S.current.oneNewMessage
+                      : S.current.nNewMessages(_unseenBelow),
+                  style: FoodlyTextStyles.caption.copyWith(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(Bootstrap.arrow_down, size: 11, color: Colors.white),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 

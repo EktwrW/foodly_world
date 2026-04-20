@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
+import 'package:foodly_world/data_models/service_packages/service_package_dm.dart' show ServiceType;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
@@ -16,6 +17,7 @@ import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
 part 'widgets/categories_app_bar.dart';
+part 'widgets/catering_filters_bar.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -217,6 +219,17 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ),
                     ],
                   ).paddingHorizontal(16),
+                  if (vm.isCateringCategory)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: _CateringFiltersBar(
+                        key: const Key('categories-page-catering-filters-bar'),
+                        selectedServiceType: vm.selectedServiceType,
+                        ordering: vm.ordering,
+                        onServiceTypeSelected: cubit.selectServiceType,
+                        onOrderingChanged: cubit.changeOrdering,
+                      ),
+                    ),
                   Expanded(
                     flex: 7,
                     child: AnimatedSwitcher(

@@ -955,6 +955,21 @@
   "eventTypeCocktail": "Cóctel",
   "eventTypeCookingClassPrivate": "Clase de cocina privada",
   "eventTypeCustom": "Personalizado",
+  "serviceTypeAll": "Todos",
+  "orderingLabel": "Ordenar",
+  "orderingDistance": "Cercanía",
+  "orderingPriceAsc": "Precio",
+  "orderingRatingDesc": "Rating",
+  "priceFromBadge": "desde €{price}",
+  "@priceFromBadge": {
+    "description": "Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "65"
+      }
+    }
+  },
   "requestService": "Solicitar servicio",
   "requestQuote": "Solicitar cotización",
   "quoteApproved": "Cotización aprobada",
@@ -965,10 +980,22 @@
   "typeMessage": "Escribe un mensaje...",
   "noMessagesYet": "Aún no hay mensajes",
   "messageThread": "Hilo de mensajes",
+  "reconnecting": "Reconectando…",
+  "oneNewMessage": "1 nuevo mensaje",
+  "nNewMessages": "{count} mensajes nuevos",
+  "@nNewMessages": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "enterQuoteAmount": "Ingrese el monto de la cotización",
   "quoteNotes": "Notas de la cotización (opcional)",
   "confirmApproveQuote": "¿Aprobar esta cotización?",
   "confirmApproveQuoteMessage": "Al aprobar, confirmas la reserva. El pago se realiza fuera de la plataforma.",
+  "rejectQuote": "Rechazar",
+  "quoteRejected": "Cotización rechazada",
+  "confirmRejectQuote": "¿Rechazar esta cotización?",
+  "confirmRejectQuoteMessage": "Al rechazar, cierras esta solicitud y el negocio será notificado. No podrás revertir esta acción.",
+  "rejectionReasonOptional": "Motivo (opcional)",
+  "rejectionReasonHint": "Ayuda al negocio a entender por qué no avanzó la reserva",
   "paymentOffPlatform": "Pago fuera de la plataforma",
   "eventLocation": "Ubicación del evento",
   "bookingDetail": "Detalle de reserva",

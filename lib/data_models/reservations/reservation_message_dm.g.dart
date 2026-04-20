@@ -14,12 +14,17 @@ _$ReservationMessagesResponseDMImpl
                       ReservationMessageDM.fromJson(e as Map<String, dynamic>))
                   .toList() ??
               const [],
+          serverNow: json['server_now'] == null
+              ? null
+              : DateTime.parse(json['server_now'] as String),
         );
 
 Map<String, dynamic> _$$ReservationMessagesResponseDMImplToJson(
         _$ReservationMessagesResponseDMImpl instance) =>
     <String, dynamic>{
       'messages': instance.messages.map((e) => e.toJson()).toList(),
+      if (instance.serverNow?.toIso8601String() case final value?)
+        'server_now': value,
     };
 
 _$ReservationMessageCreateResponseDMImpl

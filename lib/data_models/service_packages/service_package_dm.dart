@@ -114,6 +114,37 @@ enum ServiceType {
         cookingClassPrivate => Bootstrap.mortarboard,
         custom => Bootstrap.stars,
       };
+
+  /// BE wire value — must match the `@JsonValue(...)` annotation on each
+  /// case AND `ServicePackage::SERVICE_TYPES` in the backend. Used for
+  /// query-string params (e.g. `service_type=wedding` in GET /business/nearby)
+  /// where we can't rely on json_serializable's private enum map.
+  String get apiValue => switch (this) {
+        dinner => 'dinner',
+        lunch => 'lunch',
+        brunch => 'brunch',
+        cocktail => 'cocktail',
+        wedding => 'wedding',
+        corporate => 'corporate',
+        birthday => 'birthday',
+        cookingClassPrivate => 'cooking_class_private',
+        custom => 'custom',
+      };
+
+  /// Catering chips surfaced in the discovery page — intentionally excludes
+  /// `custom` (catch-all used by providers who don't fit any predefined
+  /// type; not useful as a filter). Ordered roughly by the frequency of
+  /// real-world catering bookings in the PT/AR launch markets.
+  static const List<ServiceType> discoveryChipOrder = [
+    wedding,
+    birthday,
+    cocktail,
+    corporate,
+    dinner,
+    lunch,
+    brunch,
+    cookingClassPrivate,
+  ];
 }
 
 enum PriceType {

@@ -287,6 +287,16 @@ abstract class BusinessClient {
     @Query('radius') double? radius,
     @Query('category_id') int? categoryId,
     @Query('limit') int? limit,
+    // Catering & Chefs vertical — filter to businesses that have at least one
+    // ACTIVE service_package with this type. Must be the BE string value
+    // (see ServiceType JsonValue): 'dinner' | 'lunch' | 'brunch' | 'cocktail'
+    // | 'wedding' | 'corporate' | 'birthday' | 'cooking_class_private' | 'custom'
+    @Query('service_type') String? serviceType,
+    // Discovery ordering — 'distance' (default), 'price_asc' or 'rating_desc'.
+    @Query('ordering') String? ordering,
+    // Optional EUR ceiling; excludes businesses without an active package
+    // priced at or below the ceiling.
+    @Query('max_price') double? maxPrice,
   });
 
   @GET('/business/new-releases')

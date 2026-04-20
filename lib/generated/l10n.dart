@@ -6474,6 +6474,52 @@ class S {
     return Intl.message('Custom', name: 'eventTypeCustom', desc: '', args: []);
   }
 
+  /// `All`
+  String get serviceTypeAll {
+    return Intl.message('All', name: 'serviceTypeAll', desc: '', args: []);
+  }
+
+  /// `Sort by`
+  String get orderingLabel {
+    return Intl.message('Sort by', name: 'orderingLabel', desc: '', args: []);
+  }
+
+  /// `Distance`
+  String get orderingDistance {
+    return Intl.message(
+      'Distance',
+      name: 'orderingDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get orderingPriceAsc {
+    return Intl.message('Price', name: 'orderingPriceAsc', desc: '', args: []);
+  }
+
+  /// `Rating`
+  String get orderingRatingDesc {
+    return Intl.message(
+      'Rating',
+      name: 'orderingRatingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `from €{price}`
+  String priceFromBadge(String price) {
+    return Intl.message(
+      'from €$price',
+      name: 'priceFromBadge',
+      desc:
+          'Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR',
+      args: [price],
+    );
+  }
+
   /// `Request service`
   String get requestService {
     return Intl.message(
@@ -6574,6 +6620,36 @@ class S {
     );
   }
 
+  /// `Reconnecting…`
+  String get reconnecting {
+    return Intl.message(
+      'Reconnecting…',
+      name: 'reconnecting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 new message`
+  String get oneNewMessage {
+    return Intl.message(
+      '1 new message',
+      name: 'oneNewMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} new messages`
+  String nNewMessages(int count) {
+    return Intl.message(
+      '$count new messages',
+      name: 'nNewMessages',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Enter quote amount`
   String get enterQuoteAmount {
     return Intl.message(
@@ -6609,6 +6685,61 @@ class S {
     return Intl.message(
       'By approving, you confirm the booking. Payment is handled outside the platform.',
       name: 'confirmApproveQuoteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reject`
+  String get rejectQuote {
+    return Intl.message('Reject', name: 'rejectQuote', desc: '', args: []);
+  }
+
+  /// `Quote rejected`
+  String get quoteRejected {
+    return Intl.message(
+      'Quote rejected',
+      name: 'quoteRejected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reject this quote?`
+  String get confirmRejectQuote {
+    return Intl.message(
+      'Reject this quote?',
+      name: 'confirmRejectQuote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rejecting closes this request and notifies the business. This action can't be undone.`
+  String get confirmRejectQuoteMessage {
+    return Intl.message(
+      'Rejecting closes this request and notifies the business. This action can\'t be undone.',
+      name: 'confirmRejectQuoteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason (optional)`
+  String get rejectionReasonOptional {
+    return Intl.message(
+      'Reason (optional)',
+      name: 'rejectionReasonOptional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help the business understand why the booking didn't go through`
+  String get rejectionReasonHint {
+    return Intl.message(
+      'Help the business understand why the booking didn\'t go through',
+      name: 'rejectionReasonHint',
       desc: '',
       args: [],
     );
