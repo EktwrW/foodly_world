@@ -66,8 +66,9 @@ flutter {
 }
 
 dependencies {
-    // Pair with `coreLibraryDesugaringEnabled = true` above. 2.1.4 is the
-    // minimum required by flutter_local_notifications ^21 — bumping to a
-    // lower version will fail at build time with the same AAR metadata error.
-    coreLibraryDesugaring 'com.android.tools.build:desugar_jdk_libs:2.1.4'
+    // Pair with `coreLibraryDesugaringEnabled = true` above. 2.1.5 is the
+    // published stable (Google skipped 2.1.4 on Maven). 2.1.x satisfies the
+    // minimum demanded by flutter_local_notifications ^21; older 2.0.x fails
+    // at build with the same AAR metadata error.
+    coreLibraryDesugaring 'com.android.tools.build:desugar_jdk_libs:2.1.5'
 }
