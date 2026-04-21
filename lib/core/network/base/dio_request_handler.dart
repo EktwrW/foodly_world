@@ -26,6 +26,7 @@ abstract class DioRequestHandler {
     const authEndpoints = <String>{
       '/login',
       '/social-login',
+      '/biometric-login',
       '/register',
       '/forgot-password',
     };
@@ -84,6 +85,7 @@ abstract class DioRequestHandler {
         '/login',
         '/register',
         '/social-login',
+        '/biometric-login',
         '/token/refresh',
       };
       final path = e.requestOptions.path;
