@@ -227,6 +227,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "all": MessageLookupByLibrary.simpleMessage("Todos"),
     "allBookings": MessageLookupByLibrary.simpleMessage("Todas"),
+    "allowLocationInSettings": MessageLookupByLibrary.simpleMessage(
+      "Permitir en Ajustes",
+    ),
+    "allowLocationInSettingsDescription": MessageLookupByLibrary.simpleMessage(
+      "Toca para abrir los ajustes de la app y habilitar la ubicación",
+    ),
     "allowReservations": MessageLookupByLibrary.simpleMessage(
       "Permitir Reservas",
     ),
@@ -1359,6 +1365,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Retomar sesión usando tu huella/rostro o patrón",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Reintentar"),
+    "retryLocation": MessageLookupByLibrary.simpleMessage(
+      "Reintentar ubicación",
+    ),
+    "retryLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "Toca para volver a obtener tu ubicación",
+    ),
     "retryRecording": MessageLookupByLibrary.simpleMessage(
       "Reintentar grabación",
     ),

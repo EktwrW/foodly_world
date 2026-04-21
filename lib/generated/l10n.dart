@@ -1894,6 +1894,46 @@ class S {
     );
   }
 
+  /// `Allow in Settings`
+  String get allowLocationInSettings {
+    return Intl.message(
+      'Allow in Settings',
+      name: 'allowLocationInSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap to open app settings and enable location`
+  String get allowLocationInSettingsDescription {
+    return Intl.message(
+      'Tap to open app settings and enable location',
+      name: 'allowLocationInSettingsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry location`
+  String get retryLocation {
+    return Intl.message(
+      'Retry location',
+      name: 'retryLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap to get your location again`
+  String get retryLocationDescription {
+    return Intl.message(
+      'Tap to get your location again',
+      name: 'retryLocationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log In`
   String get login {
     return Intl.message('Log In', name: 'login', desc: '', args: []);

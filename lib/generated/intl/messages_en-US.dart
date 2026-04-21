@@ -213,6 +213,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "all": MessageLookupByLibrary.simpleMessage("All"),
     "allBookings": MessageLookupByLibrary.simpleMessage("All"),
+    "allowLocationInSettings": MessageLookupByLibrary.simpleMessage(
+      "Allow in Settings",
+    ),
+    "allowLocationInSettingsDescription": MessageLookupByLibrary.simpleMessage(
+      "Tap to open app settings and enable location",
+    ),
     "allowReservations": MessageLookupByLibrary.simpleMessage(
       "Allow Reservations",
     ),
@@ -1275,6 +1281,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Resume session with fingerprint/face or pattern",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "retryLocation": MessageLookupByLibrary.simpleMessage("Retry location"),
+    "retryLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "Tap to get your location again",
+    ),
     "retryRecording": MessageLookupByLibrary.simpleMessage("Retry recording"),
     "review": MessageLookupByLibrary.simpleMessage("Review"),
     "reviewDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(

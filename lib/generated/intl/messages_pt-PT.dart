@@ -227,6 +227,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "all": MessageLookupByLibrary.simpleMessage("Todos"),
     "allBookings": MessageLookupByLibrary.simpleMessage("Todos"),
+    "allowLocationInSettings": MessageLookupByLibrary.simpleMessage(
+      "Permitir nas Definições",
+    ),
+    "allowLocationInSettingsDescription": MessageLookupByLibrary.simpleMessage(
+      "Toca para abrir as definições da app e ativar a localização",
+    ),
     "allowReservations": MessageLookupByLibrary.simpleMessage(
       "Permitir Reservas",
     ),
@@ -1335,6 +1341,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Retomar sessão com impressão digital/rosto ou padrão",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Tentar novamente"),
+    "retryLocation": MessageLookupByLibrary.simpleMessage("Tentar novamente"),
+    "retryLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "Toca para obter a tua localização novamente",
+    ),
     "retryRecording": MessageLookupByLibrary.simpleMessage(
       "Tentar novamente gravar",
     ),

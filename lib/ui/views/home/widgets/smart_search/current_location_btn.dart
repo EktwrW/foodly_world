@@ -1,5 +1,21 @@
 part of '../main_search_widget.dart';
 
+/// Clasifica el caso "sin ubicación" para que el botón elija **mensaje +
+/// acción correctos** según el estado real del LocationBloc.
+///
+/// El bug previo: abríamos siempre `Geolocator.openAppSettings()`, que te deja
+/// en los ajustes de la app aunque el problema sea el GPS del SO apagado o un
+/// simple timeout del fix. Desde 2026-04-21 ramificamos en tres casos reales:
+///
+/// - [serviceDisabled]  → el switch de ubicación del SO está apagado
+///                        → abrir "Location Settings" del SO.
+/// - [permanentlyDenied] → el usuario marcó "No volver a preguntar" o bloqueó
+///                        el permiso para siempre → abrir "App Settings".
+/// - [retry]             → denegación simple, error transitorio, timeout de
+///                        `getCurrentPosition` o `lastKnownPosition == null`
+///                        → volver a disparar `LocationEvent.checkLocation()`.
+enum _NoLocationCase { serviceDisabled, permanentlyDenied, retry }
+
 class CurrentLocationButton extends StatelessWidget {
   final bool isSocialFeature;
 
@@ -17,10 +33,43 @@ class CurrentLocationButton extends StatelessWidget {
           orElse: () => false,
         );
 
+        // Ramificación por estado del bloc SOLO para el caso "no tengo ubicación".
+        // Mantener `orElse → retry` a propósito: cubre permissionDenied (soft),
+        // locationError, locationChecked-con-position-null (timeout del fix en
+        // físico) y cualquier estado futuro que no sea bloqueo duro del SO.
+        final noLocCase = locationState.maybeWhen(
+          serviceDisabled: (_) => _NoLocationCase.serviceDisabled,
+          permissionPermanentlyDenied: (_) => _NoLocationCase.permanentlyDenied,
+          orElse: () => _NoLocationCase.retry,
+        );
+
         return BlocBuilder<SmartSearchCubit, SmartSearchState>(
           builder: (context, state) {
             final locationService = di<LocationService>();
             final hasLocation = locationService.hasLocationData;
+
+            // Precomputo de label/tooltip/icon del "no location" para no
+            // duplicar switches entre Tooltip y Row.
+            final String noLocLabel;
+            final String noLocTooltip;
+            final IconData noLocIcon;
+            switch (noLocCase) {
+              case _NoLocationCase.serviceDisabled:
+                noLocLabel = S.current.enableLocation;
+                noLocTooltip = S.current.enableLocationDescription;
+                noLocIcon = Icons.location_disabled;
+                break;
+              case _NoLocationCase.permanentlyDenied:
+                noLocLabel = S.current.allowLocationInSettings;
+                noLocTooltip = S.current.allowLocationInSettingsDescription;
+                noLocIcon = Icons.settings_outlined;
+                break;
+              case _NoLocationCase.retry:
+                noLocLabel = S.current.retryLocation;
+                noLocTooltip = S.current.retryLocationDescription;
+                noLocIcon = Icons.refresh_rounded;
+                break;
+            }
 
             return Tooltip(
               message: isChecking
@@ -29,7 +78,7 @@ class CurrentLocationButton extends StatelessWidget {
                       ? locationService.currentAddress.isNotEmpty == true
                           ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
                           : '${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
-                      : S.current.enableLocationDescription,
+                      : noLocTooltip,
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
@@ -37,9 +86,29 @@ class CurrentLocationButton extends StatelessWidget {
                       ? null
                       : () async {
                           if (!hasLocation) {
-                            locationService.awaitingSettingsReturn = true;
-                            Geolocator.openAppSettings();
-                            return;
+                            // Acción específica por caso — NO caemos a App
+                            // Settings para todo. Ver docstring de _NoLocationCase.
+                            switch (noLocCase) {
+                              case _NoLocationCase.serviceDisabled:
+                                // GPS del SO apagado: abrir SWITCH de ubicación,
+                                // no ajustes de la app (ahí no está el toggle).
+                                locationService.awaitingSettingsReturn = true;
+                                await Geolocator.openLocationSettings();
+                                return;
+                              case _NoLocationCase.permanentlyDenied:
+                                // "No volver a preguntar": el único camino es
+                                // que el usuario habilite el permiso manualmente.
+                                locationService.awaitingSettingsReturn = true;
+                                await Geolocator.openAppSettings();
+                                return;
+                              case _NoLocationCase.retry:
+                                // Denegación suave, timeout del fix o estado
+                                // transitorio: dispara el flujo de nuevo.
+                                context
+                                    .read<LocationBloc>()
+                                    .add(const LocationEvent.checkLocation());
+                                return;
+                            }
                           }
 
                           // Check if user is outside Foodly coverage and it matches their principal address
@@ -131,14 +200,14 @@ class CurrentLocationButton extends StatelessWidget {
                             : Row(
                                 spacing: 9,
                                 children: [
-                                  const Icon(
-                                    Icons.location_off_outlined,
+                                  Icon(
+                                    noLocIcon,
                                     color: FoodlyThemes.error,
                                     size: 23,
                                   ),
                                   Expanded(
                                     child: Text(
-                                      S.current.enableLocation,
+                                      noLocLabel,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: FoodlyTextStyles.captionBold.copyWith(color: FoodlyThemes.error),
