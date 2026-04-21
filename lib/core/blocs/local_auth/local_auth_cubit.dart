@@ -113,33 +113,30 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
     if (_dto.isAuthenticating) return;
     _dto = _dto.copyWith(isAuthenticating: true);
 
-    // Serialize behind the push-permission flow.
+    // Serializar detrás del flujo de permiso de notificaciones.
     //
-    // Why: Android does not queue system-modal dialogs. If POST_NOTIFICATIONS
-    // is still on screen (from main.dart's fire-and-forget
-    // PushNotificationService.initialize()) when we ask the OS to show the
-    // BiometricPrompt, Android silently rejects the biometric request —
-    // authenticated=false is returned without the user ever seeing the
-    // fingerprint/Face ID sheet. Reproduced on release 1.4.2+32 in the
-    // 2026-04-21 edge case: logout (save session) → close app → revoke
-    // notifications in Android Settings → reopen → push dialog shows →
-    // approve push → biometric never appears, and the fingerprint button
-    // is a no-op until the app is swipe-killed (because of the latent bug
-    // below).
+    // Por qué: Android no encola diálogos system-modal. Si el prompt de
+    // POST_NOTIFICATIONS (disparado fire-and-forget desde main.dart vía
+    // PushNotificationService.initialize()) sigue en pantalla cuando le
+    // pedimos al OS mostrar el BiometricPrompt, Android rechaza el request
+    // silenciosamente — `authenticated=false` sin que el usuario vea la
+    // sheet de fingerprint/Face ID. Reproducido en 1.4.2+32 (2026-04-21):
+    // logout → cerrar app → revocar notificaciones en Settings → reabrir →
+    // diálogo push → aprobar → biometría jamás aparece y el botón queda
+    // no-op hasta swipe-kill (por el bug del _dto, ver abajo).
     //
-    // The pattern mirrors FoodlyLocationWrapper — same Completer, same 5s
-    // defensive timeout. If Firebase blew up inside initialize() the
-    // completer still settles via the catch block, so we never hang past
-    // 5s.
+    // Esperamos SIN timeout arbitrario: timeouts cortos (5 s) hacían
+    // fall-through antes de que el usuario tocara Permitir en el diálogo
+    // de notificaciones, mostrando BiometricPrompt en paralelo y
+    // cancelando el reconocimiento. El safety-net contra cuelgue del
+    // plugin vive dentro del service (timer de 120 s), así que acá solo
+    // necesitamos try/catch por si el servicio no está registrado.
     if (di.isRegistered<PushNotificationService>()) {
       try {
-        await di<PushNotificationService>()
-            .permissionFlowComplete
-            .timeout(const Duration(seconds: 5));
+        await di<PushNotificationService>().permissionFlowComplete;
       } catch (_) {
-        // Timeout or service missing — fall through. Worst case we hit the
-        // same race once and the user has to retry; the isAuthenticating
-        // reset below ensures the retry actually runs.
+        // Service missing — fall through. El reset de isAuthenticating
+        // abajo asegura que el retry manual funcione.
       }
     }
 

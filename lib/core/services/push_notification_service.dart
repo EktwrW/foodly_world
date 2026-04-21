@@ -81,7 +81,22 @@ class PushNotificationService {
   final Completer<void> _permissionFlowCompleter = Completer<void>();
   Future<void> get permissionFlowComplete => _permissionFlowCompleter.future;
 
+  /// Safety-net timer — libera el completer si algo catastrófico impide que
+  /// [_completePermissionFlow] se dispare por los caminos normales (e.g. el
+  /// plugin Android 13+ nunca resuelve `requestNotificationsPermission`, que
+  /// es el único escenario razonable donde el usuario aprobó pero el future
+  /// jamás completa). El valor (120 s) está deliberadamente sobredimensionado
+  /// para que **nunca** le gane a un usuario tardando en leer el diálogo —
+  /// ése es el antipatrón que queremos evitar: timeouts cortos (5 s) hacían
+  /// fall-through antes de que el usuario tocara Permitir, disparando el
+  /// diálogo de localización en paralelo y haciendo que Android silenciara
+  /// el segundo. Este timer SOLO cubre el bug del plugin. Iniciado en
+  /// [initialize] y cancelado en cuanto el flujo completa por otra vía.
+  Timer? _permissionFlowSafetyTimer;
+
   void _completePermissionFlow() {
+    _permissionFlowSafetyTimer?.cancel();
+    _permissionFlowSafetyTimer = null;
     if (!_permissionFlowCompleter.isCompleted) _permissionFlowCompleter.complete();
   }
 
@@ -121,6 +136,18 @@ class PushNotificationService {
     }
 
     try {
+      // Safety-net de último recurso para el completer. Cubre ÚNICAMENTE el
+      // escenario donde el plugin de permisos queda colgado (i.e.
+      // requestNotificationsPermission en Android 13+ no resuelve nunca).
+      // 120 s es deliberadamente mucho más grande que cualquier ventana
+      // razonable de interacción del usuario con el diálogo — el objetivo es
+      // NO penalizar al usuario por leer despacio. Se cancela en cuanto
+      // [_completePermissionFlow] dispare por el camino normal.
+      _permissionFlowSafetyTimer = Timer(const Duration(seconds: 120), () {
+        _logger.w('PushNotificationService permission flow safety timer fired — releasing completer (possible plugin hang)');
+        _completePermissionFlow();
+      });
+
       // Background handler MUST be registered before any other listener.
       FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -314,6 +341,8 @@ class PushNotificationService {
     _onTokenRefreshSub = null;
     _onMessageSub = null;
     _onMessageOpenedAppSub = null;
+    _permissionFlowSafetyTimer?.cancel();
+    _permissionFlowSafetyTimer = null;
     _initialized = false;
   }
 

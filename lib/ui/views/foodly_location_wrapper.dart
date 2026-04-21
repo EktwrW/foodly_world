@@ -50,23 +50,20 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     if (_locationService.mustFetchLocation) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
-        // 5s ceiling on the push permission wait. Covers the degenerate
-        // case where PushNotificationService.initialize() hangs (e.g.
-        // Firebase.initializeApp silently failed and the Completer is
-        // never settled — even though initialize() has a catch that
-        // releases the completer, we belt-and-suspenders with a timeout
-        // so the location button is NEVER stuck on "verificando
-        // ubicación" because of push). 5s is comfortably longer than a
-        // user tapping "Allow" on the push dialog.
+        // Esperamos a que el flujo de permiso de notificaciones TERMINE
+        // realmente (usuario tocó Permitir/Denegar, o el plugin no tenía
+        // nada que preguntar). SIN timeout arbitrario: Android no encola
+        // diálogos de permiso, y un timeout corto hacía fall-through antes
+        // de que el usuario respondiera, disparando el diálogo de
+        // localización en paralelo → Android silenciaba el segundo y el
+        // usuario nunca veía el prompt de ubicación. El safety-net contra
+        // cuelgue del plugin vive dentro del service (timer de 120 s), así
+        // que acá no necesitamos defensa adicional. El try/catch solo cubre
+        // que el servicio exista en DI.
         try {
-          await di<PushNotificationService>()
-              .permissionFlowComplete
-              .timeout(const Duration(seconds: 5));
+          await di<PushNotificationService>().permissionFlowComplete;
         } catch (_) {
-          // Timeout or service missing — fall through; Android will either
-          // show both dialogs now that the race window is past, or the
-          // location dialog will surface first and push prompts on next
-          // launch.
+          // Service missing — fall through.
         }
         if (!mounted) return;
         // Guard: defer location check if biometric auth is active OR if
