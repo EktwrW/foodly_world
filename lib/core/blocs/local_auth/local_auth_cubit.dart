@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/data_transfer_objects/local_auth/local_auth_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:local_auth/local_auth.dart';
@@ -111,6 +112,37 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
   Future<void> authenticate() async {
     if (_dto.isAuthenticating) return;
     _dto = _dto.copyWith(isAuthenticating: true);
+
+    // Serialize behind the push-permission flow.
+    //
+    // Why: Android does not queue system-modal dialogs. If POST_NOTIFICATIONS
+    // is still on screen (from main.dart's fire-and-forget
+    // PushNotificationService.initialize()) when we ask the OS to show the
+    // BiometricPrompt, Android silently rejects the biometric request —
+    // authenticated=false is returned without the user ever seeing the
+    // fingerprint/Face ID sheet. Reproduced on release 1.4.2+32 in the
+    // 2026-04-21 edge case: logout (save session) → close app → revoke
+    // notifications in Android Settings → reopen → push dialog shows →
+    // approve push → biometric never appears, and the fingerprint button
+    // is a no-op until the app is swipe-killed (because of the latent bug
+    // below).
+    //
+    // The pattern mirrors FoodlyLocationWrapper — same Completer, same 5s
+    // defensive timeout. If Firebase blew up inside initialize() the
+    // completer still settles via the catch block, so we never hang past
+    // 5s.
+    if (di.isRegistered<PushNotificationService>()) {
+      try {
+        await di<PushNotificationService>()
+            .permissionFlowComplete
+            .timeout(const Duration(seconds: 5));
+      } catch (_) {
+        // Timeout or service missing — fall through. Worst case we hit the
+        // same race once and the user has to retry; the isAuthenticating
+        // reset below ensures the retry actually runs.
+      }
+    }
+
     try {
       await auth
           .authenticate(
@@ -127,15 +159,26 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
             // Biometric was denied/cancelled. Clear the guard so that location
             // checks and notification polling can resume normally.
             _authSessionService.setBiometricLoginInProgress(false);
+            // CRITICAL: reassign _dto (the field), not only the copy passed to
+            // emit. The previous version emitted the new state with
+            // isAuthenticating=false but left the field sitting at true, so
+            // the `if (_dto.isAuthenticating) return;` guard at the top of
+            // this method would short-circuit every subsequent retry —
+            // including the manual tap on the fingerprint button. The only
+            // way out was a swipe-kill (fresh cubit). Same bug applies to the
+            // PlatformException catch block below.
+            _dto = _dto.copyWith(isAuthenticating: false);
             _logger.e(S.current.unauthorizedAccess);
-            emit(_Error(S.current.unauthorizedAccess, _dto.copyWith(isAuthenticating: false)));
+            emit(_Error(S.current.unauthorizedAccess, _dto));
           }
         },
       );
       return;
     } on PlatformException catch (e) {
       _logger.e('$e');
-      emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
+      // See comment above: reset the field, not only the emit payload.
+      _dto = _dto.copyWith(isAuthenticating: false);
+      emit(_Error('$e', _dto));
       return;
     }
   }

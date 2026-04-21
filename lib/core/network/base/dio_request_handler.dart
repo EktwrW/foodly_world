@@ -12,15 +12,25 @@ abstract class DioRequestHandler {
     final authSessionService = di<AuthSessionService>();
     await authSessionService.validateAccessToken();
 
-    // Auth endpoints (login, social-login, register) must NEVER be blocked
-    // by stale token checks. These endpoints are unauthenticated on the
-    // backend but Dio's base headers may carry a stale Bearer token from a
-    // previous session. Strip the auth header and let them through.
+    // Auth endpoints (login, social-login, register, forgot-password) must
+    // NEVER be blocked by stale token checks. These endpoints are
+    // unauthenticated on the backend but Dio's base headers may carry a
+    // stale Bearer token from a previous session. Strip the auth header and
+    // let them through.
+    //
+    // IMPORTANT: use a whitelist of exact paths (prefixed with '/'), NOT
+    // endsWith. A lazy `endsWith('/register')` matched `/device-tokens/register`
+    // too, stripped its Authorization header, and made every FCM token
+    // registration return 401 server-side — the reason no push notifications
+    // were being delivered before 2026-04-21. See Bug C.
+    const authEndpoints = <String>{
+      '/login',
+      '/social-login',
+      '/register',
+      '/forgot-password',
+    };
     final path = options.path;
-    final isAuthEndpoint = path.endsWith('/login') ||
-        path.endsWith('/social-login') ||
-        path.endsWith('/register') ||
-        path.endsWith('/forgot-password');
+    final isAuthEndpoint = authEndpoints.contains(path);
 
     if (isAuthEndpoint) {
       options.headers.remove(FoodlyStrings.AUTHORIZATION);
@@ -67,11 +77,17 @@ abstract class DioRequestHandler {
     // modal would confuse the user.
     // Also suppress during biometric login (token rotation race condition).
     if (e.response?.statusCode == 401) {
+      // Same whitelist pattern as the request handler — see Bug C comment
+      // above. Never use endsWith here or `/device-tokens/register`,
+      // `/businesses/.../token/refresh`-style paths will match falsely.
+      const authEndpoints = <String>{
+        '/login',
+        '/register',
+        '/social-login',
+        '/token/refresh',
+      };
       final path = e.requestOptions.path;
-      final isAuthEndpoint = path.endsWith('/login') ||
-          path.endsWith('/register') ||
-          path.endsWith('/social-login') ||
-          path.endsWith('/token/refresh');
+      final isAuthEndpoint = authEndpoints.contains(path);
 
       if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint) {
         // Attempt a silent refresh before declaring the session dead.
