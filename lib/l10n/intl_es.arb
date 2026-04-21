@@ -682,6 +682,9 @@
     }
   },
   "allowReservations": "Permitir Reservas",
+  "acceptServiceRequests": "Aceptar solicitudes",
+  "manage": "Gestionar",
+  "businessNotAcceptingRequestsNow": "Este negocio no está aceptando solicitudes por ahora",
   "pending": "Pendiente",
   "confirmed": "Confirmada",
   "rejected": "Rechazada",
@@ -850,7 +853,6 @@
   "analyticsStatusRejected": "Rechazada",
   "analyticsStatusNoShow": "No asistió",
   "cateringAndChefs": "Catering & Chefs",
-
   "servicePackages": "Paquetes de servicio",
   "packages": "Paquetes",
   "noPackagesYet": "Aún no hay paquetes",
@@ -868,7 +870,6 @@
   "active": "Activo",
   "activePackageHint": "Los paquetes activos son visibles para los clientes",
   "featuredPackageHint": "Los paquetes destacados aparecen primero",
-
   "serviceType": "Tipo de servicio",
   "priceType": "Tipo de precio",
   "dinner": "Cena",
@@ -896,7 +897,6 @@
   "packageDescriptionHint": "Describe qué incluye este paquete",
   "addItem": "Agregar ítem",
   "includeItemHint": "Ej: Entrada, plato principal, postre",
-
   "specialties": "Especialidades",
   "cuisines": "Cocinas",
   "certifications": "Certificaciones",
@@ -930,7 +930,6 @@
   "portfolioVideoUrl": "URL de video/portfolio",
   "title": "Título",
   "descriptionLabel": "Descripción",
-
   "serviceBookingRequest": "Solicitud de servicio",
   "tableReservations": "Reservas de mesa",
   "serviceRequests": "Solicitudes de servicio",
@@ -984,7 +983,11 @@
   "oneNewMessage": "1 nuevo mensaje",
   "nNewMessages": "{count} mensajes nuevos",
   "@nNewMessages": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "enterQuoteAmount": "Ingrese el monto de la cotización",
   "quoteNotes": "Notas de la cotización (opcional)",

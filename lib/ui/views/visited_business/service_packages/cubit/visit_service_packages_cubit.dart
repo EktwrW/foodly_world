@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/service_packages/service_package_repo.dart';
+import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,12 +8,23 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'visit_service_packages_state.dart';
 part 'visit_service_packages_cubit.freezed.dart';
 
+/// Cubit for the visitor-facing "Service Packages" page.
+///
+/// Receives an optional [business] piggy-backed via GoRouter's `state.extra`
+/// so the page can surface UX state that isn't returned by the public
+/// endpoints — specifically the `allow_reservations` flag that controls
+/// whether the "Request service" CTA is enabled. When this page is reached
+/// via a deep link (no extra), we default to `allowReservations=true` and
+/// rely on the BE guard (`ReservationController::storeServiceBooking`) to
+/// reject the request if the manager has actually disabled it.
 class VisitServicePackagesCubit extends Cubit<VisitServicePackagesState> {
   final ServicePackageRepo _repo;
   final String businessUuid;
+  final BusinessDM? _business;
 
-  VisitServicePackagesCubit(this._repo, {required this.businessUuid})
-      : super(const VisitServicePackagesState.initial()) {
+  VisitServicePackagesCubit(this._repo, {required this.businessUuid, BusinessDM? business})
+      : _business = business,
+        super(const VisitServicePackagesState.initial()) {
     _fetchAll();
   }
 
@@ -41,7 +53,12 @@ class VisitServicePackagesCubit extends Cubit<VisitServicePackagesState> {
     );
 
     if (!hasError) {
-      emit(VisitServicePackagesState.loaded(profile: profile, packages: packages));
+      emit(VisitServicePackagesState.loaded(
+        profile: profile,
+        packages: packages,
+        // Fail-open when no BusinessDM was threaded through (deep link case).
+        allowReservations: _business?.allowReservations ?? true,
+      ));
     }
   }
 }

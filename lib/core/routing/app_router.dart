@@ -674,6 +674,10 @@ class AppRouter {
                 create: (context) => VisitServicePackagesCubit(
                   di(),
                   businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                  // Piggy-back the full BusinessDM so the cubit can surface
+                  // `allow_reservations` for the CTA disable logic. Null on
+                  // deep-link entry, which is fine — see cubit doc.
+                  business: state.extra as BusinessDM?,
                 ),
                 child: const VisitServicePackagesPage(),
               ),

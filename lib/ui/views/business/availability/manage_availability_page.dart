@@ -111,6 +111,7 @@ class _ManageAvailabilityPageState extends State<ManageAvailabilityPage> {
               );
 
               return Column(
+                spacing: 16,
                 children: [
                   _MonthHeader(
                     month: _visibleMonth,
@@ -126,7 +127,7 @@ class _ManageAvailabilityPageState extends State<ManageAvailabilityPage> {
                       final now = DateTime.now();
                       _goToMonth(DateTime(now.year, now.month));
                     },
-                  ),
+                  ).paddingTop(16),
                   const _LegendRow(),
                   Expanded(
                     child: RefreshIndicator(

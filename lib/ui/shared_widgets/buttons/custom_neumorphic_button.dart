@@ -24,6 +24,7 @@ class CustomNeumorphicButton extends StatelessWidget {
   final Color? foregroundColor;
   final double? depth;
   final Widget? leading;
+  final Widget? trailing;
   final String? tooltip;
 
   const CustomNeumorphicButton({
@@ -42,6 +43,7 @@ class CustomNeumorphicButton extends StatelessWidget {
     this.backgroundColor,
     this.depth = 3,
     this.leading,
+    this.trailing,
     this.foregroundColor,
     this.tooltip,
   });
@@ -109,6 +111,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                       spread: 0.16,
                       style: getBaseTextStyle,
                     ),
+                    if (trailing != null) trailing!.paddingLeft(12),
                   ],
                 ),
               ),
@@ -145,6 +148,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                       color: !disabled ? (foregroundColor ?? FoodlyThemes.primaryFoodly) : Colors.grey,
                       style: getBaseTextStyle,
                     ),
+                    if (trailing != null) trailing!.paddingLeft(12),
                   ],
                 ),
               ),

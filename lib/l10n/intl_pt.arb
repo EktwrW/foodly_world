@@ -683,6 +683,9 @@
     }
   },
   "allowReservations": "Permitir Reservas",
+  "acceptServiceRequests": "Aceitar pedidos",
+  "manage": "Gerir",
+  "businessNotAcceptingRequestsNow": "Este estabelecimento não está a aceitar pedidos agora",
   "pending": "Pendente",
   "confirmed": "Confirmada",
   "rejected": "Rejeitada",
@@ -850,7 +853,6 @@
   "analyticsStatusRejected": "Rejeitada",
   "analyticsStatusNoShow": "Não compareceu",
   "cateringAndChefs": "Catering & Chefs",
-
   "servicePackages": "Pacotes de serviço",
   "packages": "Pacotes",
   "noPackagesYet": "Ainda não há pacotes",
@@ -868,7 +870,6 @@
   "active": "Ativo",
   "activePackageHint": "Pacotes ativos são visíveis para os clientes",
   "featuredPackageHint": "Pacotes em destaque aparecem primeiro",
-
   "serviceType": "Tipo de serviço",
   "priceType": "Tipo de preço",
   "dinner": "Jantar",
@@ -896,7 +897,6 @@
   "packageDescriptionHint": "Descreva o que este pacote inclui",
   "addItem": "Adicionar item",
   "includeItemHint": "Ex: Entrada, prato principal, sobremesa",
-
   "specialties": "Especialidades",
   "cuisines": "Cozinhas",
   "certifications": "Certificações",
@@ -930,7 +930,6 @@
   "portfolioVideoUrl": "URL de vídeo/portfólio",
   "title": "Título",
   "descriptionLabel": "Descrição",
-
   "serviceBookingRequest": "Pedido de serviço",
   "tableReservations": "Reservas de mesa",
   "serviceRequests": "Pedidos de serviço",
@@ -984,7 +983,11 @@
   "oneNewMessage": "1 nova mensagem",
   "nNewMessages": "{count} mensagens novas",
   "@nNewMessages": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "enterQuoteAmount": "Introduza o valor do orçamento",
   "quoteNotes": "Notas do orçamento (opcional)",

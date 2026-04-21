@@ -143,6 +143,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutVideoPlaceholder": MessageLookupByLibrary.simpleMessage(
       "App Guide — Coming Soon",
     ),
+    "acceptServiceRequests": MessageLookupByLibrary.simpleMessage(
+      "Accept requests",
+    ),
     "accessiblePMR": MessageLookupByLibrary.simpleMessage("Accessible PMR"),
     "account": MessageLookupByLibrary.simpleMessage("Account"),
     "active": MessageLookupByLibrary.simpleMessage("Active"),
@@ -355,6 +358,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Business information not found",
     ),
     "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+    "businessNotAcceptingRequestsNow": MessageLookupByLibrary.simpleMessage(
+      "This business isn\'t accepting requests right now",
+    ),
     "businessRegister": MessageLookupByLibrary.simpleMessage(
       "Register Business",
     ),
@@ -914,6 +920,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lunch": MessageLookupByLibrary.simpleMessage("Lunch"),
     "mainPromos": MessageLookupByLibrary.simpleMessage("Featured Promotions"),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "manage": MessageLookupByLibrary.simpleMessage("Manage"),
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Manage Reservations",
     ),

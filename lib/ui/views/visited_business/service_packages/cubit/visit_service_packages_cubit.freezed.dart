@@ -20,8 +20,8 @@ mixin _$VisitServicePackagesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)
+    required TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -30,8 +30,8 @@ mixin _$VisitServicePackagesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult? Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -40,8 +40,8 @@ mixin _$VisitServicePackagesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -139,8 +139,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)
+    required TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -152,8 +152,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult? Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -165,8 +165,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -262,8 +262,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)
+    required TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -275,8 +275,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult? Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -288,8 +288,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -348,7 +348,10 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ProfessionalProfileDM? profile, List<ServicePackageDM> packages});
+  $Res call(
+      {ProfessionalProfileDM? profile,
+      List<ServicePackageDM> packages,
+      bool allowReservations});
 
   $ProfessionalProfileDMCopyWith<$Res>? get profile;
 }
@@ -368,6 +371,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
   $Res call({
     Object? profile = freezed,
     Object? packages = null,
+    Object? allowReservations = null,
   }) {
     return _then(_$LoadedImpl(
       profile: freezed == profile
@@ -378,6 +382,10 @@ class __$$LoadedImplCopyWithImpl<$Res>
           ? _value._packages
           : packages // ignore: cast_nullable_to_non_nullable
               as List<ServicePackageDM>,
+      allowReservations: null == allowReservations
+          ? _value.allowReservations
+          : allowReservations // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -400,7 +408,9 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(
-      {this.profile, final List<ServicePackageDM> packages = const []})
+      {this.profile,
+      final List<ServicePackageDM> packages = const [],
+      this.allowReservations = true})
       : _packages = packages;
 
   @override
@@ -414,9 +424,20 @@ class _$LoadedImpl implements _Loaded {
     return EqualUnmodifiableListView(_packages);
   }
 
+// Whether the business currently accepts incoming service requests.
+// Mirrors the dashboard switch `allow_reservations` — when false the
+// CTA to request a booking must be disabled on this page. Defaults to
+// true so deep-links that land on the packages page without an
+// attached BusinessDM don't force-close the CTA (the BE guard in
+// ReservationController::storeServiceBooking is the ultimate source
+// of truth; this field is just a UX hint).
+  @override
+  @JsonKey()
+  final bool allowReservations;
+
   @override
   String toString() {
-    return 'VisitServicePackagesState.loaded(profile: $profile, packages: $packages)';
+    return 'VisitServicePackagesState.loaded(profile: $profile, packages: $packages, allowReservations: $allowReservations)';
   }
 
   @override
@@ -425,12 +446,14 @@ class _$LoadedImpl implements _Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            const DeepCollectionEquality().equals(other._packages, _packages));
+            const DeepCollectionEquality().equals(other._packages, _packages) &&
+            (identical(other.allowReservations, allowReservations) ||
+                other.allowReservations == allowReservations));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, profile, const DeepCollectionEquality().hash(_packages));
+  int get hashCode => Object.hash(runtimeType, profile,
+      const DeepCollectionEquality().hash(_packages), allowReservations);
 
   /// Create a copy of VisitServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
@@ -445,12 +468,12 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)
+    required TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(profile, packages);
+    return loaded(profile, packages, allowReservations);
   }
 
   @override
@@ -458,12 +481,12 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult? Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(profile, packages);
+    return loaded?.call(profile, packages, allowReservations);
   }
 
   @override
@@ -471,14 +494,14 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(profile, packages);
+      return loaded(profile, packages, allowReservations);
     }
     return orElse();
   }
@@ -524,10 +547,19 @@ class _$LoadedImpl implements _Loaded {
 abstract class _Loaded implements VisitServicePackagesState {
   const factory _Loaded(
       {final ProfessionalProfileDM? profile,
-      final List<ServicePackageDM> packages}) = _$LoadedImpl;
+      final List<ServicePackageDM> packages,
+      final bool allowReservations}) = _$LoadedImpl;
 
   ProfessionalProfileDM? get profile;
-  List<ServicePackageDM> get packages;
+  List<ServicePackageDM>
+      get packages; // Whether the business currently accepts incoming service requests.
+// Mirrors the dashboard switch `allow_reservations` — when false the
+// CTA to request a booking must be disabled on this page. Defaults to
+// true so deep-links that land on the packages page without an
+// attached BusinessDM don't force-close the CTA (the BE guard in
+// ReservationController::storeServiceBooking is the ultimate source
+// of truth; this field is just a UX hint).
+  bool get allowReservations;
 
   /// Create a copy of VisitServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
@@ -606,8 +638,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)
+    required TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -619,8 +651,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult? Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -632,8 +664,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            ProfessionalProfileDM? profile, List<ServicePackageDM> packages)?
+    TResult Function(ProfessionalProfileDM? profile,
+            List<ServicePackageDM> packages, bool allowReservations)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

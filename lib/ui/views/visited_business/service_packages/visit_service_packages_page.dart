@@ -65,7 +65,8 @@ class VisitServicePackagesPage extends StatelessWidget {
                     child: Text(msg, style: FoodlyTextStyles.label, textAlign: TextAlign.center),
                   ),
                 ),
-                loaded: (profile, packages) => _LoadedContent(profile: profile, packages: packages),
+                loaded: (profile, packages, allowReservations) =>
+                    _LoadedContent(profile: profile, packages: packages, allowReservations: allowReservations),
               );
             },
           ),
@@ -81,7 +82,13 @@ class _LoadedContent extends StatelessWidget {
   final ProfessionalProfileDM? profile;
   final List<ServicePackageDM> packages;
 
-  const _LoadedContent({this.profile, required this.packages});
+  /// Mirrors `business.allow_reservations`. When false we keep the cards
+  /// visible (visitors may still browse offerings) but neutralise the
+  /// "Request service" CTA with a short explanatory snackbar. Ultimate
+  /// enforcement lives in `ReservationController::storeServiceBooking`.
+  final bool allowReservations;
+
+  const _LoadedContent({this.profile, required this.packages, required this.allowReservations});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +140,11 @@ class _LoadedContent extends StatelessWidget {
                 (context, index) => FadeInUp(
                   delay: Duration(milliseconds: 60 * index),
                   duration: const Duration(milliseconds: 300),
-                  child: _VisitorPackageCard(package: packages[index], isMobile: false),
+                  child: _VisitorPackageCard(
+                    package: packages[index],
+                    isMobile: false,
+                    allowReservations: allowReservations,
+                  ),
                 ),
                 childCount: packages.length,
               ),
@@ -150,7 +161,11 @@ class _LoadedContent extends StatelessWidget {
                 return FadeInUp(
                   delay: Duration(milliseconds: 80 * index),
                   duration: const Duration(milliseconds: 300),
-                  child: _VisitorPackageCard(package: packages[index], isMobile: true),
+                  child: _VisitorPackageCard(
+                    package: packages[index],
+                    isMobile: true,
+                    allowReservations: allowReservations,
+                  ),
                 );
               },
             ),
@@ -349,8 +364,13 @@ class _InfoChip extends StatelessWidget {
 class _VisitorPackageCard extends StatelessWidget {
   final ServicePackageDM package;
   final bool isMobile;
+  final bool allowReservations;
 
-  const _VisitorPackageCard({required this.package, required this.isMobile});
+  const _VisitorPackageCard({
+    required this.package,
+    required this.isMobile,
+    required this.allowReservations,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -498,23 +518,50 @@ class _VisitorPackageCard extends StatelessWidget {
                     ],
                   ),
 
-                // Request Service CTA
+                // Request Service CTA — greyed-out when the business has
+                // flipped off `allow_reservations`. Tapping the disabled
+                // state still gives the user feedback via a snackbar so the
+                // affordance doesn't feel broken (silent no-op). We wrap in
+                // a GestureDetector + IgnorePointer because
+                // CustomNeumorphicButton nullifies onPressed when
+                // `disabled: true`, so we need the outer detector to catch
+                // the tap and surface the snackbar.
                 const SizedBox(height: 4),
                 SizedBox(
                   width: double.infinity,
-                  child: CustomNeumorphicButton(
-                    text: S.current.requestService,
-                    disabled: false,
-                    fontSize: 14.6,
-                    onPressed: () {
-                      final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
-                      showServiceBookingRequestSheet(
-                        context,
-                        businessUuid: businessUuid,
-                        package: package,
-                      );
-                    },
-                  ),
+                  child: allowReservations
+                      ? CustomNeumorphicButton(
+                          text: S.current.requestService,
+                          disabled: false,
+                          fontSize: 14.6,
+                          onPressed: () {
+                            final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
+                            showServiceBookingRequestSheet(
+                              context,
+                              businessUuid: businessUuid,
+                              package: package,
+                            );
+                          },
+                        )
+                      : GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(SnackBar(
+                                content: Text(S.current.businessNotAcceptingRequestsNow),
+                                behavior: SnackBarBehavior.floating,
+                              ));
+                          },
+                          child: IgnorePointer(
+                            child: CustomNeumorphicButton(
+                              text: S.current.requestService,
+                              disabled: true,
+                              fontSize: 14.6,
+                              onPressed: () {},
+                            ),
+                          ),
+                        ),
                 ),
               ],
             ),

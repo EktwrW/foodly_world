@@ -683,6 +683,9 @@
     }
   },
   "allowReservations": "Allow Reservations",
+  "acceptServiceRequests": "Accept requests",
+  "manage": "Manage",
+  "businessNotAcceptingRequestsNow": "This business isn't accepting requests right now",
   "pending": "Pending",
   "confirmed": "Confirmed",
   "rejected": "Rejected",
@@ -850,7 +853,6 @@
   "analyticsStatusRejected": "Rejected",
   "analyticsStatusNoShow": "No show",
   "cateringAndChefs": "Catering & Chefs",
-
   "servicePackages": "Service packages",
   "packages": "Packages",
   "noPackagesYet": "No packages yet",
@@ -868,7 +870,6 @@
   "active": "Active",
   "activePackageHint": "Active packages are visible to customers",
   "featuredPackageHint": "Featured packages appear first",
-
   "serviceType": "Service type",
   "priceType": "Price type",
   "dinner": "Dinner",
@@ -896,7 +897,6 @@
   "packageDescriptionHint": "Describe what this package includes",
   "addItem": "Add item",
   "includeItemHint": "E.g.: Starter, main course, dessert",
-
   "specialties": "Specialties",
   "cuisines": "Cuisines",
   "certifications": "Certifications",
@@ -930,7 +930,6 @@
   "portfolioVideoUrl": "Portfolio/video URL",
   "title": "Title",
   "descriptionLabel": "Description",
-
   "serviceBookingRequest": "Service request",
   "tableReservations": "Table reservations",
   "serviceRequests": "Service requests",
@@ -984,7 +983,11 @@
   "oneNewMessage": "1 new message",
   "nNewMessages": "{count} new messages",
   "@nNewMessages": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "enterQuoteAmount": "Enter quote amount",
   "quoteNotes": "Quote notes (optional)",

@@ -4779,6 +4779,31 @@ class S {
     );
   }
 
+  /// `Accept requests`
+  String get acceptServiceRequests {
+    return Intl.message(
+      'Accept requests',
+      name: 'acceptServiceRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage`
+  String get manage {
+    return Intl.message('Manage', name: 'manage', desc: '', args: []);
+  }
+
+  /// `This business isn't accepting requests right now`
+  String get businessNotAcceptingRequestsNow {
+    return Intl.message(
+      'This business isn\'t accepting requests right now',
+      name: 'businessNotAcceptingRequestsNow',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pending`
   String get pending {
     return Intl.message('Pending', name: 'pending', desc: '', args: []);
