@@ -51,6 +51,25 @@ class PushNotificationService {
   StreamSubscription<RemoteMessage>? _onMessageSub;
   StreamSubscription<RemoteMessage>? _onMessageOpenedAppSub;
 
+  /// Reentrancy guard for [registerCurrentToken].
+  ///
+  /// Two callers can invoke this simultaneously:
+  ///   - [AuthSessionService.initializeNotifications] after a successful login.
+  ///   - The [FirebaseMessaging.onTokenRefresh] listener wired below — FCM
+  ///     can fire a rotation callback while the initial [getToken] is still
+  ///     in flight on the very first login on a device.
+  ///
+  /// Before the BE moved to `ON CONFLICT DO UPDATE`, these concurrent calls
+  /// raced on the unique index `device_tokens_fcm_token_unique` and one of
+  /// the two requests returned 500 (the other succeeded, so the token WAS
+  /// registered, but Cloud Run's error log filled with phantom 500s). The
+  /// BE is now idempotent, so this guard is a belt-and-suspenders fix: even
+  /// with an idempotent BE we save a network round-trip and avoid duplicated
+  /// log entries by collapsing concurrent calls into a single in-flight
+  /// request. Any caller arriving while a register is in flight simply
+  /// awaits the same future.
+  Future<void>? _inFlightRegister;
+
   /// Completes as soon as the OS-level notification permission dialog flow
   /// is finished (user approved, denied, or the platform had nothing to ask).
   /// Other parts of the app — specifically [FoodlyLocationWrapper] — MUST
@@ -203,12 +222,35 @@ class PushNotificationService {
   }
 
   /// Retrieves the current FCM token and POSTs it to the BE.
+  ///
   /// Safe to call multiple times — server-side upsert by fcm_token makes it
   /// idempotent. Silently no-ops if the user isn't logged in (no auth header
   /// → BE returns 401 which we swallow).
+  ///
+  /// Reentrancy: concurrent calls collapse into a single in-flight request
+  /// via [_inFlightRegister]. See the field docblock for the full rationale.
   Future<void> registerCurrentToken() async {
     if (kIsWeb) return; // Phase 2
 
+    // Collapse concurrent callers onto a single future. The second caller
+    // waits for (and reuses) the first caller's result instead of firing
+    // its own POST. Cleared in the finally block below so a LATER call
+    // (e.g. a real FCM rotation minutes after login) still goes through.
+    final inFlight = _inFlightRegister;
+    if (inFlight != null) {
+      return inFlight;
+    }
+
+    final future = _registerCurrentTokenImpl();
+    _inFlightRegister = future;
+    try {
+      await future;
+    } finally {
+      _inFlightRegister = null;
+    }
+  }
+
+  Future<void> _registerCurrentTokenImpl() async {
     try {
       final messaging = FirebaseMessaging.instance;
       final token = await messaging.getToken();
