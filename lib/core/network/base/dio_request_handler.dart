@@ -12,21 +12,27 @@ abstract class DioRequestHandler {
     final authSessionService = di<AuthSessionService>();
     await authSessionService.validateAccessToken();
 
-    // Auth endpoints (login, social-login, register, forgot-password) must
-    // NEVER be blocked by stale token checks. These endpoints are
-    // unauthenticated on the backend but Dio's base headers may carry a
-    // stale Bearer token from a previous session. Strip the auth header and
-    // let them through.
+    // Public auth endpoints must NEVER be blocked by stale token checks.
+    // These endpoints are UNAUTHENTICATED on the backend but Dio's base
+    // headers may carry a stale Bearer token from a previous session. Strip
+    // the auth header and let them through.
     //
     // IMPORTANT: use a whitelist of exact paths (prefixed with '/'), NOT
     // endsWith. A lazy `endsWith('/register')` matched `/device-tokens/register`
     // too, stripped its Authorization header, and made every FCM token
     // registration return 401 server-side — the reason no push notifications
     // were being delivered before 2026-04-21. See Bug C.
+    //
+    // CRITICAL: /biometric-login is NOT in this list. Although it looks like
+    // an auth endpoint, server-side it is wrapped by `auth:sanctum`
+    // (routes/api.php) and `BiometricAuthController::store` calls
+    // `auth()->user()` — so it REQUIRES the Authorization header (the user's
+    // currently cached access or refresh token). Putting it here was the
+    // cause of Bug E.1: every biometric login returned 401 server-side, the
+    // cubit emitted _Error, and FoodlyWrapper bounced the user back to login.
     const authEndpoints = <String>{
       '/login',
       '/social-login',
-      '/biometric-login',
       '/register',
       '/forgot-password',
     };

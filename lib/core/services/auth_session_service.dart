@@ -474,18 +474,31 @@ class AuthSessionService {
 
   /// Handles token expiration: clears session, shows a localized message,
   /// and navigates to login. Guards against re-entrancy via [forceToLogin].
+  ///
+  /// Navigation uses the router directly (not a BuildContext) because
+  /// [_clearInvalidSession] above tears down cubits/widgets, and by the next
+  /// frame `rootNavigatorKey.currentContext.mounted` is frequently false —
+  /// which previously left the snackbar on screen and a blank page behind it
+  /// (Bug E.2, 2026-04-21). The router's own state is the source of truth,
+  /// so `goNamed` works without a live widget context.
   void notifyTokenExpired() {
     if (forceToLogin || _isBiometricLoginInProgress) return;
     _clearInvalidSession();
 
+    // Navigate FIRST — always, context-independent. Even if the snackbar
+    // below can't render (no live context), the user still lands on /login.
+    try {
+      di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
+    } catch (e) {
+      di<Logger>().e('notifyTokenExpired: navigation to login failed: $e');
+    }
+
+    // Best-effort snackbar. If the context is still mounted the user gets the
+    // explanatory message; if not, we've at least taken them to login so
+    // they're not stuck on a blank screen.
     final context = rootNavigatorKey.currentContext;
     if (context != null && context.mounted) {
       FoodlySnackbars.errorGeneric(context, S.current.sessionExpiredMessage);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          di<AppRouter>().appRouter.goNamed(AppRoutes.login.name);
-        }
-      });
     }
   }
 
