@@ -63,7 +63,11 @@ Future<Widget> buildFoodlyApp() async {
       if (!isMenuSubdomain) ...[
         BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
         BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
-        BlocProvider(create: (context) => LocationBloc(di(), di())),
+        // LocationBloc: (BaseConfig, Logger, PlacesProxyRepo, AppFeaturesRepo)
+        // Los 2 últimos se agregaron en Fase 4 del Places Proxy — el bloc
+        // elige path nuevo (proxy) o legacy (direct) según el flag runtime
+        // `placesProxyEnabled` del AppFeaturesRepo.
+        BlocProvider(create: (context) => LocationBloc(di(), di(), di(), di())),
         BlocProvider(create: (context) => MainDrawerCubit(di(), di())),
         BlocProvider(create: (context) => SmartSearchCubit(di(), di())),
         BlocProvider(create: (context) => di<FavoritesCubit>()),

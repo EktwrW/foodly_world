@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' show Options;
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/places_proxy/foodly_places_client.dart';
@@ -31,6 +32,25 @@ class PlacesProxyRepo {
   final FoodlyPlacesClient _client;
 
   const PlacesProxyRepo({required FoodlyPlacesClient client}) : _client = client;
+
+  /// Timeout defensivo por defecto para reverse-geocoding.
+  ///
+  /// Se aplica como `sendTimeout` + `receiveTimeout` per-request vía
+  /// `Options(...)` (no en `BaseOptions`: no queremos que esto pise los
+  /// timeouts de otros endpoints como uploads de imágenes que son
+  /// legítimamente más lentos).
+  ///
+  /// **Por qué 6s:** valor establecido en prod 2026-04 tras un bug que
+  /// dejaba al `LocationBloc` colgado en `_CheckingLocation` cuando Places
+  /// no respondía (transición wifi↔4G, DNS lento, operador saturado). 6s
+  /// es "suficientemente largo para que responda una red degradada" y
+  /// "suficientemente corto para que la UI no se sienta muerta". Bajar de
+  /// 3-4s es arriesgado; subir arriba de 10s rompe la percepción de UX.
+  ///
+  /// El caller puede pasar un `timeout` explícito si conoce su contexto
+  /// (p.ej. onboarding, donde se podría tolerar un poco más porque el
+  /// usuario ya está esperando un setup largo).
+  static const Duration _defaultReverseTimeout = Duration(seconds: 6);
 
   /// Places Autocomplete.
   ///
@@ -96,15 +116,36 @@ class PlacesProxyRepo {
   /// (onboarding) sin que el interceptor dispare silent refresh —
   /// `/geocoding/reverse` está en el whitelist de `DioRequestHandler`.
   ///
+  /// **Timeout defensivo obligatorio.** Se pasa como `Options(sendTimeout,
+  /// receiveTimeout)` per-request — Dio cancela la conexión TCP cuando
+  /// vence, a diferencia de un `.timeout()` Dart que solo cancela el Future
+  /// y deja la conexión colgando. Default `_defaultReverseTimeout` (6s);
+  /// ver docblock de esa constante para el porqué del valor. NO usar
+  /// `null`/remover este timeout: sin él, un request colgado bloquea al
+  /// `LocationBloc` en `_CheckingLocation` indefinidamente (bug prod 2026-04).
+  ///
   /// Failure modes:
   /// - DioException con statusCode 429 → throttle:geocoding-public
   ///   golpeado (límite más estricto que places-authed porque es público).
   /// - DioException con statusCode 502 → UPSTREAM_ERROR.
+  /// - DioException con `type == DioExceptionType.receiveTimeout` o
+  ///   `sendTimeout` → el endpoint tardó más que `timeout`. El caller
+  ///   debe tratarlo como un failure genérico sin retry automático (la
+  ///   red está degradada; reintentar solo empeora la latencia percibida).
   Future<ApiResult<GeocodingResponseDM>> reverse(
-    GeocodingReverseRequestDTO body,
-  ) async {
+    GeocodingReverseRequestDTO body, {
+    Duration timeout = _defaultReverseTimeout,
+  }) async {
     try {
-      return ApiResult.success(await _client.reverse(body));
+      return ApiResult.success(
+        await _client.reverse(
+          body,
+          options: Options(
+            sendTimeout: timeout,
+            receiveTimeout: timeout,
+          ),
+        ),
+      );
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

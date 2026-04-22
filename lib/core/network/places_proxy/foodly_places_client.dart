@@ -94,10 +94,20 @@ abstract class FoodlyPlacesClient {
   ///
   /// **Público** (sin Bearer). Ver docblock de clase. El DTO contiene
   /// `lat`/`lng` como double + `language`/`region` opcionales.
+  ///
+  /// `options` permite al caller pasar `Options(sendTimeout:..., receiveTimeout:...)`
+  /// per-request. Es la forma idiomática de timeoutear un endpoint específico
+  /// en Dio sin tocar `BaseOptions` globales (que afectarían a todos los
+  /// endpoints de la app). CRÍTICO para este endpoint: si el request queda
+  /// colgado, el `LocationBloc` se congela en `_CheckingLocation` y el botón
+  /// de current location queda en "Verificando ubicación..." hasta que el
+  /// usuario mate la app. Bug reproducido en prod 2026-04. El `PlacesProxyRepo`
+  /// siempre le pasa un timeout defensivo (default 6s); no dejar `null`.
   @POST('/geocoding/reverse')
   Future<GeocodingResponseDM> reverse(
-    @Body() GeocodingReverseRequestDTO body,
-  );
+    @Body() GeocodingReverseRequestDTO body, {
+    @DioOptions() Options? options,
+  });
 
   /// Geocoding forward — query libre → dirección/componentes/coords.
   ///
