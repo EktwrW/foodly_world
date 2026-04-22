@@ -30,11 +30,22 @@ abstract class DioRequestHandler {
     // currently cached access or refresh token). Putting it here was the
     // cause of Bug E.1: every biometric login returned 401 server-side, the
     // cubit emitted _Error, and FoodlyWrapper bounced the user back to login.
+    //
+    // Public proxy endpoints (no auth:sanctum in routes/api.php) also belong
+    // here so that:
+    //   1. No stale Bearer is sent on requests that happen pre-login
+    //      (e.g. reverse geocoding en onboarding/signup).
+    //   2. If the cached access token is expired, we do NOT stall the
+    //      public request on a silent refresh the user's flow doesn't need.
+    // - /geocoding/reverse  → throttle:geocoding-public
+    // - /config/features    → throttle:120,1 (bootstrap feature flags)
     const authEndpoints = <String>{
       '/login',
       '/social-login',
       '/register',
       '/forgot-password',
+      '/geocoding/reverse',
+      '/config/features',
     };
     final path = options.path;
     final isAuthEndpoint = authEndpoints.contains(path);
