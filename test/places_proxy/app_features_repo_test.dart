@@ -74,7 +74,7 @@ void main() {
     });
 
     test('forceRefresh=true fuerza un hit al backend aunque el cache esté fresco', () async {
-      fake.responseQueue.add(const AppFeaturesDM(placesProxyEnabled: true));
+      fake.responseQueue.add(const AppFeaturesDM());
       fake.responseQueue.add(const AppFeaturesDM(placesProxyEnabled: false));
 
       await repo.getFeatures();
@@ -82,14 +82,14 @@ void main() {
 
       expect(fake.hitCount, 2);
       refreshed.when(
-        success: (data) => expect(data.placesProxyEnabled, isFalse,
-            reason: 'El forceRefresh debe traer el nuevo valor'),
+        success: (data) =>
+            expect(data.placesProxyEnabled, isFalse, reason: 'El forceRefresh debe traer el nuevo valor'),
         failure: (_) => fail('Se esperaba success'),
       );
     });
 
     test('invalidate() elimina el cache y el próximo getFeatures pega al backend', () async {
-      fake.responseQueue.add(const AppFeaturesDM(placesProxyEnabled: true));
+      fake.responseQueue.add(const AppFeaturesDM());
       fake.responseQueue.add(const AppFeaturesDM(placesProxyEnabled: false));
 
       await repo.getFeatures();
@@ -134,8 +134,8 @@ void main() {
       // previo (el snapshot exitoso con placesProxyEnabled=false).
       final cached = await repo.getFeatures();
       cached.when(
-        success: (data) => expect(data.placesProxyEnabled, isFalse,
-            reason: 'El cache previo debe sobrevivir a un failure transient'),
+        success: (data) =>
+            expect(data.placesProxyEnabled, isFalse, reason: 'El cache previo debe sobrevivir a un failure transient'),
         failure: (_) => fail('El cache previo debe seguir vivo'),
       );
     });
