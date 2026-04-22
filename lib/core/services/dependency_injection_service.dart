@@ -6,6 +6,8 @@ import 'package:foodly_world/core/network/analytics/analytics_api_provider.dart'
 import 'package:foodly_world/core/network/analytics/dashboard_client.dart';
 import 'package:foodly_world/core/network/analytics/dashboard_repo.dart';
 import 'package:foodly_world/core/network/analytics/events_client.dart';
+import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
+import 'package:foodly_world/core/network/app_config/config_features_client.dart';
 import 'package:foodly_world/core/network/business_availability/business_availability_client.dart';
 import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
 import 'package:foodly_world/core/network/buzz/buzz_client.dart';
@@ -15,6 +17,8 @@ import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
+import 'package:foodly_world/core/network/places_proxy/foodly_places_client.dart';
+import 'package:foodly_world/core/network/places_proxy/places_proxy_repo.dart';
 import 'package:foodly_world/core/network/posts/post_client.dart';
 import 'package:foodly_world/core/network/posts/post_repo.dart';
 import 'package:foodly_world/core/network/reservations/reservation_client.dart';
@@ -75,6 +79,13 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => BusinessAvailabilityClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ServicePackageClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => DeviceTokenClient(di<FoodlyApiProvider>().dio))
+      // Places Proxy + Config Features — ambos usan la misma Dio del
+      // FoodlyApiProvider (baseUrl = api.foodly.solutions/v1). El
+      // interceptor ya tiene whitelisted `/geocoding/reverse` y
+      // `/config/features` (endpoints públicos) así que no se les
+      // inyecta Bearer ni dispara silent refresh en esos paths.
+      ..registerLazySingleton(() => FoodlyPlacesClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => ConfigFeaturesClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
       ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
@@ -95,7 +106,14 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => BusinessAvailabilityRepo(client: di()))
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))
       ..registerLazySingleton(() => DeviceTokenRepo(client: di()))
-      ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()));
+      ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()))
+      // PlacesProxyRepo es "tonto": envuelve Retrofit en ApiResult sin
+      // decidir proxy vs fallback — esa decisión vive en los callers
+      // consultando AppFeaturesRepo.cachedOrDefaults.placesProxyEnabled.
+      ..registerLazySingleton(() => PlacesProxyRepo(client: di()))
+      // AppFeaturesRepo mantiene cache in-memory de 5 min. No es const
+      // porque internamente guarda estado (`_cached`, `_cachedAt`).
+      ..registerLazySingleton(() => AppFeaturesRepo(client: di()));
 
     /// Register services
     final authService = AuthSessionService(
