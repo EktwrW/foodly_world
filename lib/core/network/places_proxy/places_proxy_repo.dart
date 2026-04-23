@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' show Options;
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/places_proxy/foodly_places_client.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/places_proxy/geocoding_response_dm.dart';
 import 'package:foodly_world/data_models/places_proxy/place_autocomplete_response_dm.dart';
 import 'package:foodly_world/data_models/places_proxy/place_details_response_dm.dart';
@@ -30,8 +31,13 @@ import 'package:foodly_world/data_transfer_objects/places_proxy/place_autocomple
 /// diseminadas por la app.
 class PlacesProxyRepo {
   final FoodlyPlacesClient _client;
+  final AuthSessionService _authSession;
 
-  const PlacesProxyRepo({required FoodlyPlacesClient client}) : _client = client;
+  const PlacesProxyRepo({
+    required FoodlyPlacesClient client,
+    required AuthSessionService authSession,
+  })  : _client = client,
+        _authSession = authSession;
 
   /// Timeout defensivo por defecto para reverse-geocoding.
   ///
@@ -54,10 +60,31 @@ class PlacesProxyRepo {
 
   /// Places Autocomplete.
   ///
+  /// **Ramificación authed/public interna.** El repo decide a qué endpoint
+  /// pegar según `AuthSessionService.isLoggedIn`:
+  /// - Usuario logueado  → `/places/autocomplete`         (throttle:places-authed, Bearer)
+  /// - Usuario anónimo   → `/public/places/autocomplete`  (throttle:places-public, sin Bearer)
+  ///
+  /// **¿Por qué acá y no en el call-site?**
+  ///   1. **Seguridad por defecto:** si un consumer futuro (business_create,
+  ///      branch_create, etc.) olvida ramificar estando pre-login, el 401
+  ///      del endpoint authed dispara el modal de "sesión expirada" + kick
+  ///      a login — exactamente el bug que se corrigió el 2026-04-23 en el
+  ///      sign-up. Centralizar elimina esa clase de error por diseño.
+  ///   2. **Escalabilidad:** nuevos callers heredan la decisión gratis.
+  ///   3. **Encapsulación:** el call-site no debería saber que existen dos
+  ///      endpoints; expresa intención ("quiero autocomplete") y el repo
+  ///      resuelve el transport.
+  ///   4. **Auditoría del token:** el repo garantiza que (a) la variante
+  ///      authed sólo se llama con `isLoggedIn == true` (hay Bearer válido),
+  ///      (b) la variante pública nunca manda token (el `DioRequestHandler`
+  ///      lo stripea igual, pero tener defense-in-depth acá es barato).
+  ///
   /// Failure modes esperados (dentro de `ApiResult.failure`):
   /// - DioException con statusCode 422 → validación de backend (input
   ///   vacío, parámetros fuera de rango). No es retryable.
-  /// - DioException con statusCode 429 → throttle:places-authed golpeado.
+  /// - DioException con statusCode 429 → throttle golpeado. En el flow
+  ///   authed es 60/min/user; en el público es 15/min/IP + 60/hour/device-id.
   ///   El caller puede hacer backoff y reintentar.
   /// - DioException con statusCode 502 → UPSTREAM_ERROR (Google 5xx o
   ///   circuit breaker). Es el trigger natural para caer al fallback
@@ -70,13 +97,28 @@ class PlacesProxyRepo {
     PlaceAutocompleteRequestDTO body,
   ) async {
     try {
-      return ApiResult.success(await _client.autocomplete(body));
+      final response = _authSession.isLoggedIn
+          ? await _client.autocomplete(body)
+          : await _client.autocompletePublic(body);
+      return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
 
   /// Place Details.
+  ///
+  /// **Ramificación authed/public interna** — mismo criterio que
+  /// `autocomplete()` (ver su docblock para el porqué).
+  /// - Usuario logueado  → `/places/details/{placeId}`
+  /// - Usuario anónimo   → `/public/places/details/{placeId}`
+  ///
+  /// **Session token consistency:** `sessionToken` DEBE ser el mismo UUID
+  /// que se usó en el autocomplete que originó este place_id; de lo
+  /// contrario Google factura el details como "sessionless" (~10x más
+  /// caro). **Eso vale igual para ambas variantes** — Google factura por
+  /// sesión sin importar si el request entró por el endpoint authed o el
+  /// público (el backend pasa el token a Google idéntico en ambos casos).
   ///
   /// Failure modes esperados:
   /// - DioException con statusCode 404 → `status: NOT_FOUND`. El caller
@@ -86,10 +128,6 @@ class PlacesProxyRepo {
   /// - DioException con statusCode 422 → `place_id` maleado. No debería
   ///   pasar en flujos normales (siempre venimos de un autocomplete).
   /// - DioException con statusCode 502 → UPSTREAM_ERROR.
-  ///
-  /// `sessionToken` DEBE ser el mismo UUID que se usó en el autocomplete
-  /// que originó este place_id; de lo contrario Google factura el details
-  /// como "sessionless" (~10x más caro).
   Future<ApiResult<PlaceDetailsResponseDM>> details({
     required String placeId,
     String? sessionToken,
@@ -97,14 +135,20 @@ class PlacesProxyRepo {
     String? region,
   }) async {
     try {
-      return ApiResult.success(
-        await _client.details(
-          placeId,
-          sessionToken: sessionToken,
-          language: language,
-          region: region,
-        ),
-      );
+      final response = _authSession.isLoggedIn
+          ? await _client.details(
+              placeId,
+              sessionToken: sessionToken,
+              language: language,
+              region: region,
+            )
+          : await _client.detailsPublic(
+              placeId,
+              sessionToken: sessionToken,
+              language: language,
+              region: region,
+            );
+      return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

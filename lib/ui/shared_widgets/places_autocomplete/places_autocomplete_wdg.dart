@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
+import 'package:foodly_world/core/network/places_proxy/places_proxy_repo.dart';
+import 'package:foodly_world/data_models/places_proxy/place_prediction_dm.dart';
+import 'package:foodly_world/data_transfer_objects/places_proxy/place_autocomplete_request_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/places_autocomplete/_places_proxy_adapter.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:logger/logger.dart';
@@ -140,7 +145,26 @@ class FoodlyPlacesAutocompleteWdg extends StatefulWidget {
 }
 
 class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg> {
-  late final PlacesApi _placesApi;
+  /// `true` → usamos Foodly Places Proxy backend. `false` → hit directo a
+  /// `nova_places_api`. Resuelto UNA vez en `initState` leyendo el cache
+  /// in-memory de [AppFeaturesRepo] (nunca I/O en initState). Default seguro
+  /// es `true` (proxy activo) — ver docblock de `AppFeaturesDM.placesProxyEnabled`.
+  ///
+  /// No reacciona a cambios en runtime del flag: si el ops-team flipa el
+  /// kill-switch a false mientras el widget está montado, la instancia
+  /// actual sigue con la ruta vieja. Aceptable porque el widget es de vida
+  /// corta (autocompletar es "abrir pantalla → tipear → pickear → cerrar").
+  late final bool _useProxy;
+
+  /// Cliente nova legacy. Solo se inicializa cuando `_useProxy == false`;
+  /// nullable para no gastar apiKey/Dio instance cuando no hace falta.
+  PlacesApi? _placesApi;
+
+  /// Repo del proxy Foodly. Solo se setea cuando `_useProxy == true` —
+  /// null en la ruta legacy. Resuelto vía GetIt (ya registrado como
+  /// LazySingleton en dependency_injection_service).
+  PlacesProxyRepo? _proxyRepo;
+
   late final PlaceDebouncer _placeDebouncer;
   late final String _sessionToken;
   late final TextEditingController _textController;
@@ -154,7 +178,17 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
   @override
   void initState() {
     super.initState();
-    _placesApi = PlacesApi(apiKey: widget.apiKey);
+    // Lectura síncrona del cache — `cachedOrDefaults` devuelve el último
+    // fetch exitoso o el AppFeaturesDM de defaults (placesProxyEnabled=true).
+    // Nunca hace I/O acá; el refresh lo dispara quien corresponda en boot.
+    _useProxy = di<AppFeaturesRepo>().cachedOrDefaults.placesProxyEnabled;
+
+    if (_useProxy) {
+      _proxyRepo = di<PlacesProxyRepo>();
+    } else {
+      _placesApi = PlacesApi(apiKey: widget.apiKey);
+    }
+
     _placeDebouncer = PlaceDebouncer(milliseconds: widget.debounceTime);
     _sessionToken = widget.sessionToken ?? generateSessionToken();
     _textController = widget.textController ?? TextEditingController();
@@ -166,7 +200,8 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
   @override
   void dispose() {
     widget.controller?.detach();
-    _placesApi.dispose();
+    // `_placesApi` es nullable en la ruta proxy — solo disposamos si se creó.
+    _placesApi?.dispose();
     _placeDebouncer.dispose();
     _textController.dispose();
     _focusNode.removeListener(_onFocusChange);
@@ -289,6 +324,9 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
     });
   }
 
+  /// Dispatcher por flag. La lógica de cada rama vive en métodos separados
+  /// para que el diff entre "usando nova" y "usando proxy" sea leíble en
+  /// PRs y grepable por nombre cuando rollback.
   Future<void> _handleSearchText(String searchTerm) async {
     if (searchTerm.isEmpty || !_focusNode.hasFocus) {
       _hideOverlay();
@@ -297,8 +335,19 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
 
     _prevSearchTerm = searchTerm;
 
+    if (_useProxy) {
+      await _handleSearchViaProxy(searchTerm);
+    } else {
+      await _handleSearchViaNova(searchTerm);
+    }
+  }
+
+  /// Ruta legacy — hit directo a Google vía `nova_places_api`. Se elimina
+  /// en Fase 6 junto con el flag y el paquete. Mantenida 1:1 al
+  /// comportamiento pre-migración para que el rollback sea un no-op.
+  Future<void> _handleSearchViaNova(String searchTerm) async {
     try {
-      final response = await _placesApi.placeAutocomplete(
+      final response = await _placesApi!.placeAutocomplete(
         input: searchTerm,
         language: widget.language,
         components: widget.components,
@@ -338,6 +387,72 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
     }
   }
 
+  /// Ruta proxy — la autocomplete pega al backend Foodly que hace el call
+  /// server-to-server a Google. Diferencias observables vs nova:
+  ///   - `components` acá viaja como string pipe-joined (`"country:pt|country:es"`)
+  ///     porque es el shape que espera el FormRequest del backend.
+  ///   - `location` viaja como string `"lat,lng"` con la misma semántica.
+  ///   - Error surface: el repo envuelve todo en ApiResult, lo que nos da
+  ///     un único path de failure en vez de dos (response.isSuccess==false
+  ///     y throw).
+  ///   - El overlay renderiza `PlacePredictionDM` directo (no se convierte
+  ///     a nova.Prediction — ver docblock del adapter para el porqué).
+  Future<void> _handleSearchViaProxy(String searchTerm) async {
+    final dto = PlaceAutocompleteRequestDTO(
+      input: searchTerm,
+      language: widget.language,
+      region: widget.region,
+      sessionToken: _sessionToken,
+      // components: nova espera `List<String>` tipo `["country:pt", ...]`.
+      // El backend espera un único string pipe-joined. Si widget.components
+      // es null o vacío, no mandamos la key (@JsonKey includeIfNull: false).
+      components: (widget.components == null || widget.components!.isEmpty)
+          ? null
+          : widget.components!.join('|'),
+      // location: nova toma LatLngLiteral; backend toma string "lat,lng".
+      location: widget.location != null
+          ? '${widget.location!.lat},${widget.location!.lng}'
+          : null,
+      // radius: nova acepta double, backend int (metros). Casteo seguro —
+      // los valores que mandamos hoy son enteros (20, 50, etc.).
+      radius: widget.radius?.toInt(),
+      types: (widget.types == null || widget.types!.isEmpty) ? null : widget.types!.join('|'),
+    );
+
+    final result = await _proxyRepo!.autocomplete(dto);
+
+    if (!mounted) return;
+
+    result.when(
+      success: (response) {
+        // ZERO_RESULTS y status no-ok que no sean errores → UI limpia, sin toast.
+        if (response.status.isEmpty || response.predictions.isEmpty) {
+          _hideOverlay();
+          return;
+        }
+
+        if (response.status.isError) {
+          widget.onSearchFailed?.call('Places proxy status: ${response.status.name}');
+          _hideOverlay();
+          return;
+        }
+
+        _hideOverlay();
+
+        final overlayView = _buildProxyPredictionsOverlay(
+          context,
+          response.predictions,
+        );
+        _showOverlay(context, overlayView);
+      },
+      failure: (failure) {
+        widget.onSearchFailed?.call(failure.error.toString());
+        _hideOverlay();
+      },
+    );
+  }
+
+  /// Overlay de la ruta legacy (nova). Intocado vs pre-migración.
   Widget _buildPredictionsSearchingOverlay(
     BuildContext context,
     List<PlaceAutocompletePrediction> predictions,
@@ -361,7 +476,7 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
         if (widget.detailRequired && widget.onPickedPlaceDetail != null) {
           if (prediction.placeId == null) return;
 
-          final resp = await _placesApi.getPlaceDetails(
+          final resp = await _placesApi!.getPlaceDetails(
             placeId: prediction.placeId!,
             language: widget.language,
             region: widget.region,
@@ -371,6 +486,67 @@ class FoodlyPlacesAutocompleteWdgState extends State<FoodlyPlacesAutocompleteWdg
           if (resp.isSuccess) {
             widget.onPickedPlaceDetail?.call(resp.result!);
           }
+        }
+      },
+    );
+  }
+
+  /// Overlay de la ruta proxy. Renderiza `PlacePredictionDM` sin convertir
+  /// a nova.PlaceAutocompletePrediction (ver docblock del adapter para el
+  /// porqué). En `onPredictionSelect`:
+  ///   - Hide overlay + unfocus + mirror text — idéntico a la ruta nova.
+  ///   - **NO** se dispara `widget.onPicked(...)` — el callback espera un
+  ///     `nova.PlaceAutocompletePrediction` con subtypes que no podemos
+  ///     fabricar de forma segura desde un DM. El único consumer del
+  ///     callback hoy es un logger en `PlacesAutocompleteWdg`, así que la
+  ///     pérdida funcional es nula. Documentado aquí explícito para que si
+  ///     un consumer nuevo lo necesita, migre primero a DM.
+  ///   - Hit a `/places/details/{placeId}` via proxy con el mismo
+  ///     sessionToken (billing consolidado) y language/region del widget.
+  ///   - Pasa el Place resultante por `novaPlaceFromDM` para que el
+  ///     callback `onPickedPlaceDetail` siga recibiendo `nova.Place` sin
+  ///     cambios en los consumers (cascada queda para Fase 6).
+  Widget _buildProxyPredictionsOverlay(
+    BuildContext context,
+    List<PlacePredictionDM> predictions,
+  ) {
+    return _ProxyPredictionListView(
+      predictions: predictions,
+      onPredictionSelect: (prediction) async {
+        _hideOverlay();
+        _focusNode.unfocus();
+
+        _prevSearchTerm = prediction.description;
+        _textController.value = TextEditingValue(
+          text: prediction.description,
+          selection: TextSelection.collapsed(offset: prediction.description.length),
+        );
+
+        if (widget.detailRequired && widget.onPickedPlaceDetail != null) {
+          final result = await _proxyRepo!.details(
+            placeId: prediction.placeId,
+            sessionToken: _sessionToken,
+            language: widget.language,
+            region: widget.region,
+          );
+
+          if (!mounted) return;
+
+          result.when(
+            success: (response) {
+              final place = response.result;
+              if (place == null || !response.status.isOk) {
+                // NOT_FOUND / status no-ok → no disparamos el callback.
+                // El caller ya maneja "no hubo detalle" como no-op.
+                widget.onSearchFailed?.call('Place details status: ${response.status.name}');
+                return;
+              }
+              widget.onPickedPlaceDetail?.call(novaPlaceFromDM(place));
+            },
+            failure: (failure) {
+              widget.onSearchFailed?.call(failure.error.toString());
+            },
+          );
         }
       },
     );
@@ -424,6 +600,46 @@ class PredictionListView extends StatelessWidget {
 
   final List<PlaceAutocompletePrediction> predictions;
   final ValueChanged<PlaceAutocompletePrediction> onPredictionSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      shrinkWrap: true,
+      itemCount: predictions.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
+      itemBuilder: (context, index) {
+        final prediction = predictions[index];
+        return ListTile(
+          title: Text(
+            prediction.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () => onPredictionSelect(prediction),
+        );
+      },
+    );
+  }
+}
+
+/// Gemelo de [PredictionListView] que renderiza `PlacePredictionDM` en vez
+/// de `PlaceAutocompletePrediction` de nova. Privado: solo lo usa el
+/// widget en la ruta proxy. Se elimina en Fase 6 junto con la `PredictionListView`
+/// original cuando toda la cascada pase a DMs.
+///
+/// Idéntico en UX a su gemelo para que el flip del flag no cambie el look:
+/// misma padding, mismo separator, mismo `maxLines: 2` + ellipsis. Si algún
+/// día queremos enriquecer la UI con `structured_formatting` (main/secondary),
+/// el DM ya lo trae — pero lo dejamos para un PR cosmético aparte.
+class _ProxyPredictionListView extends StatelessWidget {
+  const _ProxyPredictionListView({
+    required this.predictions,
+    required this.onPredictionSelect,
+  });
+
+  final List<PlacePredictionDM> predictions;
+  final ValueChanged<PlacePredictionDM> onPredictionSelect;
 
   @override
   Widget build(BuildContext context) {

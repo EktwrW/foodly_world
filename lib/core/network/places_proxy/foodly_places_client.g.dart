@@ -85,6 +85,73 @@ class _FoodlyPlacesClient implements FoodlyPlacesClient {
   }
 
   @override
+  Future<PlaceAutocompleteResponseDM> autocompletePublic(
+    PlaceAutocompleteRequestDTO body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<PlaceAutocompleteResponseDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/public/places/autocomplete',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PlaceAutocompleteResponseDM _value;
+    try {
+      _value = PlaceAutocompleteResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<PlaceDetailsResponseDM> detailsPublic(
+    String placeId, {
+    String? sessionToken,
+    String? language,
+    String? region,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'sessionToken': sessionToken,
+      r'language': language,
+      r'region': region,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<PlaceDetailsResponseDM>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/public/places/details/${placeId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PlaceDetailsResponseDM _value;
+    try {
+      _value = PlaceDetailsResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<GeocodingResponseDM> reverse(
     GeocodingReverseRequestDTO body, {
     Options? options,

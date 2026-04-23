@@ -16,10 +16,12 @@ part 'foodly_places_client.g.dart';
 /// Autocomplete, Place Details, Geocoding reverse, Geocoding forward).
 ///
 /// **Auth por endpoint** (ver `be-foodly/routes/api.php`):
-/// - `/places/autocomplete`  → group `throttle:places-authed` (requiere Bearer)
-/// - `/places/details/{id}`  → group `throttle:places-authed` (requiere Bearer)
-/// - `/geocoding/forward`    → group `throttle:places-authed` (requiere Bearer)
-/// - `/geocoding/reverse`    → **PÚBLICO**, throttle:geocoding-public
+/// - `/places/autocomplete`              → group `throttle:places-authed` (requiere Bearer)
+/// - `/places/details/{id}`              → group `throttle:places-authed` (requiere Bearer)
+/// - `/geocoding/forward`                → group `throttle:places-authed` (requiere Bearer)
+/// - `/geocoding/reverse`                → **PÚBLICO**, throttle:geocoding-public
+/// - `/public/places/autocomplete`       → **PÚBLICO**, throttle:places-public (signup)
+/// - `/public/places/details/{placeId}`  → **PÚBLICO**, throttle:places-public (signup)
 ///
 /// El endpoint reverse debe poder llamarse desde pantallas PRE-login
 /// (onboarding/signup) cuando el usuario aún no tiene sesión — por eso lo
@@ -27,6 +29,15 @@ part 'foodly_places_client.g.dart';
 /// `DioRequestHandler` para que **no** dispare silent refresh si el device
 /// tiene un access token expirado en memoria (reverse geocoding en el
 /// bootstrap no tiene por qué bloquearse por eso).
+///
+/// **Autocomplete / Details — ¿por qué dos variantes?** El sign-up también
+/// es pre-login: el usuario escribe su dirección *antes* de crear la cuenta.
+/// La variante `/public/places/*` se monta con throttle más estricto
+/// (15/min/IP + 60/hour/device-id vs 60/min/user del authed) para
+/// limitar exposición al abuso sin auth. La decisión "authed vs public"
+/// NO vive acá — la resuelve `PlacesProxyRepo` leyendo `AuthSessionService.isLoggedIn`
+/// para que el call-site no tenga que saber que hay dos endpoints. Ver
+/// docblock de `PlacesProxyRepo.autocomplete/details` para el porqué.
 ///
 /// Ver memoria: "Interceptor Dio — whitelist exacto, nunca endsWith".
 ///
@@ -84,6 +95,37 @@ abstract class FoodlyPlacesClient {
   /// el backend responde 422 INVALID_REQUEST.
   @GET('/places/details/{placeId}')
   Future<PlaceDetailsResponseDM> details(
+    @Path('placeId') String placeId, {
+    @Query('sessionToken') String? sessionToken,
+    @Query('language') String? language,
+    @Query('region') String? region,
+  });
+
+  /// Places Autocomplete — variante PÚBLICA (sin Bearer). Se llama desde
+  /// el flujo de sign-up donde el usuario todavía no tiene cuenta creada.
+  ///
+  /// Mismo contrato de request/response que `autocomplete()`. El backend
+  /// delega al mismo `PlacesController::autocomplete`; la diferencia es
+  /// sólo el middleware (`throttle:places-public` en vez de
+  /// `throttle:places-authed` + `auth:sanctum`).
+  ///
+  /// **NO llamar directo.** El consumer correcto es
+  /// `PlacesProxyRepo.autocomplete`, que decide authed vs public según
+  /// `AuthSessionService.isLoggedIn`. Exponer el método en el client es
+  /// un "leak" necesario del lado Retrofit (no hay forma de que una misma
+  /// abstracción llame dos paths distintos) pero el call-site jamás debe
+  /// decidir cuál usar.
+  @POST('/public/places/autocomplete')
+  Future<PlaceAutocompleteResponseDM> autocompletePublic(
+    @Body() PlaceAutocompleteRequestDTO body,
+  );
+
+  /// Place Details — variante PÚBLICA (sin Bearer). Ver docblock de
+  /// `autocompletePublic` para el porqué de la variante.
+  ///
+  /// Contrato idéntico a `details()`: `placeId` en path, resto como query.
+  @GET('/public/places/details/{placeId}')
+  Future<PlaceDetailsResponseDM> detailsPublic(
     @Path('placeId') String placeId, {
     @Query('sessionToken') String? sessionToken,
     @Query('language') String? language,
