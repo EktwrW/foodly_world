@@ -101,8 +101,25 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     });
   }
 
+  /// Consulta si el usuario tiene el GPS service prendido a nivel sistema.
+  ///
+  /// **Timeout 3 s:** `Geolocator.isLocationServiceEnabled()` es un IPC
+  /// síncrono al location manager del sistema — normalmente <100 ms. Si
+  /// se cuelga (binder saturado, plugin en estado raro después de un hot
+  /// reload en dev, bug conocido de plugins cuando el isolate de
+  /// plataforma está ocupado), 3 s es suficiente para que no bloquee el
+  /// boot del app. Fail-safe: si timeoutea, asumimos `false` (service
+  /// disabled) — el caller emite `_ServiceDisabled` y la UI le pide al
+  /// usuario prender el GPS. Preferimos un falso-negativo que pide una
+  /// acción concreta al usuario antes que un spinner infinito.
   Future<void> checkLocationServiceEnabled() async {
-    final isEnabled = await Geolocator.isLocationServiceEnabled();
+    final isEnabled = await Geolocator.isLocationServiceEnabled().timeout(
+      const Duration(seconds: 3),
+      onTimeout: () {
+        _logger.w('Geolocator.isLocationServiceEnabled timed out after 3s — assuming disabled');
+        return false;
+      },
+    );
 
     _locationDM = _locationDM.copyWith(serviceEnabled: isEnabled);
   }
@@ -115,16 +132,31 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   /// dependen de esa transición para salir del spinner "Verificando ubicación...".
   ///
   /// Defensas multicapa contra cuelgues:
-  ///  1. Dio con timeouts de 6 s (ver constructor) — cubre el caso donde el
-  ///     reverse-geocoding de Places nunca responde.
-  ///  2. `timeLimit: 10 s` en `LocationSettings` — timeout nativo del plugin.
+  ///  1. `.timeout(3 s)` en `isLocationServiceEnabled` y `checkPermission` —
+  ///     cubre IPC colgado al location manager del sistema (binder saturado,
+  ///     plugin en estado raro post hot-reload). Fail-safe: service=false /
+  ///     permission=denied para que el flujo avance al branch correcto.
+  ///  2. `timeLimit: 10 s` en `LocationSettings` — timeout nativo del plugin
+  ///     para `getCurrentPosition`.
   ///  3. Backup Dart-side `Future.any` con 12 s — cubre dispositivos donde el
   ///     timeLimit nativo no se propaga (bug conocido en Huawei/Xiaomi MIUI
   ///     con Play Services desactualizado).
-  ///  4. `try / finally` con flag `terminalStateEmitted` — garantiza que si
+  ///  4. `.timeout(5 s)` en `getLastKnownPosition` — el fallback también
+  ///     puede colgarse si el cache del sistema está en "hotsync"; on timeout
+  ///     devuelve null y se sigue con position=null.
+  ///  5. Dio con timeouts de 6 s (ver constructor) — cubre el caso donde el
+  ///     reverse-geocoding de Places nunca responde.
+  ///  6. `try / finally` con flag `terminalStateEmitted` — garantiza que si
   ///     cualquier `await` dentro del try lanza algo no previsto, el finally
   ///     emite `_LocationChecked` con lo que tengamos para que la UI se
   ///     destrabe.
+  ///
+  /// **Qué NO tiene timeout y por qué:** `Geolocator.requestPermission()`
+  /// (línea del branch `denied`) se deja SIN timeout por la invariante de
+  /// `feedback_android_permission_serialization.md` — Android no encola
+  /// diálogos de permiso, y el safety-net debe vivir en un service con
+  /// Completer, no acá. Si se cuelga, es bug del service wrapper, no de
+  /// este bloc.
   Future<void> determinePosition(Emitter<LocationState> emit) async {
     emit(const _CheckingLocation());
 
@@ -142,7 +174,18 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         return;
       }
 
-      final permission = await Geolocator.checkPermission();
+      // Timeout 3 s: mismo razonamiento que `isLocationServiceEnabled` —
+      // es una lectura del estado de permisos vía IPC, normalmente <100 ms.
+      // Si timeoutea, asumimos `.denied` para que caigamos al flujo de
+      // `requestPermission` (que SÍ puede abrir un dialog legítimo y NO
+      // lleva timeout por `feedback_android_permission_serialization.md`).
+      final permission = await Geolocator.checkPermission().timeout(
+        const Duration(seconds: 3),
+        onTimeout: () {
+          _logger.w('Geolocator.checkPermission timed out after 3s — assuming denied');
+          return LocationPermission.denied;
+        },
+      );
       _locationDM = _locationDM.copyWith(permission: permission);
 
       if (_locationDM.permission == LocationPermission.denied) {
@@ -183,7 +226,20 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       } catch (e) {
         _logger.w('Geolocator.getCurrentPosition timed out / failed: $e — falling back to lastKnownPosition');
         try {
-          currentPosition = await Geolocator.getLastKnownPosition();
+          // Timeout 5 s: `getLastKnownPosition` lee el cache del sistema
+          // de localización — normalmente <200 ms, pero en Android puede
+          // esperar un "hotsync" del cache si no hay fix reciente, y en
+          // plugins con versión vieja se han visto cuelgues por binder.
+          // Si timeoutea, `currentPosition` queda `null` y el finally de
+          // `determinePosition` emite `_LocationChecked` con position=null;
+          // downstream maneja "sin ubicación" elegantemente.
+          currentPosition = await Geolocator.getLastKnownPosition().timeout(
+            const Duration(seconds: 5),
+            onTimeout: () {
+              _logger.w('Geolocator.getLastKnownPosition timed out after 5s — continuing with null position');
+              return null;
+            },
+          );
         } catch (e2) {
           _logger.e('Geolocator.getLastKnownPosition also failed: $e2');
         }
