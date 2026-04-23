@@ -107,10 +107,16 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))
       ..registerLazySingleton(() => DeviceTokenRepo(client: di()))
       ..registerLazySingleton(() => DashboardRepo(dashboardClient: di()))
-      // PlacesProxyRepo es "tonto": envuelve Retrofit en ApiResult sin
-      // decidir proxy vs fallback — esa decisión vive en los callers
-      // consultando AppFeaturesRepo.cachedOrDefaults.placesProxyEnabled.
-      ..registerLazySingleton(() => PlacesProxyRepo(client: di()))
+      // PlacesProxyRepo envuelve Retrofit en ApiResult. La decisión
+      // "proxy vs nova_places_api fallback" vive en los callers
+      // (AppFeaturesRepo.cachedOrDefaults.placesProxyEnabled), pero la
+      // decisión "endpoint authed vs público" la resuelve el repo
+      // internamente vía AuthSessionService.isLoggedIn — así evitamos
+      // que cada call-site pre-login (sign-up) repita el branching y se
+      // olvide alguno, cayendo en 401 → modal de sesión expirada.
+      ..registerLazySingleton(
+        () => PlacesProxyRepo(client: di(), authSession: di()),
+      )
       // AppFeaturesRepo mantiene cache in-memory de 5 min. No es const
       // porque internamente guarda estado (`_cached`, `_cachedAt`).
       ..registerLazySingleton(() => AppFeaturesRepo(client: di()));

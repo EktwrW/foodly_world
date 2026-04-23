@@ -37,8 +37,10 @@ abstract class DioRequestHandler {
     //      (e.g. reverse geocoding en onboarding/signup).
     //   2. If the cached access token is expired, we do NOT stall the
     //      public request on a silent refresh the user's flow doesn't need.
-    // - /geocoding/reverse  → throttle:geocoding-public
-    // - /config/features    → throttle:120,1 (bootstrap feature flags)
+    // - /geocoding/reverse               → throttle:geocoding-public
+    // - /config/features                 → throttle:120,1 (bootstrap feature flags)
+    // - /public/places/autocomplete      → throttle:places-public (signup)
+    // - /public/places/details/{placeId} → throttle:places-public (signup)
     const authEndpoints = <String>{
       '/login',
       '/social-login',
@@ -46,9 +48,23 @@ abstract class DioRequestHandler {
       '/forgot-password',
       '/geocoding/reverse',
       '/config/features',
+      '/public/places/autocomplete',
     };
     final path = options.path;
-    final isAuthEndpoint = authEndpoints.contains(path);
+
+    // `/public/places/details/{placeId}` es una ruta pública CON segmento
+    // dinámico — no cabe en el Set exacto (cada placeId es diferente).
+    // Usamos `startsWith('/public/places/details/')` SOLO para este caso,
+    // asumiendo que NO existe (ni va a existir) una ruta authed con ese
+    // prefijo — todas las rutas authed de places viven en `/places/...`
+    // sin el `/public/` delante. El naming convention (namespace
+    // `/public/`) protege contra falsos positivos estilo Bug C.
+    //
+    // Si algún día alguien inventa `/public/places/details/admin/...`
+    // authed, este chequeo lo dejaría pasar sin Bearer — pero el problema
+    // sería estructural (contradicción en naming), no este whitelist.
+    final isAuthEndpoint = authEndpoints.contains(path) ||
+        path.startsWith('/public/places/details/');
 
     if (isAuthEndpoint) {
       options.headers.remove(FoodlyStrings.AUTHORIZATION);
@@ -98,15 +114,27 @@ abstract class DioRequestHandler {
       // Same whitelist pattern as the request handler — see Bug C comment
       // above. Never use endsWith here or `/device-tokens/register`,
       // `/businesses/.../token/refresh`-style paths will match falsely.
+      //
+      // Los endpoints públicos (`/public/places/*`, `/geocoding/reverse`)
+      // también van acá: un 401 sobre ellos sería un bug del backend (mal
+      // middleware) y NO debe kickear la sesión del usuario. En prod
+      // serviría de escudo si alguien accidentalmente envuelve estas
+      // rutas en `auth:sanctum` — el usuario vería un error suave en el
+      // widget en vez de un modal de "sesión expirada" + logout.
       const authEndpoints = <String>{
         '/login',
         '/register',
         '/social-login',
         '/biometric-login',
         '/token/refresh',
+        '/geocoding/reverse',
+        '/public/places/autocomplete',
       };
       final path = e.requestOptions.path;
-      final isAuthEndpoint = authEndpoints.contains(path);
+      final isAuthEndpoint = authEndpoints.contains(path) ||
+          // Ver comentario del request handler: placeId dinámico obliga a
+          // usar startsWith aislado a este prefijo específico.
+          path.startsWith('/public/places/details/');
 
       if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint) {
         // Attempt a silent refresh before declaring the session dead.
