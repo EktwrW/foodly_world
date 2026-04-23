@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
+import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
@@ -102,7 +103,18 @@ class SignUpCubit extends Cubit<SignUpState> {
           countryNode: FocusNode(),
           placesFocusNode: FocusNode(),
           businessCountryNode: FocusNode(),
-          country: FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode),
+          // country: sólo sembramos desde `locationService` si ya hay data GPS
+          // real. Pre-login el service está virgen y `currentCountryCode` cae a
+          // 'US' por fallback — si confiáramos en eso, [applyDeviceLocation] ya
+          // encontraría country != null y su guard `_vm.country == null` nunca
+          // dispararía, dejando el form pegado en USA incluso para usuarios en
+          // AR/ES/PT/VE. Con country=null, el pipeline
+          // LocationEvent.checkLocation → _LocationChecked(dm) → applyDeviceLocation
+          // siembra el país real. Post-login esto es no-op: `hasLocationData`
+          // ya es true, entonces se mantiene el comportamiento previo.
+          country: locationService.hasLocationData
+              ? FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == locationService.currentCountryCode)
+              : null,
           businessCountry: authService.userSessionDM?.user.principalAddress?.country,
           businessCountryCode: authService.userSessionDM?.user.principalAddress?.country?.countryCode,
           userSessionDM: authService.userSessionDM ?? const UserSessionDM(user: UserDM(), token: ''),
@@ -273,6 +285,88 @@ class SignUpCubit extends Cubit<SignUpState> {
     _vm.phoneNumberController?.focusNode?.requestFocus();
 
     emit(_Loaded(_vm));
+  }
+
+  /// Pre-fill de country / dirección / coords desde el bootstrap GPS del
+  /// dispositivo (reverse-geocoding vía `PlacesProxyRepo.reverse`).
+  ///
+  /// Consumer del `LocationBloc`: `SignUpUserPage` dispara
+  /// `LocationEvent.checkLocation` pre-login y el `BlocListener` delega acá
+  /// cuando llega `_LocationChecked(dm)`. El pipeline completo es:
+  ///
+  ///   Geolocator.getCurrentPosition → PlacesProxyRepo.reverse → _LocationChecked(dm) → applyDeviceLocation(dm)
+  ///
+  /// **Contrato:**
+  /// - **No pisa lo que el usuario ya escribió.** Cada controller solo se
+  ///   pre-fillea si `text.isEmpty`. Esto cubre:
+  ///     (a) usuario tipeando más rápido que el reverse-geocoding,
+  ///     (b) valores pre-existentes desde [processSocialSignUpData],
+  ///     (c) múltiples `_LocationChecked` en un resume/re-check.
+  /// - **Idempotente.** Si ninguna asignación aplicó (todo ya lleno o el DM
+  ///   vacío), no se emite un estado nuevo — evita rebuilds innecesarios.
+  /// - **No llama `LocationService.updateLocation`.** A propósito: ese
+  ///   side-effect vive en `FoodlyLocationWrapper` y arrastra carga de
+  ///   `NearbyPromotionsCubit` + `NewReleasesCubit` + splash removal.
+  ///   Duplicarlo acá rompería el happy path post-login. Trade-off: una
+  ///   llamada extra a `/geocoding/reverse` cuando el usuario termina el
+  ///   sign-up y el wrapper se monta (backend la cachea, costo marginal).
+  /// - **Country matching por countryCode ISO-2.** Si el code del dispositivo
+  ///   no matchea ningún `FoodlyCountries` activo (p.ej. usuario en Chile),
+  ///   dejamos `country` como estaba. Pre-login el constructor ahora deja
+  ///   `country=null` cuando el service está virgen (ver constructor), así que
+  ///   el guard `_vm.country == null` dispara correctamente y sembramos el país
+  ///   real. Post-login, el constructor ya resolvió el país desde el GPS real;
+  ///   un segundo `_LocationChecked` del mismo país es no-op.
+  void applyDeviceLocation(LocationDetailsDM dm) {
+    var changed = false;
+
+    // 1) Country: solo sobrescribe si aún no hay country seteado y el DM
+    // trae un code reconocido. No forzamos USA si el code es de un mercado
+    // fuera de Foodly — respetamos la selección default del constructor.
+    final resolvedCountry =
+        FoodlyCountries.values.firstWhereOrNull((c) => c.countryCode == dm.countryCode);
+    if (_vm.country == null && resolvedCountry != null) {
+      _vm = _vm.copyWith(country: resolvedCountry);
+      changed = true;
+    }
+
+    // 2) Controllers: pre-fill SOLO si están vacíos. Preservamos typing en
+    // curso e inputs ya pre-llenos (social sign-up).
+    final addressCtrl = _vm.addressController?.controller;
+    final addressText = dm.address;
+    if (addressCtrl != null &&
+        addressCtrl.text.isEmpty &&
+        addressText != null &&
+        addressText.isNotEmpty) {
+      addressCtrl.text = addressText;
+      changed = true;
+    }
+
+    final cityCtrl = _vm.cityController?.controller;
+    final cityText = dm.city;
+    if (cityCtrl != null && cityCtrl.text.isEmpty && cityText != null && cityText.isNotEmpty) {
+      cityCtrl.text = cityText;
+      changed = true;
+    }
+
+    final zipCtrl = _vm.zipCodeController?.controller;
+    final zipText = dm.zipCode;
+    if (zipCtrl != null && zipCtrl.text.isEmpty && zipText != null && zipText.isNotEmpty) {
+      zipCtrl.text = zipText;
+      changed = true;
+    }
+
+    // 3) userLocation (coords): el constructor ya la setea si
+    // `_locationService.hasLocationData` era true al nacer el cubit. En el
+    // flujo pre-login el service estaba virgen, así que la sembramos acá.
+    if (_vm.userLocation == null && dm.position != null) {
+      _vm = _vm.copyWith(
+        userLocation: LatLngLiteral(lat: dm.position!.latitude, lng: dm.position!.longitude),
+      );
+      changed = true;
+    }
+
+    if (changed) emit(_Loaded(_vm));
   }
 
   void setUserGender(UserGender? gender) => gender != null ? emit(_Loaded(_vm = _vm.copyWith(gender: gender))) : null;
