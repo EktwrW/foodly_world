@@ -104,9 +104,7 @@ class CurrentLocationButton extends StatelessWidget {
                               case _NoLocationCase.retry:
                                 // Denegación suave, timeout del fix o estado
                                 // transitorio: dispara el flujo de nuevo.
-                                context
-                                    .read<LocationBloc>()
-                                    .add(const LocationEvent.checkLocation());
+                                context.read<LocationBloc>().add(const LocationEvent.checkLocation());
                                 return;
                             }
                           }
