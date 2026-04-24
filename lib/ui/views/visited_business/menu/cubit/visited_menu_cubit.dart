@@ -1,6 +1,7 @@
 import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
@@ -24,7 +25,8 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
             business: businessDM,
             businessUuid: businessDM?.uuid ?? '',
           ),
-          controller: PageController(),
+          indexView: businessDM?.menuInitialPageIndex ?? 0,
+          controller: PageController(initialPage: businessDM?.menuInitialPageIndex ?? 0),
           floatingButtonKey: GlobalKey(),
         ),
         _businessRepo = businessRepo,
@@ -34,6 +36,16 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
 
   Future<void> _loadMenu() async {
     await Future.microtask(() => emit(_Loading(_vm)));
+
+    // Si `businessDM` llegó null al constructor (caso típico del
+    // customer entrando por `menu.foodly.solutions/<uuid>` como deep
+    // link, sin `extra` pre-populado), el `PageController` se creó con
+    // `initialPage: 0` y se hidratará en `_handleSuccessMenuResponse`
+    // vía `fetchBusinessById`. Capturamos ese estado ANTES del fetch
+    // para decidir más abajo si hay que sincronizar el `PageController`
+    // — es el único caso donde el controller puede terminar
+    // desalineado con `indexView`.
+    final businessWasNull = _vm.menuDM?.business == null;
 
     late final MenuDM menuData;
 
@@ -61,13 +73,37 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
       });
     }
 
+    // `menuInitialPageIndex` centraliza la regla por categoría de negocio
+    // (hoy: drinkHouse → 1 bebidas, resto → 0 platos). Mismo getter lo usa
+    // `ManageMenuCubit` — ver `BusinessDM.menuInitialPageIndex` en
+    // `business_dm.dart` para el porqué.
+    final initialPage = menuData.business?.menuInitialPageIndex ?? 0;
+
     _vm = _vm.copyWith(
       menuDM: menuData,
-      indexView: menuData.business?.category?.id == FoodlyCategories.drinkHouse ? 1 : 0,
+      indexView: initialPage,
     );
 
     if (_vm.menuDM != null) await _precacheMenuImages(_vm.menuDM!);
     emit(_Loaded(_vm));
+
+    // Sincronizar el `PageController` SOLO en el caso edge:
+    //   (1) `businessDM` llegó null al constructor (deep link
+    //       `menu.foodly.solutions/<uuid>` es el flujo dominante acá), Y
+    //   (2) tras hidratar con `fetchBusinessById`, el business resultó
+    //       ser `drinkHouse` (initialPage = 1).
+    //
+    // Si el customer llegó con `businessDM` en `extra` (navegación
+    // interna desde otra vista), el `PageController` ya arrancó en la
+    // página correcta desde el constructor — no hay nada que hacer.
+    if (businessWasNull && initialPage > 0) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        final controller = _vm.controller;
+        if (controller != null && controller.hasClients) {
+          controller.jumpToPage(initialPage);
+        }
+      });
+    }
   }
 
   Future<void> _precacheMenuImages(MenuDM menu) {
@@ -107,8 +143,12 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
     final completer = Completer<void>();
     final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }

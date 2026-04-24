@@ -120,6 +120,25 @@ class BusinessDM with _$BusinessDM {
       _ => FoodlyAssets.reserveTable,
     };
   }
+
+  /// Tab inicial del `PageView` del menú (manager y customer).
+  ///
+  /// Bares (`FoodlyCategories.drinkHouse`) → tab 1 (bebidas), porque es
+  /// el caso de uso dominante del tipo de negocio. El resto arranca en
+  /// tab 0 (platos). Si en el futuro se suman más overrides por categoría
+  /// (e.g. `bakery` → postres), esta es la función donde concentrarlos
+  /// para mantener a los dos cubits alineados (`ManageMenuCubit` y
+  /// `VisitedMenuCubit`).
+  ///
+  /// Resolvemos vía `categoryId` primero — es el enum parseado desde
+  /// `category_id` del JSON con `_safeCategoryFromJson` y es el que usa
+  /// el resto del código (`categoryAvatar`, `bussinessReservationImage`).
+  /// Fallback a `category?.id` por si el endpoint hidrata el objeto
+  /// relacional pero no el scalar (más robusto contra drift del BE).
+  int get menuInitialPageIndex {
+    final cat = categoryId ?? category?.id;
+    return cat?.isDrinkHouse == true ? 1 : 0;
+  }
 }
 
 @freezed

@@ -68,12 +68,11 @@ class ItemDM with _$ItemDM {
       };
   Version get getSelectedVersion => selectedVersion ?? sortedVersions.first;
 
-  double? get currentPrice => _pricesMap[getSelectedVersion] ;
+  double? get currentPrice => _pricesMap[getSelectedVersion];
   double? getVersionPrice(Version version) => _pricesMap[version];
   bool checkIfVersionCanBeSaved(Version version) => _pricesMap[version] != null && ((_pricesMap[version] ?? 0) > 0);
   bool showAddPriceWarning(Version v) => versions.contains(v) && !checkIfVersionCanBeSaved(v);
-  bool get canBeSaved =>
-      versions.every((v) => showAddPriceWarning(v) == false) && name.length > 2 && description.length > 2;
+  bool get canBeSaved => (versions.every((v) => showAddPriceWarning(v) == false) || !available) && name.length > 2;
 }
 
 @freezed

@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart' show listEquals;
 import 'package:flutter/material.dart' show GlobalKey, PageController;
+import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart' show FoodlyStrings;
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart' show BusinessRepo;
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show Logger, di;
-import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM, FoodlyCategories;
+import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM;
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_transfer_objects/business/business_update_dto.dart';
 import 'package:foodly_world/data_transfer_objects/menu/category_register_dto.dart';
@@ -31,7 +32,8 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
             business: businessDM,
             businessUuid: businessDM?.uuid ?? '',
           ),
-          controller: PageController(),
+          indexView: businessDM?.menuInitialPageIndex ?? 0,
+          controller: PageController(initialPage: businessDM?.menuInitialPageIndex ?? 0),
           floatingButtonKey: GlobalKey(),
         ),
         _businessRepo = businessRepo,
@@ -41,6 +43,16 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
 
   Future<void> _loadMenu() async {
     await Future.microtask(() => emit(_Loading(_vm)));
+
+    // Si `businessDM` llegó null al constructor (p.ej. deep link sin
+    // `extra`), el `PageController` se creó con `initialPage: 0` y se
+    // hidratará en `_handleSuccessMenuResponse` vía `fetchBusinessById`.
+    // Capturamos ese estado ANTES del fetch para decidir más abajo si
+    // hay que sincronizar el `PageController` — es el único caso donde
+    // el controller puede terminar desalineado con `indexView`. Si el
+    // business vino populado en `extra`, el controller ya arrancó en
+    // la página correcta desde el constructor y no hay nada que hacer.
+    final businessWasNull = _vm.menuDM?.business == null;
 
     late final MenuDM menuData;
 
@@ -68,13 +80,38 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
       });
     }
 
+    // `menuInitialPageIndex` centraliza la regla por categoría de negocio
+    // (hoy: drinkHouse → 1 bebidas, resto → 0 platos). Mismo getter lo usa
+    // `VisitedMenuCubit` — ver `BusinessDM.menuInitialPageIndex` en
+    // `business_dm.dart` para el porqué.
+    final initialPage = menuData.business?.menuInitialPageIndex ?? 0;
+
     _vm = _vm.copyWith(
       menuDM: menuData,
       editMenuDM: menuData,
-      indexView: menuData.business?.category?.id == FoodlyCategories.drinkHouse ? 1 : 0,
+      indexView: initialPage,
     );
 
     emit(_Loaded(_vm));
+
+    // Sincronizar el `PageController` SOLO en el caso edge:
+    //   (1) `businessDM` llegó null al constructor, Y
+    //   (2) tras hidratar con `fetchBusinessById`, el business resultó
+    //       ser `drinkHouse` (initialPage = 1).
+    //
+    // En el flujo normal (manager navega con `businessDM` poblado en
+    // `extra`) el `PageController` ya arrancó en la página correcta
+    // desde el constructor — no hay que hacer nada. Evitar el jump en
+    // ese caso es importante porque dispararía un `onPageChanged`
+    // innecesario y podría generar un flash visual.
+    if (businessWasNull && initialPage > 0) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        final controller = _vm.controller;
+        if (controller != null && controller.hasClients) {
+          controller.jumpToPage(initialPage);
+        }
+      });
+    }
   }
 
   Future<MenuDM> _handleSuccessMenuResponse(MenuDM data) async {
@@ -341,9 +378,7 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
   }
 
   void _updateComboItem(ItemDM item, {bool updateOriginalMenuDM = false}) {
-    final updatedItems = _vm.editMenuDM?.combos
-        .map((i) => (i.uuid == item.uuid || i.isNewItem) ? item : i)
-        .toList();
+    final updatedItems = _vm.editMenuDM?.combos.map((i) => (i.uuid == item.uuid || i.isNewItem) ? item : i).toList();
 
     if (updateOriginalMenuDM) {
       _vm = _vm.copyWith(menuDM: _vm.menuDM?.copyWith(combos: updatedItems ?? _vm.menuDM?.combos ?? []));

@@ -168,23 +168,15 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl extends _Initial with DiagnosticableTreeMixin {
+class _$InitialImpl extends _Initial {
   const _$InitialImpl(this.vm) : super._();
 
   @override
   final MenuVM vm;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VisitedMenuState.initial(vm: $vm)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VisitedMenuState.initial'))
-      ..add(DiagnosticsProperty('vm', vm));
   }
 
   @override
@@ -342,23 +334,15 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl extends _Loading with DiagnosticableTreeMixin {
+class _$LoadingImpl extends _Loading {
   const _$LoadingImpl(this.vm) : super._();
 
   @override
   final MenuVM vm;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VisitedMenuState.loading(vm: $vm)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VisitedMenuState.loading'))
-      ..add(DiagnosticsProperty('vm', vm));
   }
 
   @override
@@ -516,23 +500,15 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadedImpl extends _Loaded with DiagnosticableTreeMixin {
+class _$LoadedImpl extends _Loaded {
   const _$LoadedImpl(this.vm) : super._();
 
   @override
   final MenuVM vm;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VisitedMenuState.loaded(vm: $vm)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VisitedMenuState.loaded'))
-      ..add(DiagnosticsProperty('vm', vm));
   }
 
   @override
@@ -695,7 +671,7 @@ class __$$ShowSnackbarImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShowSnackbarImpl extends _ShowSnackbar with DiagnosticableTreeMixin {
+class _$ShowSnackbarImpl extends _ShowSnackbar {
   const _$ShowSnackbarImpl(this.vm, this.msg) : super._();
 
   @override
@@ -704,17 +680,8 @@ class _$ShowSnackbarImpl extends _ShowSnackbar with DiagnosticableTreeMixin {
   final String msg;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VisitedMenuState.showSnackbar(vm: $vm, msg: $msg)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VisitedMenuState.showSnackbar'))
-      ..add(DiagnosticsProperty('vm', vm))
-      ..add(DiagnosticsProperty('msg', msg));
   }
 
   @override
@@ -880,7 +847,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorImpl extends _Error with DiagnosticableTreeMixin {
+class _$ErrorImpl extends _Error {
   const _$ErrorImpl(this.msg, this.vm) : super._();
 
   @override
@@ -889,17 +856,8 @@ class _$ErrorImpl extends _Error with DiagnosticableTreeMixin {
   final MenuVM vm;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'VisitedMenuState.error(msg: $msg, vm: $vm)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'VisitedMenuState.error'))
-      ..add(DiagnosticsProperty('msg', msg))
-      ..add(DiagnosticsProperty('vm', vm));
   }
 
   @override
