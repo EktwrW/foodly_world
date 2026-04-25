@@ -11,7 +11,7 @@
   "addNewCategory": "Añadir nueva categoría",
   "addNewItem": "Añadir nuevo artículo",
   "addOpeningHours": "Añadir Horarios de Apertura",
-  "addPhoto": "Añadir foto",
+  "addPhoto": "Agregar foto",
   "address": "Dirección",
   "addServices": "Agregar Servicios",
   "addTagline": "Agrega una frase destacada",
@@ -97,6 +97,7 @@
   "cancelEdit": "Cancelar edición",
   "canNotContainSpecialCharactersBut_": "No puede contener espacios ni caracteres especiales excepto '_'",
   "cannotUndone": "\nEsta acción no se puede deshacer.",
+  "cannotReviewOwnBusiness": "No puedes reseñar tu propio negocio",
   "categories": "Categorías",
   "categoryDeletedSuccess": "Categoría eliminada correctamente",
   "categoryNameEmpty": "El nombre de la categoría no puede estar vacío",
@@ -932,6 +933,21 @@
   "hasInsurance": "Tiene seguro",
   "insuranceHint": "Cobertura de responsabilidad civil",
   "portfolioVideoUrl": "URL de video/portfolio",
+  "portfolio": "Portafolio",
+  "photosOptionalMax": "Fotos (opcional, hasta {max})",
+  "@photosOptionalMax": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "photoLimitReached": "Máximo {max} fotos",
+  "@photoLimitReached": {
+    "placeholders": {
+      "max": {"type": "int"}
+    }
+  },
+  "removePhoto": "Quitar foto",
+  "photoUploadFailed": "No se pudieron subir todas las fotos. Edita el paquete para reintentar.",
   "title": "Título",
   "descriptionLabel": "Descripción",
   "serviceBookingRequest": "Solicitud de servicio",

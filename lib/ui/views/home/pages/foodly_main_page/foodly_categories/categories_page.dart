@@ -31,6 +31,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   StreamSubscription<LocationDetailsDM>? _locationSub;
 
+  /// The last category we physically scrolled the carousel to. Tracked
+  /// separately from `prev.vm.currentCategory` in `listenWhen` because on
+  /// first entry the cubit is constructed with `currentCategory` already
+  /// populated — so `prev` and `curr` are identical the whole way through
+  /// `initial → loading → loaded`, and a `prev != curr` guard would never
+  /// fire the initial centering scroll. This field starts as `null` so the
+  /// first matching `loaded` always animates; subsequent `loaded` emissions
+  /// (filter/ordering/radius refetches) no-op because the category matches.
+  FoodlyCategories? _lastAnimatedCategory;
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +65,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final cubit = context.read<CategoriesCubit>();
 
     return BlocConsumer<CategoriesCubit, CategoriesState>(
+      // Carousel animate logic lives inside the listener and is gated by
+      // the `_lastAnimatedCategory` field — see its declaration for why we
+      // can't use `prev.vm.currentCategory != curr.vm.currentCategory` here
+      // (cubit is constructed with the category already populated, so that
+      // comparison would never fire on first load).
+      //
+      // Other responsibilities of this listener:
+      //   - Two indexing correctness issues: enum.index vs activeCategories
+      //     position (off-by-2 after `academy`), and linear diff vs shortest-
+      //     path diff on the infinite-loop carousel (the shortest-path fix
+      //     lives in FoodlyCarousel._animateToPage).
+      //   - dialogService loading/hide and error snackbar.
       listener: (context, state) {
         state.whenOrNull(
           loading: (vm) {
@@ -63,10 +85,21 @@ class _CategoriesPageState extends State<CategoriesPage> {
             }
           },
           loaded: (vm) {
-            WidgetsBinding.instance.addPostFrameCallback((_) => vm.carouselController?.animateToPage(
-                  vm.currentCategory?.index ?? 0,
-                  duration: Durations.extralong1,
-                ));
+            final category = vm.currentCategory;
+            if (category != null && category != _lastAnimatedCategory) {
+              // Use `activeCategories.indexOf` (not `.index`) so the target
+              // matches the actual position of the tile inside the carousel.
+              final targetIndex = FoodlyCategories.activeCategories.indexOf(category);
+              if (targetIndex >= 0) {
+                _lastAnimatedCategory = category;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  final controller = vm.carouselController;
+                  if (controller == null) return;
+
+                  controller.animateToPage(targetIndex, duration: Durations.extralong1);
+                });
+              }
+            }
 
             dialogService.hideLoading();
           },

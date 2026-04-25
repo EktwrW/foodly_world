@@ -96,7 +96,12 @@ class ServicePackagesCubit extends Cubit<ServicePackagesState> {
 
   // ── Service Packages ───────────────────────────────────────
 
-  Future<bool> createPackage(Map<String, dynamic> data) async {
+  /// Creates a package and returns the created [ServicePackageDM] on success,
+  /// or `null` on failure. Returning the DM (instead of a bool) lets callers
+  /// chain a photo upload — [createPackageWithPhotos] uses this to grab the
+  /// fresh UUID and hand it to [uploadPhotos] in a single user-visible
+  /// "save" step.
+  Future<ServicePackageDM?> createPackage(Map<String, dynamic> data) async {
     _vm = _vm.copyWith(isSavingPackage: true);
     emit(ServicePackagesState.saving(_vm));
 
@@ -113,18 +118,21 @@ class ServicePackagesCubit extends Cubit<ServicePackagesState> {
           );
         }
         emit(ServicePackagesState.saved(_vm, response.message));
-        return true;
+        return newPackage;
       },
       failure: (error) {
         _logger.e(error);
         _vm = _vm.copyWith(isSavingPackage: false);
         emit(ServicePackagesState.error(_vm, error.toString()));
-        return false;
+        return null;
       },
     );
   }
 
-  Future<bool> updatePackage(String uuid, Map<String, dynamic> data) async {
+  /// Updates an existing package and returns the updated [ServicePackageDM]
+  /// on success, or `null` on failure. Symmetry with [createPackage] so the
+  /// form can treat both as "returned DM or error".
+  Future<ServicePackageDM?> updatePackage(String uuid, Map<String, dynamic> data) async {
     _vm = _vm.copyWith(isSavingPackage: true);
     emit(ServicePackagesState.saving(_vm));
 
@@ -140,15 +148,35 @@ class ServicePackagesCubit extends Cubit<ServicePackagesState> {
           _vm = _vm.copyWith(packages: list, isSavingPackage: false);
         }
         emit(ServicePackagesState.saved(_vm, response.message));
-        return true;
+        return updated;
       },
       failure: (error) {
         _logger.e(error);
         _vm = _vm.copyWith(isSavingPackage: false);
         emit(ServicePackagesState.error(_vm, error.toString()));
-        return false;
+        return null;
       },
     );
+  }
+
+  /// Create a package and, if [photos] is non-empty, chain the upload in a
+  /// single "save" operation from the user's perspective. Returns `true`
+  /// only when both steps succeed.
+  ///
+  /// Partial-failure policy: if the package was created but the photo
+  /// upload failed, the package STAYS (the user can retry the upload
+  /// from edit mode). We surface the failure so the form can toast an
+  /// error, but we don't roll back the create — that would be worse UX
+  /// than a half-done save the user can finish.
+  Future<bool> createPackageWithPhotos(
+    Map<String, dynamic> data,
+    List<MultipartFile> photos,
+  ) async {
+    final created = await createPackage(data);
+    if (created == null) return false;
+    if (photos.isEmpty) return true;
+    if (created.uuid == null) return true; // Nothing to attach to.
+    return uploadPhotos(created.uuid!, photos);
   }
 
   Future<bool> deletePackage(String uuid) async {

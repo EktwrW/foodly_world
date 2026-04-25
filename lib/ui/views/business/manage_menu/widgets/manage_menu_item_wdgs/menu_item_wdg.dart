@@ -18,7 +18,7 @@ class MenuItemWdg extends StatelessWidget {
   final bool isLastScreenItem;
   final Widget? dragIconWdg;
 
-  Widget get _currencyWidget => Text('${vm.currency}:', style: FoodlyTextStyles.label);
+  Widget get _currencyWidget => Text('${vm.currency}:', style: FoodlyTextStyles.label.copyWith(color: Colors.white));
   bool get _itemNotAvailable => !item.available && !vm.editMode;
 
   @override
@@ -220,7 +220,6 @@ class MenuItemWdg extends StatelessWidget {
                           subCategoryUuid: subCategory.uuid,
                         ).paddingOnly(left: 10, right: 6),
                         if (item.available) const Spacer(),
-                        if (item.available) _currencyWidget.paddingHorizontal(4),
                         if (item.available)
                           SizedBox(
                             width: 110,
@@ -229,12 +228,16 @@ class MenuItemWdg extends StatelessWidget {
                               elevation: 3,
                               color: FoodlyThemes.tertiaryFoodly,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                              child: Center(
-                                child: Text(
-                                  _itemNotAvailable ? '-' : '${item.currentPrice}',
-                                  style: FoodlyTextStyles.bodyWhiteSemibold.copyWith(fontSize: 16.5),
-                                ),
-                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _currencyWidget.paddingHorizontal(3),
+                                  Text(
+                                    _itemNotAvailable ? '-' : '${item.currentPrice}',
+                                    style: FoodlyTextStyles.bodyWhiteSemibold,
+                                  ),
+                                ],
+                              ).paddingHorizontal(6),
                             ),
                           ),
                       ],

@@ -1,14 +1,21 @@
 part of '../categories_page.dart';
 
-/// Horizontal filter bar surfaced in [CategoriesPage] when the active
-/// category is `cateringAndChefs`. Renders:
-///   1. A scrollable row of [ServiceType] chips (wedding, birthday, cocktail…)
-///   2. A compact segmented control for [DiscoveryOrdering] (distance /
-///      price / rating).
+/// Filter row surfaced in [CategoriesPage] when the active category is
+/// `cateringAndChefs`. Two compact dropdowns side-by-side:
 ///
-/// Production quality: matches the glassmorphic-purple AppBar + primary-green
-/// selection language already used by the radius selector right above. Reuses
-/// [FoodlyThemes] tokens so changes to brand colours propagate for free.
+///   1. **Tipo de evento** — `ServiceType` (wedding, birthday, cocktail…)
+///      with a "Todos" null entry at the top.
+///   2. **Ordenar por** — `DiscoveryOrdering` (distance / price_asc /
+///      rating_desc).
+///
+/// Why dropdowns and not chips+segmented: on mobile the combined radius
+/// pills + chip scroller + segmented button stacked vertically felt
+/// visually noisy — too many "purple pill rows" competing for attention
+/// right under the AppBar. Two dropdowns collapse the same state into a
+/// single row that's compact on phones and scales cleanly to tablets.
+/// Matches the styling of `_StatusFilterDropdown` in
+/// `manage_reservations_page.dart` so the discovery page speaks the same
+/// visual language as the business dashboard.
 class _CateringFiltersBar extends StatelessWidget {
   final ServiceType? selectedServiceType;
   final DiscoveryOrdering ordering;
@@ -25,142 +32,154 @@ class _CateringFiltersBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(
-          height: 38,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            itemCount: ServiceType.discoveryChipOrder.length + 1, // +1 for "All"
-            separatorBuilder: (_, __) => const SizedBox(width: 8),
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                final selected = selectedServiceType == null;
-                return _FilterChip(
-                  label: S.current.serviceTypeAll,
-                  icon: Bootstrap.grid,
-                  selected: selected,
-                  onTap: () => onServiceTypeSelected(null),
-                );
-              }
-              final type = ServiceType.discoveryChipOrder[index - 1];
-              final selected = selectedServiceType == type;
-              return _FilterChip(
-                label: type.label,
-                icon: type.icon,
-                selected: selected,
-                onTap: () => onServiceTypeSelected(type),
-              );
-            },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        spacing: 10,
+        children: [
+          // ── Tipo de evento ───────────────────────────────────
+          Expanded(
+            child: _FilterDropdownShell<ServiceType?>(
+              value: selectedServiceType,
+              leadingIcon: selectedServiceType?.icon ?? Bootstrap.grid,
+              items: [
+                _DropdownItem(null, S.current.serviceTypeAll, Bootstrap.grid),
+                for (final t in ServiceType.discoveryChipOrder) _DropdownItem<ServiceType?>(t, t.label, t.icon),
+              ],
+              onChanged: onServiceTypeSelected,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  S.current.orderingLabel,
-                  style: FoodlyTextStyles.captionPurple,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              SegmentedButton<DiscoveryOrdering>(
-                segments: DiscoveryOrdering.values
-                    .map(
-                      (o) => ButtonSegment<DiscoveryOrdering>(
-                        value: o,
-                        label: Text(
-                          o.label,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11.5),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                selected: {ordering},
-                onSelectionChanged: (newSelection) => onOrderingChanged(newSelection.first),
-                showSelectedIcon: false,
-                style: ButtonStyle(
-                  side: const WidgetStatePropertyAll(BorderSide(color: FoodlyThemes.primaryFoodly)),
-                  foregroundColor: WidgetStateProperty.resolveWith((states) {
-                    return states.contains(WidgetState.selected) ? Colors.white : FoodlyThemes.primaryFoodly;
-                  }),
-                  backgroundColor: WidgetStateProperty.resolveWith((states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return FoodlyThemes.primaryFoodly.withValues(alpha: .7);
-                    }
-                    return null;
-                  }),
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                  visualDensity: VisualDensity.compact,
-                ),
-              ),
-            ],
+          // ── Ordenar por ──────────────────────────────────────
+          Expanded(
+            child: _FilterDropdownShell<DiscoveryOrdering>(
+              value: ordering,
+              leadingIcon: _orderingIcon(ordering),
+              items: [
+                for (final o in DiscoveryOrdering.values)
+                  _DropdownItem<DiscoveryOrdering>(o, o.label, _orderingIcon(o)),
+              ],
+              onChanged: (v) {
+                if (v != null) onOrderingChanged(v);
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
+  static IconData _orderingIcon(DiscoveryOrdering o) => switch (o) {
+        // Sensible default — near-me is the map-pin metaphor users already
+        // associate with "distance sort" in most food apps.
+        DiscoveryOrdering.distance => Bootstrap.geo_alt,
+        DiscoveryOrdering.priceAsc => Bootstrap.tag,
+        DiscoveryOrdering.ratingDesc => Bootstrap.star,
+      };
 }
 
-class _FilterChip extends StatelessWidget {
+/// Value-label-icon triple for each dropdown entry. Kept as a private
+/// record-lite class so the generic [_FilterDropdownShell] can work for
+/// any enum (ServiceType, DiscoveryOrdering, and anything else that
+/// joins this page later) without duplicating the shell's glassmorphic
+/// styling.
+class _DropdownItem<T> {
+  final T value;
   final String label;
   final IconData icon;
-  final bool selected;
-  final VoidCallback onTap;
 
-  const _FilterChip({
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.onTap,
+  const _DropdownItem(this.value, this.label, this.icon);
+}
+
+/// Pill-shaped dropdown with a soft purple border + 5 %-alpha fill. Same
+/// visual treatment as `_StatusFilterDropdown` in manage reservations so
+/// the two screens feel like siblings. Uses [DropdownButton.selectedItemBuilder]
+/// so the closed-state text renders in primary purple bold, while
+/// expanded items render in neutral text for readability.
+class _FilterDropdownShell<T> extends StatelessWidget {
+  final T value;
+  final IconData leadingIcon;
+  final List<_DropdownItem<T>> items;
+  final ValueChanged<T?> onChanged;
+
+  const _FilterDropdownShell({
+    super.key,
+    required this.value,
+    required this.leadingIcon,
+    required this.items,
+    required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bg = selected ? FoodlyThemes.primaryFoodly : Colors.white;
-    final fg = selected ? Colors.white : FoodlyThemes.primaryFoodly;
-    final borderColor = FoodlyThemes.primaryFoodly.withValues(alpha: selected ? 1 : .45);
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(999),
-        child: AnimatedContainer(
-          duration: Durations.short3,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          decoration: BoxDecoration(
-            color: bg,
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: borderColor, width: selected ? 1.4 : 1),
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      color: FoodlyThemes.primaryFoodly.withValues(alpha: .25),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
+    return Container(
+      height: 42,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.4)),
+        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.05),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          value: value,
+          isExpanded: true,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          borderRadius: BorderRadius.circular(12),
+          icon: const Icon(Bootstrap.chevron_down, size: 12, color: FoodlyThemes.primaryFoodly),
+          style: const TextStyle(fontSize: 13, color: Colors.black87),
+          // The closed-state rendering — icon + label in primary purple bold.
+          // We add the leading icon here because the expanded menu items
+          // already include the icon inline; keeping both consistent means
+          // the user sees the same affordance in open and closed states.
+          selectedItemBuilder: (context) => items
+              .map(
+                (item) => Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(leadingIcon, size: 14, color: FoodlyThemes.primaryFoodly),
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        item.label,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: FoodlyThemes.primaryFoodly,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
                     ),
-                  ]
-                : null,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 14, color: fg),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: TextStyle(
-                  color: fg,
-                  fontSize: 12.5,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                  ],
                 ),
-              ),
-            ],
-          ),
+              )
+              .toList(),
+          items: items
+              .map(
+                (item) => DropdownMenuItem<T>(
+                  value: item.value,
+                  child: Row(
+                    children: [
+                      Icon(
+                        item.icon,
+                        size: 16,
+                        color: item.value == value ? FoodlyThemes.primaryFoodly : Colors.black54,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          item.label,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: item.value == value ? FoodlyThemes.primaryFoodly : Colors.black87,
+                            fontWeight: item.value == value ? FontWeight.w600 : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: onChanged,
         ),
       ),
     );

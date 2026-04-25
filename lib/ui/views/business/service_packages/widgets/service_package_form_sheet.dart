@@ -1,13 +1,17 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
+import 'package:dio/dio.dart' show MultipartFile;
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BlocConsumer, FoodlyThemes, S, ReadContext;
 import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/service_packages/cubit/service_packages_cubit.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:image_picker/image_picker.dart';
+import 'package:universal_io/io.dart' show File;
 
 class ServicePackageFormSheet extends StatefulWidget {
   final ServicePackageDM? existingPackage;
@@ -36,6 +40,24 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
   late bool _isActive;
   late List<String> _includes;
   late List<String> _addOns;
+
+  /// Hard limit on photos per package. Kept deliberately low — catering
+  /// providers benefit most from a handful of representative shots (hero
+  /// image + 1-2 context), not a gallery; the visitor card only renders
+  /// a lightweight carousel anyway. Synced with the BE validator in
+  /// ServicePackagePhotoController (keep in step if that changes).
+  static const int _maxPhotos = 3;
+
+  /// Locally-picked photos that haven't been uploaded yet. Flushed on
+  /// submit: after the package is created/updated we POST these as a
+  /// single multipart upload. Stored as [XFile] so we keep the original
+  /// file path + mime type for [MultipartFile.fromFile].
+  final List<XFile> _pendingPhotos = [];
+
+  /// Uploading is handled after the save() call completes. We show a
+  /// small busy indicator over the photos section so the user doesn't
+  /// think the form froze.
+  bool _uploadingPhotos = false;
 
   bool get _isEditing => widget.existingPackage != null;
 
@@ -79,13 +101,18 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ServicePackagesCubit, ServicePackagesState>(
+      // Close-on-save is handled explicitly inside [_submit] so we can
+      // await the photo upload before popping. Listening to `saved` here
+      // would fire right after the package row is written — before the
+      // multipart upload has a chance to run — and the user would be back
+      // at the list with a fresh empty-photo card for a blink.
       listener: (context, state) {
         state.mapOrNull(
-          saved: (_) => Navigator.of(context).pop(),
+          error: (e) => FoodlySnackbars.errorGeneric(context, e.message),
         );
       },
       builder: (context, state) {
-        final isSaving = state.vm.isSavingPackage;
+        final isSaving = state.vm.isSavingPackage || _uploadingPhotos;
 
         return Padding(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -119,6 +146,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                             _buildGuestsRow(isSaving),
                             _buildDurationField(isSaving),
                             _buildIncludesSection(isSaving),
+                            _buildPhotosGrid(isSaving),
                             _buildToggles(isSaving),
                             _buildButtons(context, isSaving).paddingTop(36),
                           ],
@@ -550,9 +578,72 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
     );
   }
 
+  // ── Photos grid ───────────────────────────────────────────────
+
+  /// Visual count of photos the user currently sees attached to this
+  /// package: existing (server-side, already uploaded — only meaningful in
+  /// edit mode) + pending (locally picked, not yet uploaded).
+  int get _photoCount => (widget.existingPackage?.photos.length ?? 0) + _pendingPhotos.length;
+
+  Widget _buildPhotosGrid(bool isSaving) {
+    final existing = widget.existingPackage?.photos ?? const <ServicePackagePhotoDM>[];
+    final remaining = _maxPhotos - _photoCount;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8,
+      children: [
+        Text(S.current.photosOptionalMax(_maxPhotos), style: FoodlyTextStyles.labelPurpleBold),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final photo in existing)
+              _PhotoTile(
+                key: ValueKey('existing_${photo.uuid}'),
+                imageUrl: photo.photoPath,
+                onRemove: isSaving
+                    ? null
+                    : () {
+                        if (photo.uuid != null) {
+                          context.read<ServicePackagesCubit>().deletePhoto(photo.uuid!);
+                        }
+                      },
+              ),
+            for (int i = 0; i < _pendingPhotos.length; i++)
+              _PhotoTile(
+                key: ValueKey('pending_$i'),
+                localFile: File(_pendingPhotos[i].path),
+                onRemove: isSaving ? null : () => setState(() => _pendingPhotos.removeAt(i)),
+              ),
+            if (remaining > 0)
+              _AddPhotoTile(
+                enabled: !isSaving,
+                onTap: () => _pickPhotos(remaining),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> _pickPhotos(int remaining) async {
+    if (remaining <= 0) {
+      FoodlySnackbars.infoGeneric(context, S.current.photoLimitReached(_maxPhotos));
+      return;
+    }
+    // Gallery-only (no camera) per product decision: chefs upload curated
+    // marketing shots, not raw captures. `limit` is honored on supported
+    // platforms; we still cap defensively with `.take(remaining)`.
+    final picker = ImagePicker();
+    final picked = await picker.pickMultiImage(limit: remaining);
+    if (picked.isEmpty || !mounted) return;
+    setState(() => _pendingPhotos.addAll(picked.take(remaining)));
+  }
+
   // ── Submit ────────────────────────────────────────────────────
 
-  void _submit(BuildContext context) {
+  Future<void> _submit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
 
     final data = <String, dynamic>{
@@ -584,10 +675,42 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
 
     final cubit = context.read<ServicePackagesCubit>();
 
+    // Convert the locally-picked XFiles into dio MultipartFiles. We do
+    // this lazily on submit (not during picking) so we don't hold open
+    // file handles while the user is still editing the form.
+    final photos = <MultipartFile>[
+      for (final xf in _pendingPhotos) await MultipartFile.fromFile(xf.path, filename: xf.name),
+    ];
+
+    bool ok;
     if (_isEditing) {
-      cubit.updatePackage(widget.existingPackage!.uuid!, data);
+      final updated = await cubit.updatePackage(widget.existingPackage!.uuid!, data);
+      if (updated == null) {
+        ok = false;
+      } else if (photos.isEmpty) {
+        ok = true;
+      } else {
+        setState(() => _uploadingPhotos = true);
+        ok = await cubit.uploadPhotos(widget.existingPackage!.uuid!, photos);
+        if (mounted) setState(() => _uploadingPhotos = false);
+      }
     } else {
-      cubit.createPackage(data);
+      // create + upload as a single logical operation. The cubit spinner
+      // covers the create step; we flip our local flag for the upload
+      // step so the form's save button stays disabled end-to-end.
+      if (photos.isNotEmpty) setState(() => _uploadingPhotos = true);
+      ok = await cubit.createPackageWithPhotos(data, photos);
+      if (mounted) setState(() => _uploadingPhotos = false);
+    }
+
+    if (!context.mounted) return;
+    if (ok) {
+      Navigator.of(context).pop();
+    } else if (photos.isNotEmpty) {
+      // The package row likely landed but one or more uploads failed —
+      // tell the user to retry from edit mode. errorGeneric is already
+      // wired up in the BlocConsumer listener for plain save failures.
+      FoodlySnackbars.infoGeneric(context, S.current.photoUploadFailed);
     }
   }
 
@@ -663,6 +786,121 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
       ),
       filled: true,
       fillColor: Colors.white,
+    );
+  }
+}
+
+// ── Photo Tile ────────────────────────────────────────────────
+//
+// Square 88×88 thumbnail with a small close button in the corner. Used
+// for both already-uploaded photos (pass `imageUrl`) and locally-picked
+// pending photos (pass `localFile`). Exactly one of the two must be set.
+
+class _PhotoTile extends StatelessWidget {
+  final String? imageUrl;
+  final File? localFile;
+  final VoidCallback? onRemove;
+
+  const _PhotoTile({
+    super.key,
+    this.imageUrl,
+    this.localFile,
+    this.onRemove,
+  }) : assert((imageUrl != null) ^ (localFile != null),
+            'Provide exactly one of imageUrl (existing) or localFile (pending)');
+
+  @override
+  Widget build(BuildContext context) {
+    final imageProvider = localFile != null ? FileImage(localFile!) as ImageProvider : NetworkImage(imageUrl!);
+
+    return SizedBox(
+      width: 88,
+      height: 88,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image(
+                image: imageProvider,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  color: Colors.black12,
+                  child: const Icon(Bootstrap.image, size: 24, color: Colors.black26),
+                ),
+              ),
+            ),
+          ),
+          if (onRemove != null)
+            Positioned(
+              top: -6,
+              right: -6,
+              child: Material(
+                color: Colors.white,
+                shape: const CircleBorder(),
+                elevation: 2,
+                child: InkWell(
+                  customBorder: const CircleBorder(),
+                  onTap: onRemove,
+                  child: Tooltip(
+                    message: S.current.removePhoto,
+                    child: const Padding(
+                      padding: EdgeInsets.all(3),
+                      child: Icon(Bootstrap.x, size: 16, color: FoodlyThemes.error),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Add Photo Tile ────────────────────────────────────────────
+//
+// The "+" tile that opens the gallery picker. Dashed purple border keeps
+// it distinct from real photo thumbnails and signals affordance without
+// a heavy button treatment.
+
+class _AddPhotoTile extends StatelessWidget {
+  final bool enabled;
+  final VoidCallback onTap;
+
+  const _AddPhotoTile({required this.enabled, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: enabled ? onTap : null,
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        width: 88,
+        height: 88,
+        decoration: BoxDecoration(
+          color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.04),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.5) : Colors.black12,
+            width: 1.2,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 4,
+          children: [
+            Icon(Bootstrap.plus_lg, size: 22, color: enabled ? FoodlyThemes.primaryFoodly : Colors.black26),
+            Text(
+              S.current.addPhoto,
+              style: FoodlyTextStyles.caption.copyWith(
+                color: enabled ? FoodlyThemes.primaryFoodly : Colors.black26,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -136,7 +136,7 @@ class _ManageMenuScreenState extends State<ManageMenuScreen> {
           return AnimatedOpacity(
             opacity: visible ? UiUtilities.sliverVisibleOpacity : UiUtilities.sliverHiddenOpacity,
             duration: Durations.medium1,
-            child: child!,
+            child: vm.isAnyItemEditing ? const SizedBox.shrink() : child!,
           );
         },
         child: MenuFloatingActionButton(

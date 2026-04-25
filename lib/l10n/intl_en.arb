@@ -11,7 +11,6 @@
   "addNewCategory": "Add a new category",
   "addNewItem": "Add New Item",
   "addOpeningHours": "Add Opening Hours",
-  "addPhoto": "Add a photo",
   "address": "Address",
   "addServices": "Add Services",
   "addTagline": "Add a catchy tagline",
@@ -97,6 +96,7 @@
   "cancelEdit": "Cancel Edit",
   "canNotContainSpecialCharactersBut_": "Cannot contain spaces or special characters except '_'",
   "cannotUndone": "\nThis action cannot be undone.",
+  "cannotReviewOwnBusiness": "You cannot review your own business.",
   "categories": "Categories",
   "categoryDeletedSuccess": "Category deleted successfully",
   "categoryNameEmpty": "Category name can not be empty",
@@ -932,6 +932,26 @@
   "hasInsurance": "Has insurance",
   "insuranceHint": "Liability insurance coverage",
   "portfolioVideoUrl": "Portfolio/video URL",
+  "portfolio": "Portfolio",
+  "photosOptionalMax": "Photos (optional, up to {max})",
+  "@photosOptionalMax": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "addPhoto": "Add photo",
+  "photoLimitReached": "Maximum {max} photos",
+  "@photoLimitReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "removePhoto": "Remove photo",
+  "photoUploadFailed": "Some photos couldn't be uploaded. Edit the package to retry.",
   "title": "Title",
   "descriptionLabel": "Description",
   "serviceBookingRequest": "Service request",

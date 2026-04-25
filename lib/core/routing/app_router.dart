@@ -576,6 +576,10 @@ class AppRouter {
               child: ManageReservationsPage(
                 businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 initialFilter: state.uri.queryParameters['filter'],
+                // Both call sites (footer buttons + home) already pass the
+                // BusinessDM via `extra`. The cubit uses its categoryId to
+                // derive the booking_type filter automatically.
+                business: state.extra as BusinessDM?,
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),

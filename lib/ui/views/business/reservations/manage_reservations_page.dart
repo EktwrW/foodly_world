@@ -16,8 +16,14 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 class ManageReservationsPage extends StatelessWidget {
   final String businessUuid;
   final String? initialFilter;
+  final BusinessDM? business;
 
-  const ManageReservationsPage({super.key, required this.businessUuid, this.initialFilter});
+  const ManageReservationsPage({
+    super.key,
+    required this.businessUuid,
+    this.initialFilter,
+    this.business,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,12 @@ class ManageReservationsPage extends StatelessWidget {
         logger: di(),
         businessUuid: businessUuid,
         initialFilter: initialFilter,
+        // The BE endpoint filters by booking_type when we send it; the cubit
+        // derives the right value from the vertical so each business sees
+        // only the reservations it can actually produce (catering→service,
+        // restaurants/bars/etc.→table). No visible filter chip — each
+        // business has a single booking_type today.
+        businessCategory: business?.categoryId,
       ),
       child: PopScope(
         canPop: false,
@@ -75,7 +87,6 @@ class ManageReservationsPage extends StatelessWidget {
           body: const SafeArea(
             child: Column(
               children: [
-                _BookingTypeFilter(),
                 _StatusFilterDropdown(),
                 Expanded(child: _ManagerReservationsList()),
               ],
@@ -83,57 +94,6 @@ class ManageReservationsPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _BookingTypeFilter extends StatelessWidget {
-  const _BookingTypeFilter();
-
-  static List<(String, BookingType?)> get _items => [
-        (S.current.allBookings, null),
-        (S.current.tableReservations, BookingType.table),
-        (S.current.serviceRequests, BookingType.service),
-      ];
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<ManageReservationsCubit, ManageReservationsState, BookingType?>(
-      selector: (state) => state.vm.bookingTypeFilter,
-      builder: (context, activeType) {
-        final cubit = context.read<ManageReservationsCubit>();
-
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              spacing: 8,
-              children: _items.map((item) {
-                final selected = activeType == item.$2;
-                return ChoiceChip(
-                  label: Text(item.$1),
-                  selected: selected,
-                  onSelected: (_) => cubit.setBookingTypeFilter(item.$2),
-                  selectedColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.18),
-                  labelStyle: TextStyle(
-                    color: selected ? FoodlyThemes.primaryFoodly : Colors.black87,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                    fontSize: 13,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: selected ? FoodlyThemes.primaryFoodly : Colors.black12,
-                    ),
-                  ),
-                  backgroundColor: Colors.white,
-                );
-              }).toList(),
-            ),
-          ),
-        );
-      },
     );
   }
 }

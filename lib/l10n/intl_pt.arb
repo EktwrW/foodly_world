@@ -97,6 +97,7 @@
   "cancelEdit": "Cancelar edição",
   "canNotContainSpecialCharactersBut_": "Não pode conter espaços nem caracteres especiais exceto '_'",
   "cannotUndone": "\nEsta ação não pode ser desfeita.",
+  "cannotReviewOwnBusiness": "Não pode avaliar o seu próprio negócio",
   "categories": "Categorias",
   "categoryDeletedSuccess": "Categoria eliminada com sucesso",
   "categoryTitleUpdated": "Título da categoria atualizado com sucesso",
@@ -932,6 +933,25 @@
   "hasInsurance": "Tem seguro",
   "insuranceHint": "Cobertura de seguro de responsabilidade",
   "portfolioVideoUrl": "URL de vídeo/portfólio",
+  "portfolio": "Portfólio",
+  "photosOptionalMax": "Fotos (opcional, até {max})",
+  "@photosOptionalMax": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoLimitReached": "Máximo {max} fotos",
+  "@photoLimitReached": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "removePhoto": "Remover foto",
+  "photoUploadFailed": "Não foi possível enviar todas as fotos. Edita o pacote para tentar novamente.",
   "title": "Título",
   "descriptionLabel": "Descrição",
   "serviceBookingRequest": "Pedido de serviço",

@@ -9,6 +9,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecoration
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/video/video_players.dart' show YouTubeVideoPlayer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/visit_service_packages_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/widgets/service_booking_request_sheet.dart';
@@ -216,6 +217,7 @@ class _ProfileHeader extends StatelessWidget {
       spacing: 16,
       children: [
         _buildHeader(),
+        if (profile.hasPortfolioVideo) _buildPortfolioVideo(),
         ..._buildInfoWidgets(),
       ],
     );
@@ -230,6 +232,7 @@ class _ProfileHeader extends StatelessWidget {
       spacing: 16,
       children: [
         _buildHeader(),
+        if (profile.hasPortfolioVideo) _buildPortfolioVideo(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -262,6 +265,35 @@ class _ProfileHeader extends StatelessWidget {
         const Icon(Bootstrap.person_badge, size: 20, color: FoodlyThemes.primaryFoodly),
         Text(S.current.professionalProfile, style: FoodlyTextStyles.labelPurpleBold),
         if (profile.isVerified) const Icon(Bootstrap.patch_check_fill, size: 16, color: FoodlyThemes.tertiaryFoodly),
+      ],
+    );
+  }
+
+  /// Portfolio video block. Guarded by [profile.hasPortfolioVideo] so this is
+  /// only called when there's a URL. We reuse the same [YouTubeVideoPlayer]
+  /// that powers promotions: inline playback on mobile, thumbnail + external
+  /// launch on web (the package's WebView isn't supported there), and a
+  /// graceful fallback to a thumbnail when the embed fails (geo-restricted,
+  /// embed-disabled, or WebView stuck on loading).
+  Widget _buildPortfolioVideo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 6,
+      children: [
+        Row(
+          spacing: 6,
+          children: [
+            const Icon(Bootstrap.play_btn, size: 16, color: FoodlyThemes.primaryFoodly),
+            Text(S.current.portfolio, style: FoodlyTextStyles.captionBold),
+          ],
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: YouTubeVideoPlayer(url: profile.portfolioVideoUrl!),
+          ),
+        ),
       ],
     );
   }
@@ -529,39 +561,22 @@ class _VisitorPackageCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 SizedBox(
                   width: double.infinity,
-                  child: allowReservations
-                      ? CustomNeumorphicButton(
-                          text: S.current.requestService,
-                          disabled: false,
-                          fontSize: 14.6,
-                          onPressed: () {
-                            final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
-                            showServiceBookingRequestSheet(
-                              context,
-                              businessUuid: businessUuid,
-                              package: package,
-                            );
-                          },
-                        )
-                      : GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(SnackBar(
-                                content: Text(S.current.businessNotAcceptingRequestsNow),
-                                behavior: SnackBarBehavior.floating,
-                              ));
-                          },
-                          child: IgnorePointer(
-                            child: CustomNeumorphicButton(
-                              text: S.current.requestService,
-                              disabled: true,
-                              fontSize: 14.6,
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
+                  child: CustomNeumorphicButton(
+                    text: S.current.requestService,
+                    disabled: !allowReservations,
+                    tooltip: !allowReservations ? S.current.businessNotAcceptingRequestsNow : null,
+                    fontSize: 13,
+                    padding: const EdgeInsets.all(9),
+                    margin: const EdgeInsets.symmetric(horizontal: 26),
+                    onPressed: () {
+                      final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
+                      showServiceBookingRequestSheet(
+                        context,
+                        businessUuid: businessUuid,
+                        package: package,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

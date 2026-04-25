@@ -168,26 +168,48 @@ class _FoodlyCarouselState extends State<FoodlyCarousel> {
   // Programmatic navigation (used by FoodlyCarouselController)
   // ---------------------------------------------------------------------------
 
+  /// Compute the destination virtual page for a logical [index], picking
+  /// the SHORTEST path around the loop when infinite scroll is active.
+  ///
+  /// Previous bug: `diff = index - currentLogical` is a straight-line delta.
+  /// Going from logical 21 (last) to logical 0 (first) produced `diff = -21`,
+  /// animating 21 pages in reverse through the entire carousel — even though
+  /// the two tiles are visually adjacent in the infinite-scroll wrap-around.
+  ///
+  /// Correct path: compare forward vs backward distance along the ring of
+  /// N items and pick the smaller one. Ties default to forward.
+  int _targetVirtualPage(int index) {
+    if (_effectiveInfiniteScroll) {
+      final n = widget.items.length;
+      final currentVirtual = _pageController.hasClients
+          ? (_pageController.page?.round() ?? _initialPage)
+          : _initialPage;
+      final currentLogical = ((currentVirtual % n) + n) % n;
+      final forward = (index - currentLogical + n) % n;
+      final backward = (currentLogical - index + n) % n;
+      final delta = forward <= backward ? forward : -backward;
+      return currentVirtual + delta;
+    }
+    return index.clamp(0, widget.items.length - 1);
+  }
+
   void _animateToPage(int index, {Duration? duration, Curve? curve}) {
     if (!_pageController.hasClients || widget.items.isEmpty) return;
+    _pageController.animateToPage(
+      _targetVirtualPage(index),
+      duration: duration ?? const Duration(milliseconds: 400),
+      curve: curve ?? Curves.decelerate,
+    );
+  }
 
-    if (_effectiveInfiniteScroll) {
-      // Calculate the closest virtual page for the target index.
-      final currentVirtual = _pageController.page?.round() ?? _initialPage;
-      final currentLogical = currentVirtual % widget.items.length;
-      final diff = index - currentLogical;
-      _pageController.animateToPage(
-        currentVirtual + diff,
-        duration: duration ?? const Duration(milliseconds: 400),
-        curve: curve ?? Curves.decelerate,
-      );
-    } else {
-      _pageController.animateToPage(
-        index.clamp(0, widget.items.length - 1),
-        duration: duration ?? const Duration(milliseconds: 400),
-        curve: curve ?? Curves.decelerate,
-      );
-    }
+  /// Jump instantly (no animation) to a logical [index]. Used for the
+  /// initial centering when entering a page with a pre-selected item —
+  /// animating from the default `initialPage` would leave the target tile
+  /// half-rendered on the edge for the duration of the animation, which
+  /// reads as a bug even though the math is right.
+  void _jumpToPage(int index) {
+    if (!_pageController.hasClients || widget.items.isEmpty) return;
+    _pageController.jumpToPage(_targetVirtualPage(index));
   }
 
   void _nextPage({Duration? duration, Curve? curve}) {
@@ -300,6 +322,11 @@ class FoodlyCarouselController {
   }) {
     _state?._animateToPage(page, duration: duration, curve: curve);
   }
+
+  /// Jump to the given logical [page] index without animating. Use for
+  /// initial centering so the target tile is in the viewport the moment
+  /// the carousel first paints — no mid-animation half-render.
+  void jumpToPage(int page) => _state?._jumpToPage(page);
 
   /// Move to the next page.
   void nextPage({

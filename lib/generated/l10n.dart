@@ -144,11 +144,6 @@ class S {
     );
   }
 
-  /// `Add a photo`
-  String get addPhoto {
-    return Intl.message('Add a photo', name: 'addPhoto', desc: '', args: []);
-  }
-
   /// `Address`
   String get address {
     return Intl.message('Address', name: 'address', desc: '', args: []);
@@ -694,6 +689,16 @@ class S {
     return Intl.message(
       '\nThis action cannot be undone.',
       name: 'cannotUndone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot review your own business.`
+  String get cannotReviewOwnBusiness {
+    return Intl.message(
+      'You cannot review your own business.',
+      name: 'cannotReviewOwnBusiness',
       desc: '',
       args: [],
     );
@@ -6334,6 +6339,56 @@ class S {
     return Intl.message(
       'Portfolio/video URL',
       name: 'portfolioVideoUrl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Portfolio`
+  String get portfolio {
+    return Intl.message('Portfolio', name: 'portfolio', desc: '', args: []);
+  }
+
+  /// `Photos (optional, up to {max})`
+  String photosOptionalMax(int max) {
+    return Intl.message(
+      'Photos (optional, up to $max)',
+      name: 'photosOptionalMax',
+      desc: '',
+      args: [max],
+    );
+  }
+
+  /// `Add photo`
+  String get addPhoto {
+    return Intl.message('Add photo', name: 'addPhoto', desc: '', args: []);
+  }
+
+  /// `Maximum {max} photos`
+  String photoLimitReached(int max) {
+    return Intl.message(
+      'Maximum $max photos',
+      name: 'photoLimitReached',
+      desc: '',
+      args: [max],
+    );
+  }
+
+  /// `Remove photo`
+  String get removePhoto {
+    return Intl.message(
+      'Remove photo',
+      name: 'removePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Some photos couldn't be uploaded. Edit the package to retry.`
+  String get photoUploadFailed {
+    return Intl.message(
+      'Some photos couldn\'t be uploaded. Edit the package to retry.',
+      name: 'photoUploadFailed',
       desc: '',
       args: [],
     );

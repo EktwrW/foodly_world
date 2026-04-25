@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/enums/foodly_categories_enums.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/views/business/reservations/cubit/manage_reservations_vm.dart';
@@ -20,10 +21,26 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
 
   String? get activeFilterKey => _activeFilterKey;
 
+  /// Derive the booking-type filter from the business's vertical. Today
+  /// every business handles exactly one booking_type:
+  /// - Catering & Chefs → BOOKING_SERVICE (only service-package bookings)
+  /// - Everyone else    → BOOKING_TABLE (traditional table reservations)
+  ///
+  /// We set this implicitly at construction so the UI doesn't need a
+  /// visible filter (which was confusing: it looked like the user could
+  /// switch, but there was nothing on the other side). When the
+  /// category is unknown (e.g. navigated without `extra: currentBusiness`)
+  /// we send no filter and let the BE return whatever exists — fail-open.
+  static BookingType? _deriveBookingType(FoodlyCategories? category) {
+    if (category == null) return null;
+    return category.isCateringOrChefs ? BookingType.service : BookingType.table;
+  }
+
   ManageReservationsCubit({
     required ReservationRepo reservationRepo,
     required Logger logger,
     required String businessUuid,
+    FoodlyCategories? businessCategory,
     String? initialFilter,
   })  : _reservationRepo = reservationRepo,
         _logger = logger,
@@ -33,8 +50,12 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
           statusFilter: initialFilter != null && initialFilter != 'today'
               ? ReservationStatus.values.where((s) => s.name == initialFilter).firstOrNull
               : null,
+          bookingTypeFilter: _deriveBookingType(businessCategory),
         ),
-        super(ManageReservationsState.initial(ManageReservationsVM(businessUuid: businessUuid))) {
+        super(ManageReservationsState.initial(ManageReservationsVM(
+          businessUuid: businessUuid,
+          bookingTypeFilter: _deriveBookingType(businessCategory),
+        ))) {
     fetchReservations();
   }
 
@@ -46,11 +67,6 @@ class ManageReservationsCubit extends Cubit<ManageReservationsState> {
       final status = ReservationStatus.values.where((s) => s.name == filterKey).firstOrNull;
       _vm = _vm.copyWith(statusFilter: status);
     }
-    fetchReservations();
-  }
-
-  void setBookingTypeFilter(BookingType? bookingType) {
-    _vm = _vm.copyWith(bookingTypeFilter: bookingType);
     fetchReservations();
   }
 
