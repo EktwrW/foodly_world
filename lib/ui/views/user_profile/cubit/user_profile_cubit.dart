@@ -15,6 +15,28 @@ export 'package:foodly_world/core/view_models/user_profile_vm.dart';
 part 'user_profile_state.dart';
 part 'user_profile_cubit.freezed.dart';
 
+/// Outcome of an email-change attempt. Tipado para que el widget pueda
+/// distinguir el caso "password incorrecto" (reabrir dialog con error
+/// inline) del genérico (snackbar global), sin parsear strings.
+enum EmailUpdateOutcome {
+  /// El servidor aceptó el cambio. La sesión queda actualizada.
+  success,
+
+  /// La password ingresada en el dialog de re-auth no coincide con la
+  /// actual. El widget debería reabrir el dialog con `errorText` y
+  /// dejar al usuario reintentar sin perder el email tipeado.
+  passwordMismatch,
+
+  /// El payload no incluyó `current_password` (no debería pasar desde
+  /// la UI; defensivo por si alguien invoca con string vacío).
+  passwordRequired,
+
+  /// Cualquier otro error (red, 500, validación de email duplicado,
+  /// etc.). El cubit ya emitió `_Error` con el mensaje apropiado para
+  /// que el listener muestre el snackbar global.
+  failed,
+}
+
 class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileVM _vm;
   final AuthSessionService _authService;
@@ -201,7 +223,17 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   /// out). The backend enforces `current_password` verification for email
   /// changes; this method just plumbs the password collected by the
   /// [PasswordConfirmationDialog] into the update payload.
-  Future<void> callToUpdateEmail({required String newEmail, required String currentPassword}) async {
+  ///
+  /// Returns an [EmailUpdateOutcome] so the widget can react specifically
+  /// to a wrong password (re-open the dialog with an inline error) instead
+  /// of treating it like a generic failure. Generic failures still emit
+  /// `_Error` so the page's listener shows a snackbar; password-related
+  /// failures emit `_Loaded` instead so we don't double-notify (the dialog
+  /// will own the error UX).
+  Future<EmailUpdateOutcome> callToUpdateEmail({
+    required String newEmail,
+    required String currentPassword,
+  }) async {
     emit(_Loading(_vm));
 
     final dto = UserBodyUpdateDTO(
@@ -209,12 +241,48 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       password: currentPassword,
     );
 
-    await _meRepo.updateProfile(dto).then((result) {
-      result.when(
-        success: (userSessionDM) => _updateCurrentUser((userSessionDM).user),
-        failure: (e) => emit(_Error(e.errorMsg, _vm)),
-      );
-    });
+    final result = await _meRepo.updateProfile(dto);
+    return result.when(
+      success: (userSessionDM) {
+        _updateCurrentUser(userSessionDM.user);
+        return EmailUpdateOutcome.success;
+      },
+      failure: (e) {
+        // Distinguish password-related validation from everything else.
+        //
+        // The new BE returns 422 with `code: current_password_mismatch` /
+        // `current_password_required` (see CreateUserController::update).
+        // For the transition window where Cloud Run might still serve the
+        // old code (401 + plain English error) we ALSO sniff the message
+        // text — same defensive pattern as in `dio_request_handler`. Once
+        // the BE rollout is confirmed in prod the legacy fallback can go,
+        // but it's cheap to keep as belt-and-suspenders.
+        final code = e.errorCode;
+        final rawMsg = e.errorMsg.toLowerCase();
+        final isMismatch = code == 'current_password_mismatch' ||
+            (code == null && rawMsg.contains('current password') && rawMsg.contains('match'));
+        final isRequired = code == 'current_password_required' ||
+            (code == null && rawMsg.contains('current password') && rawMsg.contains('required'));
+
+        if (isMismatch) {
+          // Don't go through `_Error` — the dialog will display the error
+          // inline. Restoring `_Loaded` avoids leaving the page stuck on
+          // the loading spinner and prevents the page-level listener from
+          // firing a competing snackbar.
+          emit(_Loaded(_vm));
+          return EmailUpdateOutcome.passwordMismatch;
+        }
+        if (isRequired) {
+          emit(_Loaded(_vm));
+          return EmailUpdateOutcome.passwordRequired;
+        }
+        // Anything else (server error, validation on the email itself
+        // like "already taken", network) — fall through to the generic
+        // listener-driven snackbar.
+        emit(_Error(e.errorMsg, _vm));
+        return EmailUpdateOutcome.failed;
+      },
+    );
   }
 
   /// First-time password setup for social-login users (their stored password

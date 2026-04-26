@@ -481,6 +481,17 @@ class AuthSessionService {
   /// which previously left the snackbar on screen and a blank page behind it
   /// (Bug E.2, 2026-04-21). The router's own state is the source of truth,
   /// so `goNamed` works without a live widget context.
+  ///
+  /// IMPORTANT: [forceToLogin] is reset to `false` on the post-frame callback
+  /// after the login redirect lands. Without this, the global redirector in
+  /// [AppRouter] keeps returning `/login` for every subsequent navigation —
+  /// including the user successfully logging back in. The original code only
+  /// reset the flag from [exit] (manual logout), so an automatic 401 path
+  /// left the app in a permanent "always-redirect-to-login" state, which
+  /// rendered as a blank page on top of `/login` once the route's widgets
+  /// tried to read the now-null userSessionDM. The flag did its job (block
+  /// re-entrancy and force the initial redirect); after the redirect
+  /// completes, we have to clear it so the router can move on.
   void notifyTokenExpired() {
     if (forceToLogin || _isBiometricLoginInProgress) return;
     _clearInvalidSession();
@@ -492,6 +503,15 @@ class AuthSessionService {
     } catch (e) {
       di<Logger>().e('notifyTokenExpired: navigation to login failed: $e');
     }
+
+    // Reset the gate after the navigation has been resolved by the router.
+    // Doing it on the post-frame callback (instead of synchronously) ensures
+    // the global redirector still sees `forceToLogin == true` during the
+    // initial redirect resolution; only AFTER /login is mounted do we let
+    // the flag fall back to false so the user can log back in normally.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      forceToLogin = false;
+    });
 
     // Best-effort snackbar. If the context is still mounted the user gets the
     // explanatory message; if not, we've at least taken them to login so

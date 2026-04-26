@@ -6394,6 +6394,56 @@ class S {
     );
   }
 
+  /// `Incorrect password. Please try again.`
+  String get passwordIncorrect {
+    return Intl.message(
+      'Incorrect password. Please try again.',
+      name: 'passwordIncorrect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password to continue.`
+  String get passwordRequired {
+    return Intl.message(
+      'Enter your password to continue.',
+      name: 'passwordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your email was updated successfully.`
+  String get emailUpdated {
+    return Intl.message(
+      'Your email was updated successfully.',
+      name: 'emailUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong. Please try again.`
+  String get genericErrorRetry {
+    return Intl.message(
+      'Something went wrong. Please try again.',
+      name: 'genericErrorRetry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection. Check your network and try again.`
+  String get noConnection {
+    return Intl.message(
+      'No internet connection. Check your network and try again.',
+      name: 'noConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Title`
   String get title {
     return Intl.message('Title', name: 'title', desc: '', args: []);

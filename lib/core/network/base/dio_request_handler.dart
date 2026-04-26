@@ -136,7 +136,40 @@ abstract class DioRequestHandler {
           // usar startsWith aislado a este prefijo específico.
           path.startsWith('/public/places/details/');
 
-      if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint) {
+      // Sudo-mode validation surfaced as 401 (legacy BE behaviour).
+      //
+      // The "correct" status for `current_password mismatch / required` is
+      // 422 — the session is still valid; we're refusing because the user
+      // didn't prove they're the legit owner. The BE has been updated to
+      // return 422, but in case Cloud Run is still serving the old code
+      // (or any other endpoint regresses to 401 for sudo-mode in the
+      // future), we sniff the response body and bail out of the
+      // session-expired flow when we see signs of a validation error.
+      //
+      // This avoids the brutal cascade we hit:
+      //   1. Interceptor classifies 401 as expired session.
+      //   2. Triggers silent refresh → succeeds.
+      //   3. Retries original request → still 401 (password still wrong).
+      //   4. Calls notifyTokenExpired → forceToLogin + redirect to /login.
+      //   5. User is thrown out for mistyping their password.
+      final body = e.response?.data;
+      bool looksLikeSudoModeFailure = false;
+      if (body is Map) {
+        final code = body['code'];
+        if (code is String &&
+            (code == 'current_password_mismatch' || code == 'current_password_required')) {
+          looksLikeSudoModeFailure = true;
+        } else {
+          // Older BE responses include just `{error: "Current password ..."}`.
+          // Match conservatively to avoid false positives.
+          final raw = '${body['error'] ?? body['message'] ?? ''}'.toLowerCase();
+          if (raw.contains('current password')) {
+            looksLikeSudoModeFailure = true;
+          }
+        }
+      }
+
+      if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint && !looksLikeSudoModeFailure) {
         // Attempt a silent refresh before declaring the session dead.
         if (authSessionService.hasRefreshToken && !authSessionService.isRefreshingToken) {
           final refreshed = await authSessionService.silentRefresh();

@@ -695,6 +695,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("Your"),
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
+    "emailUpdated": MessageLookupByLibrary.simpleMessage(
+      "Your email was updated successfully.",
+    ),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Enable location"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
       "Tap to enable location access",
@@ -798,6 +801,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
     "generateQR": MessageLookupByLibrary.simpleMessage("Generate QR code"),
     "generateWithAI": MessageLookupByLibrary.simpleMessage("Generate with AI"),
+    "genericErrorRetry": MessageLookupByLibrary.simpleMessage(
+      "Something went wrong. Please try again.",
+    ),
     "goodAfternoon": MessageLookupByLibrary.simpleMessage("Good Afternoon"),
     "goodEvening": MessageLookupByLibrary.simpleMessage("Good Evening"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Good Morning"),
@@ -991,6 +997,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAudioDetected": MessageLookupByLibrary.simpleMessage(
       "No audio detected. Please try again.",
     ),
+    "noConnection": MessageLookupByLibrary.simpleMessage(
+      "No internet connection. Check your network and try again.",
+    ),
     "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
       "You don\'t have any businesses in your favorites list yet",
     ),
@@ -1085,8 +1094,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "partySize": MessageLookupByLibrary.simpleMessage("Party size:"),
     "partySizeCount": m23,
     "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "passwordIncorrect": MessageLookupByLibrary.simpleMessage(
+      "Incorrect password. Please try again.",
+    ),
     "passwordInstructions": MessageLookupByLibrary.simpleMessage(
       "The password must be at least 8 characters long, include a number, a lowercase letter, and an uppercase letter",
+    ),
+    "passwordRequired": MessageLookupByLibrary.simpleMessage(
+      "Enter your password to continue.",
     ),
     "passwordSent": MessageLookupByLibrary.simpleMessage(
       "Temporary password sent",

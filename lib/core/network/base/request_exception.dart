@@ -8,6 +8,61 @@ class AppRequestException implements Exception {
 
   const AppRequestException({this.error, this.stackTrace});
 
+  /// HTTP status code if the underlying error came from Dio. Null for
+  /// non-network errors (parsing, programmer error, etc.).
+  int? get statusCode {
+    if (error is DioException) {
+      return (error as DioException).response?.statusCode;
+    }
+    return null;
+  }
+
+  /// Application-level error code from the response body, when the BE
+  /// includes one. Lets call sites distinguish "current_password_mismatch"
+  /// from "current_password_required" without parsing English strings.
+  String? get errorCode {
+    if (error is DioException) {
+      final data = (error as DioException).response?.data;
+      if (data is Map) {
+        final code = data['code'];
+        if (code is String && code.isNotEmpty) return code;
+      }
+    }
+    return null;
+  }
+
+  /// Field-level validation errors keyed by field name. Empty when the
+  /// response is not a Laravel-style 422 with `errors`.
+  Map<String, List<String>> get fieldErrors {
+    if (error is DioException) {
+      final data = (error as DioException).response?.data;
+      if (data is Map) {
+        final raw = data['errors'];
+        if (raw is Map) {
+          return {
+            for (final e in raw.entries)
+              '${e.key}': e.value is List
+                  ? List<String>.from(e.value.map((v) => '$v'))
+                  : ['${e.value}'],
+          };
+        }
+      }
+    }
+    return const {};
+  }
+
+  /// True for `DioException`s whose `error` is one of the offline-ish
+  /// types — used by the presenter to show a "no connection" message
+  /// instead of a generic one.
+  bool get isOffline {
+    if (error is! DioException) return false;
+    final t = (error as DioException).type;
+    return t == DioExceptionType.connectionError ||
+        t == DioExceptionType.connectionTimeout ||
+        t == DioExceptionType.receiveTimeout ||
+        t == DioExceptionType.sendTimeout;
+  }
+
   String get errorMsg {
     if (error is DioException) {
       final dio = error as DioException;

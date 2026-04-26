@@ -70,15 +70,48 @@ class _EmailEditingWdg extends StatelessWidget {
       return;
     }
 
-    // Re-auth: ask for current password via the reusable sudo-mode dialog.
-    final currentPassword = await PasswordConfirmationDialog.show(
-      context,
-      reason: S.current.confirmPasswordForEmailChange,
-    );
-    if (currentPassword == null) return; // cancelled
-    if (!context.mounted) return;
+    // Sudo-mode loop. The user can retry the password without the page-level
+    // snackbar firing or the dialog tearing down — we re-show it with the
+    // `errorText` parameter so they correct in place. Anything other than a
+    // password mismatch breaks out: success closes (the cubit emits
+    // `_UserUpdated`), generic failure delegates to the page listener's
+    // snackbar (the cubit emitted `_Error` with the localized message).
+    String? inlineError;
+    while (true) {
+      final currentPassword = await PasswordConfirmationDialog.show(
+        context,
+        reason: S.current.confirmPasswordForEmailChange,
+        errorText: inlineError,
+      );
+      if (currentPassword == null) return; // cancelled
+      if (!context.mounted) return;
 
-    cubit.callToUpdateEmail(newEmail: newEmail, currentPassword: currentPassword);
+      final outcome = await cubit.callToUpdateEmail(
+        newEmail: newEmail,
+        currentPassword: currentPassword,
+      );
+      if (!context.mounted) return;
+
+      switch (outcome) {
+        case EmailUpdateOutcome.success:
+        case EmailUpdateOutcome.failed:
+          // Success path: cubit emitted `_UserUpdated`, listener pops back
+          // to read-only and shows the success snackbar. Failure path:
+          // cubit emitted `_Error`, listener shows the error snackbar.
+          // Either way, we're done with the dialog flow.
+          return;
+        case EmailUpdateOutcome.passwordMismatch:
+          inlineError = S.current.passwordIncorrect;
+          continue; // re-open dialog with the inline error
+        case EmailUpdateOutcome.passwordRequired:
+          // Defensive — UI never sends an empty password (the dialog's
+          // confirm button is disabled until the field has content).
+          // Treat as a generic failure to avoid a tight retry loop on a
+          // persistent client bug.
+          FoodlySnackbars.errorGeneric(context, S.current.passwordRequired);
+          return;
+      }
+    }
   }
 
   @override

@@ -170,6 +170,14 @@ class MeRepo {
         latitude: updateDTO.latitude,
         longitude: updateDTO.longitude,
         address: updateDTO.address,
+        // Sudo-mode verification fields. The DTO carries them as
+        // `password` / `newPassword`, mapped to `current_password` /
+        // `new_password` in the multipart body. The repo previously
+        // dropped them when destructuring — silently breaking the
+        // email-change flow because the BE always saw a missing
+        // current_password and refused with 422 (or 401, in legacy).
+        password: updateDTO.password,
+        newPassword: updateDTO.newPassword,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

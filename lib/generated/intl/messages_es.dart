@@ -731,6 +731,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("Tu"),
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
+    "emailUpdated": MessageLookupByLibrary.simpleMessage(
+      "Tu correo se actualizó correctamente.",
+    ),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Activar ubicación"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
       "Toca para activar el acceso a la ubicación",
@@ -842,6 +845,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Género"),
     "generateQR": MessageLookupByLibrary.simpleMessage("Generar código QR"),
     "generateWithAI": MessageLookupByLibrary.simpleMessage("Generar con IA"),
+    "genericErrorRetry": MessageLookupByLibrary.simpleMessage(
+      "Algo salió mal. Inténtalo de nuevo.",
+    ),
     "goodAfternoon": MessageLookupByLibrary.simpleMessage("Buenas tardes"),
     "goodEvening": MessageLookupByLibrary.simpleMessage("Buenas noches"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Buenos días"),
@@ -1045,6 +1051,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAudioDetected": MessageLookupByLibrary.simpleMessage(
       "No se detectó audio. Por favor, intenta de nuevo.",
     ),
+    "noConnection": MessageLookupByLibrary.simpleMessage(
+      "Sin conexión a internet. Revisa tu red e inténtalo de nuevo.",
+    ),
     "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
       "Aún no tienes negocios en tu lista de favoritos",
     ),
@@ -1145,8 +1154,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "partySize": MessageLookupByLibrary.simpleMessage("Comensales:"),
     "partySizeCount": m23,
     "password": MessageLookupByLibrary.simpleMessage("Contraseña"),
+    "passwordIncorrect": MessageLookupByLibrary.simpleMessage(
+      "La contraseña no es correcta. Inténtalo de nuevo.",
+    ),
     "passwordInstructions": MessageLookupByLibrary.simpleMessage(
       "La contraseña debe tener al menos 8 caracteres, un número, una letra minúscula y una mayúscula",
+    ),
+    "passwordRequired": MessageLookupByLibrary.simpleMessage(
+      "Ingresa tu contraseña para continuar.",
     ),
     "passwordSent": MessageLookupByLibrary.simpleMessage(
       "Contraseña temporal enviada",

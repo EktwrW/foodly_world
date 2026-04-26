@@ -30,16 +30,26 @@ class PasswordConfirmationDialog extends StatefulWidget {
   final String title;
   final String reason;
 
+  /// Optional error to render inline below the password field on first
+  /// open. Used by the retry loop in `_EmailEditingWdg`: after the BE
+  /// rejects the password, the caller re-shows this dialog with
+  /// `errorText: S.current.passwordIncorrect` so the user retries
+  /// without losing context. The error clears the moment the user
+  /// starts typing again — they're already correcting the issue.
+  final String? errorText;
+
   const PasswordConfirmationDialog({
     super.key,
     required this.title,
     required this.reason,
+    this.errorText,
   });
 
   static Future<String?> show(
     BuildContext context, {
     required String reason,
     String? title,
+    String? errorText,
   }) {
     return showDialog<String>(
       context: context,
@@ -47,6 +57,7 @@ class PasswordConfirmationDialog extends StatefulWidget {
       builder: (_) => PasswordConfirmationDialog(
         title: title ?? S.current.confirmPasswordTitle,
         reason: reason,
+        errorText: errorText,
       ),
     );
   }
@@ -59,12 +70,25 @@ class _PasswordConfirmationDialogState extends State<PasswordConfirmationDialog>
   final _controller = TextEditingController();
   bool _isValid = false;
 
+  /// Inline error shown below the password input. Initialized from
+  /// [PasswordConfirmationDialog.errorText] so a previous failed attempt
+  /// can carry its message into a re-opened dialog. Cleared as soon as
+  /// the user types — keeping a stale error visible while they're
+  /// already correcting it would be visual noise.
+  late String? _inlineError = widget.errorText;
+
   @override
   void initState() {
     super.initState();
     _controller.addListener(() {
       final valid = _controller.text.isNotEmpty;
-      if (valid != _isValid) setState(() => _isValid = valid);
+      final shouldClearError = _inlineError != null && _controller.text.isNotEmpty;
+      if (valid != _isValid || shouldClearError) {
+        setState(() {
+          _isValid = valid;
+          if (shouldClearError) _inlineError = null;
+        });
+      }
     });
   }
 
@@ -121,6 +145,26 @@ class _PasswordConfirmationDialogState extends State<PasswordConfirmationDialog>
                 labelText: S.current.password,
                 onFieldSubmitted: (_) => _confirm(),
               ),
+              if (_inlineError != null) ...[
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(LineAwesome.exclamation_circle_solid,
+                        size: 14, color: FoodlyThemes.error),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        _inlineError!,
+                        style: const TextStyle(
+                          color: FoodlyThemes.error,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 16),
               Row(
                 children: [

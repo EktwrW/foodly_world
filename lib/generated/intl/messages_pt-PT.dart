@@ -725,6 +725,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("O teu"),
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
+    "emailUpdated": MessageLookupByLibrary.simpleMessage(
+      "O teu email foi atualizado com sucesso.",
+    ),
     "enableLocation": MessageLookupByLibrary.simpleMessage(
       "Ativar localização",
     ),
@@ -836,6 +839,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Género"),
     "generateQR": MessageLookupByLibrary.simpleMessage("Gerar código QR"),
     "generateWithAI": MessageLookupByLibrary.simpleMessage("Gerar com IA"),
+    "genericErrorRetry": MessageLookupByLibrary.simpleMessage(
+      "Algo correu mal. Tenta de novo.",
+    ),
     "goodAfternoon": MessageLookupByLibrary.simpleMessage("Boa tarde"),
     "goodEvening": MessageLookupByLibrary.simpleMessage("Boa noite"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Bom dia"),
@@ -1037,6 +1043,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAudioDetected": MessageLookupByLibrary.simpleMessage(
       "Nenhum áudio detetado. Por favor, tente novamente.",
     ),
+    "noConnection": MessageLookupByLibrary.simpleMessage(
+      "Sem ligação à internet. Verifica a tua rede e tenta de novo.",
+    ),
     "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
       "Ainda não tem negócios na sua lista de favoritos",
     ),
@@ -1137,8 +1146,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "partySize": MessageLookupByLibrary.simpleMessage("Comensais:"),
     "partySizeCount": m23,
     "password": MessageLookupByLibrary.simpleMessage("Senha"),
+    "passwordIncorrect": MessageLookupByLibrary.simpleMessage(
+      "Palavra-passe incorreta. Tenta de novo.",
+    ),
     "passwordInstructions": MessageLookupByLibrary.simpleMessage(
       "A senha deve ter pelo menos 8 caracteres, um número, uma letra minúscula e uma maiúscula",
+    ),
+    "passwordRequired": MessageLookupByLibrary.simpleMessage(
+      "Introduz a tua palavra-passe para continuar.",
     ),
     "passwordSent": MessageLookupByLibrary.simpleMessage(
       "Senha temporária enviada",
