@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart' show FadeIn, FadeInUp;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/data_models/reservations/reservation_message_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -254,6 +255,15 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> wi
             _messages = [..._messages, response.data!];
             _isSending = false;
           });
+          // service.message_sent — both call sites (my_reservations_page +
+          // manage_reservations_page) gate this sheet behind
+          // `reservation.isServiceBooking`, so by construction every
+          // message sent from here belongs to a service booking. No
+          // booking_type plumbing needed.
+          di<ServiceEventsTracker>().messageSent(
+            reservationUuid: widget.reservationUuid,
+            sourceModule: 'ReservationMessagesSheet',
+          );
           // Sending counts as activity → fast-poll window.
           _markActivity();
           _retuneTimer();

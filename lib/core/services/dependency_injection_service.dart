@@ -31,6 +31,7 @@ import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
+import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
@@ -151,6 +152,10 @@ class DependencyInjectionService {
           authService: authService,
           logger: di(),
         ));
+    // Typed wrapper for `service.*` events (Catering & Chefs analytics).
+    // Lazy because nothing wires it before the first visit-service-packages
+    // route opens, which can be many minutes into the session.
+    di.registerLazySingleton(() => ServiceEventsTracker(di<EventTrackingService>()));
 
     final favoritesCubit = FavoritesCubit(
       businessRepo: di(),

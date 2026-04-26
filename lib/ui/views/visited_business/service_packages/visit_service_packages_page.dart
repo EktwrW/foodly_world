@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:animate_do/animate_do.dart' show FadeIn, FadeInUp;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, S, AppRouter, di, PaddingExtension;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
+import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
@@ -15,6 +18,7 @@ import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/vi
 import 'package:foodly_world/ui/views/visited_business/service_packages/widgets/service_booking_request_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:visibility_detector/visibility_detector.dart';
 
 class VisitServicePackagesPage extends StatelessWidget {
   const VisitServicePackagesPage({super.key});
@@ -141,10 +145,14 @@ class _LoadedContent extends StatelessWidget {
                 (context, index) => FadeInUp(
                   delay: Duration(milliseconds: 60 * index),
                   duration: const Duration(milliseconds: 300),
-                  child: _VisitorPackageCard(
-                    package: packages[index],
-                    isMobile: false,
-                    allowReservations: allowReservations,
+                  child: _PackageVisibilityTracker(
+                    packageUuid: packages[index].uuid ?? '',
+                    position: index,
+                    child: _VisitorPackageCard(
+                      package: packages[index],
+                      isMobile: false,
+                      allowReservations: allowReservations,
+                    ),
                   ),
                 ),
                 childCount: packages.length,
@@ -162,10 +170,14 @@ class _LoadedContent extends StatelessWidget {
                 return FadeInUp(
                   delay: Duration(milliseconds: 80 * index),
                   duration: const Duration(milliseconds: 300),
-                  child: _VisitorPackageCard(
-                    package: packages[index],
-                    isMobile: true,
-                    allowReservations: allowReservations,
+                  child: _PackageVisibilityTracker(
+                    packageUuid: packages[index].uuid ?? '',
+                    position: index,
+                    child: _VisitorPackageCard(
+                      package: packages[index],
+                      isMobile: true,
+                      allowReservations: allowReservations,
+                    ),
                   ),
                 );
               },
@@ -570,6 +582,15 @@ class _VisitorPackageCard extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 26),
                     onPressed: () {
                       final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
+                      // service.package_inquiry — funnel checkpoint between
+                      // viewing and submitting the booking. Fired on the tap
+                      // (not after the sheet mounts) so we still capture
+                      // the intent if the sheet itself fails to open.
+                      di<ServiceEventsTracker>().packageInquiry(
+                        packageUuid: package.uuid ?? '',
+                        businessUuid: businessUuid,
+                        sourceModule: 'VisitServicePackagesPage',
+                      );
                       showServiceBookingRequestSheet(
                         context,
                         businessUuid: businessUuid,
@@ -583,6 +604,82 @@ class _VisitorPackageCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ── Package visibility tracker ──────────────────────────────────
+//
+// Wraps a package card and emits `service.package_view` exactly once when
+// the card has been at least 50 % visible for a continuous 1 s. Standard
+// feed-analytics gating to filter:
+//
+//   - Scroll fly-bys (cards that flash through the viewport without
+//     actually being read).
+//   - Off-screen cards built by the SliverList builder.
+//
+// Tracking from a dedicated wrapper (instead of inside the card itself)
+// keeps the card stateless and lets us enable/disable analytics at the
+// page level by swapping the wrapper for `child` in tests.
+
+class _PackageVisibilityTracker extends StatefulWidget {
+  final String packageUuid;
+  final int position;
+  final Widget child;
+
+  const _PackageVisibilityTracker({
+    required this.packageUuid,
+    required this.position,
+    required this.child,
+  });
+
+  @override
+  State<_PackageVisibilityTracker> createState() => _PackageVisibilityTrackerState();
+}
+
+class _PackageVisibilityTrackerState extends State<_PackageVisibilityTracker> {
+  static const _visibilityThreshold = 0.5;
+  static const _dwellTime = Duration(seconds: 1);
+
+  Timer? _dwellTimer;
+  bool _tracked = false;
+
+  @override
+  void dispose() {
+    _dwellTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (_tracked || widget.packageUuid.isEmpty) return;
+
+    if (info.visibleFraction >= _visibilityThreshold) {
+      // Card crossed the threshold — start the dwell countdown. If it
+      // disappears before the timer fires, we cancel and wait for the
+      // next time it reappears.
+      _dwellTimer ??= Timer(_dwellTime, () {
+        if (!mounted || _tracked) return;
+        _tracked = true;
+        final businessUuid = context.read<VisitServicePackagesCubit>().businessUuid;
+        di<ServiceEventsTracker>().packageView(
+          packageUuid: widget.packageUuid,
+          businessUuid: businessUuid,
+          position: widget.position,
+          sourceModule: 'VisitServicePackagesPage',
+        );
+      });
+    } else {
+      _dwellTimer?.cancel();
+      _dwellTimer = null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return VisibilityDetector(
+      key: Key('pkg-vis-${widget.packageUuid}'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: widget.child,
     );
   }
 }

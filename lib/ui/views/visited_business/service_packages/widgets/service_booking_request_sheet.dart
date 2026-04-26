@@ -3,6 +3,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -78,6 +79,16 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     if (widget.package.minGuests != null) {
       _guestCountController.text = widget.package.minGuests.toString();
     }
+    // service.booking_started — open of the booking form is the funnel
+    // checkpoint between "package inquiry" (tap on CTA) and "booking
+    // submitted" (form sent). Fired once on initState; if the user
+    // dismisses the sheet without submitting, that's an explicit drop-off
+    // Mateo can compute as bookingStarted - bookingSubmitted.
+    di<ServiceEventsTracker>().bookingStarted(
+      packageUuid: widget.package.uuid ?? '',
+      businessUuid: widget.businessUuid,
+      sourceModule: 'ServiceBookingRequestSheet',
+    );
     _loadAvailability();
   }
 
@@ -113,6 +124,14 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
           _isLoadingAvailability = false;
           _availabilityLoadFailed = false;
         });
+        // service.availability_checked — fired only on successful fetch so
+        // Mateo's metric reflects "real consults the customer made", not
+        // failed network attempts. The booking sheet calls this on mount
+        // (and only on mount), so 1 event = 1 booking-form open.
+        di<ServiceEventsTracker>().availabilityChecked(
+          businessUuid: widget.businessUuid,
+          sourceModule: 'ServiceBookingRequestSheet',
+        );
       },
       failure: (_) {
         // Fail open: if we can't load availability, don't block the user.
@@ -234,6 +253,16 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
 
     result.when(
       success: (response) {
+        // service.booking_submitted — only fire after the BE accepted.
+        // Failures don't count as a submission (Mateo's funnel rates would
+        // otherwise look healthier than reality).
+        di<ServiceEventsTracker>().bookingSubmitted(
+          reservationUuid: response.reservation?.reservationUuid ?? '',
+          packageUuid: widget.package.uuid ?? '',
+          businessUuid: widget.businessUuid,
+          guestCount: int.tryParse(_guestCountController.text),
+          sourceModule: 'ServiceBookingRequestSheet',
+        );
         Navigator.of(context).pop();
         FoodlySnackbars.successGeneric(context, response.message);
       },

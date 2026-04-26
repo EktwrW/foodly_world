@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/service_packages/service_package_repo.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
@@ -59,6 +61,15 @@ class VisitServicePackagesCubit extends Cubit<VisitServicePackagesState> {
         // Fail-open when no BusinessDM was threaded through (deep link case).
         allowReservations: _business?.allowReservations ?? true,
       ));
+
+      // service.profile_view — fired once per page open, after the data is
+      // ready. Tracking from the cubit (not the widget) makes the event
+      // independent of widget rebuilds: navigating away and back reinstantiates
+      // the cubit, so we get exactly one event per logical "profile open".
+      di<ServiceEventsTracker>().profileView(
+        businessUuid: businessUuid,
+        sourceModule: 'VisitServicePackagesCubit',
+      );
     }
   }
 }
