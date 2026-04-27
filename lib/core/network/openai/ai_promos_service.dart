@@ -190,19 +190,33 @@ class ReplicateService {
   static final _replicateApiKey = di<BaseConfig>().replicateApiKey;
   static final _logger = di<Logger>();
 
-  // ✅ OPTIMIZACIÓN DE COSTES: Resoluciones ajustadas para el pricing escalonado
-  // Para aprovechar el tier de $0.0025 (hasta 0.5 MP = 500,000 pixels)
-  // 896 × 512 = 458,752 pixels ✅ (estás en el tier más barato)
+  // Resolución pareada con `ImageHelper::MAX_DIMENSION = 1280` en el BE.
   //
-  // Alternativas para maximizar calidad manteniendo bajo coste:
-  // - 704 × 704 = 495,616 pixels ✅ (cuadrado, tier $0.0025)
-  // - 768 × 640 = 491,520 pixels ✅ (16:10, tier $0.0025)
-  static const _imageWidth = 896;
-  static const _imageHeight = 512;
-
-  // ✅ NOTA: Si necesitas mayor resolución:
-  // - 1024 × 1024 = 1,048,576 pixels (tier $0.005)
-  // - 1280 × 720 = 921,600 pixels (tier $0.005, 16:9 HD)
+  // Antes (Apr 2026): 896×512 = 458 752 px → tier $0.0025 (≤ 0.5 MP).
+  // Ahora: 1280×720 = 921 600 px → tier $0.005 (≤ 1 MP). +100 % costo
+  // por imagen, pero la calidad final salta de "softish 700×400" a
+  // "HD 1280×720 sin downsample" porque el cap del BE (1280) ahora
+  // coincide con el lado mayor de la fuente.
+  //
+  // 16:9 es OBLIGATORIO acá: los widgets de promo en el FE
+  // (edit_promo_media.dart línea 43, manage_promotion_card.dart línea
+  // 37) renderizan dentro de `AspectRatio: 16/9`, y el image cropper
+  // del editor también está hardcodeado a 16:9
+  // (`CropAspectRatioPreset.ratio16x9`). Generar a 1:1 o 3:2 produciría
+  // letterboxing o cropping inconsistente con las imágenes subidas
+  // manualmente por el manager.
+  //
+  // El cap mensual por business sigue en `ai_promo_monthly_limit = 6`
+  // (ver `Business` model), así el incremento de costo es 6 × $0.0025
+  // = +$0.015/business/mes. Aceptable para el volumen actual.
+  //
+  // Alternativas dentro del mismo tier $0.005, manteniendo 16:9:
+  //   - 1024 × 576 = 589 824 px (más barato en bandwidth, ligeramente
+  //     menor calidad final ya que el BE no downsamplea pero sí pasa
+  //     por re-encode JPEG). Útil si subimos el volumen y queremos
+  //     bajar el costo de storage/bandwidth.
+  static const _imageWidth = 1280;
+  static const _imageHeight = 720;
 
   ReplicateService() {
     _dio.options.baseUrl = _baseUrl;

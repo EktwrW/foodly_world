@@ -87,7 +87,15 @@ class TopEventsBar extends StatelessWidget {
                       BarChartRodData(
                         toY: item.value.toDouble(),
                         width: 18,
-                        color: FoodlyThemes.secondaryFoodly,
+                        gradient: LinearGradient(
+                          colors: [
+                            FoodlyThemes.primaryFoodly,
+                            FoodlyThemes.primaryFoodly.withValues(alpha: 0.7),
+                            FoodlyThemes.primaryFoodly.withValues(alpha: 0.56),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
                       ),
                     ],
