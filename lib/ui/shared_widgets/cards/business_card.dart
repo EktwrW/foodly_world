@@ -6,13 +6,19 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
-/// Small "from €N" pill used on catering cards to set price expectations
-/// before the user taps into the detail view. Rendered only when the BE
-/// populated `min_service_price` on the business (currently only from
+/// Small "from <currency>N" pill used on catering cards to set price
+/// expectations before the user taps into the detail view. Rendered only when
+/// the BE populated `min_service_price` on the business (currently only from
 /// GET /business/nearby).
-Widget _buildMinPriceBadge(double minPrice) {
-  // Locale-aware thousands separator is overkill for the 10-500 EUR range
-  // catering packages live in — keep it simple.
+///
+/// [currency] is the symbol the business is priced in — derived from the
+/// business's country at the callsite (BusinessDM.country?.currencySymbol).
+/// We pass it explicitly rather than reading the auth-session currency,
+/// because this widget renders OTHER businesses' cards in the discovery
+/// feed, not the logged-in user's own business.
+Widget _buildMinPriceBadge(double minPrice, String currency) {
+  // Locale-aware thousands separator is overkill for the price range
+  // catering packages typically live in — keep it simple.
   final priceLabel =
       minPrice.truncateToDouble() == minPrice ? minPrice.toInt().toString() : minPrice.toStringAsFixed(2);
   return DecoratedBox(
@@ -27,7 +33,7 @@ Widget _buildMinPriceBadge(double minPrice) {
         const Icon(Bootstrap.tag_fill, size: 10, color: FoodlyThemes.primaryFoodly),
         const SizedBox(width: 4),
         Text(
-          S.current.priceFromBadge(priceLabel),
+          S.current.priceFromBadge(currency, priceLabel),
           style: FoodlyTextStyles.labelBoldMini.copyWith(color: FoodlyThemes.primaryFoodly),
         ),
       ],
@@ -156,7 +162,13 @@ class BusinessListCard extends StatelessWidget {
                   ),
                   if (business.minServicePrice != null) ...[
                     const SizedBox(width: 4),
-                    _buildMinPriceBadge(business.minServicePrice!),
+                    _buildMinPriceBadge(
+                      business.minServicePrice!,
+                      // Discovery card → other business's currency, NOT the
+                      // logged-in user's. Fallback `$` matches MenuVM /
+                      // AuthSessionService.currency convention.
+                      business.country?.currencySymbol ?? '\$',
+                    ),
                   ],
                   const Spacer(),
                   SizedBox.square(
@@ -257,7 +269,13 @@ class BusinessGridCard extends StatelessWidget {
                     Positioned(
                       bottom: 6,
                       left: 6,
-                      child: _buildMinPriceBadge(business.minServicePrice!),
+                      // Same comment as the list-card callsite: this is
+                      // another business's badge in the discovery feed,
+                      // so use that business's currency (not the auth one).
+                      child: _buildMinPriceBadge(
+                        business.minServicePrice!,
+                        business.country?.currencySymbol ?? '\$',
+                      ),
                     ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show AuthSessionService, di;
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -131,6 +132,8 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
   }
 
   Widget _buildContextInfo() {
+    final currency = di<AuthSessionService>().currency;
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -149,7 +152,7 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
           if (widget.budgetEstimate != null) ...[
             const SizedBox(height: 4),
             Text(
-              '${S.current.budgetEstimate}: €${widget.budgetEstimate!.toStringAsFixed(2)}',
+              '${S.current.budgetEstimate}: $currency${widget.budgetEstimate!.toStringAsFixed(2)}',
               style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.primaryFoodly),
             ),
           ],
@@ -159,13 +162,20 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
   }
 
   Widget _buildAmountField() {
+    // Currency symbol of the manager's business — same source as
+    // _buildContextInfo above. Used as a TEXT prefix instead of a
+    // Bootstrap.currency_euro icon because that icon is hardcoded to € and
+    // wouldn't reflect ARS / VES / USD for Phase 2/3 markets.
+    final currency = di<AuthSessionService>().currency;
+
     return TextFormField(
       controller: _amountController,
       autofocus: true,
       decoration: InputDecoration(
         labelText: S.current.enterQuoteAmount,
         labelStyle: FoodlyTextStyles.hintText,
-        prefixIcon: const Icon(Bootstrap.currency_euro, size: 18, color: FoodlyThemes.secondaryFoodly),
+        prefixText: '$currency ',
+        prefixStyle: const TextStyle(color: FoodlyThemes.secondaryFoodly, fontWeight: FontWeight.w600),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),

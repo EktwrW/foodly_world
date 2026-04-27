@@ -92,8 +92,15 @@ class ServicePackageCard extends StatelessWidget {
                     if (package.hasPrice)
                       _InfoChip(
                         icon: Bootstrap.currency_exchange,
+                        // Currency comes from the package itself when set
+                        // (BE persists it per-package). When the package
+                        // doesn't carry one — e.g. legacy rows from before
+                        // the field was wired up — we fall back to the
+                        // logged-in manager's business currency, since
+                        // this card is only ever rendered with
+                        // `isManager: true` (manage_service_packages_page).
                         label:
-                            '${package.currency ?? '€'}${package.price!.toStringAsFixed(2)} / ${_priceTypeLabel(package.priceType)}',
+                            '${package.currency ?? di<AuthSessionService>().currency}${package.price!.toStringAsFixed(2)} / ${_priceTypeLabel(package.priceType)}',
                       )
                     else if (package.isOnQuote)
                       _InfoChip(

@@ -57,8 +57,15 @@ class MenuFloatingActionButton extends StatelessWidget {
                       _closeFAB();
                       try {
                         await Share.share(
-                          S.current
-                              .shareMenuMessage(menu?.business?.name ?? '-'.toBold(), ('Foodly').toBold(), menuUrl),
+                          // Use the flat businessName from BusinessMenuResource
+                          // — menu.business is null on this payload (BE doesn't
+                          // ship the full BusinessDM here for performance, see
+                          // MenuDM doc). Parens around the ?? are mandatory:
+                          // ?? has LOWER precedence than `.toBold()`, so
+                          // without them the bold extension would only wrap
+                          // the '-' fallback.
+                          S.current.shareMenuMessage(
+                              (menu?.businessName ?? '-').toBold(), 'Foodly'.toBold(), menuUrl),
                           subject: S.current.shareMenuSubject,
                         );
                       } catch (e) {

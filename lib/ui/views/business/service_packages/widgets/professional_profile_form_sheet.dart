@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
-import 'package:foodly_world/core/core_exports.dart' show BlocConsumer, FoodlyThemes, PaddingExtension, ReadContext, S;
+import 'package:foodly_world/core/core_exports.dart'
+    show AuthSessionService, BlocConsumer, FoodlyThemes, PaddingExtension, ReadContext, S, di;
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -374,7 +375,15 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textInputAction: TextInputAction.next,
             style: FoodlyTextStyles.inputTextValue,
-            decoration: _inputDecoration(label: S.current.travelFeeKm, hint: '1.50', suffixText: '€/km'),
+            // Suffix `<currency>/km` derived from the manager's business
+            // country instead of the previous hardcoded `€/km`. Phase 2/3
+            // markets (USA, AR, VE, BR) need the right symbol for travel
+            // fees expressed per km. Fallback `$` mirrors AuthSessionService.
+            decoration: _inputDecoration(
+              label: S.current.travelFeeKm,
+              hint: '1.50',
+              suffixText: '${di<AuthSessionService>().currency}/km',
+            ),
           ),
         ),
       ],

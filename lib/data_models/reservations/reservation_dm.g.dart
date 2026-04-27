@@ -140,6 +140,9 @@ _$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
       businessLatitude: (json['business_latitude'] as num?)?.toDouble(),
       businessLongitude: (json['business_longitude'] as num?)?.toDouble(),
       businessAddress: json['business_address'] as String?,
+      businessCountry: $enumDecodeNullable(
+          _$FoodlyCountriesEnumMap, json['business_country'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
       userUuid: json['user_uuid'] as String?,
       userName: json['user_name'] as String?,
       userPhoto: json['user_photo'] as String?,
@@ -195,6 +198,8 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
       if (instance.businessLongitude case final value?)
         'business_longitude': value,
       if (instance.businessAddress case final value?) 'business_address': value,
+      if (_$FoodlyCountriesEnumMap[instance.businessCountry] case final value?)
+        'business_country': value,
       if (instance.userUuid case final value?) 'user_uuid': value,
       if (instance.userName case final value?) 'user_name': value,
       if (instance.userPhoto case final value?) 'user_photo': value,
@@ -236,6 +241,14 @@ const _$ReservationStatusEnumMap = {
 const _$BookingTypeEnumMap = {
   BookingType.table: 'table',
   BookingType.service: 'service',
+};
+
+const _$FoodlyCountriesEnumMap = {
+  FoodlyCountries.ARGENTINA: 'Argentina',
+  FoodlyCountries.SPAIN: 'Spain',
+  FoodlyCountries.PORTUGAL: 'Portugal',
+  FoodlyCountries.USA: 'United States',
+  FoodlyCountries.VENEZUELA: 'Venezuela',
 };
 
 const _$EventTypeEnumMap = {

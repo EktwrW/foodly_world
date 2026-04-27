@@ -58,7 +58,12 @@ class _FavoriteMenusCard extends StatelessWidget {
   const _FavoriteMenusCard({super.key, required this.menu});
 
   String get _publicMenuUrl {
-    final uuid = menu.business?.uuid ?? '';
+    // Use the flat businessUuid field on the menu — menu.business is null in
+    // the favorites payload (BusinessMenuResource only ships flat
+    // business_uuid / business_name, not the full BusinessDM). Without this
+    // the share + QR buttons stayed disabled forever in the favorites view
+    // because _publicMenuUrl resolved to ''.
+    final uuid = menu.businessUuid;
     return uuid.isEmpty ? '' : 'https://menu.foodly.solutions/$uuid';
   }
 
@@ -177,8 +182,14 @@ class _FavoriteMenusCard extends StatelessWidget {
                         ? () async {
                             try {
                               await Share.share(
+                                // Use flat businessName from
+                                // BusinessMenuResource — menu.business is null
+                                // on the favorites payload (BE doesn't ship
+                                // the full BusinessDM here). Parens around ??
+                                // are mandatory: ?? has LOWER precedence than
+                                // `.toBold()`.
                                 S.current.shareMenuMessage(
-                                    business?.name ?? '-'.toBold(), ('Foodly').toBold(), _publicMenuUrl),
+                                    (menu.businessName ?? '-').toBold(), 'Foodly'.toBold(), _publicMenuUrl),
                                 subject: S.current.shareMenuSubject,
                               );
                             } catch (e) {

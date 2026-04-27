@@ -112,11 +112,11 @@ class _LoadingOverlayState extends State<LoadingOverlay> {
         child: ColoredBox(
           color: Colors.black12,
           child: Center(
-            child: (switch (widget.type) {
-              LoadingType.iso => const LoadingWidgetFoodlyIso(),
-              LoadingType.logo => const LoadingWidgetFoodlyLogo(),
-            })
-                .paddingAll(36),
+            // child: (switch (widget.type) {
+            //   LoadingType.iso => const LoadingWidgetFoodlyIso(),
+            //   LoadingType.logo => const LoadingWidgetFoodlyLogo(),
+            // })
+            child: const LoadingWidgetFoodlyIso().paddingAll(36),
           ),
         ),
       ),

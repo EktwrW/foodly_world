@@ -988,10 +988,14 @@
   "orderingDistance": "Distance",
   "orderingPriceAsc": "Price",
   "orderingRatingDesc": "Rating",
-  "priceFromBadge": "from €{price}",
+  "priceFromBadge": "from {currency}{price}",
   "@priceFromBadge": {
-    "description": "Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR",
+    "description": "Shown on catering business cards in the nearby discovery. {currency} is the symbol derived from the business's country (€, $, ARS, Bs, etc.) and {price} is the cheapest active package price.",
     "placeholders": {
+      "currency": {
+        "type": "String",
+        "example": "€"
+      },
       "price": {
         "type": "String",
         "example": "150"

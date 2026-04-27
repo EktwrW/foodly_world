@@ -21,9 +21,18 @@ class MenuDM with _$MenuDM {
   factory MenuDM({
     required String uuid,
     int? id,
+    // Hydrated client-side in some flows (e.g. favorites_vm wires the parent
+    // BusinessDM in after fetching). [BusinessMenuResource] does NOT include
+    // it — see [businessName] for the flat name that always comes from the BE.
     BusinessDM? business,
     @JsonKey(name: 'business_uuid') required String businessUuid,
     @JsonKey(name: 'business_id') int? businessId,
+    // Flat business name shipped by [BusinessMenuResource] — added so share
+    // sheets / breadcrumbs can render the parent business without pulling the
+    // full BusinessDM (~15 KB lite payload, recursion risk). Mirrors the
+    // existing flat businessUuid / businessId pattern. Nullable for
+    // forward-compat with any payload that doesn't carry it yet.
+    @JsonKey(name: 'business_name') String? businessName,
     @JsonKey(name: 'updated_at') DateTime? lastUpdate,
     @JsonKey(name: 'business_food_categories') @Default([]) List<CategoryDM> foodCategories,
     @JsonKey(name: 'business_drink_categories') @Default([]) List<CategoryDM> drinkCategories,

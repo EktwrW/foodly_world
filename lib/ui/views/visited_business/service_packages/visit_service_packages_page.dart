@@ -526,8 +526,13 @@ class _VisitorPackageCard extends StatelessWidget {
                     else if (package.hasPrice)
                       _InfoChip(
                         icon: Bootstrap.cash,
+                        // Customer-facing card: the package itself carries
+                        // its currency (BE persists it). Fallback is `$`,
+                        // matching the global default used by MenuVM and
+                        // AuthSessionService.currency. Never default to
+                        // `€` — would mislabel ARS / VES / USD prices.
                         text:
-                            '${package.currency ?? "€"} ${package.price!.toStringAsFixed(2)} ${package.priceType.priceTypeLabel}',
+                            '${package.currency ?? "\$"} ${package.price!.toStringAsFixed(2)} ${package.priceType.priceTypeLabel}',
                       ),
                     if (package.hasGuestRange)
                       _InfoChip(

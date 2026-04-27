@@ -24,6 +24,7 @@ _$MenuDMImpl _$$MenuDMImplFromJson(Map<String, dynamic> json) => _$MenuDMImpl(
           : BusinessDM.fromJson(json['business'] as Map<String, dynamic>),
       businessUuid: json['business_uuid'] as String,
       businessId: (json['business_id'] as num?)?.toInt(),
+      businessName: json['business_name'] as String?,
       lastUpdate: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
@@ -49,6 +50,7 @@ Map<String, dynamic> _$$MenuDMImplToJson(_$MenuDMImpl instance) =>
       if (instance.business?.toJson() case final value?) 'business': value,
       'business_uuid': instance.businessUuid,
       if (instance.businessId case final value?) 'business_id': value,
+      if (instance.businessName case final value?) 'business_name': value,
       if (instance.lastUpdate?.toIso8601String() case final value?)
         'updated_at': value,
       'business_food_categories':

@@ -38,6 +38,7 @@ class PostCard extends StatelessWidget {
     return FadeIn(
       child: Card(
         elevation: 1,
+        color: Colors.white,
         shadowColor: Colors.black26,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -115,7 +116,13 @@ class PostCard extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return MarkdownBody(
-      data: post.content,
+      // Compact long URLs into `domain.com/…` markdown links before
+      // handing off to flutter_markdown. Without this the autolinker
+      // renders the full URL on three lines, duplicating the info that
+      // the LinkPreviewCard already shows below. Original URL is kept
+      // as the link target — tap behaviour is unchanged. See
+      // [shortenUrlsInMarkdown] in link_preview_card.dart for the rules.
+      data: shortenUrlsInMarkdown(post.content),
       selectable: true,
       softLineBreak: true,
       styleSheet: MarkdownStyleSheet(
@@ -183,7 +190,7 @@ class PostCard extends StatelessWidget {
                 child: Icon(
                   post.isLiked ? Icons.favorite : Icons.favorite_border,
                   key: ValueKey(post.isLiked),
-                  color: post.isLiked ? Colors.redAccent : Colors.grey.shade400,
+                  color: FoodlyThemes.favourites,
                   size: 20,
                 ),
               ),
@@ -191,8 +198,8 @@ class PostCard extends StatelessWidget {
               Text(
                 '${post.likesCount}',
                 style: FoodlyTextStyles.caption.copyWith(
-                  color: post.isLiked ? Colors.redAccent : Colors.grey.shade500,
-                  fontWeight: FontWeight.w600,
+                  color: FoodlyThemes.favourites,
+                  fontWeight: post.isLiked ? FontWeight.w600 : FontWeight.normal,
                 ),
               ),
             ],
@@ -205,9 +212,9 @@ class PostCard extends StatelessWidget {
         InkWell(
           onTap: () => _sharePost(context),
           borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Icon(Icons.share_outlined, size: 18, color: Colors.grey.shade400),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Icon(Icons.share_outlined, size: 18, color: FoodlyThemes.primaryFoodly),
           ),
         ),
       ],

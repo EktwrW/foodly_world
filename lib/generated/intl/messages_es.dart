@@ -91,7 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m28(maxImages) =>
       "Presiona para agregar fotos, hasta un máximo de ${maxImages} imágenes";
 
-  static String m29(price) => "desde €${price}";
+  static String m29(currency, price) => "desde ${currency}${price}";
 
   static String m30(seconds) => "Reenviar en ${seconds}s";
 

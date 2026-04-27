@@ -133,8 +133,12 @@ class _FavoriteItemsCard extends StatelessWidget {
                       ? () async {
                           try {
                             await Share.share(
+                              // Precedence: ?? lower than `.toBold()`, so bold
+                              // was only being applied to the '-' fallback.
+                              // Wrap the nullable resolution in parens so the
+                              // actual business name gets bolded too.
                               S.current.shareMenuMessage(
-                                  business?.name ?? '-'.toBold(), ('Foodly').toBold(), _publicMenuUrl),
+                                  (business?.name ?? '-').toBold(), 'Foodly'.toBold(), _publicMenuUrl),
                               subject: S.current.shareMenuSubject,
                             );
                           } catch (e) {

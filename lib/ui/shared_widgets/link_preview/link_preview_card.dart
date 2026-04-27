@@ -15,6 +15,48 @@ String? extractFirstUrl(String text) {
   return match?.group(0);
 }
 
+/// Replaces every raw URL inside [content] with a markdown link whose visible
+/// text is the URL's domain (plus an ellipsis when the URL has a non-trivial
+/// path), while keeping the original URL as the link target.
+///
+/// Why: pasting a 250-char article URL into a community post otherwise
+/// renders as three lines of underlined purple text — visually noisy and
+/// duplicated by the [LinkPreviewCard] that shows below it (which already
+/// surfaces the title, image, and domain). Shortening here gives the post a
+/// compact, Twitter-style clickable label like `20minutos.es/…` while the
+/// preview card carries the rich context.
+///
+/// Examples:
+///   - `https://20minutos.es/gastronomia/restaurantes/sibuya-...`
+///       → `[20minutos.es/…](https://20minutos.es/gastronomia/...)`
+///   - `https://www.example.com`
+///       → `[example.com](https://www.example.com)`  (no path → no ellipsis)
+///   - `[click here](https://x.com)` (already a markdown link)
+///       → unchanged. The negative lookbehind `(?<!\]\()` prevents nesting
+///         `[click here]([example.com](https://x.com))` which would break
+///         the markdown parser.
+///
+/// Malformed URLs (Uri.tryParse fails or empty host) are left as-is so we
+/// never degrade a user's post — the Markdown autolinker still handles them.
+String shortenUrlsInMarkdown(String content) {
+  // Same character class as [extractFirstUrl] (excludes whitespace, angle
+  // brackets, closing brackets) so what gets a preview card is exactly what
+  // gets shortened — no drift between the two paths.
+  final regex = RegExp(
+    r'(?<!\]\()https?://[^\s<>\)\]\}]+',
+    caseSensitive: false,
+  );
+  return content.replaceAllMapped(regex, (match) {
+    final url = match.group(0)!;
+    final uri = Uri.tryParse(url);
+    if (uri == null || uri.host.isEmpty) return url;
+    final host = uri.host.replaceFirst(RegExp(r'^www\.'), '');
+    final hasPath = uri.path.isNotEmpty && uri.path != '/';
+    final display = hasPath ? '$host/…' : host;
+    return '[$display]($url)';
+  });
+}
+
 /// A card that fetches and displays Open-Graph metadata for a URL.
 ///
 /// Shows the page title, description, image, and domain.

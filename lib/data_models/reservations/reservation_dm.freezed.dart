@@ -1265,6 +1265,18 @@ mixin _$ReservationDM {
   double? get businessLongitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_address')
   String? get businessAddress =>
+      throw _privateConstructorUsedError; // Country of the business that owns the reservation. Used by the
+// customer-facing reservation_card to render the quoted_amount in the
+// right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
+// [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
+// captured in feedback_defensive_json_enums.md — if the BE ever ships a
+// country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
+// the whole reservations list MUST NOT fail to deserialize. We just
+// fall back to the global '$' default at the consumer site.
+  @JsonKey(
+      name: 'business_country',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  FoodlyCountries? get businessCountry =>
       throw _privateConstructorUsedError; // User info
   @JsonKey(name: 'user_uuid')
   String? get userUuid => throw _privateConstructorUsedError;
@@ -1344,6 +1356,10 @@ abstract class $ReservationDMCopyWith<$Res> {
       @JsonKey(name: 'business_latitude') double? businessLatitude,
       @JsonKey(name: 'business_longitude') double? businessLongitude,
       @JsonKey(name: 'business_address') String? businessAddress,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      FoodlyCountries? businessCountry,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
@@ -1400,6 +1416,7 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
     Object? businessLatitude = freezed,
     Object? businessLongitude = freezed,
     Object? businessAddress = freezed,
+    Object? businessCountry = freezed,
     Object? userUuid = freezed,
     Object? userName = freezed,
     Object? userPhoto = freezed,
@@ -1498,6 +1515,10 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
           ? _value.businessAddress
           : businessAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessCountry: freezed == businessCountry
+          ? _value.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
       userUuid: freezed == userUuid
           ? _value.userUuid
           : userUuid // ignore: cast_nullable_to_non_nullable
@@ -1610,6 +1631,10 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
       @JsonKey(name: 'business_latitude') double? businessLatitude,
       @JsonKey(name: 'business_longitude') double? businessLongitude,
       @JsonKey(name: 'business_address') String? businessAddress,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      FoodlyCountries? businessCountry,
       @JsonKey(name: 'user_uuid') String? userUuid,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
@@ -1664,6 +1689,7 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? businessLatitude = freezed,
     Object? businessLongitude = freezed,
     Object? businessAddress = freezed,
+    Object? businessCountry = freezed,
     Object? userUuid = freezed,
     Object? userName = freezed,
     Object? userPhoto = freezed,
@@ -1762,6 +1788,10 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
           ? _value.businessAddress
           : businessAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessCountry: freezed == businessCountry
+          ? _value.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
       userUuid: freezed == userUuid
           ? _value.userUuid
           : userUuid // ignore: cast_nullable_to_non_nullable
@@ -1869,6 +1899,10 @@ class _$ReservationDMImpl extends _ReservationDM {
       @JsonKey(name: 'business_latitude') this.businessLatitude,
       @JsonKey(name: 'business_longitude') this.businessLongitude,
       @JsonKey(name: 'business_address') this.businessAddress,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      this.businessCountry,
       @JsonKey(name: 'user_uuid') this.userUuid,
       @JsonKey(name: 'user_name') this.userName,
       @JsonKey(name: 'user_photo') this.userPhoto,
@@ -1952,6 +1986,19 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey(name: 'business_address')
   final String? businessAddress;
+// Country of the business that owns the reservation. Used by the
+// customer-facing reservation_card to render the quoted_amount in the
+// right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
+// [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
+// captured in feedback_defensive_json_enums.md — if the BE ever ships a
+// country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
+// the whole reservations list MUST NOT fail to deserialize. We just
+// fall back to the global '$' default at the consumer site.
+  @override
+  @JsonKey(
+      name: 'business_country',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  final FoodlyCountries? businessCountry;
 // User info
   @override
   @JsonKey(name: 'user_uuid')
@@ -2018,7 +2065,7 @@ class _$ReservationDMImpl extends _ReservationDM {
 
   @override
   String toString() {
-    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -2063,6 +2110,8 @@ class _$ReservationDMImpl extends _ReservationDM {
                 other.businessLongitude == businessLongitude) &&
             (identical(other.businessAddress, businessAddress) ||
                 other.businessAddress == businessAddress) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
             (identical(other.userUuid, userUuid) ||
                 other.userUuid == userUuid) &&
             (identical(other.userName, userName) ||
@@ -2128,6 +2177,7 @@ class _$ReservationDMImpl extends _ReservationDM {
         businessLatitude,
         businessLongitude,
         businessAddress,
+        businessCountry,
         userUuid,
         userName,
         userPhoto,
@@ -2187,6 +2237,10 @@ abstract class _ReservationDM extends ReservationDM {
       @JsonKey(name: 'business_latitude') final double? businessLatitude,
       @JsonKey(name: 'business_longitude') final double? businessLongitude,
       @JsonKey(name: 'business_address') final String? businessAddress,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      final FoodlyCountries? businessCountry,
       @JsonKey(name: 'user_uuid') final String? userUuid,
       @JsonKey(name: 'user_name') final String? userName,
       @JsonKey(name: 'user_photo') final String? userPhoto,
@@ -2268,7 +2322,20 @@ abstract class _ReservationDM extends ReservationDM {
   double? get businessLongitude;
   @override
   @JsonKey(name: 'business_address')
-  String? get businessAddress; // User info
+  String?
+      get businessAddress; // Country of the business that owns the reservation. Used by the
+// customer-facing reservation_card to render the quoted_amount in the
+// right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
+// [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
+// captured in feedback_defensive_json_enums.md — if the BE ever ships a
+// country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
+// the whole reservations list MUST NOT fail to deserialize. We just
+// fall back to the global '$' default at the consumer site.
+  @override
+  @JsonKey(
+      name: 'business_country',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  FoodlyCountries? get businessCountry; // User info
   @override
   @JsonKey(name: 'user_uuid')
   String? get userUuid;

@@ -6679,14 +6679,14 @@ class S {
     );
   }
 
-  /// `from €{price}`
-  String priceFromBadge(String price) {
+  /// `from {currency}{price}`
+  String priceFromBadge(String currency, String price) {
     return Intl.message(
-      'from €$price',
+      'from $currency$price',
       name: 'priceFromBadge',
       desc:
-          'Shown on catering business cards in the nearby discovery; {price} is the cheapest active package price in EUR',
-      args: [price],
+          'Shown on catering business cards in the nearby discovery. {currency} is the symbol derived from the business\'s country (€, \$, ARS, Bs, etc.) and {price} is the cheapest active package price.',
+      args: [currency, price],
     );
   }
 

@@ -189,12 +189,22 @@ MenuDM _$MenuDMFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MenuDM {
   String get uuid => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
+  int? get id =>
+      throw _privateConstructorUsedError; // Hydrated client-side in some flows (e.g. favorites_vm wires the parent
+// BusinessDM in after fetching). [BusinessMenuResource] does NOT include
+// it — see [businessName] for the flat name that always comes from the BE.
   BusinessDM? get business => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_uuid')
   String get businessUuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_id')
-  int? get businessId => throw _privateConstructorUsedError;
+  int? get businessId =>
+      throw _privateConstructorUsedError; // Flat business name shipped by [BusinessMenuResource] — added so share
+// sheets / breadcrumbs can render the parent business without pulling the
+// full BusinessDM (~15 KB lite payload, recursion risk). Mirrors the
+// existing flat businessUuid / businessId pattern. Nullable for
+// forward-compat with any payload that doesn't carry it yet.
+  @JsonKey(name: 'business_name')
+  String? get businessName => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   DateTime? get lastUpdate => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_food_categories')
@@ -226,6 +236,7 @@ abstract class $MenuDMCopyWith<$Res> {
       BusinessDM? business,
       @JsonKey(name: 'business_uuid') String businessUuid,
       @JsonKey(name: 'business_id') int? businessId,
+      @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'updated_at') DateTime? lastUpdate,
       @JsonKey(name: 'business_food_categories')
       List<CategoryDM> foodCategories,
@@ -257,6 +268,7 @@ class _$MenuDMCopyWithImpl<$Res, $Val extends MenuDM>
     Object? business = freezed,
     Object? businessUuid = null,
     Object? businessId = freezed,
+    Object? businessName = freezed,
     Object? lastUpdate = freezed,
     Object? foodCategories = null,
     Object? drinkCategories = null,
@@ -284,6 +296,10 @@ class _$MenuDMCopyWithImpl<$Res, $Val extends MenuDM>
           ? _value.businessId
           : businessId // ignore: cast_nullable_to_non_nullable
               as int?,
+      businessName: freezed == businessName
+          ? _value.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastUpdate: freezed == lastUpdate
           ? _value.lastUpdate
           : lastUpdate // ignore: cast_nullable_to_non_nullable
@@ -335,6 +351,7 @@ abstract class _$$MenuDMImplCopyWith<$Res> implements $MenuDMCopyWith<$Res> {
       BusinessDM? business,
       @JsonKey(name: 'business_uuid') String businessUuid,
       @JsonKey(name: 'business_id') int? businessId,
+      @JsonKey(name: 'business_name') String? businessName,
       @JsonKey(name: 'updated_at') DateTime? lastUpdate,
       @JsonKey(name: 'business_food_categories')
       List<CategoryDM> foodCategories,
@@ -365,6 +382,7 @@ class __$$MenuDMImplCopyWithImpl<$Res>
     Object? business = freezed,
     Object? businessUuid = null,
     Object? businessId = freezed,
+    Object? businessName = freezed,
     Object? lastUpdate = freezed,
     Object? foodCategories = null,
     Object? drinkCategories = null,
@@ -392,6 +410,10 @@ class __$$MenuDMImplCopyWithImpl<$Res>
           ? _value.businessId
           : businessId // ignore: cast_nullable_to_non_nullable
               as int?,
+      businessName: freezed == businessName
+          ? _value.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastUpdate: freezed == lastUpdate
           ? _value.lastUpdate
           : lastUpdate // ignore: cast_nullable_to_non_nullable
@@ -425,6 +447,7 @@ class _$MenuDMImpl extends _MenuDM {
       this.business,
       @JsonKey(name: 'business_uuid') required this.businessUuid,
       @JsonKey(name: 'business_id') this.businessId,
+      @JsonKey(name: 'business_name') this.businessName,
       @JsonKey(name: 'updated_at') this.lastUpdate,
       @JsonKey(name: 'business_food_categories')
       final List<CategoryDM> foodCategories = const [],
@@ -444,6 +467,9 @@ class _$MenuDMImpl extends _MenuDM {
   final String uuid;
   @override
   final int? id;
+// Hydrated client-side in some flows (e.g. favorites_vm wires the parent
+// BusinessDM in after fetching). [BusinessMenuResource] does NOT include
+// it — see [businessName] for the flat name that always comes from the BE.
   @override
   final BusinessDM? business;
   @override
@@ -452,6 +478,14 @@ class _$MenuDMImpl extends _MenuDM {
   @override
   @JsonKey(name: 'business_id')
   final int? businessId;
+// Flat business name shipped by [BusinessMenuResource] — added so share
+// sheets / breadcrumbs can render the parent business without pulling the
+// full BusinessDM (~15 KB lite payload, recursion risk). Mirrors the
+// existing flat businessUuid / businessId pattern. Nullable for
+// forward-compat with any payload that doesn't carry it yet.
+  @override
+  @JsonKey(name: 'business_name')
+  final String? businessName;
   @override
   @JsonKey(name: 'updated_at')
   final DateTime? lastUpdate;
@@ -488,7 +522,7 @@ class _$MenuDMImpl extends _MenuDM {
 
   @override
   String toString() {
-    return 'MenuDM(uuid: $uuid, id: $id, business: $business, businessUuid: $businessUuid, businessId: $businessId, lastUpdate: $lastUpdate, foodCategories: $foodCategories, drinkCategories: $drinkCategories, combos: $combos, followersLength: $followersLength)';
+    return 'MenuDM(uuid: $uuid, id: $id, business: $business, businessUuid: $businessUuid, businessId: $businessId, businessName: $businessName, lastUpdate: $lastUpdate, foodCategories: $foodCategories, drinkCategories: $drinkCategories, combos: $combos, followersLength: $followersLength)';
   }
 
   @override
@@ -504,6 +538,8 @@ class _$MenuDMImpl extends _MenuDM {
                 other.businessUuid == businessUuid) &&
             (identical(other.businessId, businessId) ||
                 other.businessId == businessId) &&
+            (identical(other.businessName, businessName) ||
+                other.businessName == businessName) &&
             (identical(other.lastUpdate, lastUpdate) ||
                 other.lastUpdate == lastUpdate) &&
             const DeepCollectionEquality()
@@ -524,6 +560,7 @@ class _$MenuDMImpl extends _MenuDM {
       business,
       businessUuid,
       businessId,
+      businessName,
       lastUpdate,
       const DeepCollectionEquality().hash(_foodCategories),
       const DeepCollectionEquality().hash(_drinkCategories),
@@ -553,6 +590,7 @@ abstract class _MenuDM extends MenuDM {
           final BusinessDM? business,
           @JsonKey(name: 'business_uuid') required final String businessUuid,
           @JsonKey(name: 'business_id') final int? businessId,
+          @JsonKey(name: 'business_name') final String? businessName,
           @JsonKey(name: 'updated_at') final DateTime? lastUpdate,
           @JsonKey(name: 'business_food_categories')
           final List<CategoryDM> foodCategories,
@@ -568,7 +606,10 @@ abstract class _MenuDM extends MenuDM {
   @override
   String get uuid;
   @override
-  int? get id;
+  int?
+      get id; // Hydrated client-side in some flows (e.g. favorites_vm wires the parent
+// BusinessDM in after fetching). [BusinessMenuResource] does NOT include
+// it — see [businessName] for the flat name that always comes from the BE.
   @override
   BusinessDM? get business;
   @override
@@ -576,7 +617,15 @@ abstract class _MenuDM extends MenuDM {
   String get businessUuid;
   @override
   @JsonKey(name: 'business_id')
-  int? get businessId;
+  int?
+      get businessId; // Flat business name shipped by [BusinessMenuResource] — added so share
+// sheets / breadcrumbs can render the parent business without pulling the
+// full BusinessDM (~15 KB lite payload, recursion risk). Mirrors the
+// existing flat businessUuid / businessId pattern. Nullable for
+// forward-compat with any payload that doesn't carry it yet.
+  @override
+  @JsonKey(name: 'business_name')
+  String? get businessName;
   @override
   @JsonKey(name: 'updated_at')
   DateTime? get lastUpdate;

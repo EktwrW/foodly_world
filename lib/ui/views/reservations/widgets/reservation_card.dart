@@ -4,6 +4,7 @@ import 'package:foodly_world/core/utils/calendar_helper.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -109,41 +110,38 @@ class ReservationCard extends StatelessWidget {
 
           // Quote actions (customer side, quoted status): Reject + Approve
           if (reservation.canApproveQuote && (onApproveQuote != null || onRejectQuote != null)) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 13),
             Row(
               children: [
                 if (onRejectQuote != null)
                   Expanded(
-                    child: OutlinedButton.icon(
+                    child: CustomNeumorphicButton(
                       onPressed: onRejectQuote,
-                      icon: const Icon(Bootstrap.x_circle, size: 15),
-                      label: Text(S.current.rejectQuote),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red.shade700,
-                        side: BorderSide(color: Colors.red.shade400),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      ),
+                      type: CustomNeumorphicBtnType.secondary,
+                      disabled: false,
+                      text: S.current.rejectQuote,
+                      fontSize: 13,
+                      margin: EdgeInsets.zero,
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 7),
+                      shadowDarkColor: Colors.black45,
                     ),
                   ),
                 if (onRejectQuote != null && onApproveQuote != null) const SizedBox(width: 8),
                 if (onApproveQuote != null)
                   Expanded(
                     flex: 2,
-                    child: TextButton.icon(
+                    child: CustomNeumorphicButton(
                       onPressed: onApproveQuote,
-                      icon: const Icon(Bootstrap.check_circle_fill, size: 16),
-                      label: Text(S.current.approveQuote),
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.deepPurple,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      ),
+                      disabled: false,
+                      text: S.current.approveQuote,
+                      fontSize: 13,
+                      margin: EdgeInsets.zero,
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 7),
                     ),
                   ),
               ],
             ),
+            const SizedBox(height: 13),
           ],
 
           // Messages shortcut
@@ -156,10 +154,10 @@ class ReservationCard extends StatelessWidget {
                 icon: const Icon(Bootstrap.chat_left_text, size: 14),
                 label: Text(
                   '${S.current.bookingMessages}${reservation.hasMessages ? ' (${reservation.messagesCount})' : ''}',
-                  style: const TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 13),
                 ),
                 style: TextButton.styleFrom(
-                  foregroundColor: FoodlyThemes.secondaryFoodly,
+                  foregroundColor: FoodlyThemes.primaryFoodly,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -248,7 +246,7 @@ class ReservationCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       elevation: 2,
-      color: reservation.isConfirmed ? Colors.white : null,
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: _buildContent(),
     );
@@ -299,7 +297,7 @@ class _InfoChip extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 4,
       children: [
-        Icon(icon, size: 14, color: FoodlyThemes.secondaryFoodly),
+        Icon(icon, size: 14),
         Text(label, style: FoodlyTextStyles.caption),
       ],
     );
@@ -364,14 +362,24 @@ class _ServiceBookingDetails extends StatelessWidget {
               label: '${reservation.eventAddress}${reservation.eventCity != null ? ', ${reservation.eventCity}' : ''}',
             ),
 
-          // Quoted amount
+          // Quoted amount. Currency comes from the BUSINESS that owns the
+          // reservation (not from the logged-in user) — this is a customer-
+          // facing card and the customer might be quoted by a chef in a
+          // different country than their own. ReservationResource on the
+          // BE now ships `business_country`; ReservationDM maps it via
+          // FoodlyCountries with a defensive unknownEnumValue=null. Fallback
+          // `$` matches the global default in MenuVM / AuthSessionService.
+          //
+          // The earlier Bootstrap.currency_euro icon is replaced by
+          // Bootstrap.cash_coin (neutral "money" glyph) so the icon doesn't
+          // hardcode €. The currency itself moves into the label text.
           if (reservation.hasQuote)
             Row(
               children: [
-                const Icon(Bootstrap.currency_euro, size: 14, color: Colors.deepPurple),
+                const Icon(Bootstrap.cash_coin, size: 14, color: Colors.deepPurple),
                 const SizedBox(width: 6),
                 Text(
-                  '${S.current.quotedAmount}: €${reservation.quotedAmount!.toStringAsFixed(2)}',
+                  '${S.current.quotedAmount}: ${reservation.businessCountry?.currencySymbol ?? '\$'}${reservation.quotedAmount!.toStringAsFixed(2)}',
                   style: FoodlyTextStyles.caption.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Colors.deepPurple,
@@ -408,7 +416,7 @@ class _ServiceDetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 13, color: FoodlyThemes.secondaryFoodly),
+        Icon(icon, size: 13),
         const SizedBox(width: 6),
         Expanded(
           child: Text(

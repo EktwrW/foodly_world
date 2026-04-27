@@ -66,15 +66,17 @@ class AllowReservations extends StatelessWidget {
                 lightSource: LightSource.topRight,
               ),
             ),
-            Text(
-              // Copy específico por vertical: catering conceptualmente recibe
-              // "solicitudes" (pedido de cotización o booking de paquete),
-              // no "reservas" de mesa.
-              isCateringOrChefs ? S.current.acceptServiceRequests : S.current.allowReservations,
-              style: FoodlyTextStyles.actionsBody,
-              overflow: TextOverflow.ellipsis,
+            Expanded(
+              child: Text(
+                // Copy específico por vertical: catering conceptualmente recibe
+                // "solicitudes" (pedido de cotización o booking de paquete),
+                // no "reservas" de mesa.
+                isCateringOrChefs ? S.current.acceptServiceRequests : S.current.allowReservations,
+                maxLines: 2,
+                style: FoodlyTextStyles.actionsBody,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            const Spacer(),
             if (isCateringOrChefs)
               // Catering & Chefs: atajo al calendario en lugar del input de
               // party-size. Usa la misma ruta que el AppBar de

@@ -402,6 +402,13 @@ class _ServiceBookingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Manager-side card → currency comes from the manager's own business
+    // (the only one shown in this dashboard). Same source as quote_send_sheet
+    // and the rest of the manager-side surfaces. Defaults to '$' so we never
+    // crash on a half-loaded session, mirroring the pattern in
+    // AuthSessionService.currency.
+    final currency = di<AuthSessionService>().currency;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(10),
@@ -457,7 +464,7 @@ class _ServiceBookingDetails extends StatelessWidget {
           if (reservation.budgetEstimate != null)
             _ServiceDetailRow(
               icon: Bootstrap.cash_coin,
-              label: '${S.current.budgetEstimate}: €${reservation.budgetEstimate!.toStringAsFixed(2)}',
+              label: '${S.current.budgetEstimate}: $currency${reservation.budgetEstimate!.toStringAsFixed(2)}',
             ),
 
           // Dietary notes
@@ -467,14 +474,19 @@ class _ServiceBookingDetails extends StatelessWidget {
               label: '${S.current.dietaryNotes}: ${reservation.dietaryNotes}',
             ),
 
-          // Quoted amount (if already quoted)
+          // Quoted amount (if already quoted). Replaced the earlier
+          // Bootstrap.currency_euro icon with cash_coin (neutral "money"
+          // glyph already used by the budget row above) so the card no
+          // longer hardcodes €. The currency symbol itself moves into the
+          // label text — derived from the manager's business country —
+          // which is the canonical pattern across the rest of the app.
           if (reservation.hasQuote)
             Row(
               children: [
-                const Icon(Bootstrap.currency_euro, size: 14, color: Colors.deepPurple),
+                const Icon(Bootstrap.cash_coin, size: 14, color: Colors.deepPurple),
                 const SizedBox(width: 6),
                 Text(
-                  '${S.current.quotedAmount}: €${reservation.quotedAmount!.toStringAsFixed(2)}',
+                  '${S.current.quotedAmount}: $currency${reservation.quotedAmount!.toStringAsFixed(2)}',
                   style: FoodlyTextStyles.caption.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Colors.deepPurple,

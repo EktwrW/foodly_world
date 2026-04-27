@@ -72,6 +72,7 @@ class AuthSessionService {
   String get uuid => userSessionDM?.user.uuid ?? '';
   Map<String, String>? get authHeader => _authHeader;
   String get lang => Intl.getCurrentLocale().substring(0, 2);
+  String get currency => userSessionDM?.user.business.firstOrNull?.country?.currencySymbol ?? '\$';
   bool get isAccessTokenExpired {
     if (!isLoggedIn) return false;
     final createdAtStr = userSessionDM?.tokedCreatedAt;

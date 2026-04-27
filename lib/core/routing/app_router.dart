@@ -720,10 +720,22 @@ class AppRouter {
           // Deep link handler: menu.foodly.solutions/{uuid}
           // Logged-in users → visited business (full experience).
           // Not logged-in → public menu (read-only).
+          //
+          // IMPORTANT: use [hasSessionOrPending], NOT [isLoggedIn]. On a cold-
+          // start triggered by the QR (app closed → scan → app opens AND the
+          // deep link is delivered while HydratedBloc is still rehydrating),
+          // [setSession] hasn't been called yet, so [isLoggedIn] returns false
+          // even when there is a perfectly valid cached session. That made the
+          // user land on the public read-only menu when they should have gotten
+          // the in-app visited experience. [hasSessionOrPending] also picks up
+          // the pending-restore window, closing that race. If the restore
+          // ultimately fails (refresh token expired, etc.), the [visitBusiness]
+          // route has its own [requiresAccess, requiresLogin] redirector that
+          // bounces to login — so this is safe.
           GoRoute(
             path: AppRoutes.publicMenu.path,
             redirect: (context, state) {
-              if (authSessService.isLoggedIn) {
+              if (authSessService.hasSessionOrPending) {
                 final uuid = state.pathParameters['businessUuid'] ?? '';
                 return AppRoutes.visitBusiness.path.replaceFirst(':id', uuid);
               }

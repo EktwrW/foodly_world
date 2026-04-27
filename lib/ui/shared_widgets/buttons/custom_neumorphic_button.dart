@@ -26,6 +26,7 @@ class CustomNeumorphicButton extends StatelessWidget {
   final Widget? leading;
   final Widget? trailing;
   final String? tooltip;
+  final Color? shadowDarkColor;
 
   const CustomNeumorphicButton({
     super.key,
@@ -46,6 +47,7 @@ class CustomNeumorphicButton extends StatelessWidget {
     this.trailing,
     this.foregroundColor,
     this.tooltip,
+    this.shadowDarkColor,
   });
 
   TextStyle get getBaseTextStyle => textStyle ?? FoodlyTextStyles.loginPrimaryCTA.copyWith(fontSize: fontSize ?? 16);
@@ -63,6 +65,7 @@ class CustomNeumorphicButton extends StatelessWidget {
             boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
             depth: depth,
             intensity: 1.2,
+            shadowDarkColor: shadowDarkColor,
             color: !disabled ? FoodlyThemes.primaryLighten73 : Colors.grey[200],
           ),
           padding: padding,
@@ -91,9 +94,10 @@ class CustomNeumorphicButton extends StatelessWidget {
           style: ui.NeumorphicStyle(
             shape: ui.NeumorphicShape.convex,
             boxShape: ui.NeumorphicBoxShape.roundRect(BorderRadius.circular(bosShapeRadius)),
-            depth: 3,
+            depth: depth,
             intensity: 1.2,
             surfaceIntensity: .3,
+            shadowDarkColor: shadowDarkColor,
             color: !disabled ? ui.NeumorphicColors.embossMaxWhiteColor : Colors.grey[200],
           ),
           padding: padding,
@@ -168,6 +172,7 @@ class CustomNeumorphicButton extends StatelessWidget {
             intensity: 1.2,
             color: !disabled ? FoodlyThemes.primaryFoodly : Colors.grey[400],
             surfaceIntensity: .8,
+            shadowDarkColor: shadowDarkColor,
           ),
           padding: padding,
           child: Row(

@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'reservation_dm.freezed.dart';
@@ -143,6 +144,16 @@ class ReservationDM with _$ReservationDM {
     @JsonKey(name: 'business_latitude') double? businessLatitude,
     @JsonKey(name: 'business_longitude') double? businessLongitude,
     @JsonKey(name: 'business_address') String? businessAddress,
+    // Country of the business that owns the reservation. Used by the
+    // customer-facing reservation_card to render the quoted_amount in the
+    // right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
+    // [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
+    // captured in feedback_defensive_json_enums.md — if the BE ever ships a
+    // country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
+    // the whole reservations list MUST NOT fail to deserialize. We just
+    // fall back to the global '$' default at the consumer site.
+    @JsonKey(name: 'business_country', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+    FoodlyCountries? businessCountry,
     // User info
     @JsonKey(name: 'user_uuid') String? userUuid,
     @JsonKey(name: 'user_name') String? userName,

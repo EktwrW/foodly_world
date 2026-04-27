@@ -365,7 +365,12 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
           if (pkg.hasPrice) ...[
             const SizedBox(height: 4),
             Text(
-              '${pkg.currency ?? '€'}${pkg.price!.toStringAsFixed(2)} · ${pkg.priceType.name}',
+              // The package carries its own currency (persisted by the BE
+              // per business country at package-creation time). Fallback
+              // is `$` — the same global default used in MenuVM,
+              // ManageMenuVM, AuthSessionService.currency, etc. — so we
+              // never display the wrong symbol on a defensive path.
+              '${pkg.currency ?? '\$'}${pkg.price!.toStringAsFixed(2)} · ${pkg.priceType.name}',
               style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.primaryFoodly),
             ),
           ] else if (pkg.isOnQuote) ...[
