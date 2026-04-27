@@ -1,0 +1,23 @@
+# menu.foodly.solutions — public business menus, served as a Flutter Web app.
+#
+# Each business uuid resolves to a public menu page (the same surface that
+# the QR codes and "share menu" links produce). These pages are intentionally
+# crawlable: the more they index, the more local-search visibility each
+# Foodly customer gets ("pizzeria covilhã menu", etc.).
+#
+# Disallow `/api/`, `/auth/`, and the Flutter engine assets to keep the
+# crawl budget on actual menu URLs. The Flutter Web SPA ships its routes
+# under `/<businessUuid>` paths via in-app routing, so there's nothing
+# to disallow at the static-files level beyond engine internals.
+
+User-agent: *
+Allow: /
+Disallow: /flutter_service_worker.js
+Disallow: /version.json
+Disallow: /canvaskit/
+Disallow: /assets/
+
+# No sitemap declared yet — the menu list is dynamic (one URL per business
+# uuid), so a static sitemap would go stale immediately. Future TODO: have
+# the BE generate /sitemap.xml on-demand listing all active business UUIDs
+# and reference it here.
