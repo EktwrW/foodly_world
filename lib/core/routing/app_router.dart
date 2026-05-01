@@ -610,20 +610,40 @@ class AppRouter {
             path: AppRoutes.businessAnalytics.path,
             name: AppRoutes.businessAnalytics.name,
             redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
-            pageBuilder: (context, state) => CustomTransitionPage<void>(
-              transitionDuration: Durations.medium4,
-              key: state.pageKey,
-              child: BlocProvider(
-                create: (_) => AnalyticsCubit(
-                  dashboardRepo: di(),
-                  logger: di(),
-                  businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+            pageBuilder: (context, state) {
+              // [AnalyticsCubit] now needs the full BusinessDM (not just the
+              // uuid) to derive [AnalyticsKind] from `categoryId` — that's
+              // what selects between business-overview and service-overview.
+              // The footer button in `business_footer_buttons.dart:79` already
+              // passes `vm.currentBusiness` via `extra`, so this is a typed
+              // read against the existing contract.
+              //
+              // Defensive fallback: if `extra` is missing (e.g. someone deep-
+              // links to the analytics route without going through the
+              // dashboard), fall back to the auth user's first business —
+              // managers always have one. As a last resort we synthesise a
+              // BusinessDM from just the uuid path param so the cubit can
+              // still attempt the fetch (will render as `restaurant` flavour
+              // until business detail loads downstream).
+              final business = (state.extra is BusinessDM)
+                  ? state.extra as BusinessDM
+                  : (di<AuthSessionService>().userSessionDM?.user.business.firstOrNull ??
+                      BusinessDM(uuid: state.pathParameters[AppRoutes.routeIdParam] ?? ''));
+              return CustomTransitionPage<void>(
+                transitionDuration: Durations.medium4,
+                key: state.pageKey,
+                child: BlocProvider(
+                  create: (_) => AnalyticsCubit(
+                    dashboardRepo: di(),
+                    logger: di(),
+                    business: business,
+                  ),
+                  child: const AnalyticsDashboardPage(),
                 ),
-                child: const AnalyticsDashboardPage(),
-              ),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                  FadeTransition(opacity: animation, child: child),
-            ),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child),
+              );
+            },
           ),
           GoRoute(
             path: AppRoutes.visitBusiness.path,

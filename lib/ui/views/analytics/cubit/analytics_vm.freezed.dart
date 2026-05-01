@@ -16,9 +16,27 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AnalyticsVM {
+  /// Business whose analytics we're showing. Carried through the cubit
+  /// so widgets can access `categoryId`, `name`, etc. without a lookup.
+  /// Nullable to support the empty `initial` state — every real lifecycle
+  /// path (`loading`, `loaded`, `error`) is emitted with `business` set.
+  BusinessDM? get business => throw _privateConstructorUsedError;
+
+  /// Pre-resolved at cubit construction so `AnalyticsDashboardPage` can
+  /// branch synchronously without re-deriving on every rebuild. Default
+  /// `restaurant` covers the empty/initial state.
+  AnalyticsKind get kind => throw _privateConstructorUsedError;
+
+  /// Restaurant-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.restaurant]. Mutually exclusive with [serviceOverview]
+  /// — at most one of the two is non-null per loaded state.
   BusinessOverviewDataDM? get overview => throw _privateConstructorUsedError;
+
+  /// Catering & chefs-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.service]. Mutually exclusive with [overview].
+  ServiceOverviewDataDM? get serviceOverview =>
+      throw _privateConstructorUsedError;
   int get selectedDays => throw _privateConstructorUsedError;
-  String? get businessUuid => throw _privateConstructorUsedError;
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
@@ -34,11 +52,15 @@ abstract class $AnalyticsVMCopyWith<$Res> {
       _$AnalyticsVMCopyWithImpl<$Res, AnalyticsVM>;
   @useResult
   $Res call(
-      {BusinessOverviewDataDM? overview,
-      int selectedDays,
-      String? businessUuid});
+      {BusinessDM? business,
+      AnalyticsKind kind,
+      BusinessOverviewDataDM? overview,
+      ServiceOverviewDataDM? serviceOverview,
+      int selectedDays});
 
+  $BusinessDMCopyWith<$Res>? get business;
   $BusinessOverviewDataDMCopyWith<$Res>? get overview;
+  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview;
 }
 
 /// @nodoc
@@ -56,24 +78,48 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? business = freezed,
+    Object? kind = null,
     Object? overview = freezed,
+    Object? serviceOverview = freezed,
     Object? selectedDays = null,
-    Object? businessUuid = freezed,
   }) {
     return _then(_value.copyWith(
+      business: freezed == business
+          ? _value.business
+          : business // ignore: cast_nullable_to_non_nullable
+              as BusinessDM?,
+      kind: null == kind
+          ? _value.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as AnalyticsKind,
       overview: freezed == overview
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
               as BusinessOverviewDataDM?,
+      serviceOverview: freezed == serviceOverview
+          ? _value.serviceOverview
+          : serviceOverview // ignore: cast_nullable_to_non_nullable
+              as ServiceOverviewDataDM?,
       selectedDays: null == selectedDays
           ? _value.selectedDays
           : selectedDays // ignore: cast_nullable_to_non_nullable
               as int,
-      businessUuid: freezed == businessUuid
-          ? _value.businessUuid
-          : businessUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of AnalyticsVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessDMCopyWith<$Res>? get business {
+    if (_value.business == null) {
+      return null;
+    }
+
+    return $BusinessDMCopyWith<$Res>(_value.business!, (value) {
+      return _then(_value.copyWith(business: value) as $Val);
+    });
   }
 
   /// Create a copy of AnalyticsVM
@@ -89,6 +135,21 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
       return _then(_value.copyWith(overview: value) as $Val);
     });
   }
+
+  /// Create a copy of AnalyticsVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview {
+    if (_value.serviceOverview == null) {
+      return null;
+    }
+
+    return $ServiceOverviewDataDMCopyWith<$Res>(_value.serviceOverview!,
+        (value) {
+      return _then(_value.copyWith(serviceOverview: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -100,12 +161,18 @@ abstract class _$$AnalyticsVMImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {BusinessOverviewDataDM? overview,
-      int selectedDays,
-      String? businessUuid});
+      {BusinessDM? business,
+      AnalyticsKind kind,
+      BusinessOverviewDataDM? overview,
+      ServiceOverviewDataDM? serviceOverview,
+      int selectedDays});
 
   @override
+  $BusinessDMCopyWith<$Res>? get business;
+  @override
   $BusinessOverviewDataDMCopyWith<$Res>? get overview;
+  @override
+  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview;
 }
 
 /// @nodoc
@@ -121,23 +188,33 @@ class __$$AnalyticsVMImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? business = freezed,
+    Object? kind = null,
     Object? overview = freezed,
+    Object? serviceOverview = freezed,
     Object? selectedDays = null,
-    Object? businessUuid = freezed,
   }) {
     return _then(_$AnalyticsVMImpl(
+      business: freezed == business
+          ? _value.business
+          : business // ignore: cast_nullable_to_non_nullable
+              as BusinessDM?,
+      kind: null == kind
+          ? _value.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as AnalyticsKind,
       overview: freezed == overview
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
               as BusinessOverviewDataDM?,
+      serviceOverview: freezed == serviceOverview
+          ? _value.serviceOverview
+          : serviceOverview // ignore: cast_nullable_to_non_nullable
+              as ServiceOverviewDataDM?,
       selectedDays: null == selectedDays
           ? _value.selectedDays
           : selectedDays // ignore: cast_nullable_to_non_nullable
               as int,
-      businessUuid: freezed == businessUuid
-          ? _value.businessUuid
-          : businessUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -146,19 +223,43 @@ class __$$AnalyticsVMImplCopyWithImpl<$Res>
 
 class _$AnalyticsVMImpl implements _AnalyticsVM {
   const _$AnalyticsVMImpl(
-      {this.overview, this.selectedDays = 30, this.businessUuid});
+      {this.business,
+      this.kind = AnalyticsKind.restaurant,
+      this.overview,
+      this.serviceOverview,
+      this.selectedDays = 30});
 
+  /// Business whose analytics we're showing. Carried through the cubit
+  /// so widgets can access `categoryId`, `name`, etc. without a lookup.
+  /// Nullable to support the empty `initial` state — every real lifecycle
+  /// path (`loading`, `loaded`, `error`) is emitted with `business` set.
+  @override
+  final BusinessDM? business;
+
+  /// Pre-resolved at cubit construction so `AnalyticsDashboardPage` can
+  /// branch synchronously without re-deriving on every rebuild. Default
+  /// `restaurant` covers the empty/initial state.
+  @override
+  @JsonKey()
+  final AnalyticsKind kind;
+
+  /// Restaurant-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.restaurant]. Mutually exclusive with [serviceOverview]
+  /// — at most one of the two is non-null per loaded state.
   @override
   final BusinessOverviewDataDM? overview;
+
+  /// Catering & chefs-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.service]. Mutually exclusive with [overview].
+  @override
+  final ServiceOverviewDataDM? serviceOverview;
   @override
   @JsonKey()
   final int selectedDays;
-  @override
-  final String? businessUuid;
 
   @override
   String toString() {
-    return 'AnalyticsVM(overview: $overview, selectedDays: $selectedDays, businessUuid: $businessUuid)';
+    return 'AnalyticsVM(business: $business, kind: $kind, overview: $overview, serviceOverview: $serviceOverview, selectedDays: $selectedDays)';
   }
 
   @override
@@ -166,17 +267,20 @@ class _$AnalyticsVMImpl implements _AnalyticsVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnalyticsVMImpl &&
+            (identical(other.business, business) ||
+                other.business == business) &&
+            (identical(other.kind, kind) || other.kind == kind) &&
             (identical(other.overview, overview) ||
                 other.overview == overview) &&
+            (identical(other.serviceOverview, serviceOverview) ||
+                other.serviceOverview == serviceOverview) &&
             (identical(other.selectedDays, selectedDays) ||
-                other.selectedDays == selectedDays) &&
-            (identical(other.businessUuid, businessUuid) ||
-                other.businessUuid == businessUuid));
+                other.selectedDays == selectedDays));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, overview, selectedDays, businessUuid);
+  int get hashCode => Object.hash(
+      runtimeType, business, kind, overview, serviceOverview, selectedDays);
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
@@ -189,16 +293,37 @@ class _$AnalyticsVMImpl implements _AnalyticsVM {
 
 abstract class _AnalyticsVM implements AnalyticsVM {
   const factory _AnalyticsVM(
-      {final BusinessOverviewDataDM? overview,
-      final int selectedDays,
-      final String? businessUuid}) = _$AnalyticsVMImpl;
+      {final BusinessDM? business,
+      final AnalyticsKind kind,
+      final BusinessOverviewDataDM? overview,
+      final ServiceOverviewDataDM? serviceOverview,
+      final int selectedDays}) = _$AnalyticsVMImpl;
 
+  /// Business whose analytics we're showing. Carried through the cubit
+  /// so widgets can access `categoryId`, `name`, etc. without a lookup.
+  /// Nullable to support the empty `initial` state — every real lifecycle
+  /// path (`loading`, `loaded`, `error`) is emitted with `business` set.
+  @override
+  BusinessDM? get business;
+
+  /// Pre-resolved at cubit construction so `AnalyticsDashboardPage` can
+  /// branch synchronously without re-deriving on every rebuild. Default
+  /// `restaurant` covers the empty/initial state.
+  @override
+  AnalyticsKind get kind;
+
+  /// Restaurant-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.restaurant]. Mutually exclusive with [serviceOverview]
+  /// — at most one of the two is non-null per loaded state.
   @override
   BusinessOverviewDataDM? get overview;
+
+  /// Catering & chefs-flavour payload. Populated only when [kind] is
+  /// [AnalyticsKind.service]. Mutually exclusive with [overview].
+  @override
+  ServiceOverviewDataDM? get serviceOverview;
   @override
   int get selectedDays;
-  @override
-  String? get businessUuid;
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.

@@ -325,6 +325,7 @@ class NotificationsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(title),
         content: TextField(
           controller: controller,

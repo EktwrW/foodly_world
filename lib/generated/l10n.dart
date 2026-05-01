@@ -5454,6 +5454,156 @@ class S {
     );
   }
 
+  /// `Service bookings`
+  String get analyticsBookingsTotal {
+    return Intl.message(
+      'Service bookings',
+      name: 'analyticsBookingsTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success rate`
+  String get analyticsBookingSuccessRate {
+    return Intl.message(
+      'Success rate',
+      name: 'analyticsBookingSuccessRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Response time`
+  String get analyticsAvgResponseHours {
+    return Intl.message(
+      'Response time',
+      name: 'analyticsAvgResponseHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Availability checks`
+  String get analyticsAvailabilityChecks {
+    return Intl.message(
+      'Availability checks',
+      name: 'analyticsAvailabilityChecks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bookings`
+  String get analyticsBookings {
+    return Intl.message(
+      'Bookings',
+      name: 'analyticsBookings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top packages`
+  String get analyticsTopPackagesTitle {
+    return Intl.message(
+      'Top packages',
+      name: 'analyticsTopPackagesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile views`
+  String get analyticsLabelProfileView {
+    return Intl.message(
+      'Profile views',
+      name: 'analyticsLabelProfileView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package views`
+  String get analyticsLabelPackageView {
+    return Intl.message(
+      'Package views',
+      name: 'analyticsLabelPackageView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inquiries`
+  String get analyticsLabelPackageInquiry {
+    return Intl.message(
+      'Inquiries',
+      name: 'analyticsLabelPackageInquiry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking started`
+  String get analyticsLabelBookingStarted {
+    return Intl.message(
+      'Booking started',
+      name: 'analyticsLabelBookingStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking submitted`
+  String get analyticsLabelBookingSubmitted {
+    return Intl.message(
+      'Booking submitted',
+      name: 'analyticsLabelBookingSubmitted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booking confirmed`
+  String get analyticsLabelBookingSucceeded {
+    return Intl.message(
+      'Booking confirmed',
+      name: 'analyticsLabelBookingSucceeded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View → Inquiry`
+  String get analyticsViewToInquiry {
+    return Intl.message(
+      'View → Inquiry',
+      name: 'analyticsViewToInquiry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inquiry → Booking`
+  String get analyticsInquiryToBooking {
+    return Intl.message(
+      'Inquiry → Booking',
+      name: 'analyticsInquiryToBooking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View → Booking`
+  String get analyticsViewToBooking {
+    return Intl.message(
+      'View → Booking',
+      name: 'analyticsViewToBooking',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add to calendar`
   String get addToCalendar {
     return Intl.message(

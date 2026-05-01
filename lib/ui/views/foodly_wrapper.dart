@@ -310,6 +310,7 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(title),
         content: TextField(
           controller: controller,

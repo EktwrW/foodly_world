@@ -6,7 +6,7 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
-/// Small "from <currency>N" pill used on catering cards to set price
+/// Small "from `<currency>N`" pill used on catering cards to set price
 /// expectations before the user taps into the detail view. Rendered only when
 /// the BE populated `min_service_price` on the business (currently only from
 /// GET /business/nearby).

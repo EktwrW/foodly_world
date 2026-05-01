@@ -137,7 +137,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
                           children: [
-                            _buildTitle().paddingVertical(9),
+                            _buildTitle().paddingVertical(8),
                             _buildTitleField(isSaving),
                             _buildDescriptionField(isSaving),
                             _buildServiceTypeSelector(isSaving),
@@ -148,7 +148,7 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
                             _buildIncludesSection(isSaving),
                             _buildPhotosGrid(isSaving),
                             _buildToggles(isSaving),
-                            _buildButtons(context, isSaving).paddingTop(36),
+                            _buildButtons(context, isSaving).paddingTop(32),
                           ],
                         ),
                       ),
@@ -417,8 +417,12 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
         Text(S.current.includes, style: FoodlyTextStyles.labelPurpleBold),
         if (_includes.isNotEmpty)
           Wrap(
-            spacing: 6,
-            runSpacing: 6,
+            // Chip spacing 8/8 instead of 6/6 — matches the type-selector
+            // chips above (`_buildServiceTypeSelector`, `_buildPriceTypeSelector`)
+            // and the canonical chip spacing across Foodly. 6 was tight enough
+            // that adjacent chips visually merged on dense forms.
+            spacing: 8,
+            runSpacing: 8,
             children: _includes.asMap().entries.map((entry) {
               return Chip(
                 label: Text(entry.value, style: const TextStyle(fontSize: 12)),
@@ -636,6 +640,20 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
     // marketing shots, not raw captures. `limit` is honored on supported
     // platforms; we still cap defensively with `.take(remaining)`.
     final picker = ImagePicker();
+
+    // image_picker's `pickMultiImage(limit:)` validator throws
+    //   "Invalid argument (limit): cannot be lower than 2: 1"
+    // when limit is 1 — it refuses to do "multi" with a max of one. So
+    // when only one slot is left (e.g. user already added 2 of _maxPhotos=3),
+    // fall back to single-image picking. Same gallery, same XFile output,
+    // no crash.
+    if (remaining == 1) {
+      final picked = await picker.pickImage(source: ImageSource.gallery);
+      if (picked == null || !mounted) return;
+      setState(() => _pendingPhotos.add(picked));
+      return;
+    }
+
     final picked = await picker.pickMultiImage(limit: remaining);
     if (picked.isEmpty || !mounted) return;
     setState(() => _pendingPhotos.addAll(picked.take(remaining)));
@@ -792,9 +810,13 @@ class _ServicePackageFormSheetState extends State<ServicePackageFormSheet> {
 
 // ── Photo Tile ────────────────────────────────────────────────
 //
-// Square 88×88 thumbnail with a small close button in the corner. Used
-// for both already-uploaded photos (pass `imageUrl`) and locally-picked
-// pending photos (pass `localFile`). Exactly one of the two must be set.
+// 80×80 thumbnail with a small close button in the corner. Dimensions and
+// corner radius mirror [MenuItemPictureWdg] in `manage_menu` so the photo
+// picker on a service package looks visually identical to the food/drink
+// item picture in the menu editor — same Foodly visual language across
+// both manager surfaces. Used for both already-uploaded photos
+// (pass `imageUrl`) and locally-picked pending photos (pass `localFile`).
+// Exactly one of the two must be set.
 
 class _PhotoTile extends StatelessWidget {
   final String? imageUrl;
@@ -814,14 +836,14 @@ class _PhotoTile extends StatelessWidget {
     final imageProvider = localFile != null ? FileImage(localFile!) as ImageProvider : NetworkImage(imageUrl!);
 
     return SizedBox(
-      width: 88,
-      height: 88,
+      width: 80,
+      height: 80,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               child: Image(
                 image: imageProvider,
                 fit: BoxFit.cover,
@@ -861,9 +883,13 @@ class _PhotoTile extends StatelessWidget {
 
 // ── Add Photo Tile ────────────────────────────────────────────
 //
-// The "+" tile that opens the gallery picker. Dashed purple border keeps
-// it distinct from real photo thumbnails and signals affordance without
-// a heavy button treatment.
+// The empty slot that opens the gallery picker. Visually aligned with
+// [MenuItemPictureWdg] in `manage_menu`: 80×80 container, BorderRadius 8,
+// faint primary tint (alpha 0.036 in edit mode, same value the menu uses),
+// and a single neumorphic [Icons.add_photo_alternate_outlined] glyph in
+// [FoodlyThemes.accentColor]. The previous "+" + "Agregar foto" combo
+// with a dashed purple border was a one-off; replacing it brings the
+// catering & chefs photo picker in line with the rest of the manager UI.
 
 class _AddPhotoTile extends StatelessWidget {
   final bool enabled;
@@ -875,30 +901,25 @@ class _AddPhotoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: enabled ? onTap : null,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(8),
       child: Container(
-        width: 88,
-        height: 88,
+        width: 80,
+        height: 80,
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.04),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.5) : Colors.black12,
-            width: 1.2,
-          ),
+          color: FoodlyThemes.primaryFoodly.withValues(alpha: enabled ? 0.036 : 0.02),
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 4,
-          children: [
-            Icon(Bootstrap.plus_lg, size: 22, color: enabled ? FoodlyThemes.primaryFoodly : Colors.black26),
-            Text(
-              S.current.addPhoto,
-              style: FoodlyTextStyles.caption.copyWith(
-                color: enabled ? FoodlyThemes.primaryFoodly : Colors.black26,
-              ),
+        child: Center(
+          child: ui.NeumorphicIcon(
+            Icons.add_photo_alternate_outlined,
+            style: ui.NeumorphicStyle(
+              shape: ui.NeumorphicShape.concave,
+              color: enabled ? FoodlyThemes.accentColor : Colors.black26,
+              depth: 2,
             ),
-          ],
+            size: 48,
+          ),
         ),
       ),
     );

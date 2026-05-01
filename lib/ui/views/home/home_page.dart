@@ -88,6 +88,7 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               icon: const Icon(Bootstrap.calendar2_check, size: 40, color: FoodlyThemes.primaryFoodly),
+              backgroundColor: Colors.white,
               title: Text(
                 count == 1 ? S.current.pendingReservationsAlertOne : S.current.pendingReservationsAlertMany(count),
                 textAlign: TextAlign.center,

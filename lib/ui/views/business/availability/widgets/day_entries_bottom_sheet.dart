@@ -88,8 +88,7 @@ class DayEntriesBottomSheet extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text(
                           S.current.close,
-                          style: const TextStyle(
-                              color: FoodlyThemes.primaryFoodly),
+                          style: const TextStyle(color: FoodlyThemes.primaryFoodly),
                         ),
                       ),
                     ),
@@ -135,8 +134,7 @@ class DayEntriesBottomSheet extends StatelessWidget {
   Widget _buildTitle() {
     return Row(
       children: [
-        const Icon(Bootstrap.calendar2_event,
-            color: FoodlyThemes.primaryFoodly, size: 22),
+        const Icon(Bootstrap.calendar2_event, color: FoodlyThemes.primaryFoodly, size: 22),
         const SizedBox(width: 10),
         Expanded(
           child: Text(
@@ -204,9 +202,7 @@ class _EntryRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_timeRange(),
-                    style: FoodlyTextStyles.actionsBody,
-                    overflow: TextOverflow.ellipsis),
+                Text(_timeRange(), style: FoodlyTextStyles.actionsBody, overflow: TextOverflow.ellipsis),
                 if ((entry.reason ?? '').isNotEmpty)
                   Text(
                     entry.reason!,
@@ -221,11 +217,8 @@ class _EntryRow extends StatelessWidget {
           else
             IconButton(
               tooltip: S.current.delete,
-              icon: Icon(Bootstrap.trash,
-                  size: 18, color: Colors.red.shade400),
-              onPressed: entry.availabilityUuid == null
-                  ? null
-                  : () => _confirmDelete(context, entry.availabilityUuid!),
+              icon: Icon(Bootstrap.trash, size: 18, color: Colors.red.shade400),
+              onPressed: entry.availabilityUuid == null ? null : () => _confirmDelete(context, entry.availabilityUuid!),
             ),
         ],
       ),
@@ -236,6 +229,7 @@ class _EntryRow extends StatelessWidget {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(S.current.deleteBlock),
         content: Text(S.current.deleteBlockConfirm),
         actions: [

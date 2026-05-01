@@ -10,10 +10,17 @@ class DailyTrendsChart extends StatelessWidget {
   final List<DailyPointDM> eventsDaily;
   final List<DailyPointDM> reservationsDaily;
 
+  /// Legend label for the primary line. Defaults to `S.current.reservations`
+  /// (restaurant flavour). Service-overview passes `S.current.analyticsBookings`
+  /// when reusing this chart with `bookingsDaily` as the primary series —
+  /// the chart shape doesn't change, only the legend wording.
+  final String? primaryLabel;
+
   const DailyTrendsChart({
     super.key,
     required this.eventsDaily,
     required this.reservationsDaily,
+    this.primaryLabel,
   });
 
   List<FlSpot> _toSpots(List<DailyPointDM> points) {
@@ -57,7 +64,7 @@ class DailyTrendsChart extends StatelessWidget {
             padding: const EdgeInsets.only(left: 4, bottom: 12),
             child: Row(
               children: [
-                _LegendDot(color: FoodlyThemes.primaryFoodly, label: S.current.reservations),
+                _LegendDot(color: FoodlyThemes.primaryFoodly, label: primaryLabel ?? S.current.reservations),
                 const SizedBox(width: 16),
                 _LegendDot(color: Colors.blueGrey.shade300, label: S.current.totalEvents),
               ],

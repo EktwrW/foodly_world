@@ -125,6 +125,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(S.current.deletePostTitle),
         content: Text(S.current.deletePostConfirm),
         actions: [

@@ -53,6 +53,42 @@ class _DashboardClient implements DashboardClient {
     return _value;
   }
 
+  @override
+  Future<ServiceOverviewResponseDM> getServiceOverview({
+    int? days,
+    String? businessUuid,
+    int? ownerUserId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'days': days,
+      r'business_uuid': businessUuid,
+      r'owner_user_id': ownerUserId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ServiceOverviewResponseDM>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/analytics/service-overview',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ServiceOverviewResponseDM _value;
+    try {
+      _value = ServiceOverviewResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

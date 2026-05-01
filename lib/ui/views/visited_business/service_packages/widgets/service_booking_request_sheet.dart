@@ -298,7 +298,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       spacing: 16,
                       children: [
-                        _buildTitle().paddingVertical(9),
+                        _buildTitle().paddingVertical(8),
                         _buildPackageInfo(),
                         _buildAvailabilityHint(),
                         _buildDateTimeRow(),
@@ -335,9 +335,19 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
   }
 
   Widget _buildTitle() {
+    // Service packages exist exclusively under the catering & chefs vertical,
+    // so this sheet is always shown when a customer is requesting from a
+    // catering business. Use the same circular avatar that already brands
+    // catering surfaces (business cards, professional profile form,
+    // favorites) so the visual identity is consistent end-to-end. Replaced
+    // a generic Bootstrap.calendar2_plus icon — descriptive but generic —
+    // with the vertical-specific mark.
     return Row(
       children: [
-        const Icon(Bootstrap.calendar2_plus, size: 22, color: FoodlyThemes.primaryFoodly),
+        SizedBox.square(
+          dimension: 28,
+          child: FoodlyCategories.cateringAndChefs.avatar,
+        ),
         const SizedBox(width: 10),
         Text(S.current.requestService, style: FoodlyTextStyles.menuTitle),
       ],
@@ -522,6 +532,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     return TextFormField(
       controller: _guestCountController,
       enabled: !_isSending,
+      style: FoodlyTextStyles.inputTextValue,
       decoration: _inputDecoration(S.current.guestCount, prefixIcon: FontAwesome.people_group_solid),
       keyboardType: TextInputType.number,
       validator: (v) {
@@ -548,11 +559,13 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
         TextFormField(
           controller: _addressController,
           enabled: !_isSending,
+          style: FoodlyTextStyles.inputTextValue,
           decoration: _inputDecoration(S.current.eventAddress, prefixIcon: Bootstrap.geo_alt),
         ),
         TextFormField(
           controller: _cityController,
           enabled: !_isSending,
+          style: FoodlyTextStyles.inputTextValue,
           decoration: _inputDecoration(S.current.eventCity, prefixIcon: Bootstrap.building),
         ),
       ],
@@ -563,6 +576,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     return TextFormField(
       controller: _dietaryController,
       enabled: !_isSending,
+      style: FoodlyTextStyles.inputTextValue,
       decoration: _inputDecoration(S.current.dietaryNotes, prefixIcon: Bootstrap.egg),
       maxLines: 2,
     );
@@ -572,6 +586,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     return TextFormField(
       controller: _budgetController,
       enabled: !_isSending,
+      style: FoodlyTextStyles.inputTextValue,
       decoration: _inputDecoration(S.current.budgetEstimate, prefixIcon: Bootstrap.cash_coin),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
     );
@@ -581,6 +596,7 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
     return TextFormField(
       controller: _notesController,
       enabled: !_isSending,
+      style: FoodlyTextStyles.inputTextValue,
       decoration: _inputDecoration(S.current.specialRequests, prefixIcon: Bootstrap.chat_left_text),
       maxLines: 3,
       maxLength: 500,
@@ -588,16 +604,26 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
   }
 
   Widget _buildButtons() {
+    // Aligned with the buttons row in professional_profile_form_sheet and
+    // service_package_form_sheet:
+    //   - `Row(spacing: 12)` so there's breathing room between Cancel and
+    //     the action button (was 0).
+    //   - Cancel uses `CustomNeumorphicBtnType.outlined` (was `secondary`)
+    //     to match the other forms — outlined reads as "step back" while
+    //     the primary fill carries the affirmative action.
+    //   - Padding `EdgeInsets.all(9)` (was `symmetric(vertical: 13,
+    //     horizontal: 9)`) — 13 was off the canonical spacing scale.
     return Row(
+      spacing: 12,
       children: [
         Expanded(
           child: CustomNeumorphicButton(
             text: S.current.cancel,
             onPressed: _isSending ? null : () => Navigator.of(context).pop(),
-            type: CustomNeumorphicBtnType.secondary,
+            type: CustomNeumorphicBtnType.outlined,
             disabled: _isSending,
             fontSize: 14,
-            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
+            padding: const EdgeInsets.all(9),
           ),
         ),
         Expanded(
@@ -606,36 +632,54 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
             onPressed: _isSending ? null : _submit,
             disabled: _isSending,
             fontSize: 14,
-            padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
+            padding: const EdgeInsets.all(9),
           ),
         ),
       ],
     );
   }
 
+  /// Input decoration aligned to the canonical pattern used by the
+  /// manager-side forms (`professional_profile_form_sheet`,
+  /// `service_package_form_sheet`). Same border colors, same radii, same
+  /// content padding — but keeps the `prefixIcon` parameter that this
+  /// customer-facing sheet uses to give each field a quick visual cue.
+  ///
+  /// Previous version diverged on multiple axes (label style, no
+  /// content padding, `Colors.red.shade300` instead of `FoodlyThemes.error`,
+  /// no `disabledBorder`), making the customer's booking form feel less
+  /// polished than the manager's package-creation form. Bringing them in
+  /// line so both surfaces feel like the same product.
   InputDecoration _inputDecoration(String label, {IconData? prefixIcon}) {
+    const borderRadius = BorderRadius.all(Radius.circular(8));
+
     return InputDecoration(
       labelText: label,
-      labelStyle: FoodlyTextStyles.hintText,
+      labelStyle: FoodlyTextStyles.labelPurpleBold,
+      hintStyle: FoodlyTextStyles.hintText,
       prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 18, color: FoodlyThemes.secondaryFoodly) : null,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       filled: true,
       fillColor: Colors.white,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Colors.black12),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: FoodlyThemes.secondaryFoodly),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: FoodlyThemes.primaryFoodly),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: FoodlyThemes.primaryFoodly, width: 1.5),
       ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: Colors.red.shade300),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: FoodlyThemes.error),
       ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: Colors.red.shade300),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: FoodlyThemes.error, width: 1.5),
+      ),
+      disabledBorder: const OutlineInputBorder(
+        borderRadius: borderRadius,
+        borderSide: BorderSide(color: Colors.black12),
       ),
     );
   }

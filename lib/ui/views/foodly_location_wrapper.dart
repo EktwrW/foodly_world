@@ -225,6 +225,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
       barrierDismissible: false,
       barrierColor: Colors.black.withValues(alpha: .69),
       builder: (_) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text(S.current.locationRationaleTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,

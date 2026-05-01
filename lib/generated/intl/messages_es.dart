@@ -245,8 +245,33 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ya reseñaste este negocio.\n¿Quieres editar tu reseña?",
     ),
     "analytics": MessageLookupByLibrary.simpleMessage("Analíticas"),
+    "analyticsAvailabilityChecks": MessageLookupByLibrary.simpleMessage(
+      "Disponibilidad consultada",
+    ),
+    "analyticsAvgResponseHours": MessageLookupByLibrary.simpleMessage(
+      "Tiempo de respuesta",
+    ),
+    "analyticsBookingSuccessRate": MessageLookupByLibrary.simpleMessage(
+      "Tasa de éxito",
+    ),
+    "analyticsBookings": MessageLookupByLibrary.simpleMessage("Bookings"),
+    "analyticsBookingsTotal": MessageLookupByLibrary.simpleMessage(
+      "Reservas de servicio",
+    ),
     "analyticsComingSoon": MessageLookupByLibrary.simpleMessage(
       "Panel de Analíticas — Próximamente\nConoce el rendimiento real de tu negocio: visitas, platos más pedidos, tendencias de clientes e ingresos. Todo en un solo lugar.",
+    ),
+    "analyticsInquiryToBooking": MessageLookupByLibrary.simpleMessage(
+      "Consulta → Booking",
+    ),
+    "analyticsLabelBookingStarted": MessageLookupByLibrary.simpleMessage(
+      "Booking iniciado",
+    ),
+    "analyticsLabelBookingSubmitted": MessageLookupByLibrary.simpleMessage(
+      "Booking enviado",
+    ),
+    "analyticsLabelBookingSucceeded": MessageLookupByLibrary.simpleMessage(
+      "Booking confirmado",
     ),
     "analyticsLabelBusinessOpen": MessageLookupByLibrary.simpleMessage(
       "Visitas al negocio",
@@ -275,6 +300,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "analyticsLabelMenuViewed": MessageLookupByLibrary.simpleMessage(
       "Vistas del menú",
+    ),
+    "analyticsLabelPackageInquiry": MessageLookupByLibrary.simpleMessage(
+      "Consultas",
+    ),
+    "analyticsLabelPackageView": MessageLookupByLibrary.simpleMessage(
+      "Vistas de paquetes",
+    ),
+    "analyticsLabelProfileView": MessageLookupByLibrary.simpleMessage(
+      "Visitas a perfil",
     ),
     "analyticsLabelReservationStarted": MessageLookupByLibrary.simpleMessage(
       "Reservas iniciadas",
@@ -307,6 +341,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Rechazada",
     ),
     "analyticsTitle": MessageLookupByLibrary.simpleMessage("Analíticas"),
+    "analyticsTopPackagesTitle": MessageLookupByLibrary.simpleMessage(
+      "Top paquetes",
+    ),
+    "analyticsViewToBooking": MessageLookupByLibrary.simpleMessage(
+      "Vista → Booking",
+    ),
+    "analyticsViewToInquiry": MessageLookupByLibrary.simpleMessage(
+      "Vista → Consulta",
+    ),
     "and": MessageLookupByLibrary.simpleMessage("y"),
     "andCreateContentToThese": MessageLookupByLibrary.simpleMessage(
       "y gestionar contenido, promociones y más",

@@ -28,11 +28,21 @@ class AnalyticsLabelHelper {
   /// Lazily-built maps that use S.current so locale is resolved at call time.
 
   static Map<String, String> get _funnelStepLabels => {
+        // Restaurant flavour funnel (business-overview).
         'business_open': S.current.analyticsLabelBusinessOpen,
         'cta_clicked': S.current.analyticsLabelCtaClicked,
         'reservation_started': S.current.analyticsLabelReservationStarted,
         'reservation_submitted': S.current.analyticsLabelReservationSubmitted,
         'reservation_succeeded': S.current.analyticsLabelReservationSucceeded,
+        // Catering & chefs flavour funnel (service-overview). Step keys
+        // arrive without the `service.` prefix in the BE response — they're
+        // bare names inside a `funnel.steps` map.
+        'profile_view': S.current.analyticsLabelProfileView,
+        'package_view': S.current.analyticsLabelPackageView,
+        'package_inquiry': S.current.analyticsLabelPackageInquiry,
+        'booking_started': S.current.analyticsLabelBookingStarted,
+        'booking_submitted': S.current.analyticsLabelBookingSubmitted,
+        'booking_succeeded': S.current.analyticsLabelBookingSucceeded,
       };
 
   static Map<String, String> get _eventTypeLabels => {

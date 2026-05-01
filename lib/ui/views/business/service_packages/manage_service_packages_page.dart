@@ -61,12 +61,14 @@ class ManageServicePackagesPage extends StatelessWidget {
             leadingWidth: 60,
           ),
           floatingActionButton: Builder(
-            builder: (ctx) => FloatingActionButton(
-              backgroundColor: FoodlyThemes.primaryFoodly,
-              onPressed: () => _showCreatePackageSheet(ctx),
-              child: const Icon(Bootstrap.plus_lg, color: Colors.white),
-            ),
-          ),
+              builder: (ctx) => FloatingActionButton(
+                    onPressed: () => _showCreatePackageSheet(ctx),
+                    splashColor: FoodlyThemes.primaryLighten73.withValues(alpha: 0.39),
+                    backgroundColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.73),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    elevation: 8.0,
+                    child: const Icon(Bootstrap.plus_lg, color: Colors.white, size: 28),
+                  ).paddingOnly(bottom: context.screenWidth * 0.039, right: 12)),
           body: const SafeArea(
             child: _ServicePackagesBody(),
           ),
@@ -285,13 +287,9 @@ class _ProfileSummaryCard extends StatelessWidget {
                 )
               : Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Bootstrap.person_badge_fill, size: 24, color: FoodlyThemes.primaryFoodly),
+                    SizedBox.square(
+                      dimension: 39,
+                      child: FoodlyCategories.cateringAndChefs.avatar,
                     ),
                     const SizedBox(width: 12),
                     Expanded(

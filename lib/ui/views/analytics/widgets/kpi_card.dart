@@ -61,7 +61,7 @@ class KpiCard extends StatelessWidget {
           Flexible(
             child: Text(
               label,
-              style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
+              style: FoodlyTextStyles.caption.copyWith(fontSize: 11, height: 1.1),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

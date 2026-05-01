@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart'
     show AuthSessionService, BlocConsumer, FoodlyThemes, PaddingExtension, ReadContext, S, di;
+import 'package:foodly_world/core/enums/foodly_categories_enums.dart' show FoodlyCategories;
 import 'package:foodly_world/data_models/service_packages/professional_profile_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -122,12 +123,12 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           spacing: 16,
                           children: [
-                            _buildTitle().paddingVertical(9),
+                            _buildTitle().paddingVertical(8),
 
                             // ── Tags: specialties, cuisines, certifications, languages ──
                             _buildTagSectionSelector(isSaving),
                             _buildTagInput(isSaving),
-                            _buildTagChips(),
+                            _buildTagChips().paddingBottom(9),
 
                             // ── Experience & Team ──
                             _buildExperienceRow(isSaving),
@@ -143,11 +144,11 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
                             _buildCancellationSection(isSaving),
 
                             // ── Additional Info ──
-                            _buildInsuranceToggle(isSaving),
-                            _buildPortfolioField(isSaving),
+                            _buildInsuranceToggle(isSaving).paddingVertical(6),
+                            _buildPortfolioField(isSaving).paddingTop(3),
 
                             // ── Buttons ──
-                            _buildButtons(context, isSaving).paddingTop(30),
+                            _buildButtons(context, isSaving).paddingTop(32),
                           ],
                         ),
                       ),
@@ -178,9 +179,18 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
   // ── Title ─────────────────────────────────────────────────────
 
   Widget _buildTitle() {
+    // Header icon — was Bootstrap.person_badge (generic ID-card glyph) but
+    // the catering & chefs vertical already has a dedicated category avatar
+    // (`FoodlyCategories.cateringAndChefs.avatar`, the same circular asset
+    // shown on business cards / favorites for this vertical). Reusing it
+    // here keeps the visual language consistent — wherever the user sees
+    // catering & chefs content, the same avatar identifies it.
     return Row(
       children: [
-        const Icon(Bootstrap.person_badge, size: 22, color: FoodlyThemes.primaryFoodly),
+        SizedBox.square(
+          dimension: 28,
+          child: FoodlyCategories.cateringAndChefs.avatar,
+        ),
         const SizedBox(width: 10),
         Text(S.current.professionalProfile, style: FoodlyTextStyles.menuTitle),
       ],
@@ -282,9 +292,12 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
     final tags = _getTagList(_activeTagSection);
     if (tags.isEmpty) return const SizedBox.shrink();
 
+    // Chip spacing 8/8 (was 6/6) to match _buildTagSectionSelector above and
+    // the includes chips in service_package_form_sheet — canonical chip
+    // gutter across Foodly.
     return Wrap(
-      spacing: 6,
-      runSpacing: 6,
+      spacing: 8,
+      runSpacing: 8,
       children: tags.asMap().entries.map((entry) {
         return Chip(
           label: Text(entry.value, style: const TextStyle(fontSize: 12)),
@@ -435,21 +448,24 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
           value: _depositRequired,
           isSaving: isSaving,
           onChanged: (v) => setState(() => _depositRequired = v),
-        ),
+        ).paddingTop(6),
         if (_depositRequired)
-          TextFormField(
-            controller: _depositPercentageController,
-            enabled: !isSaving,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            style: FoodlyTextStyles.inputTextValue,
-            decoration: _inputDecoration(label: S.current.depositPercentage, hint: '30', suffixText: '%'),
-            validator: (v) {
-              if (!_depositRequired) return null;
-              if (v == null || v.trim().isEmpty) return S.current.fieldRequired;
-              final p = double.tryParse(v);
-              if (p == null || p <= 0 || p > 100) return S.current.invalidValue;
-              return null;
-            },
+          SizedBox(
+            height: 60,
+            child: TextFormField(
+              controller: _depositPercentageController,
+              enabled: !isSaving,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              style: FoodlyTextStyles.inputTextValue,
+              decoration: _inputDecoration(label: S.current.depositPercentage, hint: '30', suffixText: '%'),
+              validator: (v) {
+                if (!_depositRequired) return null;
+                if (v == null || v.trim().isEmpty) return S.current.fieldRequired;
+                final p = double.tryParse(v);
+                if (p == null || p <= 0 || p > 100) return S.current.invalidValue;
+                return null;
+              },
+            ),
           ),
       ],
     );
@@ -462,18 +478,21 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 8,
       children: [
-        DropdownButtonFormField<CancellationPolicy>(
-          initialValue: _cancellationPolicy,
-          isExpanded: true,
-          style: FoodlyTextStyles.inputTextValue,
-          decoration: _inputDecoration(label: S.current.cancellationPolicy, hint: ''),
-          items: CancellationPolicy.values.map((cp) {
-            return DropdownMenuItem(
-              value: cp,
-              child: Text(_cancellationLabel(cp), style: const TextStyle(fontSize: 13)),
-            );
-          }).toList(),
-          onChanged: isSaving ? null : (v) => setState(() => _cancellationPolicy = v),
+        SizedBox(
+          height: 60,
+          child: DropdownButtonFormField<CancellationPolicy>(
+            initialValue: _cancellationPolicy,
+            isExpanded: true,
+            style: FoodlyTextStyles.inputTextValue,
+            decoration: _inputDecoration(label: S.current.cancellationPolicy, hint: ''),
+            items: CancellationPolicy.values.map((cp) {
+              return DropdownMenuItem(
+                value: cp,
+                child: Text(_cancellationLabel(cp), style: const TextStyle(fontSize: 13)),
+              );
+            }).toList(),
+            onChanged: isSaving ? null : (v) => setState(() => _cancellationPolicy = v),
+          ),
         ),
         TextFormField(
           controller: _cancellationTextController,
