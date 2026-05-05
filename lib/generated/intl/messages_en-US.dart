@@ -945,6 +945,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationPermissionPermanentlyDenied": MessageLookupByLibrary.simpleMessage(
       "Location permanently denied. Please enable it in app settings.",
     ),
+    "locationPermissionWebInstructions": MessageLookupByLibrary.simpleMessage(
+      "Enable location from the lock icon in your browser\'s address bar.",
+    ),
     "locationRationaleBody": MessageLookupByLibrary.simpleMessage(
       "Foodly uses your location to find restaurants near you. Your location is never shared with other users.",
     ),

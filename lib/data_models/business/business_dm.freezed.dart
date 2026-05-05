@@ -68,7 +68,23 @@ mixin _$BusinessDM {
   @JsonKey(name: 'ratings_count')
   int? get ratingsCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'business_opening_hours')
-  BusinessDays get businessDays => throw _privateConstructorUsedError;
+  BusinessDays get businessDays =>
+      throw _privateConstructorUsedError; // Server-computed open/closed status using the BUSINESS's local
+// timezone (derived from `business_country` in `BusinessStatusHelper`
+// on the BE). The FE no longer computes this — see [currentStatus]
+// getter below for the parsed enum, and `BusinessStatusHelper.php` for
+// the rationale (single source of truth, correct for cross-timezone
+// viewers, kills the "My Pizzeria looks closed" bug).
+// Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
+// from controllers that haven't been updated yet (defensive).
+  @JsonKey(name: 'status')
+  String? get status =>
+      throw _privateConstructorUsedError; // Human-readable hours for TODAY in the business's local time, e.g.
+// "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
+// Server-side string ready to render. Null when no hours configured
+// for today.
+  @JsonKey(name: 'hours_display')
+  String? get hoursDisplay => throw _privateConstructorUsedError;
   @JsonKey(name: 'followers_length')
   int get followersLength => throw _privateConstructorUsedError;
   @JsonKey(name: 'intro_message')
@@ -135,6 +151,8 @@ abstract class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'rating_avg') double? rating,
       @JsonKey(name: 'ratings_count') int? ratingsCount,
       @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+      @JsonKey(name: 'status') String? status,
+      @JsonKey(name: 'hours_display') String? hoursDisplay,
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
@@ -189,6 +207,8 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? rating = freezed,
     Object? ratingsCount = freezed,
     Object? businessDays = null,
+    Object? status = freezed,
+    Object? hoursDisplay = freezed,
     Object? followersLength = null,
     Object? introMessage = freezed,
     Object? allowReservations = null,
@@ -296,6 +316,14 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
           ? _value.businessDays
           : businessDays // ignore: cast_nullable_to_non_nullable
               as BusinessDays,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hoursDisplay: freezed == hoursDisplay
+          ? _value.hoursDisplay
+          : hoursDisplay // ignore: cast_nullable_to_non_nullable
+              as String?,
       followersLength: null == followersLength
           ? _value.followersLength
           : followersLength // ignore: cast_nullable_to_non_nullable
@@ -394,6 +422,8 @@ abstract class _$$BusinessDMImplCopyWith<$Res>
       @JsonKey(name: 'rating_avg') double? rating,
       @JsonKey(name: 'ratings_count') int? ratingsCount,
       @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+      @JsonKey(name: 'status') String? status,
+      @JsonKey(name: 'hours_display') String? hoursDisplay,
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
@@ -448,6 +478,8 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? ratingsCount = freezed,
     Object? businessDays = null,
+    Object? status = freezed,
+    Object? hoursDisplay = freezed,
     Object? followersLength = null,
     Object? introMessage = freezed,
     Object? allowReservations = null,
@@ -555,6 +587,14 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
           ? _value.businessDays
           : businessDays // ignore: cast_nullable_to_non_nullable
               as BusinessDays,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hoursDisplay: freezed == hoursDisplay
+          ? _value.hoursDisplay
+          : hoursDisplay // ignore: cast_nullable_to_non_nullable
+              as String?,
       followersLength: null == followersLength
           ? _value.followersLength
           : followersLength // ignore: cast_nullable_to_non_nullable
@@ -628,6 +668,8 @@ class _$BusinessDMImpl extends _BusinessDM {
       @JsonKey(name: 'ratings_count') this.ratingsCount,
       @JsonKey(name: 'business_opening_hours')
       this.businessDays = const BusinessDays(),
+      @JsonKey(name: 'status') this.status,
+      @JsonKey(name: 'hours_display') this.hoursDisplay,
       @JsonKey(name: 'followers_length') this.followersLength = 0,
       @JsonKey(name: 'intro_message') this.introMessage,
       @JsonKey(name: 'allow_reservations') this.allowReservations = false,
@@ -756,6 +798,24 @@ class _$BusinessDMImpl extends _BusinessDM {
   @override
   @JsonKey(name: 'business_opening_hours')
   final BusinessDays businessDays;
+// Server-computed open/closed status using the BUSINESS's local
+// timezone (derived from `business_country` in `BusinessStatusHelper`
+// on the BE). The FE no longer computes this — see [currentStatus]
+// getter below for the parsed enum, and `BusinessStatusHelper.php` for
+// the rationale (single source of truth, correct for cross-timezone
+// viewers, kills the "My Pizzeria looks closed" bug).
+// Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
+// from controllers that haven't been updated yet (defensive).
+  @override
+  @JsonKey(name: 'status')
+  final String? status;
+// Human-readable hours for TODAY in the business's local time, e.g.
+// "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
+// Server-side string ready to render. Null when no hours configured
+// for today.
+  @override
+  @JsonKey(name: 'hours_display')
+  final String? hoursDisplay;
   @override
   @JsonKey(name: 'followers_length')
   final int followersLength;
@@ -798,7 +858,7 @@ class _$BusinessDMImpl extends _BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 
   @override
@@ -840,6 +900,9 @@ class _$BusinessDMImpl extends _BusinessDM {
                 other.ratingsCount == ratingsCount) &&
             (identical(other.businessDays, businessDays) ||
                 other.businessDays == businessDays) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.hoursDisplay, hoursDisplay) ||
+                other.hoursDisplay == hoursDisplay) &&
             (identical(other.followersLength, followersLength) ||
                 other.followersLength == followersLength) &&
             (identical(other.introMessage, introMessage) ||
@@ -887,6 +950,8 @@ class _$BusinessDMImpl extends _BusinessDM {
         rating,
         ratingsCount,
         businessDays,
+        status,
+        hoursDisplay,
         followersLength,
         introMessage,
         allowReservations,
@@ -943,6 +1008,8 @@ abstract class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'rating_avg') final double? rating,
       @JsonKey(name: 'ratings_count') final int? ratingsCount,
       @JsonKey(name: 'business_opening_hours') final BusinessDays businessDays,
+      @JsonKey(name: 'status') final String? status,
+      @JsonKey(name: 'hours_display') final String? hoursDisplay,
       @JsonKey(name: 'followers_length') final int followersLength,
       @JsonKey(name: 'intro_message') final String? introMessage,
       @JsonKey(name: 'allow_reservations') final bool allowReservations,
@@ -1030,7 +1097,25 @@ abstract class _BusinessDM extends BusinessDM {
   int? get ratingsCount;
   @override
   @JsonKey(name: 'business_opening_hours')
-  BusinessDays get businessDays;
+  BusinessDays
+      get businessDays; // Server-computed open/closed status using the BUSINESS's local
+// timezone (derived from `business_country` in `BusinessStatusHelper`
+// on the BE). The FE no longer computes this — see [currentStatus]
+// getter below for the parsed enum, and `BusinessStatusHelper.php` for
+// the rationale (single source of truth, correct for cross-timezone
+// viewers, kills the "My Pizzeria looks closed" bug).
+// Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
+// from controllers that haven't been updated yet (defensive).
+  @override
+  @JsonKey(name: 'status')
+  String?
+      get status; // Human-readable hours for TODAY in the business's local time, e.g.
+// "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
+// Server-side string ready to render. Null when no hours configured
+// for today.
+  @override
+  @JsonKey(name: 'hours_display')
+  String? get hoursDisplay;
   @override
   @JsonKey(name: 'followers_length')
   int get followersLength;

@@ -1,4 +1,3 @@
-import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
@@ -73,8 +72,6 @@ class BusinessListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDay = business.businessDays.currentDaySchedule;
-
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
@@ -155,9 +152,9 @@ class BusinessListCard extends StatelessWidget {
               child: Row(
                 spacing: 8,
                 children: [
-                  _buildStatusBadge(currentDay.currentStatus),
+                  _buildStatusBadge(business.currentStatus),
                   Text(
-                    currentDay.formattedHours,
+                    business.hoursDisplay ?? '',
                     style: FoodlyTextStyles.labelBoldMini,
                   ),
                   if (business.minServicePrice != null) ...[
@@ -217,8 +214,6 @@ class BusinessGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDay = business.businessDays.currentDaySchedule;
-
     return SizedBox(
       width: context.screenWidth * .43,
       child: Card(
@@ -311,13 +306,13 @@ class BusinessGridCard extends StatelessWidget {
                 spacing: 6,
                 children: [
                   Text(
-                    currentDay.formattedHours,
+                    business.hoursDisplay ?? '',
                     style: FoodlyTextStyles.labelBoldMini,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildStatusBadge(currentDay.currentStatus),
+                      _buildStatusBadge(business.currentStatus),
                       SizedBox.square(
                         dimension: 28,
                         child: business.categoryAvatar,

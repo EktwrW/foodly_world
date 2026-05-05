@@ -52,6 +52,8 @@ _$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
           ? const BusinessDays()
           : BusinessDays.fromJson(
               json['business_opening_hours'] as Map<String, dynamic>),
+      status: json['status'] as String?,
+      hoursDisplay: json['hours_display'] as String?,
       followersLength: (json['followers_length'] as num?)?.toInt() ?? 0,
       introMessage: json['intro_message'] as String?,
       allowReservations: json['allow_reservations'] as bool? ?? false,
@@ -100,6 +102,8 @@ Map<String, dynamic> _$$BusinessDMImplToJson(_$BusinessDMImpl instance) =>
       if (instance.rating case final value?) 'rating_avg': value,
       if (instance.ratingsCount case final value?) 'ratings_count': value,
       'business_opening_hours': instance.businessDays.toJson(),
+      if (instance.status case final value?) 'status': value,
+      if (instance.hoursDisplay case final value?) 'hours_display': value,
       'followers_length': instance.followersLength,
       if (instance.introMessage case final value?) 'intro_message': value,
       'allow_reservations': instance.allowReservations,

@@ -62,6 +62,7 @@ class ReviewCard extends StatelessWidget {
               )),
           Card(
             elevation: 0,
+            color: Colors.white,
             child: Column(
               children: [
                 SizedBox(

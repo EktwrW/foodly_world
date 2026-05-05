@@ -324,6 +324,7 @@
   "onSite": "On site",
   "openMenuAnyDevice": "\nto open the menu in any device",
   "openSettings": "Open Settings",
+  "locationPermissionWebInstructions": "Enable location from the lock icon in your browser's address bar.",
   "open": "Open",
   "openSoon": "Open soon",
   "optional": "Optional",

@@ -328,6 +328,7 @@
   "onSite": "No local",
   "openMenuAnyDevice": "\npara abrir o menu em qualquer dispositivo",
   "openSettings": "Abrir Definições",
+  "locationPermissionWebInstructions": "Ativa a localização através do ícone do cadeado na barra do navegador.",
   "open": "Aberto",
   "openSoon": "Abre em breve",
   "optional": "Opcional",

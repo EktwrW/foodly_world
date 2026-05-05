@@ -983,6 +983,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationPermissionPermanentlyDenied": MessageLookupByLibrary.simpleMessage(
       "Localização permanentemente negada. Ative nas definições da app.",
     ),
+    "locationPermissionWebInstructions": MessageLookupByLibrary.simpleMessage(
+      "Ativa a localização através do ícone do cadeado na barra do navegador.",
+    ),
     "locationRationaleBody": MessageLookupByLibrary.simpleMessage(
       "O Foodly usa a sua localização para encontrar restaurantes perto de si. A sua localização nunca é partilhada com outros utilizadores.",
     ),

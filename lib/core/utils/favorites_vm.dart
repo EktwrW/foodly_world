@@ -168,11 +168,14 @@ class FavoritesVM {
 
     switch (businessSortType) {
       case BusinessSortType.open:
-        // Para ordenamiento por apertura
-        final openBusinesses = sortedList.where((business) => business.businessDays.isOpen).toList()
+        // Sort por estado actual del business (open vs everything else).
+        // `isOpen` ahora delega al `status` server-side de BusinessDM —
+        // computado en la timezone del business. Ver BusinessStatusHelper
+        // en el BE.
+        final openBusinesses = sortedList.where((business) => business.isOpen).toList()
           ..sort((a, b) => (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? '')));
 
-        final closedBusinesses = sortedList.where((business) => !business.businessDays.isOpen).toList()
+        final closedBusinesses = sortedList.where((business) => !business.isOpen).toList()
           ..sort((a, b) => (a.name?.toLowerCase() ?? '').compareTo((b.name?.toLowerCase() ?? '')));
 
         sortedList = isBusinessSortAscending

@@ -1,10 +1,9 @@
 import 'package:clay_containers/widgets/clay_container.dart' show ClayContainer;
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/enums/business_enums.dart' show BusinessStatus;
 import 'package:foodly_world/core/enums/foodly_categories_enums.dart' show FoodlyCategories;
-import 'package:foodly_world/core/extensions/datetime_extension.dart'
-    show BusinessDaysExtension, BusinessStatus, BusinessStatusExtension;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM, Day;
+import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM;
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart' show AvatarStyle, AvatarWidget;
@@ -12,18 +11,23 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 
 class MyFavoritesBusinessMiniCard extends StatelessWidget {
-  final Day? currentDay;
   final BusinessDM? business;
   final SavedPromoBusinessDM? savedPromoBusiness;
 
   const MyFavoritesBusinessMiniCard({
     super.key,
-    this.currentDay,
     this.business,
     this.savedPromoBusiness,
   });
 
-  Day? get _currentDay => currentDay ?? business?.businessDays.currentDaySchedule;
+  /// Status comes from whichever source the parent passed in. Both DMs
+  /// expose `currentStatus` after the server-side timezone refactor — see
+  /// `BusinessStatusHelper.php`.
+  BusinessStatus? get _currentStatus => business?.currentStatus ?? savedPromoBusiness?.currentStatus;
+
+  /// Hours string is server-formatted ("09:00 – 22:00"). Null when no
+  /// hours are configured for today.
+  String? get _hoursDisplay => business?.hoursDisplay ?? savedPromoBusiness?.hoursDisplay;
 
   Widget _buildStatusBadge(BusinessStatus status) {
     final (text, color) = switch (status) {
@@ -133,15 +137,16 @@ class MyFavoritesBusinessMiniCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                if (_currentDay != null)
+                if (_currentStatus != null)
                   Row(
                     spacing: 8,
                     children: [
-                      _buildStatusBadge(_currentDay!.currentStatus),
-                      Text(
-                        _currentDay!.formattedHours,
-                        style: FoodlyTextStyles.labelBoldMini,
-                      ),
+                      _buildStatusBadge(_currentStatus!),
+                      if (_hoursDisplay != null)
+                        Text(
+                          _hoursDisplay!,
+                          style: FoodlyTextStyles.labelBoldMini,
+                        ),
                     ],
                   ),
               ],

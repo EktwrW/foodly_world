@@ -251,6 +251,7 @@ class _ProfileSummaryCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(16),
       elevation: 1,
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),

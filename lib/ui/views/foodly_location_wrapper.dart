@@ -258,9 +258,22 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
             ),
           TextButton(
             onPressed: () {
-              _locationService.awaitingSettingsReturn = true;
               Navigator.of(navContext).pop();
-              Geolocator.openAppSettings();
+              if (kIsWeb) {
+                // Web doesn't have a native "settings" deep link. The
+                // geolocator_web plugin throws `UnsupportedError` if we
+                // call `openAppSettings()`. Instead we tell the user how
+                // to grant the permission themselves — the lock icon in
+                // the address bar is the universal entry point across
+                // Chrome / Safari / Firefox / Edge.
+                FoodlySnackbars.infoGeneric(
+                  navContext,
+                  S.current.locationPermissionWebInstructions,
+                );
+              } else {
+                _locationService.awaitingSettingsReturn = true;
+                Geolocator.openAppSettings();
+              }
             },
             child: Text(S.current.openSettings),
           ),

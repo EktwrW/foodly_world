@@ -110,95 +110,18 @@ extension DateExtension on DateTime {
   }
 }
 
-extension BusinessStatusExtension on Day {
-  BusinessStatus get currentStatus {
-    if (isDayOff) return BusinessStatus.closed;
-    if (isInOpeningHoursRange) return BusinessStatus.open;
-
-    final now = DateTime.now();
-    final dateFormat = DateFormat('HH:mm');
-
-    // Check first period
-    if (openA != null) {
-      final openTime = dateFormat.parse(openA!);
-      var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
-
-      // If opening time is in the past today, check if it might be tomorrow's opening time
-      if (openDateTime.isBefore(now)) {
-        final closeTime = closeA != null ? dateFormat.parse(closeA!) : null;
-        if (closeTime != null) {
-          final closeDateTime = DateTime(now.year, now.month, now.day, closeTime.hour, closeTime.minute);
-          // If closing time is before opening time, it crosses midnight
-          if (closeDateTime.isBefore(openDateTime)) {
-            // Check tomorrow's opening time
-            openDateTime = openDateTime.add(const Duration(days: 1));
-          }
-        }
-      }
-
-      final difference = openDateTime.difference(now);
-      if (difference.inHours <= 1 && difference.inHours >= 0) {
-        return BusinessStatus.openingSoon;
-      }
-    }
-
-    // Check second period
-    if (openB != null) {
-      final openTime = dateFormat.parse(openB!);
-      var openDateTime = DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
-
-      // If opening time is in the past today, check if it might be tomorrow's opening time
-      if (openDateTime.isBefore(now)) {
-        final closeTime = closeB != null ? dateFormat.parse(closeB!) : null;
-        if (closeTime != null) {
-          final closeDateTime = DateTime(now.year, now.month, now.day, closeTime.hour, closeTime.minute);
-          // If closing time is before opening time, it crosses midnight
-          if (closeDateTime.isBefore(openDateTime)) {
-            // Check tomorrow's opening time
-            openDateTime = openDateTime.add(const Duration(days: 1));
-          }
-        }
-      }
-
-      final difference = openDateTime.difference(now);
-      if (difference.inHours <= 1 && difference.inHours >= 0) {
-        return BusinessStatus.openingSoon;
-      }
-    }
-
-    return BusinessStatus.closed;
-  }
-
-  String get formattedHours {
-    if (isDayOff) return 'Closed today';
-
-    final firstPeriod = '${openA ?? ''} - ${closeA ?? ''}';
-    if (openB == null || closeB == null) return firstPeriod;
-
-    return '$firstPeriod, $openB - $closeB';
-  }
-}
-
-extension BusinessDaysExtension on BusinessDays {
-  Day get currentDaySchedule {
-    final now = DateTime.now();
-    final currentWeekday = now.weekday % 7; // 0-6, where 0 is Sunday
-
-    // Map DateTime weekday to our Weekday enum
-    // DateTime: 1-7 (Monday-Sunday)
-    // Our enum: 0-6 (Sunday-Saturday)
-    // To convert: (weekday % 7) gives us 1-6,0 which matches our enum order if we shift
-    return switch (currentWeekday) {
-      0 => weekdaysData[Weekday.sunday]!, // Sunday
-      1 => weekdaysData[Weekday.monday]!, // Monday
-      2 => weekdaysData[Weekday.tuesday]!,
-      3 => weekdaysData[Weekday.wednesday]!,
-      4 => weekdaysData[Weekday.thursday]!,
-      5 => weekdaysData[Weekday.friday]!,
-      6 => weekdaysData[Weekday.saturday]!,
-      _ => throw ArgumentError('Invalid weekday: $currentWeekday')
-    };
-  }
-}
-
-enum BusinessStatus { open, closed, openingSoon }
+// Business open/closed logic moved server-side. The BE computes `status`
+// and `hours_display` per business in its own local timezone (see
+// `BusinessStatusHelper.php`), and the FE reads them via
+// [BusinessDM.currentStatus] / [BusinessDM.hoursDisplay].
+//
+// What used to live here:
+//   - `BusinessStatusExtension on Day` (currentStatus + formattedHours)
+//   - `BusinessDaysExtension on BusinessDays` (currentDaySchedule)
+//   - `enum BusinessStatus`
+//
+// All deleted. The enum moved to `core/enums/business_enums.dart` so
+// widgets can import it without pulling the date-formatting extensions
+// in this file. Computing it on the device with `DateTime.now()` was the
+// root of the "My Pizzeria looks closed" bug — the device clock isn't
+// the business's clock for any cross-timezone viewer.

@@ -203,7 +203,7 @@ class __$$SavedPromoBusinessDMImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SavedPromoBusinessDMImpl implements _SavedPromoBusinessDM {
+class _$SavedPromoBusinessDMImpl extends _SavedPromoBusinessDM {
   const _$SavedPromoBusinessDMImpl(
       {required this.uuid,
       required this.name,
@@ -212,7 +212,8 @@ class _$SavedPromoBusinessDMImpl implements _SavedPromoBusinessDM {
       @JsonKey(name: 'category_name') this.categoryName,
       @JsonKey(name: 'category_image_path') this.categoryImagePath,
       this.status = 'closed',
-      @JsonKey(name: 'hours_display') this.hoursDisplay});
+      @JsonKey(name: 'hours_display') this.hoursDisplay})
+      : super._();
 
   factory _$SavedPromoBusinessDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$SavedPromoBusinessDMImplFromJson(json);
@@ -287,7 +288,7 @@ class _$SavedPromoBusinessDMImpl implements _SavedPromoBusinessDM {
   }
 }
 
-abstract class _SavedPromoBusinessDM implements SavedPromoBusinessDM {
+abstract class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
   const factory _SavedPromoBusinessDM(
           {required final String uuid,
           required final String name,
@@ -298,6 +299,7 @@ abstract class _SavedPromoBusinessDM implements SavedPromoBusinessDM {
           final String status,
           @JsonKey(name: 'hours_display') final String? hoursDisplay}) =
       _$SavedPromoBusinessDMImpl;
+  const _SavedPromoBusinessDM._() : super._();
 
   factory _SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =
       _$SavedPromoBusinessDMImpl.fromJson;

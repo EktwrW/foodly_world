@@ -1,6 +1,7 @@
 import 'dart:async' show TimeoutException;
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, Bloc, Emitter, FoodlyStrings, Logger, S;
 import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
@@ -225,23 +226,34 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         ]);
       } catch (e) {
         _logger.w('Geolocator.getCurrentPosition timed out / failed: $e — falling back to lastKnownPosition');
-        try {
-          // Timeout 5 s: `getLastKnownPosition` lee el cache del sistema
-          // de localización — normalmente <200 ms, pero en Android puede
-          // esperar un "hotsync" del cache si no hay fix reciente, y en
-          // plugins con versión vieja se han visto cuelgues por binder.
-          // Si timeoutea, `currentPosition` queda `null` y el finally de
-          // `determinePosition` emite `_LocationChecked` con position=null;
-          // downstream maneja "sin ubicación" elegantemente.
-          currentPosition = await Geolocator.getLastKnownPosition().timeout(
-            const Duration(seconds: 5),
-            onTimeout: () {
-              _logger.w('Geolocator.getLastKnownPosition timed out after 5s — continuing with null position');
-              return null;
-            },
-          );
-        } catch (e2) {
-          _logger.e('Geolocator.getLastKnownPosition also failed: $e2');
+        // Web does NOT implement `getLastKnownPosition` — the geolocator_web
+        // implementation throws `UnsupportedError` synchronously. Skipping
+        // it on web is correct: browsers don't expose a cached fix anyway,
+        // so the only sensible fallback is `position = null` and let the UI
+        // surface "no location" elegantly. Native (iOS/Android) keeps the
+        // try/timeout path because `getLastKnownPosition` IS supported and
+        // reads the OS-level cache.
+        if (kIsWeb) {
+          _logger.w('Skipping getLastKnownPosition fallback on web — not supported by geolocator_web');
+        } else {
+          try {
+            // Timeout 5 s: `getLastKnownPosition` lee el cache del sistema
+            // de localización — normalmente <200 ms, pero en Android puede
+            // esperar un "hotsync" del cache si no hay fix reciente, y en
+            // plugins con versión vieja se han visto cuelgues por binder.
+            // Si timeoutea, `currentPosition` queda `null` y el finally de
+            // `determinePosition` emite `_LocationChecked` con position=null;
+            // downstream maneja "sin ubicación" elegantemente.
+            currentPosition = await Geolocator.getLastKnownPosition().timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                _logger.w('Geolocator.getLastKnownPosition timed out after 5s — continuing with null position');
+                return null;
+              },
+            );
+          } catch (e2) {
+            _logger.e('Geolocator.getLastKnownPosition also failed: $e2');
+          }
         }
       }
       _locationDM = _locationDM.copyWith(position: currentPosition);

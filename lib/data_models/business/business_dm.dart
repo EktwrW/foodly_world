@@ -65,6 +65,20 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'rating_avg') double? rating,
     @JsonKey(name: 'ratings_count') int? ratingsCount,
     @JsonKey(name: 'business_opening_hours') @Default(BusinessDays()) BusinessDays businessDays,
+    // Server-computed open/closed status using the BUSINESS's local
+    // timezone (derived from `business_country` in `BusinessStatusHelper`
+    // on the BE). The FE no longer computes this — see [currentStatus]
+    // getter below for the parsed enum, and `BusinessStatusHelper.php` for
+    // the rationale (single source of truth, correct for cross-timezone
+    // viewers, kills the "My Pizzeria looks closed" bug).
+    // Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
+    // from controllers that haven't been updated yet (defensive).
+    @JsonKey(name: 'status') String? status,
+    // Human-readable hours for TODAY in the business's local time, e.g.
+    // "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
+    // Server-side string ready to render. Null when no hours configured
+    // for today.
+    @JsonKey(name: 'hours_display') String? hoursDisplay,
     @JsonKey(name: 'followers_length') @Default(0) int followersLength,
     @JsonKey(name: 'intro_message') String? introMessage,
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
@@ -112,6 +126,31 @@ class BusinessDM with _$BusinessDM {
         dimension: 28,
         child: categoryId?.avatar ?? category?.id?.avatar ?? const SizedBox.shrink(),
       );
+
+  /// Parses the server's `status` string into the [BusinessStatus] enum.
+  /// The BE computes the status in the business's local timezone, so this
+  /// getter is the SINGLE source of truth for "is this business open right
+  /// now?" — never compute it locally with `DateTime.now()` because that
+  /// uses the device's timezone, which doesn't match the business's for
+  /// any cross-zone viewer.
+  ///
+  /// Defensive default `closed` when the BE didn't ship `status` (legacy
+  /// payloads from controllers that haven't been redeployed yet, or in
+  /// freezed-default `BusinessDM()` instances). All endpoints in the
+  /// codebase are wired to populate this after the timezone-aware refactor;
+  /// see `BusinessStatusHelper.php`.
+  BusinessStatus get currentStatus => switch (status) {
+        'open' => BusinessStatus.open,
+        'opening_soon' => BusinessStatus.openingSoon,
+        'closed' => BusinessStatus.closed,
+        _ => BusinessStatus.closed,
+      };
+
+  /// Convenience boolean for callers that only care about open vs not-open
+  /// (e.g. sort: open first, closed last). `opening_soon` reads as NOT
+  /// open here — the business literally isn't accepting customers right
+  /// now, even if it will in 30 min.
+  bool get isOpen => currentStatus == BusinessStatus.open;
 
   AssetData get bussinessReservationImage {
     return switch (categoryId) {

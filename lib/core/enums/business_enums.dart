@@ -3,6 +3,17 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, BoxIcons;
 import 'package:json_annotation/json_annotation.dart';
 
+/// Whether a business is currently open right now, opening within 60
+/// minutes, or closed. Server-computed in the business's local timezone
+/// (see `BusinessStatusHelper.php` on the BE) and shipped on every business
+/// resource as the `status` string. The FE parses that string into this
+/// enum via [BusinessDM.currentStatus] — there is no client-side fallback
+/// computation, so a rendered status is exactly what the BE measured.
+///
+/// Lives here (not next to BusinessDM) so widgets can `import` it without
+/// pulling the full DM file and its Freezed-generated parts.
+enum BusinessStatus { open, closed, openingSoon }
+
 enum BusinessServices {
   @JsonValue(1)
   wifi(Bootstrap.wifi, 1),

@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/enums/business_enums.dart' show BusinessStatus;
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,6 +7,8 @@ part 'saved_promotions_response_dm.g.dart';
 
 @freezed
 class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
+  const SavedPromoBusinessDM._();
+
   const factory SavedPromoBusinessDM({
     required String uuid,
     required String name,
@@ -19,6 +22,16 @@ class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
 
   factory SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =>
       _$SavedPromoBusinessDMFromJson(json);
+
+  /// Same parsing rules as [BusinessDM.currentStatus] — keeps the saved-
+  /// promotions card and the regular business card on the same enum
+  /// surface for the UI badge.
+  BusinessStatus get currentStatus => switch (status) {
+        'open' => BusinessStatus.open,
+        'opening_soon' => BusinessStatus.openingSoon,
+        'closed' => BusinessStatus.closed,
+        _ => BusinessStatus.closed,
+      };
 }
 
 @freezed

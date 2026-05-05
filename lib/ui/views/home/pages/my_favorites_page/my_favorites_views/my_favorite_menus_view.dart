@@ -70,7 +70,6 @@ class _FavoriteMenusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final business = menu.business;
-    final currentDay = menu.business?.businessDays.currentDaySchedule;
 
     return Card(
       key: Key(menu.uuid),
@@ -138,13 +137,13 @@ class _FavoriteMenusCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (currentDay != null)
+                  if (business != null)
                     Row(
                       spacing: 8,
                       children: [
-                        _buildStatusBadge(currentDay.currentStatus),
+                        _buildStatusBadge(business.currentStatus),
                         Text(
-                          currentDay.formattedHours,
+                          business.hoursDisplay ?? '',
                           style: FoodlyTextStyles.labelBoldMini,
                         ),
                       ],

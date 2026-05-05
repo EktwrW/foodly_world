@@ -2409,6 +2409,16 @@ class S {
     );
   }
 
+  /// `Enable location from the lock icon in your browser's address bar.`
+  String get locationPermissionWebInstructions {
+    return Intl.message(
+      'Enable location from the lock icon in your browser\'s address bar.',
+      name: 'locationPermissionWebInstructions',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Open`
   String get open {
     return Intl.message('Open', name: 'open', desc: '', args: []);

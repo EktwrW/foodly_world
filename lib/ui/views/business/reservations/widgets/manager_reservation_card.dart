@@ -176,7 +176,7 @@ class ManagerReservationCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: reservation.isConfirmed ? Colors.white : null,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: content,

@@ -6,6 +6,7 @@ import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.da
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:universal_io/io.dart' as uni_io;
 
 class CreatePostDialog extends StatefulWidget {
@@ -87,17 +88,22 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      // Material 3 default tiñe el surface del Dialog con el primary del
+      // theme según la elevación → como `primaryFoodly` es purple, el chrome
+      // (header + action row) salía rosado y el tinte interno del wrapper
+      // del TextField se confundía con el fondo. Forzamos blanco puro para
+      // que el contenedor interno sí se lea como "campo" sobre fondo limpio.
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: context.screenHeight * 0.72),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildHeader(),
-            const Divider(height: 1),
             Flexible(child: _buildBody()),
-            const Divider(height: 1),
             _buildActions(),
           ],
         ),
@@ -111,18 +117,18 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
         Expanded(
           child: Text(
             S.current.createPostTitle,
-            style: FoodlyTextStyles.profileSectionTitlePurple,
+            style: FoodlyTextStyles.confirmationTextPrimary,
           ),
         ),
-        CloseButton(
-          color: Colors.grey.shade500,
+        const CloseButton(
+          color: FoodlyThemes.secondaryFoodly,
           style: ButtonStyle(
-            padding: WidgetStateProperty.all(EdgeInsets.zero),
-            minimumSize: WidgetStateProperty.all(const Size(36, 36)),
+            padding: WidgetStatePropertyAll(EdgeInsets.zero),
+            minimumSize: WidgetStatePropertyAll(Size(32, 32)),
           ),
         ),
       ],
-    ).paddingOnly(left: 16, top: 12, right: 8, bottom: 12);
+    ).paddingOnly(left: 16, top: 12, right: 16, bottom: 12);
   }
 
   Widget _buildBody() {
@@ -132,25 +138,44 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Text input ──
-          TextField(
-            controller: _contentController,
-            focusNode: _focusNode,
-            maxLines: null,
-            minLines: 6,
-            maxLength: 1000,
-            textCapitalization: TextCapitalization.sentences,
-            style: FoodlyTextStyles.label,
-            onChanged: (_) => setState(() {}),
-            decoration: InputDecoration(
-              hintText: S.current.whatsOnYourMind,
-              hintStyle: FoodlyTextStyles.hintText,
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              counterStyle: FoodlyTextStyles.caption.copyWith(color: Colors.black26, fontSize: 11),
+          //
+          // Se envuelve en un Container con tinte primario muy sutil para
+          // que el área editable se lea como un campo y no como prosa
+          // suelta dentro del dialog. El contraste con el fondo blanco
+          // del body es deliberadamente bajo (alpha 0.04) — el objetivo
+          // es delimitar, no competir con el contenido. counterText se
+          // suprime acá y el contador real se renderiza en la action row
+          // (ver _buildActions) para que el counter no flote contra el
+          // borde del Container.
+          const SizedBox(height: 4),
+          Container(
+            decoration: BoxDecoration(
+              color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.04),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
+            child: TextField(
+              controller: _contentController,
+              focusNode: _focusNode,
+              maxLines: null,
+              minLines: 6,
+              maxLength: 1000,
+              textCapitalization: TextCapitalization.sentences,
+              style: FoodlyTextStyles.actionsBody,
+              onChanged: (_) => setState(() {}),
+              decoration: InputDecoration(
+                hintText: S.current.whatsOnYourMind,
+                hintStyle: FoodlyTextStyles.hintText,
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                isCollapsed: true,
+                contentPadding: EdgeInsets.zero,
+                counterText: '',
+              ),
             ),
           ),
+          const SizedBox(height: 8),
 
           // ── Detected URL preview ──
           if (_detectedUrl != null) ...[
@@ -195,8 +220,13 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
   }
 
   Widget _buildActions() {
+    final length = _contentController.text.characters.length;
+    // Highlight cuando el counter se acerca al límite (≥90 %). El warning
+    // amarillo de los temas Foodly comunica "atención sin error" — pasar a
+    // error rojo justo en el corte sería castigar al usuario por usar todo
+    // el espacio disponible.
+    final nearLimit = length >= 900;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // ── Photo picker ──
         _ActionIcon(
@@ -205,6 +235,19 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
           enabled: _photoPath == null,
           onTap: _pickPhoto,
         ),
+        const Spacer(),
+        // ── Counter ──
+        // Se mueve acá desde InputDecoration.counterStyle para que viva
+        // junto al CTA y no flote contra el borde del Container del
+        // TextField. Mantiene el límite visible sin pelearse con el body.
+        Text(
+          '$length/1000',
+          style: FoodlyTextStyles.caption.copyWith(
+            fontSize: 11,
+            color: nearLimit ? FoodlyThemes.warning : FoodlyThemes.secondaryFoodly,
+          ),
+        ),
+        const SizedBox(width: 12),
 
         // ── Post button ──
         SizedBox.fromSize(
@@ -239,13 +282,16 @@ class _ActionIcon extends StatelessWidget {
       message: tooltip,
       child: InkWell(
         onTap: enabled ? onTap : null,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
+        // Padding 10 + icon 22 = touch target 42pt → más cómodo que los
+        // 38pt previos y por encima del mínimo de Material (40pt) sin
+        // engordar el footer del dialog.
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(10),
           child: Icon(
             icon,
             size: 22,
-            color: enabled ? FoodlyThemes.primaryFoodly : Colors.grey.shade300,
+            color: enabled ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly.withValues(alpha: 0.35),
           ),
         ),
       ),

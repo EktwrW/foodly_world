@@ -31,24 +31,13 @@ class BusinessDays with _$BusinessDays {
         Weekday.saturday: day6,
       };
 
-  bool get isOpen {
-    final now = DateTime.now();
-
-    final Weekday currentWeekday = switch (now.weekday) {
-      1 => Weekday.monday,
-      2 => Weekday.tuesday,
-      3 => Weekday.wednesday,
-      4 => Weekday.thursday,
-      5 => Weekday.friday,
-      6 => Weekday.saturday,
-      7 => Weekday.sunday,
-      _ => throw ArgumentError('Invalid weekday: ${now.weekday}')
-    };
-
-    final today = weekdaysData[currentWeekday]!;
-
-    return today.isInOpeningHoursRange;
-  }
+  // `isOpen` getter intentionally removed: use [BusinessDM.isOpen] instead,
+  // which reads the server-computed `status` field. The BE applies the
+  // business's local timezone (via BusinessStatusHelper) — computing it
+  // here with `DateTime.now()` was wrong for any cross-timezone viewer.
+  // [Day.isInOpeningHoursRange] still exists for the visited/business
+  // weekly opening-hours widget, where it's only used to highlight the
+  // current weekday row (visual cue, not a status truth).
 
   bool get allDaysAreDayOff => weekdaysData.values.every((day) => day.isDayOff);
 }
