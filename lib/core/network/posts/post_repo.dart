@@ -16,6 +16,7 @@ class PostRepo {
     double? latitude,
     double? longitude,
     int? radius,
+    String? filter,
   }) async {
     try {
       return ApiResult.success(
@@ -25,6 +26,7 @@ class PostRepo {
           latitude: latitude,
           longitude: longitude,
           radius: radius,
+          filter: filter,
         ),
       );
     } catch (e, s) {

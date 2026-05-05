@@ -667,7 +667,14 @@ mixin _$NotificationDataDM {
   @JsonKey(name: 'promotion_uuid')
   String? get promotionUuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservation_uuid')
-  String? get reservationUuid => throw _privateConstructorUsedError;
+  String? get reservationUuid =>
+      throw _privateConstructorUsedError; // Social graph: post creado por un user seguido (Follow Loop). Lo
+// poblamos por completitud aunque hoy el tap-target del switch de
+// entityUuid es el perfil del actor (no hay aún una ruta a un post
+// individual). Si más adelante agregamos PostDetailPage, basta con
+// cambiar el case del switch a data?.postUuid.
+  @JsonKey(name: 'post_uuid')
+  String? get postUuid => throw _privateConstructorUsedError;
 
   /// Serializes this NotificationDataDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -701,7 +708,8 @@ abstract class $NotificationDataDMCopyWith<$Res> {
       @JsonKey(name: 'combo_uuid') String? comboUuid,
       @JsonKey(name: 'promotion_id') int? promotionId,
       @JsonKey(name: 'promotion_uuid') String? promotionUuid,
-      @JsonKey(name: 'reservation_uuid') String? reservationUuid});
+      @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+      @JsonKey(name: 'post_uuid') String? postUuid});
 }
 
 /// @nodoc
@@ -735,6 +743,7 @@ class _$NotificationDataDMCopyWithImpl<$Res, $Val extends NotificationDataDM>
     Object? promotionId = freezed,
     Object? promotionUuid = freezed,
     Object? reservationUuid = freezed,
+    Object? postUuid = freezed,
   }) {
     return _then(_value.copyWith(
       actorId: freezed == actorId
@@ -801,6 +810,10 @@ class _$NotificationDataDMCopyWithImpl<$Res, $Val extends NotificationDataDM>
           ? _value.reservationUuid
           : reservationUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      postUuid: freezed == postUuid
+          ? _value.postUuid
+          : postUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -829,7 +842,8 @@ abstract class _$$NotificationDataDMImplCopyWith<$Res>
       @JsonKey(name: 'combo_uuid') String? comboUuid,
       @JsonKey(name: 'promotion_id') int? promotionId,
       @JsonKey(name: 'promotion_uuid') String? promotionUuid,
-      @JsonKey(name: 'reservation_uuid') String? reservationUuid});
+      @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+      @JsonKey(name: 'post_uuid') String? postUuid});
 }
 
 /// @nodoc
@@ -861,6 +875,7 @@ class __$$NotificationDataDMImplCopyWithImpl<$Res>
     Object? promotionId = freezed,
     Object? promotionUuid = freezed,
     Object? reservationUuid = freezed,
+    Object? postUuid = freezed,
   }) {
     return _then(_$NotificationDataDMImpl(
       actorId: freezed == actorId
@@ -927,6 +942,10 @@ class __$$NotificationDataDMImplCopyWithImpl<$Res>
           ? _value.reservationUuid
           : reservationUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      postUuid: freezed == postUuid
+          ? _value.postUuid
+          : postUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -950,7 +969,8 @@ class _$NotificationDataDMImpl implements _NotificationDataDM {
       @JsonKey(name: 'combo_uuid') this.comboUuid,
       @JsonKey(name: 'promotion_id') this.promotionId,
       @JsonKey(name: 'promotion_uuid') this.promotionUuid,
-      @JsonKey(name: 'reservation_uuid') this.reservationUuid});
+      @JsonKey(name: 'reservation_uuid') this.reservationUuid,
+      @JsonKey(name: 'post_uuid') this.postUuid});
 
   factory _$NotificationDataDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationDataDMImplFromJson(json);
@@ -1003,10 +1023,18 @@ class _$NotificationDataDMImpl implements _NotificationDataDM {
   @override
   @JsonKey(name: 'reservation_uuid')
   final String? reservationUuid;
+// Social graph: post creado por un user seguido (Follow Loop). Lo
+// poblamos por completitud aunque hoy el tap-target del switch de
+// entityUuid es el perfil del actor (no hay aún una ruta a un post
+// individual). Si más adelante agregamos PostDetailPage, basta con
+// cambiar el case del switch a data?.postUuid.
+  @override
+  @JsonKey(name: 'post_uuid')
+  final String? postUuid;
 
   @override
   String toString() {
-    return 'NotificationDataDM(actorId: $actorId, actorUuid: $actorUuid, actorPhotoUrl: $actorPhotoUrl, businessId: $businessId, businessUuid: $businessUuid, menuId: $menuId, menuUuid: $menuUuid, foodItemId: $foodItemId, foodItemUuid: $foodItemUuid, drinkItemId: $drinkItemId, drinkItemUuid: $drinkItemUuid, comboId: $comboId, comboUuid: $comboUuid, promotionId: $promotionId, promotionUuid: $promotionUuid, reservationUuid: $reservationUuid)';
+    return 'NotificationDataDM(actorId: $actorId, actorUuid: $actorUuid, actorPhotoUrl: $actorPhotoUrl, businessId: $businessId, businessUuid: $businessUuid, menuId: $menuId, menuUuid: $menuUuid, foodItemId: $foodItemId, foodItemUuid: $foodItemUuid, drinkItemId: $drinkItemId, drinkItemUuid: $drinkItemUuid, comboId: $comboId, comboUuid: $comboUuid, promotionId: $promotionId, promotionUuid: $promotionUuid, reservationUuid: $reservationUuid, postUuid: $postUuid)';
   }
 
   @override
@@ -1042,7 +1070,9 @@ class _$NotificationDataDMImpl implements _NotificationDataDM {
             (identical(other.promotionUuid, promotionUuid) ||
                 other.promotionUuid == promotionUuid) &&
             (identical(other.reservationUuid, reservationUuid) ||
-                other.reservationUuid == reservationUuid));
+                other.reservationUuid == reservationUuid) &&
+            (identical(other.postUuid, postUuid) ||
+                other.postUuid == postUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1064,7 +1094,8 @@ class _$NotificationDataDMImpl implements _NotificationDataDM {
       comboUuid,
       promotionId,
       promotionUuid,
-      reservationUuid);
+      reservationUuid,
+      postUuid);
 
   /// Create a copy of NotificationDataDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1100,7 +1131,8 @@ abstract class _NotificationDataDM implements NotificationDataDM {
           @JsonKey(name: 'combo_uuid') final String? comboUuid,
           @JsonKey(name: 'promotion_id') final int? promotionId,
           @JsonKey(name: 'promotion_uuid') final String? promotionUuid,
-          @JsonKey(name: 'reservation_uuid') final String? reservationUuid}) =
+          @JsonKey(name: 'reservation_uuid') final String? reservationUuid,
+          @JsonKey(name: 'post_uuid') final String? postUuid}) =
       _$NotificationDataDMImpl;
 
   factory _NotificationDataDM.fromJson(Map<String, dynamic> json) =
@@ -1153,7 +1185,15 @@ abstract class _NotificationDataDM implements NotificationDataDM {
   String? get promotionUuid;
   @override
   @JsonKey(name: 'reservation_uuid')
-  String? get reservationUuid;
+  String?
+      get reservationUuid; // Social graph: post creado por un user seguido (Follow Loop). Lo
+// poblamos por completitud aunque hoy el tap-target del switch de
+// entityUuid es el perfil del actor (no hay aún una ruta a un post
+// individual). Si más adelante agregamos PostDetailPage, basta con
+// cambiar el case del switch a data?.postUuid.
+  @override
+  @JsonKey(name: 'post_uuid')
+  String? get postUuid;
 
   /// Create a copy of NotificationDataDM
   /// with the given fields replaced by the non-null parameter values.

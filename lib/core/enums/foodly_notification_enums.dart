@@ -75,7 +75,13 @@ enum FoodlyNotificationSubType {
   @JsonValue('service_quote_rejected')
   serviceQuoteRejected('service_quote_rejected'),
   @JsonValue('service_message_new')
-  serviceMessageNew('service_message_new');
+  serviceMessageNew('service_message_new'),
+  // Social graph (Follow Loop, mayo 2026): un user que el destinatario
+  // sigue publicó un post nuevo. Push-eligible (ver
+  // NotificationController::PUSH_ELIGIBLE_SUBTYPES). Tap-target = perfil
+  // del actor; `data` trae actor_uuid + post_uuid.
+  @JsonValue('followed_user_post')
+  followedUserPost('followed_user_post');
 
   final String value;
   const FoodlyNotificationSubType(this.value);

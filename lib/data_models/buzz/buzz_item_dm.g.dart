@@ -53,6 +53,10 @@ _$BuzzItemDMImpl _$$BuzzItemDMImplFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      fromFollowing: json['from_following'] as bool? ?? false,
+      actorUuid: json['actor_uuid'] as String?,
+      actorName: json['actor_name'] as String?,
+      actorPhotoUrl: json['actor_photo_url'] as String?,
     );
 
 Map<String, dynamic> _$$BuzzItemDMImplToJson(_$BuzzItemDMImpl instance) =>
@@ -67,4 +71,8 @@ Map<String, dynamic> _$$BuzzItemDMImplToJson(_$BuzzItemDMImpl instance) =>
       if (instance.entityName case final value?) 'entity_name': value,
       if (instance.createdAt?.toIso8601String() case final value?)
         'created_at': value,
+      'from_following': instance.fromFollowing,
+      if (instance.actorUuid case final value?) 'actor_uuid': value,
+      if (instance.actorName case final value?) 'actor_name': value,
+      if (instance.actorPhotoUrl case final value?) 'actor_photo_url': value,
     };

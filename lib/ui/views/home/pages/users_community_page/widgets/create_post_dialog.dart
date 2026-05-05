@@ -6,7 +6,6 @@ import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.da
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:universal_io/io.dart' as uni_io;
 
 class CreatePostDialog extends StatefulWidget {

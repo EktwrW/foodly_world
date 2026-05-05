@@ -63,12 +63,20 @@ class SocialCubit extends Cubit<SocialState> {
     final latitude = position?.latitude;
     final longitude = position?.longitude;
 
+    // Cuando el filtro es "following", el BE ignora lat/lng pero se las
+    // pasamos igual (por consistencia con el getter del repo) — el
+    // controller las descarta.
+    final filter = _vm.feedFilter == PostsFeedFilter.following
+        ? PostsFeedFilter.following.value
+        : null;
+
     try {
       final result = await _postRepo.getPosts(
         page: 1,
         perPage: 20,
         latitude: latitude,
         longitude: longitude,
+        filter: filter,
       );
 
       await result.when(
@@ -100,6 +108,9 @@ class SocialCubit extends Cubit<SocialState> {
 
     final nextPage = _vm.currentPage + 1;
     final position = _locationService.currentLocation.position;
+    final filter = _vm.feedFilter == PostsFeedFilter.following
+        ? PostsFeedFilter.following.value
+        : null;
 
     try {
       final result = await _postRepo.getPosts(
@@ -107,6 +118,7 @@ class SocialCubit extends Cubit<SocialState> {
         perPage: 20,
         latitude: position?.latitude,
         longitude: position?.longitude,
+        filter: filter,
       );
 
       result.when(
@@ -262,6 +274,22 @@ class SocialCubit extends Cubit<SocialState> {
       _logger.e('Exception toggling like: $e');
       loadPosts();
     }
+  }
+
+  /// Cambia entre el feed por proximidad y el feed de usuarios seguidos.
+  /// Limpia los posts visibles y dispara reload — sin esto el ListView se
+  /// queda con los posts del filtro anterior mientras llega el response.
+  void changeFeedFilter(PostsFeedFilter filter) {
+    if (filter == _vm.feedFilter) return;
+    _tracker.track(
+      'social.feed_filter_changed',
+      'SocialCubit',
+      page: 'community',
+      data: {'filter': filter.value},
+    );
+    _vm = _vm.copyWith(feedFilter: filter, posts: [], postsMeta: null);
+    emit(SocialState.loaded(_vm));
+    loadPosts(refresh: true);
   }
 
   /// Cambia la vista actual (Posts / Users)

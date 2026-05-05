@@ -23,6 +23,34 @@ enum SocialPageViews {
   }
 }
 
+/// Filtros para el feed de posts de la pestaña Sociales.
+///
+/// `nearby`   → comportamiento histórico: posts ordenados por fecha y
+///              filtrados por radio geográfico desde la ubicación actual.
+/// `following`→ Follow Loop (mayo 2026): posts SOLO de usuarios que el
+///              user actual sigue, sin filtro geográfico (la red social es
+///              global). Si el user no sigue a nadie el BE devuelve lista
+///              vacía y la UI muestra un empty-state explicativo.
+///
+/// El `value` se serializa como ?filter=... en el query del endpoint.
+enum PostsFeedFilter {
+  nearby('nearby'),
+  following('following');
+
+  final String value;
+  const PostsFeedFilter(this.value);
+
+  String get label => switch (this) {
+        PostsFeedFilter.nearby => S.current.feedFilterNearby,
+        PostsFeedFilter.following => S.current.feedFilterFollowing,
+      };
+
+  IconData get icon => switch (this) {
+        PostsFeedFilter.nearby => Bootstrap.geo_alt_fill,
+        PostsFeedFilter.following => Bootstrap.person_check_fill,
+      };
+}
+
 enum UserSortMode {
   active,
   nearest,
@@ -57,6 +85,7 @@ class SocialVM with _$SocialVM {
     PostsMetaDM? postsMeta,
     @Default(false) bool isLoadingMorePosts,
     @Default(false) bool isCreatingPost,
+    @Default(PostsFeedFilter.nearby) PostsFeedFilter feedFilter,
 
     // Users state
     @Default([]) List<NearbyUserDM> nearbyUsers,

@@ -62,11 +62,15 @@ class PostCard extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
-        AvatarWidget(
+        // Anillo purple cuando el autor es alguien que el user actual ya
+        // sigue. Visual cue barato y consistente con el patrón Instagram /
+        // X — comunica "esta persona ya está en tu red" sin ocupar texto
+        // adicional en el header. Off cuando el autor es uno mismo (la
+        // BE devuelve isFollowedByMe=false en ese caso) y cuando aún no
+        // se sigue al autor (avatar normal).
+        _AvatarWithFollowRing(
           avatarUrl: post.userPhoto,
-          avatarType: AvatarType.user,
-          width: 40,
-          height: 40,
+          isFollowed: post.isFollowedByMe,
         ),
         Expanded(
           child: Column(
@@ -246,5 +250,49 @@ class PostCard extends StatelessWidget {
     // Text-only share.
     // ignore: deprecated_member_use
     await Share.share(shareText);
+  }
+}
+
+/// Avatar 40×40 con un anillo `primaryFoodly` opcional alrededor.
+///
+/// Cuando `isFollowed` es false renderiza el avatar exactamente como antes
+/// (sin overhead). Cuando es true envuelve al avatar en un Container con
+/// border circular de 1.6 px en `primaryFoodly` y un padding de 2 px para
+/// que el anillo quede separado del avatar y no parezca un bordeado.
+///
+/// El tamaño total del avatar (incluyendo anillo) se mantiene en 40 px
+/// para no empujar el resto del header. El AvatarWidget interno se
+/// reduce a 36 cuando hay anillo.
+class _AvatarWithFollowRing extends StatelessWidget {
+  final String? avatarUrl;
+  final bool isFollowed;
+
+  const _AvatarWithFollowRing({required this.avatarUrl, required this.isFollowed});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isFollowed) {
+      return AvatarWidget(
+        avatarUrl: avatarUrl,
+        avatarType: AvatarType.user,
+        width: 40,
+        height: 40,
+      );
+    }
+    return Container(
+      width: 40,
+      height: 40,
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: FoodlyThemes.primaryFoodly, width: 1.6),
+      ),
+      child: AvatarWidget(
+        avatarUrl: avatarUrl,
+        avatarType: AvatarType.user,
+        width: 36,
+        height: 36,
+      ),
+    );
   }
 }

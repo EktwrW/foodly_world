@@ -76,6 +76,7 @@ _$NotificationDataDMImpl _$$NotificationDataDMImplFromJson(
       promotionId: (json['promotion_id'] as num?)?.toInt(),
       promotionUuid: json['promotion_uuid'] as String?,
       reservationUuid: json['reservation_uuid'] as String?,
+      postUuid: json['post_uuid'] as String?,
     );
 
 Map<String, dynamic> _$$NotificationDataDMImplToJson(
@@ -97,6 +98,7 @@ Map<String, dynamic> _$$NotificationDataDMImplToJson(
       if (instance.promotionId case final value?) 'promotion_id': value,
       if (instance.promotionUuid case final value?) 'promotion_uuid': value,
       if (instance.reservationUuid case final value?) 'reservation_uuid': value,
+      if (instance.postUuid case final value?) 'post_uuid': value,
     };
 
 _$NotificationDMImpl _$$NotificationDMImplFromJson(Map<String, dynamic> json) =>
@@ -167,4 +169,5 @@ const _$FoodlyNotificationSubTypeEnumMap = {
   FoodlyNotificationSubType.serviceQuoteApproved: 'service_quote_approved',
   FoodlyNotificationSubType.serviceQuoteRejected: 'service_quote_rejected',
   FoodlyNotificationSubType.serviceMessageNew: 'service_message_new',
+  FoodlyNotificationSubType.followedUserPost: 'followed_user_post',
 };

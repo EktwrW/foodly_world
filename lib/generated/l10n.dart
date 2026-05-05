@@ -649,6 +649,98 @@ class S {
     );
   }
 
+  /// `{actor} left a review at {businessName}`
+  String buzzNewReviewSocial(Object actor, Object businessName) {
+    return Intl.message(
+      '$actor left a review at $businessName',
+      name: 'buzzNewReviewSocial',
+      desc: '',
+      args: [actor, businessName],
+    );
+  }
+
+  /// `{actor} liked a dish at {businessName}`
+  String buzzNewFavoriteMenuItemSocial(Object actor, Object businessName) {
+    return Intl.message(
+      '$actor liked a dish at $businessName',
+      name: 'buzzNewFavoriteMenuItemSocial',
+      desc: '',
+      args: [actor, businessName],
+    );
+  }
+
+  /// `{actor} liked "{entityName}" at {businessName}`
+  String buzzNewFavoriteMenuItemSocialNamed(
+    Object actor,
+    Object entityName,
+    Object businessName,
+  ) {
+    return Intl.message(
+      '$actor liked "$entityName" at $businessName',
+      name: 'buzzNewFavoriteMenuItemSocialNamed',
+      desc: '',
+      args: [actor, entityName, businessName],
+    );
+  }
+
+  /// `{actor} saved a menu from {businessName}`
+  String buzzNewFavoriteMenuSocial(Object actor, Object businessName) {
+    return Intl.message(
+      '$actor saved a menu from $businessName',
+      name: 'buzzNewFavoriteMenuSocial',
+      desc: '',
+      args: [actor, businessName],
+    );
+  }
+
+  /// `{actor} saved the "{entityName}" menu from {businessName}`
+  String buzzNewFavoriteMenuSocialNamed(
+    Object actor,
+    Object entityName,
+    Object businessName,
+  ) {
+    return Intl.message(
+      '$actor saved the "$entityName" menu from $businessName',
+      name: 'buzzNewFavoriteMenuSocialNamed',
+      desc: '',
+      args: [actor, entityName, businessName],
+    );
+  }
+
+  /// `{actor} saved a promo from {businessName}`
+  String buzzNewFavoritePromotionSocial(Object actor, Object businessName) {
+    return Intl.message(
+      '$actor saved a promo from $businessName',
+      name: 'buzzNewFavoritePromotionSocial',
+      desc: '',
+      args: [actor, businessName],
+    );
+  }
+
+  /// `{actor} saved the "{entityName}" promo from {businessName}`
+  String buzzNewFavoritePromotionSocialNamed(
+    Object actor,
+    Object entityName,
+    Object businessName,
+  ) {
+    return Intl.message(
+      '$actor saved the "$entityName" promo from $businessName',
+      name: 'buzzNewFavoritePromotionSocialNamed',
+      desc: '',
+      args: [actor, entityName, businessName],
+    );
+  }
+
+  /// `{actor} interacted with {businessName}`
+  String buzzDefaultActivitySocial(Object actor, Object businessName) {
+    return Intl.message(
+      '$actor interacted with $businessName',
+      name: 'buzzDefaultActivitySocial',
+      desc: '',
+      args: [actor, businessName],
+    );
+  }
+
   /// `Cafés and Breakfasts`
   String get cafesAndBreakfasts {
     return Intl.message(
@@ -4619,6 +4711,41 @@ class S {
     return Intl.message(
       'Be the first to share something!',
       name: 'postsFeedBeFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nearby`
+  String get feedFilterNearby {
+    return Intl.message('Nearby', name: 'feedFilterNearby', desc: '', args: []);
+  }
+
+  /// `Following`
+  String get feedFilterFollowing {
+    return Intl.message(
+      'Following',
+      name: 'feedFilterFollowing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're not following anyone yet`
+  String get feedFollowingEmptyTitle {
+    return Intl.message(
+      'You\'re not following anyone yet',
+      name: 'feedFollowingEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow users from the Users tab to see their posts here.`
+  String get feedFollowingEmptySubtitle {
+    return Intl.message(
+      'Follow users from the Users tab to see their posts here.',
+      name: 'feedFollowingEmptySubtitle',
       desc: '',
       args: [],
     );

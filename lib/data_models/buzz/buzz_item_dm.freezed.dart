@@ -458,7 +458,19 @@ mixin _$BuzzItemDM {
   @JsonKey(name: 'entity_name')
   String? get entityName => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt =>
+      throw _privateConstructorUsedError; // Follow Loop (mayo 2026): social attribution. Cuando el actor de
+// la notif está en la red del usuario actual, el BE popula estos
+// campos y `from_following=true`; el FE renderiza al actor en el
+// copy y un avatar pequeño. Si false, mostramos la copy genérica.
+  @JsonKey(name: 'from_following')
+  bool get fromFollowing => throw _privateConstructorUsedError;
+  @JsonKey(name: 'actor_uuid')
+  String? get actorUuid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'actor_name')
+  String? get actorName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'actor_photo_url')
+  String? get actorPhotoUrl => throw _privateConstructorUsedError;
 
   /// Serializes this BuzzItemDM to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -485,7 +497,11 @@ abstract class $BuzzItemDMCopyWith<$Res> {
       @JsonKey(name: 'business_photo') String? businessPhoto,
       @JsonKey(name: 'menu_uuid') String? menuUuid,
       @JsonKey(name: 'entity_name') String? entityName,
-      @JsonKey(name: 'created_at') DateTime? createdAt});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'from_following') bool fromFollowing,
+      @JsonKey(name: 'actor_uuid') String? actorUuid,
+      @JsonKey(name: 'actor_name') String? actorName,
+      @JsonKey(name: 'actor_photo_url') String? actorPhotoUrl});
 }
 
 /// @nodoc
@@ -512,6 +528,10 @@ class _$BuzzItemDMCopyWithImpl<$Res, $Val extends BuzzItemDM>
     Object? menuUuid = freezed,
     Object? entityName = freezed,
     Object? createdAt = freezed,
+    Object? fromFollowing = null,
+    Object? actorUuid = freezed,
+    Object? actorName = freezed,
+    Object? actorPhotoUrl = freezed,
   }) {
     return _then(_value.copyWith(
       uuid: null == uuid
@@ -550,6 +570,22 @@ class _$BuzzItemDMCopyWithImpl<$Res, $Val extends BuzzItemDM>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      fromFollowing: null == fromFollowing
+          ? _value.fromFollowing
+          : fromFollowing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      actorUuid: freezed == actorUuid
+          ? _value.actorUuid
+          : actorUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actorName: freezed == actorName
+          ? _value.actorName
+          : actorName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actorPhotoUrl: freezed == actorPhotoUrl
+          ? _value.actorPhotoUrl
+          : actorPhotoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -571,7 +607,11 @@ abstract class _$$BuzzItemDMImplCopyWith<$Res>
       @JsonKey(name: 'business_photo') String? businessPhoto,
       @JsonKey(name: 'menu_uuid') String? menuUuid,
       @JsonKey(name: 'entity_name') String? entityName,
-      @JsonKey(name: 'created_at') DateTime? createdAt});
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'from_following') bool fromFollowing,
+      @JsonKey(name: 'actor_uuid') String? actorUuid,
+      @JsonKey(name: 'actor_name') String? actorName,
+      @JsonKey(name: 'actor_photo_url') String? actorPhotoUrl});
 }
 
 /// @nodoc
@@ -596,6 +636,10 @@ class __$$BuzzItemDMImplCopyWithImpl<$Res>
     Object? menuUuid = freezed,
     Object? entityName = freezed,
     Object? createdAt = freezed,
+    Object? fromFollowing = null,
+    Object? actorUuid = freezed,
+    Object? actorName = freezed,
+    Object? actorPhotoUrl = freezed,
   }) {
     return _then(_$BuzzItemDMImpl(
       uuid: null == uuid
@@ -634,13 +678,29 @@ class __$$BuzzItemDMImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      fromFollowing: null == fromFollowing
+          ? _value.fromFollowing
+          : fromFollowing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      actorUuid: freezed == actorUuid
+          ? _value.actorUuid
+          : actorUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actorName: freezed == actorName
+          ? _value.actorName
+          : actorName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      actorPhotoUrl: freezed == actorPhotoUrl
+          ? _value.actorPhotoUrl
+          : actorPhotoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$BuzzItemDMImpl implements _BuzzItemDM {
+class _$BuzzItemDMImpl extends _BuzzItemDM {
   const _$BuzzItemDMImpl(
       {required this.uuid,
       this.message = '',
@@ -650,7 +710,12 @@ class _$BuzzItemDMImpl implements _BuzzItemDM {
       @JsonKey(name: 'business_photo') this.businessPhoto,
       @JsonKey(name: 'menu_uuid') this.menuUuid,
       @JsonKey(name: 'entity_name') this.entityName,
-      @JsonKey(name: 'created_at') this.createdAt});
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'from_following') this.fromFollowing = false,
+      @JsonKey(name: 'actor_uuid') this.actorUuid,
+      @JsonKey(name: 'actor_name') this.actorName,
+      @JsonKey(name: 'actor_photo_url') this.actorPhotoUrl})
+      : super._();
 
   factory _$BuzzItemDMImpl.fromJson(Map<String, dynamic> json) =>
       _$$BuzzItemDMImplFromJson(json);
@@ -681,10 +746,26 @@ class _$BuzzItemDMImpl implements _BuzzItemDM {
   @override
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+// Follow Loop (mayo 2026): social attribution. Cuando el actor de
+// la notif está en la red del usuario actual, el BE popula estos
+// campos y `from_following=true`; el FE renderiza al actor en el
+// copy y un avatar pequeño. Si false, mostramos la copy genérica.
+  @override
+  @JsonKey(name: 'from_following')
+  final bool fromFollowing;
+  @override
+  @JsonKey(name: 'actor_uuid')
+  final String? actorUuid;
+  @override
+  @JsonKey(name: 'actor_name')
+  final String? actorName;
+  @override
+  @JsonKey(name: 'actor_photo_url')
+  final String? actorPhotoUrl;
 
   @override
   String toString() {
-    return 'BuzzItemDM(uuid: $uuid, message: $message, subType: $subType, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, menuUuid: $menuUuid, entityName: $entityName, createdAt: $createdAt)';
+    return 'BuzzItemDM(uuid: $uuid, message: $message, subType: $subType, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, menuUuid: $menuUuid, entityName: $entityName, createdAt: $createdAt, fromFollowing: $fromFollowing, actorUuid: $actorUuid, actorName: $actorName, actorPhotoUrl: $actorPhotoUrl)';
   }
 
   @override
@@ -706,7 +787,15 @@ class _$BuzzItemDMImpl implements _BuzzItemDM {
             (identical(other.entityName, entityName) ||
                 other.entityName == entityName) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.fromFollowing, fromFollowing) ||
+                other.fromFollowing == fromFollowing) &&
+            (identical(other.actorUuid, actorUuid) ||
+                other.actorUuid == actorUuid) &&
+            (identical(other.actorName, actorName) ||
+                other.actorName == actorName) &&
+            (identical(other.actorPhotoUrl, actorPhotoUrl) ||
+                other.actorPhotoUrl == actorPhotoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -721,7 +810,11 @@ class _$BuzzItemDMImpl implements _BuzzItemDM {
       businessPhoto,
       menuUuid,
       entityName,
-      createdAt);
+      createdAt,
+      fromFollowing,
+      actorUuid,
+      actorName,
+      actorPhotoUrl);
 
   /// Create a copy of BuzzItemDM
   /// with the given fields replaced by the non-null parameter values.
@@ -739,7 +832,7 @@ class _$BuzzItemDMImpl implements _BuzzItemDM {
   }
 }
 
-abstract class _BuzzItemDM implements BuzzItemDM {
+abstract class _BuzzItemDM extends BuzzItemDM {
   const factory _BuzzItemDM(
           {required final String uuid,
           final String message,
@@ -749,8 +842,13 @@ abstract class _BuzzItemDM implements BuzzItemDM {
           @JsonKey(name: 'business_photo') final String? businessPhoto,
           @JsonKey(name: 'menu_uuid') final String? menuUuid,
           @JsonKey(name: 'entity_name') final String? entityName,
-          @JsonKey(name: 'created_at') final DateTime? createdAt}) =
+          @JsonKey(name: 'created_at') final DateTime? createdAt,
+          @JsonKey(name: 'from_following') final bool fromFollowing,
+          @JsonKey(name: 'actor_uuid') final String? actorUuid,
+          @JsonKey(name: 'actor_name') final String? actorName,
+          @JsonKey(name: 'actor_photo_url') final String? actorPhotoUrl}) =
       _$BuzzItemDMImpl;
+  const _BuzzItemDM._() : super._();
 
   factory _BuzzItemDM.fromJson(Map<String, dynamic> json) =
       _$BuzzItemDMImpl.fromJson;
@@ -779,7 +877,23 @@ abstract class _BuzzItemDM implements BuzzItemDM {
   String? get entityName;
   @override
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
+  DateTime?
+      get createdAt; // Follow Loop (mayo 2026): social attribution. Cuando el actor de
+// la notif está en la red del usuario actual, el BE popula estos
+// campos y `from_following=true`; el FE renderiza al actor en el
+// copy y un avatar pequeño. Si false, mostramos la copy genérica.
+  @override
+  @JsonKey(name: 'from_following')
+  bool get fromFollowing;
+  @override
+  @JsonKey(name: 'actor_uuid')
+  String? get actorUuid;
+  @override
+  @JsonKey(name: 'actor_name')
+  String? get actorName;
+  @override
+  @JsonKey(name: 'actor_photo_url')
+  String? get actorPhotoUrl;
 
   /// Create a copy of BuzzItemDM
   /// with the given fields replaced by the non-null parameter values.

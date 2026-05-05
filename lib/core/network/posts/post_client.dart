@@ -15,6 +15,9 @@ abstract class PostClient {
     @Query('latitude') double? latitude,
     @Query('longitude') double? longitude,
     @Query('radius') int? radius,
+    // 'following' → feed social del user actual; sin valor → feed por
+    // proximidad. El BE ignora cualquier otro string (cae al default).
+    @Query('filter') String? filter,
   });
 
   @POST('/posts/store')

@@ -51,6 +51,7 @@ _$PostDMImpl _$$PostDMImplFromJson(Map<String, dynamic> json) => _$PostDMImpl(
       userUuid: json['user_uuid'] as String,
       userName: json['user_name'] as String? ?? '',
       userPhoto: json['user_photo'] as String?,
+      isFollowedByMe: json['is_followed_by_me'] as bool? ?? false,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       createdAt: json['created_at'] == null
@@ -72,6 +73,7 @@ Map<String, dynamic> _$$PostDMImplToJson(_$PostDMImpl instance) =>
       'user_uuid': instance.userUuid,
       'user_name': instance.userName,
       if (instance.userPhoto case final value?) 'user_photo': value,
+      'is_followed_by_me': instance.isFollowedByMe,
       if (instance.latitude case final value?) 'latitude': value,
       if (instance.longitude case final value?) 'longitude': value,
       if (instance.createdAt?.toIso8601String() case final value?)

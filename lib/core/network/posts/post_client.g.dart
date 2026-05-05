@@ -24,6 +24,7 @@ class _PostClient implements PostClient {
     double? latitude,
     double? longitude,
     int? radius,
+    String? filter,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -32,6 +33,7 @@ class _PostClient implements PostClient {
       r'latitude': latitude,
       r'longitude': longitude,
       r'radius': radius,
+      r'filter': filter,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

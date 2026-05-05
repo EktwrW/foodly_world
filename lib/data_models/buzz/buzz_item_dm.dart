@@ -27,6 +27,8 @@ class BuzzMetaDM with _$BuzzMetaDM {
 
 @freezed
 class BuzzItemDM with _$BuzzItemDM {
+  const BuzzItemDM._();
+
   const factory BuzzItemDM({
     required String uuid,
     @Default('') String message,
@@ -37,7 +39,23 @@ class BuzzItemDM with _$BuzzItemDM {
     @JsonKey(name: 'menu_uuid') String? menuUuid,
     @JsonKey(name: 'entity_name') String? entityName,
     @JsonKey(name: 'created_at') DateTime? createdAt,
+    // Follow Loop (mayo 2026): social attribution. Cuando el actor de
+    // la notif está en la red del usuario actual, el BE popula estos
+    // campos y `from_following=true`; el FE renderiza al actor en el
+    // copy y un avatar pequeño. Si false, mostramos la copy genérica.
+    @JsonKey(name: 'from_following') @Default(false) bool fromFollowing,
+    @JsonKey(name: 'actor_uuid') String? actorUuid,
+    @JsonKey(name: 'actor_name') String? actorName,
+    @JsonKey(name: 'actor_photo_url') String? actorPhotoUrl,
   }) = _BuzzItemDM;
 
   factory BuzzItemDM.fromJson(Map<String, dynamic> json) => _$BuzzItemDMFromJson(json);
+
+  /// Helper para renderizado: nombre limpio del actor o null si no
+  /// debemos atribuir socialmente este item.
+  String? get displayActorName {
+    if (!fromFollowing) return null;
+    final n = actorName?.trim();
+    return (n == null || n.isEmpty) ? null : n;
+  }
 }

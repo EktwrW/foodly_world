@@ -21,7 +21,9 @@ mixin _$SocialVM {
   List<PostDM> get posts => throw _privateConstructorUsedError;
   PostsMetaDM? get postsMeta => throw _privateConstructorUsedError;
   bool get isLoadingMorePosts => throw _privateConstructorUsedError;
-  bool get isCreatingPost => throw _privateConstructorUsedError; // Users state
+  bool get isCreatingPost => throw _privateConstructorUsedError;
+  PostsFeedFilter get feedFilter =>
+      throw _privateConstructorUsedError; // Users state
   List<NearbyUserDM> get nearbyUsers => throw _privateConstructorUsedError;
   NearbyUsersMetaDM? get usersMeta => throw _privateConstructorUsedError;
   bool get isLoadingMoreUsers => throw _privateConstructorUsedError;
@@ -53,6 +55,7 @@ abstract class $SocialVMCopyWith<$Res> {
       PostsMetaDM? postsMeta,
       bool isLoadingMorePosts,
       bool isCreatingPost,
+      PostsFeedFilter feedFilter,
       List<NearbyUserDM> nearbyUsers,
       NearbyUsersMetaDM? usersMeta,
       bool isLoadingMoreUsers,
@@ -89,6 +92,7 @@ class _$SocialVMCopyWithImpl<$Res, $Val extends SocialVM>
     Object? postsMeta = freezed,
     Object? isLoadingMorePosts = null,
     Object? isCreatingPost = null,
+    Object? feedFilter = null,
     Object? nearbyUsers = null,
     Object? usersMeta = freezed,
     Object? isLoadingMoreUsers = null,
@@ -121,6 +125,10 @@ class _$SocialVMCopyWithImpl<$Res, $Val extends SocialVM>
           ? _value.isCreatingPost
           : isCreatingPost // ignore: cast_nullable_to_non_nullable
               as bool,
+      feedFilter: null == feedFilter
+          ? _value.feedFilter
+          : feedFilter // ignore: cast_nullable_to_non_nullable
+              as PostsFeedFilter,
       nearbyUsers: null == nearbyUsers
           ? _value.nearbyUsers
           : nearbyUsers // ignore: cast_nullable_to_non_nullable
@@ -221,6 +229,7 @@ abstract class _$$SocialVMImplCopyWith<$Res>
       PostsMetaDM? postsMeta,
       bool isLoadingMorePosts,
       bool isCreatingPost,
+      PostsFeedFilter feedFilter,
       List<NearbyUserDM> nearbyUsers,
       NearbyUsersMetaDM? usersMeta,
       bool isLoadingMoreUsers,
@@ -258,6 +267,7 @@ class __$$SocialVMImplCopyWithImpl<$Res>
     Object? postsMeta = freezed,
     Object? isLoadingMorePosts = null,
     Object? isCreatingPost = null,
+    Object? feedFilter = null,
     Object? nearbyUsers = null,
     Object? usersMeta = freezed,
     Object? isLoadingMoreUsers = null,
@@ -290,6 +300,10 @@ class __$$SocialVMImplCopyWithImpl<$Res>
           ? _value.isCreatingPost
           : isCreatingPost // ignore: cast_nullable_to_non_nullable
               as bool,
+      feedFilter: null == feedFilter
+          ? _value.feedFilter
+          : feedFilter // ignore: cast_nullable_to_non_nullable
+              as PostsFeedFilter,
       nearbyUsers: null == nearbyUsers
           ? _value._nearbyUsers
           : nearbyUsers // ignore: cast_nullable_to_non_nullable
@@ -343,6 +357,7 @@ class _$SocialVMImpl extends _SocialVM {
       this.postsMeta,
       this.isLoadingMorePosts = false,
       this.isCreatingPost = false,
+      this.feedFilter = PostsFeedFilter.nearby,
       final List<NearbyUserDM> nearbyUsers = const [],
       this.usersMeta,
       this.isLoadingMoreUsers = false,
@@ -380,6 +395,9 @@ class _$SocialVMImpl extends _SocialVM {
   @override
   @JsonKey()
   final bool isCreatingPost;
+  @override
+  @JsonKey()
+  final PostsFeedFilter feedFilter;
 // Users state
   final List<NearbyUserDM> _nearbyUsers;
 // Users state
@@ -426,7 +444,7 @@ class _$SocialVMImpl extends _SocialVM {
 
   @override
   String toString() {
-    return 'SocialVM(currentView: $currentView, posts: $posts, postsMeta: $postsMeta, isLoadingMorePosts: $isLoadingMorePosts, isCreatingPost: $isCreatingPost, nearbyUsers: $nearbyUsers, usersMeta: $usersMeta, isLoadingMoreUsers: $isLoadingMoreUsers, isLoadingUsers: $isLoadingUsers, userSortMode: $userSortMode, buzzItems: $buzzItems, buzzMeta: $buzzMeta, isLoadingMoreBuzz: $isLoadingMoreBuzz, isLoadingBuzz: $isLoadingBuzz, floatingButtonKey: $floatingButtonKey)';
+    return 'SocialVM(currentView: $currentView, posts: $posts, postsMeta: $postsMeta, isLoadingMorePosts: $isLoadingMorePosts, isCreatingPost: $isCreatingPost, feedFilter: $feedFilter, nearbyUsers: $nearbyUsers, usersMeta: $usersMeta, isLoadingMoreUsers: $isLoadingMoreUsers, isLoadingUsers: $isLoadingUsers, userSortMode: $userSortMode, buzzItems: $buzzItems, buzzMeta: $buzzMeta, isLoadingMoreBuzz: $isLoadingMoreBuzz, isLoadingBuzz: $isLoadingBuzz, floatingButtonKey: $floatingButtonKey)';
   }
 
   @override
@@ -443,6 +461,8 @@ class _$SocialVMImpl extends _SocialVM {
                 other.isLoadingMorePosts == isLoadingMorePosts) &&
             (identical(other.isCreatingPost, isCreatingPost) ||
                 other.isCreatingPost == isCreatingPost) &&
+            (identical(other.feedFilter, feedFilter) ||
+                other.feedFilter == feedFilter) &&
             const DeepCollectionEquality()
                 .equals(other._nearbyUsers, _nearbyUsers) &&
             (identical(other.usersMeta, usersMeta) ||
@@ -473,6 +493,7 @@ class _$SocialVMImpl extends _SocialVM {
       postsMeta,
       isLoadingMorePosts,
       isCreatingPost,
+      feedFilter,
       const DeepCollectionEquality().hash(_nearbyUsers),
       usersMeta,
       isLoadingMoreUsers,
@@ -500,6 +521,7 @@ abstract class _SocialVM extends SocialVM {
           final PostsMetaDM? postsMeta,
           final bool isLoadingMorePosts,
           final bool isCreatingPost,
+          final PostsFeedFilter feedFilter,
           final List<NearbyUserDM> nearbyUsers,
           final NearbyUsersMetaDM? usersMeta,
           final bool isLoadingMoreUsers,
@@ -522,7 +544,9 @@ abstract class _SocialVM extends SocialVM {
   @override
   bool get isLoadingMorePosts;
   @override
-  bool get isCreatingPost; // Users state
+  bool get isCreatingPost;
+  @override
+  PostsFeedFilter get feedFilter; // Users state
   @override
   List<NearbyUserDM> get nearbyUsers;
   @override

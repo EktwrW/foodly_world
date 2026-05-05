@@ -39,6 +39,11 @@ class PostDM with _$PostDM {
     @JsonKey(name: 'user_uuid') required String userUuid,
     @JsonKey(name: 'user_name') @Default('') String userName,
     @JsonKey(name: 'user_photo') String? userPhoto,
+    // Follow Loop (mayo 2026): true cuando el usuario actual sigue al
+    // autor. La PostCard pinta un anillo purple al avatar como cue
+    // visual de "esta persona ya está en tu red". Default false para
+    // que un BE viejo (sin la key) no rompa el parser.
+    @JsonKey(name: 'is_followed_by_me') @Default(false) bool isFollowedByMe,
     double? latitude,
     double? longitude,
     @JsonKey(name: 'created_at') DateTime? createdAt,

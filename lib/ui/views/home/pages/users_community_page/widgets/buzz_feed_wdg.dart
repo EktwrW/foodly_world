@@ -118,6 +118,27 @@ class _BuzzItemCard extends StatelessWidget {
   String _buzzMessage() {
     final name = item.businessName.isNotEmpty ? item.businessName : '?';
     final entity = item.entityName;
+    final actor = item.displayActorName;
+
+    // Social attribution: cuando el item viene de un actor que el user
+    // sigue, reemplazamos el sujeto anónimo ("alguien", "un cliente")
+    // por el nombre real. Las claves *Social tienen el placeholder
+    // {actor}; las anónimas se mantienen para items del barrio.
+    if (actor != null) {
+      return switch (item.subType) {
+        'new_review' => S.current.buzzNewReviewSocial(actor, name),
+        'new_promotion' => S.current.buzzNewPromotion(name),
+        'promotion_update' => S.current.buzzPromotionUpdate(name),
+        'new_favorite_menu_item' when entity != null => S.current.buzzNewFavoriteMenuItemSocialNamed(actor, entity, name),
+        'new_favorite_menu_item' => S.current.buzzNewFavoriteMenuItemSocial(actor, name),
+        'new_favorite_menu' when entity != null => S.current.buzzNewFavoriteMenuSocialNamed(actor, entity, name),
+        'new_favorite_menu' => S.current.buzzNewFavoriteMenuSocial(actor, name),
+        'new_favorite_promotion' when entity != null => S.current.buzzNewFavoritePromotionSocialNamed(actor, entity, name),
+        'new_favorite_promotion' => S.current.buzzNewFavoritePromotionSocial(actor, name),
+        _ => S.current.buzzDefaultActivitySocial(actor, name),
+      };
+    }
+
     return switch (item.subType) {
       'new_review' => S.current.buzzNewReview(name),
       'new_follower' => S.current.buzzNewFollower(name),
@@ -232,6 +253,51 @@ class _BuzzItemCard extends StatelessWidget {
       'new_favorite_promotion' => (Icons.bookmark, FoodlyThemes.primaryFoodly),
       _ => (Icons.campaign, FoodlyThemes.secondaryFoodly),
     };
+
+    // Atribución social: si el item viene de la red del usuario, mostramos
+    // el avatar del actor con un anillo purple, y un mini-badge con el
+    // icono de categoría en la esquina inferior derecha. Esto comunica
+    // "esto lo hizo X (alguien que sigues)" en lugar del icon abstracto
+    // del barrio.
+    if (item.fromFollowing) {
+      return SizedBox(
+        width: 36,
+        height: 36,
+        child: Stack(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              padding: const EdgeInsets.all(1.5),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: FoodlyThemes.primaryFoodly, width: 1.4),
+              ),
+              child: AvatarWidget(
+                avatarUrl: item.actorPhotoUrl,
+                avatarType: AvatarType.user,
+                width: 32,
+                height: 32,
+              ),
+            ),
+            Positioned(
+              right: -2,
+              bottom: -2,
+              child: Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.95),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 1.2),
+                ),
+                child: Icon(icon, size: 9, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Container(
       width: 36,

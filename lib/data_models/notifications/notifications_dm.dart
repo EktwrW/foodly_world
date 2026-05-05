@@ -55,6 +55,12 @@ class NotificationDataDM with _$NotificationDataDM {
     @JsonKey(name: 'promotion_id') int? promotionId,
     @JsonKey(name: 'promotion_uuid') String? promotionUuid,
     @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+    // Social graph: post creado por un user seguido (Follow Loop). Lo
+    // poblamos por completitud aunque hoy el tap-target del switch de
+    // entityUuid es el perfil del actor (no hay aún una ruta a un post
+    // individual). Si más adelante agregamos PostDetailPage, basta con
+    // cambiar el case del switch a data?.postUuid.
+    @JsonKey(name: 'post_uuid') String? postUuid,
   }) = _NotificationDataDM;
 
   factory NotificationDataDM.fromJson(Map<String, dynamic> json) => _$NotificationDataDMFromJson(json);
@@ -101,6 +107,11 @@ class NotificationDM with _$NotificationDM {
   /// Entity UUID based on notification sub_type - for navigation
   String? get entityUuid => switch (subType) {
         FoodlyNotificationSubType.newFollower => data?.actorUuid,
+        // Tap → perfil del autor del post. No tenemos ruta a un post
+        // individual todavía; el perfil muestra todos sus posts y es el
+        // destino más coherente con la intención del usuario al tocar
+        // ("ver qué publicó esta persona que sigo").
+        FoodlyNotificationSubType.followedUserPost => data?.actorUuid,
         FoodlyNotificationSubType.newFavoriteMenu => data?.menuUuid,
         FoodlyNotificationSubType.newFavoriteMenuItem => data?.foodItemUuid ?? data?.drinkItemUuid ?? data?.comboUuid,
         FoodlyNotificationSubType.newFavoritePromotion => data?.promotionUuid,

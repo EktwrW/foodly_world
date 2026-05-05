@@ -456,7 +456,13 @@ mixin _$PostDM {
   @JsonKey(name: 'user_name')
   String get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_photo')
-  String? get userPhoto => throw _privateConstructorUsedError;
+  String? get userPhoto =>
+      throw _privateConstructorUsedError; // Follow Loop (mayo 2026): true cuando el usuario actual sigue al
+// autor. La PostCard pinta un anillo purple al avatar como cue
+// visual de "esta persona ya está en tu red". Default false para
+// que un BE viejo (sin la key) no rompa el parser.
+  @JsonKey(name: 'is_followed_by_me')
+  bool get isFollowedByMe => throw _privateConstructorUsedError;
   double? get latitude => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -488,6 +494,7 @@ abstract class $PostDMCopyWith<$Res> {
       @JsonKey(name: 'user_uuid') String userUuid,
       @JsonKey(name: 'user_name') String userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
+      @JsonKey(name: 'is_followed_by_me') bool isFollowedByMe,
       double? latitude,
       double? longitude,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -518,6 +525,7 @@ class _$PostDMCopyWithImpl<$Res, $Val extends PostDM>
     Object? userUuid = null,
     Object? userName = null,
     Object? userPhoto = freezed,
+    Object? isFollowedByMe = null,
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? createdAt = freezed,
@@ -560,6 +568,10 @@ class _$PostDMCopyWithImpl<$Res, $Val extends PostDM>
           ? _value.userPhoto
           : userPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFollowedByMe: null == isFollowedByMe
+          ? _value.isFollowedByMe
+          : isFollowedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -597,6 +609,7 @@ abstract class _$$PostDMImplCopyWith<$Res> implements $PostDMCopyWith<$Res> {
       @JsonKey(name: 'user_uuid') String userUuid,
       @JsonKey(name: 'user_name') String userName,
       @JsonKey(name: 'user_photo') String? userPhoto,
+      @JsonKey(name: 'is_followed_by_me') bool isFollowedByMe,
       double? latitude,
       double? longitude,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -625,6 +638,7 @@ class __$$PostDMImplCopyWithImpl<$Res>
     Object? userUuid = null,
     Object? userName = null,
     Object? userPhoto = freezed,
+    Object? isFollowedByMe = null,
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? createdAt = freezed,
@@ -667,6 +681,10 @@ class __$$PostDMImplCopyWithImpl<$Res>
           ? _value.userPhoto
           : userPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFollowedByMe: null == isFollowedByMe
+          ? _value.isFollowedByMe
+          : isFollowedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       latitude: freezed == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -700,6 +718,7 @@ class _$PostDMImpl extends _PostDM {
       @JsonKey(name: 'user_uuid') required this.userUuid,
       @JsonKey(name: 'user_name') this.userName = '',
       @JsonKey(name: 'user_photo') this.userPhoto,
+      @JsonKey(name: 'is_followed_by_me') this.isFollowedByMe = false,
       this.latitude,
       this.longitude,
       @JsonKey(name: 'created_at') this.createdAt,
@@ -733,6 +752,13 @@ class _$PostDMImpl extends _PostDM {
   @override
   @JsonKey(name: 'user_photo')
   final String? userPhoto;
+// Follow Loop (mayo 2026): true cuando el usuario actual sigue al
+// autor. La PostCard pinta un anillo purple al avatar como cue
+// visual de "esta persona ya está en tu red". Default false para
+// que un BE viejo (sin la key) no rompa el parser.
+  @override
+  @JsonKey(name: 'is_followed_by_me')
+  final bool isFollowedByMe;
   @override
   final double? latitude;
   @override
@@ -746,7 +772,7 @@ class _$PostDMImpl extends _PostDM {
 
   @override
   String toString() {
-    return 'PostDM(id: $id, uuid: $uuid, content: $content, photoUrl: $photoUrl, likesCount: $likesCount, isLiked: $isLiked, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostDM(id: $id, uuid: $uuid, content: $content, photoUrl: $photoUrl, likesCount: $likesCount, isLiked: $isLiked, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, isFollowedByMe: $isFollowedByMe, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -768,6 +794,8 @@ class _$PostDMImpl extends _PostDM {
                 other.userName == userName) &&
             (identical(other.userPhoto, userPhoto) ||
                 other.userPhoto == userPhoto) &&
+            (identical(other.isFollowedByMe, isFollowedByMe) ||
+                other.isFollowedByMe == isFollowedByMe) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
@@ -791,6 +819,7 @@ class _$PostDMImpl extends _PostDM {
       userUuid,
       userName,
       userPhoto,
+      isFollowedByMe,
       latitude,
       longitude,
       createdAt,
@@ -823,6 +852,7 @@ abstract class _PostDM extends PostDM {
       @JsonKey(name: 'user_uuid') required final String userUuid,
       @JsonKey(name: 'user_name') final String userName,
       @JsonKey(name: 'user_photo') final String? userPhoto,
+      @JsonKey(name: 'is_followed_by_me') final bool isFollowedByMe,
       final double? latitude,
       final double? longitude,
       @JsonKey(name: 'created_at') final DateTime? createdAt,
@@ -854,7 +884,14 @@ abstract class _PostDM extends PostDM {
   String get userName;
   @override
   @JsonKey(name: 'user_photo')
-  String? get userPhoto;
+  String?
+      get userPhoto; // Follow Loop (mayo 2026): true cuando el usuario actual sigue al
+// autor. La PostCard pinta un anillo purple al avatar como cue
+// visual de "esta persona ya está en tu red". Default false para
+// que un BE viejo (sin la key) no rompa el parser.
+  @override
+  @JsonKey(name: 'is_followed_by_me')
+  bool get isFollowedByMe;
   @override
   double? get latitude;
   @override
