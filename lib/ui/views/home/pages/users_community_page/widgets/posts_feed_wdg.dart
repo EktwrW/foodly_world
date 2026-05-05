@@ -7,7 +7,8 @@ import 'package:foodly_world/core/utils/scroll_tracker.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
-import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart' show PostsFeedFilter, SocialVM;
+import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart'
+    show PostsFeedFilter, SocialVM;
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/post_card.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 
@@ -98,7 +99,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
           },
           style: ButtonStyle(
             visualDensity: VisualDensity.compact,
-            textStyle: WidgetStatePropertyAll(FoodlyTextStyles.labelBoldMini),
+            textStyle: const WidgetStatePropertyAll(FoodlyTextStyles.labelBoldMini),
             backgroundColor: WidgetStateProperty.resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
                 return FoodlyThemes.primaryFoodly.withValues(alpha: 0.10);
