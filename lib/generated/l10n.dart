@@ -5276,10 +5276,10 @@ class S {
     );
   }
 
-  /// `Foodly is free to use — for businesses and customers alike. In the future, a small commission on in-app orders will be the only cost. No subscriptions, no hidden fees.`
+  /// `Foodly is free to use — for businesses and customers alike. When in-app payments launch soon, an optional 1% commission will apply only to orders customers choose to pay through Foodly. No subscriptions, no hidden fees, no surprises.`
   String get aboutFree {
     return Intl.message(
-      'Foodly is free to use — for businesses and customers alike. In the future, a small commission on in-app orders will be the only cost. No subscriptions, no hidden fees.',
+      'Foodly is free to use — for businesses and customers alike. When in-app payments launch soon, an optional 1% commission will apply only to orders customers choose to pay through Foodly. No subscriptions, no hidden fees, no surprises.',
       name: 'aboutFree',
       desc: '',
       args: [],

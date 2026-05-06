@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/first_launch_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/firebase_options.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -36,6 +37,22 @@ Future<Widget> buildFoodlyApp() async {
   // is silent-failure-by-design — if credentials are missing or permissions
   // denied, it logs and moves on without blocking startup.
   unawaited(di<PushNotificationService>().initialize());
+
+  // Bug F (2026-05-06): borrar memoria + desinstalar + reinstalar dejaba
+  // un modal de "sesión expirada" arriba de la welcome screen. Causa
+  // raíz — iOS Keychain sobrevive al uninstall por defecto, así que
+  // SecureTokenService leía tokens viejos en el primer arranque
+  // post-reinstalación. FirstLaunchService detecta ese caso vía
+  // SharedPreferences (que SÍ se borra al uninstall) y limpia el Keychain
+  // antes de que cualquier consumidor intente restaurar la sesión.
+  //
+  // Awaitamos a propósito: tiene que terminar ANTES de
+  // HydratedBloc.storage.build, porque el primer instante en que se
+  // construye RootBloc dispara fromJson → restoreTokensFromSecureStorage.
+  // Si no esperamos, perdemos la carrera y volvemos a leer tokens
+  // residuales antes de borrarlos.
+  await di<FirstLaunchService>().ensureCleanInstall();
+
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory:
         kIsWeb ? HydratedStorageDirectory.web : HydratedStorageDirectory((await getTemporaryDirectory()).path),

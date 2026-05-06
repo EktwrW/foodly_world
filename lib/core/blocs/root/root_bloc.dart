@@ -67,9 +67,23 @@ class RootBloc extends HydratedBloc<RootEvent, RootState> {
     if (restoredSession != null) {
       _authSessionService.initializeSessionOrClear(restoredSession);
     } else {
-      // No tokens found — session is invalid.
+      // No tokens en Keychain → no es "sesión expirada", es ausencia de
+      // sesión. Antes (pre-Bug F, 2026-05-06) llamábamos
+      // notifyTokenExpired() acá, que dispara el modal "tu sesión expiró"
+      // y un redirect a /login. Pero notar: este branch corre SOLO cuando
+      // HydratedBloc tenía un cachedState (alguien estuvo logueado en este
+      // device) PERO el Keychain no tiene tokens. Causas típicas:
+      //   1. Fresh install post-uninstall en iOS donde el Keychain
+      //      residual ya fue limpiado por FirstLaunchService — el
+      //      cachedState ni siquiera debería existir, pero por consistencia
+      //      defensiva tratamos el caso.
+      //   2. Logout que nunca limpió el HydratedBloc state (bug aparte).
+      //   3. Migración entre versiones donde el shape del cachedState
+      //      cambia y los tokens ya no se persisten en HydratedBloc.
+      // En los tres casos lo correcto es limpiar el state silenciosamente
+      // y dejar que el router lleve al user a /start o /login sin modal.
       _authSessionService.hasPendingSessionRestore = false;
-      _authSessionService.notifyTokenExpired();
+      add(const RootEvent.userLogout());
     }
   }
 

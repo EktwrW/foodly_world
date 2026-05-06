@@ -162,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Para Clientes",
     ),
     "aboutFree": MessageLookupByLibrary.simpleMessage(
-      "O Foodly e gratuito — para negocios e clientes. No futuro, uma pequena comissao em encomendas feitas atraves da app sera o unico custo. Sem subscricoes, sem taxas ocultas.",
+      "O Foodly e gratuito — para negocios e clientes. Quando os pagamentos na app estiverem disponiveis em breve, uma comissao opcional de 1% sera aplicada apenas as encomendas que os clientes escolham pagar atraves do Foodly. Sem subscricoes, sem taxas ocultas, sem surpresas.",
     ),
     "aboutFreeTitle": MessageLookupByLibrary.simpleMessage("Gratis para Todos"),
     "aboutMission": MessageLookupByLibrary.simpleMessage(

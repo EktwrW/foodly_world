@@ -30,6 +30,7 @@ import 'package:foodly_world/core/network/service_packages/service_package_repo.
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
+import 'package:foodly_world/core/services/first_launch_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -60,7 +61,8 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => LocationService())
       ..registerSingleton<DialogService>(DialogService())
       ..registerLazySingleton(() => LocalStorageService())
-      ..registerLazySingleton(() => SecureTokenService());
+      ..registerLazySingleton(() => SecureTokenService())
+      ..registerLazySingleton(() => FirstLaunchService(secureTokenService: di()));
 
     /// Register Dio instance (shared, same as FoodlyApiProvider.dio)
     di.registerLazySingleton<Dio>(() => di<FoodlyApiProvider>().dio);

@@ -140,6 +140,66 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
       }
     }
 
+    // Bug D (2026-05-06): grace period entre el cierre del diálogo de
+    // notificaciones y la apertura del BiometricPrompt.
+    //
+    // El plugin `flutter_local_notifications` resuelve la promise de
+    // `requestNotificationsPermission()` apenas el usuario tappea
+    // Permitir/Denegar — pero Android tarda ~200-400ms en estabilizar el
+    // window-focus después de cerrar un system dialog. Si llamamos a
+    // `auth.authenticate()` dentro de esa ventana, el OS recibe el
+    // request mientras el FocusManager todavía está soltando el dialog
+    // anterior y silencia el BiometricPrompt sin error visible.
+    //
+    // 400ms es deliberadamente conservador: 200ms es el límite inferior
+    // observado en devices viejos, así que dejamos margen. El usuario no
+    // percibe la pausa porque ocurre entre dos diálogos system-modal
+    // consecutivos. iOS no tiene este race (el FaceID/TouchID prompt es
+    // serializado por el OS), pero el delay es inocuo allí.
+    if (!kIsWeb) {
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+
+    // Bug D (cont.): re-evaluar capacidad biométrica DESPUÉS del permission
+    // flow.
+    //
+    // El initializeLocalAuth() corre al construir el cubit, antes de que
+    // el usuario haya respondido al diálogo de notificaciones. En el edge
+    // case "sesión guardada + permisos reseteados", esa primera
+    // evaluación puede agarrar un estado transitorio del OS (ej. Android
+    // todavía no ha rehidratado los providers de biometría tras reset)
+    // y devolver canCheckBiometrics=false aunque el dispositivo SÍ
+    // soporte. Sin re-evaluar, terminamos en _Loaded con biometricAuthEnabled=false
+    // y el user nunca ve la sheet de fingerprint.
+    //
+    // Esta re-evaluación es defensiva: si el primer check fue correcto,
+    // el segundo retorna lo mismo y no cambia el flujo. Solo "rescata"
+    // los casos donde el primer check fue víctima del race.
+    if (!kIsWeb && !biometricAuthEnabled) {
+      try {
+        final isSupported = await auth.isDeviceSupported();
+        if (isSupported) {
+          final canCheck = await _checkBiometrics();
+          _dto = _dto.copyWith(deviceIsSupported: isSupported, canCheckBiometrics: canCheck);
+          if (canCheck) {
+            await _getAvailableBiometrics();
+          }
+        }
+      } catch (e) {
+        _logger.w('Re-evaluación de biometrics falló: $e');
+      }
+
+      // Si tras la re-evaluación seguimos sin biometría disponible,
+      // abortamos limpiamente — no tiene sentido pedir authenticate().
+      if (!biometricAuthEnabled) {
+        _dto = _dto.copyWith(isAuthenticating: false);
+        _authSessionService.setBiometricLoginInProgress(false);
+        _authSessionService.completePendingServicesInit();
+        emit(_Loaded(_dto));
+        return;
+      }
+    }
+
     try {
       await auth
           .authenticate(

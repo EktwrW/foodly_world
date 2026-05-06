@@ -73,8 +73,22 @@ abstract class DioRequestHandler {
 
     // If the access token looks expired client-side, try a silent refresh
     // before sending the request. This avoids a guaranteed 401 round-trip.
+    //
+    // Bug G (2026-05-06): el chequeo era `.startsWith(TokenType.bearer.name)`
+    // donde `TokenType.bearer.name == 'bearer'` (lowercase, derivado del
+    // identifier del enum). Pero `setSession` construye el header como
+    // `'Bearer ...'` con B mayúscula (porque tokenType viene del BE con
+    // capital o del default 'Bearer'). startsWith es case-sensitive,
+    // así que el predicado NUNCA matcheaba en producción y el pre-flight
+    // refresh nunca corría — cada request con token expirado pagaba un
+    // 401 + retry en vez de refrescar proactivamente.
+    //
+    // Fix: comparar lowercase. Es robusto a cualquier casing futuro del BE
+    // y elimina la dependencia entre `.name` del enum y el casing del
+    // header construído en otra parte del código.
+    final isBearer = authHeader.toLowerCase().startsWith('bearer');
     if (authHeader.isNotEmpty &&
-        authHeader.startsWith(TokenType.bearer.name) &&
+        isBearer &&
         authSessionService.isAccessTokenExpired &&
         authSessionService.isLoggedIn) {
       if (authSessionService.hasRefreshToken) {
@@ -91,7 +105,8 @@ abstract class DioRequestHandler {
     }
 
     // Always inject the latest access token into the request header.
-    if (authHeader.isNotEmpty && authHeader.startsWith(TokenType.bearer.name)) {
+    // Mismo fix de case-sensitivity que arriba (Bug G).
+    if (authHeader.isNotEmpty && isBearer) {
       final activeToken = authSessionService.userSessionDM?.accessToken ??
           authSessionService.userSessionDM?.token;
       options.headers[FoodlyStrings.AUTHORIZATION] =

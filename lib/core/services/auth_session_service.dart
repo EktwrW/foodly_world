@@ -169,6 +169,23 @@ class AuthSessionService {
   void setSession(UserSessionDM? newUserSessionDM) {
     userSessionDM = newUserSessionDM;
 
+    // Bug E (2026-05-06): cuando recibimos una sesión válida nueva (uuid
+    // no vacío), bajamos forceToLogin. Sin esto, si un boot anterior dejó
+    // el flag en true (initializeSessionOrClear → 401 → _clearInvalidSession
+    // setea forceToLogin=true sin postFrame que lo baje), un re-login
+    // exitoso (Google sign-in, email/password, biométrico) deja el flag
+    // arriba y el GoRouter redirector tira al user de vuelta a /login en
+    // la siguiente navegación. Loop sin escape.
+    //
+    // La invariante es simple: tener tokens válidos ⇒ NO force-to-login.
+    // Anclar el reset acá garantiza que TODO callsite que crea sesión
+    // (login, socialLogin, biometricLogin, silentRefresh) lo arregla en
+    // un solo lugar — antes había que recordar de bajar el flag manualmente
+    // en cada callsite, y los olvidos causaban este bug.
+    if (newUserSessionDM != null && (newUserSessionDM.user.uuid?.isNotEmpty ?? false)) {
+      forceToLogin = false;
+    }
+
     // Prefer access_token (new dual-token field); fall back to token (legacy).
     final activeToken = newUserSessionDM?.accessToken ?? newUserSessionDM?.token;
     final tokenType = newUserSessionDM?.tokenType ?? 'Bearer';
@@ -194,7 +211,16 @@ class AuthSessionService {
     }
 
     if (!kIsWeb) {
-      FirebaseCrashlytics.instance.setUserIdentifier(newUserSessionDM?.user.uuid ?? 'anonymous');
+      // Defensa: si Crashlytics no está inicializado (Firebase boot falló,
+      // o estamos corriendo bajo flutter_test sin Firebase mock) no debe
+      // tumbar el flujo de setSession. Es un side-effect informativo —
+      // saber el uid en los crash reports es útil pero NO crítico para el
+      // ciclo de vida de la sesión.
+      try {
+        FirebaseCrashlytics.instance.setUserIdentifier(newUserSessionDM?.user.uuid ?? 'anonymous');
+      } catch (_) {
+        // No-op por diseño.
+      }
     }
   }
 
