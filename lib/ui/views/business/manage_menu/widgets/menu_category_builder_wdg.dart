@@ -22,6 +22,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.d
 import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart' show LoadingWidgetFoodlyIso;
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart' show ImageViewer;
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
+import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';

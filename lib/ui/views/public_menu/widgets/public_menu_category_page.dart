@@ -7,6 +7,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart' hi
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
+import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -253,23 +254,14 @@ class _PublicMenuItemWdgState extends State<PublicMenuItemWdg> {
                     children: [
                       _buildVersionSelector(context).paddingOnly(left: 10, right: 6),
                       if (widget.item.available) const Spacer(),
+                      // Patrón canónico — mismo widget compartido que
+                      // manager (modo no-edit) y visited business. El
+                      // currency va dentro del badge verde a la izquierda
+                      // del precio, en lugar de afuera en negro.
                       if (widget.item.available)
-                        Text('${widget.currency}:', style: FoodlyTextStyles.label).paddingHorizontal(4),
-                      if (widget.item.available)
-                        SizedBox(
-                          width: 110,
-                          height: 36,
-                          child: Card.filled(
-                            elevation: 3,
-                            color: FoodlyThemes.tertiaryFoodly,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                            child: Center(
-                              child: Text(
-                                _itemNotAvailable ? '-' : '$_currentPrice',
-                                style: FoodlyTextStyles.bodyWhiteSemibold.copyWith(fontSize: 16.5),
-                              ),
-                            ),
-                          ),
+                        MenuItemPriceTag(
+                          currency: widget.currency,
+                          price: _itemNotAvailable ? null : '$_currentPrice',
                         ),
                     ],
                   ).paddingBottom(_itemNotAvailable ? 8 : 0),

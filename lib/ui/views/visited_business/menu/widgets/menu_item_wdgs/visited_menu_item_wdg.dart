@@ -57,7 +57,6 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
     return widget.item.getVersionPrice(_selectedVersion) ?? 0;
   }
 
-  Widget get _currencyWidget => Text('${widget.vm?.currency ?? widget.currency}:', style: FoodlyTextStyles.label);
   bool get _itemNotAvailable => !widget.item.available;
 
   @override
@@ -103,22 +102,15 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                       // Usar el selector de versiones conectado a nuestro método de actualización
                       _buildVersionSelector(context).paddingOnly(left: 10, right: 6),
                       if (widget.item.available) const Spacer(),
-                      if (widget.item.available) _currencyWidget.paddingHorizontal(4),
+                      // Patrón canónico: currency dentro del badge verde,
+                      // a la izquierda del precio. Antes mostrábamos el
+                      // currency afuera en negro y el precio adentro —
+                      // se leían como dos cosas separadas. Ver
+                      // MenuItemPriceTag.
                       if (widget.item.available)
-                        SizedBox(
-                          width: 110,
-                          height: 36,
-                          child: Card.filled(
-                            elevation: 3,
-                            color: FoodlyThemes.tertiaryFoodly,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                            child: Center(
-                              child: Text(
-                                _itemNotAvailable ? '-' : '$_currentPrice',
-                                style: FoodlyTextStyles.bodyWhiteSemibold.copyWith(fontSize: 16.5),
-                              ),
-                            ),
-                          ),
+                        MenuItemPriceTag(
+                          currency: widget.vm?.currency ?? widget.currency ?? '\$',
+                          price: _itemNotAvailable ? null : '$_currentPrice',
                         ),
                     ],
                   ).paddingBottom(widget.item.available ? 0 : 8),

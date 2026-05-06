@@ -221,24 +221,13 @@ class MenuItemWdg extends StatelessWidget {
                         ).paddingOnly(left: 10, right: 6),
                         if (item.available) const Spacer(),
                         if (item.available)
-                          SizedBox(
-                            width: 110,
-                            height: 36,
-                            child: Card.filled(
-                              elevation: 3,
-                              color: FoodlyThemes.tertiaryFoodly,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  _currencyWidget.paddingHorizontal(3),
-                                  Text(
-                                    _itemNotAvailable ? '-' : '${item.currentPrice}',
-                                    style: FoodlyTextStyles.bodyWhiteSemibold,
-                                  ),
-                                ],
-                              ).paddingHorizontal(6),
-                            ),
+                          // Widget canónico compartido — mismo patrón en
+                          // visited business y public menu para que el
+                          // precio se lea idéntico en cualquier vista del
+                          // menú. Ver MenuItemPriceTag para el contrato.
+                          MenuItemPriceTag(
+                            currency: vm.currency,
+                            price: _itemNotAvailable ? null : '${item.currentPrice}',
                           ),
                       ],
                     ).paddingBottom(item.available ? 0 : 8),
