@@ -2,16 +2,9 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
-import 'package:foodly_world/core/network/base/app_api_provider.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
-import 'package:foodly_world/core/network/users/me_repo.dart';
-import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/core/services/local_storage_service.dart';
-import 'package:foodly_world/core/services/secure_token_service.dart';
-import 'package:logger/logger.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 
@@ -80,8 +73,8 @@ class _FakeMeRepo implements MeRepo {
   /// Outcome del próximo refreshToken(). Inicializado a "exitoso" con
   /// una sesión válida nueva — los tests pueden setearlo a `failure` o
   /// a un Future que demora.
-  ApiResult<UserSessionDM> refreshOutcome = ApiResult.success(
-    const UserSessionDM(
+  ApiResult<UserSessionDM> refreshOutcome = const ApiResult.success(
+    UserSessionDM(
       user: UserDM(uuid: 'u1'),
       token: 'NEW-access',
       tokenType: 'Bearer',
@@ -96,6 +89,7 @@ class _FakeMeRepo implements MeRepo {
 
   int refreshTokenCalls = 0;
 
+  @override
   Future<ApiResult<UserSessionDM>> refreshToken() async {
     refreshTokenCalls++;
     if (refreshDelay != null) await refreshDelay;
@@ -191,7 +185,7 @@ void main() {
     test(
       'refresh exitoso → setSession con tokens nuevos, returns true',
       () async {
-        service.setSession(_session(accessToken: 'OLD', refreshToken: 'refresh-A'));
+        service.setSession(_session(accessToken: 'OLD'));
 
         final result = await service.silentRefresh();
 

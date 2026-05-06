@@ -1,12 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foodly_world/core/configs/base_config.dart';
-import 'package:foodly_world/core/network/base/app_api_provider.dart';
-import 'package:foodly_world/core/network/users/me_repo.dart';
-import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/core/services/local_storage_service.dart';
-import 'package:foodly_world/core/services/secure_token_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 

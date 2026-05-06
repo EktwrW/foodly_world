@@ -1,8 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foodly_world/core/consts/foodly_strings.dart';
-import 'package:foodly_world/core/network/base/dio_request_handler.dart';
-import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 
 /// Fake AuthSessionService que TRACKEA cuántas veces se invoca cada API
@@ -273,7 +270,7 @@ void main() {
         // un timeout corto.
         await _runRequest(options).timeout(
           const Duration(milliseconds: 200),
-          onTimeout: () => RequestOptions(path: ''),
+          onTimeout: () => RequestOptions(),
         );
 
         expect(spy.silentRefreshCalls, 1);
@@ -296,7 +293,7 @@ void main() {
 
         await _runRequest(options).timeout(
           const Duration(milliseconds: 200),
-          onTimeout: () => RequestOptions(path: ''),
+          onTimeout: () => RequestOptions(),
         );
 
         expect(spy.silentRefreshCalls, 0,
