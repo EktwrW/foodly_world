@@ -19,6 +19,15 @@ jobs:
         run: flutter pub get
 
       - name: Build Flutter Web (Public Menu)
+        # IS_MENU_SUBDOMAIN=true hace que main.dart bypasee FoodlyWrapper
+        # (auth/location/etc) y sólo renderice el childWidget. La web pública
+        # `menu.foodly.solutions` SÓLO muestra el menú de un negocio — no usa
+        # auth, no usa Maps/Geocoding, no usa AI. Por eso NO se inyectan los
+        # dart-defines GOOGLE_MAPS_API_KEY / GOOGLE_MAPS_GEOCODING_URL /
+        # GOOGLE_SIGN_IN_CLIENT_ID / OPENAI_API_KEY / REPLICATE_API_KEY:
+        # serían string vacío (los secrets ni existen en el repo) y abultan
+        # el bundle servido al usuario público. ANALYTICS_TOKEN se mantiene
+        # para trackear views del menú.
         run: |
           flutter build web --release \
             --dart-define=IS_MENU_SUBDOMAIN=true \
@@ -27,12 +36,7 @@ jobs:
             --dart-define=API_VERSION=/api \
             --dart-define=LOGGER_LEVEL=NOTHING \
             --dart-define=APP_ROOT=/ \
-            --dart-define=GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }} \
-            --dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng= \
-            --dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${{ secrets.GOOGLE_SIGN_IN_CLIENT_ID }} \
-            --dart-define=ANALYTICS_TOKEN=${{ secrets.ANALYTICS_TOKEN }} \
-            --dart-define=OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-            --dart-define=REPLICATE_API_KEY=${{ secrets.REPLICATE_API_KEY }}
+            --dart-define=ANALYTICS_TOKEN=${{ secrets.ANALYTICS_TOKEN }}
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools

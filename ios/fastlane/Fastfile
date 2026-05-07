@@ -7,6 +7,23 @@
 default_platform(:ios)
 
 # Dart defines shared across all build lanes
+#
+# Nota sobre `GOOGLE_MAPS_API_KEY` (2026-05-07):
+#   El path activo de Places/Geocoding en producción es el Foodly Places Proxy
+#   backend (Fase 5 del proxy, 2026-04-23). Los 3 call-sites Dart que
+#   consumían `BaseConfig.googleDefaultApiKey` quedaron como fallback legacy
+#   detrás de `placesProxyEnabled = false` y sólo se ejecutan si el flag se
+#   baja. Por eso se removió el fallback hardcodeado a la Android Maps key
+#   `AIza...MSL4` (que además ahora está restringida por package+SHA-1 a la
+#   app Android — desde iOS sería rechazada igual).
+#
+#   Si por algún motivo se rollbackea el Places Proxy:
+#     1. Re-agregar Places + Geocoding a la clave iOS auto-created by Firebase
+#        (`AIza...sbxA`) en GCP Console.
+#     2. Exportar `GOOGLE_MAPS_API_KEY=AIza...sbxA` antes de correr fastlane.
+#   Si la env var no está seteada, el dart-define queda en string vacío y
+#   `BaseConfig.googleDefaultApiKey` retorna `''` — los call-sites legacy
+#   tirarían un REQUEST_DENIED ruidoso de Google, no un fallo silencioso.
 DART_DEFINES = [
   "ENV=prod",
   "DOMAIN=https://api.foodly.solutions",
@@ -15,7 +32,7 @@ DART_DEFINES = [
   "APP_ROOT=/app/",
   "LOGGER_LEVEL=ALL",
   'GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=',
-  "GOOGLE_MAPS_API_KEY=#{ENV['GOOGLE_MAPS_API_KEY'] || 'AIzaSyA2EUJDudKf-67bKDrpGeGJfKxYjmlMSL4'}",
+  "GOOGLE_MAPS_API_KEY=#{ENV['GOOGLE_MAPS_API_KEY'] || ''}",
   "GOOGLE_SIGN_IN_CLIENT_ID=#{ENV['GOOGLE_SIGN_IN_CLIENT_ID'] || '951890938827-gjo39ar4r70btq1ik1r09l8dmqklt19p.apps.googleusercontent.com'}",
   "OPENAI_API_KEY=#{ENV['OPENAI_API_KEY']}",
   "REPLICATE_API_KEY=#{ENV['REPLICATE_API_KEY']}",

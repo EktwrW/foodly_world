@@ -135,7 +135,10 @@ class SignUpCubit extends Cubit<SignUpState> {
   List<UserRole> get getUserTypes => _vm.userTypes;
   Position? get getCurrentPosition => _locationService.currentLocation.position;
   String get lang => _authService.lang;
-  String get googleApiKey => di<BaseConfig>().googleDefaultApiKey;
+  // Note: `googleApiKey` getter removido 2026-05-07 — código muerto desde Fase 4
+  // del Places Proxy (Apr 2026). La Android Maps API key fue restringida por
+  // package+SHA-1 ese mismo día, así que aunque alguien la re-introduzca por
+  // accidente, GCP la rechazaría desde iOS/web igual.
   bool get isGoogleSignIn => _vm.importedAvatar?.isNotEmpty ?? false;
 
   // Tracks the ISO code and complete number from the phone field's onChanged.
