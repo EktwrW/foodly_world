@@ -205,7 +205,11 @@ class SignUpCubit extends Cubit<SignUpState> {
       password: password,
       passwordConfirmation: password,
       phone: _vm.phoneNumberController?.controller?.text ?? '',
-      dateOfBirth: _vm.dateOfBirth?.toUtc() ?? DateTime.now().toUtc(),
+      // No `.toUtc()` — el DTO se serializa con `.toIso8601String()` via
+      // freezed/json_serializable, que ya emite el ISO con la zona local.
+      // El BE (Carbon::parse) lo acepta en cualquier zona y normaliza.
+      // Forzar UTC acá rompe consistencia con el resto del proyecto.
+      dateOfBirth: _vm.dateOfBirth ?? DateTime.now(),
       address: _vm.addressController?.controller?.text ?? '',
       zipCode: _vm.zipCodeController?.controller?.text ?? '',
       city: _vm.cityController?.controller?.text ?? '',

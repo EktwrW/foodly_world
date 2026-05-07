@@ -74,7 +74,12 @@ class EventTrackingService with WidgetsBindingObserver {
     final event = EventDTO(
       eventClientId: const Uuid().v4(),
       eventType: eventType,
-      clientTimestamp: DateTime.now().toUtc().toIso8601String(),
+      // No `.toUtc()` — el patrón del proyecto es serializar DateTime a la
+      // API con `.toIso8601String()` a secas. El BE (Carbon::parse) acepta
+      // cualquier zona y normaliza internamente. Forzar UTC acá rompía la
+      // consistencia con el resto de los DTOs (UserDM.dateOfBirth,
+      // PromotionDM.startDate, etc., todos sin `.toUtc()`).
+      clientTimestamp: DateTime.now().toIso8601String(),
       sourceModule: sourceModule,
       sessionId: _sessionId,
       platform: _authService.platform?.value ?? 'unknown',
