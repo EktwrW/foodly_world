@@ -193,6 +193,33 @@
       "group": "build",
       "label": "Shorebird - Patch iOS (OTA)",
       "detail": "Envía un OTA patch a iOS sin pasar por App Store. Solo cambios Dart."
+    },
+    {
+      "type": "shell",
+      "command": "bundle",
+      "args": ["exec", "fastlane", "beta_upload"],
+      "options": {
+        "cwd": "${workspaceFolder}/ios"
+      },
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Fastlane - Upload IPA to TestFlight (beta)",
+      "detail": "⬆️ TESTFLIGHT: sube el IPA preexistente (build/ios/ipa/*.ipa) a TestFlight. Asume que ya corriste 'Shorebird - Release iOS (App Store)' antes. Lane: beta_upload del Fastfile. Para el ciclo completo (build + dSYMs + TestFlight) usar 'Foodly - iOS Full Release Pipeline'."
+    },
+    {
+      "type": "shell",
+      "command": "echo",
+      "args": ["✅ iOS Full Release Pipeline complete — Shorebird release + dSYMs + TestFlight"],
+      "dependsOn": [
+        "Shorebird - Release iOS (App Store)",
+        "Firebase - Upload iOS dSYMs",
+        "Fastlane - Upload IPA to TestFlight (beta)"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "group": "build",
+      "label": "Foodly - iOS Full Release Pipeline",
+      "detail": "🚀 PIPELINE COMPLETO iOS: Shorebird Release iOS → Upload dSYMs a Crashlytics → Subir IPA a TestFlight. Usar para cada release iOS que tenga cambios nativos. Para cambios solo Dart usar 'Shorebird - Patch iOS (OTA)'."
     }
   ]
 }
