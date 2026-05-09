@@ -7,7 +7,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di;
+import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di, LoadingWidgetFoodlyIso;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -28,6 +28,7 @@ import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promo
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:video_player/video_player.dart';
 
 class TopOffersWidget extends StatefulWidget {
   const TopOffersWidget({super.key});
@@ -328,50 +329,232 @@ class _BackdropRoundedRectangle extends StatelessWidget {
   }
 }
 
-class _EmptyOffersWidget extends StatelessWidget {
+/// Empty/error placeholder para `TopOffersWidget` cuando la lista de promos
+/// cerca del usuario está vacía o falló la carga.
+///
+/// Diseño (refactor 2026-05-08): el placeholder anterior era un icono +
+/// texto plano que daba sensación de "app vacía" y no enganchaba. La nueva
+/// versión replica el shape exacto de la PromoCard real (Card con
+/// borderRadius 8, AspectRatio 16/9, blur backdrop encima al estilo del
+/// `_BackdropRoundedRectangle` de la card de promo) pero con un video
+/// `assets/videos/promos.mp4` en loop muteado en lugar de la imagen de la
+/// promo. Mensaje motivador encima del video ("Pronto, sabores cerca tuyo")
+/// + botón Reintentar abajo. Sin controles de play/pause, sin heart, sin
+/// business info — claramente un placeholder, pero visualmente continuo
+/// con la card real para que cuando aparezcan promos reales la transición
+/// no se sienta como un cambio de pantalla.
+///
+/// Por qué video en vez de imagen: el movimiento mantiene la atención del
+/// usuario unos segundos extra (la métrica clave acá es "no se va de la
+/// app cuando ve empty state"). Loop infinito asegura que aunque el user
+/// se quede mirando, nunca aparezca un final muerto.
+///
+/// Por qué `VideoPlayer` puro y NO `FlickVideoPlayer` (como
+/// `NetworkVideoPlayer` en `video_players.dart`): Flick siempre dibuja
+/// controles (play/pause/progress bar) que acá serían distractores. El
+/// widget bajo nivel `VideoPlayer` solo renderiza el video sin chrome.
+class _EmptyOffersWidget extends StatefulWidget {
   final bool isError;
   final VoidCallback onRetry;
 
   const _EmptyOffersWidget({required this.isError, required this.onRetry});
 
   @override
+  State<_EmptyOffersWidget> createState() => _EmptyOffersWidgetState();
+}
+
+class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
+  static const _videoAsset = 'assets/videos/promos.mp4';
+
+  VideoPlayerController? _controller;
+  bool _videoReady = false;
+  bool _videoFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    final controller = VideoPlayerController.asset(_videoAsset);
+    try {
+      await controller.initialize();
+      if (!mounted) {
+        await controller.dispose();
+        return;
+      }
+      await controller.setLooping(true);
+      await controller.setVolume(0);
+      await controller.play();
+      setState(() {
+        _controller = controller;
+        _videoReady = true;
+      });
+    } catch (_) {
+      // Asset roto, codec no soportado en este device, o disposed mid-init.
+      // Caemos a fallback visual sin video — el blur message y el retry
+      // siguen funcionando.
+      await controller.dispose();
+      if (mounted) setState(() => _videoFailed = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final s = S.current;
+    final title = widget.isError ? s.promosEmptyErrorTitle : s.promosEmptyTitle;
+    final subtitle = widget.isError ? s.promosEmptyErrorSubtitle : s.promosEmptySubtitle;
+
     return SizedBox(
       height: 369,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Icon(
-                isError ? Bootstrap.wifi_off : Bootstrap.megaphone,
-                size: 36,
-                color: FoodlyThemes.primaryFoodly.withValues(alpha: .45),
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Card con video + blur backdrop overlay — mismo shape que `NearbyPromoCard`
+          // para mantener continuidad visual cuando aparezcan promos reales.
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            color: ui.NeumorphicColors.decorationMaxWhiteColor,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: _buildVideo(),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _BackdropEmptyMessage(title: title, subtitle: subtitle),
+                ),
+              ],
             ),
-            Text(
-              isError ? S.current.couldNotLoadPromotions : S.current.noPromotionsNearby,
-              style: FoodlyTextStyles.cardsSmallSubtitle,
+          ),
+          const SizedBox(height: 14),
+          // Botón Reintentar — mismo style que el original, mantenido por petición
+          // del founder. Disparar `cubit.load()` re-fetcha y, si encuentra promos,
+          // este widget se desmonta y se reemplaza por el FoodlyCarousel.
+          SizedBox(
+            width: 239,
+            child: CustomNeumorphicButton(
+              onPressed: widget.onRetry,
+              type: CustomNeumorphicBtnType.tertiary,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              text: s.retry,
+              leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+              disabled: false,
+              fontSize: 12.3,
+              bosShapeRadius: 3.9,
             ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: 239,
-              child: CustomNeumorphicButton(
-                onPressed: onRetry,
-                type: CustomNeumorphicBtnType.tertiary,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                text: S.current.retry,
-                leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                disabled: false,
-                fontSize: 12.3,
-                bosShapeRadius: 3.9,
-              ),
-            ),
-          ],
-        ).paddingBottom(36),
+          ),
+        ],
       ),
     );
+  }
+
+  Widget _buildVideo() {
+    // Video listo → renderizar con BoxFit.cover (fill sin deformar).
+    if (_videoReady && _controller != null) {
+      return FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: _controller!.value.size.width,
+          height: _controller!.value.size.height,
+          child: VideoPlayer(_controller!),
+        ),
+      );
+    }
+
+    // Asset roto → fondo purple translúcido sutil. El blur message arriba
+    // sigue siendo legible y el retry funciona igual.
+    if (_videoFailed) {
+      return ColoredBox(color: FoodlyThemes.primaryFoodly.withValues(alpha: .08));
+    }
+
+    // Inicializando (primeros ~100-300 ms tras mount). Loading iso oficial
+    // para mantener el lenguaje visual del resto de la app.
+    return ColoredBox(
+      color: FoodlyThemes.primaryFoodly.withValues(alpha: .04),
+      child: const Center(child: LoadingWidgetFoodlyIso(height: 46)),
+    );
+  }
+}
+
+/// Backdrop blur con título + subtítulo encima del video del placeholder.
+///
+/// Misma técnica visual que `_BackdropRoundedRectangle` (la card de promo
+/// real): `BackdropFilter` con sigma 6 + container semi-translúcido encima
+/// del video, texto purple primario con multi-shadow blanco para legibilidad
+/// independientemente del frame del video que esté detrás.
+///
+/// La diferencia con `_BackdropRoundedRectangle` es que este NO renderiza
+/// business name / rating / icons — es solo el "hero text" porque no hay
+/// negocio detrás del placeholder.
+class _BackdropEmptyMessage extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _BackdropEmptyMessage({required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 6),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: BackdropFilter(
+            filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+            child: Container(
+              decoration: BoxDecoration(
+                color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: FoodlyTextStyles.secondaryTitle.copyWith(
+                      color: FoodlyThemes.primaryFoodly,
+                      fontSize: 17,
+                      shadows: const [
+                        Shadow(color: Colors.white, offset: Offset(0, 1), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(0, -1), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(1, 0), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(-1, 0), blurRadius: 16),
+                      ],
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
 

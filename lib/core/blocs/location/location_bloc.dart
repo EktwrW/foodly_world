@@ -80,15 +80,22 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   /// traducción oficial.
   String get _currentLanguageCode => Intl.getCurrentLocale().substring(0, 2);
 
+  /// Watchdog timeout para `Geolocator.requestPermission()`. Default 90 s
+  /// (deliberadamente largo, ver docblock de [determinePosition]). Inyectable
+  /// solo para tests — en prod siempre se usa el default.
+  final Duration _requestPermissionTimeout;
+
   LocationBloc(
     BaseConfig baseConfig,
     Logger logger,
     PlacesProxyRepo placesProxyRepo,
-    AppFeaturesRepo appFeaturesRepo,
-  )   : _baseConfig = baseConfig,
+    AppFeaturesRepo appFeaturesRepo, {
+    Duration requestPermissionTimeout = const Duration(seconds: 90),
+  })  : _baseConfig = baseConfig,
         _logger = logger,
         _placesProxyRepo = placesProxyRepo,
         _appFeaturesRepo = appFeaturesRepo,
+        _requestPermissionTimeout = requestPermissionTimeout,
         _locationDM = const LocationDetailsDM(),
         super(const _Initial()) {
     on<LocationEvent>((event, emit) async {
@@ -152,12 +159,27 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   ///     emite `_LocationChecked` con lo que tengamos para que la UI se
   ///     destrabe.
   ///
-  /// **Qué NO tiene timeout y por qué:** `Geolocator.requestPermission()`
-  /// (línea del branch `denied`) se deja SIN timeout por la invariante de
-  /// `feedback_android_permission_serialization.md` — Android no encola
-  /// diálogos de permiso, y el safety-net debe vivir en un service con
-  /// Completer, no acá. Si se cuelga, es bug del service wrapper, no de
-  /// este bloc.
+  /// **Watchdog defensivo sobre `Geolocator.requestPermission()` (90 s):**
+  /// La convención es que el `FoodlyLocationWrapper` serialice el flow vía
+  /// `permissionFlowComplete` para que el dialog de location aparezca solo
+  /// cuando ya cerró el de notificaciones (ver
+  /// `feedback_android_permission_serialization.md` y Bug B.2). Pero el
+  /// 2026-05-09 vimos en un Razr 50 Ultra (ROM Hello UI / MyUX de Motorola)
+  /// que aún con la serialización correcta, el sistema entró en un estado
+  /// patológico donde el dialog de permission JAMÁS se mostró y
+  /// `requestPermission()` se quedó esperando para siempre. El bloc
+  /// quedó en `_CheckingLocation` eterno, ningún cubit downstream
+  /// disparó `load()`, y la home se quedó con shimmer infinito sin retry.
+  /// Crashlytics no detectó nada — no es crash ni ANR (UI thread libre).
+  ///
+  /// Por eso ahora `requestPermission()` también tiene timeout (90 s,
+  /// deliberadamente largo: un user normal contesta en <10 s, y queremos
+  /// no afectar el flow normal aunque el user demore en pensarlo). Si
+  /// timeoutea, asumimos `denied` (NO `deniedForever`) → cae al branch
+  /// que emite `_PermissionDenied` → la UI muestra retry con "Open
+  /// Settings". 90 s NO reemplaza la convención de serialización —
+  /// la convención sigue como path principal — pero es el último
+  /// safety-net antes de bloquear al user.
   Future<void> determinePosition(Emitter<LocationState> emit) async {
     emit(const _CheckingLocation());
 
@@ -190,7 +212,28 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       _locationDM = _locationDM.copyWith(permission: permission);
 
       if (_locationDM.permission == LocationPermission.denied) {
-        final newPermission = await Geolocator.requestPermission();
+        // Watchdog 90 s — ver docblock de `determinePosition` para el
+        // razonamiento completo. Tres razones por las que esto puede
+        // colgarse y necesita escape: (1) ROM custom (Motorola MyUX,
+        // Xiaomi MIUI) con bug en su permission manager, (2) Play
+        // Services desactualizado en el device, (3) estado inconsistente
+        // tras un install previo donde el user respondió "permitir solo
+        // esta vez" y el sistema NO re-prompteea en una nueva sesión.
+        // Asumimos `denied` (no `deniedForever`) para que el próximo
+        // `checkLocation` pueda volver a pedir.
+        final newPermission = await Geolocator.requestPermission().timeout(
+          _requestPermissionTimeout,
+          onTimeout: () {
+            _logger.w(
+              'Geolocator.requestPermission timed out after 90s — '
+              'assuming denied so the UI can surface a retry. '
+              'This usually indicates a system-level bug (custom ROM, stale Play Services, '
+              'or inconsistent permission state). User can retry via the dialog or by '
+              're-opening the app.',
+            );
+            return LocationPermission.denied;
+          },
+        );
         _locationDM = _locationDM.copyWith(permission: newPermission);
 
         if (_locationDM.permission == LocationPermission.denied) {

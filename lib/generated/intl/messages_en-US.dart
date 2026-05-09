@@ -1290,6 +1290,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "promoTabActive": MessageLookupByLibrary.simpleMessage("Active"),
     "promoTabExpired": MessageLookupByLibrary.simpleMessage("Expired"),
     "promoTabUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
+    "promosEmptyErrorSubtitle": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t load promos. Try again.",
+    ),
+    "promosEmptyErrorTitle": MessageLookupByLibrary.simpleMessage(
+      "Connection interrupted",
+    ),
+    "promosEmptySubtitle": MessageLookupByLibrary.simpleMessage(
+      "We\'re cooking up the best deals for you.",
+    ),
+    "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Flavors near you, soon",
+    ),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
     "quoteApproved": MessageLookupByLibrary.simpleMessage("Quote approved"),

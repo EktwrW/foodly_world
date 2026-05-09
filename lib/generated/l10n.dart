@@ -2401,6 +2401,46 @@ class S {
     );
   }
 
+  /// `Flavors near you, soon`
+  String get promosEmptyTitle {
+    return Intl.message(
+      'Flavors near you, soon',
+      name: 'promosEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We're cooking up the best deals for you.`
+  String get promosEmptySubtitle {
+    return Intl.message(
+      'We\'re cooking up the best deals for you.',
+      name: 'promosEmptySubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection interrupted`
+  String get promosEmptyErrorTitle {
+    return Intl.message(
+      'Connection interrupted',
+      name: 'promosEmptyErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't load promos. Try again.`
+  String get promosEmptyErrorSubtitle {
+    return Intl.message(
+      'We couldn\'t load promos. Try again.',
+      name: 'promosEmptyErrorSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Retry`
   String get retry {
     return Intl.message('Retry', name: 'retry', desc: '', args: []);
