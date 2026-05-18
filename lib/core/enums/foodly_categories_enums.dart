@@ -69,6 +69,9 @@ enum FoodlyCategories {
   @JsonValue(22)
   venezuelan(22),
 
+  @JsonValue(23)
+  brazilian(23),
+
   @JsonValue(25)
   foodTrucks(25),
 
@@ -129,6 +132,7 @@ enum FoodlyCategories {
         venezuelan => S.current.venezuelan,
         foodTrucks => S.current.foodTrucks,
         cateringAndChefs => S.current.cateringAndChefs,
+        brazilian => S.current.brazilian,
       };
 
   Widget get avatar => ClipOval(child: Image.asset(assetPath, fit: BoxFit.contain));
@@ -158,6 +162,7 @@ enum FoodlyCategories {
         arabic => 'assets/images/arabe.png',
         foodTrucks => 'assets/images/stand.png',
         cateringAndChefs => 'assets/images/catering_chefs.png',
+        brazilian => 'assets/images/brasilera.png',
       };
 }
 

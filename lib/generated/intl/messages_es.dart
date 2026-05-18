@@ -552,6 +552,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Reservas y precios",
     ),
     "brands": MessageLookupByLibrary.simpleMessage("marcas"),
+    "brazilian": MessageLookupByLibrary.simpleMessage("Brasilera"),
     "brunch": MessageLookupByLibrary.simpleMessage("Brunch"),
     "budgetEstimate": MessageLookupByLibrary.simpleMessage(
       "Presupuesto estimado",

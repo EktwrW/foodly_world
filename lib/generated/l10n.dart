@@ -697,6 +697,11 @@ class S {
     return Intl.message('Argentinian', name: 'argentinian', desc: '', args: []);
   }
 
+  /// `Brazilian`
+  String get brazilian {
+    return Intl.message('Brazilian', name: 'brazilian', desc: '', args: []);
+  }
+
   /// `Asian`
   String get asian {
     return Intl.message('Asian', name: 'asian', desc: '', args: []);
