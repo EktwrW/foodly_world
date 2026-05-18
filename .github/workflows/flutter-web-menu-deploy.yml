@@ -14,7 +14,21 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.38.0
+          # **Bumped 2026-05-19 de 3.38.0 → 3.38.3** (matchea la versión
+          # local de Hector en fvm — evita discrepancias build local vs CI).
+          #
+          # **Por qué importa el patch específico:** Flutter 3.38.0 (la
+          # primera release de la serie 3.38) traía Dart `3.10.0-290.4.beta`
+          # pre-release. El patch 3.38.3 (Nov 2025) sí trae Dart `3.10.1`
+          # estable. `flutter_local_notifications ^21.0.0` exige Dart
+          # `^3.10.0` ESTABLE, así que pub rechazaba con 3.38.0 pero
+          # acepta con 3.38.3.
+          #
+          # Si en algún momento la dep `flutter_local_notifications`
+          # vuelve a romper, primer chequeo: ver Dart version del Flutter
+          # release con `flutter --version`. Si trae `.beta` o `.dev`, hay
+          # que mover a un patch posterior o `channel: stable` sin pin.
+          flutter-version: 3.38.3
 
       - name: Install dependencies
         run: flutter pub get
