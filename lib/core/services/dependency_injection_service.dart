@@ -14,6 +14,8 @@ import 'package:foodly_world/core/network/buzz/buzz_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/device_tokens/device_token_client.dart';
 import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
+import 'package:foodly_world/core/network/menu_import/menu_import_client.dart';
+import 'package:foodly_world/core/network/menu_import/menu_import_repo.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
@@ -89,6 +91,11 @@ class DependencyInjectionService {
       // inyecta Bearer ni dispara silent refresh en esos paths.
       ..registerLazySingleton(() => FoodlyPlacesClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ConfigFeaturesClient(di<FoodlyApiProvider>().dio))
+      // Menu Import (refactor Mateo 2026-05-09) — los 3 endpoints
+      // (/upload, /parse, /bulk) viven detrás de auth:sanctum +
+      // Manager-only del lado BE. Acá NO inyectamos auth; el
+      // FoodlyApiProvider ya agrega el Bearer en sus interceptors.
+      ..registerLazySingleton(() => MenuImportClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
       ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
@@ -122,7 +129,13 @@ class DependencyInjectionService {
       )
       // AppFeaturesRepo mantiene cache in-memory de 5 min. No es const
       // porque internamente guarda estado (`_cached`, `_cachedAt`).
-      ..registerLazySingleton(() => AppFeaturesRepo(client: di()));
+      ..registerLazySingleton(() => AppFeaturesRepo(client: di()))
+      // MenuImportRepo wrapping del MenuImportClient en ApiResult,
+      // con timeouts per-request específicos por endpoint:
+      //   - upload: 60 s   (multipart, 25 fotos × 6 MB sobre 4G mediocre)
+      //   - parse:  90 s   (NLP cae a OpenAI Vision en peor caso)
+      //   - bulk:   30 s   (transacción atómica, normalmente <2 s pero damos colchón)
+      ..registerLazySingleton(() => MenuImportRepo(client: di()));
 
     /// Register services
     final authService = AuthSessionService(

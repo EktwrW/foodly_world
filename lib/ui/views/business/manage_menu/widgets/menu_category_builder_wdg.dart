@@ -30,8 +30,9 @@ import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/view_model/manage_menu_vm.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_snackbars.dart';
+import 'package:foodly_world/ui/views/business/menu_import/widgets/menu_import_empty_state_wdg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, EvaIcons;
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, BoxIcons, EvaIcons;
 import 'package:logger/logger.dart';
 
 part 'adaptive_item_version_selector_wdg.dart';
@@ -84,7 +85,19 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
             text: S.current.addNewCategory,
           ),
         if ((widget.categories?.isEmpty ?? false) && !widget.vm.editMode)
-          Expanded(child: const NoItemsViewWdg().paddingBottom(80)),
+          // Empty state contextual:
+          //   - Manager logueado + categoría vacía + no en editMode →
+          //     banner hero del feature "Importar menú con IA" con CTA
+          //     directo a la ruta `manageMenuImport`. Es el path más
+          //     prominente; la creación manual sigue disponible vía FAB.
+          //   - Visitor (no manager) → mantenemos el `NoItemsViewWdg`
+          //     plano que ya existía: "no hay items aún" con asset
+          //     genérico de menú vacío.
+          Flexible(
+            child: (widget.vm.loggerUserCanEdit && (widget.vm.menuDM?.uuid.isNotEmpty ?? false))
+                ? MenuImportEmptyStateWdg(menuUuid: widget.vm.menuDM!.uuid).paddingBottom(90)
+                : const NoItemsViewWdg().paddingBottom(90),
+          ),
         if (widget.categories?.isNotEmpty ?? false)
           Expanded(
             child: NotificationListener<ScrollNotification>(
@@ -101,7 +114,8 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                 key: PageStorageKey('menu_category_${widget.menuCategory.name}'),
                 // No usar controller aquí para evitar conflictos con NestedScrollView
                 physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: widget.categories?.length ?? 0, padding: EdgeInsets.zero,
+                itemCount: widget.categories?.length ?? 0,
+                padding: const EdgeInsets.only(bottom: 90),
                 itemBuilder: (context, index) {
                   final subCategory = widget.categories?[index];
                   final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);

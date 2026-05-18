@@ -1,5 +1,70 @@
 {
   "@@locale": "en-US",
+  "aiMenuImportTitle": "Import menu with AI",
+  "aiMenuImportHeroTitle": "Digitize your menu with AI",
+  "aiMenuImportHeroSubtitle": "Upload photos of your menu and AI extracts items, categories and prices automatically.",
+  "aiMenuImportDisclaimer": "This feature uses AI to extract menu items from your photos. AI can make mistakes — review names, prices and descriptions before confirming.",
+  "aiMenuImportTips": "For best results: one photo per section, good lighting, no glare, no parallel columns.",
+  "aiMenuImportCamera": "Camera",
+  "aiMenuImportGallery": "Gallery",
+  "aiMenuImportSelectedPhotosLabel": "{count, plural, =1{1 photo selected} other{{count} photos selected}}",
+  "@aiMenuImportSelectedPhotosLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportAnalyzeCta": "Analyze with AI",
+  "aiMenuImportUploading": "Uploading {current} of {total}",
+  "@aiMenuImportUploading": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "aiMenuImportParsing": "Analyzing {current} of {total}",
+  "@aiMenuImportParsing": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "aiMenuImportUploadingHint": "Securely uploading your photos to Foodly",
+  "aiMenuImportParsingHint": "AI may take a few seconds per photo",
+  "aiMenuImportReviewPending": "Review screen coming soon — you'll be able to edit before confirming",
+  "aiMenuImportReviewTitle": "Review your menu",
+  "aiMenuImportReviewHeaderTitle": "{count, plural, =1{We detected 1 item} other{We detected {count} items}}",
+  "@aiMenuImportReviewHeaderTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportReviewHeaderHint": "Review names and prices. Tap the X to remove items you don't want.",
+  "aiMenuImportReviewDescriptionHint": "Add description (optional)",
+  "aiMenuImportReviewConfidenceOk": "OK",
+  "aiMenuImportReviewConfidenceCheck": "Review",
+  "aiMenuImportReviewConfidenceVerify": "Verify",
+  "aiMenuImportReviewVersionRegular": "Regular",
+  "aiMenuImportReviewVersionMedium": "Medium",
+  "aiMenuImportReviewVersionBig": "Large",
+  "aiMenuImportReviewFooterCount": "{count, plural, =0{No items to import} =1{1 item will be added to your menu} other{{count} items will be added to your menu}}",
+  "@aiMenuImportReviewFooterCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportReviewConfirmCta": "Add to menu",
+  "aiMenuImportReviewConfirming": "Saving…",
+  "aiMenuImportSuccessTitle": "Your menu is ready!",
+  "aiMenuImportSuccessSubtitle": "We imported {items} items in {categories} categories.",
+  "@aiMenuImportSuccessSubtitle": {
+    "placeholders": { "items": { "type": "int" }, "categories": { "type": "int" } }
+  },
+  "aiMenuImportSuccessHint": "You can now add photos to each item, adjust prices or reorder them anytime.",
+  "aiMenuImportSuccessCta": "View my menu",
+  "aiMenuImportSuccessStatFood": "{count, plural, =1{1 dish} other{{count} dishes}}",
+  "@aiMenuImportSuccessStatFood": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportSuccessStatDrinks": "{count, plural, =1{1 drink} other{{count} drinks}}",
+  "@aiMenuImportSuccessStatDrinks": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportSuccessStatCombos": "{count, plural, =1{1 combo} other{{count} combos}}",
+  "@aiMenuImportSuccessStatCombos": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportEmptyStateTitle": "Digitize your menu",
+  "aiMenuImportEmptyStateSubtitle": "Upload photos of your menu sections and AI extracts the items, categories and prices automatically.",
+  "aiMenuImportEmptyStateCta": "Import with AI",
+  "aiMenuImportEmptyStateManualHint": "You can also add items one by one with the + button",
   "about": "About",
   "accessiblePMR": "Accessible PMR",
   "account": "Account",
@@ -324,6 +389,10 @@
   "promosEmptySubtitle": "We're cooking up the best deals for you.",
   "promosEmptyErrorTitle": "Connection interrupted",
   "promosEmptyErrorSubtitle": "We couldn't load promos. Try again.",
+  "newReleasesEmptyTitle": "New flavors on the way",
+  "newReleasesEmptySubtitle": "The next discoveries in your area will show up here.",
+  "newReleasesEmptyErrorTitle": "Connection interrupted",
+  "newReleasesEmptyErrorSubtitle": "We couldn't load new businesses. Try again.",
   "retry": "Retry",
   "failedToLoadPromotionDetails": "Failed to load promotion details",
   "noRecommendationsFound": "We didn't find any recommendations for your search. \nTry other terms or try a different location.",

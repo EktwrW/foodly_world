@@ -41,6 +41,12 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
     _loadMenu();
   }
 
+  /// Re-fetch del menu desde el BE. Llamado por la pantalla padre cuando
+  /// hay una mutación externa que invalida el state actual — por ejemplo
+  /// después de un bulk-import IA exitoso (`MenuImportPage` retorna
+  /// `true` via `context.pop`, el empty state escucha y llama esto).
+  Future<void> reload() => _loadMenu();
+
   Future<void> _loadMenu() async {
     await Future.microtask(() => emit(_Loading(_vm)));
 

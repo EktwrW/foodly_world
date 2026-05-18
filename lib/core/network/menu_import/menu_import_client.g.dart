@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notifications_client.dart';
+part of 'menu_import_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'notifications_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
-class _NotificationsClient implements NotificationsClient {
-  _NotificationsClient(this._dio, {this.baseUrl, this.errorLogger});
+class _MenuImportClient implements MenuImportClient {
+  _MenuImportClient(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -18,34 +18,39 @@ class _NotificationsClient implements NotificationsClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<NotificationsResponseDM> getNotifications({
-    int? perPage,
-    bool? onlyUnread,
-    int? page,
+  Future<MenuImportUploadResponseDM> uploadImages(
+    String businessMenuUuid, {
+    required List<MultipartFile> images,
+    String? sessionId,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'per_page': perPage,
-      r'only_unread': onlyUnread,
-      r'page': page,
-    };
+    final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NotificationsResponseDM>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
+    final _data = FormData();
+    _data.files.addAll(images.map((i) => MapEntry('images[]', i)));
+    if (sessionId != null) {
+      _data.fields.add(MapEntry('session_id', sessionId));
+    }
+    final _options = _setStreamType<MenuImportUploadResponseDM>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'multipart/form-data',
+      )
           .compose(
             _dio.options,
-            '/notifications',
+            '/business-menu/${businessMenuUuid}/import/upload',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NotificationsResponseDM _value;
+    late MenuImportUploadResponseDM _value;
     try {
-      _value = NotificationsResponseDM.fromJson(_result.data!);
+      _value = MenuImportUploadResponseDM.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -54,25 +59,31 @@ class _NotificationsClient implements NotificationsClient {
   }
 
   @override
-  Future<UnreadCountResponseDM> getUnreadCount() async {
+  Future<MenuImportParseResponseDM> parseImage(
+    String businessMenuUuid,
+    MenuImportParseDTO body, {
+    Options? options,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<UnreadCountResponseDM>(
-      Options(method: 'GET', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/notifications/unread-count',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final newOptions = newRequestOptions(options);
+    newOptions.extra.addAll(_extra);
+    newOptions.headers.addAll(_dio.options.headers);
+    newOptions.headers.addAll(_headers);
+    final _options = newOptions.copyWith(
+      method: 'POST',
+      baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+      queryParameters: queryParameters,
+      path: '/business-menu/${businessMenuUuid}/import/parse',
+    )..data = _data;
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UnreadCountResponseDM _value;
+    late MenuImportParseResponseDM _value;
     try {
-      _value = UnreadCountResponseDM.fromJson(_result.data!);
+      _value = MenuImportParseResponseDM.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -81,60 +92,34 @@ class _NotificationsClient implements NotificationsClient {
   }
 
   @override
-  Future<void> markAsRead(String uuid) async {
+  Future<MenuImportBulkResponseDM> bulkImport(
+    String businessMenuUuid,
+    MenuImportBulkDTO body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<void>(
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<MenuImportBulkResponseDM>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/notifications/mark-read/${uuid}',
+            '/business-menu/${businessMenuUuid}/import/bulk',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    await _dio.fetch<void>(_options);
-  }
-
-  @override
-  Future<void> markAllAsRead() async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<void>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/notifications/mark-all-read',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    await _dio.fetch<void>(_options);
-  }
-
-  @override
-  Future<void> deleteNotification(String uuid) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<void>(
-      Options(method: 'DELETE', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/notifications/${uuid}',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MenuImportBulkResponseDM _value;
+    try {
+      _value = MenuImportBulkResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions newRequestOptions(Object? options) {

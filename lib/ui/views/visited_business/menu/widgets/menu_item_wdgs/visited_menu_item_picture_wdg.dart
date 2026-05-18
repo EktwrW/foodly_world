@@ -55,19 +55,16 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
     );
   }
 
-  Widget get _buildPlaceholder => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ui.NeumorphicIcon(
-            Icons.dining_outlined,
-            style: ui.NeumorphicStyle(
-              shape: ui.NeumorphicShape.concave,
-              color: FoodlyThemes.accentColor,
-              depth: 2,
-            ),
-            size: 50,
+  Widget get _buildPlaceholder => Center(
+        child: ui.NeumorphicIcon(
+          BoxIcons.bx_food_menu,
+          style: ui.NeumorphicStyle(
+            shape: ui.NeumorphicShape.convex,
+            color: FoodlyThemes.accentColor,
+            depth: 2,
           ),
-        ],
+          size: 46,
+        ),
       );
 
   @override

@@ -54,6 +54,399 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Import menu with AI`
+  String get aiMenuImportTitle {
+    return Intl.message(
+      'Import menu with AI',
+      name: 'aiMenuImportTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Digitize your menu with AI`
+  String get aiMenuImportHeroTitle {
+    return Intl.message(
+      'Digitize your menu with AI',
+      name: 'aiMenuImportHeroTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload photos of your menu and AI extracts items, categories and prices automatically.`
+  String get aiMenuImportHeroSubtitle {
+    return Intl.message(
+      'Upload photos of your menu and AI extracts items, categories and prices automatically.',
+      name: 'aiMenuImportHeroSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This feature uses AI to extract menu items from your photos. AI can make mistakes — review names, prices and descriptions before confirming.`
+  String get aiMenuImportDisclaimer {
+    return Intl.message(
+      'This feature uses AI to extract menu items from your photos. AI can make mistakes — review names, prices and descriptions before confirming.',
+      name: 'aiMenuImportDisclaimer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For best results: one photo per section, good lighting, no glare, no parallel columns.`
+  String get aiMenuImportTips {
+    return Intl.message(
+      'For best results: one photo per section, good lighting, no glare, no parallel columns.',
+      name: 'aiMenuImportTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get aiMenuImportCamera {
+    return Intl.message(
+      'Camera',
+      name: 'aiMenuImportCamera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery`
+  String get aiMenuImportGallery {
+    return Intl.message(
+      'Gallery',
+      name: 'aiMenuImportGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 photo selected} other{{count} photos selected}}`
+  String aiMenuImportSelectedPhotosLabel(int count) {
+    return Intl.plural(
+      count,
+      one: '1 photo selected',
+      other: '$count photos selected',
+      name: 'aiMenuImportSelectedPhotosLabel',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Analyze with AI`
+  String get aiMenuImportAnalyzeCta {
+    return Intl.message(
+      'Analyze with AI',
+      name: 'aiMenuImportAnalyzeCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploading {current} of {total}`
+  String aiMenuImportUploading(int current, int total) {
+    return Intl.message(
+      'Uploading $current of $total',
+      name: 'aiMenuImportUploading',
+      desc: '',
+      args: [current, total],
+    );
+  }
+
+  /// `Analyzing {current} of {total}`
+  String aiMenuImportParsing(int current, int total) {
+    return Intl.message(
+      'Analyzing $current of $total',
+      name: 'aiMenuImportParsing',
+      desc: '',
+      args: [current, total],
+    );
+  }
+
+  /// `Securely uploading your photos to Foodly`
+  String get aiMenuImportUploadingHint {
+    return Intl.message(
+      'Securely uploading your photos to Foodly',
+      name: 'aiMenuImportUploadingHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI may take a few seconds per photo`
+  String get aiMenuImportParsingHint {
+    return Intl.message(
+      'AI may take a few seconds per photo',
+      name: 'aiMenuImportParsingHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review screen coming soon — you'll be able to edit before confirming`
+  String get aiMenuImportReviewPending {
+    return Intl.message(
+      'Review screen coming soon — you\'ll be able to edit before confirming',
+      name: 'aiMenuImportReviewPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review your menu`
+  String get aiMenuImportReviewTitle {
+    return Intl.message(
+      'Review your menu',
+      name: 'aiMenuImportReviewTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{We detected 1 item} other{We detected {count} items}}`
+  String aiMenuImportReviewHeaderTitle(int count) {
+    return Intl.plural(
+      count,
+      one: 'We detected 1 item',
+      other: 'We detected $count items',
+      name: 'aiMenuImportReviewHeaderTitle',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Review names and prices. Tap the X to remove items you don't want.`
+  String get aiMenuImportReviewHeaderHint {
+    return Intl.message(
+      'Review names and prices. Tap the X to remove items you don\'t want.',
+      name: 'aiMenuImportReviewHeaderHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add description (optional)`
+  String get aiMenuImportReviewDescriptionHint {
+    return Intl.message(
+      'Add description (optional)',
+      name: 'aiMenuImportReviewDescriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get aiMenuImportReviewConfidenceOk {
+    return Intl.message(
+      'OK',
+      name: 'aiMenuImportReviewConfidenceOk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review`
+  String get aiMenuImportReviewConfidenceCheck {
+    return Intl.message(
+      'Review',
+      name: 'aiMenuImportReviewConfidenceCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get aiMenuImportReviewConfidenceVerify {
+    return Intl.message(
+      'Verify',
+      name: 'aiMenuImportReviewConfidenceVerify',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Regular`
+  String get aiMenuImportReviewVersionRegular {
+    return Intl.message(
+      'Regular',
+      name: 'aiMenuImportReviewVersionRegular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medium`
+  String get aiMenuImportReviewVersionMedium {
+    return Intl.message(
+      'Medium',
+      name: 'aiMenuImportReviewVersionMedium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Large`
+  String get aiMenuImportReviewVersionBig {
+    return Intl.message(
+      'Large',
+      name: 'aiMenuImportReviewVersionBig',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =0{No items to import} =1{1 item will be added to your menu} other{{count} items will be added to your menu}}`
+  String aiMenuImportReviewFooterCount(int count) {
+    return Intl.plural(
+      count,
+      zero: 'No items to import',
+      one: '1 item will be added to your menu',
+      other: '$count items will be added to your menu',
+      name: 'aiMenuImportReviewFooterCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Add to menu`
+  String get aiMenuImportReviewConfirmCta {
+    return Intl.message(
+      'Add to menu',
+      name: 'aiMenuImportReviewConfirmCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving…`
+  String get aiMenuImportReviewConfirming {
+    return Intl.message(
+      'Saving…',
+      name: 'aiMenuImportReviewConfirming',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your menu is ready!`
+  String get aiMenuImportSuccessTitle {
+    return Intl.message(
+      'Your menu is ready!',
+      name: 'aiMenuImportSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We imported {items} items in {categories} categories.`
+  String aiMenuImportSuccessSubtitle(int items, int categories) {
+    return Intl.message(
+      'We imported $items items in $categories categories.',
+      name: 'aiMenuImportSuccessSubtitle',
+      desc: '',
+      args: [items, categories],
+    );
+  }
+
+  /// `You can now add photos to each item, adjust prices or reorder them anytime.`
+  String get aiMenuImportSuccessHint {
+    return Intl.message(
+      'You can now add photos to each item, adjust prices or reorder them anytime.',
+      name: 'aiMenuImportSuccessHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View my menu`
+  String get aiMenuImportSuccessCta {
+    return Intl.message(
+      'View my menu',
+      name: 'aiMenuImportSuccessCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count, plural, =1{1 dish} other{{count} dishes}}`
+  String aiMenuImportSuccessStatFood(int count) {
+    return Intl.plural(
+      count,
+      one: '1 dish',
+      other: '$count dishes',
+      name: 'aiMenuImportSuccessStatFood',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{1 drink} other{{count} drinks}}`
+  String aiMenuImportSuccessStatDrinks(int count) {
+    return Intl.plural(
+      count,
+      one: '1 drink',
+      other: '$count drinks',
+      name: 'aiMenuImportSuccessStatDrinks',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, =1{1 combo} other{{count} combos}}`
+  String aiMenuImportSuccessStatCombos(int count) {
+    return Intl.plural(
+      count,
+      one: '1 combo',
+      other: '$count combos',
+      name: 'aiMenuImportSuccessStatCombos',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Digitize your menu`
+  String get aiMenuImportEmptyStateTitle {
+    return Intl.message(
+      'Digitize your menu',
+      name: 'aiMenuImportEmptyStateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload photos of your menu sections and AI extracts the items, categories and prices automatically.`
+  String get aiMenuImportEmptyStateSubtitle {
+    return Intl.message(
+      'Upload photos of your menu sections and AI extracts the items, categories and prices automatically.',
+      name: 'aiMenuImportEmptyStateSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import with AI`
+  String get aiMenuImportEmptyStateCta {
+    return Intl.message(
+      'Import with AI',
+      name: 'aiMenuImportEmptyStateCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can also add items one by one with the + button`
+  String get aiMenuImportEmptyStateManualHint {
+    return Intl.message(
+      'You can also add items one by one with the + button',
+      name: 'aiMenuImportEmptyStateManualHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About`
   String get about {
     return Intl.message('About', name: 'about', desc: '', args: []);
@@ -2436,6 +2829,46 @@ class S {
     return Intl.message(
       'We couldn\'t load promos. Try again.',
       name: 'promosEmptyErrorSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New flavors on the way`
+  String get newReleasesEmptyTitle {
+    return Intl.message(
+      'New flavors on the way',
+      name: 'newReleasesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The next discoveries in your area will show up here.`
+  String get newReleasesEmptySubtitle {
+    return Intl.message(
+      'The next discoveries in your area will show up here.',
+      name: 'newReleasesEmptySubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection interrupted`
+  String get newReleasesEmptyErrorTitle {
+    return Intl.message(
+      'Connection interrupted',
+      name: 'newReleasesEmptyErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't load new businesses. Try again.`
+  String get newReleasesEmptyErrorSubtitle {
+    return Intl.message(
+      'We couldn\'t load new businesses. Try again.',
+      name: 'newReleasesEmptyErrorSubtitle',
       desc: '',
       args: [],
     );

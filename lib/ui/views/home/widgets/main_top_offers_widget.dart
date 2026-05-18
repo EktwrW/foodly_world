@@ -377,7 +377,27 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
   }
 
   Future<void> _initVideo() async {
-    final controller = VideoPlayerController.asset(_videoAsset);
+    // CRÍTICO cuando hay 2+ VideoPlayer simultáneos en pantalla (este
+    // placeholder + el de `NewReleasesCard` con `business.mp4`). Sin
+    // `mixWithOthers: true` en el constructor, en iOS el plugin
+    // configura `AVAudioSession` como exclusiva ("playback") durante
+    // `initialize()` y el segundo controller que llama `.play()`
+    // **pisa el primero**: solo uno reproduce, el otro queda congelado
+    // en el primer frame. En Android es menos frecuente pero también
+    // puede pasar con ExoPlayer si la audio focus se acapara.
+    //
+    // **El option va al constructor, NO post-init:** el método
+    // `controller.setMixWithOthers(true)` existe pero llega tarde —
+    // `initialize()` ya creó la AVAudioSession en modo exclusivo. La
+    // forma confiable es pasar `VideoPlayerOptions(mixWithOthers: true)`
+    // al constructor para que la session se cree directamente en modo
+    // mixable. Aunque acá los videos están con `volume=0`, sigue siendo
+    // necesario porque la sesión se reserva al `.play()`
+    // independientemente del volumen.
+    final controller = VideoPlayerController.asset(
+      _videoAsset,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
     try {
       await controller.initialize();
       if (!mounted) {
@@ -431,29 +451,26 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
                     aspectRatio: 16 / 9,
                     child: _buildVideo(),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _BackdropEmptyMessage(title: title, subtitle: subtitle),
-                ),
+                ).paddingBottom(93),
+                Column(
+                  children: [
+                    _BackdropEmptyMessage(title: title, subtitle: subtitle),
+                    SizedBox(
+                      width: 239,
+                      child: CustomNeumorphicButton(
+                        onPressed: widget.onRetry,
+                        type: CustomNeumorphicBtnType.tertiary,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        text: s.retry,
+                        leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+                        disabled: false,
+                        fontSize: 12.3,
+                        bosShapeRadius: 3.9,
+                      ),
+                    ),
+                  ],
+                ).paddingBottom(11),
               ],
-            ),
-          ),
-          const SizedBox(height: 14),
-          // Botón Reintentar — mismo style que el original, mantenido por petición
-          // del founder. Disparar `cubit.load()` re-fetcha y, si encuentra promos,
-          // este widget se desmonta y se reemplaza por el FoodlyCarousel.
-          SizedBox(
-            width: 239,
-            child: CustomNeumorphicButton(
-              onPressed: widget.onRetry,
-              type: CustomNeumorphicBtnType.tertiary,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              text: s.retry,
-              leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-              disabled: false,
-              fontSize: 12.3,
-              bosShapeRadius: 3.9,
             ),
           ),
         ],

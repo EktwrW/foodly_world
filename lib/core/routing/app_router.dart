@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/views/business/availability/manage_availability_
 import 'package:foodly_world/ui/views/business/business_page.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/manage_menu_screen.dart';
+import 'package:foodly_world/ui/views/business/menu_import/menu_import_page.dart';
 import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
 import 'package:foodly_world/ui/views/business/reservations/manage_reservations_page.dart';
@@ -522,6 +523,24 @@ class AppRouter {
                   businessDM: state.extra as BusinessDM?,
                 ),
                 child: const ManageMenuScreen(),
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          GoRoute(
+            // Importar menú con IA (refactor Mateo 2026-05-09).
+            // El `routeIdParam` recibe el `BusinessMenu.uuid` (NO el business
+            // uuid) — el cubit lo pasa tal cual al BE, que verifica IDOR
+            // contra el manager logueado en `resolveMenuOrFail`.
+            path: AppRoutes.manageMenuImport.path,
+            name: AppRoutes.manageMenuImport.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: MenuImportPage(
+                businessMenuUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),

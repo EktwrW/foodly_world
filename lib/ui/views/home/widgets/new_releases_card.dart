@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer' show log;
+import 'dart:ui' as dart_ui show ImageFilter;
 
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape, NeumorphicColors;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
@@ -14,6 +16,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
+import 'package:video_player/video_player.dart';
 
 class NewReleasesCard extends StatefulWidget {
   const NewReleasesCard({super.key});
@@ -73,9 +76,9 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               loading: (_) => const NewReleaseShimmer(),
               loaded: (s) {
                 if (s.vm.businesses.isEmpty) {
-                  return _NewReleasesErrorWidget(
+                  return _EmptyNewReleasesWidget(
+                    isError: false,
                     onRetry: () => context.read<NewReleasesCubit>().load(),
-                    message: '${S.current.noNewBranches}\n${S.current.checkBackLater}',
                   );
                 }
 
@@ -138,9 +141,9 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               },
               error: (_) => isCheckingLocation
                   ? const NewReleaseShimmer()
-                  : _NewReleasesErrorWidget(
+                  : _EmptyNewReleasesWidget(
+                      isError: true,
                       onRetry: () => context.read<NewReleasesCubit>().load(),
-                      iconData: Icons.search_off_rounded,
                     ),
             );
           },
@@ -311,52 +314,257 @@ class _NewReleasesCardContent extends StatelessWidget {
   }
 }
 
-class _NewReleasesErrorWidget extends StatelessWidget {
+/// Empty/error placeholder para `NewReleasesCard` cuando NO hay negocios
+/// nuevos cerca del usuario o falló la carga.
+///
+/// Diseño (refactor 2026-05-11): el placeholder anterior era un icono +
+/// texto plano + botón retry — efectivo pero plano, daba sensación de
+/// "app vacía / pueblo sin nada". La nueva versión espeja exactamente el
+/// patrón visual de `_EmptyOffersWidget` (placeholder de promos): card
+/// neumórfica con `business.mp4` reproduciéndose en loop muteado de fondo
+/// y un backdrop blur encima con título + subtítulo. Botón Reintentar
+/// abajo, igual que antes.
+///
+/// **Por qué espejar exactamente TopOffers:** consistencia visual en la
+/// home. El usuario que ve dos secciones consecutivas (Promociones cerca
+/// + Nuevos negocios cerca) sin contenido no ve dos vacíos distintos sino
+/// el mismo idioma visual repetido — comunica "todavía no, pero pronto"
+/// de forma coherente.
+///
+/// **Por qué `VideoPlayer` puro y no `FlickVideoPlayer`:** Flick siempre
+/// dibuja controles (play/pause/progress) que serían distractores acá.
+/// Para detalles del trade-off, ver el docblock de `_EmptyOffersWidget`
+/// en `main_top_offers_widget.dart`.
+///
+/// **Por qué el header morado decorativo (90px con nombre/rating) NO se
+/// renderiza acá:** ese header pertenece a la card real porque muestra
+/// info del business. En empty state no hay business detrás, así que
+/// poner un header vacío sería ruido visual. El card placeholder ocupa
+/// toda la altura disponible y se ve "limpio".
+class _EmptyNewReleasesWidget extends StatefulWidget {
+  final bool isError;
   final VoidCallback onRetry;
-  final String? message;
-  final IconData? iconData;
 
-  const _NewReleasesErrorWidget({
-    required this.onRetry,
-    this.message,
-    this.iconData,
-  });
+  const _EmptyNewReleasesWidget({required this.isError, required this.onRetry});
+
+  @override
+  State<_EmptyNewReleasesWidget> createState() => _EmptyNewReleasesWidgetState();
+}
+
+class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
+  static const _videoAsset = 'assets/videos/business.mp4';
+
+  VideoPlayerController? _controller;
+  bool _videoReady = false;
+  bool _videoFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    // **`videoPlayerOptions: mixWithOthers: true` es CRÍTICO** cuando hay
+    // 2+ VideoPlayer simultáneos en pantalla (este placeholder + el de
+    // `TopOffersWidget` con `promos.mp4`). Sin esta option, en iOS el
+    // plugin configura `AVAudioSession` como exclusiva ("playback")
+    // durante `initialize()` y el segundo controller que llama `.play()`
+    // **pisa el primero**: solo uno reproduce, el otro queda congelado
+    // en el primer frame. En Android es menos frecuente pero también
+    // puede pasar con ExoPlayer si la audio focus se acapara.
+    //
+    // **Por qué al constructor y NO `controller.setMixWithOthers()`
+    // post-init:** el método setter existe pero llega tarde —
+    // `initialize()` ya creó la AVAudioSession en modo exclusivo y
+    // cambiar la category después no rescata el routing. La forma
+    // confiable es pasar `VideoPlayerOptions(mixWithOthers: true)` al
+    // constructor para que la session se cree directamente en modo
+    // mixable. Aunque acá los videos están con `volume=0`, sigue siendo
+    // necesario porque la sesión se reserva al `.play()`
+    // independientemente del volumen.
+    //
+    // El mismo fix idéntico está en `_EmptyOffersWidgetState._initVideo`.
+    final controller = VideoPlayerController.asset(
+      _videoAsset,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
+    try {
+      await controller.initialize();
+      if (!mounted) {
+        await controller.dispose();
+        return;
+      }
+      await controller.setLooping(true);
+      await controller.setVolume(0);
+      await controller.play();
+      setState(() {
+        _controller = controller;
+        _videoReady = true;
+      });
+    } catch (e) {
+      log('$e');
+      // Asset roto, codec no soportado en este device, o disposed mid-init.
+      // Caemos a fallback visual sin video — el blur message y el retry
+      // siguen funcionando, igual que en `_EmptyOffersWidget`.
+      await controller.dispose();
+      if (mounted) setState(() => _videoFailed = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final s = S.current;
+    final title = widget.isError ? s.newReleasesEmptyErrorTitle : s.newReleasesEmptyTitle;
+    final subtitle = widget.isError ? s.newReleasesEmptyErrorSubtitle : s.newReleasesEmptySubtitle;
+
     return SizedBox(
-      height: 320,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              iconData ?? Icons.new_releases_outlined,
-              size: 39,
-              color: FoodlyThemes.primaryFoodly.withValues(alpha: .45),
-            ).paddingBottom(16),
-            Text(
-              message ?? S.current.couldNotLoadNewReleases,
-              style: FoodlyTextStyles.cardsSmallSubtitle,
-              textAlign: TextAlign.center,
+      // Mantiene aproximadamente la altura del card real con su contenido
+      // (320 stack + 55 paddingTop + botón retry abajo). Evita layout
+      // shift cuando aparezcan negocios nuevos y se reemplace este widget
+      // por el `_NewReleasesCardContent` real.
+      height: 430,
+      child: Column(
+        children: [
+          // Card con video + blur backdrop overlay — mismo shape que la
+          // `Card` interna de `_NewReleasesCardContent` (ver ese widget
+          // arriba en este archivo), garantizando que la transición
+          // empty → real no se sienta como un cambio de layout.
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 6),
+            color: ui.NeumorphicColors.decorationMaxWhiteColor,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: _buildVideo(),
+                  ),
+                ),
+                Column(
+                  children: [
+                    _BackdropEmptyMessage(title: title, subtitle: subtitle),
+                    SizedBox(
+                      width: 239,
+                      child: CustomNeumorphicButton(
+                        onPressed: widget.onRetry,
+                        type: CustomNeumorphicBtnType.tertiary,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        text: s.retry,
+                        leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+                        disabled: false,
+                        fontSize: 12.3,
+                        bosShapeRadius: 3.9,
+                      ),
+                    ),
+                  ],
+                ).paddingBottom(11),
+              ],
             ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: 239,
-              child: CustomNeumorphicButton(
-                onPressed: onRetry,
-                type: CustomNeumorphicBtnType.tertiary,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                text: S.current.retry,
-                leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                disabled: false,
-                fontSize: 12.3,
-                bosShapeRadius: 3.9,
+          ),
+        ],
+      ),
+    ).paddingOnly(top: 16);
+  }
+
+  Widget _buildVideo() {
+    // Video listo → renderizar con BoxFit.cover (fill sin deformar).
+    if (_videoReady && _controller != null) {
+      return FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: _controller!.value.size.width,
+          height: _controller!.value.size.height,
+          child: VideoPlayer(_controller!),
+        ),
+      );
+    }
+
+    // Asset roto → fondo purple translúcido sutil. El blur message arriba
+    // sigue siendo legible y el retry funciona igual.
+    if (_videoFailed) {
+      return ColoredBox(color: FoodlyThemes.primaryFoodly.withValues(alpha: .08));
+    }
+
+    // Inicializando (primeros ~100-300 ms tras mount). Loading iso oficial
+    // para mantener el lenguaje visual del resto de la app.
+    return ColoredBox(
+      color: FoodlyThemes.primaryFoodly.withValues(alpha: .04),
+      child: const Center(child: LoadingWidgetFoodlyIso(height: 46)),
+    );
+  }
+}
+
+/// Backdrop blur con título + subtítulo encima del video del placeholder.
+///
+/// Réplica del `_BackdropEmptyMessage` de `main_top_offers_widget.dart`.
+/// Existe como clase privada acá (en vez de compartir una sola desde un
+/// shared widget) por simetría con TopOffers — ambos widgets son
+/// auto-contenidos y mantienen su placeholder local. Si en el futuro
+/// sumamos un 3er empty state con la misma técnica, vale la pena
+/// extraerlo a `shared_widgets/empty_state/empty_video_card.dart`.
+class _BackdropEmptyMessage extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _BackdropEmptyMessage({required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: BackdropFilter(
+            filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+            child: Container(
+              decoration: BoxDecoration(
+                color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: FoodlyTextStyles.secondaryTitle.copyWith(
+                      color: FoodlyThemes.primaryFoodly,
+                      fontSize: 17,
+                      shadows: const [
+                        Shadow(color: Colors.white, offset: Offset(0, 1), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(0, -1), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(1, 0), blurRadius: 16),
+                        Shadow(color: Colors.white, offset: Offset(-1, 0), blurRadius: 16),
+                      ],
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
-          ],
-        ).paddingBottom(36),
-      ),
-    ).paddingOnly(top: 25);
+          ),
+        ),
+      );
+    });
   }
 }

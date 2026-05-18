@@ -1,5 +1,70 @@
 {
   "@@locale": "es",
+  "aiMenuImportTitle": "Importar menú con IA",
+  "aiMenuImportHeroTitle": "Digitalizá tu menú con IA",
+  "aiMenuImportHeroSubtitle": "Subí fotos de tu menú y la IA extrae los items, categorías y precios automáticamente.",
+  "aiMenuImportDisclaimer": "Esta función usa IA para extraer items del menú a partir de tus fotos. La IA puede cometer errores — revisá nombres, precios y descripciones antes de confirmar.",
+  "aiMenuImportTips": "Para mejor resultado: una foto por sección, buena luz, sin reflejos, sin columnas paralelas.",
+  "aiMenuImportCamera": "Cámara",
+  "aiMenuImportGallery": "Galería",
+  "aiMenuImportSelectedPhotosLabel": "{count, plural, =1{1 foto seleccionada} other{{count} fotos seleccionadas}}",
+  "@aiMenuImportSelectedPhotosLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportAnalyzeCta": "Analizar con IA",
+  "aiMenuImportUploading": "Subiendo {current} de {total}",
+  "@aiMenuImportUploading": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "aiMenuImportParsing": "Analizando {current} de {total}",
+  "@aiMenuImportParsing": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "aiMenuImportUploadingHint": "Subiendo tus fotos a Foodly de forma segura",
+  "aiMenuImportParsingHint": "La IA puede tardar unos segundos por foto",
+  "aiMenuImportReviewPending": "Revisión en construcción — pronto podrás editar antes de confirmar",
+  "aiMenuImportReviewTitle": "Revisá tu menú",
+  "aiMenuImportReviewHeaderTitle": "{count, plural, =1{Detectamos 1 item} other{Detectamos {count} items}}",
+  "@aiMenuImportReviewHeaderTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportReviewHeaderHint": "Revisá nombres y precios. Tocá la X para eliminar items que no quieras.",
+  "aiMenuImportReviewDescriptionHint": "Agregar descripción (opcional)",
+  "aiMenuImportReviewConfidenceOk": "OK",
+  "aiMenuImportReviewConfidenceCheck": "Revisar",
+  "aiMenuImportReviewConfidenceVerify": "Verificar",
+  "aiMenuImportReviewVersionRegular": "Regular",
+  "aiMenuImportReviewVersionMedium": "Mediano",
+  "aiMenuImportReviewVersionBig": "Grande",
+  "aiMenuImportReviewFooterCount": "{count, plural, =0{Sin items para importar} =1{Se agregará 1 item a tu menú} other{Se agregarán {count} items a tu menú}}",
+  "@aiMenuImportReviewFooterCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportReviewConfirmCta": "Agregar al menú",
+  "aiMenuImportReviewConfirming": "Guardando…",
+  "aiMenuImportSuccessTitle": "¡Tu menú está listo!",
+  "aiMenuImportSuccessSubtitle": "Importamos {items} items en {categories} categorías.",
+  "@aiMenuImportSuccessSubtitle": {
+    "placeholders": { "items": { "type": "int" }, "categories": { "type": "int" } }
+  },
+  "aiMenuImportSuccessHint": "Ahora podés agregar fotos a cada item, ajustar precios o reordenarlos cuando quieras.",
+  "aiMenuImportSuccessCta": "Ver mi menú",
+  "aiMenuImportSuccessStatFood": "{count, plural, =1{1 plato} other{{count} platos}}",
+  "@aiMenuImportSuccessStatFood": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportSuccessStatDrinks": "{count, plural, =1{1 bebida} other{{count} bebidas}}",
+  "@aiMenuImportSuccessStatDrinks": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportSuccessStatCombos": "{count, plural, =1{1 combo} other{{count} combos}}",
+  "@aiMenuImportSuccessStatCombos": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "aiMenuImportEmptyStateTitle": "Digitalizá tu menú",
+  "aiMenuImportEmptyStateSubtitle": "Subí fotos de las secciones de tu menú y la IA extrae los items, categorías y precios automáticamente.",
+  "aiMenuImportEmptyStateCta": "Importar con IA",
+  "aiMenuImportEmptyStateManualHint": "También podés agregar items uno por uno con el botón +",
   "about": "Acerca de",
   "accessiblePMR": "Accesible PMR",
   "account": "Cuenta",
@@ -325,6 +390,10 @@
   "promosEmptySubtitle": "Estamos preparando las mejores promos para ti.",
   "promosEmptyErrorTitle": "Conexión interrumpida",
   "promosEmptyErrorSubtitle": "No pudimos cargar las promos. Probá de nuevo.",
+  "newReleasesEmptyTitle": "Nuevos sabores en camino",
+  "newReleasesEmptySubtitle": "Los próximos descubrimientos de tu zona aparecerán aquí.",
+  "newReleasesEmptyErrorTitle": "Conexión interrumpida",
+  "newReleasesEmptyErrorSubtitle": "No pudimos cargar los nuevos negocios. Probá de nuevo.",
   "visitBusinessPage": "Ver página del negocio",
   "viewPromotion": "Ver promoción",
   "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",

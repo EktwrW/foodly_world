@@ -61,13 +61,13 @@ class MenuItemPictureWdg extends StatelessWidget {
 
   Widget get _buildPlaceholder => Center(
         child: ui.NeumorphicIcon(
-          isEditing ? Icons.add_photo_alternate_outlined : Icons.dining_outlined,
+          isEditing ? Icons.add_photo_alternate_outlined : BoxIcons.bx_food_menu,
           style: ui.NeumorphicStyle(
-            shape: ui.NeumorphicShape.concave,
+            shape: ui.NeumorphicShape.convex,
             color: FoodlyThemes.accentColor,
             depth: 2,
           ),
-          size: 48,
+          size: 46,
         ),
       );
 

@@ -7,8 +7,8 @@ import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/places_proxy/places_proxy_repo.dart';
-import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/data_models/app_config/app_features_dm.dart';
+import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/data_models/places_proxy/geocoding_response_dm.dart';
 import 'package:foodly_world/data_transfer_objects/places_proxy/geocoding_reverse_request_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -203,7 +203,7 @@ void main() {
           ..permission = LocationPermission.denied
           ..hangRequestPermission = true;
 
-        final bloc = buildBloc(requestPermissionTimeout: const Duration(milliseconds: 200));
+        final bloc = buildBloc();
         final emitted = await runCheckLocationFlow(
           bloc,
           timeout: const Duration(milliseconds: 800),
@@ -462,7 +462,7 @@ class _FakePlacesProxyRepo implements PlacesProxyRepo {
 /// Fake del repo de feature flags. Por default `placesProxyEnabled=true`,
 /// que es el path principal post-Fase 5 del Places Proxy.
 class _FakeAppFeaturesRepo implements AppFeaturesRepo {
-  AppFeaturesDM cached = const AppFeaturesDM(placesProxyEnabled: true);
+  AppFeaturesDM cached = const AppFeaturesDM();
 
   @override
   AppFeaturesDM get cachedOrDefaults => cached;

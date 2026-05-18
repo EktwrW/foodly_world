@@ -34,6 +34,23 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
 
   bool get biometricAuthEnabled => _dto.deviceIsSupported && _dto.availableBiometrics.isNotEmpty;
 
+  /// True cuando `authenticate()` ya fue invocado (user tocó el botón
+  /// biométrico) y el flow está en curso — desde el setteo de
+  /// `isAuthenticating=true` en la línea 114, hasta el `emit(_Authenticated)`
+  /// / `emit(_Error)` que cierra el flow.
+  ///
+  /// Distinto de `_authSessionService.isBiometricLoginInProgress`: ese flag
+  /// se setea SÍNCRONAMENTE en `initializeLocalAuth` cuando se detecta
+  /// sesión guardada, ANTES de saber si el user va a usar biometría. O sea
+  /// `isBiometricLoginInProgress=true` no implica "user tocó el botón" — solo
+  /// "el cubit reservó el guard por las dudas". Este getter sí discrimina.
+  ///
+  /// Lo usa `FoodlyLocationWrapper._scheduleBiometricSafetyCheck` para
+  /// destrabar el watchdog cuando el user ignora el botón biométrico y se
+  /// loguea por otro path (email+password, Google, Apple) — caso en el que
+  /// el cubit queda eterno en `_NeedAuthentication` con `isAuthenticating=false`.
+  bool get isAuthInProgress => _dto.isAuthenticating;
+
   void initializeLocalAuth() async {
     emit(_Loading(_dto));
 

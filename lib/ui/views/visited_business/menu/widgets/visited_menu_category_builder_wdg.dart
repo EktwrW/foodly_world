@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_c
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart' show BoxIcons;
 
 // El selector de versiones ahora está integrado en visited_menu_item_wdg.dart
 part 'menu_item_wdgs/fav_menu_item_btns.dart';

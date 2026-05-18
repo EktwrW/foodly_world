@@ -63,7 +63,12 @@ class _BusinessPageState extends State<BusinessPage> {
             loading: (vm) => _dialogService.showLoading(),
             updatingLogo: (vm) => _dialogService.showLoading(),
             updatingMenu: (vm) => _dialogService.showLoading(),
-            loaded: (vm) => _dialogService.hideLoading(),
+            loaded: (vm) {
+              if(context.read<MainDrawerCubit>().state.vm.currentIndex != 1){
+                context.read<MainDrawerCubit>().updateSelectedIndex(1);
+              }
+              _dialogService.hideLoading();
+            },
             showCoverImagesDialog: (_) {
               _dialogService.showCustomDialog(
                 BlocProvider.value(value: _bloc, child: const EditCoverImagesDialog()),

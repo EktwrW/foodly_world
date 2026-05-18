@@ -112,38 +112,29 @@ class SubCategoryWdg extends StatelessWidget {
           const SizedBox(height: 30),
         if (subCategory?.items.isNotEmpty ?? false)
           if (vm.editMode && vm.enableEditCategoryBtns && (subCategory!.items.length) > 1)
-            ReorderableListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              buildDefaultDragHandles: false,
-              // Remove the default white Material elevation on the dragged item
-              proxyDecorator: (child, index, animation) => child,
-              itemCount: subCategory!.items.length,
-              onReorder: (oldIndex, newIndex) {
-                cubit.reorderItems(subCategory!, menuCategory, oldIndex, newIndex);
-              },
-              itemBuilder: (context, i) {
-                final item = subCategory!.items[i];
-                // BlocProvider.value re-scopes the cubit for the drag overlay,
-                // which renders outside the original BlocProvider tree.
-                return BlocProvider.value(
-                  key: Key(item.uuid),
-                  value: cubit,
-                  child: MenuItemWdg(
-                    subCategory: subCategory!,
-                    menuCategory: menuCategory,
-                    vm: vm,
-                    item: item,
-                    // Never show the bottom spacer while reordering — it
-                    // would travel with the dragged item and look broken.
-                    isLastScreenItem: false,
-                    dragIconWdg: ReorderableDragStartListener(
-                      index: i,
-                      child: const Icon(Icons.drag_handle, color: FoodlyThemes.primaryFoodly, size: 30),
-                    ),
-                  ),
-                );
-              },
+            // **Wrapper Stateful con ScrollController propio** — el
+            // ReorderableListView sin controller propio registra su
+            // Scrollable interno con el `_NestedScrollCoordinator` del
+            // `NestedScrollView` padre (manage_menu_screen.dart:149).
+            // Cuando se monta por primera vez (al entrar edit mode con
+            // una categoría que tiene >1 items, ej. "Peixes" de Platos),
+            // el coordinator pide `position.minScrollExtent` durante el
+            // ballistic handler antes de que el inner haya completado su
+            // primer layout → `_minScrollExtent!` es null → crash en
+            // gestos de scroll. Bug 2026-05-18.
+            //
+            // Dar al ReorderableListView un controller propio lo desacopla
+            // del coordinator del NestedScrollView. Como `physics:
+            // NeverScrollableScrollPhysics`, el controller no se usa
+            // realmente para scrollear, solo para evitar el registro
+            // automático con el primary controller del NestedScrollView.
+            _ReorderableSubCategoryItems(
+              key: ValueKey('reorder_${subCategory!.uuid}'),
+              items: subCategory!.items,
+              subCategory: subCategory!,
+              menuCategory: menuCategory,
+              vm: vm,
+              cubit: cubit,
             )
           else
             ...subCategory!.items.mapIndexed(
@@ -260,6 +251,106 @@ class _SaveButton extends StatelessWidget {
         size: 22,
         color: isValid ? FoodlyThemes.primaryFoodly : Colors.grey,
       ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Reorderable items wrapper — Stateful para `ScrollController` lifecycle
+// ─────────────────────────────────────────────────────────────────────────
+
+/// Envuelve `ReorderableListView.builder` con un `ScrollController` propio
+/// (no compartido con el `NestedScrollView` padre del manage_menu_screen).
+///
+/// **Por qué Stateful (2026-05-18):** sin esto, `ReorderableListView`
+/// usaba el `PrimaryScrollController` heredado del `NestedScrollView` y se
+/// registraba con su `_NestedScrollCoordinator`. Cuando se montaba por
+/// primera vez (al activar edit mode con una subcategoría que tiene >1
+/// items, ej. "Peixes" → 38 platos importados), el coordinator pedía
+/// `position.minScrollExtent` antes de que el inner completara su primer
+/// layout → `Null check operator used on a null value` en
+/// `ScrollPosition.minScrollExtent` (frame:
+/// `_NestedScrollCoordinator._getMetrics`). Síntoma observable: cada
+/// gesto de scroll en esa categoría tira excepciones en consola y el
+/// scroll falla intermitente.
+///
+/// Como tenemos `physics: NeverScrollableScrollPhysics`, el controller
+/// propio nunca se va a usar para scrollear realmente — su único rol es
+/// **prevenir que el ReorderableListView se conecte al coordinator del
+/// NestedScrollView**. Cualquier dispose() del controller es no-op
+/// efectivo pero lo hacemos por higiene de lifecycle.
+class _ReorderableSubCategoryItems extends StatefulWidget {
+  final List<ItemDM> items;
+  final CategoryDM subCategory;
+  final MenuCategory menuCategory;
+  final ManageMenuVM vm;
+  final ManageMenuCubit cubit;
+
+  const _ReorderableSubCategoryItems({
+    super.key,
+    required this.items,
+    required this.subCategory,
+    required this.menuCategory,
+    required this.vm,
+    required this.cubit,
+  });
+
+  @override
+  State<_ReorderableSubCategoryItems> createState() => _ReorderableSubCategoryItemsState();
+}
+
+class _ReorderableSubCategoryItemsState extends State<_ReorderableSubCategoryItems> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ReorderableListView.builder(
+      // ⬇️ Crítico: controller propio para desacoplarse del coordinator
+      // del NestedScrollView padre. Ver doc del widget arriba.
+      scrollController: _scrollController,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      buildDefaultDragHandles: false,
+      // Remove the default white Material elevation on the dragged item.
+      proxyDecorator: (child, index, animation) => child,
+      itemCount: widget.items.length,
+      onReorder: (oldIndex, newIndex) {
+        widget.cubit.reorderItems(widget.subCategory, widget.menuCategory, oldIndex, newIndex);
+      },
+      itemBuilder: (context, i) {
+        final item = widget.items[i];
+        // BlocProvider.value re-scopes the cubit for the drag overlay,
+        // which renders outside the original BlocProvider tree.
+        return BlocProvider.value(
+          key: Key(item.uuid),
+          value: widget.cubit,
+          child: MenuItemWdg(
+            subCategory: widget.subCategory,
+            menuCategory: widget.menuCategory,
+            vm: widget.vm,
+            item: item,
+            // Never show the bottom spacer while reordering — it
+            // would travel with the dragged item and look broken.
+            isLastScreenItem: false,
+            dragIconWdg: ReorderableDragStartListener(
+              index: i,
+              child: const Icon(Icons.drag_handle, color: FoodlyThemes.primaryFoodly, size: 30),
+            ),
+          ),
+        );
+      },
     );
   }
 }
