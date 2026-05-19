@@ -39,6 +39,7 @@ enum FoodlyCountries {
 
   String get name => _countriesMap[this]?.$1 ?? '';
   Widget? get flag => _countriesMap[this]?.$2;
+
   /// Whether a given ISO country code (e.g. 'PT', 'DE') is within Foodly's active markets.
   static bool hasCoverage(String? countryCode) {
     if (countryCode == null || countryCode.isEmpty) return true;
@@ -46,8 +47,9 @@ enum FoodlyCountries {
   }
 
   List<String> get apiComponents {
+    return [];
     //final lang = Intl.getCurrentLocale().substring(0, 2).toLowerCase();
-    final list = List<FoodlyCountries>.from(FoodlyCountries.values);
+    // final list = List<FoodlyCountries>.from(FoodlyCountries.values);
 
     // if (lang == FoodlyStrings.EN) {
     //   list.removeWhere((c) => c == FoodlyCountries.VENEZUELA);
@@ -59,6 +61,6 @@ enum FoodlyCountries {
     //   list.removeWhere((c) => c == FoodlyCountries.VENEZUELA);
     // }
 
-    return list.map((c) => '${FoodlyStrings.COUNTRY}:${c.countryCode}').toList();
+    // return list.map((c) => '${FoodlyStrings.COUNTRY}:${c.countryCode}').toList();
   }
 }

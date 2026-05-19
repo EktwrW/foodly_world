@@ -410,6 +410,7 @@ class AuthSessionService {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (context.mounted) {
             di<AppRouter>().appRouter.goNamed(redirectToStart ? AppRoutes.start.name : AppRoutes.login.name);
+            di<AppRouter>().clearRouteHistory();
           }
         });
       });

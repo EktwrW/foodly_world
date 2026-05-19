@@ -106,6 +106,62 @@ enum FoodlyCategories {
   static List<FoodlyCategories> get activeCategories =>
       values.where((c) => c != stores && c != academy).toList(growable: false);
 
+  /// Lista de [activeCategories] **reordenada** para priorizar la cocina
+  /// local del país detectado en la geolocalización del usuario.
+  ///
+  /// **Motivación UX** (2026-05-19): cuando un usuario abre el home, si
+  /// está en Portugal queremos que "Portuguesa" aparezca primero en el
+  /// carousel — la cocina local es de los descubrimientos más relevantes
+  /// y el patrón se repite en Uber Eats / Deliveroo / Glovo. Si está en
+  /// Brasil, "Brasilera" primero; en Argentina, "Argentina"; en
+  /// Venezuela, "Venezolana". Resto de países: orden default
+  /// ([activeCategories] tal cual).
+  ///
+  /// **Contrato:** la lista resultante tiene los MISMOS items que
+  /// [activeCategories], solo reordenados. El `e.index` posicional de
+  /// cada enum value NO se ve afectado (ese sigue siendo el orden de
+  /// declaración del enum, no el orden visual) — así el router
+  /// `categories` que hace `FoodlyCategories.values[categoryIndex]` para
+  /// resolver el index del extra path-param sigue funcionando.
+  ///
+  /// **`countryCode`** se espera en formato ISO 3166-1 alfa-2 (`PT`,
+  /// `BR`, `VE`, `AR`, ...) tal como lo retorna Google Geocoding API en
+  /// el `short_name` del componente `country` (ver `LocationBloc`
+  /// línea ~436). Si llega null o un código no mapeado, retorna
+  /// [activeCategories] sin modificar.
+  ///
+  /// **Performance:** O(N) sobre una lista de ~24 elementos — irrelevante
+  /// dentro del build de un widget que ya pinta 24 InkWell + 24
+  /// AnimatedContainer. La operación es trivial vs el costo de layout.
+  static List<FoodlyCategories> activeCategoriesForCountry(String? countryCode) {
+    final priority = _priorityCategoryForCountry(countryCode);
+    if (priority == null) return activeCategories;
+    return <FoodlyCategories>[
+      priority,
+      ...activeCategories.where((c) => c != priority),
+    ];
+  }
+
+  /// Mapeo país → categoría local prioritaria. Sólo incluye los países
+  /// donde Foodly tiene mercado activo (Phase 1: PT, AR, VE; Phase 2: ES,
+  /// USA; Phase 3: EU, BR — ver project_instructions). BR se incluye ya
+  /// por la migración reciente que agregó la categoría Brasilera.
+  ///
+  /// Si en el futuro se agrega un nuevo país de mercado (ej. España con
+  /// una categoría "Cocina Española"), agregar acá la rama del switch.
+  /// Es la única edit point — el resto del código consume vía
+  /// [activeCategoriesForCountry].
+  static FoodlyCategories? _priorityCategoryForCountry(String? code) {
+    if (code == null || code.isEmpty) return null;
+    return switch (code.toUpperCase()) {
+      'PT' => portuguese,
+      'BR' => brazilian,
+      'VE' => venezuelan,
+      'AR' => argentinian,
+      _ => null,
+    };
+  }
+
   // TODO: Localizar Strings en .arb files
   String get text => switch (this) {
         international => S.current.internationalCuisine,

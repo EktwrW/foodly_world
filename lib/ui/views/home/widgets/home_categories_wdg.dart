@@ -1,5 +1,7 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/location_service.dart';
+import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
@@ -22,6 +24,56 @@ class _HomeCategoriesState extends State<HomeCategories> {
 
   @override
   Widget build(BuildContext context) {
+    // **Reorden por país (2026-05-19, fix v2):** escuchamos al
+    // `LocationService.locationChanged` stream, NO al `LocationBloc`.
+    //
+    // **Por qué el cambio:** el primer intento usaba
+    // `BlocBuilder<LocationBloc>`, que SÍ rebuildea cuando el bloc emite
+    // (típicamente solo durante el check inicial via GPS). Pero el
+    // `ChangeLocationDialog` (current_location_btn.dart:254/359/420)
+    // actualiza la ubicación llamando `locationService.updateLocation*`
+    // DIRECTAMENTE — sin emitir ningún evento al bloc. Resultado: el bloc
+    // quedaba en `LocationChecked(Portugal)` aunque el user ya cambió a
+    // Argentina, y el carousel no se reordenaba.
+    //
+    // `LocationService` ya expone un `Stream<LocationDetailsDM>
+    // locationChanged` (broadcast) que emite en cada `updateLocation`,
+    // que ES llamado por todas las paths (place picked, useDevice,
+    // useSaved). `StreamBuilder` es la API natural — initialData del
+    // singleton para el primer render sin frame en blanco.
+    final locationService = di<LocationService>();
+    return StreamBuilder<LocationDetailsDM>(
+      stream: locationService.locationChanged,
+      initialData: locationService.currentLocation,
+      builder: (context, snapshot) {
+        final countryCode = snapshot.data?.countryCode;
+        final categories = FoodlyCategories.activeCategoriesForCountry(countryCode);
+
+        // Reset del dot indicator a 0 cuando cambia el orden por país —
+        // sino el dot se queda apuntando al índice viejo que ahora
+        // corresponde a otra categoría.
+        // Lo hacemos en post-frame para no llamar setState durante build.
+        //
+        // `carouselController.jumpToPage` es null-safe internamente
+        // (chequea `_state?._jumpToPage` + `hasClients` del PageController
+        // adentro — ver `foodly_carousel.dart:211/329`), así que es seguro
+        // llamarlo aunque el carousel aún no esté attached en el primer
+        // frame del rebuild.
+        if (current.value != 0) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              current.value = 0;
+              carouselController.jumpToPage(0);
+            }
+          });
+        }
+
+        return _buildCarousel(context, categories);
+      },
+    );
+  }
+
+  Widget _buildCarousel(BuildContext context, List<FoodlyCategories> categories) {
     return DecoratedBox(
       decoration: BoxDecoration(gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT),
       child: Column(
@@ -32,7 +84,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
             height: 106,
             viewportFraction: context.isFoldableInHalfView ? .41 : .3,
             itemSpacing: 6,
-            items: FoodlyCategories.activeCategories
+            items: categories
                 .map((e) => InkWell(
                       onTap: () {
                         context.goNamed(AppRoutes.categories.name, extra: e.index);
@@ -94,7 +146,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
                     child: const Icon(Bootstrap.caret_left_fill, color: ui.NeumorphicColors.decorationMaxWhiteColor)
                         .paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
                   ),
-                ...FoodlyCategories.activeCategories.asMap().entries.map(
+                ...categories.asMap().entries.map(
                   (entry) {
                     return GestureDetector(
                       onTap: () {
