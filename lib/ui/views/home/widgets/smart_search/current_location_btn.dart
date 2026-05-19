@@ -252,6 +252,41 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
   void _handlePlaceSelected(Place place) {
     setState(() => _selectedPlace = place);
     locationService.updateLocationFromPlace(place);
+    _refreshFeedsAfterLocationChange();
+  }
+
+  /// Reset + reload de **todos** los feeds dependientes de geolocalización
+  /// que tienen que reaccionar cuando el usuario cambia la ubicación del
+  /// `ChangeLocationDialog`. Se invoca desde los TRES handlers del dialog
+  /// — Place autocomplete pick, "Use device location" y "Use saved
+  /// location" — para evitar drift entre ramas.
+  ///
+  /// **Bug previo (2026-05-19):** el handler de Places sí refrescaba
+  /// `SocialCubit` (posts/buzz/nearbyUsers) cuando `isSocialFeature=true`,
+  /// pero los handlers `useDevice` y `useSaved` no lo hacían. Resultado:
+  /// cambiar a Oporto via autocomplete → posts/users vacíos como
+  /// corresponde; volver a la dirección guardada de Covilhã con el botón
+  /// `useSaved` → los views se quedaban con el estado vacío de Oporto
+  /// porque solo `NearbyPromotions` y `NewReleases` se recargaban. La
+  /// extracción a este helper elimina la categoría entera del bug —
+  /// cualquier nuevo handler que se agregue al dialog también pasa a
+  /// llamarlo y queda consistente.
+  ///
+  /// **`Future.delayed(Durations.short2)`** existe para dar tiempo a que
+  /// el `LocationService.updateLocation*` (llamado por cada handler
+  /// inmediatamente antes) propague el cambio a sus listeners y settle el
+  /// `currentLocation.position`. Sin el delay, los cubits que leen
+  /// `_locationService.currentLocation.position` en su `load()` pueden
+  /// llegar a usar las coordenadas anteriores. Patrón pre-existente del
+  /// handler de Places — lo preservamos al consolidar.
+  ///
+  /// **El bloque `isSocialFeature` es condicional** porque el
+  /// `ChangeLocationDialog` también se abre desde features no-sociales
+  /// (home/smart-search). Cuando `widget.isSocialFeature == false`, no
+  /// existe necesariamente un `SocialCubit` montado y no tiene sentido
+  /// disparar sus loads — quedarían haciendo fetch en background sin UI
+  /// que los consuma.
+  void _refreshFeedsAfterLocationChange() {
     voiceSearchCubit.resetToInitial();
     Future.delayed(Durations.short2, () {
       di<NearbyPromotionsCubit>().load();
@@ -357,17 +392,13 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                             locationChecked: (locationDM) => ui.NeumorphicButton(
                               onPressed: () {
                                 locationService.updateLocation(locationDM);
-                                voiceSearchCubit.resetToInitial();
                                 setState(
                                   () => _selectedPlace = Place(
                                     formattedAddress:
                                         '${locationDM.address ?? '-'}, ${locationDM.city ?? '-'}, ${locationDM.zipCode ?? '-'}',
                                   ),
                                 );
-                                Future.delayed(Durations.short2, () {
-                                  di<NearbyPromotionsCubit>().load();
-                                  di<NewReleasesCubit>().load();
-                                });
+                                _refreshFeedsAfterLocationChange();
                               },
                               style: ui.NeumorphicStyle(
                                 color: FoodlyThemes.primaryLighten73,
@@ -418,17 +449,13 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         onPressed: loggedUser != null
                             ? () {
                                 locationService.updateLocationUserDM(loggedUser!);
-                                voiceSearchCubit.resetToInitial();
                                 setState(
                                   () => _selectedPlace = Place(
                                     formattedAddress:
                                         '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
                                   ),
                                 );
-                                Future.delayed(Durations.short2, () {
-                                  di<NearbyPromotionsCubit>().load();
-                                  di<NewReleasesCubit>().load();
-                                });
+                                _refreshFeedsAfterLocationChange();
                               }
                             : null,
                         style: ui.NeumorphicStyle(
