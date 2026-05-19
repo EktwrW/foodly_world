@@ -41,7 +41,15 @@ class CategoriesVM with _$CategoriesVM {
     double? latitude,
     double? longitude,
     @Default(BusinessResultsViewMode.list) BusinessResultsViewMode viewMode,
-    @Default(5) double radiusDistanceInKm,
+    // **Default 10 km (2026-05-19):** subido desde 5 km original para mitigar
+    // la sensación de "Foodly no tiene cobertura" durante el bootstrap, donde
+    // hay pocos negocios por ciudad. Con 5 km, un negocio a 7 km del usuario
+    // quedaba escondido y el discovery se sentía vacío sin estarlo. El
+    // selector visible (`radiusDistanceOptions = [5, 10, 15, 25]` en
+    // `categories_page.dart`) permite al usuario bajar a 5 km cuando quiera
+    // resultados más cercanos. Cuando la densidad de negocios por ciudad
+    // crezca lo suficiente, considerar volver a 5 km como default.
+    @Default(10) double radiusDistanceInKm,
     @Default(false) bool isSwitchingRadius,
     // Catering & Chefs — active service_type chip (null = "All").
     ServiceType? selectedServiceType,
