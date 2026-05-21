@@ -98,6 +98,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     int? limit,
     bool switchingRadius = false,
   }) async {
+    final effectiveRadius = radius ?? _vm.radiusDistanceInKm;
+
     if (!switchingRadius) {
       await Future.microtask(() => emit(_Loading(_vm)));
     } else {
@@ -127,7 +129,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         .fetchNearbyBusinesses(
       latitude: latitude,
       longitude: longitude,
-      radius: radius,
+      radius: effectiveRadius,
       categoryId: categoryId,
       limit: limit,
       serviceType: serviceTypeParam,
