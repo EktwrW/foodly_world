@@ -302,7 +302,9 @@ class PushNotificationService with WidgetsBindingObserver {
         deviceName: meta.deviceName,
         deviceModel: meta.deviceModel,
         appVersion: meta.appVersion,
-        locale: _resolveDeviceLocale(),
+        // Locale real del OS — ver FoodlyLocales.deviceLocaleTag para el
+        // porqué de NO usar Intl.getCurrentLocale() acá.
+        locale: FoodlyLocales.deviceLocaleTag,
       );
 
       result.when(
@@ -388,39 +390,6 @@ class PushNotificationService with WidgetsBindingObserver {
     if (Platform.isIOS) return 'ios';
     if (Platform.isAndroid) return 'android';
     return 'web'; // desktop falls back — BE only cares ios/android/web
-  }
-
-  /// Resuelve el locale del dispositivo como un language tag corto
-  /// (`es`, `pt-PT`, `en-US`, ...) para mandarlo al BE en el registro del
-  /// DeviceToken.
-  ///
-  /// Por qué NO usamos `Intl.getCurrentLocale()` (lo que hacía antes):
-  /// ese getter devuelve `Intl.defaultLocale`, y cuando éste todavía es
-  /// null cae al fallback hardcodeado `Intl.systemLocale` == 'en_US'.
-  /// `Intl.defaultLocale` SOLO se setea cuando corre `S.load()`
-  /// (`generated/l10n.dart`), que ocurre al construir el primer frame de
-  /// `MaterialApp`. Pero [registerCurrentToken] se dispara desde el
-  /// listener `onTokenRefresh` de FCM y desde la restauración de sesión —
-  /// caminos que en un arranque en frío pueden ganarle la carrera a
-  /// `S.load()`. En esa ventana `Intl.getCurrentLocale()` devolvía 'en_US'
-  /// aunque el OS estuviera en español o portugués, y el DeviceToken
-  /// quedaba registrado en inglés. Como el back-end CONGELA el idioma de
-  /// cada notificación al crearla — `NotificationController::createNotification`
-  /// traduce y persiste el texto leyendo `DeviceToken.locale` del token
-  /// más activo del destinatario — el usuario terminaba con un historial
-  /// de notificaciones en idiomas mezclados.
-  ///
-  /// `PlatformDispatcher.locale` viene directo del embedder/OS y es
-  /// correcto desde el instante en que la plataforma entrega los locales,
-  /// sin depender de ningún paso de inicialización de la app. El BE acepta
-  /// formatos con o sin región (`es`, `es-AR`, `pt_PT`) y normaliza a los
-  /// 2 primeros caracteres, así que mandar el tag completo es seguro.
-  String _resolveDeviceLocale() {
-    final locale = WidgetsBinding.instance.platformDispatcher.locale;
-    final country = locale.countryCode;
-    return (country != null && country.isNotEmpty)
-        ? '${locale.languageCode}-$country'
-        : locale.languageCode;
   }
 
   Future<_DeviceMeta> _collectDeviceMetadata() async {

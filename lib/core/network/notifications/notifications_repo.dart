@@ -13,12 +13,14 @@ class NotificationsRepo {
     int? perPage,
     bool? onlyUnread,
     int? page,
+    String? locale,
   }) async {
     try {
       return ApiResult.success(await _notificationsClient.getNotifications(
         perPage: perPage,
         onlyUnread: onlyUnread,
         page: page,
+        locale: locale,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

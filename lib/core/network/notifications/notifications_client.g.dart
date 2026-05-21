@@ -22,12 +22,14 @@ class _NotificationsClient implements NotificationsClient {
     int? perPage,
     bool? onlyUnread,
     int? page,
+    String? locale,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'per_page': perPage,
       r'only_unread': onlyUnread,
       r'page': page,
+      r'locale': locale,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

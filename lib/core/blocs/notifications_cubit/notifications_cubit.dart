@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/notifications_cubit/notifications_vm.dart';
+import 'package:foodly_world/core/consts/foodly_locales.dart';
 import 'package:foodly_world/core/network/notifications/notifications_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
@@ -76,6 +77,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       final result = await _notificationsRepo.getNotifications(
         perPage: _vm.perPage,
         page: 1,
+        // El BE traduce title/message al leer, en este locale. Ver
+        // FoodlyLocales.deviceLocaleTag.
+        locale: FoodlyLocales.deviceLocaleTag,
       );
 
       List<NotificationDM>? toCache;
@@ -146,6 +150,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       final result = await _notificationsRepo.getNotifications(
         perPage: _vm.perPage,
         page: nextPage,
+        locale: FoodlyLocales.deviceLocaleTag,
       );
 
       result.when(

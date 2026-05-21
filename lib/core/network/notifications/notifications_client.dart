@@ -8,11 +8,15 @@ part 'notifications_client.g.dart';
 abstract class NotificationsClient {
   factory NotificationsClient(Dio dio) = _NotificationsClient;
 
+  /// [locale] — language tag del dispositivo (`es`, `pt-PT`, …). El backend
+  /// traduce title/message de cada notificación AL LEER en ese locale
+  /// (NotificationResource). Sin este query param el BE cae a 'es'.
   @GET('/notifications')
   Future<NotificationsResponseDM> getNotifications({
     @Query('per_page') int? perPage,
     @Query('only_unread') bool? onlyUnread,
     @Query('page') int? page,
+    @Query('locale') String? locale,
   });
 
   @GET('/notifications/unread-count')
