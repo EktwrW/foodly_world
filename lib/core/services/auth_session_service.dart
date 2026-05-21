@@ -186,7 +186,7 @@ class AuthSessionService {
 
     // Bug E (2026-05-06): cuando recibimos una sesión válida nueva (uuid
     // no vacío), bajamos forceToLogin. Sin esto, si un boot anterior dejó
-    // el flag en true (initializeSessionOrClear → 401 → _clearInvalidSession
+    // el flag en true (initializeSessionOrClear → 401 → clearInvalidSession
     // setea forceToLogin=true sin postFrame que lo baje), un re-login
     // exitoso (Google sign-in, email/password, biométrico) deja el flag
     // arriba y el GoRouter redirector tira al user de vuelta a /login en
@@ -287,7 +287,7 @@ class AuthSessionService {
       final refreshed = await silentRefresh();
       if (!refreshed) {
         hasPendingSessionRestore = false;
-        _clearInvalidSession();
+        clearInvalidSession();
         return;
       }
     }
@@ -310,18 +310,27 @@ class AuthSessionService {
         },
         failure: (_) {
           hasPendingSessionRestore = false;
-          _clearInvalidSession();
+          clearInvalidSession();
         },
       );
     } catch (_) {
       hasPendingSessionRestore = false;
-      _clearInvalidSession();
+      clearInvalidSession();
     }
   }
 
   /// Clears session data without UI navigation (no BuildContext needed).
-  /// Used when token validation fails during background restore.
-  void _clearInvalidSession() {
+  ///
+  /// Used cuando una sesión cacheada resulta inválida: falla la validación
+  /// del token en el restore de fondo ([initializeSessionOrClear]), o el
+  /// backend rechaza el `biometric-login` con 401
+  /// ([LocalAuthCubit._checkLoginStatusCall]).
+  ///
+  /// Limpia también el estado persistido de HydratedBloc (`userLogout` vía
+  /// [_rootBloc]). Sin esto, una sesión muerta del lado servidor quedaba en
+  /// el `_CachedState` y CADA arranque volvía a ofrecer login biométrico
+  /// contra un token que el backend ya rechazó → loop 401 → starting page.
+  void clearInvalidSession() {
     userSessionDM = null;
     _authHeader = null;
     _refreshToken = null;
@@ -332,6 +341,7 @@ class AuthSessionService {
     _secureTokenService.clearAll(); // fire-and-forget
     _favoritesCubit?.clearAllFavorites();
     _notificationsCubit?.clear();
+    _rootBloc?.add(const RootEvent.userLogout());
     forceToLogin = true;
   }
 
@@ -583,7 +593,7 @@ class AuthSessionService {
   /// and navigates to login. Guards against re-entrancy via [forceToLogin].
   ///
   /// Navigation uses the router directly (not a BuildContext) because
-  /// [_clearInvalidSession] above tears down cubits/widgets, and by the next
+  /// [clearInvalidSession] above tears down cubits/widgets, and by the next
   /// frame `rootNavigatorKey.currentContext.mounted` is frequently false —
   /// which previously left the snackbar on screen and a blank page behind it
   /// (Bug E.2, 2026-04-21). The router's own state is the source of truth,
@@ -605,7 +615,7 @@ class AuthSessionService {
     // modal. Defensa en profundidad: el interceptor ya no debería llamar
     // acá durante el logout, pero el guard lo cubre igual.
     if (forceToLogin || _isBiometricLoginInProgress || _isLoggingOut) return;
-    _clearInvalidSession();
+    clearInvalidSession();
 
     // Navigate FIRST — always, context-independent. Even if the snackbar
     // below can't render (no live context), the user still lands on /login.

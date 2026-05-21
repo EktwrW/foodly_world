@@ -284,6 +284,14 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           failure: (e) {
             _authSessionService.setBiometricLoginInProgress(false);
             _logger.e('$e');
+            // El backend rechazó el biometric-login (típicamente 401: la
+            // sesión cacheada ya está muerta del lado servidor — logout
+            // previo, token revocado, o sesión cerrada en otro dispositivo).
+            // Limpiamos la sesión persistida (RootBloc _CachedState + secure
+            // storage) para que el próximo arranque NO vuelva a ofrecer
+            // biometría contra un token muerto. Sin esto, el 401 se repetía
+            // en cada arranque / hot-restart en loop.
+            _authSessionService.clearInvalidSession();
             emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
           },
         );
