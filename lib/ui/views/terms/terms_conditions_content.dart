@@ -25,7 +25,7 @@ const _en = [
     heading: 'Acceptance of Terms',
     body: 'Welcome to Foodly. By downloading, installing, or using the Foodly mobile application ("App"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, do not use the App.\n\n'
         'These Terms constitute a legally binding agreement between you and Hector Waldman ("Foodly", "we", "us", "our"), an independent commercial operator based in Portugal.\n\n'
-        'Last updated: April 13, 2026',
+        'Last updated: May 21, 2026',
   ),
   TermsSection(
     heading: 'Description of the Service',
@@ -37,6 +37,7 @@ const _en = [
         '• Leave reviews and ratings for businesses you have visited.\n'
         '• Follow businesses and receive updates about their activity.\n'
         '• Participate in a community feed by creating and sharing posts.\n'
+        '• Request catering and private-chef services, receive quotes, and exchange messages with the provider.\n'
         '• Register and manage your own food business (Manager accounts).\n\n'
         'Foodly is a technology platform and does not prepare, sell, or deliver food. We are not responsible for the quality, safety, accuracy of descriptions, pricing, or availability of any product or service offered by businesses listed on the App.',
   ),
@@ -102,7 +103,8 @@ const _en = [
     heading: 'AI-Powered Features',
     body: 'Foodly offers AI-assisted tools exclusively for Manager accounts:\n\n'
         '• AI Text Generation: promotional descriptions generated via the OpenAI API. Your prompts are processed by OpenAI under their terms (openai.com/terms).\n'
-        '• AI Image Generation: promotional images generated via the Replicate API. Your prompts are processed by Replicate under their terms (replicate.com/terms).\n\n'
+        '• AI Image Generation: promotional images generated via the Replicate API. Your prompts are processed by Replicate under their terms (replicate.com/terms).\n'
+        '• AI Menu Digitization: menu photos you upload are processed by Google\'s Gemini AI to automatically extract dishes and prices, under Google\'s terms of service (policies.google.com/terms).\n\n'
         'You are solely responsible for reviewing and approving all AI-generated content before publishing. Foodly does not guarantee the accuracy, appropriateness, or originality of AI-generated output. Do not submit sensitive personal data as part of AI prompts.',
   ),
   TermsSection(
@@ -165,8 +167,7 @@ const _en = [
   TermsSection(
     heading: 'Governing Law & Dispute Resolution',
     body: 'These Terms are governed by the laws of Portugal and, where applicable, EU law.\n\n'
-        'Users in the EU/EEA may also benefit from mandatory consumer protection provisions of their country of residence (Spain\'s LGDCU, Argentina\'s Ley 24.240, Venezuela\'s consumer protection law, El Salvador\'s consumer protection law).\n\n'
-        'Users in California, USA: nothing in these Terms waives rights under California consumer protection law.\n\n'
+        'Users in the EU/EEA may also benefit from mandatory consumer protection provisions of their country of residence (Spain\'s LGDCU, Argentina\'s Ley 24.240, Venezuela\'s consumer protection law).\n\n'
         'We encourage informal dispute resolution first at privacy@foodly.solutions. If unresolved, the competent courts of Portugal shall have jurisdiction, without prejudice to your consumer rights under applicable local law.',
   ),
   TermsSection(
@@ -197,7 +198,7 @@ const _es = [
     heading: 'Aceptación de los Términos',
     body: 'Bienvenido/a a Foodly. Al descargar, instalar o usar la aplicación móvil Foodly ("App"), aceptas estar sujeto/a a estos Términos y Condiciones ("Términos"). Si no estás de acuerdo, no uses la App.\n\n'
         'Estos Términos constituyen un acuerdo legalmente vinculante entre tú y Hector Waldman ("Foodly"), operador comercial independiente con actividad registrada en Portugal.\n\n'
-        'Última actualización: 13 de abril de 2026',
+        'Última actualización: 21 de mayo de 2026',
   ),
   TermsSection(
     heading: 'Descripción del Servicio',
@@ -209,6 +210,7 @@ const _es = [
         '• Dejar reseñas y calificaciones a negocios que hayas visitado.\n'
         '• Seguir negocios y recibir actualizaciones de su actividad.\n'
         '• Participar en un feed comunitario creando y compartiendo publicaciones.\n'
+        '• Solicitar servicios de catering y chefs privados, recibir presupuestos e intercambiar mensajes con el proveedor.\n'
         '• Registrar y administrar tu propio negocio gastronómico (cuentas Manager).\n\n'
         'Foodly es una plataforma tecnológica y no prepara, vende ni entrega alimentos. No nos hacemos responsables de la calidad, seguridad, precios o disponibilidad de los productos o servicios ofrecidos por los negocios listados en la App.',
   ),
@@ -272,7 +274,8 @@ const _es = [
     heading: 'Funciones de Inteligencia Artificial',
     body: 'Foodly ofrece herramientas asistidas por IA exclusivamente para cuentas Manager:\n\n'
         '• Generación de texto con IA: descripciones promocionales generadas mediante la API de OpenAI (openai.com/terms).\n'
-        '• Generación de imágenes con IA: imágenes promocionales generadas mediante la API de Replicate (replicate.com/terms).\n\n'
+        '• Generación de imágenes con IA: imágenes promocionales generadas mediante la API de Replicate (replicate.com/terms).\n'
+        '• Digitalización de menús con IA: las fotos de menú que cargues son procesadas por la IA Gemini de Google para extraer automáticamente platos y precios, bajo los términos de servicio de Google (policies.google.com/terms).\n\n'
         'Eres el único/a responsable de revisar y aprobar todo el contenido generado por IA antes de publicarlo. No envíes datos personales sensibles como parte de los prompts de IA.',
   ),
   TermsSection(
@@ -332,7 +335,7 @@ const _es = [
   TermsSection(
     heading: 'Ley Aplicable y Resolución de Disputas',
     body: 'Estos Términos se rigen por las leyes de Portugal y, donde corresponda, por la legislación de la Unión Europea.\n\n'
-        'Los usuarios en la UE/EEE también pueden beneficiarse de las disposiciones obligatorias de protección al consumidor de su país (LGDCU España, Ley 24.240 Argentina, Ley de Protección al Consumidor Venezuela, El Salvador).\n\n'
+        'Los usuarios en la UE/EEE también pueden beneficiarse de las disposiciones obligatorias de protección al consumidor de su país (LGDCU España, Ley 24.240 Argentina, Ley de Protección al Consumidor Venezuela).\n\n'
         'Te animamos a resolver disputas de forma informal primero en privacy@foodly.solutions. Si no es posible, los tribunales competentes de Portugal tendrán jurisdicción.',
   ),
   TermsSection(
@@ -363,7 +366,7 @@ const _pt = [
     heading: 'Aceitação dos Termos',
     body: 'Bem-vindo/a à Foodly. Ao descarregar, instalar ou utilizar a aplicação móvel Foodly ("App"), aceita ficar vinculado/a a estes Termos e Condições ("Termos"). Se não concordar, não utilize a App.\n\n'
         'Estes Termos constituem um acordo legalmente vinculativo entre si e Hector Waldman ("Foodly"), operador comercial independente com atividade registada em Portugal.\n\n'
-        'Última atualização: 13 de abril de 2026',
+        'Última atualização: 21 de maio de 2026',
   ),
   TermsSection(
     heading: 'Descrição do Serviço',
@@ -375,6 +378,7 @@ const _pt = [
         '• Deixar avaliações e classificações a negócios que visitou.\n'
         '• Seguir negócios e receber atualizações sobre a sua atividade.\n'
         '• Participar num feed comunitário criando e partilhando publicações.\n'
+        '• Solicitar serviços de catering e chefs privados, receber orçamentos e trocar mensagens com o prestador.\n'
         '• Registar e gerir o seu próprio negócio gastronómico (contas Manager).\n\n'
         'A Foodly é uma plataforma tecnológica e não prepara, vende nem entrega alimentos. Não nos responsabilizamos pela qualidade, segurança, preços ou disponibilidade dos produtos ou serviços oferecidos pelos negócios listados na App.',
   ),
@@ -438,7 +442,8 @@ const _pt = [
     heading: 'Funcionalidades de Inteligência Artificial',
     body: 'A Foodly oferece ferramentas assistidas por IA exclusivamente para contas Manager:\n\n'
         '• Geração de texto com IA: descrições promocionais geradas via API da OpenAI (openai.com/terms).\n'
-        '• Geração de imagens com IA: imagens promocionais geradas via API da Replicate (replicate.com/terms).\n\n'
+        '• Geração de imagens com IA: imagens promocionais geradas via API da Replicate (replicate.com/terms).\n'
+        '• Digitalização de menus com IA: as fotografias de menu que carrega são processadas pela IA Gemini da Google para extrair automaticamente pratos e preços, ao abrigo dos termos de serviço da Google (policies.google.com/terms).\n\n'
         'É o único/a responsável por rever e aprovar todo o conteúdo gerado por IA antes de o publicar. Não submeta dados pessoais sensíveis como parte dos prompts de IA.',
   ),
   TermsSection(
@@ -498,7 +503,7 @@ const _pt = [
   TermsSection(
     heading: 'Lei Aplicável e Resolução de Disputas',
     body: 'Estes Termos são regidos pelas leis de Portugal e, onde aplicável, pela legislação da União Europeia.\n\n'
-        'Os utilizadores na UE/EEE podem também beneficiar das disposições obrigatórias de proteção ao consumidor do seu país (LGDCU Espanha, Lei 24.240 Argentina, Lei de Proteção ao Consumidor Venezuela, El Salvador).\n\n'
+        'Os utilizadores na UE/EEE podem também beneficiar das disposições obrigatórias de proteção ao consumidor do seu país (LGDCU Espanha, Lei 24.240 Argentina, Lei de Proteção ao Consumidor Venezuela).\n\n'
         'Encorajamos a resolução informal de disputas em privacy@foodly.solutions. Se não for possível, os tribunais competentes de Portugal terão jurisdição.',
   ),
   TermsSection(

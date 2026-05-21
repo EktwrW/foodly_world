@@ -26,7 +26,7 @@ const _en = [
     body:
         'Foodly is a platform that connects users with local food businesses, restaurants, and related gastronomy services. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use the Foodly mobile application ("App").\n\n'
         'By using Foodly you agree to this Privacy Policy. If you do not agree, please stop using the App and delete your account.\n\n'
-        'Last updated: April 13, 2026',
+        'Last updated: May 21, 2026',
   ),
   PolicySection(
     heading: 'Who We Are (Data Controller)',
@@ -44,7 +44,8 @@ const _en = [
         '• Address data: country, city, postal code, and optionally precise GPS coordinates for saved addresses.\n'
         '• Business data (managers only): business name, description, category, address, opening hours, contact channels, services, logo, cover images, menus, and promotional content.\n'
         '• Reviews: text, rating, and visit date you submit for businesses.\n'
-        '• Reservations: date, time, party size, and any special requests or notes.\n'
+        '• Reservations and service requests: date, time, party size, special requests, and — for catering and private-chef services — event details and quote information.\n'
+        '• Messages: the content of messages you exchange with businesses through the in-app reservation and service-booking chat.\n'
         '• Community content: posts, comments, and media you share in the community feed.\n\n'
         'DATA COLLECTED AUTOMATICALLY\n\n'
         '• Precise location (GPS): with your explicit permission, to find nearby businesses and personalise results. Coordinates are transmitted during location-based requests and may be stored if you save an address. Location is only accessed while the app is in use; you can revoke this permission at any time in your device settings.\n'
@@ -65,6 +66,7 @@ const _en = [
         '• Allow business managers to manage listings, menus, and promotions.\n'
         '• Generate AI-assisted promotional text (managers only — your prompts are sent to OpenAI).\n'
         '• Generate AI promotional images (managers only — your prompts are sent to Replicate).\n'
+        '• Digitize business menus from photos using AI (managers only — menu photos are processed by Google\'s Gemini AI to extract dishes and prices).\n'
         '• Improve app stability via crash reports and anonymised analytics.\n'
         '• Provide business owners with anonymised engagement insights (profile views, feature interactions, reservation conversion rates) derived from aggregated user interactions with their listing, to help them evaluate and improve their business performance.\n'
         '• Comply with applicable legal obligations.\n'
@@ -102,7 +104,7 @@ const _en = [
     heading: 'Third-Party Services',
     body:
         'We use the following third-party services. Each acts as a data processor under our instructions and is bound by data protection agreements:\n\n'
-        '• Google LLC (Firebase, Google Cloud, Maps, Places): authentication, cloud storage, analytics, crash reporting, map display, and address autocomplete. Data stored in the EU. Google Privacy Policy: policies.google.com/privacy\n\n'
+        '• Google LLC (Firebase, Google Cloud, Maps, Places, Gemini AI): authentication, cloud storage, analytics, crash reporting, map display, address autocomplete, and AI-powered digitization of business menus from photos. Data stored in the EU. Google Privacy Policy: policies.google.com/privacy\n\n'
         '• OpenAI (ChatGPT API): business managers may use AI tools to generate promotional text. Text prompts you enter are sent to OpenAI. OpenAI Privacy Policy: openai.com/privacy\n\n'
         '• Replicate: AI image generation for promotional content. Image prompts are sent to Replicate for processing. Replicate Privacy Policy: replicate.com/privacy\n\n'
         '• Smart Search Service: a search microservice operated by a trusted technical collaborator that processes your search query, approximate location, and an anonymous session identifier to return relevant business results. This service does not retain personal data beyond the duration of the search request.\n\n'
@@ -129,7 +131,7 @@ const _en = [
         '• Withdraw consent: revoke location, microphone, camera, or analytics consent at any time via device settings.\n'
         '• Non-automated decision-making: not be subject to decisions based solely on automated processing that produce legal or significant effects.\n'
         '• Lodge a complaint: with the data protection authority in your country (see Contact section).\n\n'
-        'These rights apply under GDPR (EU/EEA — Portugal, Spain), CCPA (California, USA), Ley 25.326 (Argentina), LOPDP (Venezuela), LPDP (El Salvador, Decreto 534), and equivalent laws in other jurisdictions.\n\n'
+        'These rights apply under GDPR (EU/EEA — Portugal, Spain), Ley 25.326 (Argentina), LOPDP (Venezuela), and equivalent data protection laws.\n\n'
         'To exercise any of these rights, contact: privacy@foodly.solutions. We will respond within 30 days.',
   ),
   PolicySection(
@@ -154,9 +156,8 @@ const _en = [
   PolicySection(
     heading: 'International Data Transfers',
     body:
-        'Your data is stored in the European Union (Belgium). If you access Foodly from outside the EU — including Argentina, Venezuela, the United States, or El Salvador — your data is transferred to and processed within the EU.\n\n'
-        'Such transfers comply with applicable data protection law. The EU is recognised as providing an adequate level of data protection under GDPR.\n\n'
-        'For users in California (USA): Foodly does not sell personal information as defined under the California Consumer Privacy Act (CCPA). California residents have the right to know, delete, and opt-out of the sale of personal information (sale does not apply here).',
+        'Your data is stored in the European Union (Belgium). If you access Foodly from outside the EU — including Argentina and Venezuela — your data is transferred to and processed within the EU.\n\n'
+        'Such transfers comply with applicable data protection law. The EU is recognised as providing an adequate level of data protection under GDPR.',
   ),
   PolicySection(
     heading: 'Changes to This Policy',
@@ -186,14 +187,14 @@ const _es = [
     body:
         'Foodly es una plataforma que conecta a usuarios con negocios gastronómicos locales, restaurantes y servicios relacionados. Esta Política de Privacidad explica cómo recopilamos, usamos, almacenamos y protegemos tu información personal cuando usas la aplicación móvil Foodly ("App").\n\n'
         'Al usar Foodly aceptas esta Política de Privacidad. Si no estás de acuerdo, deja de usar la App y elimina tu cuenta.\n\n'
-        'Última actualización: 13 de abril de 2026',
+        'Última actualización: 21 de mayo de 2026',
   ),
   PolicySection(
     heading: 'Quiénes Somos (Responsable del Tratamiento)',
     body:
         'Foodly es operada por Hector Waldman, operador comercial independiente con actividad registrada en Portugal (NIF disponible bajo solicitud). Nuestra infraestructura se aloja en la Unión Europea (Google Cloud, región: europe-west1 — Bélgica).\n\n'
         'Contacto de privacidad: privacy@foodly.solutions\n\n'
-        'Como operador establecido en Portugal, cumplimos con el Reglamento General de Protección de Datos (RGPD/GDPR) y con las leyes de protección de datos aplicables en todos los mercados donde la App está disponible, incluyendo Argentina (Ley 25.326), Venezuela (LOPDP), España (LOPDGDD), y El Salvador (Decreto 534).',
+        'Como operador establecido en Portugal, cumplimos con el Reglamento General de Protección de Datos (RGPD/GDPR) y con las leyes de protección de datos aplicables en todos los mercados donde la App está disponible, incluyendo Portugal (RGPD), España (LOPDGDD), Argentina (Ley 25.326) y Venezuela (LOPDP).',
   ),
   PolicySection(
     heading: 'Qué Datos Recopilamos',
@@ -204,7 +205,8 @@ const _es = [
         '• Datos de dirección: país, ciudad, código postal y, opcionalmente, coordenadas GPS de las direcciones guardadas.\n'
         '• Datos de negocio (solo gestores): nombre, descripción, categoría, dirección, horarios, canales de contacto, servicios, logo, imágenes de portada, menús y contenido promocional.\n'
         '• Reseñas: texto, calificación y fecha de visita que envías sobre los negocios.\n'
-        '• Reservaciones: fecha, hora, tamaño del grupo y solicitudes especiales o notas.\n'
+        '• Reservaciones y solicitudes de servicio: fecha, hora, tamaño del grupo, solicitudes especiales y — para servicios de catering y chefs privados — detalles del evento e información de presupuestos.\n'
+        '• Mensajes: el contenido de los mensajes que intercambias con los negocios a través del chat de reservaciones y solicitudes de servicio en la app.\n'
         '• Contenido de la comunidad: publicaciones, comentarios y medios que compartes en el feed comunitario.\n\n'
         'DATOS RECOPILADOS AUTOMÁTICAMENTE\n\n'
         '• Ubicación precisa (GPS): con tu permiso explícito, para mostrarte negocios cercanos y personalizar resultados. Las coordenadas se transmiten en solicitudes basadas en ubicación y pueden almacenarse si guardas una dirección. La ubicación solo se accede mientras la app está en uso; puedes revocar este permiso en cualquier momento en la configuración del dispositivo.\n'
@@ -225,6 +227,7 @@ const _es = [
         '• Permitir que los gestores de negocios administren sus listados, menús y promociones.\n'
         '• Generar texto promocional asistido por IA (solo gestores — tus prompts se envían a OpenAI).\n'
         '• Generar imágenes promocionales con IA (solo gestores — tus prompts se envían a Replicate).\n'
+        '• Digitalizar menús de negocios a partir de fotos mediante IA (solo gestores — las fotos del menú se procesan con la IA Gemini de Google para extraer los platos y precios).\n'
         '• Mejorar la estabilidad de la app mediante informes de fallos y analítica anónima.\n'
         '• Proporcionar a los gestores de negocios informes de interacción anonimizados (vistas de perfil, uso de funciones, tasa de conversión de reservaciones) derivados de interacciones agregadas de usuarios con su listado, para ayudarles a evaluar y mejorar el rendimiento de su negocio.\n'
         '• Cumplir con las obligaciones legales aplicables.\n'
@@ -262,7 +265,7 @@ const _es = [
     heading: 'Servicios de Terceros',
     body:
         'Utilizamos los siguientes servicios de terceros. Cada uno actúa como encargado del tratamiento bajo nuestras instrucciones y está sujeto a acuerdos de protección de datos:\n\n'
-        '• Google LLC (Firebase, Google Cloud, Maps, Places): autenticación, almacenamiento en la nube, analítica, informes de fallos, visualización de mapas y autocompletado de direcciones. Datos almacenados en la UE. Política de privacidad de Google: policies.google.com/privacy\n\n'
+        '• Google LLC (Firebase, Google Cloud, Maps, Places, Gemini AI): autenticación, almacenamiento en la nube, analítica, informes de fallos, visualización de mapas, autocompletado de direcciones y digitalización de menús de negocios a partir de fotos mediante IA. Datos almacenados en la UE. Política de privacidad de Google: policies.google.com/privacy\n\n'
         '• OpenAI (API de ChatGPT): los gestores de negocios pueden usar herramientas de IA para generar texto promocional. Los prompts de texto que introduces se envían a OpenAI. Política de privacidad de OpenAI: openai.com/privacy\n\n'
         '• Replicate: generación de imágenes con IA para contenido promocional. Los prompts de imagen se envían a Replicate para su procesamiento. Política de privacidad de Replicate: replicate.com/privacy\n\n'
         '• Servicio de búsqueda inteligente: un microservicio de búsqueda operado por un colaborador técnico de confianza que procesa tu consulta de búsqueda, ubicación aproximada e identificador de sesión anónimo para devolver resultados relevantes. Este servicio no conserva datos personales más allá de la duración de la solicitud de búsqueda.\n\n'
@@ -289,7 +292,7 @@ const _es = [
         '• Retirar el consentimiento: revocar el acceso a ubicación, micrófono, cámara o analítica en cualquier momento desde la configuración del dispositivo.\n'
         '• No ser objeto de decisiones automatizadas: no ser sujeto de decisiones basadas únicamente en tratamiento automatizado que produzcan efectos jurídicos o significativos.\n'
         '• Presentar una reclamación: ante la autoridad de protección de datos de tu país (ver sección de Contacto).\n\n'
-        'Estos derechos aplican según el RGPD (UE/EEE — Portugal, España), CCPA (California, EE.UU.), Ley 25.326 (Argentina), LOPDP (Venezuela), LPDP (El Salvador, Decreto 534) y leyes equivalentes en otras jurisdicciones.\n\n'
+        'Estos derechos aplican según el RGPD (Portugal, España), la Ley 25.326 (Argentina) y la LOPDP (Venezuela).\n\n'
         'Para ejercer cualquiera de estos derechos, contáctanos en: privacy@foodly.solutions. Responderemos en un plazo de 30 días.',
   ),
   PolicySection(
@@ -314,9 +317,8 @@ const _es = [
   PolicySection(
     heading: 'Transferencias Internacionales de Datos',
     body:
-        'Tus datos se almacenan en la Unión Europea (Bélgica). Si accedes a Foodly desde fuera de la UE — incluyendo Argentina, Venezuela, Estados Unidos o El Salvador — tus datos se transfieren a y se procesan dentro de la UE.\n\n'
-        'Dichas transferencias cumplen con la normativa aplicable de protección de datos. La UE es reconocida como garante de un nivel adecuado de protección de datos bajo el RGPD.\n\n'
-        'Para usuarios en California (EE.UU.): Foodly no vende información personal según lo definido por la Ley de Privacidad del Consumidor de California (CCPA). Los residentes de California tienen derecho a conocer, eliminar y optar por no participar en la venta de información personal (lo cual no aplica aquí ya que no vendemos datos).',
+        'Tus datos se almacenan en la Unión Europea (Bélgica). Si accedes desde fuera de la UE — incluyendo Argentina y Venezuela — tus datos se procesan dentro de la UE.\n\n'
+        'Dichas transferencias cumplen la normativa de protección de datos. La UE garantiza un nivel adecuado de protección bajo el RGPD.',
   ),
   PolicySection(
     heading: 'Cambios en Esta Política',
@@ -346,7 +348,7 @@ const _pt = [
     body:
         'A Foodly é uma plataforma que liga utilizadores a negócios gastronómicos locais, restaurantes e serviços relacionados. Esta Política de Privacidade explica como recolhemos, utilizamos, armazenamos e protegemos as suas informações pessoais quando utiliza a aplicação móvel Foodly ("App").\n\n'
         'Ao utilizar a Foodly, aceita esta Política de Privacidade. Se não concordar, por favor deixe de utilizar a App e elimine a sua conta.\n\n'
-        'Última atualização: 13 de abril de 2026',
+        'Última atualização: 21 de maio de 2026',
   ),
   PolicySection(
     heading: 'Quem Somos (Responsável pelo Tratamento)',
@@ -364,7 +366,8 @@ const _pt = [
         '• Dados de morada: país, cidade, código postal e, opcionalmente, coordenadas GPS das moradas guardadas.\n'
         '• Dados de negócio (apenas gestores): nome, descrição, categoria, morada, horários, canais de contacto, serviços, logótipo, imagens de capa, menus e conteúdo promocional.\n'
         '• Avaliações: texto, classificação e data de visita que submete sobre os negócios.\n'
-        '• Reservas: data, hora, número de pessoas e quaisquer pedidos especiais ou notas.\n'
+        '• Reservas e pedidos de serviço: data, hora, número de pessoas, pedidos especiais e — para serviços de catering e chefs privados — detalhes do evento e informação de orçamentos.\n'
+        '• Mensagens: o conteúdo das mensagens que troca com os negócios através do chat de reservas e pedidos de serviço na app.\n'
         '• Conteúdo da comunidade: publicações, comentários e multimédia que partilha no feed comunitário.\n\n'
         'DADOS RECOLHIDOS AUTOMATICAMENTE\n\n'
         '• Localização precisa (GPS): com a sua permissão explícita, para mostrar negócios próximos e personalizar resultados. As coordenadas são transmitidas em pedidos baseados em localização e podem ser guardadas se guardar uma morada. A localização só é acedida enquanto a app está em uso; pode revogar esta permissão a qualquer momento nas definições do dispositivo.\n'
@@ -385,6 +388,7 @@ const _pt = [
         '• Permitir que os gestores de negócios administrem os seus espaços, menus e promoções.\n'
         '• Gerar texto promocional assistido por IA (apenas gestores — os seus prompts são enviados para a OpenAI).\n'
         '• Gerar imagens promocionais com IA (apenas gestores — os seus prompts são enviados para a Replicate).\n'
+        '• Digitalizar menus de negócios a partir de fotografias através de IA (apenas gestores — as fotografias do menu são processadas pela IA Gemini da Google para extrair pratos e preços).\n'
         '• Melhorar a estabilidade da app através de relatórios de falhas e análise anónima.\n'
         '• Fornecer aos gestores de negócios relatórios de interação anonimizados (visualizações de perfil, utilização de funcionalidades, taxa de conversão de reservas) derivados de interações agregadas de utilizadores com a sua listagem, para os ajudar a avaliar e melhorar o desempenho do seu negócio.\n'
         '• Cumprir as obrigações legais aplicáveis.\n'
@@ -422,7 +426,7 @@ const _pt = [
     heading: 'Serviços de Terceiros',
     body:
         'Utilizamos os seguintes serviços de terceiros. Cada um atua como subcontratante sob as nossas instruções e está vinculado por acordos de proteção de dados:\n\n'
-        '• Google LLC (Firebase, Google Cloud, Maps, Places): autenticação, armazenamento na cloud, análise, relatórios de falhas, mapas e autocompletar moradas. Dados armazenados na UE. Política de privacidade da Google: policies.google.com/privacy\n\n'
+        '• Google LLC (Firebase, Google Cloud, Maps, Places, Gemini AI): autenticação, armazenamento na cloud, análise, relatórios de falhas, mapas, autocompletar moradas e digitalização de menus de negócios a partir de fotografias através de IA. Dados armazenados na UE. Política de privacidade da Google: policies.google.com/privacy\n\n'
         '• OpenAI (API ChatGPT): os gestores de negócios podem usar ferramentas de IA para gerar texto promocional. Os prompts de texto que introduz são enviados para a OpenAI. Política de privacidade da OpenAI: openai.com/privacy\n\n'
         '• Replicate: geração de imagens com IA para conteúdo promocional. Os prompts de imagem são enviados para a Replicate. Política de privacidade da Replicate: replicate.com/privacy\n\n'
         '• Serviço de pesquisa inteligente: um microserviço de pesquisa operado por um colaborador técnico de confiança que processa a sua consulta de pesquisa, localização aproximada e identificador de sessão anónimo para devolver resultados relevantes. Este serviço não retém dados pessoais para além da duração do pedido de pesquisa.\n\n'
@@ -449,7 +453,7 @@ const _pt = [
         '• Retirar o consentimento: revogar o acesso a localização, microfone, câmara ou análise a qualquer momento nas definições do dispositivo.\n'
         '• Não ser sujeito a decisões automatizadas com efeitos jurídicos ou significativos.\n'
         '• Apresentar reclamação: junto da autoridade de proteção de dados do seu país (ver secção de Contacto).\n\n'
-        'Estes direitos aplicam-se ao abrigo do RGPD (UE/EEE — Portugal, Espanha), CCPA (Califórnia, EUA), Lei 25.326 (Argentina), LOPDP (Venezuela), LPDP (El Salvador, Decreto 534) e leis equivalentes noutras jurisdições.\n\n'
+        'Estes direitos aplicam-se ao abrigo do RGPD (Portugal, Espanha), da Lei 25.326 (Argentina) e da LOPDP (Venezuela).\n\n'
         'Para exercer qualquer um destes direitos, contacte: privacy@foodly.solutions. Responderemos no prazo de 30 dias.',
   ),
   PolicySection(
@@ -474,9 +478,8 @@ const _pt = [
   PolicySection(
     heading: 'Transferências Internacionais de Dados',
     body:
-        'Os seus dados são armazenados na União Europeia (Bélgica). Se aceder à Foodly fora da UE — incluindo Argentina, Venezuela, Estados Unidos ou El Salvador — os seus dados são transferidos e processados dentro da UE.\n\n'
-        'Tais transferências cumprem a legislação aplicável de proteção de dados. A UE é reconhecida como garante de um nível adequado de proteção de dados ao abrigo do RGPD.\n\n'
-        'Para utilizadores na Califórnia (EUA): a Foodly não vende informações pessoais conforme definido pela Lei de Privacidade do Consumidor da Califórnia (CCPA). Os residentes da Califórnia têm o direito de conhecer, eliminar e recusar a venda de informações pessoais (o que não se aplica aqui, pois não vendemos dados).',
+        'Os seus dados são armazenados na União Europeia (Bélgica). Se aceder à Foodly fora da UE — incluindo Argentina e Venezuela — os seus dados são transferidos e processados dentro da UE.\n\n'
+        'Tais transferências cumprem a legislação de proteção de dados. A UE garante um nível adequado de proteção ao abrigo do RGPD.',
   ),
   PolicySection(
     heading: 'Alterações a Esta Política',
