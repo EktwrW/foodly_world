@@ -8,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// Top-level background-message handler. Required to be a static/top-level
@@ -41,7 +40,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 /// simulator without FCM support, missing APNs entitlement, revoked
 /// notification permission), the service logs and moves on without ever
 /// throwing to the caller.
-class PushNotificationService {
+class PushNotificationService with WidgetsBindingObserver {
   final DeviceTokenRepo _deviceTokenRepo;
   final Logger _logger;
 
@@ -134,6 +133,13 @@ class PushNotificationService {
       _completePermissionFlow();
       return;
     }
+
+    // Observamos cambios de locale del OS para re-registrar el DeviceToken
+    // cuando el usuario cambia el idioma del sistema con la app abierta
+    // (ver [didChangeLocales]). Lo hacemos FUERA del try/catch de Firebase:
+    // aunque la init de FCM falle, seguimos queriendo reflejar el idioma del
+    // sistema en el token para que el BE traduzca bien las notificaciones.
+    WidgetsBinding.instance.addObserver(this);
 
     try {
       // Safety-net de último recurso para el completer. Cubre ÚNICAMENTE el
@@ -296,7 +302,7 @@ class PushNotificationService {
         deviceName: meta.deviceName,
         deviceModel: meta.deviceModel,
         appVersion: meta.appVersion,
-        locale: Intl.getCurrentLocale(),
+        locale: _resolveDeviceLocale(),
       );
 
       result.when(
@@ -335,6 +341,7 @@ class PushNotificationService {
   }
 
   Future<void> dispose() async {
+    WidgetsBinding.instance.removeObserver(this);
     await _onTokenRefreshSub?.cancel();
     await _onMessageSub?.cancel();
     await _onMessageOpenedAppSub?.cancel();
@@ -344,6 +351,24 @@ class PushNotificationService {
     _permissionFlowSafetyTimer?.cancel();
     _permissionFlowSafetyTimer = null;
     _initialized = false;
+  }
+
+  /// El usuario cambió el idioma del sistema operativo con la app abierta.
+  ///
+  /// `DeviceToken.locale` (back-end) solo se refresca cuando se (re)registra
+  /// el token — en login, restauración de sesión o token refresh de FCM. Sin
+  /// este hook, cambiar el idioma del OS no actualizaba el token hasta el
+  /// siguiente login, así que las notificaciones se seguían creando en el
+  /// idioma viejo (el BE congela el idioma de cada notificación al crearla,
+  /// leyendo `DeviceToken.locale`; ver `NotificationController::createNotification`).
+  ///
+  /// Re-registramos el token para que `locale` quede actualizado de
+  /// inmediato. Fire-and-forget: si el usuario no está logueado el POST
+  /// devuelve 401 y se traga silenciosamente (ver [registerCurrentToken]).
+  @override
+  void didChangeLocales(List<Locale>? locales) {
+    _logger.i('OS locale changed → re-registering device token');
+    unawaited(registerCurrentToken());
   }
 
   // ---------------------------------------------------------------------------
@@ -363,6 +388,39 @@ class PushNotificationService {
     if (Platform.isIOS) return 'ios';
     if (Platform.isAndroid) return 'android';
     return 'web'; // desktop falls back — BE only cares ios/android/web
+  }
+
+  /// Resuelve el locale del dispositivo como un language tag corto
+  /// (`es`, `pt-PT`, `en-US`, ...) para mandarlo al BE en el registro del
+  /// DeviceToken.
+  ///
+  /// Por qué NO usamos `Intl.getCurrentLocale()` (lo que hacía antes):
+  /// ese getter devuelve `Intl.defaultLocale`, y cuando éste todavía es
+  /// null cae al fallback hardcodeado `Intl.systemLocale` == 'en_US'.
+  /// `Intl.defaultLocale` SOLO se setea cuando corre `S.load()`
+  /// (`generated/l10n.dart`), que ocurre al construir el primer frame de
+  /// `MaterialApp`. Pero [registerCurrentToken] se dispara desde el
+  /// listener `onTokenRefresh` de FCM y desde la restauración de sesión —
+  /// caminos que en un arranque en frío pueden ganarle la carrera a
+  /// `S.load()`. En esa ventana `Intl.getCurrentLocale()` devolvía 'en_US'
+  /// aunque el OS estuviera en español o portugués, y el DeviceToken
+  /// quedaba registrado en inglés. Como el back-end CONGELA el idioma de
+  /// cada notificación al crearla — `NotificationController::createNotification`
+  /// traduce y persiste el texto leyendo `DeviceToken.locale` del token
+  /// más activo del destinatario — el usuario terminaba con un historial
+  /// de notificaciones en idiomas mezclados.
+  ///
+  /// `PlatformDispatcher.locale` viene directo del embedder/OS y es
+  /// correcto desde el instante en que la plataforma entrega los locales,
+  /// sin depender de ningún paso de inicialización de la app. El BE acepta
+  /// formatos con o sin región (`es`, `es-AR`, `pt_PT`) y normaliza a los
+  /// 2 primeros caracteres, así que mandar el tag completo es seguro.
+  String _resolveDeviceLocale() {
+    final locale = WidgetsBinding.instance.platformDispatcher.locale;
+    final country = locale.countryCode;
+    return (country != null && country.isNotEmpty)
+        ? '${locale.languageCode}-$country'
+        : locale.languageCode;
   }
 
   Future<_DeviceMeta> _collectDeviceMetadata() async {
