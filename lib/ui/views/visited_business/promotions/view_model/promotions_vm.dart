@@ -12,8 +12,8 @@ enum PromotionStatus {
   next;
 
   String get text => switch (this) {
-        PromotionStatus.active => 'Activas',
-        PromotionStatus.next => 'Próximas',
+        PromotionStatus.active => S.current.promoTabActive,
+        PromotionStatus.next => S.current.promoTabUpcoming,
       };
 }
 
