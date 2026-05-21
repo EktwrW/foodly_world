@@ -56,9 +56,9 @@ class BusinessListCard extends StatelessWidget {
 
   Widget _buildStatusBadge(BusinessStatus status) {
     final (text, color) = switch (status) {
-      BusinessStatus.open => ('Open', FoodlyThemes.tertiaryFoodly),
-      BusinessStatus.closed => ('Closed', FoodlyThemes.error),
-      BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
+      BusinessStatus.open => (S.current.open, FoodlyThemes.tertiaryFoodly),
+      BusinessStatus.closed => (S.current.closed, FoodlyThemes.error),
+      BusinessStatus.openingSoon => (S.current.openSoon, FoodlyThemes.warning),
     };
 
     return DecoratedBox(
@@ -198,9 +198,9 @@ class BusinessGridCard extends StatelessWidget {
 
   Widget _buildStatusBadge(BusinessStatus status) {
     final (text, color) = switch (status) {
-      BusinessStatus.open => ('Open', FoodlyThemes.tertiaryFoodly),
-      BusinessStatus.closed => ('Closed', FoodlyThemes.error),
-      BusinessStatus.openingSoon => ('Open Soon', FoodlyThemes.warning),
+      BusinessStatus.open => (S.current.open, FoodlyThemes.tertiaryFoodly),
+      BusinessStatus.closed => (S.current.closed, FoodlyThemes.error),
+      BusinessStatus.openingSoon => (S.current.openSoon, FoodlyThemes.warning),
     };
 
     return DecoratedBox(
