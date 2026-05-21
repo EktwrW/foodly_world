@@ -47,8 +47,10 @@ class StartingCubit extends Cubit<StartingState> {
         _logger = logger,
         _meRepo = meRepo,
         _vm = StartingVM(
-          emailController: TextEditingController(text: 'userdemo1@mail.com'),
-          passwordController: TextEditingController(text: 'Test@123'),
+          emailController: TextEditingController(),
+          passwordController: TextEditingController(),
+          // emailController: TextEditingController(text: 'userdemo1@mail.com'),
+          // passwordController: TextEditingController(text: 'Test@123'),
         ),
         super(const StartingState.initial()) {
     if (kIsWeb) FlutterNativeSplash.remove();
