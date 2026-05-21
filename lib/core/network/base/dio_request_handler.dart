@@ -87,8 +87,13 @@ abstract class DioRequestHandler {
     // y elimina la dependencia entre `.name` del enum y el casing del
     // header construído en otra parte del código.
     final isBearer = authHeader.toLowerCase().startsWith('bearer');
+    // !isLoggingOut: durante un cierre de sesión NO queremos pre-flight
+    // refresh — silentRefresh → setSession → saveTokens repoblaría el secure
+    // storage que clearSession está limpiando, dejando una sesión fantasma
+    // que al reabrir la app dispara el modal "sesión expirada".
     if (authHeader.isNotEmpty &&
         isBearer &&
+        !authSessionService.isLoggingOut &&
         authSessionService.isAccessTokenExpired &&
         authSessionService.isLoggedIn) {
       if (authSessionService.hasRefreshToken) {
@@ -184,7 +189,14 @@ abstract class DioRequestHandler {
         }
       }
 
-      if (!authSessionService.isBiometricLoginInProgress && !isAuthEndpoint && !looksLikeSudoModeFailure) {
+      // !isLoggingOut: un 401 mientras se cierra sesión es esperado (el
+      // server ya invalidó el token). No debe gatillar silentRefresh
+      // (resucitaría la sesión) ni notifyTokenExpired (modal "sesión
+      // expirada"). Simplemente se rechaza el error.
+      if (!authSessionService.isBiometricLoginInProgress &&
+          !authSessionService.isLoggingOut &&
+          !isAuthEndpoint &&
+          !looksLikeSudoModeFailure) {
         // Attempt a silent refresh before declaring the session dead.
         if (authSessionService.hasRefreshToken && !authSessionService.isRefreshingToken) {
           final refreshed = await authSessionService.silentRefresh();

@@ -61,6 +61,11 @@ Future<Widget> buildFoodlyApp() async {
   final baseConfig = di<BaseConfig>();
   final rootBloc = RootBloc(authSessionService: di());
 
+  // Cableamos RootBloc en AuthSessionService para que el teardown de sesión
+  // (logout) pueda limpiar el estado persistido de HydratedBloc sin depender
+  // de un BuildContext. Ver AuthSessionService._tearDownSession.
+  di<AuthSessionService>().setRootBloc(rootBloc);
+
   di.registerLazySingleton(() => AppRouter(rootBloc: rootBloc));
 
   if (baseConfig.isLoggingEnabled) {

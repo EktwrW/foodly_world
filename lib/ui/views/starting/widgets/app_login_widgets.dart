@@ -64,6 +64,7 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               focusNode: _emailNode,
               secondaryFocusNode: _passwordNode,
               inputTextType: FoodlyInputType.email,
+              showLeading: false,
               autovalidateMode: vm.autovalidateMode,
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
             FoodlyPrimaryInputText(

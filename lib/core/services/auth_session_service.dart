@@ -49,6 +49,13 @@ class AuthSessionService {
   bool _isBiometricLoginInProgress = false;
   bool _pendingServicesInit = false;
   bool _isRefreshingToken = false;
+  bool _isLoggingOut = false;
+
+  /// Referencia directa al [RootBloc] de la app, cableada una sola vez en
+  /// main.dart tras construir el bloc. Permite que el teardown de sesión
+  /// limpie el estado persistido de HydratedBloc SIN depender de un
+  /// BuildContext (ver [_tearDownSession]).
+  RootBloc? _rootBloc;
 
   /// True when HydratedBloc found a cached session and async token restoration
   /// is in progress. Set synchronously in [RootBloc.fromJson] so that
@@ -141,6 +148,14 @@ class AuthSessionService {
 
   bool get isBiometricLoginInProgress => _isBiometricLoginInProgress;
 
+  /// True desde el inicio de [endSession] hasta el próximo login válido
+  /// ([setSession] con sesión válida lo resetea). El interceptor Dio lo
+  /// consulta para que, durante el cierre de sesión, un 401 NO dispare
+  /// `silentRefresh` (→ `setSession` → `saveTokens` repoblaría el secure
+  /// storage recién limpiado) NI `notifyTokenExpired` (→ modal "sesión
+  /// expirada"). Mismo patrón de guard que [isBiometricLoginInProgress].
+  bool get isLoggingOut => _isLoggingOut;
+
   void updateBiometricAuth(bool newValue) => requestBiometricAuth = newValue;
 
   Future<void> updateForceToLogin(bool newValue) async => forceToLogin = newValue;
@@ -184,6 +199,9 @@ class AuthSessionService {
     // en cada callsite, y los olvidos causaban este bug.
     if (newUserSessionDM != null && (newUserSessionDM.user.uuid?.isNotEmpty ?? false)) {
       forceToLogin = false;
+      // Un login válido (email/password, Google, Apple, biométrico, silent
+      // refresh) cancela cualquier guard de logout pendiente.
+      _isLoggingOut = false;
     }
 
     // Prefer access_token (new dual-token field); fall back to token (legacy).
@@ -240,6 +258,13 @@ class AuthSessionService {
   /// FCM token registration lifecycle. Registered at DI time.
   void setPushNotificationService(PushNotificationService service) {
     _pushService = service;
+  }
+
+  /// Registers the app's [RootBloc] so session teardown can clear the
+  /// persisted HydratedBloc session WITHOUT a BuildContext. Wired once at
+  /// startup in main.dart, right after RootBloc is constructed.
+  void setRootBloc(RootBloc bloc) {
+    _rootBloc = bloc;
   }
 
   /// Validates the cached token via a lightweight API call, then initializes
@@ -339,8 +364,23 @@ class AuthSessionService {
   }
 
   void endSession(BuildContext context, {bool redirectToStart = false}) async {
+    // Guard de logout en curso. Se activa ANTES de cualquier await/red para
+    // que el interceptor Dio (DioRequestHandler) sepa que estamos cerrando
+    // sesión: en esta ventana un 401 de una request concurrente (polling,
+    // re-registro del token FCM, etc.) NO debe disparar silentRefresh
+    // —que vía setSession→saveTokens repoblaría el secure storage recién
+    // limpiado— ni notifyTokenExpired. Se resetea en setSession al
+    // re-loguearse.
+    _isLoggingOut = true;
+
     di<DialogService>().showLoading();
-    final authToken = userSessionDM?.token ?? '';
+
+    // accessToken ?? token: tras el refactor dual-token el BE puede devolver
+    // sólo `access_token` (sin el legacy `token`). Leer únicamente `.token`
+    // dejaba `authToken` vacío tras un login biométrico → se tomaba la rama
+    // `else` y `_meRepo.logout()` (logout del lado servidor) nunca corría.
+    // Se usa el mismo orden de preferencia que setSession.
+    final authToken = userSessionDM?.accessToken ?? userSessionDM?.token ?? '';
 
     // Unregister the FCM token BEFORE hitting the logout endpoint — the
     // DELETE /device-tokens/unregister call needs the still-valid Bearer
@@ -356,45 +396,84 @@ class AuthSessionService {
           success: (_) => clearSession(context, redirectToStart: redirectToStart),
           failure: (e) {
             di<Logger>().e('$e');
-            clearSession(context, redirectToStart: redirectToStart);
+            return clearSession(context, redirectToStart: redirectToStart);
           },
         );
       });
     } else {
+      // clearSession ya es tolerante a contexto desmontado: el teardown de
+      // sesión corre SIEMPRE y sólo la navegación depende del contexto.
       if (context.mounted) {
-        clearSession(context, redirectToStart: redirectToStart);
+        await clearSession(context, redirectToStart: redirectToStart);
       }
     }
     di<DialogService>().hideLoading();
   }
 
+  /// Desmonta la sesión y navega fuera.
+  ///
+  /// El teardown de ESTADO ([_tearDownSession]) corre SIEMPRE, sea cual sea
+  /// el estado del `context`. Sólo la navegación final depende de que haya
+  /// un widget vivo — y si no lo hay, se navega directo por el router.
   Future<void> clearSession(BuildContext context, {bool redirectToStart = false}) async {
     try {
-      userSessionDM = null;
-      _authHeader = null;
-      _refreshToken = null;
-      _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
-      await _secureTokenService.clearAll();
-      _favoritesCubit?.clearAllFavorites();
-      _notificationsCubit?.clear();
-      di<SocialCubit>().clear();
-      di<NearbyPromotionsCubit>().clear();
-
-      if (context.mounted) {
-        context.read<RootBloc>().add(const RootEvent.userLogout());
-        context.read<SmartSearchCubit>().resetToInitial();
-      }
-
-      await updateForceToLogin(true);
-      if (context.mounted) exit(context, redirectToStart: redirectToStart);
+      await _tearDownSession();
     } catch (e) {
-      di<Logger>().e('Error en clearSession: $e');
-      // Intentar la navegación directa como fallback
+      di<Logger>().e('Error en _tearDownSession: $e');
+    }
+
+    // Navegación. exit() ya trae su propio try/catch con fallback al router.
+    try {
       if (context.mounted) {
-        context.read<SmartSearchCubit>().resetToInitial();
+        exit(context, redirectToStart: redirectToStart);
+      } else {
+        // Sin contexto vivo: el estado del router es la fuente de verdad,
+        // así que navegamos directo. Bajamos forceToLogin en post-frame,
+        // igual que hace notifyTokenExpired, para que el redirector global
+        // resuelva el redirect inicial pero después deje re-loguear.
         di<AppRouter>().appRouter.goNamed(redirectToStart ? AppRoutes.start.name : AppRoutes.login.name);
+        di<AppRouter>().clearRouteHistory();
+        WidgetsBinding.instance.addPostFrameCallback((_) => forceToLogin = false);
+      }
+    } catch (e) {
+      di<Logger>().e('Error en la navegación de clearSession: $e');
+    }
+
+    // Reset de la barra de búsqueda — cosmético, best-effort. Aislado y
+    // DESPUÉS de la navegación para que un ProviderNotFound (el contexto del
+    // LogoutDialog puede no colgar del provider) nunca aborte el logout.
+    if (context.mounted) {
+      try {
+        context.read<SmartSearchCubit>().resetToInitial();
+      } catch (e) {
+        di<Logger>().w('clearSession: no se pudo resetear SmartSearchCubit: $e');
       }
     }
+  }
+
+  /// Teardown de sesión SIN dependencia de BuildContext: anula el estado en
+  /// memoria, borra los tokens del secure storage, limpia los cubits y —
+  /// clave — limpia el estado persistido de [RootBloc] vía la referencia
+  /// directa [_rootBloc] (NO `context.read`), de modo que el `_CachedState`
+  /// de HydratedBloc se borra aunque ningún widget esté montado.
+  ///
+  /// Antes este paso vivía dentro de `if (context.mounted)` en clearSession:
+  /// si el contexto del LogoutDialog estaba desmontado tras los awaits del
+  /// flujo de logout, `RootEvent.userLogout` nunca se despachaba, HydratedBloc
+  /// conservaba la sesión vieja, y al reabrir la app restauraba una sesión
+  /// fantasma → 401 → modal "sesión expirada".
+  Future<void> _tearDownSession() async {
+    userSessionDM = null;
+    _authHeader = null;
+    _refreshToken = null;
+    _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
+    await _secureTokenService.clearAll();
+    _favoritesCubit?.clearAllFavorites();
+    _notificationsCubit?.clear();
+    di<SocialCubit>().clear();
+    di<NearbyPromotionsCubit>().clear();
+    _rootBloc?.add(const RootEvent.userLogout());
+    forceToLogin = true;
   }
 
   void exit(BuildContext context, {bool redirectToStart = false}) {
@@ -521,7 +600,11 @@ class AuthSessionService {
   /// re-entrancy and force the initial redirect); after the redirect
   /// completes, we have to clear it so the router can move on.
   void notifyTokenExpired() {
-    if (forceToLogin || _isBiometricLoginInProgress) return;
+    // _isLoggingOut: durante un cierre de sesión, un 401 es esperado (el
+    // server ya invalidó el token) — no es una expiración que merezca el
+    // modal. Defensa en profundidad: el interceptor ya no debería llamar
+    // acá durante el logout, pero el guard lo cubre igual.
+    if (forceToLogin || _isBiometricLoginInProgress || _isLoggingOut) return;
     _clearInvalidSession();
 
     // Navigate FIRST — always, context-independent. Even if the snackbar
