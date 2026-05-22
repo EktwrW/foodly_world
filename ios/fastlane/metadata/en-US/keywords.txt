@@ -1,0 +1,1 @@
+restaurant,digital menu,qr menu,reservation,food business,nearby,bar,cafe,catering,promo,analytics

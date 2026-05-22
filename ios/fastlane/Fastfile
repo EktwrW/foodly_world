@@ -3,6 +3,7 @@
 #   bundle exec fastlane beta          → Build + upload to TestFlight
 #   bundle exec fastlane beta_upload   → Upload existing IPA to TestFlight (skip build)
 #   bundle exec fastlane release       → Build + submit to App Store Review
+#   bundle exec fastlane metadata      → Upload App Store text metadata only (no binary)
 
 default_platform(:ios)
 
@@ -169,6 +170,33 @@ platform :ios do
 
     UI.success("✅ Build uploaded to App Store Connect!")
     UI.important("⚠️  Remember to submit for review manually in App Store Connect")
+  end
+
+  # Sube SOLO los textos de la ficha de App Store (no binario, no capturas).
+  #
+  # Por qué este lane existe: el lane `release` sube el binario con
+  # `skip_metadata: true`, así que la ficha (descripción, keywords, subtítulo,
+  # etc.) nunca se empuja desde Fastlane. Este lane lee `fastlane/metadata/`
+  # —estructura de Fastlane deliver, con carpetas por locale (en-US, es-MX,
+  # es-ES, pt-PT)— y publica esos textos en App Store Connect de una sola vez.
+  #
+  # `skip_binary_upload` → no toca la build (la 1.6.1+46 ya está subida).
+  # `skip_screenshots`   → las capturas se suben aparte por consola.
+  # `force: true`        → omite la preview HTML interactiva; verificá el
+  #                        resultado en App Store Connect después de correrlo.
+  # `submit_for_review: false` → NO envía a revisión; eso es un paso manual.
+  desc "Upload App Store text metadata only (no binary, no screenshots, no submit)"
+  lane :metadata do
+    upload_to_app_store(
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      skip_metadata: false,
+      force: true,
+      submit_for_review: false,
+      run_precheck_before_submit: false,
+      precheck_include_in_app_purchases: false,
+    )
+    UI.success("✅ Metadata de App Store subida. Verificá en App Store Connect → Distribución.")
   end
 
 end

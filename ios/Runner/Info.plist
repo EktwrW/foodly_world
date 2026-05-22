@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
+		<!-- Export compliance: Foodly solo usa encriptacion estandar (HTTPS/TLS
+		     contra api.foodly.solutions, Firebase, etc.), que esta exenta.
+		     `false` declara que NO usa encriptacion no exenta, asi App Store
+		     Connect no pide la pregunta de cumplimiento de exportacion en cada
+		     build ni documentacion. -->
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>CFBundleDevelopmentRegion</key>
