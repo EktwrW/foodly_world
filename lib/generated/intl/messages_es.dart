@@ -540,7 +540,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "El sistema operativo de este dispositivo no admite o no tiene configurados, los accesos de tipo patrón o biométricos.",
     ),
     "biometricSnackbarTextSpanB": MessageLookupByLibrary.simpleMessage(
-      "La sesión ha caducado, debes ingresar con tu usuario y contraseña, o acceder con la red social de tu preferencia.",
+      "La sesión ha caducado, debes ingresar con tu usuario y contraseña, o acceder con Google Sign-In.",
     ),
     "birthday": MessageLookupByLibrary.simpleMessage("Cumpleaños"),
     "blockAction": MessageLookupByLibrary.simpleMessage("Bloquear"),

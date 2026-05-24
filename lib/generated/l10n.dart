@@ -802,10 +802,10 @@ class S {
     );
   }
 
-  /// `The session has expired, you must log in with your username and password, or access via your preferred social network.`
+  /// `The session has expired, you must log in with your username and password, or access via Google Sign-In.`
   String get biometricSnackbarTextSpanB {
     return Intl.message(
-      'The session has expired, you must log in with your username and password, or access via your preferred social network.',
+      'The session has expired, you must log in with your username and password, or access via Google Sign-In.',
       name: 'biometricSnackbarTextSpanB',
       desc: '',
       args: [],

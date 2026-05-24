@@ -1,6 +1,6 @@
 // ignore_for_file: unused_field
 
-import 'dart:async' show unawaited;
+import 'dart:async' show Completer, unawaited;
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -29,6 +29,12 @@ class AuthSessionService {
   NotificationsCubit? _notificationsCubit;
   PushNotificationService? _pushService;
 
+  /// Referencia directa al [StartingCubit] singleton (creado en main.dart),
+  /// cableada vía [setStartingCubit]. Permite que el teardown de sesión
+  /// devuelva la starting page a un estado renderable SIN depender de un
+  /// BuildContext — ver [clearInvalidSession].
+  StartingCubit? _startingCubit;
+
   AuthSessionService({
     required BaseConfig config,
     required MeRepo meRepo,
@@ -50,6 +56,13 @@ class AuthSessionService {
   bool _pendingServicesInit = false;
   bool _isRefreshingToken = false;
   bool _isLoggingOut = false;
+
+  /// Completer del veredicto de validación de la sesión cacheada del arranque.
+  /// Lo completa [initializeSessionOrClear] vía su `finally`; lo consume
+  /// [LocalAuthCubit.initializeLocalAuth] como gate previo al prompt biométrico.
+  /// Lazy: lo crea quien lo toque primero — ambos flujos arrancan en paralelo
+  /// en el boot y su orden entre sí no está garantizado.
+  Completer<bool>? _sessionRestoreVerdict;
 
   /// Referencia directa al [RootBloc] de la app, cableada una sola vez en
   /// main.dart tras construir el bloc. Permite que el teardown de sesión
@@ -254,6 +267,13 @@ class AuthSessionService {
     _notificationsCubit = cubit;
   }
 
+  /// Registra el [StartingCubit] de la app. Se cablea una vez en main.dart,
+  /// dentro del `create` de su [BlocProvider]. Permite que [clearInvalidSession]
+  /// resetee la vista de la starting page sin un BuildContext.
+  void setStartingCubit(StartingCubit cubit) {
+    _startingCubit = cubit;
+  }
+
   /// Register the push notification service so login/logout can drive the
   /// FCM token registration lifecycle. Registered at DI time.
   void setPushNotificationService(PushNotificationService service) {
@@ -267,6 +287,26 @@ class AuthSessionService {
     _rootBloc = bloc;
   }
 
+  /// Future que resuelve cuando termina la validación de la sesión cacheada
+  /// del arranque ([initializeSessionOrClear]): `true` = sesión válida (o
+  /// refrescada con éxito), `false` = sesión inválida y limpiada.
+  ///
+  /// [LocalAuthCubit.initializeLocalAuth] lo espera ANTES de ofrecer el prompt
+  /// biométrico: sin esto se pedía huella sobre un token ya muerto en el BE y,
+  /// tras autenticar, `biometricLogin()` recibía 401 y la app caía a starting
+  /// page (bug 2026-05-22). El acceso es lazy — crea el [Completer] si aún no
+  /// existe — para tolerar que `initializeLocalAuth` lo espere antes de que
+  /// `initializeSessionOrClear` haya arrancado.
+  Future<bool> get sessionRestoreVerdict =>
+      (_sessionRestoreVerdict ??= Completer<bool>()).future;
+
+  /// Completa el veredicto de [sessionRestoreVerdict] de forma idempotente:
+  /// es seguro llamarlo más de una vez — los `complete` posteriores se ignoran.
+  void _completeSessionRestoreVerdict(bool valid) {
+    final completer = _sessionRestoreVerdict ??= Completer<bool>();
+    if (!completer.isCompleted) completer.complete(valid);
+  }
+
   /// Validates the cached token via a lightweight API call, then initializes
   /// favorites/notifications if valid. If invalid, clears session and forces login.
   /// Called from [RootBloc.fromJson()] — runs async in background (fire-and-forget).
@@ -278,6 +318,20 @@ class AuthSessionService {
   /// Services are started later by [_checkLoginStatusCall] (biometric success) or
   /// [completePendingServicesInit] (biometric not available).
   Future<void> initializeSessionOrClear(UserSessionDM session) async {
+    try {
+      await _validateRestoredSession(session);
+    } finally {
+      // Veredicto para el gate biométrico de [LocalAuthCubit]: si tras validar
+      // seguimos logueados, la sesión era válida; si fue limpiada
+      // (`clearInvalidSession` → `userSessionDM = null`), `isLoggedIn` es false.
+      // Una sola línea cubre TODOS los exit paths del método interno: éxito,
+      // fallo de `fetchLoggedUser`, refresh fallido con `return` temprano, o
+      // excepción no controlada.
+      _completeSessionRestoreVerdict(isLoggedIn);
+    }
+  }
+
+  Future<void> _validateRestoredSession(UserSessionDM session) async {
     setSession(session);
 
     // If access token looks expired client-side, try a silent refresh first
@@ -341,6 +395,20 @@ class AuthSessionService {
     _secureTokenService.clearAll(); // fire-and-forget
     _favoritesCubit?.clearAllFavorites();
     _notificationsCubit?.clear();
+
+    // Devuelve la starting page a un estado renderable. Tras un login, el
+    // StartingCubit singleton queda en `_UserAuthenticated`; StartingPage369
+    // sólo pinta contenido para los estados loading/welcome/error y cae a
+    // `SizedBox.expand()` (pantalla en blanco) para cualquier otro. Si una
+    // sesión se invalida en runtime (401 multi-dispositivo → notifyTokenExpired)
+    // y se navega a la starting page con el cubit todavía en
+    // `_UserAuthenticated`, el usuario ve el snackbar de "sesión expirada"
+    // sobre una pantalla vacía. `setView(initial)` emite `_Welcome`, que sí
+    // renderiza. Es el mismo reset que ya hace `exit()` en el logout manual;
+    // acá lo replicamos para el logout automático. Idempotente en el boot
+    // (el cubit recién creado ya está en `_Welcome`).
+    _startingCubit?.setView(StartingPageView.initial);
+
     _rootBloc?.add(const RootEvent.userLogout());
     forceToLogin = true;
   }

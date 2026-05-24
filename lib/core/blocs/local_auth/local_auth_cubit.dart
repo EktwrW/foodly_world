@@ -87,7 +87,40 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
         }
 
         if (hasSession && biometricAuthEnabled) {
-          emit(_NeedAuthentication(_dto));
+          // Gate de validación de sesión PREVIO al prompt biométrico.
+          //
+          // Bug 2026-05-22: con un token guardado ya muerto en el BE, el
+          // flujo viejo mostraba la huella igual; el user autenticaba, recién
+          // ahí `biometricLogin()` pegaba al BE, recibía 401, y la app caía a
+          // starting page. Resultado: huella para nada.
+          //
+          // `initializeSessionOrClear` (disparado por `RootBloc.fromJson`)
+          // corre en paralelo y valida el token contra el BE (silentRefresh +
+          // fetchLoggedUser). Esperamos su veredicto antes de decidir. El
+          // `.timeout` es defensa en profundidad: el veredicto SIEMPRE se
+          // completa (vía el `finally` de `initializeSessionOrClear`), pero si
+          // por lo que fuere no llegara, no colgamos el arranque — caemos al
+          // lado seguro (rutear a login).
+          bool sessionValid;
+          try {
+            sessionValid = await _authSessionService.sessionRestoreVerdict
+                .timeout(const Duration(seconds: 12));
+          } catch (_) {
+            sessionValid = false;
+          }
+
+          if (sessionValid) {
+            emit(_NeedAuthentication(_dto));
+          } else {
+            // Sesión inválida: NO pedimos biometría. `initializeSessionOrClear`
+            // ya llamó `clearInvalidSession()` (tokens limpios, forceToLogin
+            // arriba). Bajamos el guard especulativo y emitimos `_Loaded` con
+            // `authenticated == false` (default del DTO): el handler `loaded:`
+            // de `FoodlyWrapper` rutea a login. Path ya validado, sin huella
+            // de por medio.
+            _authSessionService.setBiometricLoginInProgress(false);
+            emit(_Loaded(_dto));
+          }
         } else {
           // Biometrics not available — clear the speculative guard set above
           // so FoodlyLocationWrapper's deferred subscription can fire.
@@ -252,7 +285,10 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
       _logger.e('$e');
       // See comment above: reset the field, not only the emit payload.
       _dto = _dto.copyWith(isAuthenticating: false);
-      emit(_Error('$e', _dto));
+      // Mensaje presentable al usuario — el listener de FingerprintButtonLogin
+      // ahora muestra este `msg` en un snackbar, así que NO puede ser la
+      // PlatformException cruda. El detalle técnico queda en el log de arriba.
+      emit(_Error(S.current.unauthorizedAccess, _dto));
       return;
     }
   }
@@ -292,7 +328,20 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
             // biometría contra un token muerto. Sin esto, el 401 se repetía
             // en cada arranque / hot-restart en loop.
             _authSessionService.clearInvalidSession();
-            emit(_Error('$e', _dto.copyWith(isAuthenticating: false)));
+            // CRÍTICO: reasignar el CAMPO `_dto`, no sólo la copia del emit.
+            // El guard `if (_dto.isAuthenticating) return;` al tope de
+            // `authenticate()` lee el campo; si queda en `true`, todo press
+            // posterior del botón biométrico se corta en seco — botón muerto
+            // hasta swipe-kill. Las ramas hermanas (success, biometría
+            // cancelada, PlatformException) ya reasignan; ésta era la única
+            // que faltaba. Además el getter `isAuthInProgress` (= este campo)
+            // alimenta el watchdog de FoodlyLocationWrapper: un `true` pegado
+            // ahí desincroniza otros flujos.
+            _dto = _dto.copyWith(isAuthenticating: false);
+            // Mensaje para el usuario, NO la excepción cruda: la sesión
+            // expiró y debe entrar con usuario y contraseña. El `$e` queda
+            // sólo en el log de arriba.
+            emit(_Error(S.current.biometricSnackbarTextSpanB, _dto));
           },
         );
       },

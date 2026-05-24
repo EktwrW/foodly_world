@@ -83,7 +83,14 @@ Future<Widget> buildFoodlyApp() async {
     providers: [
       BlocProvider(create: (context) => rootBloc),
       if (!isMenuSubdomain) ...[
-        BlocProvider(create: (context) => StartingCubit(di(), di(), di())),
+        BlocProvider(create: (context) {
+          // Cableamos el StartingCubit en AuthSessionService para que el
+          // teardown de sesión (clearInvalidSession) pueda devolver la
+          // starting page a un estado renderable sin un BuildContext.
+          final startingCubit = StartingCubit(di(), di(), di());
+          di<AuthSessionService>().setStartingCubit(startingCubit);
+          return startingCubit;
+        }),
         BlocProvider(create: (context) => LocalAuthCubit(di(), di(), di())),
         // LocationBloc: (BaseConfig, Logger, PlacesProxyRepo, AppFeaturesRepo)
         // Los 2 últimos se agregaron en Fase 4 del Places Proxy — el bloc

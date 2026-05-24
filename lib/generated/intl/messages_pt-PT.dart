@@ -541,7 +541,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "O sistema operativo deste dispositivo não suporta ou não tem configurados, os acessos de tipo padrão ou biométricos.",
     ),
     "biometricSnackbarTextSpanB": MessageLookupByLibrary.simpleMessage(
-      "A sessão expirou, deve entrar com o seu usuário e senha, ou aceder com a rede social da sua preferência.",
+      "A sessão expirou, deve entrar com o seu usuário e senha, ou aceder com Google Sign-In.",
     ),
     "birthday": MessageLookupByLibrary.simpleMessage("Aniversário"),
     "blockAction": MessageLookupByLibrary.simpleMessage("Bloquear"),

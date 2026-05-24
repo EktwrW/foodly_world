@@ -32,6 +32,23 @@ class FingerprintButtonLogin extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));
   }
 
+  /// Snackbar de feedback para un estado `_Error` del [LocalAuthCubit].
+  /// El [message] ya viene localizado y presentable desde el cubit (sesión
+  /// expirada, biometría cancelada, etc.) — nunca una excepción cruda.
+  void _showErrorSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBarWdg(
+      type: SnackBarType.warning,
+      duration: const Duration(seconds: 6),
+      content: Text(
+        message,
+        style: FoodlyTextStyles.snackBarLightBody,
+        textAlign: TextAlign.center,
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LocalAuthCubit, LocalAuthState>(
@@ -70,7 +87,13 @@ class FingerprintButtonLogin extends StatelessWidget {
             // has rebuilt with the destination page (prevents login flash).
             WidgetsBinding.instance.addPostFrameCallback((_) => di<DialogService>().hideLoading());
           },
-          error: (msg, localAuthDTO) => di<DialogService>().hideLoading(),
+          error: (msg, localAuthDTO) {
+            // Sin esto el usuario tocaba la huella, el login fallaba y se
+            // quedaba en la starting page sin ningún feedback. Mostramos el
+            // mensaje (ya localizado) que emitió el cubit.
+            di<DialogService>().hideLoading();
+            _showErrorSnackBar(context, msg);
+          },
         );
       },
       builder: (context, state) {

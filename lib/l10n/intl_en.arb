@@ -9,16 +9,34 @@
   "aiMenuImportGallery": "Gallery",
   "aiMenuImportSelectedPhotosLabel": "{count, plural, =1{1 photo selected} other{{count} photos selected}}",
   "@aiMenuImportSelectedPhotosLabel": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportAnalyzeCta": "Analyze with AI",
   "aiMenuImportUploading": "Uploading {current} of {total}",
   "@aiMenuImportUploading": {
-    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportParsing": "Analyzing {current} of {total}",
   "@aiMenuImportParsing": {
-    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportUploadingHint": "Securely uploading your photos to Foodly",
   "aiMenuImportParsingHint": "AI may take a few seconds per photo",
@@ -26,7 +44,11 @@
   "aiMenuImportReviewTitle": "Review your menu",
   "aiMenuImportReviewHeaderTitle": "{count, plural, =1{We detected 1 item} other{We detected {count} items}}",
   "@aiMenuImportReviewHeaderTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportReviewHeaderHint": "Review names and prices. Tap the X to remove items you don't want.",
   "aiMenuImportReviewDescriptionHint": "Add description (optional)",
@@ -38,28 +60,51 @@
   "aiMenuImportReviewVersionBig": "Large",
   "aiMenuImportReviewFooterCount": "{count, plural, =0{No items to import} =1{1 item will be added to your menu} other{{count} items will be added to your menu}}",
   "@aiMenuImportReviewFooterCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportReviewConfirmCta": "Add to menu",
   "aiMenuImportReviewConfirming": "Saving…",
   "aiMenuImportSuccessTitle": "Your menu is ready!",
   "aiMenuImportSuccessSubtitle": "We imported {items} items in {categories} categories.",
   "@aiMenuImportSuccessSubtitle": {
-    "placeholders": { "items": { "type": "int" }, "categories": { "type": "int" } }
+    "placeholders": {
+      "items": {
+        "type": "int"
+      },
+      "categories": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessHint": "You can now add photos to each item, adjust prices or reorder them anytime.",
   "aiMenuImportSuccessCta": "View my menu",
   "aiMenuImportSuccessStatFood": "{count, plural, =1{1 dish} other{{count} dishes}}",
   "@aiMenuImportSuccessStatFood": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessStatDrinks": "{count, plural, =1{1 drink} other{{count} drinks}}",
   "@aiMenuImportSuccessStatDrinks": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessStatCombos": "{count, plural, =1{1 combo} other{{count} combos}}",
   "@aiMenuImportSuccessStatCombos": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportEmptyStateTitle": "Digitize your menu",
   "aiMenuImportEmptyStateSubtitle": "Upload photos of your menu sections and AI extracts the items, categories and prices automatically.",
@@ -123,7 +168,7 @@
   "bakeryAndDesserts": "Bakery and Desserts",
   "big": "Big",
   "biometricSnackbarTextSpanA": "This device's operating system does not support or has not configured biometric or pattern accesses.",
-  "biometricSnackbarTextSpanB": "The session has expired, you must log in with your username and password, or access via your preferred social network.",
+  "biometricSnackbarTextSpanB": "The session has expired, you must log in with your username and password, or access via Google Sign-In.",
   "brands": "brands",
   "business": "Business",
   "businessAccountUpgradeInfo": "We'll redirect you to the business registration form. Your submission will be reviewed for platform verification. Please note that creating false businesses, misappropriation, or impersonation of brands and establishments may result in legal consequences.",

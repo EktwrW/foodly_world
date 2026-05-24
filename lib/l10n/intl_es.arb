@@ -9,16 +9,34 @@
   "aiMenuImportGallery": "Galería",
   "aiMenuImportSelectedPhotosLabel": "{count, plural, =1{1 foto seleccionada} other{{count} fotos seleccionadas}}",
   "@aiMenuImportSelectedPhotosLabel": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportAnalyzeCta": "Analizar con IA",
   "aiMenuImportUploading": "Subiendo {current} de {total}",
   "@aiMenuImportUploading": {
-    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportParsing": "Analizando {current} de {total}",
   "@aiMenuImportParsing": {
-    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportUploadingHint": "Subiendo tus fotos a Foodly de forma segura",
   "aiMenuImportParsingHint": "La IA puede tardar unos segundos por foto",
@@ -26,7 +44,11 @@
   "aiMenuImportReviewTitle": "Revisá tu menú",
   "aiMenuImportReviewHeaderTitle": "{count, plural, =1{Detectamos 1 item} other{Detectamos {count} items}}",
   "@aiMenuImportReviewHeaderTitle": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportReviewHeaderHint": "Revisá nombres y precios. Tocá la X para eliminar items que no quieras.",
   "aiMenuImportReviewDescriptionHint": "Agregar descripción (opcional)",
@@ -38,28 +60,51 @@
   "aiMenuImportReviewVersionBig": "Grande",
   "aiMenuImportReviewFooterCount": "{count, plural, =0{Sin items para importar} =1{Se agregará 1 item a tu menú} other{Se agregarán {count} items a tu menú}}",
   "@aiMenuImportReviewFooterCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportReviewConfirmCta": "Agregar al menú",
   "aiMenuImportReviewConfirming": "Guardando…",
   "aiMenuImportSuccessTitle": "¡Tu menú está listo!",
   "aiMenuImportSuccessSubtitle": "Importamos {items} items en {categories} categorías.",
   "@aiMenuImportSuccessSubtitle": {
-    "placeholders": { "items": { "type": "int" }, "categories": { "type": "int" } }
+    "placeholders": {
+      "items": {
+        "type": "int"
+      },
+      "categories": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessHint": "Ahora podés agregar fotos a cada item, ajustar precios o reordenarlos cuando quieras.",
   "aiMenuImportSuccessCta": "Ver mi menú",
   "aiMenuImportSuccessStatFood": "{count, plural, =1{1 plato} other{{count} platos}}",
   "@aiMenuImportSuccessStatFood": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessStatDrinks": "{count, plural, =1{1 bebida} other{{count} bebidas}}",
   "@aiMenuImportSuccessStatDrinks": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportSuccessStatCombos": "{count, plural, =1{1 combo} other{{count} combos}}",
   "@aiMenuImportSuccessStatCombos": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "aiMenuImportEmptyStateTitle": "Digitalizá tu menú",
   "aiMenuImportEmptyStateSubtitle": "Subí fotos de las secciones de tu menú y la IA extrae los items, categorías y precios automáticamente.",
@@ -124,7 +169,7 @@
   "bakeryAndDesserts": "Pasteleria y Postres",
   "big": "Grande",
   "biometricSnackbarTextSpanA": "El sistema operativo de este dispositivo no admite o no tiene configurados, los accesos de tipo patrón o biométricos.",
-  "biometricSnackbarTextSpanB": "La sesión ha caducado, debes ingresar con tu usuario y contraseña, o acceder con la red social de tu preferencia.",
+  "biometricSnackbarTextSpanB": "La sesión ha caducado, debes ingresar con tu usuario y contraseña, o acceder con Google Sign-In.",
   "brands": "marcas",
   "business": "Negocio",
   "businessAccountUpgradeInfo": "Te dirigiremos al formulario de registro empresarial. Tu solicitud será revisada para verificación en la plataforma. Ten en cuenta que la creación de negocios falsos, apropiación indebida o suplantación de marcas y establecimientos puede acarrear consecuencias legales.",
@@ -1039,13 +1084,17 @@
   "photosOptionalMax": "Fotos (opcional, hasta {max})",
   "@photosOptionalMax": {
     "placeholders": {
-      "max": {"type": "int"}
+      "max": {
+        "type": "int"
+      }
     }
   },
   "photoLimitReached": "Máximo {max} fotos",
   "@photoLimitReached": {
     "placeholders": {
-      "max": {"type": "int"}
+      "max": {
+        "type": "int"
+      }
     }
   },
   "removePhoto": "Quitar foto",
