@@ -58,6 +58,7 @@ class DeleteBusinessSection extends StatelessWidget {
           AppRoutes.foodlyMainPage.name,
           pathParameters: {AppRoutes.routeIdParam: userUuid},
         );
+        di<MainDrawerCubit>().updateSelectedIndex(0);
       },
       failure: (e) async {
         di<Logger>().e('Failed to delete business: ${e.errorMsg}');
