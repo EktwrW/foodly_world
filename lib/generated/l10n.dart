@@ -5784,10 +5784,10 @@ class S {
     );
   }
 
-  /// `App Guide — Coming Soon`
+  /// `Foodly Manifesto`
   String get aboutVideoPlaceholder {
     return Intl.message(
-      'App Guide — Coming Soon',
+      'Foodly Manifesto',
       name: 'aboutVideoPlaceholder',
       desc: '',
       args: [],

@@ -198,7 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Onde cada sabor encontra o seu publico.",
     ),
     "aboutVideoPlaceholder": MessageLookupByLibrary.simpleMessage(
-      "Guia da App — Em Breve",
+      "Manifesto Foodly",
     ),
     "acceptServiceRequests": MessageLookupByLibrary.simpleMessage(
       "Aceitar pedidos",

@@ -319,6 +319,11 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
       return _YoutubeThumbnail(videoId: videoId, onTap: _launchExternal);
     }
 
+    // v9.1.3 limitation: YoutubePlayerBuilder's "fullscreen" only rotates
+    // to landscape — it cannot expand the player over the widget tree when
+    // nested inside a ListView.  Instead we disable the broken fullscreen
+    // button and provide an "Open in YouTube" action so the user gets real
+    // fullscreen, comments, share, etc. via the native YouTube app.
     return YoutubePlayer(
       controller: _controller!,
       showVideoProgressIndicator: true,
@@ -327,6 +332,20 @@ class _YouTubeVideoPlayerState extends State<YouTubeVideoPlayer> {
         playedColor: FoodlyThemes.primaryFoodly,
         handleColor: FoodlyThemes.primaryFoodly,
       ),
+      bottomActions: [
+        const CurrentPosition(),
+        const ProgressBar(isExpanded: true),
+        const RemainingDuration(),
+        const PlaybackSpeedButton(),
+        // Opens the video in the YouTube app for fullscreen, sharing, etc.
+        IconButton(
+          icon: const Icon(Icons.open_in_new_rounded, color: Colors.white, size: 20),
+          tooltip: 'YouTube',
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          onPressed: _launchExternal,
+        ),
+      ],
     );
   }
 }

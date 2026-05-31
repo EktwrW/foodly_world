@@ -2,12 +2,13 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show AppRouter, di, PaddingExtension, MainDrawerCubit, ReadContext;
+    show AppRouter, AuthSessionService, di, PaddingExtension, MainDrawerCubit, ReadContext;
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/video/video_players.dart' show YouTubeVideoPlayer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +21,22 @@ class AboutPage extends StatelessWidget {
   // TODO: replace with actual store URLs before release
   static const _googlePlayUrl = '';
   static const _appStoreUrl = '';
+
+  /// YouTube video IDs for the Foodly manifesto, keyed by language code.
+  /// Defaults to PT (Portugal launch). Add ES and EN IDs when available.
+  static const _manifestoVideoIds = <String, String>{
+    'pt': 'eEw8pgI2QQA',
+    // 'es': '', // TODO: add Spanish manifesto video ID
+    // 'en': '', // TODO: add English manifesto video ID
+  };
+
+  /// Returns the YouTube URL for the manifesto video in the current app language,
+  /// falling back to Portuguese if the current language is not yet available.
+  static String get manifestoVideoUrl {
+    final lang = di<AuthSessionService>().lang;
+    final videoId = _manifestoVideoIds[lang] ?? _manifestoVideoIds['pt']!;
+    return 'https://youtu.be/$videoId';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +114,19 @@ class AboutPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
 
-                    // Video placeholder
+                    // Manifesto video — locale-aware YouTube embed
                     FadeInUp(
                       delay: const Duration(milliseconds: 100),
-                      child: _VideoPlaceholder(label: s.aboutVideoPlaceholder),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: YouTubeVideoPlayer(
+                            url: AboutPage.manifestoVideoUrl,
+                            videoTitle: s.aboutVideoPlaceholder,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 28),
 
@@ -163,71 +189,6 @@ class AboutPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-// ─── Video Placeholder ──────────────────────────────────────────────
-
-class _VideoPlaceholder extends StatelessWidget {
-  const _VideoPlaceholder({required this.label});
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 180,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            FoodlyThemes.primaryFoodly.withValues(alpha: 0.85),
-            FoodlyThemes.primaryFoodly.withValues(alpha: 0.55),
-          ],
-        ),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Subtle background icon
-          Positioned(
-            right: 20,
-            bottom: 16,
-            child: Icon(
-              Bootstrap.camera_video,
-              size: 80,
-              color: Colors.white.withValues(alpha: 0.08),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.18),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
-                ),
-                child: const Icon(Bootstrap.play_fill, color: Colors.white, size: 26),
-              ),
-              const SizedBox(height: 14),
-              Text(
-                label,
-                style: FoodlyTextStyles.label.copyWith(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
