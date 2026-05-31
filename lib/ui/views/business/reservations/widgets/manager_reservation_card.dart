@@ -188,19 +188,17 @@ class ManagerReservationCard extends StatelessWidget {
     if (reservation.isPending) {
       // Service bookings: show Send Quote + Reject
       if (reservation.isServiceBooking) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          spacing: 8,
-          children: [
+        return _ResponsiveActionRow(
+          actions: [
             if (onReject != null)
-              _ActionButton(
+              _ReservationAction(
                 label: S.current.reject,
                 icon: Bootstrap.x_circle,
                 color: Colors.red.shade700,
                 onPressed: onReject!,
               ),
             if (onSendQuote != null)
-              _ActionButton(
+              _ReservationAction(
                 label: S.current.sendQuote,
                 icon: Bootstrap.cash_coin,
                 color: Colors.deepPurple,
@@ -211,19 +209,17 @@ class ManagerReservationCard extends StatelessWidget {
       }
 
       // Table bookings: Confirm / Reject
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        spacing: 8,
-        children: [
+      return _ResponsiveActionRow(
+        actions: [
           if (onReject != null)
-            _ActionButton(
+            _ReservationAction(
               label: S.current.reject,
               icon: Bootstrap.x_circle,
               color: Colors.red.shade700,
               onPressed: onReject!,
             ),
           if (onConfirm != null)
-            _ActionButton(
+            _ReservationAction(
               label: S.current.confirm,
               icon: Bootstrap.check_circle,
               color: FoodlyThemes.tertiaryFoodly,
@@ -233,48 +229,58 @@ class ManagerReservationCard extends StatelessWidget {
       );
     }
 
-    // Quoted: waiting for customer approval, manager can cancel
+    // Quoted: waiting for customer approval, manager can cancel.
+    // This row mixes an action with an info chip (not a pure action row),
+    // so we keep it as a Flexible-guarded Row rather than the responsive
+    // collapser — the chip carries text that must stay readable, and there
+    // are at most 2 children so it never reached the overflow threshold.
     if (reservation.isQuoted) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 8,
         children: [
           if (onCancel != null)
-            _ActionButton(
-              label: S.current.cancel,
-              icon: Bootstrap.x_circle,
-              color: Colors.orange,
-              onPressed: onCancel!,
+            Flexible(
+              child: _ActionButton(
+                label: S.current.cancel,
+                icon: Bootstrap.x_circle,
+                color: Colors.orange,
+                onPressed: onCancel!,
+              ),
             ),
-          _InfoChip(
-            icon: Bootstrap.hourglass_split,
-            label: S.current.awaitingQuote,
+          Flexible(
+            child: _InfoChip(
+              icon: Bootstrap.hourglass_split,
+              label: S.current.awaitingQuote,
+            ),
           ),
         ],
       );
     }
 
+    // Confirmed: Cancel / No-show / Complete. This is the densest row
+    // (3 labelled actions) and the one that overflowed on narrow devices
+    // like the iPhone 16e — hence the responsive collapser.
     if (reservation.isConfirmed) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 8,
-        children: [
+      return _ResponsiveActionRow(
+        alignment: MainAxisAlignment.center,
+        actions: [
           if (onCancel != null)
-            _ActionButton(
+            _ReservationAction(
               label: S.current.cancel,
               icon: Bootstrap.x_circle,
               color: Colors.orange,
               onPressed: onCancel!,
             ),
           if (onNoShow != null)
-            _ActionButton(
+            _ReservationAction(
               label: S.current.noShow,
               icon: Bootstrap.person_x,
               color: Colors.blueGrey,
               onPressed: onNoShow!,
             ),
           if (onComplete != null)
-            _ActionButton(
+            _ReservationAction(
               label: S.current.complete,
               icon: Bootstrap.check_circle_fill,
               color: FoodlyThemes.primaryFoodly,
@@ -285,6 +291,133 @@ class ManagerReservationCard extends StatelessWidget {
     }
 
     return const SizedBox.shrink();
+  }
+}
+
+/// Lightweight descriptor for a manager action so [_ResponsiveActionRow]
+/// can decide how to render it (labelled vs. icon-only) without the call
+/// sites needing to know about the responsive logic.
+class _ReservationAction {
+  final String label;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onPressed;
+
+  const _ReservationAction({
+    required this.label,
+    required this.icon,
+    required this.color,
+    required this.onPressed,
+  });
+}
+
+/// Renders a row of manager actions that adapts to the available width.
+///
+/// On comfortable widths it shows the familiar icon + text buttons. When the
+/// labels would no longer fit (e.g. the 3-action "Confirmed" row on an
+/// iPhone 16e, or longer PT-PT strings), the whole row collapses — as a unit,
+/// so it never looks half-broken — to evenly spaced icon-only buttons with
+/// tooltips that preserve the meaning and a 40dp tap target for accessibility.
+///
+/// Why measure instead of just using Expanded + FittedBox: shrinking the text
+/// produces tiny, inconsistent labels that read as a bug. An all-or-nothing
+/// collapse is the intentional, professional behaviour we want here.
+class _ResponsiveActionRow extends StatelessWidget {
+  final List<_ReservationAction> actions;
+  final MainAxisAlignment alignment;
+
+  const _ResponsiveActionRow({
+    required this.actions,
+    this.alignment = MainAxisAlignment.end,
+  });
+
+  // Geometry of a single labelled [_ActionButton], kept in sync with its
+  // TextButton.icon styling below. Used to estimate the inline width budget.
+  static const double _spacing = 8;
+  static const double _labelFontSize = 12;
+  static const double _iconSize = 14;
+  static const double _iconLabelGap = 8; // TextButton.icon default gap
+  static const double _horizontalPadding = 20; // 10 left + 10 right
+  static const double _safetyBuffer = 6; // err on the side of collapsing
+
+  @override
+  Widget build(BuildContext context) {
+    if (actions.isEmpty) return const SizedBox.shrink();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final textScaler = MediaQuery.textScalerOf(context);
+
+        // Width required to show every label inline, measured against the
+        // real text + scaler so it stays correct under large-font settings.
+        var required = _spacing * (actions.length - 1);
+        for (final a in actions) {
+          final painter = TextPainter(
+            text: TextSpan(
+              text: a.label,
+              style: const TextStyle(fontSize: _labelFontSize),
+            ),
+            textDirection: Directionality.of(context),
+            textScaler: textScaler,
+            maxLines: 1,
+          )..layout();
+          required += painter.width + _iconSize + _iconLabelGap + _horizontalPadding + _safetyBuffer;
+        }
+
+        final showLabels = required <= constraints.maxWidth;
+
+        if (showLabels) {
+          return Row(
+            mainAxisAlignment: alignment,
+            spacing: _spacing,
+            children: [
+              for (final a in actions)
+                Flexible(
+                  child: _ActionButton(
+                    label: a.label,
+                    icon: a.icon,
+                    color: a.color,
+                    onPressed: a.onPressed,
+                  ),
+                ),
+            ],
+          );
+        }
+
+        // Collapsed: icon-only, evenly distributed, meaning preserved via tooltip.
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            for (final a in actions) _CompactActionButton(action: a),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Icon-only fallback used by [_ResponsiveActionRow] on narrow screens.
+/// Wraps the icon in a Tooltip (so the label is still discoverable) and an
+/// IconButton with a 40dp minimum tap target for accessibility.
+class _CompactActionButton extends StatelessWidget {
+  final _ReservationAction action;
+
+  const _CompactActionButton({required this.action});
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: action.label,
+      child: IconButton(
+        onPressed: action.onPressed,
+        icon: Icon(action.icon, size: 20),
+        color: action.color,
+        visualDensity: VisualDensity.compact,
+        padding: const EdgeInsets.all(8),
+        constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+        splashRadius: 22,
+      ),
+    );
   }
 }
 
@@ -333,7 +466,15 @@ class _ActionButton extends StatelessWidget {
     return TextButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 14),
-      label: Text(label, style: const TextStyle(fontSize: 12)),
+      // maxLines + ellipsis is a guard: the responsive parent only shows
+      // labels when they fit, but if this button is used standalone (quoted
+      // row) the label still degrades gracefully instead of overflowing.
+      label: Text(
+        label,
+        style: const TextStyle(fontSize: 11),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
       style: TextButton.styleFrom(
         foregroundColor: color,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
