@@ -85,10 +85,6 @@ enum _AppStore { googlePlay, apple }
 class _DownloadAppButton extends StatelessWidget {
   const _DownloadAppButton();
 
-  // TODO: replace with actual store URLs before release
-  static const _googlePlayUrl = '';
-  static const _appStoreUrl = '';
-
   Future<void> _launch(String url) async {
     if (url.isEmpty) return;
     final uri = Uri.parse(url);
@@ -105,7 +101,7 @@ class _DownloadAppButton extends StatelessWidget {
       color: Colors.white,
       elevation: 4,
       onSelected: (store) => _launch(
-        store == _AppStore.googlePlay ? _googlePlayUrl : _appStoreUrl,
+        store == _AppStore.googlePlay ? FoodlyStrings.PLAY_STORE_URL : FoodlyStrings.APP_STORE_URL,
       ),
       itemBuilder: (_) => [
         PopupMenuItem(
@@ -118,16 +114,20 @@ class _DownloadAppButton extends StatelessWidget {
             ],
           ),
         ),
-        PopupMenuItem(
-          value: _AppStore.apple,
-          child: Row(
-            children: [
-              Brand(Brands.apple_logo, size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
-              const SizedBox(width: 12),
-              const Text('App Store', style: FoodlyTextStyles.label),
-            ],
+        // App Store sólo cuando Apple ya aprobó. Mientras tanto el item se
+        // omite del popup para no exponer un link "page not found".
+        // Flipear `FoodlyStrings.IOS_APP_LIVE` cuando publiquemos en iOS.
+        if (FoodlyStrings.IOS_APP_LIVE)
+          PopupMenuItem(
+            value: _AppStore.apple,
+            child: Row(
+              children: [
+                Brand(Brands.apple_logo, size: 26, colorFilter: const ColorFilter.mode(Colors.black87, BlendMode.srcIn)),
+                const SizedBox(width: 12),
+                const Text('App Store', style: FoodlyTextStyles.label),
+              ],
+            ),
           ),
-        ),
       ],
     ).paddingTop(3);
   }

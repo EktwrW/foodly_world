@@ -1060,6 +1060,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidYoutubeUrl": MessageLookupByLibrary.simpleMessage(
       "Invalid YouTube URL",
     ),
+    "iosComingSoonMessage": MessageLookupByLibrary.simpleMessage(
+      "Coming very soon to iPhone! Foodly arrives on the App Store during June 2026.",
+    ),
     "italian": MessageLookupByLibrary.simpleMessage("Italian"),
     "itemAvailable": MessageLookupByLibrary.simpleMessage("Available Item"),
     "itemCreatedSuccess": MessageLookupByLibrary.simpleMessage(

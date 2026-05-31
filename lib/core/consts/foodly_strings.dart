@@ -66,4 +66,28 @@ class FoodlyStrings {
 
   // View mode preference
   static const PREFERRED_VIEW_MODE = 'preferred_view_mode';
+
+  // Store URLs (producción).
+  //
+  // Ambas son DETERMINÍSTICAS y no dependen de que la store ya haya
+  // publicado para conocerlas:
+  //  - Play Store usa el `applicationId` de Android
+  //    (`com.foodlysolutions.app`, ver `android/app/build.gradle`).
+  //  - App Store usa el App ID numérico de App Store Connect
+  //    (`6761689908`, visible en la URL de la ficha de la app).
+  //
+  // Funcionan globalmente en cuanto cada store apruebe y publique la
+  // release; antes de eso devuelven "page not found". Si más adelante
+  // migramos a un short link bajo `foodly.solutions` que redirija por
+  // User-Agent, éste es el único lugar que cambia.
+  static const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.foodlysolutions.app';
+  static const APP_STORE_URL = 'https://apps.apple.com/app/id6761689908';
+
+  /// Switch global de visibilidad del CTA de App Store en la UI (botón de
+  /// descarga en el menú público, share en About Us, etc.). Mientras Apple
+  /// no apruebe Foodly, dejar a `false` para no exponer un link que
+  /// devuelve "page not found". Al aprobarse la primera versión iOS,
+  /// flipear a `true` y todas las superficies que lo consultan habilitan
+  /// el path de App Store sin más cambios.
+  static const IOS_APP_LIVE = false;
 }

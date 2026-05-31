@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
+import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show AppRouter, AuthSessionService, di, PaddingExtension, MainDrawerCubit, ReadContext;
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
@@ -8,6 +9,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart' show YouTubeVideoPlayer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -17,10 +19,6 @@ import 'package:share_plus/share_plus.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
-
-  // TODO: replace with actual store URLs before release
-  static const _googlePlayUrl = '';
-  static const _appStoreUrl = '';
 
   /// YouTube video IDs for the Foodly manifesto, keyed by language code.
   /// Defaults to PT (Portugal launch). Add ES and EN IDs when available.
@@ -284,7 +282,7 @@ class _ShareFooter extends StatelessWidget {
         children: [
           Expanded(
             child: _ShareButton(
-              onPressed: () => _shareApp(AboutPage._googlePlayUrl),
+              onPressed: () => _shareApp(FoodlyStrings.PLAY_STORE_URL),
               icon: Brand(Brands.google_play, size: 22),
               label: s.shareOnAndroid,
             ),
@@ -292,7 +290,19 @@ class _ShareFooter extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: _ShareButton(
-              onPressed: () => _shareApp(AboutPage._appStoreUrl),
+              // Mientras Apple no apruebe iOS (`FoodlyStrings.IOS_APP_LIVE`
+              // sigue en false), tocar el botón muestra un info snackbar
+              // localizado anunciando la llegada de Foodly a la App Store
+              // en junio de 2026 — en vez de compartir un link a "page not
+              // found". Cuando flipemos el flag a true, el botón vuelve a
+              // su comportamiento normal de share.
+              onPressed: () {
+                if (FoodlyStrings.IOS_APP_LIVE) {
+                  _shareApp(FoodlyStrings.APP_STORE_URL);
+                } else {
+                  FoodlySnackbars.infoGeneric(context, s.iosComingSoonMessage);
+                }
+              },
               icon: Brand(Brands.apple_logo,
                   size: 22, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
               label: s.shareOnIOS,

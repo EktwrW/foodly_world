@@ -874,6 +874,7 @@
   "shareAppMessage": "Descubre los mejores locales cerca de ti con Foodly — explora menus, aprovecha promociones y reserva mesa, todo en una sola app!",
   "shareOnAndroid": "Compartir para Android",
   "shareOnIOS": "Compartir para iOS",
+  "iosComingSoonMessage": "¡Muy pronto en iPhone! Foodly llega a la App Store durante junio de 2026.",
   "combosLabelTitle": "Renombrar sección \"{currentLabel}\"",
   "@combosLabelTitle": {
     "placeholders": {

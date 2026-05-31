@@ -5824,6 +5824,16 @@ class S {
     );
   }
 
+  /// `Coming very soon to iPhone! Foodly arrives on the App Store during June 2026.`
+  String get iosComingSoonMessage {
+    return Intl.message(
+      'Coming very soon to iPhone! Foodly arrives on the App Store during June 2026.',
+      name: 'iosComingSoonMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Rename "{currentLabel}" section`
   String combosLabelTitle(String currentLabel) {
     return Intl.message(
