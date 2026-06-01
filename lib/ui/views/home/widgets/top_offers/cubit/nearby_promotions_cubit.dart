@@ -5,6 +5,8 @@ import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListe
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/favorites_cubit/favorites_cubit.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_transfer_objects/favorites/set_favorite_body_dto.dart';
@@ -61,6 +63,18 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
 
   /// Initial load — always starts at page 1, replaces current list.
   Future<void> load() async {
+    // Bug H (2026-06-01, post-go-live 1.6.4): el listener de
+    // `_locationService.locationChanged` dispara `load()` al resolverse el GPS
+    // — eso ocurre en cold-start ANTES del login. Sin este guard llamamos a
+    // `/promotions/nearby` (authed, no whitelisted) sin Bearer → BE 401 →
+    // ErrorInterceptor → `notifyTokenExpired()` → modal "Tu sesión ha
+    // expirado" sobre la welcome screen.
+    //
+    // `notifyTokenExpired()` ya tiene su propio guard contra `!isLoggedIn`
+    // (defensa principal), pero acá lo agregamos también para evitar el
+    // request inútil garantizado a 401 y el ruido en logs del BE.
+    if (!di<AuthSessionService>().isLoggedIn) return;
+
     // Location may not be ready yet at startup/hot-restart — retry up to 3 s.
     for (var i = 0; i < 10; i++) {
       if (_locationService.currentLocation.position != null) break;

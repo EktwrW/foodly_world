@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
+import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
@@ -46,6 +48,19 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
   }
 
   Future<void> load() async {
+    // Bug H (2026-06-01, post-go-live 1.6.4): el listener de
+    // `_locationService.locationChanged` dispara `load()` al resolverse el GPS
+    // — eso ocurre en cold-start ANTES de que el usuario se loguée. Sin este
+    // guard, llamamos a `/business/new-releases` (authed, no whitelisted en
+    // DioRequestHandler) sin Bearer token → BE responde 401 → el
+    // ErrorInterceptor llama a `notifyTokenExpired()` → modal "Tu sesión ha
+    // expirado" sobre la welcome screen, arruinando la primera impresión.
+    //
+    // `AuthSessionService.notifyTokenExpired()` ya tiene su propio guard
+    // contra `!isLoggedIn` (defensa principal), pero este check evita el
+    // request inútil que paga el round-trip y mete ruido en los logs del BE.
+    if (!di<AuthSessionService>().isLoggedIn) return;
+
     // Location may not be ready yet at startup — retry up to 3 s.
     for (var i = 0; i < 10; i++) {
       if (_locationService.currentLocation.position != null) break;

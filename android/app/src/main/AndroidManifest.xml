@@ -1,5 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!--
+        Phones-only para el lanzamiento Fase 1 (PT/AR/VE/ES).
+        Declaramos explícitamente que NO soportamos large/xlarge screens
+        (tablets, Chromebooks, foldables abiertos) para que:
+          - Play Store NO muestre la app en el listing como "compatible con
+            tablets / Chromebook" — eso engañaba a Hector y lo reportó como
+            bug post-go-live 1.6.4.
+          - El catálogo de dispositivos Play se filtre por nosotros
+            (complemento a la exclusión manual de 6.073 modelos hecha al
+            preparar el primer release).
+        Cuando la UI responsive esté lista (proyecto de tablet en Q3 2026),
+        revertir esto a `largeScreens="true" xlargeScreens="true"` y subir
+        screenshots de tablet a la ficha de Play Store.
+        Ver memoria `project_phones_only_launch.md` para contexto completo.
+    -->
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="false"
+        android:xlargeScreens="false"
+        android:resizeable="true"
+        android:anyDensity="true" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Push notifications: Android 13+ (API 33+) requires POST_NOTIFICATIONS

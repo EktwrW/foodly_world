@@ -683,6 +683,30 @@ class AuthSessionService {
     // modal. Defensa en profundidad: el interceptor ya no debería llamar
     // acá durante el logout, pero el guard lo cubre igual.
     if (forceToLogin || _isBiometricLoginInProgress || _isLoggingOut) return;
+
+    // Bug H (2026-06-01, descubierto post-go-live 1.6.4 en Play Store): un
+    // 401 ocurrido cuando NUNCA hubo sesión (cold-start post-instalación sin
+    // login previo) NO es una expiración — es ausencia de credenciales.
+    // Algún Bloc/Cubit dispara un endpoint authed (no whitelisted en
+    // DioRequestHandler) antes de que el user se loguée, el server responde
+    // 401 correctamente y el ErrorInterceptor cae acá. Sin este guard
+    // pintamos un modal "Tu sesión ha expirado" sobre la welcome screen,
+    // arruinando la primera impresión.
+    //
+    // La fix complementaria es localizar el cubit que inicializa pidiendo
+    // un endpoint authed pre-login y agregarle su propio guard de
+    // `isLoggedIn`, pero este check es DEFENSA EN PROFUNDIDAD: cubre los 4
+    // call sites de DioRequestHandler (request/error × refresh-failed/
+    // sin-refresh) y cualquier futuro path que invoque notifyTokenExpired
+    // sin haberse asegurado primero de que había sesión.
+    //
+    // No usamos `userSessionDM != null` (más permisivo) porque una restoración
+    // parcial podría dejar un dm con uuid vacío — `isLoggedIn` es el getter
+    // canónico que ya combina ambos checks. Una sesión legítimamente expirada
+    // (token vencido, dm populado con uuid no vacío) sigue gatillando el
+    // modal como antes.
+    if (!isLoggedIn) return;
+
     clearInvalidSession();
 
     // Navigate FIRST — always, context-independent. Even if the snackbar
