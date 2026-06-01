@@ -588,6 +588,7 @@
   "shareMenuMessage": "🍽️ Vê o menu de {businessName} em 🌟 {appName}: \n{menuUrl}",
   "shareMenuSubject": "Partilho contigo um menu!",
   "signInWithGoogle": "Iniciar sessão com o Google",
+  "signInWithApple": "Iniciar sessão com a Apple",
   "signup": "Registar-se",
   "signUpBusinessTooltipTextSpan1": "Recomendamos localizar o seu negócio ou endereço de atividade comercial no Google, para nos fornecer dados, incluindo coordenadas, que nos permitam dar-lhe",
   "signUpBusinessTooltipTextSpan2": "maior relevância",

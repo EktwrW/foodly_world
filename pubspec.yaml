@@ -79,6 +79,7 @@ dependencies:
   shorebird_code_push: ^2.0.5
   shared_preferences: ^2.5.5
   sidebarx: ^0.17.1
+  sign_in_with_apple: ^7.0.1
   sms_autofill: ^2.4.1
   speech_to_text: ^7.3.0
   toggle_switch: ^2.3.0

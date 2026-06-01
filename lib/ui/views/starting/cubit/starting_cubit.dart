@@ -16,6 +16,7 @@ import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 part 'starting_cubit.freezed.dart';
 part 'starting_state.dart';
@@ -94,16 +95,93 @@ class StartingCubit extends Cubit<StartingState> {
     }
   }
 
+  /// Sign in with Apple — espeja [googleSignIn]. El flujo nativo de iOS
+  /// devuelve un `identityToken` (JWT), NO un access_token OAuth: lo mandamos
+  /// como `access_provider_token` y el backend lo verifica con
+  /// `Socialite::driver('apple')->userFromToken($jwt)`.
+  ///
+  /// Apple solo entrega `givenName`/`familyName`/`email` en la PRIMERA
+  /// autorización (y nunca dentro del JWT), así que los persistimos en el VM
+  /// para que [_setSocialLoginUserForSignUp] los use si el usuario es nuevo.
+  void appleSignIn() async {
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: const [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final identityToken = credential.identityToken;
+      if (identityToken == null || identityToken.isEmpty) {
+        emit(_Error(S.current.loginError, _vm));
+        return;
+      }
+
+      emit(_Loading(_vm = _vm.copyWith(
+        // Reseteamos el de Google para que _setSocialLoginUserForSignUp tome
+        // la rama de Apple, y guardamos los datos de esta autorización.
+        googleSignInAccount: null,
+        appleGivenName: credential.givenName,
+        appleFamilyName: credential.familyName,
+        appleEmail: credential.email,
+      )));
+
+      final body = AuthSocialLoginDTO(accessToken: identityToken, provider: 'apple');
+
+      await _meRepo.socialLogin(body).then(
+        (response) {
+          return response.when(
+            success: (userSessionDM) => (userSessionDM.user.uuid?.isEmpty ?? true)
+                ? _setSocialLoginUserForSignUp(userSessionDM)
+                : _provideAccessToUser(userSessionDM),
+            failure: ((error) {
+              _logger.e('$error ${error.stackTrace}', stackTrace: error.stackTrace);
+              emit(_Error(error.errorMsg, _vm));
+            }),
+          );
+        },
+      );
+    } on SignInWithAppleAuthorizationException catch (e) {
+      // El usuario canceló el diálogo: no es un error, volvemos a welcome sin
+      // mostrar toast rojo.
+      if (e.code == AuthorizationErrorCode.canceled) {
+        emit(_Welcome(_vm));
+        return;
+      }
+      _logger.e('SignInWithAppleAuthorizationException: ${e.code} - ${e.message}');
+      emit(_Error(e.message, _vm));
+    } on PlatformException catch (e) {
+      _logger.e('PlatformException: ${e.code} - ${e.message}');
+      emit(_Error(e.message ?? S.current.platformError, _vm));
+    } catch (error) {
+      _logger.e('${S.current.error}: $error');
+      emit(_Error('${S.current.loginError}: $error', _vm));
+    }
+  }
+
   void _setSocialLoginUserForSignUp(UserSessionDM userSessionDM) {
     var user = userSessionDM.user;
-    final fullName = splitName(googleSignInAccount?.displayName ?? '');
-    user = user.copyWith(
-      email: googleSignInAccount?.email,
-      firstName: fullName[FoodlyStrings.FIRST_NAME],
-      lastName: fullName[FoodlyStrings.LAST_NAME],
-    );
 
-    _vm = _vm.copyWith(importedAvatar: googleSignInAccount?.photoUrl);
+    // Rama Google: el nombre viene en displayName y hay avatar.
+    if (googleSignInAccount != null) {
+      final fullName = splitName(googleSignInAccount?.displayName ?? '');
+      user = user.copyWith(
+        email: googleSignInAccount?.email,
+        firstName: fullName[FoodlyStrings.FIRST_NAME],
+        lastName: fullName[FoodlyStrings.LAST_NAME],
+      );
+      _vm = _vm.copyWith(importedAvatar: googleSignInAccount?.photoUrl);
+    } else {
+      // Rama Apple: nombre/email capturados del credential (primera vez).
+      // Apple no provee avatar. Hacemos fallback al user del backend por si
+      // es un re-login donde Apple ya no manda nombre.
+      user = user.copyWith(
+        email: _vm.appleEmail ?? user.email,
+        firstName: _vm.appleGivenName ?? user.firstName,
+        lastName: _vm.appleFamilyName ?? user.lastName,
+      );
+    }
 
     _provideAccessToUser(userSessionDM = userSessionDM.copyWith(user: user));
   }

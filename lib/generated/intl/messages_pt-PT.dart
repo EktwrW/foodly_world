@@ -1708,6 +1708,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sharePromotion": MessageLookupByLibrary.simpleMessage(
       "Partilhar Promoção",
     ),
+    "signInWithApple": MessageLookupByLibrary.simpleMessage(
+      "Iniciar sessão com a Apple",
+    ),
     "signInWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Iniciar sessão com o Google",
     ),

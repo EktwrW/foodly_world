@@ -584,6 +584,7 @@
   "shareMenuMessage": "🍽️ Check out {businessName}'s menu on 🌟 {appName}: \n{menuUrl}",
   "shareMenuSubject": "Sharing a menu with you!",
   "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
   "signup": "Sign Up",
   "signUpBusinessTooltipTextSpan1": "We recommend locating your business or commercial address on Google, thus providing us with data, including coordinates, that allow us to give you",
   "signUpBusinessTooltipTextSpan2": "greater relevance",

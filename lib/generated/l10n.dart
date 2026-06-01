@@ -3804,6 +3804,16 @@ class S {
     );
   }
 
+  /// `Sign in with Apple`
+  String get signInWithApple {
+    return Intl.message(
+      'Sign in with Apple',
+      name: 'signInWithApple',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign Up`
   String get signup {
     return Intl.message('Sign Up', name: 'signup', desc: '', args: []);

@@ -26,7 +26,13 @@ mixin _$StartingVM {
   RecoverPasswordView get recoverPasswordView =>
       throw _privateConstructorUsedError;
   GoogleSignInAccount? get googleSignInAccount =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+// dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
+// capturamos del lado cliente —igual que el displayName/email de Google—
+// y los arrastramos al sign-up cuando el usuario es nuevo.
+  String? get appleGivenName => throw _privateConstructorUsedError;
+  String? get appleFamilyName => throw _privateConstructorUsedError;
+  String? get appleEmail => throw _privateConstructorUsedError;
   String? get importedAvatar => throw _privateConstructorUsedError;
 
   /// Create a copy of StartingVM
@@ -50,6 +56,9 @@ abstract class $StartingVMCopyWith<$Res> {
       AutovalidateMode autovalidateMode,
       RecoverPasswordView recoverPasswordView,
       GoogleSignInAccount? googleSignInAccount,
+      String? appleGivenName,
+      String? appleFamilyName,
+      String? appleEmail,
       String? importedAvatar});
 
   $UserSessionDMCopyWith<$Res> get userSessionDM;
@@ -77,6 +86,9 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
     Object? autovalidateMode = null,
     Object? recoverPasswordView = null,
     Object? googleSignInAccount = freezed,
+    Object? appleGivenName = freezed,
+    Object? appleFamilyName = freezed,
+    Object? appleEmail = freezed,
     Object? importedAvatar = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +120,18 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
           ? _value.googleSignInAccount
           : googleSignInAccount // ignore: cast_nullable_to_non_nullable
               as GoogleSignInAccount?,
+      appleGivenName: freezed == appleGivenName
+          ? _value.appleGivenName
+          : appleGivenName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleFamilyName: freezed == appleFamilyName
+          ? _value.appleFamilyName
+          : appleFamilyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleEmail: freezed == appleEmail
+          ? _value.appleEmail
+          : appleEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
       importedAvatar: freezed == importedAvatar
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
@@ -142,6 +166,9 @@ abstract class _$$StartingVMImplCopyWith<$Res>
       AutovalidateMode autovalidateMode,
       RecoverPasswordView recoverPasswordView,
       GoogleSignInAccount? googleSignInAccount,
+      String? appleGivenName,
+      String? appleFamilyName,
+      String? appleEmail,
       String? importedAvatar});
 
   @override
@@ -168,6 +195,9 @@ class __$$StartingVMImplCopyWithImpl<$Res>
     Object? autovalidateMode = null,
     Object? recoverPasswordView = null,
     Object? googleSignInAccount = freezed,
+    Object? appleGivenName = freezed,
+    Object? appleFamilyName = freezed,
+    Object? appleEmail = freezed,
     Object? importedAvatar = freezed,
   }) {
     return _then(_$StartingVMImpl(
@@ -199,6 +229,18 @@ class __$$StartingVMImplCopyWithImpl<$Res>
           ? _value.googleSignInAccount
           : googleSignInAccount // ignore: cast_nullable_to_non_nullable
               as GoogleSignInAccount?,
+      appleGivenName: freezed == appleGivenName
+          ? _value.appleGivenName
+          : appleGivenName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleFamilyName: freezed == appleFamilyName
+          ? _value.appleFamilyName
+          : appleFamilyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleEmail: freezed == appleEmail
+          ? _value.appleEmail
+          : appleEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
       importedAvatar: freezed == importedAvatar
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
@@ -218,6 +260,9 @@ class _$StartingVMImpl extends _StartingVM {
       this.autovalidateMode = AutovalidateMode.disabled,
       this.recoverPasswordView = RecoverPasswordView.requestPassword,
       this.googleSignInAccount,
+      this.appleGivenName,
+      this.appleFamilyName,
+      this.appleEmail,
       this.importedAvatar})
       : super._();
 
@@ -239,12 +284,22 @@ class _$StartingVMImpl extends _StartingVM {
   final RecoverPasswordView recoverPasswordView;
   @override
   final GoogleSignInAccount? googleSignInAccount;
+// Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+// dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
+// capturamos del lado cliente —igual que el displayName/email de Google—
+// y los arrastramos al sign-up cuando el usuario es nuevo.
+  @override
+  final String? appleGivenName;
+  @override
+  final String? appleFamilyName;
+  @override
+  final String? appleEmail;
   @override
   final String? importedAvatar;
 
   @override
   String toString() {
-    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, importedAvatar: $importedAvatar)';
+    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar)';
   }
 
   @override
@@ -266,6 +321,12 @@ class _$StartingVMImpl extends _StartingVM {
                 other.recoverPasswordView == recoverPasswordView) &&
             (identical(other.googleSignInAccount, googleSignInAccount) ||
                 other.googleSignInAccount == googleSignInAccount) &&
+            (identical(other.appleGivenName, appleGivenName) ||
+                other.appleGivenName == appleGivenName) &&
+            (identical(other.appleFamilyName, appleFamilyName) ||
+                other.appleFamilyName == appleFamilyName) &&
+            (identical(other.appleEmail, appleEmail) ||
+                other.appleEmail == appleEmail) &&
             (identical(other.importedAvatar, importedAvatar) ||
                 other.importedAvatar == importedAvatar));
   }
@@ -280,6 +341,9 @@ class _$StartingVMImpl extends _StartingVM {
       autovalidateMode,
       recoverPasswordView,
       googleSignInAccount,
+      appleGivenName,
+      appleFamilyName,
+      appleEmail,
       importedAvatar);
 
   /// Create a copy of StartingVM
@@ -300,6 +364,9 @@ abstract class _StartingVM extends StartingVM {
       final AutovalidateMode autovalidateMode,
       final RecoverPasswordView recoverPasswordView,
       final GoogleSignInAccount? googleSignInAccount,
+      final String? appleGivenName,
+      final String? appleFamilyName,
+      final String? appleEmail,
       final String? importedAvatar}) = _$StartingVMImpl;
   const _StartingVM._() : super._();
 
@@ -316,7 +383,17 @@ abstract class _StartingVM extends StartingVM {
   @override
   RecoverPasswordView get recoverPasswordView;
   @override
-  GoogleSignInAccount? get googleSignInAccount;
+  GoogleSignInAccount?
+      get googleSignInAccount; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+// dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
+// capturamos del lado cliente —igual que el displayName/email de Google—
+// y los arrastramos al sign-up cuando el usuario es nuevo.
+  @override
+  String? get appleGivenName;
+  @override
+  String? get appleFamilyName;
+  @override
+  String? get appleEmail;
   @override
   String? get importedAvatar;
 

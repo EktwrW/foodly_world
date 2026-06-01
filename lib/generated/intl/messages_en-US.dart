@@ -1634,6 +1634,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareOnAndroid": MessageLookupByLibrary.simpleMessage("Share for Android"),
     "shareOnIOS": MessageLookupByLibrary.simpleMessage("Share for iOS"),
     "sharePromotion": MessageLookupByLibrary.simpleMessage("Share Promotion"),
+    "signInWithApple": MessageLookupByLibrary.simpleMessage(
+      "Sign in with Apple",
+    ),
     "signInWithGoogle": MessageLookupByLibrary.simpleMessage(
       "Sign in with Google",
     ),

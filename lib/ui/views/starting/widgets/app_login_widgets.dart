@@ -10,6 +10,7 @@ import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppLoginWidgets extends StatefulWidget {
   const AppLoginWidgets({
@@ -157,6 +158,27 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               margin: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
             ),
           ),
+          // Sign in with Apple — solo iOS. Apple lo exige (App Store Guideline
+          // 4.8: si ofrecés login de terceros como Google, debés ofrecer Apple)
+          // y en Android/web requeriría el flujo web, que no soportamos aún.
+          // Usamos el botón oficial del paquete para cumplir el HIG de Apple.
+          if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS)
+            FadeIn(
+              delay: Durations.long4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+                child: SignInWithAppleButton(
+                  key: const Key('apple-sign-in-btn'),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    cubit.appleSignIn();
+                  },
+                  text: S.current.signInWithApple,
+                  height: 52,
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                ),
+              ),
+            ),
         ],
       );
 }

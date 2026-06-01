@@ -21,6 +21,13 @@ class StartingVM with _$StartingVM {
     @Default(AutovalidateMode.disabled) AutovalidateMode autovalidateMode,
     @Default(RecoverPasswordView.requestPassword) RecoverPasswordView recoverPasswordView,
     GoogleSignInAccount? googleSignInAccount,
+    // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+    // dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
+    // capturamos del lado cliente —igual que el displayName/email de Google—
+    // y los arrastramos al sign-up cuando el usuario es nuevo.
+    String? appleGivenName,
+    String? appleFamilyName,
+    String? appleEmail,
     String? importedAvatar,
   }) = _StartingVM;
 
