@@ -68,7 +68,7 @@
 		<key>NSCalendarsUsageDescription</key>
 		<string>Foodly needs access to your calendar to add reservation reminders so you never miss a booking</string>
 		<key>NSCameraUsageDescription</key>
-		<string>We need access to your camera so you can take photos</string>
+		<string>Foodly uses your camera so you can take photos to add to your content — for example, photographing a dish to add it to your menu, or capturing your business logo or a photo for a review.</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>We need to use Face ID to authenticate you and secure your data</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -80,7 +80,7 @@
 		<key>NSMicrophoneUsageDescription</key>
 		<string>We need access to your microphone so you can do search by voice and record videos</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>We need access to your gallery so you can select images</string>
+		<string>Foodly uses your photo library so you can choose existing images for your content — for example, selecting a saved dish photo to add to a menu item, your business logo, or a photo for a review.</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>Foodly uses speech recognition to convert your voice into text for searching restaurants and menu items</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
