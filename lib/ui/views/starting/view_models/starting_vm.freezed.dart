@@ -33,7 +33,12 @@ mixin _$StartingVM {
   String? get appleGivenName => throw _privateConstructorUsedError;
   String? get appleFamilyName => throw _privateConstructorUsedError;
   String? get appleEmail => throw _privateConstructorUsedError;
-  String? get importedAvatar => throw _privateConstructorUsedError;
+  String? get importedAvatar =>
+      throw _privateConstructorUsedError; // True solo cuando el usuario acaba de crearse vía alta social directa
+// (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
+// guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
+// NO en logins normales posteriores.
+  bool get justSocialRegistered => throw _privateConstructorUsedError;
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
@@ -59,7 +64,8 @@ abstract class $StartingVMCopyWith<$Res> {
       String? appleGivenName,
       String? appleFamilyName,
       String? appleEmail,
-      String? importedAvatar});
+      String? importedAvatar,
+      bool justSocialRegistered});
 
   $UserSessionDMCopyWith<$Res> get userSessionDM;
 }
@@ -90,6 +96,7 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
     Object? appleFamilyName = freezed,
     Object? appleEmail = freezed,
     Object? importedAvatar = freezed,
+    Object? justSocialRegistered = null,
   }) {
     return _then(_value.copyWith(
       currentView: null == currentView
@@ -136,6 +143,10 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      justSocialRegistered: null == justSocialRegistered
+          ? _value.justSocialRegistered
+          : justSocialRegistered // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -169,7 +180,8 @@ abstract class _$$StartingVMImplCopyWith<$Res>
       String? appleGivenName,
       String? appleFamilyName,
       String? appleEmail,
-      String? importedAvatar});
+      String? importedAvatar,
+      bool justSocialRegistered});
 
   @override
   $UserSessionDMCopyWith<$Res> get userSessionDM;
@@ -199,6 +211,7 @@ class __$$StartingVMImplCopyWithImpl<$Res>
     Object? appleFamilyName = freezed,
     Object? appleEmail = freezed,
     Object? importedAvatar = freezed,
+    Object? justSocialRegistered = null,
   }) {
     return _then(_$StartingVMImpl(
       currentView: null == currentView
@@ -245,6 +258,10 @@ class __$$StartingVMImplCopyWithImpl<$Res>
           ? _value.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      justSocialRegistered: null == justSocialRegistered
+          ? _value.justSocialRegistered
+          : justSocialRegistered // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -263,7 +280,8 @@ class _$StartingVMImpl extends _StartingVM {
       this.appleGivenName,
       this.appleFamilyName,
       this.appleEmail,
-      this.importedAvatar})
+      this.importedAvatar,
+      this.justSocialRegistered = false})
       : super._();
 
   @override
@@ -296,10 +314,17 @@ class _$StartingVMImpl extends _StartingVM {
   final String? appleEmail;
   @override
   final String? importedAvatar;
+// True solo cuando el usuario acaba de crearse vía alta social directa
+// (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
+// guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
+// NO en logins normales posteriores.
+  @override
+  @JsonKey()
+  final bool justSocialRegistered;
 
   @override
   String toString() {
-    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar)';
+    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar, justSocialRegistered: $justSocialRegistered)';
   }
 
   @override
@@ -328,7 +353,9 @@ class _$StartingVMImpl extends _StartingVM {
             (identical(other.appleEmail, appleEmail) ||
                 other.appleEmail == appleEmail) &&
             (identical(other.importedAvatar, importedAvatar) ||
-                other.importedAvatar == importedAvatar));
+                other.importedAvatar == importedAvatar) &&
+            (identical(other.justSocialRegistered, justSocialRegistered) ||
+                other.justSocialRegistered == justSocialRegistered));
   }
 
   @override
@@ -344,7 +371,8 @@ class _$StartingVMImpl extends _StartingVM {
       appleGivenName,
       appleFamilyName,
       appleEmail,
-      importedAvatar);
+      importedAvatar,
+      justSocialRegistered);
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
@@ -367,7 +395,8 @@ abstract class _StartingVM extends StartingVM {
       final String? appleGivenName,
       final String? appleFamilyName,
       final String? appleEmail,
-      final String? importedAvatar}) = _$StartingVMImpl;
+      final String? importedAvatar,
+      final bool justSocialRegistered}) = _$StartingVMImpl;
   const _StartingVM._() : super._();
 
   @override
@@ -395,7 +424,13 @@ abstract class _StartingVM extends StartingVM {
   @override
   String? get appleEmail;
   @override
-  String? get importedAvatar;
+  String?
+      get importedAvatar; // True solo cuando el usuario acaba de crearse vía alta social directa
+// (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
+// guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
+// NO en logins normales posteriores.
+  @override
+  bool get justSocialRegistered;
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.

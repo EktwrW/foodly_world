@@ -209,6 +209,36 @@ class _MeClient implements MeClient {
   }
 
   @override
+  Future<UserSessionDM> socialRegister(
+    AuthSocialRegisterDTO socialRegisterDTO,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(socialRegisterDTO.toJson());
+    final _options = _setStreamType<UserSessionDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/register',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late UserSessionDM _value;
+    try {
+      _value = UserSessionDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<void> recoverPassword(UserRecoverPasswordDTO email) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -238,6 +268,7 @@ class _MeClient implements MeClient {
     required String password,
     required String passwordConfirmation,
     required String? phone,
+    String? phoneCountryCode,
     required String? address,
     required String zipCode,
     required String? city,
@@ -265,6 +296,9 @@ class _MeClient implements MeClient {
     _data.fields.add(MapEntry('password_confirmation', passwordConfirmation));
     if (phone != null) {
       _data.fields.add(MapEntry('phone', phone));
+    }
+    if (phoneCountryCode != null) {
+      _data.fields.add(MapEntry('phone_country_code', phoneCountryCode));
     }
     if (address != null) {
       _data.fields.add(MapEntry('address', address));
@@ -390,6 +424,7 @@ class _MeClient implements MeClient {
     String? lastName,
     String? email,
     String? phone,
+    String? phoneCountryCode,
     String? dateOfBirth,
     String? password,
     String? newPassword,
@@ -421,6 +456,9 @@ class _MeClient implements MeClient {
     }
     if (phone != null) {
       _data.fields.add(MapEntry('phone', phone));
+    }
+    if (phoneCountryCode != null) {
+      _data.fields.add(MapEntry('phone_country_code', phoneCountryCode));
     }
     if (dateOfBirth != null) {
       _data.fields.add(MapEntry('date_of_birth', dateOfBirth));
@@ -561,31 +599,6 @@ class _MeClient implements MeClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     await _dio.fetch<void>(_options);
-  }
-
-  RequestOptions newRequestOptions(Object? options) {
-    if (options is RequestOptions) {
-      return options as RequestOptions;
-    }
-    if (options is Options) {
-      return RequestOptions(
-        method: options.method,
-        sendTimeout: options.sendTimeout,
-        receiveTimeout: options.receiveTimeout,
-        extra: options.extra,
-        headers: options.headers,
-        responseType: options.responseType,
-        contentType: options.contentType.toString(),
-        validateStatus: options.validateStatus,
-        receiveDataWhenStatusError: options.receiveDataWhenStatusError,
-        followRedirects: options.followRedirects,
-        maxRedirects: options.maxRedirects,
-        requestEncoder: options.requestEncoder,
-        responseDecoder: options.responseDecoder,
-        path: '',
-      );
-    }
-    return RequestOptions(path: '');
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

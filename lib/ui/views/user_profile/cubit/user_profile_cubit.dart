@@ -3,6 +3,7 @@ import 'dart:async' show Completer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
+import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
@@ -110,10 +111,23 @@ class UserProfileCubit extends Cubit<UserProfileState> {
 
   String get currentCountryCode => (_vm.country?.countryCode ?? di<LocationService>().currentCountryCode).toUpperCase();
   String get lang => _authService.lang;
+
+  /// ISO del país elegido en el input de teléfono al editar el perfil. Se
+  /// captura del onChanged del IntlPhoneField y se manda junto al número.
+  String? _editedPhoneCountryIso;
+  // Normaliza '' → null: un ISO vacío no debe persistirse (rompería el
+  // initialCountryCode del IntlPhoneField al re-renderar).
+  void setEditedPhoneCountryIso(String iso) => _editedPhoneCountryIso = iso.isEmpty ? null : iso.toUpperCase();
   UserRole? get getUserRole => _vm.roleId;
   String get imagePath => _vm.imagePath;
 
-  void updateEditMode(ProfileEditing editMode) => emit(_Loaded(_vm = _vm.copyWith(edition: editMode)));
+  void updateEditMode(ProfileEditing editMode) {
+    // Reseteamos el ISO editado del teléfono en cada cambio de modo de edición,
+    // así cada sesión arranca limpia y, si el usuario no toca la bandera, el
+    // fallback usa el ISO ya guardado (currentUser.phoneCountryCode).
+    _editedPhoneCountryIso = null;
+    emit(_Loaded(_vm = _vm.copyWith(edition: editMode)));
+  }
 
   void _fetchUser() async {
     emit(_Loading(_vm));
@@ -156,6 +170,15 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       return;
     }
 
+    // El campo de teléfono NO está dentro de `formKey`, así que el validate()
+    // de arriba no lo cubre. Lo validamos explícitamente (≥7 dígitos) para no
+    // guardar números basura. El error inline ya lo muestra el campo porque
+    // setAutovalidateMode(always) lo fuerza a revalidar.
+    if (_vm.edition.isEditingPhone &&
+        !FormValidations.isPhoneNumberValid(_vm.phoneNumberController?.controller?.text ?? '')) {
+      return;
+    }
+
     UserBodyUpdateDTO dto = const UserBodyUpdateDTO();
 
     emit(_Loading(_vm));
@@ -194,6 +217,8 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       ),
       ProfileEditing.phone: dto.copyWith(
         phone: _vm.phoneNumberController?.controller?.text,
+        // ISO del país del teléfono: el editado en el input, o el que ya tenía.
+        phoneCountryCode: _editedPhoneCountryIso ?? _vm.currentUser?.phoneCountryCode,
       ),
     };
 

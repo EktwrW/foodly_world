@@ -4,6 +4,7 @@ import 'package:foodly_world/data_models/logout/logout_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/auth_social_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_update_dto.dart';
@@ -37,6 +38,14 @@ abstract class MeClient {
   @POST('/social-login')
   Future<UserSessionDM> socialLogin(@Body() AuthSocialLoginDTO socialLoginDTO);
 
+  /// Alta automática para usuarios de login social (Apple/Google). Pega al
+  /// mismo `/register` que el alta por email, pero con cuerpo JSON mínimo
+  /// (sin password ni campos del form). El backend ya soporta este caso:
+  /// detecta `provider`+`provider_id`, perdona el password, autogenera el
+  /// username y devuelve la sesión completa.
+  @POST('/register')
+  Future<UserSessionDM> socialRegister(@Body() AuthSocialRegisterDTO socialRegisterDTO);
+
   @POST('/forgot-password')
   Future<void> recoverPassword(@Body() UserRecoverPasswordDTO email);
 
@@ -51,6 +60,7 @@ abstract class MeClient {
     @Part(name: 'password') required String password,
     @Part(name: 'password_confirmation') required String passwordConfirmation,
     @Part(name: 'phone') required String? phone,
+    @Part(name: 'phone_country_code') String? phoneCountryCode,
     @Part(name: 'address') required String? address,
     @Part(name: 'zip_code') required String zipCode,
     @Part(name: 'city') required String? city,
@@ -87,6 +97,7 @@ abstract class MeClient {
     @Part(name: 'last_name') String? lastName,
     @Part(name: 'email') String? email,
     @Part(name: 'phone') String? phone,
+    @Part(name: 'phone_country_code') String? phoneCountryCode,
     @Part(name: 'date_of_birth') String? dateOfBirth,
     @Part(name: 'current_password') String? password,
     @Part(name: 'new_password') String? newPassword,

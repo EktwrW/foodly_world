@@ -8,7 +8,13 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 
 class WelcomeDialog extends StatelessWidget {
-  const WelcomeDialog({super.key});
+  /// True cuando la bienvenida es de un alta por login social (Apple/Google),
+  /// que entra como customer y NO pasó por el form. En ese caso agregamos una
+  /// guía explicando que para dar de alta un negocio debe migrar a cuenta
+  /// empresarial desde su perfil (no hay opción de negocio en el alta social).
+  final bool isSocialSignUp;
+
+  const WelcomeDialog({super.key, this.isSocialSignUp = false});
 
   TextSpan getBoldTextSpan(String text) => TextSpan(text: text, style: FoodlyTextStyles.primaryBodyBold);
 
@@ -103,6 +109,15 @@ class WelcomeDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(height: (user?.isManager ?? false) ? 1.8 : 1.5),
                 ),
+                // Guía solo para altas sociales: cómo crear un negocio (migrar a
+                // cuenta empresarial desde el perfil), ya que el alta social no
+                // ofrece la opción de negocio.
+                if (isSocialSignUp)
+                  Text(
+                    S.current.welcomeDialogSocialBusiness,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(height: 1.4),
+                  ),
               ],
             ),
           ),

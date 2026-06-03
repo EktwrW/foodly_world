@@ -160,6 +160,10 @@ class ReservationDM with _$ReservationDM {
     @JsonKey(name: 'user_photo') String? userPhoto,
     @JsonKey(name: 'user_email') String? userEmail,
     @JsonKey(name: 'user_phone') String? userPhone,
+    // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+    // Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
+    // componer el número internacional (display + botón de llamar).
+    @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
     // Service booking fields (only present when booking_type = service)
     @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
     @JsonKey(name: 'service_package_title') String? servicePackageTitle,

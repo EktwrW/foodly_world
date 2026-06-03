@@ -27,6 +27,34 @@ class FormValidations {
     return false;
   }
 
+  /// Valida un teléfono por su largo: exige al menos 7 dígitos (normaliza,
+  /// ignorando espacios, guiones y demás formato).
+  ///
+  /// Decisión deliberada de simplicidad: validar la estructura o el largo
+  /// exacto por país generaba falsos rechazos de números legítimos (sobre todo
+  /// en Argentina, donde hasta la libphonenumber de Google admite que el rango
+  /// es ambiguo). Para proteger al comerciante alcanza con descartar números
+  /// obviamente falsos (demasiado cortos). Vacío → inválido.
+  static bool isPhoneNumberValid(String phoneNumber) {
+    final digits = phoneNumber.replaceAll(RegExp(r'\D'), '');
+    return digits.length >= 7;
+  }
+
+  /// Compone el número internacional para mostrar/llamar. Reglas:
+  /// - Si [phone] está vacío → null.
+  /// - Si [phone] ya viene con prefijo internacional (+) → se devuelve tal cual
+  ///   (caso del snapshot de reserva, que ya es E.164).
+  /// - Si hay [iso] mapeable a un prefijo → `+{dial}{nacional}`.
+  /// - Si no hay ISO o el país no está soportado → se devuelve el nacional.
+  static String? composeInternationalPhone(String? phone, String? iso) {
+    final national = phone?.trim() ?? '';
+    if (national.isEmpty) return null;
+    if (national.startsWith('+')) return national;
+
+    final dial = (iso == null || iso.isEmpty) ? null : FoodlyRegex.isoToDialCode[iso.toUpperCase()];
+    return dial == null ? national : '+$dial$national';
+  }
+
   /// Valida si una URL es de YouTube y tiene un formato válido
   static bool isYoutubeUrlValid(String url) {
     try {

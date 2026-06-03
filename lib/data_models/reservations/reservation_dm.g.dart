@@ -148,6 +148,7 @@ _$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
       userPhoto: json['user_photo'] as String?,
       userEmail: json['user_email'] as String?,
       userPhone: json['user_phone'] as String?,
+      userPhoneCountryCode: json['user_phone_country_code'] as String?,
       servicePackageUuid: json['service_package_uuid'] as String?,
       servicePackageTitle: json['service_package_title'] as String?,
       eventAddress: json['event_address'] as String?,
@@ -205,6 +206,8 @@ Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
       if (instance.userPhoto case final value?) 'user_photo': value,
       if (instance.userEmail case final value?) 'user_email': value,
       if (instance.userPhone case final value?) 'user_phone': value,
+      if (instance.userPhoneCountryCode case final value?)
+        'user_phone_country_code': value,
       if (instance.servicePackageUuid case final value?)
         'service_package_uuid': value,
       if (instance.servicePackageTitle case final value?)

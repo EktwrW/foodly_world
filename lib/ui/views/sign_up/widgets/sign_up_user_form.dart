@@ -205,6 +205,12 @@ class SignUpUserForm extends StatelessWidget {
           countryCode: cubit.currentCountryCode.toUpperCase(),
           showLeading: false,
           labelText: S.current.zipCode,
+          // Dirección opcional en el alta email/contraseña: el bloque de
+          // dirección (dirección/ciudad ya eran opcionales) deja de ser
+          // obligatorio. El usuario puede usar el autocomplete o completarlo
+          // luego en su perfil. El teléfono SÍ sigue siendo obligatorio (lo
+          // valida FoodlyPhoneInputText) por la verificación SMS de identidad.
+          validator: (_) => null,
         ),
         FoodlyPhoneInputText(
           key: Key('phone_input_${cubit.currentCountryCode}'),
@@ -304,7 +310,9 @@ class SignUpUserForm extends StatelessWidget {
             );
           }).toList(),
           autovalidateMode: vm.autovalidateMode,
-          validator: (value) => value == null ? S.current.pleaseSelectAnOption : null,
+          // Género opcional para TODOS (privacidad / minimización de datos).
+          // El usuario lo puede setear luego desde su perfil.
+          validator: (_) => null,
         ).paddingBottom(10),
       ],
     );

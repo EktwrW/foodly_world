@@ -24,6 +24,10 @@ abstract class ReservationClient {
     @Field('reservation_time') required String reservationTime,
     @Field('party_size') required int partySize,
     @Field('special_requests') String? specialRequests,
+    // Snapshot de contacto que el usuario provee al reservar (opcional: solo
+    // se envía cuando le falta en el perfil o tiene email privaterelay).
+    @Field('contact_phone') String? contactPhone,
+    @Field('contact_email') String? contactEmail,
   });
 
   @GET('/reservations/my-reservations')
@@ -85,6 +89,9 @@ abstract class ReservationClient {
     @Field('dietary_notes') String? dietaryNotes,
     @Field('budget_estimate') double? budgetEstimate,
     @Field('special_requests') String? specialRequests,
+    // Snapshot de contacto del solicitante (ver createReservation).
+    @Field('contact_phone') String? contactPhone,
+    @Field('contact_email') String? contactEmail,
   });
 
   @POST('/reservations/{uuid}/quote')

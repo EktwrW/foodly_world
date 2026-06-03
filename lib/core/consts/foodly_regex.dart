@@ -48,6 +48,17 @@ class FoodlyRegex {
     '351': 'PT',  // Portugal
   };
 
+  /// ISO → prefijo de marcado. Inverso de [dialCodeToIso]; se usa para componer
+  /// el número internacional para display/llamada cuando guardamos el ISO + el
+  /// número nacional por separado.
+  static const Map<String, String> isoToDialCode = {
+    'US': '1',
+    'ES': '34',
+    'AR': '54',
+    'VE': '58',
+    'PT': '351',
+  };
+
   static final phoneNumberRegex = {
     /// United States: 3 digits for the area code, followed by 3 digits, then 4 digits, optionally separated by dashes:
     FoodlyCountries.USA.countryCode: r'^\d{3}-?\d{3}-?\d{4}$',

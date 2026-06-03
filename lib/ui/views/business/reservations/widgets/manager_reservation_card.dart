@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
@@ -31,6 +32,11 @@ class ManagerReservationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Número internacional para mostrar y llamar: si la reserva trae snapshot,
+    // `userPhone` ya es E.164; si no, lo componemos con el ISO del usuario.
+    final userPhoneIntl =
+        FormValidations.composeInternationalPhone(reservation.userPhone, reservation.userPhoneCountryCode);
+
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,11 +81,11 @@ class ManagerReservationCard extends StatelessWidget {
                   spacing: 3,
                   children: [
                     // Contact icon buttons
-                    if (reservation.userPhone != null && reservation.userPhone!.isNotEmpty)
+                    if (userPhoneIntl != null && userPhoneIntl.isNotEmpty)
                       _ContactIconButton(
                         icon: Bootstrap.telephone_fill,
-                        tooltip: reservation.userPhone!,
-                        onPressed: () => launchUrl(Uri(scheme: 'tel', path: reservation.userPhone)),
+                        tooltip: userPhoneIntl,
+                        onPressed: () => launchUrl(Uri(scheme: 'tel', path: userPhoneIntl)),
                       ),
                     if (reservation.userEmail != null && reservation.userEmail!.isNotEmpty)
                       _ContactIconButton(

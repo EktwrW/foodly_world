@@ -78,6 +78,8 @@ class _ReservationClient implements ReservationClient {
     required String reservationTime,
     required int partySize,
     String? specialRequests,
+    String? contactPhone,
+    String? contactEmail,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -89,6 +91,8 @@ class _ReservationClient implements ReservationClient {
       'reservation_time': reservationTime,
       'party_size': partySize,
       'special_requests': specialRequests,
+      'contact_phone': contactPhone,
+      'contact_email': contactEmail,
     };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<ReservationCreateResponseDM>(
@@ -377,6 +381,8 @@ class _ReservationClient implements ReservationClient {
     String? dietaryNotes,
     double? budgetEstimate,
     String? specialRequests,
+    String? contactPhone,
+    String? contactEmail,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -395,6 +401,8 @@ class _ReservationClient implements ReservationClient {
       'dietary_notes': dietaryNotes,
       'budget_estimate': budgetEstimate,
       'special_requests': specialRequests,
+      'contact_phone': contactPhone,
+      'contact_email': contactEmail,
     };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<ReservationCreateResponseDM>(
@@ -572,31 +580,6 @@ class _ReservationClient implements ReservationClient {
       rethrow;
     }
     return _value;
-  }
-
-  RequestOptions newRequestOptions(Object? options) {
-    if (options is RequestOptions) {
-      return options as RequestOptions;
-    }
-    if (options is Options) {
-      return RequestOptions(
-        method: options.method,
-        sendTimeout: options.sendTimeout,
-        receiveTimeout: options.receiveTimeout,
-        extra: options.extra,
-        headers: options.headers,
-        responseType: options.responseType,
-        contentType: options.contentType.toString(),
-        validateStatus: options.validateStatus,
-        receiveDataWhenStatusError: options.receiveDataWhenStatusError,
-        followRedirects: options.followRedirects,
-        maxRedirects: options.maxRedirects,
-        requestEncoder: options.requestEncoder,
-        responseDecoder: options.responseDecoder,
-        path: '',
-      );
-    }
-    return RequestOptions(path: '');
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

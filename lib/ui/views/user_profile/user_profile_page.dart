@@ -4,6 +4,7 @@ import 'package:foodly_world/core/blocs/check_availabilities/check_availabilitie
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
+import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
@@ -166,7 +167,12 @@ class UserProfilePage extends StatelessWidget {
                           titleSecondText: S.current.profileBirthdayText2,
                           editing: false,
                           readOnlyWidget: _BirthdayDate(
-                            birthdayDate: vm.currentUserBirthday ?? '',
+                            // Placeholder atenuado cuando no hay fecha (típico
+                            // en altas sociales que entran sin completar perfil).
+                            birthdayDate: (vm.currentUserBirthday?.isNotEmpty ?? false)
+                                ? vm.currentUserBirthday!
+                                : (vm.loggedUserCanEdit ? S.current.dateOfBirth : ''),
+                            isPlaceholder: !(vm.currentUserBirthday?.isNotEmpty ?? false),
                             key: ValueKey(vm.currentUserBirthday),
                           ),
                           editingWidget: const SizedBox.shrink(),

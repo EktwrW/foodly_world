@@ -6,10 +6,11 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/views/sign_up/social_sign_up_data.dart';
+import 'package:foodly_world/ui/views/sign_up/widgets/welcome_dialog.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
+import 'package:foodly_world/ui/views/starting/widgets/social_consent_dialog.dart';
 //import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,25 +44,41 @@ class StartingPage369 extends StatelessWidget {
             final user = vm.userSessionDM.user;
             di<DialogService>().hideLoading();
 
+            void goHome() => context.goNamed(
+                  AppRoutes.foodlyMainPage.name,
+                  pathParameters: {AppRoutes.routeIdParam: user.uuid ?? ''},
+                );
+
             if (user.isManager && user.business.isEmpty) {
               context.goNamed(AppRoutes.signUpBusiness.name);
+            } else if (vm.justSocialRegistered) {
+              // Alta social recién concretada: mostramos el WelcomeDialog con la
+              // guía de "migrar a cuenta empresarial" antes de entrar al home.
+              di<DialogService>().showCustomDialog(
+                const WelcomeDialog(isSocialSignUp: true),
+                2,
+                onDialogClose: goHome,
+              );
             } else {
-              context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: user.uuid ?? ''});
+              goHome();
             }
           },
-          isNewUser: (vm) {
+          isNewUser: (vm) async {
             di<DialogService>().hideLoading();
-            // Carry provider context (for Google/Facebook sign-ups) through to
-            // the sign-up form so /register can skip the password requirement.
-            final providerUser = vm.userSessionDM.user;
-            context.goNamed(
-              AppRoutes.signUp.name,
-              extra: SocialSignUpData(
-                avatar: vm.importedAvatar,
-                provider: providerUser.provider,
-                providerId: providerUser.providerId,
-              ),
+            // Usuario social NUEVO: ya no lo mandamos al form. Pedimos
+            // consentimiento de T&C en un diálogo; si acepta, se concreta el
+            // alta (registerSocialUser) y entra al home; si cancela, se aborta.
+            final cubit = context.read<StartingCubit>();
+            final accepted = await showDialog<bool>(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const SocialConsentDialog(),
             );
+            if (accepted == true) {
+              cubit.registerSocialUser();
+            } else {
+              cubit.cancelSocialSignUp();
+            }
           },
           error: (msg, vm) {
             di<DialogService>().hideLoading();

@@ -27,6 +27,10 @@ class UserBodyRegisterDTO {
   @JsonKey(name: 'phone')
   final String phone;
 
+  /// ISO del país del teléfono (ej. 'AR'), separado del número nacional.
+  @JsonKey(name: 'phone_country_code')
+  final String? phoneCountryCode;
+
   @JsonKey(name: 'date_of_birth')
   final DateTime dateOfBirth;
 
@@ -80,6 +84,7 @@ class UserBodyRegisterDTO {
     required this.password,
     required this.passwordConfirmation,
     required this.phone,
+    this.phoneCountryCode,
     required this.dateOfBirth,
     required this.address,
     required this.zipCode,

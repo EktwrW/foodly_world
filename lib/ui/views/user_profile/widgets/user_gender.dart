@@ -13,7 +13,17 @@ class _UsersGender extends StatelessWidget {
       child: TextButton(
         onPressed: vm.loggedUserCanEdit ? () => cubit.updateEditMode(ProfileEditing.gender) : null,
         child: Row(
-          children: [Text(vm.currentUserGender?.text ?? '', style: FoodlyTextStyles.primaryBodySemiBold)],
+          children: [
+            // Placeholder atenuado (la etiqueta "Género") cuando no hay valor,
+            // típico en altas sociales sin perfil completo.
+            Builder(builder: (_) {
+              final hasGender = vm.currentUserGender?.text.isNotEmpty ?? false;
+              return Text(
+                hasGender ? vm.currentUserGender!.text : (vm.loggedUserCanEdit ? S.current.gender : ''),
+                style: hasGender ? FoodlyTextStyles.primaryBodySemiBold : FoodlyTextStyles.hintText,
+              );
+            }),
+          ],
         ).paddingLeft(14),
       ).paddingTop(8),
     );

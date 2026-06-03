@@ -27,12 +27,17 @@ class UserLocation extends StatelessWidget {
           children: [
             const Icon(Clarity.map_marker_line, color: FoodlyThemes.primaryFoodly),
             Flexible(
-              child: Text(
-                vm.currentUserFullAddress,
-                style: FoodlyTextStyles.primaryBodySemiBold,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
+              // Placeholder atenuado (la etiqueta "Dirección") cuando no hay
+              // dirección cargada, típico en altas sociales o email sin dirección.
+              child: Builder(builder: (_) {
+                final hasAddress = vm.currentUserFullAddress.trim().isNotEmpty;
+                return Text(
+                  hasAddress ? vm.currentUserFullAddress : (vm.loggedUserCanEdit ? S.current.address : ''),
+                  style: hasAddress ? FoodlyTextStyles.primaryBodySemiBold : FoodlyTextStyles.hintText,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                );
+              }),
             ),
           ],
         ).paddingLeft(14),

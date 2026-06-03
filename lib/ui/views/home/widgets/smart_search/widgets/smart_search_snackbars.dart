@@ -74,7 +74,7 @@ class SmartSearchSnackbars {
             child: ValueListenableBuilder(
                 valueListenable: vm.inputController.controller ?? TextEditingController(),
                 builder: (_, textValue, __) {
-                  final canNotSave = vm.recognizedText.isEmpty && textValue.text.isEmpty;
+                  final canNotSave = vm.isListening || vm.recognizedText.isEmpty && textValue.text.isEmpty;
 
                   return ui.NeumorphicButton(
                     onPressed: canNotSave

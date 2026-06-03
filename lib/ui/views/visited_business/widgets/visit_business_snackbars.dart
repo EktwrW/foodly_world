@@ -15,6 +15,7 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart' show FoodlyTextStyles;
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/widgets/reservation_contact_dialog.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:universal_io/io.dart' show File;
 
@@ -357,14 +358,6 @@ class VisitedBusinessSnackbars {
                   disabled: !canSubmit,
                   fontSize: 14,
                   onPressed: () async {
-                    // Only own the SUCCESS path here. Errors emitted by the
-                    // cubit are surfaced by the global BlocListener on
-                    // VisitBusinessPage (see visit_business_page.dart:85),
-                    // which shows the real BE error (e.g. "La fecha no está
-                    // disponible"). If we also show a local errorSnack we end
-                    // up with two stacked snackbars — one generic ("no se pudo
-                    // hacer la reserva") and one specific — confusing the
-                    // user. Keep a single, informative error surface.
                     final successSnack = SnackBarWdg(
                       type: SnackBarType.success,
                       content: Text(S.current.reservationRequestSent,
@@ -372,11 +365,42 @@ class VisitedBusinessSnackbars {
                       duration: const Duration(seconds: 5),
                     ).getSnackBar(context);
 
-                    final success = await cubit.createReservation();
-                    scaffoldMessenger.hideCurrentSnackBar();
+                    // El diálogo de contacto se monta en el navigator RAÍZ, que
+                    // queda por DEBAJO del snackbar (el ScaffoldMessenger está
+                    // por encima del navigator). Cerramos el snackbar del
+                    // formulario ANTES de abrir el diálogo para que no lo tape,
+                    // pero suprimimos el reset-al-cerrar para conservar el VM
+                    // de la reserva (date/time/size). El cubit vive en la página.
+                    cubit.suppressReservationResetOnClose();
+                    scaffoldMessenger.removeCurrentSnackBar();
+
+                    // Pedimos teléfono (y email si es relay de Apple) cuando el
+                    // usuario no los tiene, para adjuntarlos a la reserva como
+                    // snapshot. Si cancela el diálogo, abortamos y limpiamos el
+                    // form (el snackbar ya se cerró).
+                    final contact = await resolveReservationContact(context);
+                    if (contact == null) {
+                      cubit.resetReservationInput();
+                      return;
+                    }
+
+                    final success = await cubit.createReservation(
+                      contactPhone: contact.phone,
+                      contactEmail: contact.contactEmail,
+                    );
                     if (success) {
+                      // Guardar el teléfono en el perfil DESPUÉS de crear la
+                      // reserva (setSession puede refrescar el router y resetear
+                      // el VM de la reserva; ya está creada, así que es seguro).
+                      await maybeSaveReservationContactToProfile(contact);
                       await Future.delayed(Durations.short4);
                       scaffoldMessenger.showSnackBar(successSnack);
+                    } else {
+                      // Falló la creación: el snackbar del form ya se cerró, así
+                      // que limpiamos el VM para que el próximo intento arranque
+                      // limpio. El error lo muestra el listener global de la
+                      // página (createReservation emitió _Error).
+                      cubit.resetReservationInput();
                     }
                   },
                   text: S.current.requestReservation,
@@ -527,6 +551,11 @@ class VisitedBusinessSnackbars {
     scaffoldMessenger
       ..removeCurrentSnackBar()
       ..showSnackBar(snackBar.getSnackBar(context)).closed.then((reason) {
+        // El form se limpia cuando el usuario ABANDONA (cierra el snackbar sin
+        // enviar). Durante el submit lo cerramos a propósito para mostrar el
+        // diálogo de contacto al frente; en ese caso NO reseteamos (si no se
+        // pierde fecha/hora/tamaño y la reserva no se puede crear).
+        if (cubit.consumeReservationResetSuppression()) return;
         cubit.resetReservationInput();
       });
   }

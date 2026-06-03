@@ -4144,6 +4144,76 @@ class S {
     );
   }
 
+  /// `One last step`
+  String get socialConsentTitle {
+    return Intl.message(
+      'One last step',
+      name: 'socialConsentTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept and continue`
+  String get acceptAndContinue {
+    return Intl.message(
+      'Accept and continue',
+      name: 'acceptAndContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't get your email from Apple. Please try again or use another sign-in method.`
+  String get socialEmailMissing {
+    return Intl.message(
+      'We couldn\'t get your email from Apple. Please try again or use another sign-in method.',
+      name: 'socialEmailMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact details`
+  String get reservationContactTitle {
+    return Intl.message(
+      'Contact details',
+      name: 'reservationContactTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The business needs this to confirm your request.`
+  String get reservationContactBody {
+    return Intl.message(
+      'The business needs this to confirm your request.',
+      name: 'reservationContactBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save to my profile for future reservations`
+  String get saveToProfileForReservations {
+    return Intl.message(
+      'Save to my profile for future reservations',
+      name: 'saveToProfileForReservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Want to list your business on Foodly? Go to your profile and turn on the business account option to register it.`
+  String get welcomeDialogSocialBusiness {
+    return Intl.message(
+      'Want to list your business on Foodly? Go to your profile and turn on the business account option to register it.',
+      name: 'welcomeDialogSocialBusiness',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `There are no customer reviews yet`
   String get thereAreNoCustomerReviewsYet {
     return Intl.message(

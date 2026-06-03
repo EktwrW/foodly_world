@@ -29,6 +29,11 @@ class StartingVM with _$StartingVM {
     String? appleFamilyName,
     String? appleEmail,
     String? importedAvatar,
+    // True solo cuando el usuario acaba de crearse vía alta social directa
+    // (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
+    // guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
+    // NO en logins normales posteriores.
+    @Default(false) bool justSocialRegistered,
   }) = _StartingVM;
 
   bool get isRequestingPassword => recoverPasswordView == RecoverPasswordView.sendingRequest;

@@ -16,6 +16,7 @@ _$UserBodyUpdateDTOImpl _$$UserBodyUpdateDTOImplFromJson(
       password: json['current_password'] as String?,
       newPassword: json['new_password'] as String?,
       phone: json['phone'] as String?,
+      phoneCountryCode: json['phone_country_code'] as String?,
       dateOfBirth: json['date_of_birth'] == null
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
@@ -39,6 +40,8 @@ Map<String, dynamic> _$$UserBodyUpdateDTOImplToJson(
       if (instance.password case final value?) 'current_password': value,
       if (instance.newPassword case final value?) 'new_password': value,
       if (instance.phone case final value?) 'phone': value,
+      if (instance.phoneCountryCode case final value?)
+        'phone_country_code': value,
       if (instance.dateOfBirth?.toIso8601String() case final value?)
         'date_of_birth': value,
       if (instance.zipCode case final value?) 'zip_code': value,

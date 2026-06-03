@@ -196,6 +196,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutVideoPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Foodly Manifesto",
     ),
+    "acceptAndContinue": MessageLookupByLibrary.simpleMessage(
+      "Accept and continue",
+    ),
     "acceptServiceRequests": MessageLookupByLibrary.simpleMessage(
       "Accept requests",
     ),
@@ -1515,6 +1518,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationConfirmed": MessageLookupByLibrary.simpleMessage(
       "Reservation confirmed.",
     ),
+    "reservationContactBody": MessageLookupByLibrary.simpleMessage(
+      "The business needs this to confirm your request.",
+    ),
+    "reservationContactTitle": MessageLookupByLibrary.simpleMessage(
+      "Contact details",
+    ),
     "reservationDetails": MessageLookupByLibrary.simpleMessage(
       "Reservation Details",
     ),
@@ -1560,6 +1569,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "saveAndClose": MessageLookupByLibrary.simpleMessage("Save and Close"),
     "saveMenu": MessageLookupByLibrary.simpleMessage("Save this menu"),
+    "saveToProfileForReservations": MessageLookupByLibrary.simpleMessage(
+      "Save to my profile for future reservations",
+    ),
     "savedPromotions": MessageLookupByLibrary.simpleMessage("Saved Promotions"),
     "savedPromotionsCurrent": MessageLookupByLibrary.simpleMessage(
       "These are your current promotions",
@@ -1669,6 +1681,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "signup": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "smokingArea": MessageLookupByLibrary.simpleMessage("Smoking Area"),
+    "socialConsentTitle": MessageLookupByLibrary.simpleMessage("One last step"),
+    "socialEmailMissing": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t get your email from Apple. Please try again or use another sign-in method.",
+    ),
     "socials": MessageLookupByLibrary.simpleMessage("Socials"),
     "solo": MessageLookupByLibrary.simpleMessage("Solo"),
     "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
@@ -1882,6 +1898,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "weekdayShort5": MessageLookupByLibrary.simpleMessage("Thu"),
     "weekdayShort6": MessageLookupByLibrary.simpleMessage("Fri"),
     "weekdayShort7": MessageLookupByLibrary.simpleMessage("Sat"),
+    "welcomeDialogSocialBusiness": MessageLookupByLibrary.simpleMessage(
+      "Want to list your business on Foodly? Go to your profile and turn on the business account option to register it.",
+    ),
     "welcomeDialogTextSpan1": MessageLookupByLibrary.simpleMessage("At"),
     "welcomeDialogTextSpan2": MessageLookupByLibrary.simpleMessage(
       "we warmly welcome you",

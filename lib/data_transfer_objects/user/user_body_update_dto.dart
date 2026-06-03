@@ -15,6 +15,7 @@ class UserBodyUpdateDTO with _$UserBodyUpdateDTO {
     @JsonKey(name: 'current_password') String? password,
     @JsonKey(name: 'new_password') String? newPassword,
     @JsonKey(name: 'phone') String? phone,
+    @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
     @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth,
     @JsonKey(name: 'zip_code') String? zipCode,
     @JsonKey(name: 'address') String? address,

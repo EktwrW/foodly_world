@@ -45,6 +45,12 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
 
     super.initState();
     _checkPendingReservations();
+
+    final mainDrawerCubit = context.read<MainDrawerCubit>();
+
+    if (mainDrawerCubit.state.vm.currentIndex != 0) {
+      mainDrawerCubit.updateSelectedIndex(0);
+    }
   }
 
   @override

@@ -208,6 +208,9 @@ class SignUpCubit extends Cubit<SignUpState> {
       password: password,
       passwordConfirmation: password,
       phone: _vm.phoneNumberController?.controller?.text ?? '',
+      // ISO del país del teléfono que ya capturamos del IntlPhoneField — antes
+      // se descartaba (bug). Permite reconstruir el número internacional.
+      phoneCountryCode: _phoneIsoCode.isNotEmpty ? _phoneIsoCode : null,
       // No `.toUtc()` — el DTO se serializa con `.toIso8601String()` via
       // freezed/json_serializable, que ya emite el ISO con la zona local.
       // El BE (Carbon::parse) lo acepta en cualquier zona y normaliza.

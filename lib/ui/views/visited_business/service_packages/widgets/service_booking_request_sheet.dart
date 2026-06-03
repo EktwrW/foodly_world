@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/network/business_availability/business_availability_repo.dart';
@@ -8,6 +10,7 @@ import 'package:foodly_world/data_models/service_packages/service_package_dm.dar
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/views/visited_business/widgets/reservation_contact_dialog.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 import 'package:intl/intl.dart';
 
@@ -228,6 +231,11 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
       return;
     }
 
+    // Pedimos teléfono (y email si es relay de Apple) cuando el usuario no los
+    // tiene, para adjuntarlos al booking como snapshot. Si cancela, abortamos.
+    final contact = await resolveReservationContact(context);
+    if (contact == null || !mounted) return;
+
     setState(() => _isSending = true);
 
     final repo = di<ReservationRepo>();
@@ -247,6 +255,8 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
       dietaryNotes: _dietaryController.text.isNotEmpty ? _dietaryController.text : null,
       budgetEstimate: _budgetController.text.isNotEmpty ? double.tryParse(_budgetController.text) : null,
       specialRequests: _notesController.text.isNotEmpty ? _notesController.text : null,
+      contactPhone: contact.phone,
+      contactEmail: contact.contactEmail,
     );
 
     if (!mounted) return;
@@ -263,6 +273,10 @@ class _ServiceBookingRequestSheetState extends State<_ServiceBookingRequestSheet
           guestCount: int.tryParse(_guestCountController.text),
           sourceModule: 'ServiceBookingRequestSheet',
         );
+        // Guardar el teléfono en el perfil (best-effort) DESPUÉS de crear el
+        // booking. Sin await: la reserva ya está creada, un refresh de router
+        // por setSession no la afecta.
+        unawaited(maybeSaveReservationContactToProfile(contact));
         Navigator.of(context).pop();
         FoodlySnackbars.successGeneric(context, response.message);
       },

@@ -166,10 +166,21 @@ class _PhoneWdg extends StatelessWidget {
             const Icon(Bootstrap.telephone, color: FoodlyThemes.primaryFoodly),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                vm.currentUserPhoneNumber ?? '',
-                style: FoodlyTextStyles.primaryBodySemiBold,
-              ),
+              // Placeholder atenuado cuando no hay teléfono (altas sociales no
+              // lo piden en el alta; se completa acá o al reservar).
+              child: Builder(builder: (_) {
+                // Mostramos el número internacional compuesto (prefijo + nacional)
+                // usando el ISO guardado; si no hay teléfono, placeholder.
+                final phoneIntl = FormValidations.composeInternationalPhone(
+                  vm.currentUserPhoneNumber,
+                  vm.currentUser?.currentPhoneCountryCode,
+                );
+                final hasPhone = phoneIntl?.isNotEmpty ?? false;
+                return Text(
+                  hasPhone ? phoneIntl! : (vm.loggedUserCanEdit ? S.current.phoneNumber : ''),
+                  style: hasPhone ? FoodlyTextStyles.primaryBodySemiBold : FoodlyTextStyles.hintText,
+                );
+              }),
             ),
           ],
         ).paddingLeft(14),
@@ -194,9 +205,14 @@ class _PhoneEditingWdg extends StatelessWidget {
             hintText: vm.currentUserPhoneNumber,
             focusNode: vm.phoneNumberController?.focusNode,
             onSubmitted: (_) => cubit,
+            onChanged: (phone) => cubit.setEditedPhoneCountryIso(phone.countryISOCode),
             autovalidateMode: vm.autovalidateMode,
+            // El teléfono se edita aislado acá → validación ≥7 en vivo.
+            liveValidation: true,
             enabled: vm.edition.isEditingPhone,
-            initialCountryCode: cubit.currentCountryCode,
+            // Bandera = el ISO guardado del teléfono (si existe), no el país por
+            // defecto del dispositivo — así el dropdown muestra el correcto.
+            initialCountryCode: vm.currentUser?.currentPhoneCountryCode ?? cubit.currentCountryCode,
           ),
           SaveAndCancelButtons(
             onSavePressed: () => cubit.callToUpdateProfile(),

@@ -15,6 +15,7 @@ UserBodyRegisterDTO _$UserBodyRegisterDTOFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
       passwordConfirmation: json['password_confirmation'] as String,
       phone: json['phone'] as String,
+      phoneCountryCode: json['phone_country_code'] as String?,
       dateOfBirth: DateTime.parse(json['date_of_birth'] as String),
       address: json['address'] as String,
       zipCode: json['zip_code'] as String,
@@ -43,6 +44,8 @@ Map<String, dynamic> _$UserBodyRegisterDTOToJson(
       'password': instance.password,
       'password_confirmation': instance.passwordConfirmation,
       'phone': instance.phone,
+      if (instance.phoneCountryCode case final value?)
+        'phone_country_code': value,
       'date_of_birth': instance.dateOfBirth.toIso8601String(),
       'address': instance.address,
       'zip_code': instance.zipCode,

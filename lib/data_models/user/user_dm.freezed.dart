@@ -35,7 +35,11 @@ mixin _$UserDM {
   @JsonKey(name: 'photo')
   String? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone')
-  String? get phone => throw _privateConstructorUsedError;
+  String? get phone =>
+      throw _privateConstructorUsedError; // ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
+// `phone` para poder reconstruir el internacional y re-renderar la bandera.
+  @JsonKey(name: 'phone_country_code')
+  String? get phoneCountryCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime? get signUpDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -118,6 +122,7 @@ abstract class $UserDMCopyWith<$Res> {
       @JsonKey(name: 'last_name') String? lastName,
       @JsonKey(name: 'photo') String? avatar,
       @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
       @JsonKey(name: 'created_at') DateTime? signUpDate,
       @JsonKey(name: 'updated_at') DateTime? lastUpdated,
       @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -171,6 +176,7 @@ class _$UserDMCopyWithImpl<$Res, $Val extends UserDM>
     Object? lastName = freezed,
     Object? avatar = freezed,
     Object? phone = freezed,
+    Object? phoneCountryCode = freezed,
     Object? signUpDate = freezed,
     Object? lastUpdated = freezed,
     Object? deletedAt = freezed,
@@ -230,6 +236,10 @@ class _$UserDMCopyWithImpl<$Res, $Val extends UserDM>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCountryCode: freezed == phoneCountryCode
+          ? _value.phoneCountryCode
+          : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
       signUpDate: freezed == signUpDate
           ? _value.signUpDate
@@ -369,6 +379,7 @@ abstract class _$$UserDMImplCopyWith<$Res> implements $UserDMCopyWith<$Res> {
       @JsonKey(name: 'last_name') String? lastName,
       @JsonKey(name: 'photo') String? avatar,
       @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
       @JsonKey(name: 'created_at') DateTime? signUpDate,
       @JsonKey(name: 'updated_at') DateTime? lastUpdated,
       @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -421,6 +432,7 @@ class __$$UserDMImplCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? avatar = freezed,
     Object? phone = freezed,
+    Object? phoneCountryCode = freezed,
     Object? signUpDate = freezed,
     Object? lastUpdated = freezed,
     Object? deletedAt = freezed,
@@ -480,6 +492,10 @@ class __$$UserDMImplCopyWithImpl<$Res>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCountryCode: freezed == phoneCountryCode
+          ? _value.phoneCountryCode
+          : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
       signUpDate: freezed == signUpDate
           ? _value.signUpDate
@@ -602,6 +618,7 @@ class _$UserDMImpl extends _UserDM {
       @JsonKey(name: 'photo')
       this.avatar = FoodlyStrings.USER_AVATAR_PLACEHOLDER,
       @JsonKey(name: 'phone') this.phone,
+      @JsonKey(name: 'phone_country_code') this.phoneCountryCode,
       @JsonKey(name: 'created_at') this.signUpDate,
       @JsonKey(name: 'updated_at') this.lastUpdated,
       @JsonKey(name: 'deleted_at') this.deletedAt,
@@ -673,6 +690,11 @@ class _$UserDMImpl extends _UserDM {
   @override
   @JsonKey(name: 'phone')
   final String? phone;
+// ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
+// `phone` para poder reconstruir el internacional y re-renderar la bandera.
+  @override
+  @JsonKey(name: 'phone_country_code')
+  final String? phoneCountryCode;
   @override
   @JsonKey(name: 'created_at')
   final DateTime? signUpDate;
@@ -823,7 +845,7 @@ class _$UserDMImpl extends _UserDM {
 
   @override
   String toString() {
-    return 'UserDM(id: $id, uuid: $uuid, email: $email, username: $username, firstName: $firstName, lastName: $lastName, avatar: $avatar, phone: $phone, signUpDate: $signUpDate, lastUpdated: $lastUpdated, deletedAt: $deletedAt, dateOfBirth: $dateOfBirth, gender: $gender, roleId: $roleId, userRole: $userRole, termsAndConditions: $termsAndConditions, business: $business, userPrefs: $userPrefs, socialProvider: $socialProvider, emailVerifiedAt: $emailVerifiedAt, provider: $provider, providerId: $providerId, providerAvatar: $providerAvatar, hasPassword: $hasPassword, addresses: $addresses, favoriteBusiness: $favoriteBusiness, favoriteMenus: $favoriteMenus, favoriteItems: $favoriteItems, favoriteCombos: $favoriteCombos, savedPromotions: $savedPromotions, followers: $followers, followersLength: $followersLength, following: $following, followingLength: $followingLength)';
+    return 'UserDM(id: $id, uuid: $uuid, email: $email, username: $username, firstName: $firstName, lastName: $lastName, avatar: $avatar, phone: $phone, phoneCountryCode: $phoneCountryCode, signUpDate: $signUpDate, lastUpdated: $lastUpdated, deletedAt: $deletedAt, dateOfBirth: $dateOfBirth, gender: $gender, roleId: $roleId, userRole: $userRole, termsAndConditions: $termsAndConditions, business: $business, userPrefs: $userPrefs, socialProvider: $socialProvider, emailVerifiedAt: $emailVerifiedAt, provider: $provider, providerId: $providerId, providerAvatar: $providerAvatar, hasPassword: $hasPassword, addresses: $addresses, favoriteBusiness: $favoriteBusiness, favoriteMenus: $favoriteMenus, favoriteItems: $favoriteItems, favoriteCombos: $favoriteCombos, savedPromotions: $savedPromotions, followers: $followers, followersLength: $followersLength, following: $following, followingLength: $followingLength)';
   }
 
   @override
@@ -842,6 +864,8 @@ class _$UserDMImpl extends _UserDM {
                 other.lastName == lastName) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) ||
+                other.phoneCountryCode == phoneCountryCode) &&
             (identical(other.signUpDate, signUpDate) ||
                 other.signUpDate == signUpDate) &&
             (identical(other.lastUpdated, lastUpdated) ||
@@ -905,6 +929,7 @@ class _$UserDMImpl extends _UserDM {
         lastName,
         avatar,
         phone,
+        phoneCountryCode,
         signUpDate,
         lastUpdated,
         deletedAt,
@@ -959,6 +984,7 @@ abstract class _UserDM extends UserDM {
       @JsonKey(name: 'last_name') final String? lastName,
       @JsonKey(name: 'photo') final String? avatar,
       @JsonKey(name: 'phone') final String? phone,
+      @JsonKey(name: 'phone_country_code') final String? phoneCountryCode,
       @JsonKey(name: 'created_at') final DateTime? signUpDate,
       @JsonKey(name: 'updated_at') final DateTime? lastUpdated,
       @JsonKey(name: 'deleted_at') final DateTime? deletedAt,
@@ -1014,7 +1040,12 @@ abstract class _UserDM extends UserDM {
   String? get avatar;
   @override
   @JsonKey(name: 'phone')
-  String? get phone;
+  String?
+      get phone; // ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
+// `phone` para poder reconstruir el internacional y re-renderar la bandera.
+  @override
+  @JsonKey(name: 'phone_country_code')
+  String? get phoneCountryCode;
   @override
   @JsonKey(name: 'created_at')
   DateTime? get signUpDate;

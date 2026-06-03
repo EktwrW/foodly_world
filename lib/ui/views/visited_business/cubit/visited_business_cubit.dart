@@ -398,6 +398,23 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
 
   // ── Reservation methods ──────────────────────────────────────────────
 
+  /// El snackbar de reserva resetea el form al CERRARSE (vía `.closed`). Pero
+  /// durante el submit lo cerramos a propósito (para que el diálogo de contacto
+  /// quede al frente), y NO queremos perder fecha/hora/tamaño. Este flag
+  /// transitorio le dice al callback `.closed` que omita ESE reset una vez.
+  /// Va fuera del VM para no afectar `canSubmitReservation`.
+  bool _suppressReservationResetOnClose = false;
+
+  void suppressReservationResetOnClose() => _suppressReservationResetOnClose = true;
+
+  /// Devuelve true (y consume el flag) si el próximo cierre del snackbar NO
+  /// debe resetear el form.
+  bool consumeReservationResetSuppression() {
+    final suppressed = _suppressReservationResetOnClose;
+    _suppressReservationResetOnClose = false;
+    return suppressed;
+  }
+
   void initializeReservationInput() {
     _vm = _vm.copyWith(
       specialRequestsController: TextEditingController(),
@@ -490,7 +507,7 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
     return completer.future;
   }
 
-  Future<bool> createReservation() async {
+  Future<bool> createReservation({String? contactPhone, String? contactEmail}) async {
     final business = _vm.currentBusiness;
     if (business == null || !_vm.canSubmitReservation) return false;
 
@@ -519,6 +536,8 @@ class VisitBusinessCubit extends Cubit<VisitBusinessState> {
       reservationTime: _vm.reservationTime!,
       partySize: _vm.reservationSize!,
       specialRequests: _vm.specialRequestsController?.text,
+      contactPhone: contactPhone,
+      contactEmail: contactEmail,
     );
 
     return result.when(

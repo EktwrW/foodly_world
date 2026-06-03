@@ -15,6 +15,7 @@ _$UserDMImpl _$$UserDMImplFromJson(Map<String, dynamic> json) => _$UserDMImpl(
       lastName: json['last_name'] as String?,
       avatar: json['photo'] as String? ?? FoodlyStrings.USER_AVATAR_PLACEHOLDER,
       phone: json['phone'] as String?,
+      phoneCountryCode: json['phone_country_code'] as String?,
       signUpDate: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -95,6 +96,8 @@ Map<String, dynamic> _$$UserDMImplToJson(_$UserDMImpl instance) =>
       if (instance.lastName case final value?) 'last_name': value,
       if (instance.avatar case final value?) 'photo': value,
       if (instance.phone case final value?) 'phone': value,
+      if (instance.phoneCountryCode case final value?)
+        'phone_country_code': value,
       if (instance.signUpDate?.toIso8601String() case final value?)
         'created_at': value,
       if (instance.lastUpdated?.toIso8601String() case final value?)

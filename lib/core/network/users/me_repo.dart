@@ -8,6 +8,7 @@ import 'package:foodly_world/data_models/logout/logout_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/auth_social_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_set_password_dto.dart';
@@ -83,6 +84,16 @@ class MeRepo {
     }
   }
 
+  /// Alta automática de un usuario que entró por login social y todavía no
+  /// existe en backend. Crea la cuenta (rol customer) y devuelve la sesión.
+  Future<ApiResult<UserSessionDM>> socialRegister(AuthSocialRegisterDTO socialRegisterDTO) async {
+    try {
+      return ApiResult.success(await _meClient.socialRegister(socialRegisterDTO));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<UserSessionDM>> register({
     required UserBodyRegisterDTO registerDTO,
     String? filePath,
@@ -103,6 +114,7 @@ class MeRepo {
         password: registerDTO.password,
         passwordConfirmation: registerDTO.passwordConfirmation,
         phone: registerDTO.phone,
+        phoneCountryCode: registerDTO.phoneCountryCode,
         address: registerDTO.address,
         zipCode: registerDTO.zipCode,
         city: registerDTO.city,
@@ -162,6 +174,7 @@ class MeRepo {
         dateOfBirth: updateDTO.dateOfBirth?.toIso8601String(),
         email: updateDTO.email,
         phone: updateDTO.phone,
+        phoneCountryCode: updateDTO.phoneCountryCode,
         zipCode: updateDTO.zipCode,
         city: updateDTO.city,
         country: updateDTO.country?.value,

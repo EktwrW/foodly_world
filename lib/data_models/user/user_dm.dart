@@ -44,6 +44,9 @@ class UserDM with _$UserDM {
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'photo') @Default(FoodlyStrings.USER_AVATAR_PLACEHOLDER) String? avatar,
     @JsonKey(name: 'phone') String? phone,
+    // ISO del país del teléfono (ej. 'AR'). Separado del número nacional en
+    // `phone` para poder reconstruir el internacional y re-renderar la bandera.
+    @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
     @JsonKey(name: 'created_at') DateTime? signUpDate,
     @JsonKey(name: 'updated_at') DateTime? lastUpdated,
     @JsonKey(name: 'deleted_at') DateTime? deletedAt,
@@ -83,6 +86,8 @@ class UserDM with _$UserDM {
   bool get isClient => userRole == 'Client' || roleId == UserRole.customer;
 
   String get fullName => '$firstName $lastName';
+
+  String? get currentPhoneCountryCode => phoneCountryCode ?? principalAddress?.country?.countryCode;
 
   /// Retorna la dirección "Home" por defecto, o la primera dirección si no hay Home, o vacío si no hay direcciones
   String get fullAddress {

@@ -32,6 +32,8 @@ class ReservationRepo {
     required String reservationTime,
     required int partySize,
     String? specialRequests,
+    String? contactPhone,
+    String? contactEmail,
   }) async {
     try {
       return ApiResult.success(
@@ -41,6 +43,8 @@ class ReservationRepo {
           reservationTime: reservationTime,
           partySize: partySize,
           specialRequests: specialRequests,
+          contactPhone: contactPhone,
+          contactEmail: contactEmail,
         ),
       );
     } catch (e, s) {
@@ -160,6 +164,8 @@ class ReservationRepo {
     String? dietaryNotes,
     double? budgetEstimate,
     String? specialRequests,
+    String? contactPhone,
+    String? contactEmail,
   }) async {
     try {
       return ApiResult.success(
@@ -176,6 +182,8 @@ class ReservationRepo {
           dietaryNotes: dietaryNotes,
           budgetEstimate: budgetEstimate,
           specialRequests: specialRequests,
+          contactPhone: contactPhone,
+          contactEmail: contactEmail,
         ),
       );
     } catch (e, s) {

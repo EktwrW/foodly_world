@@ -1288,6 +1288,11 @@ mixin _$ReservationDM {
   String? get userEmail => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_phone')
   String? get userPhone =>
+      throw _privateConstructorUsedError; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+// Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
+// componer el número internacional (display + botón de llamar).
+  @JsonKey(name: 'user_phone_country_code')
+  String? get userPhoneCountryCode =>
       throw _privateConstructorUsedError; // Service booking fields (only present when booking_type = service)
   @JsonKey(name: 'service_package_uuid')
   String? get servicePackageUuid => throw _privateConstructorUsedError;
@@ -1365,6 +1370,7 @@ abstract class $ReservationDMCopyWith<$Res> {
       @JsonKey(name: 'user_photo') String? userPhoto,
       @JsonKey(name: 'user_email') String? userEmail,
       @JsonKey(name: 'user_phone') String? userPhone,
+      @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
       @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
       @JsonKey(name: 'service_package_title') String? servicePackageTitle,
       @JsonKey(name: 'event_address') String? eventAddress,
@@ -1422,6 +1428,7 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
     Object? userPhoto = freezed,
     Object? userEmail = freezed,
     Object? userPhone = freezed,
+    Object? userPhoneCountryCode = freezed,
     Object? servicePackageUuid = freezed,
     Object? servicePackageTitle = freezed,
     Object? eventAddress = freezed,
@@ -1539,6 +1546,10 @@ class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
           ? _value.userPhone
           : userPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      userPhoneCountryCode: freezed == userPhoneCountryCode
+          ? _value.userPhoneCountryCode
+          : userPhoneCountryCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       servicePackageUuid: freezed == servicePackageUuid
           ? _value.servicePackageUuid
           : servicePackageUuid // ignore: cast_nullable_to_non_nullable
@@ -1640,6 +1651,7 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
       @JsonKey(name: 'user_photo') String? userPhoto,
       @JsonKey(name: 'user_email') String? userEmail,
       @JsonKey(name: 'user_phone') String? userPhone,
+      @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
       @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
       @JsonKey(name: 'service_package_title') String? servicePackageTitle,
       @JsonKey(name: 'event_address') String? eventAddress,
@@ -1695,6 +1707,7 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? userPhoto = freezed,
     Object? userEmail = freezed,
     Object? userPhone = freezed,
+    Object? userPhoneCountryCode = freezed,
     Object? servicePackageUuid = freezed,
     Object? servicePackageTitle = freezed,
     Object? eventAddress = freezed,
@@ -1812,6 +1825,10 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
           ? _value.userPhone
           : userPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      userPhoneCountryCode: freezed == userPhoneCountryCode
+          ? _value.userPhoneCountryCode
+          : userPhoneCountryCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       servicePackageUuid: freezed == servicePackageUuid
           ? _value.servicePackageUuid
           : servicePackageUuid // ignore: cast_nullable_to_non_nullable
@@ -1908,6 +1925,7 @@ class _$ReservationDMImpl extends _ReservationDM {
       @JsonKey(name: 'user_photo') this.userPhoto,
       @JsonKey(name: 'user_email') this.userEmail,
       @JsonKey(name: 'user_phone') this.userPhone,
+      @JsonKey(name: 'user_phone_country_code') this.userPhoneCountryCode,
       @JsonKey(name: 'service_package_uuid') this.servicePackageUuid,
       @JsonKey(name: 'service_package_title') this.servicePackageTitle,
       @JsonKey(name: 'event_address') this.eventAddress,
@@ -2015,6 +2033,12 @@ class _$ReservationDMImpl extends _ReservationDM {
   @override
   @JsonKey(name: 'user_phone')
   final String? userPhone;
+// ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+// Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
+// componer el número internacional (display + botón de llamar).
+  @override
+  @JsonKey(name: 'user_phone_country_code')
+  final String? userPhoneCountryCode;
 // Service booking fields (only present when booking_type = service)
   @override
   @JsonKey(name: 'service_package_uuid')
@@ -2065,7 +2089,7 @@ class _$ReservationDMImpl extends _ReservationDM {
 
   @override
   String toString() {
-    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, userPhoneCountryCode: $userPhoneCountryCode, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -2122,6 +2146,8 @@ class _$ReservationDMImpl extends _ReservationDM {
                 other.userEmail == userEmail) &&
             (identical(other.userPhone, userPhone) ||
                 other.userPhone == userPhone) &&
+            (identical(other.userPhoneCountryCode, userPhoneCountryCode) ||
+                other.userPhoneCountryCode == userPhoneCountryCode) &&
             (identical(other.servicePackageUuid, servicePackageUuid) ||
                 other.servicePackageUuid == servicePackageUuid) &&
             (identical(other.servicePackageTitle, servicePackageTitle) ||
@@ -2183,6 +2209,7 @@ class _$ReservationDMImpl extends _ReservationDM {
         userPhoto,
         userEmail,
         userPhone,
+        userPhoneCountryCode,
         servicePackageUuid,
         servicePackageTitle,
         eventAddress,
@@ -2246,6 +2273,8 @@ abstract class _ReservationDM extends ReservationDM {
       @JsonKey(name: 'user_photo') final String? userPhoto,
       @JsonKey(name: 'user_email') final String? userEmail,
       @JsonKey(name: 'user_phone') final String? userPhone,
+      @JsonKey(name: 'user_phone_country_code')
+      final String? userPhoneCountryCode,
       @JsonKey(name: 'service_package_uuid') final String? servicePackageUuid,
       @JsonKey(name: 'service_package_title') final String? servicePackageTitle,
       @JsonKey(name: 'event_address') final String? eventAddress,
@@ -2351,7 +2380,13 @@ abstract class _ReservationDM extends ReservationDM {
   @override
   @JsonKey(name: 'user_phone')
   String?
-      get userPhone; // Service booking fields (only present when booking_type = service)
+      get userPhone; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+// Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
+// componer el número internacional (display + botón de llamar).
+  @override
+  @JsonKey(name: 'user_phone_country_code')
+  String?
+      get userPhoneCountryCode; // Service booking fields (only present when booking_type = service)
   @override
   @JsonKey(name: 'service_package_uuid')
   String? get servicePackageUuid;

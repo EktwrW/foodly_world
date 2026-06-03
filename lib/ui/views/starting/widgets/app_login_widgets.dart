@@ -9,8 +9,7 @@ import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:icons_plus/icons_plus.dart' show Bootstrap, Brand, Brands;
 
 class AppLoginWidgets extends StatefulWidget {
   const AppLoginWidgets({
@@ -113,72 +112,76 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
     );
   }
 
-  Widget _buildLogicAndGetStartedButtons() => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          FadeIn(
-            delay: Durations.short3,
-            child: CustomNeumorphicButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                cubit.setView(StartingPageView.login);
-              },
-              text: S.current.login,
-              disabled: false,
-            ),
+  Widget _buildLogicAndGetStartedButtons() {
+    final isIOS = !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        FadeIn(
+          delay: Durations.short3,
+          child: CustomNeumorphicButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              cubit.setView(StartingPageView.login);
+            },
+            text: S.current.login,
+            disabled: false,
           ),
-          FadeIn(
-            delay: Durations.medium2,
-            child: CustomNeumorphicButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                context.goNamed(AppRoutes.signUp.name);
-              },
-              margin: const EdgeInsets.fromLTRB(
-                  UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, UIDimens.SCREEN_PADDING_MOB, 0),
-              text: S.current.signup,
-              type: CustomNeumorphicBtnType.tertiary,
-              disabled: false,
+        ),
+        FadeIn(
+          delay: Durations.medium2,
+          child: CustomNeumorphicButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              context.goNamed(AppRoutes.signUp.name);
+            },
+            margin: EdgeInsets.fromLTRB(
+              UIDimens.SCREEN_PADDING_MOB,
+              UIDimens.SCREEN_PADDING_MOB,
+              UIDimens.SCREEN_PADDING_MOB,
+              isIOS ? 0 : UIDimens.SCREEN_PADDING_MOB,
             ),
+            text: S.current.signup,
+            type: CustomNeumorphicBtnType.tertiary,
+            disabled: false,
           ),
+        ),
+        if (isIOS)
           FadeIn(
-            delay: Durations.long3,
+            delay: Durations.long1,
             child: CustomNeumorphicButton(
-              key: const Key('google-sign-in-btn'),
+              key: const Key('apple-sign-in-btn'),
               onPressed: () {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                cubit.googleSignIn();
+                cubit.appleSignIn();
               },
               padding: const EdgeInsets.all(12),
-              leading: const Icon(Bootstrap.google, color: FoodlyThemes.primaryFoodly),
-              text: S.current.signInWithGoogle,
+              leading: const Icon(Bootstrap.apple),
+              text: S.current.signInWithApple,
               shape: ui.NeumorphicShape.convex,
               disabled: false,
               type: CustomNeumorphicBtnType.outlined,
               margin: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
             ),
           ),
-          // Sign in with Apple — solo iOS. Apple lo exige (App Store Guideline
-          // 4.8: si ofrecés login de terceros como Google, debés ofrecer Apple)
-          // y en Android/web requeriría el flujo web, que no soportamos aún.
-          // Usamos el botón oficial del paquete para cumplir el HIG de Apple.
-          if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS)
-            FadeIn(
-              delay: Durations.long4,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-                child: SignInWithAppleButton(
-                  key: const Key('apple-sign-in-btn'),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    cubit.appleSignIn();
-                  },
-                  text: S.current.signInWithApple,
-                  height: 52,
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                ),
-              ),
-            ),
-        ],
-      );
+        FadeIn(
+          delay: Durations.long3,
+          child: CustomNeumorphicButton(
+            key: const Key('google-sign-in-btn'),
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              cubit.googleSignIn();
+            },
+            padding: const EdgeInsets.all(12),
+            leading: Brand(Brands.google, size: 26),
+            text: S.current.signInWithGoogle,
+            shape: ui.NeumorphicShape.convex,
+            disabled: false,
+            type: CustomNeumorphicBtnType.outlined,
+          ).paddingBottom(9),
+        ),
+      ],
+    );
+  }
 }

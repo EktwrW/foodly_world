@@ -1,3 +1,5 @@
+import 'dart:convert' show base64Url, jsonDecode, utf8;
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, Ba
 
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
+import 'package:foodly_world/data_transfer_objects/user/auth_social_register_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_recover_password_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -65,7 +68,7 @@ class StartingCubit extends Cubit<StartingState> {
       _vm = _vm.copyWith(googleSignInAccount: signIn);
 
       if (signIn != null) {
-        emit(_Loading(_vm));
+        emit(_Loading(_vm = _vm.copyWith(justSocialRegistered: false)));
 
         final googleAuth = await _vm.googleSignInAccount?.authentication;
         final body = AuthSocialLoginDTO(accessToken: googleAuth?.accessToken ?? '', provider: 'google');
@@ -118,6 +121,16 @@ class StartingCubit extends Cubit<StartingState> {
         return;
       }
 
+      // Apple incluye el email como claim del identityToken (JWT) en cada login.
+      // Si falta (típico en el SIMULADOR, que no lo entrega), evitamos pegarle
+      // al backend —que respondería 500 "email inválido"— y mostramos un mensaje
+      // claro. En un dispositivo real el claim viene presente.
+      if (!_identityTokenHasEmail(identityToken)) {
+        _logger.w('Apple identityToken sin claim email (esperable en simulador).');
+        emit(_Error(S.current.socialEmailMissing, _vm));
+        return;
+      }
+
       emit(_Loading(_vm = _vm.copyWith(
         // Reseteamos el de Google para que _setSocialLoginUserForSignUp tome
         // la rama de Apple, y guardamos los datos de esta autorización.
@@ -125,6 +138,7 @@ class StartingCubit extends Cubit<StartingState> {
         appleGivenName: credential.givenName,
         appleFamilyName: credential.familyName,
         appleEmail: credential.email,
+        justSocialRegistered: false,
       )));
 
       final body = AuthSocialLoginDTO(accessToken: identityToken, provider: 'apple');
@@ -160,6 +174,25 @@ class StartingCubit extends Cubit<StartingState> {
     }
   }
 
+  /// Decodifica el payload del identityToken (JWT) y verifica que traiga un
+  /// claim `email` no vacío. Solo lee claims, NO valida la firma (eso lo hace
+  /// el backend). Devuelve false ante cualquier token malformado.
+  bool _identityTokenHasEmail(String token) {
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return false;
+      final payload = jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1])))) as Map<String, dynamic>;
+      final email = payload['email'];
+      return email is String && email.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Usuario social NUEVO (no existe aún en backend). Construimos el user con
+  /// los datos del provider/credential y emitimos [_IsNewUser] SIN setear
+  /// sesión todavía: el alta recién se concreta cuando el usuario acepta los
+  /// T&C en el diálogo de consentimiento (StartingPage → [registerSocialUser]).
   void _setSocialLoginUserForSignUp(UserSessionDM userSessionDM) {
     var user = userSessionDM.user;
 
@@ -183,11 +216,63 @@ class StartingCubit extends Cubit<StartingState> {
       );
     }
 
-    _provideAccessToUser(userSessionDM = userSessionDM.copyWith(user: user));
+    emit(_IsNewUser(_vm = _vm.copyWith(userSessionDM: userSessionDM.copyWith(user: user))));
+  }
+
+  /// Concreta el alta social tras aceptar T&C. Crea la cuenta en backend (rol
+  /// customer) con los datos capturados y, si sale bien, entra al home con la
+  /// sesión real. El nombre/apellido de Apple viajan acá, garantizando que
+  /// queden persistidos aunque Apple no los reenvíe en futuros logins.
+  void registerSocialUser() async {
+    emit(_Loading(_vm));
+
+    final pending = _vm.userSessionDM.user;
+    final dto = AuthSocialRegisterDTO(
+      name: pending.firstName ?? '',
+      lastName: pending.lastName,
+      email: pending.email ?? '',
+      provider: pending.provider ?? '',
+      providerId: pending.providerId ?? '',
+      providerAvatar: _vm.importedAvatar,
+      // Mismo avatar como avatar_url para que el backend lo baje a
+      // profile_photo_path (si no, el comerciante ve placeholder en la reserva).
+      avatarUrl: _vm.importedAvatar,
+    );
+
+    await _meRepo.socialRegister(dto).then(
+      (response) {
+        return response.when(
+          success: (userSessionDM) {
+            _vm = _vm.copyWith(justSocialRegistered: true);
+            _provideAccessToUser(userSessionDM);
+          },
+          failure: (error) {
+            _logger.e('$error ${error.stackTrace}', stackTrace: error.stackTrace);
+            emit(_Error(error.errorMsg, _vm));
+          },
+        );
+      },
+    );
+  }
+
+  /// El usuario rechazó los T&C en el diálogo de consentimiento: abortamos el
+  /// alta (no se crea nada en backend) y volvemos a la pantalla inicial.
+  void cancelSocialSignUp() {
+    _vm = _vm.copyWith(
+      justSocialRegistered: false,
+      googleSignInAccount: null,
+      appleGivenName: null,
+      appleFamilyName: null,
+      appleEmail: null,
+      importedAvatar: null,
+    );
+    setView(StartingPageView.initial);
   }
 
   void login() {
-    emit(_Loading(_vm));
+    // Reseteamos el flag de alta social (cubit es singleton) para no reabrir
+    // el WelcomeDialog social en un login normal posterior.
+    emit(_Loading(_vm = _vm.copyWith(justSocialRegistered: false)));
 
     final loginDTO = UserBodyLoginDTO(email: _vm.emailController?.text ?? '', password: _vm.passwordController?.text);
 

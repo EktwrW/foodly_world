@@ -34,6 +34,8 @@ mixin _$UserBodyUpdateDTO {
   String? get newPassword => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone')
   String? get phone => throw _privateConstructorUsedError;
+  @JsonKey(name: 'phone_country_code')
+  String? get phoneCountryCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'date_of_birth')
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
   @JsonKey(name: 'zip_code')
@@ -77,6 +79,7 @@ abstract class $UserBodyUpdateDTOCopyWith<$Res> {
       @JsonKey(name: 'current_password') String? password,
       @JsonKey(name: 'new_password') String? newPassword,
       @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
       @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth,
       @JsonKey(name: 'zip_code') String? zipCode,
       @JsonKey(name: 'address') String? address,
@@ -110,6 +113,7 @@ class _$UserBodyUpdateDTOCopyWithImpl<$Res, $Val extends UserBodyUpdateDTO>
     Object? password = freezed,
     Object? newPassword = freezed,
     Object? phone = freezed,
+    Object? phoneCountryCode = freezed,
     Object? dateOfBirth = freezed,
     Object? zipCode = freezed,
     Object? address = freezed,
@@ -148,6 +152,10 @@ class _$UserBodyUpdateDTOCopyWithImpl<$Res, $Val extends UserBodyUpdateDTO>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCountryCode: freezed == phoneCountryCode
+          ? _value.phoneCountryCode
+          : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
       dateOfBirth: freezed == dateOfBirth
           ? _value.dateOfBirth
@@ -205,6 +213,7 @@ abstract class _$$UserBodyUpdateDTOImplCopyWith<$Res>
       @JsonKey(name: 'current_password') String? password,
       @JsonKey(name: 'new_password') String? newPassword,
       @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'phone_country_code') String? phoneCountryCode,
       @JsonKey(name: 'date_of_birth') DateTime? dateOfBirth,
       @JsonKey(name: 'zip_code') String? zipCode,
       @JsonKey(name: 'address') String? address,
@@ -236,6 +245,7 @@ class __$$UserBodyUpdateDTOImplCopyWithImpl<$Res>
     Object? password = freezed,
     Object? newPassword = freezed,
     Object? phone = freezed,
+    Object? phoneCountryCode = freezed,
     Object? dateOfBirth = freezed,
     Object? zipCode = freezed,
     Object? address = freezed,
@@ -274,6 +284,10 @@ class __$$UserBodyUpdateDTOImplCopyWithImpl<$Res>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCountryCode: freezed == phoneCountryCode
+          ? _value.phoneCountryCode
+          : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
       dateOfBirth: freezed == dateOfBirth
           ? _value.dateOfBirth
@@ -326,6 +340,7 @@ class _$UserBodyUpdateDTOImpl implements _UserBodyUpdateDTO {
       @JsonKey(name: 'current_password') this.password,
       @JsonKey(name: 'new_password') this.newPassword,
       @JsonKey(name: 'phone') this.phone,
+      @JsonKey(name: 'phone_country_code') this.phoneCountryCode,
       @JsonKey(name: 'date_of_birth') this.dateOfBirth,
       @JsonKey(name: 'zip_code') this.zipCode,
       @JsonKey(name: 'address') this.address,
@@ -361,6 +376,9 @@ class _$UserBodyUpdateDTOImpl implements _UserBodyUpdateDTO {
   @JsonKey(name: 'phone')
   final String? phone;
   @override
+  @JsonKey(name: 'phone_country_code')
+  final String? phoneCountryCode;
+  @override
   @JsonKey(name: 'date_of_birth')
   final DateTime? dateOfBirth;
   @override
@@ -390,7 +408,7 @@ class _$UserBodyUpdateDTOImpl implements _UserBodyUpdateDTO {
 
   @override
   String toString() {
-    return 'UserBodyUpdateDTO(userName: $userName, firstName: $firstName, lastName: $lastName, email: $email, password: $password, newPassword: $newPassword, phone: $phone, dateOfBirth: $dateOfBirth, zipCode: $zipCode, address: $address, city: $city, country: $country, gender: $gender, roleId: $roleId, latitude: $latitude, longitude: $longitude)';
+    return 'UserBodyUpdateDTO(userName: $userName, firstName: $firstName, lastName: $lastName, email: $email, password: $password, newPassword: $newPassword, phone: $phone, phoneCountryCode: $phoneCountryCode, dateOfBirth: $dateOfBirth, zipCode: $zipCode, address: $address, city: $city, country: $country, gender: $gender, roleId: $roleId, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -410,6 +428,8 @@ class _$UserBodyUpdateDTOImpl implements _UserBodyUpdateDTO {
             (identical(other.newPassword, newPassword) ||
                 other.newPassword == newPassword) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.phoneCountryCode, phoneCountryCode) ||
+                other.phoneCountryCode == phoneCountryCode) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
             (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
@@ -435,6 +455,7 @@ class _$UserBodyUpdateDTOImpl implements _UserBodyUpdateDTO {
       password,
       newPassword,
       phone,
+      phoneCountryCode,
       dateOfBirth,
       zipCode,
       address,
@@ -471,6 +492,7 @@ abstract class _UserBodyUpdateDTO implements UserBodyUpdateDTO {
           @JsonKey(name: 'current_password') final String? password,
           @JsonKey(name: 'new_password') final String? newPassword,
           @JsonKey(name: 'phone') final String? phone,
+          @JsonKey(name: 'phone_country_code') final String? phoneCountryCode,
           @JsonKey(name: 'date_of_birth') final DateTime? dateOfBirth,
           @JsonKey(name: 'zip_code') final String? zipCode,
           @JsonKey(name: 'address') final String? address,
@@ -506,6 +528,9 @@ abstract class _UserBodyUpdateDTO implements UserBodyUpdateDTO {
   @override
   @JsonKey(name: 'phone')
   String? get phone;
+  @override
+  @JsonKey(name: 'phone_country_code')
+  String? get phoneCountryCode;
   @override
   @JsonKey(name: 'date_of_birth')
   DateTime? get dateOfBirth;
