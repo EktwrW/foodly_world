@@ -3,7 +3,7 @@
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Necesitamos acceso a tu ubicación para encontrar restaurantes y servicios cercanos incluso cuando la app está en segundo plano.";
 "NSLocationAlwaysUsageDescription" = "Necesitamos acceso a tu ubicación para encontrar restaurantes y servicios cercanos cuando la app está en segundo plano.";
 "NSFaceIDUsageDescription" = "Necesitamos usar Face ID para autenticarte y proteger tus datos.";
-"NSCameraUsageDescription" = "Necesitamos acceso a tu cámara para que puedas tomar fotos.";
-"NSPhotoLibraryUsageDescription" = "Necesitamos acceso a tu galería para que puedas seleccionar imágenes.";
+"NSCameraUsageDescription" = "Foodly usa tu cámara para que puedas tomar fotos y añadirlas a tu contenido; por ejemplo, fotografiar un plato para agregarlo a tu menú, o capturar el logo de tu negocio o una foto para una reseña.";
+"NSPhotoLibraryUsageDescription" = "Foodly usa tu galería para que puedas elegir imágenes existentes para tu contenido; por ejemplo, seleccionar la foto de un plato para agregarla a un ítem del menú, el logo de tu negocio o una foto para una reseña.";
 "NSMicrophoneUsageDescription" = "Necesitamos acceso a tu micrófono para que puedas buscar por voz y grabar videos.";
 "NSSpeechRecognitionUsageDescription" = "Foodly utiliza el reconocimiento de voz para convertir tu voz en texto al buscar restaurantes y platos del menú.";
