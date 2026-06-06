@@ -1358,6 +1358,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noReservationsYet": MessageLookupByLibrary.simpleMessage(
       "Ainda não há reservas.",
     ),
+    "noSavedAddress": MessageLookupByLibrary.simpleMessage(
+      "Não tens uma morada guardada, podes criar uma na tua página de perfil.",
+    ),
     "noSavedPromotions": MessageLookupByLibrary.simpleMessage(
       "Ainda não tem promoções guardadas",
     ),

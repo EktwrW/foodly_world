@@ -259,21 +259,6 @@ class FoodlyDrawer extends StatelessWidget {
           ),
           SidebarXItem(
             onTap: () {
-              if (isGuest) {
-                FoodlyMainScaffold.toggleDrawer();
-                cubit.updateSelectedIndex(0);
-                GuestGuard.requireAuth(GuestGateAction.generic);
-                return;
-              }
-              navigator.appRouter.goNamed(AppRoutes.blockedUsers.name);
-              FoodlyMainScaffold.toggleDrawer();
-            },
-            icon: Icons.block,
-            label: S.current.blockedUsers,
-            selectable: false,
-          ),
-          SidebarXItem(
-            onTap: () {
               final navigator = di<AppRouter>();
               navigator.appRouter.goNamed(AppRoutes.about.name);
 

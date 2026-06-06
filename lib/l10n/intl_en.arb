@@ -608,6 +608,7 @@
   "blockedUsersEmpty": "You haven't blocked anyone.",
   "unblock": "Unblock",
   "communityGuidelinesNotice": "By posting, you agree to our Community Guidelines.",
+  "noSavedAddress": "You don't have a saved address. You can create one on your profile page.",
   "guestGateTitle": "Create your account",
   "guestGateReserve": "Log in or sign up to book a table.",
   "guestGateFavorite": "Log in or sign up to save favorites.",

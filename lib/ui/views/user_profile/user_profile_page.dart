@@ -240,7 +240,19 @@ class UserProfilePage extends StatelessWidget {
                             shape: ui.NeumorphicShape.concave,
                             disabled: false,
                             type: CustomNeumorphicBtnType.outlined,
+                            margin: const EdgeInsets.only(bottom: 36),
+                            padding: const EdgeInsets.all(9),
+                          ).paddingHorizontal(27),
+                        if (vm.loggedUserCanEdit)
+                          CustomNeumorphicButton(
+                            onPressed: () => context.pushNamed(AppRoutes.blockedUsers.name),
+                            text: S.current.blockedUsers,
+                            leading: const Icon(Icons.block, size: 18, color: FoodlyThemes.primaryFoodly),
+                            shape: ui.NeumorphicShape.concave,
+                            disabled: false,
+                            type: CustomNeumorphicBtnType.secondary,
                             margin: const EdgeInsets.only(bottom: 46),
+                            padding: const EdgeInsets.all(9),
                           ).paddingHorizontal(27),
                         if (vm.loggedUserCanEdit)
                           _DeleteAccountSection(

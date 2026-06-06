@@ -71,18 +71,18 @@ class _BlockUserDialogState extends State<_BlockUserDialog> {
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         CustomNeumorphicButton(
-          onPressed: _busy ? null : () => Navigator.of(context).pop(),
-          type: CustomNeumorphicBtnType.outlined,
-          text: S.current.cancel,
-          disabled: _busy,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-        ),
-        CustomNeumorphicButton(
           onPressed: _busy ? null : _block,
           text: _busy ? '...' : S.current.blockUser,
           disabled: _busy,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
         ),
+        CustomNeumorphicButton(
+          onPressed: _busy ? null : () => Navigator.of(context).pop(),
+          type: CustomNeumorphicBtnType.outlined,
+          text: S.current.cancel,
+          disabled: _busy,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        ).paddingTop(19),
       ],
     );
   }

@@ -3999,6 +3999,16 @@ class S {
     );
   }
 
+  /// `You don't have a saved address. You can create one on your profile page.`
+  String get noSavedAddress {
+    return Intl.message(
+      'You don\'t have a saved address. You can create one on your profile page.',
+      name: 'noSavedAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create your account`
   String get guestGateTitle {
     return Intl.message(

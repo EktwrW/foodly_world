@@ -610,6 +610,7 @@
   "blockedUsersEmpty": "No bloqueaste a nadie.",
   "unblock": "Desbloquear",
   "communityGuidelinesNotice": "Al publicar, aceptás nuestras Normas de la Comunidad.",
+  "noSavedAddress": "No tienes dirección guardada, puedes crear una en tu página de perfil.",
   "guestGateTitle": "Crea tu cuenta",
   "guestGateReserve": "Inicia sesión o regístrate para reservar.",
   "guestGateFavorite": "Inicia sesión o regístrate para guardar favoritos.",

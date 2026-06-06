@@ -1306,6 +1306,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noReservationsYet": MessageLookupByLibrary.simpleMessage(
       "No reservations yet.",
     ),
+    "noSavedAddress": MessageLookupByLibrary.simpleMessage(
+      "You don\'t have a saved address. You can create one on your profile page.",
+    ),
     "noSavedPromotions": MessageLookupByLibrary.simpleMessage(
       "You don\'t have any saved promotions yet",
     ),

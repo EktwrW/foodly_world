@@ -302,6 +302,10 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final principalAddress = authSessionService.userSessionDM?.user.principalAddress;
+    final savedLocationNotAvailable =
+        principalAddress?.address == null && principalAddress?.city == null && principalAddress?.zipCode == null;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: FadeIn(
@@ -447,7 +451,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                     if (authSessionService.isLoggedIn)
                       Flexible(
                         child: ui.NeumorphicButton(
-                          onPressed: loggedUser != null
+                          onPressed: loggedUser != null && savedLocationNotAvailable == false
                               ? () {
                                   locationService.updateLocationUserDM(loggedUser!);
                                   setState(
@@ -459,8 +463,9 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                   _refreshFeedsAfterLocationChange();
                                 }
                               : null,
+                          tooltip: savedLocationNotAvailable ? S.current.noSavedAddress : '',
                           style: ui.NeumorphicStyle(
-                            color: FoodlyThemes.primaryLighten73,
+                            color: savedLocationNotAvailable ? Colors.grey.shade400 : FoodlyThemes.primaryLighten73,
                             depth: 2,
                           ),
                           child: SizedBox(
@@ -472,13 +477,15 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 Row(
                                   spacing: 8,
                                   children: [
-                                    const Icon(Icons.location_history_rounded, size: 18),
+                                    Icon(Icons.location_history_rounded,
+                                        size: 18, color: savedLocationNotAvailable ? Colors.black54 : null),
                                     Expanded(
                                       child: Text(
                                         S.current.useSavedLocation,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: FoodlyTextStyles.captionPurpleBold,
+                                        style: FoodlyTextStyles.captionPurpleBold
+                                            .copyWith(color: savedLocationNotAvailable ? Colors.black54 : null),
                                       ),
                                     ),
                                   ],
@@ -487,7 +494,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      '${authSessionService.userSessionDM?.user.principalAddress?.address ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'} ${authSessionService.userSessionDM?.user.principalAddress?.zipCode != null ? ', ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}' : ''}',
+                                      '${principalAddress?.address ?? ''}${principalAddress?.address.isNotEmpty == true ? ', ' : ''} ${principalAddress?.city ?? ''} ${principalAddress?.zipCode != null ? ', ${principalAddress?.zipCode}' : '-'}',
                                       style: FoodlyTextStyles.addressSmallText,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
