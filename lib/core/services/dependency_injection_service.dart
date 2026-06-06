@@ -16,6 +16,8 @@ import 'package:foodly_world/core/network/device_tokens/device_token_client.dart
 import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
 import 'package:foodly_world/core/network/menu_import/menu_import_client.dart';
 import 'package:foodly_world/core/network/menu_import/menu_import_repo.dart';
+import 'package:foodly_world/core/network/moderation/moderation_client.dart';
+import 'package:foodly_world/core/network/moderation/moderation_repo.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_api_provider.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_client.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
@@ -29,8 +31,6 @@ import 'package:foodly_world/core/network/reviews/review_client.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/network/service_packages/service_package_client.dart';
 import 'package:foodly_world/core/network/service_packages/service_package_repo.dart';
-import 'package:foodly_world/core/network/moderation/moderation_client.dart';
-import 'package:foodly_world/core/network/moderation/moderation_repo.dart';
 import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';

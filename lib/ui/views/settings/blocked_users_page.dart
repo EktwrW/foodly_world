@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/network/moderation/moderation_client.dart' show BlockedUserDM;
 import 'package:foodly_world/core/network/moderation/moderation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
 /// Pantalla de gestión de usuarios bloqueados (App Store Guideline 1.2):
 /// lista los usuarios bloqueados y permite desbloquearlos.

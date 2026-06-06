@@ -45,7 +45,7 @@ class ModerationRepo {
         'reason': reason.apiValue,
         if (details != null && details.trim().isNotEmpty) 'details': details.trim(),
       });
-      return ApiResult.success(true);
+      return const ApiResult.success(true);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -54,7 +54,7 @@ class ModerationRepo {
   Future<ApiResult<bool>> blockUser(String userUuid) async {
     try {
       await _client.blockUser(userUuid);
-      return ApiResult.success(true);
+      return const ApiResult.success(true);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -63,7 +63,7 @@ class ModerationRepo {
   Future<ApiResult<bool>> unblockUser(String userUuid) async {
     try {
       await _client.unblockUser(userUuid);
-      return ApiResult.success(true);
+      return const ApiResult.success(true);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
