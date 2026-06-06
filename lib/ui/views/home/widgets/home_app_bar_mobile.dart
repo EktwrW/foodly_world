@@ -48,7 +48,13 @@ class Home369AppBarMobile extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             fit: BoxFit.scaleDown,
                             child: GreetingWidget(
-                              userName: di<AuthSessionService>().userSessionDM?.user.firstName?.split(' ').first,
+                              // Invitado (5.1.1.v): no hay nombre → saludamos con
+                              // un placeholder localizado ("Invitado"/"Guest"/
+                              // "Visitante") para mantener el saludo completo y la
+                              // armonía del header.
+                              userName: di<AuthSessionService>().isGuest
+                                  ? S.current.guestUserName
+                                  : di<AuthSessionService>().userSessionDM?.user.firstName?.split(' ').first,
                               titleFontSize: 24,
                             ),
                           ),

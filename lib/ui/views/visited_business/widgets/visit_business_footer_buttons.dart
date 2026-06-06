@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
+import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
@@ -71,6 +72,8 @@ class VisitBusinessFooterButtons extends StatelessWidget {
                 child: FooterButton(
                   onPressed: (currentBusiness?.allowReservations ?? false)
                       ? () {
+                          // Modo invitado (5.1.1.v): reservar requiere cuenta.
+                          if (!GuestGuard.requireAuth(GuestGateAction.reserve)) return;
                           di<EventTrackingService>().track(
                             'business.cta_clicked',
                             'business_detail_page',
@@ -91,6 +94,8 @@ class VisitBusinessFooterButtons extends StatelessWidget {
               ),
             FooterButton(
               onPressed: () async {
+                // Modo invitado (5.1.1.v): dejar una reseña requiere cuenta.
+                if (!GuestGuard.requireAuth(GuestGateAction.review)) return;
                 if (di<AuthSessionService>().userSessionDM?.user.business.any((b) => b.uuid == currentBusiness?.uuid) ==
                     true) {
                   FoodlySnackbars.infoGeneric(context, S.current.cannotReviewOwnBusiness,

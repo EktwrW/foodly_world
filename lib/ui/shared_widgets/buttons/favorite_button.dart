@@ -7,6 +7,7 @@ import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
 
@@ -367,6 +368,8 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           isFavoriteIcon: widget.isFavoriteIcon,
           liked: isFavorite,
           onPressed: () {
+            // Modo invitado (5.1.1.v): guardar favoritos requiere cuenta.
+            if (!GuestGuard.requireAuth(GuestGateAction.favorite)) return;
             _toggleFavorite(favoritesCubit);
           },
           iconSize: widget.iconSize,

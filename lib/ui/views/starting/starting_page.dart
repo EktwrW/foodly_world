@@ -4,12 +4,12 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/welcome_dialog.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/app_login_widgets.dart';
-import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
 import 'package:foodly_world/ui/views/starting/widgets/social_consent_dialog.dart';
 //import 'package:foodly_world/ui/views/starting/widgets/social_media_buttons.dart';
 import 'package:go_router/go_router.dart';
@@ -145,7 +145,47 @@ class StartingPage369 extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  if (!vm.currentView.isLogin) const Center(child: FingerprintButtonLogin()),
+                  if (!vm.currentView.isLogin)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 9),
+                            height: 1,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          child: CustomNeumorphicButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                              // Modo invitado (App Store 5.1.1.v): entra al home
+                              // sin sesión. Ver StartingCubit.enterAsGuest().
+                              context.read<StartingCubit>().enterAsGuest();
+                            },
+                            type: CustomNeumorphicBtnType.outlined,
+                            disabled: false,
+                            leading: const Asset(FoodlyAssets.isoFoodly, height: 14.3),
+                            text: S.current.exploreAsGuest,
+                            padding: const EdgeInsets.all(6),
+                            margin: const EdgeInsets.all(6),
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 9),
+                            height: 1,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
+                          ),
+                        ),
+                      ],
+                    ),
                   const SizedBox.shrink(),
                 ],
               ),

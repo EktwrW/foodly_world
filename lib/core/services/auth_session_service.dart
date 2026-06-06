@@ -57,6 +57,14 @@ class AuthSessionService {
   bool _isRefreshingToken = false;
   bool _isLoggingOut = false;
 
+  /// Modo invitado (guest browsing, App Store 5.1.1.v). Cuando es `true`, el
+  /// usuario navega el descubrimiento (home, promos, negocios, menús) SIN
+  /// sesión. Es efímero EN MEMORIA — no se persiste, así que un cold-start
+  /// siempre cae en la starting page. Se prende en [enterGuestMode] (botón
+  /// "Explorar") y se apaga al loguearse o al salir del modo invitado.
+  /// NO confundir con [isLoggedIn]: un invitado es `!isLoggedIn && isGuest`.
+  bool isGuest = false;
+
   /// Completer del veredicto de validación de la sesión cacheada del arranque.
   /// Lo completa [initializeSessionOrClear] vía su `finally`; lo consume
   /// [LocalAuthCubit.initializeLocalAuth] como gate previo al prompt biométrico.
@@ -88,6 +96,18 @@ class AuthSessionService {
   /// Use this for early checks (biometric guard) where [isLoggedIn] would
   /// return false because [setSession] hasn't been called yet.
   bool get hasSessionOrPending => isLoggedIn || hasPendingSessionRestore;
+
+  /// True si hay sesión real O el usuario está en modo invitado. Se usa en los
+  /// guards de ruteo y en los cubits del home para dejar pasar al invitado a
+  /// las superficies públicas (descubrimiento) sin abrir las privadas.
+  bool get hasSessionOrGuest => isLoggedIn || isGuest;
+
+  /// Entra al modo invitado. Idempotente. Lo llama [StartingCubit.enterAsGuest]
+  /// desde el botón "Explorar" de la starting page.
+  void enterGuestMode() => isGuest = true;
+
+  /// Sale del modo invitado (al loguearse o al volver a la starting page).
+  void exitGuestMode() => isGuest = false;
   bool get userIsManager => userSessionDM?.user.isManager ?? false;
   String get uuid => userSessionDM?.user.uuid ?? '';
   Map<String, String>? get authHeader => _authHeader;
@@ -215,6 +235,8 @@ class AuthSessionService {
       // Un login válido (email/password, Google, Apple, biométrico, silent
       // refresh) cancela cualquier guard de logout pendiente.
       _isLoggingOut = false;
+      // Un login real cierra el modo invitado: a partir de acá hay sesión.
+      isGuest = false;
     }
 
     // Prefer access_token (new dual-token field); fall back to token (legacy).

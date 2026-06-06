@@ -97,49 +97,28 @@ class FingerprintButtonLogin extends StatelessWidget {
         );
       },
       builder: (context, state) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                height: 1,
-                width: double.infinity,
-                decoration: BoxDecoration(color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-            CustomRoundedNeumorphicButton(
-              diameter: 64,
-              iconSize: 52,
-              onPressed: () {
-                switch (context.read<LocalAuthCubit>().biometricAuthEnabled) {
-                  case true:
-                    if (di<AuthSessionService>().isLoggedIn) {
-                      context.read<LocalAuthCubit>().authenticate();
-                    } else {
-                      _showBiometricSnackBar(context);
-                    }
-                    break;
-
-                  case false:
-                    _showBiometricSnackBar(context);
-                    break;
+        return CustomRoundedNeumorphicButton(
+          diameter: 56,
+          iconSize: 43,
+          onPressed: () {
+            switch (context.read<LocalAuthCubit>().biometricAuthEnabled) {
+              case true:
+                if (di<AuthSessionService>().isLoggedIn) {
+                  context.read<LocalAuthCubit>().authenticate();
+                } else {
+                  _showBiometricSnackBar(context);
                 }
-              },
-              depth: 1,
-              padding: const EdgeInsets.fromLTRB(10, 6, 6, 7),
-              iconData: Bootstrap.fingerprint,
-              tooltip: S.current.resumeSessionWithSecurity,
-            ),
-            Flexible(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                height: 1,
-                width: double.infinity,
-                decoration: BoxDecoration(color: FoodlyThemes.primaryFoodly, borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-          ],
+                break;
+
+              case false:
+                _showBiometricSnackBar(context);
+                break;
+            }
+          },
+          depth: 1,
+          padding: const EdgeInsets.fromLTRB(10, 9, 6, 7),
+          iconData: Bootstrap.fingerprint,
+          tooltip: S.current.resumeSessionWithSecurity,
         );
       },
     );

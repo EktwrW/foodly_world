@@ -8,18 +8,10 @@ const _kHighlightColor = Color(0xFFF3F3F3);
 
 // ─── Promo Carousel Shimmer ───────────────────────────────────────────────────
 
-/// Skeleton for [TopOffersWidget] while promotions are loading.
-///
-/// Emulates the real CarouselSlider layout:
-///   - left peek card  (~24 px visible, slightly shorter = non-enlarged)
-///   - center card     (Expanded, full 369 px height)
-///   - right peek card (~24 px visible, slightly shorter)
-///
-/// Matches viewportFraction ≈ 0.9 and enlargeCenterPage/enlargeFactor: 0.15.
 class PromoCarouselShimmer extends StatelessWidget {
   const PromoCarouselShimmer({super.key});
 
-  static const _carouselH = 369.0;
+  static const _carouselH = 333.0;
   static const _sideH = 350.0; // slightly shorter → non-enlarged side cards
   static const _peekW = 24.0; // visible slice of each side card
 
@@ -249,7 +241,7 @@ class NewReleaseShimmer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                    height: 320,
+                    height: 260,
                     child: Stack(
                       children: [
                         // Cover image skeleton
@@ -260,7 +252,7 @@ class NewReleaseShimmer extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Container(
-                              height: 270,
+                              height: 230,
                               width: cardW,
                               color: const Color(0xFFEAEAEA),
                             ),

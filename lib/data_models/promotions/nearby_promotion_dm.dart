@@ -15,8 +15,12 @@ class NearbyPromotionDM with _$NearbyPromotionDM {
     @JsonKey(name: 'sub_title') @Default('') String subTitle,
     @JsonKey(name: 'media_link') String? mediaLink,
     @JsonKey(name: 'promo_media') PromoMediaLiteDM? promoMedia,
-    @JsonKey(name: 'business_uuid') required String businessUuid,
-    @JsonKey(name: 'business_name') required String businessName,
+    // Defensivo: business_name es nullable en la tabla businesses (BE) y
+    // business_uuid podría faltar en datos de borde. Con @Default('') una sola
+    // promo con esos campos vacíos no aborta el parse de toda la lista
+    // (json_serializable mapea la List entera; si un item tira, caen todos).
+    @JsonKey(name: 'business_uuid') @Default('') String businessUuid,
+    @JsonKey(name: 'business_name') @Default('') String businessName,
     @JsonKey(name: 'business_logo') String? businessLogo,
     @JsonKey(name: 'rating_avg') @Default(0.0) double ratingAvg,
     @JsonKey(name: 'is_favorited') @Default(false) bool isFavorited,

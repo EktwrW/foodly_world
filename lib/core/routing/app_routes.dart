@@ -51,6 +51,14 @@ enum AppRoutes {
   static String get routeIdParam => _routeIdParam.replaceFirst(':', '');
   static String get routeExtraParam => _routeExtraParam.replaceFirst(':', '');
 
+  /// Sentinel para el `:id` cuando el usuario navega en modo invitado (guest
+  /// browsing, App Store 5.1.1.v). El invitado no tiene UUID de usuario, así
+  /// que `foodlyMainPage` se arma como `/main/home/guest/foodly-main-page`.
+  /// Cualquier código que lea el `:id` de la home debe tolerar este valor y
+  /// NO asumir que es un UUID válido. Ver [AuthSessionService.isGuest].
+  static const String guestRouteId = 'guest';
+  static bool isGuestRouteId(String? id) => id == guestRouteId;
+
   final String path;
   final String name;
 

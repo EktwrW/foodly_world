@@ -17,8 +17,8 @@ _$NearbyPromotionDMImpl _$$NearbyPromotionDMImplFromJson(
           ? null
           : PromoMediaLiteDM.fromJson(
               json['promo_media'] as Map<String, dynamic>),
-      businessUuid: json['business_uuid'] as String,
-      businessName: json['business_name'] as String,
+      businessUuid: json['business_uuid'] as String? ?? '',
+      businessName: json['business_name'] as String? ?? '',
       businessLogo: json['business_logo'] as String?,
       ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0.0,
       isFavorited: json['is_favorited'] as bool? ?? false,

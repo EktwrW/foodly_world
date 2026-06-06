@@ -24,6 +24,7 @@ dependencies:
   badges: ^3.1.2
   bloc: ^9.2.0
   cached_network_image: ^3.4.1
+  carousel_slider: ^5.1.2
   clay_containers: ^0.3.4
   cupertino_icons: ^1.0.8
   dart_openai: ^5.1.0

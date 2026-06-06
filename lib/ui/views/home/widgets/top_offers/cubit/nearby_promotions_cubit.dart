@@ -25,7 +25,7 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
   StreamSubscription<dynamic>? _locationSub;
 
   static const int _perPage = 10;
-  static const double _radius = 10.0;
+  static const double _radius = 15.0;
 
   NearbyPromotionsCubit({
     required BusinessRepo businessRepo,
@@ -73,7 +73,12 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
     // `notifyTokenExpired()` ya tiene su propio guard contra `!isLoggedIn`
     // (defensa principal), pero acá lo agregamos también para evitar el
     // request inútil garantizado a 401 y el ruido en logs del BE.
-    if (!di<AuthSessionService>().isLoggedIn) return;
+    //
+    // Modo invitado (5.1.1.v): `/promotions/nearby` es PÚBLICO (auth opcional
+    // de Sanctum), así que el invitado SÍ puede cargar promos cerca. Usamos
+    // `hasSessionOrGuest` para dejarlo pasar; un cold-start pre-login (sin
+    // sesión y sin modo invitado) sigue cortando acá.
+    if (!di<AuthSessionService>().hasSessionOrGuest) return;
 
     // Location may not be ready yet at startup/hot-restart — retry up to 3 s.
     for (var i = 0; i < 10; i++) {
@@ -224,8 +229,12 @@ class NearbyPromotionsCubit extends Cubit<NearbyPromotionsState> {
     final completer = Completer<void>();
     final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
-      (_, __) { if (!completer.isCompleted) completer.complete(); },
-      onError: (_, __) { if (!completer.isCompleted) completer.complete(); },
+      (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
+      onError: (_, __) {
+        if (!completer.isCompleted) completer.complete();
+      },
     ));
     return completer.future;
   }

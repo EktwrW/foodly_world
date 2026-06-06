@@ -943,6 +943,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "eventTypeDinner": MessageLookupByLibrary.simpleMessage("Dinner"),
     "eventTypeLunch": MessageLookupByLibrary.simpleMessage("Lunch"),
     "eventTypeWedding": MessageLookupByLibrary.simpleMessage("Wedding"),
+    "exploreAsGuest": MessageLookupByLibrary.simpleMessage("Explore"),
     "failedDeletePhotos": m34,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(
       "Failed to cancel reservation.",
@@ -1012,6 +1013,40 @@ class MessageLookup extends MessageLookupByLibrary {
     "goodEvening": MessageLookupByLibrary.simpleMessage("Good Evening"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Good Morning"),
     "guestCount": MessageLookupByLibrary.simpleMessage("Guest count"),
+    "guestGateCommunity": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to see the community.",
+    ),
+    "guestGateFaved": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to see your favorite businesses.",
+    ),
+    "guestGateFavorite": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to save favorites.",
+    ),
+    "guestGateGeneric": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to use this feature.",
+    ),
+    "guestGateNotifications": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to see your notifications.",
+    ),
+    "guestGatePost": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to post in the community.",
+    ),
+    "guestGateProfile": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to access your profile.",
+    ),
+    "guestGateReserve": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to book a table.",
+    ),
+    "guestGateReview": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to leave a review.",
+    ),
+    "guestGateSaved": MessageLookupByLibrary.simpleMessage(
+      "Log in or sign up to see your saved promotions.",
+    ),
+    "guestGateTitle": MessageLookupByLibrary.simpleMessage(
+      "Create your account",
+    ),
+    "guestUserName": MessageLookupByLibrary.simpleMessage("Guest"),
     "guests": MessageLookupByLibrary.simpleMessage("guests"),
     "happyBirthday": MessageLookupByLibrary.simpleMessage("Happy Birthday"),
     "happyHours": MessageLookupByLibrary.simpleMessage("Happy Hours"),

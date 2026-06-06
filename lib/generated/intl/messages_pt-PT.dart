@@ -977,6 +977,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "eventTypeDinner": MessageLookupByLibrary.simpleMessage("Jantar"),
     "eventTypeLunch": MessageLookupByLibrary.simpleMessage("Almoço"),
     "eventTypeWedding": MessageLookupByLibrary.simpleMessage("Casamento"),
+    "exploreAsGuest": MessageLookupByLibrary.simpleMessage("Explorar"),
     "failedDeletePhotos": m34,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(
       "Falha ao cancelar a reserva.",
@@ -1050,6 +1051,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "goodEvening": MessageLookupByLibrary.simpleMessage("Boa noite"),
     "goodMorning": MessageLookupByLibrary.simpleMessage("Bom dia"),
     "guestCount": MessageLookupByLibrary.simpleMessage("Número de convidados"),
+    "guestGateCommunity": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para ver a comunidade.",
+    ),
+    "guestGateFaved": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para ver os teus negócios favoritos.",
+    ),
+    "guestGateFavorite": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para guardar favoritos.",
+    ),
+    "guestGateGeneric": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para usar esta funcionalidade.",
+    ),
+    "guestGateNotifications": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para ver as tuas notificações.",
+    ),
+    "guestGatePost": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para publicar na comunidade.",
+    ),
+    "guestGateProfile": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para acederes ao teu perfil.",
+    ),
+    "guestGateReserve": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para reservar.",
+    ),
+    "guestGateReview": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para deixar uma avaliação.",
+    ),
+    "guestGateSaved": MessageLookupByLibrary.simpleMessage(
+      "Inicia sessão ou regista-te para ver as tuas promoções guardadas.",
+    ),
+    "guestGateTitle": MessageLookupByLibrary.simpleMessage("Cria a tua conta"),
+    "guestUserName": MessageLookupByLibrary.simpleMessage("Visitante"),
     "guests": MessageLookupByLibrary.simpleMessage("comensais"),
     "happyBirthday": MessageLookupByLibrary.simpleMessage("Feliz Aniversário"),
     "happyHours": MessageLookupByLibrary.simpleMessage("Horas Felizes"),

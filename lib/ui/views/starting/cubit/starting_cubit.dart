@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart' show FlutterNativeSplash;
-import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
+import 'package:foodly_world/core/core_exports.dart'
+    show AppRouter, AppRoutes, AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
 
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
@@ -57,6 +58,20 @@ class StartingCubit extends Cubit<StartingState> {
         super(const StartingState.initial()) {
     if (kIsWeb) FlutterNativeSplash.remove();
     setView(StartingPageView.initial);
+  }
+
+  /// Modo invitado (App Store 5.1.1.v): el usuario explora el descubrimiento
+  /// (home, promos cerca, nuevos negocios, búsqueda, categorías, perfiles de
+  /// negocio y menús) SIN loguearse. Prende el flag de invitado en la sesión y
+  /// navega al home usando el sentinel [AppRoutes.guestRouteId] como `:id`,
+  /// porque el invitado no tiene UUID de usuario. El flag se apaga al loguearse
+  /// ([AuthSessionService.setSession]) o al salir del modo invitado.
+  void enterAsGuest() {
+    _authSessionService.enterGuestMode();
+    di<AppRouter>().appRouter.goNamed(
+      AppRoutes.foodlyMainPage.name,
+      pathParameters: {AppRoutes.routeIdParam: AppRoutes.guestRouteId},
+    );
   }
 
   void googleSignIn() async {

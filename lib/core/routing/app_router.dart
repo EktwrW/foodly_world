@@ -270,7 +270,10 @@ class AppRouter {
         // If the parent shell route is hit (e.g., via system back pop), redirect to main page
         // instead of showing not-found. This is a safety net — PopScope in shell pages should prevent this.
         if (state.uri.toString() == appRoute.path) {
-          return '${appRoute.path}/${authSessService.uuid}/foodly-main-page';
+          // Invitado (5.1.1.v): no tiene uuid → sentinel para no armar un path
+          // con id vacío (`/main/home//foodly-main-page`).
+          final id = authSessService.isGuest ? AppRoutes.guestRouteId : authSessService.uuid;
+          return '${appRoute.path}/$id/foodly-main-page';
         }
         return null;
       }),
@@ -335,7 +338,12 @@ class AppRouter {
         // sees isLoggedIn == false, and incorrectly sends the user to login.
         if (!authSessService.isLoggedIn &&
             !authSessService.hasPendingSessionRestore &&
-            !_isPublicRoute(state.matchedLocation)) {
+            !_isPublicRoute(state.matchedLocation) &&
+            // Modo invitado (5.1.1.v): dejamos pasar al invitado a las rutas de
+            // descubrimiento sin sesión. El resto sigue cayendo a login como
+            // backstop; el gate "amable" (GuestGateSheet) se dispara antes, en
+            // el handler de la acción / tap del bottom nav.
+            !(authSessService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation))) {
           return AppRoutes.login.path;
         }
 

@@ -7,6 +7,7 @@ import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/contact/contact_bottom_sheet.dart' show showContactBottomSheet;
 import 'package:foodly_world/ui/shared_widgets/drawer/view_model/main_drawer_vm.dart';
+import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
@@ -46,6 +47,10 @@ class FoodlyDrawer extends StatelessWidget {
     final cubit = context.read<MainDrawerCubit>();
     final navigator = di<AppRouter>();
     final authService = di<AuthSessionService>();
+    // Modo invitado (5.1.1.v): los ítems que requieren cuenta (perfil, mis
+    // reservas, editar avatar) disparan el gate; el logout se vuelve "Iniciar
+    // sesión" (vía de salida del modo invitado).
+    final isGuest = authService.isGuest;
 
     return SafeArea(
       child: SidebarX(
@@ -149,7 +154,7 @@ class FoodlyDrawer extends StatelessWidget {
           width: 246,
           itemMargin: EdgeInsets.all(context.screenWidth * .005),
           itemTextPadding: const EdgeInsets.only(left: 12),
-          selectedItemTextPadding: const EdgeInsets.only(left: 16),
+          selectedItemTextPadding: const EdgeInsets.only(left: 9),
           selectedTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
           decoration: const BoxDecoration(
             color: ui.NeumorphicColors.background,
@@ -176,8 +181,13 @@ class FoodlyDrawer extends StatelessWidget {
                     buttonDiameter: buttonDiameter,
                     paddingAll: 0,
                     avatarType: AvatarType.user,
-                    onPressed: () async => await pickImage(context)
-                        .then((path) => path.isNotEmpty ? cubit.updateProfilePhoto(path) : null),
+                    onPressed: isGuest
+                        ? () {
+                            FoodlyMainScaffold.toggleDrawer();
+                            GuestGuard.requireAuth(GuestGateAction.profile);
+                          }
+                        : () async => await pickImage(context)
+                            .then((path) => path.isNotEmpty ? cubit.updateProfilePhoto(path) : null),
                   ),
                 ),
               ],
@@ -187,8 +197,9 @@ class FoodlyDrawer extends StatelessWidget {
         items: [
           SidebarXItem(
             onTap: () {
-              navigator.appRouter
-                  .goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
+              navigator.appRouter.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {
+                AppRoutes.routeIdParam: isGuest ? AppRoutes.guestRouteId : authService.uuid,
+              });
 
               cubit.updateSelectedIndex(0);
               FoodlyMainScaffold.toggleDrawer();
@@ -212,17 +223,31 @@ class FoodlyDrawer extends StatelessWidget {
             ),
           SidebarXItem(
             onTap: () {
-              navigator.appRouter
-                  .goNamed(AppRoutes.profileScreen.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
+              if (isGuest) {
+                FoodlyMainScaffold.toggleDrawer();
+                cubit.updateSelectedIndex(0);
+                GuestGuard.requireAuth(GuestGateAction.profile);
+                return;
+              } else {
+                navigator.appRouter
+                    .goNamed(AppRoutes.profileScreen.name, pathParameters: {AppRoutes.routeIdParam: authService.uuid});
 
-              cubit.updateSelectedIndex(2);
-              FoodlyMainScaffold.toggleDrawer();
+                cubit.updateSelectedIndex(2);
+                FoodlyMainScaffold.toggleDrawer();
+              }
             },
             icon: Bootstrap.person_vcard_fill,
             label: S.current.profile,
+            selectable: !isGuest,
           ),
           SidebarXItem(
             onTap: () {
+              if (isGuest) {
+                FoodlyMainScaffold.toggleDrawer();
+                cubit.updateSelectedIndex(0);
+                GuestGuard.requireAuth(GuestGateAction.generic);
+                return;
+              }
               navigator.appRouter.goNamed(AppRoutes.myReservations.name);
 
               cubit.updateSelectedIndex(3);
@@ -230,6 +255,7 @@ class FoodlyDrawer extends StatelessWidget {
             },
             icon: Bootstrap.calendar2_event,
             label: S.current.myReservations,
+            selectable: !isGuest,
           ),
           SidebarXItem(
             onTap: () {
@@ -246,8 +272,17 @@ class FoodlyDrawer extends StatelessWidget {
           ),
           SidebarXItem(
             onTap: () {
+              FoodlyMainScaffold.toggleDrawer();
+              // Modo invitado (5.1.1.v): el endpoint /contact es authed. En vez
+              // de abrir el form (que fallaría 401 al enviar), mostramos el
+              // GuestGateSheet. Hacerlo público requiere campo de email + cambios
+              // en toda la cadena de envío — fast-follow post build 55.
+              if (isGuest) {
+                cubit.updateSelectedIndex(0);
+                showGuestGateSheet(GuestGateAction.generic);
+                return;
+              }
               if (rootNavigatorKey.currentContext != null) {
-                FoodlyMainScaffold.toggleDrawer();
                 showContactBottomSheet(rootNavigatorKey.currentContext!);
               } else {
                 FoodlySnackbars.errorGeneric(context, S.current.somethingWentWrong);
@@ -260,10 +295,18 @@ class FoodlyDrawer extends StatelessWidget {
           SidebarXItem(
             onTap: () {
               FoodlyMainScaffold.toggleDrawer();
+              if (isGuest) {
+                // Invitado: el ítem es "Iniciar sesión" → sale del modo invitado
+                // y navega directo a la starting page (Welcome), con todas las
+                // opciones de auth (login / registro / sociales / explorar).
+                authService.exitGuestMode();
+                navigator.appRouter.goNamed(AppRoutes.start.name);
+                return;
+              }
               authService.logout(rootNavigatorKey.currentContext ?? context);
             },
-            icon: Bootstrap.door_open_fill,
-            label: S.current.logout,
+            icon: isGuest ? Bootstrap.box_arrow_in_right : Bootstrap.door_open_fill,
+            label: isGuest ? S.current.login : S.current.logout,
             selectable: false,
           ),
         ],

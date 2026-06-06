@@ -195,10 +195,9 @@ class FoodlyMainScaffold extends StatelessWidget {
           prev.maybeWhen(cachedState: (_) => true, orElse: () => false) !=
           curr.maybeWhen(cachedState: (_) => true, orElse: () => false),
       builder: (context, state) {
-        final isAuthenticated = state.maybeWhen(cachedState: (_) => true, orElse: () => false);
         return Scaffold(
           key: _scaffoldKey,
-          drawer: isAuthenticated ? const FoodlyDrawer() : null,
+          drawer: const FoodlyDrawer(),
           body: child,
         );
       },

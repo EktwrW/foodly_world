@@ -59,7 +59,12 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
     // `AuthSessionService.notifyTokenExpired()` ya tiene su propio guard
     // contra `!isLoggedIn` (defensa principal), pero este check evita el
     // request inútil que paga el round-trip y mete ruido en los logs del BE.
-    if (!di<AuthSessionService>().isLoggedIn) return;
+    //
+    // Modo invitado (5.1.1.v): `/business/new-releases` es PÚBLICO, así que el
+    // invitado SÍ puede ver los nuevos negocios. `hasSessionOrGuest` lo deja
+    // pasar; un cold-start pre-login (sin sesión ni modo invitado) sigue
+    // cortando acá.
+    if (!di<AuthSessionService>().hasSessionOrGuest) return;
 
     // Location may not be ready yet at startup — retry up to 3 s.
     for (var i = 0; i < 10; i++) {

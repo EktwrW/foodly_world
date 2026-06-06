@@ -308,7 +308,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
         child: Stack(
           children: [
             Container(
-              height: 500,
+              height: authSessionService.isLoggedIn ? 500 : 410,
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
               padding: const EdgeInsets.only(bottom: 12),
@@ -322,7 +322,7 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
               ),
             ),
             Container(
-              height: 450,
+              height: authSessionService.isLoggedIn ? 450 : 360,
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -444,60 +444,61 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         },
                       ),
                     ),
-                    Flexible(
-                      child: ui.NeumorphicButton(
-                        onPressed: loggedUser != null
-                            ? () {
-                                locationService.updateLocationUserDM(loggedUser!);
-                                setState(
-                                  () => _selectedPlace = Place(
-                                    formattedAddress:
-                                        '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
-                                  ),
-                                );
-                                _refreshFeedsAfterLocationChange();
-                              }
-                            : null,
-                        style: ui.NeumorphicStyle(
-                          color: FoodlyThemes.primaryLighten73,
-                          depth: 2,
-                        ),
-                        child: SizedBox(
-                          height: 66,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 8,
-                            children: [
-                              Row(
-                                spacing: 8,
-                                children: [
-                                  const Icon(Icons.location_history_rounded, size: 18),
-                                  Expanded(
+                    if (authSessionService.isLoggedIn)
+                      Flexible(
+                        child: ui.NeumorphicButton(
+                          onPressed: loggedUser != null
+                              ? () {
+                                  locationService.updateLocationUserDM(loggedUser!);
+                                  setState(
+                                    () => _selectedPlace = Place(
+                                      formattedAddress:
+                                          '${loggedUser?.principalAddress?.address ?? '-'}, ${loggedUser?.principalAddress?.city ?? '-'}, ${loggedUser?.principalAddress?.zipCode ?? '-'}',
+                                    ),
+                                  );
+                                  _refreshFeedsAfterLocationChange();
+                                }
+                              : null,
+                          style: ui.NeumorphicStyle(
+                            color: FoodlyThemes.primaryLighten73,
+                            depth: 2,
+                          ),
+                          child: SizedBox(
+                            height: 66,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8,
+                              children: [
+                                Row(
+                                  spacing: 8,
+                                  children: [
+                                    const Icon(Icons.location_history_rounded, size: 18),
+                                    Expanded(
+                                      child: Text(
+                                        S.current.useSavedLocation,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: FoodlyTextStyles.captionPurpleBold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                      S.current.useSavedLocation,
-                                      maxLines: 1,
+                                      '${authSessionService.userSessionDM?.user.principalAddress?.address ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'} ${authSessionService.userSessionDM?.user.principalAddress?.zipCode != null ? ', ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}' : ''}',
+                                      style: FoodlyTextStyles.addressSmallText,
+                                      maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: FoodlyTextStyles.captionPurpleBold,
                                     ),
                                   ),
-                                ],
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '${authSessionService.userSessionDM?.user.principalAddress?.address ?? '-'}, ${authSessionService.userSessionDM?.user.principalAddress?.city ?? '-'} ${authSessionService.userSessionDM?.user.principalAddress?.zipCode != null ? ', ${authSessionService.userSessionDM?.user.principalAddress?.zipCode}' : ''}',
-                                    style: FoodlyTextStyles.addressSmallText,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
+                      )
                   ],
                 ),
               ),

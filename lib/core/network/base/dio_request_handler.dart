@@ -114,8 +114,20 @@ abstract class DioRequestHandler {
     if (authHeader.isNotEmpty && isBearer) {
       final activeToken = authSessionService.userSessionDM?.accessToken ??
           authSessionService.userSessionDM?.token;
-      options.headers[FoodlyStrings.AUTHORIZATION] =
-          '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
+      // Modo invitado (5.1.1.v) / sin sesión: NO mandamos `Authorization:
+      // Bearer null`. Los endpoints de descubrimiento (`/promotions/nearby`,
+      // `/business/new-releases`, `/business/nearby|search`, `/public/menu/*`)
+      // tienen auth Sanctum OPCIONAL: con un token inválido el BE podría
+      // 401-ear en vez de responder como anónimo. Quitamos el header para que
+      // el invitado reciba la respuesta pública. Una llamada genuinamente
+      // authed que se escape sin token recibirá 401 silencioso (el error
+      // handler + notifyTokenExpired ya guardan contra `!isLoggedIn`).
+      if (activeToken != null && activeToken.isNotEmpty) {
+        options.headers[FoodlyStrings.AUTHORIZATION] =
+            '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
+      } else {
+        options.headers.remove(FoodlyStrings.AUTHORIZATION);
+      }
     }
 
     return handler.next(options);

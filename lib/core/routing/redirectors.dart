@@ -24,6 +24,14 @@ abstract class GoRouterRedirector {
   static AuthSessionService get authSessionService => di<AuthSessionService>();
 
   static GoRouterRedirect requiresLogin() => (context, state) {
+        // Modo invitado (5.1.1.v): el invitado puede abrir las rutas de
+        // descubrimiento sin sesión. Las rutas NO browsable (reservas, perfil,
+        // etc.) siguen exigiendo login — el gate amable se dispara antes en el
+        // handler de la acción; esto es el backstop.
+        if (authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation)) {
+          return null;
+        }
+
         // Allow navigation while a session is being restored asynchronously
         // (tokens loaded from secure storage by RootBloc). The biometric guard
         // or token validation will handle protection once the restore completes.
@@ -59,6 +67,14 @@ abstract class GoRouterRedirector {
   /// For new routes that needs to be guarded:
   /// Add an enum value to AppGuardedResource and parseLocation to use this redirector
   static GoRouterRedirect requiresAccess() => (context, state) {
+        // Modo invitado (5.1.1.v): las rutas de descubrimiento no tienen módulo
+        // de permiso (no hay sesión). Sin este bypass, hasAccessToModule()
+        // devolvería false (userSessionDM == null) y el invitado caería a
+        // /no-access. Se permiten solo las rutas browsable.
+        if (authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation)) {
+          return null;
+        }
+
         // While a session restore is in progress (tokens loading from secure
         // storage), userSessionDM is still null so hasAccessToModule() would
         // always return false. Allow through — the biometric/auto-login flow

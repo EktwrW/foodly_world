@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/constants/ui_icons_data.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart' show ViewModeToggleButton;
@@ -138,22 +139,48 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
     );
   }
 
-  void navigateTo(int index) {
+  /// Modo invitado (5.1.1.v): las tabs privadas (saved, faved, comunidad,
+  /// notificaciones) disparan el [GuestGateSheet] en vez de navegar. Devuelve
+  /// `true` si interceptó el tap (no se debe cambiar de tab). La única tab
+  /// abierta al invitado es la 4 (foodly-main-page).
+  bool _maybeGuestGate(int index) {
+    if (!GuestGuard.isGuest) return false;
     switch (index) {
       case 0:
-        context.goNamed(AppRoutes.savedPromotions.name, pathParameters: {AppRoutes.routeIdParam: uuid ?? ''});
+        GuestGuard.requireAuth(GuestGateAction.savedPromotions);
+        return true;
+      case 1:
+        GuestGuard.requireAuth(GuestGateAction.favedBusiness);
+        return true;
+      case 2:
+        GuestGuard.requireAuth(GuestGateAction.community);
+        return true;
+      case 3:
+        GuestGuard.requireAuth(GuestGateAction.notifications);
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  void navigateTo(int index) {
+    // El invitado no tiene UUID → usamos el sentinel [AppRoutes.guestRouteId].
+    final navId = GuestGuard.isGuest ? AppRoutes.guestRouteId : (uuid ?? '');
+    switch (index) {
+      case 0:
+        context.goNamed(AppRoutes.savedPromotions.name, pathParameters: {AppRoutes.routeIdParam: navId});
         break;
       case 1:
-        context.goNamed(AppRoutes.favedBusiness.name, pathParameters: {AppRoutes.routeIdParam: uuid ?? ''});
+        context.goNamed(AppRoutes.favedBusiness.name, pathParameters: {AppRoutes.routeIdParam: navId});
         break;
       case 2:
-        context.goNamed(AppRoutes.usersCommunity.name, pathParameters: {AppRoutes.routeIdParam: uuid ?? ''});
+        context.goNamed(AppRoutes.usersCommunity.name, pathParameters: {AppRoutes.routeIdParam: navId});
         break;
       case 3:
-        context.goNamed(AppRoutes.notifications.name, pathParameters: {AppRoutes.routeIdParam: uuid ?? ''});
+        context.goNamed(AppRoutes.notifications.name, pathParameters: {AppRoutes.routeIdParam: navId});
         break;
       case 4:
-        context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: uuid ?? ''});
+        context.goNamed(AppRoutes.foodlyMainPage.name, pathParameters: {AppRoutes.routeIdParam: navId});
 
         break;
     }
@@ -238,6 +265,8 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
           isHidden ? FloatingActionButtonLocation.endFloat : FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: _FoodlyBottomNavBar(
         onTap: (index) {
+          // Invitado tocando una tab privada → gate, sin cambiar de tab.
+          if (_maybeGuestGate(index)) return;
           _bottomNavIndex.value = index;
           navigateTo(index);
         },

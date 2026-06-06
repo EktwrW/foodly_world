@@ -1,13 +1,14 @@
 import 'dart:ui' as dart_ui show ImageFilter;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AppRouter, di, LoadingWidgetFoodlyIso;
+import 'package:foodly_world/core/core_exports.dart' show LoadingWidgetFoodlyIso, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -18,7 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
-import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
+import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart';
@@ -38,7 +39,7 @@ class TopOffersWidget extends StatefulWidget {
 }
 
 class _TopOffersWidgetState extends State<TopOffersWidget> {
-  static final _carouselController = FoodlyCarouselController();
+  static final _carouselController = CarouselSliderController();
 
   @override
   void initState() {
@@ -82,11 +83,15 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
               );
             }
 
-            return FoodlyCarousel(
-              controller: _carouselController,
-              height: 363,
-              autoPlay: true,
-              onPageChanged: (index) => _onPageChanged(index, promotions, vm.hasMore),
+            return CarouselSlider(
+              carouselController: _carouselController,
+              options: CarouselOptions(
+                viewportFraction: .83,
+                enableInfiniteScroll: promotions.length > 2,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                onPageChanged: (index, reason) => _onPageChanged(index, promotions, vm.hasMore),
+              ),
               items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
             );
           },
@@ -104,41 +109,42 @@ class NearbyPromoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<NearbyPromotionsCubit>();
 
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      color: ui.NeumorphicColors.decorationMaxWhiteColor,
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              // Media (external link, GCS image, or placeholder)
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: _buildMedia(),
-                ),
+    return Stack(
+      children: [
+        Column(
+          children: [
+            // Media (external link, GCS image, or placeholder)
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                child: _buildMedia(),
               ),
-            ],
-          ),
-          Align(
-            alignment: AlignmentGeometry.bottomCenter,
-            child: _BackdropRoundedRectangle(promo),
-          ),
-
-          // Favorite button
-          Positioned(
-            right: 6,
-            top: 6,
-            child: UIFavoriteWidget(
-              liked: promo.isFavorited,
-              addFavoriteIcon: FontAwesome.heart_circle_plus_solid,
-              isFavoriteIcon: FontAwesome.heart_circle_check_solid,
-              onPressed: () => cubit.toggleFavorite(promo.uuid),
             ),
+          ],
+        ),
+        Align(
+          alignment: AlignmentGeometry.bottomCenter,
+          child: _BackdropRoundedRectangle(promo),
+        ),
+
+        // Favorite button
+        Positioned(
+          right: 6,
+          top: 6,
+          child: UIFavoriteWidget(
+            liked: promo.isFavorited,
+            addFavoriteIcon: FontAwesome.heart_circle_plus_solid,
+            isFavoriteIcon: FontAwesome.heart_circle_check_solid,
+            onPressed: () {
+              // Modo invitado (5.1.1.v): guardar promos requiere cuenta. Esta
+              // card usa UIFavoriteWidget directo (no el FavoriteButton compartido),
+              // así que el gate va acá explícito.
+              if (!GuestGuard.requireAuth(GuestGateAction.favorite)) return;
+              cubit.toggleFavorite(promo.uuid);
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -174,26 +180,27 @@ class _BackdropRoundedRectangle extends StatelessWidget {
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: BackdropFilter(
-              filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding: const EdgeInsets.all(6),
-                child: SizedBox(
-                  width: constraints.maxWidth * 0.9,
-                  height: constraints.maxHeight * 0.36,
+          Flexible(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: BackdropFilter(
+                filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.all(6),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // Title + subtitle
-                      Expanded(
+                      Flexible(
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Flexible(
@@ -234,6 +241,74 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            // Business name + rating
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      promo.businessName,
+                                      style: FoodlyTextStyles.promoBusinessName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    RatingBar.builder(
+                                      initialRating: promo.ratingAvg,
+                                      itemSize: 13,
+                                      minRating: 1,
+                                      allowHalfRating: true,
+                                      ignoreGestures: true,
+                                      itemBuilder: (context, _) =>
+                                          const Icon(Icons.star, color: Colors.amber, size: 13),
+                                      onRatingUpdate: (_) {},
+                                    ),
+                                  ],
+                                ).paddingSymmetric(horizontal: 6, vertical: 6),
+                                Row(
+                                  children: [
+                                    StatefulBuilder(
+                                      builder: (_, setState) {
+                                        return CustomRoundedNeumorphicButton(
+                                          onPressed: () async {
+                                            if (isLoading) return;
+
+                                            await Future.microtask(() => setState(() => isLoading = true));
+
+                                            await di<BusinessRepo>().getPromotionByUuid(promo.uuid).then((result) {
+                                              result.when(
+                                                success: (promo) => showModalBottomSheet(
+                                                  context: context,
+                                                  isScrollControlled: true,
+                                                  backgroundColor: Colors.transparent,
+                                                  barrierColor: Colors.black45,
+                                                  builder: (_) => _PromoDetailSheet(promoDM: promo),
+                                                ),
+                                                failure: (e) => FoodlySnackbars.errorGeneric(
+                                                    context, S.current.failedToLoadPromotionDetails),
+                                              );
+                                            });
+
+                                            Future.microtask(() => setState(() => isLoading = false));
+                                          },
+                                          tooltip: S.current.viewPromotion,
+                                          iconSize: 16,
+                                          diameter: 16,
+                                          iconData: Bootstrap.arrows_fullscreen,
+                                          child: isLoading
+                                              ? const SizedBox.square(
+                                                  dimension: 16,
+                                                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
+                                                )
+                                              : null,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ).paddingSymmetric(vertical: 6),
+                              ],
+                            ).paddingSymmetric(horizontal: 6),
                           ],
                         ),
                       ),
@@ -243,89 +318,9 @@ class _BackdropRoundedRectangle extends StatelessWidget {
               ),
             ),
           ),
-          // Business name + rating
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    promo.businessName,
-                    style: FoodlyTextStyles.promoBusinessName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  RatingBar.builder(
-                    initialRating: promo.ratingAvg,
-                    itemSize: 13,
-                    minRating: 1,
-                    allowHalfRating: true,
-                    ignoreGestures: true,
-                    itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 13),
-                    onRatingUpdate: (_) {},
-                  ),
-                ],
-              ).paddingSymmetric(horizontal: 6, vertical: 6),
-              Row(
-                spacing: 16,
-                children: [
-                  CustomRoundedNeumorphicButton(
-                    onPressed: (promo.businessUuid.isNotEmpty)
-                        ? () => di<AppRouter>().appRouter.goNamed(
-                              AppRoutes.visitBusiness.name,
-                              pathParameters: {AppRoutes.routeIdParam: promo.businessUuid},
-                            )
-                        : null,
-                    tooltip: S.current.visitBusinessPage,
-                    iconSize: 16,
-                    diameter: 16,
-                    iconData: Bootstrap.shop_window,
-                  ),
-                  StatefulBuilder(
-                    builder: (_, setState) {
-                      return CustomRoundedNeumorphicButton(
-                        onPressed: () async {
-                          if (isLoading) return;
-
-                          await Future.microtask(() => setState(() => isLoading = true));
-
-                          await di<BusinessRepo>().getPromotionByUuid(promo.uuid).then((result) {
-                            result.when(
-                              success: (promo) => showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Colors.black45,
-                                builder: (_) => _PromoDetailSheet(promoDM: promo),
-                              ),
-                              failure: (e) =>
-                                  FoodlySnackbars.errorGeneric(context, S.current.failedToLoadPromotionDetails),
-                            );
-                          });
-
-                          Future.microtask(() => setState(() => isLoading = false));
-                        },
-                        tooltip: S.current.viewPromotion,
-                        iconSize: 16,
-                        diameter: 16,
-                        iconData: Bootstrap.arrows_fullscreen,
-                        child: isLoading
-                            ? const SizedBox.square(
-                                dimension: 16,
-                                child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                              )
-                            : null,
-                      );
-                    },
-                  ),
-                ],
-              ).paddingSymmetric(horizontal: 6, vertical: 6),
-            ],
-          ).paddingSymmetric(horizontal: 12),
         ],
       );
-    }).paddingBottom(6);
+    }).paddingAll(6);
   }
 }
 
@@ -433,7 +428,7 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
     final subtitle = widget.isError ? s.promosEmptyErrorSubtitle : s.promosEmptySubtitle;
 
     return SizedBox(
-      height: 369,
+      height: 333,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -451,12 +446,13 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
                     aspectRatio: 16 / 9,
                     child: _buildVideo(),
                   ),
-                ).paddingBottom(93),
+                ).paddingBottom(96),
                 Column(
+                  spacing: 3,
                   children: [
                     _BackdropEmptyMessage(title: title, subtitle: subtitle),
                     SizedBox(
-                      width: 239,
+                      width: 236,
                       child: CustomNeumorphicButton(
                         onPressed: widget.onRetry,
                         type: CustomNeumorphicBtnType.tertiary,

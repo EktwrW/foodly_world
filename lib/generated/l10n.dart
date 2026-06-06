@@ -3814,6 +3814,126 @@ class S {
     );
   }
 
+  /// `Explore`
+  String get exploreAsGuest {
+    return Intl.message('Explore', name: 'exploreAsGuest', desc: '', args: []);
+  }
+
+  /// `Guest`
+  String get guestUserName {
+    return Intl.message('Guest', name: 'guestUserName', desc: '', args: []);
+  }
+
+  /// `Create your account`
+  String get guestGateTitle {
+    return Intl.message(
+      'Create your account',
+      name: 'guestGateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to book a table.`
+  String get guestGateReserve {
+    return Intl.message(
+      'Log in or sign up to book a table.',
+      name: 'guestGateReserve',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to save favorites.`
+  String get guestGateFavorite {
+    return Intl.message(
+      'Log in or sign up to save favorites.',
+      name: 'guestGateFavorite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to leave a review.`
+  String get guestGateReview {
+    return Intl.message(
+      'Log in or sign up to leave a review.',
+      name: 'guestGateReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to post in the community.`
+  String get guestGatePost {
+    return Intl.message(
+      'Log in or sign up to post in the community.',
+      name: 'guestGatePost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to see your saved promotions.`
+  String get guestGateSaved {
+    return Intl.message(
+      'Log in or sign up to see your saved promotions.',
+      name: 'guestGateSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to see your favorite businesses.`
+  String get guestGateFaved {
+    return Intl.message(
+      'Log in or sign up to see your favorite businesses.',
+      name: 'guestGateFaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to see the community.`
+  String get guestGateCommunity {
+    return Intl.message(
+      'Log in or sign up to see the community.',
+      name: 'guestGateCommunity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to see your notifications.`
+  String get guestGateNotifications {
+    return Intl.message(
+      'Log in or sign up to see your notifications.',
+      name: 'guestGateNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to access your profile.`
+  String get guestGateProfile {
+    return Intl.message(
+      'Log in or sign up to access your profile.',
+      name: 'guestGateProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in or sign up to use this feature.`
+  String get guestGateGeneric {
+    return Intl.message(
+      'Log in or sign up to use this feature.',
+      name: 'guestGateGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign Up`
   String get signup {
     return Intl.message('Sign Up', name: 'signup', desc: '', args: []);

@@ -1,12 +1,13 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
+import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap, Brand, Brands;
@@ -136,50 +137,57 @@ class _AppLoginWidgetsState extends State<AppLoginWidgets> {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               context.goNamed(AppRoutes.signUp.name);
             },
-            margin: EdgeInsets.fromLTRB(
+            margin: const EdgeInsets.fromLTRB(
               UIDimens.SCREEN_PADDING_MOB,
               UIDimens.SCREEN_PADDING_MOB,
               UIDimens.SCREEN_PADDING_MOB,
-              isIOS ? 0 : UIDimens.SCREEN_PADDING_MOB,
+              UIDimens.SCREEN_PADDING_MOB,
             ),
             text: S.current.signup,
             type: CustomNeumorphicBtnType.tertiary,
             disabled: false,
           ),
         ),
-        if (isIOS)
-          FadeIn(
-            delay: Durations.long1,
-            child: CustomNeumorphicButton(
-              key: const Key('apple-sign-in-btn'),
-              onPressed: () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                cubit.appleSignIn();
-              },
-              padding: const EdgeInsets.all(12),
-              leading: const Icon(Bootstrap.apple),
-              text: S.current.signInWithApple,
-              shape: ui.NeumorphicShape.convex,
-              disabled: false,
-              type: CustomNeumorphicBtnType.outlined,
-              margin: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
-            ),
-          ),
         FadeIn(
           delay: Durations.long3,
-          child: CustomNeumorphicButton(
-            key: const Key('google-sign-in-btn'),
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              cubit.googleSignIn();
-            },
-            padding: const EdgeInsets.all(12),
-            leading: Brand(Brands.google, size: 26),
-            text: S.current.signInWithGoogle,
-            shape: ui.NeumorphicShape.convex,
-            disabled: false,
-            type: CustomNeumorphicBtnType.outlined,
-          ).paddingBottom(9),
+          child: Row(
+            spacing: isIOS ? 0 : 39,
+            mainAxisAlignment: isIOS ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: CustomRoundedNeumorphicButton(
+                  key: const Key('google-sign-in-btn'),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    cubit.googleSignIn();
+                  },
+                  diameter: 56,
+                  iconSize: 48,
+                  depth: 1,
+                  padding: const EdgeInsets.all(6),
+                  tooltip: S.current.signInWithGoogle,
+                  child: Brand(Brands.google, size: 43),
+                ),
+              ),
+              if (isIOS)
+                Flexible(
+                  child: CustomRoundedNeumorphicButton(
+                    key: const Key('apple-sign-in-btn'),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      cubit.appleSignIn();
+                    },
+                    diameter: 56,
+                    iconSize: 48,
+                    depth: 1,
+                    padding: const EdgeInsets.all(6),
+                    tooltip: S.current.signInWithApple,
+                    child: const Icon(Bootstrap.apple, size: 43),
+                  ),
+                ),
+              const Flexible(child: FingerprintButtonLogin()),
+            ],
+          ).paddingVertical(9),
         ),
       ],
     );

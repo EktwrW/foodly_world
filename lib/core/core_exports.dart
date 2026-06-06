@@ -34,6 +34,7 @@ export 'package:foodly_world/core/network/users/me_client.dart';
 export 'package:foodly_world/core/network/users/me_repo.dart';
 export 'package:foodly_world/core/routing/app_router.dart';
 export 'package:foodly_world/core/routing/app_routes.dart';
+export 'package:foodly_world/core/routing/guest_routes.dart';
 export 'package:foodly_world/core/routing/redirectors.dart';
 export 'package:foodly_world/core/services/auth_session_service.dart';
 export 'package:foodly_world/core/services/dependency_injection_service.dart';
