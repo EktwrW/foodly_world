@@ -2,11 +2,10 @@ import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/core/routing/app_routes.dart' show AppRoutes;
-import 'package:foodly_world/core/services/dependency_injection_service.dart' show AppRouter, di;
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/views/legal/legal_content_view.dart' show showLegalDoc, LegalDoc;
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 
 class TermsAndPrivacyPolicyWdg extends StatelessWidget {
@@ -21,8 +20,6 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appRouter = di<AppRouter>();
-
     return AnimatedOpacity(
       duration: Durations.medium2,
       opacity: enabled ? 1.0 : .3,
@@ -40,15 +37,13 @@ class TermsAndPrivacyPolicyWdg extends StatelessWidget {
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan2,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.termsConditions.name),
+                    recognizer: TapGestureRecognizer()..onTap = () => showLegalDoc(context, LegalDoc.terms),
                   ),
                   TextSpan(text: ', ${S.current.termsPrivacyTextSpan3} '),
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan4,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                    recognizer: TapGestureRecognizer()..onTap = () => showLegalDoc(context, LegalDoc.privacy),
                   ),
                   const TextSpan(text: '.'),
                 ],
@@ -73,8 +68,6 @@ class TermsAndPrivacyPolicyBusinessWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appRouter = di<AppRouter>();
-
     return AnimatedOpacity(
       duration: Durations.medium2,
       opacity: enabled ? 1.0 : .3,
@@ -92,15 +85,13 @@ class TermsAndPrivacyPolicyBusinessWdg extends StatelessWidget {
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan2,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.termsConditions.name),
+                    recognizer: TapGestureRecognizer()..onTap = () => showLegalDoc(context, LegalDoc.terms),
                   ),
                   TextSpan(text: ', ${S.current.termsPrivacyTextSpan3} '),
                   TextSpan(
                     text: S.current.termsPrivacyTextSpan4,
                     style: FoodlyTextStyles.primaryBodyBold,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => appRouter.appRouter.goNamed(AppRoutes.privacyPolicy.name),
+                    recognizer: TapGestureRecognizer()..onTap = () => showLegalDoc(context, LegalDoc.privacy),
                   ),
                   const TextSpan(text: '.'),
                 ],

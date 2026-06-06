@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
@@ -12,6 +13,7 @@ import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.dart';
 import 'package:foodly_world/ui/shared_widgets/moderation/moderation_menu_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -121,6 +123,9 @@ class PostCard extends StatelessWidget {
             authorUuid: post.userUuid,
             authorName: post.userName,
             iconSize: 20,
+            // Al bloquear, quita inmediatamente del feed local todos los posts
+            // del usuario bloqueado, sin esperar refresh del servidor (1.2).
+            onModerated: () => context.read<SocialCubit>().removeBlockedUserPosts(post.userUuid),
           ),
       ],
     ).paddingOnly(left: 14, right: 4, top: 12);

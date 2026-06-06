@@ -2,13 +2,12 @@ import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicColors, NeumorphicShape;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/core/routing/app_routes.dart' show AppRoutes;
-import 'package:foodly_world/core/services/dependency_injection_service.dart' show AppRouter, di;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/legal/legal_content_view.dart' show LegalDoc, showLegalDoc;
 
 /// Diálogo de consentimiento de Términos y Política de Privacidad para el alta
 /// social (Apple/Google), que ya no pasa por el form donde se aceptaban. Es
@@ -25,10 +24,13 @@ class SocialConsentDialog extends StatefulWidget {
 class _SocialConsentDialogState extends State<SocialConsentDialog> {
   bool _accepted = false;
 
-  TextSpan _link(String text, String routeName) => TextSpan(
+  // Abre T&C/Privacy SOBRE el diálogo (Navigator local), no con GoRouter: así
+  // el diálogo de consentimiento no se destruye y el back vuelve a él, sin
+  // romper el flujo de alta social (bug detectado por el revisor — 5.1.1.v).
+  TextSpan _link(BuildContext context, String text, LegalDoc doc) => TextSpan(
         text: text,
         style: FoodlyTextStyles.primaryBodyBold.copyWith(color: FoodlyThemes.primaryFoodly),
-        recognizer: TapGestureRecognizer()..onTap = () => di<AppRouter>().appRouter.goNamed(routeName),
+        recognizer: TapGestureRecognizer()..onTap = () => showLegalDoc(context, doc),
       );
 
   @override
@@ -62,9 +64,9 @@ class _SocialConsentDialogState extends State<SocialConsentDialog> {
                       TextSpan(
                         children: [
                           TextSpan(text: '${S.current.termsPrivacyTextSpan1} '),
-                          _link(S.current.termsPrivacyTextSpan2, AppRoutes.termsConditions.name),
+                          _link(context, S.current.termsPrivacyTextSpan2, LegalDoc.terms),
                           TextSpan(text: ', ${S.current.termsPrivacyTextSpan3} '),
-                          _link(S.current.termsPrivacyTextSpan4, AppRoutes.privacyPolicy.name),
+                          _link(context, S.current.termsPrivacyTextSpan4, LegalDoc.privacy),
                           const TextSpan(text: '.'),
                         ],
                       ),

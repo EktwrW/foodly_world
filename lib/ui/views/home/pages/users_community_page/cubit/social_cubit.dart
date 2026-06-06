@@ -185,6 +185,15 @@ class SocialCubit extends Cubit<SocialState> {
     }
   }
 
+  /// Quita del feed local TODOS los posts de un usuario recién bloqueado
+  /// (App Store 1.2), sin esperar un refresh del servidor — feedback inmediato.
+  void removeBlockedUserPosts(String userUuid) {
+    if (userUuid.isEmpty) return;
+    final filtered = _vm.posts.where((p) => p.userUuid != userUuid).toList();
+    _vm = _vm.copyWith(posts: filtered);
+    emit(SocialState.loaded(_vm));
+  }
+
   /// Elimina un post (optimistic update)
   Future<void> deletePost(String uuid) async {
     if (!_authService.isLoggedIn) return;
