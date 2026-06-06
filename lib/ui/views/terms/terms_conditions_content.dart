@@ -92,12 +92,20 @@ const _en = [
         '• Grant Foodly a non-exclusive, worldwide, royalty-free licence to display, distribute, and promote your content within the App.\n'
         '• Confirm that you own or have the right to share the content.\n'
         '• Accept full responsibility for the content you publish.\n\n'
-        'YOU MUST NOT POST CONTENT THAT:\n'
-        '• Is false, defamatory, abusive, threatening, or discriminatory.\n'
+        'ZERO-TOLERANCE POLICY\n'
+        'Foodly has ZERO TOLERANCE for objectionable content and for abusive users. YOU MUST NOT POST CONTENT THAT:\n'
+        '• Is false, defamatory, abusive, threatening, discriminatory, hateful, or harassing.\n'
+        '• Is obscene, pornographic, or sexually explicit.\n'
+        '• Promotes violence, self-harm, or any illegal activity.\n'
         '• Infringes any third-party intellectual property rights.\n'
         '• Contains personal data of third parties without their consent.\n'
-        '• Promotes illegal activity or is spam.\n\n'
-        'Foodly reserves the right to remove any User Content that violates these Terms without prior notice.',
+        '• Is spam or commercial solicitation.\n\n'
+        'CONTENT MODERATION\n'
+        '• Submissions are automatically screened for objectionable language and may be rejected.\n'
+        '• Every user can REPORT objectionable content and BLOCK abusive users within the App.\n'
+        '• Reported content is reviewed and, where it violates these Terms, removed within 24 hours; the responsible user may be suspended or permanently banned.\n'
+        '• Content that receives multiple reports is automatically hidden pending review.\n\n'
+        'By posting User Content you agree to these Community Guidelines. Foodly reserves the right to remove any User Content and to suspend or terminate any account that violates these Terms, without prior notice.',
   ),
   TermsSection(
     heading: 'AI-Powered Features',
@@ -264,11 +272,20 @@ const _es = [
         '• Otorgas a Foodly una licencia no exclusiva y mundial para mostrar y promover tu contenido dentro de la App.\n'
         '• Confirmas que eres propietario/a del contenido o tienes derecho a compartirlo.\n'
         '• Asumes plena responsabilidad por el contenido que publicas.\n\n'
-        'NO DEBES PUBLICAR CONTENIDO QUE:\n'
-        '• Sea falso, difamatorio, abusivo, amenazante o discriminatorio.\n'
+        'POLÍTICA DE TOLERANCIA CERO\n'
+        'Foodly tiene TOLERANCIA CERO con el contenido objetable y con los usuarios abusivos. NO DEBES PUBLICAR CONTENIDO QUE:\n'
+        '• Sea falso, difamatorio, abusivo, amenazante, discriminatorio, de odio o acosador.\n'
+        '• Sea obsceno, pornográfico o sexualmente explícito.\n'
+        '• Promueva la violencia, la autolesión o cualquier actividad ilegal.\n'
         '• Infrinja derechos de propiedad intelectual de terceros.\n'
         '• Contenga datos personales de terceros sin su consentimiento.\n'
-        '• Promueva actividades ilegales o sea spam.',
+        '• Sea spam o solicitación comercial.\n\n'
+        'MODERACIÓN DE CONTENIDO\n'
+        '• Las publicaciones se filtran automáticamente por lenguaje objetable y pueden ser rechazadas.\n'
+        '• Cada usuario puede REPORTAR contenido objetable y BLOQUEAR usuarios abusivos dentro de la App.\n'
+        '• El contenido reportado se revisa y, si infringe estos Términos, se elimina dentro de las 24 horas; el usuario responsable puede ser suspendido o expulsado de forma permanente.\n'
+        '• El contenido que recibe varios reportes se oculta automáticamente a la espera de revisión.\n\n'
+        'Al publicar Contenido de Usuario aceptas estas Normas de la Comunidad. Foodly se reserva el derecho de eliminar cualquier Contenido de Usuario y de suspender o cancelar cualquier cuenta que infrinja estos Términos, sin previo aviso.',
   ),
   TermsSection(
     heading: 'Funciones de Inteligencia Artificial',
@@ -432,11 +449,20 @@ const _pt = [
         '• Concede à Foodly uma licença não exclusiva e mundial para exibir e promover o seu conteúdo dentro da App.\n'
         '• Confirma que é proprietário/a do conteúdo ou tem o direito de o partilhar.\n'
         '• Assume plena responsabilidade pelo conteúdo que publica.\n\n'
-        'NÃO DEVE PUBLICAR CONTEÚDO QUE:\n'
-        '• Seja falso, difamatório, abusivo, ameaçador ou discriminatório.\n'
+        'POLÍTICA DE TOLERÂNCIA ZERO\n'
+        'A Foodly tem TOLERÂNCIA ZERO para conteúdo censurável e para utilizadores abusivos. NÃO DEVE PUBLICAR CONTEÚDO QUE:\n'
+        '• Seja falso, difamatório, abusivo, ameaçador, discriminatório, de ódio ou assediante.\n'
+        '• Seja obsceno, pornográfico ou sexualmente explícito.\n'
+        '• Promova a violência, a automutilação ou qualquer atividade ilegal.\n'
         '• Infrinja direitos de propriedade intelectual de terceiros.\n'
         '• Contenha dados pessoais de terceiros sem o seu consentimento.\n'
-        '• Promova atividades ilegais ou seja spam.',
+        '• Seja spam ou solicitação comercial.\n\n'
+        'MODERAÇÃO DE CONTEÚDO\n'
+        '• As publicações são filtradas automaticamente por linguagem censurável e podem ser rejeitadas.\n'
+        '• Cada utilizador pode DENUNCIAR conteúdo censurável e BLOQUEAR utilizadores abusivos dentro da App.\n'
+        '• O conteúdo denunciado é analisado e, se violar estes Termos, removido no prazo de 24 horas; o utilizador responsável pode ser suspenso ou banido permanentemente.\n'
+        '• O conteúdo que recebe várias denúncias é ocultado automaticamente até análise.\n\n'
+        'Ao publicar Conteúdo do Utilizador aceita estas Normas da Comunidade. A Foodly reserva-se o direito de remover qualquer Conteúdo do Utilizador e de suspender ou terminar qualquer conta que viole estes Termos, sem aviso prévio.',
   ),
   TermsSection(
     heading: 'Funcionalidades de Inteligência Artificial',

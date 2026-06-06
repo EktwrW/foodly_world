@@ -3824,6 +3824,181 @@ class S {
     return Intl.message('Guest', name: 'guestUserName', desc: '', args: []);
   }
 
+  /// `Report`
+  String get reportContent {
+    return Intl.message('Report', name: 'reportContent', desc: '', args: []);
+  }
+
+  /// `Why are you reporting this content?`
+  String get reportContentSubtitle {
+    return Intl.message(
+      'Why are you reporting this content?',
+      name: 'reportContentSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit report`
+  String get reportSubmit {
+    return Intl.message(
+      'Submit report',
+      name: 'reportSubmit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thanks for your report. Our team will review it.`
+  String get reportSentSuccess {
+    return Intl.message(
+      'Thanks for your report. Our team will review it.',
+      name: 'reportSentSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spam or scam`
+  String get reportReasonSpam {
+    return Intl.message(
+      'Spam or scam',
+      name: 'reportReasonSpam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offensive or inappropriate`
+  String get reportReasonOffensive {
+    return Intl.message(
+      'Offensive or inappropriate',
+      name: 'reportReasonOffensive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Harassment or bullying`
+  String get reportReasonHarassment {
+    return Intl.message(
+      'Harassment or bullying',
+      name: 'reportReasonHarassment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hate speech`
+  String get reportReasonHateSpeech {
+    return Intl.message(
+      'Hate speech',
+      name: 'reportReasonHateSpeech',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sexual content`
+  String get reportReasonSexual {
+    return Intl.message(
+      'Sexual content',
+      name: 'reportReasonSexual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Violence or dangerous`
+  String get reportReasonViolence {
+    return Intl.message(
+      'Violence or dangerous',
+      name: 'reportReasonViolence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `False information`
+  String get reportReasonMisinformation {
+    return Intl.message(
+      'False information',
+      name: 'reportReasonMisinformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get reportReasonOther {
+    return Intl.message('Other', name: 'reportReasonOther', desc: '', args: []);
+  }
+
+  /// `Block user`
+  String get blockUser {
+    return Intl.message('Block user', name: 'blockUser', desc: '', args: []);
+  }
+
+  /// `Block {name}? You won't see their content anymore, and they won't see yours.`
+  String blockUserConfirm(String name) {
+    return Intl.message(
+      'Block $name? You won\'t see their content anymore, and they won\'t see yours.',
+      name: 'blockUserConfirm',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `User blocked`
+  String get blockedSuccess {
+    return Intl.message(
+      'User blocked',
+      name: 'blockedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this user`
+  String get thisUser {
+    return Intl.message('this user', name: 'thisUser', desc: '', args: []);
+  }
+
+  /// `Blocked users`
+  String get blockedUsers {
+    return Intl.message(
+      'Blocked users',
+      name: 'blockedUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't blocked anyone.`
+  String get blockedUsersEmpty {
+    return Intl.message(
+      'You haven\'t blocked anyone.',
+      name: 'blockedUsersEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unblock`
+  String get unblock {
+    return Intl.message('Unblock', name: 'unblock', desc: '', args: []);
+  }
+
+  /// `By posting, you agree to our Community Guidelines.`
+  String get communityGuidelinesNotice {
+    return Intl.message(
+      'By posting, you agree to our Community Guidelines.',
+      name: 'communityGuidelinesNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create your account`
   String get guestGateTitle {
     return Intl.message(

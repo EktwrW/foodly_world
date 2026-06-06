@@ -30,6 +30,7 @@ import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
 import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
 import 'package:foodly_world/ui/views/reservations/my_reservations_page.dart';
+import 'package:foodly_world/ui/views/settings/blocked_users_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_business_page.dart';
 import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
@@ -571,6 +572,7 @@ class AppRouter {
           _goRouteWithTransition(AppRoutes.privacyPolicy, const PrivacyPolicyPage(), []),
           _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
           _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
+          _goRouteWithTransition(AppRoutes.blockedUsers, const BlockedUsersPage(), [RedirectRoute.requiresLogin]),
           _goRouteWithTransition(AppRoutes.about, const AboutPage(), [RedirectRoute.requiresLogin]),
           GoRoute(
             path: AppRoutes.managePromotions.path,

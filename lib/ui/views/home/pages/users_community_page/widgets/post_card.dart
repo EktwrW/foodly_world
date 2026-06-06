@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
+import 'package:foodly_world/core/network/moderation/moderation_repo.dart' show ReportableType;
 import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/moderation/moderation_menu_button.dart';
 import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -111,6 +113,14 @@ class PostCard extends StatelessWidget {
                 ),
               ),
             ],
+          )
+        else
+          ModerationMenuButton(
+            type: ReportableType.post,
+            contentUuid: post.uuid,
+            authorUuid: post.userUuid,
+            authorName: post.userName,
+            iconSize: 20,
           ),
       ],
     ).paddingOnly(left: 14, right: 4, top: 12);

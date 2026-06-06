@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, AuthSessionService, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
+import 'package:foodly_world/core/network/moderation/moderation_repo.dart' show ReportableType;
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/moderation/moderation_menu_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus/icons_plus.dart' show Bootstrap;
@@ -165,6 +167,13 @@ class ReviewCard extends StatelessWidget {
                                         ),
                                       ),
                                     ],
+                                  ).paddingOnly(left: 3)
+                                else
+                                  ModerationMenuButton(
+                                    type: ReportableType.review,
+                                    contentUuid: review.reviewUuid ?? '',
+                                    authorUuid: review.userUuid ?? '',
+                                    authorName: review.userName ?? '',
                                   ).paddingOnly(left: 3),
                               ],
                             ),
