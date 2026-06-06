@@ -116,6 +116,7 @@ class _ReportContentSheetState extends State<_ReportContentSheet> {
                         onPressed: _selected == null || _sending ? null : _submit,
                         text: _sending ? '...' : S.current.reportSubmit,
                       ),
+                      const SizedBox(height: 100),
                     ],
                   ),
                 ),
