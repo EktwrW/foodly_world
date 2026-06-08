@@ -69,19 +69,17 @@ class FoodlyStrings {
 
   // Store URLs (producción).
   //
-  // Ambas son DETERMINÍSTICAS y no dependen de que la store ya haya
-  // publicado para conocerlas:
-  //  - Play Store usa el `applicationId` de Android
-  //    (`com.foodlysolutions.app`, ver `android/app/build.gradle`).
-  //  - App Store usa el App ID numérico de App Store Connect
-  //    (`6761689908`, visible en la URL de la ficha de la app).
-  //
-  // Funcionan globalmente en cuanto cada store apruebe y publique la
-  // release; antes de eso devuelven "page not found". Si más adelante
-  // migramos a un short link bajo `foodly.solutions` que redirija por
-  // User-Agent, éste es el único lugar que cambia.
+  //  - Play Store: usa el `applicationId` de Android
+  //    (`com.foodlysolutions.app`). Google Play resuelve el listado regional
+  //    y la disponibilidad por sí solo → link directo sin código de país.
+  //  - App Store: NO usamos el link directo `apps.apple.com/app/id...` porque
+  //    Apple no redirige por geo-IP y un link sin país cae al storefront de
+  //    EE.UU. (donde la app no está disponible → "page not found"). En su
+  //    lugar apuntamos al geo-redirector del backend (`/dl/ios`, ver
+  //    `routes/web.php`), que detecta el país vía Cloudflare y hace 302 al
+  //    storefront correcto. Único lugar a tocar si cambia el esquema.
   static const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.foodlysolutions.app';
-  static const APP_STORE_URL = 'https://apps.apple.com/app/id6761689908';
+  static const APP_STORE_URL = 'https://api.foodly.solutions/dl/ios';
 
   /// Switch global de visibilidad del CTA de App Store en la UI (botón de
   /// descarga en el menú público, share en About Us, etc.). Mientras Apple
@@ -89,5 +87,8 @@ class FoodlyStrings {
   /// devuelve "page not found". Al aprobarse la primera versión iOS,
   /// flipear a `true` y todas las superficies que lo consultan habilitan
   /// el path de App Store sin más cambios.
-  static const IOS_APP_LIVE = false;
+  // 2026-06-08: Apple aprobó y publicó Foodly (1.8.0) en PT/AR/VE → flag en
+  // true. Habilita el CTA de App Store en About Us y en el app bar del menú
+  // público.
+  static const IOS_APP_LIVE = true;
 }
