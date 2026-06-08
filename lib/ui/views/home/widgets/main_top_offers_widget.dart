@@ -427,50 +427,47 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
     final title = widget.isError ? s.promosEmptyErrorTitle : s.promosEmptyTitle;
     final subtitle = widget.isError ? s.promosEmptyErrorSubtitle : s.promosEmptySubtitle;
 
-    return SizedBox(
-      height: 333,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Card con video + blur backdrop overlay — mismo shape que `NearbyPromoCard`
-          // para mantener continuidad visual cuando aparezcan promos reales.
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            color: ui.NeumorphicColors.decorationMaxWhiteColor,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: _buildVideo(),
-                  ),
-                ).paddingBottom(96),
-                Column(
-                  spacing: 3,
-                  children: [
-                    _BackdropEmptyMessage(title: title, subtitle: subtitle),
-                    SizedBox(
-                      width: 236,
-                      child: CustomNeumorphicButton(
-                        onPressed: widget.onRetry,
-                        type: CustomNeumorphicBtnType.tertiary,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        text: s.retry,
-                        leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                        disabled: false,
-                        fontSize: 12.3,
-                        bosShapeRadius: 3.9,
-                      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Card con video + blur backdrop overlay — mismo shape que `NearbyPromoCard`
+        // para mantener continuidad visual cuando aparezcan promos reales.
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          color: ui.NeumorphicColors.decorationMaxWhiteColor,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: _buildVideo(),
+                ),
+              ).paddingBottom(96),
+              Column(
+                spacing: 3,
+                children: [
+                  _BackdropEmptyMessage(title: title, subtitle: subtitle),
+                  SizedBox(
+                    width: 236,
+                    child: CustomNeumorphicButton(
+                      onPressed: widget.onRetry,
+                      type: CustomNeumorphicBtnType.tertiary,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      text: s.retry,
+                      leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+                      disabled: false,
+                      fontSize: 12.3,
+                      bosShapeRadius: 3.9,
                     ),
-                  ],
-                ).paddingBottom(11),
-              ],
-            ),
+                  ),
+                ],
+              ).paddingBottom(11),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
