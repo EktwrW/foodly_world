@@ -267,7 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Import with AI",
     ),
     "aiMenuImportEmptyStateManualHint": MessageLookupByLibrary.simpleMessage(
-      "You can also add items one by one with the + button",
+      "To add them by hand, open the floating menu and tap Edit",
     ),
     "aiMenuImportEmptyStateSubtitle": MessageLookupByLibrary.simpleMessage(
       "Upload photos of your menu sections and AI extracts the items, categories and prices automatically.",
@@ -886,6 +886,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Do you want to delete this cover image?",
     ),
     "downloadApp": MessageLookupByLibrary.simpleMessage("Get the app"),
+    "downloadQrImage": MessageLookupByLibrary.simpleMessage(
+      "Download QR image",
+    ),
     "drinks": MessageLookupByLibrary.simpleMessage("Drinks"),
     "durationHours": MessageLookupByLibrary.simpleMessage("Duration (hours)"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
@@ -906,6 +909,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
     "emailUpdated": MessageLookupByLibrary.simpleMessage(
       "Your email was updated successfully.",
+    ),
+    "enableDigitalMenu": MessageLookupByLibrary.simpleMessage(
+      "Enable digital menu",
+    ),
+    "enableDigitalMenuHint": MessageLookupByLibrary.simpleMessage(
+      "Show a menu alongside your packages",
     ),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Enable location"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
@@ -1019,6 +1028,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
     "generateQR": MessageLookupByLibrary.simpleMessage("Generate QR code"),
     "generateWithAI": MessageLookupByLibrary.simpleMessage("Generate with AI"),
+    "generatingQr": MessageLookupByLibrary.simpleMessage("Generating…"),
     "genericErrorRetry": MessageLookupByLibrary.simpleMessage(
       "Something went wrong. Please try again.",
     ),
@@ -1455,6 +1465,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Be the first to share something!",
     ),
     "postsFeedNoPosts": MessageLookupByLibrary.simpleMessage("No posts yet"),
+    "poweredBy": MessageLookupByLibrary.simpleMessage("Powered by"),
     "preferNotToSay": MessageLookupByLibrary.simpleMessage("Prefer not to say"),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
     "pressToAddPhotosUpToMaxImages": m46,
@@ -1491,6 +1502,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
+    "qrSavedToGallery": MessageLookupByLibrary.simpleMessage(
+      "Saved to your photos",
+    ),
     "quoteApproved": MessageLookupByLibrary.simpleMessage("Quote approved"),
     "quoteNotes": MessageLookupByLibrary.simpleMessage(
       "Quote notes (optional)",
@@ -1663,6 +1677,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "savedPromotionsUpcoming": MessageLookupByLibrary.simpleMessage(
       "These are your upcoming promotions",
+    ),
+    "scanForMenu": MessageLookupByLibrary.simpleMessage(
+      "Scan to view our menu",
     ),
     "scanQRCode": MessageLookupByLibrary.simpleMessage("Scan this QR code"),
     "seafood": MessageLookupByLibrary.simpleMessage("Seafood"),

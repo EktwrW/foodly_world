@@ -30,6 +30,18 @@ class MenuFloatingActionButton extends StatelessWidget {
     }
   }
 
+  /// Resuelve el negocio del manager (dueño) desde la sesión para obtener su
+  /// logo/nombre — fuente confiable fuera del edit mode, donde `menu.business`
+  /// puede venir null en el payload de BusinessMenuResource.
+  BusinessDM? _resolveOwnBusiness(String? businessUuid) {
+    if (businessUuid == null) return null;
+    final businesses = di<AuthSessionService>().userSessionDM?.user.business ?? const <BusinessDM>[];
+    for (final b in businesses) {
+      if (b.uuid == businessUuid) return b;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ManageMenuCubit>();
@@ -91,7 +103,14 @@ class MenuFloatingActionButton extends StatelessWidget {
                   CustomRoundedNeumorphicButton(
                     onPressed: menuUrl.isNotEmpty
                         ? () {
-                            MenuSnackbars.showQRCodeSnackBar(context, menuUrl);
+                            final ownBusiness = _resolveOwnBusiness(menu?.businessUuid);
+                            MenuSnackbars.showQRCodeSnackBar(
+                              context,
+                              menuUrl,
+                              canEdit: loggedUserCanEdit,
+                              businessName: ownBusiness?.name ?? menu?.businessName ?? '',
+                              logoUrl: ownBusiness?.logo,
+                            );
                             _closeFAB();
                           }
                         : null,

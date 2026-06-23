@@ -22,4 +22,5 @@ class BusinessEvent with _$BusinessEvent {
   const factory BusinessEvent.updateBusiness() = _UpdateBusiness;
   const factory BusinessEvent.toggleAllowReservations(bool value) = _ToggleAllowReservations;
   const factory BusinessEvent.setReservationSizeLimit(int value) = _SetReservationSizeLimit;
+  const factory BusinessEvent.toggleMenuEnabled(bool value) = _ToggleMenuEnabled;
 }

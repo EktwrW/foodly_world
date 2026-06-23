@@ -39,6 +39,7 @@ mixin _$BusinessEvent {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +64,7 @@ mixin _$BusinessEvent {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +89,7 @@ mixin _$BusinessEvent {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -117,6 +120,7 @@ mixin _$BusinessEvent {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -141,6 +145,7 @@ mixin _$BusinessEvent {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -165,6 +170,7 @@ mixin _$BusinessEvent {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -259,6 +265,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return started();
   }
@@ -286,6 +293,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return started?.call();
   }
@@ -313,6 +321,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -349,6 +358,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return started(this);
   }
@@ -376,6 +386,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return started?.call(this);
   }
@@ -403,6 +414,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -513,6 +525,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return updateLogo(path);
   }
@@ -540,6 +553,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return updateLogo?.call(path);
   }
@@ -567,6 +581,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateLogo != null) {
@@ -603,6 +618,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return updateLogo(this);
   }
@@ -630,6 +646,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return updateLogo?.call(this);
   }
@@ -657,6 +674,7 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateLogo != null) {
@@ -751,6 +769,7 @@ class _$EditCoverImagesDialogImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return editCoverImagesDialog();
   }
@@ -778,6 +797,7 @@ class _$EditCoverImagesDialogImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return editCoverImagesDialog?.call();
   }
@@ -805,6 +825,7 @@ class _$EditCoverImagesDialogImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (editCoverImagesDialog != null) {
@@ -841,6 +862,7 @@ class _$EditCoverImagesDialogImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return editCoverImagesDialog(this);
   }
@@ -868,6 +890,7 @@ class _$EditCoverImagesDialogImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return editCoverImagesDialog?.call(this);
   }
@@ -895,6 +918,7 @@ class _$EditCoverImagesDialogImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (editCoverImagesDialog != null) {
@@ -1005,6 +1029,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return addPicture(path);
   }
@@ -1032,6 +1057,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return addPicture?.call(path);
   }
@@ -1059,6 +1085,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (addPicture != null) {
@@ -1095,6 +1122,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return addPicture(this);
   }
@@ -1122,6 +1150,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return addPicture?.call(this);
   }
@@ -1149,6 +1178,7 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (addPicture != null) {
@@ -1268,6 +1298,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setCategory(category);
   }
@@ -1295,6 +1326,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setCategory?.call(category);
   }
@@ -1322,6 +1354,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setCategory != null) {
@@ -1358,6 +1391,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setCategory(this);
   }
@@ -1385,6 +1419,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setCategory?.call(this);
   }
@@ -1412,6 +1447,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setCategory != null) {
@@ -1531,6 +1567,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setService(service);
   }
@@ -1558,6 +1595,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setService?.call(service);
   }
@@ -1585,6 +1623,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setService != null) {
@@ -1621,6 +1660,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setService(this);
   }
@@ -1648,6 +1688,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setService?.call(this);
   }
@@ -1675,6 +1716,7 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setService != null) {
@@ -1818,6 +1860,7 @@ class _$SetOpeningHoursDayImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setOpeningHoursDay(dayIndex, day);
   }
@@ -1845,6 +1888,7 @@ class _$SetOpeningHoursDayImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setOpeningHoursDay?.call(dayIndex, day);
   }
@@ -1872,6 +1916,7 @@ class _$SetOpeningHoursDayImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setOpeningHoursDay != null) {
@@ -1908,6 +1953,7 @@ class _$SetOpeningHoursDayImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setOpeningHoursDay(this);
   }
@@ -1935,6 +1981,7 @@ class _$SetOpeningHoursDayImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setOpeningHoursDay?.call(this);
   }
@@ -1962,6 +2009,7 @@ class _$SetOpeningHoursDayImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setOpeningHoursDay != null) {
@@ -2056,6 +2104,7 @@ class _$UploadPicturesImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return uploadPictures();
   }
@@ -2083,6 +2132,7 @@ class _$UploadPicturesImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return uploadPictures?.call();
   }
@@ -2110,6 +2160,7 @@ class _$UploadPicturesImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (uploadPictures != null) {
@@ -2146,6 +2197,7 @@ class _$UploadPicturesImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return uploadPictures(this);
   }
@@ -2173,6 +2225,7 @@ class _$UploadPicturesImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return uploadPictures?.call(this);
   }
@@ -2200,6 +2253,7 @@ class _$UploadPicturesImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (uploadPictures != null) {
@@ -2322,6 +2376,7 @@ class _$UpdatePictureImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return updatePicture(imageId, filePath);
   }
@@ -2349,6 +2404,7 @@ class _$UpdatePictureImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return updatePicture?.call(imageId, filePath);
   }
@@ -2376,6 +2432,7 @@ class _$UpdatePictureImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updatePicture != null) {
@@ -2412,6 +2469,7 @@ class _$UpdatePictureImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return updatePicture(this);
   }
@@ -2439,6 +2497,7 @@ class _$UpdatePictureImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return updatePicture?.call(this);
   }
@@ -2466,6 +2525,7 @@ class _$UpdatePictureImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updatePicture != null) {
@@ -2561,6 +2621,7 @@ class _$CancelUploadPicturesImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return cancelUploadPictures();
   }
@@ -2588,6 +2649,7 @@ class _$CancelUploadPicturesImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return cancelUploadPictures?.call();
   }
@@ -2615,6 +2677,7 @@ class _$CancelUploadPicturesImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (cancelUploadPictures != null) {
@@ -2651,6 +2714,7 @@ class _$CancelUploadPicturesImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return cancelUploadPictures(this);
   }
@@ -2678,6 +2742,7 @@ class _$CancelUploadPicturesImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return cancelUploadPictures?.call(this);
   }
@@ -2705,6 +2770,7 @@ class _$CancelUploadPicturesImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (cancelUploadPictures != null) {
@@ -2832,6 +2898,7 @@ class _$DeleteCoverImageByIdImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return deleteCoverImageById(coverImageDM);
   }
@@ -2859,6 +2926,7 @@ class _$DeleteCoverImageByIdImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return deleteCoverImageById?.call(coverImageDM);
   }
@@ -2886,6 +2954,7 @@ class _$DeleteCoverImageByIdImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (deleteCoverImageById != null) {
@@ -2922,6 +2991,7 @@ class _$DeleteCoverImageByIdImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return deleteCoverImageById(this);
   }
@@ -2949,6 +3019,7 @@ class _$DeleteCoverImageByIdImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return deleteCoverImageById?.call(this);
   }
@@ -2976,6 +3047,7 @@ class _$DeleteCoverImageByIdImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (deleteCoverImageById != null) {
@@ -3073,6 +3145,7 @@ class _$CancelDeleteCoverImageImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return cancelDeleteCoverImage();
   }
@@ -3100,6 +3173,7 @@ class _$CancelDeleteCoverImageImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return cancelDeleteCoverImage?.call();
   }
@@ -3127,6 +3201,7 @@ class _$CancelDeleteCoverImageImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (cancelDeleteCoverImage != null) {
@@ -3163,6 +3238,7 @@ class _$CancelDeleteCoverImageImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return cancelDeleteCoverImage(this);
   }
@@ -3190,6 +3266,7 @@ class _$CancelDeleteCoverImageImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return cancelDeleteCoverImage?.call(this);
   }
@@ -3217,6 +3294,7 @@ class _$CancelDeleteCoverImageImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (cancelDeleteCoverImage != null) {
@@ -3329,6 +3407,7 @@ class _$UpdateEditingImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return updateEditing(editing);
   }
@@ -3356,6 +3435,7 @@ class _$UpdateEditingImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return updateEditing?.call(editing);
   }
@@ -3383,6 +3463,7 @@ class _$UpdateEditingImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateEditing != null) {
@@ -3419,6 +3500,7 @@ class _$UpdateEditingImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return updateEditing(this);
   }
@@ -3446,6 +3528,7 @@ class _$UpdateEditingImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return updateEditing?.call(this);
   }
@@ -3473,6 +3556,7 @@ class _$UpdateEditingImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateEditing != null) {
@@ -3566,6 +3650,7 @@ class _$EditLocationDialogImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return editLocationDialog();
   }
@@ -3593,6 +3678,7 @@ class _$EditLocationDialogImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return editLocationDialog?.call();
   }
@@ -3620,6 +3706,7 @@ class _$EditLocationDialogImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (editLocationDialog != null) {
@@ -3656,6 +3743,7 @@ class _$EditLocationDialogImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return editLocationDialog(this);
   }
@@ -3683,6 +3771,7 @@ class _$EditLocationDialogImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return editLocationDialog?.call(this);
   }
@@ -3710,6 +3799,7 @@ class _$EditLocationDialogImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (editLocationDialog != null) {
@@ -3820,6 +3910,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setCountry(country);
   }
@@ -3847,6 +3938,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setCountry?.call(country);
   }
@@ -3874,6 +3966,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setCountry != null) {
@@ -3910,6 +4003,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setCountry(this);
   }
@@ -3937,6 +4031,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setCountry?.call(this);
   }
@@ -3964,6 +4059,7 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setCountry != null) {
@@ -4088,6 +4184,7 @@ class _$SetAddressFromPlacesAPIImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setAddressFromPlacesAPI(detail);
   }
@@ -4115,6 +4212,7 @@ class _$SetAddressFromPlacesAPIImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setAddressFromPlacesAPI?.call(detail);
   }
@@ -4142,6 +4240,7 @@ class _$SetAddressFromPlacesAPIImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setAddressFromPlacesAPI != null) {
@@ -4178,6 +4277,7 @@ class _$SetAddressFromPlacesAPIImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setAddressFromPlacesAPI(this);
   }
@@ -4205,6 +4305,7 @@ class _$SetAddressFromPlacesAPIImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setAddressFromPlacesAPI?.call(this);
   }
@@ -4232,6 +4333,7 @@ class _$SetAddressFromPlacesAPIImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setAddressFromPlacesAPI != null) {
@@ -4355,6 +4457,7 @@ class _$SetMapControllerImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setMapController(controller);
   }
@@ -4382,6 +4485,7 @@ class _$SetMapControllerImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setMapController?.call(controller);
   }
@@ -4409,6 +4513,7 @@ class _$SetMapControllerImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setMapController != null) {
@@ -4445,6 +4550,7 @@ class _$SetMapControllerImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setMapController(this);
   }
@@ -4472,6 +4578,7 @@ class _$SetMapControllerImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setMapController?.call(this);
   }
@@ -4499,6 +4606,7 @@ class _$SetMapControllerImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setMapController != null) {
@@ -4592,6 +4700,7 @@ class _$UpdateBusinessImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return updateBusiness();
   }
@@ -4619,6 +4728,7 @@ class _$UpdateBusinessImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return updateBusiness?.call();
   }
@@ -4646,6 +4756,7 @@ class _$UpdateBusinessImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateBusiness != null) {
@@ -4682,6 +4793,7 @@ class _$UpdateBusinessImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return updateBusiness(this);
   }
@@ -4709,6 +4821,7 @@ class _$UpdateBusinessImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return updateBusiness?.call(this);
   }
@@ -4736,6 +4849,7 @@ class _$UpdateBusinessImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (updateBusiness != null) {
@@ -4852,6 +4966,7 @@ class _$ToggleAllowReservationsImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return toggleAllowReservations(value);
   }
@@ -4879,6 +4994,7 @@ class _$ToggleAllowReservationsImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return toggleAllowReservations?.call(value);
   }
@@ -4906,6 +5022,7 @@ class _$ToggleAllowReservationsImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (toggleAllowReservations != null) {
@@ -4942,6 +5059,7 @@ class _$ToggleAllowReservationsImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return toggleAllowReservations(this);
   }
@@ -4969,6 +5087,7 @@ class _$ToggleAllowReservationsImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return toggleAllowReservations?.call(this);
   }
@@ -4996,6 +5115,7 @@ class _$ToggleAllowReservationsImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (toggleAllowReservations != null) {
@@ -5121,6 +5241,7 @@ class _$SetReservationSizeLimitImpl
     required TResult Function() updateBusiness,
     required TResult Function(bool value) toggleAllowReservations,
     required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
     return setReservationSizeLimit(value);
   }
@@ -5148,6 +5269,7 @@ class _$SetReservationSizeLimitImpl
     TResult? Function()? updateBusiness,
     TResult? Function(bool value)? toggleAllowReservations,
     TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
   }) {
     return setReservationSizeLimit?.call(value);
   }
@@ -5175,6 +5297,7 @@ class _$SetReservationSizeLimitImpl
     TResult Function()? updateBusiness,
     TResult Function(bool value)? toggleAllowReservations,
     TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setReservationSizeLimit != null) {
@@ -5211,6 +5334,7 @@ class _$SetReservationSizeLimitImpl
         toggleAllowReservations,
     required TResult Function(_SetReservationSizeLimit value)
         setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
     return setReservationSizeLimit(this);
   }
@@ -5238,6 +5362,7 @@ class _$SetReservationSizeLimitImpl
     TResult? Function(_UpdateBusiness value)? updateBusiness,
     TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
     return setReservationSizeLimit?.call(this);
   }
@@ -5265,6 +5390,7 @@ class _$SetReservationSizeLimitImpl
     TResult Function(_UpdateBusiness value)? updateBusiness,
     TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
     TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
     if (setReservationSizeLimit != null) {
@@ -5285,6 +5411,277 @@ abstract class _SetReservationSizeLimit implements BusinessEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SetReservationSizeLimitImplCopyWith<_$SetReservationSizeLimitImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ToggleMenuEnabledImplCopyWith<$Res> {
+  factory _$$ToggleMenuEnabledImplCopyWith(_$ToggleMenuEnabledImpl value,
+          $Res Function(_$ToggleMenuEnabledImpl) then) =
+      __$$ToggleMenuEnabledImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool value});
+}
+
+/// @nodoc
+class __$$ToggleMenuEnabledImplCopyWithImpl<$Res>
+    extends _$BusinessEventCopyWithImpl<$Res, _$ToggleMenuEnabledImpl>
+    implements _$$ToggleMenuEnabledImplCopyWith<$Res> {
+  __$$ToggleMenuEnabledImplCopyWithImpl(_$ToggleMenuEnabledImpl _value,
+      $Res Function(_$ToggleMenuEnabledImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$ToggleMenuEnabledImpl(
+      null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ToggleMenuEnabledImpl
+    with DiagnosticableTreeMixin
+    implements _ToggleMenuEnabled {
+  const _$ToggleMenuEnabledImpl(this.value);
+
+  @override
+  final bool value;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.toggleMenuEnabled(value: $value)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.toggleMenuEnabled'))
+      ..add(DiagnosticsProperty('value', value));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ToggleMenuEnabledImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ToggleMenuEnabledImplCopyWith<_$ToggleMenuEnabledImpl> get copyWith =>
+      __$$ToggleMenuEnabledImplCopyWithImpl<_$ToggleMenuEnabledImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String path) updateLogo,
+    required TResult Function() editCoverImagesDialog,
+    required TResult Function(String path) addPicture,
+    required TResult Function(FoodlyCategories category) setCategory,
+    required TResult Function(BusinessServices service) setService,
+    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
+    required TResult Function() uploadPictures,
+    required TResult Function(String imageId, String filePath) updatePicture,
+    required TResult Function() cancelUploadPictures,
+    required TResult Function(BusinessCoverImageDM coverImageDM)
+        deleteCoverImageById,
+    required TResult Function() cancelDeleteCoverImage,
+    required TResult Function(DashboardEditing editing) updateEditing,
+    required TResult Function() editLocationDialog,
+    required TResult Function(FoodlyCountries country) setCountry,
+    required TResult Function(Place detail) setAddressFromPlacesAPI,
+    required TResult Function(GoogleMapController controller) setMapController,
+    required TResult Function() updateBusiness,
+    required TResult Function(bool value) toggleAllowReservations,
+    required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
+  }) {
+    return toggleMenuEnabled(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String path)? updateLogo,
+    TResult? Function()? editCoverImagesDialog,
+    TResult? Function(String path)? addPicture,
+    TResult? Function(FoodlyCategories category)? setCategory,
+    TResult? Function(BusinessServices service)? setService,
+    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
+    TResult? Function()? uploadPictures,
+    TResult? Function(String imageId, String filePath)? updatePicture,
+    TResult? Function()? cancelUploadPictures,
+    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
+    TResult? Function()? cancelDeleteCoverImage,
+    TResult? Function(DashboardEditing editing)? updateEditing,
+    TResult? Function()? editLocationDialog,
+    TResult? Function(FoodlyCountries country)? setCountry,
+    TResult? Function(Place detail)? setAddressFromPlacesAPI,
+    TResult? Function(GoogleMapController controller)? setMapController,
+    TResult? Function()? updateBusiness,
+    TResult? Function(bool value)? toggleAllowReservations,
+    TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
+  }) {
+    return toggleMenuEnabled?.call(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String path)? updateLogo,
+    TResult Function()? editCoverImagesDialog,
+    TResult Function(String path)? addPicture,
+    TResult Function(FoodlyCategories category)? setCategory,
+    TResult Function(BusinessServices service)? setService,
+    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
+    TResult Function()? uploadPictures,
+    TResult Function(String imageId, String filePath)? updatePicture,
+    TResult Function()? cancelUploadPictures,
+    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
+    TResult Function()? cancelDeleteCoverImage,
+    TResult Function(DashboardEditing editing)? updateEditing,
+    TResult Function()? editLocationDialog,
+    TResult Function(FoodlyCountries country)? setCountry,
+    TResult Function(Place detail)? setAddressFromPlacesAPI,
+    TResult Function(GoogleMapController controller)? setMapController,
+    TResult Function()? updateBusiness,
+    TResult Function(bool value)? toggleAllowReservations,
+    TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
+    required TResult orElse(),
+  }) {
+    if (toggleMenuEnabled != null) {
+      return toggleMenuEnabled(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_UpdateLogo value) updateLogo,
+    required TResult Function(_EditCoverImagesDialog value)
+        editCoverImagesDialog,
+    required TResult Function(_AddPicture value) addPicture,
+    required TResult Function(_SetCategory value) setCategory,
+    required TResult Function(_SetService value) setService,
+    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
+    required TResult Function(_UploadPictures value) uploadPictures,
+    required TResult Function(_UpdatePicture value) updatePicture,
+    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
+    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
+    required TResult Function(_CancelDeleteCoverImage value)
+        cancelDeleteCoverImage,
+    required TResult Function(_UpdateEditing value) updateEditing,
+    required TResult Function(_EditLocationDialog value) editLocationDialog,
+    required TResult Function(_SetCountry value) setCountry,
+    required TResult Function(_SetAddressFromPlacesAPI value)
+        setAddressFromPlacesAPI,
+    required TResult Function(_SetMapController value) setMapController,
+    required TResult Function(_UpdateBusiness value) updateBusiness,
+    required TResult Function(_ToggleAllowReservations value)
+        toggleAllowReservations,
+    required TResult Function(_SetReservationSizeLimit value)
+        setReservationSizeLimit,
+    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
+  }) {
+    return toggleMenuEnabled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_UpdateLogo value)? updateLogo,
+    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
+    TResult? Function(_AddPicture value)? addPicture,
+    TResult? Function(_SetCategory value)? setCategory,
+    TResult? Function(_SetService value)? setService,
+    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
+    TResult? Function(_UploadPictures value)? uploadPictures,
+    TResult? Function(_UpdatePicture value)? updatePicture,
+    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
+    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
+    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
+    TResult? Function(_UpdateEditing value)? updateEditing,
+    TResult? Function(_EditLocationDialog value)? editLocationDialog,
+    TResult? Function(_SetCountry value)? setCountry,
+    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
+    TResult? Function(_SetMapController value)? setMapController,
+    TResult? Function(_UpdateBusiness value)? updateBusiness,
+    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
+    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
+  }) {
+    return toggleMenuEnabled?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateLogo value)? updateLogo,
+    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
+    TResult Function(_AddPicture value)? addPicture,
+    TResult Function(_SetCategory value)? setCategory,
+    TResult Function(_SetService value)? setService,
+    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
+    TResult Function(_UploadPictures value)? uploadPictures,
+    TResult Function(_UpdatePicture value)? updatePicture,
+    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
+    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
+    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
+    TResult Function(_UpdateEditing value)? updateEditing,
+    TResult Function(_EditLocationDialog value)? editLocationDialog,
+    TResult Function(_SetCountry value)? setCountry,
+    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
+    TResult Function(_SetMapController value)? setMapController,
+    TResult Function(_UpdateBusiness value)? updateBusiness,
+    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
+    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
+    required TResult orElse(),
+  }) {
+    if (toggleMenuEnabled != null) {
+      return toggleMenuEnabled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ToggleMenuEnabled implements BusinessEvent {
+  const factory _ToggleMenuEnabled(final bool value) = _$ToggleMenuEnabledImpl;
+
+  bool get value;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ToggleMenuEnabledImplCopyWith<_$ToggleMenuEnabledImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

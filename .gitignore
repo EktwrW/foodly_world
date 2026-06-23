@@ -158,3 +158,6 @@ secrets.md
 ios/AuthKey_3C3R5589HQ.p8
 dSYMs-1.1.3-16.zip
 zihqbsLb
+
+# Claude Code local settings
+.claude/settings.local.json

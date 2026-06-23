@@ -282,7 +282,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Importar con IA",
     ),
     "aiMenuImportEmptyStateManualHint": MessageLookupByLibrary.simpleMessage(
-      "También podés agregar items uno por uno con el botón +",
+      "Para cargarlos a mano, abrí el menú flotante y tocá Editar",
     ),
     "aiMenuImportEmptyStateSubtitle": MessageLookupByLibrary.simpleMessage(
       "Subí fotos de las secciones de tu menú y la IA extrae los items, categorías y precios automáticamente.",
@@ -923,6 +923,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Deseas eliminar esta imagen de portada?",
     ),
     "downloadApp": MessageLookupByLibrary.simpleMessage("Obtener la app"),
+    "downloadQrImage": MessageLookupByLibrary.simpleMessage(
+      "Descargar imagen QR",
+    ),
     "drinks": MessageLookupByLibrary.simpleMessage("Bebidas"),
     "durationHours": MessageLookupByLibrary.simpleMessage("Duración (horas)"),
     "edit": MessageLookupByLibrary.simpleMessage("Editar"),
@@ -943,6 +946,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
     "emailUpdated": MessageLookupByLibrary.simpleMessage(
       "Tu correo se actualizó correctamente.",
+    ),
+    "enableDigitalMenu": MessageLookupByLibrary.simpleMessage(
+      "Habilitar menú digital",
+    ),
+    "enableDigitalMenuHint": MessageLookupByLibrary.simpleMessage(
+      "Mostrá una carta además de tus paquetes",
     ),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Activar ubicación"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
@@ -1064,6 +1073,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "gender": MessageLookupByLibrary.simpleMessage("Género"),
     "generateQR": MessageLookupByLibrary.simpleMessage("Generar código QR"),
     "generateWithAI": MessageLookupByLibrary.simpleMessage("Generar con IA"),
+    "generatingQr": MessageLookupByLibrary.simpleMessage("Generando…"),
     "genericErrorRetry": MessageLookupByLibrary.simpleMessage(
       "Algo salió mal. Inténtalo de nuevo.",
     ),
@@ -1518,6 +1528,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "postsFeedNoPosts": MessageLookupByLibrary.simpleMessage(
       "Aún no hay publicaciones",
     ),
+    "poweredBy": MessageLookupByLibrary.simpleMessage("Con tecnología de"),
     "preferNotToSay": MessageLookupByLibrary.simpleMessage(
       "Prefiero no decirlo",
     ),
@@ -1558,6 +1569,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Días de promoción"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promos"),
+    "qrSavedToGallery": MessageLookupByLibrary.simpleMessage(
+      "Guardado en tus fotos",
+    ),
     "quoteApproved": MessageLookupByLibrary.simpleMessage(
       "Cotización aprobada",
     ),
@@ -1752,6 +1766,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "savedPromotionsUpcoming": MessageLookupByLibrary.simpleMessage(
       "Estas son tus Próximas Promociones",
+    ),
+    "scanForMenu": MessageLookupByLibrary.simpleMessage(
+      "Escanea para ver nuestro menú",
     ),
     "scanQRCode": MessageLookupByLibrary.simpleMessage(
       "Escanea este código QR",

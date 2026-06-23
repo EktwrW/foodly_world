@@ -83,6 +83,9 @@ class BusinessDM with _$BusinessDM {
     @JsonKey(name: 'intro_message') String? introMessage,
     @JsonKey(name: 'allow_reservations') @Default(false) bool allowReservations,
     @JsonKey(name: 'reservations_count') @Default(6) int reservationsSizeLimit,
+    // Catering & Chefs vertical — opt-in digital menu. Other verticals always
+    // show their menu; catering shows it only when the manager enables it.
+    @JsonKey(name: 'menu_enabled') @Default(false) bool menuEnabled,
     @JsonKey(name: 'combos_label') String? combosLabel,
     @JsonKey(name: 'ai_promo_monthly_limit') @Default(6) int aiPromoMonthlyLimit,
     @JsonKey(name: 'ai_promos_used_this_month') @Default(0) int aiPromosUsedThisMonth,

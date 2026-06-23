@@ -146,6 +146,7 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
               await _updateReservationSetting(emit, allowReservations: value.value),
           setReservationSizeLimit: (_SetReservationSizeLimit value) async =>
               await _updateReservationSetting(emit, reservationSizeLimit: value.value),
+          toggleMenuEnabled: (_ToggleMenuEnabled value) async => await _updateMenuSetting(emit, value.value),
         );
       },
     );
@@ -450,6 +451,27 @@ class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
               _vm = _vm.copyWith(
                 allowReservations: updatedBusiness.allowReservations,
               );
+              emit(_Loaded(_vm));
+            },
+            failure: (error) => _handleError(error, emit),
+          ),
+        );
+  }
+
+  /// Toggle the opt-in digital menu (Catering & Chefs vertical). Mirrors
+  /// [_updateReservationSetting] but only needs to refresh `currentBusiness`
+  /// (read directly from `business.menuEnabled` by the footers/toggle).
+  Future<void> _updateMenuSetting(Emitter emit, bool menuEnabled) async {
+    if (_vm.currentBusiness?.uuid == null) return;
+
+    emit(_Loading(_vm));
+
+    final dto = BusinessUpdateDTO(menuEnabled: menuEnabled);
+
+    await _businessRepo.updateBusiness(_vm.currentBusiness!.uuid, dto).then(
+          (result) => result.when(
+            success: (updatedBusiness) {
+              _updateBusinessInCurrentArray(updatedBusiness);
               emit(_Loaded(_vm));
             },
             failure: (error) => _handleError(error, emit),

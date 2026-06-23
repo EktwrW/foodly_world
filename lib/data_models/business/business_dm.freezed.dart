@@ -92,7 +92,11 @@ mixin _$BusinessDM {
   @JsonKey(name: 'allow_reservations')
   bool get allowReservations => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit => throw _privateConstructorUsedError;
+  int get reservationsSizeLimit =>
+      throw _privateConstructorUsedError; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
+// show their menu; catering shows it only when the manager enables it.
+  @JsonKey(name: 'menu_enabled')
+  bool get menuEnabled => throw _privateConstructorUsedError;
   @JsonKey(name: 'combos_label')
   String? get combosLabel => throw _privateConstructorUsedError;
   @JsonKey(name: 'ai_promo_monthly_limit')
@@ -157,6 +161,7 @@ abstract class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
@@ -213,6 +218,7 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? introMessage = freezed,
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
+    Object? menuEnabled = null,
     Object? combosLabel = freezed,
     Object? aiPromoMonthlyLimit = null,
     Object? aiPromosUsedThisMonth = null,
@@ -340,6 +346,10 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
           ? _value.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
               as int,
+      menuEnabled: null == menuEnabled
+          ? _value.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
       combosLabel: freezed == combosLabel
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
@@ -428,6 +438,7 @@ abstract class _$$BusinessDMImplCopyWith<$Res>
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
@@ -484,6 +495,7 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
     Object? introMessage = freezed,
     Object? allowReservations = null,
     Object? reservationsSizeLimit = null,
+    Object? menuEnabled = null,
     Object? combosLabel = freezed,
     Object? aiPromoMonthlyLimit = null,
     Object? aiPromosUsedThisMonth = null,
@@ -611,6 +623,10 @@ class __$$BusinessDMImplCopyWithImpl<$Res>
           ? _value.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
               as int,
+      menuEnabled: null == menuEnabled
+          ? _value.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
       combosLabel: freezed == combosLabel
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
@@ -674,6 +690,7 @@ class _$BusinessDMImpl extends _BusinessDM {
       @JsonKey(name: 'intro_message') this.introMessage,
       @JsonKey(name: 'allow_reservations') this.allowReservations = false,
       @JsonKey(name: 'reservations_count') this.reservationsSizeLimit = 6,
+      @JsonKey(name: 'menu_enabled') this.menuEnabled = false,
       @JsonKey(name: 'combos_label') this.combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 6,
       @JsonKey(name: 'ai_promos_used_this_month')
@@ -828,6 +845,11 @@ class _$BusinessDMImpl extends _BusinessDM {
   @override
   @JsonKey(name: 'reservations_count')
   final int reservationsSizeLimit;
+// Catering & Chefs vertical — opt-in digital menu. Other verticals always
+// show their menu; catering shows it only when the manager enables it.
+  @override
+  @JsonKey(name: 'menu_enabled')
+  final bool menuEnabled;
   @override
   @JsonKey(name: 'combos_label')
   final String? combosLabel;
@@ -858,7 +880,7 @@ class _$BusinessDMImpl extends _BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 
   @override
@@ -911,6 +933,8 @@ class _$BusinessDMImpl extends _BusinessDM {
                 other.allowReservations == allowReservations) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
+            (identical(other.menuEnabled, menuEnabled) ||
+                other.menuEnabled == menuEnabled) &&
             (identical(other.combosLabel, combosLabel) ||
                 other.combosLabel == combosLabel) &&
             (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
@@ -956,6 +980,7 @@ class _$BusinessDMImpl extends _BusinessDM {
         introMessage,
         allowReservations,
         reservationsSizeLimit,
+        menuEnabled,
         combosLabel,
         aiPromoMonthlyLimit,
         aiPromosUsedThisMonth,
@@ -1014,6 +1039,7 @@ abstract class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'intro_message') final String? introMessage,
       @JsonKey(name: 'allow_reservations') final bool allowReservations,
       @JsonKey(name: 'reservations_count') final int reservationsSizeLimit,
+      @JsonKey(name: 'menu_enabled') final bool menuEnabled,
       @JsonKey(name: 'combos_label') final String? combosLabel,
       @JsonKey(name: 'ai_promo_monthly_limit') final int aiPromoMonthlyLimit,
       @JsonKey(name: 'ai_promos_used_this_month')
@@ -1127,7 +1153,11 @@ abstract class _BusinessDM extends BusinessDM {
   bool get allowReservations;
   @override
   @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit;
+  int get reservationsSizeLimit; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
+// show their menu; catering shows it only when the manager enables it.
+  @override
+  @JsonKey(name: 'menu_enabled')
+  bool get menuEnabled;
   @override
   @JsonKey(name: 'combos_label')
   String? get combosLabel;

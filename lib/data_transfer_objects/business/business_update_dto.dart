@@ -27,6 +27,7 @@ class BusinessUpdateDTO with _$BusinessUpdateDTO {
     @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
     @JsonKey(name: 'allow_reservations') bool? allowReservations,
     @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+    @JsonKey(name: 'menu_enabled') bool? menuEnabled,
     @JsonKey(name: 'combos_label') String? combosLabel,
   }) = _BusinessUpdateDTO;
 

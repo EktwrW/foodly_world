@@ -22,6 +22,7 @@ import 'package:foodly_world/ui/views/business/widgets/business_sliver_app_bar.d
 import 'package:foodly_world/ui/views/business/widgets/contact_channels/contact_channels.dart';
 import 'package:foodly_world/ui/views/business/widgets/delete_business_section.dart';
 import 'package:foodly_world/ui/views/business/widgets/edit_cover_images_widgets/edit_cover_images_dialog.dart';
+import 'package:foodly_world/ui/views/business/widgets/menu_enabled/menu_enabled.dart';
 import 'package:foodly_world/ui/views/business/widgets/opening_hours/opening_hours.dart';
 import 'package:foodly_world/ui/views/business/widgets/services/services.dart';
 
@@ -114,6 +115,9 @@ class _BusinessPageState extends State<BusinessPage> {
                         const AddressWdg(),
                         const CategoryAndRatingWdg(),
                         const AllowReservations(),
+                        // Toggle del menú digital: solo para Catering & Chefs
+                        // (las demás categorías siempre tienen menú).
+                        if (vm.currentBusiness?.categoryId?.isCateringOrChefs ?? false) const MenuEnabled(),
                         AboutUsWdg(vm: vm),
                         OpeningHoursWdg(vm: vm),
                         ServicesWdg(vm: vm),

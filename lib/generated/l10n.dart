@@ -437,11 +437,31 @@ class S {
     );
   }
 
-  /// `You can also add items one by one with the + button`
+  /// `To add them by hand, open the floating menu and tap Edit`
   String get aiMenuImportEmptyStateManualHint {
     return Intl.message(
-      'You can also add items one by one with the + button',
+      'To add them by hand, open the floating menu and tap Edit',
       name: 'aiMenuImportEmptyStateManualHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable digital menu`
+  String get enableDigitalMenu {
+    return Intl.message(
+      'Enable digital menu',
+      name: 'enableDigitalMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show a menu alongside your packages`
+  String get enableDigitalMenuHint {
+    return Intl.message(
+      'Show a menu alongside your packages',
+      name: 'enableDigitalMenuHint',
       desc: '',
       args: [],
     );
@@ -2049,6 +2069,51 @@ class S {
     return Intl.message(
       'Generate QR code',
       name: 'generateQR',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download QR image`
+  String get downloadQrImage {
+    return Intl.message(
+      'Download QR image',
+      name: 'downloadQrImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generating…`
+  String get generatingQr {
+    return Intl.message(
+      'Generating…',
+      name: 'generatingQr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scan to view our menu`
+  String get scanForMenu {
+    return Intl.message(
+      'Scan to view our menu',
+      name: 'scanForMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Powered by`
+  String get poweredBy {
+    return Intl.message('Powered by', name: 'poweredBy', desc: '', args: []);
+  }
+
+  /// `Saved to your photos`
+  String get qrSavedToGallery {
+    return Intl.message(
+      'Saved to your photos',
+      name: 'qrSavedToGallery',
       desc: '',
       args: [],
     );

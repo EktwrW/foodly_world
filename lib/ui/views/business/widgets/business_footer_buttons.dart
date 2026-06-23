@@ -13,6 +13,9 @@ class BusinessFooterButtons extends StatelessWidget {
       builder: (context, state) {
         final vm = state.vm;
         final isCatering = vm.currentBusiness?.categoryId?.isCateringOrChefs ?? false;
+        // Catering lidera con paquetes; el menú es opt-in (menu_enabled). El
+        // resto de las categorías siempre muestran el menú.
+        final showMenu = !isCatering || (vm.currentBusiness?.menuEnabled ?? false);
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,8 +32,8 @@ class BusinessFooterButtons extends StatelessWidget {
                 buttonText: S.current.viewEdit,
                 secondButtonText: S.current.packages,
                 textStyle: FoodlyTextStyles.footerButtonSmall,
-              )
-            else
+              ),
+            if (showMenu)
               FooterButton(
                 onPressed: () => context.goNamed(
                   AppRoutes.manageMenu.name,

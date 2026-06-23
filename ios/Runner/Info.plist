@@ -81,6 +81,8 @@
 		<string>We need access to your microphone so you can do search by voice and record videos</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Foodly uses your photo library so you can choose existing images for your content — for example, selecting a saved dish photo to add to a menu item, your business logo, or a photo for a review.</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Foodly saves your menu QR code image to your photo library so you can print it or share it with your customers.</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>Foodly uses speech recognition to convert your voice into text for searching restaurants and menu items</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>

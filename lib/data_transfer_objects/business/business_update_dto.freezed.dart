@@ -55,6 +55,8 @@ mixin _$BusinessUpdateDTO {
   bool? get allowReservations => throw _privateConstructorUsedError;
   @JsonKey(name: 'reservation_size_limit')
   int? get reservationSizeLimit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'menu_enabled')
+  bool? get menuEnabled => throw _privateConstructorUsedError;
   @JsonKey(name: 'combos_label')
   String? get combosLabel => throw _privateConstructorUsedError;
 
@@ -93,6 +95,7 @@ abstract class $BusinessUpdateDTOCopyWith<$Res> {
       @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') bool? allowReservations,
       @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool? menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel});
 
   $BusinessDaysCopyWith<$Res>? get businessDays;
@@ -130,6 +133,7 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
     Object? businessDays = freezed,
     Object? allowReservations = freezed,
     Object? reservationSizeLimit = freezed,
+    Object? menuEnabled = freezed,
     Object? combosLabel = freezed,
   }) {
     return _then(_value.copyWith(
@@ -201,6 +205,10 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
           ? _value.reservationSizeLimit
           : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
               as int?,
+      menuEnabled: freezed == menuEnabled
+          ? _value.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
       combosLabel: freezed == combosLabel
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
@@ -250,6 +258,7 @@ abstract class _$$BusinessUpdateDTOImplCopyWith<$Res>
       @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') bool? allowReservations,
       @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool? menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel});
 
   @override
@@ -286,6 +295,7 @@ class __$$BusinessUpdateDTOImplCopyWithImpl<$Res>
     Object? businessDays = freezed,
     Object? allowReservations = freezed,
     Object? reservationSizeLimit = freezed,
+    Object? menuEnabled = freezed,
     Object? combosLabel = freezed,
   }) {
     return _then(_$BusinessUpdateDTOImpl(
@@ -357,6 +367,10 @@ class __$$BusinessUpdateDTOImplCopyWithImpl<$Res>
           ? _value.reservationSizeLimit
           : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
               as int?,
+      menuEnabled: freezed == menuEnabled
+          ? _value.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
       combosLabel: freezed == combosLabel
           ? _value.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
@@ -387,6 +401,7 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
       @JsonKey(name: 'business_opening_hours') this.businessDays,
       @JsonKey(name: 'allow_reservations') this.allowReservations,
       @JsonKey(name: 'reservation_size_limit') this.reservationSizeLimit,
+      @JsonKey(name: 'menu_enabled') this.menuEnabled,
       @JsonKey(name: 'combos_label') this.combosLabel})
       : _businessServices = businessServices;
 
@@ -454,12 +469,15 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
   @JsonKey(name: 'reservation_size_limit')
   final int? reservationSizeLimit;
   @override
+  @JsonKey(name: 'menu_enabled')
+  final bool? menuEnabled;
+  @override
   @JsonKey(name: 'combos_label')
   final String? combosLabel;
 
   @override
   String toString() {
-    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, combosLabel: $combosLabel)';
+    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel)';
   }
 
   @override
@@ -501,32 +519,36 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
                 other.allowReservations == allowReservations) &&
             (identical(other.reservationSizeLimit, reservationSizeLimit) ||
                 other.reservationSizeLimit == reservationSizeLimit) &&
+            (identical(other.menuEnabled, menuEnabled) ||
+                other.menuEnabled == menuEnabled) &&
             (identical(other.combosLabel, combosLabel) ||
                 other.combosLabel == combosLabel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      businessName,
-      businessAboutUs,
-      businessAdditionalInfo,
-      const DeepCollectionEquality().hash(_businessServices),
-      businessEmail,
-      businessPhone,
-      businessAddress,
-      businessZipcode,
-      businessCity,
-      businessCountry,
-      businessWebsite,
-      businessLatitude,
-      businessLongitude,
-      category,
-      businessDays,
-      allowReservations,
-      reservationSizeLimit,
-      combosLabel);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        businessName,
+        businessAboutUs,
+        businessAdditionalInfo,
+        const DeepCollectionEquality().hash(_businessServices),
+        businessEmail,
+        businessPhone,
+        businessAddress,
+        businessZipcode,
+        businessCity,
+        businessCountry,
+        businessWebsite,
+        businessLatitude,
+        businessLongitude,
+        category,
+        businessDays,
+        allowReservations,
+        reservationSizeLimit,
+        menuEnabled,
+        combosLabel
+      ]);
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -566,6 +588,7 @@ abstract class _BusinessUpdateDTO implements BusinessUpdateDTO {
       @JsonKey(name: 'business_opening_hours') final BusinessDays? businessDays,
       @JsonKey(name: 'allow_reservations') final bool? allowReservations,
       @JsonKey(name: 'reservation_size_limit') final int? reservationSizeLimit,
+      @JsonKey(name: 'menu_enabled') final bool? menuEnabled,
       @JsonKey(name: 'combos_label')
       final String? combosLabel}) = _$BusinessUpdateDTOImpl;
 
@@ -623,6 +646,9 @@ abstract class _BusinessUpdateDTO implements BusinessUpdateDTO {
   @override
   @JsonKey(name: 'reservation_size_limit')
   int? get reservationSizeLimit;
+  @override
+  @JsonKey(name: 'menu_enabled')
+  bool? get menuEnabled;
   @override
   @JsonKey(name: 'combos_label')
   String? get combosLabel;

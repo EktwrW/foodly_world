@@ -16,8 +16,8 @@ import 'package:icons_plus/icons_plus.dart' show Bootstrap;
 ///   1. Es la opción más prominente: subir 5 fotos vs. tipear 50 items.
 ///   2. La IA es el diferenciador del producto en este momento — exponerlo
 ///      al onboarding del manager mejora la activation rate.
-///   3. NO bloquea el flujo manual: el FAB de "+" sigue funcionando para
-///      managers que prefieren agregar uno por uno.
+///   3. NO bloquea el flujo manual: el manager puede abrir el FAB del menú
+///      y tocar Editar para agregar items a mano (ilustrado en el hint).
 ///
 /// **Cuándo mostrarlo** (gate en el caller, no acá):
 ///   - manager logueado (`vm.loggerUserCanEdit`)
@@ -116,28 +116,75 @@ class MenuImportEmptyStateWdg extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
             ),
           ),
-          const SizedBox(height: 14),
-          // Hint sutil del flujo manual. NO es un botón secundario porque
-          // el FAB de "+" en pantalla ya cubre eso — sería UI duplicada.
-          Row(
+          const SizedBox(height: 18),
+          // Hint del flujo manual, ilustrando los dos pasos con los iconos
+          // REALES del FAB del menú: abrir el menú flotante y tocar Editar.
+          // Así el manager asocia el texto con los botones que verá en pantalla.
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              S.current.aiMenuImportEmptyStateManualHint,
+              style: FoodlyTextStyles.cardsSmallSubtitle.copyWith(
+                fontSize: 12,
+                color: Colors.black54,
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 12),
+          const Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Bootstrap.info_circle, size: 14, color: Colors.black38),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  S.current.aiMenuImportEmptyStateManualHint,
-                  style: FoodlyTextStyles.cardsSmallSubtitle.copyWith(
-                    fontSize: 12,
-                    color: Colors.black54,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              // Paso 1: el FAB principal del menú (círculo morado, icono blanco).
+              _HintStepIcon(
+                icon: Icons.menu_open_outlined,
+                background: FoodlyThemes.primaryFoodly,
+                iconColor: Colors.white,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Icon(Icons.arrow_forward_rounded, size: 16, color: Colors.black26),
+              ),
+              // Paso 2: el botón Editar que aparece al desplegar el FAB.
+              _HintStepIcon(
+                icon: Bootstrap.pencil_square,
+                background: Color(0xFFF1ECFA),
+                iconColor: FoodlyThemes.primaryFoodly,
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Chip circular que reproduce visualmente un botón del FAB del menú, usado en
+/// el hint del empty state para que el manager reconozca los iconos en pantalla.
+class _HintStepIcon extends StatelessWidget {
+  const _HintStepIcon({
+    required this.icon,
+    required this.background,
+    required this.iconColor,
+  });
+
+  final IconData icon;
+  final Color background;
+  final Color iconColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 38,
+      height: 38,
+      decoration: BoxDecoration(
+        color: background,
+        shape: BoxShape.circle,
+        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.18)),
+      ),
+      child: Icon(icon, size: 20, color: iconColor),
     );
   }
 }

@@ -58,6 +58,7 @@ _$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
       introMessage: json['intro_message'] as String?,
       allowReservations: json['allow_reservations'] as bool? ?? false,
       reservationsSizeLimit: (json['reservations_count'] as num?)?.toInt() ?? 6,
+      menuEnabled: json['menu_enabled'] as bool? ?? false,
       combosLabel: json['combos_label'] as String?,
       aiPromoMonthlyLimit:
           (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 6,
@@ -108,6 +109,7 @@ Map<String, dynamic> _$$BusinessDMImplToJson(_$BusinessDMImpl instance) =>
       if (instance.introMessage case final value?) 'intro_message': value,
       'allow_reservations': instance.allowReservations,
       'reservations_count': instance.reservationsSizeLimit,
+      'menu_enabled': instance.menuEnabled,
       if (instance.combosLabel case final value?) 'combos_label': value,
       'ai_promo_monthly_limit': instance.aiPromoMonthlyLimit,
       'ai_promos_used_this_month': instance.aiPromosUsedThisMonth,
