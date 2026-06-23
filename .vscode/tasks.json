@@ -89,6 +89,7 @@
       "args": [
         "release",
         "android",
+        "--flutter-version=3.38.3",
         "--",
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
@@ -141,6 +142,7 @@
       "args": [
         "release",
         "ios",
+        "--flutter-version=3.38.3",
         "--",
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",

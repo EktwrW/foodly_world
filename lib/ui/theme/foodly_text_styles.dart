@@ -140,7 +140,7 @@ class FoodlyTextStyles {
 
   static const footerButtonSmall = TextStyle(
     fontWeight: FontWeight.w600,
-    fontSize: 11,
+    fontSize: 10.5,
     color: FoodlyThemes.primaryFoodly,
   );
 
