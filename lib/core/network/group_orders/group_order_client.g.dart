@@ -138,6 +138,33 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
+  Future<GroupOrderResponseDM> unlockGroupOrder(String uuid) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GroupOrderResponseDM>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/group-orders/${uuid}/unlock',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GroupOrderResponseDM _value;
+    try {
+      _value = GroupOrderResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<GroupOrderResponseDM> cancelGroupOrder(String uuid) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -148,6 +175,36 @@ class _GroupOrderClient implements GroupOrderClient {
           .compose(
             _dio.options,
             '/group-orders/${uuid}/cancel',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GroupOrderResponseDM _value;
+    try {
+      _value = GroupOrderResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GroupOrderResponseDM> transferHost(
+    String uuid, {
+    required String participantUuid,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'participant_uuid': participantUuid};
+    final _options = _setStreamType<GroupOrderResponseDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/group-orders/${uuid}/transfer-host',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -350,11 +407,16 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
-  Future<PayIntentResponseDM> createPayIntent(String uuid) async {
+  Future<PayIntentResponseDM> createPayIntent(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = {'cover_participant_uuids': coverParticipantUuids};
+    _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<PayIntentResponseDM>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(

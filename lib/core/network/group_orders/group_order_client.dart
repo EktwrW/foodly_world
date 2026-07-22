@@ -31,8 +31,19 @@ abstract class GroupOrderClient {
   @PATCH('/group-orders/{uuid}/lock')
   Future<GroupOrderResponseDM> lockGroupOrder(@Path('uuid') String uuid);
 
+  /// Reabre una orden cerrada SIN pagos (F2b §C.1, solo host).
+  @PATCH('/group-orders/{uuid}/unlock')
+  Future<GroupOrderResponseDM> unlockGroupOrder(@Path('uuid') String uuid);
+
   @PATCH('/group-orders/{uuid}/cancel')
   Future<GroupOrderResponseDM> cancelGroupOrder(@Path('uuid') String uuid);
+
+  /// Transfiere la titularidad a otro participante (F2b §A.1, solo host).
+  @POST('/group-orders/{uuid}/transfer-host')
+  Future<GroupOrderResponseDM> transferHost(
+    @Path('uuid') String uuid, {
+    @Field('participant_uuid') required String participantUuid,
+  });
 
   // ── Participantes ──────────────────────────────────────────────
 
@@ -79,6 +90,12 @@ abstract class GroupOrderClient {
 
   /// Crea el PaymentIntent de la parte del usuario actual. El backend calcula
   /// el monto server-side; el cliente solo recibe el client_secret.
+  ///
+  /// F2b "yo invito": con [coverParticipantUuids] el pago cubre la parte de
+  /// ESOS participantes (Σ remaining_due, calculado 100% server-side).
   @POST('/group-orders/{uuid}/pay-intent')
-  Future<PayIntentResponseDM> createPayIntent(@Path('uuid') String uuid);
+  Future<PayIntentResponseDM> createPayIntent(
+    @Path('uuid') String uuid, {
+    @Field('cover_participant_uuids') List<String>? coverParticipantUuids,
+  });
 }

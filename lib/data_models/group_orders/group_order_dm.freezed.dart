@@ -516,7 +516,10 @@ mixin _$GroupOrderParticipantDM {
   @JsonKey(name: 'amount_due', fromJson: _money)
   double get amountDue;
   @JsonKey(name: 'amount_paid', fromJson: _money)
-  double get amountPaid;
+  double
+      get amountPaid; // "Yo invito" (F2b): uuid del participante que cubrió su pago; null = pagó él mismo.
+  @JsonKey(name: 'paid_by_participant_uuid')
+  String? get paidByParticipantUuid;
 
   /// Create a copy of GroupOrderParticipantDM
   /// with the given fields replaced by the non-null parameter values.
@@ -545,17 +548,19 @@ mixin _$GroupOrderParticipantDM {
             (identical(other.amountDue, amountDue) ||
                 other.amountDue == amountDue) &&
             (identical(other.amountPaid, amountPaid) ||
-                other.amountPaid == amountPaid));
+                other.amountPaid == amountPaid) &&
+            (identical(other.paidByParticipantUuid, paidByParticipantUuid) ||
+                other.paidByParticipantUuid == paidByParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, displayName, avatarUrl,
-      role, paymentStatus, amountDue, amountPaid);
+      role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
 
   @override
   String toString() {
-    return 'GroupOrderParticipantDM(uuid: $uuid, displayName: $displayName, avatarUrl: $avatarUrl, role: $role, paymentStatus: $paymentStatus, amountDue: $amountDue, amountPaid: $amountPaid)';
+    return 'GroupOrderParticipantDM(uuid: $uuid, displayName: $displayName, avatarUrl: $avatarUrl, role: $role, paymentStatus: $paymentStatus, amountDue: $amountDue, amountPaid: $amountPaid, paidByParticipantUuid: $paidByParticipantUuid)';
   }
 }
 
@@ -572,7 +577,9 @@ abstract mixin class $GroupOrderParticipantDMCopyWith<$Res> {
       GroupParticipantRole role,
       @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
       @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
-      @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid});
+      @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
+      @JsonKey(name: 'paid_by_participant_uuid')
+      String? paidByParticipantUuid});
 }
 
 /// @nodoc
@@ -595,6 +602,7 @@ class _$GroupOrderParticipantDMCopyWithImpl<$Res>
     Object? paymentStatus = null,
     Object? amountDue = null,
     Object? amountPaid = null,
+    Object? paidByParticipantUuid = freezed,
   }) {
     return _then(_self.copyWith(
       uuid: null == uuid
@@ -625,6 +633,10 @@ class _$GroupOrderParticipantDMCopyWithImpl<$Res>
           ? _self.amountPaid
           : amountPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      paidByParticipantUuid: freezed == paidByParticipantUuid
+          ? _self.paidByParticipantUuid
+          : paidByParticipantUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -729,15 +741,24 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             GroupParticipantRole role,
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
-            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid)?
+            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
+            @JsonKey(name: 'paid_by_participant_uuid')
+            String? paidByParticipantUuid)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM() when $default != null:
-        return $default(_that.uuid, _that.displayName, _that.avatarUrl,
-            _that.role, _that.paymentStatus, _that.amountDue, _that.amountPaid);
+        return $default(
+            _that.uuid,
+            _that.displayName,
+            _that.avatarUrl,
+            _that.role,
+            _that.paymentStatus,
+            _that.amountDue,
+            _that.amountPaid,
+            _that.paidByParticipantUuid);
       case _:
         return orElse();
     }
@@ -765,14 +786,23 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             GroupParticipantRole role,
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
-            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid)
+            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
+            @JsonKey(name: 'paid_by_participant_uuid')
+            String? paidByParticipantUuid)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM():
-        return $default(_that.uuid, _that.displayName, _that.avatarUrl,
-            _that.role, _that.paymentStatus, _that.amountDue, _that.amountPaid);
+        return $default(
+            _that.uuid,
+            _that.displayName,
+            _that.avatarUrl,
+            _that.role,
+            _that.paymentStatus,
+            _that.amountDue,
+            _that.amountPaid,
+            _that.paidByParticipantUuid);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -799,14 +829,23 @@ extension GroupOrderParticipantDMPatterns on GroupOrderParticipantDM {
             GroupParticipantRole role,
             @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
             @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
-            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid)?
+            @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
+            @JsonKey(name: 'paid_by_participant_uuid')
+            String? paidByParticipantUuid)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderParticipantDM() when $default != null:
-        return $default(_that.uuid, _that.displayName, _that.avatarUrl,
-            _that.role, _that.paymentStatus, _that.amountDue, _that.amountPaid);
+        return $default(
+            _that.uuid,
+            _that.displayName,
+            _that.avatarUrl,
+            _that.role,
+            _that.paymentStatus,
+            _that.amountDue,
+            _that.amountPaid,
+            _that.paidByParticipantUuid);
       case _:
         return null;
     }
@@ -824,7 +863,8 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
       @JsonKey(name: 'payment_status')
       this.paymentStatus = GroupPaymentStatus.pending,
       @JsonKey(name: 'amount_due', fromJson: _money) this.amountDue = 0,
-      @JsonKey(name: 'amount_paid', fromJson: _money) this.amountPaid = 0})
+      @JsonKey(name: 'amount_paid', fromJson: _money) this.amountPaid = 0,
+      @JsonKey(name: 'paid_by_participant_uuid') this.paidByParticipantUuid})
       : super._();
   factory _GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) =>
       _$GroupOrderParticipantDMFromJson(json);
@@ -849,6 +889,10 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
   @override
   @JsonKey(name: 'amount_paid', fromJson: _money)
   final double amountPaid;
+// "Yo invito" (F2b): uuid del participante que cubrió su pago; null = pagó él mismo.
+  @override
+  @JsonKey(name: 'paid_by_participant_uuid')
+  final String? paidByParticipantUuid;
 
   /// Create a copy of GroupOrderParticipantDM
   /// with the given fields replaced by the non-null parameter values.
@@ -882,17 +926,19 @@ class _GroupOrderParticipantDM extends GroupOrderParticipantDM {
             (identical(other.amountDue, amountDue) ||
                 other.amountDue == amountDue) &&
             (identical(other.amountPaid, amountPaid) ||
-                other.amountPaid == amountPaid));
+                other.amountPaid == amountPaid) &&
+            (identical(other.paidByParticipantUuid, paidByParticipantUuid) ||
+                other.paidByParticipantUuid == paidByParticipantUuid));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, displayName, avatarUrl,
-      role, paymentStatus, amountDue, amountPaid);
+      role, paymentStatus, amountDue, amountPaid, paidByParticipantUuid);
 
   @override
   String toString() {
-    return 'GroupOrderParticipantDM(uuid: $uuid, displayName: $displayName, avatarUrl: $avatarUrl, role: $role, paymentStatus: $paymentStatus, amountDue: $amountDue, amountPaid: $amountPaid)';
+    return 'GroupOrderParticipantDM(uuid: $uuid, displayName: $displayName, avatarUrl: $avatarUrl, role: $role, paymentStatus: $paymentStatus, amountDue: $amountDue, amountPaid: $amountPaid, paidByParticipantUuid: $paidByParticipantUuid)';
   }
 }
 
@@ -911,7 +957,9 @@ abstract mixin class _$GroupOrderParticipantDMCopyWith<$Res>
       GroupParticipantRole role,
       @JsonKey(name: 'payment_status') GroupPaymentStatus paymentStatus,
       @JsonKey(name: 'amount_due', fromJson: _money) double amountDue,
-      @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid});
+      @JsonKey(name: 'amount_paid', fromJson: _money) double amountPaid,
+      @JsonKey(name: 'paid_by_participant_uuid')
+      String? paidByParticipantUuid});
 }
 
 /// @nodoc
@@ -934,6 +982,7 @@ class __$GroupOrderParticipantDMCopyWithImpl<$Res>
     Object? paymentStatus = null,
     Object? amountDue = null,
     Object? amountPaid = null,
+    Object? paidByParticipantUuid = freezed,
   }) {
     return _then(_GroupOrderParticipantDM(
       uuid: null == uuid
@@ -964,6 +1013,10 @@ class __$GroupOrderParticipantDMCopyWithImpl<$Res>
           ? _self.amountPaid
           : amountPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      paidByParticipantUuid: freezed == paidByParticipantUuid
+          ? _self.paidByParticipantUuid
+          : paidByParticipantUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -986,7 +1039,10 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'total_paid', fromJson: _money)
   double get totalPaid;
   @JsonKey(name: 'lock_expires_at')
-  DateTime? get lockExpiresAt;
+  DateTime?
+      get lockExpiresAt; // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
+  @JsonKey(name: 'grace_ends_at')
+  DateTime? get graceEndsAt;
   List<GroupOrderParticipantDM> get participants;
   List<GroupOrderItemDM> get items;
 
@@ -1024,6 +1080,8 @@ mixin _$GroupOrderDM {
                 other.totalPaid == totalPaid) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
+            (identical(other.graceEndsAt, graceEndsAt) ||
+                other.graceEndsAt == graceEndsAt) &&
             const DeepCollectionEquality()
                 .equals(other.participants, participants) &&
             const DeepCollectionEquality().equals(other.items, items));
@@ -1043,12 +1101,13 @@ mixin _$GroupOrderDM {
       totalAmount,
       totalPaid,
       lockExpiresAt,
+      graceEndsAt,
       const DeepCollectionEquality().hash(participants),
       const DeepCollectionEquality().hash(items));
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1069,6 +1128,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+      @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
       List<GroupOrderItemDM> items});
 }
@@ -1095,6 +1155,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? totalAmount = null,
     Object? totalPaid = null,
     Object? lockExpiresAt = freezed,
+    Object? graceEndsAt = freezed,
     Object? participants = null,
     Object? items = null,
   }) {
@@ -1138,6 +1199,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
           : lockExpiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      graceEndsAt: freezed == graceEndsAt
+          ? _self.graceEndsAt
+          : graceEndsAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       participants: null == participants
           ? _self.participants
@@ -1255,6 +1320,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+            @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
             List<GroupOrderItemDM> items)?
         $default, {
@@ -1274,6 +1340,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.totalAmount,
             _that.totalPaid,
             _that.lockExpiresAt,
+            _that.graceEndsAt,
             _that.participants,
             _that.items);
       case _:
@@ -1307,6 +1374,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+            @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
             List<GroupOrderItemDM> items)
         $default,
@@ -1325,6 +1393,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.totalAmount,
             _that.totalPaid,
             _that.lockExpiresAt,
+            _that.graceEndsAt,
             _that.participants,
             _that.items);
       case _:
@@ -1357,6 +1426,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+            @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
             List<GroupOrderItemDM> items)?
         $default,
@@ -1375,6 +1445,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.totalAmount,
             _that.totalPaid,
             _that.lockExpiresAt,
+            _that.graceEndsAt,
             _that.participants,
             _that.items);
       case _:
@@ -1397,6 +1468,7 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(name: 'total_amount', fromJson: _money) this.totalAmount = 0,
       @JsonKey(name: 'total_paid', fromJson: _money) this.totalPaid = 0,
       @JsonKey(name: 'lock_expires_at') this.lockExpiresAt,
+      @JsonKey(name: 'grace_ends_at') this.graceEndsAt,
       final List<GroupOrderParticipantDM> participants =
           const <GroupOrderParticipantDM>[],
       final List<GroupOrderItemDM> items = const <GroupOrderItemDM>[]})
@@ -1435,6 +1507,10 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'lock_expires_at')
   final DateTime? lockExpiresAt;
+// Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
+  @override
+  @JsonKey(name: 'grace_ends_at')
+  final DateTime? graceEndsAt;
   final List<GroupOrderParticipantDM> _participants;
   @override
   @JsonKey()
@@ -1491,6 +1567,8 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.totalPaid == totalPaid) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
+            (identical(other.graceEndsAt, graceEndsAt) ||
+                other.graceEndsAt == graceEndsAt) &&
             const DeepCollectionEquality()
                 .equals(other._participants, _participants) &&
             const DeepCollectionEquality().equals(other._items, _items));
@@ -1510,12 +1588,13 @@ class _GroupOrderDM extends GroupOrderDM {
       totalAmount,
       totalPaid,
       lockExpiresAt,
+      graceEndsAt,
       const DeepCollectionEquality().hash(_participants),
       const DeepCollectionEquality().hash(_items));
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1538,6 +1617,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+      @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
       List<GroupOrderItemDM> items});
 }
@@ -1565,6 +1645,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? totalAmount = null,
     Object? totalPaid = null,
     Object? lockExpiresAt = freezed,
+    Object? graceEndsAt = freezed,
     Object? participants = null,
     Object? items = null,
   }) {
@@ -1608,6 +1689,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
           : lockExpiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      graceEndsAt: freezed == graceEndsAt
+          ? _self.graceEndsAt
+          : graceEndsAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       participants: null == participants
           ? _self._participants
@@ -2388,7 +2473,9 @@ mixin _$PayIntentResponseDM {
   String? get transactionUuid;
   @JsonKey(fromJson: _money)
   double get amount;
-  String get currency;
+  String get currency; // Participantes que este pago cubre ("yo invito", F2b).
+  @JsonKey(name: 'covered_participant_uuids')
+  List<String> get coveredParticipantUuids;
 
   /// Create a copy of PayIntentResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -2412,17 +2499,24 @@ mixin _$PayIntentResponseDM {
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            const DeepCollectionEquality().equals(
+                other.coveredParticipantUuids, coveredParticipantUuids));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, clientSecret, transactionUuid, amount, currency);
+  int get hashCode => Object.hash(
+      runtimeType,
+      clientSecret,
+      transactionUuid,
+      amount,
+      currency,
+      const DeepCollectionEquality().hash(coveredParticipantUuids));
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -2436,7 +2530,9 @@ abstract mixin class $PayIntentResponseDMCopyWith<$Res> {
       {@JsonKey(name: 'client_secret') String? clientSecret,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
-      String currency});
+      String currency,
+      @JsonKey(name: 'covered_participant_uuids')
+      List<String> coveredParticipantUuids});
 }
 
 /// @nodoc
@@ -2456,6 +2552,7 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
     Object? transactionUuid = freezed,
     Object? amount = null,
     Object? currency = null,
+    Object? coveredParticipantUuids = null,
   }) {
     return _then(_self.copyWith(
       clientSecret: freezed == clientSecret
@@ -2474,6 +2571,10 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      coveredParticipantUuids: null == coveredParticipantUuids
+          ? _self.coveredParticipantUuids
+          : coveredParticipantUuids // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -2575,7 +2676,9 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
-            String currency)?
+            String currency,
+            @JsonKey(name: 'covered_participant_uuids')
+            List<String> coveredParticipantUuids)?
         $default, {
     required TResult orElse(),
   }) {
@@ -2583,7 +2686,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
         return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency);
+            _that.currency, _that.coveredParticipantUuids);
       case _:
         return orElse();
     }
@@ -2608,14 +2711,16 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
-            String currency)
+            String currency,
+            @JsonKey(name: 'covered_participant_uuids')
+            List<String> coveredParticipantUuids)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM():
         return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency);
+            _that.currency, _that.coveredParticipantUuids);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2639,14 +2744,16 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
-            String currency)?
+            String currency,
+            @JsonKey(name: 'covered_participant_uuids')
+            List<String> coveredParticipantUuids)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
         return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency);
+            _that.currency, _that.coveredParticipantUuids);
       case _:
         return null;
     }
@@ -2660,7 +2767,10 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
       {@JsonKey(name: 'client_secret') this.clientSecret,
       @JsonKey(name: 'transaction_uuid') this.transactionUuid,
       @JsonKey(fromJson: _money) this.amount = 0,
-      this.currency = 'EUR'});
+      this.currency = 'EUR',
+      @JsonKey(name: 'covered_participant_uuids')
+      final List<String> coveredParticipantUuids = const <String>[]})
+      : _coveredParticipantUuids = coveredParticipantUuids;
   factory _PayIntentResponseDM.fromJson(Map<String, dynamic> json) =>
       _$PayIntentResponseDMFromJson(json);
 
@@ -2676,6 +2786,17 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   @override
   @JsonKey()
   final String currency;
+// Participantes que este pago cubre ("yo invito", F2b).
+  final List<String> _coveredParticipantUuids;
+// Participantes que este pago cubre ("yo invito", F2b).
+  @override
+  @JsonKey(name: 'covered_participant_uuids')
+  List<String> get coveredParticipantUuids {
+    if (_coveredParticipantUuids is EqualUnmodifiableListView)
+      return _coveredParticipantUuids;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_coveredParticipantUuids);
+  }
 
   /// Create a copy of PayIntentResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -2704,17 +2825,24 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            const DeepCollectionEquality().equals(
+                other._coveredParticipantUuids, _coveredParticipantUuids));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, clientSecret, transactionUuid, amount, currency);
+  int get hashCode => Object.hash(
+      runtimeType,
+      clientSecret,
+      transactionUuid,
+      amount,
+      currency,
+      const DeepCollectionEquality().hash(_coveredParticipantUuids));
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -2730,7 +2858,9 @@ abstract mixin class _$PayIntentResponseDMCopyWith<$Res>
       {@JsonKey(name: 'client_secret') String? clientSecret,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
-      String currency});
+      String currency,
+      @JsonKey(name: 'covered_participant_uuids')
+      List<String> coveredParticipantUuids});
 }
 
 /// @nodoc
@@ -2750,6 +2880,7 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
     Object? transactionUuid = freezed,
     Object? amount = null,
     Object? currency = null,
+    Object? coveredParticipantUuids = null,
   }) {
     return _then(_PayIntentResponseDM(
       clientSecret: freezed == clientSecret
@@ -2768,6 +2899,10 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      coveredParticipantUuids: null == coveredParticipantUuids
+          ? _self._coveredParticipantUuids
+          : coveredParticipantUuids // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }

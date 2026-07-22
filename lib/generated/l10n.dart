@@ -8665,6 +8665,106 @@ class S {
     );
   }
 
+  /// `Reopen order`
+  String get groupOrderUnlockCta {
+    return Intl.message(
+      'Reopen order',
+      name: 'groupOrderUnlockCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reopen the order? Prices unfreeze and items can be edited again.`
+  String get groupOrderUnlockConfirm {
+    return Intl.message(
+      'Reopen the order? Prices unfreeze and items can be edited again.',
+      name: 'groupOrderUnlockConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer ownership`
+  String get groupOrderTransferHost {
+    return Intl.message(
+      'Transfer ownership',
+      name: 'groupOrderTransferHost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer ownership to {name}?`
+  String groupOrderTransferHostConfirm(String name) {
+    return Intl.message(
+      'Transfer ownership to $name?',
+      name: 'groupOrderTransferHostConfirm',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Cover their share`
+  String get groupOrderCoverShare {
+    return Intl.message(
+      'Cover their share',
+      name: 'groupOrderCoverShare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay {name}'s share ({amount})?`
+  String groupOrderCoverConfirm(String name, String amount) {
+    return Intl.message(
+      'Pay $name\'s share ($amount)?',
+      name: 'groupOrderCoverConfirm',
+      desc: '',
+      args: [name, amount],
+    );
+  }
+
+  /// `Pay all remaining · {amount}`
+  String groupOrderPayAllRemaining(String amount) {
+    return Intl.message(
+      'Pay all remaining · $amount',
+      name: 'groupOrderPayAllRemaining',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Pay everything remaining ({amount})?`
+  String groupOrderPayAllConfirm(String amount) {
+    return Intl.message(
+      'Pay everything remaining ($amount)?',
+      name: 'groupOrderPayAllConfirm',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Paid by {name}`
+  String groupOrderPaidBy(String name) {
+    return Intl.message(
+      'Paid by $name',
+      name: 'groupOrderPaidBy',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Extra time: {amount} missing`
+  String groupOrderGraceNotice(String amount) {
+    return Intl.message(
+      'Extra time: $amount missing',
+      name: 'groupOrderGraceNotice',
+      desc: '',
+      args: [amount],
+    );
+  }
+
   /// `Log in or sign up to start a group order.`
   String get guestGateGroupOrder {
     return Intl.message(

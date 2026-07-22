@@ -1312,5 +1312,60 @@
   "groupOrderViewOrder": "View order",
   "groupOrderAddFromMenu": "Add dishes from the menu",
   "groupOrderLockCta": "Close order",
+  "groupOrderUnlockCta": "Reopen order",
+  "groupOrderUnlockConfirm": "Reopen the order? Prices unfreeze and items can be edited again.",
+  "groupOrderTransferHost": "Transfer ownership",
+  "groupOrderTransferHostConfirm": "Transfer ownership to {name}?",
+  "@groupOrderTransferHostConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderCoverShare": "Cover their share",
+  "groupOrderCoverConfirm": "Pay {name}'s share ({amount})?",
+  "@groupOrderCoverConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllRemaining": "Pay all remaining · {amount}",
+  "@groupOrderPayAllRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllConfirm": "Pay everything remaining ({amount})?",
+  "@groupOrderPayAllConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPaidBy": "Paid by {name}",
+  "@groupOrderPaidBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderGraceNotice": "Extra time: {amount} missing",
+  "@groupOrderGraceNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Log in or sign up to start a group order."
 }

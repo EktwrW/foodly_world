@@ -21,15 +21,25 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// está OPEN; null para participantes que no son host.
   final VoidCallback? onLock;
 
+  /// "Yo invito" global (F2b §A.2): pagar TODO lo pendiente de la orden.
+  /// null => sin botón (el caller decide cuándo tiene sentido mostrarlo).
+  final VoidCallback? onPayAll;
+
+  /// Operación en curso (loading del cubit o PaymentSheet abierto): los CTAs
+  /// se deshabilitan para evitar dobles taps / pagos duplicados.
+  final bool isBusy;
+
   const GroupOrderTotalsFooter({
     super.key,
     required this.order,
     required this.myShare,
     this.onPay,
     this.onLock,
+    this.onPayAll,
+    this.isBusy = false,
   });
 
-  bool get _canPay => order.isPayable && myShare > 0 && onPay != null;
+  bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +79,25 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             ),
             const SizedBox(height: 14),
           ],
+          // Ventana de gracia (F2b §A.2): el deadline venció pero aún se puede
+          // completar el pago — típicamente cubriendo lo que falta.
+          if (order.isInGracePeriod) ...[
+            Row(
+              children: [
+                const Icon(Icons.timer_outlined, size: 16, color: FoodlyThemes.tertiaryFoodly),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    S.current.groupOrderGraceNotice(
+                      formatMoney(order.totalRemaining, order.currency),
+                    ),
+                    style: FoodlyTextStyles.caption,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
           // Total de la orden (subtotal mientras está abierta; congelado al cerrar).
           _AmountRow(
             label: S.current.groupOrderTotal,
@@ -90,11 +119,11 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             // Host: cierra el pedido (congela precios y habilita el pago).
             CustomNeumorphicButton(
               text: S.current.groupOrderLockCta,
-              disabled: onLock == null || order.items.isEmpty,
+              disabled: onLock == null || order.items.isEmpty || isBusy,
               margin: EdgeInsets.zero,
               onPressed: onLock,
             )
-          else
+          else ...[
             CustomNeumorphicButton(
               text: _canPay
                   ? S.current.groupOrderPayMyShare(formatMoney(myShare, order.currency))
@@ -103,6 +132,19 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               margin: EdgeInsets.zero,
               onPressed: onPay,
             ),
+            // "Pagar todo lo pendiente · €X" (F2b §A.2) — disponible para todos.
+            if (onPayAll != null && order.totalRemaining > 0) ...[
+              const SizedBox(height: 8),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderPayAllRemaining(
+                  formatMoney(order.totalRemaining, order.currency),
+                ),
+                disabled: isBusy,
+                margin: EdgeInsets.zero,
+                onPressed: onPayAll,
+              ),
+            ],
+          ],
         ],
       ),
     );

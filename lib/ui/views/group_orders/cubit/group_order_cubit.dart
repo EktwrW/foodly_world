@@ -43,6 +43,24 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     result.when(success: _applyResponse, failure: _onError);
   }
 
+  /// Host: reabre una orden cerrada SIN pagos (F2b §C.1).
+  Future<void> unlock() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.unlockGroupOrder(uuid);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
+  /// Host: transfiere la titularidad a otro participante (F2b §A.1).
+  Future<void> transferHost(String participantUuid) async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.transferHost(uuid, participantUuid: participantUuid);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
   /// Agrega un ítem (solo cuando la orden está OPEN).
   Future<void> addItem({
     required String itemableType,
@@ -80,14 +98,22 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   /// Genera el PaymentIntent de la parte del usuario actual. Devuelve la
   /// respuesta (con client_secret) para que la página confirme el pago con
   /// el Stripe PaymentSheet. El estado `paid` se sella vía webhook + refetch.
-  Future<PayIntentResponseDM?> createPayIntent() async {
+  ///
+  /// F2b "yo invito": con [coverParticipantUuids] el pago cubre la parte de
+  /// esos participantes (el monto lo calcula el backend: Σ remaining_due).
+  Future<PayIntentResponseDM?> createPayIntent({
+    List<String>? coverParticipantUuids,
+  }) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return null;
 
     _vm = _vm.copyWith(isPaying: true, errorMessage: null);
     emit(GroupOrderState.loaded(_vm));
 
-    final result = await _repo.createPayIntent(uuid);
+    final result = await _repo.createPayIntent(
+      uuid,
+      coverParticipantUuids: coverParticipantUuids,
+    );
     return result.when(
       success: (r) {
         _vm = _vm.copyWith(isPaying: false);

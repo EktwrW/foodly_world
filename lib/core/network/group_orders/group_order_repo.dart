@@ -52,6 +52,29 @@ class GroupOrderRepo {
     }
   }
 
+  /// F2b §C.1 — reabre una orden cerrada sin pagos (solo host).
+  Future<ApiResult<GroupOrderResponseDM>> unlockGroupOrder(String uuid) async {
+    try {
+      return ApiResult.success(await _client.unlockGroupOrder(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F2b §A.1 — transfiere la titularidad a otro participante (solo host).
+  Future<ApiResult<GroupOrderResponseDM>> transferHost(
+    String uuid, {
+    required String participantUuid,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _client.transferHost(uuid, participantUuid: participantUuid),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<GroupOrderResponseDM>> cancelGroupOrder(String uuid) async {
     try {
       return ApiResult.success(await _client.cancelGroupOrder(uuid));
@@ -115,9 +138,17 @@ class GroupOrderRepo {
     }
   }
 
-  Future<ApiResult<PayIntentResponseDM>> createPayIntent(String uuid) async {
+  /// F2b "yo invito": con [coverParticipantUuids] el pago cubre la parte de
+  /// esos participantes (monto server-side).
+  Future<ApiResult<PayIntentResponseDM>> createPayIntent(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+  }) async {
     try {
-      return ApiResult.success(await _client.createPayIntent(uuid));
+      return ApiResult.success(await _client.createPayIntent(
+        uuid,
+        coverParticipantUuids: coverParticipantUuids,
+      ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

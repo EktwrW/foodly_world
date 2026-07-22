@@ -99,6 +99,8 @@ abstract class GroupOrderParticipantDM with _$GroupOrderParticipantDM {
     @JsonKey(name: 'payment_status') @Default(GroupPaymentStatus.pending) GroupPaymentStatus paymentStatus,
     @JsonKey(name: 'amount_due', fromJson: _money) @Default(0) double amountDue,
     @JsonKey(name: 'amount_paid', fromJson: _money) @Default(0) double amountPaid,
+    // "Yo invito" (F2b): uuid del participante que cubrió su pago; null = pagó él mismo.
+    @JsonKey(name: 'paid_by_participant_uuid') String? paidByParticipantUuid,
   }) = _GroupOrderParticipantDM;
 
   factory GroupOrderParticipantDM.fromJson(Map<String, dynamic> json) =>
@@ -107,6 +109,9 @@ abstract class GroupOrderParticipantDM with _$GroupOrderParticipantDM {
   bool get isHost => role == GroupParticipantRole.host;
   bool get hasPaid => paymentStatus == GroupPaymentStatus.paid;
   bool get isProcessing => paymentStatus == GroupPaymentStatus.processing;
+
+  /// Su parte la pagó otro participante ("yo invito").
+  bool get wasCoveredByOther => hasPaid && paidByParticipantUuid != null;
 
   /// Saldo pendiente del participante.
   double get remainingDue => (amountDue - amountPaid).clamp(0, double.infinity);
@@ -131,6 +136,8 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @JsonKey(name: 'total_amount', fromJson: _money) @Default(0) double totalAmount,
     @JsonKey(name: 'total_paid', fromJson: _money) @Default(0) double totalPaid,
     @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
+    // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
+    @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
     @Default(<GroupOrderParticipantDM>[]) List<GroupOrderParticipantDM> participants,
     @Default(<GroupOrderItemDM>[]) List<GroupOrderItemDM> items,
   }) = _GroupOrderDM;
@@ -145,6 +152,18 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   /// Cuántos participantes ya pagaron.
   int get paidCount => participants.where((p) => p.hasPaid).length;
+
+  /// Participantes con saldo pendiente y sin pago en curso — los "cubribles"
+  /// del flujo "yo invito" (F2b §A.2).
+  List<GroupOrderParticipantDM> get coverableParticipants =>
+      participants.where((p) => p.remainingDue > 0 && !p.isProcessing).toList();
+
+  /// Total pendiente de pago de toda la orden.
+  double get totalRemaining => (totalAmount - totalPaid).clamp(0, double.infinity);
+
+  /// En ventana de gracia (deadline vencido, aún no expirada).
+  bool get isInGracePeriod =>
+      isPayable && graceEndsAt != null && graceEndsAt!.isAfter(DateTime.now());
 
   /// Progreso de pago [0, 1].
   double get paymentProgress =>
@@ -200,6 +219,8 @@ abstract class PayIntentResponseDM with _$PayIntentResponseDM {
     @JsonKey(name: 'transaction_uuid') String? transactionUuid,
     @JsonKey(fromJson: _money) @Default(0) double amount,
     @Default('EUR') String currency,
+    // Participantes que este pago cubre ("yo invito", F2b).
+    @JsonKey(name: 'covered_participant_uuids') @Default(<String>[]) List<String> coveredParticipantUuids,
   }) = _PayIntentResponseDM;
 
   factory PayIntentResponseDM.fromJson(Map<String, dynamic> json) =>

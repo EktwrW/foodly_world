@@ -49,6 +49,7 @@ class _SpyAuthSessionService implements AuthSessionService {
   );
   @override
   UserSessionDM? get userSessionDM => _session;
+  @override
   set userSessionDM(UserSessionDM? v) => _session = v;
 
   @override

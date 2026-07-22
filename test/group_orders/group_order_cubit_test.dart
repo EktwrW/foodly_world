@@ -168,6 +168,85 @@ void main() {
     });
   });
 
+  group('F2b', () {
+    test('createPayIntent con covers pasa los uuids al repo ("yo invito")', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      repo.payIntentOutcome = const ApiResult.success(
+        PayIntentResponseDM(
+          clientSecret: 'sec_covers',
+          amount: 30,
+          coveredParticipantUuids: ['p2', 'p3'],
+        ),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      final result = await cubit.createPayIntent(coverParticipantUuids: ['p2', 'p3']);
+
+      expect(result?.clientSecret, 'sec_covers');
+      expect(result?.coveredParticipantUuids, ['p2', 'p3']);
+      expect(repo.lastCoverUuids, ['p2', 'p3']);
+
+      await cubit.close();
+    });
+
+    test('unlock: emite [loading, loaded] con la orden reabierta', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      final reopened = sampleOrder().copyWith(status: GroupOrderStatus.open, totalAmount: 0);
+      repo.unlockOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: reopened, myParticipantUuid: 'p1'),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      final emitted = <GroupOrderState>[];
+      final sub = cubit.stream.listen(emitted.add);
+
+      await cubit.unlock();
+      await Future<void>.delayed(const Duration(milliseconds: 10));
+
+      expect(isLoading(emitted.first), true);
+      expect(isLoaded(emitted.last), true);
+      expect(vmOf(emitted.last).order?.status, GroupOrderStatus.open);
+
+      await sub.cancel();
+      await cubit.close();
+    });
+
+    test('transferHost: pasa el uuid destino y aplica la respuesta', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      final transferred = sampleOrder().copyWith(
+        participants: const [
+          GroupOrderParticipantDM(uuid: 'p1', displayName: 'Yo', amountDue: 20),
+          GroupOrderParticipantDM(
+            uuid: 'p2',
+            displayName: 'Nuevo Host',
+            role: GroupParticipantRole.host,
+          ),
+        ],
+      );
+      repo.transferHostOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: transferred, myShare: 20, myParticipantUuid: 'p1'),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      await cubit.transferHost('p2');
+
+      expect(repo.lastTransferTarget, 'p2');
+      final newHost = cubit.vm.order?.participants.where((p) => p.isHost).first;
+      expect(newHost?.uuid, 'p2');
+
+      await cubit.close();
+    });
+  });
+
   group('removeItem', () {
     test('éxito: aplica la respuesta y emite loaded con la orden actualizada', () async {
       repo.getOutcome = ApiResult.success(
@@ -201,6 +280,12 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? getOutcome;
   ApiResult<GroupOrderResponseDM>? removeItemOutcome;
   ApiResult<PayIntentResponseDM>? payIntentOutcome;
+  ApiResult<GroupOrderResponseDM>? unlockOutcome;
+  ApiResult<GroupOrderResponseDM>? transferHostOutcome;
+
+  /// Espías F2b: qué recibió el repo en la última llamada.
+  List<String>? lastCoverUuids;
+  String? lastTransferTarget;
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async => getOutcome!;
@@ -209,7 +294,25 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> removeItem(String uuid, String itemUuid) async => removeItemOutcome!;
 
   @override
-  Future<ApiResult<PayIntentResponseDM>> createPayIntent(String uuid) async => payIntentOutcome!;
+  Future<ApiResult<PayIntentResponseDM>> createPayIntent(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+  }) async {
+    lastCoverUuids = coverParticipantUuids;
+    return payIntentOutcome!;
+  }
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> unlockGroupOrder(String uuid) async => unlockOutcome!;
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> transferHost(
+    String uuid, {
+    required String participantUuid,
+  }) async {
+    lastTransferTarget = participantUuid;
+    return transferHostOutcome!;
+  }
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

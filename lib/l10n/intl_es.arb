@@ -1312,5 +1312,60 @@
   "groupOrderViewOrder": "Ver la orden",
   "groupOrderAddFromMenu": "Agrega platos del menú",
   "groupOrderLockCta": "Cerrar la orden",
+  "groupOrderUnlockCta": "Reabrir la orden",
+  "groupOrderUnlockConfirm": "¿Reabrir la orden? Los precios se descongelan y se podrán editar los ítems.",
+  "groupOrderTransferHost": "Transferir titularidad",
+  "groupOrderTransferHostConfirm": "¿Transferir la titularidad a {name}?",
+  "@groupOrderTransferHostConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderCoverShare": "Cubrir su parte",
+  "groupOrderCoverConfirm": "¿Pagar la parte de {name} ({amount})?",
+  "@groupOrderCoverConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllRemaining": "Pagar todo lo pendiente · {amount}",
+  "@groupOrderPayAllRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllConfirm": "¿Pagar todo lo pendiente ({amount})?",
+  "@groupOrderPayAllConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPaidBy": "Pagado por {name}",
+  "@groupOrderPaidBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderGraceNotice": "Tiempo extra: faltan {amount}",
+  "@groupOrderGraceNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

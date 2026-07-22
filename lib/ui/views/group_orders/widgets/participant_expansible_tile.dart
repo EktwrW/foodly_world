@@ -29,12 +29,21 @@ class ParticipantExpansibleTile extends StatefulWidget {
   /// quién puede borrar qué (dueño del ítem / host) la decide el caller.
   final void Function(GroupOrderItemDM item)? onRemoveItem;
 
+  /// "Yo invito" (F2b §A.2): pagar la parte de ESTE participante. null =>
+  /// sin CTA (la regla — pendiente, no soy yo, orden pagable — la decide el caller).
+  final VoidCallback? onCover;
+
+  /// Nombre de quien cubrió su pago ("Pagado por X"); null si pagó él mismo.
+  final String? paidByName;
+
   const ParticipantExpansibleTile({
     super.key,
     required this.order,
     required this.participant,
     this.initiallyExpanded = false,
     this.onRemoveItem,
+    this.onCover,
+    this.paidByName,
   });
 
   @override
@@ -81,20 +90,33 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          widget.participant.displayName,
-                          style: FoodlyTextStyles.labelBold,
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              widget.participant.displayName,
+                              style: FoodlyTextStyles.labelBold,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          if (widget.participant.isHost) ...[
+                            const SizedBox(width: 6),
+                            const _HostBadge(),
+                          ],
+                        ],
+                      ),
+                      // "Yo invito": deja rastro de quién cubrió esta parte.
+                      if (widget.paidByName != null)
+                        Text(
+                          S.current.groupOrderPaidBy(widget.paidByName!),
+                          style: FoodlyTextStyles.caption,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      if (widget.participant.isHost) ...[
-                        const SizedBox(width: 6),
-                        const _HostBadge(),
-                      ],
                     ],
                   ),
                 ),
@@ -120,27 +142,41 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
         ),
         bodyBuilder: (context, animation) => Padding(
           padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
-          child: items.isEmpty
-              ? Padding(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (items.isEmpty)
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
                     child: Text(S.current.groupOrderNoItems, style: FoodlyTextStyles.caption),
                   ),
                 )
-              : Column(
-                  children: [
-                    for (final item in items)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: GroupOrderItemTile(
-                          item: item,
-                          currency: widget.order.currency,
-                          onRemove:
-                              widget.onRemoveItem == null ? null : () => widget.onRemoveItem!(item),
-                        ),
-                      ),
-                  ],
+              else
+                for (final item in items)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 6),
+                    child: GroupOrderItemTile(
+                      item: item,
+                      currency: widget.order.currency,
+                      onRemove:
+                          widget.onRemoveItem == null ? null : () => widget.onRemoveItem!(item),
+                    ),
+                  ),
+              // "Cubrir su parte" (F2b §A.2) — solo si el caller lo habilitó.
+              if (widget.onCover != null)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton.icon(
+                    onPressed: widget.onCover,
+                    icon: const Icon(Icons.volunteer_activism_outlined,
+                        size: 16, color: FoodlyThemes.primaryFoodly),
+                    label: Text(S.current.groupOrderCoverShare,
+                        style: FoodlyTextStyles.captionPurpleBold),
+                  ),
                 ),
+            ],
+          ),
         ),
       ),
     );

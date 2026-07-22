@@ -45,6 +45,7 @@ _GroupOrderParticipantDM _$GroupOrderParticipantDMFromJson(
           GroupPaymentStatus.pending,
       amountDue: json['amount_due'] == null ? 0 : _money(json['amount_due']),
       amountPaid: json['amount_paid'] == null ? 0 : _money(json['amount_paid']),
+      paidByParticipantUuid: json['paid_by_participant_uuid'] as String?,
     );
 
 Map<String, dynamic> _$GroupOrderParticipantDMToJson(
@@ -57,6 +58,8 @@ Map<String, dynamic> _$GroupOrderParticipantDMToJson(
       'payment_status': _$GroupPaymentStatusEnumMap[instance.paymentStatus]!,
       'amount_due': instance.amountDue,
       'amount_paid': instance.amountPaid,
+      if (instance.paidByParticipantUuid case final value?)
+        'paid_by_participant_uuid': value,
     };
 
 const _$GroupParticipantRoleEnumMap = {
@@ -87,6 +90,9 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       lockExpiresAt: json['lock_expires_at'] == null
           ? null
           : DateTime.parse(json['lock_expires_at'] as String),
+      graceEndsAt: json['grace_ends_at'] == null
+          ? null
+          : DateTime.parse(json['grace_ends_at'] as String),
       participants: (json['participants'] as List<dynamic>?)
               ?.map((e) =>
                   GroupOrderParticipantDM.fromJson(e as Map<String, dynamic>))
@@ -111,6 +117,8 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'total_paid': instance.totalPaid,
       if (instance.lockExpiresAt?.toIso8601String() case final value?)
         'lock_expires_at': value,
+      if (instance.graceEndsAt?.toIso8601String() case final value?)
+        'grace_ends_at': value,
       'participants': instance.participants.map((e) => e.toJson()).toList(),
       'items': instance.items.map((e) => e.toJson()).toList(),
     };
@@ -168,6 +176,11 @@ _PayIntentResponseDM _$PayIntentResponseDMFromJson(Map<String, dynamic> json) =>
       transactionUuid: json['transaction_uuid'] as String?,
       amount: json['amount'] == null ? 0 : _money(json['amount']),
       currency: json['currency'] as String? ?? 'EUR',
+      coveredParticipantUuids:
+          (json['covered_participant_uuids'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const <String>[],
     );
 
 Map<String, dynamic> _$PayIntentResponseDMToJson(
@@ -177,6 +190,7 @@ Map<String, dynamic> _$PayIntentResponseDMToJson(
       if (instance.transactionUuid case final value?) 'transaction_uuid': value,
       'amount': instance.amount,
       'currency': instance.currency,
+      'covered_participant_uuids': instance.coveredParticipantUuids,
     };
 
 _GroupInviteResponseDM _$GroupInviteResponseDMFromJson(
