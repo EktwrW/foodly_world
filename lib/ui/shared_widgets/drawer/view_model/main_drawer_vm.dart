@@ -4,7 +4,7 @@ import 'package:sidebarx/sidebarx.dart' show SidebarXController;
 part 'main_drawer_vm.freezed.dart';
 
 @freezed
-class MainDrawerVM with _$MainDrawerVM {
+abstract class MainDrawerVM with _$MainDrawerVM {
   const MainDrawerVM._();
 
   const factory MainDrawerVM({

@@ -2,11 +2,10 @@ import 'dart:async' show TimeoutException;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, Bloc, Emitter, FoodlyStrings, Logger, S;
 import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/places_proxy/places_proxy_repo.dart';
-
 import 'package:foodly_world/data_models/places/location_details_dm.dart';
 import 'package:foodly_world/data_models/places_proxy/geocoding_response_dm.dart';
 import 'package:foodly_world/data_transfer_objects/places_proxy/geocoding_reverse_request_dto.dart';

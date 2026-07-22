@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,140 +9,97 @@ part of 'menu_import_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MenuImportVM {
   /// Fotos elegidas por el manager ANTES del upload. Una vez subidas,
   /// se vacía y los paths persistidos viven en `uploadedImages`.
-  List<File> get selectedFiles => throw _privateConstructorUsedError;
+  List<File> get selectedFiles;
 
   /// Session ID recibido del primer /upload. El FE lo guarda para que,
   /// si el manager agrega más fotos en una segunda tanda (mismo flow,
   /// sin cerrar la pantalla), las nuevas se persistan bajo el mismo
   /// storage path en GCS — necesario para reanudación si la app muere.
-  String? get sessionId => throw _privateConstructorUsedError;
+  String? get sessionId;
 
   /// Paths + URLs de fotos efectivamente subidas a GCS. Persistido
   /// como source-of-truth de qué se subió por si el flow continúa
   /// luego (decisión 1 = B del PRD del 2026-05-09).
-  List<MenuImportUploadedImageDM> get uploadedImages =>
-      throw _privateConstructorUsedError;
+  List<MenuImportUploadedImageDM> get uploadedImages;
 
   /// Acumulado de las respuestas /parse — una por foto. Cada call al
   /// NLP devuelve un `grouped_menu` independiente; la vista de revisión
   /// los unifica/dedup en un único árbol que el manager edita.
-  List<ParsedCategoryGroupDM> get parsedGroups =>
-      throw _privateConstructorUsedError;
+  List<ParsedCategoryGroupDM> get parsedGroups;
 
   /// Progreso visible al manager durante upload/parse. `total` se setea
   /// al inicio del paso correspondiente.
-  int get currentStepIndex => throw _privateConstructorUsedError;
-  int get currentStepTotal => throw _privateConstructorUsedError;
+  int get currentStepIndex;
+  int get currentStepTotal;
 
   /// Stats del bulk-import al confirmar. Usado en el dialog Foodly de
   /// éxito ("Importamos {totalItems} items en {totalCategories} categorías").
-  MenuImportBulkStatsDM? get bulkStats => throw _privateConstructorUsedError;
+  MenuImportBulkStatsDM? get bulkStats;
 
   /// Locale del usuario para hint al NLP. ES por default; el cubit lo
   /// pisa con el locale activo de la app cuando se inyecta.
-  String get locale => throw _privateConstructorUsedError;
+  String get locale;
 
   /// Create a copy of MenuImportVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MenuImportVMCopyWith<MenuImportVM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MenuImportVMCopyWith<$Res> {
-  factory $MenuImportVMCopyWith(
-          MenuImportVM value, $Res Function(MenuImportVM) then) =
-      _$MenuImportVMCopyWithImpl<$Res, MenuImportVM>;
-  @useResult
-  $Res call(
-      {List<File> selectedFiles,
-      String? sessionId,
-      List<MenuImportUploadedImageDM> uploadedImages,
-      List<ParsedCategoryGroupDM> parsedGroups,
-      int currentStepIndex,
-      int currentStepTotal,
-      MenuImportBulkStatsDM? bulkStats,
-      String locale});
-}
-
-/// @nodoc
-class _$MenuImportVMCopyWithImpl<$Res, $Val extends MenuImportVM>
-    implements $MenuImportVMCopyWith<$Res> {
-  _$MenuImportVMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MenuImportVM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<MenuImportVM> get copyWith =>
+      _$MenuImportVMCopyWithImpl<MenuImportVM>(
+          this as MenuImportVM, _$identity);
+
   @override
-  $Res call({
-    Object? selectedFiles = null,
-    Object? sessionId = freezed,
-    Object? uploadedImages = null,
-    Object? parsedGroups = null,
-    Object? currentStepIndex = null,
-    Object? currentStepTotal = null,
-    Object? bulkStats = freezed,
-    Object? locale = null,
-  }) {
-    return _then(_value.copyWith(
-      selectedFiles: null == selectedFiles
-          ? _value.selectedFiles
-          : selectedFiles // ignore: cast_nullable_to_non_nullable
-              as List<File>,
-      sessionId: freezed == sessionId
-          ? _value.sessionId
-          : sessionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      uploadedImages: null == uploadedImages
-          ? _value.uploadedImages
-          : uploadedImages // ignore: cast_nullable_to_non_nullable
-              as List<MenuImportUploadedImageDM>,
-      parsedGroups: null == parsedGroups
-          ? _value.parsedGroups
-          : parsedGroups // ignore: cast_nullable_to_non_nullable
-              as List<ParsedCategoryGroupDM>,
-      currentStepIndex: null == currentStepIndex
-          ? _value.currentStepIndex
-          : currentStepIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentStepTotal: null == currentStepTotal
-          ? _value.currentStepTotal
-          : currentStepTotal // ignore: cast_nullable_to_non_nullable
-              as int,
-      bulkStats: freezed == bulkStats
-          ? _value.bulkStats
-          : bulkStats // ignore: cast_nullable_to_non_nullable
-              as MenuImportBulkStatsDM?,
-      locale: null == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MenuImportVM &&
+            const DeepCollectionEquality()
+                .equals(other.selectedFiles, selectedFiles) &&
+            (identical(other.sessionId, sessionId) ||
+                other.sessionId == sessionId) &&
+            const DeepCollectionEquality()
+                .equals(other.uploadedImages, uploadedImages) &&
+            const DeepCollectionEquality()
+                .equals(other.parsedGroups, parsedGroups) &&
+            (identical(other.currentStepIndex, currentStepIndex) ||
+                other.currentStepIndex == currentStepIndex) &&
+            (identical(other.currentStepTotal, currentStepTotal) ||
+                other.currentStepTotal == currentStepTotal) &&
+            (identical(other.bulkStats, bulkStats) ||
+                other.bulkStats == bulkStats) &&
+            (identical(other.locale, locale) || other.locale == locale));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(selectedFiles),
+      sessionId,
+      const DeepCollectionEquality().hash(uploadedImages),
+      const DeepCollectionEquality().hash(parsedGroups),
+      currentStepIndex,
+      currentStepTotal,
+      bulkStats,
+      locale);
+
+  @override
+  String toString() {
+    return 'MenuImportVM(selectedFiles: $selectedFiles, sessionId: $sessionId, uploadedImages: $uploadedImages, parsedGroups: $parsedGroups, currentStepIndex: $currentStepIndex, currentStepTotal: $currentStepTotal, bulkStats: $bulkStats, locale: $locale)';
   }
 }
 
 /// @nodoc
-abstract class _$$MenuImportVMImplCopyWith<$Res>
-    implements $MenuImportVMCopyWith<$Res> {
-  factory _$$MenuImportVMImplCopyWith(
-          _$MenuImportVMImpl value, $Res Function(_$MenuImportVMImpl) then) =
-      __$$MenuImportVMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $MenuImportVMCopyWith<$Res> {
+  factory $MenuImportVMCopyWith(
+          MenuImportVM value, $Res Function(MenuImportVM) _then) =
+      _$MenuImportVMCopyWithImpl;
   @useResult
   $Res call(
       {List<File> selectedFiles,
@@ -156,12 +113,11 @@ abstract class _$$MenuImportVMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MenuImportVMImplCopyWithImpl<$Res>
-    extends _$MenuImportVMCopyWithImpl<$Res, _$MenuImportVMImpl>
-    implements _$$MenuImportVMImplCopyWith<$Res> {
-  __$$MenuImportVMImplCopyWithImpl(
-      _$MenuImportVMImpl _value, $Res Function(_$MenuImportVMImpl) _then)
-      : super(_value, _then);
+class _$MenuImportVMCopyWithImpl<$Res> implements $MenuImportVMCopyWith<$Res> {
+  _$MenuImportVMCopyWithImpl(this._self, this._then);
+
+  final MenuImportVM _self;
+  final $Res Function(MenuImportVM) _then;
 
   /// Create a copy of MenuImportVM
   /// with the given fields replaced by the non-null parameter values.
@@ -177,47 +133,255 @@ class __$$MenuImportVMImplCopyWithImpl<$Res>
     Object? bulkStats = freezed,
     Object? locale = null,
   }) {
-    return _then(_$MenuImportVMImpl(
+    return _then(_self.copyWith(
       selectedFiles: null == selectedFiles
-          ? _value._selectedFiles
+          ? _self.selectedFiles
           : selectedFiles // ignore: cast_nullable_to_non_nullable
               as List<File>,
       sessionId: freezed == sessionId
-          ? _value.sessionId
+          ? _self.sessionId
           : sessionId // ignore: cast_nullable_to_non_nullable
               as String?,
       uploadedImages: null == uploadedImages
-          ? _value._uploadedImages
+          ? _self.uploadedImages
           : uploadedImages // ignore: cast_nullable_to_non_nullable
               as List<MenuImportUploadedImageDM>,
       parsedGroups: null == parsedGroups
-          ? _value._parsedGroups
+          ? _self.parsedGroups
           : parsedGroups // ignore: cast_nullable_to_non_nullable
               as List<ParsedCategoryGroupDM>,
       currentStepIndex: null == currentStepIndex
-          ? _value.currentStepIndex
+          ? _self.currentStepIndex
           : currentStepIndex // ignore: cast_nullable_to_non_nullable
               as int,
       currentStepTotal: null == currentStepTotal
-          ? _value.currentStepTotal
+          ? _self.currentStepTotal
           : currentStepTotal // ignore: cast_nullable_to_non_nullable
               as int,
       bulkStats: freezed == bulkStats
-          ? _value.bulkStats
+          ? _self.bulkStats
           : bulkStats // ignore: cast_nullable_to_non_nullable
               as MenuImportBulkStatsDM?,
       locale: null == locale
-          ? _value.locale
+          ? _self.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [MenuImportVM].
+extension MenuImportVMPatterns on MenuImportVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_MenuImportVM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_MenuImportVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_MenuImportVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<File> selectedFiles,
+            String? sessionId,
+            List<MenuImportUploadedImageDM> uploadedImages,
+            List<ParsedCategoryGroupDM> parsedGroups,
+            int currentStepIndex,
+            int currentStepTotal,
+            MenuImportBulkStatsDM? bulkStats,
+            String locale)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM() when $default != null:
+        return $default(
+            _that.selectedFiles,
+            _that.sessionId,
+            _that.uploadedImages,
+            _that.parsedGroups,
+            _that.currentStepIndex,
+            _that.currentStepTotal,
+            _that.bulkStats,
+            _that.locale);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<File> selectedFiles,
+            String? sessionId,
+            List<MenuImportUploadedImageDM> uploadedImages,
+            List<ParsedCategoryGroupDM> parsedGroups,
+            int currentStepIndex,
+            int currentStepTotal,
+            MenuImportBulkStatsDM? bulkStats,
+            String locale)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM():
+        return $default(
+            _that.selectedFiles,
+            _that.sessionId,
+            _that.uploadedImages,
+            _that.parsedGroups,
+            _that.currentStepIndex,
+            _that.currentStepTotal,
+            _that.bulkStats,
+            _that.locale);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<File> selectedFiles,
+            String? sessionId,
+            List<MenuImportUploadedImageDM> uploadedImages,
+            List<ParsedCategoryGroupDM> parsedGroups,
+            int currentStepIndex,
+            int currentStepTotal,
+            MenuImportBulkStatsDM? bulkStats,
+            String locale)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MenuImportVM() when $default != null:
+        return $default(
+            _that.selectedFiles,
+            _that.sessionId,
+            _that.uploadedImages,
+            _that.parsedGroups,
+            _that.currentStepIndex,
+            _that.currentStepTotal,
+            _that.bulkStats,
+            _that.locale);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$MenuImportVMImpl extends _MenuImportVM {
-  const _$MenuImportVMImpl(
+class _MenuImportVM extends MenuImportVM {
+  const _MenuImportVM(
       {final List<File> selectedFiles = const <File>[],
       this.sessionId,
       final List<MenuImportUploadedImageDM> uploadedImages =
@@ -306,16 +470,19 @@ class _$MenuImportVMImpl extends _MenuImportVM {
   @JsonKey()
   final String locale;
 
+  /// Create a copy of MenuImportVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'MenuImportVM(selectedFiles: $selectedFiles, sessionId: $sessionId, uploadedImages: $uploadedImages, parsedGroups: $parsedGroups, currentStepIndex: $currentStepIndex, currentStepTotal: $currentStepTotal, bulkStats: $bulkStats, locale: $locale)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MenuImportVMCopyWith<_MenuImportVM> get copyWith =>
+      __$MenuImportVMCopyWithImpl<_MenuImportVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MenuImportVMImpl &&
+            other is _MenuImportVM &&
             const DeepCollectionEquality()
                 .equals(other._selectedFiles, _selectedFiles) &&
             (identical(other.sessionId, sessionId) ||
@@ -345,72 +512,88 @@ class _$MenuImportVMImpl extends _MenuImportVM {
       bulkStats,
       locale);
 
+  @override
+  String toString() {
+    return 'MenuImportVM(selectedFiles: $selectedFiles, sessionId: $sessionId, uploadedImages: $uploadedImages, parsedGroups: $parsedGroups, currentStepIndex: $currentStepIndex, currentStepTotal: $currentStepTotal, bulkStats: $bulkStats, locale: $locale)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$MenuImportVMCopyWith<$Res>
+    implements $MenuImportVMCopyWith<$Res> {
+  factory _$MenuImportVMCopyWith(
+          _MenuImportVM value, $Res Function(_MenuImportVM) _then) =
+      __$MenuImportVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<File> selectedFiles,
+      String? sessionId,
+      List<MenuImportUploadedImageDM> uploadedImages,
+      List<ParsedCategoryGroupDM> parsedGroups,
+      int currentStepIndex,
+      int currentStepTotal,
+      MenuImportBulkStatsDM? bulkStats,
+      String locale});
+}
+
+/// @nodoc
+class __$MenuImportVMCopyWithImpl<$Res>
+    implements _$MenuImportVMCopyWith<$Res> {
+  __$MenuImportVMCopyWithImpl(this._self, this._then);
+
+  final _MenuImportVM _self;
+  final $Res Function(_MenuImportVM) _then;
+
   /// Create a copy of MenuImportVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MenuImportVMImplCopyWith<_$MenuImportVMImpl> get copyWith =>
-      __$$MenuImportVMImplCopyWithImpl<_$MenuImportVMImpl>(this, _$identity);
+  $Res call({
+    Object? selectedFiles = null,
+    Object? sessionId = freezed,
+    Object? uploadedImages = null,
+    Object? parsedGroups = null,
+    Object? currentStepIndex = null,
+    Object? currentStepTotal = null,
+    Object? bulkStats = freezed,
+    Object? locale = null,
+  }) {
+    return _then(_MenuImportVM(
+      selectedFiles: null == selectedFiles
+          ? _self._selectedFiles
+          : selectedFiles // ignore: cast_nullable_to_non_nullable
+              as List<File>,
+      sessionId: freezed == sessionId
+          ? _self.sessionId
+          : sessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uploadedImages: null == uploadedImages
+          ? _self._uploadedImages
+          : uploadedImages // ignore: cast_nullable_to_non_nullable
+              as List<MenuImportUploadedImageDM>,
+      parsedGroups: null == parsedGroups
+          ? _self._parsedGroups
+          : parsedGroups // ignore: cast_nullable_to_non_nullable
+              as List<ParsedCategoryGroupDM>,
+      currentStepIndex: null == currentStepIndex
+          ? _self.currentStepIndex
+          : currentStepIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentStepTotal: null == currentStepTotal
+          ? _self.currentStepTotal
+          : currentStepTotal // ignore: cast_nullable_to_non_nullable
+              as int,
+      bulkStats: freezed == bulkStats
+          ? _self.bulkStats
+          : bulkStats // ignore: cast_nullable_to_non_nullable
+              as MenuImportBulkStatsDM?,
+      locale: null == locale
+          ? _self.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
-abstract class _MenuImportVM extends MenuImportVM {
-  const factory _MenuImportVM(
-      {final List<File> selectedFiles,
-      final String? sessionId,
-      final List<MenuImportUploadedImageDM> uploadedImages,
-      final List<ParsedCategoryGroupDM> parsedGroups,
-      final int currentStepIndex,
-      final int currentStepTotal,
-      final MenuImportBulkStatsDM? bulkStats,
-      final String locale}) = _$MenuImportVMImpl;
-  const _MenuImportVM._() : super._();
-
-  /// Fotos elegidas por el manager ANTES del upload. Una vez subidas,
-  /// se vacía y los paths persistidos viven en `uploadedImages`.
-  @override
-  List<File> get selectedFiles;
-
-  /// Session ID recibido del primer /upload. El FE lo guarda para que,
-  /// si el manager agrega más fotos en una segunda tanda (mismo flow,
-  /// sin cerrar la pantalla), las nuevas se persistan bajo el mismo
-  /// storage path en GCS — necesario para reanudación si la app muere.
-  @override
-  String? get sessionId;
-
-  /// Paths + URLs de fotos efectivamente subidas a GCS. Persistido
-  /// como source-of-truth de qué se subió por si el flow continúa
-  /// luego (decisión 1 = B del PRD del 2026-05-09).
-  @override
-  List<MenuImportUploadedImageDM> get uploadedImages;
-
-  /// Acumulado de las respuestas /parse — una por foto. Cada call al
-  /// NLP devuelve un `grouped_menu` independiente; la vista de revisión
-  /// los unifica/dedup en un único árbol que el manager edita.
-  @override
-  List<ParsedCategoryGroupDM> get parsedGroups;
-
-  /// Progreso visible al manager durante upload/parse. `total` se setea
-  /// al inicio del paso correspondiente.
-  @override
-  int get currentStepIndex;
-  @override
-  int get currentStepTotal;
-
-  /// Stats del bulk-import al confirmar. Usado en el dialog Foodly de
-  /// éxito ("Importamos {totalItems} items en {totalCategories} categorías").
-  @override
-  MenuImportBulkStatsDM? get bulkStats;
-
-  /// Locale del usuario para hint al NLP. ES por default; el cubit lo
-  /// pisa con el locale activo de la app cuando se inyecta.
-  @override
-  String get locale;
-
-  /// Create a copy of MenuImportVM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MenuImportVMImplCopyWith<_$MenuImportVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

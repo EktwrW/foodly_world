@@ -1,6 +1,7 @@
 import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

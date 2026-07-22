@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,328 +9,137 @@ part of 'business_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
-mixin _$BusinessEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BusinessEventCopyWith<$Res> {
-  factory $BusinessEventCopyWith(
-          BusinessEvent value, $Res Function(BusinessEvent) then) =
-      _$BusinessEventCopyWithImpl<$Res, BusinessEvent>;
-}
-
-/// @nodoc
-class _$BusinessEventCopyWithImpl<$Res, $Val extends BusinessEvent>
-    implements $BusinessEventCopyWith<$Res> {
-  _$BusinessEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$StartedImplCopyWith<$Res> {
-  factory _$$StartedImplCopyWith(
-          _$StartedImpl value, $Res Function(_$StartedImpl) then) =
-      __$$StartedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$StartedImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$StartedImpl>
-    implements _$$StartedImplCopyWith<$Res> {
-  __$$StartedImplCopyWithImpl(
-      _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
-  const _$StartedImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.started()';
-  }
-
+mixin _$BusinessEvent implements DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BusinessEvent.started'));
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StartedImpl);
+        (other.runtimeType == runtimeType && other is BusinessEvent);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return started();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent()';
   }
+}
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return started?.call();
-  }
+/// @nodoc
+class $BusinessEventCopyWith<$Res> {
+  $BusinessEventCopyWith(BusinessEvent _, $Res Function(BusinessEvent) __);
+}
 
-  @override
+/// Adds pattern-matching-related methods to [BusinessEvent].
+extension BusinessEventPatterns on BusinessEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_UpdateLogo value)? updateLogo,
+    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
+    TResult Function(_AddPicture value)? addPicture,
+    TResult Function(_SetCategory value)? setCategory,
+    TResult Function(_SetService value)? setService,
+    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
+    TResult Function(_UploadPictures value)? uploadPictures,
+    TResult Function(_UpdatePicture value)? updatePicture,
+    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
+    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
+    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
+    TResult Function(_UpdateEditing value)? updateEditing,
+    TResult Function(_EditLocationDialog value)? editLocationDialog,
+    TResult Function(_SetCountry value)? setCountry,
+    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
+    TResult Function(_SetMapController value)? setMapController,
+    TResult Function(_UpdateBusiness value)? updateBusiness,
+    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
+    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
+    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started();
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case _UpdateLogo() when updateLogo != null:
+        return updateLogo(_that);
+      case _EditCoverImagesDialog() when editCoverImagesDialog != null:
+        return editCoverImagesDialog(_that);
+      case _AddPicture() when addPicture != null:
+        return addPicture(_that);
+      case _SetCategory() when setCategory != null:
+        return setCategory(_that);
+      case _SetService() when setService != null:
+        return setService(_that);
+      case _SetOpeningHoursDay() when setOpeningHoursDay != null:
+        return setOpeningHoursDay(_that);
+      case _UploadPictures() when uploadPictures != null:
+        return uploadPictures(_that);
+      case _UpdatePicture() when updatePicture != null:
+        return updatePicture(_that);
+      case _CancelUploadPictures() when cancelUploadPictures != null:
+        return cancelUploadPictures(_that);
+      case _DeleteCoverImageById() when deleteCoverImageById != null:
+        return deleteCoverImageById(_that);
+      case _CancelDeleteCoverImage() when cancelDeleteCoverImage != null:
+        return cancelDeleteCoverImage(_that);
+      case _UpdateEditing() when updateEditing != null:
+        return updateEditing(_that);
+      case _EditLocationDialog() when editLocationDialog != null:
+        return editLocationDialog(_that);
+      case _SetCountry() when setCountry != null:
+        return setCountry(_that);
+      case _SetAddressFromPlacesAPI() when setAddressFromPlacesAPI != null:
+        return setAddressFromPlacesAPI(_that);
+      case _SetMapController() when setMapController != null:
+        return setMapController(_that);
+      case _UpdateBusiness() when updateBusiness != null:
+        return updateBusiness(_that);
+      case _ToggleAllowReservations() when toggleAllowReservations != null:
+        return toggleAllowReservations(_that);
+      case _SetReservationSizeLimit() when setReservationSizeLimit != null:
+        return setReservationSizeLimit(_that);
+      case _ToggleMenuEnabled() when toggleMenuEnabled != null:
+        return toggleMenuEnabled(_that);
+      case _:
+        return orElse();
     }
-    return orElse();
   }
 
-  @override
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
@@ -360,10 +169,65 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
         setReservationSizeLimit,
     required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
   }) {
-    return started(this);
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started(_that);
+      case _UpdateLogo():
+        return updateLogo(_that);
+      case _EditCoverImagesDialog():
+        return editCoverImagesDialog(_that);
+      case _AddPicture():
+        return addPicture(_that);
+      case _SetCategory():
+        return setCategory(_that);
+      case _SetService():
+        return setService(_that);
+      case _SetOpeningHoursDay():
+        return setOpeningHoursDay(_that);
+      case _UploadPictures():
+        return uploadPictures(_that);
+      case _UpdatePicture():
+        return updatePicture(_that);
+      case _CancelUploadPictures():
+        return cancelUploadPictures(_that);
+      case _DeleteCoverImageById():
+        return deleteCoverImageById(_that);
+      case _CancelDeleteCoverImage():
+        return cancelDeleteCoverImage(_that);
+      case _UpdateEditing():
+        return updateEditing(_that);
+      case _EditLocationDialog():
+        return editLocationDialog(_that);
+      case _SetCountry():
+        return setCountry(_that);
+      case _SetAddressFromPlacesAPI():
+        return setAddressFromPlacesAPI(_that);
+      case _SetMapController():
+        return setMapController(_that);
+      case _UpdateBusiness():
+        return updateBusiness(_that);
+      case _ToggleAllowReservations():
+        return toggleAllowReservations(_that);
+      case _SetReservationSizeLimit():
+        return setReservationSizeLimit(_that);
+      case _ToggleMenuEnabled():
+        return toggleMenuEnabled(_that);
+    }
   }
 
-  @override
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
@@ -388,95 +252,353 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
     TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
   }) {
-    return started?.call(this);
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case _UpdateLogo() when updateLogo != null:
+        return updateLogo(_that);
+      case _EditCoverImagesDialog() when editCoverImagesDialog != null:
+        return editCoverImagesDialog(_that);
+      case _AddPicture() when addPicture != null:
+        return addPicture(_that);
+      case _SetCategory() when setCategory != null:
+        return setCategory(_that);
+      case _SetService() when setService != null:
+        return setService(_that);
+      case _SetOpeningHoursDay() when setOpeningHoursDay != null:
+        return setOpeningHoursDay(_that);
+      case _UploadPictures() when uploadPictures != null:
+        return uploadPictures(_that);
+      case _UpdatePicture() when updatePicture != null:
+        return updatePicture(_that);
+      case _CancelUploadPictures() when cancelUploadPictures != null:
+        return cancelUploadPictures(_that);
+      case _DeleteCoverImageById() when deleteCoverImageById != null:
+        return deleteCoverImageById(_that);
+      case _CancelDeleteCoverImage() when cancelDeleteCoverImage != null:
+        return cancelDeleteCoverImage(_that);
+      case _UpdateEditing() when updateEditing != null:
+        return updateEditing(_that);
+      case _EditLocationDialog() when editLocationDialog != null:
+        return editLocationDialog(_that);
+      case _SetCountry() when setCountry != null:
+        return setCountry(_that);
+      case _SetAddressFromPlacesAPI() when setAddressFromPlacesAPI != null:
+        return setAddressFromPlacesAPI(_that);
+      case _SetMapController() when setMapController != null:
+        return setMapController(_that);
+      case _UpdateBusiness() when updateBusiness != null:
+        return updateBusiness(_that);
+      case _ToggleAllowReservations() when toggleAllowReservations != null:
+        return toggleAllowReservations(_that);
+      case _SetReservationSizeLimit() when setReservationSizeLimit != null:
+        return setReservationSizeLimit(_that);
+      case _ToggleMenuEnabled() when toggleMenuEnabled != null:
+        return toggleMenuEnabled(_that);
+      case _:
+        return null;
+    }
   }
 
-  @override
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String path)? updateLogo,
+    TResult Function()? editCoverImagesDialog,
+    TResult Function(String path)? addPicture,
+    TResult Function(FoodlyCategories category)? setCategory,
+    TResult Function(BusinessServices service)? setService,
+    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
+    TResult Function()? uploadPictures,
+    TResult Function(String imageId, String filePath)? updatePicture,
+    TResult Function()? cancelUploadPictures,
+    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
+    TResult Function()? cancelDeleteCoverImage,
+    TResult Function(DashboardEditing editing)? updateEditing,
+    TResult Function()? editLocationDialog,
+    TResult Function(FoodlyCountries country)? setCountry,
+    TResult Function(Place detail)? setAddressFromPlacesAPI,
+    TResult Function(GoogleMapController controller)? setMapController,
+    TResult Function()? updateBusiness,
+    TResult Function(bool value)? toggleAllowReservations,
+    TResult Function(int value)? setReservationSizeLimit,
+    TResult Function(bool value)? toggleMenuEnabled,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started(this);
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case _UpdateLogo() when updateLogo != null:
+        return updateLogo(_that.path);
+      case _EditCoverImagesDialog() when editCoverImagesDialog != null:
+        return editCoverImagesDialog();
+      case _AddPicture() when addPicture != null:
+        return addPicture(_that.path);
+      case _SetCategory() when setCategory != null:
+        return setCategory(_that.category);
+      case _SetService() when setService != null:
+        return setService(_that.service);
+      case _SetOpeningHoursDay() when setOpeningHoursDay != null:
+        return setOpeningHoursDay(_that.dayIndex, _that.day);
+      case _UploadPictures() when uploadPictures != null:
+        return uploadPictures();
+      case _UpdatePicture() when updatePicture != null:
+        return updatePicture(_that.imageId, _that.filePath);
+      case _CancelUploadPictures() when cancelUploadPictures != null:
+        return cancelUploadPictures();
+      case _DeleteCoverImageById() when deleteCoverImageById != null:
+        return deleteCoverImageById(_that.coverImageDM);
+      case _CancelDeleteCoverImage() when cancelDeleteCoverImage != null:
+        return cancelDeleteCoverImage();
+      case _UpdateEditing() when updateEditing != null:
+        return updateEditing(_that.editing);
+      case _EditLocationDialog() when editLocationDialog != null:
+        return editLocationDialog();
+      case _SetCountry() when setCountry != null:
+        return setCountry(_that.country);
+      case _SetAddressFromPlacesAPI() when setAddressFromPlacesAPI != null:
+        return setAddressFromPlacesAPI(_that.detail);
+      case _SetMapController() when setMapController != null:
+        return setMapController(_that.controller);
+      case _UpdateBusiness() when updateBusiness != null:
+        return updateBusiness();
+      case _ToggleAllowReservations() when toggleAllowReservations != null:
+        return toggleAllowReservations(_that.value);
+      case _SetReservationSizeLimit() when setReservationSizeLimit != null:
+        return setReservationSizeLimit(_that.value);
+      case _ToggleMenuEnabled() when toggleMenuEnabled != null:
+        return toggleMenuEnabled(_that.value);
+      case _:
+        return orElse();
     }
-    return orElse();
   }
-}
 
-abstract class _Started implements BusinessEvent {
-  const factory _Started() = _$StartedImpl;
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$UpdateLogoImplCopyWith<$Res> {
-  factory _$$UpdateLogoImplCopyWith(
-          _$UpdateLogoImpl value, $Res Function(_$UpdateLogoImpl) then) =
-      __$$UpdateLogoImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String path});
-}
-
-/// @nodoc
-class __$$UpdateLogoImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$UpdateLogoImpl>
-    implements _$$UpdateLogoImplCopyWith<$Res> {
-  __$$UpdateLogoImplCopyWithImpl(
-      _$UpdateLogoImpl _value, $Res Function(_$UpdateLogoImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? path = null,
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String path) updateLogo,
+    required TResult Function() editCoverImagesDialog,
+    required TResult Function(String path) addPicture,
+    required TResult Function(FoodlyCategories category) setCategory,
+    required TResult Function(BusinessServices service) setService,
+    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
+    required TResult Function() uploadPictures,
+    required TResult Function(String imageId, String filePath) updatePicture,
+    required TResult Function() cancelUploadPictures,
+    required TResult Function(BusinessCoverImageDM coverImageDM)
+        deleteCoverImageById,
+    required TResult Function() cancelDeleteCoverImage,
+    required TResult Function(DashboardEditing editing) updateEditing,
+    required TResult Function() editLocationDialog,
+    required TResult Function(FoodlyCountries country) setCountry,
+    required TResult Function(Place detail) setAddressFromPlacesAPI,
+    required TResult Function(GoogleMapController controller) setMapController,
+    required TResult Function() updateBusiness,
+    required TResult Function(bool value) toggleAllowReservations,
+    required TResult Function(int value) setReservationSizeLimit,
+    required TResult Function(bool value) toggleMenuEnabled,
   }) {
-    return _then(_$UpdateLogoImpl(
-      null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started();
+      case _UpdateLogo():
+        return updateLogo(_that.path);
+      case _EditCoverImagesDialog():
+        return editCoverImagesDialog();
+      case _AddPicture():
+        return addPicture(_that.path);
+      case _SetCategory():
+        return setCategory(_that.category);
+      case _SetService():
+        return setService(_that.service);
+      case _SetOpeningHoursDay():
+        return setOpeningHoursDay(_that.dayIndex, _that.day);
+      case _UploadPictures():
+        return uploadPictures();
+      case _UpdatePicture():
+        return updatePicture(_that.imageId, _that.filePath);
+      case _CancelUploadPictures():
+        return cancelUploadPictures();
+      case _DeleteCoverImageById():
+        return deleteCoverImageById(_that.coverImageDM);
+      case _CancelDeleteCoverImage():
+        return cancelDeleteCoverImage();
+      case _UpdateEditing():
+        return updateEditing(_that.editing);
+      case _EditLocationDialog():
+        return editLocationDialog();
+      case _SetCountry():
+        return setCountry(_that.country);
+      case _SetAddressFromPlacesAPI():
+        return setAddressFromPlacesAPI(_that.detail);
+      case _SetMapController():
+        return setMapController(_that.controller);
+      case _UpdateBusiness():
+        return updateBusiness();
+      case _ToggleAllowReservations():
+        return toggleAllowReservations(_that.value);
+      case _SetReservationSizeLimit():
+        return setReservationSizeLimit(_that.value);
+      case _ToggleMenuEnabled():
+        return toggleMenuEnabled(_that.value);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String path)? updateLogo,
+    TResult? Function()? editCoverImagesDialog,
+    TResult? Function(String path)? addPicture,
+    TResult? Function(FoodlyCategories category)? setCategory,
+    TResult? Function(BusinessServices service)? setService,
+    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
+    TResult? Function()? uploadPictures,
+    TResult? Function(String imageId, String filePath)? updatePicture,
+    TResult? Function()? cancelUploadPictures,
+    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
+    TResult? Function()? cancelDeleteCoverImage,
+    TResult? Function(DashboardEditing editing)? updateEditing,
+    TResult? Function()? editLocationDialog,
+    TResult? Function(FoodlyCountries country)? setCountry,
+    TResult? Function(Place detail)? setAddressFromPlacesAPI,
+    TResult? Function(GoogleMapController controller)? setMapController,
+    TResult? Function()? updateBusiness,
+    TResult? Function(bool value)? toggleAllowReservations,
+    TResult? Function(int value)? setReservationSizeLimit,
+    TResult? Function(bool value)? toggleMenuEnabled,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case _UpdateLogo() when updateLogo != null:
+        return updateLogo(_that.path);
+      case _EditCoverImagesDialog() when editCoverImagesDialog != null:
+        return editCoverImagesDialog();
+      case _AddPicture() when addPicture != null:
+        return addPicture(_that.path);
+      case _SetCategory() when setCategory != null:
+        return setCategory(_that.category);
+      case _SetService() when setService != null:
+        return setService(_that.service);
+      case _SetOpeningHoursDay() when setOpeningHoursDay != null:
+        return setOpeningHoursDay(_that.dayIndex, _that.day);
+      case _UploadPictures() when uploadPictures != null:
+        return uploadPictures();
+      case _UpdatePicture() when updatePicture != null:
+        return updatePicture(_that.imageId, _that.filePath);
+      case _CancelUploadPictures() when cancelUploadPictures != null:
+        return cancelUploadPictures();
+      case _DeleteCoverImageById() when deleteCoverImageById != null:
+        return deleteCoverImageById(_that.coverImageDM);
+      case _CancelDeleteCoverImage() when cancelDeleteCoverImage != null:
+        return cancelDeleteCoverImage();
+      case _UpdateEditing() when updateEditing != null:
+        return updateEditing(_that.editing);
+      case _EditLocationDialog() when editLocationDialog != null:
+        return editLocationDialog();
+      case _SetCountry() when setCountry != null:
+        return setCountry(_that.country);
+      case _SetAddressFromPlacesAPI() when setAddressFromPlacesAPI != null:
+        return setAddressFromPlacesAPI(_that.detail);
+      case _SetMapController() when setMapController != null:
+        return setMapController(_that.controller);
+      case _UpdateBusiness() when updateBusiness != null:
+        return updateBusiness();
+      case _ToggleAllowReservations() when toggleAllowReservations != null:
+        return toggleAllowReservations(_that.value);
+      case _SetReservationSizeLimit() when setReservationSizeLimit != null:
+        return setReservationSizeLimit(_that.value);
+      case _ToggleMenuEnabled() when toggleMenuEnabled != null:
+        return toggleMenuEnabled(_that.value);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
-  const _$UpdateLogoImpl(this.path);
-
-  @override
-  final String path;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.updateLogo(path: $path)';
-  }
+class _Started with DiagnosticableTreeMixin implements BusinessEvent {
+  const _Started();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'BusinessEvent.started'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _Started);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.started()';
+  }
+}
+
+/// @nodoc
+
+class _UpdateLogo with DiagnosticableTreeMixin implements BusinessEvent {
+  const _UpdateLogo(this.path);
+
+  final String path;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdateLogoCopyWith<_UpdateLogo> get copyWith =>
+      __$UpdateLogoCopyWithImpl<_UpdateLogo>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.updateLogo'))
       ..add(DiagnosticsProperty('path', path));
@@ -486,479 +608,45 @@ class _$UpdateLogoImpl with DiagnosticableTreeMixin implements _UpdateLogo {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdateLogoImpl &&
+            other is _UpdateLogo &&
             (identical(other.path, path) || other.path == path));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, path);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UpdateLogoImplCopyWith<_$UpdateLogoImpl> get copyWith =>
-      __$$UpdateLogoImplCopyWithImpl<_$UpdateLogoImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return updateLogo(path);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return updateLogo?.call(path);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateLogo != null) {
-      return updateLogo(path);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return updateLogo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return updateLogo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateLogo != null) {
-      return updateLogo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdateLogo implements BusinessEvent {
-  const factory _UpdateLogo(final String path) = _$UpdateLogoImpl;
-
-  String get path;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdateLogoImplCopyWith<_$UpdateLogoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$EditCoverImagesDialogImplCopyWith<$Res> {
-  factory _$$EditCoverImagesDialogImplCopyWith(
-          _$EditCoverImagesDialogImpl value,
-          $Res Function(_$EditCoverImagesDialogImpl) then) =
-      __$$EditCoverImagesDialogImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$EditCoverImagesDialogImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$EditCoverImagesDialogImpl>
-    implements _$$EditCoverImagesDialogImplCopyWith<$Res> {
-  __$$EditCoverImagesDialogImplCopyWithImpl(_$EditCoverImagesDialogImpl _value,
-      $Res Function(_$EditCoverImagesDialogImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$EditCoverImagesDialogImpl
-    with DiagnosticableTreeMixin
-    implements _EditCoverImagesDialog {
-  const _$EditCoverImagesDialogImpl();
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.editCoverImagesDialog()';
+    return 'BusinessEvent.updateLogo(path: $path)';
   }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.editCoverImagesDialog'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$EditCoverImagesDialogImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return editCoverImagesDialog();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return editCoverImagesDialog?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (editCoverImagesDialog != null) {
-      return editCoverImagesDialog();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return editCoverImagesDialog(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return editCoverImagesDialog?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (editCoverImagesDialog != null) {
-      return editCoverImagesDialog(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _EditCoverImagesDialog implements BusinessEvent {
-  const factory _EditCoverImagesDialog() = _$EditCoverImagesDialogImpl;
 }
 
 /// @nodoc
-abstract class _$$AddPictureImplCopyWith<$Res> {
-  factory _$$AddPictureImplCopyWith(
-          _$AddPictureImpl value, $Res Function(_$AddPictureImpl) then) =
-      __$$AddPictureImplCopyWithImpl<$Res>;
+abstract mixin class _$UpdateLogoCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdateLogoCopyWith(
+          _UpdateLogo value, $Res Function(_UpdateLogo) _then) =
+      __$UpdateLogoCopyWithImpl;
   @useResult
   $Res call({String path});
 }
 
 /// @nodoc
-class __$$AddPictureImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$AddPictureImpl>
-    implements _$$AddPictureImplCopyWith<$Res> {
-  __$$AddPictureImplCopyWithImpl(
-      _$AddPictureImpl _value, $Res Function(_$AddPictureImpl) _then)
-      : super(_value, _then);
+class __$UpdateLogoCopyWithImpl<$Res> implements _$UpdateLogoCopyWith<$Res> {
+  __$UpdateLogoCopyWithImpl(this._self, this._then);
+
+  final _UpdateLogo _self;
+  final $Res Function(_UpdateLogo) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? path = null,
   }) {
-    return _then(_$AddPictureImpl(
+    return _then(_UpdateLogo(
       null == path
-          ? _value.path
+          ? _self.path
           : path // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -967,20 +655,48 @@ class __$$AddPictureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
-  const _$AddPictureImpl(this.path);
-
-  @override
-  final String path;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.addPicture(path: $path)';
-  }
+class _EditCoverImagesDialog
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _EditCoverImagesDialog();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.editCoverImagesDialog'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _EditCoverImagesDialog);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.editCoverImagesDialog()';
+  }
+}
+
+/// @nodoc
+
+class _AddPicture with DiagnosticableTreeMixin implements BusinessEvent {
+  const _AddPicture(this.path);
+
+  final String path;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$AddPictureCopyWith<_AddPicture> get copyWith =>
+      __$AddPictureCopyWithImpl<_AddPicture>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.addPicture'))
       ..add(DiagnosticsProperty('path', path));
@@ -990,265 +706,67 @@ class _$AddPictureImpl with DiagnosticableTreeMixin implements _AddPicture {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AddPictureImpl &&
+            other is _AddPicture &&
             (identical(other.path, path) || other.path == path));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, path);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$AddPictureImplCopyWith<_$AddPictureImpl> get copyWith =>
-      __$$AddPictureImplCopyWithImpl<_$AddPictureImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return addPicture(path);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.addPicture(path: $path)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return addPicture?.call(path);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (addPicture != null) {
-      return addPicture(path);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return addPicture(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return addPicture?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (addPicture != null) {
-      return addPicture(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _AddPicture implements BusinessEvent {
-  const factory _AddPicture(final String path) = _$AddPictureImpl;
-
-  String get path;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AddPictureImplCopyWith<_$AddPictureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SetCategoryImplCopyWith<$Res> {
-  factory _$$SetCategoryImplCopyWith(
-          _$SetCategoryImpl value, $Res Function(_$SetCategoryImpl) then) =
-      __$$SetCategoryImplCopyWithImpl<$Res>;
+abstract mixin class _$AddPictureCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$AddPictureCopyWith(
+          _AddPicture value, $Res Function(_AddPicture) _then) =
+      __$AddPictureCopyWithImpl;
   @useResult
-  $Res call({FoodlyCategories category});
+  $Res call({String path});
 }
 
 /// @nodoc
-class __$$SetCategoryImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetCategoryImpl>
-    implements _$$SetCategoryImplCopyWith<$Res> {
-  __$$SetCategoryImplCopyWithImpl(
-      _$SetCategoryImpl _value, $Res Function(_$SetCategoryImpl) _then)
-      : super(_value, _then);
+class __$AddPictureCopyWithImpl<$Res> implements _$AddPictureCopyWith<$Res> {
+  __$AddPictureCopyWithImpl(this._self, this._then);
+
+  final _AddPicture _self;
+  final $Res Function(_AddPicture) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? category = null,
+    Object? path = null,
   }) {
-    return _then(_$SetCategoryImpl(
-      null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories,
+    return _then(_AddPicture(
+      null == path
+          ? _self.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
-  const _$SetCategoryImpl(this.category);
+class _SetCategory with DiagnosticableTreeMixin implements BusinessEvent {
+  const _SetCategory(this.category);
 
-  @override
   final FoodlyCategories category;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setCategory(category: $category)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetCategoryCopyWith<_SetCategory> get copyWith =>
+      __$SetCategoryCopyWithImpl<_SetCategory>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.setCategory'))
       ..add(DiagnosticsProperty('category', category));
@@ -1258,7 +776,7 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetCategoryImpl &&
+            other is _SetCategory &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -1266,259 +784,60 @@ class _$SetCategoryImpl with DiagnosticableTreeMixin implements _SetCategory {
   @override
   int get hashCode => Object.hash(runtimeType, category);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SetCategoryImplCopyWith<_$SetCategoryImpl> get copyWith =>
-      __$$SetCategoryImplCopyWithImpl<_$SetCategoryImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setCategory(category);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.setCategory(category: $category)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setCategory?.call(category);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setCategory != null) {
-      return setCategory(category);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setCategory(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setCategory?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setCategory != null) {
-      return setCategory(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetCategory implements BusinessEvent {
-  const factory _SetCategory(final FoodlyCategories category) =
-      _$SetCategoryImpl;
-
-  FoodlyCategories get category;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetCategoryImplCopyWith<_$SetCategoryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SetServiceImplCopyWith<$Res> {
-  factory _$$SetServiceImplCopyWith(
-          _$SetServiceImpl value, $Res Function(_$SetServiceImpl) then) =
-      __$$SetServiceImplCopyWithImpl<$Res>;
+abstract mixin class _$SetCategoryCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetCategoryCopyWith(
+          _SetCategory value, $Res Function(_SetCategory) _then) =
+      __$SetCategoryCopyWithImpl;
   @useResult
-  $Res call({BusinessServices service});
+  $Res call({FoodlyCategories category});
 }
 
 /// @nodoc
-class __$$SetServiceImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetServiceImpl>
-    implements _$$SetServiceImplCopyWith<$Res> {
-  __$$SetServiceImplCopyWithImpl(
-      _$SetServiceImpl _value, $Res Function(_$SetServiceImpl) _then)
-      : super(_value, _then);
+class __$SetCategoryCopyWithImpl<$Res> implements _$SetCategoryCopyWith<$Res> {
+  __$SetCategoryCopyWithImpl(this._self, this._then);
+
+  final _SetCategory _self;
+  final $Res Function(_SetCategory) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? service = null,
+    Object? category = null,
   }) {
-    return _then(_$SetServiceImpl(
-      null == service
-          ? _value.service
-          : service // ignore: cast_nullable_to_non_nullable
-              as BusinessServices,
+    return _then(_SetCategory(
+      null == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
-  const _$SetServiceImpl(this.service);
+class _SetService with DiagnosticableTreeMixin implements BusinessEvent {
+  const _SetService(this.service);
 
-  @override
   final BusinessServices service;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setService(service: $service)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetServiceCopyWith<_SetService> get copyWith =>
+      __$SetServiceCopyWithImpl<_SetService>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.setService'))
       ..add(DiagnosticsProperty('service', service));
@@ -1528,286 +847,70 @@ class _$SetServiceImpl with DiagnosticableTreeMixin implements _SetService {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetServiceImpl &&
+            other is _SetService &&
             (identical(other.service, service) || other.service == service));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, service);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SetServiceImplCopyWith<_$SetServiceImpl> get copyWith =>
-      __$$SetServiceImplCopyWithImpl<_$SetServiceImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setService(service);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setService?.call(service);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setService != null) {
-      return setService(service);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setService(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setService?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setService != null) {
-      return setService(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetService implements BusinessEvent {
-  const factory _SetService(final BusinessServices service) = _$SetServiceImpl;
-
-  BusinessServices get service;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetServiceImplCopyWith<_$SetServiceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$SetOpeningHoursDayImplCopyWith<$Res> {
-  factory _$$SetOpeningHoursDayImplCopyWith(_$SetOpeningHoursDayImpl value,
-          $Res Function(_$SetOpeningHoursDayImpl) then) =
-      __$$SetOpeningHoursDayImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int dayIndex, Day day});
-
-  $DayCopyWith<$Res> get day;
-}
-
-/// @nodoc
-class __$$SetOpeningHoursDayImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetOpeningHoursDayImpl>
-    implements _$$SetOpeningHoursDayImplCopyWith<$Res> {
-  __$$SetOpeningHoursDayImplCopyWithImpl(_$SetOpeningHoursDayImpl _value,
-      $Res Function(_$SetOpeningHoursDayImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dayIndex = null,
-    Object? day = null,
-  }) {
-    return _then(_$SetOpeningHoursDayImpl(
-      null == dayIndex
-          ? _value.dayIndex
-          : dayIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as Day,
-    ));
-  }
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DayCopyWith<$Res> get day {
-    return $DayCopyWith<$Res>(_value.day, (value) {
-      return _then(_value.copyWith(day: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$SetOpeningHoursDayImpl
-    with DiagnosticableTreeMixin
-    implements _SetOpeningHoursDay {
-  const _$SetOpeningHoursDayImpl(this.dayIndex, this.day);
-
-  @override
-  final int dayIndex;
-  @override
-  final Day day;
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setOpeningHoursDay(dayIndex: $dayIndex, day: $day)';
+    return 'BusinessEvent.setService(service: $service)';
   }
+}
+
+/// @nodoc
+abstract mixin class _$SetServiceCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetServiceCopyWith(
+          _SetService value, $Res Function(_SetService) _then) =
+      __$SetServiceCopyWithImpl;
+  @useResult
+  $Res call({BusinessServices service});
+}
+
+/// @nodoc
+class __$SetServiceCopyWithImpl<$Res> implements _$SetServiceCopyWith<$Res> {
+  __$SetServiceCopyWithImpl(this._self, this._then);
+
+  final _SetService _self;
+  final $Res Function(_SetService) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? service = null,
+  }) {
+    return _then(_SetService(
+      null == service
+          ? _self.service
+          : service // ignore: cast_nullable_to_non_nullable
+              as BusinessServices,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _SetOpeningHoursDay
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _SetOpeningHoursDay(this.dayIndex, this.day);
+
+  final int dayIndex;
+  final Day day;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetOpeningHoursDayCopyWith<_SetOpeningHoursDay> get copyWith =>
+      __$SetOpeningHoursDayCopyWithImpl<_SetOpeningHoursDay>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.setOpeningHoursDay'))
       ..add(DiagnosticsProperty('dayIndex', dayIndex))
@@ -1818,7 +921,7 @@ class _$SetOpeningHoursDayImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetOpeningHoursDayImpl &&
+            other is _SetOpeningHoursDay &&
             (identical(other.dayIndex, dayIndex) ||
                 other.dayIndex == dayIndex) &&
             (identical(other.day, day) || other.day == day));
@@ -1827,246 +930,69 @@ class _$SetOpeningHoursDayImpl
   @override
   int get hashCode => Object.hash(runtimeType, dayIndex, day);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SetOpeningHoursDayImplCopyWith<_$SetOpeningHoursDayImpl> get copyWith =>
-      __$$SetOpeningHoursDayImplCopyWithImpl<_$SetOpeningHoursDayImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setOpeningHoursDay(dayIndex, day);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setOpeningHoursDay?.call(dayIndex, day);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setOpeningHoursDay != null) {
-      return setOpeningHoursDay(dayIndex, day);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setOpeningHoursDay(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setOpeningHoursDay?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setOpeningHoursDay != null) {
-      return setOpeningHoursDay(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetOpeningHoursDay implements BusinessEvent {
-  const factory _SetOpeningHoursDay(final int dayIndex, final Day day) =
-      _$SetOpeningHoursDayImpl;
-
-  int get dayIndex;
-  Day get day;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetOpeningHoursDayImplCopyWith<_$SetOpeningHoursDayImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UploadPicturesImplCopyWith<$Res> {
-  factory _$$UploadPicturesImplCopyWith(_$UploadPicturesImpl value,
-          $Res Function(_$UploadPicturesImpl) then) =
-      __$$UploadPicturesImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UploadPicturesImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$UploadPicturesImpl>
-    implements _$$UploadPicturesImplCopyWith<$Res> {
-  __$$UploadPicturesImplCopyWithImpl(
-      _$UploadPicturesImpl _value, $Res Function(_$UploadPicturesImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$UploadPicturesImpl
-    with DiagnosticableTreeMixin
-    implements _UploadPictures {
-  const _$UploadPicturesImpl();
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.uploadPictures()';
+    return 'BusinessEvent.setOpeningHoursDay(dayIndex: $dayIndex, day: $day)';
   }
+}
+
+/// @nodoc
+abstract mixin class _$SetOpeningHoursDayCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetOpeningHoursDayCopyWith(
+          _SetOpeningHoursDay value, $Res Function(_SetOpeningHoursDay) _then) =
+      __$SetOpeningHoursDayCopyWithImpl;
+  @useResult
+  $Res call({int dayIndex, Day day});
+
+  $DayCopyWith<$Res> get day;
+}
+
+/// @nodoc
+class __$SetOpeningHoursDayCopyWithImpl<$Res>
+    implements _$SetOpeningHoursDayCopyWith<$Res> {
+  __$SetOpeningHoursDayCopyWithImpl(this._self, this._then);
+
+  final _SetOpeningHoursDay _self;
+  final $Res Function(_SetOpeningHoursDay) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? dayIndex = null,
+    Object? day = null,
+  }) {
+    return _then(_SetOpeningHoursDay(
+      null == dayIndex
+          ? _self.dayIndex
+          : dayIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == day
+          ? _self.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as Day,
+    ));
+  }
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DayCopyWith<$Res> get day {
+    return $DayCopyWith<$Res>(_self.day, (value) {
+      return _then(_self.copyWith(day: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _UploadPictures with DiagnosticableTreeMixin implements BusinessEvent {
+  const _UploadPictures();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.uploadPictures'));
   }
@@ -2074,257 +1000,35 @@ class _$UploadPicturesImpl
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UploadPicturesImpl);
+        (other.runtimeType == runtimeType && other is _UploadPictures);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return uploadPictures();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.uploadPictures()';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return uploadPictures?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (uploadPictures != null) {
-      return uploadPictures();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return uploadPictures(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return uploadPictures?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (uploadPictures != null) {
-      return uploadPictures(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UploadPictures implements BusinessEvent {
-  const factory _UploadPictures() = _$UploadPicturesImpl;
 }
 
 /// @nodoc
-abstract class _$$UpdatePictureImplCopyWith<$Res> {
-  factory _$$UpdatePictureImplCopyWith(
-          _$UpdatePictureImpl value, $Res Function(_$UpdatePictureImpl) then) =
-      __$$UpdatePictureImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String imageId, String filePath});
-}
 
-/// @nodoc
-class __$$UpdatePictureImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$UpdatePictureImpl>
-    implements _$$UpdatePictureImplCopyWith<$Res> {
-  __$$UpdatePictureImplCopyWithImpl(
-      _$UpdatePictureImpl _value, $Res Function(_$UpdatePictureImpl) _then)
-      : super(_value, _then);
+class _UpdatePicture with DiagnosticableTreeMixin implements BusinessEvent {
+  const _UpdatePicture(this.imageId, this.filePath);
+
+  final String imageId;
+  final String filePath;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? imageId = null,
-    Object? filePath = null,
-  }) {
-    return _then(_$UpdatePictureImpl(
-      null == imageId
-          ? _value.imageId
-          : imageId // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == filePath
-          ? _value.filePath
-          : filePath // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$UpdatePictureImpl
-    with DiagnosticableTreeMixin
-    implements _UpdatePicture {
-  const _$UpdatePictureImpl(this.imageId, this.filePath);
-
-  @override
-  final String imageId;
-  @override
-  final String filePath;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.updatePicture(imageId: $imageId, filePath: $filePath)';
-  }
+  _$UpdatePictureCopyWith<_UpdatePicture> get copyWith =>
+      __$UpdatePictureCopyWithImpl<_UpdatePicture>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.updatePicture'))
       ..add(DiagnosticsProperty('imageId', imageId))
@@ -2335,7 +1039,7 @@ class _$UpdatePictureImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatePictureImpl &&
+            other is _UpdatePicture &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.filePath, filePath) ||
                 other.filePath == filePath));
@@ -2344,245 +1048,59 @@ class _$UpdatePictureImpl
   @override
   int get hashCode => Object.hash(runtimeType, imageId, filePath);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatePictureImplCopyWith<_$UpdatePictureImpl> get copyWith =>
-      __$$UpdatePictureImplCopyWithImpl<_$UpdatePictureImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return updatePicture(imageId, filePath);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return updatePicture?.call(imageId, filePath);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updatePicture != null) {
-      return updatePicture(imageId, filePath);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return updatePicture(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return updatePicture?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updatePicture != null) {
-      return updatePicture(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdatePicture implements BusinessEvent {
-  const factory _UpdatePicture(final String imageId, final String filePath) =
-      _$UpdatePictureImpl;
-
-  String get imageId;
-  String get filePath;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatePictureImplCopyWith<_$UpdatePictureImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$CancelUploadPicturesImplCopyWith<$Res> {
-  factory _$$CancelUploadPicturesImplCopyWith(_$CancelUploadPicturesImpl value,
-          $Res Function(_$CancelUploadPicturesImpl) then) =
-      __$$CancelUploadPicturesImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CancelUploadPicturesImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$CancelUploadPicturesImpl>
-    implements _$$CancelUploadPicturesImplCopyWith<$Res> {
-  __$$CancelUploadPicturesImplCopyWithImpl(_$CancelUploadPicturesImpl _value,
-      $Res Function(_$CancelUploadPicturesImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$CancelUploadPicturesImpl
-    with DiagnosticableTreeMixin
-    implements _CancelUploadPictures {
-  const _$CancelUploadPicturesImpl();
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.cancelUploadPictures()';
+    return 'BusinessEvent.updatePicture(imageId: $imageId, filePath: $filePath)';
   }
+}
+
+/// @nodoc
+abstract mixin class _$UpdatePictureCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdatePictureCopyWith(
+          _UpdatePicture value, $Res Function(_UpdatePicture) _then) =
+      __$UpdatePictureCopyWithImpl;
+  @useResult
+  $Res call({String imageId, String filePath});
+}
+
+/// @nodoc
+class __$UpdatePictureCopyWithImpl<$Res>
+    implements _$UpdatePictureCopyWith<$Res> {
+  __$UpdatePictureCopyWithImpl(this._self, this._then);
+
+  final _UpdatePicture _self;
+  final $Res Function(_UpdatePicture) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? imageId = null,
+    Object? filePath = null,
+  }) {
+    return _then(_UpdatePicture(
+      null == imageId
+          ? _self.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == filePath
+          ? _self.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _CancelUploadPictures
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _CancelUploadPictures();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.cancelUploadPictures'));
   }
@@ -2590,205 +1108,66 @@ class _$CancelUploadPicturesImpl
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CancelUploadPicturesImpl);
+        (other.runtimeType == runtimeType && other is _CancelUploadPictures);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return cancelUploadPictures();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.cancelUploadPictures()';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return cancelUploadPictures?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (cancelUploadPictures != null) {
-      return cancelUploadPictures();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return cancelUploadPictures(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return cancelUploadPictures?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (cancelUploadPictures != null) {
-      return cancelUploadPictures(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _CancelUploadPictures implements BusinessEvent {
-  const factory _CancelUploadPictures() = _$CancelUploadPicturesImpl;
 }
 
 /// @nodoc
-abstract class _$$DeleteCoverImageByIdImplCopyWith<$Res> {
-  factory _$$DeleteCoverImageByIdImplCopyWith(_$DeleteCoverImageByIdImpl value,
-          $Res Function(_$DeleteCoverImageByIdImpl) then) =
-      __$$DeleteCoverImageByIdImplCopyWithImpl<$Res>;
+
+class _DeleteCoverImageById
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _DeleteCoverImageById(this.coverImageDM);
+
+  final BusinessCoverImageDM coverImageDM;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DeleteCoverImageByIdCopyWith<_DeleteCoverImageById> get copyWith =>
+      __$DeleteCoverImageByIdCopyWithImpl<_DeleteCoverImageById>(
+          this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'BusinessEvent.deleteCoverImageById'))
+      ..add(DiagnosticsProperty('coverImageDM', coverImageDM));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _DeleteCoverImageById &&
+            (identical(other.coverImageDM, coverImageDM) ||
+                other.coverImageDM == coverImageDM));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, coverImageDM);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.deleteCoverImageById(coverImageDM: $coverImageDM)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$DeleteCoverImageByIdCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$DeleteCoverImageByIdCopyWith(_DeleteCoverImageById value,
+          $Res Function(_DeleteCoverImageById) _then) =
+      __$DeleteCoverImageByIdCopyWithImpl;
   @useResult
   $Res call({BusinessCoverImageDM coverImageDM});
 
@@ -2796,23 +1175,22 @@ abstract class _$$DeleteCoverImageByIdImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$DeleteCoverImageByIdImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$DeleteCoverImageByIdImpl>
-    implements _$$DeleteCoverImageByIdImplCopyWith<$Res> {
-  __$$DeleteCoverImageByIdImplCopyWithImpl(_$DeleteCoverImageByIdImpl _value,
-      $Res Function(_$DeleteCoverImageByIdImpl) _then)
-      : super(_value, _then);
+class __$DeleteCoverImageByIdCopyWithImpl<$Res>
+    implements _$DeleteCoverImageByIdCopyWith<$Res> {
+  __$DeleteCoverImageByIdCopyWithImpl(this._self, this._then);
+
+  final _DeleteCoverImageById _self;
+  final $Res Function(_DeleteCoverImageById) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? coverImageDM = null,
   }) {
-    return _then(_$DeleteCoverImageByIdImpl(
+    return _then(_DeleteCoverImageById(
       null == coverImageDM
-          ? _value.coverImageDM
+          ? _self.coverImageDM
           : coverImageDM // ignore: cast_nullable_to_non_nullable
               as BusinessCoverImageDM,
     ));
@@ -2823,289 +1201,21 @@ class __$$DeleteCoverImageByIdImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $BusinessCoverImageDMCopyWith<$Res> get coverImageDM {
-    return $BusinessCoverImageDMCopyWith<$Res>(_value.coverImageDM, (value) {
-      return _then(_value.copyWith(coverImageDM: value));
+    return $BusinessCoverImageDMCopyWith<$Res>(_self.coverImageDM, (value) {
+      return _then(_self.copyWith(coverImageDM: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$DeleteCoverImageByIdImpl
+class _CancelDeleteCoverImage
     with DiagnosticableTreeMixin
-    implements _DeleteCoverImageById {
-  const _$DeleteCoverImageByIdImpl(this.coverImageDM);
-
-  @override
-  final BusinessCoverImageDM coverImageDM;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.deleteCoverImageById(coverImageDM: $coverImageDM)';
-  }
+    implements BusinessEvent {
+  const _CancelDeleteCoverImage();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BusinessEvent.deleteCoverImageById'))
-      ..add(DiagnosticsProperty('coverImageDM', coverImageDM));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DeleteCoverImageByIdImpl &&
-            (identical(other.coverImageDM, coverImageDM) ||
-                other.coverImageDM == coverImageDM));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, coverImageDM);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeleteCoverImageByIdImplCopyWith<_$DeleteCoverImageByIdImpl>
-      get copyWith =>
-          __$$DeleteCoverImageByIdImplCopyWithImpl<_$DeleteCoverImageByIdImpl>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return deleteCoverImageById(coverImageDM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return deleteCoverImageById?.call(coverImageDM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (deleteCoverImageById != null) {
-      return deleteCoverImageById(coverImageDM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return deleteCoverImageById(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return deleteCoverImageById?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (deleteCoverImageById != null) {
-      return deleteCoverImageById(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _DeleteCoverImageById implements BusinessEvent {
-  const factory _DeleteCoverImageById(final BusinessCoverImageDM coverImageDM) =
-      _$DeleteCoverImageByIdImpl;
-
-  BusinessCoverImageDM get coverImageDM;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeleteCoverImageByIdImplCopyWith<_$DeleteCoverImageByIdImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$CancelDeleteCoverImageImplCopyWith<$Res> {
-  factory _$$CancelDeleteCoverImageImplCopyWith(
-          _$CancelDeleteCoverImageImpl value,
-          $Res Function(_$CancelDeleteCoverImageImpl) then) =
-      __$$CancelDeleteCoverImageImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CancelDeleteCoverImageImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$CancelDeleteCoverImageImpl>
-    implements _$$CancelDeleteCoverImageImplCopyWith<$Res> {
-  __$$CancelDeleteCoverImageImplCopyWithImpl(
-      _$CancelDeleteCoverImageImpl _value,
-      $Res Function(_$CancelDeleteCoverImageImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$CancelDeleteCoverImageImpl
-    with DiagnosticableTreeMixin
-    implements _CancelDeleteCoverImage {
-  const _$CancelDeleteCoverImageImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.cancelDeleteCoverImage()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(
           DiagnosticsProperty('type', 'BusinessEvent.cancelDeleteCoverImage'));
@@ -3114,251 +1224,34 @@ class _$CancelDeleteCoverImageImpl
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CancelDeleteCoverImageImpl);
+        (other.runtimeType == runtimeType && other is _CancelDeleteCoverImage);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return cancelDeleteCoverImage();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.cancelDeleteCoverImage()';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return cancelDeleteCoverImage?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (cancelDeleteCoverImage != null) {
-      return cancelDeleteCoverImage();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return cancelDeleteCoverImage(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return cancelDeleteCoverImage?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (cancelDeleteCoverImage != null) {
-      return cancelDeleteCoverImage(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _CancelDeleteCoverImage implements BusinessEvent {
-  const factory _CancelDeleteCoverImage() = _$CancelDeleteCoverImageImpl;
 }
 
 /// @nodoc
-abstract class _$$UpdateEditingImplCopyWith<$Res> {
-  factory _$$UpdateEditingImplCopyWith(
-          _$UpdateEditingImpl value, $Res Function(_$UpdateEditingImpl) then) =
-      __$$UpdateEditingImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({DashboardEditing editing});
-}
 
-/// @nodoc
-class __$$UpdateEditingImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$UpdateEditingImpl>
-    implements _$$UpdateEditingImplCopyWith<$Res> {
-  __$$UpdateEditingImplCopyWithImpl(
-      _$UpdateEditingImpl _value, $Res Function(_$UpdateEditingImpl) _then)
-      : super(_value, _then);
+class _UpdateEditing with DiagnosticableTreeMixin implements BusinessEvent {
+  const _UpdateEditing(this.editing);
+
+  final DashboardEditing editing;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? editing = null,
-  }) {
-    return _then(_$UpdateEditingImpl(
-      null == editing
-          ? _value.editing
-          : editing // ignore: cast_nullable_to_non_nullable
-              as DashboardEditing,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$UpdateEditingImpl
-    with DiagnosticableTreeMixin
-    implements _UpdateEditing {
-  const _$UpdateEditingImpl(this.editing);
-
-  @override
-  final DashboardEditing editing;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.updateEditing(editing: $editing)';
-  }
+  _$UpdateEditingCopyWith<_UpdateEditing> get copyWith =>
+      __$UpdateEditingCopyWithImpl<_UpdateEditing>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.updateEditing'))
       ..add(DiagnosticsProperty('editing', editing));
@@ -3368,251 +1261,61 @@ class _$UpdateEditingImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdateEditingImpl &&
+            other is _UpdateEditing &&
             (identical(other.editing, editing) || other.editing == editing));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, editing);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UpdateEditingImplCopyWith<_$UpdateEditingImpl> get copyWith =>
-      __$$UpdateEditingImplCopyWithImpl<_$UpdateEditingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return updateEditing(editing);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return updateEditing?.call(editing);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateEditing != null) {
-      return updateEditing(editing);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return updateEditing(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return updateEditing?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateEditing != null) {
-      return updateEditing(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdateEditing implements BusinessEvent {
-  const factory _UpdateEditing(final DashboardEditing editing) =
-      _$UpdateEditingImpl;
-
-  DashboardEditing get editing;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdateEditingImplCopyWith<_$UpdateEditingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$EditLocationDialogImplCopyWith<$Res> {
-  factory _$$EditLocationDialogImplCopyWith(_$EditLocationDialogImpl value,
-          $Res Function(_$EditLocationDialogImpl) then) =
-      __$$EditLocationDialogImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$EditLocationDialogImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$EditLocationDialogImpl>
-    implements _$$EditLocationDialogImplCopyWith<$Res> {
-  __$$EditLocationDialogImplCopyWithImpl(_$EditLocationDialogImpl _value,
-      $Res Function(_$EditLocationDialogImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$EditLocationDialogImpl
-    with DiagnosticableTreeMixin
-    implements _EditLocationDialog {
-  const _$EditLocationDialogImpl();
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.editLocationDialog()';
+    return 'BusinessEvent.updateEditing(editing: $editing)';
   }
+}
+
+/// @nodoc
+abstract mixin class _$UpdateEditingCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$UpdateEditingCopyWith(
+          _UpdateEditing value, $Res Function(_UpdateEditing) _then) =
+      __$UpdateEditingCopyWithImpl;
+  @useResult
+  $Res call({DashboardEditing editing});
+}
+
+/// @nodoc
+class __$UpdateEditingCopyWithImpl<$Res>
+    implements _$UpdateEditingCopyWith<$Res> {
+  __$UpdateEditingCopyWithImpl(this._self, this._then);
+
+  final _UpdateEditing _self;
+  final $Res Function(_UpdateEditing) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? editing = null,
+  }) {
+    return _then(_UpdateEditing(
+      null == editing
+          ? _self.editing
+          : editing // ignore: cast_nullable_to_non_nullable
+              as DashboardEditing,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _EditLocationDialog
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _EditLocationDialog();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.editLocationDialog'));
   }
@@ -3620,248 +1323,34 @@ class _$EditLocationDialogImpl
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EditLocationDialogImpl);
+        (other.runtimeType == runtimeType && other is _EditLocationDialog);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return editLocationDialog();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.editLocationDialog()';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return editLocationDialog?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (editLocationDialog != null) {
-      return editLocationDialog();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return editLocationDialog(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return editLocationDialog?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (editLocationDialog != null) {
-      return editLocationDialog(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _EditLocationDialog implements BusinessEvent {
-  const factory _EditLocationDialog() = _$EditLocationDialogImpl;
 }
 
 /// @nodoc
-abstract class _$$SetCountryImplCopyWith<$Res> {
-  factory _$$SetCountryImplCopyWith(
-          _$SetCountryImpl value, $Res Function(_$SetCountryImpl) then) =
-      __$$SetCountryImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({FoodlyCountries country});
-}
 
-/// @nodoc
-class __$$SetCountryImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetCountryImpl>
-    implements _$$SetCountryImplCopyWith<$Res> {
-  __$$SetCountryImplCopyWithImpl(
-      _$SetCountryImpl _value, $Res Function(_$SetCountryImpl) _then)
-      : super(_value, _then);
+class _SetCountry with DiagnosticableTreeMixin implements BusinessEvent {
+  const _SetCountry(this.country);
+
+  final FoodlyCountries country;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? country = null,
-  }) {
-    return _then(_$SetCountryImpl(
-      null == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as FoodlyCountries,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
-  const _$SetCountryImpl(this.country);
-
-  @override
-  final FoodlyCountries country;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setCountry(country: $country)';
-  }
+  _$SetCountryCopyWith<_SetCountry> get copyWith =>
+      __$SetCountryCopyWithImpl<_SetCountry>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.setCountry'))
       ..add(DiagnosticsProperty('country', country));
@@ -3871,269 +1360,70 @@ class _$SetCountryImpl with DiagnosticableTreeMixin implements _SetCountry {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetCountryImpl &&
+            other is _SetCountry &&
             (identical(other.country, country) || other.country == country));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, country);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SetCountryImplCopyWith<_$SetCountryImpl> get copyWith =>
-      __$$SetCountryImplCopyWithImpl<_$SetCountryImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setCountry(country);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.setCountry(country: $country)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setCountry?.call(country);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setCountry != null) {
-      return setCountry(country);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setCountry(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setCountry?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setCountry != null) {
-      return setCountry(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetCountry implements BusinessEvent {
-  const factory _SetCountry(final FoodlyCountries country) = _$SetCountryImpl;
-
-  FoodlyCountries get country;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetCountryImplCopyWith<_$SetCountryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SetAddressFromPlacesAPIImplCopyWith<$Res> {
-  factory _$$SetAddressFromPlacesAPIImplCopyWith(
-          _$SetAddressFromPlacesAPIImpl value,
-          $Res Function(_$SetAddressFromPlacesAPIImpl) then) =
-      __$$SetAddressFromPlacesAPIImplCopyWithImpl<$Res>;
+abstract mixin class _$SetCountryCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetCountryCopyWith(
+          _SetCountry value, $Res Function(_SetCountry) _then) =
+      __$SetCountryCopyWithImpl;
   @useResult
-  $Res call({Place detail});
+  $Res call({FoodlyCountries country});
 }
 
 /// @nodoc
-class __$$SetAddressFromPlacesAPIImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetAddressFromPlacesAPIImpl>
-    implements _$$SetAddressFromPlacesAPIImplCopyWith<$Res> {
-  __$$SetAddressFromPlacesAPIImplCopyWithImpl(
-      _$SetAddressFromPlacesAPIImpl _value,
-      $Res Function(_$SetAddressFromPlacesAPIImpl) _then)
-      : super(_value, _then);
+class __$SetCountryCopyWithImpl<$Res> implements _$SetCountryCopyWith<$Res> {
+  __$SetCountryCopyWithImpl(this._self, this._then);
+
+  final _SetCountry _self;
+  final $Res Function(_SetCountry) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? detail = null,
+    Object? country = null,
   }) {
-    return _then(_$SetAddressFromPlacesAPIImpl(
-      null == detail
-          ? _value.detail
-          : detail // ignore: cast_nullable_to_non_nullable
-              as Place,
+    return _then(_SetCountry(
+      null == country
+          ? _self.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SetAddressFromPlacesAPIImpl
+class _SetAddressFromPlacesAPI
     with DiagnosticableTreeMixin
-    implements _SetAddressFromPlacesAPI {
-  const _$SetAddressFromPlacesAPIImpl(this.detail);
+    implements BusinessEvent {
+  const _SetAddressFromPlacesAPI(this.detail);
 
-  @override
   final Place detail;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setAddressFromPlacesAPI(detail: $detail)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetAddressFromPlacesAPICopyWith<_SetAddressFromPlacesAPI> get copyWith =>
+      __$SetAddressFromPlacesAPICopyWithImpl<_SetAddressFromPlacesAPI>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(
           DiagnosticsProperty('type', 'BusinessEvent.setAddressFromPlacesAPI'))
@@ -4144,269 +1434,68 @@ class _$SetAddressFromPlacesAPIImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetAddressFromPlacesAPIImpl &&
+            other is _SetAddressFromPlacesAPI &&
             (identical(other.detail, detail) || other.detail == detail));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, detail);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SetAddressFromPlacesAPIImplCopyWith<_$SetAddressFromPlacesAPIImpl>
-      get copyWith => __$$SetAddressFromPlacesAPIImplCopyWithImpl<
-          _$SetAddressFromPlacesAPIImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setAddressFromPlacesAPI(detail);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.setAddressFromPlacesAPI(detail: $detail)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setAddressFromPlacesAPI?.call(detail);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setAddressFromPlacesAPI != null) {
-      return setAddressFromPlacesAPI(detail);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setAddressFromPlacesAPI(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setAddressFromPlacesAPI?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setAddressFromPlacesAPI != null) {
-      return setAddressFromPlacesAPI(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetAddressFromPlacesAPI implements BusinessEvent {
-  const factory _SetAddressFromPlacesAPI(final Place detail) =
-      _$SetAddressFromPlacesAPIImpl;
-
-  Place get detail;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetAddressFromPlacesAPIImplCopyWith<_$SetAddressFromPlacesAPIImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SetMapControllerImplCopyWith<$Res> {
-  factory _$$SetMapControllerImplCopyWith(_$SetMapControllerImpl value,
-          $Res Function(_$SetMapControllerImpl) then) =
-      __$$SetMapControllerImplCopyWithImpl<$Res>;
+abstract mixin class _$SetAddressFromPlacesAPICopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetAddressFromPlacesAPICopyWith(_SetAddressFromPlacesAPI value,
+          $Res Function(_SetAddressFromPlacesAPI) _then) =
+      __$SetAddressFromPlacesAPICopyWithImpl;
   @useResult
-  $Res call({GoogleMapController controller});
+  $Res call({Place detail});
 }
 
 /// @nodoc
-class __$$SetMapControllerImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetMapControllerImpl>
-    implements _$$SetMapControllerImplCopyWith<$Res> {
-  __$$SetMapControllerImplCopyWithImpl(_$SetMapControllerImpl _value,
-      $Res Function(_$SetMapControllerImpl) _then)
-      : super(_value, _then);
+class __$SetAddressFromPlacesAPICopyWithImpl<$Res>
+    implements _$SetAddressFromPlacesAPICopyWith<$Res> {
+  __$SetAddressFromPlacesAPICopyWithImpl(this._self, this._then);
+
+  final _SetAddressFromPlacesAPI _self;
+  final $Res Function(_SetAddressFromPlacesAPI) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? controller = null,
+    Object? detail = null,
   }) {
-    return _then(_$SetMapControllerImpl(
-      null == controller
-          ? _value.controller
-          : controller // ignore: cast_nullable_to_non_nullable
-              as GoogleMapController,
+    return _then(_SetAddressFromPlacesAPI(
+      null == detail
+          ? _self.detail
+          : detail // ignore: cast_nullable_to_non_nullable
+              as Place,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SetMapControllerImpl
-    with DiagnosticableTreeMixin
-    implements _SetMapController {
-  const _$SetMapControllerImpl(this.controller);
+class _SetMapController with DiagnosticableTreeMixin implements BusinessEvent {
+  const _SetMapController(this.controller);
 
-  @override
   final GoogleMapController controller;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setMapController(controller: $controller)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetMapControllerCopyWith<_SetMapController> get copyWith =>
+      __$SetMapControllerCopyWithImpl<_SetMapController>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.setMapController'))
       ..add(DiagnosticsProperty('controller', controller));
@@ -4416,7 +1505,7 @@ class _$SetMapControllerImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetMapControllerImpl &&
+            other is _SetMapController &&
             (identical(other.controller, controller) ||
                 other.controller == controller));
   }
@@ -4424,245 +1513,52 @@ class _$SetMapControllerImpl
   @override
   int get hashCode => Object.hash(runtimeType, controller);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SetMapControllerImplCopyWith<_$SetMapControllerImpl> get copyWith =>
-      __$$SetMapControllerImplCopyWithImpl<_$SetMapControllerImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setMapController(controller);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setMapController?.call(controller);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setMapController != null) {
-      return setMapController(controller);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setMapController(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setMapController?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setMapController != null) {
-      return setMapController(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetMapController implements BusinessEvent {
-  const factory _SetMapController(final GoogleMapController controller) =
-      _$SetMapControllerImpl;
-
-  GoogleMapController get controller;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetMapControllerImplCopyWith<_$SetMapControllerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$UpdateBusinessImplCopyWith<$Res> {
-  factory _$$UpdateBusinessImplCopyWith(_$UpdateBusinessImpl value,
-          $Res Function(_$UpdateBusinessImpl) then) =
-      __$$UpdateBusinessImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UpdateBusinessImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$UpdateBusinessImpl>
-    implements _$$UpdateBusinessImplCopyWith<$Res> {
-  __$$UpdateBusinessImplCopyWithImpl(
-      _$UpdateBusinessImpl _value, $Res Function(_$UpdateBusinessImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$UpdateBusinessImpl
-    with DiagnosticableTreeMixin
-    implements _UpdateBusiness {
-  const _$UpdateBusinessImpl();
-
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.updateBusiness()';
+    return 'BusinessEvent.setMapController(controller: $controller)';
   }
+}
+
+/// @nodoc
+abstract mixin class _$SetMapControllerCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetMapControllerCopyWith(
+          _SetMapController value, $Res Function(_SetMapController) _then) =
+      __$SetMapControllerCopyWithImpl;
+  @useResult
+  $Res call({GoogleMapController controller});
+}
+
+/// @nodoc
+class __$SetMapControllerCopyWithImpl<$Res>
+    implements _$SetMapControllerCopyWith<$Res> {
+  __$SetMapControllerCopyWithImpl(this._self, this._then);
+
+  final _SetMapController _self;
+  final $Res Function(_SetMapController) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? controller = null,
+  }) {
+    return _then(_SetMapController(
+      null == controller
+          ? _self.controller
+          : controller // ignore: cast_nullable_to_non_nullable
+              as GoogleMapController,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _UpdateBusiness with DiagnosticableTreeMixin implements BusinessEvent {
+  const _UpdateBusiness();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.updateBusiness'));
   }
@@ -4670,252 +1566,37 @@ class _$UpdateBusinessImpl
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UpdateBusinessImpl);
+        (other.runtimeType == runtimeType && other is _UpdateBusiness);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return updateBusiness();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.updateBusiness()';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return updateBusiness?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateBusiness != null) {
-      return updateBusiness();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return updateBusiness(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return updateBusiness?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (updateBusiness != null) {
-      return updateBusiness(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdateBusiness implements BusinessEvent {
-  const factory _UpdateBusiness() = _$UpdateBusinessImpl;
 }
 
 /// @nodoc
-abstract class _$$ToggleAllowReservationsImplCopyWith<$Res> {
-  factory _$$ToggleAllowReservationsImplCopyWith(
-          _$ToggleAllowReservationsImpl value,
-          $Res Function(_$ToggleAllowReservationsImpl) then) =
-      __$$ToggleAllowReservationsImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({bool value});
-}
 
-/// @nodoc
-class __$$ToggleAllowReservationsImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$ToggleAllowReservationsImpl>
-    implements _$$ToggleAllowReservationsImplCopyWith<$Res> {
-  __$$ToggleAllowReservationsImplCopyWithImpl(
-      _$ToggleAllowReservationsImpl _value,
-      $Res Function(_$ToggleAllowReservationsImpl) _then)
-      : super(_value, _then);
+class _ToggleAllowReservations
+    with DiagnosticableTreeMixin
+    implements BusinessEvent {
+  const _ToggleAllowReservations(this.value);
+
+  final bool value;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? value = null,
-  }) {
-    return _then(_$ToggleAllowReservationsImpl(
-      null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ToggleAllowReservationsImpl
-    with DiagnosticableTreeMixin
-    implements _ToggleAllowReservations {
-  const _$ToggleAllowReservationsImpl(this.value);
-
-  @override
-  final bool value;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.toggleAllowReservations(value: $value)';
-  }
+  _$ToggleAllowReservationsCopyWith<_ToggleAllowReservations> get copyWith =>
+      __$ToggleAllowReservationsCopyWithImpl<_ToggleAllowReservations>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(
           DiagnosticsProperty('type', 'BusinessEvent.toggleAllowReservations'))
@@ -4926,271 +1607,71 @@ class _$ToggleAllowReservationsImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ToggleAllowReservationsImpl &&
+            other is _ToggleAllowReservations &&
             (identical(other.value, value) || other.value == value));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ToggleAllowReservationsImplCopyWith<_$ToggleAllowReservationsImpl>
-      get copyWith => __$$ToggleAllowReservationsImplCopyWithImpl<
-          _$ToggleAllowReservationsImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return toggleAllowReservations(value);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.toggleAllowReservations(value: $value)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return toggleAllowReservations?.call(value);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (toggleAllowReservations != null) {
-      return toggleAllowReservations(value);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return toggleAllowReservations(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return toggleAllowReservations?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (toggleAllowReservations != null) {
-      return toggleAllowReservations(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ToggleAllowReservations implements BusinessEvent {
-  const factory _ToggleAllowReservations(final bool value) =
-      _$ToggleAllowReservationsImpl;
-
-  bool get value;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ToggleAllowReservationsImplCopyWith<_$ToggleAllowReservationsImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SetReservationSizeLimitImplCopyWith<$Res> {
-  factory _$$SetReservationSizeLimitImplCopyWith(
-          _$SetReservationSizeLimitImpl value,
-          $Res Function(_$SetReservationSizeLimitImpl) then) =
-      __$$SetReservationSizeLimitImplCopyWithImpl<$Res>;
+abstract mixin class _$ToggleAllowReservationsCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$ToggleAllowReservationsCopyWith(_ToggleAllowReservations value,
+          $Res Function(_ToggleAllowReservations) _then) =
+      __$ToggleAllowReservationsCopyWithImpl;
   @useResult
-  $Res call({int value});
+  $Res call({bool value});
 }
 
 /// @nodoc
-class __$$SetReservationSizeLimitImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$SetReservationSizeLimitImpl>
-    implements _$$SetReservationSizeLimitImplCopyWith<$Res> {
-  __$$SetReservationSizeLimitImplCopyWithImpl(
-      _$SetReservationSizeLimitImpl _value,
-      $Res Function(_$SetReservationSizeLimitImpl) _then)
-      : super(_value, _then);
+class __$ToggleAllowReservationsCopyWithImpl<$Res>
+    implements _$ToggleAllowReservationsCopyWith<$Res> {
+  __$ToggleAllowReservationsCopyWithImpl(this._self, this._then);
+
+  final _ToggleAllowReservations _self;
+  final $Res Function(_ToggleAllowReservations) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$SetReservationSizeLimitImpl(
+    return _then(_ToggleAllowReservations(
       null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
-              as int,
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SetReservationSizeLimitImpl
+class _SetReservationSizeLimit
     with DiagnosticableTreeMixin
-    implements _SetReservationSizeLimit {
-  const _$SetReservationSizeLimitImpl(this.value);
+    implements BusinessEvent {
+  const _SetReservationSizeLimit(this.value);
 
-  @override
   final int value;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.setReservationSizeLimit(value: $value)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SetReservationSizeLimitCopyWith<_SetReservationSizeLimit> get copyWith =>
+      __$SetReservationSizeLimitCopyWithImpl<_SetReservationSizeLimit>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(
           DiagnosticsProperty('type', 'BusinessEvent.setReservationSizeLimit'))
@@ -5201,269 +1682,68 @@ class _$SetReservationSizeLimitImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SetReservationSizeLimitImpl &&
+            other is _SetReservationSizeLimit &&
             (identical(other.value, value) || other.value == value));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SetReservationSizeLimitImplCopyWith<_$SetReservationSizeLimitImpl>
-      get copyWith => __$$SetReservationSizeLimitImplCopyWithImpl<
-          _$SetReservationSizeLimitImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return setReservationSizeLimit(value);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.setReservationSizeLimit(value: $value)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return setReservationSizeLimit?.call(value);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setReservationSizeLimit != null) {
-      return setReservationSizeLimit(value);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return setReservationSizeLimit(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return setReservationSizeLimit?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (setReservationSizeLimit != null) {
-      return setReservationSizeLimit(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetReservationSizeLimit implements BusinessEvent {
-  const factory _SetReservationSizeLimit(final int value) =
-      _$SetReservationSizeLimitImpl;
-
-  int get value;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SetReservationSizeLimitImplCopyWith<_$SetReservationSizeLimitImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ToggleMenuEnabledImplCopyWith<$Res> {
-  factory _$$ToggleMenuEnabledImplCopyWith(_$ToggleMenuEnabledImpl value,
-          $Res Function(_$ToggleMenuEnabledImpl) then) =
-      __$$ToggleMenuEnabledImplCopyWithImpl<$Res>;
+abstract mixin class _$SetReservationSizeLimitCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$SetReservationSizeLimitCopyWith(_SetReservationSizeLimit value,
+          $Res Function(_SetReservationSizeLimit) _then) =
+      __$SetReservationSizeLimitCopyWithImpl;
   @useResult
-  $Res call({bool value});
+  $Res call({int value});
 }
 
 /// @nodoc
-class __$$ToggleMenuEnabledImplCopyWithImpl<$Res>
-    extends _$BusinessEventCopyWithImpl<$Res, _$ToggleMenuEnabledImpl>
-    implements _$$ToggleMenuEnabledImplCopyWith<$Res> {
-  __$$ToggleMenuEnabledImplCopyWithImpl(_$ToggleMenuEnabledImpl _value,
-      $Res Function(_$ToggleMenuEnabledImpl) _then)
-      : super(_value, _then);
+class __$SetReservationSizeLimitCopyWithImpl<$Res>
+    implements _$SetReservationSizeLimitCopyWith<$Res> {
+  __$SetReservationSizeLimitCopyWithImpl(this._self, this._then);
+
+  final _SetReservationSizeLimit _self;
+  final $Res Function(_SetReservationSizeLimit) _then;
 
   /// Create a copy of BusinessEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$ToggleMenuEnabledImpl(
+    return _then(_SetReservationSizeLimit(
       null == value
-          ? _value.value
+          ? _self.value
           : value // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as int,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ToggleMenuEnabledImpl
-    with DiagnosticableTreeMixin
-    implements _ToggleMenuEnabled {
-  const _$ToggleMenuEnabledImpl(this.value);
+class _ToggleMenuEnabled with DiagnosticableTreeMixin implements BusinessEvent {
+  const _ToggleMenuEnabled(this.value);
 
-  @override
   final bool value;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessEvent.toggleMenuEnabled(value: $value)';
-  }
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ToggleMenuEnabledCopyWith<_ToggleMenuEnabled> get copyWith =>
+      __$ToggleMenuEnabledCopyWithImpl<_ToggleMenuEnabled>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessEvent.toggleMenuEnabled'))
       ..add(DiagnosticsProperty('value', value));
@@ -5473,302 +1753,147 @@ class _$ToggleMenuEnabledImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ToggleMenuEnabledImpl &&
+            other is _ToggleMenuEnabled &&
             (identical(other.value, value) || other.value == value));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ToggleMenuEnabledImplCopyWith<_$ToggleMenuEnabledImpl> get copyWith =>
-      __$$ToggleMenuEnabledImplCopyWithImpl<_$ToggleMenuEnabledImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String path) updateLogo,
-    required TResult Function() editCoverImagesDialog,
-    required TResult Function(String path) addPicture,
-    required TResult Function(FoodlyCategories category) setCategory,
-    required TResult Function(BusinessServices service) setService,
-    required TResult Function(int dayIndex, Day day) setOpeningHoursDay,
-    required TResult Function() uploadPictures,
-    required TResult Function(String imageId, String filePath) updatePicture,
-    required TResult Function() cancelUploadPictures,
-    required TResult Function(BusinessCoverImageDM coverImageDM)
-        deleteCoverImageById,
-    required TResult Function() cancelDeleteCoverImage,
-    required TResult Function(DashboardEditing editing) updateEditing,
-    required TResult Function() editLocationDialog,
-    required TResult Function(FoodlyCountries country) setCountry,
-    required TResult Function(Place detail) setAddressFromPlacesAPI,
-    required TResult Function(GoogleMapController controller) setMapController,
-    required TResult Function() updateBusiness,
-    required TResult Function(bool value) toggleAllowReservations,
-    required TResult Function(int value) setReservationSizeLimit,
-    required TResult Function(bool value) toggleMenuEnabled,
-  }) {
-    return toggleMenuEnabled(value);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessEvent.toggleMenuEnabled(value: $value)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(String path)? updateLogo,
-    TResult? Function()? editCoverImagesDialog,
-    TResult? Function(String path)? addPicture,
-    TResult? Function(FoodlyCategories category)? setCategory,
-    TResult? Function(BusinessServices service)? setService,
-    TResult? Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult? Function()? uploadPictures,
-    TResult? Function(String imageId, String filePath)? updatePicture,
-    TResult? Function()? cancelUploadPictures,
-    TResult? Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult? Function()? cancelDeleteCoverImage,
-    TResult? Function(DashboardEditing editing)? updateEditing,
-    TResult? Function()? editLocationDialog,
-    TResult? Function(FoodlyCountries country)? setCountry,
-    TResult? Function(Place detail)? setAddressFromPlacesAPI,
-    TResult? Function(GoogleMapController controller)? setMapController,
-    TResult? Function()? updateBusiness,
-    TResult? Function(bool value)? toggleAllowReservations,
-    TResult? Function(int value)? setReservationSizeLimit,
-    TResult? Function(bool value)? toggleMenuEnabled,
-  }) {
-    return toggleMenuEnabled?.call(value);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String path)? updateLogo,
-    TResult Function()? editCoverImagesDialog,
-    TResult Function(String path)? addPicture,
-    TResult Function(FoodlyCategories category)? setCategory,
-    TResult Function(BusinessServices service)? setService,
-    TResult Function(int dayIndex, Day day)? setOpeningHoursDay,
-    TResult Function()? uploadPictures,
-    TResult Function(String imageId, String filePath)? updatePicture,
-    TResult Function()? cancelUploadPictures,
-    TResult Function(BusinessCoverImageDM coverImageDM)? deleteCoverImageById,
-    TResult Function()? cancelDeleteCoverImage,
-    TResult Function(DashboardEditing editing)? updateEditing,
-    TResult Function()? editLocationDialog,
-    TResult Function(FoodlyCountries country)? setCountry,
-    TResult Function(Place detail)? setAddressFromPlacesAPI,
-    TResult Function(GoogleMapController controller)? setMapController,
-    TResult Function()? updateBusiness,
-    TResult Function(bool value)? toggleAllowReservations,
-    TResult Function(int value)? setReservationSizeLimit,
-    TResult Function(bool value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (toggleMenuEnabled != null) {
-      return toggleMenuEnabled(value);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_UpdateLogo value) updateLogo,
-    required TResult Function(_EditCoverImagesDialog value)
-        editCoverImagesDialog,
-    required TResult Function(_AddPicture value) addPicture,
-    required TResult Function(_SetCategory value) setCategory,
-    required TResult Function(_SetService value) setService,
-    required TResult Function(_SetOpeningHoursDay value) setOpeningHoursDay,
-    required TResult Function(_UploadPictures value) uploadPictures,
-    required TResult Function(_UpdatePicture value) updatePicture,
-    required TResult Function(_CancelUploadPictures value) cancelUploadPictures,
-    required TResult Function(_DeleteCoverImageById value) deleteCoverImageById,
-    required TResult Function(_CancelDeleteCoverImage value)
-        cancelDeleteCoverImage,
-    required TResult Function(_UpdateEditing value) updateEditing,
-    required TResult Function(_EditLocationDialog value) editLocationDialog,
-    required TResult Function(_SetCountry value) setCountry,
-    required TResult Function(_SetAddressFromPlacesAPI value)
-        setAddressFromPlacesAPI,
-    required TResult Function(_SetMapController value) setMapController,
-    required TResult Function(_UpdateBusiness value) updateBusiness,
-    required TResult Function(_ToggleAllowReservations value)
-        toggleAllowReservations,
-    required TResult Function(_SetReservationSizeLimit value)
-        setReservationSizeLimit,
-    required TResult Function(_ToggleMenuEnabled value) toggleMenuEnabled,
-  }) {
-    return toggleMenuEnabled(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_UpdateLogo value)? updateLogo,
-    TResult? Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult? Function(_AddPicture value)? addPicture,
-    TResult? Function(_SetCategory value)? setCategory,
-    TResult? Function(_SetService value)? setService,
-    TResult? Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult? Function(_UploadPictures value)? uploadPictures,
-    TResult? Function(_UpdatePicture value)? updatePicture,
-    TResult? Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult? Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult? Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult? Function(_UpdateEditing value)? updateEditing,
-    TResult? Function(_EditLocationDialog value)? editLocationDialog,
-    TResult? Function(_SetCountry value)? setCountry,
-    TResult? Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult? Function(_SetMapController value)? setMapController,
-    TResult? Function(_UpdateBusiness value)? updateBusiness,
-    TResult? Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult? Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult? Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-  }) {
-    return toggleMenuEnabled?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_UpdateLogo value)? updateLogo,
-    TResult Function(_EditCoverImagesDialog value)? editCoverImagesDialog,
-    TResult Function(_AddPicture value)? addPicture,
-    TResult Function(_SetCategory value)? setCategory,
-    TResult Function(_SetService value)? setService,
-    TResult Function(_SetOpeningHoursDay value)? setOpeningHoursDay,
-    TResult Function(_UploadPictures value)? uploadPictures,
-    TResult Function(_UpdatePicture value)? updatePicture,
-    TResult Function(_CancelUploadPictures value)? cancelUploadPictures,
-    TResult Function(_DeleteCoverImageById value)? deleteCoverImageById,
-    TResult Function(_CancelDeleteCoverImage value)? cancelDeleteCoverImage,
-    TResult Function(_UpdateEditing value)? updateEditing,
-    TResult Function(_EditLocationDialog value)? editLocationDialog,
-    TResult Function(_SetCountry value)? setCountry,
-    TResult Function(_SetAddressFromPlacesAPI value)? setAddressFromPlacesAPI,
-    TResult Function(_SetMapController value)? setMapController,
-    TResult Function(_UpdateBusiness value)? updateBusiness,
-    TResult Function(_ToggleAllowReservations value)? toggleAllowReservations,
-    TResult Function(_SetReservationSizeLimit value)? setReservationSizeLimit,
-    TResult Function(_ToggleMenuEnabled value)? toggleMenuEnabled,
-    required TResult orElse(),
-  }) {
-    if (toggleMenuEnabled != null) {
-      return toggleMenuEnabled(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ToggleMenuEnabled implements BusinessEvent {
-  const factory _ToggleMenuEnabled(final bool value) = _$ToggleMenuEnabledImpl;
-
-  bool get value;
-
-  /// Create a copy of BusinessEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ToggleMenuEnabledImplCopyWith<_$ToggleMenuEnabledImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$BusinessState {
-  BusinessVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) =>
-      throw _privateConstructorUsedError;
+abstract mixin class _$ToggleMenuEnabledCopyWith<$Res>
+    implements $BusinessEventCopyWith<$Res> {
+  factory _$ToggleMenuEnabledCopyWith(
+          _ToggleMenuEnabled value, $Res Function(_ToggleMenuEnabled) _then) =
+      __$ToggleMenuEnabledCopyWithImpl;
+  @useResult
+  $Res call({bool value});
+}
+
+/// @nodoc
+class __$ToggleMenuEnabledCopyWithImpl<$Res>
+    implements _$ToggleMenuEnabledCopyWith<$Res> {
+  __$ToggleMenuEnabledCopyWithImpl(this._self, this._then);
+
+  final _ToggleMenuEnabled _self;
+  final $Res Function(_ToggleMenuEnabled) _then;
+
+  /// Create a copy of BusinessEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_ToggleMenuEnabled(
+      null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$BusinessState implements DiagnosticableTreeMixin {
+  BusinessVM get vm;
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $BusinessStateCopyWith<BusinessState> get copyWith =>
+      _$BusinessStateCopyWithImpl<BusinessState>(
+          this as BusinessState, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'BusinessState'))
+      ..add(DiagnosticsProperty('vm', vm));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState(vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $BusinessStateCopyWith<$Res> {
+  factory $BusinessStateCopyWith(
+          BusinessState value, $Res Function(BusinessState) _then) =
+      _$BusinessStateCopyWithImpl;
+  @useResult
+  $Res call({BusinessVM vm});
+
+  $BusinessVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class _$BusinessStateCopyWithImpl<$Res>
+    implements $BusinessStateCopyWith<$Res> {
+  _$BusinessStateCopyWithImpl(this._self, this._then);
+
+  final BusinessState _self;
+  final $Res Function(BusinessState) _then;
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_self.copyWith(
+      vm: null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as BusinessVM,
+    ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [BusinessState].
+extension BusinessStatePatterns on BusinessState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -5784,117 +1909,347 @@ mixin _$BusinessState {
     TResult Function(_LocationUpdated value)? locationUpdated,
     TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BusinessStateCopyWith<BusinessState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BusinessStateCopyWith<$Res> {
-  factory $BusinessStateCopyWith(
-          BusinessState value, $Res Function(BusinessState) then) =
-      _$BusinessStateCopyWithImpl<$Res, BusinessState>;
-  @useResult
-  $Res call({BusinessVM vm});
-
-  $BusinessVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class _$BusinessStateCopyWithImpl<$Res, $Val extends BusinessState>
-    implements $BusinessStateCopyWith<$Res> {
-  _$BusinessStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
   }) {
-    return _then(_value.copyWith(
-      vm: null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as BusinessVM,
-    ) as $Val);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _UpdatingLogo() when updatingLogo != null:
+        return updatingLogo(_that);
+      case _UpdatingMenu() when updatingMenu != null:
+        return updatingMenu(_that);
+      case _UpdatingPictures() when updatingPictures != null:
+        return updatingPictures(_that);
+      case _PicturesUpdated() when picturesUpdated != null:
+        return picturesUpdated(_that);
+      case _PictureDeleted() when pictureDeleted != null:
+        return pictureDeleted(_that);
+      case _EditLocation() when editLocation != null:
+        return editLocation(_that);
+      case _LocationUpdated() when locationUpdated != null:
+        return locationUpdated(_that);
+      case _ShowCoverImagesDialog() when showCoverImagesDialog != null:
+        return showCoverImagesDialog(_that);
+      case _:
+        return orElse();
+    }
   }
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessVMCopyWith<$Res> get vm {
-    return $BusinessVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
-    });
-  }
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $BusinessStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({BusinessVM vm});
-
-  @override
-  $BusinessVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+    required TResult Function(_UpdatingLogo value) updatingLogo,
+    required TResult Function(_UpdatingMenu value) updatingMenu,
+    required TResult Function(_UpdatingPictures value) updatingPictures,
+    required TResult Function(_PicturesUpdated value) picturesUpdated,
+    required TResult Function(_PictureDeleted value) pictureDeleted,
+    required TResult Function(_EditLocation value) editLocation,
+    required TResult Function(_LocationUpdated value) locationUpdated,
+    required TResult Function(_ShowCoverImagesDialog value)
+        showCoverImagesDialog,
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as BusinessVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _Loaded():
+        return loaded(_that);
+      case _Error():
+        return error(_that);
+      case _UpdatingLogo():
+        return updatingLogo(_that);
+      case _UpdatingMenu():
+        return updatingMenu(_that);
+      case _UpdatingPictures():
+        return updatingPictures(_that);
+      case _PicturesUpdated():
+        return picturesUpdated(_that);
+      case _PictureDeleted():
+        return pictureDeleted(_that);
+      case _EditLocation():
+        return editLocation(_that);
+      case _LocationUpdated():
+        return locationUpdated(_that);
+      case _ShowCoverImagesDialog():
+        return showCoverImagesDialog(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_UpdatingLogo value)? updatingLogo,
+    TResult? Function(_UpdatingMenu value)? updatingMenu,
+    TResult? Function(_UpdatingPictures value)? updatingPictures,
+    TResult? Function(_PicturesUpdated value)? picturesUpdated,
+    TResult? Function(_PictureDeleted value)? pictureDeleted,
+    TResult? Function(_EditLocation value)? editLocation,
+    TResult? Function(_LocationUpdated value)? locationUpdated,
+    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _UpdatingLogo() when updatingLogo != null:
+        return updatingLogo(_that);
+      case _UpdatingMenu() when updatingMenu != null:
+        return updatingMenu(_that);
+      case _UpdatingPictures() when updatingPictures != null:
+        return updatingPictures(_that);
+      case _PicturesUpdated() when picturesUpdated != null:
+        return picturesUpdated(_that);
+      case _PictureDeleted() when pictureDeleted != null:
+        return pictureDeleted(_that);
+      case _EditLocation() when editLocation != null:
+        return editLocation(_that);
+      case _LocationUpdated() when locationUpdated != null:
+        return locationUpdated(_that);
+      case _ShowCoverImagesDialog() when showCoverImagesDialog != null:
+        return showCoverImagesDialog(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BusinessVM vm)? initial,
+    TResult Function(BusinessVM vm)? loading,
+    TResult Function(BusinessVM vm)? loaded,
+    TResult Function(String msg, BusinessVM vm)? error,
+    TResult Function(BusinessVM vm)? updatingLogo,
+    TResult Function(BusinessVM vm)? updatingMenu,
+    TResult Function(BusinessVM vm)? updatingPictures,
+    TResult Function(BusinessVM vm)? picturesUpdated,
+    TResult Function(BusinessVM vm)? pictureDeleted,
+    TResult Function(BusinessVM vm)? editLocation,
+    TResult Function(BusinessVM vm)? locationUpdated,
+    TResult Function(BusinessVM vm)? showCoverImagesDialog,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _UpdatingLogo() when updatingLogo != null:
+        return updatingLogo(_that.vm);
+      case _UpdatingMenu() when updatingMenu != null:
+        return updatingMenu(_that.vm);
+      case _UpdatingPictures() when updatingPictures != null:
+        return updatingPictures(_that.vm);
+      case _PicturesUpdated() when picturesUpdated != null:
+        return picturesUpdated(_that.vm);
+      case _PictureDeleted() when pictureDeleted != null:
+        return pictureDeleted(_that.vm);
+      case _EditLocation() when editLocation != null:
+        return editLocation(_that.vm);
+      case _LocationUpdated() when locationUpdated != null:
+        return locationUpdated(_that.vm);
+      case _ShowCoverImagesDialog() when showCoverImagesDialog != null:
+        return showCoverImagesDialog(_that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(BusinessVM vm) initial,
+    required TResult Function(BusinessVM vm) loading,
+    required TResult Function(BusinessVM vm) loaded,
+    required TResult Function(String msg, BusinessVM vm) error,
+    required TResult Function(BusinessVM vm) updatingLogo,
+    required TResult Function(BusinessVM vm) updatingMenu,
+    required TResult Function(BusinessVM vm) updatingPictures,
+    required TResult Function(BusinessVM vm) picturesUpdated,
+    required TResult Function(BusinessVM vm) pictureDeleted,
+    required TResult Function(BusinessVM vm) editLocation,
+    required TResult Function(BusinessVM vm) locationUpdated,
+    required TResult Function(BusinessVM vm) showCoverImagesDialog,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Loading():
+        return loading(_that.vm);
+      case _Loaded():
+        return loaded(_that.vm);
+      case _Error():
+        return error(_that.msg, _that.vm);
+      case _UpdatingLogo():
+        return updatingLogo(_that.vm);
+      case _UpdatingMenu():
+        return updatingMenu(_that.vm);
+      case _UpdatingPictures():
+        return updatingPictures(_that.vm);
+      case _PicturesUpdated():
+        return picturesUpdated(_that.vm);
+      case _PictureDeleted():
+        return pictureDeleted(_that.vm);
+      case _EditLocation():
+        return editLocation(_that.vm);
+      case _LocationUpdated():
+        return locationUpdated(_that.vm);
+      case _ShowCoverImagesDialog():
+        return showCoverImagesDialog(_that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BusinessVM vm)? initial,
+    TResult? Function(BusinessVM vm)? loading,
+    TResult? Function(BusinessVM vm)? loaded,
+    TResult? Function(String msg, BusinessVM vm)? error,
+    TResult? Function(BusinessVM vm)? updatingLogo,
+    TResult? Function(BusinessVM vm)? updatingMenu,
+    TResult? Function(BusinessVM vm)? updatingPictures,
+    TResult? Function(BusinessVM vm)? picturesUpdated,
+    TResult? Function(BusinessVM vm)? pictureDeleted,
+    TResult? Function(BusinessVM vm)? editLocation,
+    TResult? Function(BusinessVM vm)? locationUpdated,
+    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _UpdatingLogo() when updatingLogo != null:
+        return updatingLogo(_that.vm);
+      case _UpdatingMenu() when updatingMenu != null:
+        return updatingMenu(_that.vm);
+      case _UpdatingPictures() when updatingPictures != null:
+        return updatingPictures(_that.vm);
+      case _PicturesUpdated() when picturesUpdated != null:
+        return picturesUpdated(_that.vm);
+      case _PictureDeleted() when pictureDeleted != null:
+        return pictureDeleted(_that.vm);
+      case _EditLocation() when editLocation != null:
+        return editLocation(_that.vm);
+      case _LocationUpdated() when locationUpdated != null:
+        return locationUpdated(_that.vm);
+      case _ShowCoverImagesDialog() when showCoverImagesDialog != null:
+        return showCoverImagesDialog(_that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial with DiagnosticableTreeMixin implements BusinessState {
+  const _Initial(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.initial(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.initial'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -5904,165 +2259,24 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _Initial &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return initial(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.initial(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements BusinessState {
-  const factory _Initial(final BusinessVM vm) = _$InitialImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -6072,45 +2286,56 @@ abstract class _$$LoadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadingImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
-  const _$LoadingImpl(this.vm);
+class _Loading with DiagnosticableTreeMixin implements BusinessState {
+  const _Loading(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.loading(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.loading'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -6120,165 +2345,24 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
+            other is _Loading &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return loading(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.loading(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return loading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements BusinessState {
-  const factory _Loading(final BusinessVM vm) = _$LoadingImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
+abstract mixin class _$LoadingCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -6288,45 +2372,56 @@ abstract class _$$LoadedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadedImpl(
+    return _then(_Loading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
-  const _$LoadedImpl(this.vm);
+class _Loaded with DiagnosticableTreeMixin implements BusinessState {
+  const _Loaded(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.loaded(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.loaded'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -6336,220 +2431,84 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _Loaded &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return loaded(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.loaded(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return loaded?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements BusinessState {
-  const factory _Loaded(final BusinessVM vm) = _$LoadedImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$LoadedCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
+      __$LoadedCopyWithImpl;
   @override
   @useResult
-  $Res call({String msg, BusinessVM vm});
+  $Res call({BusinessVM vm});
 
   @override
   $BusinessVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? msg = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_Loaded(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  const _$ErrorImpl(this.msg, this.vm);
+class _Error with DiagnosticableTreeMixin implements BusinessState {
+  const _Error(this.msg, this.vm);
 
-  @override
   final String msg;
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.error(msg: $msg, vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.error'))
       ..add(DiagnosticsProperty('msg', msg))
@@ -6560,7 +2519,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.msg, msg) || other.msg == msg) &&
             (identical(other.vm, vm) || other.vm == vm));
   }
@@ -6568,207 +2527,81 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, msg, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return error(msg, vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.error(msg: $msg, vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return error?.call(msg, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(msg, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements BusinessState {
-  const factory _Error(final String msg, final BusinessVM vm) = _$ErrorImpl;
-
-  String get msg;
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UpdatingLogoImplCopyWith<$Res>
+abstract mixin class _$ErrorCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$UpdatingLogoImplCopyWith(
-          _$UpdatingLogoImpl value, $Res Function(_$UpdatingLogoImpl) then) =
-      __$$UpdatingLogoImplCopyWithImpl<$Res>;
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
   @override
   @useResult
-  $Res call({BusinessVM vm});
+  $Res call({String msg, BusinessVM vm});
 
   @override
   $BusinessVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$UpdatingLogoImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$UpdatingLogoImpl>
-    implements _$$UpdatingLogoImplCopyWith<$Res> {
-  __$$UpdatingLogoImplCopyWithImpl(
-      _$UpdatingLogoImpl _value, $Res Function(_$UpdatingLogoImpl) _then)
-      : super(_value, _then);
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
+    Object? msg = null,
     Object? vm = null,
   }) {
-    return _then(_$UpdatingLogoImpl(
+    return _then(_Error(
+      null == msg
+          ? _self.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UpdatingLogoImpl with DiagnosticableTreeMixin implements _UpdatingLogo {
-  const _$UpdatingLogoImpl(this.vm);
+class _UpdatingLogo with DiagnosticableTreeMixin implements BusinessState {
+  const _UpdatingLogo(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.updatingLogo(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdatingLogoCopyWith<_UpdatingLogo> get copyWith =>
+      __$UpdatingLogoCopyWithImpl<_UpdatingLogo>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.updatingLogo'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -6778,165 +2611,25 @@ class _$UpdatingLogoImpl with DiagnosticableTreeMixin implements _UpdatingLogo {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatingLogoImpl &&
+            other is _UpdatingLogo &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatingLogoImplCopyWith<_$UpdatingLogoImpl> get copyWith =>
-      __$$UpdatingLogoImplCopyWithImpl<_$UpdatingLogoImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return updatingLogo(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.updatingLogo(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return updatingLogo?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingLogo != null) {
-      return updatingLogo(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return updatingLogo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return updatingLogo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingLogo != null) {
-      return updatingLogo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdatingLogo implements BusinessState {
-  const factory _UpdatingLogo(final BusinessVM vm) = _$UpdatingLogoImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatingLogoImplCopyWith<_$UpdatingLogoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UpdatingMenuImplCopyWith<$Res>
+abstract mixin class _$UpdatingLogoCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$UpdatingMenuImplCopyWith(
-          _$UpdatingMenuImpl value, $Res Function(_$UpdatingMenuImpl) then) =
-      __$$UpdatingMenuImplCopyWithImpl<$Res>;
+  factory _$UpdatingLogoCopyWith(
+          _UpdatingLogo value, $Res Function(_UpdatingLogo) _then) =
+      __$UpdatingLogoCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -6946,45 +2639,57 @@ abstract class _$$UpdatingMenuImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UpdatingMenuImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$UpdatingMenuImpl>
-    implements _$$UpdatingMenuImplCopyWith<$Res> {
-  __$$UpdatingMenuImplCopyWithImpl(
-      _$UpdatingMenuImpl _value, $Res Function(_$UpdatingMenuImpl) _then)
-      : super(_value, _then);
+class __$UpdatingLogoCopyWithImpl<$Res>
+    implements _$UpdatingLogoCopyWith<$Res> {
+  __$UpdatingLogoCopyWithImpl(this._self, this._then);
+
+  final _UpdatingLogo _self;
+  final $Res Function(_UpdatingLogo) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$UpdatingMenuImpl(
+    return _then(_UpdatingLogo(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UpdatingMenuImpl with DiagnosticableTreeMixin implements _UpdatingMenu {
-  const _$UpdatingMenuImpl(this.vm);
+class _UpdatingMenu with DiagnosticableTreeMixin implements BusinessState {
+  const _UpdatingMenu(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.updatingMenu(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdatingMenuCopyWith<_UpdatingMenu> get copyWith =>
+      __$UpdatingMenuCopyWithImpl<_UpdatingMenu>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.updatingMenu'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -6994,165 +2699,25 @@ class _$UpdatingMenuImpl with DiagnosticableTreeMixin implements _UpdatingMenu {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatingMenuImpl &&
+            other is _UpdatingMenu &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatingMenuImplCopyWith<_$UpdatingMenuImpl> get copyWith =>
-      __$$UpdatingMenuImplCopyWithImpl<_$UpdatingMenuImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return updatingMenu(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.updatingMenu(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return updatingMenu?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingMenu != null) {
-      return updatingMenu(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return updatingMenu(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return updatingMenu?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingMenu != null) {
-      return updatingMenu(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdatingMenu implements BusinessState {
-  const factory _UpdatingMenu(final BusinessVM vm) = _$UpdatingMenuImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatingMenuImplCopyWith<_$UpdatingMenuImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UpdatingPicturesImplCopyWith<$Res>
+abstract mixin class _$UpdatingMenuCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$UpdatingPicturesImplCopyWith(_$UpdatingPicturesImpl value,
-          $Res Function(_$UpdatingPicturesImpl) then) =
-      __$$UpdatingPicturesImplCopyWithImpl<$Res>;
+  factory _$UpdatingMenuCopyWith(
+          _UpdatingMenu value, $Res Function(_UpdatingMenu) _then) =
+      __$UpdatingMenuCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -7162,47 +2727,57 @@ abstract class _$$UpdatingPicturesImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UpdatingPicturesImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$UpdatingPicturesImpl>
-    implements _$$UpdatingPicturesImplCopyWith<$Res> {
-  __$$UpdatingPicturesImplCopyWithImpl(_$UpdatingPicturesImpl _value,
-      $Res Function(_$UpdatingPicturesImpl) _then)
-      : super(_value, _then);
+class __$UpdatingMenuCopyWithImpl<$Res>
+    implements _$UpdatingMenuCopyWith<$Res> {
+  __$UpdatingMenuCopyWithImpl(this._self, this._then);
+
+  final _UpdatingMenu _self;
+  final $Res Function(_UpdatingMenu) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$UpdatingPicturesImpl(
+    return _then(_UpdatingMenu(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UpdatingPicturesImpl
-    with DiagnosticableTreeMixin
-    implements _UpdatingPictures {
-  const _$UpdatingPicturesImpl(this.vm);
+class _UpdatingPictures with DiagnosticableTreeMixin implements BusinessState {
+  const _UpdatingPictures(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.updatingPictures(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdatingPicturesCopyWith<_UpdatingPictures> get copyWith =>
+      __$UpdatingPicturesCopyWithImpl<_UpdatingPictures>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.updatingPictures'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -7212,166 +2787,25 @@ class _$UpdatingPicturesImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatingPicturesImpl &&
+            other is _UpdatingPictures &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatingPicturesImplCopyWith<_$UpdatingPicturesImpl> get copyWith =>
-      __$$UpdatingPicturesImplCopyWithImpl<_$UpdatingPicturesImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return updatingPictures(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.updatingPictures(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return updatingPictures?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingPictures != null) {
-      return updatingPictures(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return updatingPictures(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return updatingPictures?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (updatingPictures != null) {
-      return updatingPictures(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdatingPictures implements BusinessState {
-  const factory _UpdatingPictures(final BusinessVM vm) = _$UpdatingPicturesImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatingPicturesImplCopyWith<_$UpdatingPicturesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PicturesUpdatedImplCopyWith<$Res>
+abstract mixin class _$UpdatingPicturesCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$PicturesUpdatedImplCopyWith(_$PicturesUpdatedImpl value,
-          $Res Function(_$PicturesUpdatedImpl) then) =
-      __$$PicturesUpdatedImplCopyWithImpl<$Res>;
+  factory _$UpdatingPicturesCopyWith(
+          _UpdatingPictures value, $Res Function(_UpdatingPictures) _then) =
+      __$UpdatingPicturesCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -7381,47 +2815,57 @@ abstract class _$$PicturesUpdatedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PicturesUpdatedImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$PicturesUpdatedImpl>
-    implements _$$PicturesUpdatedImplCopyWith<$Res> {
-  __$$PicturesUpdatedImplCopyWithImpl(
-      _$PicturesUpdatedImpl _value, $Res Function(_$PicturesUpdatedImpl) _then)
-      : super(_value, _then);
+class __$UpdatingPicturesCopyWithImpl<$Res>
+    implements _$UpdatingPicturesCopyWith<$Res> {
+  __$UpdatingPicturesCopyWithImpl(this._self, this._then);
+
+  final _UpdatingPictures _self;
+  final $Res Function(_UpdatingPictures) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$PicturesUpdatedImpl(
+    return _then(_UpdatingPictures(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$PicturesUpdatedImpl
-    with DiagnosticableTreeMixin
-    implements _PicturesUpdated {
-  const _$PicturesUpdatedImpl(this.vm);
+class _PicturesUpdated with DiagnosticableTreeMixin implements BusinessState {
+  const _PicturesUpdated(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.picturesUpdated(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PicturesUpdatedCopyWith<_PicturesUpdated> get copyWith =>
+      __$PicturesUpdatedCopyWithImpl<_PicturesUpdated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.picturesUpdated'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -7431,166 +2875,25 @@ class _$PicturesUpdatedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PicturesUpdatedImpl &&
+            other is _PicturesUpdated &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PicturesUpdatedImplCopyWith<_$PicturesUpdatedImpl> get copyWith =>
-      __$$PicturesUpdatedImplCopyWithImpl<_$PicturesUpdatedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return picturesUpdated(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.picturesUpdated(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return picturesUpdated?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (picturesUpdated != null) {
-      return picturesUpdated(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return picturesUpdated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return picturesUpdated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (picturesUpdated != null) {
-      return picturesUpdated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _PicturesUpdated implements BusinessState {
-  const factory _PicturesUpdated(final BusinessVM vm) = _$PicturesUpdatedImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PicturesUpdatedImplCopyWith<_$PicturesUpdatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PictureDeletedImplCopyWith<$Res>
+abstract mixin class _$PicturesUpdatedCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$PictureDeletedImplCopyWith(_$PictureDeletedImpl value,
-          $Res Function(_$PictureDeletedImpl) then) =
-      __$$PictureDeletedImplCopyWithImpl<$Res>;
+  factory _$PicturesUpdatedCopyWith(
+          _PicturesUpdated value, $Res Function(_PicturesUpdated) _then) =
+      __$PicturesUpdatedCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -7600,47 +2903,57 @@ abstract class _$$PictureDeletedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PictureDeletedImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$PictureDeletedImpl>
-    implements _$$PictureDeletedImplCopyWith<$Res> {
-  __$$PictureDeletedImplCopyWithImpl(
-      _$PictureDeletedImpl _value, $Res Function(_$PictureDeletedImpl) _then)
-      : super(_value, _then);
+class __$PicturesUpdatedCopyWithImpl<$Res>
+    implements _$PicturesUpdatedCopyWith<$Res> {
+  __$PicturesUpdatedCopyWithImpl(this._self, this._then);
+
+  final _PicturesUpdated _self;
+  final $Res Function(_PicturesUpdated) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$PictureDeletedImpl(
+    return _then(_PicturesUpdated(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$PictureDeletedImpl
-    with DiagnosticableTreeMixin
-    implements _PictureDeleted {
-  const _$PictureDeletedImpl(this.vm);
+class _PictureDeleted with DiagnosticableTreeMixin implements BusinessState {
+  const _PictureDeleted(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.pictureDeleted(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PictureDeletedCopyWith<_PictureDeleted> get copyWith =>
+      __$PictureDeletedCopyWithImpl<_PictureDeleted>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.pictureDeleted'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -7650,166 +2963,25 @@ class _$PictureDeletedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PictureDeletedImpl &&
+            other is _PictureDeleted &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PictureDeletedImplCopyWith<_$PictureDeletedImpl> get copyWith =>
-      __$$PictureDeletedImplCopyWithImpl<_$PictureDeletedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return pictureDeleted(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.pictureDeleted(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return pictureDeleted?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (pictureDeleted != null) {
-      return pictureDeleted(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return pictureDeleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return pictureDeleted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (pictureDeleted != null) {
-      return pictureDeleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _PictureDeleted implements BusinessState {
-  const factory _PictureDeleted(final BusinessVM vm) = _$PictureDeletedImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PictureDeletedImplCopyWith<_$PictureDeletedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$EditLocationImplCopyWith<$Res>
+abstract mixin class _$PictureDeletedCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$EditLocationImplCopyWith(
-          _$EditLocationImpl value, $Res Function(_$EditLocationImpl) then) =
-      __$$EditLocationImplCopyWithImpl<$Res>;
+  factory _$PictureDeletedCopyWith(
+          _PictureDeleted value, $Res Function(_PictureDeleted) _then) =
+      __$PictureDeletedCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -7819,45 +2991,57 @@ abstract class _$$EditLocationImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$EditLocationImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$EditLocationImpl>
-    implements _$$EditLocationImplCopyWith<$Res> {
-  __$$EditLocationImplCopyWithImpl(
-      _$EditLocationImpl _value, $Res Function(_$EditLocationImpl) _then)
-      : super(_value, _then);
+class __$PictureDeletedCopyWithImpl<$Res>
+    implements _$PictureDeletedCopyWith<$Res> {
+  __$PictureDeletedCopyWithImpl(this._self, this._then);
+
+  final _PictureDeleted _self;
+  final $Res Function(_PictureDeleted) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$EditLocationImpl(
+    return _then(_PictureDeleted(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$EditLocationImpl with DiagnosticableTreeMixin implements _EditLocation {
-  const _$EditLocationImpl(this.vm);
+class _EditLocation with DiagnosticableTreeMixin implements BusinessState {
+  const _EditLocation(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.editLocation(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$EditLocationCopyWith<_EditLocation> get copyWith =>
+      __$EditLocationCopyWithImpl<_EditLocation>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.editLocation'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -7867,165 +3051,25 @@ class _$EditLocationImpl with DiagnosticableTreeMixin implements _EditLocation {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EditLocationImpl &&
+            other is _EditLocation &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$EditLocationImplCopyWith<_$EditLocationImpl> get copyWith =>
-      __$$EditLocationImplCopyWithImpl<_$EditLocationImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return editLocation(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.editLocation(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return editLocation?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (editLocation != null) {
-      return editLocation(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return editLocation(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return editLocation?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (editLocation != null) {
-      return editLocation(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _EditLocation implements BusinessState {
-  const factory _EditLocation(final BusinessVM vm) = _$EditLocationImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$EditLocationImplCopyWith<_$EditLocationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LocationUpdatedImplCopyWith<$Res>
+abstract mixin class _$EditLocationCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$LocationUpdatedImplCopyWith(_$LocationUpdatedImpl value,
-          $Res Function(_$LocationUpdatedImpl) then) =
-      __$$LocationUpdatedImplCopyWithImpl<$Res>;
+  factory _$EditLocationCopyWith(
+          _EditLocation value, $Res Function(_EditLocation) _then) =
+      __$EditLocationCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -8035,47 +3079,57 @@ abstract class _$$LocationUpdatedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LocationUpdatedImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$LocationUpdatedImpl>
-    implements _$$LocationUpdatedImplCopyWith<$Res> {
-  __$$LocationUpdatedImplCopyWithImpl(
-      _$LocationUpdatedImpl _value, $Res Function(_$LocationUpdatedImpl) _then)
-      : super(_value, _then);
+class __$EditLocationCopyWithImpl<$Res>
+    implements _$EditLocationCopyWith<$Res> {
+  __$EditLocationCopyWithImpl(this._self, this._then);
+
+  final _EditLocation _self;
+  final $Res Function(_EditLocation) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LocationUpdatedImpl(
+    return _then(_EditLocation(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LocationUpdatedImpl
-    with DiagnosticableTreeMixin
-    implements _LocationUpdated {
-  const _$LocationUpdatedImpl(this.vm);
+class _LocationUpdated with DiagnosticableTreeMixin implements BusinessState {
+  const _LocationUpdated(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.locationUpdated(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LocationUpdatedCopyWith<_LocationUpdated> get copyWith =>
+      __$LocationUpdatedCopyWithImpl<_LocationUpdated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.locationUpdated'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -8085,167 +3139,25 @@ class _$LocationUpdatedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LocationUpdatedImpl &&
+            other is _LocationUpdated &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LocationUpdatedImplCopyWith<_$LocationUpdatedImpl> get copyWith =>
-      __$$LocationUpdatedImplCopyWithImpl<_$LocationUpdatedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
-  }) {
-    return locationUpdated(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.locationUpdated(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return locationUpdated?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (locationUpdated != null) {
-      return locationUpdated(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return locationUpdated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return locationUpdated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (locationUpdated != null) {
-      return locationUpdated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _LocationUpdated implements BusinessState {
-  const factory _LocationUpdated(final BusinessVM vm) = _$LocationUpdatedImpl;
-
-  @override
-  BusinessVM get vm;
-
-  /// Create a copy of BusinessState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LocationUpdatedImplCopyWith<_$LocationUpdatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ShowCoverImagesDialogImplCopyWith<$Res>
+abstract mixin class _$LocationUpdatedCopyWith<$Res>
     implements $BusinessStateCopyWith<$Res> {
-  factory _$$ShowCoverImagesDialogImplCopyWith(
-          _$ShowCoverImagesDialogImpl value,
-          $Res Function(_$ShowCoverImagesDialogImpl) then) =
-      __$$ShowCoverImagesDialogImplCopyWithImpl<$Res>;
+  factory _$LocationUpdatedCopyWith(
+          _LocationUpdated value, $Res Function(_LocationUpdated) _then) =
+      __$LocationUpdatedCopyWithImpl;
   @override
   @useResult
   $Res call({BusinessVM vm});
@@ -8255,47 +3167,60 @@ abstract class _$$ShowCoverImagesDialogImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ShowCoverImagesDialogImplCopyWithImpl<$Res>
-    extends _$BusinessStateCopyWithImpl<$Res, _$ShowCoverImagesDialogImpl>
-    implements _$$ShowCoverImagesDialogImplCopyWith<$Res> {
-  __$$ShowCoverImagesDialogImplCopyWithImpl(_$ShowCoverImagesDialogImpl _value,
-      $Res Function(_$ShowCoverImagesDialogImpl) _then)
-      : super(_value, _then);
+class __$LocationUpdatedCopyWithImpl<$Res>
+    implements _$LocationUpdatedCopyWith<$Res> {
+  __$LocationUpdatedCopyWithImpl(this._self, this._then);
+
+  final _LocationUpdated _self;
+  final $Res Function(_LocationUpdated) _then;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$ShowCoverImagesDialogImpl(
+    return _then(_LocationUpdated(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as BusinessVM,
     ));
+  }
+
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ShowCoverImagesDialogImpl
+class _ShowCoverImagesDialog
     with DiagnosticableTreeMixin
-    implements _ShowCoverImagesDialog {
-  const _$ShowCoverImagesDialogImpl(this.vm);
+    implements BusinessState {
+  const _ShowCoverImagesDialog(this.vm);
 
   @override
   final BusinessVM vm;
 
+  /// Create a copy of BusinessState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusinessState.showCoverImagesDialog(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ShowCoverImagesDialogCopyWith<_ShowCoverImagesDialog> get copyWith =>
+      __$ShowCoverImagesDialogCopyWithImpl<_ShowCoverImagesDialog>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BusinessState.showCoverImagesDialog'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -8305,157 +3230,65 @@ class _$ShowCoverImagesDialogImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ShowCoverImagesDialogImpl &&
+            other is _ShowCoverImagesDialog &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusinessState.showCoverImagesDialog(vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ShowCoverImagesDialogCopyWith<$Res>
+    implements $BusinessStateCopyWith<$Res> {
+  factory _$ShowCoverImagesDialogCopyWith(_ShowCoverImagesDialog value,
+          $Res Function(_ShowCoverImagesDialog) _then) =
+      __$ShowCoverImagesDialogCopyWithImpl;
+  @override
+  @useResult
+  $Res call({BusinessVM vm});
+
+  @override
+  $BusinessVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$ShowCoverImagesDialogCopyWithImpl<$Res>
+    implements _$ShowCoverImagesDialogCopyWith<$Res> {
+  __$ShowCoverImagesDialogCopyWithImpl(this._self, this._then);
+
+  final _ShowCoverImagesDialog _self;
+  final $Res Function(_ShowCoverImagesDialog) _then;
+
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ShowCoverImagesDialogImplCopyWith<_$ShowCoverImagesDialogImpl>
-      get copyWith => __$$ShowCoverImagesDialogImplCopyWithImpl<
-          _$ShowCoverImagesDialogImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BusinessVM vm) initial,
-    required TResult Function(BusinessVM vm) loading,
-    required TResult Function(BusinessVM vm) loaded,
-    required TResult Function(String msg, BusinessVM vm) error,
-    required TResult Function(BusinessVM vm) updatingLogo,
-    required TResult Function(BusinessVM vm) updatingMenu,
-    required TResult Function(BusinessVM vm) updatingPictures,
-    required TResult Function(BusinessVM vm) picturesUpdated,
-    required TResult Function(BusinessVM vm) pictureDeleted,
-    required TResult Function(BusinessVM vm) editLocation,
-    required TResult Function(BusinessVM vm) locationUpdated,
-    required TResult Function(BusinessVM vm) showCoverImagesDialog,
+  $Res call({
+    Object? vm = null,
   }) {
-    return showCoverImagesDialog(vm);
+    return _then(_ShowCoverImagesDialog(
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as BusinessVM,
+    ));
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BusinessVM vm)? initial,
-    TResult? Function(BusinessVM vm)? loading,
-    TResult? Function(BusinessVM vm)? loaded,
-    TResult? Function(String msg, BusinessVM vm)? error,
-    TResult? Function(BusinessVM vm)? updatingLogo,
-    TResult? Function(BusinessVM vm)? updatingMenu,
-    TResult? Function(BusinessVM vm)? updatingPictures,
-    TResult? Function(BusinessVM vm)? picturesUpdated,
-    TResult? Function(BusinessVM vm)? pictureDeleted,
-    TResult? Function(BusinessVM vm)? editLocation,
-    TResult? Function(BusinessVM vm)? locationUpdated,
-    TResult? Function(BusinessVM vm)? showCoverImagesDialog,
-  }) {
-    return showCoverImagesDialog?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BusinessVM vm)? initial,
-    TResult Function(BusinessVM vm)? loading,
-    TResult Function(BusinessVM vm)? loaded,
-    TResult Function(String msg, BusinessVM vm)? error,
-    TResult Function(BusinessVM vm)? updatingLogo,
-    TResult Function(BusinessVM vm)? updatingMenu,
-    TResult Function(BusinessVM vm)? updatingPictures,
-    TResult Function(BusinessVM vm)? picturesUpdated,
-    TResult Function(BusinessVM vm)? pictureDeleted,
-    TResult Function(BusinessVM vm)? editLocation,
-    TResult Function(BusinessVM vm)? locationUpdated,
-    TResult Function(BusinessVM vm)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (showCoverImagesDialog != null) {
-      return showCoverImagesDialog(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_UpdatingLogo value) updatingLogo,
-    required TResult Function(_UpdatingMenu value) updatingMenu,
-    required TResult Function(_UpdatingPictures value) updatingPictures,
-    required TResult Function(_PicturesUpdated value) picturesUpdated,
-    required TResult Function(_PictureDeleted value) pictureDeleted,
-    required TResult Function(_EditLocation value) editLocation,
-    required TResult Function(_LocationUpdated value) locationUpdated,
-    required TResult Function(_ShowCoverImagesDialog value)
-        showCoverImagesDialog,
-  }) {
-    return showCoverImagesDialog(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_UpdatingLogo value)? updatingLogo,
-    TResult? Function(_UpdatingMenu value)? updatingMenu,
-    TResult? Function(_UpdatingPictures value)? updatingPictures,
-    TResult? Function(_PicturesUpdated value)? picturesUpdated,
-    TResult? Function(_PictureDeleted value)? pictureDeleted,
-    TResult? Function(_EditLocation value)? editLocation,
-    TResult? Function(_LocationUpdated value)? locationUpdated,
-    TResult? Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-  }) {
-    return showCoverImagesDialog?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_UpdatingLogo value)? updatingLogo,
-    TResult Function(_UpdatingMenu value)? updatingMenu,
-    TResult Function(_UpdatingPictures value)? updatingPictures,
-    TResult Function(_PicturesUpdated value)? picturesUpdated,
-    TResult Function(_PictureDeleted value)? pictureDeleted,
-    TResult Function(_EditLocation value)? editLocation,
-    TResult Function(_LocationUpdated value)? locationUpdated,
-    TResult Function(_ShowCoverImagesDialog value)? showCoverImagesDialog,
-    required TResult orElse(),
-  }) {
-    if (showCoverImagesDialog != null) {
-      return showCoverImagesDialog(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ShowCoverImagesDialog implements BusinessState {
-  const factory _ShowCoverImagesDialog(final BusinessVM vm) =
-      _$ShowCoverImagesDialogImpl;
-
-  @override
-  BusinessVM get vm;
 
   /// Create a copy of BusinessState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ShowCoverImagesDialogImplCopyWith<_$ShowCoverImagesDialogImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $BusinessVMCopyWith<$Res> get vm {
+    return $BusinessVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
 }
+
+// dart format on

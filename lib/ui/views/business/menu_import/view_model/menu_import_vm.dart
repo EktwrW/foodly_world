@@ -16,7 +16,7 @@ part 'menu_import_vm.freezed.dart';
 /// `selectedFiles`, `sessionId`, etc., sobreviven entre `picking`,
 /// `uploading`, `parsing`, etc.
 @freezed
-class MenuImportVM with _$MenuImportVM {
+abstract class MenuImportVM with _$MenuImportVM {
   const MenuImportVM._();
 
   const factory MenuImportVM({

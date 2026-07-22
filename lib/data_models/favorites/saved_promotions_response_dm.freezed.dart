@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,127 +9,70 @@ part of 'saved_promotions_response_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-SavedPromoBusinessDM _$SavedPromoBusinessDMFromJson(Map<String, dynamic> json) {
-  return _SavedPromoBusinessDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$SavedPromoBusinessDM {
-  String get uuid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get logo => throw _privateConstructorUsedError;
+  String get uuid;
+  String get name;
+  String? get logo;
   @JsonKey(name: 'category_id')
-  int? get categoryId => throw _privateConstructorUsedError;
+  int? get categoryId;
   @JsonKey(name: 'category_name')
-  String? get categoryName => throw _privateConstructorUsedError;
+  String? get categoryName;
   @JsonKey(name: 'category_image_path')
-  String? get categoryImagePath => throw _privateConstructorUsedError;
-  String get status =>
-      throw _privateConstructorUsedError; // "open" | "closed" | "opening_soon"
+  String? get categoryImagePath;
+  String get status; // "open" | "closed" | "opening_soon"
   @JsonKey(name: 'hours_display')
-  String? get hoursDisplay => throw _privateConstructorUsedError;
-
-  /// Serializes this SavedPromoBusinessDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get hoursDisplay;
 
   /// Create a copy of SavedPromoBusinessDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SavedPromoBusinessDMCopyWith<SavedPromoBusinessDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SavedPromoBusinessDMCopyWith<$Res> {
-  factory $SavedPromoBusinessDMCopyWith(SavedPromoBusinessDM value,
-          $Res Function(SavedPromoBusinessDM) then) =
-      _$SavedPromoBusinessDMCopyWithImpl<$Res, SavedPromoBusinessDM>;
-  @useResult
-  $Res call(
-      {String uuid,
-      String name,
-      String? logo,
-      @JsonKey(name: 'category_id') int? categoryId,
-      @JsonKey(name: 'category_name') String? categoryName,
-      @JsonKey(name: 'category_image_path') String? categoryImagePath,
-      String status,
-      @JsonKey(name: 'hours_display') String? hoursDisplay});
-}
-
-/// @nodoc
-class _$SavedPromoBusinessDMCopyWithImpl<$Res,
-        $Val extends SavedPromoBusinessDM>
-    implements $SavedPromoBusinessDMCopyWith<$Res> {
-  _$SavedPromoBusinessDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SavedPromoBusinessDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $SavedPromoBusinessDMCopyWith<SavedPromoBusinessDM> get copyWith =>
+      _$SavedPromoBusinessDMCopyWithImpl<SavedPromoBusinessDM>(
+          this as SavedPromoBusinessDM, _$identity);
+
+  /// Serializes this SavedPromoBusinessDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? uuid = null,
-    Object? name = null,
-    Object? logo = freezed,
-    Object? categoryId = freezed,
-    Object? categoryName = freezed,
-    Object? categoryImagePath = freezed,
-    Object? status = null,
-    Object? hoursDisplay = freezed,
-  }) {
-    return _then(_value.copyWith(
-      uuid: null == uuid
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      logo: freezed == logo
-          ? _value.logo
-          : logo // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      categoryName: freezed == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryImagePath: freezed == categoryImagePath
-          ? _value.categoryImagePath
-          : categoryImagePath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      hoursDisplay: freezed == hoursDisplay
-          ? _value.hoursDisplay
-          : hoursDisplay // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SavedPromoBusinessDM &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.logo, logo) || other.logo == logo) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) ||
+                other.categoryImagePath == categoryImagePath) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.hoursDisplay, hoursDisplay) ||
+                other.hoursDisplay == hoursDisplay));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, uuid, name, logo, categoryId,
+      categoryName, categoryImagePath, status, hoursDisplay);
+
+  @override
+  String toString() {
+    return 'SavedPromoBusinessDM(uuid: $uuid, name: $name, logo: $logo, categoryId: $categoryId, categoryName: $categoryName, categoryImagePath: $categoryImagePath, status: $status, hoursDisplay: $hoursDisplay)';
   }
 }
 
 /// @nodoc
-abstract class _$$SavedPromoBusinessDMImplCopyWith<$Res>
-    implements $SavedPromoBusinessDMCopyWith<$Res> {
-  factory _$$SavedPromoBusinessDMImplCopyWith(_$SavedPromoBusinessDMImpl value,
-          $Res Function(_$SavedPromoBusinessDMImpl) then) =
-      __$$SavedPromoBusinessDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $SavedPromoBusinessDMCopyWith<$Res> {
+  factory $SavedPromoBusinessDMCopyWith(SavedPromoBusinessDM value,
+          $Res Function(SavedPromoBusinessDM) _then) =
+      _$SavedPromoBusinessDMCopyWithImpl;
   @useResult
   $Res call(
       {String uuid,
@@ -143,12 +86,12 @@ abstract class _$$SavedPromoBusinessDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SavedPromoBusinessDMImplCopyWithImpl<$Res>
-    extends _$SavedPromoBusinessDMCopyWithImpl<$Res, _$SavedPromoBusinessDMImpl>
-    implements _$$SavedPromoBusinessDMImplCopyWith<$Res> {
-  __$$SavedPromoBusinessDMImplCopyWithImpl(_$SavedPromoBusinessDMImpl _value,
-      $Res Function(_$SavedPromoBusinessDMImpl) _then)
-      : super(_value, _then);
+class _$SavedPromoBusinessDMCopyWithImpl<$Res>
+    implements $SavedPromoBusinessDMCopyWith<$Res> {
+  _$SavedPromoBusinessDMCopyWithImpl(this._self, this._then);
+
+  final SavedPromoBusinessDM _self;
+  final $Res Function(SavedPromoBusinessDM) _then;
 
   /// Create a copy of SavedPromoBusinessDM
   /// with the given fields replaced by the non-null parameter values.
@@ -164,47 +107,255 @@ class __$$SavedPromoBusinessDMImplCopyWithImpl<$Res>
     Object? status = null,
     Object? hoursDisplay = freezed,
   }) {
-    return _then(_$SavedPromoBusinessDMImpl(
+    return _then(_self.copyWith(
       uuid: null == uuid
-          ? _value.uuid
+          ? _self.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       logo: freezed == logo
-          ? _value.logo
+          ? _self.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryId: freezed == categoryId
-          ? _value.categoryId
+          ? _self.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
       categoryName: freezed == categoryName
-          ? _value.categoryName
+          ? _self.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryImagePath: freezed == categoryImagePath
-          ? _value.categoryImagePath
+          ? _self.categoryImagePath
           : categoryImagePath // ignore: cast_nullable_to_non_nullable
               as String?,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
       hoursDisplay: freezed == hoursDisplay
-          ? _value.hoursDisplay
+          ? _self.hoursDisplay
           : hoursDisplay // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [SavedPromoBusinessDM].
+extension SavedPromoBusinessDMPatterns on SavedPromoBusinessDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SavedPromoBusinessDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SavedPromoBusinessDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SavedPromoBusinessDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String uuid,
+            String name,
+            String? logo,
+            @JsonKey(name: 'category_id') int? categoryId,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath,
+            String status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM() when $default != null:
+        return $default(
+            _that.uuid,
+            _that.name,
+            _that.logo,
+            _that.categoryId,
+            _that.categoryName,
+            _that.categoryImagePath,
+            _that.status,
+            _that.hoursDisplay);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String uuid,
+            String name,
+            String? logo,
+            @JsonKey(name: 'category_id') int? categoryId,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath,
+            String status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM():
+        return $default(
+            _that.uuid,
+            _that.name,
+            _that.logo,
+            _that.categoryId,
+            _that.categoryName,
+            _that.categoryImagePath,
+            _that.status,
+            _that.hoursDisplay);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String uuid,
+            String name,
+            String? logo,
+            @JsonKey(name: 'category_id') int? categoryId,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath,
+            String status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromoBusinessDM() when $default != null:
+        return $default(
+            _that.uuid,
+            _that.name,
+            _that.logo,
+            _that.categoryId,
+            _that.categoryName,
+            _that.categoryImagePath,
+            _that.status,
+            _that.hoursDisplay);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$SavedPromoBusinessDMImpl extends _SavedPromoBusinessDM {
-  const _$SavedPromoBusinessDMImpl(
+class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
+  const _SavedPromoBusinessDM(
       {required this.uuid,
       required this.name,
       this.logo,
@@ -214,9 +365,8 @@ class _$SavedPromoBusinessDMImpl extends _SavedPromoBusinessDM {
       this.status = 'closed',
       @JsonKey(name: 'hours_display') this.hoursDisplay})
       : super._();
-
-  factory _$SavedPromoBusinessDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SavedPromoBusinessDMImplFromJson(json);
+  factory _SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =>
+      _$SavedPromoBusinessDMFromJson(json);
 
   @override
   final String uuid;
@@ -241,16 +391,27 @@ class _$SavedPromoBusinessDMImpl extends _SavedPromoBusinessDM {
   @JsonKey(name: 'hours_display')
   final String? hoursDisplay;
 
+  /// Create a copy of SavedPromoBusinessDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'SavedPromoBusinessDM(uuid: $uuid, name: $name, logo: $logo, categoryId: $categoryId, categoryName: $categoryName, categoryImagePath: $categoryImagePath, status: $status, hoursDisplay: $hoursDisplay)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SavedPromoBusinessDMCopyWith<_SavedPromoBusinessDM> get copyWith =>
+      __$SavedPromoBusinessDMCopyWithImpl<_SavedPromoBusinessDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$SavedPromoBusinessDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SavedPromoBusinessDMImpl &&
+            other is _SavedPromoBusinessDM &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.logo, logo) || other.logo == logo) &&
@@ -270,96 +431,137 @@ class _$SavedPromoBusinessDMImpl extends _SavedPromoBusinessDM {
   int get hashCode => Object.hash(runtimeType, uuid, name, logo, categoryId,
       categoryName, categoryImagePath, status, hoursDisplay);
 
-  /// Create a copy of SavedPromoBusinessDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SavedPromoBusinessDMImplCopyWith<_$SavedPromoBusinessDMImpl>
-      get copyWith =>
-          __$$SavedPromoBusinessDMImplCopyWithImpl<_$SavedPromoBusinessDMImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SavedPromoBusinessDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'SavedPromoBusinessDM(uuid: $uuid, name: $name, logo: $logo, categoryId: $categoryId, categoryName: $categoryName, categoryImagePath: $categoryImagePath, status: $status, hoursDisplay: $hoursDisplay)';
   }
 }
 
-abstract class _SavedPromoBusinessDM extends SavedPromoBusinessDM {
-  const factory _SavedPromoBusinessDM(
-          {required final String uuid,
-          required final String name,
-          final String? logo,
-          @JsonKey(name: 'category_id') final int? categoryId,
-          @JsonKey(name: 'category_name') final String? categoryName,
-          @JsonKey(name: 'category_image_path') final String? categoryImagePath,
-          final String status,
-          @JsonKey(name: 'hours_display') final String? hoursDisplay}) =
-      _$SavedPromoBusinessDMImpl;
-  const _SavedPromoBusinessDM._() : super._();
+/// @nodoc
+abstract mixin class _$SavedPromoBusinessDMCopyWith<$Res>
+    implements $SavedPromoBusinessDMCopyWith<$Res> {
+  factory _$SavedPromoBusinessDMCopyWith(_SavedPromoBusinessDM value,
+          $Res Function(_SavedPromoBusinessDM) _then) =
+      __$SavedPromoBusinessDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String uuid,
+      String name,
+      String? logo,
+      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'category_name') String? categoryName,
+      @JsonKey(name: 'category_image_path') String? categoryImagePath,
+      String status,
+      @JsonKey(name: 'hours_display') String? hoursDisplay});
+}
 
-  factory _SavedPromoBusinessDM.fromJson(Map<String, dynamic> json) =
-      _$SavedPromoBusinessDMImpl.fromJson;
+/// @nodoc
+class __$SavedPromoBusinessDMCopyWithImpl<$Res>
+    implements _$SavedPromoBusinessDMCopyWith<$Res> {
+  __$SavedPromoBusinessDMCopyWithImpl(this._self, this._then);
 
-  @override
-  String get uuid;
-  @override
-  String get name;
-  @override
-  String? get logo;
-  @override
-  @JsonKey(name: 'category_id')
-  int? get categoryId;
-  @override
-  @JsonKey(name: 'category_name')
-  String? get categoryName;
-  @override
-  @JsonKey(name: 'category_image_path')
-  String? get categoryImagePath;
-  @override
-  String get status; // "open" | "closed" | "opening_soon"
-  @override
-  @JsonKey(name: 'hours_display')
-  String? get hoursDisplay;
+  final _SavedPromoBusinessDM _self;
+  final $Res Function(_SavedPromoBusinessDM) _then;
 
   /// Create a copy of SavedPromoBusinessDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SavedPromoBusinessDMImplCopyWith<_$SavedPromoBusinessDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-SavedPromotionsResponseDM _$SavedPromotionsResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _SavedPromotionsResponseDM.fromJson(json);
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? uuid = null,
+    Object? name = null,
+    Object? logo = freezed,
+    Object? categoryId = freezed,
+    Object? categoryName = freezed,
+    Object? categoryImagePath = freezed,
+    Object? status = null,
+    Object? hoursDisplay = freezed,
+  }) {
+    return _then(_SavedPromoBusinessDM(
+      uuid: null == uuid
+          ? _self.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      logo: freezed == logo
+          ? _self.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: freezed == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryName: freezed == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryImagePath: freezed == categoryImagePath
+          ? _self.categoryImagePath
+          : categoryImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      hoursDisplay: freezed == hoursDisplay
+          ? _self.hoursDisplay
+          : hoursDisplay // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$SavedPromotionsResponseDM {
-  List<NearbyPromotionDM> get data => throw _privateConstructorUsedError;
-  List<SavedPromoBusinessDM> get businesses =>
-      throw _privateConstructorUsedError;
-  SavedPromosMeta? get meta => throw _privateConstructorUsedError;
-
-  /// Serializes this SavedPromotionsResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<NearbyPromotionDM> get data;
+  List<SavedPromoBusinessDM> get businesses;
+  SavedPromosMeta? get meta;
 
   /// Create a copy of SavedPromotionsResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $SavedPromotionsResponseDMCopyWith<SavedPromotionsResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$SavedPromotionsResponseDMCopyWithImpl<SavedPromotionsResponseDM>(
+          this as SavedPromotionsResponseDM, _$identity);
+
+  /// Serializes this SavedPromotionsResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SavedPromotionsResponseDM &&
+            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality()
+                .equals(other.businesses, businesses) &&
+            (identical(other.meta, meta) || other.meta == meta));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(businesses),
+      meta);
+
+  @override
+  String toString() {
+    return 'SavedPromotionsResponseDM(data: $data, businesses: $businesses, meta: $meta)';
+  }
 }
 
 /// @nodoc
-abstract class $SavedPromotionsResponseDMCopyWith<$Res> {
+abstract mixin class $SavedPromotionsResponseDMCopyWith<$Res> {
   factory $SavedPromotionsResponseDMCopyWith(SavedPromotionsResponseDM value,
-          $Res Function(SavedPromotionsResponseDM) then) =
-      _$SavedPromotionsResponseDMCopyWithImpl<$Res, SavedPromotionsResponseDM>;
+          $Res Function(SavedPromotionsResponseDM) _then) =
+      _$SavedPromotionsResponseDMCopyWithImpl;
   @useResult
   $Res call(
       {List<NearbyPromotionDM> data,
@@ -370,15 +572,12 @@ abstract class $SavedPromotionsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SavedPromotionsResponseDMCopyWithImpl<$Res,
-        $Val extends SavedPromotionsResponseDM>
+class _$SavedPromotionsResponseDMCopyWithImpl<$Res>
     implements $SavedPromotionsResponseDMCopyWith<$Res> {
-  _$SavedPromotionsResponseDMCopyWithImpl(this._value, this._then);
+  _$SavedPromotionsResponseDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SavedPromotionsResponseDM _self;
+  final $Res Function(SavedPromotionsResponseDM) _then;
 
   /// Create a copy of SavedPromotionsResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -389,20 +588,20 @@ class _$SavedPromotionsResponseDMCopyWithImpl<$Res,
     Object? businesses = null,
     Object? meta = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       data: null == data
-          ? _value.data
+          ? _self.data
           : data // ignore: cast_nullable_to_non_nullable
               as List<NearbyPromotionDM>,
       businesses: null == businesses
-          ? _value.businesses
+          ? _self.businesses
           : businesses // ignore: cast_nullable_to_non_nullable
               as List<SavedPromoBusinessDM>,
       meta: freezed == meta
-          ? _value.meta
+          ? _self.meta
           : meta // ignore: cast_nullable_to_non_nullable
               as SavedPromosMeta?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of SavedPromotionsResponseDM
@@ -410,82 +609,190 @@ class _$SavedPromotionsResponseDMCopyWithImpl<$Res,
   @override
   @pragma('vm:prefer-inline')
   $SavedPromosMetaCopyWith<$Res>? get meta {
-    if (_value.meta == null) {
+    if (_self.meta == null) {
       return null;
     }
 
-    return $SavedPromosMetaCopyWith<$Res>(_value.meta!, (value) {
-      return _then(_value.copyWith(meta: value) as $Val);
+    return $SavedPromosMetaCopyWith<$Res>(_self.meta!, (value) {
+      return _then(_self.copyWith(meta: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$SavedPromotionsResponseDMImplCopyWith<$Res>
-    implements $SavedPromotionsResponseDMCopyWith<$Res> {
-  factory _$$SavedPromotionsResponseDMImplCopyWith(
-          _$SavedPromotionsResponseDMImpl value,
-          $Res Function(_$SavedPromotionsResponseDMImpl) then) =
-      __$$SavedPromotionsResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {List<NearbyPromotionDM> data,
-      List<SavedPromoBusinessDM> businesses,
-      SavedPromosMeta? meta});
+/// Adds pattern-matching-related methods to [SavedPromotionsResponseDM].
+extension SavedPromotionsResponseDMPatterns on SavedPromotionsResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $SavedPromosMetaCopyWith<$Res>? get meta;
-}
-
-/// @nodoc
-class __$$SavedPromotionsResponseDMImplCopyWithImpl<$Res>
-    extends _$SavedPromotionsResponseDMCopyWithImpl<$Res,
-        _$SavedPromotionsResponseDMImpl>
-    implements _$$SavedPromotionsResponseDMImplCopyWith<$Res> {
-  __$$SavedPromotionsResponseDMImplCopyWithImpl(
-      _$SavedPromotionsResponseDMImpl _value,
-      $Res Function(_$SavedPromotionsResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SavedPromotionsResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = null,
-    Object? businesses = null,
-    Object? meta = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SavedPromotionsResponseDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$SavedPromotionsResponseDMImpl(
-      data: null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<NearbyPromotionDM>,
-      businesses: null == businesses
-          ? _value._businesses
-          : businesses // ignore: cast_nullable_to_non_nullable
-              as List<SavedPromoBusinessDM>,
-      meta: freezed == meta
-          ? _value.meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as SavedPromosMeta?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SavedPromotionsResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SavedPromotionsResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(List<NearbyPromotionDM> data,
+            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM() when $default != null:
+        return $default(_that.data, _that.businesses, _that.meta);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<NearbyPromotionDM> data,
+            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM():
+        return $default(_that.data, _that.businesses, _that.meta);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(List<NearbyPromotionDM> data,
+            List<SavedPromoBusinessDM> businesses, SavedPromosMeta? meta)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromotionsResponseDM() when $default != null:
+        return $default(_that.data, _that.businesses, _that.meta);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SavedPromotionsResponseDMImpl implements _SavedPromotionsResponseDM {
-  const _$SavedPromotionsResponseDMImpl(
+class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
+  const _SavedPromotionsResponseDM(
       {final List<NearbyPromotionDM> data = const [],
       final List<SavedPromoBusinessDM> businesses = const [],
       this.meta})
       : _data = data,
         _businesses = businesses;
-
-  factory _$SavedPromotionsResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SavedPromotionsResponseDMImplFromJson(json);
+  factory _SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$SavedPromotionsResponseDMFromJson(json);
 
   final List<NearbyPromotionDM> _data;
   @override
@@ -508,16 +815,28 @@ class _$SavedPromotionsResponseDMImpl implements _SavedPromotionsResponseDM {
   @override
   final SavedPromosMeta? meta;
 
+  /// Create a copy of SavedPromotionsResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'SavedPromotionsResponseDM(data: $data, businesses: $businesses, meta: $meta)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SavedPromotionsResponseDMCopyWith<_SavedPromotionsResponseDM>
+      get copyWith =>
+          __$SavedPromotionsResponseDMCopyWithImpl<_SavedPromotionsResponseDM>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$SavedPromotionsResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SavedPromotionsResponseDMImpl &&
+            other is _SavedPromotionsResponseDM &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             const DeepCollectionEquality()
                 .equals(other._businesses, _businesses) &&
@@ -532,157 +851,97 @@ class _$SavedPromotionsResponseDMImpl implements _SavedPromotionsResponseDM {
       const DeepCollectionEquality().hash(_businesses),
       meta);
 
-  /// Create a copy of SavedPromotionsResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SavedPromotionsResponseDMImplCopyWith<_$SavedPromotionsResponseDMImpl>
-      get copyWith => __$$SavedPromotionsResponseDMImplCopyWithImpl<
-          _$SavedPromotionsResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SavedPromotionsResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'SavedPromotionsResponseDM(data: $data, businesses: $businesses, meta: $meta)';
   }
 }
 
-abstract class _SavedPromotionsResponseDM implements SavedPromotionsResponseDM {
-  const factory _SavedPromotionsResponseDM(
-      {final List<NearbyPromotionDM> data,
-      final List<SavedPromoBusinessDM> businesses,
-      final SavedPromosMeta? meta}) = _$SavedPromotionsResponseDMImpl;
+/// @nodoc
+abstract mixin class _$SavedPromotionsResponseDMCopyWith<$Res>
+    implements $SavedPromotionsResponseDMCopyWith<$Res> {
+  factory _$SavedPromotionsResponseDMCopyWith(_SavedPromotionsResponseDM value,
+          $Res Function(_SavedPromotionsResponseDM) _then) =
+      __$SavedPromotionsResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<NearbyPromotionDM> data,
+      List<SavedPromoBusinessDM> businesses,
+      SavedPromosMeta? meta});
 
-  factory _SavedPromotionsResponseDM.fromJson(Map<String, dynamic> json) =
-      _$SavedPromotionsResponseDMImpl.fromJson;
+  @override
+  $SavedPromosMetaCopyWith<$Res>? get meta;
+}
 
-  @override
-  List<NearbyPromotionDM> get data;
-  @override
-  List<SavedPromoBusinessDM> get businesses;
-  @override
-  SavedPromosMeta? get meta;
+/// @nodoc
+class __$SavedPromotionsResponseDMCopyWithImpl<$Res>
+    implements _$SavedPromotionsResponseDMCopyWith<$Res> {
+  __$SavedPromotionsResponseDMCopyWithImpl(this._self, this._then);
+
+  final _SavedPromotionsResponseDM _self;
+  final $Res Function(_SavedPromotionsResponseDM) _then;
 
   /// Create a copy of SavedPromotionsResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SavedPromotionsResponseDMImplCopyWith<_$SavedPromotionsResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? data = null,
+    Object? businesses = null,
+    Object? meta = freezed,
+  }) {
+    return _then(_SavedPromotionsResponseDM(
+      data: null == data
+          ? _self._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<NearbyPromotionDM>,
+      businesses: null == businesses
+          ? _self._businesses
+          : businesses // ignore: cast_nullable_to_non_nullable
+              as List<SavedPromoBusinessDM>,
+      meta: freezed == meta
+          ? _self.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as SavedPromosMeta?,
+    ));
+  }
 
-SavedPromosMeta _$SavedPromosMetaFromJson(Map<String, dynamic> json) {
-  return _SavedPromosMeta.fromJson(json);
+  /// Create a copy of SavedPromotionsResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SavedPromosMetaCopyWith<$Res>? get meta {
+    if (_self.meta == null) {
+      return null;
+    }
+
+    return $SavedPromosMetaCopyWith<$Res>(_self.meta!, (value) {
+      return _then(_self.copyWith(meta: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$SavedPromosMeta {
-  int get total => throw _privateConstructorUsedError;
-
-  /// Serializes this SavedPromosMeta to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get total;
 
   /// Create a copy of SavedPromosMeta
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $SavedPromosMetaCopyWith<SavedPromosMeta> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$SavedPromosMetaCopyWithImpl<SavedPromosMeta>(
+          this as SavedPromosMeta, _$identity);
 
-/// @nodoc
-abstract class $SavedPromosMetaCopyWith<$Res> {
-  factory $SavedPromosMetaCopyWith(
-          SavedPromosMeta value, $Res Function(SavedPromosMeta) then) =
-      _$SavedPromosMetaCopyWithImpl<$Res, SavedPromosMeta>;
-  @useResult
-  $Res call({int total});
-}
-
-/// @nodoc
-class _$SavedPromosMetaCopyWithImpl<$Res, $Val extends SavedPromosMeta>
-    implements $SavedPromosMetaCopyWith<$Res> {
-  _$SavedPromosMetaCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SavedPromosMeta
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? total = null,
-  }) {
-    return _then(_value.copyWith(
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$SavedPromosMetaImplCopyWith<$Res>
-    implements $SavedPromosMetaCopyWith<$Res> {
-  factory _$$SavedPromosMetaImplCopyWith(_$SavedPromosMetaImpl value,
-          $Res Function(_$SavedPromosMetaImpl) then) =
-      __$$SavedPromosMetaImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int total});
-}
-
-/// @nodoc
-class __$$SavedPromosMetaImplCopyWithImpl<$Res>
-    extends _$SavedPromosMetaCopyWithImpl<$Res, _$SavedPromosMetaImpl>
-    implements _$$SavedPromosMetaImplCopyWith<$Res> {
-  __$$SavedPromosMetaImplCopyWithImpl(
-      _$SavedPromosMetaImpl _value, $Res Function(_$SavedPromosMetaImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SavedPromosMeta
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? total = null,
-  }) {
-    return _then(_$SavedPromosMetaImpl(
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$SavedPromosMetaImpl implements _SavedPromosMeta {
-  const _$SavedPromosMetaImpl({this.total = 0});
-
-  factory _$SavedPromosMetaImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SavedPromosMetaImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final int total;
-
-  @override
-  String toString() {
-    return 'SavedPromosMeta(total: $total)';
-  }
+  /// Serializes this SavedPromosMeta to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SavedPromosMetaImpl &&
+            other is SavedPromosMeta &&
             (identical(other.total, total) || other.total == total));
   }
 
@@ -690,36 +949,279 @@ class _$SavedPromosMetaImpl implements _SavedPromosMeta {
   @override
   int get hashCode => Object.hash(runtimeType, total);
 
-  /// Create a copy of SavedPromosMeta
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SavedPromosMetaImplCopyWith<_$SavedPromosMetaImpl> get copyWith =>
-      __$$SavedPromosMetaImplCopyWithImpl<_$SavedPromosMetaImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SavedPromosMetaImplToJson(
-      this,
-    );
+  String toString() {
+    return 'SavedPromosMeta(total: $total)';
   }
 }
 
-abstract class _SavedPromosMeta implements SavedPromosMeta {
-  const factory _SavedPromosMeta({final int total}) = _$SavedPromosMetaImpl;
+/// @nodoc
+abstract mixin class $SavedPromosMetaCopyWith<$Res> {
+  factory $SavedPromosMetaCopyWith(
+          SavedPromosMeta value, $Res Function(SavedPromosMeta) _then) =
+      _$SavedPromosMetaCopyWithImpl;
+  @useResult
+  $Res call({int total});
+}
 
-  factory _SavedPromosMeta.fromJson(Map<String, dynamic> json) =
-      _$SavedPromosMetaImpl.fromJson;
+/// @nodoc
+class _$SavedPromosMetaCopyWithImpl<$Res>
+    implements $SavedPromosMetaCopyWith<$Res> {
+  _$SavedPromosMetaCopyWithImpl(this._self, this._then);
+
+  final SavedPromosMeta _self;
+  final $Res Function(SavedPromosMeta) _then;
+
+  /// Create a copy of SavedPromosMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? total = null,
+  }) {
+    return _then(_self.copyWith(
+      total: null == total
+          ? _self.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [SavedPromosMeta].
+extension SavedPromosMetaPatterns on SavedPromosMeta {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SavedPromosMeta value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SavedPromosMeta value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SavedPromosMeta value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(int total)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta() when $default != null:
+        return $default(_that.total);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(int total) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta():
+        return $default(_that.total);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(int total)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SavedPromosMeta() when $default != null:
+        return $default(_that.total);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _SavedPromosMeta implements SavedPromosMeta {
+  const _SavedPromosMeta({this.total = 0});
+  factory _SavedPromosMeta.fromJson(Map<String, dynamic> json) =>
+      _$SavedPromosMetaFromJson(json);
 
   @override
-  int get total;
+  @JsonKey()
+  final int total;
 
   /// Create a copy of SavedPromosMeta
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SavedPromosMetaImplCopyWith<_$SavedPromosMetaImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$SavedPromosMetaCopyWith<_SavedPromosMeta> get copyWith =>
+      __$SavedPromosMetaCopyWithImpl<_SavedPromosMeta>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$SavedPromosMetaToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _SavedPromosMeta &&
+            (identical(other.total, total) || other.total == total));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, total);
+
+  @override
+  String toString() {
+    return 'SavedPromosMeta(total: $total)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$SavedPromosMetaCopyWith<$Res>
+    implements $SavedPromosMetaCopyWith<$Res> {
+  factory _$SavedPromosMetaCopyWith(
+          _SavedPromosMeta value, $Res Function(_SavedPromosMeta) _then) =
+      __$SavedPromosMetaCopyWithImpl;
+  @override
+  @useResult
+  $Res call({int total});
+}
+
+/// @nodoc
+class __$SavedPromosMetaCopyWithImpl<$Res>
+    implements _$SavedPromosMetaCopyWith<$Res> {
+  __$SavedPromosMetaCopyWithImpl(this._self, this._then);
+
+  final _SavedPromosMeta _self;
+  final $Res Function(_SavedPromosMeta) _then;
+
+  /// Create a copy of SavedPromosMeta
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? total = null,
+  }) {
+    return _then(_SavedPromosMeta(
+      total: null == total
+          ? _self.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+// dart format on

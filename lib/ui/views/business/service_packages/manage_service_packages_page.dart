@@ -9,7 +9,7 @@ import 'package:foodly_world/ui/views/business/service_packages/widgets/professi
 import 'package:foodly_world/ui/views/business/service_packages/widgets/service_package_card.dart';
 import 'package:foodly_world/ui/views/business/service_packages/widgets/service_package_form_sheet.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class ManageServicePackagesPage extends StatelessWidget {
   final String businessUuid;

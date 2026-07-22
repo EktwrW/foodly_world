@@ -6,20 +6,20 @@ part of 'place_geometry_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PlaceLatLngDMImpl _$$PlaceLatLngDMImplFromJson(Map<String, dynamic> json) =>
-    _$PlaceLatLngDMImpl(
+_PlaceLatLngDM _$PlaceLatLngDMFromJson(Map<String, dynamic> json) =>
+    _PlaceLatLngDM(
       lat: (json['lat'] as num?)?.toDouble() ?? 0.0,
       lng: (json['lng'] as num?)?.toDouble() ?? 0.0,
     );
 
-Map<String, dynamic> _$$PlaceLatLngDMImplToJson(_$PlaceLatLngDMImpl instance) =>
+Map<String, dynamic> _$PlaceLatLngDMToJson(_PlaceLatLngDM instance) =>
     <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
     };
 
-_$PlaceBoundsDMImpl _$$PlaceBoundsDMImplFromJson(Map<String, dynamic> json) =>
-    _$PlaceBoundsDMImpl(
+_PlaceBoundsDM _$PlaceBoundsDMFromJson(Map<String, dynamic> json) =>
+    _PlaceBoundsDM(
       northeast: json['northeast'] == null
           ? null
           : PlaceLatLngDM.fromJson(json['northeast'] as Map<String, dynamic>),
@@ -28,15 +28,14 @@ _$PlaceBoundsDMImpl _$$PlaceBoundsDMImplFromJson(Map<String, dynamic> json) =>
           : PlaceLatLngDM.fromJson(json['southwest'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$PlaceBoundsDMImplToJson(_$PlaceBoundsDMImpl instance) =>
+Map<String, dynamic> _$PlaceBoundsDMToJson(_PlaceBoundsDM instance) =>
     <String, dynamic>{
       if (instance.northeast?.toJson() case final value?) 'northeast': value,
       if (instance.southwest?.toJson() case final value?) 'southwest': value,
     };
 
-_$PlaceGeometryDMImpl _$$PlaceGeometryDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PlaceGeometryDMImpl(
+_PlaceGeometryDM _$PlaceGeometryDMFromJson(Map<String, dynamic> json) =>
+    _PlaceGeometryDM(
       location:
           PlaceLatLngDM.fromJson(json['location'] as Map<String, dynamic>),
       viewport: json['viewport'] == null
@@ -48,8 +47,7 @@ _$PlaceGeometryDMImpl _$$PlaceGeometryDMImplFromJson(
       locationType: json['location_type'] as String?,
     );
 
-Map<String, dynamic> _$$PlaceGeometryDMImplToJson(
-        _$PlaceGeometryDMImpl instance) =>
+Map<String, dynamic> _$PlaceGeometryDMToJson(_PlaceGeometryDM instance) =>
     <String, dynamic>{
       'location': instance.location.toJson(),
       if (instance.viewport?.toJson() case final value?) 'viewport': value,

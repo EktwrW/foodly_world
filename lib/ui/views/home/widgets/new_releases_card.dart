@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Clarity;
 import 'package:video_player/video_player.dart';
 
 class NewReleasesCard extends StatefulWidget {
@@ -271,33 +271,40 @@ class _NewReleasesCardContent extends StatelessWidget {
                             ),
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               if (category != null) SizedBox.square(dimension: 30, child: category.avatar),
-                              Card(
-                                color: FoodlyThemes.tertiaryFoodly,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      [
-                                        business.city,
-                                        business.country?.value,
-                                      ].whereType<String>().join(', '),
-                                      style: FoodlyTextStyles.captionWhite,
-                                    ),
-                                    const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16),
-                                    const SizedBox(width: 4),
-                                  ],
-                                ).paddingAll(3),
-                              ).paddingOnly(left: 4),
-                              const Spacer(),
+                              Expanded(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(6)),
+                                  color: FoodlyThemes.tertiaryFoodly,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          [
+                                            business.city,
+                                            business.country?.value,
+                                          ].whereType<String>().join(', '),
+                                          style: FoodlyTextStyles.captionWhite,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16),
+                                      const SizedBox(width: 3),
+                                    ],
+                                  ).paddingAll(3),
+                                ).paddingOnly(left: 4),
+                              ),
                               Text.rich(
                                 TextSpan(
                                   text: S.current.moreInfo,
                                   style: FoodlyTextStyles.cardTextButtonBlue,
                                 ),
-                              ).paddingOnly(right: 10),
+                              ).paddingHorizontal(3),
                             ],
                           ).paddingOnly(top: 4),
                         ],

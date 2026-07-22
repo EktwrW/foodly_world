@@ -9,7 +9,7 @@ part 'availability_vm.freezed.dart';
 /// cubit updates this VM and emits it inside each state variant so the
 /// widgets can read a single consistent snapshot.
 @freezed
-class AvailabilityVM with _$AvailabilityVM {
+abstract class AvailabilityVM with _$AvailabilityVM {
   const AvailabilityVM._();
 
   const factory AvailabilityVM({

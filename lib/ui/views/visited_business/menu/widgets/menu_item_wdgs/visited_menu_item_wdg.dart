@@ -112,6 +112,13 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                           currency: widget.vm?.currency ?? widget.currency ?? '\$',
                           price: _itemNotAvailable ? null : '$_currentPrice',
                         ),
+                      // "+" para sumar el plato a la orden grupal activa (si la hay).
+                      if (widget.item.available)
+                        _AddToGroupOrderButton(
+                          businessUuid: widget.vm?.menuDM?.business?.uuid,
+                          itemableType: _groupItemableType(widget.menuCategory),
+                          itemUuid: widget.item.uuid,
+                        ).paddingOnly(left: 6, right: 4),
                     ],
                   ).paddingBottom(widget.item.available ? 0 : 8),
                 ],
@@ -194,6 +201,53 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Mapea la categoría del menú al `itemableType` que espera el backend.
+String _groupItemableType(MenuCategory c) => switch (c) {
+      MenuCategory.food => 'food',
+      MenuCategory.drinks => 'drink',
+      MenuCategory.combos => 'combo',
+    };
+
+/// Botón "+" que suma el plato a la orden grupal ACTIVA. Solo aparece cuando
+/// hay una orden abierta para ESTE negocio (reacciona al ActiveGroupOrderCubit).
+class _AddToGroupOrderButton extends StatelessWidget {
+  final String? businessUuid;
+  final String itemableType;
+  final String itemUuid;
+
+  const _AddToGroupOrderButton({
+    required this.businessUuid,
+    required this.itemableType,
+    required this.itemUuid,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final uuid = businessUuid;
+    if (uuid == null || uuid.isEmpty) return const SizedBox.shrink();
+
+    final cubit = di<ActiveGroupOrderCubit>();
+    return BlocBuilder<ActiveGroupOrderCubit, GroupOrderDM?>(
+      bloc: cubit,
+      builder: (context, order) {
+        final active = order != null && order.businessUuid == uuid && order.isOpen;
+        if (!active) return const SizedBox.shrink();
+
+        return InkWell(
+          onTap: () => cubit.addFood(itemableType, itemUuid),
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: 28,
+            height: 28,
+            decoration: const BoxDecoration(color: FoodlyThemes.primaryFoodly, shape: BoxShape.circle),
+            child: const Icon(Icons.add_rounded, color: Colors.white, size: 18),
+          ),
+        );
+      },
     );
   }
 }

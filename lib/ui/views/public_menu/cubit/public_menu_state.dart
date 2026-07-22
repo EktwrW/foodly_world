@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'public_menu_state.freezed.dart';
 
 @freezed
-class PublicMenuState with _$PublicMenuState {
+sealed class PublicMenuState with _$PublicMenuState {
   const factory PublicMenuState.initial() = _Initial;
   const factory PublicMenuState.loading() = _Loading;
   const factory PublicMenuState.loaded({

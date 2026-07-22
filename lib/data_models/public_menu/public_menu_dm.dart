@@ -6,7 +6,7 @@ part 'public_menu_dm.freezed.dart';
 part 'public_menu_dm.g.dart';
 
 @freezed
-class PublicMenuResponseDM with _$PublicMenuResponseDM {
+abstract class PublicMenuResponseDM with _$PublicMenuResponseDM {
   factory PublicMenuResponseDM({
     required BusinessDM business,
     required MenuDM menu,

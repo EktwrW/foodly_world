@@ -23,7 +23,7 @@ part 'analytics_vm.freezed.dart';
 enum AnalyticsKind { restaurant, service }
 
 @freezed
-class AnalyticsVM with _$AnalyticsVM {
+abstract class AnalyticsVM with _$AnalyticsVM {
   const factory AnalyticsVM({
     /// Business whose analytics we're showing. Carried through the cubit
     /// so widgets can access `categoryId`, `name`, etc. without a lookup.

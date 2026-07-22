@@ -1,7 +1,9 @@
+import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/active_group_order_chip.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_app_bar_wdg.dart';
@@ -30,6 +32,14 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
     _dialogService = di<DialogService>();
     _scrollController = ScrollController();
     _setupScrollListener();
+
+    // Asegura que el flag group_orders_enabled esté disponible para el FAB.
+    // Normalmente lo fetchea el flujo de location/places, pero si ese servicio
+    // no corre, _cached queda null (defaults → flag false) y el botón no sale.
+    // Fetcheamos aquí y reconstruimos cuando llega.
+    di<AppFeaturesRepo>().getFeatures().then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   void _setupScrollListener() {
@@ -109,21 +119,39 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
   }
 
   Widget _buildMenuWdg(BuildContext context, MenuVM vm) {
+    // La entrada a la orden grupal vive ahora en el FAB (MenuFloatingActionButton),
+    // gateada por el flag group_orders_enabled.
     return Scaffold(
-      floatingActionButton: ValueListenableBuilder(
-        valueListenable: _isFabVisible,
-        builder: (_, visible, child) {
-          return AnimatedOpacity(
-            opacity: visible ? UiUtilities.sliverVisibleOpacity : UiUtilities.sliverHiddenOpacity,
-            duration: Durations.medium1,
-            child: child!,
-          );
-        },
-        child: MenuFloatingActionButton(
-          menu: vm.menuDM,
-          floatingButtonKey: vm.floatingButtonKey,
-          menuUrl: _publicMenuUrl(vm),
-        ),
+      floatingActionButton: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          // FabCircularMenuPlus usa un OverflowBox interno que exige altura
+          // ACOTADA: debe recibir los constraints del slot del Scaffold tal
+          // cual. (Envolverlo en un Column se los vuelve infinitos y rompe
+          // el layout — por eso el chip va como Positioned en un Stack.)
+          ValueListenableBuilder(
+            valueListenable: _isFabVisible,
+            builder: (_, visible, child) {
+              return AnimatedOpacity(
+                opacity: visible ? UiUtilities.sliverVisibleOpacity : UiUtilities.sliverHiddenOpacity,
+                duration: Durations.medium1,
+                child: child!,
+              );
+            },
+            child: MenuFloatingActionButton(
+              menu: vm.menuDM,
+              floatingButtonKey: vm.floatingButtonKey,
+              menuUrl: _publicMenuUrl(vm),
+            ),
+          ),
+          // Chip persistente "Ver pedido · €X" mientras haya orden grupal
+          // activa para este negocio (spec v2 §D.1), flotando sobre el FAB.
+          Positioned(
+            right: 0,
+            bottom: 64, // fabSize (54) + 10 de separación
+            child: ActiveGroupOrderChip(businessUuid: vm.menuDM?.businessUuid ?? ''),
+          ),
+        ],
       ),
       body: NestedScrollView(
         controller: _scrollController,

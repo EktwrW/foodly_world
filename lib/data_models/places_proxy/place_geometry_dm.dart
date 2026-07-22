@@ -12,7 +12,7 @@ part 'place_geometry_dm.g.dart';
 /// El caller debe validar con `isZero` antes de persistir — un (0,0) es
 /// técnicamente válido (Null Island) pero nunca es lo que queremos mostrar.
 @freezed
-class PlaceLatLngDM with _$PlaceLatLngDM {
+abstract class PlaceLatLngDM with _$PlaceLatLngDM {
   const factory PlaceLatLngDM({
     @Default(0.0) double lat,
     @Default(0.0) double lng,
@@ -25,7 +25,7 @@ class PlaceLatLngDM with _$PlaceLatLngDM {
 /// Geocoding devuelve `bounds` solo para entidades con extensión (ciudad,
 /// país) y no para direcciones puntuales.
 @freezed
-class PlaceBoundsDM with _$PlaceBoundsDM {
+abstract class PlaceBoundsDM with _$PlaceBoundsDM {
   const factory PlaceBoundsDM({
     PlaceLatLngDM? northeast,
     PlaceLatLngDM? southwest,
@@ -43,7 +43,7 @@ class PlaceBoundsDM with _$PlaceBoundsDM {
 ///   valores: `ROOFTOP`, `RANGE_INTERPOLATED`, `GEOMETRIC_CENTER`,
 ///   `APPROXIMATE`. Útil para medir confianza del pin.
 @freezed
-class PlaceGeometryDM with _$PlaceGeometryDM {
+abstract class PlaceGeometryDM with _$PlaceGeometryDM {
   const factory PlaceGeometryDM({
     required PlaceLatLngDM location,
     PlaceBoundsDM? viewport,

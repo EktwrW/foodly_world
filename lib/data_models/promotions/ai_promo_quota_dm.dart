@@ -4,7 +4,7 @@ part 'ai_promo_quota_dm.freezed.dart';
 part 'ai_promo_quota_dm.g.dart';
 
 @freezed
-class AiPromoQuotaResponse with _$AiPromoQuotaResponse {
+abstract class AiPromoQuotaResponse with _$AiPromoQuotaResponse {
   const AiPromoQuotaResponse._();
 
   const factory AiPromoQuotaResponse({

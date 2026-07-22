@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,114 +9,72 @@ part of 'notifications_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NotificationsVM {
-  List<NotificationDM> get notifications => throw _privateConstructorUsedError;
-  int get unreadCount => throw _privateConstructorUsedError;
-  int get currentPage => throw _privateConstructorUsedError;
-  int get lastPage => throw _privateConstructorUsedError;
-  int get perPage => throw _privateConstructorUsedError;
-  int get total => throw _privateConstructorUsedError;
-  bool get isPolling => throw _privateConstructorUsedError;
-  bool get hasMorePages => throw _privateConstructorUsedError;
+  List<NotificationDM> get notifications;
+  int get unreadCount;
+  int get currentPage;
+  int get lastPage;
+  int get perPage;
+  int get total;
+  bool get isPolling;
+  bool get hasMorePages;
 
   /// Create a copy of NotificationsVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $NotificationsVMCopyWith<NotificationsVM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificationsVMCopyWith<$Res> {
-  factory $NotificationsVMCopyWith(
-          NotificationsVM value, $Res Function(NotificationsVM) then) =
-      _$NotificationsVMCopyWithImpl<$Res, NotificationsVM>;
-  @useResult
-  $Res call(
-      {List<NotificationDM> notifications,
-      int unreadCount,
-      int currentPage,
-      int lastPage,
-      int perPage,
-      int total,
-      bool isPolling,
-      bool hasMorePages});
-}
-
-/// @nodoc
-class _$NotificationsVMCopyWithImpl<$Res, $Val extends NotificationsVM>
-    implements $NotificationsVMCopyWith<$Res> {
-  _$NotificationsVMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NotificationsVM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $NotificationsVMCopyWith<NotificationsVM> get copyWith =>
+      _$NotificationsVMCopyWithImpl<NotificationsVM>(
+          this as NotificationsVM, _$identity);
+
   @override
-  $Res call({
-    Object? notifications = null,
-    Object? unreadCount = null,
-    Object? currentPage = null,
-    Object? lastPage = null,
-    Object? perPage = null,
-    Object? total = null,
-    Object? isPolling = null,
-    Object? hasMorePages = null,
-  }) {
-    return _then(_value.copyWith(
-      notifications: null == notifications
-          ? _value.notifications
-          : notifications // ignore: cast_nullable_to_non_nullable
-              as List<NotificationDM>,
-      unreadCount: null == unreadCount
-          ? _value.unreadCount
-          : unreadCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastPage: null == lastPage
-          ? _value.lastPage
-          : lastPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      perPage: null == perPage
-          ? _value.perPage
-          : perPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as int,
-      isPolling: null == isPolling
-          ? _value.isPolling
-          : isPolling // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasMorePages: null == hasMorePages
-          ? _value.hasMorePages
-          : hasMorePages // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NotificationsVM &&
+            const DeepCollectionEquality()
+                .equals(other.notifications, notifications) &&
+            (identical(other.unreadCount, unreadCount) ||
+                other.unreadCount == unreadCount) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
+            (identical(other.perPage, perPage) || other.perPage == perPage) &&
+            (identical(other.total, total) || other.total == total) &&
+            (identical(other.isPolling, isPolling) ||
+                other.isPolling == isPolling) &&
+            (identical(other.hasMorePages, hasMorePages) ||
+                other.hasMorePages == hasMorePages));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(notifications),
+      unreadCount,
+      currentPage,
+      lastPage,
+      perPage,
+      total,
+      isPolling,
+      hasMorePages);
+
+  @override
+  String toString() {
+    return 'NotificationsVM(notifications: $notifications, unreadCount: $unreadCount, currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total, isPolling: $isPolling, hasMorePages: $hasMorePages)';
   }
 }
 
 /// @nodoc
-abstract class _$$NotificationsVMImplCopyWith<$Res>
-    implements $NotificationsVMCopyWith<$Res> {
-  factory _$$NotificationsVMImplCopyWith(_$NotificationsVMImpl value,
-          $Res Function(_$NotificationsVMImpl) then) =
-      __$$NotificationsVMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $NotificationsVMCopyWith<$Res> {
+  factory $NotificationsVMCopyWith(
+          NotificationsVM value, $Res Function(NotificationsVM) _then) =
+      _$NotificationsVMCopyWithImpl;
   @useResult
   $Res call(
       {List<NotificationDM> notifications,
@@ -130,12 +88,12 @@ abstract class _$$NotificationsVMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$NotificationsVMImplCopyWithImpl<$Res>
-    extends _$NotificationsVMCopyWithImpl<$Res, _$NotificationsVMImpl>
-    implements _$$NotificationsVMImplCopyWith<$Res> {
-  __$$NotificationsVMImplCopyWithImpl(
-      _$NotificationsVMImpl _value, $Res Function(_$NotificationsVMImpl) _then)
-      : super(_value, _then);
+class _$NotificationsVMCopyWithImpl<$Res>
+    implements $NotificationsVMCopyWith<$Res> {
+  _$NotificationsVMCopyWithImpl(this._self, this._then);
+
+  final NotificationsVM _self;
+  final $Res Function(NotificationsVM) _then;
 
   /// Create a copy of NotificationsVM
   /// with the given fields replaced by the non-null parameter values.
@@ -151,47 +109,255 @@ class __$$NotificationsVMImplCopyWithImpl<$Res>
     Object? isPolling = null,
     Object? hasMorePages = null,
   }) {
-    return _then(_$NotificationsVMImpl(
+    return _then(_self.copyWith(
       notifications: null == notifications
-          ? _value._notifications
+          ? _self.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
               as List<NotificationDM>,
       unreadCount: null == unreadCount
-          ? _value.unreadCount
+          ? _self.unreadCount
           : unreadCount // ignore: cast_nullable_to_non_nullable
               as int,
       currentPage: null == currentPage
-          ? _value.currentPage
+          ? _self.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
       lastPage: null == lastPage
-          ? _value.lastPage
+          ? _self.lastPage
           : lastPage // ignore: cast_nullable_to_non_nullable
               as int,
       perPage: null == perPage
-          ? _value.perPage
+          ? _self.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
               as int,
       total: null == total
-          ? _value.total
+          ? _self.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
       isPolling: null == isPolling
-          ? _value.isPolling
+          ? _self.isPolling
           : isPolling // ignore: cast_nullable_to_non_nullable
               as bool,
       hasMorePages: null == hasMorePages
-          ? _value.hasMorePages
+          ? _self.hasMorePages
           : hasMorePages // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [NotificationsVM].
+extension NotificationsVMPatterns on NotificationsVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_NotificationsVM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_NotificationsVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_NotificationsVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<NotificationDM> notifications,
+            int unreadCount,
+            int currentPage,
+            int lastPage,
+            int perPage,
+            int total,
+            bool isPolling,
+            bool hasMorePages)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM() when $default != null:
+        return $default(
+            _that.notifications,
+            _that.unreadCount,
+            _that.currentPage,
+            _that.lastPage,
+            _that.perPage,
+            _that.total,
+            _that.isPolling,
+            _that.hasMorePages);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<NotificationDM> notifications,
+            int unreadCount,
+            int currentPage,
+            int lastPage,
+            int perPage,
+            int total,
+            bool isPolling,
+            bool hasMorePages)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM():
+        return $default(
+            _that.notifications,
+            _that.unreadCount,
+            _that.currentPage,
+            _that.lastPage,
+            _that.perPage,
+            _that.total,
+            _that.isPolling,
+            _that.hasMorePages);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<NotificationDM> notifications,
+            int unreadCount,
+            int currentPage,
+            int lastPage,
+            int perPage,
+            int total,
+            bool isPolling,
+            bool hasMorePages)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NotificationsVM() when $default != null:
+        return $default(
+            _that.notifications,
+            _that.unreadCount,
+            _that.currentPage,
+            _that.lastPage,
+            _that.perPage,
+            _that.total,
+            _that.isPolling,
+            _that.hasMorePages);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$NotificationsVMImpl extends _NotificationsVM {
-  const _$NotificationsVMImpl(
+class _NotificationsVM extends NotificationsVM {
+  const _NotificationsVM(
       {final List<NotificationDM> notifications = const [],
       this.unreadCount = 0,
       this.currentPage = 1,
@@ -234,16 +400,19 @@ class _$NotificationsVMImpl extends _NotificationsVM {
   @JsonKey()
   final bool hasMorePages;
 
+  /// Create a copy of NotificationsVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'NotificationsVM(notifications: $notifications, unreadCount: $unreadCount, currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total, isPolling: $isPolling, hasMorePages: $hasMorePages)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NotificationsVMCopyWith<_NotificationsVM> get copyWith =>
+      __$NotificationsVMCopyWithImpl<_NotificationsVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotificationsVMImpl &&
+            other is _NotificationsVM &&
             const DeepCollectionEquality()
                 .equals(other._notifications, _notifications) &&
             (identical(other.unreadCount, unreadCount) ||
@@ -272,49 +441,88 @@ class _$NotificationsVMImpl extends _NotificationsVM {
       isPolling,
       hasMorePages);
 
+  @override
+  String toString() {
+    return 'NotificationsVM(notifications: $notifications, unreadCount: $unreadCount, currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total, isPolling: $isPolling, hasMorePages: $hasMorePages)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$NotificationsVMCopyWith<$Res>
+    implements $NotificationsVMCopyWith<$Res> {
+  factory _$NotificationsVMCopyWith(
+          _NotificationsVM value, $Res Function(_NotificationsVM) _then) =
+      __$NotificationsVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<NotificationDM> notifications,
+      int unreadCount,
+      int currentPage,
+      int lastPage,
+      int perPage,
+      int total,
+      bool isPolling,
+      bool hasMorePages});
+}
+
+/// @nodoc
+class __$NotificationsVMCopyWithImpl<$Res>
+    implements _$NotificationsVMCopyWith<$Res> {
+  __$NotificationsVMCopyWithImpl(this._self, this._then);
+
+  final _NotificationsVM _self;
+  final $Res Function(_NotificationsVM) _then;
+
   /// Create a copy of NotificationsVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$NotificationsVMImplCopyWith<_$NotificationsVMImpl> get copyWith =>
-      __$$NotificationsVMImplCopyWithImpl<_$NotificationsVMImpl>(
-          this, _$identity);
+  $Res call({
+    Object? notifications = null,
+    Object? unreadCount = null,
+    Object? currentPage = null,
+    Object? lastPage = null,
+    Object? perPage = null,
+    Object? total = null,
+    Object? isPolling = null,
+    Object? hasMorePages = null,
+  }) {
+    return _then(_NotificationsVM(
+      notifications: null == notifications
+          ? _self._notifications
+          : notifications // ignore: cast_nullable_to_non_nullable
+              as List<NotificationDM>,
+      unreadCount: null == unreadCount
+          ? _self.unreadCount
+          : unreadCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentPage: null == currentPage
+          ? _self.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _self.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      perPage: null == perPage
+          ? _self.perPage
+          : perPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      total: null == total
+          ? _self.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int,
+      isPolling: null == isPolling
+          ? _self.isPolling
+          : isPolling // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMorePages: null == hasMorePages
+          ? _self.hasMorePages
+          : hasMorePages // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
-abstract class _NotificationsVM extends NotificationsVM {
-  const factory _NotificationsVM(
-      {final List<NotificationDM> notifications,
-      final int unreadCount,
-      final int currentPage,
-      final int lastPage,
-      final int perPage,
-      final int total,
-      final bool isPolling,
-      final bool hasMorePages}) = _$NotificationsVMImpl;
-  const _NotificationsVM._() : super._();
-
-  @override
-  List<NotificationDM> get notifications;
-  @override
-  int get unreadCount;
-  @override
-  int get currentPage;
-  @override
-  int get lastPage;
-  @override
-  int get perPage;
-  @override
-  int get total;
-  @override
-  bool get isPolling;
-  @override
-  bool get hasMorePages;
-
-  /// Create a copy of NotificationsVM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NotificationsVMImplCopyWith<_$NotificationsVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

@@ -19,7 +19,7 @@ import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/visited_menu_category_builder_wdg.dart'
     show VisitedMenuItemWdg;
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 

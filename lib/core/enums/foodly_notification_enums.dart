@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show Icons, IconData;
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:json_annotation/json_annotation.dart' show JsonEnum, JsonValue;
 
 @JsonEnum()

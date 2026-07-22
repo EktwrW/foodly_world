@@ -15,7 +15,7 @@ part 'place_prediction_dm.g.dart';
 /// Útil para UIs que quieren renderizar el nombre en bold y la dirección
 /// en un peso menor.
 @freezed
-class PlacePredictionDM with _$PlacePredictionDM {
+abstract class PlacePredictionDM with _$PlacePredictionDM {
   const factory PlacePredictionDM({
     @JsonKey(name: 'place_id') required String placeId,
     required String description,
@@ -27,7 +27,7 @@ class PlacePredictionDM with _$PlacePredictionDM {
 }
 
 @freezed
-class PlaceStructuredFormattingDM with _$PlaceStructuredFormattingDM {
+abstract class PlaceStructuredFormattingDM with _$PlaceStructuredFormattingDM {
   const factory PlaceStructuredFormattingDM({
     @JsonKey(name: 'main_text') String? mainText,
     @JsonKey(name: 'secondary_text') String? secondaryText,

@@ -17,7 +17,7 @@ import 'package:foodly_world/ui/views/business/menu_import/cubit/menu_import_cub
 import 'package:foodly_world/ui/views/business/menu_import/widgets/menu_import_review_view.dart';
 import 'package:foodly_world/ui/views/business/menu_import/widgets/menu_import_success_dialog.dart';
 import 'package:go_router/go_router.dart' show GoRouterHelper;
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 /// Pantalla 1 del flow "Importar menú con IA" — el manager elige fotos
 /// del menú (cámara o galería), las ve como thumbnails reordenables, lee

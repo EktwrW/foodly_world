@@ -4,7 +4,7 @@ part 'buzz_item_dm.freezed.dart';
 part 'buzz_item_dm.g.dart';
 
 @freezed
-class BuzzResponseDM with _$BuzzResponseDM {
+abstract class BuzzResponseDM with _$BuzzResponseDM {
   const factory BuzzResponseDM({
     @Default([]) List<BuzzItemDM> data,
     BuzzMetaDM? meta,
@@ -14,7 +14,7 @@ class BuzzResponseDM with _$BuzzResponseDM {
 }
 
 @freezed
-class BuzzMetaDM with _$BuzzMetaDM {
+abstract class BuzzMetaDM with _$BuzzMetaDM {
   const factory BuzzMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -26,7 +26,7 @@ class BuzzMetaDM with _$BuzzMetaDM {
 }
 
 @freezed
-class BuzzItemDM with _$BuzzItemDM {
+abstract class BuzzItemDM with _$BuzzItemDM {
   const BuzzItemDM._();
 
   const factory BuzzItemDM({

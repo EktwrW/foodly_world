@@ -16,7 +16,7 @@ part 'place_address_component_dm.g.dart';
 /// address component sin tipo — no he visto nunca, pero el defensivo es
 /// barato y mata toda una clase de bugs).
 @freezed
-class PlaceAddressComponentDM with _$PlaceAddressComponentDM {
+abstract class PlaceAddressComponentDM with _$PlaceAddressComponentDM {
   const factory PlaceAddressComponentDM({
     @JsonKey(name: 'long_name') required String longName,
     @JsonKey(name: 'short_name') required String shortName,

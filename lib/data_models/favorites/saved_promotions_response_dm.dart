@@ -6,7 +6,7 @@ part 'saved_promotions_response_dm.freezed.dart';
 part 'saved_promotions_response_dm.g.dart';
 
 @freezed
-class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
+abstract class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
   const SavedPromoBusinessDM._();
 
   const factory SavedPromoBusinessDM({
@@ -35,7 +35,7 @@ class SavedPromoBusinessDM with _$SavedPromoBusinessDM {
 }
 
 @freezed
-class SavedPromotionsResponseDM with _$SavedPromotionsResponseDM {
+abstract class SavedPromotionsResponseDM with _$SavedPromotionsResponseDM {
   const factory SavedPromotionsResponseDM({
     @Default([]) List<NearbyPromotionDM> data,
     @Default([]) List<SavedPromoBusinessDM> businesses,
@@ -47,7 +47,7 @@ class SavedPromotionsResponseDM with _$SavedPromotionsResponseDM {
 }
 
 @freezed
-class SavedPromosMeta with _$SavedPromosMeta {
+abstract class SavedPromosMeta with _$SavedPromosMeta {
   const factory SavedPromosMeta({
     @Default(0) int total,
   }) = _SavedPromosMeta;

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'contact_state.freezed.dart';
 
 @freezed
-class ContactState with _$ContactState {
+sealed class ContactState with _$ContactState {
   const factory ContactState.idle(ContactVM vm) = _Idle;
   const factory ContactState.sending(ContactVM vm) = _Sending;
   const factory ContactState.sent(ContactVM vm) = _Sent;

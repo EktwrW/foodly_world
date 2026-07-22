@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,95 +9,43 @@ part of 'service_packages_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ServicePackagesState {
-  ServicePackagesVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  ServicePackagesVM get vm;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ServicePackagesStateCopyWith<ServicePackagesState> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ServicePackagesStateCopyWithImpl<ServicePackagesState>(
+          this as ServicePackagesState, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ServicePackagesState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString() {
+    return 'ServicePackagesState(vm: $vm)';
+  }
 }
 
 /// @nodoc
-abstract class $ServicePackagesStateCopyWith<$Res> {
+abstract mixin class $ServicePackagesStateCopyWith<$Res> {
   factory $ServicePackagesStateCopyWith(ServicePackagesState value,
-          $Res Function(ServicePackagesState) then) =
-      _$ServicePackagesStateCopyWithImpl<$Res, ServicePackagesState>;
+          $Res Function(ServicePackagesState) _then) =
+      _$ServicePackagesStateCopyWithImpl;
   @useResult
   $Res call({ServicePackagesVM vm});
 
@@ -105,15 +53,12 @@ abstract class $ServicePackagesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ServicePackagesStateCopyWithImpl<$Res,
-        $Val extends ServicePackagesState>
+class _$ServicePackagesStateCopyWithImpl<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  _$ServicePackagesStateCopyWithImpl(this._value, this._then);
+  _$ServicePackagesStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ServicePackagesState _self;
+  final $Res Function(ServicePackagesState) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
@@ -122,12 +67,12 @@ class _$ServicePackagesStateCopyWithImpl<$Res,
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       vm: null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ServicePackagesState
@@ -135,195 +80,311 @@ class _$ServicePackagesStateCopyWithImpl<$Res,
   @override
   @pragma('vm:prefer-inline')
   $ServicePackagesVMCopyWith<$Res> get vm {
-    return $ServicePackagesVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ServicePackagesVM vm});
+/// Adds pattern-matching-related methods to [ServicePackagesState].
+extension ServicePackagesStatePatterns on ServicePackagesState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ServicePackagesVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Saving value)? saving,
+    TResult Function(_Saved value)? saved,
+    TResult Function(_Deleted value)? deleted,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as ServicePackagesVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Saving() when saving != null:
+        return saving(_that);
+      case _Saved() when saved != null:
+        return saved(_that);
+      case _Deleted() when deleted != null:
+        return deleted(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Saving value) saving,
+    required TResult Function(_Saved value) saved,
+    required TResult Function(_Deleted value) deleted,
+    required TResult Function(_Error value) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _Loaded():
+        return loaded(_that);
+      case _Saving():
+        return saving(_that);
+      case _Saved():
+        return saved(_that);
+      case _Deleted():
+        return deleted(_that);
+      case _Error():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Saving value)? saving,
+    TResult? Function(_Saved value)? saved,
+    TResult? Function(_Deleted value)? deleted,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Saving() when saving != null:
+        return saving(_that);
+      case _Saved() when saved != null:
+        return saved(_that);
+      case _Deleted() when deleted != null:
+        return deleted(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ServicePackagesVM vm)? initial,
+    TResult Function(ServicePackagesVM vm)? loading,
+    TResult Function(ServicePackagesVM vm)? loaded,
+    TResult Function(ServicePackagesVM vm)? saving,
+    TResult Function(ServicePackagesVM vm, String message)? saved,
+    TResult Function(ServicePackagesVM vm, String message)? deleted,
+    TResult Function(ServicePackagesVM vm, String message)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Saving() when saving != null:
+        return saving(_that.vm);
+      case _Saved() when saved != null:
+        return saved(_that.vm, _that.message);
+      case _Deleted() when deleted != null:
+        return deleted(_that.vm, _that.message);
+      case _Error() when error != null:
+        return error(_that.vm, _that.message);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ServicePackagesVM vm) initial,
+    required TResult Function(ServicePackagesVM vm) loading,
+    required TResult Function(ServicePackagesVM vm) loaded,
+    required TResult Function(ServicePackagesVM vm) saving,
+    required TResult Function(ServicePackagesVM vm, String message) saved,
+    required TResult Function(ServicePackagesVM vm, String message) deleted,
+    required TResult Function(ServicePackagesVM vm, String message) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Loading():
+        return loading(_that.vm);
+      case _Loaded():
+        return loaded(_that.vm);
+      case _Saving():
+        return saving(_that.vm);
+      case _Saved():
+        return saved(_that.vm, _that.message);
+      case _Deleted():
+        return deleted(_that.vm, _that.message);
+      case _Error():
+        return error(_that.vm, _that.message);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ServicePackagesVM vm)? initial,
+    TResult? Function(ServicePackagesVM vm)? loading,
+    TResult? Function(ServicePackagesVM vm)? loaded,
+    TResult? Function(ServicePackagesVM vm)? saving,
+    TResult? Function(ServicePackagesVM vm, String message)? saved,
+    TResult? Function(ServicePackagesVM vm, String message)? deleted,
+    TResult? Function(ServicePackagesVM vm, String message)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Saving() when saving != null:
+        return saving(_that.vm);
+      case _Saved() when saved != null:
+        return saved(_that.vm, _that.message);
+      case _Deleted() when deleted != null:
+        return deleted(_that.vm, _that.message);
+      case _Error() when error != null:
+        return error(_that.vm, _that.message);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial implements ServicePackagesState {
+  const _Initial(this.vm);
 
   @override
   final ServicePackagesVM vm;
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Initial &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'ServicePackagesState.initial(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return initial(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements ServicePackagesState {
-  const factory _Initial(final ServicePackagesVM vm) = _$InitialImpl;
-
-  @override
-  ServicePackagesVM get vm;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -333,174 +394,76 @@ abstract class _$$LoadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadingImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl(this.vm);
+class _Loading implements ServicePackagesState {
+  const _Loading(this.vm);
 
   @override
   final ServicePackagesVM vm;
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Loading &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'ServicePackagesState.loading(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return loading(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return loading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements ServicePackagesState {
-  const factory _Loading(final ServicePackagesVM vm) = _$LoadingImpl;
-
-  @override
-  ServicePackagesVM get vm;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
+abstract mixin class _$LoadingCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -510,174 +473,76 @@ abstract class _$$LoadedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadedImpl(
+    return _then(_Loading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(this.vm);
+class _Loaded implements ServicePackagesState {
+  const _Loaded(this.vm);
 
   @override
   final ServicePackagesVM vm;
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Loaded &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'ServicePackagesState.loaded(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return loaded(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return loaded?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements ServicePackagesState {
-  const factory _Loaded(final ServicePackagesVM vm) = _$LoadedImpl;
-
-  @override
-  ServicePackagesVM get vm;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SavingImplCopyWith<$Res>
+abstract mixin class _$LoadedCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$SavingImplCopyWith(
-          _$SavingImpl value, $Res Function(_$SavingImpl) then) =
-      __$$SavingImplCopyWithImpl<$Res>;
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
+      __$LoadedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm});
@@ -687,361 +552,157 @@ abstract class _$$SavingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SavingImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$SavingImpl>
-    implements _$$SavingImplCopyWith<$Res> {
-  __$$SavingImplCopyWithImpl(
-      _$SavingImpl _value, $Res Function(_$SavingImpl) _then)
-      : super(_value, _then);
+class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$SavingImpl(
+    return _then(_Loaded(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SavingImpl implements _Saving {
-  const _$SavingImpl(this.vm);
+class _Saving implements ServicePackagesState {
+  const _Saving(this.vm);
 
   @override
   final ServicePackagesVM vm;
 
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ServicePackagesState.saving(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SavingCopyWith<_Saving> get copyWith =>
+      __$SavingCopyWithImpl<_Saving>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SavingImpl &&
+            other is _Saving &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SavingImplCopyWith<_$SavingImpl> get copyWith =>
-      __$$SavingImplCopyWithImpl<_$SavingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return saving(vm);
+  String toString() {
+    return 'ServicePackagesState.saving(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return saving?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (saving != null) {
-      return saving(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return saving(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return saving?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (saving != null) {
-      return saving(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Saving implements ServicePackagesState {
-  const factory _Saving(final ServicePackagesVM vm) = _$SavingImpl;
-
-  @override
-  ServicePackagesVM get vm;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SavingImplCopyWith<_$SavingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SavedImplCopyWith<$Res>
+abstract mixin class _$SavingCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$SavedImplCopyWith(
-          _$SavedImpl value, $Res Function(_$SavedImpl) then) =
-      __$$SavedImplCopyWithImpl<$Res>;
+  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) =
+      __$SavingCopyWithImpl;
   @override
   @useResult
-  $Res call({ServicePackagesVM vm, String message});
+  $Res call({ServicePackagesVM vm});
 
   @override
   $ServicePackagesVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$SavedImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$SavedImpl>
-    implements _$$SavedImplCopyWith<$Res> {
-  __$$SavedImplCopyWithImpl(
-      _$SavedImpl _value, $Res Function(_$SavedImpl) _then)
-      : super(_value, _then);
+class __$SavingCopyWithImpl<$Res> implements _$SavingCopyWith<$Res> {
+  __$SavingCopyWithImpl(this._self, this._then);
+
+  final _Saving _self;
+  final $Res Function(_Saving) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
-    Object? message = null,
   }) {
-    return _then(_$SavedImpl(
+    return _then(_Saving(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SavedImpl implements _Saved {
-  const _$SavedImpl(this.vm, this.message);
+class _Saved implements ServicePackagesState {
+  const _Saved(this.vm, this.message);
 
   @override
   final ServicePackagesVM vm;
-  @override
   final String message;
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SavedCopyWith<_Saved> get copyWith =>
+      __$SavedCopyWithImpl<_Saved>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Saved &&
+            (identical(other.vm, vm) || other.vm == vm) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm, message);
 
   @override
   String toString() {
     return 'ServicePackagesState.saved(vm: $vm, message: $message)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SavedImpl &&
-            (identical(other.vm, vm) || other.vm == vm) &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm, message);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SavedImplCopyWith<_$SavedImpl> get copyWith =>
-      __$$SavedImplCopyWithImpl<_$SavedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return saved(vm, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return saved?.call(vm, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(vm, message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return saved(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return saved?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (saved != null) {
-      return saved(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Saved implements ServicePackagesState {
-  const factory _Saved(final ServicePackagesVM vm, final String message) =
-      _$SavedImpl;
-
-  @override
-  ServicePackagesVM get vm;
-  String get message;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SavedImplCopyWith<_$SavedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeletedImplCopyWith<$Res>
+abstract mixin class _$SavedCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$DeletedImplCopyWith(
-          _$DeletedImpl value, $Res Function(_$DeletedImpl) then) =
-      __$$DeletedImplCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) =
+      __$SavedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm, String message});
@@ -1051,184 +712,83 @@ abstract class _$$DeletedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DeletedImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$DeletedImpl>
-    implements _$$DeletedImplCopyWith<$Res> {
-  __$$DeletedImplCopyWithImpl(
-      _$DeletedImpl _value, $Res Function(_$DeletedImpl) _then)
-      : super(_value, _then);
+class __$SavedCopyWithImpl<$Res> implements _$SavedCopyWith<$Res> {
+  __$SavedCopyWithImpl(this._self, this._then);
+
+  final _Saved _self;
+  final $Res Function(_Saved) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
     Object? message = null,
   }) {
-    return _then(_$DeletedImpl(
+    return _then(_Saved(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
       null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$DeletedImpl implements _Deleted {
-  const _$DeletedImpl(this.vm, this.message);
+class _Deleted implements ServicePackagesState {
+  const _Deleted(this.vm, this.message);
 
   @override
   final ServicePackagesVM vm;
-  @override
   final String message;
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DeletedCopyWith<_Deleted> get copyWith =>
+      __$DeletedCopyWithImpl<_Deleted>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Deleted &&
+            (identical(other.vm, vm) || other.vm == vm) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm, message);
 
   @override
   String toString() {
     return 'ServicePackagesState.deleted(vm: $vm, message: $message)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DeletedImpl &&
-            (identical(other.vm, vm) || other.vm == vm) &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm, message);
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      __$$DeletedImplCopyWithImpl<_$DeletedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
-  }) {
-    return deleted(vm, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return deleted?.call(vm, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted(vm, message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return deleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return deleted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Deleted implements ServicePackagesState {
-  const factory _Deleted(final ServicePackagesVM vm, final String message) =
-      _$DeletedImpl;
-
-  @override
-  ServicePackagesVM get vm;
-  String get message;
-
-  /// Create a copy of ServicePackagesState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeletedImplCopyWith<_$DeletedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$DeletedCopyWith<$Res>
     implements $ServicePackagesStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$DeletedCopyWith(_Deleted value, $Res Function(_Deleted) _then) =
+      __$DeletedCopyWithImpl;
   @override
   @useResult
   $Res call({ServicePackagesVM vm, String message});
@@ -1238,54 +798,65 @@ abstract class _$$ErrorImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ServicePackagesStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$DeletedCopyWithImpl<$Res> implements _$DeletedCopyWith<$Res> {
+  __$DeletedCopyWithImpl(this._self, this._then);
+
+  final _Deleted _self;
+  final $Res Function(_Deleted) _then;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
     Object? message = null,
   }) {
-    return _then(_$ErrorImpl(
+    return _then(_Deleted(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ServicePackagesVM,
       null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
     ));
+  }
+
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.vm, this.message);
+class _Error implements ServicePackagesState {
+  const _Error(this.vm, this.message);
 
   @override
   final ServicePackagesVM vm;
-  @override
   final String message;
 
+  /// Create a copy of ServicePackagesState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ServicePackagesState.error(vm: $vm, message: $message)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.vm, vm) || other.vm == vm) &&
             (identical(other.message, message) || other.message == message));
   }
@@ -1293,119 +864,61 @@ class _$ErrorImpl implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, vm, message);
 
+  @override
+  String toString() {
+    return 'ServicePackagesState.error(vm: $vm, message: $message)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $ServicePackagesStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
+  @override
+  @useResult
+  $Res call({ServicePackagesVM vm, String message});
+
+  @override
+  $ServicePackagesVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ServicePackagesVM vm) initial,
-    required TResult Function(ServicePackagesVM vm) loading,
-    required TResult Function(ServicePackagesVM vm) loaded,
-    required TResult Function(ServicePackagesVM vm) saving,
-    required TResult Function(ServicePackagesVM vm, String message) saved,
-    required TResult Function(ServicePackagesVM vm, String message) deleted,
-    required TResult Function(ServicePackagesVM vm, String message) error,
+  $Res call({
+    Object? vm = null,
+    Object? message = null,
   }) {
-    return error(vm, message);
+    return _then(_Error(
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as ServicePackagesVM,
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ServicePackagesVM vm)? initial,
-    TResult? Function(ServicePackagesVM vm)? loading,
-    TResult? Function(ServicePackagesVM vm)? loaded,
-    TResult? Function(ServicePackagesVM vm)? saving,
-    TResult? Function(ServicePackagesVM vm, String message)? saved,
-    TResult? Function(ServicePackagesVM vm, String message)? deleted,
-    TResult? Function(ServicePackagesVM vm, String message)? error,
-  }) {
-    return error?.call(vm, message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ServicePackagesVM vm)? initial,
-    TResult Function(ServicePackagesVM vm)? loading,
-    TResult Function(ServicePackagesVM vm)? loaded,
-    TResult Function(ServicePackagesVM vm)? saving,
-    TResult Function(ServicePackagesVM vm, String message)? saved,
-    TResult Function(ServicePackagesVM vm, String message)? deleted,
-    TResult Function(ServicePackagesVM vm, String message)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(vm, message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Saving value) saving,
-    required TResult Function(_Saved value) saved,
-    required TResult Function(_Deleted value) deleted,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Saving value)? saving,
-    TResult? Function(_Saved value)? saved,
-    TResult? Function(_Deleted value)? deleted,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Saving value)? saving,
-    TResult Function(_Saved value)? saved,
-    TResult Function(_Deleted value)? deleted,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements ServicePackagesState {
-  const factory _Error(final ServicePackagesVM vm, final String message) =
-      _$ErrorImpl;
-
-  @override
-  ServicePackagesVM get vm;
-  String get message;
 
   /// Create a copy of ServicePackagesState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $ServicePackagesVMCopyWith<$Res> get vm {
+    return $ServicePackagesVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
 }
+
+// dart format on

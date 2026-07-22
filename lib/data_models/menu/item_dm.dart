@@ -10,7 +10,7 @@ part 'item_dm.freezed.dart';
 part 'item_dm.g.dart';
 
 @freezed
-class ItemDM with _$ItemDM {
+abstract class ItemDM with _$ItemDM {
   const ItemDM._();
 
   const factory ItemDM({
@@ -76,7 +76,7 @@ class ItemDM with _$ItemDM {
 }
 
 @freezed
-class Prices with _$Prices {
+abstract class Prices with _$Prices {
   const factory Prices({
     @Default(0) double regular,
     @Default(0) double medium,

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart' as itr show IterableExtension;
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';

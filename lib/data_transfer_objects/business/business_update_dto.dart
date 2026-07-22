@@ -8,7 +8,7 @@ part 'business_update_dto.freezed.dart';
 part 'business_update_dto.g.dart';
 
 @freezed
-class BusinessUpdateDTO with _$BusinessUpdateDTO {
+abstract class BusinessUpdateDTO with _$BusinessUpdateDTO {
   const factory BusinessUpdateDTO({
     @JsonKey(name: 'business_name') String? businessName,
     @JsonKey(name: 'business_about_us') String? businessAboutUs,

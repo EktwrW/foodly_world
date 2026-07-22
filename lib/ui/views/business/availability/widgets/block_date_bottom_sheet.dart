@@ -3,7 +3,7 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, S;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 /// Result of the [BlockDateBottomSheet] — `null` means the user dismissed
 /// the sheet without confirming. `startTime` / `endTime` are `HH:MM:SS`

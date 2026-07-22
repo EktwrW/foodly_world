@@ -3,7 +3,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class BusinessEmailAndPhoneWdg extends StatelessWidget {
   final String email;

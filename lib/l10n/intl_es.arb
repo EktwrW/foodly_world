@@ -1276,5 +1276,41 @@
   "loadingAvailability": "Cargando disponibilidad…",
   "unavailableDaysHint": "Los días en gris no están disponibles.",
   "dateUnavailable": "Esa fecha acaba de bloquearse. Elige otra, por favor.",
-  "datePartiallyBlockedInfo": "Ese día tiene horarios parcialmente reservados. Puede que te pidamos ajustar la hora."
+  "datePartiallyBlockedInfo": "Ese día tiene horarios parcialmente reservados. Puede que te pidamos ajustar la hora.",
+  "groupOrderTitle": "Orden grupal",
+  "groupOrderParticipants": "Participantes",
+  "groupOrderItemsSection": "Ítems",
+  "groupOrderNoItems": "Aún no hay ítems",
+  "groupOrderTotal": "Total de la orden",
+  "groupOrderYourShare": "Tu parte",
+  "groupOrderPayMyShare": "Pagar mi parte · {amount}",
+  "@groupOrderPayMyShare": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderNoBalanceDue": "Sin saldo pendiente",
+  "groupOrderPaidProgress": "{paid} de {total} pagado",
+  "@groupOrderPaidProgress": {
+    "placeholders": {
+      "paid": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "groupOrderHostBadge": "Host",
+  "groupOrderPaymentSucceeded": "Pago realizado",
+  "groupOrderPaymentCanceled": "Pago cancelado",
+  "groupOrderPaymentFailed": "No se pudo completar el pago",
+  "groupOrderEntryCta": "Ordenar en grupo",
+  "groupOrderCreating": "Creando…",
+  "groupOrderViewOrder": "Ver la orden",
+  "groupOrderAddFromMenu": "Agrega platos del menú",
+  "groupOrderLockCta": "Cerrar la orden",
+  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

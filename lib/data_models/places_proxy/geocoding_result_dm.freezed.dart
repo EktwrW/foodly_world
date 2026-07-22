@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,42 +9,67 @@ part of 'geocoding_result_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-GeocodingResultDM _$GeocodingResultDMFromJson(Map<String, dynamic> json) {
-  return _GeocodingResultDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$GeocodingResultDM {
   @JsonKey(name: 'place_id')
-  String? get placeId => throw _privateConstructorUsedError;
+  String? get placeId;
   @JsonKey(name: 'formatted_address')
-  String? get formattedAddress => throw _privateConstructorUsedError;
+  String? get formattedAddress;
   @JsonKey(name: 'address_components')
-  List<PlaceAddressComponentDM> get addressComponents =>
-      throw _privateConstructorUsedError;
-  PlaceGeometryDM? get geometry => throw _privateConstructorUsedError;
-  List<String> get types => throw _privateConstructorUsedError;
-
-  /// Serializes this GeocodingResultDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<PlaceAddressComponentDM> get addressComponents;
+  PlaceGeometryDM? get geometry;
+  List<String> get types;
 
   /// Create a copy of GeocodingResultDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $GeocodingResultDMCopyWith<GeocodingResultDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$GeocodingResultDMCopyWithImpl<GeocodingResultDM>(
+          this as GeocodingResultDM, _$identity);
+
+  /// Serializes this GeocodingResultDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GeocodingResultDM &&
+            (identical(other.placeId, placeId) || other.placeId == placeId) &&
+            (identical(other.formattedAddress, formattedAddress) ||
+                other.formattedAddress == formattedAddress) &&
+            const DeepCollectionEquality()
+                .equals(other.addressComponents, addressComponents) &&
+            (identical(other.geometry, geometry) ||
+                other.geometry == geometry) &&
+            const DeepCollectionEquality().equals(other.types, types));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      placeId,
+      formattedAddress,
+      const DeepCollectionEquality().hash(addressComponents),
+      geometry,
+      const DeepCollectionEquality().hash(types));
+
+  @override
+  String toString() {
+    return 'GeocodingResultDM(placeId: $placeId, formattedAddress: $formattedAddress, addressComponents: $addressComponents, geometry: $geometry, types: $types)';
+  }
 }
 
 /// @nodoc
-abstract class $GeocodingResultDMCopyWith<$Res> {
+abstract mixin class $GeocodingResultDMCopyWith<$Res> {
   factory $GeocodingResultDMCopyWith(
-          GeocodingResultDM value, $Res Function(GeocodingResultDM) then) =
-      _$GeocodingResultDMCopyWithImpl<$Res, GeocodingResultDM>;
+          GeocodingResultDM value, $Res Function(GeocodingResultDM) _then) =
+      _$GeocodingResultDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'place_id') String? placeId,
@@ -58,14 +83,12 @@ abstract class $GeocodingResultDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GeocodingResultDMCopyWithImpl<$Res, $Val extends GeocodingResultDM>
+class _$GeocodingResultDMCopyWithImpl<$Res>
     implements $GeocodingResultDMCopyWith<$Res> {
-  _$GeocodingResultDMCopyWithImpl(this._value, this._then);
+  _$GeocodingResultDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final GeocodingResultDM _self;
+  final $Res Function(GeocodingResultDM) _then;
 
   /// Create a copy of GeocodingResultDM
   /// with the given fields replaced by the non-null parameter values.
@@ -78,28 +101,28 @@ class _$GeocodingResultDMCopyWithImpl<$Res, $Val extends GeocodingResultDM>
     Object? geometry = freezed,
     Object? types = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       placeId: freezed == placeId
-          ? _value.placeId
+          ? _self.placeId
           : placeId // ignore: cast_nullable_to_non_nullable
               as String?,
       formattedAddress: freezed == formattedAddress
-          ? _value.formattedAddress
+          ? _self.formattedAddress
           : formattedAddress // ignore: cast_nullable_to_non_nullable
               as String?,
       addressComponents: null == addressComponents
-          ? _value.addressComponents
+          ? _self.addressComponents
           : addressComponents // ignore: cast_nullable_to_non_nullable
               as List<PlaceAddressComponentDM>,
       geometry: freezed == geometry
-          ? _value.geometry
+          ? _self.geometry
           : geometry // ignore: cast_nullable_to_non_nullable
               as PlaceGeometryDM?,
       types: null == types
-          ? _value.types
+          ? _self.types
           : types // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of GeocodingResultDM
@@ -107,84 +130,201 @@ class _$GeocodingResultDMCopyWithImpl<$Res, $Val extends GeocodingResultDM>
   @override
   @pragma('vm:prefer-inline')
   $PlaceGeometryDMCopyWith<$Res>? get geometry {
-    if (_value.geometry == null) {
+    if (_self.geometry == null) {
       return null;
     }
 
-    return $PlaceGeometryDMCopyWith<$Res>(_value.geometry!, (value) {
-      return _then(_value.copyWith(geometry: value) as $Val);
+    return $PlaceGeometryDMCopyWith<$Res>(_self.geometry!, (value) {
+      return _then(_self.copyWith(geometry: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$GeocodingResultDMImplCopyWith<$Res>
-    implements $GeocodingResultDMCopyWith<$Res> {
-  factory _$$GeocodingResultDMImplCopyWith(_$GeocodingResultDMImpl value,
-          $Res Function(_$GeocodingResultDMImpl) then) =
-      __$$GeocodingResultDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'place_id') String? placeId,
-      @JsonKey(name: 'formatted_address') String? formattedAddress,
-      @JsonKey(name: 'address_components')
-      List<PlaceAddressComponentDM> addressComponents,
-      PlaceGeometryDM? geometry,
-      List<String> types});
+/// Adds pattern-matching-related methods to [GeocodingResultDM].
+extension GeocodingResultDMPatterns on GeocodingResultDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $PlaceGeometryDMCopyWith<$Res>? get geometry;
-}
-
-/// @nodoc
-class __$$GeocodingResultDMImplCopyWithImpl<$Res>
-    extends _$GeocodingResultDMCopyWithImpl<$Res, _$GeocodingResultDMImpl>
-    implements _$$GeocodingResultDMImplCopyWith<$Res> {
-  __$$GeocodingResultDMImplCopyWithImpl(_$GeocodingResultDMImpl _value,
-      $Res Function(_$GeocodingResultDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of GeocodingResultDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? placeId = freezed,
-    Object? formattedAddress = freezed,
-    Object? addressComponents = null,
-    Object? geometry = freezed,
-    Object? types = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GeocodingResultDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$GeocodingResultDMImpl(
-      placeId: freezed == placeId
-          ? _value.placeId
-          : placeId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      formattedAddress: freezed == formattedAddress
-          ? _value.formattedAddress
-          : formattedAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
-      addressComponents: null == addressComponents
-          ? _value._addressComponents
-          : addressComponents // ignore: cast_nullable_to_non_nullable
-              as List<PlaceAddressComponentDM>,
-      geometry: freezed == geometry
-          ? _value.geometry
-          : geometry // ignore: cast_nullable_to_non_nullable
-              as PlaceGeometryDM?,
-      types: null == types
-          ? _value._types
-          : types // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_GeocodingResultDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_GeocodingResultDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'place_id') String? placeId,
+            @JsonKey(name: 'formatted_address') String? formattedAddress,
+            @JsonKey(name: 'address_components')
+            List<PlaceAddressComponentDM> addressComponents,
+            PlaceGeometryDM? geometry,
+            List<String> types)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM() when $default != null:
+        return $default(_that.placeId, _that.formattedAddress,
+            _that.addressComponents, _that.geometry, _that.types);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'place_id') String? placeId,
+            @JsonKey(name: 'formatted_address') String? formattedAddress,
+            @JsonKey(name: 'address_components')
+            List<PlaceAddressComponentDM> addressComponents,
+            PlaceGeometryDM? geometry,
+            List<String> types)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM():
+        return $default(_that.placeId, _that.formattedAddress,
+            _that.addressComponents, _that.geometry, _that.types);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'place_id') String? placeId,
+            @JsonKey(name: 'formatted_address') String? formattedAddress,
+            @JsonKey(name: 'address_components')
+            List<PlaceAddressComponentDM> addressComponents,
+            PlaceGeometryDM? geometry,
+            List<String> types)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResultDM() when $default != null:
+        return $default(_that.placeId, _that.formattedAddress,
+            _that.addressComponents, _that.geometry, _that.types);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$GeocodingResultDMImpl implements _GeocodingResultDM {
-  const _$GeocodingResultDMImpl(
+class _GeocodingResultDM implements GeocodingResultDM {
+  const _GeocodingResultDM(
       {@JsonKey(name: 'place_id') this.placeId,
       @JsonKey(name: 'formatted_address') this.formattedAddress,
       @JsonKey(name: 'address_components')
@@ -194,9 +334,8 @@ class _$GeocodingResultDMImpl implements _GeocodingResultDM {
       final List<String> types = const <String>[]})
       : _addressComponents = addressComponents,
         _types = types;
-
-  factory _$GeocodingResultDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GeocodingResultDMImplFromJson(json);
+  factory _GeocodingResultDM.fromJson(Map<String, dynamic> json) =>
+      _$GeocodingResultDMFromJson(json);
 
   @override
   @JsonKey(name: 'place_id')
@@ -225,16 +364,26 @@ class _$GeocodingResultDMImpl implements _GeocodingResultDM {
     return EqualUnmodifiableListView(_types);
   }
 
+  /// Create a copy of GeocodingResultDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'GeocodingResultDM(placeId: $placeId, formattedAddress: $formattedAddress, addressComponents: $addressComponents, geometry: $geometry, types: $types)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$GeocodingResultDMCopyWith<_GeocodingResultDM> get copyWith =>
+      __$GeocodingResultDMCopyWithImpl<_GeocodingResultDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$GeocodingResultDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GeocodingResultDMImpl &&
+            other is _GeocodingResultDM &&
             (identical(other.placeId, placeId) || other.placeId == placeId) &&
             (identical(other.formattedAddress, formattedAddress) ||
                 other.formattedAddress == formattedAddress) &&
@@ -255,53 +404,88 @@ class _$GeocodingResultDMImpl implements _GeocodingResultDM {
       geometry,
       const DeepCollectionEquality().hash(_types));
 
-  /// Create a copy of GeocodingResultDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$GeocodingResultDMImplCopyWith<_$GeocodingResultDMImpl> get copyWith =>
-      __$$GeocodingResultDMImplCopyWithImpl<_$GeocodingResultDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GeocodingResultDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'GeocodingResultDM(placeId: $placeId, formattedAddress: $formattedAddress, addressComponents: $addressComponents, geometry: $geometry, types: $types)';
   }
 }
 
-abstract class _GeocodingResultDM implements GeocodingResultDM {
-  const factory _GeocodingResultDM(
-      {@JsonKey(name: 'place_id') final String? placeId,
-      @JsonKey(name: 'formatted_address') final String? formattedAddress,
+/// @nodoc
+abstract mixin class _$GeocodingResultDMCopyWith<$Res>
+    implements $GeocodingResultDMCopyWith<$Res> {
+  factory _$GeocodingResultDMCopyWith(
+          _GeocodingResultDM value, $Res Function(_GeocodingResultDM) _then) =
+      __$GeocodingResultDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'place_id') String? placeId,
+      @JsonKey(name: 'formatted_address') String? formattedAddress,
       @JsonKey(name: 'address_components')
-      final List<PlaceAddressComponentDM> addressComponents,
-      final PlaceGeometryDM? geometry,
-      final List<String> types}) = _$GeocodingResultDMImpl;
-
-  factory _GeocodingResultDM.fromJson(Map<String, dynamic> json) =
-      _$GeocodingResultDMImpl.fromJson;
+      List<PlaceAddressComponentDM> addressComponents,
+      PlaceGeometryDM? geometry,
+      List<String> types});
 
   @override
-  @JsonKey(name: 'place_id')
-  String? get placeId;
-  @override
-  @JsonKey(name: 'formatted_address')
-  String? get formattedAddress;
-  @override
-  @JsonKey(name: 'address_components')
-  List<PlaceAddressComponentDM> get addressComponents;
-  @override
-  PlaceGeometryDM? get geometry;
-  @override
-  List<String> get types;
+  $PlaceGeometryDMCopyWith<$Res>? get geometry;
+}
+
+/// @nodoc
+class __$GeocodingResultDMCopyWithImpl<$Res>
+    implements _$GeocodingResultDMCopyWith<$Res> {
+  __$GeocodingResultDMCopyWithImpl(this._self, this._then);
+
+  final _GeocodingResultDM _self;
+  final $Res Function(_GeocodingResultDM) _then;
 
   /// Create a copy of GeocodingResultDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GeocodingResultDMImplCopyWith<_$GeocodingResultDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? placeId = freezed,
+    Object? formattedAddress = freezed,
+    Object? addressComponents = null,
+    Object? geometry = freezed,
+    Object? types = null,
+  }) {
+    return _then(_GeocodingResultDM(
+      placeId: freezed == placeId
+          ? _self.placeId
+          : placeId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      formattedAddress: freezed == formattedAddress
+          ? _self.formattedAddress
+          : formattedAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      addressComponents: null == addressComponents
+          ? _self._addressComponents
+          : addressComponents // ignore: cast_nullable_to_non_nullable
+              as List<PlaceAddressComponentDM>,
+      geometry: freezed == geometry
+          ? _self.geometry
+          : geometry // ignore: cast_nullable_to_non_nullable
+              as PlaceGeometryDM?,
+      types: null == types
+          ? _self._types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+
+  /// Create a copy of GeocodingResultDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PlaceGeometryDMCopyWith<$Res>? get geometry {
+    if (_self.geometry == null) {
+      return null;
+    }
+
+    return $PlaceGeometryDMCopyWith<$Res>(_self.geometry!, (value) {
+      return _then(_self.copyWith(geometry: value));
+    });
+  }
 }
+
+// dart format on

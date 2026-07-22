@@ -4,7 +4,7 @@ part 'username_dm.g.dart';
 part 'username_dm.freezed.dart';
 
 @freezed
-class UsernameDM with _$UsernameDM {
+abstract class UsernameDM with _$UsernameDM {
   const UsernameDM._();
 
   const factory UsernameDM({

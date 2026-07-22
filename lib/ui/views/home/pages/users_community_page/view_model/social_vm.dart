@@ -5,7 +5,7 @@ import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 
 part 'social_vm.freezed.dart';
 
@@ -74,7 +74,7 @@ enum UserSortMode {
 }
 
 @freezed
-class SocialVM with _$SocialVM {
+abstract class SocialVM with _$SocialVM {
   const SocialVM._();
 
   const factory SocialVM({

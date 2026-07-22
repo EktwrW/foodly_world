@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,67 +9,60 @@ part of 'business_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-BusinessDM _$BusinessDMFromJson(Map<String, dynamic> json) {
-  return _BusinessDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$BusinessDM {
   @JsonKey(name: 'id')
-  int? get intId => throw _privateConstructorUsedError;
+  int? get intId;
   @JsonKey(name: 'business_logo')
-  String get logo => throw _privateConstructorUsedError;
+  String get logo;
   @JsonKey(name: 'cover_images')
-  List<BusinessCoverImageDM> get coverImages =>
-      throw _privateConstructorUsedError;
+  List<BusinessCoverImageDM> get coverImages;
   @JsonKey(name: 'branches')
-  List<BusinessDM> get branches => throw _privateConstructorUsedError;
+  List<BusinessDM> get branches;
   @JsonKey(name: 'business_uuid')
-  String get uuid => throw _privateConstructorUsedError;
+  String get uuid;
   @JsonKey(name: 'business_name')
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @JsonKey(name: 'business_about_us')
-  String? get aboutUs => throw _privateConstructorUsedError;
+  String? get aboutUs;
   @JsonKey(name: 'business_services')
-  List<BusinessServicesDM>? get services => throw _privateConstructorUsedError;
+  List<BusinessServicesDM>? get services;
   @JsonKey(name: 'business_promotions')
-  List<PromotionDM>? get promotions => throw _privateConstructorUsedError;
+  List<PromotionDM>? get promotions;
   @JsonKey(name: 'business_additional_info')
-  String? get additionalInfo => throw _privateConstructorUsedError;
+  String? get additionalInfo;
   @JsonKey(name: 'business_email')
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
   @JsonKey(name: 'business_phone')
-  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get phoneNumber;
   @JsonKey(name: 'business_address')
-  String? get address => throw _privateConstructorUsedError;
+  String? get address;
   @JsonKey(name: 'business_zipcode')
-  String? get zipCode => throw _privateConstructorUsedError;
+  String? get zipCode;
   @JsonKey(name: 'business_city')
-  String? get city => throw _privateConstructorUsedError;
+  String? get city;
   @JsonKey(name: 'business_country')
-  FoodlyCountries? get country => throw _privateConstructorUsedError;
+  FoodlyCountries? get country;
   @JsonKey(name: 'business_menus')
-  List<MenuDM> get menus => throw _privateConstructorUsedError;
+  List<MenuDM> get menus;
   @JsonKey(name: 'business_latitude')
-  double? get latitude => throw _privateConstructorUsedError;
+  double? get latitude;
   @JsonKey(name: 'business_longitude')
-  double? get longitude => throw _privateConstructorUsedError;
+  double? get longitude;
   @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-  FoodlyCategories? get categoryId => throw _privateConstructorUsedError;
+  FoodlyCategories? get categoryId;
   @JsonKey(name: 'category')
-  CategoryDM? get category => throw _privateConstructorUsedError;
+  CategoryDM? get category;
   @JsonKey(name: 'rating_avg')
-  double? get rating => throw _privateConstructorUsedError;
+  double? get rating;
   @JsonKey(name: 'ratings_count')
-  int? get ratingsCount => throw _privateConstructorUsedError;
+  int? get ratingsCount;
   @JsonKey(name: 'business_opening_hours')
-  BusinessDays get businessDays =>
-      throw _privateConstructorUsedError; // Server-computed open/closed status using the BUSINESS's local
+  BusinessDays
+      get businessDays; // Server-computed open/closed status using the BUSINESS's local
 // timezone (derived from `business_country` in `BusinessStatusHelper`
 // on the BE). The FE no longer computes this — see [currentStatus]
 // getter below for the parsed enum, and `BusinessStatusHelper.php` for
@@ -78,56 +71,165 @@ mixin _$BusinessDM {
 // Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
 // from controllers that haven't been updated yet (defensive).
   @JsonKey(name: 'status')
-  String? get status =>
-      throw _privateConstructorUsedError; // Human-readable hours for TODAY in the business's local time, e.g.
+  String?
+      get status; // Human-readable hours for TODAY in the business's local time, e.g.
 // "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
 // Server-side string ready to render. Null when no hours configured
 // for today.
   @JsonKey(name: 'hours_display')
-  String? get hoursDisplay => throw _privateConstructorUsedError;
+  String? get hoursDisplay;
   @JsonKey(name: 'followers_length')
-  int get followersLength => throw _privateConstructorUsedError;
+  int get followersLength;
   @JsonKey(name: 'intro_message')
-  String? get introMessage => throw _privateConstructorUsedError;
+  String? get introMessage;
   @JsonKey(name: 'allow_reservations')
-  bool get allowReservations => throw _privateConstructorUsedError;
+  bool get allowReservations;
   @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit =>
-      throw _privateConstructorUsedError; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
+  int get reservationsSizeLimit; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
 // show their menu; catering shows it only when the manager enables it.
   @JsonKey(name: 'menu_enabled')
-  bool get menuEnabled => throw _privateConstructorUsedError;
+  bool get menuEnabled;
   @JsonKey(name: 'combos_label')
-  String? get combosLabel => throw _privateConstructorUsedError;
+  String? get combosLabel;
   @JsonKey(name: 'ai_promo_monthly_limit')
-  int get aiPromoMonthlyLimit => throw _privateConstructorUsedError;
+  int get aiPromoMonthlyLimit;
   @JsonKey(name: 'ai_promos_used_this_month')
-  int get aiPromosUsedThisMonth =>
-      throw _privateConstructorUsedError; // Catering & Chefs vertical — MIN price across ACTIVE service_packages
+  int get aiPromosUsedThisMonth; // Catering & Chefs vertical — MIN price across ACTIVE service_packages
 // for this business (EUR). Only populated by endpoints that join the
 // subselect (currently: GET /business/nearby). Null when the business has
 // no priced active package (restaurants without packages, or catering
 // providers that only offer on-quote packages).
   @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-  double? get minServicePrice =>
-      throw _privateConstructorUsedError; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
-  List<ReviewDM> get reviews => throw _privateConstructorUsedError;
-
-  /// Serializes this BusinessDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  double?
+      get minServicePrice; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
+  List<ReviewDM> get reviews;
 
   /// Create a copy of BusinessDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $BusinessDMCopyWith<BusinessDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$BusinessDMCopyWithImpl<BusinessDM>(this as BusinessDM, _$identity);
+
+  /// Serializes this BusinessDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessDM &&
+            (identical(other.intId, intId) || other.intId == intId) &&
+            (identical(other.logo, logo) || other.logo == logo) &&
+            const DeepCollectionEquality()
+                .equals(other.coverImages, coverImages) &&
+            const DeepCollectionEquality().equals(other.branches, branches) &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.aboutUs, aboutUs) || other.aboutUs == aboutUs) &&
+            const DeepCollectionEquality().equals(other.services, services) &&
+            const DeepCollectionEquality()
+                .equals(other.promotions, promotions) &&
+            (identical(other.additionalInfo, additionalInfo) ||
+                other.additionalInfo == additionalInfo) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.zipCode, zipCode) || other.zipCode == zipCode) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            const DeepCollectionEquality().equals(other.menus, menus) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.ratingsCount, ratingsCount) ||
+                other.ratingsCount == ratingsCount) &&
+            (identical(other.businessDays, businessDays) ||
+                other.businessDays == businessDays) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.hoursDisplay, hoursDisplay) ||
+                other.hoursDisplay == hoursDisplay) &&
+            (identical(other.followersLength, followersLength) ||
+                other.followersLength == followersLength) &&
+            (identical(other.introMessage, introMessage) ||
+                other.introMessage == introMessage) &&
+            (identical(other.allowReservations, allowReservations) ||
+                other.allowReservations == allowReservations) &&
+            (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
+                other.reservationsSizeLimit == reservationsSizeLimit) &&
+            (identical(other.menuEnabled, menuEnabled) ||
+                other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) ||
+                other.combosLabel == combosLabel) &&
+            (identical(other.aiPromoMonthlyLimit, aiPromoMonthlyLimit) ||
+                other.aiPromoMonthlyLimit == aiPromoMonthlyLimit) &&
+            (identical(other.aiPromosUsedThisMonth, aiPromosUsedThisMonth) ||
+                other.aiPromosUsedThisMonth == aiPromosUsedThisMonth) &&
+            (identical(other.minServicePrice, minServicePrice) ||
+                other.minServicePrice == minServicePrice) &&
+            const DeepCollectionEquality().equals(other.reviews, reviews));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        intId,
+        logo,
+        const DeepCollectionEquality().hash(coverImages),
+        const DeepCollectionEquality().hash(branches),
+        uuid,
+        name,
+        aboutUs,
+        const DeepCollectionEquality().hash(services),
+        const DeepCollectionEquality().hash(promotions),
+        additionalInfo,
+        email,
+        phoneNumber,
+        address,
+        zipCode,
+        city,
+        country,
+        const DeepCollectionEquality().hash(menus),
+        latitude,
+        longitude,
+        categoryId,
+        category,
+        rating,
+        ratingsCount,
+        businessDays,
+        status,
+        hoursDisplay,
+        followersLength,
+        introMessage,
+        allowReservations,
+        reservationsSizeLimit,
+        menuEnabled,
+        combosLabel,
+        aiPromoMonthlyLimit,
+        aiPromosUsedThisMonth,
+        minServicePrice,
+        const DeepCollectionEquality().hash(reviews)
+      ]);
+
+  @override
+  String toString() {
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+  }
 }
 
 /// @nodoc
-abstract class $BusinessDMCopyWith<$Res> {
+abstract mixin class $BusinessDMCopyWith<$Res> {
   factory $BusinessDMCopyWith(
-          BusinessDM value, $Res Function(BusinessDM) then) =
-      _$BusinessDMCopyWithImpl<$Res, BusinessDM>;
+          BusinessDM value, $Res Function(BusinessDM) _then) =
+      _$BusinessDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int? intId,
@@ -174,14 +276,11 @@ abstract class $BusinessDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
-    implements $BusinessDMCopyWith<$Res> {
-  _$BusinessDMCopyWithImpl(this._value, this._then);
+class _$BusinessDMCopyWithImpl<$Res> implements $BusinessDMCopyWith<$Res> {
+  _$BusinessDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BusinessDM _self;
+  final $Res Function(BusinessDM) _then;
 
   /// Create a copy of BusinessDM
   /// with the given fields replaced by the non-null parameter values.
@@ -225,152 +324,152 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
     Object? minServicePrice = freezed,
     Object? reviews = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       intId: freezed == intId
-          ? _value.intId
+          ? _self.intId
           : intId // ignore: cast_nullable_to_non_nullable
               as int?,
       logo: null == logo
-          ? _value.logo
+          ? _self.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String,
       coverImages: null == coverImages
-          ? _value.coverImages
+          ? _self.coverImages
           : coverImages // ignore: cast_nullable_to_non_nullable
               as List<BusinessCoverImageDM>,
       branches: null == branches
-          ? _value.branches
+          ? _self.branches
           : branches // ignore: cast_nullable_to_non_nullable
               as List<BusinessDM>,
       uuid: null == uuid
-          ? _value.uuid
+          ? _self.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
       name: freezed == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
       aboutUs: freezed == aboutUs
-          ? _value.aboutUs
+          ? _self.aboutUs
           : aboutUs // ignore: cast_nullable_to_non_nullable
               as String?,
       services: freezed == services
-          ? _value.services
+          ? _self.services
           : services // ignore: cast_nullable_to_non_nullable
               as List<BusinessServicesDM>?,
       promotions: freezed == promotions
-          ? _value.promotions
+          ? _self.promotions
           : promotions // ignore: cast_nullable_to_non_nullable
               as List<PromotionDM>?,
       additionalInfo: freezed == additionalInfo
-          ? _value.additionalInfo
+          ? _self.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
               as String?,
       email: freezed == email
-          ? _value.email
+          ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
+          ? _self.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
       address: freezed == address
-          ? _value.address
+          ? _self.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
       zipCode: freezed == zipCode
-          ? _value.zipCode
+          ? _self.zipCode
           : zipCode // ignore: cast_nullable_to_non_nullable
               as String?,
       city: freezed == city
-          ? _value.city
+          ? _self.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
       country: freezed == country
-          ? _value.country
+          ? _self.country
           : country // ignore: cast_nullable_to_non_nullable
               as FoodlyCountries?,
       menus: null == menus
-          ? _value.menus
+          ? _self.menus
           : menus // ignore: cast_nullable_to_non_nullable
               as List<MenuDM>,
       latitude: freezed == latitude
-          ? _value.latitude
+          ? _self.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double?,
       longitude: freezed == longitude
-          ? _value.longitude
+          ? _self.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
       categoryId: freezed == categoryId
-          ? _value.categoryId
+          ? _self.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as FoodlyCategories?,
       category: freezed == category
-          ? _value.category
+          ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryDM?,
       rating: freezed == rating
-          ? _value.rating
+          ? _self.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double?,
       ratingsCount: freezed == ratingsCount
-          ? _value.ratingsCount
+          ? _self.ratingsCount
           : ratingsCount // ignore: cast_nullable_to_non_nullable
               as int?,
       businessDays: null == businessDays
-          ? _value.businessDays
+          ? _self.businessDays
           : businessDays // ignore: cast_nullable_to_non_nullable
               as BusinessDays,
       status: freezed == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
       hoursDisplay: freezed == hoursDisplay
-          ? _value.hoursDisplay
+          ? _self.hoursDisplay
           : hoursDisplay // ignore: cast_nullable_to_non_nullable
               as String?,
       followersLength: null == followersLength
-          ? _value.followersLength
+          ? _self.followersLength
           : followersLength // ignore: cast_nullable_to_non_nullable
               as int,
       introMessage: freezed == introMessage
-          ? _value.introMessage
+          ? _self.introMessage
           : introMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       allowReservations: null == allowReservations
-          ? _value.allowReservations
+          ? _self.allowReservations
           : allowReservations // ignore: cast_nullable_to_non_nullable
               as bool,
       reservationsSizeLimit: null == reservationsSizeLimit
-          ? _value.reservationsSizeLimit
+          ? _self.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
               as int,
       menuEnabled: null == menuEnabled
-          ? _value.menuEnabled
+          ? _self.menuEnabled
           : menuEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       combosLabel: freezed == combosLabel
-          ? _value.combosLabel
+          ? _self.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
               as String?,
       aiPromoMonthlyLimit: null == aiPromoMonthlyLimit
-          ? _value.aiPromoMonthlyLimit
+          ? _self.aiPromoMonthlyLimit
           : aiPromoMonthlyLimit // ignore: cast_nullable_to_non_nullable
               as int,
       aiPromosUsedThisMonth: null == aiPromosUsedThisMonth
-          ? _value.aiPromosUsedThisMonth
+          ? _self.aiPromosUsedThisMonth
           : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
               as int,
       minServicePrice: freezed == minServicePrice
-          ? _value.minServicePrice
+          ? _self.minServicePrice
           : minServicePrice // ignore: cast_nullable_to_non_nullable
               as double?,
       reviews: null == reviews
-          ? _value.reviews
+          ? _self.reviews
           : reviews // ignore: cast_nullable_to_non_nullable
               as List<ReviewDM>,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of BusinessDM
@@ -378,12 +477,12 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
   @override
   @pragma('vm:prefer-inline')
   $CategoryDMCopyWith<$Res>? get category {
-    if (_value.category == null) {
+    if (_self.category == null) {
       return null;
     }
 
-    return $CategoryDMCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
+    return $CategoryDMCopyWith<$Res>(_self.category!, (value) {
+      return _then(_self.copyWith(category: value));
     });
   }
 
@@ -392,269 +491,407 @@ class _$BusinessDMCopyWithImpl<$Res, $Val extends BusinessDM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessDaysCopyWith<$Res> get businessDays {
-    return $BusinessDaysCopyWith<$Res>(_value.businessDays, (value) {
-      return _then(_value.copyWith(businessDays: value) as $Val);
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays, (value) {
+      return _then(_self.copyWith(businessDays: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$BusinessDMImplCopyWith<$Res>
-    implements $BusinessDMCopyWith<$Res> {
-  factory _$$BusinessDMImplCopyWith(
-          _$BusinessDMImpl value, $Res Function(_$BusinessDMImpl) then) =
-      __$$BusinessDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'id') int? intId,
-      @JsonKey(name: 'business_logo') String logo,
-      @JsonKey(name: 'cover_images') List<BusinessCoverImageDM> coverImages,
-      @JsonKey(name: 'branches') List<BusinessDM> branches,
-      @JsonKey(name: 'business_uuid') String uuid,
-      @JsonKey(name: 'business_name') String? name,
-      @JsonKey(name: 'business_about_us') String? aboutUs,
-      @JsonKey(name: 'business_services') List<BusinessServicesDM>? services,
-      @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
-      @JsonKey(name: 'business_additional_info') String? additionalInfo,
-      @JsonKey(name: 'business_email') String? email,
-      @JsonKey(name: 'business_phone') String? phoneNumber,
-      @JsonKey(name: 'business_address') String? address,
-      @JsonKey(name: 'business_zipcode') String? zipCode,
-      @JsonKey(name: 'business_city') String? city,
-      @JsonKey(name: 'business_country') FoodlyCountries? country,
-      @JsonKey(name: 'business_menus') List<MenuDM> menus,
-      @JsonKey(name: 'business_latitude') double? latitude,
-      @JsonKey(name: 'business_longitude') double? longitude,
-      @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? categoryId,
-      @JsonKey(name: 'category') CategoryDM? category,
-      @JsonKey(name: 'rating_avg') double? rating,
-      @JsonKey(name: 'ratings_count') int? ratingsCount,
-      @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
-      @JsonKey(name: 'status') String? status,
-      @JsonKey(name: 'hours_display') String? hoursDisplay,
-      @JsonKey(name: 'followers_length') int followersLength,
-      @JsonKey(name: 'intro_message') String? introMessage,
-      @JsonKey(name: 'allow_reservations') bool allowReservations,
-      @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
-      @JsonKey(name: 'menu_enabled') bool menuEnabled,
-      @JsonKey(name: 'combos_label') String? combosLabel,
-      @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
-      @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
-      @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-      double? minServicePrice,
-      List<ReviewDM> reviews});
+/// Adds pattern-matching-related methods to [BusinessDM].
+extension BusinessDMPatterns on BusinessDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $CategoryDMCopyWith<$Res>? get category;
-  @override
-  $BusinessDaysCopyWith<$Res> get businessDays;
-}
-
-/// @nodoc
-class __$$BusinessDMImplCopyWithImpl<$Res>
-    extends _$BusinessDMCopyWithImpl<$Res, _$BusinessDMImpl>
-    implements _$$BusinessDMImplCopyWith<$Res> {
-  __$$BusinessDMImplCopyWithImpl(
-      _$BusinessDMImpl _value, $Res Function(_$BusinessDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? intId = freezed,
-    Object? logo = null,
-    Object? coverImages = null,
-    Object? branches = null,
-    Object? uuid = null,
-    Object? name = freezed,
-    Object? aboutUs = freezed,
-    Object? services = freezed,
-    Object? promotions = freezed,
-    Object? additionalInfo = freezed,
-    Object? email = freezed,
-    Object? phoneNumber = freezed,
-    Object? address = freezed,
-    Object? zipCode = freezed,
-    Object? city = freezed,
-    Object? country = freezed,
-    Object? menus = null,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? categoryId = freezed,
-    Object? category = freezed,
-    Object? rating = freezed,
-    Object? ratingsCount = freezed,
-    Object? businessDays = null,
-    Object? status = freezed,
-    Object? hoursDisplay = freezed,
-    Object? followersLength = null,
-    Object? introMessage = freezed,
-    Object? allowReservations = null,
-    Object? reservationsSizeLimit = null,
-    Object? menuEnabled = null,
-    Object? combosLabel = freezed,
-    Object? aiPromoMonthlyLimit = null,
-    Object? aiPromosUsedThisMonth = null,
-    Object? minServicePrice = freezed,
-    Object? reviews = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BusinessDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$BusinessDMImpl(
-      intId: freezed == intId
-          ? _value.intId
-          : intId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      logo: null == logo
-          ? _value.logo
-          : logo // ignore: cast_nullable_to_non_nullable
-              as String,
-      coverImages: null == coverImages
-          ? _value._coverImages
-          : coverImages // ignore: cast_nullable_to_non_nullable
-              as List<BusinessCoverImageDM>,
-      branches: null == branches
-          ? _value._branches
-          : branches // ignore: cast_nullable_to_non_nullable
-              as List<BusinessDM>,
-      uuid: null == uuid
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      aboutUs: freezed == aboutUs
-          ? _value.aboutUs
-          : aboutUs // ignore: cast_nullable_to_non_nullable
-              as String?,
-      services: freezed == services
-          ? _value._services
-          : services // ignore: cast_nullable_to_non_nullable
-              as List<BusinessServicesDM>?,
-      promotions: freezed == promotions
-          ? _value._promotions
-          : promotions // ignore: cast_nullable_to_non_nullable
-              as List<PromotionDM>?,
-      additionalInfo: freezed == additionalInfo
-          ? _value.additionalInfo
-          : additionalInfo // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zipCode: freezed == zipCode
-          ? _value.zipCode
-          : zipCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as FoodlyCountries?,
-      menus: null == menus
-          ? _value._menus
-          : menus // ignore: cast_nullable_to_non_nullable
-              as List<MenuDM>,
-      latitude: freezed == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories?,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryDM?,
-      rating: freezed == rating
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
-      ratingsCount: freezed == ratingsCount
-          ? _value.ratingsCount
-          : ratingsCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      businessDays: null == businessDays
-          ? _value.businessDays
-          : businessDays // ignore: cast_nullable_to_non_nullable
-              as BusinessDays,
-      status: freezed == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hoursDisplay: freezed == hoursDisplay
-          ? _value.hoursDisplay
-          : hoursDisplay // ignore: cast_nullable_to_non_nullable
-              as String?,
-      followersLength: null == followersLength
-          ? _value.followersLength
-          : followersLength // ignore: cast_nullable_to_non_nullable
-              as int,
-      introMessage: freezed == introMessage
-          ? _value.introMessage
-          : introMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      allowReservations: null == allowReservations
-          ? _value.allowReservations
-          : allowReservations // ignore: cast_nullable_to_non_nullable
-              as bool,
-      reservationsSizeLimit: null == reservationsSizeLimit
-          ? _value.reservationsSizeLimit
-          : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
-              as int,
-      menuEnabled: null == menuEnabled
-          ? _value.menuEnabled
-          : menuEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      combosLabel: freezed == combosLabel
-          ? _value.combosLabel
-          : combosLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      aiPromoMonthlyLimit: null == aiPromoMonthlyLimit
-          ? _value.aiPromoMonthlyLimit
-          : aiPromoMonthlyLimit // ignore: cast_nullable_to_non_nullable
-              as int,
-      aiPromosUsedThisMonth: null == aiPromosUsedThisMonth
-          ? _value.aiPromosUsedThisMonth
-          : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
-              as int,
-      minServicePrice: freezed == minServicePrice
-          ? _value.minServicePrice
-          : minServicePrice // ignore: cast_nullable_to_non_nullable
-              as double?,
-      reviews: null == reviews
-          ? _value._reviews
-          : reviews // ignore: cast_nullable_to_non_nullable
-              as List<ReviewDM>,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BusinessDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BusinessDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'id') int? intId,
+            @JsonKey(name: 'business_logo') String logo,
+            @JsonKey(name: 'cover_images')
+            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'branches') List<BusinessDM> branches,
+            @JsonKey(name: 'business_uuid') String uuid,
+            @JsonKey(name: 'business_name') String? name,
+            @JsonKey(name: 'business_about_us') String? aboutUs,
+            @JsonKey(name: 'business_services')
+            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
+            @JsonKey(name: 'business_additional_info') String? additionalInfo,
+            @JsonKey(name: 'business_email') String? email,
+            @JsonKey(name: 'business_phone') String? phoneNumber,
+            @JsonKey(name: 'business_address') String? address,
+            @JsonKey(name: 'business_zipcode') String? zipCode,
+            @JsonKey(name: 'business_city') String? city,
+            @JsonKey(name: 'business_country') FoodlyCountries? country,
+            @JsonKey(name: 'business_menus') List<MenuDM> menus,
+            @JsonKey(name: 'business_latitude') double? latitude,
+            @JsonKey(name: 'business_longitude') double? longitude,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category') CategoryDM? category,
+            @JsonKey(name: 'rating_avg') double? rating,
+            @JsonKey(name: 'ratings_count') int? ratingsCount,
+            @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+            @JsonKey(name: 'status') String? status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay,
+            @JsonKey(name: 'followers_length') int followersLength,
+            @JsonKey(name: 'intro_message') String? introMessage,
+            @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel,
+            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month')
+            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+            double? minServicePrice,
+            List<ReviewDM> reviews)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM() when $default != null:
+        return $default(
+            _that.intId,
+            _that.logo,
+            _that.coverImages,
+            _that.branches,
+            _that.uuid,
+            _that.name,
+            _that.aboutUs,
+            _that.services,
+            _that.promotions,
+            _that.additionalInfo,
+            _that.email,
+            _that.phoneNumber,
+            _that.address,
+            _that.zipCode,
+            _that.city,
+            _that.country,
+            _that.menus,
+            _that.latitude,
+            _that.longitude,
+            _that.categoryId,
+            _that.category,
+            _that.rating,
+            _that.ratingsCount,
+            _that.businessDays,
+            _that.status,
+            _that.hoursDisplay,
+            _that.followersLength,
+            _that.introMessage,
+            _that.allowReservations,
+            _that.reservationsSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel,
+            _that.aiPromoMonthlyLimit,
+            _that.aiPromosUsedThisMonth,
+            _that.minServicePrice,
+            _that.reviews);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'id') int? intId,
+            @JsonKey(name: 'business_logo') String logo,
+            @JsonKey(name: 'cover_images')
+            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'branches') List<BusinessDM> branches,
+            @JsonKey(name: 'business_uuid') String uuid,
+            @JsonKey(name: 'business_name') String? name,
+            @JsonKey(name: 'business_about_us') String? aboutUs,
+            @JsonKey(name: 'business_services')
+            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
+            @JsonKey(name: 'business_additional_info') String? additionalInfo,
+            @JsonKey(name: 'business_email') String? email,
+            @JsonKey(name: 'business_phone') String? phoneNumber,
+            @JsonKey(name: 'business_address') String? address,
+            @JsonKey(name: 'business_zipcode') String? zipCode,
+            @JsonKey(name: 'business_city') String? city,
+            @JsonKey(name: 'business_country') FoodlyCountries? country,
+            @JsonKey(name: 'business_menus') List<MenuDM> menus,
+            @JsonKey(name: 'business_latitude') double? latitude,
+            @JsonKey(name: 'business_longitude') double? longitude,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category') CategoryDM? category,
+            @JsonKey(name: 'rating_avg') double? rating,
+            @JsonKey(name: 'ratings_count') int? ratingsCount,
+            @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+            @JsonKey(name: 'status') String? status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay,
+            @JsonKey(name: 'followers_length') int followersLength,
+            @JsonKey(name: 'intro_message') String? introMessage,
+            @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel,
+            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month')
+            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+            double? minServicePrice,
+            List<ReviewDM> reviews)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM():
+        return $default(
+            _that.intId,
+            _that.logo,
+            _that.coverImages,
+            _that.branches,
+            _that.uuid,
+            _that.name,
+            _that.aboutUs,
+            _that.services,
+            _that.promotions,
+            _that.additionalInfo,
+            _that.email,
+            _that.phoneNumber,
+            _that.address,
+            _that.zipCode,
+            _that.city,
+            _that.country,
+            _that.menus,
+            _that.latitude,
+            _that.longitude,
+            _that.categoryId,
+            _that.category,
+            _that.rating,
+            _that.ratingsCount,
+            _that.businessDays,
+            _that.status,
+            _that.hoursDisplay,
+            _that.followersLength,
+            _that.introMessage,
+            _that.allowReservations,
+            _that.reservationsSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel,
+            _that.aiPromoMonthlyLimit,
+            _that.aiPromosUsedThisMonth,
+            _that.minServicePrice,
+            _that.reviews);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'id') int? intId,
+            @JsonKey(name: 'business_logo') String logo,
+            @JsonKey(name: 'cover_images')
+            List<BusinessCoverImageDM> coverImages,
+            @JsonKey(name: 'branches') List<BusinessDM> branches,
+            @JsonKey(name: 'business_uuid') String uuid,
+            @JsonKey(name: 'business_name') String? name,
+            @JsonKey(name: 'business_about_us') String? aboutUs,
+            @JsonKey(name: 'business_services')
+            List<BusinessServicesDM>? services,
+            @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
+            @JsonKey(name: 'business_additional_info') String? additionalInfo,
+            @JsonKey(name: 'business_email') String? email,
+            @JsonKey(name: 'business_phone') String? phoneNumber,
+            @JsonKey(name: 'business_address') String? address,
+            @JsonKey(name: 'business_zipcode') String? zipCode,
+            @JsonKey(name: 'business_city') String? city,
+            @JsonKey(name: 'business_country') FoodlyCountries? country,
+            @JsonKey(name: 'business_menus') List<MenuDM> menus,
+            @JsonKey(name: 'business_latitude') double? latitude,
+            @JsonKey(name: 'business_longitude') double? longitude,
+            @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? categoryId,
+            @JsonKey(name: 'category') CategoryDM? category,
+            @JsonKey(name: 'rating_avg') double? rating,
+            @JsonKey(name: 'ratings_count') int? ratingsCount,
+            @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+            @JsonKey(name: 'status') String? status,
+            @JsonKey(name: 'hours_display') String? hoursDisplay,
+            @JsonKey(name: 'followers_length') int followersLength,
+            @JsonKey(name: 'intro_message') String? introMessage,
+            @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel,
+            @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+            @JsonKey(name: 'ai_promos_used_this_month')
+            int aiPromosUsedThisMonth,
+            @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
+            double? minServicePrice,
+            List<ReviewDM> reviews)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessDM() when $default != null:
+        return $default(
+            _that.intId,
+            _that.logo,
+            _that.coverImages,
+            _that.branches,
+            _that.uuid,
+            _that.name,
+            _that.aboutUs,
+            _that.services,
+            _that.promotions,
+            _that.additionalInfo,
+            _that.email,
+            _that.phoneNumber,
+            _that.address,
+            _that.zipCode,
+            _that.city,
+            _that.country,
+            _that.menus,
+            _that.latitude,
+            _that.longitude,
+            _that.categoryId,
+            _that.category,
+            _that.rating,
+            _that.ratingsCount,
+            _that.businessDays,
+            _that.status,
+            _that.hoursDisplay,
+            _that.followersLength,
+            _that.introMessage,
+            _that.allowReservations,
+            _that.reservationsSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel,
+            _that.aiPromoMonthlyLimit,
+            _that.aiPromosUsedThisMonth,
+            _that.minServicePrice,
+            _that.reviews);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$BusinessDMImpl extends _BusinessDM {
-  const _$BusinessDMImpl(
+class _BusinessDM extends BusinessDM {
+  const _BusinessDM(
       {@JsonKey(name: 'id') this.intId,
       @JsonKey(name: 'business_logo')
       this.logo = FoodlyStrings.LOGO_PLACEHOLDER,
@@ -705,9 +942,8 @@ class _$BusinessDMImpl extends _BusinessDM {
         _menus = menus,
         _reviews = reviews,
         super._();
-
-  factory _$BusinessDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BusinessDMImplFromJson(json);
+  factory _BusinessDM.fromJson(Map<String, dynamic> json) =>
+      _$BusinessDMFromJson(json);
 
   @override
   @JsonKey(name: 'id')
@@ -878,16 +1114,26 @@ class _$BusinessDMImpl extends _BusinessDM {
     return EqualUnmodifiableListView(_reviews);
   }
 
+  /// Create a copy of BusinessDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessDMCopyWith<_BusinessDM> get copyWith =>
+      __$BusinessDMCopyWithImpl<_BusinessDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BusinessDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessDMImpl &&
+            other is _BusinessDM &&
             (identical(other.intId, intId) || other.intId == intId) &&
             (identical(other.logo, logo) || other.logo == logo) &&
             const DeepCollectionEquality()
@@ -988,374 +1234,314 @@ class _$BusinessDMImpl extends _BusinessDM {
         const DeepCollectionEquality().hash(_reviews)
       ]);
 
-  /// Create a copy of BusinessDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessDMImplCopyWith<_$BusinessDMImpl> get copyWith =>
-      __$$BusinessDMImplCopyWithImpl<_$BusinessDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BusinessDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 }
 
-abstract class _BusinessDM extends BusinessDM {
-  const factory _BusinessDM(
-      {@JsonKey(name: 'id') final int? intId,
-      @JsonKey(name: 'business_logo') final String logo,
-      @JsonKey(name: 'cover_images')
-      final List<BusinessCoverImageDM> coverImages,
-      @JsonKey(name: 'branches') final List<BusinessDM> branches,
-      @JsonKey(name: 'business_uuid') final String uuid,
-      @JsonKey(name: 'business_name') final String? name,
-      @JsonKey(name: 'business_about_us') final String? aboutUs,
-      @JsonKey(name: 'business_services')
-      final List<BusinessServicesDM>? services,
-      @JsonKey(name: 'business_promotions') final List<PromotionDM>? promotions,
-      @JsonKey(name: 'business_additional_info') final String? additionalInfo,
-      @JsonKey(name: 'business_email') final String? email,
-      @JsonKey(name: 'business_phone') final String? phoneNumber,
-      @JsonKey(name: 'business_address') final String? address,
-      @JsonKey(name: 'business_zipcode') final String? zipCode,
-      @JsonKey(name: 'business_city') final String? city,
-      @JsonKey(name: 'business_country') final FoodlyCountries? country,
-      @JsonKey(name: 'business_menus') final List<MenuDM> menus,
-      @JsonKey(name: 'business_latitude') final double? latitude,
-      @JsonKey(name: 'business_longitude') final double? longitude,
+/// @nodoc
+abstract mixin class _$BusinessDMCopyWith<$Res>
+    implements $BusinessDMCopyWith<$Res> {
+  factory _$BusinessDMCopyWith(
+          _BusinessDM value, $Res Function(_BusinessDM) _then) =
+      __$BusinessDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'id') int? intId,
+      @JsonKey(name: 'business_logo') String logo,
+      @JsonKey(name: 'cover_images') List<BusinessCoverImageDM> coverImages,
+      @JsonKey(name: 'branches') List<BusinessDM> branches,
+      @JsonKey(name: 'business_uuid') String uuid,
+      @JsonKey(name: 'business_name') String? name,
+      @JsonKey(name: 'business_about_us') String? aboutUs,
+      @JsonKey(name: 'business_services') List<BusinessServicesDM>? services,
+      @JsonKey(name: 'business_promotions') List<PromotionDM>? promotions,
+      @JsonKey(name: 'business_additional_info') String? additionalInfo,
+      @JsonKey(name: 'business_email') String? email,
+      @JsonKey(name: 'business_phone') String? phoneNumber,
+      @JsonKey(name: 'business_address') String? address,
+      @JsonKey(name: 'business_zipcode') String? zipCode,
+      @JsonKey(name: 'business_city') String? city,
+      @JsonKey(name: 'business_country') FoodlyCountries? country,
+      @JsonKey(name: 'business_menus') List<MenuDM> menus,
+      @JsonKey(name: 'business_latitude') double? latitude,
+      @JsonKey(name: 'business_longitude') double? longitude,
       @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-      final FoodlyCategories? categoryId,
-      @JsonKey(name: 'category') final CategoryDM? category,
-      @JsonKey(name: 'rating_avg') final double? rating,
-      @JsonKey(name: 'ratings_count') final int? ratingsCount,
-      @JsonKey(name: 'business_opening_hours') final BusinessDays businessDays,
-      @JsonKey(name: 'status') final String? status,
-      @JsonKey(name: 'hours_display') final String? hoursDisplay,
-      @JsonKey(name: 'followers_length') final int followersLength,
-      @JsonKey(name: 'intro_message') final String? introMessage,
-      @JsonKey(name: 'allow_reservations') final bool allowReservations,
-      @JsonKey(name: 'reservations_count') final int reservationsSizeLimit,
-      @JsonKey(name: 'menu_enabled') final bool menuEnabled,
-      @JsonKey(name: 'combos_label') final String? combosLabel,
-      @JsonKey(name: 'ai_promo_monthly_limit') final int aiPromoMonthlyLimit,
-      @JsonKey(name: 'ai_promos_used_this_month')
-      final int aiPromosUsedThisMonth,
+      FoodlyCategories? categoryId,
+      @JsonKey(name: 'category') CategoryDM? category,
+      @JsonKey(name: 'rating_avg') double? rating,
+      @JsonKey(name: 'ratings_count') int? ratingsCount,
+      @JsonKey(name: 'business_opening_hours') BusinessDays businessDays,
+      @JsonKey(name: 'status') String? status,
+      @JsonKey(name: 'hours_display') String? hoursDisplay,
+      @JsonKey(name: 'followers_length') int followersLength,
+      @JsonKey(name: 'intro_message') String? introMessage,
+      @JsonKey(name: 'allow_reservations') bool allowReservations,
+      @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool menuEnabled,
+      @JsonKey(name: 'combos_label') String? combosLabel,
+      @JsonKey(name: 'ai_promo_monthly_limit') int aiPromoMonthlyLimit,
+      @JsonKey(name: 'ai_promos_used_this_month') int aiPromosUsedThisMonth,
       @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-      final double? minServicePrice,
-      final List<ReviewDM> reviews}) = _$BusinessDMImpl;
-  const _BusinessDM._() : super._();
-
-  factory _BusinessDM.fromJson(Map<String, dynamic> json) =
-      _$BusinessDMImpl.fromJson;
+      double? minServicePrice,
+      List<ReviewDM> reviews});
 
   @override
-  @JsonKey(name: 'id')
-  int? get intId;
+  $CategoryDMCopyWith<$Res>? get category;
   @override
-  @JsonKey(name: 'business_logo')
-  String get logo;
-  @override
-  @JsonKey(name: 'cover_images')
-  List<BusinessCoverImageDM> get coverImages;
-  @override
-  @JsonKey(name: 'branches')
-  List<BusinessDM> get branches;
-  @override
-  @JsonKey(name: 'business_uuid')
-  String get uuid;
-  @override
-  @JsonKey(name: 'business_name')
-  String? get name;
-  @override
-  @JsonKey(name: 'business_about_us')
-  String? get aboutUs;
-  @override
-  @JsonKey(name: 'business_services')
-  List<BusinessServicesDM>? get services;
-  @override
-  @JsonKey(name: 'business_promotions')
-  List<PromotionDM>? get promotions;
-  @override
-  @JsonKey(name: 'business_additional_info')
-  String? get additionalInfo;
-  @override
-  @JsonKey(name: 'business_email')
-  String? get email;
-  @override
-  @JsonKey(name: 'business_phone')
-  String? get phoneNumber;
-  @override
-  @JsonKey(name: 'business_address')
-  String? get address;
-  @override
-  @JsonKey(name: 'business_zipcode')
-  String? get zipCode;
-  @override
-  @JsonKey(name: 'business_city')
-  String? get city;
-  @override
-  @JsonKey(name: 'business_country')
-  FoodlyCountries? get country;
-  @override
-  @JsonKey(name: 'business_menus')
-  List<MenuDM> get menus;
-  @override
-  @JsonKey(name: 'business_latitude')
-  double? get latitude;
-  @override
-  @JsonKey(name: 'business_longitude')
-  double? get longitude;
-  @override
-  @JsonKey(name: 'category_id', fromJson: _safeCategoryFromJson)
-  FoodlyCategories? get categoryId;
-  @override
-  @JsonKey(name: 'category')
-  CategoryDM? get category;
-  @override
-  @JsonKey(name: 'rating_avg')
-  double? get rating;
-  @override
-  @JsonKey(name: 'ratings_count')
-  int? get ratingsCount;
-  @override
-  @JsonKey(name: 'business_opening_hours')
-  BusinessDays
-      get businessDays; // Server-computed open/closed status using the BUSINESS's local
-// timezone (derived from `business_country` in `BusinessStatusHelper`
-// on the BE). The FE no longer computes this — see [currentStatus]
-// getter below for the parsed enum, and `BusinessStatusHelper.php` for
-// the rationale (single source of truth, correct for cross-timezone
-// viewers, kills the "My Pizzeria looks closed" bug).
-// Values: 'open' | 'closed' | 'opening_soon'. Null only on payloads
-// from controllers that haven't been updated yet (defensive).
-  @override
-  @JsonKey(name: 'status')
-  String?
-      get status; // Human-readable hours for TODAY in the business's local time, e.g.
-// "09:00 – 22:00" or "09:00 – 14:00 / 18:00 – 23:00" for split shifts.
-// Server-side string ready to render. Null when no hours configured
-// for today.
-  @override
-  @JsonKey(name: 'hours_display')
-  String? get hoursDisplay;
-  @override
-  @JsonKey(name: 'followers_length')
-  int get followersLength;
-  @override
-  @JsonKey(name: 'intro_message')
-  String? get introMessage;
-  @override
-  @JsonKey(name: 'allow_reservations')
-  bool get allowReservations;
-  @override
-  @JsonKey(name: 'reservations_count')
-  int get reservationsSizeLimit; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
-// show their menu; catering shows it only when the manager enables it.
-  @override
-  @JsonKey(name: 'menu_enabled')
-  bool get menuEnabled;
-  @override
-  @JsonKey(name: 'combos_label')
-  String? get combosLabel;
-  @override
-  @JsonKey(name: 'ai_promo_monthly_limit')
-  int get aiPromoMonthlyLimit;
-  @override
-  @JsonKey(name: 'ai_promos_used_this_month')
-  int get aiPromosUsedThisMonth; // Catering & Chefs vertical — MIN price across ACTIVE service_packages
-// for this business (EUR). Only populated by endpoints that join the
-// subselect (currently: GET /business/nearby). Null when the business has
-// no priced active package (restaurants without packages, or catering
-// providers that only offer on-quote packages).
-  @override
-  @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)
-  double?
-      get minServicePrice; // This field is not from the API, it's used to store the reviews of the business when fetching them together with the business details
-  @override
-  List<ReviewDM> get reviews;
+  $BusinessDaysCopyWith<$Res> get businessDays;
+}
+
+/// @nodoc
+class __$BusinessDMCopyWithImpl<$Res> implements _$BusinessDMCopyWith<$Res> {
+  __$BusinessDMCopyWithImpl(this._self, this._then);
+
+  final _BusinessDM _self;
+  final $Res Function(_BusinessDM) _then;
 
   /// Create a copy of BusinessDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessDMImplCopyWith<_$BusinessDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? intId = freezed,
+    Object? logo = null,
+    Object? coverImages = null,
+    Object? branches = null,
+    Object? uuid = null,
+    Object? name = freezed,
+    Object? aboutUs = freezed,
+    Object? services = freezed,
+    Object? promotions = freezed,
+    Object? additionalInfo = freezed,
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+    Object? address = freezed,
+    Object? zipCode = freezed,
+    Object? city = freezed,
+    Object? country = freezed,
+    Object? menus = null,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? categoryId = freezed,
+    Object? category = freezed,
+    Object? rating = freezed,
+    Object? ratingsCount = freezed,
+    Object? businessDays = null,
+    Object? status = freezed,
+    Object? hoursDisplay = freezed,
+    Object? followersLength = null,
+    Object? introMessage = freezed,
+    Object? allowReservations = null,
+    Object? reservationsSizeLimit = null,
+    Object? menuEnabled = null,
+    Object? combosLabel = freezed,
+    Object? aiPromoMonthlyLimit = null,
+    Object? aiPromosUsedThisMonth = null,
+    Object? minServicePrice = freezed,
+    Object? reviews = null,
+  }) {
+    return _then(_BusinessDM(
+      intId: freezed == intId
+          ? _self.intId
+          : intId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      logo: null == logo
+          ? _self.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String,
+      coverImages: null == coverImages
+          ? _self._coverImages
+          : coverImages // ignore: cast_nullable_to_non_nullable
+              as List<BusinessCoverImageDM>,
+      branches: null == branches
+          ? _self._branches
+          : branches // ignore: cast_nullable_to_non_nullable
+              as List<BusinessDM>,
+      uuid: null == uuid
+          ? _self.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aboutUs: freezed == aboutUs
+          ? _self.aboutUs
+          : aboutUs // ignore: cast_nullable_to_non_nullable
+              as String?,
+      services: freezed == services
+          ? _self._services
+          : services // ignore: cast_nullable_to_non_nullable
+              as List<BusinessServicesDM>?,
+      promotions: freezed == promotions
+          ? _self._promotions
+          : promotions // ignore: cast_nullable_to_non_nullable
+              as List<PromotionDM>?,
+      additionalInfo: freezed == additionalInfo
+          ? _self.additionalInfo
+          : additionalInfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _self.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _self.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      zipCode: freezed == zipCode
+          ? _self.zipCode
+          : zipCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      city: freezed == city
+          ? _self.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
+      country: freezed == country
+          ? _self.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
+      menus: null == menus
+          ? _self._menus
+          : menus // ignore: cast_nullable_to_non_nullable
+              as List<MenuDM>,
+      latitude: freezed == latitude
+          ? _self.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _self.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      categoryId: freezed == categoryId
+          ? _self.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories?,
+      category: freezed == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryDM?,
+      rating: freezed == rating
+          ? _self.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      ratingsCount: freezed == ratingsCount
+          ? _self.ratingsCount
+          : ratingsCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      businessDays: null == businessDays
+          ? _self.businessDays
+          : businessDays // ignore: cast_nullable_to_non_nullable
+              as BusinessDays,
+      status: freezed == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hoursDisplay: freezed == hoursDisplay
+          ? _self.hoursDisplay
+          : hoursDisplay // ignore: cast_nullable_to_non_nullable
+              as String?,
+      followersLength: null == followersLength
+          ? _self.followersLength
+          : followersLength // ignore: cast_nullable_to_non_nullable
+              as int,
+      introMessage: freezed == introMessage
+          ? _self.introMessage
+          : introMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      allowReservations: null == allowReservations
+          ? _self.allowReservations
+          : allowReservations // ignore: cast_nullable_to_non_nullable
+              as bool,
+      reservationsSizeLimit: null == reservationsSizeLimit
+          ? _self.reservationsSizeLimit
+          : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      menuEnabled: null == menuEnabled
+          ? _self.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      combosLabel: freezed == combosLabel
+          ? _self.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aiPromoMonthlyLimit: null == aiPromoMonthlyLimit
+          ? _self.aiPromoMonthlyLimit
+          : aiPromoMonthlyLimit // ignore: cast_nullable_to_non_nullable
+              as int,
+      aiPromosUsedThisMonth: null == aiPromosUsedThisMonth
+          ? _self.aiPromosUsedThisMonth
+          : aiPromosUsedThisMonth // ignore: cast_nullable_to_non_nullable
+              as int,
+      minServicePrice: freezed == minServicePrice
+          ? _self.minServicePrice
+          : minServicePrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      reviews: null == reviews
+          ? _self._reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<ReviewDM>,
+    ));
+  }
 
-CategoryDM _$CategoryDMFromJson(Map<String, dynamic> json) {
-  return _CategoryDM.fromJson(json);
+  /// Create a copy of BusinessDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryDMCopyWith<$Res>? get category {
+    if (_self.category == null) {
+      return null;
+    }
+
+    return $CategoryDMCopyWith<$Res>(_self.category!, (value) {
+      return _then(_self.copyWith(category: value));
+    });
+  }
+
+  /// Create a copy of BusinessDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessDaysCopyWith<$Res> get businessDays {
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays, (value) {
+      return _then(_self.copyWith(businessDays: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$CategoryDM {
   @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-  FoodlyCategories? get id => throw _privateConstructorUsedError;
+  FoodlyCategories? get id;
   @JsonKey(name: 'category_uuid')
-  String? get categoryUuid => throw _privateConstructorUsedError;
+  String? get categoryUuid;
   @JsonKey(name: 'category_name')
-  String? get categoryName => throw _privateConstructorUsedError;
+  String? get categoryName;
   @JsonKey(name: 'category_image_path')
-  String? get categoryImagePath => throw _privateConstructorUsedError;
-
-  /// Serializes this CategoryDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get categoryImagePath;
 
   /// Create a copy of CategoryDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $CategoryDMCopyWith<CategoryDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$CategoryDMCopyWithImpl<CategoryDM>(this as CategoryDM, _$identity);
 
-/// @nodoc
-abstract class $CategoryDMCopyWith<$Res> {
-  factory $CategoryDMCopyWith(
-          CategoryDM value, $Res Function(CategoryDM) then) =
-      _$CategoryDMCopyWithImpl<$Res, CategoryDM>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? id,
-      @JsonKey(name: 'category_uuid') String? categoryUuid,
-      @JsonKey(name: 'category_name') String? categoryName,
-      @JsonKey(name: 'category_image_path') String? categoryImagePath});
-}
-
-/// @nodoc
-class _$CategoryDMCopyWithImpl<$Res, $Val extends CategoryDM>
-    implements $CategoryDMCopyWith<$Res> {
-  _$CategoryDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CategoryDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? categoryUuid = freezed,
-    Object? categoryName = freezed,
-    Object? categoryImagePath = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories?,
-      categoryUuid: freezed == categoryUuid
-          ? _value.categoryUuid
-          : categoryUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryName: freezed == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryImagePath: freezed == categoryImagePath
-          ? _value.categoryImagePath
-          : categoryImagePath // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CategoryDMImplCopyWith<$Res>
-    implements $CategoryDMCopyWith<$Res> {
-  factory _$$CategoryDMImplCopyWith(
-          _$CategoryDMImpl value, $Res Function(_$CategoryDMImpl) then) =
-      __$$CategoryDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-      FoodlyCategories? id,
-      @JsonKey(name: 'category_uuid') String? categoryUuid,
-      @JsonKey(name: 'category_name') String? categoryName,
-      @JsonKey(name: 'category_image_path') String? categoryImagePath});
-}
-
-/// @nodoc
-class __$$CategoryDMImplCopyWithImpl<$Res>
-    extends _$CategoryDMCopyWithImpl<$Res, _$CategoryDMImpl>
-    implements _$$CategoryDMImplCopyWith<$Res> {
-  __$$CategoryDMImplCopyWithImpl(
-      _$CategoryDMImpl _value, $Res Function(_$CategoryDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CategoryDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? categoryUuid = freezed,
-    Object? categoryName = freezed,
-    Object? categoryImagePath = freezed,
-  }) {
-    return _then(_$CategoryDMImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories?,
-      categoryUuid: freezed == categoryUuid
-          ? _value.categoryUuid
-          : categoryUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryName: freezed == categoryName
-          ? _value.categoryName
-          : categoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categoryImagePath: freezed == categoryImagePath
-          ? _value.categoryImagePath
-          : categoryImagePath // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CategoryDMImpl implements _CategoryDM {
-  const _$CategoryDMImpl(
-      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson) this.id,
-      @JsonKey(name: 'category_uuid') this.categoryUuid,
-      @JsonKey(name: 'category_name') this.categoryName,
-      @JsonKey(name: 'category_image_path') this.categoryImagePath});
-
-  factory _$CategoryDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CategoryDMImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-  final FoodlyCategories? id;
-  @override
-  @JsonKey(name: 'category_uuid')
-  final String? categoryUuid;
-  @override
-  @JsonKey(name: 'category_name')
-  final String? categoryName;
-  @override
-  @JsonKey(name: 'category_image_path')
-  final String? categoryImagePath;
-
-  @override
-  String toString() {
-    return 'CategoryDM(id: $id, categoryUuid: $categoryUuid, categoryName: $categoryName, categoryImagePath: $categoryImagePath)';
-  }
+  /// Serializes this CategoryDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryDMImpl &&
+            other is CategoryDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.categoryUuid, categoryUuid) ||
                 other.categoryUuid == categoryUuid) &&
@@ -1370,53 +1556,358 @@ class _$CategoryDMImpl implements _CategoryDM {
   int get hashCode => Object.hash(
       runtimeType, id, categoryUuid, categoryName, categoryImagePath);
 
-  /// Create a copy of CategoryDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CategoryDMImplCopyWith<_$CategoryDMImpl> get copyWith =>
-      __$$CategoryDMImplCopyWithImpl<_$CategoryDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CategoryDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'CategoryDM(id: $id, categoryUuid: $categoryUuid, categoryName: $categoryName, categoryImagePath: $categoryImagePath)';
   }
 }
 
-abstract class _CategoryDM implements CategoryDM {
-  const factory _CategoryDM(
+/// @nodoc
+abstract mixin class $CategoryDMCopyWith<$Res> {
+  factory $CategoryDMCopyWith(
+          CategoryDM value, $Res Function(CategoryDM) _then) =
+      _$CategoryDMCopyWithImpl;
+  @useResult
+  $Res call(
       {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-      final FoodlyCategories? id,
-      @JsonKey(name: 'category_uuid') final String? categoryUuid,
-      @JsonKey(name: 'category_name') final String? categoryName,
-      @JsonKey(name: 'category_image_path')
-      final String? categoryImagePath}) = _$CategoryDMImpl;
+      FoodlyCategories? id,
+      @JsonKey(name: 'category_uuid') String? categoryUuid,
+      @JsonKey(name: 'category_name') String? categoryName,
+      @JsonKey(name: 'category_image_path') String? categoryImagePath});
+}
 
-  factory _CategoryDM.fromJson(Map<String, dynamic> json) =
-      _$CategoryDMImpl.fromJson;
+/// @nodoc
+class _$CategoryDMCopyWithImpl<$Res> implements $CategoryDMCopyWith<$Res> {
+  _$CategoryDMCopyWithImpl(this._self, this._then);
+
+  final CategoryDM _self;
+  final $Res Function(CategoryDM) _then;
+
+  /// Create a copy of CategoryDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? categoryUuid = freezed,
+    Object? categoryName = freezed,
+    Object? categoryImagePath = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories?,
+      categoryUuid: freezed == categoryUuid
+          ? _self.categoryUuid
+          : categoryUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryName: freezed == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryImagePath: freezed == categoryImagePath
+          ? _self.categoryImagePath
+          : categoryImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [CategoryDM].
+extension CategoryDMPatterns on CategoryDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_CategoryDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_CategoryDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_CategoryDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? id,
+            @JsonKey(name: 'category_uuid') String? categoryUuid,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM() when $default != null:
+        return $default(_that.id, _that.categoryUuid, _that.categoryName,
+            _that.categoryImagePath);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? id,
+            @JsonKey(name: 'category_uuid') String? categoryUuid,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM():
+        return $default(_that.id, _that.categoryUuid, _that.categoryName,
+            _that.categoryImagePath);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
+            FoodlyCategories? id,
+            @JsonKey(name: 'category_uuid') String? categoryUuid,
+            @JsonKey(name: 'category_name') String? categoryName,
+            @JsonKey(name: 'category_image_path') String? categoryImagePath)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _CategoryDM() when $default != null:
+        return $default(_that.id, _that.categoryUuid, _that.categoryName,
+            _that.categoryImagePath);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _CategoryDM implements CategoryDM {
+  const _CategoryDM(
+      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson) this.id,
+      @JsonKey(name: 'category_uuid') this.categoryUuid,
+      @JsonKey(name: 'category_name') this.categoryName,
+      @JsonKey(name: 'category_image_path') this.categoryImagePath});
+  factory _CategoryDM.fromJson(Map<String, dynamic> json) =>
+      _$CategoryDMFromJson(json);
 
   @override
   @JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
-  FoodlyCategories? get id;
+  final FoodlyCategories? id;
   @override
   @JsonKey(name: 'category_uuid')
-  String? get categoryUuid;
+  final String? categoryUuid;
   @override
   @JsonKey(name: 'category_name')
-  String? get categoryName;
+  final String? categoryName;
   @override
   @JsonKey(name: 'category_image_path')
-  String? get categoryImagePath;
+  final String? categoryImagePath;
 
   /// Create a copy of CategoryDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CategoryDMImplCopyWith<_$CategoryDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$CategoryDMCopyWith<_CategoryDM> get copyWith =>
+      __$CategoryDMCopyWithImpl<_CategoryDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CategoryDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _CategoryDM &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.categoryUuid, categoryUuid) ||
+                other.categoryUuid == categoryUuid) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.categoryImagePath, categoryImagePath) ||
+                other.categoryImagePath == categoryImagePath));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, categoryUuid, categoryName, categoryImagePath);
+
+  @override
+  String toString() {
+    return 'CategoryDM(id: $id, categoryUuid: $categoryUuid, categoryName: $categoryName, categoryImagePath: $categoryImagePath)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$CategoryDMCopyWith<$Res>
+    implements $CategoryDMCopyWith<$Res> {
+  factory _$CategoryDMCopyWith(
+          _CategoryDM value, $Res Function(_CategoryDM) _then) =
+      __$CategoryDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'id', fromJson: _safeCategoryFromJson)
+      FoodlyCategories? id,
+      @JsonKey(name: 'category_uuid') String? categoryUuid,
+      @JsonKey(name: 'category_name') String? categoryName,
+      @JsonKey(name: 'category_image_path') String? categoryImagePath});
+}
+
+/// @nodoc
+class __$CategoryDMCopyWithImpl<$Res> implements _$CategoryDMCopyWith<$Res> {
+  __$CategoryDMCopyWithImpl(this._self, this._then);
+
+  final _CategoryDM _self;
+  final $Res Function(_CategoryDM) _then;
+
+  /// Create a copy of CategoryDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = freezed,
+    Object? categoryUuid = freezed,
+    Object? categoryName = freezed,
+    Object? categoryImagePath = freezed,
+  }) {
+    return _then(_CategoryDM(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories?,
+      categoryUuid: freezed == categoryUuid
+          ? _self.categoryUuid
+          : categoryUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryName: freezed == categoryName
+          ? _self.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryImagePath: freezed == categoryImagePath
+          ? _self.categoryImagePath
+          : categoryImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 BusinessServicesDM _$BusinessServicesDMFromJson(Map<String, dynamic> json) {
@@ -1426,94 +1917,58 @@ BusinessServicesDM _$BusinessServicesDMFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BusinessServicesDM {
   @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-  BusinessServices? get service => throw _privateConstructorUsedError;
+  BusinessServices? get service;
   @JsonKey(name: 'service_uuid')
-  String? get uuid => throw _privateConstructorUsedError;
+  String? get uuid;
   @JsonKey(name: 'service_name')
-  String? get serviceName => throw _privateConstructorUsedError;
+  String? get serviceName;
   @JsonKey(name: 'service_description')
-  String? get serviceDescriptio => throw _privateConstructorUsedError;
+  String? get serviceDescriptio;
   @JsonKey(name: 'service_image_path')
-  String? get serviceImagePath => throw _privateConstructorUsedError;
-
-  /// Serializes this BusinessServicesDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get serviceImagePath;
 
   /// Create a copy of BusinessServicesDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BusinessServicesDMCopyWith<BusinessServicesDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BusinessServicesDMCopyWith<$Res> {
-  factory $BusinessServicesDMCopyWith(
-          BusinessServicesDM value, $Res Function(BusinessServicesDM) then) =
-      _$BusinessServicesDMCopyWithImpl<$Res, BusinessServicesDM>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      BusinessServices? service,
-      @JsonKey(name: 'service_uuid') String? uuid,
-      @JsonKey(name: 'service_name') String? serviceName,
-      @JsonKey(name: 'service_description') String? serviceDescriptio,
-      @JsonKey(name: 'service_image_path') String? serviceImagePath});
-}
-
-/// @nodoc
-class _$BusinessServicesDMCopyWithImpl<$Res, $Val extends BusinessServicesDM>
-    implements $BusinessServicesDMCopyWith<$Res> {
-  _$BusinessServicesDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BusinessServicesDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $BusinessServicesDMCopyWith<BusinessServicesDM> get copyWith =>
+      _$BusinessServicesDMCopyWithImpl<BusinessServicesDM>(
+          this as BusinessServicesDM, _$identity);
+
+  /// Serializes this BusinessServicesDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? service = freezed,
-    Object? uuid = freezed,
-    Object? serviceName = freezed,
-    Object? serviceDescriptio = freezed,
-    Object? serviceImagePath = freezed,
-  }) {
-    return _then(_value.copyWith(
-      service: freezed == service
-          ? _value.service
-          : service // ignore: cast_nullable_to_non_nullable
-              as BusinessServices?,
-      uuid: freezed == uuid
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceName: freezed == serviceName
-          ? _value.serviceName
-          : serviceName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceDescriptio: freezed == serviceDescriptio
-          ? _value.serviceDescriptio
-          : serviceDescriptio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceImagePath: freezed == serviceImagePath
-          ? _value.serviceImagePath
-          : serviceImagePath // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessServicesDM &&
+            (identical(other.service, service) || other.service == service) &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.serviceName, serviceName) ||
+                other.serviceName == serviceName) &&
+            (identical(other.serviceDescriptio, serviceDescriptio) ||
+                other.serviceDescriptio == serviceDescriptio) &&
+            (identical(other.serviceImagePath, serviceImagePath) ||
+                other.serviceImagePath == serviceImagePath));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, service, uuid, serviceName,
+      serviceDescriptio, serviceImagePath);
+
+  @override
+  String toString() {
+    return 'BusinessServicesDM(service: $service, uuid: $uuid, serviceName: $serviceName, serviceDescriptio: $serviceDescriptio, serviceImagePath: $serviceImagePath)';
   }
 }
 
 /// @nodoc
-abstract class _$$BusinessServiceDMImplCopyWith<$Res>
-    implements $BusinessServicesDMCopyWith<$Res> {
-  factory _$$BusinessServiceDMImplCopyWith(_$BusinessServiceDMImpl value,
-          $Res Function(_$BusinessServiceDMImpl) then) =
-      __$$BusinessServiceDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $BusinessServicesDMCopyWith<$Res> {
+  factory $BusinessServicesDMCopyWith(
+          BusinessServicesDM value, $Res Function(BusinessServicesDM) _then) =
+      _$BusinessServicesDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1525,12 +1980,12 @@ abstract class _$$BusinessServiceDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$BusinessServiceDMImplCopyWithImpl<$Res>
-    extends _$BusinessServicesDMCopyWithImpl<$Res, _$BusinessServiceDMImpl>
-    implements _$$BusinessServiceDMImplCopyWith<$Res> {
-  __$$BusinessServiceDMImplCopyWithImpl(_$BusinessServiceDMImpl _value,
-      $Res Function(_$BusinessServiceDMImpl) _then)
-      : super(_value, _then);
+class _$BusinessServicesDMCopyWithImpl<$Res>
+    implements $BusinessServicesDMCopyWith<$Res> {
+  _$BusinessServicesDMCopyWithImpl(this._self, this._then);
+
+  final BusinessServicesDM _self;
+  final $Res Function(BusinessServicesDM) _then;
 
   /// Create a copy of BusinessServicesDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1543,35 +1998,219 @@ class __$$BusinessServiceDMImplCopyWithImpl<$Res>
     Object? serviceDescriptio = freezed,
     Object? serviceImagePath = freezed,
   }) {
-    return _then(_$BusinessServiceDMImpl(
+    return _then(_self.copyWith(
       service: freezed == service
-          ? _value.service
+          ? _self.service
           : service // ignore: cast_nullable_to_non_nullable
               as BusinessServices?,
       uuid: freezed == uuid
-          ? _value.uuid
+          ? _self.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String?,
       serviceName: freezed == serviceName
-          ? _value.serviceName
+          ? _self.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String?,
       serviceDescriptio: freezed == serviceDescriptio
-          ? _value.serviceDescriptio
+          ? _self.serviceDescriptio
           : serviceDescriptio // ignore: cast_nullable_to_non_nullable
               as String?,
       serviceImagePath: freezed == serviceImagePath
-          ? _value.serviceImagePath
+          ? _self.serviceImagePath
           : serviceImagePath // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [BusinessServicesDM].
+extension BusinessServicesDMPatterns on BusinessServicesDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BusinessServiceDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BusinessServiceDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BusinessServiceDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(
+                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            BusinessServices? service,
+            @JsonKey(name: 'service_uuid') String? uuid,
+            @JsonKey(name: 'service_name') String? serviceName,
+            @JsonKey(name: 'service_description') String? serviceDescriptio,
+            @JsonKey(name: 'service_image_path') String? serviceImagePath)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM() when $default != null:
+        return $default(_that.service, _that.uuid, _that.serviceName,
+            _that.serviceDescriptio, _that.serviceImagePath);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(
+                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            BusinessServices? service,
+            @JsonKey(name: 'service_uuid') String? uuid,
+            @JsonKey(name: 'service_name') String? serviceName,
+            @JsonKey(name: 'service_description') String? serviceDescriptio,
+            @JsonKey(name: 'service_image_path') String? serviceImagePath)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM():
+        return $default(_that.service, _that.uuid, _that.serviceName,
+            _that.serviceDescriptio, _that.serviceImagePath);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(
+                name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            BusinessServices? service,
+            @JsonKey(name: 'service_uuid') String? uuid,
+            @JsonKey(name: 'service_name') String? serviceName,
+            @JsonKey(name: 'service_description') String? serviceDescriptio,
+            @JsonKey(name: 'service_image_path') String? serviceImagePath)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessServiceDM() when $default != null:
+        return $default(_that.service, _that.uuid, _that.serviceName,
+            _that.serviceDescriptio, _that.serviceImagePath);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$BusinessServiceDMImpl extends _BusinessServiceDM {
-  const _$BusinessServiceDMImpl(
+class _BusinessServiceDM extends BusinessServicesDM {
+  const _BusinessServiceDM(
       {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
       this.service,
       @JsonKey(name: 'service_uuid') this.uuid,
@@ -1579,9 +2218,8 @@ class _$BusinessServiceDMImpl extends _BusinessServiceDM {
       @JsonKey(name: 'service_description') this.serviceDescriptio,
       @JsonKey(name: 'service_image_path') this.serviceImagePath})
       : super._();
-
-  factory _$BusinessServiceDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BusinessServiceDMImplFromJson(json);
+  factory _BusinessServiceDM.fromJson(Map<String, dynamic> json) =>
+      _$BusinessServiceDMFromJson(json);
 
   @override
   @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1599,16 +2237,26 @@ class _$BusinessServiceDMImpl extends _BusinessServiceDM {
   @JsonKey(name: 'service_image_path')
   final String? serviceImagePath;
 
+  /// Create a copy of BusinessServicesDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BusinessServicesDM(service: $service, uuid: $uuid, serviceName: $serviceName, serviceDescriptio: $serviceDescriptio, serviceImagePath: $serviceImagePath)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessServiceDMCopyWith<_BusinessServiceDM> get copyWith =>
+      __$BusinessServiceDMCopyWithImpl<_BusinessServiceDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BusinessServiceDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessServiceDMImpl &&
+            other is _BusinessServiceDM &&
             (identical(other.service, service) || other.service == service) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.serviceName, serviceName) ||
@@ -1624,57 +2272,71 @@ class _$BusinessServiceDMImpl extends _BusinessServiceDM {
   int get hashCode => Object.hash(runtimeType, service, uuid, serviceName,
       serviceDescriptio, serviceImagePath);
 
-  /// Create a copy of BusinessServicesDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessServiceDMImplCopyWith<_$BusinessServiceDMImpl> get copyWith =>
-      __$$BusinessServiceDMImplCopyWithImpl<_$BusinessServiceDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BusinessServiceDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'BusinessServicesDM(service: $service, uuid: $uuid, serviceName: $serviceName, serviceDescriptio: $serviceDescriptio, serviceImagePath: $serviceImagePath)';
   }
 }
 
-abstract class _BusinessServiceDM extends BusinessServicesDM {
-  const factory _BusinessServiceDM(
+/// @nodoc
+abstract mixin class _$BusinessServiceDMCopyWith<$Res>
+    implements $BusinessServicesDMCopyWith<$Res> {
+  factory _$BusinessServiceDMCopyWith(
+          _BusinessServiceDM value, $Res Function(_BusinessServiceDM) _then) =
+      __$BusinessServiceDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
       {@JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      final BusinessServices? service,
-      @JsonKey(name: 'service_uuid') final String? uuid,
-      @JsonKey(name: 'service_name') final String? serviceName,
-      @JsonKey(name: 'service_description') final String? serviceDescriptio,
-      @JsonKey(name: 'service_image_path')
-      final String? serviceImagePath}) = _$BusinessServiceDMImpl;
-  const _BusinessServiceDM._() : super._();
+      BusinessServices? service,
+      @JsonKey(name: 'service_uuid') String? uuid,
+      @JsonKey(name: 'service_name') String? serviceName,
+      @JsonKey(name: 'service_description') String? serviceDescriptio,
+      @JsonKey(name: 'service_image_path') String? serviceImagePath});
+}
 
-  factory _BusinessServiceDM.fromJson(Map<String, dynamic> json) =
-      _$BusinessServiceDMImpl.fromJson;
+/// @nodoc
+class __$BusinessServiceDMCopyWithImpl<$Res>
+    implements _$BusinessServiceDMCopyWith<$Res> {
+  __$BusinessServiceDMCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-  BusinessServices? get service;
-  @override
-  @JsonKey(name: 'service_uuid')
-  String? get uuid;
-  @override
-  @JsonKey(name: 'service_name')
-  String? get serviceName;
-  @override
-  @JsonKey(name: 'service_description')
-  String? get serviceDescriptio;
-  @override
-  @JsonKey(name: 'service_image_path')
-  String? get serviceImagePath;
+  final _BusinessServiceDM _self;
+  final $Res Function(_BusinessServiceDM) _then;
 
   /// Create a copy of BusinessServicesDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessServiceDMImplCopyWith<_$BusinessServiceDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? service = freezed,
+    Object? uuid = freezed,
+    Object? serviceName = freezed,
+    Object? serviceDescriptio = freezed,
+    Object? serviceImagePath = freezed,
+  }) {
+    return _then(_BusinessServiceDM(
+      service: freezed == service
+          ? _self.service
+          : service // ignore: cast_nullable_to_non_nullable
+              as BusinessServices?,
+      uuid: freezed == uuid
+          ? _self.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serviceName: freezed == serviceName
+          ? _self.serviceName
+          : serviceName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serviceDescriptio: freezed == serviceDescriptio
+          ? _self.serviceDescriptio
+          : serviceDescriptio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serviceImagePath: freezed == serviceImagePath
+          ? _self.serviceImagePath
+          : serviceImagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
+
+// dart format on

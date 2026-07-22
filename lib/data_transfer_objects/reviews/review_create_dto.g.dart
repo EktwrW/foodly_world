@@ -6,9 +6,8 @@ part of 'review_create_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReviewCreateDTOImpl _$$ReviewCreateDTOImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ReviewCreateDTOImpl(
+_ReviewCreateDTO _$ReviewCreateDTOFromJson(Map<String, dynamic> json) =>
+    _ReviewCreateDTO(
       businessUuid: json['business_uuid'] as String,
       rating: (json['rating'] as num).toInt(),
       reviewType: $enumDecodeNullable(_$ReviewTypeEnumMap, json['review_type']),
@@ -16,8 +15,7 @@ _$ReviewCreateDTOImpl _$$ReviewCreateDTOImplFromJson(
       businessVisitedAt: json['business_visited_at'] as String?,
     );
 
-Map<String, dynamic> _$$ReviewCreateDTOImplToJson(
-        _$ReviewCreateDTOImpl instance) =>
+Map<String, dynamic> _$ReviewCreateDTOToJson(_ReviewCreateDTO instance) =>
     <String, dynamic>{
       'business_uuid': instance.businessUuid,
       'rating': instance.rating,

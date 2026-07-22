@@ -6,8 +6,7 @@ part of 'business_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
-    _$BusinessDMImpl(
+_BusinessDM _$BusinessDMFromJson(Map<String, dynamic> json) => _BusinessDM(
       intId: (json['id'] as num?)?.toInt(),
       logo: json['business_logo'] as String? ?? FoodlyStrings.LOGO_PLACEHOLDER,
       coverImages: (json['cover_images'] as List<dynamic>?)
@@ -71,7 +70,7 @@ _$BusinessDMImpl _$$BusinessDMImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$BusinessDMImplToJson(_$BusinessDMImpl instance) =>
+Map<String, dynamic> _$BusinessDMToJson(_BusinessDM instance) =>
     <String, dynamic>{
       if (instance.intId case final value?) 'id': value,
       'business_logo': instance.logo,
@@ -154,15 +153,14 @@ const _$FoodlyCategoriesEnumMap = {
   FoodlyCategories.cateringAndChefs: 26,
 };
 
-_$CategoryDMImpl _$$CategoryDMImplFromJson(Map<String, dynamic> json) =>
-    _$CategoryDMImpl(
+_CategoryDM _$CategoryDMFromJson(Map<String, dynamic> json) => _CategoryDM(
       id: _safeCategoryFromJson(json['id']),
       categoryUuid: json['category_uuid'] as String?,
       categoryName: json['category_name'] as String?,
       categoryImagePath: json['category_image_path'] as String?,
     );
 
-Map<String, dynamic> _$$CategoryDMImplToJson(_$CategoryDMImpl instance) =>
+Map<String, dynamic> _$CategoryDMToJson(_CategoryDM instance) =>
     <String, dynamic>{
       if (_$FoodlyCategoriesEnumMap[instance.id] case final value?) 'id': value,
       if (instance.categoryUuid case final value?) 'category_uuid': value,
@@ -171,9 +169,8 @@ Map<String, dynamic> _$$CategoryDMImplToJson(_$CategoryDMImpl instance) =>
         'category_image_path': value,
     };
 
-_$BusinessServiceDMImpl _$$BusinessServiceDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$BusinessServiceDMImpl(
+_BusinessServiceDM _$BusinessServiceDMFromJson(Map<String, dynamic> json) =>
+    _BusinessServiceDM(
       service: $enumDecodeNullable(_$BusinessServicesEnumMap, json['id'],
           unknownValue: JsonKey.nullForUndefinedEnumValue),
       uuid: json['service_uuid'] as String?,
@@ -182,8 +179,7 @@ _$BusinessServiceDMImpl _$$BusinessServiceDMImplFromJson(
       serviceImagePath: json['service_image_path'] as String?,
     );
 
-Map<String, dynamic> _$$BusinessServiceDMImplToJson(
-        _$BusinessServiceDMImpl instance) =>
+Map<String, dynamic> _$BusinessServiceDMToJson(_BusinessServiceDM instance) =>
     <String, dynamic>{
       if (_$BusinessServicesEnumMap[instance.service] case final value?)
         'id': value,

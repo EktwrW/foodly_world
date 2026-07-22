@@ -12,7 +12,7 @@ import 'package:foodly_world/ui/shared_widgets/image/image_slider_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/business/widgets/business_name/business_name.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Clarity;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Clarity;
 
 class BusinessSliverAppBar extends StatelessWidget {
   const BusinessSliverAppBar({super.key});

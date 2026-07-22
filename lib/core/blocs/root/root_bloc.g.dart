@@ -6,46 +6,42 @@ part of 'root_bloc.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$InitialImpl _$$InitialImplFromJson(Map<String, dynamic> json) =>
-    _$InitialImpl(
+_Initial _$InitialFromJson(Map<String, dynamic> json) => _Initial(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$InitialImplToJson(_$InitialImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$InitialToJson(_Initial instance) => <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$CachedStateImpl _$$CachedStateImplFromJson(Map<String, dynamic> json) =>
-    _$CachedStateImpl(
+_CachedState _$CachedStateFromJson(Map<String, dynamic> json) => _CachedState(
       userSessionDM:
           UserSessionDM.fromJson(json['userSessionDM'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$CachedStateImplToJson(_$CachedStateImpl instance) =>
+Map<String, dynamic> _$CachedStateToJson(_CachedState instance) =>
     <String, dynamic>{
       'userSessionDM': instance.userSessionDM.toJson(),
       'runtimeType': instance.$type,
     };
 
-_$UserLoggedOutImpl _$$UserLoggedOutImplFromJson(Map<String, dynamic> json) =>
-    _$UserLoggedOutImpl(
+_UserLoggedOut _$UserLoggedOutFromJson(Map<String, dynamic> json) =>
+    _UserLoggedOut(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$UserLoggedOutImplToJson(_$UserLoggedOutImpl instance) =>
+Map<String, dynamic> _$UserLoggedOutToJson(_UserLoggedOut instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
 
-_$SessionExpiredImpl _$$SessionExpiredImplFromJson(Map<String, dynamic> json) =>
-    _$SessionExpiredImpl(
+_SessionExpired _$SessionExpiredFromJson(Map<String, dynamic> json) =>
+    _SessionExpired(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$SessionExpiredImplToJson(
-        _$SessionExpiredImpl instance) =>
+Map<String, dynamic> _$SessionExpiredToJson(_SessionExpired instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };

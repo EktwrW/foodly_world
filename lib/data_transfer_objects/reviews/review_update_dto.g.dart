@@ -6,17 +6,15 @@ part of 'review_update_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReviewUpdateDTOImpl _$$ReviewUpdateDTOImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ReviewUpdateDTOImpl(
+_ReviewUpdateDTO _$ReviewUpdateDTOFromJson(Map<String, dynamic> json) =>
+    _ReviewUpdateDTO(
       rating: (json['rating'] as num?)?.toInt(),
       reviewType: $enumDecodeNullable(_$ReviewTypeEnumMap, json['review_type']),
       comment: json['comment'] as String?,
       businessVisitedAt: json['business_visited_at'] as String?,
     );
 
-Map<String, dynamic> _$$ReviewUpdateDTOImplToJson(
-        _$ReviewUpdateDTOImpl instance) =>
+Map<String, dynamic> _$ReviewUpdateDTOToJson(_ReviewUpdateDTO instance) =>
     <String, dynamic>{
       if (instance.rating case final value?) 'rating': value,
       if (_$ReviewTypeEnumMap[instance.reviewType] case final value?)

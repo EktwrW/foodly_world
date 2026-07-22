@@ -13,7 +13,7 @@ part 'promotion_dm.freezed.dart';
 part 'promotion_dm.g.dart';
 
 @freezed
-class PromotionsResponse with _$PromotionsResponse {
+abstract class PromotionsResponse with _$PromotionsResponse {
   const factory PromotionsResponse({
     @JsonKey(name: 'business_promotions') required List<PromotionDM> promotions,
   }) = _PromotionsResponse;
@@ -33,7 +33,7 @@ class Base64Converter extends JsonConverter<Uint8List?, String?> {
 }
 
 @freezed
-class PromotionDM with _$PromotionDM {
+abstract class PromotionDM with _$PromotionDM {
   const PromotionDM._();
 
   factory PromotionDM({
@@ -90,7 +90,7 @@ enum MediaType {
 }
 
 @freezed
-class PromoMediaDM with _$PromoMediaDM {
+abstract class PromoMediaDM with _$PromoMediaDM {
   const PromoMediaDM._();
 
   const factory PromoMediaDM({
@@ -108,7 +108,7 @@ class PromoMediaDM with _$PromoMediaDM {
 }
 
 @freezed
-class PromoDaysDM with _$PromoDaysDM {
+abstract class PromoDaysDM with _$PromoDaysDM {
   const PromoDaysDM._();
 
   const factory PromoDaysDM({
@@ -139,7 +139,7 @@ class PromoDaysDM with _$PromoDaysDM {
 }
 
 @freezed
-class PromoGenerationResponse with _$PromoGenerationResponse {
+abstract class PromoGenerationResponse with _$PromoGenerationResponse {
   const factory PromoGenerationResponse({
     required String title,
     required String subtitle,
@@ -151,7 +151,7 @@ class PromoGenerationResponse with _$PromoGenerationResponse {
 }
 
 @freezed
-class PromoMediaResponse with _$PromoMediaResponse {
+abstract class PromoMediaResponse with _$PromoMediaResponse {
   const factory PromoMediaResponse({
     @JsonKey(name: 'business_promo_reference_media') required List<PromoMediaDM> promoMedia,
   }) = _PromoMediaResponse;

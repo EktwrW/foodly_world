@@ -1,7 +1,7 @@
 part of 'visit_service_packages_cubit.dart';
 
 @freezed
-class VisitServicePackagesState with _$VisitServicePackagesState {
+sealed class VisitServicePackagesState with _$VisitServicePackagesState {
   const factory VisitServicePackagesState.initial() = _Initial;
   const factory VisitServicePackagesState.loading() = _Loading;
   const factory VisitServicePackagesState.loaded({

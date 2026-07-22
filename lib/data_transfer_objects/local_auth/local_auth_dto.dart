@@ -6,7 +6,7 @@ import 'package:local_auth/local_auth.dart';
 part 'local_auth_dto.freezed.dart';
 
 @freezed
-class LocalAuthDTO with _$LocalAuthDTO {
+abstract class LocalAuthDTO with _$LocalAuthDTO {
   const factory LocalAuthDTO({
     @Default(false) bool deviceIsSupported,
     @Default(false) bool isAuthenticating,

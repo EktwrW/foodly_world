@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:foodly_world/core/utils/assets_utils.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 

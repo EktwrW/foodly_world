@@ -5,7 +5,7 @@ part 'reservation_dm.freezed.dart';
 part 'reservation_dm.g.dart';
 
 @freezed
-class ReservationsResponseDM with _$ReservationsResponseDM {
+abstract class ReservationsResponseDM with _$ReservationsResponseDM {
   const factory ReservationsResponseDM({
     @Default([]) List<ReservationDM> reservations,
     ReservationsMetaDM? meta,
@@ -15,7 +15,7 @@ class ReservationsResponseDM with _$ReservationsResponseDM {
 }
 
 @freezed
-class ReservationsMetaDM with _$ReservationsMetaDM {
+abstract class ReservationsMetaDM with _$ReservationsMetaDM {
   const factory ReservationsMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -27,7 +27,7 @@ class ReservationsMetaDM with _$ReservationsMetaDM {
 }
 
 @freezed
-class ReservationCreateResponseDM with _$ReservationCreateResponseDM {
+abstract class ReservationCreateResponseDM with _$ReservationCreateResponseDM {
   const factory ReservationCreateResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -39,7 +39,7 @@ class ReservationCreateResponseDM with _$ReservationCreateResponseDM {
 }
 
 @freezed
-class ReservationActionResponseDM with _$ReservationActionResponseDM {
+abstract class ReservationActionResponseDM with _$ReservationActionResponseDM {
   const factory ReservationActionResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -51,7 +51,7 @@ class ReservationActionResponseDM with _$ReservationActionResponseDM {
 }
 
 @freezed
-class ReservationShowResponseDM with _$ReservationShowResponseDM {
+abstract class ReservationShowResponseDM with _$ReservationShowResponseDM {
   const factory ReservationShowResponseDM({
     ReservationDM? reservation,
   }) = _ReservationShowResponseDM;
@@ -60,7 +60,7 @@ class ReservationShowResponseDM with _$ReservationShowResponseDM {
 }
 
 @freezed
-class PendingReservationsCountDM with _$PendingReservationsCountDM {
+abstract class PendingReservationsCountDM with _$PendingReservationsCountDM {
   const factory PendingReservationsCountDM({
     @JsonKey(name: 'pending_count') @Default(0) int pendingCount,
   }) = _PendingReservationsCountDM;
@@ -120,7 +120,7 @@ enum EventType {
 }
 
 @freezed
-class ReservationDM with _$ReservationDM {
+abstract class ReservationDM with _$ReservationDM {
   const ReservationDM._();
 
   const factory ReservationDM({

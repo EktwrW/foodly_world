@@ -5,13 +5,14 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/core_exports.dart' show BaseConfig, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/places_proxy/places_proxy_repo.dart';
 import 'package:foodly_world/data_models/places_proxy/place_prediction_dm.dart';
 import 'package:foodly_world/data_transfer_objects/places_proxy/place_autocomplete_request_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/places_autocomplete/_places_proxy_adapter.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:logger/logger.dart';
 import 'package:nova_places_api/nova_places_api.dart';
 

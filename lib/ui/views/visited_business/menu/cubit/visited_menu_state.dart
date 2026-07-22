@@ -1,7 +1,7 @@
 part of 'visited_menu_cubit.dart';
 
 @freezed
-class VisitedMenuState with _$VisitedMenuState {
+sealed class VisitedMenuState with _$VisitedMenuState {
   const VisitedMenuState._();
 
   const factory VisitedMenuState.initial(MenuVM vm) = _Initial;

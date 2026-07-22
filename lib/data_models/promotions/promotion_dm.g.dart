@@ -12,23 +12,20 @@ Base64Converter _$Base64ConverterFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$Base64ConverterToJson(Base64Converter instance) =>
     <String, dynamic>{};
 
-_$PromotionsResponseImpl _$$PromotionsResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PromotionsResponseImpl(
+_PromotionsResponse _$PromotionsResponseFromJson(Map<String, dynamic> json) =>
+    _PromotionsResponse(
       promotions: (json['business_promotions'] as List<dynamic>)
           .map((e) => PromotionDM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$PromotionsResponseImplToJson(
-        _$PromotionsResponseImpl instance) =>
+Map<String, dynamic> _$PromotionsResponseToJson(_PromotionsResponse instance) =>
     <String, dynamic>{
       'business_promotions':
           instance.promotions.map((e) => e.toJson()).toList(),
     };
 
-_$PromotionDMImpl _$$PromotionDMImplFromJson(Map<String, dynamic> json) =>
-    _$PromotionDMImpl(
+_PromotionDM _$PromotionDMFromJson(Map<String, dynamic> json) => _PromotionDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       title: json['title'] as String,
@@ -63,7 +60,7 @@ _$PromotionDMImpl _$$PromotionDMImplFromJson(Map<String, dynamic> json) =>
       followersLength: (json['followers_length'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$PromotionDMImplToJson(_$PromotionDMImpl instance) =>
+Map<String, dynamic> _$PromotionDMToJson(_PromotionDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
@@ -93,8 +90,8 @@ const _$VersionEnumMap = {
   Version.big: 'big',
 };
 
-_$PromoMediaDMImpl _$$PromoMediaDMImplFromJson(Map<String, dynamic> json) =>
-    _$PromoMediaDMImpl(
+_PromoMediaDM _$PromoMediaDMFromJson(Map<String, dynamic> json) =>
+    _PromoMediaDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       mediaUrl: json['business_promo_media_url'] as String,
@@ -102,7 +99,7 @@ _$PromoMediaDMImpl _$$PromoMediaDMImplFromJson(Map<String, dynamic> json) =>
       mediaType: $enumDecode(_$MediaTypeEnumMap, json['media_type']),
     );
 
-Map<String, dynamic> _$$PromoMediaDMImplToJson(_$PromoMediaDMImpl instance) =>
+Map<String, dynamic> _$PromoMediaDMToJson(_PromoMediaDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
@@ -117,8 +114,7 @@ const _$MediaTypeEnumMap = {
   MediaType.video: 'Video',
 };
 
-_$PromoDaysDMImpl _$$PromoDaysDMImplFromJson(Map<String, dynamic> json) =>
-    _$PromoDaysDMImpl(
+_PromoDaysDM _$PromoDaysDMFromJson(Map<String, dynamic> json) => _PromoDaysDM(
       sunday: json['day_0'] as bool? ?? false,
       monday: json['day_1'] as bool? ?? false,
       tuesday: json['day_2'] as bool? ?? false,
@@ -128,7 +124,7 @@ _$PromoDaysDMImpl _$$PromoDaysDMImplFromJson(Map<String, dynamic> json) =>
       saturday: json['day_6'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$PromoDaysDMImplToJson(_$PromoDaysDMImpl instance) =>
+Map<String, dynamic> _$PromoDaysDMToJson(_PromoDaysDM instance) =>
     <String, dynamic>{
       'day_0': instance.sunday,
       'day_1': instance.monday,
@@ -139,9 +135,9 @@ Map<String, dynamic> _$$PromoDaysDMImplToJson(_$PromoDaysDMImpl instance) =>
       'day_6': instance.saturday,
     };
 
-_$PromoGenerationResponseImpl _$$PromoGenerationResponseImplFromJson(
+_PromoGenerationResponse _$PromoGenerationResponseFromJson(
         Map<String, dynamic> json) =>
-    _$PromoGenerationResponseImpl(
+    _PromoGenerationResponse(
       title: json['title'] as String,
       subtitle: json['subtitle'] as String,
       description: json['description'] as String,
@@ -149,8 +145,8 @@ _$PromoGenerationResponseImpl _$$PromoGenerationResponseImplFromJson(
           const Base64Converter().fromJson(json['imageBytes'] as String?),
     );
 
-Map<String, dynamic> _$$PromoGenerationResponseImplToJson(
-        _$PromoGenerationResponseImpl instance) =>
+Map<String, dynamic> _$PromoGenerationResponseToJson(
+        _PromoGenerationResponse instance) =>
     <String, dynamic>{
       'title': instance.title,
       'subtitle': instance.subtitle,
@@ -159,16 +155,14 @@ Map<String, dynamic> _$$PromoGenerationResponseImplToJson(
         'imageBytes': value,
     };
 
-_$PromoMediaResponseImpl _$$PromoMediaResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PromoMediaResponseImpl(
+_PromoMediaResponse _$PromoMediaResponseFromJson(Map<String, dynamic> json) =>
+    _PromoMediaResponse(
       promoMedia: (json['business_promo_reference_media'] as List<dynamic>)
           .map((e) => PromoMediaDM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$PromoMediaResponseImplToJson(
-        _$PromoMediaResponseImpl instance) =>
+Map<String, dynamic> _$PromoMediaResponseToJson(_PromoMediaResponse instance) =>
     <String, dynamic>{
       'business_promo_reference_media':
           instance.promoMedia.map((e) => e.toJson()).toList(),

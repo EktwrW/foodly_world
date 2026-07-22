@@ -6,9 +6,9 @@ part of 'place_details_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PlaceDetailsResponseDMImpl _$$PlaceDetailsResponseDMImplFromJson(
+_PlaceDetailsResponseDM _$PlaceDetailsResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$PlaceDetailsResponseDMImpl(
+    _PlaceDetailsResponseDM(
       status: $enumDecode(_$ProxyStatusEnumEnumMap, json['status'],
           unknownValue: ProxyStatusEnum.unknown),
       result: json['result'] == null
@@ -16,8 +16,8 @@ _$PlaceDetailsResponseDMImpl _$$PlaceDetailsResponseDMImplFromJson(
           : PlaceDM.fromJson(json['result'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$PlaceDetailsResponseDMImplToJson(
-        _$PlaceDetailsResponseDMImpl instance) =>
+Map<String, dynamic> _$PlaceDetailsResponseDMToJson(
+        _PlaceDetailsResponseDM instance) =>
     <String, dynamic>{
       'status': _$ProxyStatusEnumEnumMap[instance.status]!,
       if (instance.result?.toJson() case final value?) 'result': value,

@@ -18,7 +18,7 @@ import 'package:foodly_world/ui/utils/share_promotion_helper.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/cubit/promotions_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:intl/intl.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 

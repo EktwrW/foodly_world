@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,60 +9,104 @@ part of 'manage_promotions_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+/// @nodoc
+mixin _$ManagePromotionsState implements DiagnosticableTreeMixin {
+  ManagePromotionsVM get vm;
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsStateCopyWith<ManagePromotionsState> get copyWith =>
+      _$ManagePromotionsStateCopyWithImpl<ManagePromotionsState>(
+          this as ManagePromotionsState, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'ManagePromotionsState'))
+      ..add(DiagnosticsProperty('vm', vm));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ManagePromotionsState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState(vm: $vm)';
+  }
+}
 
 /// @nodoc
-mixin _$ManagePromotionsState {
-  ManagePromotionsVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) =>
-      throw _privateConstructorUsedError;
+abstract mixin class $ManagePromotionsStateCopyWith<$Res> {
+  factory $ManagePromotionsStateCopyWith(ManagePromotionsState value,
+          $Res Function(ManagePromotionsState) _then) =
+      _$ManagePromotionsStateCopyWithImpl;
+  @useResult
+  $Res call({ManagePromotionsVM vm});
+
+  $ManagePromotionsVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class _$ManagePromotionsStateCopyWithImpl<$Res>
+    implements $ManagePromotionsStateCopyWith<$Res> {
+  _$ManagePromotionsStateCopyWithImpl(this._self, this._then);
+
+  final ManagePromotionsState _self;
+  final $Res Function(ManagePromotionsState) _then;
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_self.copyWith(
+      vm: null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as ManagePromotionsVM,
+    ));
+  }
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [ManagePromotionsState].
+extension ManagePromotionsStatePatterns on ManagePromotionsState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -71,118 +115,227 @@ mixin _$ManagePromotionsState {
     TResult Function(_Error value)? error,
     TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ManagePromotionsStateCopyWith<ManagePromotionsState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ManagePromotionsStateCopyWith<$Res> {
-  factory $ManagePromotionsStateCopyWith(ManagePromotionsState value,
-          $Res Function(ManagePromotionsState) then) =
-      _$ManagePromotionsStateCopyWithImpl<$Res, ManagePromotionsState>;
-  @useResult
-  $Res call({ManagePromotionsVM vm});
-
-  $ManagePromotionsVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class _$ManagePromotionsStateCopyWithImpl<$Res,
-        $Val extends ManagePromotionsState>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  _$ManagePromotionsStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
   }) {
-    return _then(_value.copyWith(
-      vm: null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as ManagePromotionsVM,
-    ) as $Val);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _AiQuotaExhausted() when aiQuotaExhausted != null:
+        return aiQuotaExhausted(_that);
+      case _:
+        return orElse();
+    }
   }
 
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ManagePromotionsVMCopyWith<$Res> get vm {
-    return $ManagePromotionsVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
-    });
-  }
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ManagePromotionsVM vm});
-
-  @override
-  $ManagePromotionsVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as ManagePromotionsVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _Loaded():
+        return loaded(_that);
+      case _Error():
+        return error(_that);
+      case _AiQuotaExhausted():
+        return aiQuotaExhausted(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _AiQuotaExhausted() when aiQuotaExhausted != null:
+        return aiQuotaExhausted(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ManagePromotionsVM vm)? initial,
+    TResult Function(ManagePromotionsVM vm)? loading,
+    TResult Function(ManagePromotionsVM vm)? loaded,
+    TResult Function(String message, ManagePromotionsVM vm)? error,
+    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _AiQuotaExhausted() when aiQuotaExhausted != null:
+        return aiQuotaExhausted(_that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ManagePromotionsVM vm) initial,
+    required TResult Function(ManagePromotionsVM vm) loading,
+    required TResult Function(ManagePromotionsVM vm) loaded,
+    required TResult Function(String message, ManagePromotionsVM vm) error,
+    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Loading():
+        return loading(_that.vm);
+      case _Loaded():
+        return loaded(_that.vm);
+      case _Error():
+        return error(_that.message, _that.vm);
+      case _AiQuotaExhausted():
+        return aiQuotaExhausted(_that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ManagePromotionsVM vm)? initial,
+    TResult? Function(ManagePromotionsVM vm)? loading,
+    TResult? Function(ManagePromotionsVM vm)? loaded,
+    TResult? Function(String message, ManagePromotionsVM vm)? error,
+    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _AiQuotaExhausted() when aiQuotaExhausted != null:
+        return aiQuotaExhausted(_that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial with DiagnosticableTreeMixin implements ManagePromotionsState {
+  const _Initial(this.vm);
 
   @override
   final ManagePromotionsVM vm;
 
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsState.initial(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ManagePromotionsState.initial'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -192,122 +345,24 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _Initial &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
-  }) {
-    return initial(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.initial(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements ManagePromotionsState {
-  const factory _Initial(final ManagePromotionsVM vm) = _$InitialImpl;
-
-  @override
-  ManagePromotionsVM get vm;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -317,45 +372,56 @@ abstract class _$$LoadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadingImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ManagePromotionsVM,
     ));
+  }
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
-  const _$LoadingImpl(this.vm);
+class _Loading with DiagnosticableTreeMixin implements ManagePromotionsState {
+  const _Loading(this.vm);
 
   @override
   final ManagePromotionsVM vm;
 
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsState.loading(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ManagePromotionsState.loading'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -365,122 +431,24 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
+            other is _Loading &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
-  }) {
-    return loading(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.loading(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) {
-    return loading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements ManagePromotionsState {
-  const factory _Loading(final ManagePromotionsVM vm) = _$LoadingImpl;
-
-  @override
-  ManagePromotionsVM get vm;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
+abstract mixin class _$LoadingCopyWith<$Res>
     implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({ManagePromotionsVM vm});
@@ -490,45 +458,56 @@ abstract class _$$LoadedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadedImpl(
+    return _then(_Loading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ManagePromotionsVM,
     ));
+  }
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
-  const _$LoadedImpl(this.vm);
+class _Loaded with DiagnosticableTreeMixin implements ManagePromotionsState {
+  const _Loaded(this.vm);
 
   @override
   final ManagePromotionsVM vm;
 
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsState.loaded(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ManagePromotionsState.loaded'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -538,177 +517,84 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _Loaded &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
-  }) {
-    return loaded(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.loaded(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) {
-    return loaded?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements ManagePromotionsState {
-  const factory _Loaded(final ManagePromotionsVM vm) = _$LoadedImpl;
-
-  @override
-  ManagePromotionsVM get vm;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$LoadedCopyWith<$Res>
     implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
+      __$LoadedCopyWithImpl;
   @override
   @useResult
-  $Res call({String message, ManagePromotionsVM vm});
+  $Res call({ManagePromotionsVM vm});
 
   @override
   $ManagePromotionsVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? message = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_Loaded(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ManagePromotionsVM,
     ));
+  }
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  const _$ErrorImpl(this.message, this.vm);
+class _Error with DiagnosticableTreeMixin implements ManagePromotionsState {
+  const _Error(this.message, this.vm);
 
-  @override
   final String message;
   @override
   final ManagePromotionsVM vm;
 
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsState.error(message: $message, vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ManagePromotionsState.error'))
       ..add(DiagnosticsProperty('message', message))
@@ -719,7 +605,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.vm, vm) || other.vm == vm));
   }
@@ -727,167 +613,83 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message, vm);
 
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
-  }) {
-    return error(message, vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.error(message: $message, vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) {
-    return error?.call(message, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements ManagePromotionsState {
-  const factory _Error(final String message, final ManagePromotionsVM vm) =
-      _$ErrorImpl;
-
-  String get message;
-  @override
-  ManagePromotionsVM get vm;
-
-  /// Create a copy of ManagePromotionsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$AiQuotaExhaustedImplCopyWith<$Res>
+abstract mixin class _$ErrorCopyWith<$Res>
     implements $ManagePromotionsStateCopyWith<$Res> {
-  factory _$$AiQuotaExhaustedImplCopyWith(_$AiQuotaExhaustedImpl value,
-          $Res Function(_$AiQuotaExhaustedImpl) then) =
-      __$$AiQuotaExhaustedImplCopyWithImpl<$Res>;
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
   @override
   @useResult
-  $Res call({ManagePromotionsVM vm});
+  $Res call({String message, ManagePromotionsVM vm});
 
   @override
   $ManagePromotionsVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$AiQuotaExhaustedImplCopyWithImpl<$Res>
-    extends _$ManagePromotionsStateCopyWithImpl<$Res, _$AiQuotaExhaustedImpl>
-    implements _$$AiQuotaExhaustedImplCopyWith<$Res> {
-  __$$AiQuotaExhaustedImplCopyWithImpl(_$AiQuotaExhaustedImpl _value,
-      $Res Function(_$AiQuotaExhaustedImpl) _then)
-      : super(_value, _then);
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
 
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
+    Object? message = null,
     Object? vm = null,
   }) {
-    return _then(_$AiQuotaExhaustedImpl(
+    return _then(_Error(
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ManagePromotionsVM,
     ));
+  }
+
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$AiQuotaExhaustedImpl
+class _AiQuotaExhausted
     with DiagnosticableTreeMixin
-    implements _AiQuotaExhausted {
-  const _$AiQuotaExhaustedImpl(this.vm);
+    implements ManagePromotionsState {
+  const _AiQuotaExhausted(this.vm);
 
   @override
   final ManagePromotionsVM vm;
 
+  /// Create a copy of ManagePromotionsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsState.aiQuotaExhausted(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$AiQuotaExhaustedCopyWith<_AiQuotaExhausted> get copyWith =>
+      __$AiQuotaExhaustedCopyWithImpl<_AiQuotaExhausted>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(
           DiagnosticsProperty('type', 'ManagePromotionsState.aiQuotaExhausted'))
@@ -898,114 +700,65 @@ class _$AiQuotaExhaustedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AiQuotaExhaustedImpl &&
+            other is _AiQuotaExhausted &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ManagePromotionsState.aiQuotaExhausted(vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$AiQuotaExhaustedCopyWith<$Res>
+    implements $ManagePromotionsStateCopyWith<$Res> {
+  factory _$AiQuotaExhaustedCopyWith(
+          _AiQuotaExhausted value, $Res Function(_AiQuotaExhausted) _then) =
+      __$AiQuotaExhaustedCopyWithImpl;
+  @override
+  @useResult
+  $Res call({ManagePromotionsVM vm});
+
+  @override
+  $ManagePromotionsVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$AiQuotaExhaustedCopyWithImpl<$Res>
+    implements _$AiQuotaExhaustedCopyWith<$Res> {
+  __$AiQuotaExhaustedCopyWithImpl(this._self, this._then);
+
+  final _AiQuotaExhausted _self;
+  final $Res Function(_AiQuotaExhausted) _then;
+
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AiQuotaExhaustedImplCopyWith<_$AiQuotaExhaustedImpl> get copyWith =>
-      __$$AiQuotaExhaustedImplCopyWithImpl<_$AiQuotaExhaustedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ManagePromotionsVM vm) initial,
-    required TResult Function(ManagePromotionsVM vm) loading,
-    required TResult Function(ManagePromotionsVM vm) loaded,
-    required TResult Function(String message, ManagePromotionsVM vm) error,
-    required TResult Function(ManagePromotionsVM vm) aiQuotaExhausted,
+  $Res call({
+    Object? vm = null,
   }) {
-    return aiQuotaExhausted(vm);
+    return _then(_AiQuotaExhausted(
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as ManagePromotionsVM,
+    ));
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ManagePromotionsVM vm)? initial,
-    TResult? Function(ManagePromotionsVM vm)? loading,
-    TResult? Function(ManagePromotionsVM vm)? loaded,
-    TResult? Function(String message, ManagePromotionsVM vm)? error,
-    TResult? Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-  }) {
-    return aiQuotaExhausted?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ManagePromotionsVM vm)? initial,
-    TResult Function(ManagePromotionsVM vm)? loading,
-    TResult Function(ManagePromotionsVM vm)? loaded,
-    TResult Function(String message, ManagePromotionsVM vm)? error,
-    TResult Function(ManagePromotionsVM vm)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (aiQuotaExhausted != null) {
-      return aiQuotaExhausted(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_AiQuotaExhausted value) aiQuotaExhausted,
-  }) {
-    return aiQuotaExhausted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-  }) {
-    return aiQuotaExhausted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_AiQuotaExhausted value)? aiQuotaExhausted,
-    required TResult orElse(),
-  }) {
-    if (aiQuotaExhausted != null) {
-      return aiQuotaExhausted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _AiQuotaExhausted implements ManagePromotionsState {
-  const factory _AiQuotaExhausted(final ManagePromotionsVM vm) =
-      _$AiQuotaExhaustedImpl;
-
-  @override
-  ManagePromotionsVM get vm;
 
   /// Create a copy of ManagePromotionsState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AiQuotaExhaustedImplCopyWith<_$AiQuotaExhaustedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $ManagePromotionsVMCopyWith<$Res> get vm {
+    return $ManagePromotionsVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
 }
+
+// dart format on

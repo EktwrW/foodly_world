@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,101 +9,43 @@ part of 'menu_import_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MenuImportState {
-  MenuImportVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  MenuImportVM get vm;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $MenuImportStateCopyWith<MenuImportState> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$MenuImportStateCopyWithImpl<MenuImportState>(
+          this as MenuImportState, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MenuImportState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString() {
+    return 'MenuImportState(vm: $vm)';
+  }
 }
 
 /// @nodoc
-abstract class $MenuImportStateCopyWith<$Res> {
+abstract mixin class $MenuImportStateCopyWith<$Res> {
   factory $MenuImportStateCopyWith(
-          MenuImportState value, $Res Function(MenuImportState) then) =
-      _$MenuImportStateCopyWithImpl<$Res, MenuImportState>;
+          MenuImportState value, $Res Function(MenuImportState) _then) =
+      _$MenuImportStateCopyWithImpl;
   @useResult
   $Res call({MenuImportVM vm});
 
@@ -111,14 +53,12 @@ abstract class $MenuImportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MenuImportStateCopyWithImpl<$Res, $Val extends MenuImportState>
+class _$MenuImportStateCopyWithImpl<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  _$MenuImportStateCopyWithImpl(this._value, this._then);
+  _$MenuImportStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final MenuImportState _self;
+  final $Res Function(MenuImportState) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
@@ -127,12 +67,12 @@ class _$MenuImportStateCopyWithImpl<$Res, $Val extends MenuImportState>
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       vm: null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of MenuImportState
@@ -140,201 +80,329 @@ class _$MenuImportStateCopyWithImpl<$Res, $Val extends MenuImportState>
   @override
   @pragma('vm:prefer-inline')
   $MenuImportVMCopyWith<$Res> get vm {
-    return $MenuImportVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $MenuImportStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({MenuImportVM vm});
+/// Adds pattern-matching-related methods to [MenuImportState].
+extension MenuImportStatePatterns on MenuImportState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $MenuImportVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Picking value)? picking,
+    TResult Function(_Uploading value)? uploading,
+    TResult Function(_Parsing value)? parsing,
+    TResult Function(_Reviewing value)? reviewing,
+    TResult Function(_Confirming value)? confirming,
+    TResult Function(_Done value)? done,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as MenuImportVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Picking() when picking != null:
+        return picking(_that);
+      case _Uploading() when uploading != null:
+        return uploading(_that);
+      case _Parsing() when parsing != null:
+        return parsing(_that);
+      case _Reviewing() when reviewing != null:
+        return reviewing(_that);
+      case _Confirming() when confirming != null:
+        return confirming(_that);
+      case _Done() when done != null:
+        return done(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Picking value) picking,
+    required TResult Function(_Uploading value) uploading,
+    required TResult Function(_Parsing value) parsing,
+    required TResult Function(_Reviewing value) reviewing,
+    required TResult Function(_Confirming value) confirming,
+    required TResult Function(_Done value) done,
+    required TResult Function(_Error value) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Picking():
+        return picking(_that);
+      case _Uploading():
+        return uploading(_that);
+      case _Parsing():
+        return parsing(_that);
+      case _Reviewing():
+        return reviewing(_that);
+      case _Confirming():
+        return confirming(_that);
+      case _Done():
+        return done(_that);
+      case _Error():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Picking value)? picking,
+    TResult? Function(_Uploading value)? uploading,
+    TResult? Function(_Parsing value)? parsing,
+    TResult? Function(_Reviewing value)? reviewing,
+    TResult? Function(_Confirming value)? confirming,
+    TResult? Function(_Done value)? done,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Picking() when picking != null:
+        return picking(_that);
+      case _Uploading() when uploading != null:
+        return uploading(_that);
+      case _Parsing() when parsing != null:
+        return parsing(_that);
+      case _Reviewing() when reviewing != null:
+        return reviewing(_that);
+      case _Confirming() when confirming != null:
+        return confirming(_that);
+      case _Done() when done != null:
+        return done(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MenuImportVM vm)? initial,
+    TResult Function(MenuImportVM vm)? picking,
+    TResult Function(MenuImportVM vm)? uploading,
+    TResult Function(MenuImportVM vm)? parsing,
+    TResult Function(MenuImportVM vm)? reviewing,
+    TResult Function(MenuImportVM vm)? confirming,
+    TResult Function(MenuImportVM vm)? done,
+    TResult Function(String message, MenuImportVM vm)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Picking() when picking != null:
+        return picking(_that.vm);
+      case _Uploading() when uploading != null:
+        return uploading(_that.vm);
+      case _Parsing() when parsing != null:
+        return parsing(_that.vm);
+      case _Reviewing() when reviewing != null:
+        return reviewing(_that.vm);
+      case _Confirming() when confirming != null:
+        return confirming(_that.vm);
+      case _Done() when done != null:
+        return done(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(MenuImportVM vm) initial,
+    required TResult Function(MenuImportVM vm) picking,
+    required TResult Function(MenuImportVM vm) uploading,
+    required TResult Function(MenuImportVM vm) parsing,
+    required TResult Function(MenuImportVM vm) reviewing,
+    required TResult Function(MenuImportVM vm) confirming,
+    required TResult Function(MenuImportVM vm) done,
+    required TResult Function(String message, MenuImportVM vm) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Picking():
+        return picking(_that.vm);
+      case _Uploading():
+        return uploading(_that.vm);
+      case _Parsing():
+        return parsing(_that.vm);
+      case _Reviewing():
+        return reviewing(_that.vm);
+      case _Confirming():
+        return confirming(_that.vm);
+      case _Done():
+        return done(_that.vm);
+      case _Error():
+        return error(_that.message, _that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(MenuImportVM vm)? initial,
+    TResult? Function(MenuImportVM vm)? picking,
+    TResult? Function(MenuImportVM vm)? uploading,
+    TResult? Function(MenuImportVM vm)? parsing,
+    TResult? Function(MenuImportVM vm)? reviewing,
+    TResult? Function(MenuImportVM vm)? confirming,
+    TResult? Function(MenuImportVM vm)? done,
+    TResult? Function(String message, MenuImportVM vm)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Picking() when picking != null:
+        return picking(_that.vm);
+      case _Uploading() when uploading != null:
+        return uploading(_that.vm);
+      case _Parsing() when parsing != null:
+        return parsing(_that.vm);
+      case _Reviewing() when reviewing != null:
+        return reviewing(_that.vm);
+      case _Confirming() when confirming != null:
+        return confirming(_that.vm);
+      case _Done() when done != null:
+        return done(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial implements MenuImportState {
+  const _Initial(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Initial &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.initial(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return initial(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements MenuImportState {
-  const factory _Initial(final MenuImportVM vm) = _$InitialImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PickingImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$PickingImplCopyWith(
-          _$PickingImpl value, $Res Function(_$PickingImpl) then) =
-      __$$PickingImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -344,180 +412,76 @@ abstract class _$$PickingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PickingImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$PickingImpl>
-    implements _$$PickingImplCopyWith<$Res> {
-  __$$PickingImplCopyWithImpl(
-      _$PickingImpl _value, $Res Function(_$PickingImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$PickingImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$PickingImpl implements _Picking {
-  const _$PickingImpl(this.vm);
+class _Picking implements MenuImportState {
+  const _Picking(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PickingCopyWith<_Picking> get copyWith =>
+      __$PickingCopyWithImpl<_Picking>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Picking &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.picking(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PickingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PickingImplCopyWith<_$PickingImpl> get copyWith =>
-      __$$PickingImplCopyWithImpl<_$PickingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return picking(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return picking?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (picking != null) {
-      return picking(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return picking(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return picking?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (picking != null) {
-      return picking(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Picking implements MenuImportState {
-  const factory _Picking(final MenuImportVM vm) = _$PickingImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PickingImplCopyWith<_$PickingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UploadingImplCopyWith<$Res>
+abstract mixin class _$PickingCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$UploadingImplCopyWith(
-          _$UploadingImpl value, $Res Function(_$UploadingImpl) then) =
-      __$$UploadingImplCopyWithImpl<$Res>;
+  factory _$PickingCopyWith(_Picking value, $Res Function(_Picking) _then) =
+      __$PickingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -527,180 +491,77 @@ abstract class _$$UploadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UploadingImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$UploadingImpl>
-    implements _$$UploadingImplCopyWith<$Res> {
-  __$$UploadingImplCopyWithImpl(
-      _$UploadingImpl _value, $Res Function(_$UploadingImpl) _then)
-      : super(_value, _then);
+class __$PickingCopyWithImpl<$Res> implements _$PickingCopyWith<$Res> {
+  __$PickingCopyWithImpl(this._self, this._then);
+
+  final _Picking _self;
+  final $Res Function(_Picking) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$UploadingImpl(
+    return _then(_Picking(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UploadingImpl implements _Uploading {
-  const _$UploadingImpl(this.vm);
+class _Uploading implements MenuImportState {
+  const _Uploading(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UploadingCopyWith<_Uploading> get copyWith =>
+      __$UploadingCopyWithImpl<_Uploading>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Uploading &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.uploading(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UploadingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UploadingImplCopyWith<_$UploadingImpl> get copyWith =>
-      __$$UploadingImplCopyWithImpl<_$UploadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return uploading(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return uploading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (uploading != null) {
-      return uploading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return uploading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return uploading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (uploading != null) {
-      return uploading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Uploading implements MenuImportState {
-  const factory _Uploading(final MenuImportVM vm) = _$UploadingImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UploadingImplCopyWith<_$UploadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ParsingImplCopyWith<$Res>
+abstract mixin class _$UploadingCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$ParsingImplCopyWith(
-          _$ParsingImpl value, $Res Function(_$ParsingImpl) then) =
-      __$$ParsingImplCopyWithImpl<$Res>;
+  factory _$UploadingCopyWith(
+          _Uploading value, $Res Function(_Uploading) _then) =
+      __$UploadingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -710,180 +571,76 @@ abstract class _$$ParsingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ParsingImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$ParsingImpl>
-    implements _$$ParsingImplCopyWith<$Res> {
-  __$$ParsingImplCopyWithImpl(
-      _$ParsingImpl _value, $Res Function(_$ParsingImpl) _then)
-      : super(_value, _then);
+class __$UploadingCopyWithImpl<$Res> implements _$UploadingCopyWith<$Res> {
+  __$UploadingCopyWithImpl(this._self, this._then);
+
+  final _Uploading _self;
+  final $Res Function(_Uploading) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$ParsingImpl(
+    return _then(_Uploading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ParsingImpl implements _Parsing {
-  const _$ParsingImpl(this.vm);
+class _Parsing implements MenuImportState {
+  const _Parsing(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ParsingCopyWith<_Parsing> get copyWith =>
+      __$ParsingCopyWithImpl<_Parsing>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Parsing &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.parsing(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ParsingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ParsingImplCopyWith<_$ParsingImpl> get copyWith =>
-      __$$ParsingImplCopyWithImpl<_$ParsingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return parsing(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return parsing?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (parsing != null) {
-      return parsing(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return parsing(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return parsing?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (parsing != null) {
-      return parsing(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Parsing implements MenuImportState {
-  const factory _Parsing(final MenuImportVM vm) = _$ParsingImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ParsingImplCopyWith<_$ParsingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ReviewingImplCopyWith<$Res>
+abstract mixin class _$ParsingCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$ReviewingImplCopyWith(
-          _$ReviewingImpl value, $Res Function(_$ReviewingImpl) then) =
-      __$$ReviewingImplCopyWithImpl<$Res>;
+  factory _$ParsingCopyWith(_Parsing value, $Res Function(_Parsing) _then) =
+      __$ParsingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -893,180 +650,77 @@ abstract class _$$ReviewingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ReviewingImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$ReviewingImpl>
-    implements _$$ReviewingImplCopyWith<$Res> {
-  __$$ReviewingImplCopyWithImpl(
-      _$ReviewingImpl _value, $Res Function(_$ReviewingImpl) _then)
-      : super(_value, _then);
+class __$ParsingCopyWithImpl<$Res> implements _$ParsingCopyWith<$Res> {
+  __$ParsingCopyWithImpl(this._self, this._then);
+
+  final _Parsing _self;
+  final $Res Function(_Parsing) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$ReviewingImpl(
+    return _then(_Parsing(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ReviewingImpl implements _Reviewing {
-  const _$ReviewingImpl(this.vm);
+class _Reviewing implements MenuImportState {
+  const _Reviewing(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReviewingCopyWith<_Reviewing> get copyWith =>
+      __$ReviewingCopyWithImpl<_Reviewing>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Reviewing &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.reviewing(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReviewingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ReviewingImplCopyWith<_$ReviewingImpl> get copyWith =>
-      __$$ReviewingImplCopyWithImpl<_$ReviewingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return reviewing(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return reviewing?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (reviewing != null) {
-      return reviewing(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return reviewing(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return reviewing?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (reviewing != null) {
-      return reviewing(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Reviewing implements MenuImportState {
-  const factory _Reviewing(final MenuImportVM vm) = _$ReviewingImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReviewingImplCopyWith<_$ReviewingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ConfirmingImplCopyWith<$Res>
+abstract mixin class _$ReviewingCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$ConfirmingImplCopyWith(
-          _$ConfirmingImpl value, $Res Function(_$ConfirmingImpl) then) =
-      __$$ConfirmingImplCopyWithImpl<$Res>;
+  factory _$ReviewingCopyWith(
+          _Reviewing value, $Res Function(_Reviewing) _then) =
+      __$ReviewingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -1076,180 +730,77 @@ abstract class _$$ConfirmingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ConfirmingImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$ConfirmingImpl>
-    implements _$$ConfirmingImplCopyWith<$Res> {
-  __$$ConfirmingImplCopyWithImpl(
-      _$ConfirmingImpl _value, $Res Function(_$ConfirmingImpl) _then)
-      : super(_value, _then);
+class __$ReviewingCopyWithImpl<$Res> implements _$ReviewingCopyWith<$Res> {
+  __$ReviewingCopyWithImpl(this._self, this._then);
+
+  final _Reviewing _self;
+  final $Res Function(_Reviewing) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$ConfirmingImpl(
+    return _then(_Reviewing(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ConfirmingImpl implements _Confirming {
-  const _$ConfirmingImpl(this.vm);
+class _Confirming implements MenuImportState {
+  const _Confirming(this.vm);
 
   @override
   final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ConfirmingCopyWith<_Confirming> get copyWith =>
+      __$ConfirmingCopyWithImpl<_Confirming>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Confirming &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'MenuImportState.confirming(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ConfirmingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ConfirmingImplCopyWith<_$ConfirmingImpl> get copyWith =>
-      __$$ConfirmingImplCopyWithImpl<_$ConfirmingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return confirming(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return confirming?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (confirming != null) {
-      return confirming(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return confirming(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return confirming?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (confirming != null) {
-      return confirming(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Confirming implements MenuImportState {
-  const factory _Confirming(final MenuImportVM vm) = _$ConfirmingImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ConfirmingImplCopyWith<_$ConfirmingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DoneImplCopyWith<$Res>
+abstract mixin class _$ConfirmingCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$DoneImplCopyWith(
-          _$DoneImpl value, $Res Function(_$DoneImpl) then) =
-      __$$DoneImplCopyWithImpl<$Res>;
+  factory _$ConfirmingCopyWith(
+          _Confirming value, $Res Function(_Confirming) _then) =
+      __$ConfirmingCopyWithImpl;
   @override
   @useResult
   $Res call({MenuImportVM vm});
@@ -1259,179 +810,157 @@ abstract class _$$DoneImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DoneImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$DoneImpl>
-    implements _$$DoneImplCopyWith<$Res> {
-  __$$DoneImplCopyWithImpl(_$DoneImpl _value, $Res Function(_$DoneImpl) _then)
-      : super(_value, _then);
+class __$ConfirmingCopyWithImpl<$Res> implements _$ConfirmingCopyWith<$Res> {
+  __$ConfirmingCopyWithImpl(this._self, this._then);
+
+  final _Confirming _self;
+  final $Res Function(_Confirming) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$DoneImpl(
+    return _then(_Confirming(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$DoneImpl implements _Done {
-  const _$DoneImpl(this.vm);
+class _Done implements MenuImportState {
+  const _Done(this.vm);
 
   @override
   final MenuImportVM vm;
 
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'MenuImportState.done(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DoneCopyWith<_Done> get copyWith =>
+      __$DoneCopyWithImpl<_Done>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DoneImpl &&
+            other is _Done &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$DoneImplCopyWith<_$DoneImpl> get copyWith =>
-      __$$DoneImplCopyWithImpl<_$DoneImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return done(vm);
+  String toString() {
+    return 'MenuImportState.done(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return done?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (done != null) {
-      return done(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return done(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return done?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (done != null) {
-      return done(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Done implements MenuImportState {
-  const factory _Done(final MenuImportVM vm) = _$DoneImpl;
-
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DoneImplCopyWith<_$DoneImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$DoneCopyWith<$Res>
     implements $MenuImportStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$DoneCopyWith(_Done value, $Res Function(_Done) _then) =
+      __$DoneCopyWithImpl;
+  @override
+  @useResult
+  $Res call({MenuImportVM vm});
+
+  @override
+  $MenuImportVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$DoneCopyWithImpl<$Res> implements _$DoneCopyWith<$Res> {
+  __$DoneCopyWithImpl(this._self, this._then);
+
+  final _Done _self;
+  final $Res Function(_Done) _then;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_Done(
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as MenuImportVM,
+    ));
+  }
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _Error implements MenuImportState {
+  const _Error(this.message, this.vm);
+
+  final String message;
+  @override
+  final MenuImportVM vm;
+
+  /// Create a copy of MenuImportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Error &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message, vm);
+
+  @override
+  String toString() {
+    return 'MenuImportState.error(message: $message, vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $MenuImportStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String message, MenuImportVM vm});
@@ -1441,180 +970,41 @@ abstract class _$$ErrorImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$MenuImportStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? message = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
+    return _then(_Error(
       null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as MenuImportVM,
     ));
   }
-}
-
-/// @nodoc
-
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.message, this.vm);
-
-  @override
-  final String message;
-  @override
-  final MenuImportVM vm;
-
-  @override
-  String toString() {
-    return 'MenuImportState.error(message: $message, vm: $vm)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message, vm);
 
   /// Create a copy of MenuImportState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(MenuImportVM vm) initial,
-    required TResult Function(MenuImportVM vm) picking,
-    required TResult Function(MenuImportVM vm) uploading,
-    required TResult Function(MenuImportVM vm) parsing,
-    required TResult Function(MenuImportVM vm) reviewing,
-    required TResult Function(MenuImportVM vm) confirming,
-    required TResult Function(MenuImportVM vm) done,
-    required TResult Function(String message, MenuImportVM vm) error,
-  }) {
-    return error(message, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(MenuImportVM vm)? initial,
-    TResult? Function(MenuImportVM vm)? picking,
-    TResult? Function(MenuImportVM vm)? uploading,
-    TResult? Function(MenuImportVM vm)? parsing,
-    TResult? Function(MenuImportVM vm)? reviewing,
-    TResult? Function(MenuImportVM vm)? confirming,
-    TResult? Function(MenuImportVM vm)? done,
-    TResult? Function(String message, MenuImportVM vm)? error,
-  }) {
-    return error?.call(message, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MenuImportVM vm)? initial,
-    TResult Function(MenuImportVM vm)? picking,
-    TResult Function(MenuImportVM vm)? uploading,
-    TResult Function(MenuImportVM vm)? parsing,
-    TResult Function(MenuImportVM vm)? reviewing,
-    TResult Function(MenuImportVM vm)? confirming,
-    TResult Function(MenuImportVM vm)? done,
-    TResult Function(String message, MenuImportVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Picking value) picking,
-    required TResult Function(_Uploading value) uploading,
-    required TResult Function(_Parsing value) parsing,
-    required TResult Function(_Reviewing value) reviewing,
-    required TResult Function(_Confirming value) confirming,
-    required TResult Function(_Done value) done,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Picking value)? picking,
-    TResult? Function(_Uploading value)? uploading,
-    TResult? Function(_Parsing value)? parsing,
-    TResult? Function(_Reviewing value)? reviewing,
-    TResult? Function(_Confirming value)? confirming,
-    TResult? Function(_Done value)? done,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Picking value)? picking,
-    TResult Function(_Uploading value)? uploading,
-    TResult Function(_Parsing value)? parsing,
-    TResult Function(_Reviewing value)? reviewing,
-    TResult Function(_Confirming value)? confirming,
-    TResult Function(_Done value)? done,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
+  $MenuImportVMCopyWith<$Res> get vm {
+    return $MenuImportVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
-abstract class _Error implements MenuImportState {
-  const factory _Error(final String message, final MenuImportVM vm) =
-      _$ErrorImpl;
-
-  String get message;
-  @override
-  MenuImportVM get vm;
-
-  /// Create a copy of MenuImportState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

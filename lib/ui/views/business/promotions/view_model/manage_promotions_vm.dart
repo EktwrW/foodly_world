@@ -32,7 +32,7 @@ enum PromotionEditing {
 }
 
 @freezed
-class ManagePromotionsVM with _$ManagePromotionsVM {
+abstract class ManagePromotionsVM with _$ManagePromotionsVM {
   const ManagePromotionsVM._();
 
   const factory ManagePromotionsVM({

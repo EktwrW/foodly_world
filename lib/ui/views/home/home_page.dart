@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape;
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_icons_data.dart';
@@ -13,7 +14,7 @@ import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.d
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart' show ViewModeToggleButton;
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 part 'widgets/foodly_bottom_nav_bar.dart';
 

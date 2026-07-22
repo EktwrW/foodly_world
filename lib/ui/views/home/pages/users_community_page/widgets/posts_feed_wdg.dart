@@ -10,7 +10,7 @@ import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/soci
 import 'package:foodly_world/ui/views/home/pages/users_community_page/view_model/social_vm.dart'
     show PostsFeedFilter, SocialVM;
 import 'package:foodly_world/ui/views/home/pages/users_community_page/widgets/post_card.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class PostsFeedWidget extends StatefulWidget {
   const PostsFeedWidget({super.key});

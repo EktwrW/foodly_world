@@ -6,17 +6,17 @@ part of 'menu_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MenuResponseImpl _$$MenuResponseImplFromJson(Map<String, dynamic> json) =>
-    _$MenuResponseImpl(
+_MenuResponse _$MenuResponseFromJson(Map<String, dynamic> json) =>
+    _MenuResponse(
       menuDM: MenuDM.fromJson(json['menu'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$MenuResponseImplToJson(_$MenuResponseImpl instance) =>
+Map<String, dynamic> _$MenuResponseToJson(_MenuResponse instance) =>
     <String, dynamic>{
       'menu': instance.menuDM.toJson(),
     };
 
-_$MenuDMImpl _$$MenuDMImplFromJson(Map<String, dynamic> json) => _$MenuDMImpl(
+_MenuDM _$MenuDMFromJson(Map<String, dynamic> json) => _MenuDM(
       uuid: json['uuid'] as String,
       id: (json['id'] as num?)?.toInt(),
       business: json['business'] == null
@@ -43,8 +43,7 @@ _$MenuDMImpl _$$MenuDMImplFromJson(Map<String, dynamic> json) => _$MenuDMImpl(
       followersLength: (json['followers_length'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$MenuDMImplToJson(_$MenuDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MenuDMToJson(_MenuDM instance) => <String, dynamic>{
       'uuid': instance.uuid,
       if (instance.id case final value?) 'id': value,
       if (instance.business?.toJson() case final value?) 'business': value,
@@ -61,8 +60,7 @@ Map<String, dynamic> _$$MenuDMImplToJson(_$MenuDMImpl instance) =>
       'followers_length': instance.followersLength,
     };
 
-_$CategoryDMImpl _$$CategoryDMImplFromJson(Map<String, dynamic> json) =>
-    _$CategoryDMImpl(
+_CategoryDM _$CategoryDMFromJson(Map<String, dynamic> json) => _CategoryDM(
       name: json['name'] as String,
       uuid: json['uuid'] as String,
       id: (json['id'] as num?)?.toInt(),
@@ -72,7 +70,7 @@ _$CategoryDMImpl _$$CategoryDMImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$CategoryDMImplToJson(_$CategoryDMImpl instance) =>
+Map<String, dynamic> _$CategoryDMToJson(_CategoryDM instance) =>
     <String, dynamic>{
       'name': instance.name,
       'uuid': instance.uuid,

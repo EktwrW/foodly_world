@@ -1,7 +1,7 @@
 part of 'local_auth_cubit.dart';
 
 @freezed
-class LocalAuthState with _$LocalAuthState {
+sealed class LocalAuthState with _$LocalAuthState {
   const factory LocalAuthState.initial(LocalAuthDTO localAuthDTO) = _Initial;
   const factory LocalAuthState.loading(LocalAuthDTO localAuthDTO) = _Loading;
   const factory LocalAuthState.loaded(LocalAuthDTO localAuthDTO) = _Loaded;

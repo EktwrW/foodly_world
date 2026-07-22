@@ -14,7 +14,7 @@ import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.d
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class FoodlyDrawer extends StatelessWidget {

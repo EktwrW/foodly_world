@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,83 +9,60 @@ part of 'business_search_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-BusinessSearchDM _$BusinessSearchDMFromJson(Map<String, dynamic> json) {
-  return _BusinessSearchDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$BusinessSearchDM {
   @JsonKey(name: 'business')
-  List<BusinessDM> get business => throw _privateConstructorUsedError;
-
-  /// Serializes this BusinessSearchDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<BusinessDM> get business;
 
   /// Create a copy of BusinessSearchDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BusinessSearchDMCopyWith<BusinessSearchDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BusinessSearchDMCopyWith<$Res> {
-  factory $BusinessSearchDMCopyWith(
-          BusinessSearchDM value, $Res Function(BusinessSearchDM) then) =
-      _$BusinessSearchDMCopyWithImpl<$Res, BusinessSearchDM>;
-  @useResult
-  $Res call({@JsonKey(name: 'business') List<BusinessDM> business});
-}
-
-/// @nodoc
-class _$BusinessSearchDMCopyWithImpl<$Res, $Val extends BusinessSearchDM>
-    implements $BusinessSearchDMCopyWith<$Res> {
-  _$BusinessSearchDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BusinessSearchDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $BusinessSearchDMCopyWith<BusinessSearchDM> get copyWith =>
+      _$BusinessSearchDMCopyWithImpl<BusinessSearchDM>(
+          this as BusinessSearchDM, _$identity);
+
+  /// Serializes this BusinessSearchDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? business = null,
-  }) {
-    return _then(_value.copyWith(
-      business: null == business
-          ? _value.business
-          : business // ignore: cast_nullable_to_non_nullable
-              as List<BusinessDM>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessSearchDM &&
+            const DeepCollectionEquality().equals(other.business, business));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(business));
+
+  @override
+  String toString() {
+    return 'BusinessSearchDM(business: $business)';
   }
 }
 
 /// @nodoc
-abstract class _$$BusinessSearchDMImplCopyWith<$Res>
-    implements $BusinessSearchDMCopyWith<$Res> {
-  factory _$$BusinessSearchDMImplCopyWith(_$BusinessSearchDMImpl value,
-          $Res Function(_$BusinessSearchDMImpl) then) =
-      __$$BusinessSearchDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $BusinessSearchDMCopyWith<$Res> {
+  factory $BusinessSearchDMCopyWith(
+          BusinessSearchDM value, $Res Function(BusinessSearchDM) _then) =
+      _$BusinessSearchDMCopyWithImpl;
   @useResult
   $Res call({@JsonKey(name: 'business') List<BusinessDM> business});
 }
 
 /// @nodoc
-class __$$BusinessSearchDMImplCopyWithImpl<$Res>
-    extends _$BusinessSearchDMCopyWithImpl<$Res, _$BusinessSearchDMImpl>
-    implements _$$BusinessSearchDMImplCopyWith<$Res> {
-  __$$BusinessSearchDMImplCopyWithImpl(_$BusinessSearchDMImpl _value,
-      $Res Function(_$BusinessSearchDMImpl) _then)
-      : super(_value, _then);
+class _$BusinessSearchDMCopyWithImpl<$Res>
+    implements $BusinessSearchDMCopyWith<$Res> {
+  _$BusinessSearchDMCopyWithImpl(this._self, this._then);
+
+  final BusinessSearchDM _self;
+  final $Res Function(BusinessSearchDM) _then;
 
   /// Create a copy of BusinessSearchDM
   /// with the given fields replaced by the non-null parameter values.
@@ -94,24 +71,183 @@ class __$$BusinessSearchDMImplCopyWithImpl<$Res>
   $Res call({
     Object? business = null,
   }) {
-    return _then(_$BusinessSearchDMImpl(
+    return _then(_self.copyWith(
       business: null == business
-          ? _value._business
+          ? _self.business
           : business // ignore: cast_nullable_to_non_nullable
               as List<BusinessDM>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [BusinessSearchDM].
+extension BusinessSearchDMPatterns on BusinessSearchDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BusinessSearchDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BusinessSearchDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BusinessSearchDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM() when $default != null:
+        return $default(_that.business);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM():
+        return $default(_that.business);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(@JsonKey(name: 'business') List<BusinessDM> business)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessSearchDM() when $default != null:
+        return $default(_that.business);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$BusinessSearchDMImpl implements _BusinessSearchDM {
-  const _$BusinessSearchDMImpl(
+class _BusinessSearchDM implements BusinessSearchDM {
+  const _BusinessSearchDM(
       {@JsonKey(name: 'business') required final List<BusinessDM> business})
       : _business = business;
-
-  factory _$BusinessSearchDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BusinessSearchDMImplFromJson(json);
+  factory _BusinessSearchDM.fromJson(Map<String, dynamic> json) =>
+      _$BusinessSearchDMFromJson(json);
 
   final List<BusinessDM> _business;
   @override
@@ -122,16 +258,26 @@ class _$BusinessSearchDMImpl implements _BusinessSearchDM {
     return EqualUnmodifiableListView(_business);
   }
 
+  /// Create a copy of BusinessSearchDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BusinessSearchDM(business: $business)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessSearchDMCopyWith<_BusinessSearchDM> get copyWith =>
+      __$BusinessSearchDMCopyWithImpl<_BusinessSearchDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BusinessSearchDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessSearchDMImpl &&
+            other is _BusinessSearchDM &&
             const DeepCollectionEquality().equals(other._business, _business));
   }
 
@@ -140,39 +286,45 @@ class _$BusinessSearchDMImpl implements _BusinessSearchDM {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_business));
 
-  /// Create a copy of BusinessSearchDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessSearchDMImplCopyWith<_$BusinessSearchDMImpl> get copyWith =>
-      __$$BusinessSearchDMImplCopyWithImpl<_$BusinessSearchDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BusinessSearchDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'BusinessSearchDM(business: $business)';
   }
 }
 
-abstract class _BusinessSearchDM implements BusinessSearchDM {
-  const factory _BusinessSearchDM(
-      {@JsonKey(name: 'business')
-      required final List<BusinessDM> business}) = _$BusinessSearchDMImpl;
-
-  factory _BusinessSearchDM.fromJson(Map<String, dynamic> json) =
-      _$BusinessSearchDMImpl.fromJson;
-
+/// @nodoc
+abstract mixin class _$BusinessSearchDMCopyWith<$Res>
+    implements $BusinessSearchDMCopyWith<$Res> {
+  factory _$BusinessSearchDMCopyWith(
+          _BusinessSearchDM value, $Res Function(_BusinessSearchDM) _then) =
+      __$BusinessSearchDMCopyWithImpl;
   @override
-  @JsonKey(name: 'business')
-  List<BusinessDM> get business;
+  @useResult
+  $Res call({@JsonKey(name: 'business') List<BusinessDM> business});
+}
+
+/// @nodoc
+class __$BusinessSearchDMCopyWithImpl<$Res>
+    implements _$BusinessSearchDMCopyWith<$Res> {
+  __$BusinessSearchDMCopyWithImpl(this._self, this._then);
+
+  final _BusinessSearchDM _self;
+  final $Res Function(_BusinessSearchDM) _then;
 
   /// Create a copy of BusinessSearchDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessSearchDMImplCopyWith<_$BusinessSearchDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? business = null,
+  }) {
+    return _then(_BusinessSearchDM(
+      business: null == business
+          ? _self._business
+          : business // ignore: cast_nullable_to_non_nullable
+              as List<BusinessDM>,
+    ));
+  }
 }
+
+// dart format on

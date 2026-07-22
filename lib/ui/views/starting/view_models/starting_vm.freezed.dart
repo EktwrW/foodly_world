@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,49 +9,97 @@ part of 'starting_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$StartingVM {
-  StartingPageView get currentView => throw _privateConstructorUsedError;
-  TextEditingController? get emailController =>
-      throw _privateConstructorUsedError;
-  TextEditingController? get passwordController =>
-      throw _privateConstructorUsedError;
-  UserSessionDM get userSessionDM => throw _privateConstructorUsedError;
-  AutovalidateMode get autovalidateMode => throw _privateConstructorUsedError;
-  RecoverPasswordView get recoverPasswordView =>
-      throw _privateConstructorUsedError;
-  GoogleSignInAccount? get googleSignInAccount =>
-      throw _privateConstructorUsedError; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
+  StartingPageView get currentView;
+  TextEditingController? get emailController;
+  TextEditingController? get passwordController;
+  UserSessionDM get userSessionDM;
+  AutovalidateMode get autovalidateMode;
+  RecoverPasswordView get recoverPasswordView;
+  GoogleSignInAccount?
+      get googleSignInAccount; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
 // dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
 // capturamos del lado cliente —igual que el displayName/email de Google—
 // y los arrastramos al sign-up cuando el usuario es nuevo.
-  String? get appleGivenName => throw _privateConstructorUsedError;
-  String? get appleFamilyName => throw _privateConstructorUsedError;
-  String? get appleEmail => throw _privateConstructorUsedError;
-  String? get importedAvatar =>
-      throw _privateConstructorUsedError; // True solo cuando el usuario acaba de crearse vía alta social directa
+  String? get appleGivenName;
+  String? get appleFamilyName;
+  String? get appleEmail;
+  String?
+      get importedAvatar; // True solo cuando el usuario acaba de crearse vía alta social directa
 // (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
 // guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
 // NO en logins normales posteriores.
-  bool get justSocialRegistered => throw _privateConstructorUsedError;
+  bool get justSocialRegistered;
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $StartingVMCopyWith<StartingVM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$StartingVMCopyWithImpl<StartingVM>(this as StartingVM, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is StartingVM &&
+            (identical(other.currentView, currentView) ||
+                other.currentView == currentView) &&
+            (identical(other.emailController, emailController) ||
+                other.emailController == emailController) &&
+            (identical(other.passwordController, passwordController) ||
+                other.passwordController == passwordController) &&
+            (identical(other.userSessionDM, userSessionDM) ||
+                other.userSessionDM == userSessionDM) &&
+            (identical(other.autovalidateMode, autovalidateMode) ||
+                other.autovalidateMode == autovalidateMode) &&
+            (identical(other.recoverPasswordView, recoverPasswordView) ||
+                other.recoverPasswordView == recoverPasswordView) &&
+            (identical(other.googleSignInAccount, googleSignInAccount) ||
+                other.googleSignInAccount == googleSignInAccount) &&
+            (identical(other.appleGivenName, appleGivenName) ||
+                other.appleGivenName == appleGivenName) &&
+            (identical(other.appleFamilyName, appleFamilyName) ||
+                other.appleFamilyName == appleFamilyName) &&
+            (identical(other.appleEmail, appleEmail) ||
+                other.appleEmail == appleEmail) &&
+            (identical(other.importedAvatar, importedAvatar) ||
+                other.importedAvatar == importedAvatar) &&
+            (identical(other.justSocialRegistered, justSocialRegistered) ||
+                other.justSocialRegistered == justSocialRegistered));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      currentView,
+      emailController,
+      passwordController,
+      userSessionDM,
+      autovalidateMode,
+      recoverPasswordView,
+      googleSignInAccount,
+      appleGivenName,
+      appleFamilyName,
+      appleEmail,
+      importedAvatar,
+      justSocialRegistered);
+
+  @override
+  String toString() {
+    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar, justSocialRegistered: $justSocialRegistered)';
+  }
 }
 
 /// @nodoc
-abstract class $StartingVMCopyWith<$Res> {
+abstract mixin class $StartingVMCopyWith<$Res> {
   factory $StartingVMCopyWith(
-          StartingVM value, $Res Function(StartingVM) then) =
-      _$StartingVMCopyWithImpl<$Res, StartingVM>;
+          StartingVM value, $Res Function(StartingVM) _then) =
+      _$StartingVMCopyWithImpl;
   @useResult
   $Res call(
       {StartingPageView currentView,
@@ -71,14 +119,11 @@ abstract class $StartingVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
-    implements $StartingVMCopyWith<$Res> {
-  _$StartingVMCopyWithImpl(this._value, this._then);
+class _$StartingVMCopyWithImpl<$Res> implements $StartingVMCopyWith<$Res> {
+  _$StartingVMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final StartingVM _self;
+  final $Res Function(StartingVM) _then;
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
@@ -98,56 +143,56 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
     Object? importedAvatar = freezed,
     Object? justSocialRegistered = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       currentView: null == currentView
-          ? _value.currentView
+          ? _self.currentView
           : currentView // ignore: cast_nullable_to_non_nullable
               as StartingPageView,
       emailController: freezed == emailController
-          ? _value.emailController
+          ? _self.emailController
           : emailController // ignore: cast_nullable_to_non_nullable
               as TextEditingController?,
       passwordController: freezed == passwordController
-          ? _value.passwordController
+          ? _self.passwordController
           : passwordController // ignore: cast_nullable_to_non_nullable
               as TextEditingController?,
       userSessionDM: null == userSessionDM
-          ? _value.userSessionDM
+          ? _self.userSessionDM
           : userSessionDM // ignore: cast_nullable_to_non_nullable
               as UserSessionDM,
       autovalidateMode: null == autovalidateMode
-          ? _value.autovalidateMode
+          ? _self.autovalidateMode
           : autovalidateMode // ignore: cast_nullable_to_non_nullable
               as AutovalidateMode,
       recoverPasswordView: null == recoverPasswordView
-          ? _value.recoverPasswordView
+          ? _self.recoverPasswordView
           : recoverPasswordView // ignore: cast_nullable_to_non_nullable
               as RecoverPasswordView,
       googleSignInAccount: freezed == googleSignInAccount
-          ? _value.googleSignInAccount
+          ? _self.googleSignInAccount
           : googleSignInAccount // ignore: cast_nullable_to_non_nullable
               as GoogleSignInAccount?,
       appleGivenName: freezed == appleGivenName
-          ? _value.appleGivenName
+          ? _self.appleGivenName
           : appleGivenName // ignore: cast_nullable_to_non_nullable
               as String?,
       appleFamilyName: freezed == appleFamilyName
-          ? _value.appleFamilyName
+          ? _self.appleFamilyName
           : appleFamilyName // ignore: cast_nullable_to_non_nullable
               as String?,
       appleEmail: freezed == appleEmail
-          ? _value.appleEmail
+          ? _self.appleEmail
           : appleEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       importedAvatar: freezed == importedAvatar
-          ? _value.importedAvatar
+          ? _self.importedAvatar
           : importedAvatar // ignore: cast_nullable_to_non_nullable
               as String?,
       justSocialRegistered: null == justSocialRegistered
-          ? _value.justSocialRegistered
+          ? _self.justSocialRegistered
           : justSocialRegistered // ignore: cast_nullable_to_non_nullable
               as bool,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of StartingVM
@@ -155,121 +200,248 @@ class _$StartingVMCopyWithImpl<$Res, $Val extends StartingVM>
   @override
   @pragma('vm:prefer-inline')
   $UserSessionDMCopyWith<$Res> get userSessionDM {
-    return $UserSessionDMCopyWith<$Res>(_value.userSessionDM, (value) {
-      return _then(_value.copyWith(userSessionDM: value) as $Val);
+    return $UserSessionDMCopyWith<$Res>(_self.userSessionDM, (value) {
+      return _then(_self.copyWith(userSessionDM: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$StartingVMImplCopyWith<$Res>
-    implements $StartingVMCopyWith<$Res> {
-  factory _$$StartingVMImplCopyWith(
-          _$StartingVMImpl value, $Res Function(_$StartingVMImpl) then) =
-      __$$StartingVMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {StartingPageView currentView,
-      TextEditingController? emailController,
-      TextEditingController? passwordController,
-      UserSessionDM userSessionDM,
-      AutovalidateMode autovalidateMode,
-      RecoverPasswordView recoverPasswordView,
-      GoogleSignInAccount? googleSignInAccount,
-      String? appleGivenName,
-      String? appleFamilyName,
-      String? appleEmail,
-      String? importedAvatar,
-      bool justSocialRegistered});
+/// Adds pattern-matching-related methods to [StartingVM].
+extension StartingVMPatterns on StartingVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $UserSessionDMCopyWith<$Res> get userSessionDM;
-}
-
-/// @nodoc
-class __$$StartingVMImplCopyWithImpl<$Res>
-    extends _$StartingVMCopyWithImpl<$Res, _$StartingVMImpl>
-    implements _$$StartingVMImplCopyWith<$Res> {
-  __$$StartingVMImplCopyWithImpl(
-      _$StartingVMImpl _value, $Res Function(_$StartingVMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of StartingVM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currentView = null,
-    Object? emailController = freezed,
-    Object? passwordController = freezed,
-    Object? userSessionDM = null,
-    Object? autovalidateMode = null,
-    Object? recoverPasswordView = null,
-    Object? googleSignInAccount = freezed,
-    Object? appleGivenName = freezed,
-    Object? appleFamilyName = freezed,
-    Object? appleEmail = freezed,
-    Object? importedAvatar = freezed,
-    Object? justSocialRegistered = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_StartingVM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$StartingVMImpl(
-      currentView: null == currentView
-          ? _value.currentView
-          : currentView // ignore: cast_nullable_to_non_nullable
-              as StartingPageView,
-      emailController: freezed == emailController
-          ? _value.emailController
-          : emailController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
-      passwordController: freezed == passwordController
-          ? _value.passwordController
-          : passwordController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController?,
-      userSessionDM: null == userSessionDM
-          ? _value.userSessionDM
-          : userSessionDM // ignore: cast_nullable_to_non_nullable
-              as UserSessionDM,
-      autovalidateMode: null == autovalidateMode
-          ? _value.autovalidateMode
-          : autovalidateMode // ignore: cast_nullable_to_non_nullable
-              as AutovalidateMode,
-      recoverPasswordView: null == recoverPasswordView
-          ? _value.recoverPasswordView
-          : recoverPasswordView // ignore: cast_nullable_to_non_nullable
-              as RecoverPasswordView,
-      googleSignInAccount: freezed == googleSignInAccount
-          ? _value.googleSignInAccount
-          : googleSignInAccount // ignore: cast_nullable_to_non_nullable
-              as GoogleSignInAccount?,
-      appleGivenName: freezed == appleGivenName
-          ? _value.appleGivenName
-          : appleGivenName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appleFamilyName: freezed == appleFamilyName
-          ? _value.appleFamilyName
-          : appleFamilyName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      appleEmail: freezed == appleEmail
-          ? _value.appleEmail
-          : appleEmail // ignore: cast_nullable_to_non_nullable
-              as String?,
-      importedAvatar: freezed == importedAvatar
-          ? _value.importedAvatar
-          : importedAvatar // ignore: cast_nullable_to_non_nullable
-              as String?,
-      justSocialRegistered: null == justSocialRegistered
-          ? _value.justSocialRegistered
-          : justSocialRegistered // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _StartingVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_StartingVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StartingVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_StartingVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StartingVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            StartingPageView currentView,
+            TextEditingController? emailController,
+            TextEditingController? passwordController,
+            UserSessionDM userSessionDM,
+            AutovalidateMode autovalidateMode,
+            RecoverPasswordView recoverPasswordView,
+            GoogleSignInAccount? googleSignInAccount,
+            String? appleGivenName,
+            String? appleFamilyName,
+            String? appleEmail,
+            String? importedAvatar,
+            bool justSocialRegistered)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _StartingVM() when $default != null:
+        return $default(
+            _that.currentView,
+            _that.emailController,
+            _that.passwordController,
+            _that.userSessionDM,
+            _that.autovalidateMode,
+            _that.recoverPasswordView,
+            _that.googleSignInAccount,
+            _that.appleGivenName,
+            _that.appleFamilyName,
+            _that.appleEmail,
+            _that.importedAvatar,
+            _that.justSocialRegistered);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            StartingPageView currentView,
+            TextEditingController? emailController,
+            TextEditingController? passwordController,
+            UserSessionDM userSessionDM,
+            AutovalidateMode autovalidateMode,
+            RecoverPasswordView recoverPasswordView,
+            GoogleSignInAccount? googleSignInAccount,
+            String? appleGivenName,
+            String? appleFamilyName,
+            String? appleEmail,
+            String? importedAvatar,
+            bool justSocialRegistered)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StartingVM():
+        return $default(
+            _that.currentView,
+            _that.emailController,
+            _that.passwordController,
+            _that.userSessionDM,
+            _that.autovalidateMode,
+            _that.recoverPasswordView,
+            _that.googleSignInAccount,
+            _that.appleGivenName,
+            _that.appleFamilyName,
+            _that.appleEmail,
+            _that.importedAvatar,
+            _that.justSocialRegistered);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            StartingPageView currentView,
+            TextEditingController? emailController,
+            TextEditingController? passwordController,
+            UserSessionDM userSessionDM,
+            AutovalidateMode autovalidateMode,
+            RecoverPasswordView recoverPasswordView,
+            GoogleSignInAccount? googleSignInAccount,
+            String? appleGivenName,
+            String? appleFamilyName,
+            String? appleEmail,
+            String? importedAvatar,
+            bool justSocialRegistered)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _StartingVM() when $default != null:
+        return $default(
+            _that.currentView,
+            _that.emailController,
+            _that.passwordController,
+            _that.userSessionDM,
+            _that.autovalidateMode,
+            _that.recoverPasswordView,
+            _that.googleSignInAccount,
+            _that.appleGivenName,
+            _that.appleFamilyName,
+            _that.appleEmail,
+            _that.importedAvatar,
+            _that.justSocialRegistered);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$StartingVMImpl extends _StartingVM {
-  const _$StartingVMImpl(
+class _StartingVM extends StartingVM {
+  const _StartingVM(
       {this.currentView = StartingPageView.initial,
       this.emailController,
       this.passwordController,
@@ -322,16 +494,19 @@ class _$StartingVMImpl extends _StartingVM {
   @JsonKey()
   final bool justSocialRegistered;
 
+  /// Create a copy of StartingVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar, justSocialRegistered: $justSocialRegistered)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$StartingVMCopyWith<_StartingVM> get copyWith =>
+      __$StartingVMCopyWithImpl<_StartingVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StartingVMImpl &&
+            other is _StartingVM &&
             (identical(other.currentView, currentView) ||
                 other.currentView == currentView) &&
             (identical(other.emailController, emailController) ||
@@ -374,68 +549,124 @@ class _$StartingVMImpl extends _StartingVM {
       importedAvatar,
       justSocialRegistered);
 
+  @override
+  String toString() {
+    return 'StartingVM(currentView: $currentView, emailController: $emailController, passwordController: $passwordController, userSessionDM: $userSessionDM, autovalidateMode: $autovalidateMode, recoverPasswordView: $recoverPasswordView, googleSignInAccount: $googleSignInAccount, appleGivenName: $appleGivenName, appleFamilyName: $appleFamilyName, appleEmail: $appleEmail, importedAvatar: $importedAvatar, justSocialRegistered: $justSocialRegistered)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$StartingVMCopyWith<$Res>
+    implements $StartingVMCopyWith<$Res> {
+  factory _$StartingVMCopyWith(
+          _StartingVM value, $Res Function(_StartingVM) _then) =
+      __$StartingVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {StartingPageView currentView,
+      TextEditingController? emailController,
+      TextEditingController? passwordController,
+      UserSessionDM userSessionDM,
+      AutovalidateMode autovalidateMode,
+      RecoverPasswordView recoverPasswordView,
+      GoogleSignInAccount? googleSignInAccount,
+      String? appleGivenName,
+      String? appleFamilyName,
+      String? appleEmail,
+      String? importedAvatar,
+      bool justSocialRegistered});
+
+  @override
+  $UserSessionDMCopyWith<$Res> get userSessionDM;
+}
+
+/// @nodoc
+class __$StartingVMCopyWithImpl<$Res> implements _$StartingVMCopyWith<$Res> {
+  __$StartingVMCopyWithImpl(this._self, this._then);
+
+  final _StartingVM _self;
+  final $Res Function(_StartingVM) _then;
+
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StartingVMImplCopyWith<_$StartingVMImpl> get copyWith =>
-      __$$StartingVMImplCopyWithImpl<_$StartingVMImpl>(this, _$identity);
-}
-
-abstract class _StartingVM extends StartingVM {
-  const factory _StartingVM(
-      {final StartingPageView currentView,
-      final TextEditingController? emailController,
-      final TextEditingController? passwordController,
-      final UserSessionDM userSessionDM,
-      final AutovalidateMode autovalidateMode,
-      final RecoverPasswordView recoverPasswordView,
-      final GoogleSignInAccount? googleSignInAccount,
-      final String? appleGivenName,
-      final String? appleFamilyName,
-      final String? appleEmail,
-      final String? importedAvatar,
-      final bool justSocialRegistered}) = _$StartingVMImpl;
-  const _StartingVM._() : super._();
-
-  @override
-  StartingPageView get currentView;
-  @override
-  TextEditingController? get emailController;
-  @override
-  TextEditingController? get passwordController;
-  @override
-  UserSessionDM get userSessionDM;
-  @override
-  AutovalidateMode get autovalidateMode;
-  @override
-  RecoverPasswordView get recoverPasswordView;
-  @override
-  GoogleSignInAccount?
-      get googleSignInAccount; // Apple solo entrega nombre/email en la PRIMERA autorización y nunca
-// dentro del identityToken (el JWT solo trae `sub` + email). Por eso los
-// capturamos del lado cliente —igual que el displayName/email de Google—
-// y los arrastramos al sign-up cuando el usuario es nuevo.
-  @override
-  String? get appleGivenName;
-  @override
-  String? get appleFamilyName;
-  @override
-  String? get appleEmail;
-  @override
-  String?
-      get importedAvatar; // True solo cuando el usuario acaba de crearse vía alta social directa
-// (Apple/Google). Lo usa StartingPage para mostrar el WelcomeDialog (con la
-// guía de "migrar a cuenta empresarial") en ese primer ingreso al home, y
-// NO en logins normales posteriores.
-  @override
-  bool get justSocialRegistered;
+  $Res call({
+    Object? currentView = null,
+    Object? emailController = freezed,
+    Object? passwordController = freezed,
+    Object? userSessionDM = null,
+    Object? autovalidateMode = null,
+    Object? recoverPasswordView = null,
+    Object? googleSignInAccount = freezed,
+    Object? appleGivenName = freezed,
+    Object? appleFamilyName = freezed,
+    Object? appleEmail = freezed,
+    Object? importedAvatar = freezed,
+    Object? justSocialRegistered = null,
+  }) {
+    return _then(_StartingVM(
+      currentView: null == currentView
+          ? _self.currentView
+          : currentView // ignore: cast_nullable_to_non_nullable
+              as StartingPageView,
+      emailController: freezed == emailController
+          ? _self.emailController
+          : emailController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      passwordController: freezed == passwordController
+          ? _self.passwordController
+          : passwordController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController?,
+      userSessionDM: null == userSessionDM
+          ? _self.userSessionDM
+          : userSessionDM // ignore: cast_nullable_to_non_nullable
+              as UserSessionDM,
+      autovalidateMode: null == autovalidateMode
+          ? _self.autovalidateMode
+          : autovalidateMode // ignore: cast_nullable_to_non_nullable
+              as AutovalidateMode,
+      recoverPasswordView: null == recoverPasswordView
+          ? _self.recoverPasswordView
+          : recoverPasswordView // ignore: cast_nullable_to_non_nullable
+              as RecoverPasswordView,
+      googleSignInAccount: freezed == googleSignInAccount
+          ? _self.googleSignInAccount
+          : googleSignInAccount // ignore: cast_nullable_to_non_nullable
+              as GoogleSignInAccount?,
+      appleGivenName: freezed == appleGivenName
+          ? _self.appleGivenName
+          : appleGivenName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleFamilyName: freezed == appleFamilyName
+          ? _self.appleFamilyName
+          : appleFamilyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appleEmail: freezed == appleEmail
+          ? _self.appleEmail
+          : appleEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      importedAvatar: freezed == importedAvatar
+          ? _self.importedAvatar
+          : importedAvatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      justSocialRegistered: null == justSocialRegistered
+          ? _self.justSocialRegistered
+          : justSocialRegistered // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 
   /// Create a copy of StartingVM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StartingVMImplCopyWith<_$StartingVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $UserSessionDMCopyWith<$Res> get userSessionDM {
+    return $UserSessionDMCopyWith<$Res>(_self.userSessionDM, (value) {
+      return _then(_self.copyWith(userSessionDM: value));
+    });
+  }
 }
+
+// dart format on

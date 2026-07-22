@@ -6,9 +6,8 @@ part of 'user_body_update_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserBodyUpdateDTOImpl _$$UserBodyUpdateDTOImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UserBodyUpdateDTOImpl(
+_UserBodyUpdateDTO _$UserBodyUpdateDTOFromJson(Map<String, dynamic> json) =>
+    _UserBodyUpdateDTO(
       userName: json['username'] as String?,
       firstName: json['name'] as String?,
       lastName: json['last_name'] as String?,
@@ -30,8 +29,7 @@ _$UserBodyUpdateDTOImpl _$$UserBodyUpdateDTOImplFromJson(
       longitude: (json['longitude'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$UserBodyUpdateDTOImplToJson(
-        _$UserBodyUpdateDTOImpl instance) =>
+Map<String, dynamic> _$UserBodyUpdateDTOToJson(_UserBodyUpdateDTO instance) =>
     <String, dynamic>{
       if (instance.userName case final value?) 'username': value,
       if (instance.firstName case final value?) 'name': value,

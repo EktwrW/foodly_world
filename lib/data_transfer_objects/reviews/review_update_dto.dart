@@ -5,7 +5,7 @@ part 'review_update_dto.freezed.dart';
 part 'review_update_dto.g.dart';
 
 @freezed
-class ReviewUpdateDTO with _$ReviewUpdateDTO {
+abstract class ReviewUpdateDTO with _$ReviewUpdateDTO {
   const factory ReviewUpdateDTO({
     int? rating,
     @JsonKey(name: 'review_type') ReviewType? reviewType,

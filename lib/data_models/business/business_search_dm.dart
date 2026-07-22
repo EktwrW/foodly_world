@@ -5,7 +5,7 @@ part 'business_search_dm.freezed.dart';
 part 'business_search_dm.g.dart';
 
 @freezed
-class BusinessSearchDM with _$BusinessSearchDM {
+abstract class BusinessSearchDM with _$BusinessSearchDM {
   const factory BusinessSearchDM({
     @JsonKey(name: 'business') required List<BusinessDM> business,
   }) = _BusinessSearchDM;

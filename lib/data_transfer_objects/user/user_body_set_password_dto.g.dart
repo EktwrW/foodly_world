@@ -6,14 +6,14 @@ part of 'user_body_set_password_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserBodySetPasswordDTOImpl _$$UserBodySetPasswordDTOImplFromJson(
+_UserBodySetPasswordDTO _$UserBodySetPasswordDTOFromJson(
         Map<String, dynamic> json) =>
-    _$UserBodySetPasswordDTOImpl(
+    _UserBodySetPasswordDTO(
       newPassword: json['new_password'] as String,
     );
 
-Map<String, dynamic> _$$UserBodySetPasswordDTOImplToJson(
-        _$UserBodySetPasswordDTOImpl instance) =>
+Map<String, dynamic> _$UserBodySetPasswordDTOToJson(
+        _UserBodySetPasswordDTO instance) =>
     <String, dynamic>{
       'new_password': instance.newPassword,
     };

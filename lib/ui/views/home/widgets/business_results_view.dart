@@ -8,7 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class BusinessResultsView extends StatelessWidget {
   final List<BusinessDM> searchResults;

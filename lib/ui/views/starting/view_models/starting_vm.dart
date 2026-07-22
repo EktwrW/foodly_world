@@ -10,7 +10,7 @@ part 'starting_vm.freezed.dart';
 enum RecoverPasswordView { requestPassword, sendingRequest, passwordSent, errorRequest }
 
 @freezed
-class StartingVM with _$StartingVM {
+abstract class StartingVM with _$StartingVM {
   const StartingVM._();
 
   const factory StartingVM({

@@ -5,14 +5,15 @@ import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListe
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/notifications_cubit/notifications_vm.dart';
 import 'package:foodly_world/core/consts/foodly_locales.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/notifications/notifications_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-part 'notifications_state.dart';
 part 'notifications_cubit.freezed.dart';
+part 'notifications_state.dart';
 
 /// Intervalo de polling en segundos (90 segundos recomendado)
 const int _pollingIntervalSeconds = 90;

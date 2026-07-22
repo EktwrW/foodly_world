@@ -6,7 +6,7 @@ part 'opening_hours_dm.freezed.dart';
 part 'opening_hours_dm.g.dart';
 
 @freezed
-class BusinessDays with _$BusinessDays {
+abstract class BusinessDays with _$BusinessDays {
   const BusinessDays._();
 
   const factory BusinessDays({
@@ -43,7 +43,7 @@ class BusinessDays with _$BusinessDays {
 }
 
 @freezed
-class Day with _$Day {
+abstract class Day with _$Day {
   const Day._();
 
   const factory Day({

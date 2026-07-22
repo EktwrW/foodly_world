@@ -10,7 +10,7 @@ import 'package:foodly_world/ui/views/business/availability/widgets/block_date_b
 import 'package:foodly_world/ui/views/business/availability/widgets/day_entries_bottom_sheet.dart';
 import 'package:foodly_world/ui/views/business/availability/widgets/month_calendar.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 /// Manager page for the availability calendar (Catering & Chefs vertical).
 ///

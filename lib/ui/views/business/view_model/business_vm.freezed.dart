@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,74 +9,176 @@ part of 'business_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BusinessVM {
-  DashboardEditing get dashboardEditing => throw _privateConstructorUsedError;
-  List<BusinessDM> get myBusinessesses => throw _privateConstructorUsedError;
-  BusinessDM? get currentBusiness => throw _privateConstructorUsedError;
-  List<BusinessServices> get currentBusinessServices =>
-      throw _privateConstructorUsedError;
-  List<BusinessCoverImageDM> get picturesPath =>
-      throw _privateConstructorUsedError;
-  FoodlyCategories? get newCategory => throw _privateConstructorUsedError;
-  BusinessCoverImageDM? get targetForDelete =>
-      throw _privateConstructorUsedError;
-  InputController? get businessNameCtrl => throw _privateConstructorUsedError;
-  InputController? get businessAboutUsCtrl =>
-      throw _privateConstructorUsedError;
-  InputController? get businessEmailCtrl => throw _privateConstructorUsedError;
-  InputController? get businessPhoneCtrl => throw _privateConstructorUsedError;
-  InputController? get businessCityCtrl => throw _privateConstructorUsedError;
-  InputController? get businessAddressCtrl =>
-      throw _privateConstructorUsedError;
-  InputController? get businessZipCodeCtrl =>
-      throw _privateConstructorUsedError;
-  InputController? get businessAdditionalInfoCtrl =>
-      throw _privateConstructorUsedError;
-  double? get latitude => throw _privateConstructorUsedError;
-  double? get longitude => throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get nameFormKey => throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get aboutUsFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get openingHoursFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get servicesFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get contactUsFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get addInfoFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get locationFormKey =>
-      throw _privateConstructorUsedError;
-  GlobalKey<FormState>? get categoryFormKey =>
-      throw _privateConstructorUsedError;
-  FoodlyCountries? get businessCountry => throw _privateConstructorUsedError;
-  Set<Marker> get markers => throw _privateConstructorUsedError;
-  GoogleMapController? get mapController => throw _privateConstructorUsedError;
-  AutovalidateMode get autovalidateMode => throw _privateConstructorUsedError;
-  BusinessDays get businessDays => throw _privateConstructorUsedError;
-  bool get loggedUserCanEdit => throw _privateConstructorUsedError;
-  InputController? get reservationSizeLimitCtrl =>
-      throw _privateConstructorUsedError;
-  bool get allowReservations => throw _privateConstructorUsedError;
+  DashboardEditing get dashboardEditing;
+  List<BusinessDM> get myBusinessesses;
+  BusinessDM? get currentBusiness;
+  List<BusinessServices> get currentBusinessServices;
+  List<BusinessCoverImageDM> get picturesPath;
+  FoodlyCategories? get newCategory;
+  BusinessCoverImageDM? get targetForDelete;
+  InputController? get businessNameCtrl;
+  InputController? get businessAboutUsCtrl;
+  InputController? get businessEmailCtrl;
+  InputController? get businessPhoneCtrl;
+  InputController? get businessCityCtrl;
+  InputController? get businessAddressCtrl;
+  InputController? get businessZipCodeCtrl;
+  InputController? get businessAdditionalInfoCtrl;
+  double? get latitude;
+  double? get longitude;
+  GlobalKey<FormState>? get nameFormKey;
+  GlobalKey<FormState>? get aboutUsFormKey;
+  GlobalKey<FormState>? get openingHoursFormKey;
+  GlobalKey<FormState>? get servicesFormKey;
+  GlobalKey<FormState>? get contactUsFormKey;
+  GlobalKey<FormState>? get addInfoFormKey;
+  GlobalKey<FormState>? get locationFormKey;
+  GlobalKey<FormState>? get categoryFormKey;
+  FoodlyCountries? get businessCountry;
+  Set<Marker> get markers;
+  GoogleMapController? get mapController;
+  AutovalidateMode get autovalidateMode;
+  BusinessDays get businessDays;
+  bool get loggedUserCanEdit;
+  InputController? get reservationSizeLimitCtrl;
+  bool get allowReservations;
 
   /// Create a copy of BusinessVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $BusinessVMCopyWith<BusinessVM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$BusinessVMCopyWithImpl<BusinessVM>(this as BusinessVM, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessVM &&
+            (identical(other.dashboardEditing, dashboardEditing) ||
+                other.dashboardEditing == dashboardEditing) &&
+            const DeepCollectionEquality()
+                .equals(other.myBusinessesses, myBusinessesses) &&
+            (identical(other.currentBusiness, currentBusiness) ||
+                other.currentBusiness == currentBusiness) &&
+            const DeepCollectionEquality().equals(
+                other.currentBusinessServices, currentBusinessServices) &&
+            const DeepCollectionEquality()
+                .equals(other.picturesPath, picturesPath) &&
+            (identical(other.newCategory, newCategory) ||
+                other.newCategory == newCategory) &&
+            (identical(other.targetForDelete, targetForDelete) ||
+                other.targetForDelete == targetForDelete) &&
+            (identical(other.businessNameCtrl, businessNameCtrl) ||
+                other.businessNameCtrl == businessNameCtrl) &&
+            (identical(other.businessAboutUsCtrl, businessAboutUsCtrl) ||
+                other.businessAboutUsCtrl == businessAboutUsCtrl) &&
+            (identical(other.businessEmailCtrl, businessEmailCtrl) ||
+                other.businessEmailCtrl == businessEmailCtrl) &&
+            (identical(other.businessPhoneCtrl, businessPhoneCtrl) ||
+                other.businessPhoneCtrl == businessPhoneCtrl) &&
+            (identical(other.businessCityCtrl, businessCityCtrl) ||
+                other.businessCityCtrl == businessCityCtrl) &&
+            (identical(other.businessAddressCtrl, businessAddressCtrl) ||
+                other.businessAddressCtrl == businessAddressCtrl) &&
+            (identical(other.businessZipCodeCtrl, businessZipCodeCtrl) ||
+                other.businessZipCodeCtrl == businessZipCodeCtrl) &&
+            (identical(other.businessAdditionalInfoCtrl,
+                    businessAdditionalInfoCtrl) ||
+                other.businessAdditionalInfoCtrl ==
+                    businessAdditionalInfoCtrl) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.nameFormKey, nameFormKey) ||
+                other.nameFormKey == nameFormKey) &&
+            (identical(other.aboutUsFormKey, aboutUsFormKey) ||
+                other.aboutUsFormKey == aboutUsFormKey) &&
+            (identical(other.openingHoursFormKey, openingHoursFormKey) ||
+                other.openingHoursFormKey == openingHoursFormKey) &&
+            (identical(other.servicesFormKey, servicesFormKey) ||
+                other.servicesFormKey == servicesFormKey) &&
+            (identical(other.contactUsFormKey, contactUsFormKey) ||
+                other.contactUsFormKey == contactUsFormKey) &&
+            (identical(other.addInfoFormKey, addInfoFormKey) ||
+                other.addInfoFormKey == addInfoFormKey) &&
+            (identical(other.locationFormKey, locationFormKey) ||
+                other.locationFormKey == locationFormKey) &&
+            (identical(other.categoryFormKey, categoryFormKey) ||
+                other.categoryFormKey == categoryFormKey) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
+            const DeepCollectionEquality().equals(other.markers, markers) &&
+            (identical(other.mapController, mapController) ||
+                other.mapController == mapController) &&
+            (identical(other.autovalidateMode, autovalidateMode) ||
+                other.autovalidateMode == autovalidateMode) &&
+            (identical(other.businessDays, businessDays) ||
+                other.businessDays == businessDays) &&
+            (identical(other.loggedUserCanEdit, loggedUserCanEdit) ||
+                other.loggedUserCanEdit == loggedUserCanEdit) &&
+            (identical(
+                    other.reservationSizeLimitCtrl, reservationSizeLimitCtrl) ||
+                other.reservationSizeLimitCtrl == reservationSizeLimitCtrl) &&
+            (identical(other.allowReservations, allowReservations) ||
+                other.allowReservations == allowReservations));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        dashboardEditing,
+        const DeepCollectionEquality().hash(myBusinessesses),
+        currentBusiness,
+        const DeepCollectionEquality().hash(currentBusinessServices),
+        const DeepCollectionEquality().hash(picturesPath),
+        newCategory,
+        targetForDelete,
+        businessNameCtrl,
+        businessAboutUsCtrl,
+        businessEmailCtrl,
+        businessPhoneCtrl,
+        businessCityCtrl,
+        businessAddressCtrl,
+        businessZipCodeCtrl,
+        businessAdditionalInfoCtrl,
+        latitude,
+        longitude,
+        nameFormKey,
+        aboutUsFormKey,
+        openingHoursFormKey,
+        servicesFormKey,
+        contactUsFormKey,
+        addInfoFormKey,
+        locationFormKey,
+        categoryFormKey,
+        businessCountry,
+        const DeepCollectionEquality().hash(markers),
+        mapController,
+        autovalidateMode,
+        businessDays,
+        loggedUserCanEdit,
+        reservationSizeLimitCtrl,
+        allowReservations
+      ]);
+
+  @override
+  String toString() {
+    return 'BusinessVM(dashboardEditing: $dashboardEditing, myBusinessesses: $myBusinessesses, currentBusiness: $currentBusiness, currentBusinessServices: $currentBusinessServices, picturesPath: $picturesPath, newCategory: $newCategory, targetForDelete: $targetForDelete, businessNameCtrl: $businessNameCtrl, businessAboutUsCtrl: $businessAboutUsCtrl, businessEmailCtrl: $businessEmailCtrl, businessPhoneCtrl: $businessPhoneCtrl, businessCityCtrl: $businessCityCtrl, businessAddressCtrl: $businessAddressCtrl, businessZipCodeCtrl: $businessZipCodeCtrl, businessAdditionalInfoCtrl: $businessAdditionalInfoCtrl, latitude: $latitude, longitude: $longitude, nameFormKey: $nameFormKey, aboutUsFormKey: $aboutUsFormKey, openingHoursFormKey: $openingHoursFormKey, servicesFormKey: $servicesFormKey, contactUsFormKey: $contactUsFormKey, addInfoFormKey: $addInfoFormKey, locationFormKey: $locationFormKey, categoryFormKey: $categoryFormKey, businessCountry: $businessCountry, markers: $markers, mapController: $mapController, autovalidateMode: $autovalidateMode, businessDays: $businessDays, loggedUserCanEdit: $loggedUserCanEdit, reservationSizeLimitCtrl: $reservationSizeLimitCtrl, allowReservations: $allowReservations)';
+  }
 }
 
 /// @nodoc
-abstract class $BusinessVMCopyWith<$Res> {
+abstract mixin class $BusinessVMCopyWith<$Res> {
   factory $BusinessVMCopyWith(
-          BusinessVM value, $Res Function(BusinessVM) then) =
-      _$BusinessVMCopyWithImpl<$Res, BusinessVM>;
+          BusinessVM value, $Res Function(BusinessVM) _then) =
+      _$BusinessVMCopyWithImpl;
   @useResult
   $Res call(
       {DashboardEditing dashboardEditing,
@@ -128,14 +230,11 @@ abstract class $BusinessVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
-    implements $BusinessVMCopyWith<$Res> {
-  _$BusinessVMCopyWithImpl(this._value, this._then);
+class _$BusinessVMCopyWithImpl<$Res> implements $BusinessVMCopyWith<$Res> {
+  _$BusinessVMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BusinessVM _self;
+  final $Res Function(BusinessVM) _then;
 
   /// Create a copy of BusinessVM
   /// with the given fields replaced by the non-null parameter values.
@@ -176,140 +275,140 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
     Object? reservationSizeLimitCtrl = freezed,
     Object? allowReservations = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       dashboardEditing: null == dashboardEditing
-          ? _value.dashboardEditing
+          ? _self.dashboardEditing
           : dashboardEditing // ignore: cast_nullable_to_non_nullable
               as DashboardEditing,
       myBusinessesses: null == myBusinessesses
-          ? _value.myBusinessesses
+          ? _self.myBusinessesses
           : myBusinessesses // ignore: cast_nullable_to_non_nullable
               as List<BusinessDM>,
       currentBusiness: freezed == currentBusiness
-          ? _value.currentBusiness
+          ? _self.currentBusiness
           : currentBusiness // ignore: cast_nullable_to_non_nullable
               as BusinessDM?,
       currentBusinessServices: null == currentBusinessServices
-          ? _value.currentBusinessServices
+          ? _self.currentBusinessServices
           : currentBusinessServices // ignore: cast_nullable_to_non_nullable
               as List<BusinessServices>,
       picturesPath: null == picturesPath
-          ? _value.picturesPath
+          ? _self.picturesPath
           : picturesPath // ignore: cast_nullable_to_non_nullable
               as List<BusinessCoverImageDM>,
       newCategory: freezed == newCategory
-          ? _value.newCategory
+          ? _self.newCategory
           : newCategory // ignore: cast_nullable_to_non_nullable
               as FoodlyCategories?,
       targetForDelete: freezed == targetForDelete
-          ? _value.targetForDelete
+          ? _self.targetForDelete
           : targetForDelete // ignore: cast_nullable_to_non_nullable
               as BusinessCoverImageDM?,
       businessNameCtrl: freezed == businessNameCtrl
-          ? _value.businessNameCtrl
+          ? _self.businessNameCtrl
           : businessNameCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessAboutUsCtrl: freezed == businessAboutUsCtrl
-          ? _value.businessAboutUsCtrl
+          ? _self.businessAboutUsCtrl
           : businessAboutUsCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessEmailCtrl: freezed == businessEmailCtrl
-          ? _value.businessEmailCtrl
+          ? _self.businessEmailCtrl
           : businessEmailCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessPhoneCtrl: freezed == businessPhoneCtrl
-          ? _value.businessPhoneCtrl
+          ? _self.businessPhoneCtrl
           : businessPhoneCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessCityCtrl: freezed == businessCityCtrl
-          ? _value.businessCityCtrl
+          ? _self.businessCityCtrl
           : businessCityCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessAddressCtrl: freezed == businessAddressCtrl
-          ? _value.businessAddressCtrl
+          ? _self.businessAddressCtrl
           : businessAddressCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessZipCodeCtrl: freezed == businessZipCodeCtrl
-          ? _value.businessZipCodeCtrl
+          ? _self.businessZipCodeCtrl
           : businessZipCodeCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       businessAdditionalInfoCtrl: freezed == businessAdditionalInfoCtrl
-          ? _value.businessAdditionalInfoCtrl
+          ? _self.businessAdditionalInfoCtrl
           : businessAdditionalInfoCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       latitude: freezed == latitude
-          ? _value.latitude
+          ? _self.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double?,
       longitude: freezed == longitude
-          ? _value.longitude
+          ? _self.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
       nameFormKey: freezed == nameFormKey
-          ? _value.nameFormKey
+          ? _self.nameFormKey
           : nameFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       aboutUsFormKey: freezed == aboutUsFormKey
-          ? _value.aboutUsFormKey
+          ? _self.aboutUsFormKey
           : aboutUsFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       openingHoursFormKey: freezed == openingHoursFormKey
-          ? _value.openingHoursFormKey
+          ? _self.openingHoursFormKey
           : openingHoursFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       servicesFormKey: freezed == servicesFormKey
-          ? _value.servicesFormKey
+          ? _self.servicesFormKey
           : servicesFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       contactUsFormKey: freezed == contactUsFormKey
-          ? _value.contactUsFormKey
+          ? _self.contactUsFormKey
           : contactUsFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       addInfoFormKey: freezed == addInfoFormKey
-          ? _value.addInfoFormKey
+          ? _self.addInfoFormKey
           : addInfoFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       locationFormKey: freezed == locationFormKey
-          ? _value.locationFormKey
+          ? _self.locationFormKey
           : locationFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       categoryFormKey: freezed == categoryFormKey
-          ? _value.categoryFormKey
+          ? _self.categoryFormKey
           : categoryFormKey // ignore: cast_nullable_to_non_nullable
               as GlobalKey<FormState>?,
       businessCountry: freezed == businessCountry
-          ? _value.businessCountry
+          ? _self.businessCountry
           : businessCountry // ignore: cast_nullable_to_non_nullable
               as FoodlyCountries?,
       markers: null == markers
-          ? _value.markers
+          ? _self.markers
           : markers // ignore: cast_nullable_to_non_nullable
               as Set<Marker>,
       mapController: freezed == mapController
-          ? _value.mapController
+          ? _self.mapController
           : mapController // ignore: cast_nullable_to_non_nullable
               as GoogleMapController?,
       autovalidateMode: null == autovalidateMode
-          ? _value.autovalidateMode
+          ? _self.autovalidateMode
           : autovalidateMode // ignore: cast_nullable_to_non_nullable
               as AutovalidateMode,
       businessDays: null == businessDays
-          ? _value.businessDays
+          ? _self.businessDays
           : businessDays // ignore: cast_nullable_to_non_nullable
               as BusinessDays,
       loggedUserCanEdit: null == loggedUserCanEdit
-          ? _value.loggedUserCanEdit
+          ? _self.loggedUserCanEdit
           : loggedUserCanEdit // ignore: cast_nullable_to_non_nullable
               as bool,
       reservationSizeLimitCtrl: freezed == reservationSizeLimitCtrl
-          ? _value.reservationSizeLimitCtrl
+          ? _self.reservationSizeLimitCtrl
           : reservationSizeLimitCtrl // ignore: cast_nullable_to_non_nullable
               as InputController?,
       allowReservations: null == allowReservations
-          ? _value.allowReservations
+          ? _self.allowReservations
           : allowReservations // ignore: cast_nullable_to_non_nullable
               as bool,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of BusinessVM
@@ -317,12 +416,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessDMCopyWith<$Res>? get currentBusiness {
-    if (_value.currentBusiness == null) {
+    if (_self.currentBusiness == null) {
       return null;
     }
 
-    return $BusinessDMCopyWith<$Res>(_value.currentBusiness!, (value) {
-      return _then(_value.copyWith(currentBusiness: value) as $Val);
+    return $BusinessDMCopyWith<$Res>(_self.currentBusiness!, (value) {
+      return _then(_self.copyWith(currentBusiness: value));
     });
   }
 
@@ -331,13 +430,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessCoverImageDMCopyWith<$Res>? get targetForDelete {
-    if (_value.targetForDelete == null) {
+    if (_self.targetForDelete == null) {
       return null;
     }
 
-    return $BusinessCoverImageDMCopyWith<$Res>(_value.targetForDelete!,
-        (value) {
-      return _then(_value.copyWith(targetForDelete: value) as $Val);
+    return $BusinessCoverImageDMCopyWith<$Res>(_self.targetForDelete!, (value) {
+      return _then(_self.copyWith(targetForDelete: value));
     });
   }
 
@@ -346,12 +444,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessNameCtrl {
-    if (_value.businessNameCtrl == null) {
+    if (_self.businessNameCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessNameCtrl!, (value) {
-      return _then(_value.copyWith(businessNameCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessNameCtrl!, (value) {
+      return _then(_self.copyWith(businessNameCtrl: value));
     });
   }
 
@@ -360,12 +458,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessAboutUsCtrl {
-    if (_value.businessAboutUsCtrl == null) {
+    if (_self.businessAboutUsCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessAboutUsCtrl!, (value) {
-      return _then(_value.copyWith(businessAboutUsCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessAboutUsCtrl!, (value) {
+      return _then(_self.copyWith(businessAboutUsCtrl: value));
     });
   }
 
@@ -374,12 +472,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessEmailCtrl {
-    if (_value.businessEmailCtrl == null) {
+    if (_self.businessEmailCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessEmailCtrl!, (value) {
-      return _then(_value.copyWith(businessEmailCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessEmailCtrl!, (value) {
+      return _then(_self.copyWith(businessEmailCtrl: value));
     });
   }
 
@@ -388,12 +486,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessPhoneCtrl {
-    if (_value.businessPhoneCtrl == null) {
+    if (_self.businessPhoneCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessPhoneCtrl!, (value) {
-      return _then(_value.copyWith(businessPhoneCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessPhoneCtrl!, (value) {
+      return _then(_self.copyWith(businessPhoneCtrl: value));
     });
   }
 
@@ -402,12 +500,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessCityCtrl {
-    if (_value.businessCityCtrl == null) {
+    if (_self.businessCityCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessCityCtrl!, (value) {
-      return _then(_value.copyWith(businessCityCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessCityCtrl!, (value) {
+      return _then(_self.copyWith(businessCityCtrl: value));
     });
   }
 
@@ -416,12 +514,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessAddressCtrl {
-    if (_value.businessAddressCtrl == null) {
+    if (_self.businessAddressCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessAddressCtrl!, (value) {
-      return _then(_value.copyWith(businessAddressCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessAddressCtrl!, (value) {
+      return _then(_self.copyWith(businessAddressCtrl: value));
     });
   }
 
@@ -430,12 +528,12 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessZipCodeCtrl {
-    if (_value.businessZipCodeCtrl == null) {
+    if (_self.businessZipCodeCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessZipCodeCtrl!, (value) {
-      return _then(_value.copyWith(businessZipCodeCtrl: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.businessZipCodeCtrl!, (value) {
+      return _then(_self.copyWith(businessZipCodeCtrl: value));
     });
   }
 
@@ -444,13 +542,13 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get businessAdditionalInfoCtrl {
-    if (_value.businessAdditionalInfoCtrl == null) {
+    if (_self.businessAdditionalInfoCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.businessAdditionalInfoCtrl!,
+    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!,
         (value) {
-      return _then(_value.copyWith(businessAdditionalInfoCtrl: value) as $Val);
+      return _then(_self.copyWith(businessAdditionalInfoCtrl: value));
     });
   }
 
@@ -459,8 +557,8 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessDaysCopyWith<$Res> get businessDays {
-    return $BusinessDaysCopyWith<$Res>(_value.businessDays, (value) {
-      return _then(_value.copyWith(businessDays: value) as $Val);
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays, (value) {
+      return _then(_self.copyWith(businessDays: value));
     });
   }
 
@@ -469,274 +567,379 @@ class _$BusinessVMCopyWithImpl<$Res, $Val extends BusinessVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res>? get reservationSizeLimitCtrl {
-    if (_value.reservationSizeLimitCtrl == null) {
+    if (_self.reservationSizeLimitCtrl == null) {
       return null;
     }
 
-    return $InputControllerCopyWith<$Res>(_value.reservationSizeLimitCtrl!,
+    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!,
         (value) {
-      return _then(_value.copyWith(reservationSizeLimitCtrl: value) as $Val);
+      return _then(_self.copyWith(reservationSizeLimitCtrl: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$BusinessVMImplCopyWith<$Res>
-    implements $BusinessVMCopyWith<$Res> {
-  factory _$$BusinessVMImplCopyWith(
-          _$BusinessVMImpl value, $Res Function(_$BusinessVMImpl) then) =
-      __$$BusinessVMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {DashboardEditing dashboardEditing,
-      List<BusinessDM> myBusinessesses,
-      BusinessDM? currentBusiness,
-      List<BusinessServices> currentBusinessServices,
-      List<BusinessCoverImageDM> picturesPath,
-      FoodlyCategories? newCategory,
-      BusinessCoverImageDM? targetForDelete,
-      InputController? businessNameCtrl,
-      InputController? businessAboutUsCtrl,
-      InputController? businessEmailCtrl,
-      InputController? businessPhoneCtrl,
-      InputController? businessCityCtrl,
-      InputController? businessAddressCtrl,
-      InputController? businessZipCodeCtrl,
-      InputController? businessAdditionalInfoCtrl,
-      double? latitude,
-      double? longitude,
-      GlobalKey<FormState>? nameFormKey,
-      GlobalKey<FormState>? aboutUsFormKey,
-      GlobalKey<FormState>? openingHoursFormKey,
-      GlobalKey<FormState>? servicesFormKey,
-      GlobalKey<FormState>? contactUsFormKey,
-      GlobalKey<FormState>? addInfoFormKey,
-      GlobalKey<FormState>? locationFormKey,
-      GlobalKey<FormState>? categoryFormKey,
-      FoodlyCountries? businessCountry,
-      Set<Marker> markers,
-      GoogleMapController? mapController,
-      AutovalidateMode autovalidateMode,
-      BusinessDays businessDays,
-      bool loggedUserCanEdit,
-      InputController? reservationSizeLimitCtrl,
-      bool allowReservations});
+/// Adds pattern-matching-related methods to [BusinessVM].
+extension BusinessVMPatterns on BusinessVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $BusinessDMCopyWith<$Res>? get currentBusiness;
-  @override
-  $BusinessCoverImageDMCopyWith<$Res>? get targetForDelete;
-  @override
-  $InputControllerCopyWith<$Res>? get businessNameCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessAboutUsCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessEmailCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessPhoneCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessCityCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessAddressCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessZipCodeCtrl;
-  @override
-  $InputControllerCopyWith<$Res>? get businessAdditionalInfoCtrl;
-  @override
-  $BusinessDaysCopyWith<$Res> get businessDays;
-  @override
-  $InputControllerCopyWith<$Res>? get reservationSizeLimitCtrl;
-}
-
-/// @nodoc
-class __$$BusinessVMImplCopyWithImpl<$Res>
-    extends _$BusinessVMCopyWithImpl<$Res, _$BusinessVMImpl>
-    implements _$$BusinessVMImplCopyWith<$Res> {
-  __$$BusinessVMImplCopyWithImpl(
-      _$BusinessVMImpl _value, $Res Function(_$BusinessVMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessVM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dashboardEditing = null,
-    Object? myBusinessesses = null,
-    Object? currentBusiness = freezed,
-    Object? currentBusinessServices = null,
-    Object? picturesPath = null,
-    Object? newCategory = freezed,
-    Object? targetForDelete = freezed,
-    Object? businessNameCtrl = freezed,
-    Object? businessAboutUsCtrl = freezed,
-    Object? businessEmailCtrl = freezed,
-    Object? businessPhoneCtrl = freezed,
-    Object? businessCityCtrl = freezed,
-    Object? businessAddressCtrl = freezed,
-    Object? businessZipCodeCtrl = freezed,
-    Object? businessAdditionalInfoCtrl = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? nameFormKey = freezed,
-    Object? aboutUsFormKey = freezed,
-    Object? openingHoursFormKey = freezed,
-    Object? servicesFormKey = freezed,
-    Object? contactUsFormKey = freezed,
-    Object? addInfoFormKey = freezed,
-    Object? locationFormKey = freezed,
-    Object? categoryFormKey = freezed,
-    Object? businessCountry = freezed,
-    Object? markers = null,
-    Object? mapController = freezed,
-    Object? autovalidateMode = null,
-    Object? businessDays = null,
-    Object? loggedUserCanEdit = null,
-    Object? reservationSizeLimitCtrl = freezed,
-    Object? allowReservations = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BusinessVM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$BusinessVMImpl(
-      dashboardEditing: null == dashboardEditing
-          ? _value.dashboardEditing
-          : dashboardEditing // ignore: cast_nullable_to_non_nullable
-              as DashboardEditing,
-      myBusinessesses: null == myBusinessesses
-          ? _value._myBusinessesses
-          : myBusinessesses // ignore: cast_nullable_to_non_nullable
-              as List<BusinessDM>,
-      currentBusiness: freezed == currentBusiness
-          ? _value.currentBusiness
-          : currentBusiness // ignore: cast_nullable_to_non_nullable
-              as BusinessDM?,
-      currentBusinessServices: null == currentBusinessServices
-          ? _value._currentBusinessServices
-          : currentBusinessServices // ignore: cast_nullable_to_non_nullable
-              as List<BusinessServices>,
-      picturesPath: null == picturesPath
-          ? _value._picturesPath
-          : picturesPath // ignore: cast_nullable_to_non_nullable
-              as List<BusinessCoverImageDM>,
-      newCategory: freezed == newCategory
-          ? _value.newCategory
-          : newCategory // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories?,
-      targetForDelete: freezed == targetForDelete
-          ? _value.targetForDelete
-          : targetForDelete // ignore: cast_nullable_to_non_nullable
-              as BusinessCoverImageDM?,
-      businessNameCtrl: freezed == businessNameCtrl
-          ? _value.businessNameCtrl
-          : businessNameCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessAboutUsCtrl: freezed == businessAboutUsCtrl
-          ? _value.businessAboutUsCtrl
-          : businessAboutUsCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessEmailCtrl: freezed == businessEmailCtrl
-          ? _value.businessEmailCtrl
-          : businessEmailCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessPhoneCtrl: freezed == businessPhoneCtrl
-          ? _value.businessPhoneCtrl
-          : businessPhoneCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessCityCtrl: freezed == businessCityCtrl
-          ? _value.businessCityCtrl
-          : businessCityCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessAddressCtrl: freezed == businessAddressCtrl
-          ? _value.businessAddressCtrl
-          : businessAddressCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessZipCodeCtrl: freezed == businessZipCodeCtrl
-          ? _value.businessZipCodeCtrl
-          : businessZipCodeCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      businessAdditionalInfoCtrl: freezed == businessAdditionalInfoCtrl
-          ? _value.businessAdditionalInfoCtrl
-          : businessAdditionalInfoCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      latitude: freezed == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      nameFormKey: freezed == nameFormKey
-          ? _value.nameFormKey
-          : nameFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      aboutUsFormKey: freezed == aboutUsFormKey
-          ? _value.aboutUsFormKey
-          : aboutUsFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      openingHoursFormKey: freezed == openingHoursFormKey
-          ? _value.openingHoursFormKey
-          : openingHoursFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      servicesFormKey: freezed == servicesFormKey
-          ? _value.servicesFormKey
-          : servicesFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      contactUsFormKey: freezed == contactUsFormKey
-          ? _value.contactUsFormKey
-          : contactUsFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      addInfoFormKey: freezed == addInfoFormKey
-          ? _value.addInfoFormKey
-          : addInfoFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      locationFormKey: freezed == locationFormKey
-          ? _value.locationFormKey
-          : locationFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      categoryFormKey: freezed == categoryFormKey
-          ? _value.categoryFormKey
-          : categoryFormKey // ignore: cast_nullable_to_non_nullable
-              as GlobalKey<FormState>?,
-      businessCountry: freezed == businessCountry
-          ? _value.businessCountry
-          : businessCountry // ignore: cast_nullable_to_non_nullable
-              as FoodlyCountries?,
-      markers: null == markers
-          ? _value._markers
-          : markers // ignore: cast_nullable_to_non_nullable
-              as Set<Marker>,
-      mapController: freezed == mapController
-          ? _value.mapController
-          : mapController // ignore: cast_nullable_to_non_nullable
-              as GoogleMapController?,
-      autovalidateMode: null == autovalidateMode
-          ? _value.autovalidateMode
-          : autovalidateMode // ignore: cast_nullable_to_non_nullable
-              as AutovalidateMode,
-      businessDays: null == businessDays
-          ? _value.businessDays
-          : businessDays // ignore: cast_nullable_to_non_nullable
-              as BusinessDays,
-      loggedUserCanEdit: null == loggedUserCanEdit
-          ? _value.loggedUserCanEdit
-          : loggedUserCanEdit // ignore: cast_nullable_to_non_nullable
-              as bool,
-      reservationSizeLimitCtrl: freezed == reservationSizeLimitCtrl
-          ? _value.reservationSizeLimitCtrl
-          : reservationSizeLimitCtrl // ignore: cast_nullable_to_non_nullable
-              as InputController?,
-      allowReservations: null == allowReservations
-          ? _value.allowReservations
-          : allowReservations // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BusinessVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BusinessVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            DashboardEditing dashboardEditing,
+            List<BusinessDM> myBusinessesses,
+            BusinessDM? currentBusiness,
+            List<BusinessServices> currentBusinessServices,
+            List<BusinessCoverImageDM> picturesPath,
+            FoodlyCategories? newCategory,
+            BusinessCoverImageDM? targetForDelete,
+            InputController? businessNameCtrl,
+            InputController? businessAboutUsCtrl,
+            InputController? businessEmailCtrl,
+            InputController? businessPhoneCtrl,
+            InputController? businessCityCtrl,
+            InputController? businessAddressCtrl,
+            InputController? businessZipCodeCtrl,
+            InputController? businessAdditionalInfoCtrl,
+            double? latitude,
+            double? longitude,
+            GlobalKey<FormState>? nameFormKey,
+            GlobalKey<FormState>? aboutUsFormKey,
+            GlobalKey<FormState>? openingHoursFormKey,
+            GlobalKey<FormState>? servicesFormKey,
+            GlobalKey<FormState>? contactUsFormKey,
+            GlobalKey<FormState>? addInfoFormKey,
+            GlobalKey<FormState>? locationFormKey,
+            GlobalKey<FormState>? categoryFormKey,
+            FoodlyCountries? businessCountry,
+            Set<Marker> markers,
+            GoogleMapController? mapController,
+            AutovalidateMode autovalidateMode,
+            BusinessDays businessDays,
+            bool loggedUserCanEdit,
+            InputController? reservationSizeLimitCtrl,
+            bool allowReservations)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM() when $default != null:
+        return $default(
+            _that.dashboardEditing,
+            _that.myBusinessesses,
+            _that.currentBusiness,
+            _that.currentBusinessServices,
+            _that.picturesPath,
+            _that.newCategory,
+            _that.targetForDelete,
+            _that.businessNameCtrl,
+            _that.businessAboutUsCtrl,
+            _that.businessEmailCtrl,
+            _that.businessPhoneCtrl,
+            _that.businessCityCtrl,
+            _that.businessAddressCtrl,
+            _that.businessZipCodeCtrl,
+            _that.businessAdditionalInfoCtrl,
+            _that.latitude,
+            _that.longitude,
+            _that.nameFormKey,
+            _that.aboutUsFormKey,
+            _that.openingHoursFormKey,
+            _that.servicesFormKey,
+            _that.contactUsFormKey,
+            _that.addInfoFormKey,
+            _that.locationFormKey,
+            _that.categoryFormKey,
+            _that.businessCountry,
+            _that.markers,
+            _that.mapController,
+            _that.autovalidateMode,
+            _that.businessDays,
+            _that.loggedUserCanEdit,
+            _that.reservationSizeLimitCtrl,
+            _that.allowReservations);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            DashboardEditing dashboardEditing,
+            List<BusinessDM> myBusinessesses,
+            BusinessDM? currentBusiness,
+            List<BusinessServices> currentBusinessServices,
+            List<BusinessCoverImageDM> picturesPath,
+            FoodlyCategories? newCategory,
+            BusinessCoverImageDM? targetForDelete,
+            InputController? businessNameCtrl,
+            InputController? businessAboutUsCtrl,
+            InputController? businessEmailCtrl,
+            InputController? businessPhoneCtrl,
+            InputController? businessCityCtrl,
+            InputController? businessAddressCtrl,
+            InputController? businessZipCodeCtrl,
+            InputController? businessAdditionalInfoCtrl,
+            double? latitude,
+            double? longitude,
+            GlobalKey<FormState>? nameFormKey,
+            GlobalKey<FormState>? aboutUsFormKey,
+            GlobalKey<FormState>? openingHoursFormKey,
+            GlobalKey<FormState>? servicesFormKey,
+            GlobalKey<FormState>? contactUsFormKey,
+            GlobalKey<FormState>? addInfoFormKey,
+            GlobalKey<FormState>? locationFormKey,
+            GlobalKey<FormState>? categoryFormKey,
+            FoodlyCountries? businessCountry,
+            Set<Marker> markers,
+            GoogleMapController? mapController,
+            AutovalidateMode autovalidateMode,
+            BusinessDays businessDays,
+            bool loggedUserCanEdit,
+            InputController? reservationSizeLimitCtrl,
+            bool allowReservations)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM():
+        return $default(
+            _that.dashboardEditing,
+            _that.myBusinessesses,
+            _that.currentBusiness,
+            _that.currentBusinessServices,
+            _that.picturesPath,
+            _that.newCategory,
+            _that.targetForDelete,
+            _that.businessNameCtrl,
+            _that.businessAboutUsCtrl,
+            _that.businessEmailCtrl,
+            _that.businessPhoneCtrl,
+            _that.businessCityCtrl,
+            _that.businessAddressCtrl,
+            _that.businessZipCodeCtrl,
+            _that.businessAdditionalInfoCtrl,
+            _that.latitude,
+            _that.longitude,
+            _that.nameFormKey,
+            _that.aboutUsFormKey,
+            _that.openingHoursFormKey,
+            _that.servicesFormKey,
+            _that.contactUsFormKey,
+            _that.addInfoFormKey,
+            _that.locationFormKey,
+            _that.categoryFormKey,
+            _that.businessCountry,
+            _that.markers,
+            _that.mapController,
+            _that.autovalidateMode,
+            _that.businessDays,
+            _that.loggedUserCanEdit,
+            _that.reservationSizeLimitCtrl,
+            _that.allowReservations);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            DashboardEditing dashboardEditing,
+            List<BusinessDM> myBusinessesses,
+            BusinessDM? currentBusiness,
+            List<BusinessServices> currentBusinessServices,
+            List<BusinessCoverImageDM> picturesPath,
+            FoodlyCategories? newCategory,
+            BusinessCoverImageDM? targetForDelete,
+            InputController? businessNameCtrl,
+            InputController? businessAboutUsCtrl,
+            InputController? businessEmailCtrl,
+            InputController? businessPhoneCtrl,
+            InputController? businessCityCtrl,
+            InputController? businessAddressCtrl,
+            InputController? businessZipCodeCtrl,
+            InputController? businessAdditionalInfoCtrl,
+            double? latitude,
+            double? longitude,
+            GlobalKey<FormState>? nameFormKey,
+            GlobalKey<FormState>? aboutUsFormKey,
+            GlobalKey<FormState>? openingHoursFormKey,
+            GlobalKey<FormState>? servicesFormKey,
+            GlobalKey<FormState>? contactUsFormKey,
+            GlobalKey<FormState>? addInfoFormKey,
+            GlobalKey<FormState>? locationFormKey,
+            GlobalKey<FormState>? categoryFormKey,
+            FoodlyCountries? businessCountry,
+            Set<Marker> markers,
+            GoogleMapController? mapController,
+            AutovalidateMode autovalidateMode,
+            BusinessDays businessDays,
+            bool loggedUserCanEdit,
+            InputController? reservationSizeLimitCtrl,
+            bool allowReservations)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessVM() when $default != null:
+        return $default(
+            _that.dashboardEditing,
+            _that.myBusinessesses,
+            _that.currentBusiness,
+            _that.currentBusinessServices,
+            _that.picturesPath,
+            _that.newCategory,
+            _that.targetForDelete,
+            _that.businessNameCtrl,
+            _that.businessAboutUsCtrl,
+            _that.businessEmailCtrl,
+            _that.businessPhoneCtrl,
+            _that.businessCityCtrl,
+            _that.businessAddressCtrl,
+            _that.businessZipCodeCtrl,
+            _that.businessAdditionalInfoCtrl,
+            _that.latitude,
+            _that.longitude,
+            _that.nameFormKey,
+            _that.aboutUsFormKey,
+            _that.openingHoursFormKey,
+            _that.servicesFormKey,
+            _that.contactUsFormKey,
+            _that.addInfoFormKey,
+            _that.locationFormKey,
+            _that.categoryFormKey,
+            _that.businessCountry,
+            _that.markers,
+            _that.mapController,
+            _that.autovalidateMode,
+            _that.businessDays,
+            _that.loggedUserCanEdit,
+            _that.reservationSizeLimitCtrl,
+            _that.allowReservations);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$BusinessVMImpl extends _BusinessVM {
-  const _$BusinessVMImpl(
+class _BusinessVM extends BusinessVM {
+  const _BusinessVM(
       {this.dashboardEditing = DashboardEditing.none,
       final List<BusinessDM> myBusinessesses = const [],
       this.currentBusiness,
@@ -877,16 +1080,19 @@ class _$BusinessVMImpl extends _BusinessVM {
   @JsonKey()
   final bool allowReservations;
 
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BusinessVM(dashboardEditing: $dashboardEditing, myBusinessesses: $myBusinessesses, currentBusiness: $currentBusiness, currentBusinessServices: $currentBusinessServices, picturesPath: $picturesPath, newCategory: $newCategory, targetForDelete: $targetForDelete, businessNameCtrl: $businessNameCtrl, businessAboutUsCtrl: $businessAboutUsCtrl, businessEmailCtrl: $businessEmailCtrl, businessPhoneCtrl: $businessPhoneCtrl, businessCityCtrl: $businessCityCtrl, businessAddressCtrl: $businessAddressCtrl, businessZipCodeCtrl: $businessZipCodeCtrl, businessAdditionalInfoCtrl: $businessAdditionalInfoCtrl, latitude: $latitude, longitude: $longitude, nameFormKey: $nameFormKey, aboutUsFormKey: $aboutUsFormKey, openingHoursFormKey: $openingHoursFormKey, servicesFormKey: $servicesFormKey, contactUsFormKey: $contactUsFormKey, addInfoFormKey: $addInfoFormKey, locationFormKey: $locationFormKey, categoryFormKey: $categoryFormKey, businessCountry: $businessCountry, markers: $markers, mapController: $mapController, autovalidateMode: $autovalidateMode, businessDays: $businessDays, loggedUserCanEdit: $loggedUserCanEdit, reservationSizeLimitCtrl: $reservationSizeLimitCtrl, allowReservations: $allowReservations)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessVMCopyWith<_BusinessVM> get copyWith =>
+      __$BusinessVMCopyWithImpl<_BusinessVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessVMImpl &&
+            other is _BusinessVM &&
             (identical(other.dashboardEditing, dashboardEditing) ||
                 other.dashboardEditing == dashboardEditing) &&
             const DeepCollectionEquality()
@@ -995,123 +1201,428 @@ class _$BusinessVMImpl extends _BusinessVM {
         allowReservations
       ]);
 
+  @override
+  String toString() {
+    return 'BusinessVM(dashboardEditing: $dashboardEditing, myBusinessesses: $myBusinessesses, currentBusiness: $currentBusiness, currentBusinessServices: $currentBusinessServices, picturesPath: $picturesPath, newCategory: $newCategory, targetForDelete: $targetForDelete, businessNameCtrl: $businessNameCtrl, businessAboutUsCtrl: $businessAboutUsCtrl, businessEmailCtrl: $businessEmailCtrl, businessPhoneCtrl: $businessPhoneCtrl, businessCityCtrl: $businessCityCtrl, businessAddressCtrl: $businessAddressCtrl, businessZipCodeCtrl: $businessZipCodeCtrl, businessAdditionalInfoCtrl: $businessAdditionalInfoCtrl, latitude: $latitude, longitude: $longitude, nameFormKey: $nameFormKey, aboutUsFormKey: $aboutUsFormKey, openingHoursFormKey: $openingHoursFormKey, servicesFormKey: $servicesFormKey, contactUsFormKey: $contactUsFormKey, addInfoFormKey: $addInfoFormKey, locationFormKey: $locationFormKey, categoryFormKey: $categoryFormKey, businessCountry: $businessCountry, markers: $markers, mapController: $mapController, autovalidateMode: $autovalidateMode, businessDays: $businessDays, loggedUserCanEdit: $loggedUserCanEdit, reservationSizeLimitCtrl: $reservationSizeLimitCtrl, allowReservations: $allowReservations)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$BusinessVMCopyWith<$Res>
+    implements $BusinessVMCopyWith<$Res> {
+  factory _$BusinessVMCopyWith(
+          _BusinessVM value, $Res Function(_BusinessVM) _then) =
+      __$BusinessVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {DashboardEditing dashboardEditing,
+      List<BusinessDM> myBusinessesses,
+      BusinessDM? currentBusiness,
+      List<BusinessServices> currentBusinessServices,
+      List<BusinessCoverImageDM> picturesPath,
+      FoodlyCategories? newCategory,
+      BusinessCoverImageDM? targetForDelete,
+      InputController? businessNameCtrl,
+      InputController? businessAboutUsCtrl,
+      InputController? businessEmailCtrl,
+      InputController? businessPhoneCtrl,
+      InputController? businessCityCtrl,
+      InputController? businessAddressCtrl,
+      InputController? businessZipCodeCtrl,
+      InputController? businessAdditionalInfoCtrl,
+      double? latitude,
+      double? longitude,
+      GlobalKey<FormState>? nameFormKey,
+      GlobalKey<FormState>? aboutUsFormKey,
+      GlobalKey<FormState>? openingHoursFormKey,
+      GlobalKey<FormState>? servicesFormKey,
+      GlobalKey<FormState>? contactUsFormKey,
+      GlobalKey<FormState>? addInfoFormKey,
+      GlobalKey<FormState>? locationFormKey,
+      GlobalKey<FormState>? categoryFormKey,
+      FoodlyCountries? businessCountry,
+      Set<Marker> markers,
+      GoogleMapController? mapController,
+      AutovalidateMode autovalidateMode,
+      BusinessDays businessDays,
+      bool loggedUserCanEdit,
+      InputController? reservationSizeLimitCtrl,
+      bool allowReservations});
+
+  @override
+  $BusinessDMCopyWith<$Res>? get currentBusiness;
+  @override
+  $BusinessCoverImageDMCopyWith<$Res>? get targetForDelete;
+  @override
+  $InputControllerCopyWith<$Res>? get businessNameCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessAboutUsCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessEmailCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessPhoneCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessCityCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessAddressCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessZipCodeCtrl;
+  @override
+  $InputControllerCopyWith<$Res>? get businessAdditionalInfoCtrl;
+  @override
+  $BusinessDaysCopyWith<$Res> get businessDays;
+  @override
+  $InputControllerCopyWith<$Res>? get reservationSizeLimitCtrl;
+}
+
+/// @nodoc
+class __$BusinessVMCopyWithImpl<$Res> implements _$BusinessVMCopyWith<$Res> {
+  __$BusinessVMCopyWithImpl(this._self, this._then);
+
+  final _BusinessVM _self;
+  final $Res Function(_BusinessVM) _then;
+
   /// Create a copy of BusinessVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$BusinessVMImplCopyWith<_$BusinessVMImpl> get copyWith =>
-      __$$BusinessVMImplCopyWithImpl<_$BusinessVMImpl>(this, _$identity);
-}
-
-abstract class _BusinessVM extends BusinessVM {
-  const factory _BusinessVM(
-      {final DashboardEditing dashboardEditing,
-      final List<BusinessDM> myBusinessesses,
-      final BusinessDM? currentBusiness,
-      final List<BusinessServices> currentBusinessServices,
-      final List<BusinessCoverImageDM> picturesPath,
-      final FoodlyCategories? newCategory,
-      final BusinessCoverImageDM? targetForDelete,
-      final InputController? businessNameCtrl,
-      final InputController? businessAboutUsCtrl,
-      final InputController? businessEmailCtrl,
-      final InputController? businessPhoneCtrl,
-      final InputController? businessCityCtrl,
-      final InputController? businessAddressCtrl,
-      final InputController? businessZipCodeCtrl,
-      final InputController? businessAdditionalInfoCtrl,
-      final double? latitude,
-      final double? longitude,
-      final GlobalKey<FormState>? nameFormKey,
-      final GlobalKey<FormState>? aboutUsFormKey,
-      final GlobalKey<FormState>? openingHoursFormKey,
-      final GlobalKey<FormState>? servicesFormKey,
-      final GlobalKey<FormState>? contactUsFormKey,
-      final GlobalKey<FormState>? addInfoFormKey,
-      final GlobalKey<FormState>? locationFormKey,
-      final GlobalKey<FormState>? categoryFormKey,
-      final FoodlyCountries? businessCountry,
-      final Set<Marker> markers,
-      final GoogleMapController? mapController,
-      final AutovalidateMode autovalidateMode,
-      final BusinessDays businessDays,
-      final bool loggedUserCanEdit,
-      final InputController? reservationSizeLimitCtrl,
-      final bool allowReservations}) = _$BusinessVMImpl;
-  const _BusinessVM._() : super._();
-
-  @override
-  DashboardEditing get dashboardEditing;
-  @override
-  List<BusinessDM> get myBusinessesses;
-  @override
-  BusinessDM? get currentBusiness;
-  @override
-  List<BusinessServices> get currentBusinessServices;
-  @override
-  List<BusinessCoverImageDM> get picturesPath;
-  @override
-  FoodlyCategories? get newCategory;
-  @override
-  BusinessCoverImageDM? get targetForDelete;
-  @override
-  InputController? get businessNameCtrl;
-  @override
-  InputController? get businessAboutUsCtrl;
-  @override
-  InputController? get businessEmailCtrl;
-  @override
-  InputController? get businessPhoneCtrl;
-  @override
-  InputController? get businessCityCtrl;
-  @override
-  InputController? get businessAddressCtrl;
-  @override
-  InputController? get businessZipCodeCtrl;
-  @override
-  InputController? get businessAdditionalInfoCtrl;
-  @override
-  double? get latitude;
-  @override
-  double? get longitude;
-  @override
-  GlobalKey<FormState>? get nameFormKey;
-  @override
-  GlobalKey<FormState>? get aboutUsFormKey;
-  @override
-  GlobalKey<FormState>? get openingHoursFormKey;
-  @override
-  GlobalKey<FormState>? get servicesFormKey;
-  @override
-  GlobalKey<FormState>? get contactUsFormKey;
-  @override
-  GlobalKey<FormState>? get addInfoFormKey;
-  @override
-  GlobalKey<FormState>? get locationFormKey;
-  @override
-  GlobalKey<FormState>? get categoryFormKey;
-  @override
-  FoodlyCountries? get businessCountry;
-  @override
-  Set<Marker> get markers;
-  @override
-  GoogleMapController? get mapController;
-  @override
-  AutovalidateMode get autovalidateMode;
-  @override
-  BusinessDays get businessDays;
-  @override
-  bool get loggedUserCanEdit;
-  @override
-  InputController? get reservationSizeLimitCtrl;
-  @override
-  bool get allowReservations;
+  $Res call({
+    Object? dashboardEditing = null,
+    Object? myBusinessesses = null,
+    Object? currentBusiness = freezed,
+    Object? currentBusinessServices = null,
+    Object? picturesPath = null,
+    Object? newCategory = freezed,
+    Object? targetForDelete = freezed,
+    Object? businessNameCtrl = freezed,
+    Object? businessAboutUsCtrl = freezed,
+    Object? businessEmailCtrl = freezed,
+    Object? businessPhoneCtrl = freezed,
+    Object? businessCityCtrl = freezed,
+    Object? businessAddressCtrl = freezed,
+    Object? businessZipCodeCtrl = freezed,
+    Object? businessAdditionalInfoCtrl = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? nameFormKey = freezed,
+    Object? aboutUsFormKey = freezed,
+    Object? openingHoursFormKey = freezed,
+    Object? servicesFormKey = freezed,
+    Object? contactUsFormKey = freezed,
+    Object? addInfoFormKey = freezed,
+    Object? locationFormKey = freezed,
+    Object? categoryFormKey = freezed,
+    Object? businessCountry = freezed,
+    Object? markers = null,
+    Object? mapController = freezed,
+    Object? autovalidateMode = null,
+    Object? businessDays = null,
+    Object? loggedUserCanEdit = null,
+    Object? reservationSizeLimitCtrl = freezed,
+    Object? allowReservations = null,
+  }) {
+    return _then(_BusinessVM(
+      dashboardEditing: null == dashboardEditing
+          ? _self.dashboardEditing
+          : dashboardEditing // ignore: cast_nullable_to_non_nullable
+              as DashboardEditing,
+      myBusinessesses: null == myBusinessesses
+          ? _self._myBusinessesses
+          : myBusinessesses // ignore: cast_nullable_to_non_nullable
+              as List<BusinessDM>,
+      currentBusiness: freezed == currentBusiness
+          ? _self.currentBusiness
+          : currentBusiness // ignore: cast_nullable_to_non_nullable
+              as BusinessDM?,
+      currentBusinessServices: null == currentBusinessServices
+          ? _self._currentBusinessServices
+          : currentBusinessServices // ignore: cast_nullable_to_non_nullable
+              as List<BusinessServices>,
+      picturesPath: null == picturesPath
+          ? _self._picturesPath
+          : picturesPath // ignore: cast_nullable_to_non_nullable
+              as List<BusinessCoverImageDM>,
+      newCategory: freezed == newCategory
+          ? _self.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories?,
+      targetForDelete: freezed == targetForDelete
+          ? _self.targetForDelete
+          : targetForDelete // ignore: cast_nullable_to_non_nullable
+              as BusinessCoverImageDM?,
+      businessNameCtrl: freezed == businessNameCtrl
+          ? _self.businessNameCtrl
+          : businessNameCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessAboutUsCtrl: freezed == businessAboutUsCtrl
+          ? _self.businessAboutUsCtrl
+          : businessAboutUsCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessEmailCtrl: freezed == businessEmailCtrl
+          ? _self.businessEmailCtrl
+          : businessEmailCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessPhoneCtrl: freezed == businessPhoneCtrl
+          ? _self.businessPhoneCtrl
+          : businessPhoneCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessCityCtrl: freezed == businessCityCtrl
+          ? _self.businessCityCtrl
+          : businessCityCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessAddressCtrl: freezed == businessAddressCtrl
+          ? _self.businessAddressCtrl
+          : businessAddressCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessZipCodeCtrl: freezed == businessZipCodeCtrl
+          ? _self.businessZipCodeCtrl
+          : businessZipCodeCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      businessAdditionalInfoCtrl: freezed == businessAdditionalInfoCtrl
+          ? _self.businessAdditionalInfoCtrl
+          : businessAdditionalInfoCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      latitude: freezed == latitude
+          ? _self.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _self.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      nameFormKey: freezed == nameFormKey
+          ? _self.nameFormKey
+          : nameFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      aboutUsFormKey: freezed == aboutUsFormKey
+          ? _self.aboutUsFormKey
+          : aboutUsFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      openingHoursFormKey: freezed == openingHoursFormKey
+          ? _self.openingHoursFormKey
+          : openingHoursFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      servicesFormKey: freezed == servicesFormKey
+          ? _self.servicesFormKey
+          : servicesFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      contactUsFormKey: freezed == contactUsFormKey
+          ? _self.contactUsFormKey
+          : contactUsFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      addInfoFormKey: freezed == addInfoFormKey
+          ? _self.addInfoFormKey
+          : addInfoFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      locationFormKey: freezed == locationFormKey
+          ? _self.locationFormKey
+          : locationFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      categoryFormKey: freezed == categoryFormKey
+          ? _self.categoryFormKey
+          : categoryFormKey // ignore: cast_nullable_to_non_nullable
+              as GlobalKey<FormState>?,
+      businessCountry: freezed == businessCountry
+          ? _self.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
+      markers: null == markers
+          ? _self._markers
+          : markers // ignore: cast_nullable_to_non_nullable
+              as Set<Marker>,
+      mapController: freezed == mapController
+          ? _self.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as GoogleMapController?,
+      autovalidateMode: null == autovalidateMode
+          ? _self.autovalidateMode
+          : autovalidateMode // ignore: cast_nullable_to_non_nullable
+              as AutovalidateMode,
+      businessDays: null == businessDays
+          ? _self.businessDays
+          : businessDays // ignore: cast_nullable_to_non_nullable
+              as BusinessDays,
+      loggedUserCanEdit: null == loggedUserCanEdit
+          ? _self.loggedUserCanEdit
+          : loggedUserCanEdit // ignore: cast_nullable_to_non_nullable
+              as bool,
+      reservationSizeLimitCtrl: freezed == reservationSizeLimitCtrl
+          ? _self.reservationSizeLimitCtrl
+          : reservationSizeLimitCtrl // ignore: cast_nullable_to_non_nullable
+              as InputController?,
+      allowReservations: null == allowReservations
+          ? _self.allowReservations
+          : allowReservations // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 
   /// Create a copy of BusinessVM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessVMImplCopyWith<_$BusinessVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $BusinessDMCopyWith<$Res>? get currentBusiness {
+    if (_self.currentBusiness == null) {
+      return null;
+    }
+
+    return $BusinessDMCopyWith<$Res>(_self.currentBusiness!, (value) {
+      return _then(_self.copyWith(currentBusiness: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessCoverImageDMCopyWith<$Res>? get targetForDelete {
+    if (_self.targetForDelete == null) {
+      return null;
+    }
+
+    return $BusinessCoverImageDMCopyWith<$Res>(_self.targetForDelete!, (value) {
+      return _then(_self.copyWith(targetForDelete: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessNameCtrl {
+    if (_self.businessNameCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessNameCtrl!, (value) {
+      return _then(_self.copyWith(businessNameCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessAboutUsCtrl {
+    if (_self.businessAboutUsCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessAboutUsCtrl!, (value) {
+      return _then(_self.copyWith(businessAboutUsCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessEmailCtrl {
+    if (_self.businessEmailCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessEmailCtrl!, (value) {
+      return _then(_self.copyWith(businessEmailCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessPhoneCtrl {
+    if (_self.businessPhoneCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessPhoneCtrl!, (value) {
+      return _then(_self.copyWith(businessPhoneCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessCityCtrl {
+    if (_self.businessCityCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessCityCtrl!, (value) {
+      return _then(_self.copyWith(businessCityCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessAddressCtrl {
+    if (_self.businessAddressCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessAddressCtrl!, (value) {
+      return _then(_self.copyWith(businessAddressCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessZipCodeCtrl {
+    if (_self.businessZipCodeCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessZipCodeCtrl!, (value) {
+      return _then(_self.copyWith(businessZipCodeCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get businessAdditionalInfoCtrl {
+    if (_self.businessAdditionalInfoCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.businessAdditionalInfoCtrl!,
+        (value) {
+      return _then(_self.copyWith(businessAdditionalInfoCtrl: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessDaysCopyWith<$Res> get businessDays {
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays, (value) {
+      return _then(_self.copyWith(businessDays: value));
+    });
+  }
+
+  /// Create a copy of BusinessVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res>? get reservationSizeLimitCtrl {
+    if (_self.reservationSizeLimitCtrl == null) {
+      return null;
+    }
+
+    return $InputControllerCopyWith<$Res>(_self.reservationSizeLimitCtrl!,
+        (value) {
+      return _then(_self.copyWith(reservationSizeLimitCtrl: value));
+    });
+  }
 }
+
+// dart format on

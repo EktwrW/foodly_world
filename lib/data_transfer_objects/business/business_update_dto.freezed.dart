@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,72 +9,142 @@ part of 'business_update_dto.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-BusinessUpdateDTO _$BusinessUpdateDTOFromJson(Map<String, dynamic> json) {
-  return _BusinessUpdateDTO.fromJson(json);
-}
 
 /// @nodoc
 mixin _$BusinessUpdateDTO {
   @JsonKey(name: 'business_name')
-  String? get businessName => throw _privateConstructorUsedError;
+  String? get businessName;
   @JsonKey(name: 'business_about_us')
-  String? get businessAboutUs => throw _privateConstructorUsedError;
+  String? get businessAboutUs;
   @JsonKey(name: 'business_additional_info')
-  String? get businessAdditionalInfo => throw _privateConstructorUsedError;
+  String? get businessAdditionalInfo;
   @JsonKey(name: 'business_services')
-  List<BusinessServices>? get businessServices =>
-      throw _privateConstructorUsedError;
+  List<BusinessServices>? get businessServices;
   @JsonKey(name: 'business_email')
-  String? get businessEmail => throw _privateConstructorUsedError;
+  String? get businessEmail;
   @JsonKey(name: 'business_phone')
-  String? get businessPhone => throw _privateConstructorUsedError;
+  String? get businessPhone;
   @JsonKey(name: 'business_address')
-  String? get businessAddress => throw _privateConstructorUsedError;
+  String? get businessAddress;
   @JsonKey(name: 'business_zipcode')
-  String? get businessZipcode => throw _privateConstructorUsedError;
+  String? get businessZipcode;
   @JsonKey(name: 'business_city')
-  String? get businessCity => throw _privateConstructorUsedError;
+  String? get businessCity;
   @JsonKey(name: 'business_country')
-  FoodlyCountries? get businessCountry => throw _privateConstructorUsedError;
+  FoodlyCountries? get businessCountry;
   @JsonKey(name: 'business_website')
-  String? get businessWebsite => throw _privateConstructorUsedError;
+  String? get businessWebsite;
   @JsonKey(name: 'business_latitude')
-  double? get businessLatitude => throw _privateConstructorUsedError;
+  double? get businessLatitude;
   @JsonKey(name: 'business_longitude')
-  double? get businessLongitude => throw _privateConstructorUsedError;
+  double? get businessLongitude;
   @JsonKey(name: 'category_id')
-  FoodlyCategories? get category => throw _privateConstructorUsedError;
+  FoodlyCategories? get category;
   @JsonKey(name: 'business_opening_hours')
-  BusinessDays? get businessDays => throw _privateConstructorUsedError;
+  BusinessDays? get businessDays;
   @JsonKey(name: 'allow_reservations')
-  bool? get allowReservations => throw _privateConstructorUsedError;
+  bool? get allowReservations;
   @JsonKey(name: 'reservation_size_limit')
-  int? get reservationSizeLimit => throw _privateConstructorUsedError;
+  int? get reservationSizeLimit;
   @JsonKey(name: 'menu_enabled')
-  bool? get menuEnabled => throw _privateConstructorUsedError;
+  bool? get menuEnabled;
   @JsonKey(name: 'combos_label')
-  String? get combosLabel => throw _privateConstructorUsedError;
-
-  /// Serializes this BusinessUpdateDTO to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get combosLabel;
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $BusinessUpdateDTOCopyWith<BusinessUpdateDTO> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$BusinessUpdateDTOCopyWithImpl<BusinessUpdateDTO>(
+          this as BusinessUpdateDTO, _$identity);
+
+  /// Serializes this BusinessUpdateDTO to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BusinessUpdateDTO &&
+            (identical(other.businessName, businessName) ||
+                other.businessName == businessName) &&
+            (identical(other.businessAboutUs, businessAboutUs) ||
+                other.businessAboutUs == businessAboutUs) &&
+            (identical(other.businessAdditionalInfo, businessAdditionalInfo) ||
+                other.businessAdditionalInfo == businessAdditionalInfo) &&
+            const DeepCollectionEquality()
+                .equals(other.businessServices, businessServices) &&
+            (identical(other.businessEmail, businessEmail) ||
+                other.businessEmail == businessEmail) &&
+            (identical(other.businessPhone, businessPhone) ||
+                other.businessPhone == businessPhone) &&
+            (identical(other.businessAddress, businessAddress) ||
+                other.businessAddress == businessAddress) &&
+            (identical(other.businessZipcode, businessZipcode) ||
+                other.businessZipcode == businessZipcode) &&
+            (identical(other.businessCity, businessCity) ||
+                other.businessCity == businessCity) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
+            (identical(other.businessWebsite, businessWebsite) ||
+                other.businessWebsite == businessWebsite) &&
+            (identical(other.businessLatitude, businessLatitude) ||
+                other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) ||
+                other.businessLongitude == businessLongitude) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.businessDays, businessDays) ||
+                other.businessDays == businessDays) &&
+            (identical(other.allowReservations, allowReservations) ||
+                other.allowReservations == allowReservations) &&
+            (identical(other.reservationSizeLimit, reservationSizeLimit) ||
+                other.reservationSizeLimit == reservationSizeLimit) &&
+            (identical(other.menuEnabled, menuEnabled) ||
+                other.menuEnabled == menuEnabled) &&
+            (identical(other.combosLabel, combosLabel) ||
+                other.combosLabel == combosLabel));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        businessName,
+        businessAboutUs,
+        businessAdditionalInfo,
+        const DeepCollectionEquality().hash(businessServices),
+        businessEmail,
+        businessPhone,
+        businessAddress,
+        businessZipcode,
+        businessCity,
+        businessCountry,
+        businessWebsite,
+        businessLatitude,
+        businessLongitude,
+        category,
+        businessDays,
+        allowReservations,
+        reservationSizeLimit,
+        menuEnabled,
+        combosLabel
+      ]);
+
+  @override
+  String toString() {
+    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel)';
+  }
 }
 
 /// @nodoc
-abstract class $BusinessUpdateDTOCopyWith<$Res> {
+abstract mixin class $BusinessUpdateDTOCopyWith<$Res> {
   factory $BusinessUpdateDTOCopyWith(
-          BusinessUpdateDTO value, $Res Function(BusinessUpdateDTO) then) =
-      _$BusinessUpdateDTOCopyWithImpl<$Res, BusinessUpdateDTO>;
+          BusinessUpdateDTO value, $Res Function(BusinessUpdateDTO) _then) =
+      _$BusinessUpdateDTOCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'business_name') String? businessName,
@@ -102,14 +172,12 @@ abstract class $BusinessUpdateDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
+class _$BusinessUpdateDTOCopyWithImpl<$Res>
     implements $BusinessUpdateDTOCopyWith<$Res> {
-  _$BusinessUpdateDTOCopyWithImpl(this._value, this._then);
+  _$BusinessUpdateDTOCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BusinessUpdateDTO _self;
+  final $Res Function(BusinessUpdateDTO) _then;
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -136,84 +204,84 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
     Object? menuEnabled = freezed,
     Object? combosLabel = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       businessName: freezed == businessName
-          ? _value.businessName
+          ? _self.businessName
           : businessName // ignore: cast_nullable_to_non_nullable
               as String?,
       businessAboutUs: freezed == businessAboutUs
-          ? _value.businessAboutUs
+          ? _self.businessAboutUs
           : businessAboutUs // ignore: cast_nullable_to_non_nullable
               as String?,
       businessAdditionalInfo: freezed == businessAdditionalInfo
-          ? _value.businessAdditionalInfo
+          ? _self.businessAdditionalInfo
           : businessAdditionalInfo // ignore: cast_nullable_to_non_nullable
               as String?,
       businessServices: freezed == businessServices
-          ? _value.businessServices
+          ? _self.businessServices
           : businessServices // ignore: cast_nullable_to_non_nullable
               as List<BusinessServices>?,
       businessEmail: freezed == businessEmail
-          ? _value.businessEmail
+          ? _self.businessEmail
           : businessEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       businessPhone: freezed == businessPhone
-          ? _value.businessPhone
+          ? _self.businessPhone
           : businessPhone // ignore: cast_nullable_to_non_nullable
               as String?,
       businessAddress: freezed == businessAddress
-          ? _value.businessAddress
+          ? _self.businessAddress
           : businessAddress // ignore: cast_nullable_to_non_nullable
               as String?,
       businessZipcode: freezed == businessZipcode
-          ? _value.businessZipcode
+          ? _self.businessZipcode
           : businessZipcode // ignore: cast_nullable_to_non_nullable
               as String?,
       businessCity: freezed == businessCity
-          ? _value.businessCity
+          ? _self.businessCity
           : businessCity // ignore: cast_nullable_to_non_nullable
               as String?,
       businessCountry: freezed == businessCountry
-          ? _value.businessCountry
+          ? _self.businessCountry
           : businessCountry // ignore: cast_nullable_to_non_nullable
               as FoodlyCountries?,
       businessWebsite: freezed == businessWebsite
-          ? _value.businessWebsite
+          ? _self.businessWebsite
           : businessWebsite // ignore: cast_nullable_to_non_nullable
               as String?,
       businessLatitude: freezed == businessLatitude
-          ? _value.businessLatitude
+          ? _self.businessLatitude
           : businessLatitude // ignore: cast_nullable_to_non_nullable
               as double?,
       businessLongitude: freezed == businessLongitude
-          ? _value.businessLongitude
+          ? _self.businessLongitude
           : businessLongitude // ignore: cast_nullable_to_non_nullable
               as double?,
       category: freezed == category
-          ? _value.category
+          ? _self.category
           : category // ignore: cast_nullable_to_non_nullable
               as FoodlyCategories?,
       businessDays: freezed == businessDays
-          ? _value.businessDays
+          ? _self.businessDays
           : businessDays // ignore: cast_nullable_to_non_nullable
               as BusinessDays?,
       allowReservations: freezed == allowReservations
-          ? _value.allowReservations
+          ? _self.allowReservations
           : allowReservations // ignore: cast_nullable_to_non_nullable
               as bool?,
       reservationSizeLimit: freezed == reservationSizeLimit
-          ? _value.reservationSizeLimit
+          ? _self.reservationSizeLimit
           : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
               as int?,
       menuEnabled: freezed == menuEnabled
-          ? _value.menuEnabled
+          ? _self.menuEnabled
           : menuEnabled // ignore: cast_nullable_to_non_nullable
               as bool?,
       combosLabel: freezed == combosLabel
-          ? _value.combosLabel
+          ? _self.combosLabel
           : combosLabel // ignore: cast_nullable_to_non_nullable
               as String?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of BusinessUpdateDTO
@@ -221,168 +289,300 @@ class _$BusinessUpdateDTOCopyWithImpl<$Res, $Val extends BusinessUpdateDTO>
   @override
   @pragma('vm:prefer-inline')
   $BusinessDaysCopyWith<$Res>? get businessDays {
-    if (_value.businessDays == null) {
+    if (_self.businessDays == null) {
       return null;
     }
 
-    return $BusinessDaysCopyWith<$Res>(_value.businessDays!, (value) {
-      return _then(_value.copyWith(businessDays: value) as $Val);
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays!, (value) {
+      return _then(_self.copyWith(businessDays: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$BusinessUpdateDTOImplCopyWith<$Res>
-    implements $BusinessUpdateDTOCopyWith<$Res> {
-  factory _$$BusinessUpdateDTOImplCopyWith(_$BusinessUpdateDTOImpl value,
-          $Res Function(_$BusinessUpdateDTOImpl) then) =
-      __$$BusinessUpdateDTOImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'business_name') String? businessName,
-      @JsonKey(name: 'business_about_us') String? businessAboutUs,
-      @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
-      @JsonKey(name: 'business_services')
-      List<BusinessServices>? businessServices,
-      @JsonKey(name: 'business_email') String? businessEmail,
-      @JsonKey(name: 'business_phone') String? businessPhone,
-      @JsonKey(name: 'business_address') String? businessAddress,
-      @JsonKey(name: 'business_zipcode') String? businessZipcode,
-      @JsonKey(name: 'business_city') String? businessCity,
-      @JsonKey(name: 'business_country') FoodlyCountries? businessCountry,
-      @JsonKey(name: 'business_website') String? businessWebsite,
-      @JsonKey(name: 'business_latitude') double? businessLatitude,
-      @JsonKey(name: 'business_longitude') double? businessLongitude,
-      @JsonKey(name: 'category_id') FoodlyCategories? category,
-      @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
-      @JsonKey(name: 'allow_reservations') bool? allowReservations,
-      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
-      @JsonKey(name: 'menu_enabled') bool? menuEnabled,
-      @JsonKey(name: 'combos_label') String? combosLabel});
+/// Adds pattern-matching-related methods to [BusinessUpdateDTO].
+extension BusinessUpdateDTOPatterns on BusinessUpdateDTO {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $BusinessDaysCopyWith<$Res>? get businessDays;
-}
-
-/// @nodoc
-class __$$BusinessUpdateDTOImplCopyWithImpl<$Res>
-    extends _$BusinessUpdateDTOCopyWithImpl<$Res, _$BusinessUpdateDTOImpl>
-    implements _$$BusinessUpdateDTOImplCopyWith<$Res> {
-  __$$BusinessUpdateDTOImplCopyWithImpl(_$BusinessUpdateDTOImpl _value,
-      $Res Function(_$BusinessUpdateDTOImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of BusinessUpdateDTO
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? businessName = freezed,
-    Object? businessAboutUs = freezed,
-    Object? businessAdditionalInfo = freezed,
-    Object? businessServices = freezed,
-    Object? businessEmail = freezed,
-    Object? businessPhone = freezed,
-    Object? businessAddress = freezed,
-    Object? businessZipcode = freezed,
-    Object? businessCity = freezed,
-    Object? businessCountry = freezed,
-    Object? businessWebsite = freezed,
-    Object? businessLatitude = freezed,
-    Object? businessLongitude = freezed,
-    Object? category = freezed,
-    Object? businessDays = freezed,
-    Object? allowReservations = freezed,
-    Object? reservationSizeLimit = freezed,
-    Object? menuEnabled = freezed,
-    Object? combosLabel = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BusinessUpdateDTO value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$BusinessUpdateDTOImpl(
-      businessName: freezed == businessName
-          ? _value.businessName
-          : businessName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessAboutUs: freezed == businessAboutUs
-          ? _value.businessAboutUs
-          : businessAboutUs // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessAdditionalInfo: freezed == businessAdditionalInfo
-          ? _value.businessAdditionalInfo
-          : businessAdditionalInfo // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessServices: freezed == businessServices
-          ? _value._businessServices
-          : businessServices // ignore: cast_nullable_to_non_nullable
-              as List<BusinessServices>?,
-      businessEmail: freezed == businessEmail
-          ? _value.businessEmail
-          : businessEmail // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessPhone: freezed == businessPhone
-          ? _value.businessPhone
-          : businessPhone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessAddress: freezed == businessAddress
-          ? _value.businessAddress
-          : businessAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessZipcode: freezed == businessZipcode
-          ? _value.businessZipcode
-          : businessZipcode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessCity: freezed == businessCity
-          ? _value.businessCity
-          : businessCity // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessCountry: freezed == businessCountry
-          ? _value.businessCountry
-          : businessCountry // ignore: cast_nullable_to_non_nullable
-              as FoodlyCountries?,
-      businessWebsite: freezed == businessWebsite
-          ? _value.businessWebsite
-          : businessWebsite // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessLatitude: freezed == businessLatitude
-          ? _value.businessLatitude
-          : businessLatitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      businessLongitude: freezed == businessLongitude
-          ? _value.businessLongitude
-          : businessLongitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      category: freezed == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as FoodlyCategories?,
-      businessDays: freezed == businessDays
-          ? _value.businessDays
-          : businessDays // ignore: cast_nullable_to_non_nullable
-              as BusinessDays?,
-      allowReservations: freezed == allowReservations
-          ? _value.allowReservations
-          : allowReservations // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      reservationSizeLimit: freezed == reservationSizeLimit
-          ? _value.reservationSizeLimit
-          : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
-              as int?,
-      menuEnabled: freezed == menuEnabled
-          ? _value.menuEnabled
-          : menuEnabled // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      combosLabel: freezed == combosLabel
-          ? _value.combosLabel
-          : combosLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BusinessUpdateDTO value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BusinessUpdateDTO value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_about_us') String? businessAboutUs,
+            @JsonKey(name: 'business_additional_info')
+            String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services')
+            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_email') String? businessEmail,
+            @JsonKey(name: 'business_phone') String? businessPhone,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(name: 'business_zipcode') String? businessZipcode,
+            @JsonKey(name: 'business_city') String? businessCity,
+            @JsonKey(name: 'business_country') FoodlyCountries? businessCountry,
+            @JsonKey(name: 'business_website') String? businessWebsite,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'category_id') FoodlyCategories? category,
+            @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
+            @JsonKey(name: 'allow_reservations') bool? allowReservations,
+            @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool? menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO() when $default != null:
+        return $default(
+            _that.businessName,
+            _that.businessAboutUs,
+            _that.businessAdditionalInfo,
+            _that.businessServices,
+            _that.businessEmail,
+            _that.businessPhone,
+            _that.businessAddress,
+            _that.businessZipcode,
+            _that.businessCity,
+            _that.businessCountry,
+            _that.businessWebsite,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.category,
+            _that.businessDays,
+            _that.allowReservations,
+            _that.reservationSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_about_us') String? businessAboutUs,
+            @JsonKey(name: 'business_additional_info')
+            String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services')
+            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_email') String? businessEmail,
+            @JsonKey(name: 'business_phone') String? businessPhone,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(name: 'business_zipcode') String? businessZipcode,
+            @JsonKey(name: 'business_city') String? businessCity,
+            @JsonKey(name: 'business_country') FoodlyCountries? businessCountry,
+            @JsonKey(name: 'business_website') String? businessWebsite,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'category_id') FoodlyCategories? category,
+            @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
+            @JsonKey(name: 'allow_reservations') bool? allowReservations,
+            @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool? menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO():
+        return $default(
+            _that.businessName,
+            _that.businessAboutUs,
+            _that.businessAdditionalInfo,
+            _that.businessServices,
+            _that.businessEmail,
+            _that.businessPhone,
+            _that.businessAddress,
+            _that.businessZipcode,
+            _that.businessCity,
+            _that.businessCountry,
+            _that.businessWebsite,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.category,
+            _that.businessDays,
+            _that.allowReservations,
+            _that.reservationSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_about_us') String? businessAboutUs,
+            @JsonKey(name: 'business_additional_info')
+            String? businessAdditionalInfo,
+            @JsonKey(name: 'business_services')
+            List<BusinessServices>? businessServices,
+            @JsonKey(name: 'business_email') String? businessEmail,
+            @JsonKey(name: 'business_phone') String? businessPhone,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(name: 'business_zipcode') String? businessZipcode,
+            @JsonKey(name: 'business_city') String? businessCity,
+            @JsonKey(name: 'business_country') FoodlyCountries? businessCountry,
+            @JsonKey(name: 'business_website') String? businessWebsite,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'category_id') FoodlyCategories? category,
+            @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
+            @JsonKey(name: 'allow_reservations') bool? allowReservations,
+            @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+            @JsonKey(name: 'menu_enabled') bool? menuEnabled,
+            @JsonKey(name: 'combos_label') String? combosLabel)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BusinessUpdateDTO() when $default != null:
+        return $default(
+            _that.businessName,
+            _that.businessAboutUs,
+            _that.businessAdditionalInfo,
+            _that.businessServices,
+            _that.businessEmail,
+            _that.businessPhone,
+            _that.businessAddress,
+            _that.businessZipcode,
+            _that.businessCity,
+            _that.businessCountry,
+            _that.businessWebsite,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.category,
+            _that.businessDays,
+            _that.allowReservations,
+            _that.reservationSizeLimit,
+            _that.menuEnabled,
+            _that.combosLabel);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
-  const _$BusinessUpdateDTOImpl(
+class _BusinessUpdateDTO implements BusinessUpdateDTO {
+  const _BusinessUpdateDTO(
       {@JsonKey(name: 'business_name') this.businessName,
       @JsonKey(name: 'business_about_us') this.businessAboutUs,
       @JsonKey(name: 'business_additional_info') this.businessAdditionalInfo,
@@ -404,9 +604,8 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
       @JsonKey(name: 'menu_enabled') this.menuEnabled,
       @JsonKey(name: 'combos_label') this.combosLabel})
       : _businessServices = businessServices;
-
-  factory _$BusinessUpdateDTOImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BusinessUpdateDTOImplFromJson(json);
+  factory _BusinessUpdateDTO.fromJson(Map<String, dynamic> json) =>
+      _$BusinessUpdateDTOFromJson(json);
 
   @override
   @JsonKey(name: 'business_name')
@@ -475,16 +674,26 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
   @JsonKey(name: 'combos_label')
   final String? combosLabel;
 
+  /// Create a copy of BusinessUpdateDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessUpdateDTOCopyWith<_BusinessUpdateDTO> get copyWith =>
+      __$BusinessUpdateDTOCopyWithImpl<_BusinessUpdateDTO>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$BusinessUpdateDTOToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessUpdateDTOImpl &&
+            other is _BusinessUpdateDTO &&
             (identical(other.businessName, businessName) ||
                 other.businessName == businessName) &&
             (identical(other.businessAboutUs, businessAboutUs) ||
@@ -550,113 +759,172 @@ class _$BusinessUpdateDTOImpl implements _BusinessUpdateDTO {
         combosLabel
       ]);
 
-  /// Create a copy of BusinessUpdateDTO
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessUpdateDTOImplCopyWith<_$BusinessUpdateDTOImpl> get copyWith =>
-      __$$BusinessUpdateDTOImplCopyWithImpl<_$BusinessUpdateDTOImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BusinessUpdateDTOImplToJson(
-      this,
-    );
+  String toString() {
+    return 'BusinessUpdateDTO(businessName: $businessName, businessAboutUs: $businessAboutUs, businessAdditionalInfo: $businessAdditionalInfo, businessServices: $businessServices, businessEmail: $businessEmail, businessPhone: $businessPhone, businessAddress: $businessAddress, businessZipcode: $businessZipcode, businessCity: $businessCity, businessCountry: $businessCountry, businessWebsite: $businessWebsite, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, category: $category, businessDays: $businessDays, allowReservations: $allowReservations, reservationSizeLimit: $reservationSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel)';
   }
 }
 
-abstract class _BusinessUpdateDTO implements BusinessUpdateDTO {
-  const factory _BusinessUpdateDTO(
-      {@JsonKey(name: 'business_name') final String? businessName,
-      @JsonKey(name: 'business_about_us') final String? businessAboutUs,
-      @JsonKey(name: 'business_additional_info')
-      final String? businessAdditionalInfo,
+/// @nodoc
+abstract mixin class _$BusinessUpdateDTOCopyWith<$Res>
+    implements $BusinessUpdateDTOCopyWith<$Res> {
+  factory _$BusinessUpdateDTOCopyWith(
+          _BusinessUpdateDTO value, $Res Function(_BusinessUpdateDTO) _then) =
+      __$BusinessUpdateDTOCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'business_name') String? businessName,
+      @JsonKey(name: 'business_about_us') String? businessAboutUs,
+      @JsonKey(name: 'business_additional_info') String? businessAdditionalInfo,
       @JsonKey(name: 'business_services')
-      final List<BusinessServices>? businessServices,
-      @JsonKey(name: 'business_email') final String? businessEmail,
-      @JsonKey(name: 'business_phone') final String? businessPhone,
-      @JsonKey(name: 'business_address') final String? businessAddress,
-      @JsonKey(name: 'business_zipcode') final String? businessZipcode,
-      @JsonKey(name: 'business_city') final String? businessCity,
-      @JsonKey(name: 'business_country') final FoodlyCountries? businessCountry,
-      @JsonKey(name: 'business_website') final String? businessWebsite,
-      @JsonKey(name: 'business_latitude') final double? businessLatitude,
-      @JsonKey(name: 'business_longitude') final double? businessLongitude,
-      @JsonKey(name: 'category_id') final FoodlyCategories? category,
-      @JsonKey(name: 'business_opening_hours') final BusinessDays? businessDays,
-      @JsonKey(name: 'allow_reservations') final bool? allowReservations,
-      @JsonKey(name: 'reservation_size_limit') final int? reservationSizeLimit,
-      @JsonKey(name: 'menu_enabled') final bool? menuEnabled,
-      @JsonKey(name: 'combos_label')
-      final String? combosLabel}) = _$BusinessUpdateDTOImpl;
-
-  factory _BusinessUpdateDTO.fromJson(Map<String, dynamic> json) =
-      _$BusinessUpdateDTOImpl.fromJson;
+      List<BusinessServices>? businessServices,
+      @JsonKey(name: 'business_email') String? businessEmail,
+      @JsonKey(name: 'business_phone') String? businessPhone,
+      @JsonKey(name: 'business_address') String? businessAddress,
+      @JsonKey(name: 'business_zipcode') String? businessZipcode,
+      @JsonKey(name: 'business_city') String? businessCity,
+      @JsonKey(name: 'business_country') FoodlyCountries? businessCountry,
+      @JsonKey(name: 'business_website') String? businessWebsite,
+      @JsonKey(name: 'business_latitude') double? businessLatitude,
+      @JsonKey(name: 'business_longitude') double? businessLongitude,
+      @JsonKey(name: 'category_id') FoodlyCategories? category,
+      @JsonKey(name: 'business_opening_hours') BusinessDays? businessDays,
+      @JsonKey(name: 'allow_reservations') bool? allowReservations,
+      @JsonKey(name: 'reservation_size_limit') int? reservationSizeLimit,
+      @JsonKey(name: 'menu_enabled') bool? menuEnabled,
+      @JsonKey(name: 'combos_label') String? combosLabel});
 
   @override
-  @JsonKey(name: 'business_name')
-  String? get businessName;
-  @override
-  @JsonKey(name: 'business_about_us')
-  String? get businessAboutUs;
-  @override
-  @JsonKey(name: 'business_additional_info')
-  String? get businessAdditionalInfo;
-  @override
-  @JsonKey(name: 'business_services')
-  List<BusinessServices>? get businessServices;
-  @override
-  @JsonKey(name: 'business_email')
-  String? get businessEmail;
-  @override
-  @JsonKey(name: 'business_phone')
-  String? get businessPhone;
-  @override
-  @JsonKey(name: 'business_address')
-  String? get businessAddress;
-  @override
-  @JsonKey(name: 'business_zipcode')
-  String? get businessZipcode;
-  @override
-  @JsonKey(name: 'business_city')
-  String? get businessCity;
-  @override
-  @JsonKey(name: 'business_country')
-  FoodlyCountries? get businessCountry;
-  @override
-  @JsonKey(name: 'business_website')
-  String? get businessWebsite;
-  @override
-  @JsonKey(name: 'business_latitude')
-  double? get businessLatitude;
-  @override
-  @JsonKey(name: 'business_longitude')
-  double? get businessLongitude;
-  @override
-  @JsonKey(name: 'category_id')
-  FoodlyCategories? get category;
-  @override
-  @JsonKey(name: 'business_opening_hours')
-  BusinessDays? get businessDays;
-  @override
-  @JsonKey(name: 'allow_reservations')
-  bool? get allowReservations;
-  @override
-  @JsonKey(name: 'reservation_size_limit')
-  int? get reservationSizeLimit;
-  @override
-  @JsonKey(name: 'menu_enabled')
-  bool? get menuEnabled;
-  @override
-  @JsonKey(name: 'combos_label')
-  String? get combosLabel;
+  $BusinessDaysCopyWith<$Res>? get businessDays;
+}
+
+/// @nodoc
+class __$BusinessUpdateDTOCopyWithImpl<$Res>
+    implements _$BusinessUpdateDTOCopyWith<$Res> {
+  __$BusinessUpdateDTOCopyWithImpl(this._self, this._then);
+
+  final _BusinessUpdateDTO _self;
+  final $Res Function(_BusinessUpdateDTO) _then;
 
   /// Create a copy of BusinessUpdateDTO
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessUpdateDTOImplCopyWith<_$BusinessUpdateDTOImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? businessName = freezed,
+    Object? businessAboutUs = freezed,
+    Object? businessAdditionalInfo = freezed,
+    Object? businessServices = freezed,
+    Object? businessEmail = freezed,
+    Object? businessPhone = freezed,
+    Object? businessAddress = freezed,
+    Object? businessZipcode = freezed,
+    Object? businessCity = freezed,
+    Object? businessCountry = freezed,
+    Object? businessWebsite = freezed,
+    Object? businessLatitude = freezed,
+    Object? businessLongitude = freezed,
+    Object? category = freezed,
+    Object? businessDays = freezed,
+    Object? allowReservations = freezed,
+    Object? reservationSizeLimit = freezed,
+    Object? menuEnabled = freezed,
+    Object? combosLabel = freezed,
+  }) {
+    return _then(_BusinessUpdateDTO(
+      businessName: freezed == businessName
+          ? _self.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessAboutUs: freezed == businessAboutUs
+          ? _self.businessAboutUs
+          : businessAboutUs // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessAdditionalInfo: freezed == businessAdditionalInfo
+          ? _self.businessAdditionalInfo
+          : businessAdditionalInfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessServices: freezed == businessServices
+          ? _self._businessServices
+          : businessServices // ignore: cast_nullable_to_non_nullable
+              as List<BusinessServices>?,
+      businessEmail: freezed == businessEmail
+          ? _self.businessEmail
+          : businessEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessPhone: freezed == businessPhone
+          ? _self.businessPhone
+          : businessPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessAddress: freezed == businessAddress
+          ? _self.businessAddress
+          : businessAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessZipcode: freezed == businessZipcode
+          ? _self.businessZipcode
+          : businessZipcode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessCity: freezed == businessCity
+          ? _self.businessCity
+          : businessCity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessCountry: freezed == businessCountry
+          ? _self.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
+      businessWebsite: freezed == businessWebsite
+          ? _self.businessWebsite
+          : businessWebsite // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessLatitude: freezed == businessLatitude
+          ? _self.businessLatitude
+          : businessLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessLongitude: freezed == businessLongitude
+          ? _self.businessLongitude
+          : businessLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      category: freezed == category
+          ? _self.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as FoodlyCategories?,
+      businessDays: freezed == businessDays
+          ? _self.businessDays
+          : businessDays // ignore: cast_nullable_to_non_nullable
+              as BusinessDays?,
+      allowReservations: freezed == allowReservations
+          ? _self.allowReservations
+          : allowReservations // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      reservationSizeLimit: freezed == reservationSizeLimit
+          ? _self.reservationSizeLimit
+          : reservationSizeLimit // ignore: cast_nullable_to_non_nullable
+              as int?,
+      menuEnabled: freezed == menuEnabled
+          ? _self.menuEnabled
+          : menuEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      combosLabel: freezed == combosLabel
+          ? _self.combosLabel
+          : combosLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  /// Create a copy of BusinessUpdateDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessDaysCopyWith<$Res>? get businessDays {
+    if (_self.businessDays == null) {
+      return null;
+    }
+
+    return $BusinessDaysCopyWith<$Res>(_self.businessDays!, (value) {
+      return _then(_self.copyWith(businessDays: value));
+    });
+  }
 }
+
+// dart format on

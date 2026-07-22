@@ -7,7 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/contact/cubit/contact_state.dart'
 import 'package:foodly_world/ui/shared_widgets/contact/view_model/contact_vm.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 void showContactBottomSheet(BuildContext context, {String? prefilledSubject}) {
   showModalBottomSheet<void>(

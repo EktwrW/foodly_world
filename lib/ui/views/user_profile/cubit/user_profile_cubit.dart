@@ -2,6 +2,7 @@ import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
@@ -13,8 +14,8 @@ import 'package:nova_places_api/nova_places_api.dart';
 
 export 'package:foodly_world/core/view_models/user_profile_vm.dart';
 
-part 'user_profile_state.dart';
 part 'user_profile_cubit.freezed.dart';
+part 'user_profile_state.dart';
 
 /// Outcome of an email-change attempt. Tipado para que el widget pueda
 /// distinguir el caso "password incorrecto" (reabrir dialog con error

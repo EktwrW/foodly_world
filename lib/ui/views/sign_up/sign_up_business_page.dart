@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_form.dart
 import 'package:foodly_world/ui/views/sign_up/widgets/sign_up_business_tooltip.dart';
 import 'package:foodly_world/ui/views/sign_up/widgets/terms_privacy_wdg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 class SignUpBusinessPage extends StatefulWidget {
   const SignUpBusinessPage({super.key});

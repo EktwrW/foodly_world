@@ -12,7 +12,7 @@ part 'business_vm.freezed.dart';
 enum DashboardEditing { none, name, address, category, aboutUs, openingHours, services, contactUs, additionalInfo }
 
 @freezed
-class BusinessVM with _$BusinessVM {
+abstract class BusinessVM with _$BusinessVM {
   const BusinessVM._();
 
   const factory BusinessVM({

@@ -14,7 +14,7 @@ import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categor
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show CurrentLocationButton;
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 part 'widgets/categories_app_bar.dart';
 part 'widgets/catering_filters_bar.dart';

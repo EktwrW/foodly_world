@@ -25,7 +25,7 @@ part 'app_features_dm.g.dart';
 /// Cache-Control: public, max-age=60 pero el HTTP cache de Dio en
 /// Flutter no es trivial — mejor cache en memoria explícito.
 @freezed
-class AppFeaturesDM with _$AppFeaturesDM {
+abstract class AppFeaturesDM with _$AppFeaturesDM {
   const factory AppFeaturesDM({
     /// Controla si la app usa el backend Foodly Places Proxy
     /// (true → nuestro proxy; false → nova_places_api directo).
@@ -34,6 +34,12 @@ class AppFeaturesDM with _$AppFeaturesDM {
     /// y, si el proxy falla, el interceptor del repo genera failure que
     /// el caller puede manejar.
     @JsonKey(name: 'places_proxy_enabled') @Default(true) bool placesProxyEnabled,
+
+    /// Kill-switch del feature Group Orders & Split Payments. Default false:
+    /// el CTA "Ordenar en grupo" solo se muestra cuando el backend lo
+    /// enciende (GROUP_ORDERS_ENABLED=true). Así los pagos in-app no se
+    /// exponen antes de estar listos en cada mercado.
+    @JsonKey(name: 'group_orders_enabled') @Default(false) bool groupOrdersEnabled,
   }) = _AppFeaturesDM;
 
   factory AppFeaturesDM.fromJson(Map<String, dynamic> json) => _$AppFeaturesDMFromJson(json);

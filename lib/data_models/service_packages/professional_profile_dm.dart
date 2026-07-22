@@ -26,7 +26,7 @@ double? _doubleFromJson(dynamic value) {
 // ── Response wrappers ────────────────────────────────────────
 
 @freezed
-class ProfessionalProfileResponseDM with _$ProfessionalProfileResponseDM {
+abstract class ProfessionalProfileResponseDM with _$ProfessionalProfileResponseDM {
   const factory ProfessionalProfileResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -62,7 +62,7 @@ enum CancellationPolicy {
 // ── Main data model ──────────────────────────────────────────
 
 @freezed
-class ProfessionalProfileDM with _$ProfessionalProfileDM {
+abstract class ProfessionalProfileDM with _$ProfessionalProfileDM {
   const ProfessionalProfileDM._();
 
   const factory ProfessionalProfileDM({

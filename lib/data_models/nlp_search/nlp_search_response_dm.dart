@@ -5,7 +5,7 @@ part 'nlp_search_response_dm.freezed.dart';
 part 'nlp_search_response_dm.g.dart';
 
 @freezed
-class NlpSearchResponseDM with _$NlpSearchResponseDM {
+abstract class NlpSearchResponseDM with _$NlpSearchResponseDM {
   const factory NlpSearchResponseDM({
     @JsonKey(name: 'business') @Default([]) List<BusinessDM> business,
     @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo,
@@ -15,7 +15,7 @@ class NlpSearchResponseDM with _$NlpSearchResponseDM {
 }
 
 @freezed
-class NlpInfoDM with _$NlpInfoDM {
+abstract class NlpInfoDM with _$NlpInfoDM {
   const factory NlpInfoDM({
     @JsonKey(name: 'detected_categories') @Default([]) List<int> detectedCategories,
     @JsonKey(name: 'extracted_keywords') @Default([]) List<String> extractedKeywords,
@@ -27,7 +27,7 @@ class NlpInfoDM with _$NlpInfoDM {
 }
 
 @freezed
-class TimeFilterDM with _$TimeFilterDM {
+abstract class TimeFilterDM with _$TimeFilterDM {
   const factory TimeFilterDM({
     String? from,
     String? to,

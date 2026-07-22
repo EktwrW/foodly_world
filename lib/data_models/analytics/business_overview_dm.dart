@@ -53,7 +53,7 @@ List<BreakdownItemDM> parseEventTypes(dynamic raw) {
 
 /// Top-level response from GET /analytics/business-overview
 @freezed
-class BusinessOverviewResponseDM with _$BusinessOverviewResponseDM {
+abstract class BusinessOverviewResponseDM with _$BusinessOverviewResponseDM {
   const factory BusinessOverviewResponseDM({
     BusinessOverviewDataDM? data,
   }) = _BusinessOverviewResponseDM;
@@ -63,7 +63,7 @@ class BusinessOverviewResponseDM with _$BusinessOverviewResponseDM {
 }
 
 @freezed
-class BusinessOverviewDataDM with _$BusinessOverviewDataDM {
+abstract class BusinessOverviewDataDM with _$BusinessOverviewDataDM {
   const factory BusinessOverviewDataDM({
     KpisDM? kpis,
     FunnelDM? funnel,
@@ -78,7 +78,7 @@ class BusinessOverviewDataDM with _$BusinessOverviewDataDM {
 // ─── KPIs ───────────────────────────────────────────────────────────────────
 
 @freezed
-class KpisDM with _$KpisDM {
+abstract class KpisDM with _$KpisDM {
   const factory KpisDM({
     @JsonKey(name: 'reservations_total') @Default(0) int reservationsTotal,
     @JsonKey(name: 'reservation_success_rate') @Default(0.0) double reservationSuccessRate,
@@ -95,7 +95,7 @@ class KpisDM with _$KpisDM {
 // ─── Funnel ─────────────────────────────────────────────────────────────────
 
 @freezed
-class FunnelDM with _$FunnelDM {
+abstract class FunnelDM with _$FunnelDM {
   const factory FunnelDM({
     @JsonKey(fromJson: parseFunnelSteps) @Default([]) List<FunnelStepDM> steps,
     FunnelConversionDM? conversion,
@@ -105,7 +105,7 @@ class FunnelDM with _$FunnelDM {
 }
 
 @freezed
-class FunnelStepDM with _$FunnelStepDM {
+abstract class FunnelStepDM with _$FunnelStepDM {
   const factory FunnelStepDM({
     @Default('') String label,
     @Default(0) int value,
@@ -115,7 +115,7 @@ class FunnelStepDM with _$FunnelStepDM {
 }
 
 @freezed
-class FunnelConversionDM with _$FunnelConversionDM {
+abstract class FunnelConversionDM with _$FunnelConversionDM {
   const factory FunnelConversionDM({
     @JsonKey(name: 'open_to_cta_rate') @Default(0.0) double openToCtaRate,
     @JsonKey(name: 'open_to_reservation_rate') @Default(0.0) double openToReservationRate,
@@ -129,7 +129,7 @@ class FunnelConversionDM with _$FunnelConversionDM {
 // ─── Daily Series ───────────────────────────────────────────────────────────
 
 @freezed
-class DailySeriesDM with _$DailySeriesDM {
+abstract class DailySeriesDM with _$DailySeriesDM {
   const factory DailySeriesDM({
     @JsonKey(name: 'reservations_daily') @Default([]) List<DailyPointDM> reservationsDaily,
     @JsonKey(name: 'reviews_daily') @Default([]) List<DailyPointDM> reviewsDaily,
@@ -142,7 +142,7 @@ class DailySeriesDM with _$DailySeriesDM {
 }
 
 @freezed
-class DailyPointDM with _$DailyPointDM {
+abstract class DailyPointDM with _$DailyPointDM {
   const factory DailyPointDM({
     @Default('') String date,
     @Default(0) int value,
@@ -154,7 +154,7 @@ class DailyPointDM with _$DailyPointDM {
 // ─── Breakdowns ─────────────────────────────────────────────────────────────
 
 @freezed
-class BreakdownsDM with _$BreakdownsDM {
+abstract class BreakdownsDM with _$BreakdownsDM {
   const factory BreakdownsDM({
     @JsonKey(name: 'reservations_by_status', fromJson: parseBreakdownMapOrList) @Default([]) List<BreakdownItemDM> reservationsByStatus,
     @JsonKey(name: 'top_event_types', fromJson: parseEventTypes) @Default([]) List<BreakdownItemDM> topEventTypes,
@@ -165,7 +165,7 @@ class BreakdownsDM with _$BreakdownsDM {
 }
 
 @freezed
-class BreakdownItemDM with _$BreakdownItemDM {
+abstract class BreakdownItemDM with _$BreakdownItemDM {
   const factory BreakdownItemDM({
     @Default('') String label,
     @Default(0) int value,

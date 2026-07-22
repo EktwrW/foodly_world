@@ -32,6 +32,8 @@ enum AppRoutes {
   visitMenu('/visit-menu/$_routeIdParam', 'visitMenu'),
   visitServicePackages('$mainRoute/$_routeIdParam/visit-business/visit-service-packages', 'visitServicePackages'),
   visitPromotions('$mainRoute/$_routeIdParam/visit-business/visit-promotions', 'visitPromotions'),
+  // Group Orders & Split Payments
+  groupOrder('/group-order/$_routeIdParam', 'groupOrder'),
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //

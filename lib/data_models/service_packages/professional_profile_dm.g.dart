@@ -6,19 +6,19 @@ part of 'professional_profile_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProfessionalProfileResponseDMImpl
-    _$$ProfessionalProfileResponseDMImplFromJson(Map<String, dynamic> json) =>
-        _$ProfessionalProfileResponseDMImpl(
-          success: json['success'] as bool? ?? false,
-          message: json['message'] as String? ?? '',
-          professionalProfile: json['professional_profile'] == null
-              ? null
-              : ProfessionalProfileDM.fromJson(
-                  json['professional_profile'] as Map<String, dynamic>),
-        );
+_ProfessionalProfileResponseDM _$ProfessionalProfileResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _ProfessionalProfileResponseDM(
+      success: json['success'] as bool? ?? false,
+      message: json['message'] as String? ?? '',
+      professionalProfile: json['professional_profile'] == null
+          ? null
+          : ProfessionalProfileDM.fromJson(
+              json['professional_profile'] as Map<String, dynamic>),
+    );
 
-Map<String, dynamic> _$$ProfessionalProfileResponseDMImplToJson(
-        _$ProfessionalProfileResponseDMImpl instance) =>
+Map<String, dynamic> _$ProfessionalProfileResponseDMToJson(
+        _ProfessionalProfileResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
@@ -26,9 +26,9 @@ Map<String, dynamic> _$$ProfessionalProfileResponseDMImplToJson(
         'professional_profile': value,
     };
 
-_$ProfessionalProfileDMImpl _$$ProfessionalProfileDMImplFromJson(
+_ProfessionalProfileDM _$ProfessionalProfileDMFromJson(
         Map<String, dynamic> json) =>
-    _$ProfessionalProfileDMImpl(
+    _ProfessionalProfileDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       businessId: (json['business_id'] as num?)?.toInt(),
@@ -77,8 +77,8 @@ _$ProfessionalProfileDMImpl _$$ProfessionalProfileDMImplFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ProfessionalProfileDMImplToJson(
-        _$ProfessionalProfileDMImpl instance) =>
+Map<String, dynamic> _$ProfessionalProfileDMToJson(
+        _ProfessionalProfileDM instance) =>
     <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,

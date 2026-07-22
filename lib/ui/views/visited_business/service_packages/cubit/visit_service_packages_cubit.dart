@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/service_packages/service_package_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/services/service_events_tracker.dart';
@@ -7,8 +8,8 @@ import 'package:foodly_world/data_models/service_packages/professional_profile_d
 import 'package:foodly_world/data_models/service_packages/service_package_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'visit_service_packages_state.dart';
 part 'visit_service_packages_cubit.freezed.dart';
+part 'visit_service_packages_state.dart';
 
 /// Cubit for the visitor-facing "Service Packages" page.
 ///

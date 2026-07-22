@@ -1,4 +1,4 @@
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 
 class UIIconsData {
   const UIIconsData._();

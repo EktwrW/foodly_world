@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show IconData, Icons;
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, BoxIcons;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, BoxIcons;
 import 'package:json_annotation/json_annotation.dart';
 
 /// Whether a business is currently open right now, opening within 60

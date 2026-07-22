@@ -33,7 +33,7 @@ part 'service_overview_dm.g.dart';
 /// `BusinessOverviewResponseDM` silently drops `success` from its payload —
 /// here we model it explicitly so consumers can check the flag if needed.
 @freezed
-class ServiceOverviewResponseDM with _$ServiceOverviewResponseDM {
+abstract class ServiceOverviewResponseDM with _$ServiceOverviewResponseDM {
   const factory ServiceOverviewResponseDM({
     @Default(false) bool success,
     ServiceOverviewDataDM? data,
@@ -44,7 +44,7 @@ class ServiceOverviewResponseDM with _$ServiceOverviewResponseDM {
 }
 
 @freezed
-class ServiceOverviewDataDM with _$ServiceOverviewDataDM {
+abstract class ServiceOverviewDataDM with _$ServiceOverviewDataDM {
   const factory ServiceOverviewDataDM({
     AnalyticsScopeDM? scope,
     ServiceKpisDM? kpis,
@@ -67,7 +67,7 @@ class ServiceOverviewDataDM with _$ServiceOverviewDataDM {
 /// Generic name (no `Service` prefix) so business-overview can reuse it
 /// later if its DM is updated to model `scope` properly.
 @freezed
-class AnalyticsScopeDM with _$AnalyticsScopeDM {
+abstract class AnalyticsScopeDM with _$AnalyticsScopeDM {
   const factory AnalyticsScopeDM({
     AnalyticsPeriodDM? period,
     @Default([]) List<AnalyticsBusinessRefDM> businesses,
@@ -78,7 +78,7 @@ class AnalyticsScopeDM with _$AnalyticsScopeDM {
 }
 
 @freezed
-class AnalyticsPeriodDM with _$AnalyticsPeriodDM {
+abstract class AnalyticsPeriodDM with _$AnalyticsPeriodDM {
   const factory AnalyticsPeriodDM({
     @Default(30) int days,
     @Default('') String start,
@@ -93,7 +93,7 @@ class AnalyticsPeriodDM with _$AnalyticsPeriodDM {
 /// Not a full [BusinessDM] — the analytics endpoint only echoes id, uuid
 /// and name, not the rich business profile.
 @freezed
-class AnalyticsBusinessRefDM with _$AnalyticsBusinessRefDM {
+abstract class AnalyticsBusinessRefDM with _$AnalyticsBusinessRefDM {
   const factory AnalyticsBusinessRefDM({
     @Default(0) int id,
     @JsonKey(name: 'business_uuid') @Default('') String businessUuid,
@@ -126,7 +126,7 @@ class AnalyticsBusinessRefDM with _$AnalyticsBusinessRefDM {
 /// Mateo carried those fields verbatim into the service shape so the FE can
 /// render them from the same KPI card definitions if it wants to.
 @freezed
-class ServiceKpisDM with _$ServiceKpisDM {
+abstract class ServiceKpisDM with _$ServiceKpisDM {
   const factory ServiceKpisDM({
     @JsonKey(name: 'bookings_total') @Default(0) int bookingsTotal,
     @JsonKey(name: 'booking_success_rate') @Default(0.0) double bookingSuccessRate,
@@ -170,7 +170,7 @@ class ServiceKpisDM with _$ServiceKpisDM {
 /// Reuses [FunnelStepDM] from business_overview_dm.dart — same `{label, value}`
 /// shape applies regardless of which event sequence the funnel represents.
 @freezed
-class ServiceFunnelDM with _$ServiceFunnelDM {
+abstract class ServiceFunnelDM with _$ServiceFunnelDM {
   const factory ServiceFunnelDM({
     @JsonKey(fromJson: parseFunnelSteps) @Default([]) List<FunnelStepDM> steps,
     ServiceFunnelConversionDM? conversion,
@@ -191,7 +191,7 @@ class ServiceFunnelDM with _$ServiceFunnelDM {
 /// requesting it" — the succeeded step is partly outside the chef's
 /// control (customer can ghost between submit and confirm).
 @freezed
-class ServiceFunnelConversionDM with _$ServiceFunnelConversionDM {
+abstract class ServiceFunnelConversionDM with _$ServiceFunnelConversionDM {
   const factory ServiceFunnelConversionDM({
     @JsonKey(name: 'view_to_inquiry_rate') @Default(0.0) double viewToInquiryRate,
     @JsonKey(name: 'inquiry_to_booking_rate') @Default(0.0) double inquiryToBookingRate,
@@ -221,7 +221,7 @@ class ServiceFunnelConversionDM with _$ServiceFunnelConversionDM {
 /// already represented inside the funnel step `package_view`, and message
 /// volume is currently absent from the analytics surface.
 @freezed
-class ServiceDailySeriesDM with _$ServiceDailySeriesDM {
+abstract class ServiceDailySeriesDM with _$ServiceDailySeriesDM {
   const factory ServiceDailySeriesDM({
     @JsonKey(name: 'bookings_daily') @Default([]) List<DailyPointDM> bookingsDaily,
     @JsonKey(name: 'reviews_daily') @Default([]) List<DailyPointDM> reviewsDaily,
@@ -253,7 +253,7 @@ class ServiceDailySeriesDM with _$ServiceDailySeriesDM {
 /// catering dashboard surfaces "top packages" instead, which is more
 /// actionable for the chef.
 @freezed
-class ServiceBreakdownsDM with _$ServiceBreakdownsDM {
+abstract class ServiceBreakdownsDM with _$ServiceBreakdownsDM {
   const factory ServiceBreakdownsDM({
     @JsonKey(name: 'bookings_by_status', fromJson: parseBreakdownMapOrList)
     @Default([])
@@ -275,7 +275,7 @@ class ServiceBreakdownsDM with _$ServiceBreakdownsDM {
 /// the service_packages DM. Consumers that need the typed enum can map
 /// `PriceType.values.firstWhere(...)` at the callsite.
 @freezed
-class TopServicePackageDM with _$TopServicePackageDM {
+abstract class TopServicePackageDM with _$TopServicePackageDM {
   const factory TopServicePackageDM({
     @JsonKey(name: 'package_uuid') @Default('') String packageUuid,
     @Default('') String title,
@@ -296,7 +296,7 @@ class TopServicePackageDM with _$TopServicePackageDM {
 /// definition; if business-overview's DM is ever updated to expose meta,
 /// it should import this type.
 @freezed
-class AnalyticsMetaDM with _$AnalyticsMetaDM {
+abstract class AnalyticsMetaDM with _$AnalyticsMetaDM {
   const factory AnalyticsMetaDM({
     @JsonKey(name: 'generated_at') String? generatedAt,
     @Default('') String source,

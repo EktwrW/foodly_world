@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'input_controller.freezed.dart';
 
 @freezed
-class InputController with _$InputController {
+abstract class InputController with _$InputController {
   const InputController._();
 
   const factory InputController({

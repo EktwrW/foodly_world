@@ -6,9 +6,8 @@ part of 'post_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PostsResponseDMImpl _$$PostsResponseDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PostsResponseDMImpl(
+_PostsResponseDM _$PostsResponseDMFromJson(Map<String, dynamic> json) =>
+    _PostsResponseDM(
       posts: (json['posts'] as List<dynamic>?)
               ?.map((e) => PostDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,22 +17,20 @@ _$PostsResponseDMImpl _$$PostsResponseDMImplFromJson(
           : PostsMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$PostsResponseDMImplToJson(
-        _$PostsResponseDMImpl instance) =>
+Map<String, dynamic> _$PostsResponseDMToJson(_PostsResponseDM instance) =>
     <String, dynamic>{
       'posts': instance.posts.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$PostsMetaDMImpl _$$PostsMetaDMImplFromJson(Map<String, dynamic> json) =>
-    _$PostsMetaDMImpl(
+_PostsMetaDM _$PostsMetaDMFromJson(Map<String, dynamic> json) => _PostsMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
       total: (json['total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$PostsMetaDMImplToJson(_$PostsMetaDMImpl instance) =>
+Map<String, dynamic> _$PostsMetaDMToJson(_PostsMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -41,7 +38,7 @@ Map<String, dynamic> _$$PostsMetaDMImplToJson(_$PostsMetaDMImpl instance) =>
       'total': instance.total,
     };
 
-_$PostDMImpl _$$PostDMImplFromJson(Map<String, dynamic> json) => _$PostDMImpl(
+_PostDM _$PostDMFromJson(Map<String, dynamic> json) => _PostDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String,
       content: json['content'] as String,
@@ -62,8 +59,7 @@ _$PostDMImpl _$$PostDMImplFromJson(Map<String, dynamic> json) => _$PostDMImpl(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$PostDMImplToJson(_$PostDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PostDMToJson(_PostDM instance) => <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       'uuid': instance.uuid,
       'content': instance.content,
@@ -82,15 +78,15 @@ Map<String, dynamic> _$$PostDMImplToJson(_$PostDMImpl instance) =>
         'updated_at': value,
     };
 
-_$ToggleLikeResponseDMImpl _$$ToggleLikeResponseDMImplFromJson(
+_ToggleLikeResponseDM _$ToggleLikeResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ToggleLikeResponseDMImpl(
+    _ToggleLikeResponseDM(
       isLiked: json['is_liked'] as bool? ?? false,
       likesCount: (json['likes_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ToggleLikeResponseDMImplToJson(
-        _$ToggleLikeResponseDMImpl instance) =>
+Map<String, dynamic> _$ToggleLikeResponseDMToJson(
+        _ToggleLikeResponseDM instance) =>
     <String, dynamic>{
       'is_liked': instance.isLiked,
       'likes_count': instance.likesCount,

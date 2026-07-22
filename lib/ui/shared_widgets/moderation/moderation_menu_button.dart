@@ -4,7 +4,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/moderation/block_user_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/moderation/report_content_sheet.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 /// Menú de moderación (App Store Guideline 1.2) que se muestra en el contenido
 /// de OTROS usuarios (reseñas, posts): permite Reportar el contenido y Bloquear

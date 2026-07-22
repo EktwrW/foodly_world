@@ -5,7 +5,7 @@ part 'contact_vm.freezed.dart';
 enum ContactRecipient { hello, privacy }
 
 @freezed
-class ContactVM with _$ContactVM {
+abstract class ContactVM with _$ContactVM {
   const factory ContactVM({
     @Default(ContactRecipient.hello) ContactRecipient recipient,
     String? attachmentPath,

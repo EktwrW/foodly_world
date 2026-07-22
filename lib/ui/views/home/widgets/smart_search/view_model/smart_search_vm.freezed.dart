@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,39 +9,91 @@ part of 'smart_search_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SmartSearchVM {
-  bool get isInitialized => throw _privateConstructorUsedError;
-  bool get isListening => throw _privateConstructorUsedError;
-  String get recognizedText => throw _privateConstructorUsedError;
-  List<BusinessDM> get searchResults => throw _privateConstructorUsedError;
-  BusinessResultsViewMode get viewMode => throw _privateConstructorUsedError;
-  SmartSearchMode get smartSearchMode => throw _privateConstructorUsedError;
-  InputController get inputController => throw _privateConstructorUsedError;
-  bool get isBottomBarHidden => throw _privateConstructorUsedError;
-  bool get micPermissionDenied => throw _privateConstructorUsedError;
-  String? get sessionId => throw _privateConstructorUsedError;
-  NlpSearchPlatform? get platform => throw _privateConstructorUsedError;
+  bool get isInitialized;
+  bool get isListening;
+  String get recognizedText;
+  List<BusinessDM> get searchResults;
+  BusinessResultsViewMode get viewMode;
+  SmartSearchMode get smartSearchMode;
+  InputController get inputController;
+  bool get isBottomBarHidden;
+  bool get micPermissionDenied;
+  String? get sessionId;
+  NlpSearchPlatform? get platform;
   @JsonKey(name: 'device_info')
-  DeviceInfoDTO? get deviceInfo => throw _privateConstructorUsedError;
+  DeviceInfoDTO? get deviceInfo;
 
   /// Create a copy of SmartSearchVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $SmartSearchVMCopyWith<SmartSearchVM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$SmartSearchVMCopyWithImpl<SmartSearchVM>(
+          this as SmartSearchVM, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SmartSearchVM &&
+            (identical(other.isInitialized, isInitialized) ||
+                other.isInitialized == isInitialized) &&
+            (identical(other.isListening, isListening) ||
+                other.isListening == isListening) &&
+            (identical(other.recognizedText, recognizedText) ||
+                other.recognizedText == recognizedText) &&
+            const DeepCollectionEquality()
+                .equals(other.searchResults, searchResults) &&
+            (identical(other.viewMode, viewMode) ||
+                other.viewMode == viewMode) &&
+            (identical(other.smartSearchMode, smartSearchMode) ||
+                other.smartSearchMode == smartSearchMode) &&
+            (identical(other.inputController, inputController) ||
+                other.inputController == inputController) &&
+            (identical(other.isBottomBarHidden, isBottomBarHidden) ||
+                other.isBottomBarHidden == isBottomBarHidden) &&
+            (identical(other.micPermissionDenied, micPermissionDenied) ||
+                other.micPermissionDenied == micPermissionDenied) &&
+            (identical(other.sessionId, sessionId) ||
+                other.sessionId == sessionId) &&
+            (identical(other.platform, platform) ||
+                other.platform == platform) &&
+            (identical(other.deviceInfo, deviceInfo) ||
+                other.deviceInfo == deviceInfo));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      isInitialized,
+      isListening,
+      recognizedText,
+      const DeepCollectionEquality().hash(searchResults),
+      viewMode,
+      smartSearchMode,
+      inputController,
+      isBottomBarHidden,
+      micPermissionDenied,
+      sessionId,
+      platform,
+      deviceInfo);
+
+  @override
+  String toString() {
+    return 'SmartSearchVM(isInitialized: $isInitialized, isListening: $isListening, recognizedText: $recognizedText, searchResults: $searchResults, viewMode: $viewMode, smartSearchMode: $smartSearchMode, inputController: $inputController, isBottomBarHidden: $isBottomBarHidden, micPermissionDenied: $micPermissionDenied, sessionId: $sessionId, platform: $platform, deviceInfo: $deviceInfo)';
+  }
 }
 
 /// @nodoc
-abstract class $SmartSearchVMCopyWith<$Res> {
+abstract mixin class $SmartSearchVMCopyWith<$Res> {
   factory $SmartSearchVMCopyWith(
-          SmartSearchVM value, $Res Function(SmartSearchVM) then) =
-      _$SmartSearchVMCopyWithImpl<$Res, SmartSearchVM>;
+          SmartSearchVM value, $Res Function(SmartSearchVM) _then) =
+      _$SmartSearchVMCopyWithImpl;
   @useResult
   $Res call(
       {bool isInitialized,
@@ -61,14 +113,12 @@ abstract class $SmartSearchVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SmartSearchVMCopyWithImpl<$Res, $Val extends SmartSearchVM>
+class _$SmartSearchVMCopyWithImpl<$Res>
     implements $SmartSearchVMCopyWith<$Res> {
-  _$SmartSearchVMCopyWithImpl(this._value, this._then);
+  _$SmartSearchVMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SmartSearchVM _self;
+  final $Res Function(SmartSearchVM) _then;
 
   /// Create a copy of SmartSearchVM
   /// with the given fields replaced by the non-null parameter values.
@@ -88,56 +138,56 @@ class _$SmartSearchVMCopyWithImpl<$Res, $Val extends SmartSearchVM>
     Object? platform = freezed,
     Object? deviceInfo = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       isInitialized: null == isInitialized
-          ? _value.isInitialized
+          ? _self.isInitialized
           : isInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
       isListening: null == isListening
-          ? _value.isListening
+          ? _self.isListening
           : isListening // ignore: cast_nullable_to_non_nullable
               as bool,
       recognizedText: null == recognizedText
-          ? _value.recognizedText
+          ? _self.recognizedText
           : recognizedText // ignore: cast_nullable_to_non_nullable
               as String,
       searchResults: null == searchResults
-          ? _value.searchResults
+          ? _self.searchResults
           : searchResults // ignore: cast_nullable_to_non_nullable
               as List<BusinessDM>,
       viewMode: null == viewMode
-          ? _value.viewMode
+          ? _self.viewMode
           : viewMode // ignore: cast_nullable_to_non_nullable
               as BusinessResultsViewMode,
       smartSearchMode: null == smartSearchMode
-          ? _value.smartSearchMode
+          ? _self.smartSearchMode
           : smartSearchMode // ignore: cast_nullable_to_non_nullable
               as SmartSearchMode,
       inputController: null == inputController
-          ? _value.inputController
+          ? _self.inputController
           : inputController // ignore: cast_nullable_to_non_nullable
               as InputController,
       isBottomBarHidden: null == isBottomBarHidden
-          ? _value.isBottomBarHidden
+          ? _self.isBottomBarHidden
           : isBottomBarHidden // ignore: cast_nullable_to_non_nullable
               as bool,
       micPermissionDenied: null == micPermissionDenied
-          ? _value.micPermissionDenied
+          ? _self.micPermissionDenied
           : micPermissionDenied // ignore: cast_nullable_to_non_nullable
               as bool,
       sessionId: freezed == sessionId
-          ? _value.sessionId
+          ? _self.sessionId
           : sessionId // ignore: cast_nullable_to_non_nullable
               as String?,
       platform: freezed == platform
-          ? _value.platform
+          ? _self.platform
           : platform // ignore: cast_nullable_to_non_nullable
               as NlpSearchPlatform?,
       deviceInfo: freezed == deviceInfo
-          ? _value.deviceInfo
+          ? _self.deviceInfo
           : deviceInfo // ignore: cast_nullable_to_non_nullable
               as DeviceInfoDTO?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of SmartSearchVM
@@ -145,121 +195,248 @@ class _$SmartSearchVMCopyWithImpl<$Res, $Val extends SmartSearchVM>
   @override
   @pragma('vm:prefer-inline')
   $InputControllerCopyWith<$Res> get inputController {
-    return $InputControllerCopyWith<$Res>(_value.inputController, (value) {
-      return _then(_value.copyWith(inputController: value) as $Val);
+    return $InputControllerCopyWith<$Res>(_self.inputController, (value) {
+      return _then(_self.copyWith(inputController: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$SmartSearchVMImplCopyWith<$Res>
-    implements $SmartSearchVMCopyWith<$Res> {
-  factory _$$SmartSearchVMImplCopyWith(
-          _$SmartSearchVMImpl value, $Res Function(_$SmartSearchVMImpl) then) =
-      __$$SmartSearchVMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {bool isInitialized,
-      bool isListening,
-      String recognizedText,
-      List<BusinessDM> searchResults,
-      BusinessResultsViewMode viewMode,
-      SmartSearchMode smartSearchMode,
-      InputController inputController,
-      bool isBottomBarHidden,
-      bool micPermissionDenied,
-      String? sessionId,
-      NlpSearchPlatform? platform,
-      @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo});
+/// Adds pattern-matching-related methods to [SmartSearchVM].
+extension SmartSearchVMPatterns on SmartSearchVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $InputControllerCopyWith<$Res> get inputController;
-}
-
-/// @nodoc
-class __$$SmartSearchVMImplCopyWithImpl<$Res>
-    extends _$SmartSearchVMCopyWithImpl<$Res, _$SmartSearchVMImpl>
-    implements _$$SmartSearchVMImplCopyWith<$Res> {
-  __$$SmartSearchVMImplCopyWithImpl(
-      _$SmartSearchVMImpl _value, $Res Function(_$SmartSearchVMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SmartSearchVM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isInitialized = null,
-    Object? isListening = null,
-    Object? recognizedText = null,
-    Object? searchResults = null,
-    Object? viewMode = null,
-    Object? smartSearchMode = null,
-    Object? inputController = null,
-    Object? isBottomBarHidden = null,
-    Object? micPermissionDenied = null,
-    Object? sessionId = freezed,
-    Object? platform = freezed,
-    Object? deviceInfo = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_SmartSearchVM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$SmartSearchVMImpl(
-      isInitialized: null == isInitialized
-          ? _value.isInitialized
-          : isInitialized // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isListening: null == isListening
-          ? _value.isListening
-          : isListening // ignore: cast_nullable_to_non_nullable
-              as bool,
-      recognizedText: null == recognizedText
-          ? _value.recognizedText
-          : recognizedText // ignore: cast_nullable_to_non_nullable
-              as String,
-      searchResults: null == searchResults
-          ? _value._searchResults
-          : searchResults // ignore: cast_nullable_to_non_nullable
-              as List<BusinessDM>,
-      viewMode: null == viewMode
-          ? _value.viewMode
-          : viewMode // ignore: cast_nullable_to_non_nullable
-              as BusinessResultsViewMode,
-      smartSearchMode: null == smartSearchMode
-          ? _value.smartSearchMode
-          : smartSearchMode // ignore: cast_nullable_to_non_nullable
-              as SmartSearchMode,
-      inputController: null == inputController
-          ? _value.inputController
-          : inputController // ignore: cast_nullable_to_non_nullable
-              as InputController,
-      isBottomBarHidden: null == isBottomBarHidden
-          ? _value.isBottomBarHidden
-          : isBottomBarHidden // ignore: cast_nullable_to_non_nullable
-              as bool,
-      micPermissionDenied: null == micPermissionDenied
-          ? _value.micPermissionDenied
-          : micPermissionDenied // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sessionId: freezed == sessionId
-          ? _value.sessionId
-          : sessionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      platform: freezed == platform
-          ? _value.platform
-          : platform // ignore: cast_nullable_to_non_nullable
-              as NlpSearchPlatform?,
-      deviceInfo: freezed == deviceInfo
-          ? _value.deviceInfo
-          : deviceInfo // ignore: cast_nullable_to_non_nullable
-              as DeviceInfoDTO?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_SmartSearchVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_SmartSearchVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool isInitialized,
+            bool isListening,
+            String recognizedText,
+            List<BusinessDM> searchResults,
+            BusinessResultsViewMode viewMode,
+            SmartSearchMode smartSearchMode,
+            InputController inputController,
+            bool isBottomBarHidden,
+            bool micPermissionDenied,
+            String? sessionId,
+            NlpSearchPlatform? platform,
+            @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM() when $default != null:
+        return $default(
+            _that.isInitialized,
+            _that.isListening,
+            _that.recognizedText,
+            _that.searchResults,
+            _that.viewMode,
+            _that.smartSearchMode,
+            _that.inputController,
+            _that.isBottomBarHidden,
+            _that.micPermissionDenied,
+            _that.sessionId,
+            _that.platform,
+            _that.deviceInfo);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool isInitialized,
+            bool isListening,
+            String recognizedText,
+            List<BusinessDM> searchResults,
+            BusinessResultsViewMode viewMode,
+            SmartSearchMode smartSearchMode,
+            InputController inputController,
+            bool isBottomBarHidden,
+            bool micPermissionDenied,
+            String? sessionId,
+            NlpSearchPlatform? platform,
+            @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM():
+        return $default(
+            _that.isInitialized,
+            _that.isListening,
+            _that.recognizedText,
+            _that.searchResults,
+            _that.viewMode,
+            _that.smartSearchMode,
+            _that.inputController,
+            _that.isBottomBarHidden,
+            _that.micPermissionDenied,
+            _that.sessionId,
+            _that.platform,
+            _that.deviceInfo);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool isInitialized,
+            bool isListening,
+            String recognizedText,
+            List<BusinessDM> searchResults,
+            BusinessResultsViewMode viewMode,
+            SmartSearchMode smartSearchMode,
+            InputController inputController,
+            bool isBottomBarHidden,
+            bool micPermissionDenied,
+            String? sessionId,
+            NlpSearchPlatform? platform,
+            @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _SmartSearchVM() when $default != null:
+        return $default(
+            _that.isInitialized,
+            _that.isListening,
+            _that.recognizedText,
+            _that.searchResults,
+            _that.viewMode,
+            _that.smartSearchMode,
+            _that.inputController,
+            _that.isBottomBarHidden,
+            _that.micPermissionDenied,
+            _that.sessionId,
+            _that.platform,
+            _that.deviceInfo);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$SmartSearchVMImpl extends _SmartSearchVM {
-  const _$SmartSearchVMImpl(
+class _SmartSearchVM extends SmartSearchVM {
+  const _SmartSearchVM(
       {required this.isInitialized,
       required this.isListening,
       required this.recognizedText,
@@ -312,16 +489,19 @@ class _$SmartSearchVMImpl extends _SmartSearchVM {
   @JsonKey(name: 'device_info')
   final DeviceInfoDTO? deviceInfo;
 
+  /// Create a copy of SmartSearchVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'SmartSearchVM(isInitialized: $isInitialized, isListening: $isListening, recognizedText: $recognizedText, searchResults: $searchResults, viewMode: $viewMode, smartSearchMode: $smartSearchMode, inputController: $inputController, isBottomBarHidden: $isBottomBarHidden, micPermissionDenied: $micPermissionDenied, sessionId: $sessionId, platform: $platform, deviceInfo: $deviceInfo)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SmartSearchVMCopyWith<_SmartSearchVM> get copyWith =>
+      __$SmartSearchVMCopyWithImpl<_SmartSearchVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SmartSearchVMImpl &&
+            other is _SmartSearchVM &&
             (identical(other.isInitialized, isInitialized) ||
                 other.isInitialized == isInitialized) &&
             (identical(other.isListening, isListening) ||
@@ -364,62 +544,125 @@ class _$SmartSearchVMImpl extends _SmartSearchVM {
       platform,
       deviceInfo);
 
+  @override
+  String toString() {
+    return 'SmartSearchVM(isInitialized: $isInitialized, isListening: $isListening, recognizedText: $recognizedText, searchResults: $searchResults, viewMode: $viewMode, smartSearchMode: $smartSearchMode, inputController: $inputController, isBottomBarHidden: $isBottomBarHidden, micPermissionDenied: $micPermissionDenied, sessionId: $sessionId, platform: $platform, deviceInfo: $deviceInfo)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$SmartSearchVMCopyWith<$Res>
+    implements $SmartSearchVMCopyWith<$Res> {
+  factory _$SmartSearchVMCopyWith(
+          _SmartSearchVM value, $Res Function(_SmartSearchVM) _then) =
+      __$SmartSearchVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool isInitialized,
+      bool isListening,
+      String recognizedText,
+      List<BusinessDM> searchResults,
+      BusinessResultsViewMode viewMode,
+      SmartSearchMode smartSearchMode,
+      InputController inputController,
+      bool isBottomBarHidden,
+      bool micPermissionDenied,
+      String? sessionId,
+      NlpSearchPlatform? platform,
+      @JsonKey(name: 'device_info') DeviceInfoDTO? deviceInfo});
+
+  @override
+  $InputControllerCopyWith<$Res> get inputController;
+}
+
+/// @nodoc
+class __$SmartSearchVMCopyWithImpl<$Res>
+    implements _$SmartSearchVMCopyWith<$Res> {
+  __$SmartSearchVMCopyWithImpl(this._self, this._then);
+
+  final _SmartSearchVM _self;
+  final $Res Function(_SmartSearchVM) _then;
+
   /// Create a copy of SmartSearchVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SmartSearchVMImplCopyWith<_$SmartSearchVMImpl> get copyWith =>
-      __$$SmartSearchVMImplCopyWithImpl<_$SmartSearchVMImpl>(this, _$identity);
-}
-
-abstract class _SmartSearchVM extends SmartSearchVM {
-  const factory _SmartSearchVM(
-          {required final bool isInitialized,
-          required final bool isListening,
-          required final String recognizedText,
-          final List<BusinessDM> searchResults,
-          final BusinessResultsViewMode viewMode,
-          final SmartSearchMode smartSearchMode,
-          required final InputController inputController,
-          final bool isBottomBarHidden,
-          final bool micPermissionDenied,
-          final String? sessionId,
-          final NlpSearchPlatform? platform,
-          @JsonKey(name: 'device_info') final DeviceInfoDTO? deviceInfo}) =
-      _$SmartSearchVMImpl;
-  const _SmartSearchVM._() : super._();
-
-  @override
-  bool get isInitialized;
-  @override
-  bool get isListening;
-  @override
-  String get recognizedText;
-  @override
-  List<BusinessDM> get searchResults;
-  @override
-  BusinessResultsViewMode get viewMode;
-  @override
-  SmartSearchMode get smartSearchMode;
-  @override
-  InputController get inputController;
-  @override
-  bool get isBottomBarHidden;
-  @override
-  bool get micPermissionDenied;
-  @override
-  String? get sessionId;
-  @override
-  NlpSearchPlatform? get platform;
-  @override
-  @JsonKey(name: 'device_info')
-  DeviceInfoDTO? get deviceInfo;
+  $Res call({
+    Object? isInitialized = null,
+    Object? isListening = null,
+    Object? recognizedText = null,
+    Object? searchResults = null,
+    Object? viewMode = null,
+    Object? smartSearchMode = null,
+    Object? inputController = null,
+    Object? isBottomBarHidden = null,
+    Object? micPermissionDenied = null,
+    Object? sessionId = freezed,
+    Object? platform = freezed,
+    Object? deviceInfo = freezed,
+  }) {
+    return _then(_SmartSearchVM(
+      isInitialized: null == isInitialized
+          ? _self.isInitialized
+          : isInitialized // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isListening: null == isListening
+          ? _self.isListening
+          : isListening // ignore: cast_nullable_to_non_nullable
+              as bool,
+      recognizedText: null == recognizedText
+          ? _self.recognizedText
+          : recognizedText // ignore: cast_nullable_to_non_nullable
+              as String,
+      searchResults: null == searchResults
+          ? _self._searchResults
+          : searchResults // ignore: cast_nullable_to_non_nullable
+              as List<BusinessDM>,
+      viewMode: null == viewMode
+          ? _self.viewMode
+          : viewMode // ignore: cast_nullable_to_non_nullable
+              as BusinessResultsViewMode,
+      smartSearchMode: null == smartSearchMode
+          ? _self.smartSearchMode
+          : smartSearchMode // ignore: cast_nullable_to_non_nullable
+              as SmartSearchMode,
+      inputController: null == inputController
+          ? _self.inputController
+          : inputController // ignore: cast_nullable_to_non_nullable
+              as InputController,
+      isBottomBarHidden: null == isBottomBarHidden
+          ? _self.isBottomBarHidden
+          : isBottomBarHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
+      micPermissionDenied: null == micPermissionDenied
+          ? _self.micPermissionDenied
+          : micPermissionDenied // ignore: cast_nullable_to_non_nullable
+              as bool,
+      sessionId: freezed == sessionId
+          ? _self.sessionId
+          : sessionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      platform: freezed == platform
+          ? _self.platform
+          : platform // ignore: cast_nullable_to_non_nullable
+              as NlpSearchPlatform?,
+      deviceInfo: freezed == deviceInfo
+          ? _self.deviceInfo
+          : deviceInfo // ignore: cast_nullable_to_non_nullable
+              as DeviceInfoDTO?,
+    ));
+  }
 
   /// Create a copy of SmartSearchVM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SmartSearchVMImplCopyWith<_$SmartSearchVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $InputControllerCopyWith<$Res> get inputController {
+    return $InputControllerCopyWith<$Res>(_self.inputController, (value) {
+      return _then(_self.copyWith(inputController: value));
+    });
+  }
 }
+
+// dart format on

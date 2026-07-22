@@ -36,7 +36,7 @@ import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_fo
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_snackbars.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 part '../visited_business/widgets/about_us/about_us.dart';
 part '../visited_business/widgets/additional_info/additional_info.dart';

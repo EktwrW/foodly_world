@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,50 +9,93 @@ part of 'promotion_dto.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PromotionDTO _$PromotionDTOFromJson(Map<String, dynamic> json) {
-  return _PromotionDTO.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PromotionDTO {
   @JsonKey(name: 'business_uuid')
-  String? get businessUuid => throw _privateConstructorUsedError;
-  String? get title => throw _privateConstructorUsedError;
+  String? get businessUuid;
+  String? get title;
   @JsonKey(name: 'sub_title')
-  String? get subTitle => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String? get subTitle;
+  String? get description;
   @JsonKey(name: 'start_date')
-  String? get startDate => throw _privateConstructorUsedError;
+  String? get startDate;
   @JsonKey(name: 'expire_date')
-  String? get expireDate => throw _privateConstructorUsedError;
-  List<Version> get versions => throw _privateConstructorUsedError;
-  Prices? get prices => throw _privateConstructorUsedError;
+  String? get expireDate;
+  List<Version> get versions;
+  Prices? get prices;
   @JsonKey(name: 'promo_active_days')
-  PromoDaysDM? get promoActiveDays => throw _privateConstructorUsedError;
-  bool? get available => throw _privateConstructorUsedError;
+  PromoDaysDM? get promoActiveDays;
+  bool? get available;
   @JsonKey(name: 'media_link')
-  String? get mediaLink => throw _privateConstructorUsedError;
-
-  /// Serializes this PromotionDTO to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get mediaLink;
 
   /// Create a copy of PromotionDTO
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PromotionDTOCopyWith<PromotionDTO> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$PromotionDTOCopyWithImpl<PromotionDTO>(
+          this as PromotionDTO, _$identity);
+
+  /// Serializes this PromotionDTO to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PromotionDTO &&
+            (identical(other.businessUuid, businessUuid) ||
+                other.businessUuid == businessUuid) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.subTitle, subTitle) ||
+                other.subTitle == subTitle) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.expireDate, expireDate) ||
+                other.expireDate == expireDate) &&
+            const DeepCollectionEquality().equals(other.versions, versions) &&
+            (identical(other.prices, prices) || other.prices == prices) &&
+            (identical(other.promoActiveDays, promoActiveDays) ||
+                other.promoActiveDays == promoActiveDays) &&
+            (identical(other.available, available) ||
+                other.available == available) &&
+            (identical(other.mediaLink, mediaLink) ||
+                other.mediaLink == mediaLink));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      businessUuid,
+      title,
+      subTitle,
+      description,
+      startDate,
+      expireDate,
+      const DeepCollectionEquality().hash(versions),
+      prices,
+      promoActiveDays,
+      available,
+      mediaLink);
+
+  @override
+  String toString() {
+    return 'PromotionDTO(businessUuid: $businessUuid, title: $title, subTitle: $subTitle, description: $description, startDate: $startDate, expireDate: $expireDate, versions: $versions, prices: $prices, promoActiveDays: $promoActiveDays, available: $available, mediaLink: $mediaLink)';
+  }
 }
 
 /// @nodoc
-abstract class $PromotionDTOCopyWith<$Res> {
+abstract mixin class $PromotionDTOCopyWith<$Res> {
   factory $PromotionDTOCopyWith(
-          PromotionDTO value, $Res Function(PromotionDTO) then) =
-      _$PromotionDTOCopyWithImpl<$Res, PromotionDTO>;
+          PromotionDTO value, $Res Function(PromotionDTO) _then) =
+      _$PromotionDTOCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'business_uuid') String? businessUuid,
@@ -72,14 +115,11 @@ abstract class $PromotionDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PromotionDTOCopyWithImpl<$Res, $Val extends PromotionDTO>
-    implements $PromotionDTOCopyWith<$Res> {
-  _$PromotionDTOCopyWithImpl(this._value, this._then);
+class _$PromotionDTOCopyWithImpl<$Res> implements $PromotionDTOCopyWith<$Res> {
+  _$PromotionDTOCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PromotionDTO _self;
+  final $Res Function(PromotionDTO) _then;
 
   /// Create a copy of PromotionDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -98,52 +138,52 @@ class _$PromotionDTOCopyWithImpl<$Res, $Val extends PromotionDTO>
     Object? available = freezed,
     Object? mediaLink = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       businessUuid: freezed == businessUuid
-          ? _value.businessUuid
+          ? _self.businessUuid
           : businessUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       title: freezed == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
       subTitle: freezed == subTitle
-          ? _value.subTitle
+          ? _self.subTitle
           : subTitle // ignore: cast_nullable_to_non_nullable
               as String?,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       startDate: freezed == startDate
-          ? _value.startDate
+          ? _self.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
       expireDate: freezed == expireDate
-          ? _value.expireDate
+          ? _self.expireDate
           : expireDate // ignore: cast_nullable_to_non_nullable
               as String?,
       versions: null == versions
-          ? _value.versions
+          ? _self.versions
           : versions // ignore: cast_nullable_to_non_nullable
               as List<Version>,
       prices: freezed == prices
-          ? _value.prices
+          ? _self.prices
           : prices // ignore: cast_nullable_to_non_nullable
               as Prices?,
       promoActiveDays: freezed == promoActiveDays
-          ? _value.promoActiveDays
+          ? _self.promoActiveDays
           : promoActiveDays // ignore: cast_nullable_to_non_nullable
               as PromoDaysDM?,
       available: freezed == available
-          ? _value.available
+          ? _self.available
           : available // ignore: cast_nullable_to_non_nullable
               as bool?,
       mediaLink: freezed == mediaLink
-          ? _value.mediaLink
+          ? _self.mediaLink
           : mediaLink // ignore: cast_nullable_to_non_nullable
               as String?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of PromotionDTO
@@ -151,12 +191,12 @@ class _$PromotionDTOCopyWithImpl<$Res, $Val extends PromotionDTO>
   @override
   @pragma('vm:prefer-inline')
   $PricesCopyWith<$Res>? get prices {
-    if (_value.prices == null) {
+    if (_self.prices == null) {
       return null;
     }
 
-    return $PricesCopyWith<$Res>(_value.prices!, (value) {
-      return _then(_value.copyWith(prices: value) as $Val);
+    return $PricesCopyWith<$Res>(_self.prices!, (value) {
+      return _then(_self.copyWith(prices: value));
     });
   }
 
@@ -165,121 +205,246 @@ class _$PromotionDTOCopyWithImpl<$Res, $Val extends PromotionDTO>
   @override
   @pragma('vm:prefer-inline')
   $PromoDaysDMCopyWith<$Res>? get promoActiveDays {
-    if (_value.promoActiveDays == null) {
+    if (_self.promoActiveDays == null) {
       return null;
     }
 
-    return $PromoDaysDMCopyWith<$Res>(_value.promoActiveDays!, (value) {
-      return _then(_value.copyWith(promoActiveDays: value) as $Val);
+    return $PromoDaysDMCopyWith<$Res>(_self.promoActiveDays!, (value) {
+      return _then(_self.copyWith(promoActiveDays: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$PromotionDTOImplCopyWith<$Res>
-    implements $PromotionDTOCopyWith<$Res> {
-  factory _$$PromotionDTOImplCopyWith(
-          _$PromotionDTOImpl value, $Res Function(_$PromotionDTOImpl) then) =
-      __$$PromotionDTOImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'business_uuid') String? businessUuid,
-      String? title,
-      @JsonKey(name: 'sub_title') String? subTitle,
-      String? description,
-      @JsonKey(name: 'start_date') String? startDate,
-      @JsonKey(name: 'expire_date') String? expireDate,
-      List<Version> versions,
-      Prices? prices,
-      @JsonKey(name: 'promo_active_days') PromoDaysDM? promoActiveDays,
-      bool? available,
-      @JsonKey(name: 'media_link') String? mediaLink});
+/// Adds pattern-matching-related methods to [PromotionDTO].
+extension PromotionDTOPatterns on PromotionDTO {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $PricesCopyWith<$Res>? get prices;
-  @override
-  $PromoDaysDMCopyWith<$Res>? get promoActiveDays;
-}
-
-/// @nodoc
-class __$$PromotionDTOImplCopyWithImpl<$Res>
-    extends _$PromotionDTOCopyWithImpl<$Res, _$PromotionDTOImpl>
-    implements _$$PromotionDTOImplCopyWith<$Res> {
-  __$$PromotionDTOImplCopyWithImpl(
-      _$PromotionDTOImpl _value, $Res Function(_$PromotionDTOImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PromotionDTO
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? businessUuid = freezed,
-    Object? title = freezed,
-    Object? subTitle = freezed,
-    Object? description = freezed,
-    Object? startDate = freezed,
-    Object? expireDate = freezed,
-    Object? versions = null,
-    Object? prices = freezed,
-    Object? promoActiveDays = freezed,
-    Object? available = freezed,
-    Object? mediaLink = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PromotionDTO value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$PromotionDTOImpl(
-      businessUuid: freezed == businessUuid
-          ? _value.businessUuid
-          : businessUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String?,
-      subTitle: freezed == subTitle
-          ? _value.subTitle
-          : subTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      expireDate: freezed == expireDate
-          ? _value.expireDate
-          : expireDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      versions: null == versions
-          ? _value._versions
-          : versions // ignore: cast_nullable_to_non_nullable
-              as List<Version>,
-      prices: freezed == prices
-          ? _value.prices
-          : prices // ignore: cast_nullable_to_non_nullable
-              as Prices?,
-      promoActiveDays: freezed == promoActiveDays
-          ? _value.promoActiveDays
-          : promoActiveDays // ignore: cast_nullable_to_non_nullable
-              as PromoDaysDM?,
-      available: freezed == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      mediaLink: freezed == mediaLink
-          ? _value.mediaLink
-          : mediaLink // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PromotionDTO value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PromotionDTO value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            String? title,
+            @JsonKey(name: 'sub_title') String? subTitle,
+            String? description,
+            @JsonKey(name: 'start_date') String? startDate,
+            @JsonKey(name: 'expire_date') String? expireDate,
+            List<Version> versions,
+            Prices? prices,
+            @JsonKey(name: 'promo_active_days') PromoDaysDM? promoActiveDays,
+            bool? available,
+            @JsonKey(name: 'media_link') String? mediaLink)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO() when $default != null:
+        return $default(
+            _that.businessUuid,
+            _that.title,
+            _that.subTitle,
+            _that.description,
+            _that.startDate,
+            _that.expireDate,
+            _that.versions,
+            _that.prices,
+            _that.promoActiveDays,
+            _that.available,
+            _that.mediaLink);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            String? title,
+            @JsonKey(name: 'sub_title') String? subTitle,
+            String? description,
+            @JsonKey(name: 'start_date') String? startDate,
+            @JsonKey(name: 'expire_date') String? expireDate,
+            List<Version> versions,
+            Prices? prices,
+            @JsonKey(name: 'promo_active_days') PromoDaysDM? promoActiveDays,
+            bool? available,
+            @JsonKey(name: 'media_link') String? mediaLink)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO():
+        return $default(
+            _that.businessUuid,
+            _that.title,
+            _that.subTitle,
+            _that.description,
+            _that.startDate,
+            _that.expireDate,
+            _that.versions,
+            _that.prices,
+            _that.promoActiveDays,
+            _that.available,
+            _that.mediaLink);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            String? title,
+            @JsonKey(name: 'sub_title') String? subTitle,
+            String? description,
+            @JsonKey(name: 'start_date') String? startDate,
+            @JsonKey(name: 'expire_date') String? expireDate,
+            List<Version> versions,
+            Prices? prices,
+            @JsonKey(name: 'promo_active_days') PromoDaysDM? promoActiveDays,
+            bool? available,
+            @JsonKey(name: 'media_link') String? mediaLink)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PromotionDTO() when $default != null:
+        return $default(
+            _that.businessUuid,
+            _that.title,
+            _that.subTitle,
+            _that.description,
+            _that.startDate,
+            _that.expireDate,
+            _that.versions,
+            _that.prices,
+            _that.promoActiveDays,
+            _that.available,
+            _that.mediaLink);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$PromotionDTOImpl implements _PromotionDTO {
-  const _$PromotionDTOImpl(
+class _PromotionDTO implements PromotionDTO {
+  const _PromotionDTO(
       {@JsonKey(name: 'business_uuid') this.businessUuid,
       this.title,
       @JsonKey(name: 'sub_title') this.subTitle,
@@ -292,9 +457,8 @@ class _$PromotionDTOImpl implements _PromotionDTO {
       this.available,
       @JsonKey(name: 'media_link') this.mediaLink})
       : _versions = versions;
-
-  factory _$PromotionDTOImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PromotionDTOImplFromJson(json);
+  factory _PromotionDTO.fromJson(Map<String, dynamic> json) =>
+      _$PromotionDTOFromJson(json);
 
   @override
   @JsonKey(name: 'business_uuid')
@@ -332,16 +496,26 @@ class _$PromotionDTOImpl implements _PromotionDTO {
   @JsonKey(name: 'media_link')
   final String? mediaLink;
 
+  /// Create a copy of PromotionDTO
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PromotionDTO(businessUuid: $businessUuid, title: $title, subTitle: $subTitle, description: $description, startDate: $startDate, expireDate: $expireDate, versions: $versions, prices: $prices, promoActiveDays: $promoActiveDays, available: $available, mediaLink: $mediaLink)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PromotionDTOCopyWith<_PromotionDTO> get copyWith =>
+      __$PromotionDTOCopyWithImpl<_PromotionDTO>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PromotionDTOToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PromotionDTOImpl &&
+            other is _PromotionDTO &&
             (identical(other.businessUuid, businessUuid) ||
                 other.businessUuid == businessUuid) &&
             (identical(other.title, title) || other.title == title) &&
@@ -379,73 +553,139 @@ class _$PromotionDTOImpl implements _PromotionDTO {
       available,
       mediaLink);
 
-  /// Create a copy of PromotionDTO
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PromotionDTOImplCopyWith<_$PromotionDTOImpl> get copyWith =>
-      __$$PromotionDTOImplCopyWithImpl<_$PromotionDTOImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PromotionDTOImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PromotionDTO(businessUuid: $businessUuid, title: $title, subTitle: $subTitle, description: $description, startDate: $startDate, expireDate: $expireDate, versions: $versions, prices: $prices, promoActiveDays: $promoActiveDays, available: $available, mediaLink: $mediaLink)';
   }
 }
 
-abstract class _PromotionDTO implements PromotionDTO {
-  const factory _PromotionDTO(
-      {@JsonKey(name: 'business_uuid') final String? businessUuid,
-      final String? title,
-      @JsonKey(name: 'sub_title') final String? subTitle,
-      final String? description,
-      @JsonKey(name: 'start_date') final String? startDate,
-      @JsonKey(name: 'expire_date') final String? expireDate,
-      final List<Version> versions,
-      final Prices? prices,
-      @JsonKey(name: 'promo_active_days') final PromoDaysDM? promoActiveDays,
-      final bool? available,
-      @JsonKey(name: 'media_link')
-      final String? mediaLink}) = _$PromotionDTOImpl;
+/// @nodoc
+abstract mixin class _$PromotionDTOCopyWith<$Res>
+    implements $PromotionDTOCopyWith<$Res> {
+  factory _$PromotionDTOCopyWith(
+          _PromotionDTO value, $Res Function(_PromotionDTO) _then) =
+      __$PromotionDTOCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'business_uuid') String? businessUuid,
+      String? title,
+      @JsonKey(name: 'sub_title') String? subTitle,
+      String? description,
+      @JsonKey(name: 'start_date') String? startDate,
+      @JsonKey(name: 'expire_date') String? expireDate,
+      List<Version> versions,
+      Prices? prices,
+      @JsonKey(name: 'promo_active_days') PromoDaysDM? promoActiveDays,
+      bool? available,
+      @JsonKey(name: 'media_link') String? mediaLink});
 
-  factory _PromotionDTO.fromJson(Map<String, dynamic> json) =
-      _$PromotionDTOImpl.fromJson;
+  @override
+  $PricesCopyWith<$Res>? get prices;
+  @override
+  $PromoDaysDMCopyWith<$Res>? get promoActiveDays;
+}
 
-  @override
-  @JsonKey(name: 'business_uuid')
-  String? get businessUuid;
-  @override
-  String? get title;
-  @override
-  @JsonKey(name: 'sub_title')
-  String? get subTitle;
-  @override
-  String? get description;
-  @override
-  @JsonKey(name: 'start_date')
-  String? get startDate;
-  @override
-  @JsonKey(name: 'expire_date')
-  String? get expireDate;
-  @override
-  List<Version> get versions;
-  @override
-  Prices? get prices;
-  @override
-  @JsonKey(name: 'promo_active_days')
-  PromoDaysDM? get promoActiveDays;
-  @override
-  bool? get available;
-  @override
-  @JsonKey(name: 'media_link')
-  String? get mediaLink;
+/// @nodoc
+class __$PromotionDTOCopyWithImpl<$Res>
+    implements _$PromotionDTOCopyWith<$Res> {
+  __$PromotionDTOCopyWithImpl(this._self, this._then);
+
+  final _PromotionDTO _self;
+  final $Res Function(_PromotionDTO) _then;
 
   /// Create a copy of PromotionDTO
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PromotionDTOImplCopyWith<_$PromotionDTOImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? businessUuid = freezed,
+    Object? title = freezed,
+    Object? subTitle = freezed,
+    Object? description = freezed,
+    Object? startDate = freezed,
+    Object? expireDate = freezed,
+    Object? versions = null,
+    Object? prices = freezed,
+    Object? promoActiveDays = freezed,
+    Object? available = freezed,
+    Object? mediaLink = freezed,
+  }) {
+    return _then(_PromotionDTO(
+      businessUuid: freezed == businessUuid
+          ? _self.businessUuid
+          : businessUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: freezed == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subTitle: freezed == subTitle
+          ? _self.subTitle
+          : subTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _self.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      expireDate: freezed == expireDate
+          ? _self.expireDate
+          : expireDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      versions: null == versions
+          ? _self._versions
+          : versions // ignore: cast_nullable_to_non_nullable
+              as List<Version>,
+      prices: freezed == prices
+          ? _self.prices
+          : prices // ignore: cast_nullable_to_non_nullable
+              as Prices?,
+      promoActiveDays: freezed == promoActiveDays
+          ? _self.promoActiveDays
+          : promoActiveDays // ignore: cast_nullable_to_non_nullable
+              as PromoDaysDM?,
+      available: freezed == available
+          ? _self.available
+          : available // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      mediaLink: freezed == mediaLink
+          ? _self.mediaLink
+          : mediaLink // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  /// Create a copy of PromotionDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PricesCopyWith<$Res>? get prices {
+    if (_self.prices == null) {
+      return null;
+    }
+
+    return $PricesCopyWith<$Res>(_self.prices!, (value) {
+      return _then(_self.copyWith(prices: value));
+    });
+  }
+
+  /// Create a copy of PromotionDTO
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PromoDaysDMCopyWith<$Res>? get promoActiveDays {
+    if (_self.promoActiveDays == null) {
+      return null;
+    }
+
+    return $PromoDaysDMCopyWith<$Res>(_self.promoActiveDays!, (value) {
+      return _then(_self.copyWith(promoActiveDays: value));
+    });
+  }
 }
+
+// dart format on

@@ -18,7 +18,7 @@ enum PromotionStatus {
 }
 
 @freezed
-class PromotionsVM with _$PromotionsVM {
+abstract class PromotionsVM with _$PromotionsVM {
   const PromotionsVM._();
 
   const factory PromotionsVM({

@@ -7,7 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_content.dart';
 import 'package:foodly_world/ui/views/terms/terms_conditions_content.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 enum LegalDoc { terms, privacy }
 

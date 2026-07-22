@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
-part 'check_availabilities_state.dart';
 part 'check_availabilities_cubit.freezed.dart';
+part 'check_availabilities_state.dart';
 
 class CheckAvailabilitiesCubit extends Cubit<CheckAvailabilitiesState> {
   final _meRepo = di<MeRepo>();

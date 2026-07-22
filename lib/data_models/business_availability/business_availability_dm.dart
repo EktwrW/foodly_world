@@ -35,7 +35,7 @@ enum AvailabilitySource {
 /// Full-day blocks have `isFullDay = true` with null `startTime` / `endTime`.
 /// Partial blocks have `isFullDay = false` and both times populated (HH:MM:SS).
 @freezed
-class BusinessAvailabilityDM with _$BusinessAvailabilityDM {
+abstract class BusinessAvailabilityDM with _$BusinessAvailabilityDM {
   const BusinessAvailabilityDM._();
 
   const factory BusinessAvailabilityDM({
@@ -72,7 +72,7 @@ class BusinessAvailabilityDM with _$BusinessAvailabilityDM {
 /// and `GET /public/business-availability/{businessUuid}` (the public
 /// variant carries stripped-down entries — see [PublicAvailabilitySlotDM]).
 @freezed
-class BusinessAvailabilityResponseDM with _$BusinessAvailabilityResponseDM {
+abstract class BusinessAvailabilityResponseDM with _$BusinessAvailabilityResponseDM {
   const factory BusinessAvailabilityResponseDM({
     String? from,
     String? to,
@@ -86,7 +86,7 @@ class BusinessAvailabilityResponseDM with _$BusinessAvailabilityResponseDM {
 /// Response shape of `POST /business-availability/store` and
 /// `PATCH /business-availability/update/{uuid}`.
 @freezed
-class BusinessAvailabilityCreateResponseDM
+abstract class BusinessAvailabilityCreateResponseDM
     with _$BusinessAvailabilityCreateResponseDM {
   const factory BusinessAvailabilityCreateResponseDM({
     @Default(false) bool success,
@@ -100,7 +100,7 @@ class BusinessAvailabilityCreateResponseDM
 
 /// Response shape of `POST /business-availability/bulk`.
 @freezed
-class BusinessAvailabilityBulkResponseDM
+abstract class BusinessAvailabilityBulkResponseDM
     with _$BusinessAvailabilityBulkResponseDM {
   const factory BusinessAvailabilityBulkResponseDM({
     @Default(false) bool success,
@@ -115,7 +115,7 @@ class BusinessAvailabilityBulkResponseDM
 
 /// Response shape of `DELETE /business-availability/destroy/{uuid}`.
 @freezed
-class BusinessAvailabilityActionResponseDM
+abstract class BusinessAvailabilityActionResponseDM
     with _$BusinessAvailabilityActionResponseDM {
   const factory BusinessAvailabilityActionResponseDM({
     @Default(false) bool success,
@@ -131,7 +131,7 @@ class BusinessAvailabilityActionResponseDM
 /// `reason`, `reservation_uuid`, `type`, `source`, and `availability_uuid`
 /// — customers only need to know "this slot is unavailable".
 @freezed
-class PublicAvailabilitySlotDM with _$PublicAvailabilitySlotDM {
+abstract class PublicAvailabilitySlotDM with _$PublicAvailabilitySlotDM {
   const PublicAvailabilitySlotDM._();
 
   const factory PublicAvailabilitySlotDM({
@@ -150,7 +150,7 @@ class PublicAvailabilitySlotDM with _$PublicAvailabilitySlotDM {
 
 /// Response shape of `GET /public/business-availability/{businessUuid}`.
 @freezed
-class PublicBusinessAvailabilityResponseDM
+abstract class PublicBusinessAvailabilityResponseDM
     with _$PublicBusinessAvailabilityResponseDM {
   const factory PublicBusinessAvailabilityResponseDM({
     String? from,
@@ -166,7 +166,7 @@ class PublicBusinessAvailabilityResponseDM
 /// Bulk-create entry payload (client → BE). One row of the `entries[]`
 /// array sent to `POST /business-availability/bulk`.
 @freezed
-class BusinessAvailabilityBulkEntryDM
+abstract class BusinessAvailabilityBulkEntryDM
     with _$BusinessAvailabilityBulkEntryDM {
   const factory BusinessAvailabilityBulkEntryDM({
     required String date,

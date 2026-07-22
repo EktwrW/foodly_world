@@ -21,7 +21,7 @@ part 'place_details_response_dm.g.dart';
 /// siempre viene no-null, pero lo dejamos nullable por defensa (memoria
 /// "JSON enums defensivos — cover both valid and defensive").
 @freezed
-class PlaceDetailsResponseDM with _$PlaceDetailsResponseDM {
+abstract class PlaceDetailsResponseDM with _$PlaceDetailsResponseDM {
   const factory PlaceDetailsResponseDM({
     @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required ProxyStatusEnum status,
     PlaceDM? result,

@@ -4,7 +4,7 @@ part 'nearby_user_dm.freezed.dart';
 part 'nearby_user_dm.g.dart';
 
 @freezed
-class NearbyUsersResponseDM with _$NearbyUsersResponseDM {
+abstract class NearbyUsersResponseDM with _$NearbyUsersResponseDM {
   const factory NearbyUsersResponseDM({
     @Default([]) List<NearbyUserDM> data,
     NearbyUsersMetaDM? meta,
@@ -14,7 +14,7 @@ class NearbyUsersResponseDM with _$NearbyUsersResponseDM {
 }
 
 @freezed
-class NearbyUsersMetaDM with _$NearbyUsersMetaDM {
+abstract class NearbyUsersMetaDM with _$NearbyUsersMetaDM {
   const factory NearbyUsersMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -26,7 +26,7 @@ class NearbyUsersMetaDM with _$NearbyUsersMetaDM {
 }
 
 @freezed
-class NearbyUserDM with _$NearbyUserDM {
+abstract class NearbyUserDM with _$NearbyUserDM {
   const NearbyUserDM._();
 
   const factory NearbyUserDM({
@@ -48,7 +48,7 @@ class NearbyUserDM with _$NearbyUserDM {
 }
 
 @freezed
-class UserProfileDM with _$UserProfileDM {
+abstract class UserProfileDM with _$UserProfileDM {
   const factory UserProfileDM({
     required String uuid,
     @Default('') String name,
@@ -65,7 +65,7 @@ class UserProfileDM with _$UserProfileDM {
 }
 
 @freezed
-class UserProfileStatsDM with _$UserProfileStatsDM {
+abstract class UserProfileStatsDM with _$UserProfileStatsDM {
   const factory UserProfileStatsDM({
     @JsonKey(name: 'posts_count') @Default(0) int postsCount,
     @JsonKey(name: 'likes_received') @Default(0) int likesReceived,
@@ -78,7 +78,7 @@ class UserProfileStatsDM with _$UserProfileStatsDM {
 }
 
 @freezed
-class UserProfilePostDM with _$UserProfilePostDM {
+abstract class UserProfilePostDM with _$UserProfilePostDM {
   const factory UserProfilePostDM({
     required String uuid,
     required String content,

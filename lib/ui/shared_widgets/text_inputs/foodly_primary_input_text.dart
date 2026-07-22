@@ -7,7 +7,7 @@ import 'package:foodly_world/core/utils/form_validations.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 export 'package:foodly_world/core/enums/foodly_enums.dart' show FoodlyInputType;
 

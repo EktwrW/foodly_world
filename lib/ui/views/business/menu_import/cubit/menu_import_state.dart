@@ -19,7 +19,7 @@ part of 'menu_import_cubit.dart';
 /// retry button sin perder progreso. El bloc `manage_promotions_state.dart`
 /// sigue exactamente el mismo patrón (referencia del proyecto).
 @freezed
-class MenuImportState with _$MenuImportState {
+sealed class MenuImportState with _$MenuImportState {
   const factory MenuImportState.initial(MenuImportVM vm) = _Initial;
   const factory MenuImportState.picking(MenuImportVM vm) = _Picking;
   const factory MenuImportState.uploading(MenuImportVM vm) = _Uploading;

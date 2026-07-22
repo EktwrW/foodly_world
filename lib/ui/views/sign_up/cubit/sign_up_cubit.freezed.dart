@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,216 +9,50 @@ part of 'sign_up_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
-mixin _$SignUpState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SignUpStateCopyWith<$Res> {
-  factory $SignUpStateCopyWith(
-          SignUpState value, $Res Function(SignUpState) then) =
-      _$SignUpStateCopyWithImpl<$Res, SignUpState>;
-}
-
-/// @nodoc
-class _$SignUpStateCopyWithImpl<$Res, $Val extends SignUpState>
-    implements $SignUpStateCopyWith<$Res> {
-  _$SignUpStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.initial()';
-  }
-
+mixin _$SignUpState implements DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SignUpState.initial'));
+    properties..add(DiagnosticsProperty('type', 'SignUpState'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType && other is SignUpState);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return initial();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState()';
   }
+}
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return initial?.call();
-  }
+/// @nodoc
+class $SignUpStateCopyWith<$Res> {
+  $SignUpStateCopyWith(SignUpState _, $Res Function(SignUpState) __);
+}
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
+/// Adds pattern-matching-related methods to [SignUpState].
+extension SignUpStatePatterns on SignUpState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -229,78 +63,268 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _UserCreated() when userCreated != null:
+        return userCreated(_that);
+      case _BusinessCreationFinished() when businessCreationFinished != null:
+        return businessCreationFinished(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
     }
-    return orElse();
   }
-}
 
-abstract class _Initial implements SignUpState {
-  const factory _Initial() = _$InitialImpl;
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UserProfileVM signUpVM});
-
-  $UserProfileVMCopyWith<$Res> get signUpVM;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? signUpVM = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_UserCreated value) userCreated,
+    required TResult Function(_BusinessCreationFinished value)
+        businessCreationFinished,
+    required TResult Function(_Error value) error,
   }) {
-    return _then(_$LoadingImpl(
-      null == signUpVM
-          ? _value.signUpVM
-          : signUpVM // ignore: cast_nullable_to_non_nullable
-              as UserProfileVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _Loaded():
+        return loaded(_that);
+      case _UserCreated():
+        return userCreated(_that);
+      case _BusinessCreationFinished():
+        return businessCreationFinished(_that);
+      case _Error():
+        return error(_that);
+    }
   }
 
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserProfileVMCopyWith<$Res> get signUpVM {
-    return $UserProfileVMCopyWith<$Res>(_value.signUpVM, (value) {
-      return _then(_value.copyWith(signUpVM: value));
-    });
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UserCreated value)? userCreated,
+    TResult? Function(_BusinessCreationFinished value)?
+        businessCreationFinished,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _UserCreated() when userCreated != null:
+        return userCreated(_that);
+      case _BusinessCreationFinished() when businessCreationFinished != null:
+        return businessCreationFinished(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(UserProfileVM signUpVM)? loading,
+    TResult Function(UserProfileVM signUpVM)? loaded,
+    TResult Function(UserProfileVM signUpVM)? userCreated,
+    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
+    TResult Function(String msg, UserProfileVM signUpVM)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case _Loading() when loading != null:
+        return loading(_that.signUpVM);
+      case _Loaded() when loaded != null:
+        return loaded(_that.signUpVM);
+      case _UserCreated() when userCreated != null:
+        return userCreated(_that.signUpVM);
+      case _BusinessCreationFinished() when businessCreationFinished != null:
+        return businessCreationFinished(_that.signUpVM);
+      case _Error() when error != null:
+        return error(_that.msg, _that.signUpVM);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(UserProfileVM signUpVM) loading,
+    required TResult Function(UserProfileVM signUpVM) loaded,
+    required TResult Function(UserProfileVM signUpVM) userCreated,
+    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
+    required TResult Function(String msg, UserProfileVM signUpVM) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial();
+      case _Loading():
+        return loading(_that.signUpVM);
+      case _Loaded():
+        return loaded(_that.signUpVM);
+      case _UserCreated():
+        return userCreated(_that.signUpVM);
+      case _BusinessCreationFinished():
+        return businessCreationFinished(_that.signUpVM);
+      case _Error():
+        return error(_that.msg, _that.signUpVM);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(UserProfileVM signUpVM)? loading,
+    TResult? Function(UserProfileVM signUpVM)? loaded,
+    TResult? Function(UserProfileVM signUpVM)? userCreated,
+    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
+    TResult? Function(String msg, UserProfileVM signUpVM)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case _Loading() when loading != null:
+        return loading(_that.signUpVM);
+      case _Loaded() when loaded != null:
+        return loaded(_that.signUpVM);
+      case _UserCreated() when userCreated != null:
+        return userCreated(_that.signUpVM);
+      case _BusinessCreationFinished() when businessCreationFinished != null:
+        return businessCreationFinished(_that.signUpVM);
+      case _Error() when error != null:
+        return error(_that.msg, _that.signUpVM);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
-  const _$LoadingImpl(this.signUpVM);
-
-  @override
-  final UserProfileVM signUpVM;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.loading(signUpVM: $signUpVM)';
-  }
+class _Initial with DiagnosticableTreeMixin implements SignUpState {
+  const _Initial();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'SignUpState.initial'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _Initial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.initial()';
+  }
+}
+
+/// @nodoc
+
+class _Loading with DiagnosticableTreeMixin implements SignUpState {
+  const _Loading(this.signUpVM);
+
+  final UserProfileVM signUpVM;
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
       ..add(DiagnosticsProperty('type', 'SignUpState.loading'))
       ..add(DiagnosticsProperty('signUpVM', signUpVM));
@@ -310,7 +334,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
+            other is _Loading &&
             (identical(other.signUpVM, signUpVM) ||
                 other.signUpVM == signUpVM));
   }
@@ -318,120 +342,17 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   @override
   int get hashCode => Object.hash(runtimeType, signUpVM);
 
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return loading(signUpVM);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.loading(signUpVM: $signUpVM)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return loading?.call(signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(signUpVM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements SignUpState {
-  const factory _Loading(final UserProfileVM signUpVM) = _$LoadingImpl;
-
-  UserProfileVM get signUpVM;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+abstract mixin class _$LoadingCopyWith<$Res>
+    implements $SignUpStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -439,23 +360,21 @@ abstract class _$$LoadedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? signUpVM = null,
   }) {
-    return _then(_$LoadedImpl(
+    return _then(_Loading(
       null == signUpVM
-          ? _value.signUpVM
+          ? _self.signUpVM
           : signUpVM // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
@@ -466,28 +385,28 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $UserProfileVMCopyWith<$Res> get signUpVM {
-    return $UserProfileVMCopyWith<$Res>(_value.signUpVM, (value) {
-      return _then(_value.copyWith(signUpVM: value));
+    return $UserProfileVMCopyWith<$Res>(_self.signUpVM, (value) {
+      return _then(_self.copyWith(signUpVM: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
-  const _$LoadedImpl(this.signUpVM);
+class _Loaded with DiagnosticableTreeMixin implements SignUpState {
+  const _Loaded(this.signUpVM);
 
-  @override
   final UserProfileVM signUpVM;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.loaded(signUpVM: $signUpVM)';
-  }
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SignUpState.loaded'))
       ..add(DiagnosticsProperty('signUpVM', signUpVM));
@@ -497,7 +416,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _Loaded &&
             (identical(other.signUpVM, signUpVM) ||
                 other.signUpVM == signUpVM));
   }
@@ -505,120 +424,17 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
   @override
   int get hashCode => Object.hash(runtimeType, signUpVM);
 
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return loaded(signUpVM);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.loaded(signUpVM: $signUpVM)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return loaded?.call(signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(signUpVM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements SignUpState {
-  const factory _Loaded(final UserProfileVM signUpVM) = _$LoadedImpl;
-
-  UserProfileVM get signUpVM;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserCreatedImplCopyWith<$Res> {
-  factory _$$UserCreatedImplCopyWith(
-          _$UserCreatedImpl value, $Res Function(_$UserCreatedImpl) then) =
-      __$$UserCreatedImplCopyWithImpl<$Res>;
+abstract mixin class _$LoadedCopyWith<$Res>
+    implements $SignUpStateCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
+      __$LoadedCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -626,23 +442,21 @@ abstract class _$$UserCreatedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserCreatedImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$UserCreatedImpl>
-    implements _$$UserCreatedImplCopyWith<$Res> {
-  __$$UserCreatedImplCopyWithImpl(
-      _$UserCreatedImpl _value, $Res Function(_$UserCreatedImpl) _then)
-      : super(_value, _then);
+class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? signUpVM = null,
   }) {
-    return _then(_$UserCreatedImpl(
+    return _then(_Loaded(
       null == signUpVM
-          ? _value.signUpVM
+          ? _self.signUpVM
           : signUpVM // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
@@ -653,28 +467,28 @@ class __$$UserCreatedImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $UserProfileVMCopyWith<$Res> get signUpVM {
-    return $UserProfileVMCopyWith<$Res>(_value.signUpVM, (value) {
-      return _then(_value.copyWith(signUpVM: value));
+    return $UserProfileVMCopyWith<$Res>(_self.signUpVM, (value) {
+      return _then(_self.copyWith(signUpVM: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$UserCreatedImpl with DiagnosticableTreeMixin implements _UserCreated {
-  const _$UserCreatedImpl(this.signUpVM);
+class _UserCreated with DiagnosticableTreeMixin implements SignUpState {
+  const _UserCreated(this.signUpVM);
 
-  @override
   final UserProfileVM signUpVM;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.userCreated(signUpVM: $signUpVM)';
-  }
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UserCreatedCopyWith<_UserCreated> get copyWith =>
+      __$UserCreatedCopyWithImpl<_UserCreated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SignUpState.userCreated'))
       ..add(DiagnosticsProperty('signUpVM', signUpVM));
@@ -684,7 +498,7 @@ class _$UserCreatedImpl with DiagnosticableTreeMixin implements _UserCreated {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserCreatedImpl &&
+            other is _UserCreated &&
             (identical(other.signUpVM, signUpVM) ||
                 other.signUpVM == signUpVM));
   }
@@ -692,121 +506,18 @@ class _$UserCreatedImpl with DiagnosticableTreeMixin implements _UserCreated {
   @override
   int get hashCode => Object.hash(runtimeType, signUpVM);
 
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UserCreatedImplCopyWith<_$UserCreatedImpl> get copyWith =>
-      __$$UserCreatedImplCopyWithImpl<_$UserCreatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return userCreated(signUpVM);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.userCreated(signUpVM: $signUpVM)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return userCreated?.call(signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (userCreated != null) {
-      return userCreated(signUpVM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return userCreated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return userCreated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (userCreated != null) {
-      return userCreated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UserCreated implements SignUpState {
-  const factory _UserCreated(final UserProfileVM signUpVM) = _$UserCreatedImpl;
-
-  UserProfileVM get signUpVM;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserCreatedImplCopyWith<_$UserCreatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$BusinessCreationFinishedImplCopyWith<$Res> {
-  factory _$$BusinessCreationFinishedImplCopyWith(
-          _$BusinessCreationFinishedImpl value,
-          $Res Function(_$BusinessCreationFinishedImpl) then) =
-      __$$BusinessCreationFinishedImplCopyWithImpl<$Res>;
+abstract mixin class _$UserCreatedCopyWith<$Res>
+    implements $SignUpStateCopyWith<$Res> {
+  factory _$UserCreatedCopyWith(
+          _UserCreated value, $Res Function(_UserCreated) _then) =
+      __$UserCreatedCopyWithImpl;
   @useResult
   $Res call({UserProfileVM signUpVM});
 
@@ -814,24 +525,21 @@ abstract class _$$BusinessCreationFinishedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$BusinessCreationFinishedImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$BusinessCreationFinishedImpl>
-    implements _$$BusinessCreationFinishedImplCopyWith<$Res> {
-  __$$BusinessCreationFinishedImplCopyWithImpl(
-      _$BusinessCreationFinishedImpl _value,
-      $Res Function(_$BusinessCreationFinishedImpl) _then)
-      : super(_value, _then);
+class __$UserCreatedCopyWithImpl<$Res> implements _$UserCreatedCopyWith<$Res> {
+  __$UserCreatedCopyWithImpl(this._self, this._then);
+
+  final _UserCreated _self;
+  final $Res Function(_UserCreated) _then;
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? signUpVM = null,
   }) {
-    return _then(_$BusinessCreationFinishedImpl(
+    return _then(_UserCreated(
       null == signUpVM
-          ? _value.signUpVM
+          ? _self.signUpVM
           : signUpVM // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
@@ -842,30 +550,31 @@ class __$$BusinessCreationFinishedImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $UserProfileVMCopyWith<$Res> get signUpVM {
-    return $UserProfileVMCopyWith<$Res>(_value.signUpVM, (value) {
-      return _then(_value.copyWith(signUpVM: value));
+    return $UserProfileVMCopyWith<$Res>(_self.signUpVM, (value) {
+      return _then(_self.copyWith(signUpVM: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$BusinessCreationFinishedImpl
+class _BusinessCreationFinished
     with DiagnosticableTreeMixin
-    implements _BusinessCreationFinished {
-  const _$BusinessCreationFinishedImpl(this.signUpVM);
+    implements SignUpState {
+  const _BusinessCreationFinished(this.signUpVM);
 
-  @override
   final UserProfileVM signUpVM;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.businessCreationFinished(signUpVM: $signUpVM)';
-  }
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BusinessCreationFinishedCopyWith<_BusinessCreationFinished> get copyWith =>
+      __$BusinessCreationFinishedCopyWithImpl<_BusinessCreationFinished>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SignUpState.businessCreationFinished'))
       ..add(DiagnosticsProperty('signUpVM', signUpVM));
@@ -875,7 +584,7 @@ class _$BusinessCreationFinishedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BusinessCreationFinishedImpl &&
+            other is _BusinessCreationFinished &&
             (identical(other.signUpVM, signUpVM) ||
                 other.signUpVM == signUpVM));
   }
@@ -883,151 +592,41 @@ class _$BusinessCreationFinishedImpl
   @override
   int get hashCode => Object.hash(runtimeType, signUpVM);
 
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessCreationFinishedImplCopyWith<_$BusinessCreationFinishedImpl>
-      get copyWith => __$$BusinessCreationFinishedImplCopyWithImpl<
-          _$BusinessCreationFinishedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return businessCreationFinished(signUpVM);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.businessCreationFinished(signUpVM: $signUpVM)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return businessCreationFinished?.call(signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (businessCreationFinished != null) {
-      return businessCreationFinished(signUpVM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return businessCreationFinished(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return businessCreationFinished?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (businessCreationFinished != null) {
-      return businessCreationFinished(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _BusinessCreationFinished implements SignUpState {
-  const factory _BusinessCreationFinished(final UserProfileVM signUpVM) =
-      _$BusinessCreationFinishedImpl;
-
-  UserProfileVM get signUpVM;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessCreationFinishedImplCopyWith<_$BusinessCreationFinishedImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+abstract mixin class _$BusinessCreationFinishedCopyWith<$Res>
+    implements $SignUpStateCopyWith<$Res> {
+  factory _$BusinessCreationFinishedCopyWith(_BusinessCreationFinished value,
+          $Res Function(_BusinessCreationFinished) _then) =
+      __$BusinessCreationFinishedCopyWithImpl;
   @useResult
-  $Res call({String msg, UserProfileVM signUpVM});
+  $Res call({UserProfileVM signUpVM});
 
   $UserProfileVMCopyWith<$Res> get signUpVM;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$SignUpStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$BusinessCreationFinishedCopyWithImpl<$Res>
+    implements _$BusinessCreationFinishedCopyWith<$Res> {
+  __$BusinessCreationFinishedCopyWithImpl(this._self, this._then);
+
+  final _BusinessCreationFinished _self;
+  final $Res Function(_BusinessCreationFinished) _then;
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? msg = null,
     Object? signUpVM = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_BusinessCreationFinished(
       null == signUpVM
-          ? _value.signUpVM
+          ? _self.signUpVM
           : signUpVM // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
@@ -1038,30 +637,29 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $UserProfileVMCopyWith<$Res> get signUpVM {
-    return $UserProfileVMCopyWith<$Res>(_value.signUpVM, (value) {
-      return _then(_value.copyWith(signUpVM: value));
+    return $UserProfileVMCopyWith<$Res>(_self.signUpVM, (value) {
+      return _then(_self.copyWith(signUpVM: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  const _$ErrorImpl(this.msg, this.signUpVM);
+class _Error with DiagnosticableTreeMixin implements SignUpState {
+  const _Error(this.msg, this.signUpVM);
 
-  @override
   final String msg;
-  @override
   final UserProfileVM signUpVM;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpState.error(msg: $msg, signUpVM: $signUpVM)';
-  }
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SignUpState.error'))
       ..add(DiagnosticsProperty('msg', msg))
@@ -1072,7 +670,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.msg, msg) || other.msg == msg) &&
             (identical(other.signUpVM, signUpVM) ||
                 other.signUpVM == signUpVM));
@@ -1081,113 +679,58 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, msg, signUpVM);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SignUpState.error(msg: $msg, signUpVM: $signUpVM)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $SignUpStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
+  @useResult
+  $Res call({String msg, UserProfileVM signUpVM});
+
+  $UserProfileVMCopyWith<$Res> get signUpVM;
+}
+
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? msg = null,
+    Object? signUpVM = null,
+  }) {
+    return _then(_Error(
+      null == msg
+          ? _self.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == signUpVM
+          ? _self.signUpVM
+          : signUpVM // ignore: cast_nullable_to_non_nullable
+              as UserProfileVM,
+    ));
+  }
+
+  /// Create a copy of SignUpState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(UserProfileVM signUpVM) loading,
-    required TResult Function(UserProfileVM signUpVM) loaded,
-    required TResult Function(UserProfileVM signUpVM) userCreated,
-    required TResult Function(UserProfileVM signUpVM) businessCreationFinished,
-    required TResult Function(String msg, UserProfileVM signUpVM) error,
-  }) {
-    return error(msg, signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(UserProfileVM signUpVM)? loading,
-    TResult? Function(UserProfileVM signUpVM)? loaded,
-    TResult? Function(UserProfileVM signUpVM)? userCreated,
-    TResult? Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult? Function(String msg, UserProfileVM signUpVM)? error,
-  }) {
-    return error?.call(msg, signUpVM);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(UserProfileVM signUpVM)? loading,
-    TResult Function(UserProfileVM signUpVM)? loaded,
-    TResult Function(UserProfileVM signUpVM)? userCreated,
-    TResult Function(UserProfileVM signUpVM)? businessCreationFinished,
-    TResult Function(String msg, UserProfileVM signUpVM)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(msg, signUpVM);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserCreated value) userCreated,
-    required TResult Function(_BusinessCreationFinished value)
-        businessCreationFinished,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserCreated value)? userCreated,
-    TResult? Function(_BusinessCreationFinished value)?
-        businessCreationFinished,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserCreated value)? userCreated,
-    TResult Function(_BusinessCreationFinished value)? businessCreationFinished,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
+  $UserProfileVMCopyWith<$Res> get signUpVM {
+    return $UserProfileVMCopyWith<$Res>(_self.signUpVM, (value) {
+      return _then(_self.copyWith(signUpVM: value));
+    });
   }
 }
 
-abstract class _Error implements SignUpState {
-  const factory _Error(final String msg, final UserProfileVM signUpVM) =
-      _$ErrorImpl;
-
-  String get msg;
-  UserProfileVM get signUpVM;
-
-  /// Create a copy of SignUpState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

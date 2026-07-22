@@ -6,9 +6,8 @@ part of 'business_item_photo_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MenuItemPhotoDMDMImpl _$$MenuItemPhotoDMDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$MenuItemPhotoDMDMImpl(
+_MenuItemPhotoDMDM _$MenuItemPhotoDMDMFromJson(Map<String, dynamic> json) =>
+    _MenuItemPhotoDMDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       businessFoodPhotoUrl: json['business_food_photo_url'] as String?,
@@ -19,8 +18,7 @@ _$MenuItemPhotoDMDMImpl _$$MenuItemPhotoDMDMImplFromJson(
       businessComboItemId: (json['business_combos_id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$MenuItemPhotoDMDMImplToJson(
-        _$MenuItemPhotoDMDMImpl instance) =>
+Map<String, dynamic> _$MenuItemPhotoDMDMToJson(_MenuItemPhotoDMDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
@@ -38,9 +36,9 @@ Map<String, dynamic> _$$MenuItemPhotoDMDMImplToJson(
         'business_combos_id': value,
     };
 
-_$MenuItemPhotoResponseImpl _$$MenuItemPhotoResponseImplFromJson(
+_MenuItemPhotoResponse _$MenuItemPhotoResponseFromJson(
         Map<String, dynamic> json) =>
-    _$MenuItemPhotoResponseImpl(
+    _MenuItemPhotoResponse(
       foodReferencePhotos:
           (json['business_food_reference_photos'] as List<dynamic>?)
               ?.map((e) => MenuItemPhotoDM.fromJson(e as Map<String, dynamic>))
@@ -54,8 +52,8 @@ _$MenuItemPhotoResponseImpl _$$MenuItemPhotoResponseImplFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$MenuItemPhotoResponseImplToJson(
-        _$MenuItemPhotoResponseImpl instance) =>
+Map<String, dynamic> _$MenuItemPhotoResponseToJson(
+        _MenuItemPhotoResponse instance) =>
     <String, dynamic>{
       if (instance.foodReferencePhotos?.map((e) => e.toJson()).toList()
           case final value?)

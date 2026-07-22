@@ -32,7 +32,7 @@ class FoodlyCountriesConverter implements JsonConverter<FoodlyCountries?, String
 }
 
 @freezed
-class UserDM with _$UserDM {
+abstract class UserDM with _$UserDM {
   const UserDM._();
 
   const factory UserDM({
@@ -162,7 +162,7 @@ class UserDM with _$UserDM {
 }
 
 @freezed
-class AddressLabelDM with _$AddressLabelDM {
+abstract class AddressLabelDM with _$AddressLabelDM {
   factory AddressLabelDM({
     int? id,
     String? uuid,
@@ -176,7 +176,7 @@ class AddressLabelDM with _$AddressLabelDM {
 }
 
 @freezed
-class AddressDM with _$AddressDM {
+abstract class AddressDM with _$AddressDM {
   const AddressDM._();
 
   factory AddressDM({
@@ -256,7 +256,7 @@ enum UserRole {
 }
 
 @freezed
-class LoginProviderDM with _$LoginProviderDM {
+abstract class LoginProviderDM with _$LoginProviderDM {
   factory LoginProviderDM({
     required int id,
     required String uuid,

@@ -6,7 +6,7 @@ part of 'availability_cubit.dart';
 /// can render from a single consistent snapshot regardless of the variant.
 /// Error/saved/deleted variants add a message for snackbar consumption.
 @freezed
-class AvailabilityState with _$AvailabilityState {
+sealed class AvailabilityState with _$AvailabilityState {
   const factory AvailabilityState.initial(AvailabilityVM vm) = _Initial;
   const factory AvailabilityState.loading(AvailabilityVM vm) = _Loading;
   const factory AvailabilityState.loaded(AvailabilityVM vm) = _Loaded;

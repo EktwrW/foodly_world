@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,10 +9,8 @@ part of 'analytics_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AnalyticsVM {
@@ -20,36 +18,61 @@ mixin _$AnalyticsVM {
   /// so widgets can access `categoryId`, `name`, etc. without a lookup.
   /// Nullable to support the empty `initial` state — every real lifecycle
   /// path (`loading`, `loaded`, `error`) is emitted with `business` set.
-  BusinessDM? get business => throw _privateConstructorUsedError;
+  BusinessDM? get business;
 
   /// Pre-resolved at cubit construction so `AnalyticsDashboardPage` can
   /// branch synchronously without re-deriving on every rebuild. Default
   /// `restaurant` covers the empty/initial state.
-  AnalyticsKind get kind => throw _privateConstructorUsedError;
+  AnalyticsKind get kind;
 
   /// Restaurant-flavour payload. Populated only when [kind] is
   /// [AnalyticsKind.restaurant]. Mutually exclusive with [serviceOverview]
   /// — at most one of the two is non-null per loaded state.
-  BusinessOverviewDataDM? get overview => throw _privateConstructorUsedError;
+  BusinessOverviewDataDM? get overview;
 
   /// Catering & chefs-flavour payload. Populated only when [kind] is
   /// [AnalyticsKind.service]. Mutually exclusive with [overview].
-  ServiceOverviewDataDM? get serviceOverview =>
-      throw _privateConstructorUsedError;
-  int get selectedDays => throw _privateConstructorUsedError;
+  ServiceOverviewDataDM? get serviceOverview;
+  int get selectedDays;
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $AnalyticsVMCopyWith<AnalyticsVM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$AnalyticsVMCopyWithImpl<AnalyticsVM>(this as AnalyticsVM, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AnalyticsVM &&
+            (identical(other.business, business) ||
+                other.business == business) &&
+            (identical(other.kind, kind) || other.kind == kind) &&
+            (identical(other.overview, overview) ||
+                other.overview == overview) &&
+            (identical(other.serviceOverview, serviceOverview) ||
+                other.serviceOverview == serviceOverview) &&
+            (identical(other.selectedDays, selectedDays) ||
+                other.selectedDays == selectedDays));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, business, kind, overview, serviceOverview, selectedDays);
+
+  @override
+  String toString() {
+    return 'AnalyticsVM(business: $business, kind: $kind, overview: $overview, serviceOverview: $serviceOverview, selectedDays: $selectedDays)';
+  }
 }
 
 /// @nodoc
-abstract class $AnalyticsVMCopyWith<$Res> {
+abstract mixin class $AnalyticsVMCopyWith<$Res> {
   factory $AnalyticsVMCopyWith(
-          AnalyticsVM value, $Res Function(AnalyticsVM) then) =
-      _$AnalyticsVMCopyWithImpl<$Res, AnalyticsVM>;
+          AnalyticsVM value, $Res Function(AnalyticsVM) _then) =
+      _$AnalyticsVMCopyWithImpl;
   @useResult
   $Res call(
       {BusinessDM? business,
@@ -64,14 +87,11 @@ abstract class $AnalyticsVMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
-    implements $AnalyticsVMCopyWith<$Res> {
-  _$AnalyticsVMCopyWithImpl(this._value, this._then);
+class _$AnalyticsVMCopyWithImpl<$Res> implements $AnalyticsVMCopyWith<$Res> {
+  _$AnalyticsVMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final AnalyticsVM _self;
+  final $Res Function(AnalyticsVM) _then;
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
@@ -84,28 +104,28 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
     Object? serviceOverview = freezed,
     Object? selectedDays = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       business: freezed == business
-          ? _value.business
+          ? _self.business
           : business // ignore: cast_nullable_to_non_nullable
               as BusinessDM?,
       kind: null == kind
-          ? _value.kind
+          ? _self.kind
           : kind // ignore: cast_nullable_to_non_nullable
               as AnalyticsKind,
       overview: freezed == overview
-          ? _value.overview
+          ? _self.overview
           : overview // ignore: cast_nullable_to_non_nullable
               as BusinessOverviewDataDM?,
       serviceOverview: freezed == serviceOverview
-          ? _value.serviceOverview
+          ? _self.serviceOverview
           : serviceOverview // ignore: cast_nullable_to_non_nullable
               as ServiceOverviewDataDM?,
       selectedDays: null == selectedDays
-          ? _value.selectedDays
+          ? _self.selectedDays
           : selectedDays // ignore: cast_nullable_to_non_nullable
               as int,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of AnalyticsVM
@@ -113,12 +133,12 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessDMCopyWith<$Res>? get business {
-    if (_value.business == null) {
+    if (_self.business == null) {
       return null;
     }
 
-    return $BusinessDMCopyWith<$Res>(_value.business!, (value) {
-      return _then(_value.copyWith(business: value) as $Val);
+    return $BusinessDMCopyWith<$Res>(_self.business!, (value) {
+      return _then(_self.copyWith(business: value));
     });
   }
 
@@ -127,12 +147,12 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
   @override
   @pragma('vm:prefer-inline')
   $BusinessOverviewDataDMCopyWith<$Res>? get overview {
-    if (_value.overview == null) {
+    if (_self.overview == null) {
       return null;
     }
 
-    return $BusinessOverviewDataDMCopyWith<$Res>(_value.overview!, (value) {
-      return _then(_value.copyWith(overview: value) as $Val);
+    return $BusinessOverviewDataDMCopyWith<$Res>(_self.overview!, (value) {
+      return _then(_self.copyWith(overview: value));
     });
   }
 
@@ -141,88 +161,199 @@ class _$AnalyticsVMCopyWithImpl<$Res, $Val extends AnalyticsVM>
   @override
   @pragma('vm:prefer-inline')
   $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview {
-    if (_value.serviceOverview == null) {
+    if (_self.serviceOverview == null) {
       return null;
     }
 
-    return $ServiceOverviewDataDMCopyWith<$Res>(_value.serviceOverview!,
+    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!,
         (value) {
-      return _then(_value.copyWith(serviceOverview: value) as $Val);
+      return _then(_self.copyWith(serviceOverview: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$AnalyticsVMImplCopyWith<$Res>
-    implements $AnalyticsVMCopyWith<$Res> {
-  factory _$$AnalyticsVMImplCopyWith(
-          _$AnalyticsVMImpl value, $Res Function(_$AnalyticsVMImpl) then) =
-      __$$AnalyticsVMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {BusinessDM? business,
-      AnalyticsKind kind,
-      BusinessOverviewDataDM? overview,
-      ServiceOverviewDataDM? serviceOverview,
-      int selectedDays});
+/// Adds pattern-matching-related methods to [AnalyticsVM].
+extension AnalyticsVMPatterns on AnalyticsVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $BusinessDMCopyWith<$Res>? get business;
-  @override
-  $BusinessOverviewDataDMCopyWith<$Res>? get overview;
-  @override
-  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview;
-}
-
-/// @nodoc
-class __$$AnalyticsVMImplCopyWithImpl<$Res>
-    extends _$AnalyticsVMCopyWithImpl<$Res, _$AnalyticsVMImpl>
-    implements _$$AnalyticsVMImplCopyWith<$Res> {
-  __$$AnalyticsVMImplCopyWithImpl(
-      _$AnalyticsVMImpl _value, $Res Function(_$AnalyticsVMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of AnalyticsVM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? business = freezed,
-    Object? kind = null,
-    Object? overview = freezed,
-    Object? serviceOverview = freezed,
-    Object? selectedDays = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AnalyticsVM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$AnalyticsVMImpl(
-      business: freezed == business
-          ? _value.business
-          : business // ignore: cast_nullable_to_non_nullable
-              as BusinessDM?,
-      kind: null == kind
-          ? _value.kind
-          : kind // ignore: cast_nullable_to_non_nullable
-              as AnalyticsKind,
-      overview: freezed == overview
-          ? _value.overview
-          : overview // ignore: cast_nullable_to_non_nullable
-              as BusinessOverviewDataDM?,
-      serviceOverview: freezed == serviceOverview
-          ? _value.serviceOverview
-          : serviceOverview // ignore: cast_nullable_to_non_nullable
-              as ServiceOverviewDataDM?,
-      selectedDays: null == selectedDays
-          ? _value.selectedDays
-          : selectedDays // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AnalyticsVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AnalyticsVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            BusinessDM? business,
+            AnalyticsKind kind,
+            BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview,
+            int selectedDays)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM() when $default != null:
+        return $default(_that.business, _that.kind, _that.overview,
+            _that.serviceOverview, _that.selectedDays);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            BusinessDM? business,
+            AnalyticsKind kind,
+            BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview,
+            int selectedDays)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM():
+        return $default(_that.business, _that.kind, _that.overview,
+            _that.serviceOverview, _that.selectedDays);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            BusinessDM? business,
+            AnalyticsKind kind,
+            BusinessOverviewDataDM? overview,
+            ServiceOverviewDataDM? serviceOverview,
+            int selectedDays)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _AnalyticsVM() when $default != null:
+        return $default(_that.business, _that.kind, _that.overview,
+            _that.serviceOverview, _that.selectedDays);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$AnalyticsVMImpl implements _AnalyticsVM {
-  const _$AnalyticsVMImpl(
+class _AnalyticsVM implements AnalyticsVM {
+  const _AnalyticsVM(
       {this.business,
       this.kind = AnalyticsKind.restaurant,
       this.overview,
@@ -257,16 +388,19 @@ class _$AnalyticsVMImpl implements _AnalyticsVM {
   @JsonKey()
   final int selectedDays;
 
+  /// Create a copy of AnalyticsVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'AnalyticsVM(business: $business, kind: $kind, overview: $overview, serviceOverview: $serviceOverview, selectedDays: $selectedDays)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$AnalyticsVMCopyWith<_AnalyticsVM> get copyWith =>
+      __$AnalyticsVMCopyWithImpl<_AnalyticsVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AnalyticsVMImpl &&
+            other is _AnalyticsVM &&
             (identical(other.business, business) ||
                 other.business == business) &&
             (identical(other.kind, kind) || other.kind == kind) &&
@@ -282,53 +416,119 @@ class _$AnalyticsVMImpl implements _AnalyticsVM {
   int get hashCode => Object.hash(
       runtimeType, business, kind, overview, serviceOverview, selectedDays);
 
+  @override
+  String toString() {
+    return 'AnalyticsVM(business: $business, kind: $kind, overview: $overview, serviceOverview: $serviceOverview, selectedDays: $selectedDays)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$AnalyticsVMCopyWith<$Res>
+    implements $AnalyticsVMCopyWith<$Res> {
+  factory _$AnalyticsVMCopyWith(
+          _AnalyticsVM value, $Res Function(_AnalyticsVM) _then) =
+      __$AnalyticsVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {BusinessDM? business,
+      AnalyticsKind kind,
+      BusinessOverviewDataDM? overview,
+      ServiceOverviewDataDM? serviceOverview,
+      int selectedDays});
+
+  @override
+  $BusinessDMCopyWith<$Res>? get business;
+  @override
+  $BusinessOverviewDataDMCopyWith<$Res>? get overview;
+  @override
+  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview;
+}
+
+/// @nodoc
+class __$AnalyticsVMCopyWithImpl<$Res> implements _$AnalyticsVMCopyWith<$Res> {
+  __$AnalyticsVMCopyWithImpl(this._self, this._then);
+
+  final _AnalyticsVM _self;
+  final $Res Function(_AnalyticsVM) _then;
+
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AnalyticsVMImplCopyWith<_$AnalyticsVMImpl> get copyWith =>
-      __$$AnalyticsVMImplCopyWithImpl<_$AnalyticsVMImpl>(this, _$identity);
-}
-
-abstract class _AnalyticsVM implements AnalyticsVM {
-  const factory _AnalyticsVM(
-      {final BusinessDM? business,
-      final AnalyticsKind kind,
-      final BusinessOverviewDataDM? overview,
-      final ServiceOverviewDataDM? serviceOverview,
-      final int selectedDays}) = _$AnalyticsVMImpl;
-
-  /// Business whose analytics we're showing. Carried through the cubit
-  /// so widgets can access `categoryId`, `name`, etc. without a lookup.
-  /// Nullable to support the empty `initial` state — every real lifecycle
-  /// path (`loading`, `loaded`, `error`) is emitted with `business` set.
-  @override
-  BusinessDM? get business;
-
-  /// Pre-resolved at cubit construction so `AnalyticsDashboardPage` can
-  /// branch synchronously without re-deriving on every rebuild. Default
-  /// `restaurant` covers the empty/initial state.
-  @override
-  AnalyticsKind get kind;
-
-  /// Restaurant-flavour payload. Populated only when [kind] is
-  /// [AnalyticsKind.restaurant]. Mutually exclusive with [serviceOverview]
-  /// — at most one of the two is non-null per loaded state.
-  @override
-  BusinessOverviewDataDM? get overview;
-
-  /// Catering & chefs-flavour payload. Populated only when [kind] is
-  /// [AnalyticsKind.service]. Mutually exclusive with [overview].
-  @override
-  ServiceOverviewDataDM? get serviceOverview;
-  @override
-  int get selectedDays;
+  $Res call({
+    Object? business = freezed,
+    Object? kind = null,
+    Object? overview = freezed,
+    Object? serviceOverview = freezed,
+    Object? selectedDays = null,
+  }) {
+    return _then(_AnalyticsVM(
+      business: freezed == business
+          ? _self.business
+          : business // ignore: cast_nullable_to_non_nullable
+              as BusinessDM?,
+      kind: null == kind
+          ? _self.kind
+          : kind // ignore: cast_nullable_to_non_nullable
+              as AnalyticsKind,
+      overview: freezed == overview
+          ? _self.overview
+          : overview // ignore: cast_nullable_to_non_nullable
+              as BusinessOverviewDataDM?,
+      serviceOverview: freezed == serviceOverview
+          ? _self.serviceOverview
+          : serviceOverview // ignore: cast_nullable_to_non_nullable
+              as ServiceOverviewDataDM?,
+      selectedDays: null == selectedDays
+          ? _self.selectedDays
+          : selectedDays // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 
   /// Create a copy of AnalyticsVM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AnalyticsVMImplCopyWith<_$AnalyticsVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $BusinessDMCopyWith<$Res>? get business {
+    if (_self.business == null) {
+      return null;
+    }
+
+    return $BusinessDMCopyWith<$Res>(_self.business!, (value) {
+      return _then(_self.copyWith(business: value));
+    });
+  }
+
+  /// Create a copy of AnalyticsVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BusinessOverviewDataDMCopyWith<$Res>? get overview {
+    if (_self.overview == null) {
+      return null;
+    }
+
+    return $BusinessOverviewDataDMCopyWith<$Res>(_self.overview!, (value) {
+      return _then(_self.copyWith(overview: value));
+    });
+  }
+
+  /// Create a copy of AnalyticsVM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServiceOverviewDataDMCopyWith<$Res>? get serviceOverview {
+    if (_self.serviceOverview == null) {
+      return null;
+    }
+
+    return $ServiceOverviewDataDMCopyWith<$Res>(_self.serviceOverview!,
+        (value) {
+      return _then(_self.copyWith(serviceOverview: value));
+    });
+  }
 }
+
+// dart format on

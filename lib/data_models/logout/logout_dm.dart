@@ -4,7 +4,7 @@ part 'logout_dm.freezed.dart';
 part 'logout_dm.g.dart';
 
 @freezed
-class LogoutDM with _$LogoutDM {
+abstract class LogoutDM with _$LogoutDM {
   const factory LogoutDM({
     @JsonKey(name: 'message') String? message,
   }) = _LogoutDM;

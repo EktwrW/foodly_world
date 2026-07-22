@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+
+/// Pie de la orden grupal: progreso de pago ("3 de 5 pagado" + barra), total,
+/// la parte del usuario actual y el CTA "Pagar mi parte". Estilo Foodly.
+///
+/// [myShare] es lo que debe pagar el usuario actual; [onPay] dispara el flujo
+/// de pago (PaymentSheet de Stripe). El botón se desactiva si no hay nada que
+/// pagar o la orden no admite pagos.
+class GroupOrderTotalsFooter extends StatelessWidget {
+  final GroupOrderDM order;
+  final double myShare;
+  final VoidCallback? onPay;
+
+  /// Cierre del pedido (lock) por el host. Solo se ofrece mientras la orden
+  /// está OPEN; null para participantes que no son host.
+  final VoidCallback? onLock;
+
+  const GroupOrderTotalsFooter({
+    super.key,
+    required this.order,
+    required this.myShare,
+    this.onPay,
+    this.onLock,
+  });
+
+  bool get _canPay => order.isPayable && myShare > 0 && onPay != null;
+
+  @override
+  Widget build(BuildContext context) {
+    final paid = order.paidCount;
+    final total = order.participants.length;
+    final isOpen = order.isOpen;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 12, offset: Offset(0, -2))],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Progreso de pago — solo tras el lock (antes nadie ha pagado).
+          if (!isOpen) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(S.current.groupOrderPaidProgress(paid, total), style: FoodlyTextStyles.captionPurpleBold),
+                Text(formatMoney(order.totalPaid, order.currency), style: FoodlyTextStyles.caption),
+              ],
+            ),
+            const SizedBox(height: 6),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: LinearProgressIndicator(
+                value: order.paymentProgress,
+                minHeight: 6,
+                backgroundColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.10),
+                valueColor: const AlwaysStoppedAnimation(FoodlyThemes.tertiaryFoodly),
+              ),
+            ),
+            const SizedBox(height: 14),
+          ],
+          // Total de la orden (subtotal mientras está abierta; congelado al cerrar).
+          _AmountRow(
+            label: S.current.groupOrderTotal,
+            value: formatMoney(isOpen ? order.subtotal : order.totalAmount, order.currency),
+            style: FoodlyTextStyles.label,
+          ),
+          // Tu parte — solo relevante tras el lock.
+          if (!isOpen) ...[
+            const SizedBox(height: 4),
+            _AmountRow(
+              label: S.current.groupOrderYourShare,
+              value: formatMoney(myShare, order.currency),
+              style: FoodlyTextStyles.labelPurpleBold,
+              valueStyle: FoodlyTextStyles.itemPricePurpleBold,
+            ),
+          ],
+          const SizedBox(height: 14),
+          if (isOpen)
+            // Host: cierra el pedido (congela precios y habilita el pago).
+            CustomNeumorphicButton(
+              text: S.current.groupOrderLockCta,
+              disabled: onLock == null || order.items.isEmpty,
+              margin: EdgeInsets.zero,
+              onPressed: onLock,
+            )
+          else
+            CustomNeumorphicButton(
+              text: _canPay
+                  ? S.current.groupOrderPayMyShare(formatMoney(myShare, order.currency))
+                  : S.current.groupOrderNoBalanceDue,
+              disabled: !_canPay,
+              margin: EdgeInsets.zero,
+              onPressed: onPay,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AmountRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final TextStyle? style;
+  final TextStyle? valueStyle;
+
+  const _AmountRow({required this.label, required this.value, this.style, this.valueStyle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: style),
+        Text(value, style: valueStyle ?? style),
+      ],
+    );
+  }
+}

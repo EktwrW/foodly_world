@@ -10,6 +10,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 /// `guestGate*` en los .arb.
 enum GuestGateAction {
   reserve,
+  groupOrder,
   favorite,
   review,
   post,
@@ -23,6 +24,7 @@ enum GuestGateAction {
   /// Mensaje contextual ("Iniciá sesión o registrate para …").
   String get message => switch (this) {
         GuestGateAction.reserve => S.current.guestGateReserve,
+        GuestGateAction.groupOrder => S.current.guestGateGroupOrder,
         GuestGateAction.favorite => S.current.guestGateFavorite,
         GuestGateAction.review => S.current.guestGateReview,
         GuestGateAction.post => S.current.guestGatePost,
