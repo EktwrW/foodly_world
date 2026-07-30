@@ -14,21 +14,17 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          # **Bumped 2026-05-19 de 3.38.0 → 3.38.3** (matchea la versión
-          # local de Hector en fvm — evita discrepancias build local vs CI).
+          # **Bumped 2026-07-22 de 3.38.3 → 3.44.6** (matchea .fvmrc tras el
+          # despineo de F6: `icons_plus_pro` exige Flutter ≥3.44, así que
+          # 3.38.x ya ni resuelve deps). Regla: si se bumpea fvm, bumpear
+          # aquí y en tests.yml en el MISMO commit.
           #
-          # **Por qué importa el patch específico:** Flutter 3.38.0 (la
-          # primera release de la serie 3.38) traía Dart `3.10.0-290.4.beta`
-          # pre-release. El patch 3.38.3 (Nov 2025) sí trae Dart `3.10.1`
-          # estable. `flutter_local_notifications ^21.0.0` exige Dart
-          # `^3.10.0` ESTABLE, así que pub rechazaba con 3.38.0 pero
-          # acepta con 3.38.3.
-          #
-          # Si en algún momento la dep `flutter_local_notifications`
-          # vuelve a romper, primer chequeo: ver Dart version del Flutter
-          # release con `flutter --version`. Si trae `.beta` o `.dev`, hay
-          # que mover a un patch posterior o `channel: stable` sin pin.
-          flutter-version: 3.38.3
+          # Histórico (2026-05-19, 3.38.0→3.38.3): los primeros releases de
+          # una serie pueden traer Dart pre-release (p.ej. 3.38.0 traía
+          # `3.10.0-290.4.beta`) y algunas deps exigen Dart ESTABLE. Si pub
+          # rechaza deps tras un bump, chequear `flutter --version`: con
+          # `.beta`/`.dev` en Dart, mover a un patch posterior.
+          flutter-version: 3.44.6
 
       - name: Install dependencies
         run: flutter pub get
