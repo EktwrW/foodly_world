@@ -151,6 +151,29 @@
         "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ]
+    },
+    {
+      "name": "Group Orders test — iPhone 16e (LOCAL backend)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-d", "8E983487-90D5-4EC0-B933-AE0ACE6D8021"],
+      "toolArgs": [
+        "--dart-define=ENV=dev",
+        "--dart-define=DOMAIN=http://localhost:8000",
+        "--dart-define=API_VERSION=/api",
+        "--dart-define=LOG_EMAIL=${env:LOG_EMAIL}",
+        "--dart-define=LOG_PASS=${env:LOG_PASS}",
+        "--dart-define=LOGGER_LEVEL=ALL",
+        "--dart-define=REG_PREFILL=true",
+        "--dart-define=APP_ROOT=/app/",
+        "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=",
+        "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
+        "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
+        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
+        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
+        "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}",
+        "--dart-define=STRIPE_PUBLISHABLE_KEY=${env:STRIPE_PUBLISHABLE_KEY}"
+      ]
     }
   ]
 }

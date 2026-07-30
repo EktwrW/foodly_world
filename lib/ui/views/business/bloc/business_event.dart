@@ -1,7 +1,7 @@
 part of 'business_bloc.dart';
 
 @freezed
-class BusinessEvent with _$BusinessEvent {
+sealed class BusinessEvent with _$BusinessEvent {
   const factory BusinessEvent.started() = _Started;
   const factory BusinessEvent.updateLogo(String path) = _UpdateLogo;
   const factory BusinessEvent.editCoverImagesDialog() = _EditCoverImagesDialog;

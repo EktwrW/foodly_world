@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'nearby_promotions_state.freezed.dart';
 
 @freezed
-class NearbyPromotionsState with _$NearbyPromotionsState {
+sealed class NearbyPromotionsState with _$NearbyPromotionsState {
   const factory NearbyPromotionsState.initial(NearbyPromotionsVM vm) = _Initial;
   const factory NearbyPromotionsState.loading(NearbyPromotionsVM vm) = _Loading;
   const factory NearbyPromotionsState.loaded(NearbyPromotionsVM vm) = _Loaded;

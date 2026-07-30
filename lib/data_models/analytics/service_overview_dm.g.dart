@@ -6,9 +6,9 @@ part of 'service_overview_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ServiceOverviewResponseDMImpl _$$ServiceOverviewResponseDMImplFromJson(
+_ServiceOverviewResponseDM _$ServiceOverviewResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServiceOverviewResponseDMImpl(
+    _ServiceOverviewResponseDM(
       success: json['success'] as bool? ?? false,
       data: json['data'] == null
           ? null
@@ -16,16 +16,16 @@ _$ServiceOverviewResponseDMImpl _$$ServiceOverviewResponseDMImplFromJson(
               json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ServiceOverviewResponseDMImplToJson(
-        _$ServiceOverviewResponseDMImpl instance) =>
+Map<String, dynamic> _$ServiceOverviewResponseDMToJson(
+        _ServiceOverviewResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       if (instance.data?.toJson() case final value?) 'data': value,
     };
 
-_$ServiceOverviewDataDMImpl _$$ServiceOverviewDataDMImplFromJson(
+_ServiceOverviewDataDM _$ServiceOverviewDataDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServiceOverviewDataDMImpl(
+    _ServiceOverviewDataDM(
       scope: json['scope'] == null
           ? null
           : AnalyticsScopeDM.fromJson(json['scope'] as Map<String, dynamic>),
@@ -48,8 +48,8 @@ _$ServiceOverviewDataDMImpl _$$ServiceOverviewDataDMImplFromJson(
           : AnalyticsMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ServiceOverviewDataDMImplToJson(
-        _$ServiceOverviewDataDMImpl instance) =>
+Map<String, dynamic> _$ServiceOverviewDataDMToJson(
+        _ServiceOverviewDataDM instance) =>
     <String, dynamic>{
       if (instance.scope?.toJson() case final value?) 'scope': value,
       if (instance.kpis?.toJson() case final value?) 'kpis': value,
@@ -59,9 +59,8 @@ Map<String, dynamic> _$$ServiceOverviewDataDMImplToJson(
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$AnalyticsScopeDMImpl _$$AnalyticsScopeDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AnalyticsScopeDMImpl(
+_AnalyticsScopeDM _$AnalyticsScopeDMFromJson(Map<String, dynamic> json) =>
+    _AnalyticsScopeDM(
       period: json['period'] == null
           ? null
           : AnalyticsPeriodDM.fromJson(json['period'] as Map<String, dynamic>),
@@ -72,47 +71,44 @@ _$AnalyticsScopeDMImpl _$$AnalyticsScopeDMImplFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$AnalyticsScopeDMImplToJson(
-        _$AnalyticsScopeDMImpl instance) =>
+Map<String, dynamic> _$AnalyticsScopeDMToJson(_AnalyticsScopeDM instance) =>
     <String, dynamic>{
       if (instance.period?.toJson() case final value?) 'period': value,
       'businesses': instance.businesses.map((e) => e.toJson()).toList(),
     };
 
-_$AnalyticsPeriodDMImpl _$$AnalyticsPeriodDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AnalyticsPeriodDMImpl(
+_AnalyticsPeriodDM _$AnalyticsPeriodDMFromJson(Map<String, dynamic> json) =>
+    _AnalyticsPeriodDM(
       days: (json['days'] as num?)?.toInt() ?? 30,
       start: json['start'] as String? ?? '',
       end: json['end'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$AnalyticsPeriodDMImplToJson(
-        _$AnalyticsPeriodDMImpl instance) =>
+Map<String, dynamic> _$AnalyticsPeriodDMToJson(_AnalyticsPeriodDM instance) =>
     <String, dynamic>{
       'days': instance.days,
       'start': instance.start,
       'end': instance.end,
     };
 
-_$AnalyticsBusinessRefDMImpl _$$AnalyticsBusinessRefDMImplFromJson(
+_AnalyticsBusinessRefDM _$AnalyticsBusinessRefDMFromJson(
         Map<String, dynamic> json) =>
-    _$AnalyticsBusinessRefDMImpl(
+    _AnalyticsBusinessRefDM(
       id: (json['id'] as num?)?.toInt() ?? 0,
       businessUuid: json['business_uuid'] as String? ?? '',
       businessName: json['business_name'] as String?,
     );
 
-Map<String, dynamic> _$$AnalyticsBusinessRefDMImplToJson(
-        _$AnalyticsBusinessRefDMImpl instance) =>
+Map<String, dynamic> _$AnalyticsBusinessRefDMToJson(
+        _AnalyticsBusinessRefDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'business_uuid': instance.businessUuid,
       if (instance.businessName case final value?) 'business_name': value,
     };
 
-_$ServiceKpisDMImpl _$$ServiceKpisDMImplFromJson(Map<String, dynamic> json) =>
-    _$ServiceKpisDMImpl(
+_ServiceKpisDM _$ServiceKpisDMFromJson(Map<String, dynamic> json) =>
+    _ServiceKpisDM(
       bookingsTotal: (json['bookings_total'] as num?)?.toInt() ?? 0,
       bookingSuccessRate:
           (json['booking_success_rate'] as num?)?.toDouble() ?? 0.0,
@@ -126,7 +122,7 @@ _$ServiceKpisDMImpl _$$ServiceKpisDMImplFromJson(Map<String, dynamic> json) =>
       eventsTotal: (json['events_total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ServiceKpisDMImplToJson(_$ServiceKpisDMImpl instance) =>
+Map<String, dynamic> _$ServiceKpisDMToJson(_ServiceKpisDM instance) =>
     <String, dynamic>{
       'bookings_total': instance.bookingsTotal,
       'booking_success_rate': instance.bookingSuccessRate,
@@ -139,9 +135,8 @@ Map<String, dynamic> _$$ServiceKpisDMImplToJson(_$ServiceKpisDMImpl instance) =>
       'events_total': instance.eventsTotal,
     };
 
-_$ServiceFunnelDMImpl _$$ServiceFunnelDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ServiceFunnelDMImpl(
+_ServiceFunnelDM _$ServiceFunnelDMFromJson(Map<String, dynamic> json) =>
+    _ServiceFunnelDM(
       steps: json['steps'] == null ? const [] : parseFunnelSteps(json['steps']),
       conversion: json['conversion'] == null
           ? null
@@ -149,16 +144,15 @@ _$ServiceFunnelDMImpl _$$ServiceFunnelDMImplFromJson(
               json['conversion'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ServiceFunnelDMImplToJson(
-        _$ServiceFunnelDMImpl instance) =>
+Map<String, dynamic> _$ServiceFunnelDMToJson(_ServiceFunnelDM instance) =>
     <String, dynamic>{
       'steps': instance.steps.map((e) => e.toJson()).toList(),
       if (instance.conversion?.toJson() case final value?) 'conversion': value,
     };
 
-_$ServiceFunnelConversionDMImpl _$$ServiceFunnelConversionDMImplFromJson(
+_ServiceFunnelConversionDM _$ServiceFunnelConversionDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServiceFunnelConversionDMImpl(
+    _ServiceFunnelConversionDM(
       viewToInquiryRate:
           (json['view_to_inquiry_rate'] as num?)?.toDouble() ?? 0.0,
       inquiryToBookingRate:
@@ -167,17 +161,17 @@ _$ServiceFunnelConversionDMImpl _$$ServiceFunnelConversionDMImplFromJson(
           (json['view_to_booking_rate'] as num?)?.toDouble() ?? 0.0,
     );
 
-Map<String, dynamic> _$$ServiceFunnelConversionDMImplToJson(
-        _$ServiceFunnelConversionDMImpl instance) =>
+Map<String, dynamic> _$ServiceFunnelConversionDMToJson(
+        _ServiceFunnelConversionDM instance) =>
     <String, dynamic>{
       'view_to_inquiry_rate': instance.viewToInquiryRate,
       'inquiry_to_booking_rate': instance.inquiryToBookingRate,
       'view_to_booking_rate': instance.viewToBookingRate,
     };
 
-_$ServiceDailySeriesDMImpl _$$ServiceDailySeriesDMImplFromJson(
+_ServiceDailySeriesDM _$ServiceDailySeriesDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServiceDailySeriesDMImpl(
+    _ServiceDailySeriesDM(
       bookingsDaily: (json['bookings_daily'] as List<dynamic>?)
               ?.map((e) => DailyPointDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -192,17 +186,16 @@ _$ServiceDailySeriesDMImpl _$$ServiceDailySeriesDMImplFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$ServiceDailySeriesDMImplToJson(
-        _$ServiceDailySeriesDMImpl instance) =>
+Map<String, dynamic> _$ServiceDailySeriesDMToJson(
+        _ServiceDailySeriesDM instance) =>
     <String, dynamic>{
       'bookings_daily': instance.bookingsDaily.map((e) => e.toJson()).toList(),
       'reviews_daily': instance.reviewsDaily.map((e) => e.toJson()).toList(),
       'events_daily': instance.eventsDaily.map((e) => e.toJson()).toList(),
     };
 
-_$ServiceBreakdownsDMImpl _$$ServiceBreakdownsDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ServiceBreakdownsDMImpl(
+_ServiceBreakdownsDM _$ServiceBreakdownsDMFromJson(Map<String, dynamic> json) =>
+    _ServiceBreakdownsDM(
       bookingsByStatus: json['bookings_by_status'] == null
           ? const []
           : parseBreakdownMapOrList(json['bookings_by_status']),
@@ -213,17 +206,16 @@ _$ServiceBreakdownsDMImpl _$$ServiceBreakdownsDMImplFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$ServiceBreakdownsDMImplToJson(
-        _$ServiceBreakdownsDMImpl instance) =>
+Map<String, dynamic> _$ServiceBreakdownsDMToJson(
+        _ServiceBreakdownsDM instance) =>
     <String, dynamic>{
       'bookings_by_status':
           instance.bookingsByStatus.map((e) => e.toJson()).toList(),
       'top_packages': instance.topPackages.map((e) => e.toJson()).toList(),
     };
 
-_$TopServicePackageDMImpl _$$TopServicePackageDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TopServicePackageDMImpl(
+_TopServicePackageDM _$TopServicePackageDMFromJson(Map<String, dynamic> json) =>
+    _TopServicePackageDM(
       packageUuid: json['package_uuid'] as String? ?? '',
       title: json['title'] as String? ?? '',
       priceType: json['price_type'] as String? ?? '',
@@ -231,8 +223,8 @@ _$TopServicePackageDMImpl _$$TopServicePackageDMImplFromJson(
       bookingsCount: (json['bookings_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$TopServicePackageDMImplToJson(
-        _$TopServicePackageDMImpl instance) =>
+Map<String, dynamic> _$TopServicePackageDMToJson(
+        _TopServicePackageDM instance) =>
     <String, dynamic>{
       'package_uuid': instance.packageUuid,
       'title': instance.title,
@@ -241,15 +233,13 @@ Map<String, dynamic> _$$TopServicePackageDMImplToJson(
       'bookings_count': instance.bookingsCount,
     };
 
-_$AnalyticsMetaDMImpl _$$AnalyticsMetaDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$AnalyticsMetaDMImpl(
+_AnalyticsMetaDM _$AnalyticsMetaDMFromJson(Map<String, dynamic> json) =>
+    _AnalyticsMetaDM(
       generatedAt: json['generated_at'] as String?,
       source: json['source'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$AnalyticsMetaDMImplToJson(
-        _$AnalyticsMetaDMImpl instance) =>
+Map<String, dynamic> _$AnalyticsMetaDMToJson(_AnalyticsMetaDM instance) =>
     <String, dynamic>{
       if (instance.generatedAt case final value?) 'generated_at': value,
       'source': instance.source,

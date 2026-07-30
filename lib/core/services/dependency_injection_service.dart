@@ -14,6 +14,8 @@ import 'package:foodly_world/core/network/buzz/buzz_client.dart';
 import 'package:foodly_world/core/network/buzz/buzz_repo.dart';
 import 'package:foodly_world/core/network/device_tokens/device_token_client.dart';
 import 'package:foodly_world/core/network/device_tokens/device_token_repo.dart';
+import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
+import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/network/menu_import/menu_import_client.dart';
 import 'package:foodly_world/core/network/menu_import/menu_import_repo.dart';
 import 'package:foodly_world/core/network/moderation/moderation_client.dart';
@@ -37,6 +39,8 @@ import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/services/first_launch_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/core/services/service_events_tracker.dart';
+import 'package:foodly_world/core/services/stripe_payment_service.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
@@ -84,6 +88,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ModerationClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BuzzClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ReservationClient(di<FoodlyApiProvider>().dio))
+      ..registerLazySingleton(() => GroupOrderClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => BusinessAvailabilityClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => ServicePackageClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => DeviceTokenClient(di<FoodlyApiProvider>().dio))
@@ -117,6 +122,9 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => ModerationRepo(client: di()))
       ..registerLazySingleton(() => BuzzRepo(buzzClient: di()))
       ..registerLazySingleton(() => ReservationRepo(reservationClient: di()))
+      ..registerLazySingleton(() => GroupOrderRepo(client: di()))
+      ..registerLazySingleton(() => ActiveGroupOrderCubit(repo: di(), logger: di()))
+      ..registerLazySingleton(() => StripePaymentService())
       ..registerLazySingleton(() => BusinessAvailabilityRepo(client: di()))
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))
       ..registerLazySingleton(() => DeviceTokenRepo(client: di()))

@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:foodly_world/core/enums/foodly_enums.dart' show BusinessResultsViewMode;
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart'
     show LocalStorageService, di, FoodlyStrings, Logger;

@@ -4,7 +4,9 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
+import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
 
 class FoodlyLocationWrapper extends StatefulWidget {

@@ -6,9 +6,9 @@ part of 'service_package_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ServicePackagesResponseDMImpl _$$ServicePackagesResponseDMImplFromJson(
+_ServicePackagesResponseDM _$ServicePackagesResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServicePackagesResponseDMImpl(
+    _ServicePackagesResponseDM(
       success: json['success'] as bool? ?? false,
       servicePackages: (json['service_packages'] as List<dynamic>?)
               ?.map((e) => ServicePackageDM.fromJson(e as Map<String, dynamic>))
@@ -16,27 +16,27 @@ _$ServicePackagesResponseDMImpl _$$ServicePackagesResponseDMImplFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$ServicePackagesResponseDMImplToJson(
-        _$ServicePackagesResponseDMImpl instance) =>
+Map<String, dynamic> _$ServicePackagesResponseDMToJson(
+        _ServicePackagesResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'service_packages':
           instance.servicePackages.map((e) => e.toJson()).toList(),
     };
 
-_$ServicePackageActionResponseDMImpl
-    _$$ServicePackageActionResponseDMImplFromJson(Map<String, dynamic> json) =>
-        _$ServicePackageActionResponseDMImpl(
-          success: json['success'] as bool? ?? false,
-          message: json['message'] as String? ?? '',
-          servicePackage: json['service_package'] == null
-              ? null
-              : ServicePackageDM.fromJson(
-                  json['service_package'] as Map<String, dynamic>),
-        );
+_ServicePackageActionResponseDM _$ServicePackageActionResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _ServicePackageActionResponseDM(
+      success: json['success'] as bool? ?? false,
+      message: json['message'] as String? ?? '',
+      servicePackage: json['service_package'] == null
+          ? null
+          : ServicePackageDM.fromJson(
+              json['service_package'] as Map<String, dynamic>),
+    );
 
-Map<String, dynamic> _$$ServicePackageActionResponseDMImplToJson(
-        _$ServicePackageActionResponseDMImpl instance) =>
+Map<String, dynamic> _$ServicePackageActionResponseDMToJson(
+        _ServicePackageActionResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
@@ -44,23 +44,23 @@ Map<String, dynamic> _$$ServicePackageActionResponseDMImplToJson(
         'service_package': value,
     };
 
-_$GenericSuccessResponseDMImpl _$$GenericSuccessResponseDMImplFromJson(
+_GenericSuccessResponseDM _$GenericSuccessResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$GenericSuccessResponseDMImpl(
+    _GenericSuccessResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$GenericSuccessResponseDMImplToJson(
-        _$GenericSuccessResponseDMImpl instance) =>
+Map<String, dynamic> _$GenericSuccessResponseDMToJson(
+        _GenericSuccessResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
     };
 
-_$PhotoUploadResponseDMImpl _$$PhotoUploadResponseDMImplFromJson(
+_PhotoUploadResponseDM _$PhotoUploadResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$PhotoUploadResponseDMImpl(
+    _PhotoUploadResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       photos: (json['photos'] as List<dynamic>?)
@@ -70,17 +70,16 @@ _$PhotoUploadResponseDMImpl _$$PhotoUploadResponseDMImplFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$PhotoUploadResponseDMImplToJson(
-        _$PhotoUploadResponseDMImpl instance) =>
+Map<String, dynamic> _$PhotoUploadResponseDMToJson(
+        _PhotoUploadResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
       'photos': instance.photos.map((e) => e.toJson()).toList(),
     };
 
-_$ServicePackageDMImpl _$$ServicePackageDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ServicePackageDMImpl(
+_ServicePackageDM _$ServicePackageDMFromJson(Map<String, dynamic> json) =>
+    _ServicePackageDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       businessId: (json['business_id'] as num?)?.toInt(),
@@ -120,8 +119,7 @@ _$ServicePackageDMImpl _$$ServicePackageDMImplFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ServicePackageDMImplToJson(
-        _$ServicePackageDMImpl instance) =>
+Map<String, dynamic> _$ServicePackageDMToJson(_ServicePackageDM instance) =>
     <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,
@@ -166,9 +164,9 @@ const _$PriceTypeEnumMap = {
   PriceType.onQuote: 'on_quote',
 };
 
-_$ServicePackagePhotoDMImpl _$$ServicePackagePhotoDMImplFromJson(
+_ServicePackagePhotoDM _$ServicePackagePhotoDMFromJson(
         Map<String, dynamic> json) =>
-    _$ServicePackagePhotoDMImpl(
+    _ServicePackagePhotoDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       servicePackageId: (json['service_package_id'] as num?)?.toInt(),
@@ -176,8 +174,8 @@ _$ServicePackagePhotoDMImpl _$$ServicePackagePhotoDMImplFromJson(
       sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ServicePackagePhotoDMImplToJson(
-        _$ServicePackagePhotoDMImpl instance) =>
+Map<String, dynamic> _$ServicePackagePhotoDMToJson(
+        _ServicePackagePhotoDM instance) =>
     <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,

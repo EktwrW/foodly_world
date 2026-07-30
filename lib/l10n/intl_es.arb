@@ -1276,5 +1276,96 @@
   "loadingAvailability": "Cargando disponibilidad…",
   "unavailableDaysHint": "Los días en gris no están disponibles.",
   "dateUnavailable": "Esa fecha acaba de bloquearse. Elige otra, por favor.",
-  "datePartiallyBlockedInfo": "Ese día tiene horarios parcialmente reservados. Puede que te pidamos ajustar la hora."
+  "datePartiallyBlockedInfo": "Ese día tiene horarios parcialmente reservados. Puede que te pidamos ajustar la hora.",
+  "groupOrderTitle": "Orden grupal",
+  "groupOrderParticipants": "Participantes",
+  "groupOrderItemsSection": "Ítems",
+  "groupOrderNoItems": "Aún no hay ítems",
+  "groupOrderTotal": "Total de la orden",
+  "groupOrderYourShare": "Tu parte",
+  "groupOrderPayMyShare": "Pagar mi parte · {amount}",
+  "@groupOrderPayMyShare": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderNoBalanceDue": "Sin saldo pendiente",
+  "groupOrderPaidProgress": "{paid} de {total} pagado",
+  "@groupOrderPaidProgress": {
+    "placeholders": {
+      "paid": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "groupOrderHostBadge": "Host",
+  "groupOrderPaymentSucceeded": "Pago realizado",
+  "groupOrderPaymentCanceled": "Pago cancelado",
+  "groupOrderPaymentFailed": "No se pudo completar el pago",
+  "groupOrderEntryCta": "Ordenar en grupo",
+  "groupOrderCreating": "Creando…",
+  "groupOrderViewOrder": "Ver la orden",
+  "groupOrderAddFromMenu": "Agrega platos del menú",
+  "groupOrderLockCta": "Cerrar la orden",
+  "groupOrderUnlockCta": "Reabrir la orden",
+  "groupOrderUnlockConfirm": "¿Reabrir la orden? Los precios se descongelan y se podrán editar los ítems.",
+  "groupOrderTransferHost": "Transferir titularidad",
+  "groupOrderTransferHostConfirm": "¿Transferir la titularidad a {name}?",
+  "@groupOrderTransferHostConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderCoverShare": "Cubrir su parte",
+  "groupOrderCoverConfirm": "¿Pagar la parte de {name} ({amount})?",
+  "@groupOrderCoverConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllRemaining": "Pagar todo lo pendiente · {amount}",
+  "@groupOrderPayAllRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayAllConfirm": "¿Pagar todo lo pendiente ({amount})?",
+  "@groupOrderPayAllConfirm": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPaidBy": "Pagado por {name}",
+  "@groupOrderPaidBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderGraceNotice": "Tiempo extra: faltan {amount}",
+  "@groupOrderGraceNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

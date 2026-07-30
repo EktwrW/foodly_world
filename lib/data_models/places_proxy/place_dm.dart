@@ -29,7 +29,7 @@ part 'place_dm.g.dart';
 /// perdía coords en el roundtrip por tipos mal mapeados. Mejor ser explícito
 /// y dejar que el caller use `?? 0.0` o valide con `geometry != null`.
 @freezed
-class PlaceDM with _$PlaceDM {
+abstract class PlaceDM with _$PlaceDM {
   const factory PlaceDM({
     @JsonKey(name: 'place_id') String? placeId,
     String? name,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer;
 import 'package:foodly_world/core/core_exports.dart'
-    show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S;
+    show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S, NotificationsStatePatterns;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
@@ -14,7 +15,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/reservations/widgets/manager_reservation_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
 import 'package:foodly_world/ui/views/reservations/widgets/reservation_card.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});

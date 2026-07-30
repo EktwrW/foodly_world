@@ -10,7 +10,7 @@ import 'package:foodly_world/ui/views/starting/view_models/starting_vm.dart';
 import 'package:foodly_world/ui/views/starting/widgets/fingerprint_button_login.dart';
 import 'package:foodly_world/ui/views/starting/widgets/password_recover/password_recover_dialog.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, Brand, Brands;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Brand, Brands;
 
 class AppLoginWidgets extends StatefulWidget {
   const AppLoginWidgets({

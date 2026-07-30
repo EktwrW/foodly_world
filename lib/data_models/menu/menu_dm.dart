@@ -6,7 +6,7 @@ part 'menu_dm.freezed.dart';
 part 'menu_dm.g.dart';
 
 @freezed
-class MenuResponse with _$MenuResponse {
+abstract class MenuResponse with _$MenuResponse {
   factory MenuResponse({
     @JsonKey(name: 'menu') required MenuDM menuDM,
   }) = _MenuResponse;
@@ -15,7 +15,7 @@ class MenuResponse with _$MenuResponse {
 }
 
 @freezed
-class MenuDM with _$MenuDM {
+abstract class MenuDM with _$MenuDM {
   const MenuDM._();
 
   factory MenuDM({
@@ -49,7 +49,7 @@ class MenuDM with _$MenuDM {
 }
 
 @freezed
-class CategoryDM with _$CategoryDM {
+abstract class CategoryDM with _$CategoryDM {
   const CategoryDM._();
 
   factory CategoryDM({

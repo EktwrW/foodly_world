@@ -7,7 +7,7 @@ part 'review_create_dto.freezed.dart';
 part 'review_create_dto.g.dart';
 
 @freezed
-class ReviewCreateDTO with _$ReviewCreateDTO {
+abstract class ReviewCreateDTO with _$ReviewCreateDTO {
   const factory ReviewCreateDTO({
     @JsonKey(name: 'business_uuid') required String businessUuid,
     required int rating,

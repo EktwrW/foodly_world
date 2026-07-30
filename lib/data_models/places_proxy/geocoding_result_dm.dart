@@ -16,7 +16,7 @@ part 'geocoding_result_dm.g.dart';
 /// `addressComponents` para extraer country/state/city/postal_code +
 /// `formattedAddress` para mostrar.
 @freezed
-class GeocodingResultDM with _$GeocodingResultDM {
+abstract class GeocodingResultDM with _$GeocodingResultDM {
   const factory GeocodingResultDM({
     @JsonKey(name: 'place_id') String? placeId,
     @JsonKey(name: 'formatted_address') String? formattedAddress,

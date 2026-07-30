@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,85 +9,52 @@ part of 'contact_vm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ContactVM {
-  ContactRecipient get recipient => throw _privateConstructorUsedError;
-  String? get attachmentPath => throw _privateConstructorUsedError;
-  String? get attachmentName => throw _privateConstructorUsedError;
-  bool get attachmentTooLarge => throw _privateConstructorUsedError;
+  ContactRecipient get recipient;
+  String? get attachmentPath;
+  String? get attachmentName;
+  bool get attachmentTooLarge;
 
   /// Create a copy of ContactVM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ContactVMCopyWith<ContactVM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ContactVMCopyWith<$Res> {
-  factory $ContactVMCopyWith(ContactVM value, $Res Function(ContactVM) then) =
-      _$ContactVMCopyWithImpl<$Res, ContactVM>;
-  @useResult
-  $Res call(
-      {ContactRecipient recipient,
-      String? attachmentPath,
-      String? attachmentName,
-      bool attachmentTooLarge});
-}
-
-/// @nodoc
-class _$ContactVMCopyWithImpl<$Res, $Val extends ContactVM>
-    implements $ContactVMCopyWith<$Res> {
-  _$ContactVMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ContactVM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ContactVMCopyWith<ContactVM> get copyWith =>
+      _$ContactVMCopyWithImpl<ContactVM>(this as ContactVM, _$identity);
+
   @override
-  $Res call({
-    Object? recipient = null,
-    Object? attachmentPath = freezed,
-    Object? attachmentName = freezed,
-    Object? attachmentTooLarge = null,
-  }) {
-    return _then(_value.copyWith(
-      recipient: null == recipient
-          ? _value.recipient
-          : recipient // ignore: cast_nullable_to_non_nullable
-              as ContactRecipient,
-      attachmentPath: freezed == attachmentPath
-          ? _value.attachmentPath
-          : attachmentPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      attachmentName: freezed == attachmentName
-          ? _value.attachmentName
-          : attachmentName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      attachmentTooLarge: null == attachmentTooLarge
-          ? _value.attachmentTooLarge
-          : attachmentTooLarge // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ContactVM &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient) &&
+            (identical(other.attachmentPath, attachmentPath) ||
+                other.attachmentPath == attachmentPath) &&
+            (identical(other.attachmentName, attachmentName) ||
+                other.attachmentName == attachmentName) &&
+            (identical(other.attachmentTooLarge, attachmentTooLarge) ||
+                other.attachmentTooLarge == attachmentTooLarge));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, recipient, attachmentPath,
+      attachmentName, attachmentTooLarge);
+
+  @override
+  String toString() {
+    return 'ContactVM(recipient: $recipient, attachmentPath: $attachmentPath, attachmentName: $attachmentName, attachmentTooLarge: $attachmentTooLarge)';
   }
 }
 
 /// @nodoc
-abstract class _$$ContactVMImplCopyWith<$Res>
-    implements $ContactVMCopyWith<$Res> {
-  factory _$$ContactVMImplCopyWith(
-          _$ContactVMImpl value, $Res Function(_$ContactVMImpl) then) =
-      __$$ContactVMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ContactVMCopyWith<$Res> {
+  factory $ContactVMCopyWith(ContactVM value, $Res Function(ContactVM) _then) =
+      _$ContactVMCopyWithImpl;
   @useResult
   $Res call(
       {ContactRecipient recipient,
@@ -97,12 +64,11 @@ abstract class _$$ContactVMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ContactVMImplCopyWithImpl<$Res>
-    extends _$ContactVMCopyWithImpl<$Res, _$ContactVMImpl>
-    implements _$$ContactVMImplCopyWith<$Res> {
-  __$$ContactVMImplCopyWithImpl(
-      _$ContactVMImpl _value, $Res Function(_$ContactVMImpl) _then)
-      : super(_value, _then);
+class _$ContactVMCopyWithImpl<$Res> implements $ContactVMCopyWith<$Res> {
+  _$ContactVMCopyWithImpl(this._self, this._then);
+
+  final ContactVM _self;
+  final $Res Function(ContactVM) _then;
 
   /// Create a copy of ContactVM
   /// with the given fields replaced by the non-null parameter values.
@@ -114,31 +80,197 @@ class __$$ContactVMImplCopyWithImpl<$Res>
     Object? attachmentName = freezed,
     Object? attachmentTooLarge = null,
   }) {
-    return _then(_$ContactVMImpl(
+    return _then(_self.copyWith(
       recipient: null == recipient
-          ? _value.recipient
+          ? _self.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as ContactRecipient,
       attachmentPath: freezed == attachmentPath
-          ? _value.attachmentPath
+          ? _self.attachmentPath
           : attachmentPath // ignore: cast_nullable_to_non_nullable
               as String?,
       attachmentName: freezed == attachmentName
-          ? _value.attachmentName
+          ? _self.attachmentName
           : attachmentName // ignore: cast_nullable_to_non_nullable
               as String?,
       attachmentTooLarge: null == attachmentTooLarge
-          ? _value.attachmentTooLarge
+          ? _self.attachmentTooLarge
           : attachmentTooLarge // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ContactVM].
+extension ContactVMPatterns on ContactVM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ContactVM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ContactVM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ContactVM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(ContactRecipient recipient, String? attachmentPath,
+            String? attachmentName, bool attachmentTooLarge)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM() when $default != null:
+        return $default(_that.recipient, _that.attachmentPath,
+            _that.attachmentName, _that.attachmentTooLarge);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(ContactRecipient recipient, String? attachmentPath,
+            String? attachmentName, bool attachmentTooLarge)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM():
+        return $default(_that.recipient, _that.attachmentPath,
+            _that.attachmentName, _that.attachmentTooLarge);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(ContactRecipient recipient, String? attachmentPath,
+            String? attachmentName, bool attachmentTooLarge)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ContactVM() when $default != null:
+        return $default(_that.recipient, _that.attachmentPath,
+            _that.attachmentName, _that.attachmentTooLarge);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$ContactVMImpl implements _ContactVM {
-  const _$ContactVMImpl(
+class _ContactVM implements ContactVM {
+  const _ContactVM(
       {this.recipient = ContactRecipient.hello,
       this.attachmentPath,
       this.attachmentName,
@@ -155,16 +287,19 @@ class _$ContactVMImpl implements _ContactVM {
   @JsonKey()
   final bool attachmentTooLarge;
 
+  /// Create a copy of ContactVM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ContactVM(recipient: $recipient, attachmentPath: $attachmentPath, attachmentName: $attachmentName, attachmentTooLarge: $attachmentTooLarge)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ContactVMCopyWith<_ContactVM> get copyWith =>
+      __$ContactVMCopyWithImpl<_ContactVM>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ContactVMImpl &&
+            other is _ContactVM &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
             (identical(other.attachmentPath, attachmentPath) ||
@@ -179,35 +314,63 @@ class _$ContactVMImpl implements _ContactVM {
   int get hashCode => Object.hash(runtimeType, recipient, attachmentPath,
       attachmentName, attachmentTooLarge);
 
+  @override
+  String toString() {
+    return 'ContactVM(recipient: $recipient, attachmentPath: $attachmentPath, attachmentName: $attachmentName, attachmentTooLarge: $attachmentTooLarge)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ContactVMCopyWith<$Res>
+    implements $ContactVMCopyWith<$Res> {
+  factory _$ContactVMCopyWith(
+          _ContactVM value, $Res Function(_ContactVM) _then) =
+      __$ContactVMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {ContactRecipient recipient,
+      String? attachmentPath,
+      String? attachmentName,
+      bool attachmentTooLarge});
+}
+
+/// @nodoc
+class __$ContactVMCopyWithImpl<$Res> implements _$ContactVMCopyWith<$Res> {
+  __$ContactVMCopyWithImpl(this._self, this._then);
+
+  final _ContactVM _self;
+  final $Res Function(_ContactVM) _then;
+
   /// Create a copy of ContactVM
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ContactVMImplCopyWith<_$ContactVMImpl> get copyWith =>
-      __$$ContactVMImplCopyWithImpl<_$ContactVMImpl>(this, _$identity);
+  $Res call({
+    Object? recipient = null,
+    Object? attachmentPath = freezed,
+    Object? attachmentName = freezed,
+    Object? attachmentTooLarge = null,
+  }) {
+    return _then(_ContactVM(
+      recipient: null == recipient
+          ? _self.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as ContactRecipient,
+      attachmentPath: freezed == attachmentPath
+          ? _self.attachmentPath
+          : attachmentPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attachmentName: freezed == attachmentName
+          ? _self.attachmentName
+          : attachmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      attachmentTooLarge: null == attachmentTooLarge
+          ? _self.attachmentTooLarge
+          : attachmentTooLarge // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
-abstract class _ContactVM implements ContactVM {
-  const factory _ContactVM(
-      {final ContactRecipient recipient,
-      final String? attachmentPath,
-      final String? attachmentName,
-      final bool attachmentTooLarge}) = _$ContactVMImpl;
-
-  @override
-  ContactRecipient get recipient;
-  @override
-  String? get attachmentPath;
-  @override
-  String? get attachmentName;
-  @override
-  bool get attachmentTooLarge;
-
-  /// Create a copy of ContactVM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ContactVMImplCopyWith<_$ContactVMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

@@ -27,6 +27,13 @@ class _SpyAuthSessionService implements AuthSessionService {
   @override
   bool get isAccessTokenExpired => false;
 
+  /// `isLoggingOut` se añadió a AuthSessionService después de escribir este
+  /// spy; sin override explícito caía en noSuchMethod (null → cast a bool).
+  bool _isLoggingOut = false;
+  @override
+  bool get isLoggingOut => _isLoggingOut;
+  set isLoggingOut(bool v) => _isLoggingOut = v;
+
   @override
   bool get hasRefreshToken => _hasRefreshToken;
   set hasRefreshToken(bool v) => _hasRefreshToken = v;

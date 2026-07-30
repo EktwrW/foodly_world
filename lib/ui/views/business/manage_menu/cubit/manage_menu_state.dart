@@ -1,7 +1,7 @@
 part of 'manage_menu_cubit.dart';
 
 @freezed
-class ManageMenuState with _$ManageMenuState {
+sealed class ManageMenuState with _$ManageMenuState {
   const ManageMenuState._();
 
   const factory ManageMenuState.initial(ManageMenuVM vm) = _Initial;

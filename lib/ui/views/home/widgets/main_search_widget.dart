@@ -13,7 +13,7 @@ import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/soci
 import 'package:foodly_world/ui/views/home/widgets/smart_search/widgets/smart_search_snackbars.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:geolocator/geolocator.dart' show Geolocator;
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:nova_places_api/models/place.dart';
 
 import 'new_releases/cubit/new_releases_cubit.dart';

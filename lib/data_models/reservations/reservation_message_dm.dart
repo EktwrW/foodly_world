@@ -10,7 +10,7 @@ part 'reservation_message_dm.g.dart';
 /// lets us trust ONE clock (server) across customer + manager devices and
 /// sidesteps device clock drift.
 @freezed
-class ReservationMessagesResponseDM with _$ReservationMessagesResponseDM {
+abstract class ReservationMessagesResponseDM with _$ReservationMessagesResponseDM {
   const factory ReservationMessagesResponseDM({
     @Default([]) List<ReservationMessageDM> messages,
     @JsonKey(name: 'server_now') DateTime? serverNow,
@@ -21,7 +21,7 @@ class ReservationMessagesResponseDM with _$ReservationMessagesResponseDM {
 }
 
 @freezed
-class ReservationMessageCreateResponseDM with _$ReservationMessageCreateResponseDM {
+abstract class ReservationMessageCreateResponseDM with _$ReservationMessageCreateResponseDM {
   const factory ReservationMessageCreateResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -40,7 +40,7 @@ enum MessageAuthorType {
 }
 
 @freezed
-class ReservationMessageDM with _$ReservationMessageDM {
+abstract class ReservationMessageDM with _$ReservationMessageDM {
   const ReservationMessageDM._();
 
   const factory ReservationMessageDM({

@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart' show FoodlyStrings;
 import 'package:foodly_world/core/extensions/iterable_extension.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart' show BusinessRepo;
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show Logger, di;
 import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM;
@@ -15,8 +16,8 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/view_model/manage_menu_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'manage_menu_state.dart';
 part 'manage_menu_cubit.freezed.dart';
+part 'manage_menu_state.dart';
 
 class ManageMenuCubit extends Cubit<ManageMenuState> {
   ManageMenuVM _vm;
@@ -683,9 +684,8 @@ class ManageMenuCubit extends Cubit<ManageMenuState> {
   }
 
   void reorderItems(CategoryDM subCategory, MenuCategory menuCategory, int oldIndex, int newIndex) {
-    // ReorderableListView fires newIndex relative to the original list length,
-    // but after the item at oldIndex has been "removed". Adjust accordingly.
-    if (newIndex > oldIndex) newIndex -= 1;
+    // El call site usa `onReorderItem` (Flutter >=3.41): newIndex llega ya
+    // ajustado tras remover el item -- NO aplicar correccion manual aqui.
 
     List<ItemDM> reordered;
 

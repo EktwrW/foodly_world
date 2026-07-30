@@ -10,6 +10,7 @@ import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show LoadingWidgetFoodlyIso, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
@@ -28,7 +29,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 import 'package:video_player/video_player.dart';
 
 class TopOffersWidget extends StatefulWidget {

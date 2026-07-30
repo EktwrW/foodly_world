@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,81 +9,51 @@ part of 'geocoding_response_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-GeocodingResponseDM _$GeocodingResponseDMFromJson(Map<String, dynamic> json) {
-  return _GeocodingResponseDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$GeocodingResponseDM {
   @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-  ProxyStatusEnum get status => throw _privateConstructorUsedError;
-  List<GeocodingResultDM> get results => throw _privateConstructorUsedError;
-
-  /// Serializes this GeocodingResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  ProxyStatusEnum get status;
+  List<GeocodingResultDM> get results;
 
   /// Create a copy of GeocodingResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GeocodingResponseDMCopyWith<GeocodingResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GeocodingResponseDMCopyWith<$Res> {
-  factory $GeocodingResponseDMCopyWith(
-          GeocodingResponseDM value, $Res Function(GeocodingResponseDM) then) =
-      _$GeocodingResponseDMCopyWithImpl<$Res, GeocodingResponseDM>;
-  @useResult
-  $Res call(
-      {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      ProxyStatusEnum status,
-      List<GeocodingResultDM> results});
-}
-
-/// @nodoc
-class _$GeocodingResponseDMCopyWithImpl<$Res, $Val extends GeocodingResponseDM>
-    implements $GeocodingResponseDMCopyWith<$Res> {
-  _$GeocodingResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of GeocodingResponseDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $GeocodingResponseDMCopyWith<GeocodingResponseDM> get copyWith =>
+      _$GeocodingResponseDMCopyWithImpl<GeocodingResponseDM>(
+          this as GeocodingResponseDM, _$identity);
+
+  /// Serializes this GeocodingResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? status = null,
-    Object? results = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ProxyStatusEnum,
-      results: null == results
-          ? _value.results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<GeocodingResultDM>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GeocodingResponseDM &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other.results, results));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, status, const DeepCollectionEquality().hash(results));
+
+  @override
+  String toString() {
+    return 'GeocodingResponseDM(status: $status, results: $results)';
   }
 }
 
 /// @nodoc
-abstract class _$$GeocodingResponseDMImplCopyWith<$Res>
-    implements $GeocodingResponseDMCopyWith<$Res> {
-  factory _$$GeocodingResponseDMImplCopyWith(_$GeocodingResponseDMImpl value,
-          $Res Function(_$GeocodingResponseDMImpl) then) =
-      __$$GeocodingResponseDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $GeocodingResponseDMCopyWith<$Res> {
+  factory $GeocodingResponseDMCopyWith(
+          GeocodingResponseDM value, $Res Function(GeocodingResponseDM) _then) =
+      _$GeocodingResponseDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
@@ -92,12 +62,12 @@ abstract class _$$GeocodingResponseDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$GeocodingResponseDMImplCopyWithImpl<$Res>
-    extends _$GeocodingResponseDMCopyWithImpl<$Res, _$GeocodingResponseDMImpl>
-    implements _$$GeocodingResponseDMImplCopyWith<$Res> {
-  __$$GeocodingResponseDMImplCopyWithImpl(_$GeocodingResponseDMImpl _value,
-      $Res Function(_$GeocodingResponseDMImpl) _then)
-      : super(_value, _then);
+class _$GeocodingResponseDMCopyWithImpl<$Res>
+    implements $GeocodingResponseDMCopyWith<$Res> {
+  _$GeocodingResponseDMCopyWithImpl(this._self, this._then);
+
+  final GeocodingResponseDM _self;
+  final $Res Function(GeocodingResponseDM) _then;
 
   /// Create a copy of GeocodingResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -107,29 +77,197 @@ class __$$GeocodingResponseDMImplCopyWithImpl<$Res>
     Object? status = null,
     Object? results = null,
   }) {
-    return _then(_$GeocodingResponseDMImpl(
+    return _then(_self.copyWith(
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProxyStatusEnum,
       results: null == results
-          ? _value._results
+          ? _self.results
           : results // ignore: cast_nullable_to_non_nullable
               as List<GeocodingResultDM>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [GeocodingResponseDM].
+extension GeocodingResponseDMPatterns on GeocodingResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GeocodingResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_GeocodingResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_GeocodingResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
+            ProxyStatusEnum status,
+            List<GeocodingResultDM> results)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM() when $default != null:
+        return $default(_that.status, _that.results);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
+            ProxyStatusEnum status,
+            List<GeocodingResultDM> results)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM():
+        return $default(_that.status, _that.results);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
+            ProxyStatusEnum status,
+            List<GeocodingResultDM> results)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GeocodingResponseDM() when $default != null:
+        return $default(_that.status, _that.results);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$GeocodingResponseDMImpl implements _GeocodingResponseDM {
-  const _$GeocodingResponseDMImpl(
+class _GeocodingResponseDM implements GeocodingResponseDM {
+  const _GeocodingResponseDM(
       {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required this.status,
       final List<GeocodingResultDM> results = const <GeocodingResultDM>[]})
       : _results = results;
-
-  factory _$GeocodingResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GeocodingResponseDMImplFromJson(json);
+  factory _GeocodingResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$GeocodingResponseDMFromJson(json);
 
   @override
   @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
@@ -143,16 +281,27 @@ class _$GeocodingResponseDMImpl implements _GeocodingResponseDM {
     return EqualUnmodifiableListView(_results);
   }
 
+  /// Create a copy of GeocodingResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'GeocodingResponseDM(status: $status, results: $results)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$GeocodingResponseDMCopyWith<_GeocodingResponseDM> get copyWith =>
+      __$GeocodingResponseDMCopyWithImpl<_GeocodingResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$GeocodingResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GeocodingResponseDMImpl &&
+            other is _GeocodingResponseDM &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._results, _results));
   }
@@ -162,42 +311,53 @@ class _$GeocodingResponseDMImpl implements _GeocodingResponseDM {
   int get hashCode => Object.hash(
       runtimeType, status, const DeepCollectionEquality().hash(_results));
 
-  /// Create a copy of GeocodingResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$GeocodingResponseDMImplCopyWith<_$GeocodingResponseDMImpl> get copyWith =>
-      __$$GeocodingResponseDMImplCopyWithImpl<_$GeocodingResponseDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GeocodingResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'GeocodingResponseDM(status: $status, results: $results)';
   }
 }
 
-abstract class _GeocodingResponseDM implements GeocodingResponseDM {
-  const factory _GeocodingResponseDM(
+/// @nodoc
+abstract mixin class _$GeocodingResponseDMCopyWith<$Res>
+    implements $GeocodingResponseDMCopyWith<$Res> {
+  factory _$GeocodingResponseDMCopyWith(_GeocodingResponseDM value,
+          $Res Function(_GeocodingResponseDM) _then) =
+      __$GeocodingResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
       {@JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-      required final ProxyStatusEnum status,
-      final List<GeocodingResultDM> results}) = _$GeocodingResponseDMImpl;
+      ProxyStatusEnum status,
+      List<GeocodingResultDM> results});
+}
 
-  factory _GeocodingResponseDM.fromJson(Map<String, dynamic> json) =
-      _$GeocodingResponseDMImpl.fromJson;
+/// @nodoc
+class __$GeocodingResponseDMCopyWithImpl<$Res>
+    implements _$GeocodingResponseDMCopyWith<$Res> {
+  __$GeocodingResponseDMCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown)
-  ProxyStatusEnum get status;
-  @override
-  List<GeocodingResultDM> get results;
+  final _GeocodingResponseDM _self;
+  final $Res Function(_GeocodingResponseDM) _then;
 
   /// Create a copy of GeocodingResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GeocodingResponseDMImplCopyWith<_$GeocodingResponseDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? status = null,
+    Object? results = null,
+  }) {
+    return _then(_GeocodingResponseDM(
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProxyStatusEnum,
+      results: null == results
+          ? _self._results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<GeocodingResultDM>,
+    ));
+  }
 }
+
+// dart format on

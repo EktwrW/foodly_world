@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'service_packages_vm.freezed.dart';
 
 @freezed
-class ServicePackagesVM with _$ServicePackagesVM {
+abstract class ServicePackagesVM with _$ServicePackagesVM {
   const factory ServicePackagesVM({
     String? businessUuid,
     ProfessionalProfileDM? profile,

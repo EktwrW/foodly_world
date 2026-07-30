@@ -4,5 +4,5 @@
   ],
   "editor.snippets.codeActions.enabled": true,
   "cmake.ignoreCMakeListsMissing": true,
-  "dart.flutterSdkPath": ".fvm/versions/3.38.3"
+  "dart.flutterSdkPath": ".fvm/versions/3.44.6"
 }

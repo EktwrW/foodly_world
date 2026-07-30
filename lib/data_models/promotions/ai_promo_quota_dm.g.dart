@@ -6,9 +6,9 @@ part of 'ai_promo_quota_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AiPromoQuotaResponseImpl _$$AiPromoQuotaResponseImplFromJson(
+_AiPromoQuotaResponse _$AiPromoQuotaResponseFromJson(
         Map<String, dynamic> json) =>
-    _$AiPromoQuotaResponseImpl(
+    _AiPromoQuotaResponse(
       granted: json['granted'] as bool? ?? false,
       aiPromoMonthlyLimit:
           (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 6,
@@ -18,8 +18,8 @@ _$AiPromoQuotaResponseImpl _$$AiPromoQuotaResponseImplFromJson(
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$$AiPromoQuotaResponseImplToJson(
-        _$AiPromoQuotaResponseImpl instance) =>
+Map<String, dynamic> _$AiPromoQuotaResponseToJson(
+        _AiPromoQuotaResponse instance) =>
     <String, dynamic>{
       'granted': instance.granted,
       'ai_promo_monthly_limit': instance.aiPromoMonthlyLimit,

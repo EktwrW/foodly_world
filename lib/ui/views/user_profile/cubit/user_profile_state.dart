@@ -1,7 +1,7 @@
 part of 'user_profile_cubit.dart';
 
 @freezed
-class UserProfileState with _$UserProfileState {
+sealed class UserProfileState with _$UserProfileState {
   const factory UserProfileState.initial(UserProfileVM vm) = _Initial;
   factory UserProfileState.loading(UserProfileVM vm) = _Loading;
   factory UserProfileState.updatingProfilePicture(UserProfileVM vm) = _UpdatingProfilePicture;

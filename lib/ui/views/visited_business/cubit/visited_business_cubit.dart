@@ -2,6 +2,7 @@ import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/enums/review_enums.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/network/reviews/review_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';

@@ -17,7 +17,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/visit_service_packages_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/widgets/service_booking_request_sheet.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VisitServicePackagesPage extends StatelessWidget {

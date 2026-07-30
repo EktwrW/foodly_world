@@ -1,6 +1,7 @@
 import 'dart:async' show Completer, Timer;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/nlp_search/nlp_search_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
@@ -13,8 +14,8 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 export 'package:foodly_world/ui/views/home/widgets/smart_search/view_model/smart_search_vm.dart';
 
-part 'smart_search_state.dart';
 part 'smart_search_cubit.freezed.dart';
+part 'smart_search_state.dart';
 
 class SmartSearchCubit extends Cubit<SmartSearchState> {
   final SpeechToText _speechToText;

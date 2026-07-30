@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'manage_reservations_vm.freezed.dart';
 
 @freezed
-class ManageReservationsVM with _$ManageReservationsVM {
+abstract class ManageReservationsVM with _$ManageReservationsVM {
   const factory ManageReservationsVM({
     @Default([]) List<ReservationDM> reservations,
     ReservationsMetaDM? meta,

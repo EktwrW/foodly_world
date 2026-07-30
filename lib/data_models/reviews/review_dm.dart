@@ -5,7 +5,7 @@ part 'review_dm.freezed.dart';
 part 'review_dm.g.dart';
 
 @freezed
-class ReviewsResponseDM with _$ReviewsResponseDM {
+abstract class ReviewsResponseDM with _$ReviewsResponseDM {
   const factory ReviewsResponseDM({
     @Default([]) List<ReviewDM> reviews,
     ReviewsMetaDM? meta,
@@ -15,7 +15,7 @@ class ReviewsResponseDM with _$ReviewsResponseDM {
 }
 
 @freezed
-class ReviewsMetaDM with _$ReviewsMetaDM {
+abstract class ReviewsMetaDM with _$ReviewsMetaDM {
   const factory ReviewsMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -29,7 +29,7 @@ class ReviewsMetaDM with _$ReviewsMetaDM {
 }
 
 @freezed
-class ReviewCheckResponseDM with _$ReviewCheckResponseDM {
+abstract class ReviewCheckResponseDM with _$ReviewCheckResponseDM {
   const factory ReviewCheckResponseDM({
     @JsonKey(name: 'has_reviewed') @Default(false) bool hasReviewed,
     ReviewDM? review,
@@ -39,7 +39,7 @@ class ReviewCheckResponseDM with _$ReviewCheckResponseDM {
 }
 
 @freezed
-class ReviewCreateResponseDM with _$ReviewCreateResponseDM {
+abstract class ReviewCreateResponseDM with _$ReviewCreateResponseDM {
   const factory ReviewCreateResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -50,7 +50,7 @@ class ReviewCreateResponseDM with _$ReviewCreateResponseDM {
 }
 
 @freezed
-class ReviewUpdateResponseDM with _$ReviewUpdateResponseDM {
+abstract class ReviewUpdateResponseDM with _$ReviewUpdateResponseDM {
   const factory ReviewUpdateResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -61,7 +61,7 @@ class ReviewUpdateResponseDM with _$ReviewUpdateResponseDM {
 }
 
 @freezed
-class ReviewPhotoDM with _$ReviewPhotoDM {
+abstract class ReviewPhotoDM with _$ReviewPhotoDM {
   const factory ReviewPhotoDM({
     @JsonKey(name: 'photo_uuid') String? photoUuid,
     @JsonKey(name: 'photo_url') String? photoUrl,
@@ -71,7 +71,7 @@ class ReviewPhotoDM with _$ReviewPhotoDM {
 }
 
 @freezed
-class ReviewDM with _$ReviewDM {
+abstract class ReviewDM with _$ReviewDM {
   const ReviewDM._();
 
   const factory ReviewDM({

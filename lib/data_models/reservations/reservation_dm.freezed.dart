@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,36 +9,51 @@ part of 'reservation_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ReservationsResponseDM _$ReservationsResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ReservationsResponseDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ReservationsResponseDM {
-  List<ReservationDM> get reservations => throw _privateConstructorUsedError;
-  ReservationsMetaDM? get meta => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationsResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<ReservationDM> get reservations;
+  ReservationsMetaDM? get meta;
 
   /// Create a copy of ReservationsResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ReservationsResponseDMCopyWith<ReservationsResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ReservationsResponseDMCopyWithImpl<ReservationsResponseDM>(
+          this as ReservationsResponseDM, _$identity);
+
+  /// Serializes this ReservationsResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationsResponseDM &&
+            const DeepCollectionEquality()
+                .equals(other.reservations, reservations) &&
+            (identical(other.meta, meta) || other.meta == meta));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(reservations), meta);
+
+  @override
+  String toString() {
+    return 'ReservationsResponseDM(reservations: $reservations, meta: $meta)';
+  }
 }
 
 /// @nodoc
-abstract class $ReservationsResponseDMCopyWith<$Res> {
+abstract mixin class $ReservationsResponseDMCopyWith<$Res> {
   factory $ReservationsResponseDMCopyWith(ReservationsResponseDM value,
-          $Res Function(ReservationsResponseDM) then) =
-      _$ReservationsResponseDMCopyWithImpl<$Res, ReservationsResponseDM>;
+          $Res Function(ReservationsResponseDM) _then) =
+      _$ReservationsResponseDMCopyWithImpl;
   @useResult
   $Res call({List<ReservationDM> reservations, ReservationsMetaDM? meta});
 
@@ -46,15 +61,12 @@ abstract class $ReservationsResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationsResponseDMCopyWithImpl<$Res,
-        $Val extends ReservationsResponseDM>
+class _$ReservationsResponseDMCopyWithImpl<$Res>
     implements $ReservationsResponseDMCopyWith<$Res> {
-  _$ReservationsResponseDMCopyWithImpl(this._value, this._then);
+  _$ReservationsResponseDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ReservationsResponseDM _self;
+  final $Res Function(ReservationsResponseDM) _then;
 
   /// Create a copy of ReservationsResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -64,16 +76,16 @@ class _$ReservationsResponseDMCopyWithImpl<$Res,
     Object? reservations = null,
     Object? meta = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       reservations: null == reservations
-          ? _value.reservations
+          ? _self.reservations
           : reservations // ignore: cast_nullable_to_non_nullable
               as List<ReservationDM>,
       meta: freezed == meta
-          ? _value.meta
+          ? _self.meta
           : meta // ignore: cast_nullable_to_non_nullable
               as ReservationsMetaDM?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ReservationsResponseDM
@@ -81,71 +93,186 @@ class _$ReservationsResponseDMCopyWithImpl<$Res,
   @override
   @pragma('vm:prefer-inline')
   $ReservationsMetaDMCopyWith<$Res>? get meta {
-    if (_value.meta == null) {
+    if (_self.meta == null) {
       return null;
     }
 
-    return $ReservationsMetaDMCopyWith<$Res>(_value.meta!, (value) {
-      return _then(_value.copyWith(meta: value) as $Val);
+    return $ReservationsMetaDMCopyWith<$Res>(_self.meta!, (value) {
+      return _then(_self.copyWith(meta: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$ReservationsResponseDMImplCopyWith<$Res>
-    implements $ReservationsResponseDMCopyWith<$Res> {
-  factory _$$ReservationsResponseDMImplCopyWith(
-          _$ReservationsResponseDMImpl value,
-          $Res Function(_$ReservationsResponseDMImpl) then) =
-      __$$ReservationsResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<ReservationDM> reservations, ReservationsMetaDM? meta});
+/// Adds pattern-matching-related methods to [ReservationsResponseDM].
+extension ReservationsResponseDMPatterns on ReservationsResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ReservationsMetaDMCopyWith<$Res>? get meta;
-}
-
-/// @nodoc
-class __$$ReservationsResponseDMImplCopyWithImpl<$Res>
-    extends _$ReservationsResponseDMCopyWithImpl<$Res,
-        _$ReservationsResponseDMImpl>
-    implements _$$ReservationsResponseDMImplCopyWith<$Res> {
-  __$$ReservationsResponseDMImplCopyWithImpl(
-      _$ReservationsResponseDMImpl _value,
-      $Res Function(_$ReservationsResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ReservationsResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? reservations = null,
-    Object? meta = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationsResponseDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$ReservationsResponseDMImpl(
-      reservations: null == reservations
-          ? _value._reservations
-          : reservations // ignore: cast_nullable_to_non_nullable
-              as List<ReservationDM>,
-      meta: freezed == meta
-          ? _value.meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as ReservationsMetaDM?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationsResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationsResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<ReservationDM> reservations, ReservationsMetaDM? meta)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM() when $default != null:
+        return $default(_that.reservations, _that.meta);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<ReservationDM> reservations, ReservationsMetaDM? meta)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM():
+        return $default(_that.reservations, _that.meta);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<ReservationDM> reservations, ReservationsMetaDM? meta)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsResponseDM() when $default != null:
+        return $default(_that.reservations, _that.meta);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ReservationsResponseDMImpl implements _ReservationsResponseDM {
-  const _$ReservationsResponseDMImpl(
+class _ReservationsResponseDM implements ReservationsResponseDM {
+  const _ReservationsResponseDM(
       {final List<ReservationDM> reservations = const [], this.meta})
       : _reservations = reservations;
-
-  factory _$ReservationsResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ReservationsResponseDMImplFromJson(json);
+  factory _ReservationsResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationsResponseDMFromJson(json);
 
   final List<ReservationDM> _reservations;
   @override
@@ -159,16 +286,27 @@ class _$ReservationsResponseDMImpl implements _ReservationsResponseDM {
   @override
   final ReservationsMetaDM? meta;
 
+  /// Create a copy of ReservationsResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ReservationsResponseDM(reservations: $reservations, meta: $meta)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationsResponseDMCopyWith<_ReservationsResponseDM> get copyWith =>
+      __$ReservationsResponseDMCopyWithImpl<_ReservationsResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReservationsResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReservationsResponseDMImpl &&
+            other is _ReservationsResponseDM &&
             const DeepCollectionEquality()
                 .equals(other._reservations, _reservations) &&
             (identical(other.meta, meta) || other.meta == meta));
@@ -179,129 +317,119 @@ class _$ReservationsResponseDMImpl implements _ReservationsResponseDM {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_reservations), meta);
 
-  /// Create a copy of ReservationsResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationsResponseDMImplCopyWith<_$ReservationsResponseDMImpl>
-      get copyWith => __$$ReservationsResponseDMImplCopyWithImpl<
-          _$ReservationsResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationsResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ReservationsResponseDM(reservations: $reservations, meta: $meta)';
   }
 }
 
-abstract class _ReservationsResponseDM implements ReservationsResponseDM {
-  const factory _ReservationsResponseDM(
-      {final List<ReservationDM> reservations,
-      final ReservationsMetaDM? meta}) = _$ReservationsResponseDMImpl;
-
-  factory _ReservationsResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationsResponseDMImpl.fromJson;
+/// @nodoc
+abstract mixin class _$ReservationsResponseDMCopyWith<$Res>
+    implements $ReservationsResponseDMCopyWith<$Res> {
+  factory _$ReservationsResponseDMCopyWith(_ReservationsResponseDM value,
+          $Res Function(_ReservationsResponseDM) _then) =
+      __$ReservationsResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({List<ReservationDM> reservations, ReservationsMetaDM? meta});
 
   @override
-  List<ReservationDM> get reservations;
-  @override
-  ReservationsMetaDM? get meta;
+  $ReservationsMetaDMCopyWith<$Res>? get meta;
+}
+
+/// @nodoc
+class __$ReservationsResponseDMCopyWithImpl<$Res>
+    implements _$ReservationsResponseDMCopyWith<$Res> {
+  __$ReservationsResponseDMCopyWithImpl(this._self, this._then);
+
+  final _ReservationsResponseDM _self;
+  final $Res Function(_ReservationsResponseDM) _then;
 
   /// Create a copy of ReservationsResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationsResponseDMImplCopyWith<_$ReservationsResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? reservations = null,
+    Object? meta = freezed,
+  }) {
+    return _then(_ReservationsResponseDM(
+      reservations: null == reservations
+          ? _self._reservations
+          : reservations // ignore: cast_nullable_to_non_nullable
+              as List<ReservationDM>,
+      meta: freezed == meta
+          ? _self.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as ReservationsMetaDM?,
+    ));
+  }
 
-ReservationsMetaDM _$ReservationsMetaDMFromJson(Map<String, dynamic> json) {
-  return _ReservationsMetaDM.fromJson(json);
+  /// Create a copy of ReservationsResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReservationsMetaDMCopyWith<$Res>? get meta {
+    if (_self.meta == null) {
+      return null;
+    }
+
+    return $ReservationsMetaDMCopyWith<$Res>(_self.meta!, (value) {
+      return _then(_self.copyWith(meta: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$ReservationsMetaDM {
   @JsonKey(name: 'current_page')
-  int get currentPage => throw _privateConstructorUsedError;
+  int get currentPage;
   @JsonKey(name: 'last_page')
-  int get lastPage => throw _privateConstructorUsedError;
+  int get lastPage;
   @JsonKey(name: 'per_page')
-  int get perPage => throw _privateConstructorUsedError;
-  int get total => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationsMetaDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get perPage;
+  int get total;
 
   /// Create a copy of ReservationsMetaDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReservationsMetaDMCopyWith<ReservationsMetaDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ReservationsMetaDMCopyWith<$Res> {
-  factory $ReservationsMetaDMCopyWith(
-          ReservationsMetaDM value, $Res Function(ReservationsMetaDM) then) =
-      _$ReservationsMetaDMCopyWithImpl<$Res, ReservationsMetaDM>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'current_page') int currentPage,
-      @JsonKey(name: 'last_page') int lastPage,
-      @JsonKey(name: 'per_page') int perPage,
-      int total});
-}
-
-/// @nodoc
-class _$ReservationsMetaDMCopyWithImpl<$Res, $Val extends ReservationsMetaDM>
-    implements $ReservationsMetaDMCopyWith<$Res> {
-  _$ReservationsMetaDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ReservationsMetaDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ReservationsMetaDMCopyWith<ReservationsMetaDM> get copyWith =>
+      _$ReservationsMetaDMCopyWithImpl<ReservationsMetaDM>(
+          this as ReservationsMetaDM, _$identity);
+
+  /// Serializes this ReservationsMetaDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? currentPage = null,
-    Object? lastPage = null,
-    Object? perPage = null,
-    Object? total = null,
-  }) {
-    return _then(_value.copyWith(
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastPage: null == lastPage
-          ? _value.lastPage
-          : lastPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      perPage: null == perPage
-          ? _value.perPage
-          : perPage // ignore: cast_nullable_to_non_nullable
-              as int,
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationsMetaDM &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
+            (identical(other.perPage, perPage) || other.perPage == perPage) &&
+            (identical(other.total, total) || other.total == total));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, currentPage, lastPage, perPage, total);
+
+  @override
+  String toString() {
+    return 'ReservationsMetaDM(currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total)';
   }
 }
 
 /// @nodoc
-abstract class _$$ReservationsMetaDMImplCopyWith<$Res>
-    implements $ReservationsMetaDMCopyWith<$Res> {
-  factory _$$ReservationsMetaDMImplCopyWith(_$ReservationsMetaDMImpl value,
-          $Res Function(_$ReservationsMetaDMImpl) then) =
-      __$$ReservationsMetaDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ReservationsMetaDMCopyWith<$Res> {
+  factory $ReservationsMetaDMCopyWith(
+          ReservationsMetaDM value, $Res Function(ReservationsMetaDM) _then) =
+      _$ReservationsMetaDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'current_page') int currentPage,
@@ -311,12 +439,12 @@ abstract class _$$ReservationsMetaDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ReservationsMetaDMImplCopyWithImpl<$Res>
-    extends _$ReservationsMetaDMCopyWithImpl<$Res, _$ReservationsMetaDMImpl>
-    implements _$$ReservationsMetaDMImplCopyWith<$Res> {
-  __$$ReservationsMetaDMImplCopyWithImpl(_$ReservationsMetaDMImpl _value,
-      $Res Function(_$ReservationsMetaDMImpl) _then)
-      : super(_value, _then);
+class _$ReservationsMetaDMCopyWithImpl<$Res>
+    implements $ReservationsMetaDMCopyWith<$Res> {
+  _$ReservationsMetaDMCopyWithImpl(this._self, this._then);
+
+  final ReservationsMetaDM _self;
+  final $Res Function(ReservationsMetaDM) _then;
 
   /// Create a copy of ReservationsMetaDM
   /// with the given fields replaced by the non-null parameter values.
@@ -328,38 +456,212 @@ class __$$ReservationsMetaDMImplCopyWithImpl<$Res>
     Object? perPage = null,
     Object? total = null,
   }) {
-    return _then(_$ReservationsMetaDMImpl(
+    return _then(_self.copyWith(
       currentPage: null == currentPage
-          ? _value.currentPage
+          ? _self.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
       lastPage: null == lastPage
-          ? _value.lastPage
+          ? _self.lastPage
           : lastPage // ignore: cast_nullable_to_non_nullable
               as int,
       perPage: null == perPage
-          ? _value.perPage
+          ? _self.perPage
           : perPage // ignore: cast_nullable_to_non_nullable
               as int,
       total: null == total
-          ? _value.total
+          ? _self.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ReservationsMetaDM].
+extension ReservationsMetaDMPatterns on ReservationsMetaDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationsMetaDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationsMetaDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationsMetaDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'current_page') int currentPage,
+            @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage,
+            int total)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM() when $default != null:
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'current_page') int currentPage,
+            @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage,
+            int total)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM():
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'current_page') int currentPage,
+            @JsonKey(name: 'last_page') int lastPage,
+            @JsonKey(name: 'per_page') int perPage,
+            int total)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationsMetaDM() when $default != null:
+        return $default(
+            _that.currentPage, _that.lastPage, _that.perPage, _that.total);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$ReservationsMetaDMImpl implements _ReservationsMetaDM {
-  const _$ReservationsMetaDMImpl(
+class _ReservationsMetaDM implements ReservationsMetaDM {
+  const _ReservationsMetaDM(
       {@JsonKey(name: 'current_page') this.currentPage = 1,
       @JsonKey(name: 'last_page') this.lastPage = 1,
       @JsonKey(name: 'per_page') this.perPage = 20,
       this.total = 0});
-
-  factory _$ReservationsMetaDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ReservationsMetaDMImplFromJson(json);
+  factory _ReservationsMetaDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationsMetaDMFromJson(json);
 
   @override
   @JsonKey(name: 'current_page')
@@ -374,16 +676,26 @@ class _$ReservationsMetaDMImpl implements _ReservationsMetaDM {
   @JsonKey()
   final int total;
 
+  /// Create a copy of ReservationsMetaDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ReservationsMetaDM(currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationsMetaDMCopyWith<_ReservationsMetaDM> get copyWith =>
+      __$ReservationsMetaDMCopyWithImpl<_ReservationsMetaDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReservationsMetaDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReservationsMetaDMImpl &&
+            other is _ReservationsMetaDM &&
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             (identical(other.lastPage, lastPage) ||
@@ -397,299 +709,111 @@ class _$ReservationsMetaDMImpl implements _ReservationsMetaDM {
   int get hashCode =>
       Object.hash(runtimeType, currentPage, lastPage, perPage, total);
 
-  /// Create a copy of ReservationsMetaDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationsMetaDMImplCopyWith<_$ReservationsMetaDMImpl> get copyWith =>
-      __$$ReservationsMetaDMImplCopyWithImpl<_$ReservationsMetaDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationsMetaDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ReservationsMetaDM(currentPage: $currentPage, lastPage: $lastPage, perPage: $perPage, total: $total)';
   }
 }
 
-abstract class _ReservationsMetaDM implements ReservationsMetaDM {
-  const factory _ReservationsMetaDM(
-      {@JsonKey(name: 'current_page') final int currentPage,
-      @JsonKey(name: 'last_page') final int lastPage,
-      @JsonKey(name: 'per_page') final int perPage,
-      final int total}) = _$ReservationsMetaDMImpl;
+/// @nodoc
+abstract mixin class _$ReservationsMetaDMCopyWith<$Res>
+    implements $ReservationsMetaDMCopyWith<$Res> {
+  factory _$ReservationsMetaDMCopyWith(
+          _ReservationsMetaDM value, $Res Function(_ReservationsMetaDM) _then) =
+      __$ReservationsMetaDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'current_page') int currentPage,
+      @JsonKey(name: 'last_page') int lastPage,
+      @JsonKey(name: 'per_page') int perPage,
+      int total});
+}
 
-  factory _ReservationsMetaDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationsMetaDMImpl.fromJson;
+/// @nodoc
+class __$ReservationsMetaDMCopyWithImpl<$Res>
+    implements _$ReservationsMetaDMCopyWith<$Res> {
+  __$ReservationsMetaDMCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'current_page')
-  int get currentPage;
-  @override
-  @JsonKey(name: 'last_page')
-  int get lastPage;
-  @override
-  @JsonKey(name: 'per_page')
-  int get perPage;
-  @override
-  int get total;
+  final _ReservationsMetaDM _self;
+  final $Res Function(_ReservationsMetaDM) _then;
 
   /// Create a copy of ReservationsMetaDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationsMetaDMImplCopyWith<_$ReservationsMetaDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ReservationCreateResponseDM _$ReservationCreateResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ReservationCreateResponseDM.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ReservationCreateResponseDM {
-  bool get success => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  ReservationDM? get reservation => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationCreateResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReservationCreateResponseDMCopyWith<ReservationCreateResponseDM>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ReservationCreateResponseDMCopyWith<$Res> {
-  factory $ReservationCreateResponseDMCopyWith(
-          ReservationCreateResponseDM value,
-          $Res Function(ReservationCreateResponseDM) then) =
-      _$ReservationCreateResponseDMCopyWithImpl<$Res,
-          ReservationCreateResponseDM>;
-  @useResult
-  $Res call({bool success, String message, ReservationDM? reservation});
-
-  $ReservationDMCopyWith<$Res>? get reservation;
-}
-
-/// @nodoc
-class _$ReservationCreateResponseDMCopyWithImpl<$Res,
-        $Val extends ReservationCreateResponseDM>
-    implements $ReservationCreateResponseDMCopyWith<$Res> {
-  _$ReservationCreateResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? success = null,
-    Object? message = null,
-    Object? reservation = freezed,
+    Object? currentPage = null,
+    Object? lastPage = null,
+    Object? perPage = null,
+    Object? total = null,
   }) {
-    return _then(_value.copyWith(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      reservation: freezed == reservation
-          ? _value.reservation
-          : reservation // ignore: cast_nullable_to_non_nullable
-              as ReservationDM?,
-    ) as $Val);
-  }
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ReservationDMCopyWith<$Res>? get reservation {
-    if (_value.reservation == null) {
-      return null;
-    }
-
-    return $ReservationDMCopyWith<$Res>(_value.reservation!, (value) {
-      return _then(_value.copyWith(reservation: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$ReservationCreateResponseDMImplCopyWith<$Res>
-    implements $ReservationCreateResponseDMCopyWith<$Res> {
-  factory _$$ReservationCreateResponseDMImplCopyWith(
-          _$ReservationCreateResponseDMImpl value,
-          $Res Function(_$ReservationCreateResponseDMImpl) then) =
-      __$$ReservationCreateResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool success, String message, ReservationDM? reservation});
-
-  @override
-  $ReservationDMCopyWith<$Res>? get reservation;
-}
-
-/// @nodoc
-class __$$ReservationCreateResponseDMImplCopyWithImpl<$Res>
-    extends _$ReservationCreateResponseDMCopyWithImpl<$Res,
-        _$ReservationCreateResponseDMImpl>
-    implements _$$ReservationCreateResponseDMImplCopyWith<$Res> {
-  __$$ReservationCreateResponseDMImplCopyWithImpl(
-      _$ReservationCreateResponseDMImpl _value,
-      $Res Function(_$ReservationCreateResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? success = null,
-    Object? message = null,
-    Object? reservation = freezed,
-  }) {
-    return _then(_$ReservationCreateResponseDMImpl(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      reservation: freezed == reservation
-          ? _value.reservation
-          : reservation // ignore: cast_nullable_to_non_nullable
-              as ReservationDM?,
+    return _then(_ReservationsMetaDM(
+      currentPage: null == currentPage
+          ? _self.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _self.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      perPage: null == perPage
+          ? _self.perPage
+          : perPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      total: null == total
+          ? _self.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$ReservationCreateResponseDMImpl
-    implements _ReservationCreateResponseDM {
-  const _$ReservationCreateResponseDMImpl(
-      {this.success = false, this.message = '', this.reservation});
+mixin _$ReservationCreateResponseDM {
+  bool get success;
+  String get message;
+  ReservationDM? get reservation;
 
-  factory _$ReservationCreateResponseDMImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$ReservationCreateResponseDMImplFromJson(json);
+  /// Create a copy of ReservationCreateResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ReservationCreateResponseDMCopyWith<ReservationCreateResponseDM>
+      get copyWith => _$ReservationCreateResponseDMCopyWithImpl<
+              ReservationCreateResponseDM>(
+          this as ReservationCreateResponseDM, _$identity);
+
+  /// Serializes this ReservationCreateResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
-  @JsonKey()
-  final bool success;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationCreateResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.reservation, reservation) ||
+                other.reservation == reservation));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @JsonKey()
-  final String message;
-  @override
-  final ReservationDM? reservation;
+  int get hashCode => Object.hash(runtimeType, success, message, reservation);
 
   @override
   String toString() {
     return 'ReservationCreateResponseDM(success: $success, message: $message, reservation: $reservation)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReservationCreateResponseDMImpl &&
-            (identical(other.success, success) || other.success == success) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, success, message, reservation);
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationCreateResponseDMImplCopyWith<_$ReservationCreateResponseDMImpl>
-      get copyWith => __$$ReservationCreateResponseDMImplCopyWithImpl<
-          _$ReservationCreateResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationCreateResponseDMImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ReservationCreateResponseDM
-    implements ReservationCreateResponseDM {
-  const factory _ReservationCreateResponseDM(
-      {final bool success,
-      final String message,
-      final ReservationDM? reservation}) = _$ReservationCreateResponseDMImpl;
-
-  factory _ReservationCreateResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationCreateResponseDMImpl.fromJson;
-
-  @override
-  bool get success;
-  @override
-  String get message;
-  @override
-  ReservationDM? get reservation;
-
-  /// Create a copy of ReservationCreateResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationCreateResponseDMImplCopyWith<_$ReservationCreateResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-ReservationActionResponseDM _$ReservationActionResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ReservationActionResponseDM.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ReservationActionResponseDM {
-  bool get success => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  ReservationDM? get reservation => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationActionResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ReservationActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReservationActionResponseDMCopyWith<ReservationActionResponseDM>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ReservationActionResponseDMCopyWith<$Res> {
-  factory $ReservationActionResponseDMCopyWith(
-          ReservationActionResponseDM value,
-          $Res Function(ReservationActionResponseDM) then) =
-      _$ReservationActionResponseDMCopyWithImpl<$Res,
-          ReservationActionResponseDM>;
+abstract mixin class $ReservationCreateResponseDMCopyWith<$Res> {
+  factory $ReservationCreateResponseDMCopyWith(
+          ReservationCreateResponseDM value,
+          $Res Function(ReservationCreateResponseDM) _then) =
+      _$ReservationCreateResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, ReservationDM? reservation});
 
@@ -697,17 +821,14 @@ abstract class $ReservationActionResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReservationActionResponseDMCopyWithImpl<$Res,
-        $Val extends ReservationActionResponseDM>
-    implements $ReservationActionResponseDMCopyWith<$Res> {
-  _$ReservationActionResponseDMCopyWithImpl(this._value, this._then);
+class _$ReservationCreateResponseDMCopyWithImpl<$Res>
+    implements $ReservationCreateResponseDMCopyWith<$Res> {
+  _$ReservationCreateResponseDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ReservationCreateResponseDM _self;
+  final $Res Function(ReservationCreateResponseDM) _then;
 
-  /// Create a copy of ReservationActionResponseDM
+  /// Create a copy of ReservationCreateResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -716,98 +837,204 @@ class _$ReservationActionResponseDMCopyWithImpl<$Res,
     Object? message = null,
     Object? reservation = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       success: null == success
-          ? _value.success
+          ? _self.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       reservation: freezed == reservation
-          ? _value.reservation
+          ? _self.reservation
           : reservation // ignore: cast_nullable_to_non_nullable
               as ReservationDM?,
-    ) as $Val);
+    ));
   }
 
-  /// Create a copy of ReservationActionResponseDM
+  /// Create a copy of ReservationCreateResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ReservationDMCopyWith<$Res>? get reservation {
-    if (_value.reservation == null) {
+    if (_self.reservation == null) {
       return null;
     }
 
-    return $ReservationDMCopyWith<$Res>(_value.reservation!, (value) {
-      return _then(_value.copyWith(reservation: value) as $Val);
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$ReservationActionResponseDMImplCopyWith<$Res>
-    implements $ReservationActionResponseDMCopyWith<$Res> {
-  factory _$$ReservationActionResponseDMImplCopyWith(
-          _$ReservationActionResponseDMImpl value,
-          $Res Function(_$ReservationActionResponseDMImpl) then) =
-      __$$ReservationActionResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool success, String message, ReservationDM? reservation});
+/// Adds pattern-matching-related methods to [ReservationCreateResponseDM].
+extension ReservationCreateResponseDMPatterns on ReservationCreateResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ReservationDMCopyWith<$Res>? get reservation;
-}
-
-/// @nodoc
-class __$$ReservationActionResponseDMImplCopyWithImpl<$Res>
-    extends _$ReservationActionResponseDMCopyWithImpl<$Res,
-        _$ReservationActionResponseDMImpl>
-    implements _$$ReservationActionResponseDMImplCopyWith<$Res> {
-  __$$ReservationActionResponseDMImplCopyWithImpl(
-      _$ReservationActionResponseDMImpl _value,
-      $Res Function(_$ReservationActionResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ReservationActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? success = null,
-    Object? message = null,
-    Object? reservation = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationCreateResponseDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$ReservationActionResponseDMImpl(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      reservation: freezed == reservation
-          ? _value.reservation
-          : reservation // ignore: cast_nullable_to_non_nullable
-              as ReservationDM?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationCreateResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationCreateResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool success, String message, ReservationDM? reservation)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool success, String message, ReservationDM? reservation)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM():
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool success, String message, ReservationDM? reservation)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationCreateResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ReservationActionResponseDMImpl
-    implements _ReservationActionResponseDM {
-  const _$ReservationActionResponseDMImpl(
+class _ReservationCreateResponseDM implements ReservationCreateResponseDM {
+  const _ReservationCreateResponseDM(
       {this.success = false, this.message = '', this.reservation});
-
-  factory _$ReservationActionResponseDMImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$ReservationActionResponseDMImplFromJson(json);
+  factory _ReservationCreateResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationCreateResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -818,16 +1045,27 @@ class _$ReservationActionResponseDMImpl
   @override
   final ReservationDM? reservation;
 
+  /// Create a copy of ReservationCreateResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ReservationActionResponseDM(success: $success, message: $message, reservation: $reservation)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationCreateResponseDMCopyWith<_ReservationCreateResponseDM>
+      get copyWith => __$ReservationCreateResponseDMCopyWithImpl<
+          _ReservationCreateResponseDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReservationCreateResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReservationActionResponseDMImpl &&
+            other is _ReservationCreateResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.reservation, reservation) ||
@@ -838,181 +1076,471 @@ class _$ReservationActionResponseDMImpl
   @override
   int get hashCode => Object.hash(runtimeType, success, message, reservation);
 
-  /// Create a copy of ReservationActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationActionResponseDMImplCopyWith<_$ReservationActionResponseDMImpl>
-      get copyWith => __$$ReservationActionResponseDMImplCopyWithImpl<
-          _$ReservationActionResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationActionResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ReservationCreateResponseDM(success: $success, message: $message, reservation: $reservation)';
   }
 }
 
-abstract class _ReservationActionResponseDM
-    implements ReservationActionResponseDM {
-  const factory _ReservationActionResponseDM(
-      {final bool success,
-      final String message,
-      final ReservationDM? reservation}) = _$ReservationActionResponseDMImpl;
-
-  factory _ReservationActionResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationActionResponseDMImpl.fromJson;
-
-  @override
-  bool get success;
-  @override
-  String get message;
-  @override
-  ReservationDM? get reservation;
-
-  /// Create a copy of ReservationActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationActionResponseDMImplCopyWith<_$ReservationActionResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-ReservationShowResponseDM _$ReservationShowResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ReservationShowResponseDM.fromJson(json);
-}
-
 /// @nodoc
-mixin _$ReservationShowResponseDM {
-  ReservationDM? get reservation => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationShowResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ReservationShowResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReservationShowResponseDMCopyWith<ReservationShowResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ReservationShowResponseDMCopyWith<$Res> {
-  factory $ReservationShowResponseDMCopyWith(ReservationShowResponseDM value,
-          $Res Function(ReservationShowResponseDM) then) =
-      _$ReservationShowResponseDMCopyWithImpl<$Res, ReservationShowResponseDM>;
+abstract mixin class _$ReservationCreateResponseDMCopyWith<$Res>
+    implements $ReservationCreateResponseDMCopyWith<$Res> {
+  factory _$ReservationCreateResponseDMCopyWith(
+          _ReservationCreateResponseDM value,
+          $Res Function(_ReservationCreateResponseDM) _then) =
+      __$ReservationCreateResponseDMCopyWithImpl;
+  @override
   @useResult
-  $Res call({ReservationDM? reservation});
+  $Res call({bool success, String message, ReservationDM? reservation});
 
+  @override
   $ReservationDMCopyWith<$Res>? get reservation;
 }
 
 /// @nodoc
-class _$ReservationShowResponseDMCopyWithImpl<$Res,
-        $Val extends ReservationShowResponseDM>
-    implements $ReservationShowResponseDMCopyWith<$Res> {
-  _$ReservationShowResponseDMCopyWithImpl(this._value, this._then);
+class __$ReservationCreateResponseDMCopyWithImpl<$Res>
+    implements _$ReservationCreateResponseDMCopyWith<$Res> {
+  __$ReservationCreateResponseDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final _ReservationCreateResponseDM _self;
+  final $Res Function(_ReservationCreateResponseDM) _then;
 
-  /// Create a copy of ReservationShowResponseDM
+  /// Create a copy of ReservationCreateResponseDM
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
+    Object? success = null,
+    Object? message = null,
     Object? reservation = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_ReservationCreateResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
       reservation: freezed == reservation
-          ? _value.reservation
+          ? _self.reservation
           : reservation // ignore: cast_nullable_to_non_nullable
               as ReservationDM?,
-    ) as $Val);
+    ));
   }
 
-  /// Create a copy of ReservationShowResponseDM
+  /// Create a copy of ReservationCreateResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $ReservationDMCopyWith<$Res>? get reservation {
-    if (_value.reservation == null) {
+    if (_self.reservation == null) {
       return null;
     }
 
-    return $ReservationDMCopyWith<$Res>(_value.reservation!, (value) {
-      return _then(_value.copyWith(reservation: value) as $Val);
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$ReservationShowResponseDMImplCopyWith<$Res>
-    implements $ReservationShowResponseDMCopyWith<$Res> {
-  factory _$$ReservationShowResponseDMImplCopyWith(
-          _$ReservationShowResponseDMImpl value,
-          $Res Function(_$ReservationShowResponseDMImpl) then) =
-      __$$ReservationShowResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ReservationDM? reservation});
+mixin _$ReservationActionResponseDM {
+  bool get success;
+  String get message;
+  ReservationDM? get reservation;
+
+  /// Create a copy of ReservationActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ReservationActionResponseDMCopyWith<ReservationActionResponseDM>
+      get copyWith => _$ReservationActionResponseDMCopyWithImpl<
+              ReservationActionResponseDM>(
+          this as ReservationActionResponseDM, _$identity);
+
+  /// Serializes this ReservationActionResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationActionResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.reservation, reservation) ||
+                other.reservation == reservation));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, message, reservation);
+
+  @override
+  String toString() {
+    return 'ReservationActionResponseDM(success: $success, message: $message, reservation: $reservation)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ReservationActionResponseDMCopyWith<$Res> {
+  factory $ReservationActionResponseDMCopyWith(
+          ReservationActionResponseDM value,
+          $Res Function(ReservationActionResponseDM) _then) =
+      _$ReservationActionResponseDMCopyWithImpl;
+  @useResult
+  $Res call({bool success, String message, ReservationDM? reservation});
+
   $ReservationDMCopyWith<$Res>? get reservation;
 }
 
 /// @nodoc
-class __$$ReservationShowResponseDMImplCopyWithImpl<$Res>
-    extends _$ReservationShowResponseDMCopyWithImpl<$Res,
-        _$ReservationShowResponseDMImpl>
-    implements _$$ReservationShowResponseDMImplCopyWith<$Res> {
-  __$$ReservationShowResponseDMImplCopyWithImpl(
-      _$ReservationShowResponseDMImpl _value,
-      $Res Function(_$ReservationShowResponseDMImpl) _then)
-      : super(_value, _then);
+class _$ReservationActionResponseDMCopyWithImpl<$Res>
+    implements $ReservationActionResponseDMCopyWith<$Res> {
+  _$ReservationActionResponseDMCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of ReservationShowResponseDM
+  final ReservationActionResponseDM _self;
+  final $Res Function(ReservationActionResponseDM) _then;
+
+  /// Create a copy of ReservationActionResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? success = null,
+    Object? message = null,
     Object? reservation = freezed,
   }) {
-    return _then(_$ReservationShowResponseDMImpl(
+    return _then(_self.copyWith(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
       reservation: freezed == reservation
-          ? _value.reservation
+          ? _self.reservation
           : reservation // ignore: cast_nullable_to_non_nullable
               as ReservationDM?,
     ));
+  }
+
+  /// Create a copy of ReservationActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReservationDMCopyWith<$Res>? get reservation {
+    if (_self.reservation == null) {
+      return null;
+    }
+
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [ReservationActionResponseDM].
+extension ReservationActionResponseDMPatterns on ReservationActionResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationActionResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationActionResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationActionResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool success, String message, ReservationDM? reservation)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool success, String message, ReservationDM? reservation)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM():
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool success, String message, ReservationDM? reservation)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationActionResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.reservation);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ReservationShowResponseDMImpl implements _ReservationShowResponseDM {
-  const _$ReservationShowResponseDMImpl({this.reservation});
+class _ReservationActionResponseDM implements ReservationActionResponseDM {
+  const _ReservationActionResponseDM(
+      {this.success = false, this.message = '', this.reservation});
+  factory _ReservationActionResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationActionResponseDMFromJson(json);
 
-  factory _$ReservationShowResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ReservationShowResponseDMImplFromJson(json);
-
+  @override
+  @JsonKey()
+  final bool success;
+  @override
+  @JsonKey()
+  final String message;
   @override
   final ReservationDM? reservation;
 
+  /// Create a copy of ReservationActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ReservationShowResponseDM(reservation: $reservation)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationActionResponseDMCopyWith<_ReservationActionResponseDM>
+      get copyWith => __$ReservationActionResponseDMCopyWithImpl<
+          _ReservationActionResponseDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReservationActionResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReservationShowResponseDMImpl &&
+            other is _ReservationActionResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.reservation, reservation) ||
+                other.reservation == reservation));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, message, reservation);
+
+  @override
+  String toString() {
+    return 'ReservationActionResponseDM(success: $success, message: $message, reservation: $reservation)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ReservationActionResponseDMCopyWith<$Res>
+    implements $ReservationActionResponseDMCopyWith<$Res> {
+  factory _$ReservationActionResponseDMCopyWith(
+          _ReservationActionResponseDM value,
+          $Res Function(_ReservationActionResponseDM) _then) =
+      __$ReservationActionResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool success, String message, ReservationDM? reservation});
+
+  @override
+  $ReservationDMCopyWith<$Res>? get reservation;
+}
+
+/// @nodoc
+class __$ReservationActionResponseDMCopyWithImpl<$Res>
+    implements _$ReservationActionResponseDMCopyWith<$Res> {
+  __$ReservationActionResponseDMCopyWithImpl(this._self, this._then);
+
+  final _ReservationActionResponseDM _self;
+  final $Res Function(_ReservationActionResponseDM) _then;
+
+  /// Create a copy of ReservationActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? message = null,
+    Object? reservation = freezed,
+  }) {
+    return _then(_ReservationActionResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      reservation: freezed == reservation
+          ? _self.reservation
+          : reservation // ignore: cast_nullable_to_non_nullable
+              as ReservationDM?,
+    ));
+  }
+
+  /// Create a copy of ReservationActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReservationDMCopyWith<$Res>? get reservation {
+    if (_self.reservation == null) {
+      return null;
+    }
+
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
+    });
+  }
+}
+
+/// @nodoc
+mixin _$ReservationShowResponseDM {
+  ReservationDM? get reservation;
+
+  /// Create a copy of ReservationShowResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ReservationShowResponseDMCopyWith<ReservationShowResponseDM> get copyWith =>
+      _$ReservationShowResponseDMCopyWithImpl<ReservationShowResponseDM>(
+          this as ReservationShowResponseDM, _$identity);
+
+  /// Serializes this ReservationShowResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationShowResponseDM &&
             (identical(other.reservation, reservation) ||
                 other.reservation == reservation));
   }
@@ -1021,160 +1549,338 @@ class _$ReservationShowResponseDMImpl implements _ReservationShowResponseDM {
   @override
   int get hashCode => Object.hash(runtimeType, reservation);
 
-  /// Create a copy of ReservationShowResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationShowResponseDMImplCopyWith<_$ReservationShowResponseDMImpl>
-      get copyWith => __$$ReservationShowResponseDMImplCopyWithImpl<
-          _$ReservationShowResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationShowResponseDMImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ReservationShowResponseDM implements ReservationShowResponseDM {
-  const factory _ReservationShowResponseDM({final ReservationDM? reservation}) =
-      _$ReservationShowResponseDMImpl;
-
-  factory _ReservationShowResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationShowResponseDMImpl.fromJson;
-
-  @override
-  ReservationDM? get reservation;
-
-  /// Create a copy of ReservationShowResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationShowResponseDMImplCopyWith<_$ReservationShowResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-PendingReservationsCountDM _$PendingReservationsCountDMFromJson(
-    Map<String, dynamic> json) {
-  return _PendingReservationsCountDM.fromJson(json);
-}
-
-/// @nodoc
-mixin _$PendingReservationsCountDM {
-  @JsonKey(name: 'pending_count')
-  int get pendingCount => throw _privateConstructorUsedError;
-
-  /// Serializes this PendingReservationsCountDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PendingReservationsCountDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PendingReservationsCountDMCopyWith<PendingReservationsCountDM>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PendingReservationsCountDMCopyWith<$Res> {
-  factory $PendingReservationsCountDMCopyWith(PendingReservationsCountDM value,
-          $Res Function(PendingReservationsCountDM) then) =
-      _$PendingReservationsCountDMCopyWithImpl<$Res,
-          PendingReservationsCountDM>;
-  @useResult
-  $Res call({@JsonKey(name: 'pending_count') int pendingCount});
-}
-
-/// @nodoc
-class _$PendingReservationsCountDMCopyWithImpl<$Res,
-        $Val extends PendingReservationsCountDM>
-    implements $PendingReservationsCountDMCopyWith<$Res> {
-  _$PendingReservationsCountDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PendingReservationsCountDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pendingCount = null,
-  }) {
-    return _then(_value.copyWith(
-      pendingCount: null == pendingCount
-          ? _value.pendingCount
-          : pendingCount // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  String toString() {
+    return 'ReservationShowResponseDM(reservation: $reservation)';
   }
 }
 
 /// @nodoc
-abstract class _$$PendingReservationsCountDMImplCopyWith<$Res>
-    implements $PendingReservationsCountDMCopyWith<$Res> {
-  factory _$$PendingReservationsCountDMImplCopyWith(
-          _$PendingReservationsCountDMImpl value,
-          $Res Function(_$PendingReservationsCountDMImpl) then) =
-      __$$PendingReservationsCountDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ReservationShowResponseDMCopyWith<$Res> {
+  factory $ReservationShowResponseDMCopyWith(ReservationShowResponseDM value,
+          $Res Function(ReservationShowResponseDM) _then) =
+      _$ReservationShowResponseDMCopyWithImpl;
   @useResult
-  $Res call({@JsonKey(name: 'pending_count') int pendingCount});
+  $Res call({ReservationDM? reservation});
+
+  $ReservationDMCopyWith<$Res>? get reservation;
 }
 
 /// @nodoc
-class __$$PendingReservationsCountDMImplCopyWithImpl<$Res>
-    extends _$PendingReservationsCountDMCopyWithImpl<$Res,
-        _$PendingReservationsCountDMImpl>
-    implements _$$PendingReservationsCountDMImplCopyWith<$Res> {
-  __$$PendingReservationsCountDMImplCopyWithImpl(
-      _$PendingReservationsCountDMImpl _value,
-      $Res Function(_$PendingReservationsCountDMImpl) _then)
-      : super(_value, _then);
+class _$ReservationShowResponseDMCopyWithImpl<$Res>
+    implements $ReservationShowResponseDMCopyWith<$Res> {
+  _$ReservationShowResponseDMCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of PendingReservationsCountDM
+  final ReservationShowResponseDM _self;
+  final $Res Function(ReservationShowResponseDM) _then;
+
+  /// Create a copy of ReservationShowResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pendingCount = null,
+    Object? reservation = freezed,
   }) {
-    return _then(_$PendingReservationsCountDMImpl(
-      pendingCount: null == pendingCount
-          ? _value.pendingCount
-          : pendingCount // ignore: cast_nullable_to_non_nullable
-              as int,
+    return _then(_self.copyWith(
+      reservation: freezed == reservation
+          ? _self.reservation
+          : reservation // ignore: cast_nullable_to_non_nullable
+              as ReservationDM?,
     ));
+  }
+
+  /// Create a copy of ReservationShowResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReservationDMCopyWith<$Res>? get reservation {
+    if (_self.reservation == null) {
+      return null;
+    }
+
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [ReservationShowResponseDM].
+extension ReservationShowResponseDMPatterns on ReservationShowResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationShowResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationShowResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationShowResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(ReservationDM? reservation)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM() when $default != null:
+        return $default(_that.reservation);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(ReservationDM? reservation) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM():
+        return $default(_that.reservation);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(ReservationDM? reservation)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationShowResponseDM() when $default != null:
+        return $default(_that.reservation);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$PendingReservationsCountDMImpl implements _PendingReservationsCountDM {
-  const _$PendingReservationsCountDMImpl(
-      {@JsonKey(name: 'pending_count') this.pendingCount = 0});
-
-  factory _$PendingReservationsCountDMImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$PendingReservationsCountDMImplFromJson(json);
+class _ReservationShowResponseDM implements ReservationShowResponseDM {
+  const _ReservationShowResponseDM({this.reservation});
+  factory _ReservationShowResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationShowResponseDMFromJson(json);
 
   @override
-  @JsonKey(name: 'pending_count')
-  final int pendingCount;
+  final ReservationDM? reservation;
+
+  /// Create a copy of ReservationShowResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationShowResponseDMCopyWith<_ReservationShowResponseDM>
+      get copyWith =>
+          __$ReservationShowResponseDMCopyWithImpl<_ReservationShowResponseDM>(
+              this, _$identity);
 
   @override
-  String toString() {
-    return 'PendingReservationsCountDM(pendingCount: $pendingCount)';
+  Map<String, dynamic> toJson() {
+    return _$ReservationShowResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PendingReservationsCountDMImpl &&
+            other is _ReservationShowResponseDM &&
+            (identical(other.reservation, reservation) ||
+                other.reservation == reservation));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, reservation);
+
+  @override
+  String toString() {
+    return 'ReservationShowResponseDM(reservation: $reservation)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ReservationShowResponseDMCopyWith<$Res>
+    implements $ReservationShowResponseDMCopyWith<$Res> {
+  factory _$ReservationShowResponseDMCopyWith(_ReservationShowResponseDM value,
+          $Res Function(_ReservationShowResponseDM) _then) =
+      __$ReservationShowResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({ReservationDM? reservation});
+
+  @override
+  $ReservationDMCopyWith<$Res>? get reservation;
+}
+
+/// @nodoc
+class __$ReservationShowResponseDMCopyWithImpl<$Res>
+    implements _$ReservationShowResponseDMCopyWith<$Res> {
+  __$ReservationShowResponseDMCopyWithImpl(this._self, this._then);
+
+  final _ReservationShowResponseDM _self;
+  final $Res Function(_ReservationShowResponseDM) _then;
+
+  /// Create a copy of ReservationShowResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? reservation = freezed,
+  }) {
+    return _then(_ReservationShowResponseDM(
+      reservation: freezed == reservation
+          ? _self.reservation
+          : reservation // ignore: cast_nullable_to_non_nullable
+              as ReservationDM?,
+    ));
+  }
+
+  /// Create a copy of ReservationShowResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ReservationDMCopyWith<$Res>? get reservation {
+    if (_self.reservation == null) {
+      return null;
+    }
+
+    return $ReservationDMCopyWith<$Res>(_self.reservation!, (value) {
+      return _then(_self.copyWith(reservation: value));
+    });
+  }
+}
+
+/// @nodoc
+mixin _$PendingReservationsCountDM {
+  @JsonKey(name: 'pending_count')
+  int get pendingCount;
+
+  /// Create a copy of PendingReservationsCountDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PendingReservationsCountDMCopyWith<PendingReservationsCountDM>
+      get copyWith =>
+          _$PendingReservationsCountDMCopyWithImpl<PendingReservationsCountDM>(
+              this as PendingReservationsCountDM, _$identity);
+
+  /// Serializes this PendingReservationsCountDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PendingReservationsCountDM &&
             (identical(other.pendingCount, pendingCount) ||
                 other.pendingCount == pendingCount));
   }
@@ -1183,89 +1889,327 @@ class _$PendingReservationsCountDMImpl implements _PendingReservationsCountDM {
   @override
   int get hashCode => Object.hash(runtimeType, pendingCount);
 
-  /// Create a copy of PendingReservationsCountDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PendingReservationsCountDMImplCopyWith<_$PendingReservationsCountDMImpl>
-      get copyWith => __$$PendingReservationsCountDMImplCopyWithImpl<
-          _$PendingReservationsCountDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PendingReservationsCountDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PendingReservationsCountDM(pendingCount: $pendingCount)';
   }
 }
 
-abstract class _PendingReservationsCountDM
-    implements PendingReservationsCountDM {
-  const factory _PendingReservationsCountDM(
-          {@JsonKey(name: 'pending_count') final int pendingCount}) =
-      _$PendingReservationsCountDMImpl;
+/// @nodoc
+abstract mixin class $PendingReservationsCountDMCopyWith<$Res> {
+  factory $PendingReservationsCountDMCopyWith(PendingReservationsCountDM value,
+          $Res Function(PendingReservationsCountDM) _then) =
+      _$PendingReservationsCountDMCopyWithImpl;
+  @useResult
+  $Res call({@JsonKey(name: 'pending_count') int pendingCount});
+}
 
-  factory _PendingReservationsCountDM.fromJson(Map<String, dynamic> json) =
-      _$PendingReservationsCountDMImpl.fromJson;
+/// @nodoc
+class _$PendingReservationsCountDMCopyWithImpl<$Res>
+    implements $PendingReservationsCountDMCopyWith<$Res> {
+  _$PendingReservationsCountDMCopyWithImpl(this._self, this._then);
+
+  final PendingReservationsCountDM _self;
+  final $Res Function(PendingReservationsCountDM) _then;
+
+  /// Create a copy of PendingReservationsCountDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pendingCount = null,
+  }) {
+    return _then(_self.copyWith(
+      pendingCount: null == pendingCount
+          ? _self.pendingCount
+          : pendingCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PendingReservationsCountDM].
+extension PendingReservationsCountDMPatterns on PendingReservationsCountDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PendingReservationsCountDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PendingReservationsCountDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PendingReservationsCountDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'pending_count') int pendingCount)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM() when $default != null:
+        return $default(_that.pendingCount);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'pending_count') int pendingCount) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM():
+        return $default(_that.pendingCount);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(@JsonKey(name: 'pending_count') int pendingCount)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PendingReservationsCountDM() when $default != null:
+        return $default(_that.pendingCount);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _PendingReservationsCountDM implements PendingReservationsCountDM {
+  const _PendingReservationsCountDM(
+      {@JsonKey(name: 'pending_count') this.pendingCount = 0});
+  factory _PendingReservationsCountDM.fromJson(Map<String, dynamic> json) =>
+      _$PendingReservationsCountDMFromJson(json);
 
   @override
   @JsonKey(name: 'pending_count')
-  int get pendingCount;
+  final int pendingCount;
 
   /// Create a copy of PendingReservationsCountDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PendingReservationsCountDMImplCopyWith<_$PendingReservationsCountDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$PendingReservationsCountDMCopyWith<_PendingReservationsCountDM>
+      get copyWith => __$PendingReservationsCountDMCopyWithImpl<
+          _PendingReservationsCountDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PendingReservationsCountDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _PendingReservationsCountDM &&
+            (identical(other.pendingCount, pendingCount) ||
+                other.pendingCount == pendingCount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, pendingCount);
+
+  @override
+  String toString() {
+    return 'PendingReservationsCountDM(pendingCount: $pendingCount)';
+  }
 }
 
-ReservationDM _$ReservationDMFromJson(Map<String, dynamic> json) {
-  return _ReservationDM.fromJson(json);
+/// @nodoc
+abstract mixin class _$PendingReservationsCountDMCopyWith<$Res>
+    implements $PendingReservationsCountDMCopyWith<$Res> {
+  factory _$PendingReservationsCountDMCopyWith(
+          _PendingReservationsCountDM value,
+          $Res Function(_PendingReservationsCountDM) _then) =
+      __$PendingReservationsCountDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'pending_count') int pendingCount});
+}
+
+/// @nodoc
+class __$PendingReservationsCountDMCopyWithImpl<$Res>
+    implements _$PendingReservationsCountDMCopyWith<$Res> {
+  __$PendingReservationsCountDMCopyWithImpl(this._self, this._then);
+
+  final _PendingReservationsCountDM _self;
+  final $Res Function(_PendingReservationsCountDM) _then;
+
+  /// Create a copy of PendingReservationsCountDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? pendingCount = null,
+  }) {
+    return _then(_PendingReservationsCountDM(
+      pendingCount: null == pendingCount
+          ? _self.pendingCount
+          : pendingCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$ReservationDM {
   @JsonKey(name: 'reservation_id')
-  int? get reservationId => throw _privateConstructorUsedError;
+  int? get reservationId;
   @JsonKey(name: 'reservation_uuid')
-  String? get reservationUuid => throw _privateConstructorUsedError;
-  ReservationStatus get status => throw _privateConstructorUsedError;
+  String? get reservationUuid;
+  ReservationStatus get status;
   @JsonKey(name: 'booking_type')
-  BookingType get bookingType => throw _privateConstructorUsedError;
+  BookingType get bookingType;
   @JsonKey(name: 'reservation_date')
-  DateTime? get reservationDate => throw _privateConstructorUsedError;
+  DateTime? get reservationDate;
   @JsonKey(name: 'reservation_time')
-  String? get reservationTime => throw _privateConstructorUsedError;
+  String? get reservationTime;
   @JsonKey(name: 'party_size')
-  int get partySize => throw _privateConstructorUsedError;
+  int get partySize;
   @JsonKey(name: 'special_requests')
-  String? get specialRequests => throw _privateConstructorUsedError;
+  String? get specialRequests;
   @JsonKey(name: 'manager_notes')
-  String? get managerNotes => throw _privateConstructorUsedError;
+  String? get managerNotes;
   @JsonKey(name: 'cancelled_by')
-  String? get cancelledBy => throw _privateConstructorUsedError;
+  String? get cancelledBy;
   @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt => throw _privateConstructorUsedError;
+  DateTime? get cancelledAt;
   @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt => throw _privateConstructorUsedError;
+  DateTime? get confirmedAt;
   @JsonKey(name: 'rejected_at')
-  DateTime? get rejectedAt =>
-      throw _privateConstructorUsedError; // Business info
+  DateTime? get rejectedAt; // Business info
   @JsonKey(name: 'business_uuid')
-  String? get businessUuid => throw _privateConstructorUsedError;
+  String? get businessUuid;
   @JsonKey(name: 'business_name')
-  String? get businessName => throw _privateConstructorUsedError;
+  String? get businessName;
   @JsonKey(name: 'business_photo')
-  String? get businessPhoto => throw _privateConstructorUsedError;
+  String? get businessPhoto;
   @JsonKey(name: 'business_latitude')
-  double? get businessLatitude => throw _privateConstructorUsedError;
+  double? get businessLatitude;
   @JsonKey(name: 'business_longitude')
-  double? get businessLongitude => throw _privateConstructorUsedError;
+  double? get businessLongitude;
   @JsonKey(name: 'business_address')
-  String? get businessAddress =>
-      throw _privateConstructorUsedError; // Country of the business that owns the reservation. Used by the
+  String?
+      get businessAddress; // Country of the business that owns the reservation. Used by the
 // customer-facing reservation_card to render the quoted_amount in the
 // right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
 // [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
@@ -1276,351 +2220,211 @@ mixin _$ReservationDM {
   @JsonKey(
       name: 'business_country',
       unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-  FoodlyCountries? get businessCountry =>
-      throw _privateConstructorUsedError; // User info
+  FoodlyCountries? get businessCountry; // User info
   @JsonKey(name: 'user_uuid')
-  String? get userUuid => throw _privateConstructorUsedError;
+  String? get userUuid;
   @JsonKey(name: 'user_name')
-  String? get userName => throw _privateConstructorUsedError;
+  String? get userName;
   @JsonKey(name: 'user_photo')
-  String? get userPhoto => throw _privateConstructorUsedError;
+  String? get userPhoto;
   @JsonKey(name: 'user_email')
-  String? get userEmail => throw _privateConstructorUsedError;
+  String? get userEmail;
   @JsonKey(name: 'user_phone')
-  String? get userPhone =>
-      throw _privateConstructorUsedError; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
+  String?
+      get userPhone; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
 // Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
 // componer el número internacional (display + botón de llamar).
   @JsonKey(name: 'user_phone_country_code')
-  String? get userPhoneCountryCode =>
-      throw _privateConstructorUsedError; // Service booking fields (only present when booking_type = service)
+  String?
+      get userPhoneCountryCode; // Service booking fields (only present when booking_type = service)
   @JsonKey(name: 'service_package_uuid')
-  String? get servicePackageUuid => throw _privateConstructorUsedError;
+  String? get servicePackageUuid;
   @JsonKey(name: 'service_package_title')
-  String? get servicePackageTitle => throw _privateConstructorUsedError;
+  String? get servicePackageTitle;
   @JsonKey(name: 'event_address')
-  String? get eventAddress => throw _privateConstructorUsedError;
+  String? get eventAddress;
   @JsonKey(name: 'event_city')
-  String? get eventCity => throw _privateConstructorUsedError;
+  String? get eventCity;
   @JsonKey(name: 'event_latitude')
-  double? get eventLatitude => throw _privateConstructorUsedError;
+  double? get eventLatitude;
   @JsonKey(name: 'event_longitude')
-  double? get eventLongitude => throw _privateConstructorUsedError;
+  double? get eventLongitude;
   @JsonKey(name: 'event_type')
-  EventType? get eventType => throw _privateConstructorUsedError;
+  EventType? get eventType;
   @JsonKey(name: 'guest_count')
-  int? get guestCount => throw _privateConstructorUsedError;
+  int? get guestCount;
   @JsonKey(name: 'dietary_notes')
-  String? get dietaryNotes => throw _privateConstructorUsedError;
+  String? get dietaryNotes;
   @JsonKey(name: 'budget_estimate')
-  double? get budgetEstimate => throw _privateConstructorUsedError;
+  double? get budgetEstimate;
   @JsonKey(name: 'quoted_amount')
-  double? get quotedAmount => throw _privateConstructorUsedError;
+  double? get quotedAmount;
   @JsonKey(name: 'quoted_at')
-  DateTime? get quotedAt => throw _privateConstructorUsedError;
+  DateTime? get quotedAt;
   @JsonKey(name: 'messages_count')
-  int get messagesCount => throw _privateConstructorUsedError; // Timestamps
+  int get messagesCount; // Timestamps
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this ReservationDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  DateTime? get updatedAt;
 
   /// Create a copy of ReservationDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ReservationDMCopyWith<ReservationDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ReservationDMCopyWith<$Res> {
-  factory $ReservationDMCopyWith(
-          ReservationDM value, $Res Function(ReservationDM) then) =
-      _$ReservationDMCopyWithImpl<$Res, ReservationDM>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'reservation_id') int? reservationId,
-      @JsonKey(name: 'reservation_uuid') String? reservationUuid,
-      ReservationStatus status,
-      @JsonKey(name: 'booking_type') BookingType bookingType,
-      @JsonKey(name: 'reservation_date') DateTime? reservationDate,
-      @JsonKey(name: 'reservation_time') String? reservationTime,
-      @JsonKey(name: 'party_size') int partySize,
-      @JsonKey(name: 'special_requests') String? specialRequests,
-      @JsonKey(name: 'manager_notes') String? managerNotes,
-      @JsonKey(name: 'cancelled_by') String? cancelledBy,
-      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
-      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
-      @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
-      @JsonKey(name: 'business_uuid') String? businessUuid,
-      @JsonKey(name: 'business_name') String? businessName,
-      @JsonKey(name: 'business_photo') String? businessPhoto,
-      @JsonKey(name: 'business_latitude') double? businessLatitude,
-      @JsonKey(name: 'business_longitude') double? businessLongitude,
-      @JsonKey(name: 'business_address') String? businessAddress,
-      @JsonKey(
-          name: 'business_country',
-          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      FoodlyCountries? businessCountry,
-      @JsonKey(name: 'user_uuid') String? userUuid,
-      @JsonKey(name: 'user_name') String? userName,
-      @JsonKey(name: 'user_photo') String? userPhoto,
-      @JsonKey(name: 'user_email') String? userEmail,
-      @JsonKey(name: 'user_phone') String? userPhone,
-      @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
-      @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
-      @JsonKey(name: 'service_package_title') String? servicePackageTitle,
-      @JsonKey(name: 'event_address') String? eventAddress,
-      @JsonKey(name: 'event_city') String? eventCity,
-      @JsonKey(name: 'event_latitude') double? eventLatitude,
-      @JsonKey(name: 'event_longitude') double? eventLongitude,
-      @JsonKey(name: 'event_type') EventType? eventType,
-      @JsonKey(name: 'guest_count') int? guestCount,
-      @JsonKey(name: 'dietary_notes') String? dietaryNotes,
-      @JsonKey(name: 'budget_estimate') double? budgetEstimate,
-      @JsonKey(name: 'quoted_amount') double? quotedAmount,
-      @JsonKey(name: 'quoted_at') DateTime? quotedAt,
-      @JsonKey(name: 'messages_count') int messagesCount,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
-}
-
-/// @nodoc
-class _$ReservationDMCopyWithImpl<$Res, $Val extends ReservationDM>
-    implements $ReservationDMCopyWith<$Res> {
-  _$ReservationDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ReservationDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ReservationDMCopyWith<ReservationDM> get copyWith =>
+      _$ReservationDMCopyWithImpl<ReservationDM>(
+          this as ReservationDM, _$identity);
+
+  /// Serializes this ReservationDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? reservationId = freezed,
-    Object? reservationUuid = freezed,
-    Object? status = null,
-    Object? bookingType = null,
-    Object? reservationDate = freezed,
-    Object? reservationTime = freezed,
-    Object? partySize = null,
-    Object? specialRequests = freezed,
-    Object? managerNotes = freezed,
-    Object? cancelledBy = freezed,
-    Object? cancelledAt = freezed,
-    Object? confirmedAt = freezed,
-    Object? rejectedAt = freezed,
-    Object? businessUuid = freezed,
-    Object? businessName = freezed,
-    Object? businessPhoto = freezed,
-    Object? businessLatitude = freezed,
-    Object? businessLongitude = freezed,
-    Object? businessAddress = freezed,
-    Object? businessCountry = freezed,
-    Object? userUuid = freezed,
-    Object? userName = freezed,
-    Object? userPhoto = freezed,
-    Object? userEmail = freezed,
-    Object? userPhone = freezed,
-    Object? userPhoneCountryCode = freezed,
-    Object? servicePackageUuid = freezed,
-    Object? servicePackageTitle = freezed,
-    Object? eventAddress = freezed,
-    Object? eventCity = freezed,
-    Object? eventLatitude = freezed,
-    Object? eventLongitude = freezed,
-    Object? eventType = freezed,
-    Object? guestCount = freezed,
-    Object? dietaryNotes = freezed,
-    Object? budgetEstimate = freezed,
-    Object? quotedAmount = freezed,
-    Object? quotedAt = freezed,
-    Object? messagesCount = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      reservationId: freezed == reservationId
-          ? _value.reservationId
-          : reservationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      reservationUuid: freezed == reservationUuid
-          ? _value.reservationUuid
-          : reservationUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ReservationStatus,
-      bookingType: null == bookingType
-          ? _value.bookingType
-          : bookingType // ignore: cast_nullable_to_non_nullable
-              as BookingType,
-      reservationDate: freezed == reservationDate
-          ? _value.reservationDate
-          : reservationDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      reservationTime: freezed == reservationTime
-          ? _value.reservationTime
-          : reservationTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      partySize: null == partySize
-          ? _value.partySize
-          : partySize // ignore: cast_nullable_to_non_nullable
-              as int,
-      specialRequests: freezed == specialRequests
-          ? _value.specialRequests
-          : specialRequests // ignore: cast_nullable_to_non_nullable
-              as String?,
-      managerNotes: freezed == managerNotes
-          ? _value.managerNotes
-          : managerNotes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cancelledBy: freezed == cancelledBy
-          ? _value.cancelledBy
-          : cancelledBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
-          : cancelledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
-          : confirmedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      rejectedAt: freezed == rejectedAt
-          ? _value.rejectedAt
-          : rejectedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      businessUuid: freezed == businessUuid
-          ? _value.businessUuid
-          : businessUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessName: freezed == businessName
-          ? _value.businessName
-          : businessName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessPhoto: freezed == businessPhoto
-          ? _value.businessPhoto
-          : businessPhoto // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessLatitude: freezed == businessLatitude
-          ? _value.businessLatitude
-          : businessLatitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      businessLongitude: freezed == businessLongitude
-          ? _value.businessLongitude
-          : businessLongitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      businessAddress: freezed == businessAddress
-          ? _value.businessAddress
-          : businessAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessCountry: freezed == businessCountry
-          ? _value.businessCountry
-          : businessCountry // ignore: cast_nullable_to_non_nullable
-              as FoodlyCountries?,
-      userUuid: freezed == userUuid
-          ? _value.userUuid
-          : userUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: freezed == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userPhoto: freezed == userPhoto
-          ? _value.userPhoto
-          : userPhoto // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userEmail: freezed == userEmail
-          ? _value.userEmail
-          : userEmail // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userPhone: freezed == userPhone
-          ? _value.userPhone
-          : userPhone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userPhoneCountryCode: freezed == userPhoneCountryCode
-          ? _value.userPhoneCountryCode
-          : userPhoneCountryCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      servicePackageUuid: freezed == servicePackageUuid
-          ? _value.servicePackageUuid
-          : servicePackageUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      servicePackageTitle: freezed == servicePackageTitle
-          ? _value.servicePackageTitle
-          : servicePackageTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eventAddress: freezed == eventAddress
-          ? _value.eventAddress
-          : eventAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eventCity: freezed == eventCity
-          ? _value.eventCity
-          : eventCity // ignore: cast_nullable_to_non_nullable
-              as String?,
-      eventLatitude: freezed == eventLatitude
-          ? _value.eventLatitude
-          : eventLatitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      eventLongitude: freezed == eventLongitude
-          ? _value.eventLongitude
-          : eventLongitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      eventType: freezed == eventType
-          ? _value.eventType
-          : eventType // ignore: cast_nullable_to_non_nullable
-              as EventType?,
-      guestCount: freezed == guestCount
-          ? _value.guestCount
-          : guestCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dietaryNotes: freezed == dietaryNotes
-          ? _value.dietaryNotes
-          : dietaryNotes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      budgetEstimate: freezed == budgetEstimate
-          ? _value.budgetEstimate
-          : budgetEstimate // ignore: cast_nullable_to_non_nullable
-              as double?,
-      quotedAmount: freezed == quotedAmount
-          ? _value.quotedAmount
-          : quotedAmount // ignore: cast_nullable_to_non_nullable
-              as double?,
-      quotedAt: freezed == quotedAt
-          ? _value.quotedAt
-          : quotedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      messagesCount: null == messagesCount
-          ? _value.messagesCount
-          : messagesCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ReservationDM &&
+            (identical(other.reservationId, reservationId) ||
+                other.reservationId == reservationId) &&
+            (identical(other.reservationUuid, reservationUuid) ||
+                other.reservationUuid == reservationUuid) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.bookingType, bookingType) ||
+                other.bookingType == bookingType) &&
+            (identical(other.reservationDate, reservationDate) ||
+                other.reservationDate == reservationDate) &&
+            (identical(other.reservationTime, reservationTime) ||
+                other.reservationTime == reservationTime) &&
+            (identical(other.partySize, partySize) ||
+                other.partySize == partySize) &&
+            (identical(other.specialRequests, specialRequests) ||
+                other.specialRequests == specialRequests) &&
+            (identical(other.managerNotes, managerNotes) ||
+                other.managerNotes == managerNotes) &&
+            (identical(other.cancelledBy, cancelledBy) ||
+                other.cancelledBy == cancelledBy) &&
+            (identical(other.cancelledAt, cancelledAt) ||
+                other.cancelledAt == cancelledAt) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt) &&
+            (identical(other.rejectedAt, rejectedAt) ||
+                other.rejectedAt == rejectedAt) &&
+            (identical(other.businessUuid, businessUuid) ||
+                other.businessUuid == businessUuid) &&
+            (identical(other.businessName, businessName) ||
+                other.businessName == businessName) &&
+            (identical(other.businessPhoto, businessPhoto) ||
+                other.businessPhoto == businessPhoto) &&
+            (identical(other.businessLatitude, businessLatitude) ||
+                other.businessLatitude == businessLatitude) &&
+            (identical(other.businessLongitude, businessLongitude) ||
+                other.businessLongitude == businessLongitude) &&
+            (identical(other.businessAddress, businessAddress) ||
+                other.businessAddress == businessAddress) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
+            (identical(other.userUuid, userUuid) ||
+                other.userUuid == userUuid) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
+            (identical(other.userPhoto, userPhoto) ||
+                other.userPhoto == userPhoto) &&
+            (identical(other.userEmail, userEmail) ||
+                other.userEmail == userEmail) &&
+            (identical(other.userPhone, userPhone) ||
+                other.userPhone == userPhone) &&
+            (identical(other.userPhoneCountryCode, userPhoneCountryCode) ||
+                other.userPhoneCountryCode == userPhoneCountryCode) &&
+            (identical(other.servicePackageUuid, servicePackageUuid) ||
+                other.servicePackageUuid == servicePackageUuid) &&
+            (identical(other.servicePackageTitle, servicePackageTitle) ||
+                other.servicePackageTitle == servicePackageTitle) &&
+            (identical(other.eventAddress, eventAddress) ||
+                other.eventAddress == eventAddress) &&
+            (identical(other.eventCity, eventCity) ||
+                other.eventCity == eventCity) &&
+            (identical(other.eventLatitude, eventLatitude) ||
+                other.eventLatitude == eventLatitude) &&
+            (identical(other.eventLongitude, eventLongitude) ||
+                other.eventLongitude == eventLongitude) &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.guestCount, guestCount) ||
+                other.guestCount == guestCount) &&
+            (identical(other.dietaryNotes, dietaryNotes) ||
+                other.dietaryNotes == dietaryNotes) &&
+            (identical(other.budgetEstimate, budgetEstimate) ||
+                other.budgetEstimate == budgetEstimate) &&
+            (identical(other.quotedAmount, quotedAmount) ||
+                other.quotedAmount == quotedAmount) &&
+            (identical(other.quotedAt, quotedAt) ||
+                other.quotedAt == quotedAt) &&
+            (identical(other.messagesCount, messagesCount) ||
+                other.messagesCount == messagesCount) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        reservationId,
+        reservationUuid,
+        status,
+        bookingType,
+        reservationDate,
+        reservationTime,
+        partySize,
+        specialRequests,
+        managerNotes,
+        cancelledBy,
+        cancelledAt,
+        confirmedAt,
+        rejectedAt,
+        businessUuid,
+        businessName,
+        businessPhoto,
+        businessLatitude,
+        businessLongitude,
+        businessAddress,
+        businessCountry,
+        userUuid,
+        userName,
+        userPhoto,
+        userEmail,
+        userPhone,
+        userPhoneCountryCode,
+        servicePackageUuid,
+        servicePackageTitle,
+        eventAddress,
+        eventCity,
+        eventLatitude,
+        eventLongitude,
+        eventType,
+        guestCount,
+        dietaryNotes,
+        budgetEstimate,
+        quotedAmount,
+        quotedAt,
+        messagesCount,
+        createdAt,
+        updatedAt
+      ]);
+
+  @override
+  String toString() {
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, userPhoneCountryCode: $userPhoneCountryCode, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$ReservationDMImplCopyWith<$Res>
-    implements $ReservationDMCopyWith<$Res> {
-  factory _$$ReservationDMImplCopyWith(
-          _$ReservationDMImpl value, $Res Function(_$ReservationDMImpl) then) =
-      __$$ReservationDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ReservationDMCopyWith<$Res> {
+  factory $ReservationDMCopyWith(
+          ReservationDM value, $Res Function(ReservationDM) _then) =
+      _$ReservationDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'reservation_id') int? reservationId,
@@ -1670,12 +2474,12 @@ abstract class _$$ReservationDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ReservationDMImplCopyWithImpl<$Res>
-    extends _$ReservationDMCopyWithImpl<$Res, _$ReservationDMImpl>
-    implements _$$ReservationDMImplCopyWith<$Res> {
-  __$$ReservationDMImplCopyWithImpl(
-      _$ReservationDMImpl _value, $Res Function(_$ReservationDMImpl) _then)
-      : super(_value, _then);
+class _$ReservationDMCopyWithImpl<$Res>
+    implements $ReservationDMCopyWith<$Res> {
+  _$ReservationDMCopyWithImpl(this._self, this._then);
+
+  final ReservationDM _self;
+  final $Res Function(ReservationDM) _then;
 
   /// Create a copy of ReservationDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1724,179 +2528,597 @@ class __$$ReservationDMImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$ReservationDMImpl(
+    return _then(_self.copyWith(
       reservationId: freezed == reservationId
-          ? _value.reservationId
+          ? _self.reservationId
           : reservationId // ignore: cast_nullable_to_non_nullable
               as int?,
       reservationUuid: freezed == reservationUuid
-          ? _value.reservationUuid
+          ? _self.reservationUuid
           : reservationUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ReservationStatus,
       bookingType: null == bookingType
-          ? _value.bookingType
+          ? _self.bookingType
           : bookingType // ignore: cast_nullable_to_non_nullable
               as BookingType,
       reservationDate: freezed == reservationDate
-          ? _value.reservationDate
+          ? _self.reservationDate
           : reservationDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       reservationTime: freezed == reservationTime
-          ? _value.reservationTime
+          ? _self.reservationTime
           : reservationTime // ignore: cast_nullable_to_non_nullable
               as String?,
       partySize: null == partySize
-          ? _value.partySize
+          ? _self.partySize
           : partySize // ignore: cast_nullable_to_non_nullable
               as int,
       specialRequests: freezed == specialRequests
-          ? _value.specialRequests
+          ? _self.specialRequests
           : specialRequests // ignore: cast_nullable_to_non_nullable
               as String?,
       managerNotes: freezed == managerNotes
-          ? _value.managerNotes
+          ? _self.managerNotes
           : managerNotes // ignore: cast_nullable_to_non_nullable
               as String?,
       cancelledBy: freezed == cancelledBy
-          ? _value.cancelledBy
+          ? _self.cancelledBy
           : cancelledBy // ignore: cast_nullable_to_non_nullable
               as String?,
       cancelledAt: freezed == cancelledAt
-          ? _value.cancelledAt
+          ? _self.cancelledAt
           : cancelledAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       confirmedAt: freezed == confirmedAt
-          ? _value.confirmedAt
+          ? _self.confirmedAt
           : confirmedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       rejectedAt: freezed == rejectedAt
-          ? _value.rejectedAt
+          ? _self.rejectedAt
           : rejectedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       businessUuid: freezed == businessUuid
-          ? _value.businessUuid
+          ? _self.businessUuid
           : businessUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       businessName: freezed == businessName
-          ? _value.businessName
+          ? _self.businessName
           : businessName // ignore: cast_nullable_to_non_nullable
               as String?,
       businessPhoto: freezed == businessPhoto
-          ? _value.businessPhoto
+          ? _self.businessPhoto
           : businessPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
       businessLatitude: freezed == businessLatitude
-          ? _value.businessLatitude
+          ? _self.businessLatitude
           : businessLatitude // ignore: cast_nullable_to_non_nullable
               as double?,
       businessLongitude: freezed == businessLongitude
-          ? _value.businessLongitude
+          ? _self.businessLongitude
           : businessLongitude // ignore: cast_nullable_to_non_nullable
               as double?,
       businessAddress: freezed == businessAddress
-          ? _value.businessAddress
+          ? _self.businessAddress
           : businessAddress // ignore: cast_nullable_to_non_nullable
               as String?,
       businessCountry: freezed == businessCountry
-          ? _value.businessCountry
+          ? _self.businessCountry
           : businessCountry // ignore: cast_nullable_to_non_nullable
               as FoodlyCountries?,
       userUuid: freezed == userUuid
-          ? _value.userUuid
+          ? _self.userUuid
           : userUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       userName: freezed == userName
-          ? _value.userName
+          ? _self.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       userPhoto: freezed == userPhoto
-          ? _value.userPhoto
+          ? _self.userPhoto
           : userPhoto // ignore: cast_nullable_to_non_nullable
               as String?,
       userEmail: freezed == userEmail
-          ? _value.userEmail
+          ? _self.userEmail
           : userEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       userPhone: freezed == userPhone
-          ? _value.userPhone
+          ? _self.userPhone
           : userPhone // ignore: cast_nullable_to_non_nullable
               as String?,
       userPhoneCountryCode: freezed == userPhoneCountryCode
-          ? _value.userPhoneCountryCode
+          ? _self.userPhoneCountryCode
           : userPhoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
       servicePackageUuid: freezed == servicePackageUuid
-          ? _value.servicePackageUuid
+          ? _self.servicePackageUuid
           : servicePackageUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       servicePackageTitle: freezed == servicePackageTitle
-          ? _value.servicePackageTitle
+          ? _self.servicePackageTitle
           : servicePackageTitle // ignore: cast_nullable_to_non_nullable
               as String?,
       eventAddress: freezed == eventAddress
-          ? _value.eventAddress
+          ? _self.eventAddress
           : eventAddress // ignore: cast_nullable_to_non_nullable
               as String?,
       eventCity: freezed == eventCity
-          ? _value.eventCity
+          ? _self.eventCity
           : eventCity // ignore: cast_nullable_to_non_nullable
               as String?,
       eventLatitude: freezed == eventLatitude
-          ? _value.eventLatitude
+          ? _self.eventLatitude
           : eventLatitude // ignore: cast_nullable_to_non_nullable
               as double?,
       eventLongitude: freezed == eventLongitude
-          ? _value.eventLongitude
+          ? _self.eventLongitude
           : eventLongitude // ignore: cast_nullable_to_non_nullable
               as double?,
       eventType: freezed == eventType
-          ? _value.eventType
+          ? _self.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
               as EventType?,
       guestCount: freezed == guestCount
-          ? _value.guestCount
+          ? _self.guestCount
           : guestCount // ignore: cast_nullable_to_non_nullable
               as int?,
       dietaryNotes: freezed == dietaryNotes
-          ? _value.dietaryNotes
+          ? _self.dietaryNotes
           : dietaryNotes // ignore: cast_nullable_to_non_nullable
               as String?,
       budgetEstimate: freezed == budgetEstimate
-          ? _value.budgetEstimate
+          ? _self.budgetEstimate
           : budgetEstimate // ignore: cast_nullable_to_non_nullable
               as double?,
       quotedAmount: freezed == quotedAmount
-          ? _value.quotedAmount
+          ? _self.quotedAmount
           : quotedAmount // ignore: cast_nullable_to_non_nullable
               as double?,
       quotedAt: freezed == quotedAt
-          ? _value.quotedAt
+          ? _self.quotedAt
           : quotedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       messagesCount: null == messagesCount
-          ? _value.messagesCount
+          ? _self.messagesCount
           : messagesCount // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       updatedAt: freezed == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ReservationDM].
+extension ReservationDMPatterns on ReservationDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ReservationDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ReservationDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ReservationDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'reservation_id') int? reservationId,
+            @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+            ReservationStatus status,
+            @JsonKey(name: 'booking_type') BookingType bookingType,
+            @JsonKey(name: 'reservation_date') DateTime? reservationDate,
+            @JsonKey(name: 'reservation_time') String? reservationTime,
+            @JsonKey(name: 'party_size') int partySize,
+            @JsonKey(name: 'special_requests') String? specialRequests,
+            @JsonKey(name: 'manager_notes') String? managerNotes,
+            @JsonKey(name: 'cancelled_by') String? cancelledBy,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_photo') String? businessPhoto,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
+            @JsonKey(name: 'user_uuid') String? userUuid,
+            @JsonKey(name: 'user_name') String? userName,
+            @JsonKey(name: 'user_photo') String? userPhoto,
+            @JsonKey(name: 'user_email') String? userEmail,
+            @JsonKey(name: 'user_phone') String? userPhone,
+            @JsonKey(name: 'user_phone_country_code')
+            String? userPhoneCountryCode,
+            @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+            @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+            @JsonKey(name: 'event_address') String? eventAddress,
+            @JsonKey(name: 'event_city') String? eventCity,
+            @JsonKey(name: 'event_latitude') double? eventLatitude,
+            @JsonKey(name: 'event_longitude') double? eventLongitude,
+            @JsonKey(name: 'event_type') EventType? eventType,
+            @JsonKey(name: 'guest_count') int? guestCount,
+            @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+            @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+            @JsonKey(name: 'quoted_amount') double? quotedAmount,
+            @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+            @JsonKey(name: 'messages_count') int messagesCount,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM() when $default != null:
+        return $default(
+            _that.reservationId,
+            _that.reservationUuid,
+            _that.status,
+            _that.bookingType,
+            _that.reservationDate,
+            _that.reservationTime,
+            _that.partySize,
+            _that.specialRequests,
+            _that.managerNotes,
+            _that.cancelledBy,
+            _that.cancelledAt,
+            _that.confirmedAt,
+            _that.rejectedAt,
+            _that.businessUuid,
+            _that.businessName,
+            _that.businessPhoto,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.businessAddress,
+            _that.businessCountry,
+            _that.userUuid,
+            _that.userName,
+            _that.userPhoto,
+            _that.userEmail,
+            _that.userPhone,
+            _that.userPhoneCountryCode,
+            _that.servicePackageUuid,
+            _that.servicePackageTitle,
+            _that.eventAddress,
+            _that.eventCity,
+            _that.eventLatitude,
+            _that.eventLongitude,
+            _that.eventType,
+            _that.guestCount,
+            _that.dietaryNotes,
+            _that.budgetEstimate,
+            _that.quotedAmount,
+            _that.quotedAt,
+            _that.messagesCount,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'reservation_id') int? reservationId,
+            @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+            ReservationStatus status,
+            @JsonKey(name: 'booking_type') BookingType bookingType,
+            @JsonKey(name: 'reservation_date') DateTime? reservationDate,
+            @JsonKey(name: 'reservation_time') String? reservationTime,
+            @JsonKey(name: 'party_size') int partySize,
+            @JsonKey(name: 'special_requests') String? specialRequests,
+            @JsonKey(name: 'manager_notes') String? managerNotes,
+            @JsonKey(name: 'cancelled_by') String? cancelledBy,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_photo') String? businessPhoto,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
+            @JsonKey(name: 'user_uuid') String? userUuid,
+            @JsonKey(name: 'user_name') String? userName,
+            @JsonKey(name: 'user_photo') String? userPhoto,
+            @JsonKey(name: 'user_email') String? userEmail,
+            @JsonKey(name: 'user_phone') String? userPhone,
+            @JsonKey(name: 'user_phone_country_code')
+            String? userPhoneCountryCode,
+            @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+            @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+            @JsonKey(name: 'event_address') String? eventAddress,
+            @JsonKey(name: 'event_city') String? eventCity,
+            @JsonKey(name: 'event_latitude') double? eventLatitude,
+            @JsonKey(name: 'event_longitude') double? eventLongitude,
+            @JsonKey(name: 'event_type') EventType? eventType,
+            @JsonKey(name: 'guest_count') int? guestCount,
+            @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+            @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+            @JsonKey(name: 'quoted_amount') double? quotedAmount,
+            @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+            @JsonKey(name: 'messages_count') int messagesCount,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM():
+        return $default(
+            _that.reservationId,
+            _that.reservationUuid,
+            _that.status,
+            _that.bookingType,
+            _that.reservationDate,
+            _that.reservationTime,
+            _that.partySize,
+            _that.specialRequests,
+            _that.managerNotes,
+            _that.cancelledBy,
+            _that.cancelledAt,
+            _that.confirmedAt,
+            _that.rejectedAt,
+            _that.businessUuid,
+            _that.businessName,
+            _that.businessPhoto,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.businessAddress,
+            _that.businessCountry,
+            _that.userUuid,
+            _that.userName,
+            _that.userPhoto,
+            _that.userEmail,
+            _that.userPhone,
+            _that.userPhoneCountryCode,
+            _that.servicePackageUuid,
+            _that.servicePackageTitle,
+            _that.eventAddress,
+            _that.eventCity,
+            _that.eventLatitude,
+            _that.eventLongitude,
+            _that.eventType,
+            _that.guestCount,
+            _that.dietaryNotes,
+            _that.budgetEstimate,
+            _that.quotedAmount,
+            _that.quotedAt,
+            _that.messagesCount,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'reservation_id') int? reservationId,
+            @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+            ReservationStatus status,
+            @JsonKey(name: 'booking_type') BookingType bookingType,
+            @JsonKey(name: 'reservation_date') DateTime? reservationDate,
+            @JsonKey(name: 'reservation_time') String? reservationTime,
+            @JsonKey(name: 'party_size') int partySize,
+            @JsonKey(name: 'special_requests') String? specialRequests,
+            @JsonKey(name: 'manager_notes') String? managerNotes,
+            @JsonKey(name: 'cancelled_by') String? cancelledBy,
+            @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
+            @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+            @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_name') String? businessName,
+            @JsonKey(name: 'business_photo') String? businessPhoto,
+            @JsonKey(name: 'business_latitude') double? businessLatitude,
+            @JsonKey(name: 'business_longitude') double? businessLongitude,
+            @JsonKey(name: 'business_address') String? businessAddress,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
+            @JsonKey(name: 'user_uuid') String? userUuid,
+            @JsonKey(name: 'user_name') String? userName,
+            @JsonKey(name: 'user_photo') String? userPhoto,
+            @JsonKey(name: 'user_email') String? userEmail,
+            @JsonKey(name: 'user_phone') String? userPhone,
+            @JsonKey(name: 'user_phone_country_code')
+            String? userPhoneCountryCode,
+            @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+            @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+            @JsonKey(name: 'event_address') String? eventAddress,
+            @JsonKey(name: 'event_city') String? eventCity,
+            @JsonKey(name: 'event_latitude') double? eventLatitude,
+            @JsonKey(name: 'event_longitude') double? eventLongitude,
+            @JsonKey(name: 'event_type') EventType? eventType,
+            @JsonKey(name: 'guest_count') int? guestCount,
+            @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+            @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+            @JsonKey(name: 'quoted_amount') double? quotedAmount,
+            @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+            @JsonKey(name: 'messages_count') int messagesCount,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ReservationDM() when $default != null:
+        return $default(
+            _that.reservationId,
+            _that.reservationUuid,
+            _that.status,
+            _that.bookingType,
+            _that.reservationDate,
+            _that.reservationTime,
+            _that.partySize,
+            _that.specialRequests,
+            _that.managerNotes,
+            _that.cancelledBy,
+            _that.cancelledAt,
+            _that.confirmedAt,
+            _that.rejectedAt,
+            _that.businessUuid,
+            _that.businessName,
+            _that.businessPhoto,
+            _that.businessLatitude,
+            _that.businessLongitude,
+            _that.businessAddress,
+            _that.businessCountry,
+            _that.userUuid,
+            _that.userName,
+            _that.userPhoto,
+            _that.userEmail,
+            _that.userPhone,
+            _that.userPhoneCountryCode,
+            _that.servicePackageUuid,
+            _that.servicePackageTitle,
+            _that.eventAddress,
+            _that.eventCity,
+            _that.eventLatitude,
+            _that.eventLongitude,
+            _that.eventType,
+            _that.guestCount,
+            _that.dietaryNotes,
+            _that.budgetEstimate,
+            _that.quotedAmount,
+            _that.quotedAt,
+            _that.messagesCount,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$ReservationDMImpl extends _ReservationDM {
-  const _$ReservationDMImpl(
+class _ReservationDM extends ReservationDM {
+  const _ReservationDM(
       {@JsonKey(name: 'reservation_id') this.reservationId,
       @JsonKey(name: 'reservation_uuid') this.reservationUuid,
       this.status = ReservationStatus.pending,
@@ -1942,9 +3164,8 @@ class _$ReservationDMImpl extends _ReservationDM {
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt})
       : super._();
-
-  factory _$ReservationDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ReservationDMImplFromJson(json);
+  factory _ReservationDM.fromJson(Map<String, dynamic> json) =>
+      _$ReservationDMFromJson(json);
 
   @override
   @JsonKey(name: 'reservation_id')
@@ -2087,16 +3308,26 @@ class _$ReservationDMImpl extends _ReservationDM {
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
+  /// Create a copy of ReservationDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, userPhoneCountryCode: $userPhoneCountryCode, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ReservationDMCopyWith<_ReservationDM> get copyWith =>
+      __$ReservationDMCopyWithImpl<_ReservationDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ReservationDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ReservationDMImpl &&
+            other is _ReservationDM &&
             (identical(other.reservationId, reservationId) ||
                 other.reservationId == reservationId) &&
             (identical(other.reservationUuid, reservationUuid) ||
@@ -2227,216 +3458,289 @@ class _$ReservationDMImpl extends _ReservationDM {
         updatedAt
       ]);
 
-  /// Create a copy of ReservationDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ReservationDMImplCopyWith<_$ReservationDMImpl> get copyWith =>
-      __$$ReservationDMImplCopyWithImpl<_$ReservationDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ReservationDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ReservationDM(reservationId: $reservationId, reservationUuid: $reservationUuid, status: $status, bookingType: $bookingType, reservationDate: $reservationDate, reservationTime: $reservationTime, partySize: $partySize, specialRequests: $specialRequests, managerNotes: $managerNotes, cancelledBy: $cancelledBy, cancelledAt: $cancelledAt, confirmedAt: $confirmedAt, rejectedAt: $rejectedAt, businessUuid: $businessUuid, businessName: $businessName, businessPhoto: $businessPhoto, businessLatitude: $businessLatitude, businessLongitude: $businessLongitude, businessAddress: $businessAddress, businessCountry: $businessCountry, userUuid: $userUuid, userName: $userName, userPhoto: $userPhoto, userEmail: $userEmail, userPhone: $userPhone, userPhoneCountryCode: $userPhoneCountryCode, servicePackageUuid: $servicePackageUuid, servicePackageTitle: $servicePackageTitle, eventAddress: $eventAddress, eventCity: $eventCity, eventLatitude: $eventLatitude, eventLongitude: $eventLongitude, eventType: $eventType, guestCount: $guestCount, dietaryNotes: $dietaryNotes, budgetEstimate: $budgetEstimate, quotedAmount: $quotedAmount, quotedAt: $quotedAt, messagesCount: $messagesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
-abstract class _ReservationDM extends ReservationDM {
-  const factory _ReservationDM(
-      {@JsonKey(name: 'reservation_id') final int? reservationId,
-      @JsonKey(name: 'reservation_uuid') final String? reservationUuid,
-      final ReservationStatus status,
-      @JsonKey(name: 'booking_type') final BookingType bookingType,
-      @JsonKey(name: 'reservation_date') final DateTime? reservationDate,
-      @JsonKey(name: 'reservation_time') final String? reservationTime,
-      @JsonKey(name: 'party_size') final int partySize,
-      @JsonKey(name: 'special_requests') final String? specialRequests,
-      @JsonKey(name: 'manager_notes') final String? managerNotes,
-      @JsonKey(name: 'cancelled_by') final String? cancelledBy,
-      @JsonKey(name: 'cancelled_at') final DateTime? cancelledAt,
-      @JsonKey(name: 'confirmed_at') final DateTime? confirmedAt,
-      @JsonKey(name: 'rejected_at') final DateTime? rejectedAt,
-      @JsonKey(name: 'business_uuid') final String? businessUuid,
-      @JsonKey(name: 'business_name') final String? businessName,
-      @JsonKey(name: 'business_photo') final String? businessPhoto,
-      @JsonKey(name: 'business_latitude') final double? businessLatitude,
-      @JsonKey(name: 'business_longitude') final double? businessLongitude,
-      @JsonKey(name: 'business_address') final String? businessAddress,
+/// @nodoc
+abstract mixin class _$ReservationDMCopyWith<$Res>
+    implements $ReservationDMCopyWith<$Res> {
+  factory _$ReservationDMCopyWith(
+          _ReservationDM value, $Res Function(_ReservationDM) _then) =
+      __$ReservationDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'reservation_id') int? reservationId,
+      @JsonKey(name: 'reservation_uuid') String? reservationUuid,
+      ReservationStatus status,
+      @JsonKey(name: 'booking_type') BookingType bookingType,
+      @JsonKey(name: 'reservation_date') DateTime? reservationDate,
+      @JsonKey(name: 'reservation_time') String? reservationTime,
+      @JsonKey(name: 'party_size') int partySize,
+      @JsonKey(name: 'special_requests') String? specialRequests,
+      @JsonKey(name: 'manager_notes') String? managerNotes,
+      @JsonKey(name: 'cancelled_by') String? cancelledBy,
+      @JsonKey(name: 'cancelled_at') DateTime? cancelledAt,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
+      @JsonKey(name: 'rejected_at') DateTime? rejectedAt,
+      @JsonKey(name: 'business_uuid') String? businessUuid,
+      @JsonKey(name: 'business_name') String? businessName,
+      @JsonKey(name: 'business_photo') String? businessPhoto,
+      @JsonKey(name: 'business_latitude') double? businessLatitude,
+      @JsonKey(name: 'business_longitude') double? businessLongitude,
+      @JsonKey(name: 'business_address') String? businessAddress,
       @JsonKey(
           name: 'business_country',
           unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-      final FoodlyCountries? businessCountry,
-      @JsonKey(name: 'user_uuid') final String? userUuid,
-      @JsonKey(name: 'user_name') final String? userName,
-      @JsonKey(name: 'user_photo') final String? userPhoto,
-      @JsonKey(name: 'user_email') final String? userEmail,
-      @JsonKey(name: 'user_phone') final String? userPhone,
-      @JsonKey(name: 'user_phone_country_code')
-      final String? userPhoneCountryCode,
-      @JsonKey(name: 'service_package_uuid') final String? servicePackageUuid,
-      @JsonKey(name: 'service_package_title') final String? servicePackageTitle,
-      @JsonKey(name: 'event_address') final String? eventAddress,
-      @JsonKey(name: 'event_city') final String? eventCity,
-      @JsonKey(name: 'event_latitude') final double? eventLatitude,
-      @JsonKey(name: 'event_longitude') final double? eventLongitude,
-      @JsonKey(name: 'event_type') final EventType? eventType,
-      @JsonKey(name: 'guest_count') final int? guestCount,
-      @JsonKey(name: 'dietary_notes') final String? dietaryNotes,
-      @JsonKey(name: 'budget_estimate') final double? budgetEstimate,
-      @JsonKey(name: 'quoted_amount') final double? quotedAmount,
-      @JsonKey(name: 'quoted_at') final DateTime? quotedAt,
-      @JsonKey(name: 'messages_count') final int messagesCount,
-      @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'updated_at')
-      final DateTime? updatedAt}) = _$ReservationDMImpl;
-  const _ReservationDM._() : super._();
+      FoodlyCountries? businessCountry,
+      @JsonKey(name: 'user_uuid') String? userUuid,
+      @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'user_photo') String? userPhoto,
+      @JsonKey(name: 'user_email') String? userEmail,
+      @JsonKey(name: 'user_phone') String? userPhone,
+      @JsonKey(name: 'user_phone_country_code') String? userPhoneCountryCode,
+      @JsonKey(name: 'service_package_uuid') String? servicePackageUuid,
+      @JsonKey(name: 'service_package_title') String? servicePackageTitle,
+      @JsonKey(name: 'event_address') String? eventAddress,
+      @JsonKey(name: 'event_city') String? eventCity,
+      @JsonKey(name: 'event_latitude') double? eventLatitude,
+      @JsonKey(name: 'event_longitude') double? eventLongitude,
+      @JsonKey(name: 'event_type') EventType? eventType,
+      @JsonKey(name: 'guest_count') int? guestCount,
+      @JsonKey(name: 'dietary_notes') String? dietaryNotes,
+      @JsonKey(name: 'budget_estimate') double? budgetEstimate,
+      @JsonKey(name: 'quoted_amount') double? quotedAmount,
+      @JsonKey(name: 'quoted_at') DateTime? quotedAt,
+      @JsonKey(name: 'messages_count') int messagesCount,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+}
 
-  factory _ReservationDM.fromJson(Map<String, dynamic> json) =
-      _$ReservationDMImpl.fromJson;
+/// @nodoc
+class __$ReservationDMCopyWithImpl<$Res>
+    implements _$ReservationDMCopyWith<$Res> {
+  __$ReservationDMCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'reservation_id')
-  int? get reservationId;
-  @override
-  @JsonKey(name: 'reservation_uuid')
-  String? get reservationUuid;
-  @override
-  ReservationStatus get status;
-  @override
-  @JsonKey(name: 'booking_type')
-  BookingType get bookingType;
-  @override
-  @JsonKey(name: 'reservation_date')
-  DateTime? get reservationDate;
-  @override
-  @JsonKey(name: 'reservation_time')
-  String? get reservationTime;
-  @override
-  @JsonKey(name: 'party_size')
-  int get partySize;
-  @override
-  @JsonKey(name: 'special_requests')
-  String? get specialRequests;
-  @override
-  @JsonKey(name: 'manager_notes')
-  String? get managerNotes;
-  @override
-  @JsonKey(name: 'cancelled_by')
-  String? get cancelledBy;
-  @override
-  @JsonKey(name: 'cancelled_at')
-  DateTime? get cancelledAt;
-  @override
-  @JsonKey(name: 'confirmed_at')
-  DateTime? get confirmedAt;
-  @override
-  @JsonKey(name: 'rejected_at')
-  DateTime? get rejectedAt; // Business info
-  @override
-  @JsonKey(name: 'business_uuid')
-  String? get businessUuid;
-  @override
-  @JsonKey(name: 'business_name')
-  String? get businessName;
-  @override
-  @JsonKey(name: 'business_photo')
-  String? get businessPhoto;
-  @override
-  @JsonKey(name: 'business_latitude')
-  double? get businessLatitude;
-  @override
-  @JsonKey(name: 'business_longitude')
-  double? get businessLongitude;
-  @override
-  @JsonKey(name: 'business_address')
-  String?
-      get businessAddress; // Country of the business that owns the reservation. Used by the
-// customer-facing reservation_card to render the quoted_amount in the
-// right currency (€ / $ / ARS / Bs / etc.) instead of always assuming €.
-// [unknownEnumValue: nullForUndefinedEnumValue] is the defensive pattern
-// captured in feedback_defensive_json_enums.md — if the BE ever ships a
-// country we don't have in [FoodlyCountries] (e.g. Brazil in Phase 3),
-// the whole reservations list MUST NOT fail to deserialize. We just
-// fall back to the global '$' default at the consumer site.
-  @override
-  @JsonKey(
-      name: 'business_country',
-      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
-  FoodlyCountries? get businessCountry; // User info
-  @override
-  @JsonKey(name: 'user_uuid')
-  String? get userUuid;
-  @override
-  @JsonKey(name: 'user_name')
-  String? get userName;
-  @override
-  @JsonKey(name: 'user_photo')
-  String? get userPhoto;
-  @override
-  @JsonKey(name: 'user_email')
-  String? get userEmail;
-  @override
-  @JsonKey(name: 'user_phone')
-  String?
-      get userPhone; // ISO del país del teléfono cuando `userPhone` es nacional (sin snapshot).
-// Si hay snapshot, viene null porque `userPhone` ya es E.164. Se usa para
-// componer el número internacional (display + botón de llamar).
-  @override
-  @JsonKey(name: 'user_phone_country_code')
-  String?
-      get userPhoneCountryCode; // Service booking fields (only present when booking_type = service)
-  @override
-  @JsonKey(name: 'service_package_uuid')
-  String? get servicePackageUuid;
-  @override
-  @JsonKey(name: 'service_package_title')
-  String? get servicePackageTitle;
-  @override
-  @JsonKey(name: 'event_address')
-  String? get eventAddress;
-  @override
-  @JsonKey(name: 'event_city')
-  String? get eventCity;
-  @override
-  @JsonKey(name: 'event_latitude')
-  double? get eventLatitude;
-  @override
-  @JsonKey(name: 'event_longitude')
-  double? get eventLongitude;
-  @override
-  @JsonKey(name: 'event_type')
-  EventType? get eventType;
-  @override
-  @JsonKey(name: 'guest_count')
-  int? get guestCount;
-  @override
-  @JsonKey(name: 'dietary_notes')
-  String? get dietaryNotes;
-  @override
-  @JsonKey(name: 'budget_estimate')
-  double? get budgetEstimate;
-  @override
-  @JsonKey(name: 'quoted_amount')
-  double? get quotedAmount;
-  @override
-  @JsonKey(name: 'quoted_at')
-  DateTime? get quotedAt;
-  @override
-  @JsonKey(name: 'messages_count')
-  int get messagesCount; // Timestamps
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt;
+  final _ReservationDM _self;
+  final $Res Function(_ReservationDM) _then;
 
   /// Create a copy of ReservationDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ReservationDMImplCopyWith<_$ReservationDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? reservationId = freezed,
+    Object? reservationUuid = freezed,
+    Object? status = null,
+    Object? bookingType = null,
+    Object? reservationDate = freezed,
+    Object? reservationTime = freezed,
+    Object? partySize = null,
+    Object? specialRequests = freezed,
+    Object? managerNotes = freezed,
+    Object? cancelledBy = freezed,
+    Object? cancelledAt = freezed,
+    Object? confirmedAt = freezed,
+    Object? rejectedAt = freezed,
+    Object? businessUuid = freezed,
+    Object? businessName = freezed,
+    Object? businessPhoto = freezed,
+    Object? businessLatitude = freezed,
+    Object? businessLongitude = freezed,
+    Object? businessAddress = freezed,
+    Object? businessCountry = freezed,
+    Object? userUuid = freezed,
+    Object? userName = freezed,
+    Object? userPhoto = freezed,
+    Object? userEmail = freezed,
+    Object? userPhone = freezed,
+    Object? userPhoneCountryCode = freezed,
+    Object? servicePackageUuid = freezed,
+    Object? servicePackageTitle = freezed,
+    Object? eventAddress = freezed,
+    Object? eventCity = freezed,
+    Object? eventLatitude = freezed,
+    Object? eventLongitude = freezed,
+    Object? eventType = freezed,
+    Object? guestCount = freezed,
+    Object? dietaryNotes = freezed,
+    Object? budgetEstimate = freezed,
+    Object? quotedAmount = freezed,
+    Object? quotedAt = freezed,
+    Object? messagesCount = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_ReservationDM(
+      reservationId: freezed == reservationId
+          ? _self.reservationId
+          : reservationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      reservationUuid: freezed == reservationUuid
+          ? _self.reservationUuid
+          : reservationUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ReservationStatus,
+      bookingType: null == bookingType
+          ? _self.bookingType
+          : bookingType // ignore: cast_nullable_to_non_nullable
+              as BookingType,
+      reservationDate: freezed == reservationDate
+          ? _self.reservationDate
+          : reservationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      reservationTime: freezed == reservationTime
+          ? _self.reservationTime
+          : reservationTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      partySize: null == partySize
+          ? _self.partySize
+          : partySize // ignore: cast_nullable_to_non_nullable
+              as int,
+      specialRequests: freezed == specialRequests
+          ? _self.specialRequests
+          : specialRequests // ignore: cast_nullable_to_non_nullable
+              as String?,
+      managerNotes: freezed == managerNotes
+          ? _self.managerNotes
+          : managerNotes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cancelledBy: freezed == cancelledBy
+          ? _self.cancelledBy
+          : cancelledBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cancelledAt: freezed == cancelledAt
+          ? _self.cancelledAt
+          : cancelledAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      confirmedAt: freezed == confirmedAt
+          ? _self.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      rejectedAt: freezed == rejectedAt
+          ? _self.rejectedAt
+          : rejectedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      businessUuid: freezed == businessUuid
+          ? _self.businessUuid
+          : businessUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessName: freezed == businessName
+          ? _self.businessName
+          : businessName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessPhoto: freezed == businessPhoto
+          ? _self.businessPhoto
+          : businessPhoto // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessLatitude: freezed == businessLatitude
+          ? _self.businessLatitude
+          : businessLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessLongitude: freezed == businessLongitude
+          ? _self.businessLongitude
+          : businessLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      businessAddress: freezed == businessAddress
+          ? _self.businessAddress
+          : businessAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessCountry: freezed == businessCountry
+          ? _self.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
+      userUuid: freezed == userUuid
+          ? _self.userUuid
+          : userUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _self.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userPhoto: freezed == userPhoto
+          ? _self.userPhoto
+          : userPhoto // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userEmail: freezed == userEmail
+          ? _self.userEmail
+          : userEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userPhone: freezed == userPhone
+          ? _self.userPhone
+          : userPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userPhoneCountryCode: freezed == userPhoneCountryCode
+          ? _self.userPhoneCountryCode
+          : userPhoneCountryCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageUuid: freezed == servicePackageUuid
+          ? _self.servicePackageUuid
+          : servicePackageUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageTitle: freezed == servicePackageTitle
+          ? _self.servicePackageTitle
+          : servicePackageTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventAddress: freezed == eventAddress
+          ? _self.eventAddress
+          : eventAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventCity: freezed == eventCity
+          ? _self.eventCity
+          : eventCity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      eventLatitude: freezed == eventLatitude
+          ? _self.eventLatitude
+          : eventLatitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventLongitude: freezed == eventLongitude
+          ? _self.eventLongitude
+          : eventLongitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      eventType: freezed == eventType
+          ? _self.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as EventType?,
+      guestCount: freezed == guestCount
+          ? _self.guestCount
+          : guestCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dietaryNotes: freezed == dietaryNotes
+          ? _self.dietaryNotes
+          : dietaryNotes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      budgetEstimate: freezed == budgetEstimate
+          ? _self.budgetEstimate
+          : budgetEstimate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAmount: freezed == quotedAmount
+          ? _self.quotedAmount
+          : quotedAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      quotedAt: freezed == quotedAt
+          ? _self.quotedAt
+          : quotedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      messagesCount: null == messagesCount
+          ? _self.messagesCount
+          : messagesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
+
+// dart format on

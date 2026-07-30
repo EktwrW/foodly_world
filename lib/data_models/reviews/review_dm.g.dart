@@ -6,9 +6,8 @@ part of 'review_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReviewsResponseDMImpl _$$ReviewsResponseDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ReviewsResponseDMImpl(
+_ReviewsResponseDM _$ReviewsResponseDMFromJson(Map<String, dynamic> json) =>
+    _ReviewsResponseDM(
       reviews: (json['reviews'] as List<dynamic>?)
               ?.map((e) => ReviewDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,15 +17,14 @@ _$ReviewsResponseDMImpl _$$ReviewsResponseDMImplFromJson(
           : ReviewsMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReviewsResponseDMImplToJson(
-        _$ReviewsResponseDMImpl instance) =>
+Map<String, dynamic> _$ReviewsResponseDMToJson(_ReviewsResponseDM instance) =>
     <String, dynamic>{
       'reviews': instance.reviews.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$ReviewsMetaDMImpl _$$ReviewsMetaDMImplFromJson(Map<String, dynamic> json) =>
-    _$ReviewsMetaDMImpl(
+_ReviewsMetaDM _$ReviewsMetaDMFromJson(Map<String, dynamic> json) =>
+    _ReviewsMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
@@ -35,7 +33,7 @@ _$ReviewsMetaDMImpl _$$ReviewsMetaDMImplFromJson(Map<String, dynamic> json) =>
       ratingsCount: (json['ratings_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ReviewsMetaDMImplToJson(_$ReviewsMetaDMImpl instance) =>
+Map<String, dynamic> _$ReviewsMetaDMToJson(_ReviewsMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -45,25 +43,25 @@ Map<String, dynamic> _$$ReviewsMetaDMImplToJson(_$ReviewsMetaDMImpl instance) =>
       'ratings_count': instance.ratingsCount,
     };
 
-_$ReviewCheckResponseDMImpl _$$ReviewCheckResponseDMImplFromJson(
+_ReviewCheckResponseDM _$ReviewCheckResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReviewCheckResponseDMImpl(
+    _ReviewCheckResponseDM(
       hasReviewed: json['has_reviewed'] as bool? ?? false,
       review: json['review'] == null
           ? null
           : ReviewDM.fromJson(json['review'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReviewCheckResponseDMImplToJson(
-        _$ReviewCheckResponseDMImpl instance) =>
+Map<String, dynamic> _$ReviewCheckResponseDMToJson(
+        _ReviewCheckResponseDM instance) =>
     <String, dynamic>{
       'has_reviewed': instance.hasReviewed,
       if (instance.review?.toJson() case final value?) 'review': value,
     };
 
-_$ReviewCreateResponseDMImpl _$$ReviewCreateResponseDMImplFromJson(
+_ReviewCreateResponseDM _$ReviewCreateResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReviewCreateResponseDMImpl(
+    _ReviewCreateResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       review: json['review'] == null
@@ -71,17 +69,17 @@ _$ReviewCreateResponseDMImpl _$$ReviewCreateResponseDMImplFromJson(
           : ReviewDM.fromJson(json['review'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReviewCreateResponseDMImplToJson(
-        _$ReviewCreateResponseDMImpl instance) =>
+Map<String, dynamic> _$ReviewCreateResponseDMToJson(
+        _ReviewCreateResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
       if (instance.review?.toJson() case final value?) 'review': value,
     };
 
-_$ReviewUpdateResponseDMImpl _$$ReviewUpdateResponseDMImplFromJson(
+_ReviewUpdateResponseDM _$ReviewUpdateResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReviewUpdateResponseDMImpl(
+    _ReviewUpdateResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       review: json['review'] == null
@@ -89,28 +87,27 @@ _$ReviewUpdateResponseDMImpl _$$ReviewUpdateResponseDMImplFromJson(
           : ReviewDM.fromJson(json['review'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReviewUpdateResponseDMImplToJson(
-        _$ReviewUpdateResponseDMImpl instance) =>
+Map<String, dynamic> _$ReviewUpdateResponseDMToJson(
+        _ReviewUpdateResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
       if (instance.review?.toJson() case final value?) 'review': value,
     };
 
-_$ReviewPhotoDMImpl _$$ReviewPhotoDMImplFromJson(Map<String, dynamic> json) =>
-    _$ReviewPhotoDMImpl(
+_ReviewPhotoDM _$ReviewPhotoDMFromJson(Map<String, dynamic> json) =>
+    _ReviewPhotoDM(
       photoUuid: json['photo_uuid'] as String?,
       photoUrl: json['photo_url'] as String?,
     );
 
-Map<String, dynamic> _$$ReviewPhotoDMImplToJson(_$ReviewPhotoDMImpl instance) =>
+Map<String, dynamic> _$ReviewPhotoDMToJson(_ReviewPhotoDM instance) =>
     <String, dynamic>{
       if (instance.photoUuid case final value?) 'photo_uuid': value,
       if (instance.photoUrl case final value?) 'photo_url': value,
     };
 
-_$ReviewDMImpl _$$ReviewDMImplFromJson(Map<String, dynamic> json) =>
-    _$ReviewDMImpl(
+_ReviewDM _$ReviewDMFromJson(Map<String, dynamic> json) => _ReviewDM(
       reviewId: (json['review_id'] as num?)?.toInt(),
       reviewUuid: json['review_uuid'] as String?,
       reviewType: $enumDecodeNullable(_$ReviewTypeEnumMap, json['review_type']),
@@ -137,8 +134,7 @@ _$ReviewDMImpl _$$ReviewDMImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ReviewDMImplToJson(_$ReviewDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ReviewDMToJson(_ReviewDM instance) => <String, dynamic>{
       if (instance.reviewId case final value?) 'review_id': value,
       if (instance.reviewUuid case final value?) 'review_uuid': value,
       if (_$ReviewTypeEnumMap[instance.reviewType] case final value?)

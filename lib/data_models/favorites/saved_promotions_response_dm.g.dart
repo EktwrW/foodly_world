@@ -6,9 +6,9 @@ part of 'saved_promotions_response_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SavedPromoBusinessDMImpl _$$SavedPromoBusinessDMImplFromJson(
+_SavedPromoBusinessDM _$SavedPromoBusinessDMFromJson(
         Map<String, dynamic> json) =>
-    _$SavedPromoBusinessDMImpl(
+    _SavedPromoBusinessDM(
       uuid: json['uuid'] as String,
       name: json['name'] as String,
       logo: json['logo'] as String?,
@@ -19,8 +19,8 @@ _$SavedPromoBusinessDMImpl _$$SavedPromoBusinessDMImplFromJson(
       hoursDisplay: json['hours_display'] as String?,
     );
 
-Map<String, dynamic> _$$SavedPromoBusinessDMImplToJson(
-        _$SavedPromoBusinessDMImpl instance) =>
+Map<String, dynamic> _$SavedPromoBusinessDMToJson(
+        _SavedPromoBusinessDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,
@@ -33,9 +33,9 @@ Map<String, dynamic> _$$SavedPromoBusinessDMImplToJson(
       if (instance.hoursDisplay case final value?) 'hours_display': value,
     };
 
-_$SavedPromotionsResponseDMImpl _$$SavedPromotionsResponseDMImplFromJson(
+_SavedPromotionsResponseDM _$SavedPromotionsResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$SavedPromotionsResponseDMImpl(
+    _SavedPromotionsResponseDM(
       data: (json['data'] as List<dynamic>?)
               ?.map(
                   (e) => NearbyPromotionDM.fromJson(e as Map<String, dynamic>))
@@ -51,22 +51,20 @@ _$SavedPromotionsResponseDMImpl _$$SavedPromotionsResponseDMImplFromJson(
           : SavedPromosMeta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$SavedPromotionsResponseDMImplToJson(
-        _$SavedPromotionsResponseDMImpl instance) =>
+Map<String, dynamic> _$SavedPromotionsResponseDMToJson(
+        _SavedPromotionsResponseDM instance) =>
     <String, dynamic>{
       'data': instance.data.map((e) => e.toJson()).toList(),
       'businesses': instance.businesses.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$SavedPromosMetaImpl _$$SavedPromosMetaImplFromJson(
-        Map<String, dynamic> json) =>
-    _$SavedPromosMetaImpl(
+_SavedPromosMeta _$SavedPromosMetaFromJson(Map<String, dynamic> json) =>
+    _SavedPromosMeta(
       total: (json['total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$SavedPromosMetaImplToJson(
-        _$SavedPromosMetaImpl instance) =>
+Map<String, dynamic> _$SavedPromosMetaToJson(_SavedPromosMeta instance) =>
     <String, dynamic>{
       'total': instance.total,
     };

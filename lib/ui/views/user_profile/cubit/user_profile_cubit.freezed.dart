@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,66 +9,104 @@ part of 'user_profile_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+/// @nodoc
+mixin _$UserProfileState implements DiagnosticableTreeMixin {
+  UserProfileVM get vm;
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $UserProfileStateCopyWith<UserProfileState> get copyWith =>
+      _$UserProfileStateCopyWithImpl<UserProfileState>(
+          this as UserProfileState, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'UserProfileState'))
+      ..add(DiagnosticsProperty('vm', vm));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UserProfileState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState(vm: $vm)';
+  }
+}
 
 /// @nodoc
-mixin _$UserProfileState {
-  UserProfileVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+abstract mixin class $UserProfileStateCopyWith<$Res> {
+  factory $UserProfileStateCopyWith(
+          UserProfileState value, $Res Function(UserProfileState) _then) =
+      _$UserProfileStateCopyWithImpl;
+  @useResult
+  $Res call({UserProfileVM vm});
+
+  $UserProfileVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class _$UserProfileStateCopyWithImpl<$Res>
+    implements $UserProfileStateCopyWith<$Res> {
+  _$UserProfileStateCopyWithImpl(this._self, this._then);
+
+  final UserProfileState _self;
+  final $Res Function(UserProfileState) _then;
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_self.copyWith(
+      vm: null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as UserProfileVM,
+    ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [UserProfileState].
+extension UserProfileStatePatterns on UserProfileState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -78,117 +116,245 @@ mixin _$UserProfileState {
     TResult Function(_UserUpdated value)? userUpdated,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserProfileStateCopyWith<UserProfileState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UserProfileStateCopyWith<$Res> {
-  factory $UserProfileStateCopyWith(
-          UserProfileState value, $Res Function(UserProfileState) then) =
-      _$UserProfileStateCopyWithImpl<$Res, UserProfileState>;
-  @useResult
-  $Res call({UserProfileVM vm});
-
-  $UserProfileVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class _$UserProfileStateCopyWithImpl<$Res, $Val extends UserProfileState>
-    implements $UserProfileStateCopyWith<$Res> {
-  _$UserProfileStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
   }) {
-    return _then(_value.copyWith(
-      vm: null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as UserProfileVM,
-    ) as $Val);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _UpdatingProfilePicture() when updatingProfilePicture != null:
+        return updatingProfilePicture(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _UserUpdated() when userUpdated != null:
+        return userUpdated(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
   }
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserProfileVMCopyWith<$Res> get vm {
-    return $UserProfileVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
-    });
-  }
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $UserProfileStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({UserProfileVM vm});
-
-  @override
-  $UserProfileVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UpdatingProfilePicture value)
+        updatingProfilePicture,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_UserUpdated value) userUpdated,
+    required TResult Function(_Error value) error,
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as UserProfileVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _UpdatingProfilePicture():
+        return updatingProfilePicture(_that);
+      case _Loaded():
+        return loaded(_that);
+      case _UserUpdated():
+        return userUpdated(_that);
+      case _Error():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_UserUpdated value)? userUpdated,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _UpdatingProfilePicture() when updatingProfilePicture != null:
+        return updatingProfilePicture(_that);
+      case _Loaded() when loaded != null:
+        return loaded(_that);
+      case _UserUpdated() when userUpdated != null:
+        return userUpdated(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(UserProfileVM vm)? initial,
+    TResult Function(UserProfileVM vm)? loading,
+    TResult Function(UserProfileVM vm)? updatingProfilePicture,
+    TResult Function(UserProfileVM vm)? loaded,
+    TResult Function(UserProfileVM vm, String msg)? userUpdated,
+    TResult Function(String message, UserProfileVM vm)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _UpdatingProfilePicture() when updatingProfilePicture != null:
+        return updatingProfilePicture(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _UserUpdated() when userUpdated != null:
+        return userUpdated(_that.vm, _that.msg);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(UserProfileVM vm) initial,
+    required TResult Function(UserProfileVM vm) loading,
+    required TResult Function(UserProfileVM vm) updatingProfilePicture,
+    required TResult Function(UserProfileVM vm) loaded,
+    required TResult Function(UserProfileVM vm, String msg) userUpdated,
+    required TResult Function(String message, UserProfileVM vm) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Loading():
+        return loading(_that.vm);
+      case _UpdatingProfilePicture():
+        return updatingProfilePicture(_that.vm);
+      case _Loaded():
+        return loaded(_that.vm);
+      case _UserUpdated():
+        return userUpdated(_that.vm, _that.msg);
+      case _Error():
+        return error(_that.message, _that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(UserProfileVM vm)? initial,
+    TResult? Function(UserProfileVM vm)? loading,
+    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
+    TResult? Function(UserProfileVM vm)? loaded,
+    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
+    TResult? Function(String message, UserProfileVM vm)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _UpdatingProfilePicture() when updatingProfilePicture != null:
+        return updatingProfilePicture(_that.vm);
+      case _Loaded() when loaded != null:
+        return loaded(_that.vm);
+      case _UserUpdated() when userUpdated != null:
+        return userUpdated(_that.vm, _that.msg);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial with DiagnosticableTreeMixin implements UserProfileState {
+  const _Initial(this.vm);
 
   @override
   final UserProfileVM vm;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.initial(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState.initial'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -198,129 +364,24 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _Initial &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) {
-    return initial(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.initial(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements UserProfileState {
-  const factory _Initial(final UserProfileVM vm) = _$InitialImpl;
-
-  @override
-  UserProfileVM get vm;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $UserProfileStateCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -330,45 +391,56 @@ abstract class _$$LoadingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadingImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
-  _$LoadingImpl(this.vm);
+class _Loading with DiagnosticableTreeMixin implements UserProfileState {
+  _Loading(this.vm);
 
   @override
   final UserProfileVM vm;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.loading(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState.loading'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -378,130 +450,24 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
+            other is _Loading &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) {
-    return loading(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.loading(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return loading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements UserProfileState {
-  factory _Loading(final UserProfileVM vm) = _$LoadingImpl;
-
-  @override
-  UserProfileVM get vm;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UpdatingProfilePictureImplCopyWith<$Res>
+abstract mixin class _$LoadingCopyWith<$Res>
     implements $UserProfileStateCopyWith<$Res> {
-  factory _$$UpdatingProfilePictureImplCopyWith(
-          _$UpdatingProfilePictureImpl value,
-          $Res Function(_$UpdatingProfilePictureImpl) then) =
-      __$$UpdatingProfilePictureImplCopyWithImpl<$Res>;
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -511,48 +477,59 @@ abstract class _$$UpdatingProfilePictureImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UpdatingProfilePictureImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UpdatingProfilePictureImpl>
-    implements _$$UpdatingProfilePictureImplCopyWith<$Res> {
-  __$$UpdatingProfilePictureImplCopyWithImpl(
-      _$UpdatingProfilePictureImpl _value,
-      $Res Function(_$UpdatingProfilePictureImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$UpdatingProfilePictureImpl(
+    return _then(_Loading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UpdatingProfilePictureImpl
+class _UpdatingProfilePicture
     with DiagnosticableTreeMixin
-    implements _UpdatingProfilePicture {
-  _$UpdatingProfilePictureImpl(this.vm);
+    implements UserProfileState {
+  _UpdatingProfilePicture(this.vm);
 
   @override
   final UserProfileVM vm;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.updatingProfilePicture(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UpdatingProfilePictureCopyWith<_UpdatingProfilePicture> get copyWith =>
+      __$UpdatingProfilePictureCopyWithImpl<_UpdatingProfilePicture>(
+          this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty(
           'type', 'UserProfileState.updatingProfilePicture'))
@@ -563,131 +540,25 @@ class _$UpdatingProfilePictureImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatingProfilePictureImpl &&
+            other is _UpdatingProfilePicture &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UpdatingProfilePictureImplCopyWith<_$UpdatingProfilePictureImpl>
-      get copyWith => __$$UpdatingProfilePictureImplCopyWithImpl<
-          _$UpdatingProfilePictureImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) {
-    return updatingProfilePicture(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.updatingProfilePicture(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return updatingProfilePicture?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (updatingProfilePicture != null) {
-      return updatingProfilePicture(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return updatingProfilePicture(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return updatingProfilePicture?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (updatingProfilePicture != null) {
-      return updatingProfilePicture(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UpdatingProfilePicture implements UserProfileState {
-  factory _UpdatingProfilePicture(final UserProfileVM vm) =
-      _$UpdatingProfilePictureImpl;
-
-  @override
-  UserProfileVM get vm;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdatingProfilePictureImplCopyWith<_$UpdatingProfilePictureImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LoadedImplCopyWith<$Res>
+abstract mixin class _$UpdatingProfilePictureCopyWith<$Res>
     implements $UserProfileStateCopyWith<$Res> {
-  factory _$$LoadedImplCopyWith(
-          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
-      __$$LoadedImplCopyWithImpl<$Res>;
+  factory _$UpdatingProfilePictureCopyWith(_UpdatingProfilePicture value,
+          $Res Function(_UpdatingProfilePicture) _then) =
+      __$UpdatingProfilePictureCopyWithImpl;
   @override
   @useResult
   $Res call({UserProfileVM vm});
@@ -697,45 +568,57 @@ abstract class _$$LoadedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$LoadedImpl>
-    implements _$$LoadedImplCopyWith<$Res> {
-  __$$LoadedImplCopyWithImpl(
-      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
-      : super(_value, _then);
+class __$UpdatingProfilePictureCopyWithImpl<$Res>
+    implements _$UpdatingProfilePictureCopyWith<$Res> {
+  __$UpdatingProfilePictureCopyWithImpl(this._self, this._then);
+
+  final _UpdatingProfilePicture _self;
+  final $Res Function(_UpdatingProfilePicture) _then;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$LoadedImpl(
+    return _then(_UpdatingProfilePicture(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
     ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
-  _$LoadedImpl(this.vm);
+class _Loaded with DiagnosticableTreeMixin implements UserProfileState {
+  _Loaded(this.vm);
 
   @override
   final UserProfileVM vm;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.loaded(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState.loaded'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -745,184 +628,84 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements _Loaded {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadedImpl &&
+            other is _Loaded &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) {
-    return loaded(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.loaded(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return loaded?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements UserProfileState {
-  factory _Loaded(final UserProfileVM vm) = _$LoadedImpl;
-
-  @override
-  UserProfileVM get vm;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserUpdatedImplCopyWith<$Res>
+abstract mixin class _$LoadedCopyWith<$Res>
     implements $UserProfileStateCopyWith<$Res> {
-  factory _$$UserUpdatedImplCopyWith(
-          _$UserUpdatedImpl value, $Res Function(_$UserUpdatedImpl) then) =
-      __$$UserUpdatedImplCopyWithImpl<$Res>;
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) =
+      __$LoadedCopyWithImpl;
   @override
   @useResult
-  $Res call({UserProfileVM vm, String msg});
+  $Res call({UserProfileVM vm});
 
   @override
   $UserProfileVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$UserUpdatedImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$UserUpdatedImpl>
-    implements _$$UserUpdatedImplCopyWith<$Res> {
-  __$$UserUpdatedImplCopyWithImpl(
-      _$UserUpdatedImpl _value, $Res Function(_$UserUpdatedImpl) _then)
-      : super(_value, _then);
+class __$LoadedCopyWithImpl<$Res> implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(this._self, this._then);
+
+  final _Loaded _self;
+  final $Res Function(_Loaded) _then;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
-    Object? msg = null,
   }) {
-    return _then(_$UserUpdatedImpl(
+    return _then(_Loaded(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
-      null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$UserUpdatedImpl with DiagnosticableTreeMixin implements _UserUpdated {
-  _$UserUpdatedImpl(this.vm, this.msg);
+class _UserUpdated with DiagnosticableTreeMixin implements UserProfileState {
+  _UserUpdated(this.vm, this.msg);
 
   @override
   final UserProfileVM vm;
-  @override
   final String msg;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.userUpdated(vm: $vm, msg: $msg)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UserUpdatedCopyWith<_UserUpdated> get copyWith =>
+      __$UserUpdatedCopyWithImpl<_UserUpdated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState.userUpdated'))
       ..add(DiagnosticsProperty('vm', vm))
@@ -933,7 +716,7 @@ class _$UserUpdatedImpl with DiagnosticableTreeMixin implements _UserUpdated {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserUpdatedImpl &&
+            other is _UserUpdated &&
             (identical(other.vm, vm) || other.vm == vm) &&
             (identical(other.msg, msg) || other.msg == msg));
   }
@@ -941,179 +724,83 @@ class _$UserUpdatedImpl with DiagnosticableTreeMixin implements _UserUpdated {
   @override
   int get hashCode => Object.hash(runtimeType, vm, msg);
 
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
-      __$$UserUpdatedImplCopyWithImpl<_$UserUpdatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
-  }) {
-    return userUpdated(vm, msg);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.userUpdated(vm: $vm, msg: $msg)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return userUpdated?.call(vm, msg);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (userUpdated != null) {
-      return userUpdated(vm, msg);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return userUpdated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return userUpdated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (userUpdated != null) {
-      return userUpdated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UserUpdated implements UserProfileState {
-  factory _UserUpdated(final UserProfileVM vm, final String msg) =
-      _$UserUpdatedImpl;
-
-  @override
-  UserProfileVM get vm;
-  String get msg;
-
-  /// Create a copy of UserProfileState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserUpdatedImplCopyWith<_$UserUpdatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$UserUpdatedCopyWith<$Res>
     implements $UserProfileStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$UserUpdatedCopyWith(
+          _UserUpdated value, $Res Function(_UserUpdated) _then) =
+      __$UserUpdatedCopyWithImpl;
   @override
   @useResult
-  $Res call({String message, UserProfileVM vm});
+  $Res call({UserProfileVM vm, String msg});
 
   @override
   $UserProfileVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$UserProfileStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$UserUpdatedCopyWithImpl<$Res> implements _$UserUpdatedCopyWith<$Res> {
+  __$UserUpdatedCopyWithImpl(this._self, this._then);
+
+  final _UserUpdated _self;
+  final $Res Function(_UserUpdated) _then;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? message = null,
     Object? vm = null,
+    Object? msg = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_UserUpdated(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as UserProfileVM,
+      null == msg
+          ? _self.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
+  }
+
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  _$ErrorImpl(this.message, this.vm);
+class _Error with DiagnosticableTreeMixin implements UserProfileState {
+  _Error(this.message, this.vm);
 
-  @override
   final String message;
   @override
   final UserProfileVM vm;
 
+  /// Create a copy of UserProfileState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState.error(message: $message, vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState.error'))
       ..add(DiagnosticsProperty('message', message))
@@ -1124,7 +811,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.vm, vm) || other.vm == vm));
   }
@@ -1132,113 +819,61 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message, vm);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileState.error(message: $message, vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $UserProfileStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String message, UserProfileVM vm});
+
+  @override
+  $UserProfileVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(UserProfileVM vm) initial,
-    required TResult Function(UserProfileVM vm) loading,
-    required TResult Function(UserProfileVM vm) updatingProfilePicture,
-    required TResult Function(UserProfileVM vm) loaded,
-    required TResult Function(UserProfileVM vm, String msg) userUpdated,
-    required TResult Function(String message, UserProfileVM vm) error,
+  $Res call({
+    Object? message = null,
+    Object? vm = null,
   }) {
-    return error(message, vm);
+    return _then(_Error(
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as UserProfileVM,
+    ));
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserProfileVM vm)? initial,
-    TResult? Function(UserProfileVM vm)? loading,
-    TResult? Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult? Function(UserProfileVM vm)? loaded,
-    TResult? Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult? Function(String message, UserProfileVM vm)? error,
-  }) {
-    return error?.call(message, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserProfileVM vm)? initial,
-    TResult Function(UserProfileVM vm)? loading,
-    TResult Function(UserProfileVM vm)? updatingProfilePicture,
-    TResult Function(UserProfileVM vm)? loaded,
-    TResult Function(UserProfileVM vm, String msg)? userUpdated,
-    TResult Function(String message, UserProfileVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UpdatingProfilePicture value)
-        updatingProfilePicture,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_UserUpdated value) userUpdated,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_UserUpdated value)? userUpdated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UpdatingProfilePicture value)? updatingProfilePicture,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_UserUpdated value)? userUpdated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements UserProfileState {
-  factory _Error(final String message, final UserProfileVM vm) = _$ErrorImpl;
-
-  String get message;
-  @override
-  UserProfileVM get vm;
 
   /// Create a copy of UserProfileState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $UserProfileVMCopyWith<$Res> get vm {
+    return $UserProfileVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
 }
+
+// dart format on

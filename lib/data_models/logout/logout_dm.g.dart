@@ -6,12 +6,10 @@ part of 'logout_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$LogoutDMImpl _$$LogoutDMImplFromJson(Map<String, dynamic> json) =>
-    _$LogoutDMImpl(
+_LogoutDM _$LogoutDMFromJson(Map<String, dynamic> json) => _LogoutDM(
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$$LogoutDMImplToJson(_$LogoutDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$LogoutDMToJson(_LogoutDM instance) => <String, dynamic>{
       if (instance.message case final value?) 'message': value,
     };

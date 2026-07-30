@@ -6,8 +6,8 @@ part of 'buzz_item_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BuzzResponseDMImpl _$$BuzzResponseDMImplFromJson(Map<String, dynamic> json) =>
-    _$BuzzResponseDMImpl(
+_BuzzResponseDM _$BuzzResponseDMFromJson(Map<String, dynamic> json) =>
+    _BuzzResponseDM(
       data: (json['data'] as List<dynamic>?)
               ?.map((e) => BuzzItemDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -17,22 +17,20 @@ _$BuzzResponseDMImpl _$$BuzzResponseDMImplFromJson(Map<String, dynamic> json) =>
           : BuzzMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$BuzzResponseDMImplToJson(
-        _$BuzzResponseDMImpl instance) =>
+Map<String, dynamic> _$BuzzResponseDMToJson(_BuzzResponseDM instance) =>
     <String, dynamic>{
       'data': instance.data.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$BuzzMetaDMImpl _$$BuzzMetaDMImplFromJson(Map<String, dynamic> json) =>
-    _$BuzzMetaDMImpl(
+_BuzzMetaDM _$BuzzMetaDMFromJson(Map<String, dynamic> json) => _BuzzMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
       total: (json['total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$BuzzMetaDMImplToJson(_$BuzzMetaDMImpl instance) =>
+Map<String, dynamic> _$BuzzMetaDMToJson(_BuzzMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -40,8 +38,7 @@ Map<String, dynamic> _$$BuzzMetaDMImplToJson(_$BuzzMetaDMImpl instance) =>
       'total': instance.total,
     };
 
-_$BuzzItemDMImpl _$$BuzzItemDMImplFromJson(Map<String, dynamic> json) =>
-    _$BuzzItemDMImpl(
+_BuzzItemDM _$BuzzItemDMFromJson(Map<String, dynamic> json) => _BuzzItemDM(
       uuid: json['uuid'] as String,
       message: json['message'] as String? ?? '',
       subType: json['sub_type'] as String? ?? '',
@@ -59,7 +56,7 @@ _$BuzzItemDMImpl _$$BuzzItemDMImplFromJson(Map<String, dynamic> json) =>
       actorPhotoUrl: json['actor_photo_url'] as String?,
     );
 
-Map<String, dynamic> _$$BuzzItemDMImplToJson(_$BuzzItemDMImpl instance) =>
+Map<String, dynamic> _$BuzzItemDMToJson(_BuzzItemDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'message': instance.message,

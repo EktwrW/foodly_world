@@ -1,7 +1,7 @@
 part of 'sign_up_cubit.dart';
 
 @freezed
-class SignUpState with _$SignUpState {
+sealed class SignUpState with _$SignUpState {
   const factory SignUpState.initial() = _Initial;
   const factory SignUpState.loading(UserProfileVM signUpVM) = _Loading;
   const factory SignUpState.loaded(UserProfileVM signUpVM) = _Loaded;

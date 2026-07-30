@@ -6,9 +6,9 @@ part of 'reservation_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReservationsResponseDMImpl _$$ReservationsResponseDMImplFromJson(
+_ReservationsResponseDM _$ReservationsResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReservationsResponseDMImpl(
+    _ReservationsResponseDM(
       reservations: (json['reservations'] as List<dynamic>?)
               ?.map((e) => ReservationDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,24 +18,22 @@ _$ReservationsResponseDMImpl _$$ReservationsResponseDMImplFromJson(
           : ReservationsMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReservationsResponseDMImplToJson(
-        _$ReservationsResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationsResponseDMToJson(
+        _ReservationsResponseDM instance) =>
     <String, dynamic>{
       'reservations': instance.reservations.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$ReservationsMetaDMImpl _$$ReservationsMetaDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ReservationsMetaDMImpl(
+_ReservationsMetaDM _$ReservationsMetaDMFromJson(Map<String, dynamic> json) =>
+    _ReservationsMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
       total: (json['total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ReservationsMetaDMImplToJson(
-        _$ReservationsMetaDMImpl instance) =>
+Map<String, dynamic> _$ReservationsMetaDMToJson(_ReservationsMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -43,9 +41,9 @@ Map<String, dynamic> _$$ReservationsMetaDMImplToJson(
       'total': instance.total,
     };
 
-_$ReservationCreateResponseDMImpl _$$ReservationCreateResponseDMImplFromJson(
+_ReservationCreateResponseDM _$ReservationCreateResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReservationCreateResponseDMImpl(
+    _ReservationCreateResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       reservation: json['reservation'] == null
@@ -53,8 +51,8 @@ _$ReservationCreateResponseDMImpl _$$ReservationCreateResponseDMImplFromJson(
           : ReservationDM.fromJson(json['reservation'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReservationCreateResponseDMImplToJson(
-        _$ReservationCreateResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationCreateResponseDMToJson(
+        _ReservationCreateResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
@@ -62,9 +60,9 @@ Map<String, dynamic> _$$ReservationCreateResponseDMImplToJson(
         'reservation': value,
     };
 
-_$ReservationActionResponseDMImpl _$$ReservationActionResponseDMImplFromJson(
+_ReservationActionResponseDM _$ReservationActionResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReservationActionResponseDMImpl(
+    _ReservationActionResponseDM(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
       reservation: json['reservation'] == null
@@ -72,8 +70,8 @@ _$ReservationActionResponseDMImpl _$$ReservationActionResponseDMImplFromJson(
           : ReservationDM.fromJson(json['reservation'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReservationActionResponseDMImplToJson(
-        _$ReservationActionResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationActionResponseDMToJson(
+        _ReservationActionResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
@@ -81,35 +79,35 @@ Map<String, dynamic> _$$ReservationActionResponseDMImplToJson(
         'reservation': value,
     };
 
-_$ReservationShowResponseDMImpl _$$ReservationShowResponseDMImplFromJson(
+_ReservationShowResponseDM _$ReservationShowResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReservationShowResponseDMImpl(
+    _ReservationShowResponseDM(
       reservation: json['reservation'] == null
           ? null
           : ReservationDM.fromJson(json['reservation'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ReservationShowResponseDMImplToJson(
-        _$ReservationShowResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationShowResponseDMToJson(
+        _ReservationShowResponseDM instance) =>
     <String, dynamic>{
       if (instance.reservation?.toJson() case final value?)
         'reservation': value,
     };
 
-_$PendingReservationsCountDMImpl _$$PendingReservationsCountDMImplFromJson(
+_PendingReservationsCountDM _$PendingReservationsCountDMFromJson(
         Map<String, dynamic> json) =>
-    _$PendingReservationsCountDMImpl(
+    _PendingReservationsCountDM(
       pendingCount: (json['pending_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$PendingReservationsCountDMImplToJson(
-        _$PendingReservationsCountDMImpl instance) =>
+Map<String, dynamic> _$PendingReservationsCountDMToJson(
+        _PendingReservationsCountDM instance) =>
     <String, dynamic>{
       'pending_count': instance.pendingCount,
     };
 
-_$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
-    _$ReservationDMImpl(
+_ReservationDM _$ReservationDMFromJson(Map<String, dynamic> json) =>
+    _ReservationDM(
       reservationId: (json['reservation_id'] as num?)?.toInt(),
       reservationUuid: json['reservation_uuid'] as String?,
       status: $enumDecodeNullable(_$ReservationStatusEnumMap, json['status']) ??
@@ -172,7 +170,7 @@ _$ReservationDMImpl _$$ReservationDMImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ReservationDMImplToJson(_$ReservationDMImpl instance) =>
+Map<String, dynamic> _$ReservationDMToJson(_ReservationDM instance) =>
     <String, dynamic>{
       if (instance.reservationId case final value?) 'reservation_id': value,
       if (instance.reservationUuid case final value?) 'reservation_uuid': value,

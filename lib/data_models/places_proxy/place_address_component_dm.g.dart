@@ -6,9 +6,9 @@ part of 'place_address_component_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PlaceAddressComponentDMImpl _$$PlaceAddressComponentDMImplFromJson(
+_PlaceAddressComponentDM _$PlaceAddressComponentDMFromJson(
         Map<String, dynamic> json) =>
-    _$PlaceAddressComponentDMImpl(
+    _PlaceAddressComponentDM(
       longName: json['long_name'] as String,
       shortName: json['short_name'] as String,
       types:
@@ -16,8 +16,8 @@ _$PlaceAddressComponentDMImpl _$$PlaceAddressComponentDMImplFromJson(
               const <String>[],
     );
 
-Map<String, dynamic> _$$PlaceAddressComponentDMImplToJson(
-        _$PlaceAddressComponentDMImpl instance) =>
+Map<String, dynamic> _$PlaceAddressComponentDMToJson(
+        _PlaceAddressComponentDM instance) =>
     <String, dynamic>{
       'long_name': instance.longName,
       'short_name': instance.shortName,

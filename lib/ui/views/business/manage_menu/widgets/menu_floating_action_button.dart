@@ -7,7 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_snackbars.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:share_plus/share_plus.dart';
 
 class MenuFloatingActionButton extends StatelessWidget {

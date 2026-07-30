@@ -6,7 +6,7 @@ part of 'user_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserDMImpl _$$UserDMImplFromJson(Map<String, dynamic> json) => _$UserDMImpl(
+_UserDM _$UserDMFromJson(Map<String, dynamic> json) => _UserDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       email: json['email'] as String?,
@@ -86,8 +86,7 @@ _$UserDMImpl _$$UserDMImplFromJson(Map<String, dynamic> json) => _$UserDMImpl(
       followingLength: (json['following_length'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$UserDMImplToJson(_$UserDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserDMToJson(_UserDM instance) => <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,
       if (instance.email case final value?) 'email': value,
@@ -150,8 +149,8 @@ const _$UserRoleEnumMap = {
   UserRole.customer: 4,
 };
 
-_$AddressLabelDMImpl _$$AddressLabelDMImplFromJson(Map<String, dynamic> json) =>
-    _$AddressLabelDMImpl(
+_AddressLabelDM _$AddressLabelDMFromJson(Map<String, dynamic> json) =>
+    _AddressLabelDM(
       id: (json['id'] as num?)?.toInt(),
       uuid: json['uuid'] as String?,
       name: json['name'] as String,
@@ -160,8 +159,7 @@ _$AddressLabelDMImpl _$$AddressLabelDMImplFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as bool? ?? true,
     );
 
-Map<String, dynamic> _$$AddressLabelDMImplToJson(
-        _$AddressLabelDMImpl instance) =>
+Map<String, dynamic> _$AddressLabelDMToJson(_AddressLabelDM instance) =>
     <String, dynamic>{
       if (instance.id case final value?) 'id': value,
       if (instance.uuid case final value?) 'uuid': value,
@@ -171,8 +169,7 @@ Map<String, dynamic> _$$AddressLabelDMImplToJson(
       'is_active': instance.isActive,
     };
 
-_$AddressDMImpl _$$AddressDMImplFromJson(Map<String, dynamic> json) =>
-    _$AddressDMImpl(
+_AddressDM _$AddressDMFromJson(Map<String, dynamic> json) => _AddressDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       address: json['address'] as String,
@@ -189,7 +186,7 @@ _$AddressDMImpl _$$AddressDMImplFromJson(Map<String, dynamic> json) =>
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$AddressDMImplToJson(_$AddressDMImpl instance) =>
+Map<String, dynamic> _$AddressDMToJson(_AddressDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,
@@ -207,9 +204,8 @@ Map<String, dynamic> _$$AddressDMImplToJson(_$AddressDMImpl instance) =>
       'updated_at': instance.updatedAt.toIso8601String(),
     };
 
-_$LoginProviderDMImpl _$$LoginProviderDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$LoginProviderDMImpl(
+_LoginProviderDM _$LoginProviderDMFromJson(Map<String, dynamic> json) =>
+    _LoginProviderDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       provider: json['provider'] as String,
@@ -220,8 +216,7 @@ _$LoginProviderDMImpl _$$LoginProviderDMImplFromJson(
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$LoginProviderDMImplToJson(
-        _$LoginProviderDMImpl instance) =>
+Map<String, dynamic> _$LoginProviderDMToJson(_LoginProviderDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,

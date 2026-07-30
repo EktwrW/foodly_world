@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,85 +9,52 @@ part of 'service_package_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ServicePackagesResponseDM _$ServicePackagesResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ServicePackagesResponseDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ServicePackagesResponseDM {
-  bool get success => throw _privateConstructorUsedError;
+  bool get success;
   @JsonKey(name: 'service_packages')
-  List<ServicePackageDM> get servicePackages =>
-      throw _privateConstructorUsedError;
-
-  /// Serializes this ServicePackagesResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  List<ServicePackageDM> get servicePackages;
 
   /// Create a copy of ServicePackagesResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ServicePackagesResponseDMCopyWith<ServicePackagesResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ServicePackagesResponseDMCopyWith<$Res> {
-  factory $ServicePackagesResponseDMCopyWith(ServicePackagesResponseDM value,
-          $Res Function(ServicePackagesResponseDM) then) =
-      _$ServicePackagesResponseDMCopyWithImpl<$Res, ServicePackagesResponseDM>;
-  @useResult
-  $Res call(
-      {bool success,
-      @JsonKey(name: 'service_packages')
-      List<ServicePackageDM> servicePackages});
-}
-
-/// @nodoc
-class _$ServicePackagesResponseDMCopyWithImpl<$Res,
-        $Val extends ServicePackagesResponseDM>
-    implements $ServicePackagesResponseDMCopyWith<$Res> {
-  _$ServicePackagesResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ServicePackagesResponseDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ServicePackagesResponseDMCopyWith<ServicePackagesResponseDM> get copyWith =>
+      _$ServicePackagesResponseDMCopyWithImpl<ServicePackagesResponseDM>(
+          this as ServicePackagesResponseDM, _$identity);
+
+  /// Serializes this ServicePackagesResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? success = null,
-    Object? servicePackages = null,
-  }) {
-    return _then(_value.copyWith(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      servicePackages: null == servicePackages
-          ? _value.servicePackages
-          : servicePackages // ignore: cast_nullable_to_non_nullable
-              as List<ServicePackageDM>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ServicePackagesResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            const DeepCollectionEquality()
+                .equals(other.servicePackages, servicePackages));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success,
+      const DeepCollectionEquality().hash(servicePackages));
+
+  @override
+  String toString() {
+    return 'ServicePackagesResponseDM(success: $success, servicePackages: $servicePackages)';
   }
 }
 
 /// @nodoc
-abstract class _$$ServicePackagesResponseDMImplCopyWith<$Res>
-    implements $ServicePackagesResponseDMCopyWith<$Res> {
-  factory _$$ServicePackagesResponseDMImplCopyWith(
-          _$ServicePackagesResponseDMImpl value,
-          $Res Function(_$ServicePackagesResponseDMImpl) then) =
-      __$$ServicePackagesResponseDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ServicePackagesResponseDMCopyWith<$Res> {
+  factory $ServicePackagesResponseDMCopyWith(ServicePackagesResponseDM value,
+          $Res Function(ServicePackagesResponseDM) _then) =
+      _$ServicePackagesResponseDMCopyWithImpl;
   @useResult
   $Res call(
       {bool success,
@@ -96,14 +63,12 @@ abstract class _$$ServicePackagesResponseDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ServicePackagesResponseDMImplCopyWithImpl<$Res>
-    extends _$ServicePackagesResponseDMCopyWithImpl<$Res,
-        _$ServicePackagesResponseDMImpl>
-    implements _$$ServicePackagesResponseDMImplCopyWith<$Res> {
-  __$$ServicePackagesResponseDMImplCopyWithImpl(
-      _$ServicePackagesResponseDMImpl _value,
-      $Res Function(_$ServicePackagesResponseDMImpl) _then)
-      : super(_value, _then);
+class _$ServicePackagesResponseDMCopyWithImpl<$Res>
+    implements $ServicePackagesResponseDMCopyWith<$Res> {
+  _$ServicePackagesResponseDMCopyWithImpl(this._self, this._then);
+
+  final ServicePackagesResponseDM _self;
+  final $Res Function(ServicePackagesResponseDM) _then;
 
   /// Create a copy of ServicePackagesResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -113,30 +78,198 @@ class __$$ServicePackagesResponseDMImplCopyWithImpl<$Res>
     Object? success = null,
     Object? servicePackages = null,
   }) {
-    return _then(_$ServicePackagesResponseDMImpl(
+    return _then(_self.copyWith(
       success: null == success
-          ? _value.success
+          ? _self.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
       servicePackages: null == servicePackages
-          ? _value._servicePackages
+          ? _self.servicePackages
           : servicePackages // ignore: cast_nullable_to_non_nullable
               as List<ServicePackageDM>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ServicePackagesResponseDM].
+extension ServicePackagesResponseDMPatterns on ServicePackagesResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ServicePackagesResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ServicePackagesResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ServicePackagesResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool success,
+            @JsonKey(name: 'service_packages')
+            List<ServicePackageDM> servicePackages)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM() when $default != null:
+        return $default(_that.success, _that.servicePackages);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool success,
+            @JsonKey(name: 'service_packages')
+            List<ServicePackageDM> servicePackages)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM():
+        return $default(_that.success, _that.servicePackages);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool success,
+            @JsonKey(name: 'service_packages')
+            List<ServicePackageDM> servicePackages)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagesResponseDM() when $default != null:
+        return $default(_that.success, _that.servicePackages);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$ServicePackagesResponseDMImpl implements _ServicePackagesResponseDM {
-  const _$ServicePackagesResponseDMImpl(
+class _ServicePackagesResponseDM implements ServicePackagesResponseDM {
+  const _ServicePackagesResponseDM(
       {this.success = false,
       @JsonKey(name: 'service_packages')
       final List<ServicePackageDM> servicePackages = const []})
       : _servicePackages = servicePackages;
-
-  factory _$ServicePackagesResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ServicePackagesResponseDMImplFromJson(json);
+  factory _ServicePackagesResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ServicePackagesResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -150,16 +283,28 @@ class _$ServicePackagesResponseDMImpl implements _ServicePackagesResponseDM {
     return EqualUnmodifiableListView(_servicePackages);
   }
 
+  /// Create a copy of ServicePackagesResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ServicePackagesResponseDM(success: $success, servicePackages: $servicePackages)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ServicePackagesResponseDMCopyWith<_ServicePackagesResponseDM>
+      get copyWith =>
+          __$ServicePackagesResponseDMCopyWithImpl<_ServicePackagesResponseDM>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ServicePackagesResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ServicePackagesResponseDMImpl &&
+            other is _ServicePackagesResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             const DeepCollectionEquality()
                 .equals(other._servicePackages, _servicePackages));
@@ -170,223 +315,79 @@ class _$ServicePackagesResponseDMImpl implements _ServicePackagesResponseDM {
   int get hashCode => Object.hash(runtimeType, success,
       const DeepCollectionEquality().hash(_servicePackages));
 
-  /// Create a copy of ServicePackagesResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ServicePackagesResponseDMImplCopyWith<_$ServicePackagesResponseDMImpl>
-      get copyWith => __$$ServicePackagesResponseDMImplCopyWithImpl<
-          _$ServicePackagesResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ServicePackagesResponseDMImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ServicePackagesResponseDM implements ServicePackagesResponseDM {
-  const factory _ServicePackagesResponseDM(
-          {final bool success,
-          @JsonKey(name: 'service_packages')
-          final List<ServicePackageDM> servicePackages}) =
-      _$ServicePackagesResponseDMImpl;
-
-  factory _ServicePackagesResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ServicePackagesResponseDMImpl.fromJson;
-
-  @override
-  bool get success;
-  @override
-  @JsonKey(name: 'service_packages')
-  List<ServicePackageDM> get servicePackages;
-
-  /// Create a copy of ServicePackagesResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ServicePackagesResponseDMImplCopyWith<_$ServicePackagesResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-ServicePackageActionResponseDM _$ServicePackageActionResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _ServicePackageActionResponseDM.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ServicePackageActionResponseDM {
-  bool get success => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  @JsonKey(name: 'service_package')
-  ServicePackageDM? get servicePackage => throw _privateConstructorUsedError;
-
-  /// Serializes this ServicePackageActionResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ServicePackageActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ServicePackageActionResponseDMCopyWith<ServicePackageActionResponseDM>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ServicePackageActionResponseDMCopyWith<$Res> {
-  factory $ServicePackageActionResponseDMCopyWith(
-          ServicePackageActionResponseDM value,
-          $Res Function(ServicePackageActionResponseDM) then) =
-      _$ServicePackageActionResponseDMCopyWithImpl<$Res,
-          ServicePackageActionResponseDM>;
-  @useResult
-  $Res call(
-      {bool success,
-      String message,
-      @JsonKey(name: 'service_package') ServicePackageDM? servicePackage});
-
-  $ServicePackageDMCopyWith<$Res>? get servicePackage;
-}
-
-/// @nodoc
-class _$ServicePackageActionResponseDMCopyWithImpl<$Res,
-        $Val extends ServicePackageActionResponseDM>
-    implements $ServicePackageActionResponseDMCopyWith<$Res> {
-  _$ServicePackageActionResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ServicePackageActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? success = null,
-    Object? message = null,
-    Object? servicePackage = freezed,
-  }) {
-    return _then(_value.copyWith(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      servicePackage: freezed == servicePackage
-          ? _value.servicePackage
-          : servicePackage // ignore: cast_nullable_to_non_nullable
-              as ServicePackageDM?,
-    ) as $Val);
-  }
-
-  /// Create a copy of ServicePackageActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ServicePackageDMCopyWith<$Res>? get servicePackage {
-    if (_value.servicePackage == null) {
-      return null;
-    }
-
-    return $ServicePackageDMCopyWith<$Res>(_value.servicePackage!, (value) {
-      return _then(_value.copyWith(servicePackage: value) as $Val);
-    });
+  String toString() {
+    return 'ServicePackagesResponseDM(success: $success, servicePackages: $servicePackages)';
   }
 }
 
 /// @nodoc
-abstract class _$$ServicePackageActionResponseDMImplCopyWith<$Res>
-    implements $ServicePackageActionResponseDMCopyWith<$Res> {
-  factory _$$ServicePackageActionResponseDMImplCopyWith(
-          _$ServicePackageActionResponseDMImpl value,
-          $Res Function(_$ServicePackageActionResponseDMImpl) then) =
-      __$$ServicePackageActionResponseDMImplCopyWithImpl<$Res>;
+abstract mixin class _$ServicePackagesResponseDMCopyWith<$Res>
+    implements $ServicePackagesResponseDMCopyWith<$Res> {
+  factory _$ServicePackagesResponseDMCopyWith(_ServicePackagesResponseDM value,
+          $Res Function(_ServicePackagesResponseDM) _then) =
+      __$ServicePackagesResponseDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {bool success,
-      String message,
-      @JsonKey(name: 'service_package') ServicePackageDM? servicePackage});
-
-  @override
-  $ServicePackageDMCopyWith<$Res>? get servicePackage;
+      @JsonKey(name: 'service_packages')
+      List<ServicePackageDM> servicePackages});
 }
 
 /// @nodoc
-class __$$ServicePackageActionResponseDMImplCopyWithImpl<$Res>
-    extends _$ServicePackageActionResponseDMCopyWithImpl<$Res,
-        _$ServicePackageActionResponseDMImpl>
-    implements _$$ServicePackageActionResponseDMImplCopyWith<$Res> {
-  __$$ServicePackageActionResponseDMImplCopyWithImpl(
-      _$ServicePackageActionResponseDMImpl _value,
-      $Res Function(_$ServicePackageActionResponseDMImpl) _then)
-      : super(_value, _then);
+class __$ServicePackagesResponseDMCopyWithImpl<$Res>
+    implements _$ServicePackagesResponseDMCopyWith<$Res> {
+  __$ServicePackagesResponseDMCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of ServicePackageActionResponseDM
+  final _ServicePackagesResponseDM _self;
+  final $Res Function(_ServicePackagesResponseDM) _then;
+
+  /// Create a copy of ServicePackagesResponseDM
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? success = null,
-    Object? message = null,
-    Object? servicePackage = freezed,
+    Object? servicePackages = null,
   }) {
-    return _then(_$ServicePackageActionResponseDMImpl(
+    return _then(_ServicePackagesResponseDM(
       success: null == success
-          ? _value.success
+          ? _self.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      servicePackage: freezed == servicePackage
-          ? _value.servicePackage
-          : servicePackage // ignore: cast_nullable_to_non_nullable
-              as ServicePackageDM?,
+      servicePackages: null == servicePackages
+          ? _self._servicePackages
+          : servicePackages // ignore: cast_nullable_to_non_nullable
+              as List<ServicePackageDM>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$ServicePackageActionResponseDMImpl
-    implements _ServicePackageActionResponseDM {
-  const _$ServicePackageActionResponseDMImpl(
-      {this.success = false,
-      this.message = '',
-      @JsonKey(name: 'service_package') this.servicePackage});
-
-  factory _$ServicePackageActionResponseDMImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$ServicePackageActionResponseDMImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final bool success;
-  @override
-  @JsonKey()
-  final String message;
-  @override
+mixin _$ServicePackageActionResponseDM {
+  bool get success;
+  String get message;
   @JsonKey(name: 'service_package')
-  final ServicePackageDM? servicePackage;
+  ServicePackageDM? get servicePackage;
 
-  @override
-  String toString() {
-    return 'ServicePackageActionResponseDM(success: $success, message: $message, servicePackage: $servicePackage)';
-  }
+  /// Create a copy of ServicePackageActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ServicePackageActionResponseDMCopyWith<ServicePackageActionResponseDM>
+      get copyWith => _$ServicePackageActionResponseDMCopyWithImpl<
+              ServicePackageActionResponseDM>(
+          this as ServicePackageActionResponseDM, _$identity);
+
+  /// Serializes this ServicePackageActionResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ServicePackageActionResponseDMImpl &&
+            other is ServicePackageActionResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.servicePackage, servicePackage) ||
@@ -398,165 +399,249 @@ class _$ServicePackageActionResponseDMImpl
   int get hashCode =>
       Object.hash(runtimeType, success, message, servicePackage);
 
-  /// Create a copy of ServicePackageActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ServicePackageActionResponseDMImplCopyWith<
-          _$ServicePackageActionResponseDMImpl>
-      get copyWith => __$$ServicePackageActionResponseDMImplCopyWithImpl<
-          _$ServicePackageActionResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ServicePackageActionResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ServicePackageActionResponseDM(success: $success, message: $message, servicePackage: $servicePackage)';
   }
 }
 
-abstract class _ServicePackageActionResponseDM
-    implements ServicePackageActionResponseDM {
-  const factory _ServicePackageActionResponseDM(
-          {final bool success,
-          final String message,
-          @JsonKey(name: 'service_package')
-          final ServicePackageDM? servicePackage}) =
-      _$ServicePackageActionResponseDMImpl;
+/// @nodoc
+abstract mixin class $ServicePackageActionResponseDMCopyWith<$Res> {
+  factory $ServicePackageActionResponseDMCopyWith(
+          ServicePackageActionResponseDM value,
+          $Res Function(ServicePackageActionResponseDM) _then) =
+      _$ServicePackageActionResponseDMCopyWithImpl;
+  @useResult
+  $Res call(
+      {bool success,
+      String message,
+      @JsonKey(name: 'service_package') ServicePackageDM? servicePackage});
 
-  factory _ServicePackageActionResponseDM.fromJson(Map<String, dynamic> json) =
-      _$ServicePackageActionResponseDMImpl.fromJson;
+  $ServicePackageDMCopyWith<$Res>? get servicePackage;
+}
 
-  @override
-  bool get success;
-  @override
-  String get message;
-  @override
-  @JsonKey(name: 'service_package')
-  ServicePackageDM? get servicePackage;
+/// @nodoc
+class _$ServicePackageActionResponseDMCopyWithImpl<$Res>
+    implements $ServicePackageActionResponseDMCopyWith<$Res> {
+  _$ServicePackageActionResponseDMCopyWithImpl(this._self, this._then);
+
+  final ServicePackageActionResponseDM _self;
+  final $Res Function(ServicePackageActionResponseDM) _then;
 
   /// Create a copy of ServicePackageActionResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ServicePackageActionResponseDMImplCopyWith<
-          _$ServicePackageActionResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-GenericSuccessResponseDM _$GenericSuccessResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _GenericSuccessResponseDM.fromJson(json);
-}
-
-/// @nodoc
-mixin _$GenericSuccessResponseDM {
-  bool get success => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-
-  /// Serializes this GenericSuccessResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GenericSuccessResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $GenericSuccessResponseDMCopyWith<GenericSuccessResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GenericSuccessResponseDMCopyWith<$Res> {
-  factory $GenericSuccessResponseDMCopyWith(GenericSuccessResponseDM value,
-          $Res Function(GenericSuccessResponseDM) then) =
-      _$GenericSuccessResponseDMCopyWithImpl<$Res, GenericSuccessResponseDM>;
-  @useResult
-  $Res call({bool success, String message});
-}
-
-/// @nodoc
-class _$GenericSuccessResponseDMCopyWithImpl<$Res,
-        $Val extends GenericSuccessResponseDM>
-    implements $GenericSuccessResponseDMCopyWith<$Res> {
-  _$GenericSuccessResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of GenericSuccessResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? success = null,
     Object? message = null,
+    Object? servicePackage = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       success: null == success
-          ? _value.success
+          ? _self.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$GenericSuccessResponseDMImplCopyWith<$Res>
-    implements $GenericSuccessResponseDMCopyWith<$Res> {
-  factory _$$GenericSuccessResponseDMImplCopyWith(
-          _$GenericSuccessResponseDMImpl value,
-          $Res Function(_$GenericSuccessResponseDMImpl) then) =
-      __$$GenericSuccessResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool success, String message});
-}
-
-/// @nodoc
-class __$$GenericSuccessResponseDMImplCopyWithImpl<$Res>
-    extends _$GenericSuccessResponseDMCopyWithImpl<$Res,
-        _$GenericSuccessResponseDMImpl>
-    implements _$$GenericSuccessResponseDMImplCopyWith<$Res> {
-  __$$GenericSuccessResponseDMImplCopyWithImpl(
-      _$GenericSuccessResponseDMImpl _value,
-      $Res Function(_$GenericSuccessResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of GenericSuccessResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? success = null,
-    Object? message = null,
-  }) {
-    return _then(_$GenericSuccessResponseDMImpl(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
+      servicePackage: freezed == servicePackage
+          ? _self.servicePackage
+          : servicePackage // ignore: cast_nullable_to_non_nullable
+              as ServicePackageDM?,
     ));
+  }
+
+  /// Create a copy of ServicePackageActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackageDMCopyWith<$Res>? get servicePackage {
+    if (_self.servicePackage == null) {
+      return null;
+    }
+
+    return $ServicePackageDMCopyWith<$Res>(_self.servicePackage!, (value) {
+      return _then(_self.copyWith(servicePackage: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [ServicePackageActionResponseDM].
+extension ServicePackageActionResponseDMPatterns
+    on ServicePackageActionResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ServicePackageActionResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ServicePackageActionResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ServicePackageActionResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool success, String message,
+            @JsonKey(name: 'service_package') ServicePackageDM? servicePackage)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.servicePackage);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool success, String message,
+            @JsonKey(name: 'service_package') ServicePackageDM? servicePackage)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM():
+        return $default(_that.success, _that.message, _that.servicePackage);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool success, String message,
+            @JsonKey(name: 'service_package') ServicePackageDM? servicePackage)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageActionResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.servicePackage);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$GenericSuccessResponseDMImpl implements _GenericSuccessResponseDM {
-  const _$GenericSuccessResponseDMImpl(
-      {this.success = false, this.message = ''});
-
-  factory _$GenericSuccessResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GenericSuccessResponseDMImplFromJson(json);
+class _ServicePackageActionResponseDM
+    implements ServicePackageActionResponseDM {
+  const _ServicePackageActionResponseDM(
+      {this.success = false,
+      this.message = '',
+      @JsonKey(name: 'service_package') this.servicePackage});
+  factory _ServicePackageActionResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ServicePackageActionResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -564,17 +649,135 @@ class _$GenericSuccessResponseDMImpl implements _GenericSuccessResponseDM {
   @override
   @JsonKey()
   final String message;
+  @override
+  @JsonKey(name: 'service_package')
+  final ServicePackageDM? servicePackage;
+
+  /// Create a copy of ServicePackageActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ServicePackageActionResponseDMCopyWith<_ServicePackageActionResponseDM>
+      get copyWith => __$ServicePackageActionResponseDMCopyWithImpl<
+          _ServicePackageActionResponseDM>(this, _$identity);
 
   @override
-  String toString() {
-    return 'GenericSuccessResponseDM(success: $success, message: $message)';
+  Map<String, dynamic> toJson() {
+    return _$ServicePackageActionResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GenericSuccessResponseDMImpl &&
+            other is _ServicePackageActionResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.servicePackage, servicePackage) ||
+                other.servicePackage == servicePackage));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, success, message, servicePackage);
+
+  @override
+  String toString() {
+    return 'ServicePackageActionResponseDM(success: $success, message: $message, servicePackage: $servicePackage)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ServicePackageActionResponseDMCopyWith<$Res>
+    implements $ServicePackageActionResponseDMCopyWith<$Res> {
+  factory _$ServicePackageActionResponseDMCopyWith(
+          _ServicePackageActionResponseDM value,
+          $Res Function(_ServicePackageActionResponseDM) _then) =
+      __$ServicePackageActionResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool success,
+      String message,
+      @JsonKey(name: 'service_package') ServicePackageDM? servicePackage});
+
+  @override
+  $ServicePackageDMCopyWith<$Res>? get servicePackage;
+}
+
+/// @nodoc
+class __$ServicePackageActionResponseDMCopyWithImpl<$Res>
+    implements _$ServicePackageActionResponseDMCopyWith<$Res> {
+  __$ServicePackageActionResponseDMCopyWithImpl(this._self, this._then);
+
+  final _ServicePackageActionResponseDM _self;
+  final $Res Function(_ServicePackageActionResponseDM) _then;
+
+  /// Create a copy of ServicePackageActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? message = null,
+    Object? servicePackage = freezed,
+  }) {
+    return _then(_ServicePackageActionResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      servicePackage: freezed == servicePackage
+          ? _self.servicePackage
+          : servicePackage // ignore: cast_nullable_to_non_nullable
+              as ServicePackageDM?,
+    ));
+  }
+
+  /// Create a copy of ServicePackageActionResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ServicePackageDMCopyWith<$Res>? get servicePackage {
+    if (_self.servicePackage == null) {
+      return null;
+    }
+
+    return $ServicePackageDMCopyWith<$Res>(_self.servicePackage!, (value) {
+      return _then(_self.copyWith(servicePackage: value));
+    });
+  }
+}
+
+/// @nodoc
+mixin _$GenericSuccessResponseDM {
+  bool get success;
+  String get message;
+
+  /// Create a copy of GenericSuccessResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $GenericSuccessResponseDMCopyWith<GenericSuccessResponseDM> get copyWith =>
+      _$GenericSuccessResponseDMCopyWithImpl<GenericSuccessResponseDM>(
+          this as GenericSuccessResponseDM, _$identity);
+
+  /// Serializes this GenericSuccessResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GenericSuccessResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message));
   }
@@ -583,131 +786,350 @@ class _$GenericSuccessResponseDMImpl implements _GenericSuccessResponseDM {
   @override
   int get hashCode => Object.hash(runtimeType, success, message);
 
-  /// Create a copy of GenericSuccessResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$GenericSuccessResponseDMImplCopyWith<_$GenericSuccessResponseDMImpl>
-      get copyWith => __$$GenericSuccessResponseDMImplCopyWithImpl<
-          _$GenericSuccessResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GenericSuccessResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'GenericSuccessResponseDM(success: $success, message: $message)';
   }
 }
 
-abstract class _GenericSuccessResponseDM implements GenericSuccessResponseDM {
-  const factory _GenericSuccessResponseDM(
-      {final bool success,
-      final String message}) = _$GenericSuccessResponseDMImpl;
+/// @nodoc
+abstract mixin class $GenericSuccessResponseDMCopyWith<$Res> {
+  factory $GenericSuccessResponseDMCopyWith(GenericSuccessResponseDM value,
+          $Res Function(GenericSuccessResponseDM) _then) =
+      _$GenericSuccessResponseDMCopyWithImpl;
+  @useResult
+  $Res call({bool success, String message});
+}
 
-  factory _GenericSuccessResponseDM.fromJson(Map<String, dynamic> json) =
-      _$GenericSuccessResponseDMImpl.fromJson;
+/// @nodoc
+class _$GenericSuccessResponseDMCopyWithImpl<$Res>
+    implements $GenericSuccessResponseDMCopyWith<$Res> {
+  _$GenericSuccessResponseDMCopyWithImpl(this._self, this._then);
+
+  final GenericSuccessResponseDM _self;
+  final $Res Function(GenericSuccessResponseDM) _then;
+
+  /// Create a copy of GenericSuccessResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? message = null,
+  }) {
+    return _then(_self.copyWith(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [GenericSuccessResponseDM].
+extension GenericSuccessResponseDMPatterns on GenericSuccessResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GenericSuccessResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_GenericSuccessResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_GenericSuccessResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool success, String message)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM() when $default != null:
+        return $default(_that.success, _that.message);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool success, String message) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM():
+        return $default(_that.success, _that.message);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool success, String message)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _GenericSuccessResponseDM() when $default != null:
+        return $default(_that.success, _that.message);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _GenericSuccessResponseDM implements GenericSuccessResponseDM {
+  const _GenericSuccessResponseDM({this.success = false, this.message = ''});
+  factory _GenericSuccessResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$GenericSuccessResponseDMFromJson(json);
 
   @override
-  bool get success;
+  @JsonKey()
+  final bool success;
   @override
-  String get message;
+  @JsonKey()
+  final String message;
 
   /// Create a copy of GenericSuccessResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GenericSuccessResponseDMImplCopyWith<_$GenericSuccessResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$GenericSuccessResponseDMCopyWith<_GenericSuccessResponseDM> get copyWith =>
+      __$GenericSuccessResponseDMCopyWithImpl<_GenericSuccessResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$GenericSuccessResponseDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GenericSuccessResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, message);
+
+  @override
+  String toString() {
+    return 'GenericSuccessResponseDM(success: $success, message: $message)';
+  }
 }
 
-PhotoUploadResponseDM _$PhotoUploadResponseDMFromJson(
-    Map<String, dynamic> json) {
-  return _PhotoUploadResponseDM.fromJson(json);
+/// @nodoc
+abstract mixin class _$GenericSuccessResponseDMCopyWith<$Res>
+    implements $GenericSuccessResponseDMCopyWith<$Res> {
+  factory _$GenericSuccessResponseDMCopyWith(_GenericSuccessResponseDM value,
+          $Res Function(_GenericSuccessResponseDM) _then) =
+      __$GenericSuccessResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool success, String message});
+}
+
+/// @nodoc
+class __$GenericSuccessResponseDMCopyWithImpl<$Res>
+    implements _$GenericSuccessResponseDMCopyWith<$Res> {
+  __$GenericSuccessResponseDMCopyWithImpl(this._self, this._then);
+
+  final _GenericSuccessResponseDM _self;
+  final $Res Function(_GenericSuccessResponseDM) _then;
+
+  /// Create a copy of GenericSuccessResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? message = null,
+  }) {
+    return _then(_GenericSuccessResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$PhotoUploadResponseDM {
-  bool get success => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  List<ServicePackagePhotoDM> get photos => throw _privateConstructorUsedError;
-
-  /// Serializes this PhotoUploadResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  bool get success;
+  String get message;
+  List<ServicePackagePhotoDM> get photos;
 
   /// Create a copy of PhotoUploadResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PhotoUploadResponseDMCopyWith<PhotoUploadResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PhotoUploadResponseDMCopyWith<$Res> {
-  factory $PhotoUploadResponseDMCopyWith(PhotoUploadResponseDM value,
-          $Res Function(PhotoUploadResponseDM) then) =
-      _$PhotoUploadResponseDMCopyWithImpl<$Res, PhotoUploadResponseDM>;
-  @useResult
-  $Res call({bool success, String message, List<ServicePackagePhotoDM> photos});
-}
-
-/// @nodoc
-class _$PhotoUploadResponseDMCopyWithImpl<$Res,
-        $Val extends PhotoUploadResponseDM>
-    implements $PhotoUploadResponseDMCopyWith<$Res> {
-  _$PhotoUploadResponseDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PhotoUploadResponseDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PhotoUploadResponseDMCopyWith<PhotoUploadResponseDM> get copyWith =>
+      _$PhotoUploadResponseDMCopyWithImpl<PhotoUploadResponseDM>(
+          this as PhotoUploadResponseDM, _$identity);
+
+  /// Serializes this PhotoUploadResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? success = null,
-    Object? message = null,
-    Object? photos = null,
-  }) {
-    return _then(_value.copyWith(
-      success: null == success
-          ? _value.success
-          : success // ignore: cast_nullable_to_non_nullable
-              as bool,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      photos: null == photos
-          ? _value.photos
-          : photos // ignore: cast_nullable_to_non_nullable
-              as List<ServicePackagePhotoDM>,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PhotoUploadResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other.photos, photos));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, message,
+      const DeepCollectionEquality().hash(photos));
+
+  @override
+  String toString() {
+    return 'PhotoUploadResponseDM(success: $success, message: $message, photos: $photos)';
   }
 }
 
 /// @nodoc
-abstract class _$$PhotoUploadResponseDMImplCopyWith<$Res>
-    implements $PhotoUploadResponseDMCopyWith<$Res> {
-  factory _$$PhotoUploadResponseDMImplCopyWith(
-          _$PhotoUploadResponseDMImpl value,
-          $Res Function(_$PhotoUploadResponseDMImpl) then) =
-      __$$PhotoUploadResponseDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PhotoUploadResponseDMCopyWith<$Res> {
+  factory $PhotoUploadResponseDMCopyWith(PhotoUploadResponseDM value,
+          $Res Function(PhotoUploadResponseDM) _then) =
+      _$PhotoUploadResponseDMCopyWithImpl;
   @useResult
   $Res call({bool success, String message, List<ServicePackagePhotoDM> photos});
 }
 
 /// @nodoc
-class __$$PhotoUploadResponseDMImplCopyWithImpl<$Res>
-    extends _$PhotoUploadResponseDMCopyWithImpl<$Res,
-        _$PhotoUploadResponseDMImpl>
-    implements _$$PhotoUploadResponseDMImplCopyWith<$Res> {
-  __$$PhotoUploadResponseDMImplCopyWithImpl(_$PhotoUploadResponseDMImpl _value,
-      $Res Function(_$PhotoUploadResponseDMImpl) _then)
-      : super(_value, _then);
+class _$PhotoUploadResponseDMCopyWithImpl<$Res>
+    implements $PhotoUploadResponseDMCopyWith<$Res> {
+  _$PhotoUploadResponseDMCopyWithImpl(this._self, this._then);
+
+  final PhotoUploadResponseDM _self;
+  final $Res Function(PhotoUploadResponseDM) _then;
 
   /// Create a copy of PhotoUploadResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -718,34 +1140,196 @@ class __$$PhotoUploadResponseDMImplCopyWithImpl<$Res>
     Object? message = null,
     Object? photos = null,
   }) {
-    return _then(_$PhotoUploadResponseDMImpl(
+    return _then(_self.copyWith(
       success: null == success
-          ? _value.success
+          ? _self.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       photos: null == photos
-          ? _value._photos
+          ? _self.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as List<ServicePackagePhotoDM>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PhotoUploadResponseDM].
+extension PhotoUploadResponseDMPatterns on PhotoUploadResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PhotoUploadResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PhotoUploadResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PhotoUploadResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool success, String message, List<ServicePackagePhotoDM> photos)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.photos);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool success, String message, List<ServicePackagePhotoDM> photos)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM():
+        return $default(_that.success, _that.message, _that.photos);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool success, String message, List<ServicePackagePhotoDM> photos)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PhotoUploadResponseDM() when $default != null:
+        return $default(_that.success, _that.message, _that.photos);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$PhotoUploadResponseDMImpl implements _PhotoUploadResponseDM {
-  const _$PhotoUploadResponseDMImpl(
+class _PhotoUploadResponseDM implements PhotoUploadResponseDM {
+  const _PhotoUploadResponseDM(
       {this.success = false,
       this.message = '',
       final List<ServicePackagePhotoDM> photos = const []})
       : _photos = photos;
-
-  factory _$PhotoUploadResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PhotoUploadResponseDMImplFromJson(json);
+  factory _PhotoUploadResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$PhotoUploadResponseDMFromJson(json);
 
   @override
   @JsonKey()
@@ -762,16 +1346,27 @@ class _$PhotoUploadResponseDMImpl implements _PhotoUploadResponseDM {
     return EqualUnmodifiableListView(_photos);
   }
 
+  /// Create a copy of PhotoUploadResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PhotoUploadResponseDM(success: $success, message: $message, photos: $photos)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PhotoUploadResponseDMCopyWith<_PhotoUploadResponseDM> get copyWith =>
+      __$PhotoUploadResponseDMCopyWithImpl<_PhotoUploadResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PhotoUploadResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PhotoUploadResponseDMImpl &&
+            other is _PhotoUploadResponseDM &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other._photos, _photos));
@@ -782,255 +1377,181 @@ class _$PhotoUploadResponseDMImpl implements _PhotoUploadResponseDM {
   int get hashCode => Object.hash(runtimeType, success, message,
       const DeepCollectionEquality().hash(_photos));
 
-  /// Create a copy of PhotoUploadResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PhotoUploadResponseDMImplCopyWith<_$PhotoUploadResponseDMImpl>
-      get copyWith => __$$PhotoUploadResponseDMImplCopyWithImpl<
-          _$PhotoUploadResponseDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PhotoUploadResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PhotoUploadResponseDM(success: $success, message: $message, photos: $photos)';
   }
 }
 
-abstract class _PhotoUploadResponseDM implements PhotoUploadResponseDM {
-  const factory _PhotoUploadResponseDM(
-      {final bool success,
-      final String message,
-      final List<ServicePackagePhotoDM> photos}) = _$PhotoUploadResponseDMImpl;
+/// @nodoc
+abstract mixin class _$PhotoUploadResponseDMCopyWith<$Res>
+    implements $PhotoUploadResponseDMCopyWith<$Res> {
+  factory _$PhotoUploadResponseDMCopyWith(_PhotoUploadResponseDM value,
+          $Res Function(_PhotoUploadResponseDM) _then) =
+      __$PhotoUploadResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool success, String message, List<ServicePackagePhotoDM> photos});
+}
 
-  factory _PhotoUploadResponseDM.fromJson(Map<String, dynamic> json) =
-      _$PhotoUploadResponseDMImpl.fromJson;
+/// @nodoc
+class __$PhotoUploadResponseDMCopyWithImpl<$Res>
+    implements _$PhotoUploadResponseDMCopyWith<$Res> {
+  __$PhotoUploadResponseDMCopyWithImpl(this._self, this._then);
 
-  @override
-  bool get success;
-  @override
-  String get message;
-  @override
-  List<ServicePackagePhotoDM> get photos;
+  final _PhotoUploadResponseDM _self;
+  final $Res Function(_PhotoUploadResponseDM) _then;
 
   /// Create a copy of PhotoUploadResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PhotoUploadResponseDMImplCopyWith<_$PhotoUploadResponseDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-ServicePackageDM _$ServicePackageDMFromJson(Map<String, dynamic> json) {
-  return _ServicePackageDM.fromJson(json);
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? message = null,
+    Object? photos = null,
+  }) {
+    return _then(_PhotoUploadResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      photos: null == photos
+          ? _self._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<ServicePackagePhotoDM>,
+    ));
+  }
 }
 
 /// @nodoc
 mixin _$ServicePackageDM {
-  int? get id => throw _privateConstructorUsedError;
-  String? get uuid => throw _privateConstructorUsedError;
+  int? get id;
+  String? get uuid;
   @JsonKey(name: 'business_id')
-  int? get businessId => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  int? get businessId;
+  String get title;
+  String? get description;
   @JsonKey(name: 'service_type')
-  ServiceType get serviceType => throw _privateConstructorUsedError;
+  ServiceType get serviceType;
   @JsonKey(name: 'price_type')
-  PriceType get priceType => throw _privateConstructorUsedError;
+  PriceType get priceType;
   @JsonKey(fromJson: _doubleFromJson)
-  double? get price => throw _privateConstructorUsedError;
-  String? get currency => throw _privateConstructorUsedError;
+  double? get price;
+  String? get currency;
   @JsonKey(name: 'min_guests')
-  int? get minGuests => throw _privateConstructorUsedError;
+  int? get minGuests;
   @JsonKey(name: 'max_guests')
-  int? get maxGuests => throw _privateConstructorUsedError;
+  int? get maxGuests;
   @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
-  double? get durationHours => throw _privateConstructorUsedError;
-  List<String> get includes => throw _privateConstructorUsedError;
+  double? get durationHours;
+  List<String> get includes;
   @JsonKey(name: 'add_ons')
-  List<String> get addOns => throw _privateConstructorUsedError;
+  List<String> get addOns;
   @JsonKey(name: 'is_featured')
-  bool get isFeatured => throw _privateConstructorUsedError;
+  bool get isFeatured;
   @JsonKey(name: 'is_active')
-  bool get isActive => throw _privateConstructorUsedError;
+  bool get isActive;
   @JsonKey(name: 'sort_order')
-  int get sortOrder => throw _privateConstructorUsedError;
-  List<ServicePackagePhotoDM> get photos => throw _privateConstructorUsedError;
+  int get sortOrder;
+  List<ServicePackagePhotoDM> get photos;
   @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt;
   @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this ServicePackageDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  DateTime? get updatedAt;
 
   /// Create a copy of ServicePackageDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ServicePackageDMCopyWith<ServicePackageDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ServicePackageDMCopyWith<$Res> {
-  factory $ServicePackageDMCopyWith(
-          ServicePackageDM value, $Res Function(ServicePackageDM) then) =
-      _$ServicePackageDMCopyWithImpl<$Res, ServicePackageDM>;
-  @useResult
-  $Res call(
-      {int? id,
-      String? uuid,
-      @JsonKey(name: 'business_id') int? businessId,
-      String title,
-      String? description,
-      @JsonKey(name: 'service_type') ServiceType serviceType,
-      @JsonKey(name: 'price_type') PriceType priceType,
-      @JsonKey(fromJson: _doubleFromJson) double? price,
-      String? currency,
-      @JsonKey(name: 'min_guests') int? minGuests,
-      @JsonKey(name: 'max_guests') int? maxGuests,
-      @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
-      double? durationHours,
-      List<String> includes,
-      @JsonKey(name: 'add_ons') List<String> addOns,
-      @JsonKey(name: 'is_featured') bool isFeatured,
-      @JsonKey(name: 'is_active') bool isActive,
-      @JsonKey(name: 'sort_order') int sortOrder,
-      List<ServicePackagePhotoDM> photos,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt});
-}
-
-/// @nodoc
-class _$ServicePackageDMCopyWithImpl<$Res, $Val extends ServicePackageDM>
-    implements $ServicePackageDMCopyWith<$Res> {
-  _$ServicePackageDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ServicePackageDM
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $ServicePackageDMCopyWith<ServicePackageDM> get copyWith =>
+      _$ServicePackageDMCopyWithImpl<ServicePackageDM>(
+          this as ServicePackageDM, _$identity);
+
+  /// Serializes this ServicePackageDM to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? id = freezed,
-    Object? uuid = freezed,
-    Object? businessId = freezed,
-    Object? title = null,
-    Object? description = freezed,
-    Object? serviceType = null,
-    Object? priceType = null,
-    Object? price = freezed,
-    Object? currency = freezed,
-    Object? minGuests = freezed,
-    Object? maxGuests = freezed,
-    Object? durationHours = freezed,
-    Object? includes = null,
-    Object? addOns = null,
-    Object? isFeatured = null,
-    Object? isActive = null,
-    Object? sortOrder = null,
-    Object? photos = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      uuid: freezed == uuid
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      businessId: freezed == businessId
-          ? _value.businessId
-          : businessId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceType: null == serviceType
-          ? _value.serviceType
-          : serviceType // ignore: cast_nullable_to_non_nullable
-              as ServiceType,
-      priceType: null == priceType
-          ? _value.priceType
-          : priceType // ignore: cast_nullable_to_non_nullable
-              as PriceType,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
-      currency: freezed == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String?,
-      minGuests: freezed == minGuests
-          ? _value.minGuests
-          : minGuests // ignore: cast_nullable_to_non_nullable
-              as int?,
-      maxGuests: freezed == maxGuests
-          ? _value.maxGuests
-          : maxGuests // ignore: cast_nullable_to_non_nullable
-              as int?,
-      durationHours: freezed == durationHours
-          ? _value.durationHours
-          : durationHours // ignore: cast_nullable_to_non_nullable
-              as double?,
-      includes: null == includes
-          ? _value.includes
-          : includes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      addOns: null == addOns
-          ? _value.addOns
-          : addOns // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isFeatured: null == isFeatured
-          ? _value.isFeatured
-          : isFeatured // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sortOrder: null == sortOrder
-          ? _value.sortOrder
-          : sortOrder // ignore: cast_nullable_to_non_nullable
-              as int,
-      photos: null == photos
-          ? _value.photos
-          : photos // ignore: cast_nullable_to_non_nullable
-              as List<ServicePackagePhotoDM>,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ServicePackageDM &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.businessId, businessId) ||
+                other.businessId == businessId) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.serviceType, serviceType) ||
+                other.serviceType == serviceType) &&
+            (identical(other.priceType, priceType) ||
+                other.priceType == priceType) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.currency, currency) ||
+                other.currency == currency) &&
+            (identical(other.minGuests, minGuests) ||
+                other.minGuests == minGuests) &&
+            (identical(other.maxGuests, maxGuests) ||
+                other.maxGuests == maxGuests) &&
+            (identical(other.durationHours, durationHours) ||
+                other.durationHours == durationHours) &&
+            const DeepCollectionEquality().equals(other.includes, includes) &&
+            const DeepCollectionEquality().equals(other.addOns, addOns) &&
+            (identical(other.isFeatured, isFeatured) ||
+                other.isFeatured == isFeatured) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.sortOrder, sortOrder) ||
+                other.sortOrder == sortOrder) &&
+            const DeepCollectionEquality().equals(other.photos, photos) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        uuid,
+        businessId,
+        title,
+        description,
+        serviceType,
+        priceType,
+        price,
+        currency,
+        minGuests,
+        maxGuests,
+        durationHours,
+        const DeepCollectionEquality().hash(includes),
+        const DeepCollectionEquality().hash(addOns),
+        isFeatured,
+        isActive,
+        sortOrder,
+        const DeepCollectionEquality().hash(photos),
+        createdAt,
+        updatedAt
+      ]);
+
+  @override
+  String toString() {
+    return 'ServicePackageDM(id: $id, uuid: $uuid, businessId: $businessId, title: $title, description: $description, serviceType: $serviceType, priceType: $priceType, price: $price, currency: $currency, minGuests: $minGuests, maxGuests: $maxGuests, durationHours: $durationHours, includes: $includes, addOns: $addOns, isFeatured: $isFeatured, isActive: $isActive, sortOrder: $sortOrder, photos: $photos, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$ServicePackageDMImplCopyWith<$Res>
-    implements $ServicePackageDMCopyWith<$Res> {
-  factory _$$ServicePackageDMImplCopyWith(_$ServicePackageDMImpl value,
-          $Res Function(_$ServicePackageDMImpl) then) =
-      __$$ServicePackageDMImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ServicePackageDMCopyWith<$Res> {
+  factory $ServicePackageDMCopyWith(
+          ServicePackageDM value, $Res Function(ServicePackageDM) _then) =
+      _$ServicePackageDMCopyWithImpl;
   @useResult
   $Res call(
       {int? id,
@@ -1057,12 +1578,12 @@ abstract class _$$ServicePackageDMImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ServicePackageDMImplCopyWithImpl<$Res>
-    extends _$ServicePackageDMCopyWithImpl<$Res, _$ServicePackageDMImpl>
-    implements _$$ServicePackageDMImplCopyWith<$Res> {
-  __$$ServicePackageDMImplCopyWithImpl(_$ServicePackageDMImpl _value,
-      $Res Function(_$ServicePackageDMImpl) _then)
-      : super(_value, _then);
+class _$ServicePackageDMCopyWithImpl<$Res>
+    implements $ServicePackageDMCopyWith<$Res> {
+  _$ServicePackageDMCopyWithImpl(this._self, this._then);
+
+  final ServicePackageDM _self;
+  final $Res Function(ServicePackageDM) _then;
 
   /// Create a copy of ServicePackageDM
   /// with the given fields replaced by the non-null parameter values.
@@ -1090,95 +1611,378 @@ class __$$ServicePackageDMImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$ServicePackageDMImpl(
+    return _then(_self.copyWith(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
       uuid: freezed == uuid
-          ? _value.uuid
+          ? _self.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String?,
       businessId: freezed == businessId
-          ? _value.businessId
+          ? _self.businessId
           : businessId // ignore: cast_nullable_to_non_nullable
               as int?,
       title: null == title
-          ? _value.title
+          ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
       serviceType: null == serviceType
-          ? _value.serviceType
+          ? _self.serviceType
           : serviceType // ignore: cast_nullable_to_non_nullable
               as ServiceType,
       priceType: null == priceType
-          ? _value.priceType
+          ? _self.priceType
           : priceType // ignore: cast_nullable_to_non_nullable
               as PriceType,
       price: freezed == price
-          ? _value.price
+          ? _self.price
           : price // ignore: cast_nullable_to_non_nullable
               as double?,
       currency: freezed == currency
-          ? _value.currency
+          ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String?,
       minGuests: freezed == minGuests
-          ? _value.minGuests
+          ? _self.minGuests
           : minGuests // ignore: cast_nullable_to_non_nullable
               as int?,
       maxGuests: freezed == maxGuests
-          ? _value.maxGuests
+          ? _self.maxGuests
           : maxGuests // ignore: cast_nullable_to_non_nullable
               as int?,
       durationHours: freezed == durationHours
-          ? _value.durationHours
+          ? _self.durationHours
           : durationHours // ignore: cast_nullable_to_non_nullable
               as double?,
       includes: null == includes
-          ? _value._includes
+          ? _self.includes
           : includes // ignore: cast_nullable_to_non_nullable
               as List<String>,
       addOns: null == addOns
-          ? _value._addOns
+          ? _self.addOns
           : addOns // ignore: cast_nullable_to_non_nullable
               as List<String>,
       isFeatured: null == isFeatured
-          ? _value.isFeatured
+          ? _self.isFeatured
           : isFeatured // ignore: cast_nullable_to_non_nullable
               as bool,
       isActive: null == isActive
-          ? _value.isActive
+          ? _self.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
       sortOrder: null == sortOrder
-          ? _value.sortOrder
+          ? _self.sortOrder
           : sortOrder // ignore: cast_nullable_to_non_nullable
               as int,
       photos: null == photos
-          ? _value._photos
+          ? _self.photos
           : photos // ignore: cast_nullable_to_non_nullable
               as List<ServicePackagePhotoDM>,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       updatedAt: freezed == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ServicePackageDM].
+extension ServicePackageDMPatterns on ServicePackageDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ServicePackageDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ServicePackageDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ServicePackageDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'business_id') int? businessId,
+            String title,
+            String? description,
+            @JsonKey(name: 'service_type') ServiceType serviceType,
+            @JsonKey(name: 'price_type') PriceType priceType,
+            @JsonKey(fromJson: _doubleFromJson) double? price,
+            String? currency,
+            @JsonKey(name: 'min_guests') int? minGuests,
+            @JsonKey(name: 'max_guests') int? maxGuests,
+            @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+            double? durationHours,
+            List<String> includes,
+            @JsonKey(name: 'add_ons') List<String> addOns,
+            @JsonKey(name: 'is_featured') bool isFeatured,
+            @JsonKey(name: 'is_active') bool isActive,
+            @JsonKey(name: 'sort_order') int sortOrder,
+            List<ServicePackagePhotoDM> photos,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM() when $default != null:
+        return $default(
+            _that.id,
+            _that.uuid,
+            _that.businessId,
+            _that.title,
+            _that.description,
+            _that.serviceType,
+            _that.priceType,
+            _that.price,
+            _that.currency,
+            _that.minGuests,
+            _that.maxGuests,
+            _that.durationHours,
+            _that.includes,
+            _that.addOns,
+            _that.isFeatured,
+            _that.isActive,
+            _that.sortOrder,
+            _that.photos,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'business_id') int? businessId,
+            String title,
+            String? description,
+            @JsonKey(name: 'service_type') ServiceType serviceType,
+            @JsonKey(name: 'price_type') PriceType priceType,
+            @JsonKey(fromJson: _doubleFromJson) double? price,
+            String? currency,
+            @JsonKey(name: 'min_guests') int? minGuests,
+            @JsonKey(name: 'max_guests') int? maxGuests,
+            @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+            double? durationHours,
+            List<String> includes,
+            @JsonKey(name: 'add_ons') List<String> addOns,
+            @JsonKey(name: 'is_featured') bool isFeatured,
+            @JsonKey(name: 'is_active') bool isActive,
+            @JsonKey(name: 'sort_order') int sortOrder,
+            List<ServicePackagePhotoDM> photos,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM():
+        return $default(
+            _that.id,
+            _that.uuid,
+            _that.businessId,
+            _that.title,
+            _that.description,
+            _that.serviceType,
+            _that.priceType,
+            _that.price,
+            _that.currency,
+            _that.minGuests,
+            _that.maxGuests,
+            _that.durationHours,
+            _that.includes,
+            _that.addOns,
+            _that.isFeatured,
+            _that.isActive,
+            _that.sortOrder,
+            _that.photos,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'business_id') int? businessId,
+            String title,
+            String? description,
+            @JsonKey(name: 'service_type') ServiceType serviceType,
+            @JsonKey(name: 'price_type') PriceType priceType,
+            @JsonKey(fromJson: _doubleFromJson) double? price,
+            String? currency,
+            @JsonKey(name: 'min_guests') int? minGuests,
+            @JsonKey(name: 'max_guests') int? maxGuests,
+            @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+            double? durationHours,
+            List<String> includes,
+            @JsonKey(name: 'add_ons') List<String> addOns,
+            @JsonKey(name: 'is_featured') bool isFeatured,
+            @JsonKey(name: 'is_active') bool isActive,
+            @JsonKey(name: 'sort_order') int sortOrder,
+            List<ServicePackagePhotoDM> photos,
+            @JsonKey(name: 'created_at') DateTime? createdAt,
+            @JsonKey(name: 'updated_at') DateTime? updatedAt)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackageDM() when $default != null:
+        return $default(
+            _that.id,
+            _that.uuid,
+            _that.businessId,
+            _that.title,
+            _that.description,
+            _that.serviceType,
+            _that.priceType,
+            _that.price,
+            _that.currency,
+            _that.minGuests,
+            _that.maxGuests,
+            _that.durationHours,
+            _that.includes,
+            _that.addOns,
+            _that.isFeatured,
+            _that.isActive,
+            _that.sortOrder,
+            _that.photos,
+            _that.createdAt,
+            _that.updatedAt);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 @JsonSerializable()
-class _$ServicePackageDMImpl extends _ServicePackageDM {
-  const _$ServicePackageDMImpl(
+class _ServicePackageDM extends ServicePackageDM {
+  const _ServicePackageDM(
       {this.id,
       this.uuid,
       @JsonKey(name: 'business_id') this.businessId,
@@ -1204,9 +2008,8 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
         _addOns = addOns,
         _photos = photos,
         super._();
-
-  factory _$ServicePackageDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ServicePackageDMImplFromJson(json);
+  factory _ServicePackageDM.fromJson(Map<String, dynamic> json) =>
+      _$ServicePackageDMFromJson(json);
 
   @override
   final int? id;
@@ -1283,16 +2086,26 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
+  /// Create a copy of ServicePackageDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ServicePackageDM(id: $id, uuid: $uuid, businessId: $businessId, title: $title, description: $description, serviceType: $serviceType, priceType: $priceType, price: $price, currency: $currency, minGuests: $minGuests, maxGuests: $maxGuests, durationHours: $durationHours, includes: $includes, addOns: $addOns, isFeatured: $isFeatured, isActive: $isActive, sortOrder: $sortOrder, photos: $photos, createdAt: $createdAt, updatedAt: $updatedAt)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ServicePackageDMCopyWith<_ServicePackageDM> get copyWith =>
+      __$ServicePackageDMCopyWithImpl<_ServicePackageDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ServicePackageDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ServicePackageDMImpl &&
+            other is _ServicePackageDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.businessId, businessId) ||
@@ -1354,300 +2167,190 @@ class _$ServicePackageDMImpl extends _ServicePackageDM {
         updatedAt
       ]);
 
-  /// Create a copy of ServicePackageDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ServicePackageDMImplCopyWith<_$ServicePackageDMImpl> get copyWith =>
-      __$$ServicePackageDMImplCopyWithImpl<_$ServicePackageDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ServicePackageDMImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _ServicePackageDM extends ServicePackageDM {
-  const factory _ServicePackageDM(
-          {final int? id,
-          final String? uuid,
-          @JsonKey(name: 'business_id') final int? businessId,
-          final String title,
-          final String? description,
-          @JsonKey(name: 'service_type') final ServiceType serviceType,
-          @JsonKey(name: 'price_type') final PriceType priceType,
-          @JsonKey(fromJson: _doubleFromJson) final double? price,
-          final String? currency,
-          @JsonKey(name: 'min_guests') final int? minGuests,
-          @JsonKey(name: 'max_guests') final int? maxGuests,
-          @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
-          final double? durationHours,
-          final List<String> includes,
-          @JsonKey(name: 'add_ons') final List<String> addOns,
-          @JsonKey(name: 'is_featured') final bool isFeatured,
-          @JsonKey(name: 'is_active') final bool isActive,
-          @JsonKey(name: 'sort_order') final int sortOrder,
-          final List<ServicePackagePhotoDM> photos,
-          @JsonKey(name: 'created_at') final DateTime? createdAt,
-          @JsonKey(name: 'updated_at') final DateTime? updatedAt}) =
-      _$ServicePackageDMImpl;
-  const _ServicePackageDM._() : super._();
-
-  factory _ServicePackageDM.fromJson(Map<String, dynamic> json) =
-      _$ServicePackageDMImpl.fromJson;
-
-  @override
-  int? get id;
-  @override
-  String? get uuid;
-  @override
-  @JsonKey(name: 'business_id')
-  int? get businessId;
-  @override
-  String get title;
-  @override
-  String? get description;
-  @override
-  @JsonKey(name: 'service_type')
-  ServiceType get serviceType;
-  @override
-  @JsonKey(name: 'price_type')
-  PriceType get priceType;
-  @override
-  @JsonKey(fromJson: _doubleFromJson)
-  double? get price;
-  @override
-  String? get currency;
-  @override
-  @JsonKey(name: 'min_guests')
-  int? get minGuests;
-  @override
-  @JsonKey(name: 'max_guests')
-  int? get maxGuests;
-  @override
-  @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
-  double? get durationHours;
-  @override
-  List<String> get includes;
-  @override
-  @JsonKey(name: 'add_ons')
-  List<String> get addOns;
-  @override
-  @JsonKey(name: 'is_featured')
-  bool get isFeatured;
-  @override
-  @JsonKey(name: 'is_active')
-  bool get isActive;
-  @override
-  @JsonKey(name: 'sort_order')
-  int get sortOrder;
-  @override
-  List<ServicePackagePhotoDM> get photos;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt;
-
-  /// Create a copy of ServicePackageDM
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ServicePackageDMImplCopyWith<_$ServicePackageDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ServicePackagePhotoDM _$ServicePackagePhotoDMFromJson(
-    Map<String, dynamic> json) {
-  return _ServicePackagePhotoDM.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ServicePackagePhotoDM {
-  int? get id => throw _privateConstructorUsedError;
-  String? get uuid => throw _privateConstructorUsedError;
-  @JsonKey(name: 'service_package_id')
-  int? get servicePackageId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'photo_path')
-  String? get photoPath => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sort_order')
-  int get sortOrder => throw _privateConstructorUsedError;
-
-  /// Serializes this ServicePackagePhotoDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ServicePackagePhotoDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ServicePackagePhotoDMCopyWith<ServicePackagePhotoDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ServicePackagePhotoDMCopyWith<$Res> {
-  factory $ServicePackagePhotoDMCopyWith(ServicePackagePhotoDM value,
-          $Res Function(ServicePackagePhotoDM) then) =
-      _$ServicePackagePhotoDMCopyWithImpl<$Res, ServicePackagePhotoDM>;
-  @useResult
-  $Res call(
-      {int? id,
-      String? uuid,
-      @JsonKey(name: 'service_package_id') int? servicePackageId,
-      @JsonKey(name: 'photo_path') String? photoPath,
-      @JsonKey(name: 'sort_order') int sortOrder});
-}
-
-/// @nodoc
-class _$ServicePackagePhotoDMCopyWithImpl<$Res,
-        $Val extends ServicePackagePhotoDM>
-    implements $ServicePackagePhotoDMCopyWith<$Res> {
-  _$ServicePackagePhotoDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ServicePackagePhotoDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? uuid = freezed,
-    Object? servicePackageId = freezed,
-    Object? photoPath = freezed,
-    Object? sortOrder = null,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      uuid: freezed == uuid
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      servicePackageId: freezed == servicePackageId
-          ? _value.servicePackageId
-          : servicePackageId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      photoPath: freezed == photoPath
-          ? _value.photoPath
-          : photoPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sortOrder: null == sortOrder
-          ? _value.sortOrder
-          : sortOrder // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  String toString() {
+    return 'ServicePackageDM(id: $id, uuid: $uuid, businessId: $businessId, title: $title, description: $description, serviceType: $serviceType, priceType: $priceType, price: $price, currency: $currency, minGuests: $minGuests, maxGuests: $maxGuests, durationHours: $durationHours, includes: $includes, addOns: $addOns, isFeatured: $isFeatured, isActive: $isActive, sortOrder: $sortOrder, photos: $photos, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
 /// @nodoc
-abstract class _$$ServicePackagePhotoDMImplCopyWith<$Res>
-    implements $ServicePackagePhotoDMCopyWith<$Res> {
-  factory _$$ServicePackagePhotoDMImplCopyWith(
-          _$ServicePackagePhotoDMImpl value,
-          $Res Function(_$ServicePackagePhotoDMImpl) then) =
-      __$$ServicePackagePhotoDMImplCopyWithImpl<$Res>;
+abstract mixin class _$ServicePackageDMCopyWith<$Res>
+    implements $ServicePackageDMCopyWith<$Res> {
+  factory _$ServicePackageDMCopyWith(
+          _ServicePackageDM value, $Res Function(_ServicePackageDM) _then) =
+      __$ServicePackageDMCopyWithImpl;
   @override
   @useResult
   $Res call(
       {int? id,
       String? uuid,
-      @JsonKey(name: 'service_package_id') int? servicePackageId,
-      @JsonKey(name: 'photo_path') String? photoPath,
-      @JsonKey(name: 'sort_order') int sortOrder});
+      @JsonKey(name: 'business_id') int? businessId,
+      String title,
+      String? description,
+      @JsonKey(name: 'service_type') ServiceType serviceType,
+      @JsonKey(name: 'price_type') PriceType priceType,
+      @JsonKey(fromJson: _doubleFromJson) double? price,
+      String? currency,
+      @JsonKey(name: 'min_guests') int? minGuests,
+      @JsonKey(name: 'max_guests') int? maxGuests,
+      @JsonKey(name: 'duration_hours', fromJson: _doubleFromJson)
+      double? durationHours,
+      List<String> includes,
+      @JsonKey(name: 'add_ons') List<String> addOns,
+      @JsonKey(name: 'is_featured') bool isFeatured,
+      @JsonKey(name: 'is_active') bool isActive,
+      @JsonKey(name: 'sort_order') int sortOrder,
+      List<ServicePackagePhotoDM> photos,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
 }
 
 /// @nodoc
-class __$$ServicePackagePhotoDMImplCopyWithImpl<$Res>
-    extends _$ServicePackagePhotoDMCopyWithImpl<$Res,
-        _$ServicePackagePhotoDMImpl>
-    implements _$$ServicePackagePhotoDMImplCopyWith<$Res> {
-  __$$ServicePackagePhotoDMImplCopyWithImpl(_$ServicePackagePhotoDMImpl _value,
-      $Res Function(_$ServicePackagePhotoDMImpl) _then)
-      : super(_value, _then);
+class __$ServicePackageDMCopyWithImpl<$Res>
+    implements _$ServicePackageDMCopyWith<$Res> {
+  __$ServicePackageDMCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of ServicePackagePhotoDM
+  final _ServicePackageDM _self;
+  final $Res Function(_ServicePackageDM) _then;
+
+  /// Create a copy of ServicePackageDM
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? id = freezed,
     Object? uuid = freezed,
-    Object? servicePackageId = freezed,
-    Object? photoPath = freezed,
+    Object? businessId = freezed,
+    Object? title = null,
+    Object? description = freezed,
+    Object? serviceType = null,
+    Object? priceType = null,
+    Object? price = freezed,
+    Object? currency = freezed,
+    Object? minGuests = freezed,
+    Object? maxGuests = freezed,
+    Object? durationHours = freezed,
+    Object? includes = null,
+    Object? addOns = null,
+    Object? isFeatured = null,
+    Object? isActive = null,
     Object? sortOrder = null,
+    Object? photos = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
-    return _then(_$ServicePackagePhotoDMImpl(
+    return _then(_ServicePackageDM(
       id: freezed == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
       uuid: freezed == uuid
-          ? _value.uuid
+          ? _self.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      servicePackageId: freezed == servicePackageId
-          ? _value.servicePackageId
-          : servicePackageId // ignore: cast_nullable_to_non_nullable
+      businessId: freezed == businessId
+          ? _self.businessId
+          : businessId // ignore: cast_nullable_to_non_nullable
               as int?,
-      photoPath: freezed == photoPath
-          ? _value.photoPath
-          : photoPath // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      serviceType: null == serviceType
+          ? _self.serviceType
+          : serviceType // ignore: cast_nullable_to_non_nullable
+              as ServiceType,
+      priceType: null == priceType
+          ? _self.priceType
+          : priceType // ignore: cast_nullable_to_non_nullable
+              as PriceType,
+      price: freezed == price
+          ? _self.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      currency: freezed == currency
+          ? _self.currency
+          : currency // ignore: cast_nullable_to_non_nullable
+              as String?,
+      minGuests: freezed == minGuests
+          ? _self.minGuests
+          : minGuests // ignore: cast_nullable_to_non_nullable
+              as int?,
+      maxGuests: freezed == maxGuests
+          ? _self.maxGuests
+          : maxGuests // ignore: cast_nullable_to_non_nullable
+              as int?,
+      durationHours: freezed == durationHours
+          ? _self.durationHours
+          : durationHours // ignore: cast_nullable_to_non_nullable
+              as double?,
+      includes: null == includes
+          ? _self._includes
+          : includes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      addOns: null == addOns
+          ? _self._addOns
+          : addOns // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isFeatured: null == isFeatured
+          ? _self.isFeatured
+          : isFeatured // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       sortOrder: null == sortOrder
-          ? _value.sortOrder
+          ? _self.sortOrder
           : sortOrder // ignore: cast_nullable_to_non_nullable
               as int,
+      photos: null == photos
+          ? _self._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<ServicePackagePhotoDM>,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$ServicePackagePhotoDMImpl implements _ServicePackagePhotoDM {
-  const _$ServicePackagePhotoDMImpl(
-      {this.id,
-      this.uuid,
-      @JsonKey(name: 'service_package_id') this.servicePackageId,
-      @JsonKey(name: 'photo_path') this.photoPath,
-      @JsonKey(name: 'sort_order') this.sortOrder = 0});
-
-  factory _$ServicePackagePhotoDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ServicePackagePhotoDMImplFromJson(json);
-
-  @override
-  final int? id;
-  @override
-  final String? uuid;
-  @override
+mixin _$ServicePackagePhotoDM {
+  int? get id;
+  String? get uuid;
   @JsonKey(name: 'service_package_id')
-  final int? servicePackageId;
-  @override
+  int? get servicePackageId;
   @JsonKey(name: 'photo_path')
-  final String? photoPath;
-  @override
+  String? get photoPath;
   @JsonKey(name: 'sort_order')
-  final int sortOrder;
+  int get sortOrder;
 
-  @override
-  String toString() {
-    return 'ServicePackagePhotoDM(id: $id, uuid: $uuid, servicePackageId: $servicePackageId, photoPath: $photoPath, sortOrder: $sortOrder)';
-  }
+  /// Create a copy of ServicePackagePhotoDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ServicePackagePhotoDMCopyWith<ServicePackagePhotoDM> get copyWith =>
+      _$ServicePackagePhotoDMCopyWithImpl<ServicePackagePhotoDM>(
+          this as ServicePackagePhotoDM, _$identity);
+
+  /// Serializes this ServicePackagePhotoDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ServicePackagePhotoDMImpl &&
+            other is ServicePackagePhotoDM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.servicePackageId, servicePackageId) ||
@@ -1663,53 +2366,374 @@ class _$ServicePackagePhotoDMImpl implements _ServicePackagePhotoDM {
   int get hashCode => Object.hash(
       runtimeType, id, uuid, servicePackageId, photoPath, sortOrder);
 
-  /// Create a copy of ServicePackagePhotoDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ServicePackagePhotoDMImplCopyWith<_$ServicePackagePhotoDMImpl>
-      get copyWith => __$$ServicePackagePhotoDMImplCopyWithImpl<
-          _$ServicePackagePhotoDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ServicePackagePhotoDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ServicePackagePhotoDM(id: $id, uuid: $uuid, servicePackageId: $servicePackageId, photoPath: $photoPath, sortOrder: $sortOrder)';
   }
 }
 
-abstract class _ServicePackagePhotoDM implements ServicePackagePhotoDM {
-  const factory _ServicePackagePhotoDM(
-          {final int? id,
-          final String? uuid,
-          @JsonKey(name: 'service_package_id') final int? servicePackageId,
-          @JsonKey(name: 'photo_path') final String? photoPath,
-          @JsonKey(name: 'sort_order') final int sortOrder}) =
-      _$ServicePackagePhotoDMImpl;
+/// @nodoc
+abstract mixin class $ServicePackagePhotoDMCopyWith<$Res> {
+  factory $ServicePackagePhotoDMCopyWith(ServicePackagePhotoDM value,
+          $Res Function(ServicePackagePhotoDM) _then) =
+      _$ServicePackagePhotoDMCopyWithImpl;
+  @useResult
+  $Res call(
+      {int? id,
+      String? uuid,
+      @JsonKey(name: 'service_package_id') int? servicePackageId,
+      @JsonKey(name: 'photo_path') String? photoPath,
+      @JsonKey(name: 'sort_order') int sortOrder});
+}
 
-  factory _ServicePackagePhotoDM.fromJson(Map<String, dynamic> json) =
-      _$ServicePackagePhotoDMImpl.fromJson;
+/// @nodoc
+class _$ServicePackagePhotoDMCopyWithImpl<$Res>
+    implements $ServicePackagePhotoDMCopyWith<$Res> {
+  _$ServicePackagePhotoDMCopyWithImpl(this._self, this._then);
+
+  final ServicePackagePhotoDM _self;
+  final $Res Function(ServicePackagePhotoDM) _then;
+
+  /// Create a copy of ServicePackagePhotoDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? uuid = freezed,
+    Object? servicePackageId = freezed,
+    Object? photoPath = freezed,
+    Object? sortOrder = null,
+  }) {
+    return _then(_self.copyWith(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uuid: freezed == uuid
+          ? _self.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageId: freezed == servicePackageId
+          ? _self.servicePackageId
+          : servicePackageId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      photoPath: freezed == photoPath
+          ? _self.photoPath
+          : photoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sortOrder: null == sortOrder
+          ? _self.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [ServicePackagePhotoDM].
+extension ServicePackagePhotoDMPatterns on ServicePackagePhotoDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ServicePackagePhotoDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ServicePackagePhotoDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ServicePackagePhotoDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'service_package_id') int? servicePackageId,
+            @JsonKey(name: 'photo_path') String? photoPath,
+            @JsonKey(name: 'sort_order') int sortOrder)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM() when $default != null:
+        return $default(_that.id, _that.uuid, _that.servicePackageId,
+            _that.photoPath, _that.sortOrder);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'service_package_id') int? servicePackageId,
+            @JsonKey(name: 'photo_path') String? photoPath,
+            @JsonKey(name: 'sort_order') int sortOrder)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM():
+        return $default(_that.id, _that.uuid, _that.servicePackageId,
+            _that.photoPath, _that.sortOrder);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int? id,
+            String? uuid,
+            @JsonKey(name: 'service_package_id') int? servicePackageId,
+            @JsonKey(name: 'photo_path') String? photoPath,
+            @JsonKey(name: 'sort_order') int sortOrder)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ServicePackagePhotoDM() when $default != null:
+        return $default(_that.id, _that.uuid, _that.servicePackageId,
+            _that.photoPath, _that.sortOrder);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _ServicePackagePhotoDM implements ServicePackagePhotoDM {
+  const _ServicePackagePhotoDM(
+      {this.id,
+      this.uuid,
+      @JsonKey(name: 'service_package_id') this.servicePackageId,
+      @JsonKey(name: 'photo_path') this.photoPath,
+      @JsonKey(name: 'sort_order') this.sortOrder = 0});
+  factory _ServicePackagePhotoDM.fromJson(Map<String, dynamic> json) =>
+      _$ServicePackagePhotoDMFromJson(json);
 
   @override
-  int? get id;
+  final int? id;
   @override
-  String? get uuid;
+  final String? uuid;
   @override
   @JsonKey(name: 'service_package_id')
-  int? get servicePackageId;
+  final int? servicePackageId;
   @override
   @JsonKey(name: 'photo_path')
-  String? get photoPath;
+  final String? photoPath;
   @override
   @JsonKey(name: 'sort_order')
-  int get sortOrder;
+  final int sortOrder;
 
   /// Create a copy of ServicePackagePhotoDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ServicePackagePhotoDMImplCopyWith<_$ServicePackagePhotoDMImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$ServicePackagePhotoDMCopyWith<_ServicePackagePhotoDM> get copyWith =>
+      __$ServicePackagePhotoDMCopyWithImpl<_ServicePackagePhotoDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ServicePackagePhotoDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ServicePackagePhotoDM &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.servicePackageId, servicePackageId) ||
+                other.servicePackageId == servicePackageId) &&
+            (identical(other.photoPath, photoPath) ||
+                other.photoPath == photoPath) &&
+            (identical(other.sortOrder, sortOrder) ||
+                other.sortOrder == sortOrder));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, uuid, servicePackageId, photoPath, sortOrder);
+
+  @override
+  String toString() {
+    return 'ServicePackagePhotoDM(id: $id, uuid: $uuid, servicePackageId: $servicePackageId, photoPath: $photoPath, sortOrder: $sortOrder)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$ServicePackagePhotoDMCopyWith<$Res>
+    implements $ServicePackagePhotoDMCopyWith<$Res> {
+  factory _$ServicePackagePhotoDMCopyWith(_ServicePackagePhotoDM value,
+          $Res Function(_ServicePackagePhotoDM) _then) =
+      __$ServicePackagePhotoDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? uuid,
+      @JsonKey(name: 'service_package_id') int? servicePackageId,
+      @JsonKey(name: 'photo_path') String? photoPath,
+      @JsonKey(name: 'sort_order') int sortOrder});
+}
+
+/// @nodoc
+class __$ServicePackagePhotoDMCopyWithImpl<$Res>
+    implements _$ServicePackagePhotoDMCopyWith<$Res> {
+  __$ServicePackagePhotoDMCopyWithImpl(this._self, this._then);
+
+  final _ServicePackagePhotoDM _self;
+  final $Res Function(_ServicePackagePhotoDM) _then;
+
+  /// Create a copy of ServicePackagePhotoDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = freezed,
+    Object? uuid = freezed,
+    Object? servicePackageId = freezed,
+    Object? photoPath = freezed,
+    Object? sortOrder = null,
+  }) {
+    return _then(_ServicePackagePhotoDM(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uuid: freezed == uuid
+          ? _self.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      servicePackageId: freezed == servicePackageId
+          ? _self.servicePackageId
+          : servicePackageId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      photoPath: freezed == photoPath
+          ? _self.photoPath
+          : photoPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sortOrder: null == sortOrder
+          ? _self.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+// dart format on

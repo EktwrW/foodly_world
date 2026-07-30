@@ -1,7 +1,7 @@
 part of 'business_bloc.dart';
 
 @freezed
-class BusinessState with _$BusinessState {
+sealed class BusinessState with _$BusinessState {
   const factory BusinessState.initial(BusinessVM vm) = _Initial;
   const factory BusinessState.loading(BusinessVM vm) = _Loading;
   const factory BusinessState.loaded(BusinessVM vm) = _Loaded;

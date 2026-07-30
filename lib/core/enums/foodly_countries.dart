@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:icons_plus/icons_plus.dart' show Flag, Flags;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Flag, Flags;
 //import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 

@@ -4,7 +4,7 @@ part 'business_cover_image_dm.freezed.dart';
 part 'business_cover_image_dm.g.dart';
 
 @freezed
-class BusinessCoverImageDM with _$BusinessCoverImageDM {
+abstract class BusinessCoverImageDM with _$BusinessCoverImageDM {
   const BusinessCoverImageDM._();
 
   const factory BusinessCoverImageDM({

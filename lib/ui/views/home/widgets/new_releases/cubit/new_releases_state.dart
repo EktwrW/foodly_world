@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'new_releases_state.freezed.dart';
 
 @freezed
-class NewReleasesState with _$NewReleasesState {
+sealed class NewReleasesState with _$NewReleasesState {
   const factory NewReleasesState.initial(NewReleasesVM vm) = _Initial;
   const factory NewReleasesState.loading(NewReleasesVM vm) = _Loading;
   const factory NewReleasesState.loaded(NewReleasesVM vm) = _Loaded;

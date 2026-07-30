@@ -8484,6 +8484,296 @@ class S {
       args: [],
     );
   }
+
+  /// `Group order`
+  String get groupOrderTitle {
+    return Intl.message(
+      'Group order',
+      name: 'groupOrderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Participants`
+  String get groupOrderParticipants {
+    return Intl.message(
+      'Participants',
+      name: 'groupOrderParticipants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items`
+  String get groupOrderItemsSection {
+    return Intl.message(
+      'Items',
+      name: 'groupOrderItemsSection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No items yet`
+  String get groupOrderNoItems {
+    return Intl.message(
+      'No items yet',
+      name: 'groupOrderNoItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order total`
+  String get groupOrderTotal {
+    return Intl.message(
+      'Order total',
+      name: 'groupOrderTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your share`
+  String get groupOrderYourShare {
+    return Intl.message(
+      'Your share',
+      name: 'groupOrderYourShare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay my share · {amount}`
+  String groupOrderPayMyShare(String amount) {
+    return Intl.message(
+      'Pay my share · $amount',
+      name: 'groupOrderPayMyShare',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Nothing left to pay`
+  String get groupOrderNoBalanceDue {
+    return Intl.message(
+      'Nothing left to pay',
+      name: 'groupOrderNoBalanceDue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{paid} of {total} paid`
+  String groupOrderPaidProgress(int paid, int total) {
+    return Intl.message(
+      '$paid of $total paid',
+      name: 'groupOrderPaidProgress',
+      desc: '',
+      args: [paid, total],
+    );
+  }
+
+  /// `Host`
+  String get groupOrderHostBadge {
+    return Intl.message(
+      'Host',
+      name: 'groupOrderHostBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment completed`
+  String get groupOrderPaymentSucceeded {
+    return Intl.message(
+      'Payment completed',
+      name: 'groupOrderPaymentSucceeded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment canceled`
+  String get groupOrderPaymentCanceled {
+    return Intl.message(
+      'Payment canceled',
+      name: 'groupOrderPaymentCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment couldn't be completed`
+  String get groupOrderPaymentFailed {
+    return Intl.message(
+      'Payment couldn\'t be completed',
+      name: 'groupOrderPaymentFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order as a group`
+  String get groupOrderEntryCta {
+    return Intl.message(
+      'Order as a group',
+      name: 'groupOrderEntryCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating…`
+  String get groupOrderCreating {
+    return Intl.message(
+      'Creating…',
+      name: 'groupOrderCreating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View order`
+  String get groupOrderViewOrder {
+    return Intl.message(
+      'View order',
+      name: 'groupOrderViewOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add dishes from the menu`
+  String get groupOrderAddFromMenu {
+    return Intl.message(
+      'Add dishes from the menu',
+      name: 'groupOrderAddFromMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close order`
+  String get groupOrderLockCta {
+    return Intl.message(
+      'Close order',
+      name: 'groupOrderLockCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reopen order`
+  String get groupOrderUnlockCta {
+    return Intl.message(
+      'Reopen order',
+      name: 'groupOrderUnlockCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reopen the order? Prices unfreeze and items can be edited again.`
+  String get groupOrderUnlockConfirm {
+    return Intl.message(
+      'Reopen the order? Prices unfreeze and items can be edited again.',
+      name: 'groupOrderUnlockConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer ownership`
+  String get groupOrderTransferHost {
+    return Intl.message(
+      'Transfer ownership',
+      name: 'groupOrderTransferHost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer ownership to {name}?`
+  String groupOrderTransferHostConfirm(String name) {
+    return Intl.message(
+      'Transfer ownership to $name?',
+      name: 'groupOrderTransferHostConfirm',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Cover their share`
+  String get groupOrderCoverShare {
+    return Intl.message(
+      'Cover their share',
+      name: 'groupOrderCoverShare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay {name}'s share ({amount})?`
+  String groupOrderCoverConfirm(String name, String amount) {
+    return Intl.message(
+      'Pay $name\'s share ($amount)?',
+      name: 'groupOrderCoverConfirm',
+      desc: '',
+      args: [name, amount],
+    );
+  }
+
+  /// `Pay all remaining · {amount}`
+  String groupOrderPayAllRemaining(String amount) {
+    return Intl.message(
+      'Pay all remaining · $amount',
+      name: 'groupOrderPayAllRemaining',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Pay everything remaining ({amount})?`
+  String groupOrderPayAllConfirm(String amount) {
+    return Intl.message(
+      'Pay everything remaining ($amount)?',
+      name: 'groupOrderPayAllConfirm',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Paid by {name}`
+  String groupOrderPaidBy(String name) {
+    return Intl.message(
+      'Paid by $name',
+      name: 'groupOrderPaidBy',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Extra time: {amount} missing`
+  String groupOrderGraceNotice(String amount) {
+    return Intl.message(
+      'Extra time: $amount missing',
+      name: 'groupOrderGraceNotice',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Log in or sign up to start a group order.`
+  String get guestGateGroupOrder {
+    return Intl.message(
+      'Log in or sign up to start a group order.',
+      name: 'guestGateGroupOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

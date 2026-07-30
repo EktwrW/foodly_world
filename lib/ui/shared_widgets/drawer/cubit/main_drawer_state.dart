@@ -1,7 +1,7 @@
 part of 'main_drawer_cubit.dart';
 
 @freezed
-class MainDrawerState with _$MainDrawerState {
+sealed class MainDrawerState with _$MainDrawerState {
   const factory MainDrawerState.initial(MainDrawerVM vm) = _Initial;
   const factory MainDrawerState.loaded(MainDrawerVM vm) = _Loaded;
   const factory MainDrawerState.openDrawer(MainDrawerVM vm) = _OpenDrawer;

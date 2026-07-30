@@ -5,7 +5,7 @@ part 'user_session_dm.freezed.dart';
 part 'user_session_dm.g.dart';
 
 @freezed
-class UserSessionDM with _$UserSessionDM {
+abstract class UserSessionDM with _$UserSessionDM {
   const UserSessionDM._();
 
   const factory UserSessionDM({

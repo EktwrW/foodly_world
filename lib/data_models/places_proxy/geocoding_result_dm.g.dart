@@ -6,9 +6,8 @@ part of 'geocoding_result_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GeocodingResultDMImpl _$$GeocodingResultDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$GeocodingResultDMImpl(
+_GeocodingResultDM _$GeocodingResultDMFromJson(Map<String, dynamic> json) =>
+    _GeocodingResultDM(
       placeId: json['place_id'] as String?,
       formattedAddress: json['formatted_address'] as String?,
       addressComponents: (json['address_components'] as List<dynamic>?)
@@ -24,8 +23,7 @@ _$GeocodingResultDMImpl _$$GeocodingResultDMImplFromJson(
               const <String>[],
     );
 
-Map<String, dynamic> _$$GeocodingResultDMImplToJson(
-        _$GeocodingResultDMImpl instance) =>
+Map<String, dynamic> _$GeocodingResultDMToJson(_GeocodingResultDM instance) =>
     <String, dynamic>{
       if (instance.placeId case final value?) 'place_id': value,
       if (instance.formattedAddress case final value?)

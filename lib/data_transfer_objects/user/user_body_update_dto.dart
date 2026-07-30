@@ -6,7 +6,7 @@ part 'user_body_update_dto.freezed.dart';
 part 'user_body_update_dto.g.dart';
 
 @freezed
-class UserBodyUpdateDTO with _$UserBodyUpdateDTO {
+abstract class UserBodyUpdateDTO with _$UserBodyUpdateDTO {
   const factory UserBodyUpdateDTO({
     @JsonKey(name: 'username') String? userName,
     @JsonKey(name: 'name') String? firstName,

@@ -46,7 +46,7 @@ enum ProfileEditing {
 }
 
 @freezed
-class UserProfileVM with _$UserProfileVM {
+abstract class UserProfileVM with _$UserProfileVM {
   const UserProfileVM._();
 
   const factory UserProfileVM({

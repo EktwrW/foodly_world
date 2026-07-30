@@ -6,9 +6,9 @@ part of 'business_cover_image_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BusinessCoverImageDMImpl _$$BusinessCoverImageDMImplFromJson(
+_BusinessCoverImageDM _$BusinessCoverImageDMFromJson(
         Map<String, dynamic> json) =>
-    _$BusinessCoverImageDMImpl(
+    _BusinessCoverImageDM(
       intId: _intFromJson(json['id']),
       imageId: json['business_image_uuid'] as String?,
       url: json['business_image_path'] as String?,
@@ -21,8 +21,8 @@ _$BusinessCoverImageDMImpl _$$BusinessCoverImageDMImplFromJson(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$BusinessCoverImageDMImplToJson(
-        _$BusinessCoverImageDMImpl instance) =>
+Map<String, dynamic> _$BusinessCoverImageDMToJson(
+        _BusinessCoverImageDM instance) =>
     <String, dynamic>{
       if (instance.intId case final value?) 'id': value,
       if (instance.imageId case final value?) 'business_image_uuid': value,

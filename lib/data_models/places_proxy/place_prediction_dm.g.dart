@@ -6,9 +6,8 @@ part of 'place_prediction_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PlacePredictionDMImpl _$$PlacePredictionDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PlacePredictionDMImpl(
+_PlacePredictionDM _$PlacePredictionDMFromJson(Map<String, dynamic> json) =>
+    _PlacePredictionDM(
       placeId: json['place_id'] as String,
       description: json['description'] as String,
       structuredFormatting: json['structured_formatting'] == null
@@ -20,8 +19,7 @@ _$PlacePredictionDMImpl _$$PlacePredictionDMImplFromJson(
               const <String>[],
     );
 
-Map<String, dynamic> _$$PlacePredictionDMImplToJson(
-        _$PlacePredictionDMImpl instance) =>
+Map<String, dynamic> _$PlacePredictionDMToJson(_PlacePredictionDM instance) =>
     <String, dynamic>{
       'place_id': instance.placeId,
       'description': instance.description,
@@ -30,15 +28,15 @@ Map<String, dynamic> _$$PlacePredictionDMImplToJson(
       'types': instance.types,
     };
 
-_$PlaceStructuredFormattingDMImpl _$$PlaceStructuredFormattingDMImplFromJson(
+_PlaceStructuredFormattingDM _$PlaceStructuredFormattingDMFromJson(
         Map<String, dynamic> json) =>
-    _$PlaceStructuredFormattingDMImpl(
+    _PlaceStructuredFormattingDM(
       mainText: json['main_text'] as String?,
       secondaryText: json['secondary_text'] as String?,
     );
 
-Map<String, dynamic> _$$PlaceStructuredFormattingDMImplToJson(
-        _$PlaceStructuredFormattingDMImpl instance) =>
+Map<String, dynamic> _$PlaceStructuredFormattingDMToJson(
+        _PlaceStructuredFormattingDM instance) =>
     <String, dynamic>{
       if (instance.mainText case final value?) 'main_text': value,
       if (instance.secondaryText case final value?) 'secondary_text': value,

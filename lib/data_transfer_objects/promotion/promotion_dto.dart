@@ -6,7 +6,7 @@ part 'promotion_dto.freezed.dart';
 part 'promotion_dto.g.dart';
 
 @freezed
-class PromotionDTO with _$PromotionDTO {
+abstract class PromotionDTO with _$PromotionDTO {
   const factory PromotionDTO({
     @JsonKey(name: 'business_uuid') String? businessUuid,
     String? title,

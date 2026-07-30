@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'new_releases_vm.freezed.dart';
 
 @freezed
-class NewReleasesVM with _$NewReleasesVM {
+abstract class NewReleasesVM with _$NewReleasesVM {
   const factory NewReleasesVM({
     @Default([]) List<BusinessDM> businesses,
     @Default(false) bool isLoading,

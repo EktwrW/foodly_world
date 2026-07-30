@@ -9,7 +9,7 @@ export 'package:foodly_world/data_models/menu/item_dm.dart';
 part 'manage_menu_vm.freezed.dart';
 
 @freezed
-class ManageMenuVM with _$ManageMenuVM {
+abstract class ManageMenuVM with _$ManageMenuVM {
   const ManageMenuVM._();
 
   const factory ManageMenuVM({

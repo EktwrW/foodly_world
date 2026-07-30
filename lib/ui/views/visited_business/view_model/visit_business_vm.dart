@@ -9,7 +9,7 @@ export 'package:foodly_world/data_models/business/business_dm.dart';
 part 'visit_business_vm.freezed.dart';
 
 @freezed
-class VisitBusinessVM with _$VisitBusinessVM {
+abstract class VisitBusinessVM with _$VisitBusinessVM {
   const VisitBusinessVM._();
 
   const factory VisitBusinessVM({

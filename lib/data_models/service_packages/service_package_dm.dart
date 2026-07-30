@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart' show IconData;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 part 'service_package_dm.freezed.dart';
 part 'service_package_dm.g.dart';
@@ -24,7 +24,7 @@ double? _doubleFromJson(dynamic value) {
 // ── Response wrappers ────────────────────────────────────────
 
 @freezed
-class ServicePackagesResponseDM with _$ServicePackagesResponseDM {
+abstract class ServicePackagesResponseDM with _$ServicePackagesResponseDM {
   const factory ServicePackagesResponseDM({
     @Default(false) bool success,
     @JsonKey(name: 'service_packages') @Default([]) List<ServicePackageDM> servicePackages,
@@ -34,7 +34,7 @@ class ServicePackagesResponseDM with _$ServicePackagesResponseDM {
 }
 
 @freezed
-class ServicePackageActionResponseDM with _$ServicePackageActionResponseDM {
+abstract class ServicePackageActionResponseDM with _$ServicePackageActionResponseDM {
   const factory ServicePackageActionResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -46,7 +46,7 @@ class ServicePackageActionResponseDM with _$ServicePackageActionResponseDM {
 }
 
 @freezed
-class GenericSuccessResponseDM with _$GenericSuccessResponseDM {
+abstract class GenericSuccessResponseDM with _$GenericSuccessResponseDM {
   const factory GenericSuccessResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -56,7 +56,7 @@ class GenericSuccessResponseDM with _$GenericSuccessResponseDM {
 }
 
 @freezed
-class PhotoUploadResponseDM with _$PhotoUploadResponseDM {
+abstract class PhotoUploadResponseDM with _$PhotoUploadResponseDM {
   const factory PhotoUploadResponseDM({
     @Default(false) bool success,
     @Default('') String message,
@@ -170,7 +170,7 @@ enum PriceType {
 // ── Main data model ──────────────────────────────────────────
 
 @freezed
-class ServicePackageDM with _$ServicePackageDM {
+abstract class ServicePackageDM with _$ServicePackageDM {
   const ServicePackageDM._();
 
   const factory ServicePackageDM({
@@ -212,7 +212,7 @@ class ServicePackageDM with _$ServicePackageDM {
 // ── Photo model ──────────────────────────────────────────────
 
 @freezed
-class ServicePackagePhotoDM with _$ServicePackagePhotoDM {
+abstract class ServicePackagePhotoDM with _$ServicePackagePhotoDM {
   const factory ServicePackagePhotoDM({
     int? id,
     String? uuid,

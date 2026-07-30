@@ -6,31 +6,30 @@ part of 'reservation_message_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReservationMessagesResponseDMImpl
-    _$$ReservationMessagesResponseDMImplFromJson(Map<String, dynamic> json) =>
-        _$ReservationMessagesResponseDMImpl(
-          messages: (json['messages'] as List<dynamic>?)
-                  ?.map((e) =>
-                      ReservationMessageDM.fromJson(e as Map<String, dynamic>))
-                  .toList() ??
-              const [],
-          serverNow: json['server_now'] == null
-              ? null
-              : DateTime.parse(json['server_now'] as String),
-        );
+_ReservationMessagesResponseDM _$ReservationMessagesResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _ReservationMessagesResponseDM(
+      messages: (json['messages'] as List<dynamic>?)
+              ?.map((e) =>
+                  ReservationMessageDM.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      serverNow: json['server_now'] == null
+          ? null
+          : DateTime.parse(json['server_now'] as String),
+    );
 
-Map<String, dynamic> _$$ReservationMessagesResponseDMImplToJson(
-        _$ReservationMessagesResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationMessagesResponseDMToJson(
+        _ReservationMessagesResponseDM instance) =>
     <String, dynamic>{
       'messages': instance.messages.map((e) => e.toJson()).toList(),
       if (instance.serverNow?.toIso8601String() case final value?)
         'server_now': value,
     };
 
-_$ReservationMessageCreateResponseDMImpl
-    _$$ReservationMessageCreateResponseDMImplFromJson(
-            Map<String, dynamic> json) =>
-        _$ReservationMessageCreateResponseDMImpl(
+_ReservationMessageCreateResponseDM
+    _$ReservationMessageCreateResponseDMFromJson(Map<String, dynamic> json) =>
+        _ReservationMessageCreateResponseDM(
           success: json['success'] as bool? ?? false,
           message: json['message'] as String? ?? '',
           data: json['data'] == null
@@ -39,17 +38,17 @@ _$ReservationMessageCreateResponseDMImpl
                   json['data'] as Map<String, dynamic>),
         );
 
-Map<String, dynamic> _$$ReservationMessageCreateResponseDMImplToJson(
-        _$ReservationMessageCreateResponseDMImpl instance) =>
+Map<String, dynamic> _$ReservationMessageCreateResponseDMToJson(
+        _ReservationMessageCreateResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
       if (instance.data?.toJson() case final value?) 'data': value,
     };
 
-_$ReservationMessageDMImpl _$$ReservationMessageDMImplFromJson(
+_ReservationMessageDM _$ReservationMessageDMFromJson(
         Map<String, dynamic> json) =>
-    _$ReservationMessageDMImpl(
+    _ReservationMessageDM(
       messageUuid: json['message_uuid'] as String?,
       authorType: $enumDecodeNullable(
               _$MessageAuthorTypeEnumMap, json['author_type']) ??
@@ -62,8 +61,8 @@ _$ReservationMessageDMImpl _$$ReservationMessageDMImplFromJson(
           : DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$$ReservationMessageDMImplToJson(
-        _$ReservationMessageDMImpl instance) =>
+Map<String, dynamic> _$ReservationMessageDMToJson(
+        _ReservationMessageDM instance) =>
     <String, dynamic>{
       if (instance.messageUuid case final value?) 'message_uuid': value,
       'author_type': _$MessageAuthorTypeEnumMap[instance.authorType]!,

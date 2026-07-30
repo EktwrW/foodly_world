@@ -9,7 +9,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:icons_plus/icons_plus.dart' show Iconsax;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Iconsax;
 
 class SmartSearchSnackbars {
   const SmartSearchSnackbars._();

@@ -14,7 +14,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/widgets/edit_cover_images_widgets/edit_image_popup_menu_button.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class EditCoverImagesDialog extends StatelessWidget {
   const EditCoverImagesDialog({super.key});

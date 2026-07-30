@@ -2,14 +2,15 @@ import 'dart:async' show Completer;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/scheduler.dart' show SchedulerBinding;
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'visited_menu_state.dart';
 part 'visited_menu_cubit.freezed.dart';
+part 'visited_menu_state.dart';
 
 class VisitedMenuCubit extends Cubit<VisitedMenuState> {
   MenuVM _vm;

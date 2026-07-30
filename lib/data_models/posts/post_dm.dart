@@ -4,7 +4,7 @@ part 'post_dm.freezed.dart';
 part 'post_dm.g.dart';
 
 @freezed
-class PostsResponseDM with _$PostsResponseDM {
+abstract class PostsResponseDM with _$PostsResponseDM {
   const factory PostsResponseDM({
     @Default([]) List<PostDM> posts,
     PostsMetaDM? meta,
@@ -14,7 +14,7 @@ class PostsResponseDM with _$PostsResponseDM {
 }
 
 @freezed
-class PostsMetaDM with _$PostsMetaDM {
+abstract class PostsMetaDM with _$PostsMetaDM {
   const factory PostsMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -26,7 +26,7 @@ class PostsMetaDM with _$PostsMetaDM {
 }
 
 @freezed
-class PostDM with _$PostDM {
+abstract class PostDM with _$PostDM {
   const PostDM._();
 
   const factory PostDM({
@@ -56,7 +56,7 @@ class PostDM with _$PostDM {
 }
 
 @freezed
-class ToggleLikeResponseDM with _$ToggleLikeResponseDM {
+abstract class ToggleLikeResponseDM with _$ToggleLikeResponseDM {
   const factory ToggleLikeResponseDM({
     @JsonKey(name: 'is_liked') @Default(false) bool isLiked,
     @JsonKey(name: 'likes_count') @Default(0) int likesCount,

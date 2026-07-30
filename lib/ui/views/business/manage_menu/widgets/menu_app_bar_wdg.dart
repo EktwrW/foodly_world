@@ -9,7 +9,7 @@ import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cub
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/combos_label_bottom_sheet.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:toggle_switch/toggle_switch.dart';
 
 class SecondaryMenuSliverAppBar extends StatelessWidget {

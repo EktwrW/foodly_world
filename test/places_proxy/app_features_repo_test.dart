@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/app_config/app_features_repo.dart';
 import 'package:foodly_world/core/network/app_config/config_features_client.dart';
+import 'package:foodly_world/core/network/base/api_result.dart' show ApiResultPatterns;
 import 'package:foodly_world/data_models/app_config/app_features_dm.dart';
 
 /// Fake manual del `ConfigFeaturesClient`. Preferimos subclass sobre

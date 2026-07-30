@@ -6,7 +6,7 @@ part of 'item_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ItemDMImpl _$$ItemDMImplFromJson(Map<String, dynamic> json) => _$ItemDMImpl(
+_ItemDM _$ItemDMFromJson(Map<String, dynamic> json) => _ItemDM(
       name: json['name'] as String,
       description: json['description'] as String? ?? '',
       versions: (json['versions'] as List<dynamic>)
@@ -35,8 +35,7 @@ _$ItemDMImpl _$$ItemDMImplFromJson(Map<String, dynamic> json) => _$ItemDMImpl(
       sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$ItemDMImplToJson(_$ItemDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ItemDMToJson(_ItemDM instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'versions': instance.versions.map((e) => _$VersionEnumMap[e]!).toList(),
@@ -71,14 +70,13 @@ const _$VersionEnumMap = {
   Version.big: 'big',
 };
 
-_$PricesImpl _$$PricesImplFromJson(Map<String, dynamic> json) => _$PricesImpl(
+_Prices _$PricesFromJson(Map<String, dynamic> json) => _Prices(
       regular: (json['regular'] as num?)?.toDouble() ?? 0,
       medium: (json['medium'] as num?)?.toDouble() ?? 0,
       big: (json['big'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$$PricesImplToJson(_$PricesImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PricesToJson(_Prices instance) => <String, dynamic>{
       'regular': instance.regular,
       'medium': instance.medium,
       'big': instance.big,

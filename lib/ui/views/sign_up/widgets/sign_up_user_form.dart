@@ -10,7 +10,7 @@ import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_phone_input_te
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class SignUpUserForm extends StatelessWidget {
   const SignUpUserForm({super.key});

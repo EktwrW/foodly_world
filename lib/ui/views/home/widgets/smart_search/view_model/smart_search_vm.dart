@@ -18,7 +18,7 @@ enum SmartSearchMode {
 }
 
 @freezed
-class SmartSearchVM with _$SmartSearchVM {
+abstract class SmartSearchVM with _$SmartSearchVM {
   const SmartSearchVM._();
 
   const factory SmartSearchVM({

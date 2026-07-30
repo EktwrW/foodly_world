@@ -32,7 +32,7 @@ import 'package:foodly_world/ui/views/business/manage_menu/view_model/manage_men
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_snackbars.dart';
 import 'package:foodly_world/ui/views/business/menu_import/widgets/menu_import_empty_state_wdg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, BoxIcons, EvaIcons;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, BoxIcons, EvaIcons;
 import 'package:logger/logger.dart';
 
 part 'adaptive_item_version_selector_wdg.dart';

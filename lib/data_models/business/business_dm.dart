@@ -37,7 +37,7 @@ double? _doubleFromJson(dynamic value) {
 }
 
 @freezed
-class BusinessDM with _$BusinessDM {
+abstract class BusinessDM with _$BusinessDM {
   const BusinessDM._();
 
   const factory BusinessDM({
@@ -184,7 +184,7 @@ class BusinessDM with _$BusinessDM {
 }
 
 @freezed
-class CategoryDM with _$CategoryDM {
+abstract class CategoryDM with _$CategoryDM {
   const factory CategoryDM({
     @JsonKey(name: 'id', fromJson: _safeCategoryFromJson) FoodlyCategories? id,
     @JsonKey(name: 'category_uuid') String? categoryUuid,
@@ -196,7 +196,7 @@ class CategoryDM with _$CategoryDM {
 }
 
 @freezed
-class BusinessServicesDM with _$BusinessServicesDM {
+abstract class BusinessServicesDM with _$BusinessServicesDM {
   const BusinessServicesDM._();
   const factory BusinessServicesDM({
     @JsonKey(name: 'id', unknownEnumValue: JsonKey.nullForUndefinedEnumValue) BusinessServices? service,

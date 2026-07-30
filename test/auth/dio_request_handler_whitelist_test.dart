@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_models/user/user_dm.dart';
+import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 
 /// Fake AuthSessionService que TRACKEA cuántas veces se invoca cada API
 /// pública relevante para los tests del interceptor. No usa la real porque
@@ -27,6 +29,28 @@ class _SpyAuthSessionService implements AuthSessionService {
   @override
   bool get isAccessTokenExpired => _isAccessTokenExpired;
   set isAccessTokenExpired(bool v) => _isAccessTokenExpired = v;
+
+  /// Ver nota en dio_error_handler_401_test.dart: getter nuevo del servicio,
+  /// necesita override explícito para no caer en noSuchMethod → null.
+  bool _isLoggingOut = false;
+  @override
+  bool get isLoggingOut => _isLoggingOut;
+  set isLoggingOut(bool v) => _isLoggingOut = v;
+
+  /// Sesión logueada con token: desde el modo invitado (ea7e335) el request
+  /// handler REESCRIBE el Bearer desde la sesión y lo elimina si no hay
+  /// token. Estos tests simulan un usuario autenticado, así que el spy debe
+  /// exponer una sesión válida (antes bastaba con setear el header crudo).
+  UserSessionDM? _session = const UserSessionDM(
+    user: UserDM(uuid: 'test-user'),
+    token: 'real_user_token',
+    accessToken: 'real_user_token',
+    tokenType: 'Bearer',
+  );
+  @override
+  UserSessionDM? get userSessionDM => _session;
+  @override
+  set userSessionDM(UserSessionDM? v) => _session = v;
 
   @override
   bool get hasRefreshToken => _hasRefreshToken;

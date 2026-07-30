@@ -6,9 +6,8 @@ part of 'nearby_promotion_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NearbyPromotionDMImpl _$$NearbyPromotionDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NearbyPromotionDMImpl(
+_NearbyPromotionDM _$NearbyPromotionDMFromJson(Map<String, dynamic> json) =>
+    _NearbyPromotionDM(
       uuid: json['uuid'] as String,
       title: json['title'] as String,
       subTitle: json['sub_title'] as String? ?? '',
@@ -31,8 +30,7 @@ _$NearbyPromotionDMImpl _$$NearbyPromotionDMImplFromJson(
           : DateTime.parse(json['expire_date'] as String),
     );
 
-Map<String, dynamic> _$$NearbyPromotionDMImplToJson(
-        _$NearbyPromotionDMImpl instance) =>
+Map<String, dynamic> _$NearbyPromotionDMToJson(_NearbyPromotionDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'title': instance.title,
@@ -51,41 +49,39 @@ Map<String, dynamic> _$$NearbyPromotionDMImplToJson(
         'expire_date': value,
     };
 
-_$PromoMediaLiteDMImpl _$$PromoMediaLiteDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PromoMediaLiteDMImpl(
+_PromoMediaLiteDM _$PromoMediaLiteDMFromJson(Map<String, dynamic> json) =>
+    _PromoMediaLiteDM(
       uuid: json['uuid'] as String,
       mediaUrl: json['business_promo_media_url'] as String,
       mediaType: json['media_type'] as String? ?? 'Image',
     );
 
-Map<String, dynamic> _$$PromoMediaLiteDMImplToJson(
-        _$PromoMediaLiteDMImpl instance) =>
+Map<String, dynamic> _$PromoMediaLiteDMToJson(_PromoMediaLiteDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'business_promo_media_url': instance.mediaUrl,
       'media_type': instance.mediaType,
     };
 
-_$NearbyPromotionsResponseDMImpl _$$NearbyPromotionsResponseDMImplFromJson(
+_NearbyPromotionsResponseDM _$NearbyPromotionsResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$NearbyPromotionsResponseDMImpl(
+    _NearbyPromotionsResponseDM(
       data: (json['data'] as List<dynamic>)
           .map((e) => NearbyPromotionDM.fromJson(e as Map<String, dynamic>))
           .toList(),
       meta: NearbyPromotionsMeta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$NearbyPromotionsResponseDMImplToJson(
-        _$NearbyPromotionsResponseDMImpl instance) =>
+Map<String, dynamic> _$NearbyPromotionsResponseDMToJson(
+        _NearbyPromotionsResponseDM instance) =>
     <String, dynamic>{
       'data': instance.data.map((e) => e.toJson()).toList(),
       'meta': instance.meta.toJson(),
     };
 
-_$NearbyPromotionsMetaImpl _$$NearbyPromotionsMetaImplFromJson(
+_NearbyPromotionsMeta _$NearbyPromotionsMetaFromJson(
         Map<String, dynamic> json) =>
-    _$NearbyPromotionsMetaImpl(
+    _NearbyPromotionsMeta(
       total: (json['total'] as num).toInt(),
       page: (json['page'] as num).toInt(),
       perPage: (json['per_page'] as num).toInt(),
@@ -94,8 +90,8 @@ _$NearbyPromotionsMetaImpl _$$NearbyPromotionsMetaImplFromJson(
       radiusKm: (json['radius_km'] as num?)?.toDouble() ?? 10.0,
     );
 
-Map<String, dynamic> _$$NearbyPromotionsMetaImplToJson(
-        _$NearbyPromotionsMetaImpl instance) =>
+Map<String, dynamic> _$NearbyPromotionsMetaToJson(
+        _NearbyPromotionsMeta instance) =>
     <String, dynamic>{
       'total': instance.total,
       'page': instance.page,

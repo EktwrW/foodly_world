@@ -4,7 +4,7 @@ part 'user_prefs_dm.freezed.dart';
 part 'user_prefs_dm.g.dart';
 
 @freezed
-class UserPrefsDM with _$UserPrefsDM {
+abstract class UserPrefsDM with _$UserPrefsDM {
   const factory UserPrefsDM({
     @JsonKey(name: 'user_locale') String? locale,
     @JsonKey(name: 'user_theme') UserTheme? userTheme,

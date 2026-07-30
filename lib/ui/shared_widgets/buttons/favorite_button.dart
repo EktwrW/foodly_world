@@ -9,7 +9,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 
 /// Un enum que representa los diferentes tipos de elementos que pueden ser favoritos
 enum FavoriteItemType {

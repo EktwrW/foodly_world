@@ -22,7 +22,7 @@ part 'geocoding_response_dm.g.dart';
 /// que hoy en `location_bloc::getLocationDetailsFromCoordinates` y
 /// `location_service::updateLocationFromPlace`.
 @freezed
-class GeocodingResponseDM with _$GeocodingResponseDM {
+abstract class GeocodingResponseDM with _$GeocodingResponseDM {
   const factory GeocodingResponseDM({
     @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required ProxyStatusEnum status,
     @Default(<GeocodingResultDM>[]) List<GeocodingResultDM> results,

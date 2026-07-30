@@ -6,7 +6,7 @@ part 'nearby_promotion_dm.g.dart';
 /// Lightweight promotion model for the home carousel and saved promotions.
 /// Only contains fields needed to render a promo card.
 @freezed
-class NearbyPromotionDM with _$NearbyPromotionDM {
+abstract class NearbyPromotionDM with _$NearbyPromotionDM {
   const NearbyPromotionDM._();
 
   const factory NearbyPromotionDM({
@@ -47,7 +47,7 @@ class NearbyPromotionDM with _$NearbyPromotionDM {
 }
 
 @freezed
-class PromoMediaLiteDM with _$PromoMediaLiteDM {
+abstract class PromoMediaLiteDM with _$PromoMediaLiteDM {
   const PromoMediaLiteDM._();
 
   const factory PromoMediaLiteDM({
@@ -64,7 +64,7 @@ class PromoMediaLiteDM with _$PromoMediaLiteDM {
 }
 
 @freezed
-class NearbyPromotionsResponseDM with _$NearbyPromotionsResponseDM {
+abstract class NearbyPromotionsResponseDM with _$NearbyPromotionsResponseDM {
   const factory NearbyPromotionsResponseDM({
     required List<NearbyPromotionDM> data,
     required NearbyPromotionsMeta meta,
@@ -75,7 +75,7 @@ class NearbyPromotionsResponseDM with _$NearbyPromotionsResponseDM {
 }
 
 @freezed
-class NearbyPromotionsMeta with _$NearbyPromotionsMeta {
+abstract class NearbyPromotionsMeta with _$NearbyPromotionsMeta {
   const factory NearbyPromotionsMeta({
     required int total,
     required int page,

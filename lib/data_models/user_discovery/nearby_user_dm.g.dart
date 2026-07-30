@@ -6,9 +6,9 @@ part of 'nearby_user_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NearbyUsersResponseDMImpl _$$NearbyUsersResponseDMImplFromJson(
+_NearbyUsersResponseDM _$NearbyUsersResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$NearbyUsersResponseDMImpl(
+    _NearbyUsersResponseDM(
       data: (json['data'] as List<dynamic>?)
               ?.map((e) => NearbyUserDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,24 +18,22 @@ _$NearbyUsersResponseDMImpl _$$NearbyUsersResponseDMImplFromJson(
           : NearbyUsersMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$NearbyUsersResponseDMImplToJson(
-        _$NearbyUsersResponseDMImpl instance) =>
+Map<String, dynamic> _$NearbyUsersResponseDMToJson(
+        _NearbyUsersResponseDM instance) =>
     <String, dynamic>{
       'data': instance.data.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$NearbyUsersMetaDMImpl _$$NearbyUsersMetaDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NearbyUsersMetaDMImpl(
+_NearbyUsersMetaDM _$NearbyUsersMetaDMFromJson(Map<String, dynamic> json) =>
+    _NearbyUsersMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
       total: (json['total'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$NearbyUsersMetaDMImplToJson(
-        _$NearbyUsersMetaDMImpl instance) =>
+Map<String, dynamic> _$NearbyUsersMetaDMToJson(_NearbyUsersMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -43,8 +41,8 @@ Map<String, dynamic> _$$NearbyUsersMetaDMImplToJson(
       'total': instance.total,
     };
 
-_$NearbyUserDMImpl _$$NearbyUserDMImplFromJson(Map<String, dynamic> json) =>
-    _$NearbyUserDMImpl(
+_NearbyUserDM _$NearbyUserDMFromJson(Map<String, dynamic> json) =>
+    _NearbyUserDM(
       uuid: json['uuid'] as String,
       name: json['name'] as String? ?? '',
       username: json['username'] as String?,
@@ -59,7 +57,7 @@ _$NearbyUserDMImpl _$$NearbyUserDMImplFromJson(Map<String, dynamic> json) =>
       distance: (json['distance'] as num?)?.toDouble() ?? 0.0,
     );
 
-Map<String, dynamic> _$$NearbyUserDMImplToJson(_$NearbyUserDMImpl instance) =>
+Map<String, dynamic> _$NearbyUserDMToJson(_NearbyUserDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,
@@ -75,8 +73,8 @@ Map<String, dynamic> _$$NearbyUserDMImplToJson(_$NearbyUserDMImpl instance) =>
       'distance': instance.distance,
     };
 
-_$UserProfileDMImpl _$$UserProfileDMImplFromJson(Map<String, dynamic> json) =>
-    _$UserProfileDMImpl(
+_UserProfileDM _$UserProfileDMFromJson(Map<String, dynamic> json) =>
+    _UserProfileDM(
       uuid: json['uuid'] as String,
       name: json['name'] as String? ?? '',
       username: json['username'] as String?,
@@ -96,7 +94,7 @@ _$UserProfileDMImpl _$$UserProfileDMImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$$UserProfileDMImplToJson(_$UserProfileDMImpl instance) =>
+Map<String, dynamic> _$UserProfileDMToJson(_UserProfileDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,
@@ -110,9 +108,8 @@ Map<String, dynamic> _$$UserProfileDMImplToJson(_$UserProfileDMImpl instance) =>
         'created_at': value,
     };
 
-_$UserProfileStatsDMImpl _$$UserProfileStatsDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UserProfileStatsDMImpl(
+_UserProfileStatsDM _$UserProfileStatsDMFromJson(Map<String, dynamic> json) =>
+    _UserProfileStatsDM(
       postsCount: (json['posts_count'] as num?)?.toInt() ?? 0,
       likesReceived: (json['likes_received'] as num?)?.toInt() ?? 0,
       reviewsCount: (json['reviews_count'] as num?)?.toInt() ?? 0,
@@ -120,8 +117,7 @@ _$UserProfileStatsDMImpl _$$UserProfileStatsDMImplFromJson(
       followingCount: (json['following_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$UserProfileStatsDMImplToJson(
-        _$UserProfileStatsDMImpl instance) =>
+Map<String, dynamic> _$UserProfileStatsDMToJson(_UserProfileStatsDM instance) =>
     <String, dynamic>{
       'posts_count': instance.postsCount,
       'likes_received': instance.likesReceived,
@@ -130,9 +126,8 @@ Map<String, dynamic> _$$UserProfileStatsDMImplToJson(
       'following_count': instance.followingCount,
     };
 
-_$UserProfilePostDMImpl _$$UserProfilePostDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UserProfilePostDMImpl(
+_UserProfilePostDM _$UserProfilePostDMFromJson(Map<String, dynamic> json) =>
+    _UserProfilePostDM(
       uuid: json['uuid'] as String,
       content: json['content'] as String,
       photoUrl: json['photo_url'] as String?,
@@ -143,8 +138,7 @@ _$UserProfilePostDMImpl _$$UserProfilePostDMImplFromJson(
           : DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$$UserProfilePostDMImplToJson(
-        _$UserProfilePostDMImpl instance) =>
+Map<String, dynamic> _$UserProfilePostDMToJson(_UserProfilePostDM instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'content': instance.content,

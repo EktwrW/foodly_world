@@ -6,9 +6,9 @@ part of 'business_availability_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BusinessAvailabilityDMImpl _$$BusinessAvailabilityDMImplFromJson(
+_BusinessAvailabilityDM _$BusinessAvailabilityDMFromJson(
         Map<String, dynamic> json) =>
-    _$BusinessAvailabilityDMImpl(
+    _BusinessAvailabilityDM(
       availabilityUuid: json['availability_uuid'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
@@ -27,8 +27,8 @@ _$BusinessAvailabilityDMImpl _$$BusinessAvailabilityDMImplFromJson(
           : DateTime.parse(json['created_at'] as String),
     );
 
-Map<String, dynamic> _$$BusinessAvailabilityDMImplToJson(
-        _$BusinessAvailabilityDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityDMToJson(
+        _BusinessAvailabilityDM instance) =>
     <String, dynamic>{
       if (instance.availabilityUuid case final value?)
         'availability_uuid': value,
@@ -54,30 +54,29 @@ const _$AvailabilitySourceEnumMap = {
   AvailabilitySource.autoReservation: 'auto_reservation',
 };
 
-_$BusinessAvailabilityResponseDMImpl
-    _$$BusinessAvailabilityResponseDMImplFromJson(Map<String, dynamic> json) =>
-        _$BusinessAvailabilityResponseDMImpl(
-          from: json['from'] as String?,
-          to: json['to'] as String?,
-          availability: (json['availability'] as List<dynamic>?)
-                  ?.map((e) => BusinessAvailabilityDM.fromJson(
-                      e as Map<String, dynamic>))
-                  .toList() ??
-              const [],
-        );
+_BusinessAvailabilityResponseDM _$BusinessAvailabilityResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _BusinessAvailabilityResponseDM(
+      from: json['from'] as String?,
+      to: json['to'] as String?,
+      availability: (json['availability'] as List<dynamic>?)
+              ?.map((e) =>
+                  BusinessAvailabilityDM.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
 
-Map<String, dynamic> _$$BusinessAvailabilityResponseDMImplToJson(
-        _$BusinessAvailabilityResponseDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityResponseDMToJson(
+        _BusinessAvailabilityResponseDM instance) =>
     <String, dynamic>{
       if (instance.from case final value?) 'from': value,
       if (instance.to case final value?) 'to': value,
       'availability': instance.availability.map((e) => e.toJson()).toList(),
     };
 
-_$BusinessAvailabilityCreateResponseDMImpl
-    _$$BusinessAvailabilityCreateResponseDMImplFromJson(
-            Map<String, dynamic> json) =>
-        _$BusinessAvailabilityCreateResponseDMImpl(
+_BusinessAvailabilityCreateResponseDM
+    _$BusinessAvailabilityCreateResponseDMFromJson(Map<String, dynamic> json) =>
+        _BusinessAvailabilityCreateResponseDM(
           success: json['success'] as bool? ?? false,
           availability: json['availability'] == null
               ? null
@@ -85,18 +84,17 @@ _$BusinessAvailabilityCreateResponseDMImpl
                   json['availability'] as Map<String, dynamic>),
         );
 
-Map<String, dynamic> _$$BusinessAvailabilityCreateResponseDMImplToJson(
-        _$BusinessAvailabilityCreateResponseDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityCreateResponseDMToJson(
+        _BusinessAvailabilityCreateResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       if (instance.availability?.toJson() case final value?)
         'availability': value,
     };
 
-_$BusinessAvailabilityBulkResponseDMImpl
-    _$$BusinessAvailabilityBulkResponseDMImplFromJson(
-            Map<String, dynamic> json) =>
-        _$BusinessAvailabilityBulkResponseDMImpl(
+_BusinessAvailabilityBulkResponseDM
+    _$BusinessAvailabilityBulkResponseDMFromJson(Map<String, dynamic> json) =>
+        _BusinessAvailabilityBulkResponseDM(
           success: json['success'] as bool? ?? false,
           count: (json['count'] as num?)?.toInt() ?? 0,
           availability: (json['availability'] as List<dynamic>?)
@@ -106,32 +104,31 @@ _$BusinessAvailabilityBulkResponseDMImpl
               const [],
         );
 
-Map<String, dynamic> _$$BusinessAvailabilityBulkResponseDMImplToJson(
-        _$BusinessAvailabilityBulkResponseDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityBulkResponseDMToJson(
+        _BusinessAvailabilityBulkResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'count': instance.count,
       'availability': instance.availability.map((e) => e.toJson()).toList(),
     };
 
-_$BusinessAvailabilityActionResponseDMImpl
-    _$$BusinessAvailabilityActionResponseDMImplFromJson(
-            Map<String, dynamic> json) =>
-        _$BusinessAvailabilityActionResponseDMImpl(
+_BusinessAvailabilityActionResponseDM
+    _$BusinessAvailabilityActionResponseDMFromJson(Map<String, dynamic> json) =>
+        _BusinessAvailabilityActionResponseDM(
           success: json['success'] as bool? ?? false,
           message: json['message'] as String? ?? '',
         );
 
-Map<String, dynamic> _$$BusinessAvailabilityActionResponseDMImplToJson(
-        _$BusinessAvailabilityActionResponseDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityActionResponseDMToJson(
+        _BusinessAvailabilityActionResponseDM instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
     };
 
-_$PublicAvailabilitySlotDMImpl _$$PublicAvailabilitySlotDMImplFromJson(
+_PublicAvailabilitySlotDM _$PublicAvailabilitySlotDMFromJson(
         Map<String, dynamic> json) =>
-    _$PublicAvailabilitySlotDMImpl(
+    _PublicAvailabilitySlotDM(
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       isFullDay: json['is_full_day'] as bool? ?? true,
@@ -139,8 +136,8 @@ _$PublicAvailabilitySlotDMImpl _$$PublicAvailabilitySlotDMImplFromJson(
       endTime: json['end_time'] as String?,
     );
 
-Map<String, dynamic> _$$PublicAvailabilitySlotDMImplToJson(
-        _$PublicAvailabilitySlotDMImpl instance) =>
+Map<String, dynamic> _$PublicAvailabilitySlotDMToJson(
+        _PublicAvailabilitySlotDM instance) =>
     <String, dynamic>{
       if (instance.date?.toIso8601String() case final value?) 'date': value,
       'is_full_day': instance.isFullDay,
@@ -148,10 +145,9 @@ Map<String, dynamic> _$$PublicAvailabilitySlotDMImplToJson(
       if (instance.endTime case final value?) 'end_time': value,
     };
 
-_$PublicBusinessAvailabilityResponseDMImpl
-    _$$PublicBusinessAvailabilityResponseDMImplFromJson(
-            Map<String, dynamic> json) =>
-        _$PublicBusinessAvailabilityResponseDMImpl(
+_PublicBusinessAvailabilityResponseDM
+    _$PublicBusinessAvailabilityResponseDMFromJson(Map<String, dynamic> json) =>
+        _PublicBusinessAvailabilityResponseDM(
           from: json['from'] as String?,
           to: json['to'] as String?,
           availability: (json['availability'] as List<dynamic>?)
@@ -161,25 +157,25 @@ _$PublicBusinessAvailabilityResponseDMImpl
               const [],
         );
 
-Map<String, dynamic> _$$PublicBusinessAvailabilityResponseDMImplToJson(
-        _$PublicBusinessAvailabilityResponseDMImpl instance) =>
+Map<String, dynamic> _$PublicBusinessAvailabilityResponseDMToJson(
+        _PublicBusinessAvailabilityResponseDM instance) =>
     <String, dynamic>{
       if (instance.from case final value?) 'from': value,
       if (instance.to case final value?) 'to': value,
       'availability': instance.availability.map((e) => e.toJson()).toList(),
     };
 
-_$BusinessAvailabilityBulkEntryDMImpl
-    _$$BusinessAvailabilityBulkEntryDMImplFromJson(Map<String, dynamic> json) =>
-        _$BusinessAvailabilityBulkEntryDMImpl(
-          date: json['date'] as String,
-          isFullDay: json['is_full_day'] as bool,
-          startTime: json['start_time'] as String?,
-          endTime: json['end_time'] as String?,
-        );
+_BusinessAvailabilityBulkEntryDM _$BusinessAvailabilityBulkEntryDMFromJson(
+        Map<String, dynamic> json) =>
+    _BusinessAvailabilityBulkEntryDM(
+      date: json['date'] as String,
+      isFullDay: json['is_full_day'] as bool,
+      startTime: json['start_time'] as String?,
+      endTime: json['end_time'] as String?,
+    );
 
-Map<String, dynamic> _$$BusinessAvailabilityBulkEntryDMImplToJson(
-        _$BusinessAvailabilityBulkEntryDMImpl instance) =>
+Map<String, dynamic> _$BusinessAvailabilityBulkEntryDMToJson(
+        _BusinessAvailabilityBulkEntryDM instance) =>
     <String, dynamic>{
       'date': instance.date,
       'is_full_day': instance.isFullDay,

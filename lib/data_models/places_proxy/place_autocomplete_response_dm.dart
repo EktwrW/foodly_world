@@ -23,7 +23,7 @@ part 'place_autocomplete_response_dm.g.dart';
 /// raro: Google devolvió `ZERO_RESULTS` con el campo omitido), no tiramos
 /// NPE.
 @freezed
-class PlaceAutocompleteResponseDM with _$PlaceAutocompleteResponseDM {
+abstract class PlaceAutocompleteResponseDM with _$PlaceAutocompleteResponseDM {
   const factory PlaceAutocompleteResponseDM({
     @JsonKey(unknownEnumValue: ProxyStatusEnum.unknown) required ProxyStatusEnum status,
     @Default(<PlacePredictionDM>[]) List<PlacePredictionDM> predictions,

@@ -6,8 +6,8 @@ part of 'promotion_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PromotionDTOImpl _$$PromotionDTOImplFromJson(Map<String, dynamic> json) =>
-    _$PromotionDTOImpl(
+_PromotionDTO _$PromotionDTOFromJson(Map<String, dynamic> json) =>
+    _PromotionDTO(
       businessUuid: json['business_uuid'] as String?,
       title: json['title'] as String?,
       subTitle: json['sub_title'] as String?,
@@ -29,7 +29,7 @@ _$PromotionDTOImpl _$$PromotionDTOImplFromJson(Map<String, dynamic> json) =>
       mediaLink: json['media_link'] as String?,
     );
 
-Map<String, dynamic> _$$PromotionDTOImplToJson(_$PromotionDTOImpl instance) =>
+Map<String, dynamic> _$PromotionDTOToJson(_PromotionDTO instance) =>
     <String, dynamic>{
       if (instance.businessUuid case final value?) 'business_uuid': value,
       if (instance.title case final value?) 'title': value,

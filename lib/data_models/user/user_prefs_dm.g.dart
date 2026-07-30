@@ -6,13 +6,12 @@ part of 'user_prefs_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserPrefsDMImpl _$$UserPrefsDMImplFromJson(Map<String, dynamic> json) =>
-    _$UserPrefsDMImpl(
+_UserPrefsDM _$UserPrefsDMFromJson(Map<String, dynamic> json) => _UserPrefsDM(
       locale: json['user_locale'] as String?,
       userTheme: $enumDecodeNullable(_$UserThemeEnumMap, json['user_theme']),
     );
 
-Map<String, dynamic> _$$UserPrefsDMImplToJson(_$UserPrefsDMImpl instance) =>
+Map<String, dynamic> _$UserPrefsDMToJson(_UserPrefsDM instance) =>
     <String, dynamic>{
       if (instance.locale case final value?) 'user_locale': value,
       if (_$UserThemeEnumMap[instance.userTheme] case final value?)

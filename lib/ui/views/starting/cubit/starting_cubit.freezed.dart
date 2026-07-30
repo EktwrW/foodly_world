@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,212 +9,50 @@ part of 'starting_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
-mixin _$StartingState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $StartingStateCopyWith<$Res> {
-  factory $StartingStateCopyWith(
-          StartingState value, $Res Function(StartingState) then) =
-      _$StartingStateCopyWithImpl<$Res, StartingState>;
-}
-
-/// @nodoc
-class _$StartingStateCopyWithImpl<$Res, $Val extends StartingState>
-    implements $StartingStateCopyWith<$Res> {
-  _$StartingStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.initial()';
-  }
-
+mixin _$StartingState implements DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'StartingState.initial'));
+    properties..add(DiagnosticsProperty('type', 'StartingState'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InitialImpl);
+        (other.runtimeType == runtimeType && other is StartingState);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return initial();
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState()';
   }
+}
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return initial?.call();
-  }
+/// @nodoc
+class $StartingStateCopyWith<$Res> {
+  $StartingStateCopyWith(StartingState _, $Res Function(StartingState) __);
+}
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
+/// Adds pattern-matching-related methods to [StartingState].
+extension StartingStatePatterns on StartingState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -225,78 +63,266 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Welcome() when welcome != null:
+        return welcome(_that);
+      case _IsNewUser() when isNewUser != null:
+        return isNewUser(_that);
+      case _UserAuthenticated() when userAuthenticated != null:
+        return userAuthenticated(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
     }
-    return orElse();
   }
-}
 
-abstract class _Initial implements StartingState {
-  const factory _Initial() = _$InitialImpl;
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({StartingVM vm});
-
-  $StartingVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Welcome value) welcome,
+    required TResult Function(_IsNewUser value) isNewUser,
+    required TResult Function(_UserAuthenticated value) userAuthenticated,
+    required TResult Function(_Error value) error,
   }) {
-    return _then(_$LoadingImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as StartingVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Loading():
+        return loading(_that);
+      case _Welcome():
+        return welcome(_that);
+      case _IsNewUser():
+        return isNewUser(_that);
+      case _UserAuthenticated():
+        return userAuthenticated(_that);
+      case _Error():
+        return error(_that);
+    }
   }
 
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $StartingVMCopyWith<$Res> get vm {
-    return $StartingVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value));
-    });
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Welcome value)? welcome,
+    TResult? Function(_IsNewUser value)? isNewUser,
+    TResult? Function(_UserAuthenticated value)? userAuthenticated,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Loading() when loading != null:
+        return loading(_that);
+      case _Welcome() when welcome != null:
+        return welcome(_that);
+      case _IsNewUser() when isNewUser != null:
+        return isNewUser(_that);
+      case _UserAuthenticated() when userAuthenticated != null:
+        return userAuthenticated(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(StartingVM vm)? loading,
+    TResult Function(StartingVM vm)? welcome,
+    TResult Function(StartingVM vm)? isNewUser,
+    TResult Function(StartingVM vm)? userAuthenticated,
+    TResult Function(String msg, StartingVM vm)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Welcome() when welcome != null:
+        return welcome(_that.vm);
+      case _IsNewUser() when isNewUser != null:
+        return isNewUser(_that.vm);
+      case _UserAuthenticated() when userAuthenticated != null:
+        return userAuthenticated(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(StartingVM vm) loading,
+    required TResult Function(StartingVM vm) welcome,
+    required TResult Function(StartingVM vm) isNewUser,
+    required TResult Function(StartingVM vm) userAuthenticated,
+    required TResult Function(String msg, StartingVM vm) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial();
+      case _Loading():
+        return loading(_that.vm);
+      case _Welcome():
+        return welcome(_that.vm);
+      case _IsNewUser():
+        return isNewUser(_that.vm);
+      case _UserAuthenticated():
+        return userAuthenticated(_that.vm);
+      case _Error():
+        return error(_that.msg, _that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(StartingVM vm)? loading,
+    TResult? Function(StartingVM vm)? welcome,
+    TResult? Function(StartingVM vm)? isNewUser,
+    TResult? Function(StartingVM vm)? userAuthenticated,
+    TResult? Function(String msg, StartingVM vm)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case _Loading() when loading != null:
+        return loading(_that.vm);
+      case _Welcome() when welcome != null:
+        return welcome(_that.vm);
+      case _IsNewUser() when isNewUser != null:
+        return isNewUser(_that.vm);
+      case _UserAuthenticated() when userAuthenticated != null:
+        return userAuthenticated(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
-  const _$LoadingImpl(this.vm);
-
-  @override
-  final StartingVM vm;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.loading(vm: $vm)';
-  }
+class _Initial with DiagnosticableTreeMixin implements StartingState {
+  const _Initial();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'StartingState.initial'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _Initial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.initial()';
+  }
+}
+
+/// @nodoc
+
+class _Loading with DiagnosticableTreeMixin implements StartingState {
+  const _Loading(this.vm);
+
+  final StartingVM vm;
+
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
       ..add(DiagnosticsProperty('type', 'StartingState.loading'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -306,125 +332,24 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadingImpl &&
+            other is _Loading &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      __$$LoadingImplCopyWithImpl<_$LoadingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return loading(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.loading(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return loading?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements StartingState {
-  const factory _Loading(final StartingVM vm) = _$LoadingImpl;
-
-  StartingVM get vm;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadingImplCopyWith<_$LoadingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$WelcomeImplCopyWith<$Res> {
-  factory _$$WelcomeImplCopyWith(
-          _$WelcomeImpl value, $Res Function(_$WelcomeImpl) then) =
-      __$$WelcomeImplCopyWithImpl<$Res>;
+abstract mixin class _$LoadingCopyWith<$Res>
+    implements $StartingStateCopyWith<$Res> {
+  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) =
+      __$LoadingCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -432,23 +357,21 @@ abstract class _$$WelcomeImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$WelcomeImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$WelcomeImpl>
-    implements _$$WelcomeImplCopyWith<$Res> {
-  __$$WelcomeImplCopyWithImpl(
-      _$WelcomeImpl _value, $Res Function(_$WelcomeImpl) _then)
-      : super(_value, _then);
+class __$LoadingCopyWithImpl<$Res> implements _$LoadingCopyWith<$Res> {
+  __$LoadingCopyWithImpl(this._self, this._then);
+
+  final _Loading _self;
+  final $Res Function(_Loading) _then;
 
   /// Create a copy of StartingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$WelcomeImpl(
+    return _then(_Loading(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as StartingVM,
     ));
@@ -459,28 +382,28 @@ class __$$WelcomeImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $StartingVMCopyWith<$Res> get vm {
-    return $StartingVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value));
+    return $StartingVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$WelcomeImpl with DiagnosticableTreeMixin implements _Welcome {
-  const _$WelcomeImpl(this.vm);
+class _Welcome with DiagnosticableTreeMixin implements StartingState {
+  const _Welcome(this.vm);
 
-  @override
   final StartingVM vm;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.welcome(vm: $vm)';
-  }
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$WelcomeCopyWith<_Welcome> get copyWith =>
+      __$WelcomeCopyWithImpl<_Welcome>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'StartingState.welcome'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -490,125 +413,24 @@ class _$WelcomeImpl with DiagnosticableTreeMixin implements _Welcome {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WelcomeImpl &&
+            other is _Welcome &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$WelcomeImplCopyWith<_$WelcomeImpl> get copyWith =>
-      __$$WelcomeImplCopyWithImpl<_$WelcomeImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return welcome(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.welcome(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return welcome?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (welcome != null) {
-      return welcome(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return welcome(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return welcome?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (welcome != null) {
-      return welcome(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Welcome implements StartingState {
-  const factory _Welcome(final StartingVM vm) = _$WelcomeImpl;
-
-  StartingVM get vm;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$WelcomeImplCopyWith<_$WelcomeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$IsNewUserImplCopyWith<$Res> {
-  factory _$$IsNewUserImplCopyWith(
-          _$IsNewUserImpl value, $Res Function(_$IsNewUserImpl) then) =
-      __$$IsNewUserImplCopyWithImpl<$Res>;
+abstract mixin class _$WelcomeCopyWith<$Res>
+    implements $StartingStateCopyWith<$Res> {
+  factory _$WelcomeCopyWith(_Welcome value, $Res Function(_Welcome) _then) =
+      __$WelcomeCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -616,23 +438,21 @@ abstract class _$$IsNewUserImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$IsNewUserImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$IsNewUserImpl>
-    implements _$$IsNewUserImplCopyWith<$Res> {
-  __$$IsNewUserImplCopyWithImpl(
-      _$IsNewUserImpl _value, $Res Function(_$IsNewUserImpl) _then)
-      : super(_value, _then);
+class __$WelcomeCopyWithImpl<$Res> implements _$WelcomeCopyWith<$Res> {
+  __$WelcomeCopyWithImpl(this._self, this._then);
+
+  final _Welcome _self;
+  final $Res Function(_Welcome) _then;
 
   /// Create a copy of StartingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$IsNewUserImpl(
+    return _then(_Welcome(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as StartingVM,
     ));
@@ -643,28 +463,28 @@ class __$$IsNewUserImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $StartingVMCopyWith<$Res> get vm {
-    return $StartingVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value));
+    return $StartingVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$IsNewUserImpl with DiagnosticableTreeMixin implements _IsNewUser {
-  const _$IsNewUserImpl(this.vm);
+class _IsNewUser with DiagnosticableTreeMixin implements StartingState {
+  const _IsNewUser(this.vm);
 
-  @override
   final StartingVM vm;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.isNewUser(vm: $vm)';
-  }
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$IsNewUserCopyWith<_IsNewUser> get copyWith =>
+      __$IsNewUserCopyWithImpl<_IsNewUser>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'StartingState.isNewUser'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -674,125 +494,25 @@ class _$IsNewUserImpl with DiagnosticableTreeMixin implements _IsNewUser {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IsNewUserImpl &&
+            other is _IsNewUser &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$IsNewUserImplCopyWith<_$IsNewUserImpl> get copyWith =>
-      __$$IsNewUserImplCopyWithImpl<_$IsNewUserImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return isNewUser(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.isNewUser(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return isNewUser?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (isNewUser != null) {
-      return isNewUser(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return isNewUser(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return isNewUser?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (isNewUser != null) {
-      return isNewUser(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _IsNewUser implements StartingState {
-  const factory _IsNewUser(final StartingVM vm) = _$IsNewUserImpl;
-
-  StartingVM get vm;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IsNewUserImplCopyWith<_$IsNewUserImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UserAuthenticatedImplCopyWith<$Res> {
-  factory _$$UserAuthenticatedImplCopyWith(_$UserAuthenticatedImpl value,
-          $Res Function(_$UserAuthenticatedImpl) then) =
-      __$$UserAuthenticatedImplCopyWithImpl<$Res>;
+abstract mixin class _$IsNewUserCopyWith<$Res>
+    implements $StartingStateCopyWith<$Res> {
+  factory _$IsNewUserCopyWith(
+          _IsNewUser value, $Res Function(_IsNewUser) _then) =
+      __$IsNewUserCopyWithImpl;
   @useResult
   $Res call({StartingVM vm});
 
@@ -800,23 +520,21 @@ abstract class _$$UserAuthenticatedImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserAuthenticatedImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$UserAuthenticatedImpl>
-    implements _$$UserAuthenticatedImplCopyWith<$Res> {
-  __$$UserAuthenticatedImplCopyWithImpl(_$UserAuthenticatedImpl _value,
-      $Res Function(_$UserAuthenticatedImpl) _then)
-      : super(_value, _then);
+class __$IsNewUserCopyWithImpl<$Res> implements _$IsNewUserCopyWith<$Res> {
+  __$IsNewUserCopyWithImpl(this._self, this._then);
+
+  final _IsNewUser _self;
+  final $Res Function(_IsNewUser) _then;
 
   /// Create a copy of StartingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$UserAuthenticatedImpl(
+    return _then(_IsNewUser(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as StartingVM,
     ));
@@ -827,30 +545,28 @@ class __$$UserAuthenticatedImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $StartingVMCopyWith<$Res> get vm {
-    return $StartingVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value));
+    return $StartingVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$UserAuthenticatedImpl
-    with DiagnosticableTreeMixin
-    implements _UserAuthenticated {
-  const _$UserAuthenticatedImpl(this.vm);
+class _UserAuthenticated with DiagnosticableTreeMixin implements StartingState {
+  const _UserAuthenticated(this.vm);
 
-  @override
   final StartingVM vm;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.userAuthenticated(vm: $vm)';
-  }
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$UserAuthenticatedCopyWith<_UserAuthenticated> get copyWith =>
+      __$UserAuthenticatedCopyWithImpl<_UserAuthenticated>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'StartingState.userAuthenticated'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -860,156 +576,48 @@ class _$UserAuthenticatedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserAuthenticatedImpl &&
+            other is _UserAuthenticated &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$UserAuthenticatedImplCopyWith<_$UserAuthenticatedImpl> get copyWith =>
-      __$$UserAuthenticatedImplCopyWithImpl<_$UserAuthenticatedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return userAuthenticated(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.userAuthenticated(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return userAuthenticated?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (userAuthenticated != null) {
-      return userAuthenticated(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return userAuthenticated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return userAuthenticated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (userAuthenticated != null) {
-      return userAuthenticated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UserAuthenticated implements StartingState {
-  const factory _UserAuthenticated(final StartingVM vm) =
-      _$UserAuthenticatedImpl;
-
-  StartingVM get vm;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserAuthenticatedImplCopyWith<_$UserAuthenticatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+abstract mixin class _$UserAuthenticatedCopyWith<$Res>
+    implements $StartingStateCopyWith<$Res> {
+  factory _$UserAuthenticatedCopyWith(
+          _UserAuthenticated value, $Res Function(_UserAuthenticated) _then) =
+      __$UserAuthenticatedCopyWithImpl;
   @useResult
-  $Res call({String msg, StartingVM vm});
+  $Res call({StartingVM vm});
 
   $StartingVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$StartingStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$UserAuthenticatedCopyWithImpl<$Res>
+    implements _$UserAuthenticatedCopyWith<$Res> {
+  __$UserAuthenticatedCopyWithImpl(this._self, this._then);
+
+  final _UserAuthenticated _self;
+  final $Res Function(_UserAuthenticated) _then;
 
   /// Create a copy of StartingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
   $Res call({
-    Object? msg = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_UserAuthenticated(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as StartingVM,
     ));
@@ -1020,30 +628,29 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $StartingVMCopyWith<$Res> get vm {
-    return $StartingVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value));
+    return $StartingVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  const _$ErrorImpl(this.msg, this.vm);
+class _Error with DiagnosticableTreeMixin implements StartingState {
+  const _Error(this.msg, this.vm);
 
-  @override
   final String msg;
-  @override
   final StartingVM vm;
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StartingState.error(msg: $msg, vm: $vm)';
-  }
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'StartingState.error'))
       ..add(DiagnosticsProperty('msg', msg))
@@ -1054,7 +661,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.msg, msg) || other.msg == msg) &&
             (identical(other.vm, vm) || other.vm == vm));
   }
@@ -1062,110 +669,58 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, msg, vm);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StartingState.error(msg: $msg, vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $StartingStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
+  @useResult
+  $Res call({String msg, StartingVM vm});
+
+  $StartingVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
   /// Create a copy of StartingState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? msg = null,
+    Object? vm = null,
+  }) {
+    return _then(_Error(
+      null == msg
+          ? _self.msg
+          : msg // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as StartingVM,
+    ));
+  }
+
+  /// Create a copy of StartingState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(StartingVM vm) loading,
-    required TResult Function(StartingVM vm) welcome,
-    required TResult Function(StartingVM vm) isNewUser,
-    required TResult Function(StartingVM vm) userAuthenticated,
-    required TResult Function(String msg, StartingVM vm) error,
-  }) {
-    return error(msg, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(StartingVM vm)? loading,
-    TResult? Function(StartingVM vm)? welcome,
-    TResult? Function(StartingVM vm)? isNewUser,
-    TResult? Function(StartingVM vm)? userAuthenticated,
-    TResult? Function(String msg, StartingVM vm)? error,
-  }) {
-    return error?.call(msg, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(StartingVM vm)? loading,
-    TResult Function(StartingVM vm)? welcome,
-    TResult Function(StartingVM vm)? isNewUser,
-    TResult Function(StartingVM vm)? userAuthenticated,
-    TResult Function(String msg, StartingVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(msg, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Welcome value) welcome,
-    required TResult Function(_IsNewUser value) isNewUser,
-    required TResult Function(_UserAuthenticated value) userAuthenticated,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Welcome value)? welcome,
-    TResult? Function(_IsNewUser value)? isNewUser,
-    TResult? Function(_UserAuthenticated value)? userAuthenticated,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Welcome value)? welcome,
-    TResult Function(_IsNewUser value)? isNewUser,
-    TResult Function(_UserAuthenticated value)? userAuthenticated,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
+  $StartingVMCopyWith<$Res> get vm {
+    return $StartingVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
-abstract class _Error implements StartingState {
-  const factory _Error(final String msg, final StartingVM vm) = _$ErrorImpl;
-
-  String get msg;
-  StartingVM get vm;
-
-  /// Create a copy of StartingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

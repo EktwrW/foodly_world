@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/painting.dart' show ImageConfiguration, ImageStreamListener;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/blocs/favorites_cubit/favorites_cubit.dart';
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;

@@ -1,7 +1,7 @@
 part of 'service_packages_cubit.dart';
 
 @freezed
-class ServicePackagesState with _$ServicePackagesState {
+sealed class ServicePackagesState with _$ServicePackagesState {
   const factory ServicePackagesState.initial(ServicePackagesVM vm) = _Initial;
   const factory ServicePackagesState.loading(ServicePackagesVM vm) = _Loading;
   const factory ServicePackagesState.loaded(ServicePackagesVM vm) = _Loaded;

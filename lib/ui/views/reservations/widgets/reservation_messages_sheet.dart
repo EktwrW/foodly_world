@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:animate_do/animate_do.dart' show FadeIn, FadeInUp;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/data_models/reservations/reservation_message_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:intl/intl.dart';
 
 /// Shows a bottom sheet with the message thread for a reservation.

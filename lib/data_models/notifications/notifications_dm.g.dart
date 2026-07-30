@@ -6,9 +6,9 @@ part of 'notifications_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NotificationsResponseDMImpl _$$NotificationsResponseDMImplFromJson(
+_NotificationsResponseDM _$NotificationsResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$NotificationsResponseDMImpl(
+    _NotificationsResponseDM(
       notifications: (json['notifications'] as List<dynamic>?)
               ?.map((e) => NotificationDM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,16 +18,15 @@ _$NotificationsResponseDMImpl _$$NotificationsResponseDMImplFromJson(
           : NotificationsMetaDM.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$NotificationsResponseDMImplToJson(
-        _$NotificationsResponseDMImpl instance) =>
+Map<String, dynamic> _$NotificationsResponseDMToJson(
+        _NotificationsResponseDM instance) =>
     <String, dynamic>{
       'notifications': instance.notifications.map((e) => e.toJson()).toList(),
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
-_$NotificationsMetaDMImpl _$$NotificationsMetaDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationsMetaDMImpl(
+_NotificationsMetaDM _$NotificationsMetaDMFromJson(Map<String, dynamic> json) =>
+    _NotificationsMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
       perPage: (json['per_page'] as num?)?.toInt() ?? 20,
@@ -35,8 +34,8 @@ _$NotificationsMetaDMImpl _$$NotificationsMetaDMImplFromJson(
       unreadCount: (json['unread_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$NotificationsMetaDMImplToJson(
-        _$NotificationsMetaDMImpl instance) =>
+Map<String, dynamic> _$NotificationsMetaDMToJson(
+        _NotificationsMetaDM instance) =>
     <String, dynamic>{
       'current_page': instance.currentPage,
       'last_page': instance.lastPage,
@@ -45,21 +44,20 @@ Map<String, dynamic> _$$NotificationsMetaDMImplToJson(
       'unread_count': instance.unreadCount,
     };
 
-_$UnreadCountResponseDMImpl _$$UnreadCountResponseDMImplFromJson(
+_UnreadCountResponseDM _$UnreadCountResponseDMFromJson(
         Map<String, dynamic> json) =>
-    _$UnreadCountResponseDMImpl(
+    _UnreadCountResponseDM(
       unreadCount: (json['unread_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$UnreadCountResponseDMImplToJson(
-        _$UnreadCountResponseDMImpl instance) =>
+Map<String, dynamic> _$UnreadCountResponseDMToJson(
+        _UnreadCountResponseDM instance) =>
     <String, dynamic>{
       'unread_count': instance.unreadCount,
     };
 
-_$NotificationDataDMImpl _$$NotificationDataDMImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotificationDataDMImpl(
+_NotificationDataDM _$NotificationDataDMFromJson(Map<String, dynamic> json) =>
+    _NotificationDataDM(
       actorId: (json['actor_id'] as num?)?.toInt(),
       actorUuid: json['actor_uuid'] as String?,
       actorPhotoUrl: json['actor_photo_url'] as String?,
@@ -79,8 +77,7 @@ _$NotificationDataDMImpl _$$NotificationDataDMImplFromJson(
       postUuid: json['post_uuid'] as String?,
     );
 
-Map<String, dynamic> _$$NotificationDataDMImplToJson(
-        _$NotificationDataDMImpl instance) =>
+Map<String, dynamic> _$NotificationDataDMToJson(_NotificationDataDM instance) =>
     <String, dynamic>{
       if (instance.actorId case final value?) 'actor_id': value,
       if (instance.actorUuid case final value?) 'actor_uuid': value,
@@ -101,8 +98,8 @@ Map<String, dynamic> _$$NotificationDataDMImplToJson(
       if (instance.postUuid case final value?) 'post_uuid': value,
     };
 
-_$NotificationDMImpl _$$NotificationDMImplFromJson(Map<String, dynamic> json) =>
-    _$NotificationDMImpl(
+_NotificationDM _$NotificationDMFromJson(Map<String, dynamic> json) =>
+    _NotificationDM(
       id: (json['id'] as num).toInt(),
       uuid: json['uuid'] as String,
       type: $enumDecodeNullable(_$FoodlyNotificationTypeEnumMap, json['type']),
@@ -123,8 +120,7 @@ _$NotificationDMImpl _$$NotificationDMImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$NotificationDMImplToJson(
-        _$NotificationDMImpl instance) =>
+Map<String, dynamic> _$NotificationDMToJson(_NotificationDM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'uuid': instance.uuid,

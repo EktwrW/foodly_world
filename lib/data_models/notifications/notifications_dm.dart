@@ -5,7 +5,7 @@ part 'notifications_dm.freezed.dart';
 part 'notifications_dm.g.dart';
 
 @freezed
-class NotificationsResponseDM with _$NotificationsResponseDM {
+abstract class NotificationsResponseDM with _$NotificationsResponseDM {
   const factory NotificationsResponseDM({
     @Default([]) List<NotificationDM> notifications,
     NotificationsMetaDM? meta,
@@ -15,7 +15,7 @@ class NotificationsResponseDM with _$NotificationsResponseDM {
 }
 
 @freezed
-class NotificationsMetaDM with _$NotificationsMetaDM {
+abstract class NotificationsMetaDM with _$NotificationsMetaDM {
   const factory NotificationsMetaDM({
     @JsonKey(name: 'current_page') @Default(1) int currentPage,
     @JsonKey(name: 'last_page') @Default(1) int lastPage,
@@ -28,7 +28,7 @@ class NotificationsMetaDM with _$NotificationsMetaDM {
 }
 
 @freezed
-class UnreadCountResponseDM with _$UnreadCountResponseDM {
+abstract class UnreadCountResponseDM with _$UnreadCountResponseDM {
   const factory UnreadCountResponseDM({
     @JsonKey(name: 'unread_count') @Default(0) int unreadCount,
   }) = _UnreadCountResponseDM;
@@ -37,7 +37,7 @@ class UnreadCountResponseDM with _$UnreadCountResponseDM {
 }
 
 @freezed
-class NotificationDataDM with _$NotificationDataDM {
+abstract class NotificationDataDM with _$NotificationDataDM {
   const factory NotificationDataDM({
     @JsonKey(name: 'actor_id') int? actorId,
     @JsonKey(name: 'actor_uuid') String? actorUuid,
@@ -67,7 +67,7 @@ class NotificationDataDM with _$NotificationDataDM {
 }
 
 @freezed
-class NotificationDM with _$NotificationDM {
+abstract class NotificationDM with _$NotificationDM {
   const NotificationDM._();
 
   const factory NotificationDM({

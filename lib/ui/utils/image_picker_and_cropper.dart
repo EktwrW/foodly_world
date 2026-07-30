@@ -8,7 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/footer_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:universal_io/io.dart' as uni_io;

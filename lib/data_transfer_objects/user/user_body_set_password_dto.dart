@@ -11,7 +11,7 @@ part 'user_body_set_password_dto.g.dart';
 /// collapsing two semantically different operations — change-password and
 /// set-password — into one payload that a caller or refactor could misuse.
 @freezed
-class UserBodySetPasswordDTO with _$UserBodySetPasswordDTO {
+abstract class UserBodySetPasswordDTO with _$UserBodySetPasswordDTO {
   const factory UserBodySetPasswordDTO({
     @JsonKey(name: 'new_password') required String newPassword,
   }) = _UserBodySetPasswordDTO;

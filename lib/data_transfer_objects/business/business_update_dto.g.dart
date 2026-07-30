@@ -6,9 +6,8 @@ part of 'business_update_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BusinessUpdateDTOImpl _$$BusinessUpdateDTOImplFromJson(
-        Map<String, dynamic> json) =>
-    _$BusinessUpdateDTOImpl(
+_BusinessUpdateDTO _$BusinessUpdateDTOFromJson(Map<String, dynamic> json) =>
+    _BusinessUpdateDTO(
       businessName: json['business_name'] as String?,
       businessAboutUs: json['business_about_us'] as String?,
       businessAdditionalInfo: json['business_additional_info'] as String?,
@@ -37,8 +36,7 @@ _$BusinessUpdateDTOImpl _$$BusinessUpdateDTOImplFromJson(
       combosLabel: json['combos_label'] as String?,
     );
 
-Map<String, dynamic> _$$BusinessUpdateDTOImplToJson(
-        _$BusinessUpdateDTOImpl instance) =>
+Map<String, dynamic> _$BusinessUpdateDTOToJson(_BusinessUpdateDTO instance) =>
     <String, dynamic>{
       if (instance.businessName case final value?) 'business_name': value,
       if (instance.businessAboutUs case final value?)

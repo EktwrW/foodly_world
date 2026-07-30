@@ -18,7 +18,7 @@ import 'package:foodly_world/ui/views/analytics/widgets/service_kpi_row.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/top_events_bar.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/top_packages_bar.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class AnalyticsDashboardPage extends StatefulWidget {
   const AnalyticsDashboardPage({super.key});

@@ -1,7 +1,7 @@
 part of 'check_availabilities_cubit.dart';
 
 @freezed
-class CheckAvailabilitiesState with _$CheckAvailabilitiesState {
+sealed class CheckAvailabilitiesState with _$CheckAvailabilitiesState {
   const CheckAvailabilitiesState._();
 
   const factory CheckAvailabilitiesState.initial() = _Initial;

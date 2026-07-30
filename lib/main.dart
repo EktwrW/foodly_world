@@ -1,7 +1,9 @@
 import 'dart:async' show unawaited;
+import 'dart:developer' show log;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' show Stripe;
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/services/first_launch_service.dart';
@@ -32,6 +34,20 @@ Future<Widget> buildFoodlyApp() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   final config = BaseConfig.initConfig();
   DependencyInjectionService.registerDependencies(config);
+
+  // Stripe (Group Orders & Split Payments). La publishable key se inyecta por
+  // --dart-define (mismo patrón que el resto de config) — NUNCA hardcodeada.
+  // Test mode: --dart-define=STRIPE_PUBLISHABLE_KEY=pk_test_...
+  // El guard evita romper runs de dev que no pasan la key.
+  const stripeKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY');
+  if (stripeKey.isNotEmpty) {
+    Stripe.publishableKey = stripeKey;
+    await Stripe.instance.applySettings();
+    log('Stripe inicializado (…${stripeKey.substring(stripeKey.length - 4)})', name: 'main');
+  } else {
+    // Fail-visible: sin key, cualquier PaymentSheet lanzará StripeConfigException.
+    log('STRIPE_PUBLISHABLE_KEY vacía — los pagos NO funcionarán en este run', name: 'main');
+  }
 
   // Initialize FCM push notifications once DI is wired. The service itself
   // is silent-failure-by-design — if credentials are missing or permissions

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart' show FlutterNativeSplash;
 import 'package:foodly_world/core/core_exports.dart'
     show AppRouter, AppRoutes, AuthSessionService, BaseConfig, FoodlyStrings, MeRepo, di;
-
+import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_register_dto.dart';

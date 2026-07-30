@@ -11,7 +11,7 @@ import 'package:foodly_world/ui/views/business/reservations/widgets/manager_rese
 import 'package:foodly_world/ui/views/business/reservations/widgets/quote_send_sheet.dart';
 import 'package:foodly_world/ui/views/reservations/widgets/reservation_messages_sheet.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class ManageReservationsPage extends StatelessWidget {
   final String businessUuid;

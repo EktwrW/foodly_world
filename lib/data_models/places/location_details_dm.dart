@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 part 'location_details_dm.freezed.dart';
 
 @freezed
-class LocationDetailsDM with _$LocationDetailsDM {
+abstract class LocationDetailsDM with _$LocationDetailsDM {
   const factory LocationDetailsDM({
     String? countryCode,
     Position? position,

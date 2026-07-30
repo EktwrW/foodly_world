@@ -326,7 +326,9 @@ class _ReorderableSubCategoryItemsState extends State<_ReorderableSubCategoryIte
       // Remove the default white Material elevation on the dragged item.
       proxyDecorator: (child, index, animation) => child,
       itemCount: widget.items.length,
-      onReorder: (oldIndex, newIndex) {
+      // `onReorderItem` (Flutter >=3.41) entrega newIndex ya ajustado tras
+      // remover el item -- el cubit lo usa tal cual, sin correccion manual.
+      onReorderItem: (oldIndex, newIndex) {
         widget.cubit.reorderItems(widget.subCategory, widget.menuCategory, oldIndex, newIndex);
       },
       itemBuilder: (context, i) {

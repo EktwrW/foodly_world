@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,77 +9,43 @@ part of 'contact_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ContactState {
-  ContactVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ContactVM vm) idle,
-    required TResult Function(ContactVM vm) sending,
-    required TResult Function(ContactVM vm) sent,
-    required TResult Function(String msg, ContactVM vm) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ContactVM vm)? idle,
-    TResult? Function(ContactVM vm)? sending,
-    TResult? Function(ContactVM vm)? sent,
-    TResult? Function(String msg, ContactVM vm)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ContactVM vm)? idle,
-    TResult Function(ContactVM vm)? sending,
-    TResult Function(ContactVM vm)? sent,
-    TResult Function(String msg, ContactVM vm)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idle value) idle,
-    required TResult Function(_Sending value) sending,
-    required TResult Function(_Sent value) sent,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idle value)? idle,
-    TResult? Function(_Sending value)? sending,
-    TResult? Function(_Sent value)? sent,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idle value)? idle,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  ContactVM get vm;
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ContactStateCopyWith<ContactState> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ContactStateCopyWithImpl<ContactState>(
+          this as ContactState, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ContactState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString() {
+    return 'ContactState(vm: $vm)';
+  }
 }
 
 /// @nodoc
-abstract class $ContactStateCopyWith<$Res> {
+abstract mixin class $ContactStateCopyWith<$Res> {
   factory $ContactStateCopyWith(
-          ContactState value, $Res Function(ContactState) then) =
-      _$ContactStateCopyWithImpl<$Res, ContactState>;
+          ContactState value, $Res Function(ContactState) _then) =
+      _$ContactStateCopyWithImpl;
   @useResult
   $Res call({ContactVM vm});
 
@@ -87,14 +53,11 @@ abstract class $ContactStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ContactStateCopyWithImpl<$Res, $Val extends ContactState>
-    implements $ContactStateCopyWith<$Res> {
-  _$ContactStateCopyWithImpl(this._value, this._then);
+class _$ContactStateCopyWithImpl<$Res> implements $ContactStateCopyWith<$Res> {
+  _$ContactStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ContactState _self;
+  final $Res Function(ContactState) _then;
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
@@ -103,12 +66,12 @@ class _$ContactStateCopyWithImpl<$Res, $Val extends ContactState>
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       vm: null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ContactVM,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ContactState
@@ -116,176 +79,257 @@ class _$ContactStateCopyWithImpl<$Res, $Val extends ContactState>
   @override
   @pragma('vm:prefer-inline')
   $ContactVMCopyWith<$Res> get vm {
-    return $ContactVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
+    return $ContactVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$IdleImplCopyWith<$Res>
-    implements $ContactStateCopyWith<$Res> {
-  factory _$$IdleImplCopyWith(
-          _$IdleImpl value, $Res Function(_$IdleImpl) then) =
-      __$$IdleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ContactVM vm});
+/// Adds pattern-matching-related methods to [ContactState].
+extension ContactStatePatterns on ContactState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ContactVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$IdleImplCopyWithImpl<$Res>
-    extends _$ContactStateCopyWithImpl<$Res, _$IdleImpl>
-    implements _$$IdleImplCopyWith<$Res> {
-  __$$IdleImplCopyWithImpl(_$IdleImpl _value, $Res Function(_$IdleImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Idle value)? idle,
+    TResult Function(_Sending value)? sending,
+    TResult Function(_Sent value)? sent,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
   }) {
-    return _then(_$IdleImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as ContactVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Idle() when idle != null:
+        return idle(_that);
+      case _Sending() when sending != null:
+        return sending(_that);
+      case _Sent() when sent != null:
+        return sent(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Idle value) idle,
+    required TResult Function(_Sending value) sending,
+    required TResult Function(_Sent value) sent,
+    required TResult Function(_Error value) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Idle():
+        return idle(_that);
+      case _Sending():
+        return sending(_that);
+      case _Sent():
+        return sent(_that);
+      case _Error():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Idle value)? idle,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Idle() when idle != null:
+        return idle(_that);
+      case _Sending() when sending != null:
+        return sending(_that);
+      case _Sent() when sent != null:
+        return sent(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ContactVM vm)? idle,
+    TResult Function(ContactVM vm)? sending,
+    TResult Function(ContactVM vm)? sent,
+    TResult Function(String msg, ContactVM vm)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Idle() when idle != null:
+        return idle(_that.vm);
+      case _Sending() when sending != null:
+        return sending(_that.vm);
+      case _Sent() when sent != null:
+        return sent(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ContactVM vm) idle,
+    required TResult Function(ContactVM vm) sending,
+    required TResult Function(ContactVM vm) sent,
+    required TResult Function(String msg, ContactVM vm) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Idle():
+        return idle(_that.vm);
+      case _Sending():
+        return sending(_that.vm);
+      case _Sent():
+        return sent(_that.vm);
+      case _Error():
+        return error(_that.msg, _that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ContactVM vm)? idle,
+    TResult? Function(ContactVM vm)? sending,
+    TResult? Function(ContactVM vm)? sent,
+    TResult? Function(String msg, ContactVM vm)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Idle() when idle != null:
+        return idle(_that.vm);
+      case _Sending() when sending != null:
+        return sending(_that.vm);
+      case _Sent() when sent != null:
+        return sent(_that.vm);
+      case _Error() when error != null:
+        return error(_that.msg, _that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$IdleImpl implements _Idle {
-  const _$IdleImpl(this.vm);
+class _Idle implements ContactState {
+  const _Idle(this.vm);
 
   @override
   final ContactVM vm;
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$IdleCopyWith<_Idle> get copyWith =>
+      __$IdleCopyWithImpl<_Idle>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Idle &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'ContactState.idle(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$IdleImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$IdleImplCopyWith<_$IdleImpl> get copyWith =>
-      __$$IdleImplCopyWithImpl<_$IdleImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ContactVM vm) idle,
-    required TResult Function(ContactVM vm) sending,
-    required TResult Function(ContactVM vm) sent,
-    required TResult Function(String msg, ContactVM vm) error,
-  }) {
-    return idle(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ContactVM vm)? idle,
-    TResult? Function(ContactVM vm)? sending,
-    TResult? Function(ContactVM vm)? sent,
-    TResult? Function(String msg, ContactVM vm)? error,
-  }) {
-    return idle?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ContactVM vm)? idle,
-    TResult Function(ContactVM vm)? sending,
-    TResult Function(ContactVM vm)? sent,
-    TResult Function(String msg, ContactVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (idle != null) {
-      return idle(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idle value) idle,
-    required TResult Function(_Sending value) sending,
-    required TResult Function(_Sent value) sent,
-    required TResult Function(_Error value) error,
-  }) {
-    return idle(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idle value)? idle,
-    TResult? Function(_Sending value)? sending,
-    TResult? Function(_Sent value)? sent,
-    TResult? Function(_Error value)? error,
-  }) {
-    return idle?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idle value)? idle,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (idle != null) {
-      return idle(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Idle implements ContactState {
-  const factory _Idle(final ContactVM vm) = _$IdleImpl;
-
-  @override
-  ContactVM get vm;
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IdleImplCopyWith<_$IdleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SendingImplCopyWith<$Res>
+abstract mixin class _$IdleCopyWith<$Res>
     implements $ContactStateCopyWith<$Res> {
-  factory _$$SendingImplCopyWith(
-          _$SendingImpl value, $Res Function(_$SendingImpl) then) =
-      __$$SendingImplCopyWithImpl<$Res>;
+  factory _$IdleCopyWith(_Idle value, $Res Function(_Idle) _then) =
+      __$IdleCopyWithImpl;
   @override
   @useResult
   $Res call({ContactVM vm});
@@ -295,156 +339,76 @@ abstract class _$$SendingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SendingImplCopyWithImpl<$Res>
-    extends _$ContactStateCopyWithImpl<$Res, _$SendingImpl>
-    implements _$$SendingImplCopyWith<$Res> {
-  __$$SendingImplCopyWithImpl(
-      _$SendingImpl _value, $Res Function(_$SendingImpl) _then)
-      : super(_value, _then);
+class __$IdleCopyWithImpl<$Res> implements _$IdleCopyWith<$Res> {
+  __$IdleCopyWithImpl(this._self, this._then);
+
+  final _Idle _self;
+  final $Res Function(_Idle) _then;
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$SendingImpl(
+    return _then(_Idle(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ContactVM,
     ));
+  }
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ContactVMCopyWith<$Res> get vm {
+    return $ContactVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SendingImpl implements _Sending {
-  const _$SendingImpl(this.vm);
+class _Sending implements ContactState {
+  const _Sending(this.vm);
 
   @override
   final ContactVM vm;
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SendingCopyWith<_Sending> get copyWith =>
+      __$SendingCopyWithImpl<_Sending>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Sending &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
 
   @override
   String toString() {
     return 'ContactState.sending(vm: $vm)';
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SendingImpl &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vm);
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SendingImplCopyWith<_$SendingImpl> get copyWith =>
-      __$$SendingImplCopyWithImpl<_$SendingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ContactVM vm) idle,
-    required TResult Function(ContactVM vm) sending,
-    required TResult Function(ContactVM vm) sent,
-    required TResult Function(String msg, ContactVM vm) error,
-  }) {
-    return sending(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ContactVM vm)? idle,
-    TResult? Function(ContactVM vm)? sending,
-    TResult? Function(ContactVM vm)? sent,
-    TResult? Function(String msg, ContactVM vm)? error,
-  }) {
-    return sending?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ContactVM vm)? idle,
-    TResult Function(ContactVM vm)? sending,
-    TResult Function(ContactVM vm)? sent,
-    TResult Function(String msg, ContactVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (sending != null) {
-      return sending(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idle value) idle,
-    required TResult Function(_Sending value) sending,
-    required TResult Function(_Sent value) sent,
-    required TResult Function(_Error value) error,
-  }) {
-    return sending(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idle value)? idle,
-    TResult? Function(_Sending value)? sending,
-    TResult? Function(_Sent value)? sent,
-    TResult? Function(_Error value)? error,
-  }) {
-    return sending?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idle value)? idle,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (sending != null) {
-      return sending(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Sending implements ContactState {
-  const factory _Sending(final ContactVM vm) = _$SendingImpl;
-
-  @override
-  ContactVM get vm;
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SendingImplCopyWith<_$SendingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SentImplCopyWith<$Res>
+abstract mixin class _$SendingCopyWith<$Res>
     implements $ContactStateCopyWith<$Res> {
-  factory _$$SentImplCopyWith(
-          _$SentImpl value, $Res Function(_$SentImpl) then) =
-      __$$SentImplCopyWithImpl<$Res>;
+  factory _$SendingCopyWith(_Sending value, $Res Function(_Sending) _then) =
+      __$SendingCopyWithImpl;
   @override
   @useResult
   $Res call({ContactVM vm});
@@ -454,155 +418,157 @@ abstract class _$$SentImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SentImplCopyWithImpl<$Res>
-    extends _$ContactStateCopyWithImpl<$Res, _$SentImpl>
-    implements _$$SentImplCopyWith<$Res> {
-  __$$SentImplCopyWithImpl(_$SentImpl _value, $Res Function(_$SentImpl) _then)
-      : super(_value, _then);
+class __$SendingCopyWithImpl<$Res> implements _$SendingCopyWith<$Res> {
+  __$SendingCopyWithImpl(this._self, this._then);
+
+  final _Sending _self;
+  final $Res Function(_Sending) _then;
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$SentImpl(
+    return _then(_Sending(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ContactVM,
     ));
+  }
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ContactVMCopyWith<$Res> get vm {
+    return $ContactVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SentImpl implements _Sent {
-  const _$SentImpl(this.vm);
+class _Sent implements ContactState {
+  const _Sent(this.vm);
 
   @override
   final ContactVM vm;
 
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ContactState.sent(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SentCopyWith<_Sent> get copyWith =>
+      __$SentCopyWithImpl<_Sent>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SentImpl &&
+            other is _Sent &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SentImplCopyWith<_$SentImpl> get copyWith =>
-      __$$SentImplCopyWithImpl<_$SentImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ContactVM vm) idle,
-    required TResult Function(ContactVM vm) sending,
-    required TResult Function(ContactVM vm) sent,
-    required TResult Function(String msg, ContactVM vm) error,
-  }) {
-    return sent(vm);
+  String toString() {
+    return 'ContactState.sent(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ContactVM vm)? idle,
-    TResult? Function(ContactVM vm)? sending,
-    TResult? Function(ContactVM vm)? sent,
-    TResult? Function(String msg, ContactVM vm)? error,
-  }) {
-    return sent?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ContactVM vm)? idle,
-    TResult Function(ContactVM vm)? sending,
-    TResult Function(ContactVM vm)? sent,
-    TResult Function(String msg, ContactVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (sent != null) {
-      return sent(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idle value) idle,
-    required TResult Function(_Sending value) sending,
-    required TResult Function(_Sent value) sent,
-    required TResult Function(_Error value) error,
-  }) {
-    return sent(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idle value)? idle,
-    TResult? Function(_Sending value)? sending,
-    TResult? Function(_Sent value)? sent,
-    TResult? Function(_Error value)? error,
-  }) {
-    return sent?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idle value)? idle,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (sent != null) {
-      return sent(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Sent implements ContactState {
-  const factory _Sent(final ContactVM vm) = _$SentImpl;
-
-  @override
-  ContactVM get vm;
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SentImplCopyWith<_$SentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$SentCopyWith<$Res>
     implements $ContactStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$SentCopyWith(_Sent value, $Res Function(_Sent) _then) =
+      __$SentCopyWithImpl;
+  @override
+  @useResult
+  $Res call({ContactVM vm});
+
+  @override
+  $ContactVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$SentCopyWithImpl<$Res> implements _$SentCopyWith<$Res> {
+  __$SentCopyWithImpl(this._self, this._then);
+
+  final _Sent _self;
+  final $Res Function(_Sent) _then;
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_Sent(
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as ContactVM,
+    ));
+  }
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ContactVMCopyWith<$Res> get vm {
+    return $ContactVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _Error implements ContactState {
+  const _Error(this.msg, this.vm);
+
+  final String msg;
+  @override
+  final ContactVM vm;
+
+  /// Create a copy of ContactState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Error &&
+            (identical(other.msg, msg) || other.msg == msg) &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, msg, vm);
+
+  @override
+  String toString() {
+    return 'ContactState.error(msg: $msg, vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $ContactStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
   @override
   @useResult
   $Res call({String msg, ContactVM vm});
@@ -612,155 +578,41 @@ abstract class _$$ErrorImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$ContactStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? msg = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
+    return _then(_Error(
       null == msg
-          ? _value.msg
+          ? _self.msg
           : msg // ignore: cast_nullable_to_non_nullable
               as String,
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as ContactVM,
     ));
   }
-}
-
-/// @nodoc
-
-class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.msg, this.vm);
-
-  @override
-  final String msg;
-  @override
-  final ContactVM vm;
-
-  @override
-  String toString() {
-    return 'ContactState.error(msg: $msg, vm: $vm)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
-            (identical(other.msg, msg) || other.msg == msg) &&
-            (identical(other.vm, vm) || other.vm == vm));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, msg, vm);
 
   /// Create a copy of ContactState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(ContactVM vm) idle,
-    required TResult Function(ContactVM vm) sending,
-    required TResult Function(ContactVM vm) sent,
-    required TResult Function(String msg, ContactVM vm) error,
-  }) {
-    return error(msg, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ContactVM vm)? idle,
-    TResult? Function(ContactVM vm)? sending,
-    TResult? Function(ContactVM vm)? sent,
-    TResult? Function(String msg, ContactVM vm)? error,
-  }) {
-    return error?.call(msg, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ContactVM vm)? idle,
-    TResult Function(ContactVM vm)? sending,
-    TResult Function(ContactVM vm)? sent,
-    TResult Function(String msg, ContactVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(msg, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idle value) idle,
-    required TResult Function(_Sending value) sending,
-    required TResult Function(_Sent value) sent,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idle value)? idle,
-    TResult? Function(_Sending value)? sending,
-    TResult? Function(_Sent value)? sent,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idle value)? idle,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
+  $ContactVMCopyWith<$Res> get vm {
+    return $ContactVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
-abstract class _Error implements ContactState {
-  const factory _Error(final String msg, final ContactVM vm) = _$ErrorImpl;
-
-  String get msg;
-  @override
-  ContactVM get vm;
-
-  /// Create a copy of ContactState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

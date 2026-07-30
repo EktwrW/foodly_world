@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,37 +9,52 @@ part of 'nlp_search_response_dm.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-NlpSearchResponseDM _$NlpSearchResponseDMFromJson(Map<String, dynamic> json) {
-  return _NlpSearchResponseDM.fromJson(json);
-}
 
 /// @nodoc
 mixin _$NlpSearchResponseDM {
   @JsonKey(name: 'business')
-  List<BusinessDM> get business => throw _privateConstructorUsedError;
+  List<BusinessDM> get business;
   @JsonKey(name: 'nlp_info')
-  NlpInfoDM? get nlpInfo => throw _privateConstructorUsedError;
-
-  /// Serializes this NlpSearchResponseDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  NlpInfoDM? get nlpInfo;
 
   /// Create a copy of NlpSearchResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $NlpSearchResponseDMCopyWith<NlpSearchResponseDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$NlpSearchResponseDMCopyWithImpl<NlpSearchResponseDM>(
+          this as NlpSearchResponseDM, _$identity);
+
+  /// Serializes this NlpSearchResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NlpSearchResponseDM &&
+            const DeepCollectionEquality().equals(other.business, business) &&
+            (identical(other.nlpInfo, nlpInfo) || other.nlpInfo == nlpInfo));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(business), nlpInfo);
+
+  @override
+  String toString() {
+    return 'NlpSearchResponseDM(business: $business, nlpInfo: $nlpInfo)';
+  }
 }
 
 /// @nodoc
-abstract class $NlpSearchResponseDMCopyWith<$Res> {
+abstract mixin class $NlpSearchResponseDMCopyWith<$Res> {
   factory $NlpSearchResponseDMCopyWith(
-          NlpSearchResponseDM value, $Res Function(NlpSearchResponseDM) then) =
-      _$NlpSearchResponseDMCopyWithImpl<$Res, NlpSearchResponseDM>;
+          NlpSearchResponseDM value, $Res Function(NlpSearchResponseDM) _then) =
+      _$NlpSearchResponseDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'business') List<BusinessDM> business,
@@ -49,14 +64,12 @@ abstract class $NlpSearchResponseDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NlpSearchResponseDMCopyWithImpl<$Res, $Val extends NlpSearchResponseDM>
+class _$NlpSearchResponseDMCopyWithImpl<$Res>
     implements $NlpSearchResponseDMCopyWith<$Res> {
-  _$NlpSearchResponseDMCopyWithImpl(this._value, this._then);
+  _$NlpSearchResponseDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final NlpSearchResponseDM _self;
+  final $Res Function(NlpSearchResponseDM) _then;
 
   /// Create a copy of NlpSearchResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -66,16 +79,16 @@ class _$NlpSearchResponseDMCopyWithImpl<$Res, $Val extends NlpSearchResponseDM>
     Object? business = null,
     Object? nlpInfo = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       business: null == business
-          ? _value.business
+          ? _self.business
           : business // ignore: cast_nullable_to_non_nullable
               as List<BusinessDM>,
       nlpInfo: freezed == nlpInfo
-          ? _value.nlpInfo
+          ? _self.nlpInfo
           : nlpInfo // ignore: cast_nullable_to_non_nullable
               as NlpInfoDM?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of NlpSearchResponseDM
@@ -83,71 +96,188 @@ class _$NlpSearchResponseDMCopyWithImpl<$Res, $Val extends NlpSearchResponseDM>
   @override
   @pragma('vm:prefer-inline')
   $NlpInfoDMCopyWith<$Res>? get nlpInfo {
-    if (_value.nlpInfo == null) {
+    if (_self.nlpInfo == null) {
       return null;
     }
 
-    return $NlpInfoDMCopyWith<$Res>(_value.nlpInfo!, (value) {
-      return _then(_value.copyWith(nlpInfo: value) as $Val);
+    return $NlpInfoDMCopyWith<$Res>(_self.nlpInfo!, (value) {
+      return _then(_self.copyWith(nlpInfo: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$NlpSearchResponseDMImplCopyWith<$Res>
-    implements $NlpSearchResponseDMCopyWith<$Res> {
-  factory _$$NlpSearchResponseDMImplCopyWith(_$NlpSearchResponseDMImpl value,
-          $Res Function(_$NlpSearchResponseDMImpl) then) =
-      __$$NlpSearchResponseDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'business') List<BusinessDM> business,
-      @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
+/// Adds pattern-matching-related methods to [NlpSearchResponseDM].
+extension NlpSearchResponseDMPatterns on NlpSearchResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $NlpInfoDMCopyWith<$Res>? get nlpInfo;
-}
-
-/// @nodoc
-class __$$NlpSearchResponseDMImplCopyWithImpl<$Res>
-    extends _$NlpSearchResponseDMCopyWithImpl<$Res, _$NlpSearchResponseDMImpl>
-    implements _$$NlpSearchResponseDMImplCopyWith<$Res> {
-  __$$NlpSearchResponseDMImplCopyWithImpl(_$NlpSearchResponseDMImpl _value,
-      $Res Function(_$NlpSearchResponseDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of NlpSearchResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? business = null,
-    Object? nlpInfo = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_NlpSearchResponseDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$NlpSearchResponseDMImpl(
-      business: null == business
-          ? _value._business
-          : business // ignore: cast_nullable_to_non_nullable
-              as List<BusinessDM>,
-      nlpInfo: freezed == nlpInfo
-          ? _value.nlpInfo
-          : nlpInfo // ignore: cast_nullable_to_non_nullable
-              as NlpInfoDM?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_NlpSearchResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_NlpSearchResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business,
+            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM() when $default != null:
+        return $default(_that.business, _that.nlpInfo);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(@JsonKey(name: 'business') List<BusinessDM> business,
+            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM():
+        return $default(_that.business, _that.nlpInfo);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(@JsonKey(name: 'business') List<BusinessDM> business,
+            @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpSearchResponseDM() when $default != null:
+        return $default(_that.business, _that.nlpInfo);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$NlpSearchResponseDMImpl implements _NlpSearchResponseDM {
-  const _$NlpSearchResponseDMImpl(
+class _NlpSearchResponseDM implements NlpSearchResponseDM {
+  const _NlpSearchResponseDM(
       {@JsonKey(name: 'business') final List<BusinessDM> business = const [],
       @JsonKey(name: 'nlp_info') this.nlpInfo})
       : _business = business;
-
-  factory _$NlpSearchResponseDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NlpSearchResponseDMImplFromJson(json);
+  factory _NlpSearchResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$NlpSearchResponseDMFromJson(json);
 
   final List<BusinessDM> _business;
   @override
@@ -162,16 +292,27 @@ class _$NlpSearchResponseDMImpl implements _NlpSearchResponseDM {
   @JsonKey(name: 'nlp_info')
   final NlpInfoDM? nlpInfo;
 
+  /// Create a copy of NlpSearchResponseDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'NlpSearchResponseDM(business: $business, nlpInfo: $nlpInfo)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NlpSearchResponseDMCopyWith<_NlpSearchResponseDM> get copyWith =>
+      __$NlpSearchResponseDMCopyWithImpl<_NlpSearchResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$NlpSearchResponseDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NlpSearchResponseDMImpl &&
+            other is _NlpSearchResponseDM &&
             const DeepCollectionEquality().equals(other._business, _business) &&
             (identical(other.nlpInfo, nlpInfo) || other.nlpInfo == nlpInfo));
   }
@@ -181,75 +322,125 @@ class _$NlpSearchResponseDMImpl implements _NlpSearchResponseDM {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_business), nlpInfo);
 
-  /// Create a copy of NlpSearchResponseDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$NlpSearchResponseDMImplCopyWith<_$NlpSearchResponseDMImpl> get copyWith =>
-      __$$NlpSearchResponseDMImplCopyWithImpl<_$NlpSearchResponseDMImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NlpSearchResponseDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'NlpSearchResponseDM(business: $business, nlpInfo: $nlpInfo)';
   }
 }
 
-abstract class _NlpSearchResponseDM implements NlpSearchResponseDM {
-  const factory _NlpSearchResponseDM(
-          {@JsonKey(name: 'business') final List<BusinessDM> business,
-          @JsonKey(name: 'nlp_info') final NlpInfoDM? nlpInfo}) =
-      _$NlpSearchResponseDMImpl;
-
-  factory _NlpSearchResponseDM.fromJson(Map<String, dynamic> json) =
-      _$NlpSearchResponseDMImpl.fromJson;
+/// @nodoc
+abstract mixin class _$NlpSearchResponseDMCopyWith<$Res>
+    implements $NlpSearchResponseDMCopyWith<$Res> {
+  factory _$NlpSearchResponseDMCopyWith(_NlpSearchResponseDM value,
+          $Res Function(_NlpSearchResponseDM) _then) =
+      __$NlpSearchResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'business') List<BusinessDM> business,
+      @JsonKey(name: 'nlp_info') NlpInfoDM? nlpInfo});
 
   @override
-  @JsonKey(name: 'business')
-  List<BusinessDM> get business;
-  @override
-  @JsonKey(name: 'nlp_info')
-  NlpInfoDM? get nlpInfo;
+  $NlpInfoDMCopyWith<$Res>? get nlpInfo;
+}
+
+/// @nodoc
+class __$NlpSearchResponseDMCopyWithImpl<$Res>
+    implements _$NlpSearchResponseDMCopyWith<$Res> {
+  __$NlpSearchResponseDMCopyWithImpl(this._self, this._then);
+
+  final _NlpSearchResponseDM _self;
+  final $Res Function(_NlpSearchResponseDM) _then;
 
   /// Create a copy of NlpSearchResponseDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NlpSearchResponseDMImplCopyWith<_$NlpSearchResponseDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? business = null,
+    Object? nlpInfo = freezed,
+  }) {
+    return _then(_NlpSearchResponseDM(
+      business: null == business
+          ? _self._business
+          : business // ignore: cast_nullable_to_non_nullable
+              as List<BusinessDM>,
+      nlpInfo: freezed == nlpInfo
+          ? _self.nlpInfo
+          : nlpInfo // ignore: cast_nullable_to_non_nullable
+              as NlpInfoDM?,
+    ));
+  }
 
-NlpInfoDM _$NlpInfoDMFromJson(Map<String, dynamic> json) {
-  return _NlpInfoDM.fromJson(json);
+  /// Create a copy of NlpSearchResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $NlpInfoDMCopyWith<$Res>? get nlpInfo {
+    if (_self.nlpInfo == null) {
+      return null;
+    }
+
+    return $NlpInfoDMCopyWith<$Res>(_self.nlpInfo!, (value) {
+      return _then(_self.copyWith(nlpInfo: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$NlpInfoDM {
   @JsonKey(name: 'detected_categories')
-  List<int> get detectedCategories => throw _privateConstructorUsedError;
+  List<int> get detectedCategories;
   @JsonKey(name: 'extracted_keywords')
-  List<String> get extractedKeywords => throw _privateConstructorUsedError;
-  double get confidence => throw _privateConstructorUsedError;
+  List<String> get extractedKeywords;
+  double get confidence;
   @JsonKey(name: 'time_filter')
-  TimeFilterDM? get timeFilter => throw _privateConstructorUsedError;
-
-  /// Serializes this NlpInfoDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  TimeFilterDM? get timeFilter;
 
   /// Create a copy of NlpInfoDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $NlpInfoDMCopyWith<NlpInfoDM> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$NlpInfoDMCopyWithImpl<NlpInfoDM>(this as NlpInfoDM, _$identity);
+
+  /// Serializes this NlpInfoDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NlpInfoDM &&
+            const DeepCollectionEquality()
+                .equals(other.detectedCategories, detectedCategories) &&
+            const DeepCollectionEquality()
+                .equals(other.extractedKeywords, extractedKeywords) &&
+            (identical(other.confidence, confidence) ||
+                other.confidence == confidence) &&
+            (identical(other.timeFilter, timeFilter) ||
+                other.timeFilter == timeFilter));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(detectedCategories),
+      const DeepCollectionEquality().hash(extractedKeywords),
+      confidence,
+      timeFilter);
+
+  @override
+  String toString() {
+    return 'NlpInfoDM(detectedCategories: $detectedCategories, extractedKeywords: $extractedKeywords, confidence: $confidence, timeFilter: $timeFilter)';
+  }
 }
 
 /// @nodoc
-abstract class $NlpInfoDMCopyWith<$Res> {
-  factory $NlpInfoDMCopyWith(NlpInfoDM value, $Res Function(NlpInfoDM) then) =
-      _$NlpInfoDMCopyWithImpl<$Res, NlpInfoDM>;
+abstract mixin class $NlpInfoDMCopyWith<$Res> {
+  factory $NlpInfoDMCopyWith(NlpInfoDM value, $Res Function(NlpInfoDM) _then) =
+      _$NlpInfoDMCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'detected_categories') List<int> detectedCategories,
@@ -261,14 +452,11 @@ abstract class $NlpInfoDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NlpInfoDMCopyWithImpl<$Res, $Val extends NlpInfoDM>
-    implements $NlpInfoDMCopyWith<$Res> {
-  _$NlpInfoDMCopyWithImpl(this._value, this._then);
+class _$NlpInfoDMCopyWithImpl<$Res> implements $NlpInfoDMCopyWith<$Res> {
+  _$NlpInfoDMCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final NlpInfoDM _self;
+  final $Res Function(NlpInfoDM) _then;
 
   /// Create a copy of NlpInfoDM
   /// with the given fields replaced by the non-null parameter values.
@@ -280,24 +468,24 @@ class _$NlpInfoDMCopyWithImpl<$Res, $Val extends NlpInfoDM>
     Object? confidence = null,
     Object? timeFilter = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       detectedCategories: null == detectedCategories
-          ? _value.detectedCategories
+          ? _self.detectedCategories
           : detectedCategories // ignore: cast_nullable_to_non_nullable
               as List<int>,
       extractedKeywords: null == extractedKeywords
-          ? _value.extractedKeywords
+          ? _self.extractedKeywords
           : extractedKeywords // ignore: cast_nullable_to_non_nullable
               as List<String>,
       confidence: null == confidence
-          ? _value.confidence
+          ? _self.confidence
           : confidence // ignore: cast_nullable_to_non_nullable
               as double,
       timeFilter: freezed == timeFilter
-          ? _value.timeFilter
+          ? _self.timeFilter
           : timeFilter // ignore: cast_nullable_to_non_nullable
               as TimeFilterDM?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of NlpInfoDM
@@ -305,77 +493,195 @@ class _$NlpInfoDMCopyWithImpl<$Res, $Val extends NlpInfoDM>
   @override
   @pragma('vm:prefer-inline')
   $TimeFilterDMCopyWith<$Res>? get timeFilter {
-    if (_value.timeFilter == null) {
+    if (_self.timeFilter == null) {
       return null;
     }
 
-    return $TimeFilterDMCopyWith<$Res>(_value.timeFilter!, (value) {
-      return _then(_value.copyWith(timeFilter: value) as $Val);
+    return $TimeFilterDMCopyWith<$Res>(_self.timeFilter!, (value) {
+      return _then(_self.copyWith(timeFilter: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$NlpInfoDMImplCopyWith<$Res>
-    implements $NlpInfoDMCopyWith<$Res> {
-  factory _$$NlpInfoDMImplCopyWith(
-          _$NlpInfoDMImpl value, $Res Function(_$NlpInfoDMImpl) then) =
-      __$$NlpInfoDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'detected_categories') List<int> detectedCategories,
-      @JsonKey(name: 'extracted_keywords') List<String> extractedKeywords,
-      double confidence,
-      @JsonKey(name: 'time_filter') TimeFilterDM? timeFilter});
+/// Adds pattern-matching-related methods to [NlpInfoDM].
+extension NlpInfoDMPatterns on NlpInfoDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $TimeFilterDMCopyWith<$Res>? get timeFilter;
-}
-
-/// @nodoc
-class __$$NlpInfoDMImplCopyWithImpl<$Res>
-    extends _$NlpInfoDMCopyWithImpl<$Res, _$NlpInfoDMImpl>
-    implements _$$NlpInfoDMImplCopyWith<$Res> {
-  __$$NlpInfoDMImplCopyWithImpl(
-      _$NlpInfoDMImpl _value, $Res Function(_$NlpInfoDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of NlpInfoDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? detectedCategories = null,
-    Object? extractedKeywords = null,
-    Object? confidence = null,
-    Object? timeFilter = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_NlpInfoDM value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$NlpInfoDMImpl(
-      detectedCategories: null == detectedCategories
-          ? _value._detectedCategories
-          : detectedCategories // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      extractedKeywords: null == extractedKeywords
-          ? _value._extractedKeywords
-          : extractedKeywords // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      confidence: null == confidence
-          ? _value.confidence
-          : confidence // ignore: cast_nullable_to_non_nullable
-              as double,
-      timeFilter: freezed == timeFilter
-          ? _value.timeFilter
-          : timeFilter // ignore: cast_nullable_to_non_nullable
-              as TimeFilterDM?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_NlpInfoDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_NlpInfoDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'detected_categories') List<int> detectedCategories,
+            @JsonKey(name: 'extracted_keywords') List<String> extractedKeywords,
+            double confidence,
+            @JsonKey(name: 'time_filter') TimeFilterDM? timeFilter)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM() when $default != null:
+        return $default(_that.detectedCategories, _that.extractedKeywords,
+            _that.confidence, _that.timeFilter);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            @JsonKey(name: 'detected_categories') List<int> detectedCategories,
+            @JsonKey(name: 'extracted_keywords') List<String> extractedKeywords,
+            double confidence,
+            @JsonKey(name: 'time_filter') TimeFilterDM? timeFilter)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM():
+        return $default(_that.detectedCategories, _that.extractedKeywords,
+            _that.confidence, _that.timeFilter);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            @JsonKey(name: 'detected_categories') List<int> detectedCategories,
+            @JsonKey(name: 'extracted_keywords') List<String> extractedKeywords,
+            double confidence,
+            @JsonKey(name: 'time_filter') TimeFilterDM? timeFilter)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _NlpInfoDM() when $default != null:
+        return $default(_that.detectedCategories, _that.extractedKeywords,
+            _that.confidence, _that.timeFilter);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$NlpInfoDMImpl implements _NlpInfoDM {
-  const _$NlpInfoDMImpl(
+class _NlpInfoDM implements NlpInfoDM {
+  const _NlpInfoDM(
       {@JsonKey(name: 'detected_categories')
       final List<int> detectedCategories = const [],
       @JsonKey(name: 'extracted_keywords')
@@ -384,9 +690,8 @@ class _$NlpInfoDMImpl implements _NlpInfoDM {
       @JsonKey(name: 'time_filter') this.timeFilter})
       : _detectedCategories = detectedCategories,
         _extractedKeywords = extractedKeywords;
-
-  factory _$NlpInfoDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NlpInfoDMImplFromJson(json);
+  factory _NlpInfoDM.fromJson(Map<String, dynamic> json) =>
+      _$NlpInfoDMFromJson(json);
 
   final List<int> _detectedCategories;
   @override
@@ -415,16 +720,26 @@ class _$NlpInfoDMImpl implements _NlpInfoDM {
   @JsonKey(name: 'time_filter')
   final TimeFilterDM? timeFilter;
 
+  /// Create a copy of NlpInfoDM
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'NlpInfoDM(detectedCategories: $detectedCategories, extractedKeywords: $extractedKeywords, confidence: $confidence, timeFilter: $timeFilter)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NlpInfoDMCopyWith<_NlpInfoDM> get copyWith =>
+      __$NlpInfoDMCopyWithImpl<_NlpInfoDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$NlpInfoDMToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NlpInfoDMImpl &&
+            other is _NlpInfoDM &&
             const DeepCollectionEquality()
                 .equals(other._detectedCategories, _detectedCategories) &&
             const DeepCollectionEquality()
@@ -444,217 +759,107 @@ class _$NlpInfoDMImpl implements _NlpInfoDM {
       confidence,
       timeFilter);
 
-  /// Create a copy of NlpInfoDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$NlpInfoDMImplCopyWith<_$NlpInfoDMImpl> get copyWith =>
-      __$$NlpInfoDMImplCopyWithImpl<_$NlpInfoDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NlpInfoDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'NlpInfoDM(detectedCategories: $detectedCategories, extractedKeywords: $extractedKeywords, confidence: $confidence, timeFilter: $timeFilter)';
   }
 }
 
-abstract class _NlpInfoDM implements NlpInfoDM {
-  const factory _NlpInfoDM(
-      {@JsonKey(name: 'detected_categories') final List<int> detectedCategories,
-      @JsonKey(name: 'extracted_keywords') final List<String> extractedKeywords,
-      final double confidence,
-      @JsonKey(name: 'time_filter')
-      final TimeFilterDM? timeFilter}) = _$NlpInfoDMImpl;
+/// @nodoc
+abstract mixin class _$NlpInfoDMCopyWith<$Res>
+    implements $NlpInfoDMCopyWith<$Res> {
+  factory _$NlpInfoDMCopyWith(
+          _NlpInfoDM value, $Res Function(_NlpInfoDM) _then) =
+      __$NlpInfoDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'detected_categories') List<int> detectedCategories,
+      @JsonKey(name: 'extracted_keywords') List<String> extractedKeywords,
+      double confidence,
+      @JsonKey(name: 'time_filter') TimeFilterDM? timeFilter});
 
-  factory _NlpInfoDM.fromJson(Map<String, dynamic> json) =
-      _$NlpInfoDMImpl.fromJson;
+  @override
+  $TimeFilterDMCopyWith<$Res>? get timeFilter;
+}
 
-  @override
-  @JsonKey(name: 'detected_categories')
-  List<int> get detectedCategories;
-  @override
-  @JsonKey(name: 'extracted_keywords')
-  List<String> get extractedKeywords;
-  @override
-  double get confidence;
-  @override
-  @JsonKey(name: 'time_filter')
-  TimeFilterDM? get timeFilter;
+/// @nodoc
+class __$NlpInfoDMCopyWithImpl<$Res> implements _$NlpInfoDMCopyWith<$Res> {
+  __$NlpInfoDMCopyWithImpl(this._self, this._then);
+
+  final _NlpInfoDM _self;
+  final $Res Function(_NlpInfoDM) _then;
 
   /// Create a copy of NlpInfoDM
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NlpInfoDMImplCopyWith<_$NlpInfoDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? detectedCategories = null,
+    Object? extractedKeywords = null,
+    Object? confidence = null,
+    Object? timeFilter = freezed,
+  }) {
+    return _then(_NlpInfoDM(
+      detectedCategories: null == detectedCategories
+          ? _self._detectedCategories
+          : detectedCategories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      extractedKeywords: null == extractedKeywords
+          ? _self._extractedKeywords
+          : extractedKeywords // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      confidence: null == confidence
+          ? _self.confidence
+          : confidence // ignore: cast_nullable_to_non_nullable
+              as double,
+      timeFilter: freezed == timeFilter
+          ? _self.timeFilter
+          : timeFilter // ignore: cast_nullable_to_non_nullable
+              as TimeFilterDM?,
+    ));
+  }
 
-TimeFilterDM _$TimeFilterDMFromJson(Map<String, dynamic> json) {
-  return _TimeFilterDM.fromJson(json);
+  /// Create a copy of NlpInfoDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TimeFilterDMCopyWith<$Res>? get timeFilter {
+    if (_self.timeFilter == null) {
+      return null;
+    }
+
+    return $TimeFilterDMCopyWith<$Res>(_self.timeFilter!, (value) {
+      return _then(_self.copyWith(timeFilter: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$TimeFilterDM {
-  String? get from => throw _privateConstructorUsedError;
-  String? get to => throw _privateConstructorUsedError;
+  String? get from;
+  String? get to;
   @JsonKey(name: 'day_of_week')
-  int? get dayOfWeek => throw _privateConstructorUsedError;
+  int? get dayOfWeek;
   @JsonKey(name: 'meal_time')
-  String? get mealTime => throw _privateConstructorUsedError;
-
-  /// Serializes this TimeFilterDM to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get mealTime;
 
   /// Create a copy of TimeFilterDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $TimeFilterDMCopyWith<TimeFilterDM> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$TimeFilterDMCopyWithImpl<TimeFilterDM>(
+          this as TimeFilterDM, _$identity);
 
-/// @nodoc
-abstract class $TimeFilterDMCopyWith<$Res> {
-  factory $TimeFilterDMCopyWith(
-          TimeFilterDM value, $Res Function(TimeFilterDM) then) =
-      _$TimeFilterDMCopyWithImpl<$Res, TimeFilterDM>;
-  @useResult
-  $Res call(
-      {String? from,
-      String? to,
-      @JsonKey(name: 'day_of_week') int? dayOfWeek,
-      @JsonKey(name: 'meal_time') String? mealTime});
-}
-
-/// @nodoc
-class _$TimeFilterDMCopyWithImpl<$Res, $Val extends TimeFilterDM>
-    implements $TimeFilterDMCopyWith<$Res> {
-  _$TimeFilterDMCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TimeFilterDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? from = freezed,
-    Object? to = freezed,
-    Object? dayOfWeek = freezed,
-    Object? mealTime = freezed,
-  }) {
-    return _then(_value.copyWith(
-      from: freezed == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as String?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dayOfWeek: freezed == dayOfWeek
-          ? _value.dayOfWeek
-          : dayOfWeek // ignore: cast_nullable_to_non_nullable
-              as int?,
-      mealTime: freezed == mealTime
-          ? _value.mealTime
-          : mealTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$TimeFilterDMImplCopyWith<$Res>
-    implements $TimeFilterDMCopyWith<$Res> {
-  factory _$$TimeFilterDMImplCopyWith(
-          _$TimeFilterDMImpl value, $Res Function(_$TimeFilterDMImpl) then) =
-      __$$TimeFilterDMImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String? from,
-      String? to,
-      @JsonKey(name: 'day_of_week') int? dayOfWeek,
-      @JsonKey(name: 'meal_time') String? mealTime});
-}
-
-/// @nodoc
-class __$$TimeFilterDMImplCopyWithImpl<$Res>
-    extends _$TimeFilterDMCopyWithImpl<$Res, _$TimeFilterDMImpl>
-    implements _$$TimeFilterDMImplCopyWith<$Res> {
-  __$$TimeFilterDMImplCopyWithImpl(
-      _$TimeFilterDMImpl _value, $Res Function(_$TimeFilterDMImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TimeFilterDM
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? from = freezed,
-    Object? to = freezed,
-    Object? dayOfWeek = freezed,
-    Object? mealTime = freezed,
-  }) {
-    return _then(_$TimeFilterDMImpl(
-      from: freezed == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as String?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as String?,
-      dayOfWeek: freezed == dayOfWeek
-          ? _value.dayOfWeek
-          : dayOfWeek // ignore: cast_nullable_to_non_nullable
-              as int?,
-      mealTime: freezed == mealTime
-          ? _value.mealTime
-          : mealTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$TimeFilterDMImpl implements _TimeFilterDM {
-  const _$TimeFilterDMImpl(
-      {this.from,
-      this.to,
-      @JsonKey(name: 'day_of_week') this.dayOfWeek,
-      @JsonKey(name: 'meal_time') this.mealTime});
-
-  factory _$TimeFilterDMImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TimeFilterDMImplFromJson(json);
-
-  @override
-  final String? from;
-  @override
-  final String? to;
-  @override
-  @JsonKey(name: 'day_of_week')
-  final int? dayOfWeek;
-  @override
-  @JsonKey(name: 'meal_time')
-  final String? mealTime;
-
-  @override
-  String toString() {
-    return 'TimeFilterDM(from: $from, to: $to, dayOfWeek: $dayOfWeek, mealTime: $mealTime)';
-  }
+  /// Serializes this TimeFilterDM to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TimeFilterDMImpl &&
+            other is TimeFilterDM &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
             (identical(other.dayOfWeek, dayOfWeek) ||
@@ -667,47 +872,347 @@ class _$TimeFilterDMImpl implements _TimeFilterDM {
   @override
   int get hashCode => Object.hash(runtimeType, from, to, dayOfWeek, mealTime);
 
-  /// Create a copy of TimeFilterDM
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$TimeFilterDMImplCopyWith<_$TimeFilterDMImpl> get copyWith =>
-      __$$TimeFilterDMImplCopyWithImpl<_$TimeFilterDMImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TimeFilterDMImplToJson(
-      this,
-    );
+  String toString() {
+    return 'TimeFilterDM(from: $from, to: $to, dayOfWeek: $dayOfWeek, mealTime: $mealTime)';
   }
 }
 
-abstract class _TimeFilterDM implements TimeFilterDM {
-  const factory _TimeFilterDM(
-      {final String? from,
-      final String? to,
-      @JsonKey(name: 'day_of_week') final int? dayOfWeek,
-      @JsonKey(name: 'meal_time') final String? mealTime}) = _$TimeFilterDMImpl;
+/// @nodoc
+abstract mixin class $TimeFilterDMCopyWith<$Res> {
+  factory $TimeFilterDMCopyWith(
+          TimeFilterDM value, $Res Function(TimeFilterDM) _then) =
+      _$TimeFilterDMCopyWithImpl;
+  @useResult
+  $Res call(
+      {String? from,
+      String? to,
+      @JsonKey(name: 'day_of_week') int? dayOfWeek,
+      @JsonKey(name: 'meal_time') String? mealTime});
+}
 
-  factory _TimeFilterDM.fromJson(Map<String, dynamic> json) =
-      _$TimeFilterDMImpl.fromJson;
+/// @nodoc
+class _$TimeFilterDMCopyWithImpl<$Res> implements $TimeFilterDMCopyWith<$Res> {
+  _$TimeFilterDMCopyWithImpl(this._self, this._then);
+
+  final TimeFilterDM _self;
+  final $Res Function(TimeFilterDM) _then;
+
+  /// Create a copy of TimeFilterDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? dayOfWeek = freezed,
+    Object? mealTime = freezed,
+  }) {
+    return _then(_self.copyWith(
+      from: freezed == from
+          ? _self.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _self.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dayOfWeek: freezed == dayOfWeek
+          ? _self.dayOfWeek
+          : dayOfWeek // ignore: cast_nullable_to_non_nullable
+              as int?,
+      mealTime: freezed == mealTime
+          ? _self.mealTime
+          : mealTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [TimeFilterDM].
+extension TimeFilterDMPatterns on TimeFilterDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TimeFilterDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TimeFilterDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_TimeFilterDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String? from,
+            String? to,
+            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+            @JsonKey(name: 'meal_time') String? mealTime)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM() when $default != null:
+        return $default(_that.from, _that.to, _that.dayOfWeek, _that.mealTime);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String? from,
+            String? to,
+            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+            @JsonKey(name: 'meal_time') String? mealTime)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM():
+        return $default(_that.from, _that.to, _that.dayOfWeek, _that.mealTime);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String? from,
+            String? to,
+            @JsonKey(name: 'day_of_week') int? dayOfWeek,
+            @JsonKey(name: 'meal_time') String? mealTime)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _TimeFilterDM() when $default != null:
+        return $default(_that.from, _that.to, _that.dayOfWeek, _that.mealTime);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _TimeFilterDM implements TimeFilterDM {
+  const _TimeFilterDM(
+      {this.from,
+      this.to,
+      @JsonKey(name: 'day_of_week') this.dayOfWeek,
+      @JsonKey(name: 'meal_time') this.mealTime});
+  factory _TimeFilterDM.fromJson(Map<String, dynamic> json) =>
+      _$TimeFilterDMFromJson(json);
 
   @override
-  String? get from;
+  final String? from;
   @override
-  String? get to;
+  final String? to;
   @override
   @JsonKey(name: 'day_of_week')
-  int? get dayOfWeek;
+  final int? dayOfWeek;
   @override
   @JsonKey(name: 'meal_time')
-  String? get mealTime;
+  final String? mealTime;
 
   /// Create a copy of TimeFilterDM
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TimeFilterDMImplCopyWith<_$TimeFilterDMImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$TimeFilterDMCopyWith<_TimeFilterDM> get copyWith =>
+      __$TimeFilterDMCopyWithImpl<_TimeFilterDM>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$TimeFilterDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TimeFilterDM &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.dayOfWeek, dayOfWeek) ||
+                other.dayOfWeek == dayOfWeek) &&
+            (identical(other.mealTime, mealTime) ||
+                other.mealTime == mealTime));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, from, to, dayOfWeek, mealTime);
+
+  @override
+  String toString() {
+    return 'TimeFilterDM(from: $from, to: $to, dayOfWeek: $dayOfWeek, mealTime: $mealTime)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$TimeFilterDMCopyWith<$Res>
+    implements $TimeFilterDMCopyWith<$Res> {
+  factory _$TimeFilterDMCopyWith(
+          _TimeFilterDM value, $Res Function(_TimeFilterDM) _then) =
+      __$TimeFilterDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? from,
+      String? to,
+      @JsonKey(name: 'day_of_week') int? dayOfWeek,
+      @JsonKey(name: 'meal_time') String? mealTime});
+}
+
+/// @nodoc
+class __$TimeFilterDMCopyWithImpl<$Res>
+    implements _$TimeFilterDMCopyWith<$Res> {
+  __$TimeFilterDMCopyWithImpl(this._self, this._then);
+
+  final _TimeFilterDM _self;
+  final $Res Function(_TimeFilterDM) _then;
+
+  /// Create a copy of TimeFilterDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? dayOfWeek = freezed,
+    Object? mealTime = freezed,
+  }) {
+    return _then(_TimeFilterDM(
+      from: freezed == from
+          ? _self.from
+          : from // ignore: cast_nullable_to_non_nullable
+              as String?,
+      to: freezed == to
+          ? _self.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dayOfWeek: freezed == dayOfWeek
+          ? _self.dayOfWeek
+          : dayOfWeek // ignore: cast_nullable_to_non_nullable
+              as int?,
+      mealTime: freezed == mealTime
+          ? _self.mealTime
+          : mealTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+// dart format on

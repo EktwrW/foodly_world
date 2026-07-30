@@ -1,0 +1,31 @@
+name: Tests
+
+# Política del proyecto (2026-07): ningún código avanza sin tests verdes.
+# analyze + test corren en runner Linux — no requiere emuladores.
+# Los archivos generados (.g.dart/.freezed.dart/l10n) están COMMITEADOS,
+# así que no hace falta correr build_runner/intl_utils aquí.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Matchea .fvmrc (3.44.6). Si se bumpea fvm, bumpear aquí y en
+          # flutter-web-menu-deploy.yml en el MISMO commit.
+          flutter-version: 3.44.6
+          cache: true
+
+      - run: flutter pub get
+
+      - run: flutter analyze
+
+      - run: flutter test

@@ -12,7 +12,7 @@ import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/cubit/saved_promotions_view_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart' show NearbyPromoCard;
 import 'package:foodly_world/ui/views/home/widgets/secondary_main_app_bar.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:toggle_switch/toggle_switch.dart' show ToggleSwitch;
 
 part 'widgets/saved_promotions_toggle_switch.dart';

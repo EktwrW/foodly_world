@@ -1,7 +1,7 @@
 part of 'smart_search_cubit.dart';
 
 @freezed
-class SmartSearchState with _$SmartSearchState {
+sealed class SmartSearchState with _$SmartSearchState {
   const factory SmartSearchState.initial(SmartSearchVM vm) = _Initial;
   const factory SmartSearchState.listening(SmartSearchVM vm) = _Listening;
   const factory SmartSearchState.recognized(SmartSearchVM vm) = _Recognized;

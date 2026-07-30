@@ -4,7 +4,7 @@ part 'business_item_photo_dm.freezed.dart';
 part 'business_item_photo_dm.g.dart';
 
 @freezed
-class MenuItemPhotoDM with _$MenuItemPhotoDM {
+abstract class MenuItemPhotoDM with _$MenuItemPhotoDM {
   const factory MenuItemPhotoDM({
     required int id,
     required String uuid,
@@ -20,7 +20,7 @@ class MenuItemPhotoDM with _$MenuItemPhotoDM {
 }
 
 @freezed
-class MenuItemPhotoResponse with _$MenuItemPhotoResponse {
+abstract class MenuItemPhotoResponse with _$MenuItemPhotoResponse {
   const factory MenuItemPhotoResponse({
     @JsonKey(name: 'business_food_reference_photos') List<MenuItemPhotoDM>? foodReferencePhotos,
     @JsonKey(name: 'business_drink_reference_photos') List<MenuItemPhotoDM>? drinkReferencePhotos,

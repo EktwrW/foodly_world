@@ -10,7 +10,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 
 /// Fila de control del estado "aceptar reservas/solicitudes" en el dashboard
 /// del negocio.

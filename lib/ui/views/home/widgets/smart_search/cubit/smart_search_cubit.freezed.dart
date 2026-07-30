@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,65 +9,104 @@ part of 'smart_search_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+/// @nodoc
+mixin _$SmartSearchState implements DiagnosticableTreeMixin {
+  SmartSearchVM get vm;
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $SmartSearchStateCopyWith<SmartSearchState> get copyWith =>
+      _$SmartSearchStateCopyWithImpl<SmartSearchState>(
+          this as SmartSearchState, _$identity);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'SmartSearchState'))
+      ..add(DiagnosticsProperty('vm', vm));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is SmartSearchState &&
+            (identical(other.vm, vm) || other.vm == vm));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vm);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState(vm: $vm)';
+  }
+}
 
 /// @nodoc
-mixin _$SmartSearchState {
-  SmartSearchVM get vm => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+abstract mixin class $SmartSearchStateCopyWith<$Res> {
+  factory $SmartSearchStateCopyWith(
+          SmartSearchState value, $Res Function(SmartSearchState) _then) =
+      _$SmartSearchStateCopyWithImpl;
+  @useResult
+  $Res call({SmartSearchVM vm});
+
+  $SmartSearchVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class _$SmartSearchStateCopyWithImpl<$Res>
+    implements $SmartSearchStateCopyWith<$Res> {
+  _$SmartSearchStateCopyWithImpl(this._self, this._then);
+
+  final SmartSearchState _self;
+  final $Res Function(SmartSearchState) _then;
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vm = null,
+  }) {
+    return _then(_self.copyWith(
+      vm: null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as SmartSearchVM,
+    ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
+}
+
+/// Adds pattern-matching-related methods to [SmartSearchState].
+extension SmartSearchStatePatterns on SmartSearchState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -77,117 +116,244 @@ mixin _$SmartSearchState {
     TResult Function(_SearchComplete value)? searchComplete,
     TResult Function(_Error value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SmartSearchStateCopyWith<SmartSearchState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SmartSearchStateCopyWith<$Res> {
-  factory $SmartSearchStateCopyWith(
-          SmartSearchState value, $Res Function(SmartSearchState) then) =
-      _$SmartSearchStateCopyWithImpl<$Res, SmartSearchState>;
-  @useResult
-  $Res call({SmartSearchVM vm});
-
-  $SmartSearchVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class _$SmartSearchStateCopyWithImpl<$Res, $Val extends SmartSearchState>
-    implements $SmartSearchStateCopyWith<$Res> {
-  _$SmartSearchStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
   }) {
-    return _then(_value.copyWith(
-      vm: null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as SmartSearchVM,
-    ) as $Val);
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Listening() when listening != null:
+        return listening(_that);
+      case _Recognized() when recognized != null:
+        return recognized(_that);
+      case _Searching() when searching != null:
+        return searching(_that);
+      case _SearchComplete() when searchComplete != null:
+        return searchComplete(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return orElse();
+    }
   }
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SmartSearchVMCopyWith<$Res> get vm {
-    return $SmartSearchVMCopyWith<$Res>(_value.vm, (value) {
-      return _then(_value.copyWith(vm: value) as $Val);
-    });
-  }
-}
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
 
-/// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
-    implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({SmartSearchVM vm});
-
-  @override
-  $SmartSearchVMCopyWith<$Res> get vm;
-}
-
-/// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vm = null,
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Listening value) listening,
+    required TResult Function(_Recognized value) recognized,
+    required TResult Function(_Searching value) searching,
+    required TResult Function(_SearchComplete value) searchComplete,
+    required TResult Function(_Error value) error,
   }) {
-    return _then(_$InitialImpl(
-      null == vm
-          ? _value.vm
-          : vm // ignore: cast_nullable_to_non_nullable
-              as SmartSearchVM,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case _Listening():
+        return listening(_that);
+      case _Recognized():
+        return recognized(_that);
+      case _Searching():
+        return searching(_that);
+      case _SearchComplete():
+        return searchComplete(_that);
+      case _Error():
+        return error(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Listening value)? listening,
+    TResult? Function(_Recognized value)? recognized,
+    TResult? Function(_Searching value)? searching,
+    TResult? Function(_SearchComplete value)? searchComplete,
+    TResult? Function(_Error value)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case _Listening() when listening != null:
+        return listening(_that);
+      case _Recognized() when recognized != null:
+        return recognized(_that);
+      case _Searching() when searching != null:
+        return searching(_that);
+      case _SearchComplete() when searchComplete != null:
+        return searchComplete(_that);
+      case _Error() when error != null:
+        return error(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(SmartSearchVM vm)? initial,
+    TResult Function(SmartSearchVM vm)? listening,
+    TResult Function(SmartSearchVM vm)? recognized,
+    TResult Function(SmartSearchVM vm)? searching,
+    TResult Function(SmartSearchVM vm)? searchComplete,
+    TResult Function(String message, SmartSearchVM vm)? error,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Listening() when listening != null:
+        return listening(_that.vm);
+      case _Recognized() when recognized != null:
+        return recognized(_that.vm);
+      case _Searching() when searching != null:
+        return searching(_that.vm);
+      case _SearchComplete() when searchComplete != null:
+        return searchComplete(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(SmartSearchVM vm) initial,
+    required TResult Function(SmartSearchVM vm) listening,
+    required TResult Function(SmartSearchVM vm) recognized,
+    required TResult Function(SmartSearchVM vm) searching,
+    required TResult Function(SmartSearchVM vm) searchComplete,
+    required TResult Function(String message, SmartSearchVM vm) error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that.vm);
+      case _Listening():
+        return listening(_that.vm);
+      case _Recognized():
+        return recognized(_that.vm);
+      case _Searching():
+        return searching(_that.vm);
+      case _SearchComplete():
+        return searchComplete(_that.vm);
+      case _Error():
+        return error(_that.message, _that.vm);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(SmartSearchVM vm)? initial,
+    TResult? Function(SmartSearchVM vm)? listening,
+    TResult? Function(SmartSearchVM vm)? recognized,
+    TResult? Function(SmartSearchVM vm)? searching,
+    TResult? Function(SmartSearchVM vm)? searchComplete,
+    TResult? Function(String message, SmartSearchVM vm)? error,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that.vm);
+      case _Listening() when listening != null:
+        return listening(_that.vm);
+      case _Recognized() when recognized != null:
+        return recognized(_that.vm);
+      case _Searching() when searching != null:
+        return searching(_that.vm);
+      case _SearchComplete() when searchComplete != null:
+        return searchComplete(_that.vm);
+      case _Error() when error != null:
+        return error(_that.message, _that.vm);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
-  const _$InitialImpl(this.vm);
+class _Initial with DiagnosticableTreeMixin implements SmartSearchState {
+  const _Initial(this.vm);
 
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.initial(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$InitialCopyWith<_Initial> get copyWith =>
+      __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.initial'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -197,128 +363,24 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _Initial &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) {
-    return initial(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.initial(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return initial?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements SmartSearchState {
-  const factory _Initial(final SmartSearchVM vm) = _$InitialImpl;
-
-  @override
-  SmartSearchVM get vm;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ListeningImplCopyWith<$Res>
+abstract mixin class _$InitialCopyWith<$Res>
     implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$ListeningImplCopyWith(
-          _$ListeningImpl value, $Res Function(_$ListeningImpl) then) =
-      __$$ListeningImplCopyWithImpl<$Res>;
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
+      __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -328,45 +390,56 @@ abstract class _$$ListeningImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ListeningImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$ListeningImpl>
-    implements _$$ListeningImplCopyWith<$Res> {
-  __$$ListeningImplCopyWithImpl(
-      _$ListeningImpl _value, $Res Function(_$ListeningImpl) _then)
-      : super(_value, _then);
+class __$InitialCopyWithImpl<$Res> implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(this._self, this._then);
+
+  final _Initial _self;
+  final $Res Function(_Initial) _then;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$ListeningImpl(
+    return _then(_Initial(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as SmartSearchVM,
     ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ListeningImpl with DiagnosticableTreeMixin implements _Listening {
-  const _$ListeningImpl(this.vm);
+class _Listening with DiagnosticableTreeMixin implements SmartSearchState {
+  const _Listening(this.vm);
 
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.listening(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ListeningCopyWith<_Listening> get copyWith =>
+      __$ListeningCopyWithImpl<_Listening>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.listening'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -376,128 +449,25 @@ class _$ListeningImpl with DiagnosticableTreeMixin implements _Listening {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ListeningImpl &&
+            other is _Listening &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ListeningImplCopyWith<_$ListeningImpl> get copyWith =>
-      __$$ListeningImplCopyWithImpl<_$ListeningImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) {
-    return listening(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.listening(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return listening?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (listening != null) {
-      return listening(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return listening(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return listening?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (listening != null) {
-      return listening(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Listening implements SmartSearchState {
-  const factory _Listening(final SmartSearchVM vm) = _$ListeningImpl;
-
-  @override
-  SmartSearchVM get vm;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ListeningImplCopyWith<_$ListeningImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$RecognizedImplCopyWith<$Res>
+abstract mixin class _$ListeningCopyWith<$Res>
     implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$RecognizedImplCopyWith(
-          _$RecognizedImpl value, $Res Function(_$RecognizedImpl) then) =
-      __$$RecognizedImplCopyWithImpl<$Res>;
+  factory _$ListeningCopyWith(
+          _Listening value, $Res Function(_Listening) _then) =
+      __$ListeningCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -507,45 +477,56 @@ abstract class _$$RecognizedImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$RecognizedImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$RecognizedImpl>
-    implements _$$RecognizedImplCopyWith<$Res> {
-  __$$RecognizedImplCopyWithImpl(
-      _$RecognizedImpl _value, $Res Function(_$RecognizedImpl) _then)
-      : super(_value, _then);
+class __$ListeningCopyWithImpl<$Res> implements _$ListeningCopyWith<$Res> {
+  __$ListeningCopyWithImpl(this._self, this._then);
+
+  final _Listening _self;
+  final $Res Function(_Listening) _then;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$RecognizedImpl(
+    return _then(_Listening(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as SmartSearchVM,
     ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$RecognizedImpl with DiagnosticableTreeMixin implements _Recognized {
-  const _$RecognizedImpl(this.vm);
+class _Recognized with DiagnosticableTreeMixin implements SmartSearchState {
+  const _Recognized(this.vm);
 
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.recognized(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$RecognizedCopyWith<_Recognized> get copyWith =>
+      __$RecognizedCopyWithImpl<_Recognized>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.recognized'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -555,128 +536,25 @@ class _$RecognizedImpl with DiagnosticableTreeMixin implements _Recognized {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RecognizedImpl &&
+            other is _Recognized &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$RecognizedImplCopyWith<_$RecognizedImpl> get copyWith =>
-      __$$RecognizedImplCopyWithImpl<_$RecognizedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) {
-    return recognized(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.recognized(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return recognized?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (recognized != null) {
-      return recognized(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return recognized(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return recognized?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (recognized != null) {
-      return recognized(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Recognized implements SmartSearchState {
-  const factory _Recognized(final SmartSearchVM vm) = _$RecognizedImpl;
-
-  @override
-  SmartSearchVM get vm;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RecognizedImplCopyWith<_$RecognizedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SearchingImplCopyWith<$Res>
+abstract mixin class _$RecognizedCopyWith<$Res>
     implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$SearchingImplCopyWith(
-          _$SearchingImpl value, $Res Function(_$SearchingImpl) then) =
-      __$$SearchingImplCopyWithImpl<$Res>;
+  factory _$RecognizedCopyWith(
+          _Recognized value, $Res Function(_Recognized) _then) =
+      __$RecognizedCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -686,45 +564,56 @@ abstract class _$$SearchingImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SearchingImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$SearchingImpl>
-    implements _$$SearchingImplCopyWith<$Res> {
-  __$$SearchingImplCopyWithImpl(
-      _$SearchingImpl _value, $Res Function(_$SearchingImpl) _then)
-      : super(_value, _then);
+class __$RecognizedCopyWithImpl<$Res> implements _$RecognizedCopyWith<$Res> {
+  __$RecognizedCopyWithImpl(this._self, this._then);
+
+  final _Recognized _self;
+  final $Res Function(_Recognized) _then;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$SearchingImpl(
+    return _then(_Recognized(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as SmartSearchVM,
     ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SearchingImpl with DiagnosticableTreeMixin implements _Searching {
-  const _$SearchingImpl(this.vm);
+class _Searching with DiagnosticableTreeMixin implements SmartSearchState {
+  const _Searching(this.vm);
 
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.searching(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SearchingCopyWith<_Searching> get copyWith =>
+      __$SearchingCopyWithImpl<_Searching>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.searching'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -734,128 +623,25 @@ class _$SearchingImpl with DiagnosticableTreeMixin implements _Searching {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchingImpl &&
+            other is _Searching &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SearchingImplCopyWith<_$SearchingImpl> get copyWith =>
-      __$$SearchingImplCopyWithImpl<_$SearchingImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) {
-    return searching(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.searching(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return searching?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (searching != null) {
-      return searching(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return searching(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return searching?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (searching != null) {
-      return searching(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Searching implements SmartSearchState {
-  const factory _Searching(final SmartSearchVM vm) = _$SearchingImpl;
-
-  @override
-  SmartSearchVM get vm;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SearchingImplCopyWith<_$SearchingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SearchCompleteImplCopyWith<$Res>
+abstract mixin class _$SearchingCopyWith<$Res>
     implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$SearchCompleteImplCopyWith(_$SearchCompleteImpl value,
-          $Res Function(_$SearchCompleteImpl) then) =
-      __$$SearchCompleteImplCopyWithImpl<$Res>;
+  factory _$SearchingCopyWith(
+          _Searching value, $Res Function(_Searching) _then) =
+      __$SearchingCopyWithImpl;
   @override
   @useResult
   $Res call({SmartSearchVM vm});
@@ -865,47 +651,56 @@ abstract class _$$SearchCompleteImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SearchCompleteImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$SearchCompleteImpl>
-    implements _$$SearchCompleteImplCopyWith<$Res> {
-  __$$SearchCompleteImplCopyWithImpl(
-      _$SearchCompleteImpl _value, $Res Function(_$SearchCompleteImpl) _then)
-      : super(_value, _then);
+class __$SearchingCopyWithImpl<$Res> implements _$SearchingCopyWith<$Res> {
+  __$SearchingCopyWithImpl(this._self, this._then);
+
+  final _Searching _self;
+  final $Res Function(_Searching) _then;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? vm = null,
   }) {
-    return _then(_$SearchCompleteImpl(
+    return _then(_Searching(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as SmartSearchVM,
     ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$SearchCompleteImpl
-    with DiagnosticableTreeMixin
-    implements _SearchComplete {
-  const _$SearchCompleteImpl(this.vm);
+class _SearchComplete with DiagnosticableTreeMixin implements SmartSearchState {
+  const _SearchComplete(this.vm);
 
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.searchComplete(vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$SearchCompleteCopyWith<_SearchComplete> get copyWith =>
+      __$SearchCompleteCopyWithImpl<_SearchComplete>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.searchComplete'))
       ..add(DiagnosticsProperty('vm', vm));
@@ -915,184 +710,86 @@ class _$SearchCompleteImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchCompleteImpl &&
+            other is _SearchComplete &&
             (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, vm);
 
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$SearchCompleteImplCopyWith<_$SearchCompleteImpl> get copyWith =>
-      __$$SearchCompleteImplCopyWithImpl<_$SearchCompleteImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
-  }) {
-    return searchComplete(vm);
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.searchComplete(vm: $vm)';
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return searchComplete?.call(vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (searchComplete != null) {
-      return searchComplete(vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return searchComplete(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return searchComplete?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (searchComplete != null) {
-      return searchComplete(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SearchComplete implements SmartSearchState {
-  const factory _SearchComplete(final SmartSearchVM vm) = _$SearchCompleteImpl;
-
-  @override
-  SmartSearchVM get vm;
-
-  /// Create a copy of SmartSearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SearchCompleteImplCopyWith<_$SearchCompleteImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorImplCopyWith<$Res>
+abstract mixin class _$SearchCompleteCopyWith<$Res>
     implements $SmartSearchStateCopyWith<$Res> {
-  factory _$$ErrorImplCopyWith(
-          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
-      __$$ErrorImplCopyWithImpl<$Res>;
+  factory _$SearchCompleteCopyWith(
+          _SearchComplete value, $Res Function(_SearchComplete) _then) =
+      __$SearchCompleteCopyWithImpl;
   @override
   @useResult
-  $Res call({String message, SmartSearchVM vm});
+  $Res call({SmartSearchVM vm});
 
   @override
   $SmartSearchVMCopyWith<$Res> get vm;
 }
 
 /// @nodoc
-class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$SmartSearchStateCopyWithImpl<$Res, _$ErrorImpl>
-    implements _$$ErrorImplCopyWith<$Res> {
-  __$$ErrorImplCopyWithImpl(
-      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
-      : super(_value, _then);
+class __$SearchCompleteCopyWithImpl<$Res>
+    implements _$SearchCompleteCopyWith<$Res> {
+  __$SearchCompleteCopyWithImpl(this._self, this._then);
+
+  final _SearchComplete _self;
+  final $Res Function(_SearchComplete) _then;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? message = null,
     Object? vm = null,
   }) {
-    return _then(_$ErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_SearchComplete(
       null == vm
-          ? _value.vm
+          ? _self.vm
           : vm // ignore: cast_nullable_to_non_nullable
               as SmartSearchVM,
     ));
+  }
+
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
-  const _$ErrorImpl(this.message, this.vm);
+class _Error with DiagnosticableTreeMixin implements SmartSearchState {
+  const _Error(this.message, this.vm);
 
-  @override
   final String message;
   @override
   final SmartSearchVM vm;
 
+  /// Create a copy of SmartSearchState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SmartSearchState.error(message: $message, vm: $vm)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ErrorCopyWith<_Error> get copyWith =>
+      __$ErrorCopyWithImpl<_Error>(this, _$identity);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'SmartSearchState.error'))
       ..add(DiagnosticsProperty('message', message))
@@ -1103,7 +800,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorImpl &&
+            other is _Error &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.vm, vm) || other.vm == vm));
   }
@@ -1111,113 +808,61 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   @override
   int get hashCode => Object.hash(runtimeType, message, vm);
 
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SmartSearchState.error(message: $message, vm: $vm)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ErrorCopyWith<$Res>
+    implements $SmartSearchStateCopyWith<$Res> {
+  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
+      __$ErrorCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String message, SmartSearchVM vm});
+
+  @override
+  $SmartSearchVMCopyWith<$Res> get vm;
+}
+
+/// @nodoc
+class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
+  __$ErrorCopyWithImpl(this._self, this._then);
+
+  final _Error _self;
+  final $Res Function(_Error) _then;
+
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      __$$ErrorImplCopyWithImpl<_$ErrorImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(SmartSearchVM vm) initial,
-    required TResult Function(SmartSearchVM vm) listening,
-    required TResult Function(SmartSearchVM vm) recognized,
-    required TResult Function(SmartSearchVM vm) searching,
-    required TResult Function(SmartSearchVM vm) searchComplete,
-    required TResult Function(String message, SmartSearchVM vm) error,
+  $Res call({
+    Object? message = null,
+    Object? vm = null,
   }) {
-    return error(message, vm);
+    return _then(_Error(
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == vm
+          ? _self.vm
+          : vm // ignore: cast_nullable_to_non_nullable
+              as SmartSearchVM,
+    ));
   }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SmartSearchVM vm)? initial,
-    TResult? Function(SmartSearchVM vm)? listening,
-    TResult? Function(SmartSearchVM vm)? recognized,
-    TResult? Function(SmartSearchVM vm)? searching,
-    TResult? Function(SmartSearchVM vm)? searchComplete,
-    TResult? Function(String message, SmartSearchVM vm)? error,
-  }) {
-    return error?.call(message, vm);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SmartSearchVM vm)? initial,
-    TResult Function(SmartSearchVM vm)? listening,
-    TResult Function(SmartSearchVM vm)? recognized,
-    TResult Function(SmartSearchVM vm)? searching,
-    TResult Function(SmartSearchVM vm)? searchComplete,
-    TResult Function(String message, SmartSearchVM vm)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message, vm);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Listening value) listening,
-    required TResult Function(_Recognized value) recognized,
-    required TResult Function(_Searching value) searching,
-    required TResult Function(_SearchComplete value) searchComplete,
-    required TResult Function(_Error value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Listening value)? listening,
-    TResult? Function(_Recognized value)? recognized,
-    TResult? Function(_Searching value)? searching,
-    TResult? Function(_SearchComplete value)? searchComplete,
-    TResult? Function(_Error value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Listening value)? listening,
-    TResult Function(_Recognized value)? recognized,
-    TResult Function(_Searching value)? searching,
-    TResult Function(_SearchComplete value)? searchComplete,
-    TResult Function(_Error value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Error implements SmartSearchState {
-  const factory _Error(final String message, final SmartSearchVM vm) =
-      _$ErrorImpl;
-
-  String get message;
-  @override
-  SmartSearchVM get vm;
 
   /// Create a copy of SmartSearchState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $SmartSearchVMCopyWith<$Res> get vm {
+    return $SmartSearchVMCopyWith<$Res>(_self.vm, (value) {
+      return _then(_self.copyWith(vm: value));
+    });
+  }
 }
+
+// dart format on

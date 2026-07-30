@@ -18,6 +18,7 @@ import 'package:foodly_world/ui/views/business/promotions/cubit/manage_promotion
 import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page.dart';
 import 'package:foodly_world/ui/views/business/reservations/manage_reservations_page.dart';
 import 'package:foodly_world/ui/views/business/service_packages/manage_service_packages_page.dart';
+import 'package:foodly_world/ui/views/group_orders/group_order_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
@@ -551,6 +552,23 @@ class AppRouter {
               child: MenuImportPage(
                 businessMenuUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
               ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          GoRoute(
+            path: AppRoutes.groupOrder.path,
+            name: AppRoutes.groupOrder.name,
+            // Solo requiresLogin: ordenar en grupo es una acción de CLIENTE, no
+            // un módulo de negocio. requiresAccess (guard de módulo) mandaba la
+            // ruta a /no-access → /login porque groupOrder no está en el mapeo
+            // ModuleGuardType.getModuleGuardTypeByRoute. El guest-gate del CTA
+            // ya garantiza que solo usuarios logueados llegan aquí.
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: GroupOrderPage(orderUuid: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
             ),

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'nearby_promotions_vm.freezed.dart';
 
 @freezed
-class NearbyPromotionsVM with _$NearbyPromotionsVM {
+abstract class NearbyPromotionsVM with _$NearbyPromotionsVM {
   const factory NearbyPromotionsVM({
     @Default([]) List<NearbyPromotionDM> promotions,
     @Default(false) bool isLoading,

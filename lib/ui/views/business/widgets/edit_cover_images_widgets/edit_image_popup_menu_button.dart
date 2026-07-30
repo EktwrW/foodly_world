@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/business/bloc/business_bloc.dart';
 import 'package:foodly_world/ui/views/business/helpers/dashboard_helpers.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class EditImagePopupMenuButton extends StatelessWidget {
   final BusinessCoverImageDM coverImageDM;

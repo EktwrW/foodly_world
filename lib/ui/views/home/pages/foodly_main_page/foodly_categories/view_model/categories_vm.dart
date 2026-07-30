@@ -31,7 +31,7 @@ enum DiscoveryOrdering {
 }
 
 @freezed
-class CategoriesVM with _$CategoriesVM {
+abstract class CategoriesVM with _$CategoriesVM {
   const CategoriesVM._();
 
   const factory CategoriesVM({

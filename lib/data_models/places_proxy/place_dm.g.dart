@@ -6,8 +6,7 @@ part of 'place_dm.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PlaceDMImpl _$$PlaceDMImplFromJson(Map<String, dynamic> json) =>
-    _$PlaceDMImpl(
+_PlaceDM _$PlaceDMFromJson(Map<String, dynamic> json) => _PlaceDM(
       placeId: json['place_id'] as String?,
       name: json['name'] as String?,
       formattedAddress: json['formatted_address'] as String?,
@@ -26,8 +25,7 @@ _$PlaceDMImpl _$$PlaceDMImplFromJson(Map<String, dynamic> json) =>
               const <String>[],
     );
 
-Map<String, dynamic> _$$PlaceDMImplToJson(_$PlaceDMImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PlaceDMToJson(_PlaceDM instance) => <String, dynamic>{
       if (instance.placeId case final value?) 'place_id': value,
       if (instance.name case final value?) 'name': value,
       if (instance.formattedAddress case final value?)

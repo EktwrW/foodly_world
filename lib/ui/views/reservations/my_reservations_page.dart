@@ -14,7 +14,7 @@ import 'package:foodly_world/ui/views/reservations/cubit/my_reservations_cubit.d
 import 'package:foodly_world/ui/views/reservations/widgets/reservation_card.dart';
 import 'package:foodly_world/ui/views/reservations/widgets/reservation_messages_sheet.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class MyReservationsPage extends StatelessWidget {
   const MyReservationsPage({super.key});

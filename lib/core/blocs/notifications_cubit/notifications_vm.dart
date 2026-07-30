@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'notifications_vm.freezed.dart';
 
 @freezed
-class NotificationsVM with _$NotificationsVM {
+abstract class NotificationsVM with _$NotificationsVM {
   const NotificationsVM._();
 
   const factory NotificationsVM({

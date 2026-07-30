@@ -3,7 +3,7 @@ import 'package:foodly_world/data_models/analytics/service_overview_dm.dart';
 import 'package:foodly_world/generated/l10n.dart' show S;
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/analytics/widgets/kpi_card.dart';
-import 'package:icons_plus/icons_plus.dart' show FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show FontAwesome;
 
 /// Catering & chefs flavour of [KpiRow].
 ///

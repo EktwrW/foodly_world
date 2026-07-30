@@ -32,7 +32,7 @@ import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart
 import 'package:foodly_world/ui/views/user_profile/helpers/profile_helpers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 part 'widgets/delete_account_section.dart';
 part 'widgets/user_birthday_date.dart';

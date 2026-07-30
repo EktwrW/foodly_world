@@ -4,7 +4,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart' show Brand, Brands, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Brand, Brands, FontAwesome;
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
 

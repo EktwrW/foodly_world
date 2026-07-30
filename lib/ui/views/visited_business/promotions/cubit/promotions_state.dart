@@ -1,7 +1,7 @@
 part of 'promotions_cubit.dart';
 
 @freezed
-class PromotionsState with _$PromotionsState {
+sealed class PromotionsState with _$PromotionsState {
   const PromotionsState._();
   
   const factory PromotionsState.initial(PromotionsVM vm) = _Initial;
