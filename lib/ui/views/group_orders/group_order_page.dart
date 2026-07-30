@@ -52,7 +52,12 @@ class _GroupOrderView extends StatelessWidget {
                 .fold<double>(0, (acc, p) => acc + p.remainingDue) ??
             0);
 
-    final tip = await _askTip(context, base, order?.currency ?? 'EUR');
+    final tip = await _askTip(
+      context,
+      base,
+      order?.currency ?? 'EUR',
+      serviceFee: order?.payerFixedFee ?? 0,
+    );
     if (tip == null || !context.mounted) return; // canceló el selector
 
     final intent = await cubit.createPayIntent(
@@ -127,8 +132,14 @@ class _GroupOrderView extends StatelessWidget {
   }
 
   /// Selector de propina (F2c §B.2): 0% / 5% / 10% / monto libre.
-  /// Devuelve null si el usuario cancela (aborta el pago).
-  Future<double?> _askTip(BuildContext context, double base, String currency) async {
+  /// Muestra el desglose del pago (parte + tarifa fija del comensal) para
+  /// transparencia total. Devuelve null si el usuario cancela (aborta el pago).
+  Future<double?> _askTip(
+    BuildContext context,
+    double base,
+    String currency, {
+    double serviceFee = 0,
+  }) async {
     double pct(double p) => double.parse((base * p).toStringAsFixed(2));
 
     final choice = await showModalBottomSheet<Object>(
@@ -142,9 +153,21 @@ class _GroupOrderView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 2),
               child: Text(S.current.groupOrderTipTitle, style: FoodlyTextStyles.sectionsTitle),
             ),
+            // Desglose transparente: parte + tarifa de la plataforma de pagos.
+            if (serviceFee > 0)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+                child: Text(
+                  S.current.groupOrderTipBaseSummary(
+                    formatMoney(base, currency),
+                    formatMoney(serviceFee, currency),
+                  ),
+                  style: FoodlyTextStyles.caption,
+                ),
+              ),
             ListTile(
               leading: const Icon(Icons.money_off_rounded, color: FoodlyThemes.secondaryFoodly),
               title: Text(S.current.groupOrderTipNone, style: FoodlyTextStyles.labelBold),

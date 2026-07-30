@@ -1377,5 +1377,33 @@
   "groupOrderTipTitle": "Queres deixar gorjeta?",
   "groupOrderTipNone": "Sem gorjeta",
   "groupOrderTipCustom": "Outro valor",
+  "groupOrderServiceFeeNotice": "Inclui {amount} de taxa da plataforma de pagamentos",
+  "@groupOrderServiceFeeNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderServiceFeeTitle": "Taxa de processamento",
+  "groupOrderServiceFeeExplain": "Esta taxa fixa de {amount} por transação corresponde à plataforma que processa o teu pagamento com cartão de forma segura. Não é uma cobrança da Foodly nem do restaurante.",
+  "@groupOrderServiceFeeExplain": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderTipBaseSummary": "O teu pagamento: {base} + {fee} de taxa de processamento",
+  "@groupOrderTipBaseSummary": {
+    "placeholders": {
+      "base": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Inicia sessão ou regista-te para criar um pedido em grupo."
 }

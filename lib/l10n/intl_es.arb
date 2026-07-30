@@ -1377,5 +1377,33 @@
   "groupOrderTipTitle": "¿Quieres dejar propina?",
   "groupOrderTipNone": "Sin propina",
   "groupOrderTipCustom": "Otro monto",
+  "groupOrderServiceFeeNotice": "Incluye {amount} de tarifa de la plataforma de pagos",
+  "@groupOrderServiceFeeNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderServiceFeeTitle": "Tarifa de procesamiento",
+  "groupOrderServiceFeeExplain": "Esta tarifa fija de {amount} por transacción corresponde a la plataforma que procesa tu pago con tarjeta de forma segura. No es un cobro de Foodly ni del restaurante.",
+  "@groupOrderServiceFeeExplain": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderTipBaseSummary": "Tu pago: {base} + {fee} de tarifa de procesamiento",
+  "@groupOrderTipBaseSummary": {
+    "placeholders": {
+      "base": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

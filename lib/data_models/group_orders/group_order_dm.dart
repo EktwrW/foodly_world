@@ -143,6 +143,9 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @JsonKey(name: 'business_logo') String? businessLogo,
     @Default('EUR') String currency,
     @JsonKey(name: 'split_mode') @Default(GroupSplitMode.byItems) GroupSplitMode splitMode,
+    // Tarifa fija por transacción a cargo del comensal (plataforma de pagos).
+    // La UI SIEMPRE la muestra en el desglose antes de pagar.
+    @JsonKey(name: 'payer_fixed_fee', fromJson: _money) @Default(0.25) double payerFixedFee,
     @JsonKey(fromJson: _money) @Default(0) double subtotal,
     @JsonKey(name: 'total_amount', fromJson: _money) @Default(0) double totalAmount,
     @JsonKey(name: 'total_paid', fromJson: _money) @Default(0) double totalPaid,
@@ -229,8 +232,9 @@ abstract class PayIntentResponseDM with _$PayIntentResponseDM {
     @JsonKey(name: 'client_secret') String? clientSecret,
     @JsonKey(name: 'transaction_uuid') String? transactionUuid,
     @JsonKey(fromJson: _money) @Default(0) double amount,
-    // Propina (F2c §B.2) y total efectivamente cobrado (base + tip).
+    // Propina (F2c §B.2), tarifa del comensal y total cobrado (base+tip+fee).
     @JsonKey(name: 'tip_amount', fromJson: _money) @Default(0) double tipAmount,
+    @JsonKey(name: 'service_fee_amount', fromJson: _money) @Default(0) double serviceFeeAmount,
     @JsonKey(name: 'total_charged', fromJson: _money) @Default(0) double totalCharged,
     @Default('EUR') String currency,
     // Participantes que este pago cubre ("yo invito", F2b).

@@ -88,6 +88,9 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       splitMode:
           $enumDecodeNullable(_$GroupSplitModeEnumMap, json['split_mode']) ??
               GroupSplitMode.byItems,
+      payerFixedFee: json['payer_fixed_fee'] == null
+          ? 0.25
+          : _money(json['payer_fixed_fee']),
       subtotal: json['subtotal'] == null ? 0 : _money(json['subtotal']),
       totalAmount:
           json['total_amount'] == null ? 0 : _money(json['total_amount']),
@@ -118,6 +121,7 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       if (instance.businessLogo case final value?) 'business_logo': value,
       'currency': instance.currency,
       'split_mode': _$GroupSplitModeEnumMap[instance.splitMode]!,
+      'payer_fixed_fee': instance.payerFixedFee,
       'subtotal': instance.subtotal,
       'total_amount': instance.totalAmount,
       'total_paid': instance.totalPaid,
@@ -187,6 +191,9 @@ _PayIntentResponseDM _$PayIntentResponseDMFromJson(Map<String, dynamic> json) =>
       transactionUuid: json['transaction_uuid'] as String?,
       amount: json['amount'] == null ? 0 : _money(json['amount']),
       tipAmount: json['tip_amount'] == null ? 0 : _money(json['tip_amount']),
+      serviceFeeAmount: json['service_fee_amount'] == null
+          ? 0
+          : _money(json['service_fee_amount']),
       totalCharged:
           json['total_charged'] == null ? 0 : _money(json['total_charged']),
       currency: json['currency'] as String? ?? 'EUR',
@@ -204,6 +211,7 @@ Map<String, dynamic> _$PayIntentResponseDMToJson(
       if (instance.transactionUuid case final value?) 'transaction_uuid': value,
       'amount': instance.amount,
       'tip_amount': instance.tipAmount,
+      'service_fee_amount': instance.serviceFeeAmount,
       'total_charged': instance.totalCharged,
       'currency': instance.currency,
       'covered_participant_uuids': instance.coveredParticipantUuids,

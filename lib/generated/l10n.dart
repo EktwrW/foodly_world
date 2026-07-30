@@ -8865,6 +8865,46 @@ class S {
     );
   }
 
+  /// `Includes a {amount} payment platform fee`
+  String groupOrderServiceFeeNotice(String amount) {
+    return Intl.message(
+      'Includes a $amount payment platform fee',
+      name: 'groupOrderServiceFeeNotice',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Processing fee`
+  String get groupOrderServiceFeeTitle {
+    return Intl.message(
+      'Processing fee',
+      name: 'groupOrderServiceFeeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This flat {amount} per-transaction fee goes to the platform that securely processes your card payment. It is not charged by Foodly or the restaurant.`
+  String groupOrderServiceFeeExplain(String amount) {
+    return Intl.message(
+      'This flat $amount per-transaction fee goes to the platform that securely processes your card payment. It is not charged by Foodly or the restaurant.',
+      name: 'groupOrderServiceFeeExplain',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Your payment: {base} + {fee} processing fee`
+  String groupOrderTipBaseSummary(String base, String fee) {
+    return Intl.message(
+      'Your payment: $base + $fee processing fee',
+      name: 'groupOrderTipBaseSummary',
+      desc: '',
+      args: [base, fee],
+    );
+  }
+
   /// `Log in or sign up to start a group order.`
   String get guestGateGroupOrder {
     return Intl.message(

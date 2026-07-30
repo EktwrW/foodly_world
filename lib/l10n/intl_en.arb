@@ -1377,5 +1377,33 @@
   "groupOrderTipTitle": "Would you like to tip?",
   "groupOrderTipNone": "No tip",
   "groupOrderTipCustom": "Custom amount",
+  "groupOrderServiceFeeNotice": "Includes a {amount} payment platform fee",
+  "@groupOrderServiceFeeNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderServiceFeeTitle": "Processing fee",
+  "groupOrderServiceFeeExplain": "This flat {amount} per-transaction fee goes to the platform that securely processes your card payment. It is not charged by Foodly or the restaurant.",
+  "@groupOrderServiceFeeExplain": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderTipBaseSummary": "Your payment: {base} + {fee} processing fee",
+  "@groupOrderTipBaseSummary": {
+    "placeholders": {
+      "base": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Log in or sign up to start a group order."
 }
