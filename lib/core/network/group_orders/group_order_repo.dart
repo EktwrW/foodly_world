@@ -44,9 +44,31 @@ class GroupOrderRepo {
     }
   }
 
-  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid) async {
+  /// F2c §B.1: [splitMode] = 'by_items' | 'equal_split' (null → default backend).
+  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid, {String? splitMode}) async {
     try {
-      return ApiResult.success(await _client.lockGroupOrder(uuid));
+      return ApiResult.success(await _client.lockGroupOrder(uuid, splitMode: splitMode));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F2c: edita un ítem (cantidad/notas/compartido) mientras la orden está OPEN.
+  Future<ApiResult<GroupOrderResponseDM>> updateItem(
+    String uuid,
+    String itemUuid, {
+    int? quantity,
+    String? notes,
+    bool? shared,
+  }) async {
+    try {
+      return ApiResult.success(await _client.updateItem(
+        uuid,
+        itemUuid,
+        quantity: quantity,
+        notes: notes,
+        shared: shared,
+      ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -143,11 +165,13 @@ class GroupOrderRepo {
   Future<ApiResult<PayIntentResponseDM>> createPayIntent(
     String uuid, {
     List<String>? coverParticipantUuids,
+    double? tipAmount,
   }) async {
     try {
       return ApiResult.success(await _client.createPayIntent(
         uuid,
         coverParticipantUuids: coverParticipantUuids,
+        tipAmount: tipAmount,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

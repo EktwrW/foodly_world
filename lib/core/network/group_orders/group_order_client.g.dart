@@ -111,11 +111,16 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
-  Future<GroupOrderResponseDM> lockGroupOrder(String uuid) async {
+  Future<GroupOrderResponseDM> lockGroupOrder(
+    String uuid, {
+    String? splitMode,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = {'split_mode': splitMode};
+    _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
@@ -285,6 +290,7 @@ class _GroupOrderClient implements GroupOrderClient {
     required String itemableUuid,
     required int quantity,
     String? notes,
+    bool? shared,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -295,6 +301,7 @@ class _GroupOrderClient implements GroupOrderClient {
       'itemable_uuid': itemableUuid,
       'quantity': quantity,
       'notes': notes,
+      'shared': shared,
     };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
@@ -324,12 +331,13 @@ class _GroupOrderClient implements GroupOrderClient {
     String itemUuid, {
     int? quantity,
     String? notes,
+    bool? shared,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'quantity': quantity, 'notes': notes};
+    final _data = {'quantity': quantity, 'notes': notes, 'shared': shared};
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
@@ -410,12 +418,16 @@ class _GroupOrderClient implements GroupOrderClient {
   Future<PayIntentResponseDM> createPayIntent(
     String uuid, {
     List<String>? coverParticipantUuids,
+    double? tipAmount,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'cover_participant_uuids': coverParticipantUuids};
+    final _data = {
+      'cover_participant_uuids': coverParticipantUuids,
+      'tip_amount': tipAmount,
+    };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<PayIntentResponseDM>(
       Options(method: 'POST', headers: _headers, extra: _extra)

@@ -247,6 +247,71 @@ void main() {
     });
   });
 
+  group('F2c', () {
+    test('lock pasa el splitMode elegido por el host', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      repo.lockOutcome = ApiResult.success(
+        GroupOrderResponseDM(
+          groupOrder: sampleOrder().copyWith(splitMode: GroupSplitMode.equalSplit),
+          myShare: 10,
+          myParticipantUuid: 'p1',
+        ),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      await cubit.lock(splitMode: 'equal_split');
+
+      expect(repo.lastSplitMode, 'equal_split');
+      expect(cubit.vm.order?.splitMode, GroupSplitMode.equalSplit);
+
+      await cubit.close();
+    });
+
+    test('createPayIntent pasa la propina al repo', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      repo.payIntentOutcome = const ApiResult.success(
+        PayIntentResponseDM(clientSecret: 'sec_tip', amount: 20, tipAmount: 2, totalCharged: 22),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      final result = await cubit.createPayIntent(tipAmount: 2.0);
+
+      expect(repo.lastTipAmount, 2.0);
+      expect(result?.totalCharged, 22);
+
+      await cubit.close();
+    });
+
+    test('setItemShared aplica la respuesta y pasa el flag', () async {
+      repo.getOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: sampleOrder(), myShare: 20, myParticipantUuid: 'p1'),
+      );
+      final updated = sampleOrder().copyWith(
+        items: const [
+          GroupOrderItemDM(uuid: 'i1', participantUuid: 'p1', name: 'Nachos', unitPriceAtLock: 8.5, shared: true),
+        ],
+      );
+      repo.updateItemOutcome = ApiResult.success(
+        GroupOrderResponseDM(groupOrder: updated, myShare: 20, myParticipantUuid: 'p1'),
+      );
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      await cubit.setItemShared('i1', true);
+
+      expect(repo.lastSharedValue, true);
+      expect(cubit.vm.order?.items.first.shared, true);
+
+      await cubit.close();
+    });
+  });
+
   group('removeItem', () {
     test('éxito: aplica la respuesta y emite loaded con la orden actualizada', () async {
       repo.getOutcome = ApiResult.success(
@@ -283,9 +348,15 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? unlockOutcome;
   ApiResult<GroupOrderResponseDM>? transferHostOutcome;
 
-  /// Espías F2b: qué recibió el repo en la última llamada.
+  ApiResult<GroupOrderResponseDM>? lockOutcome;
+  ApiResult<GroupOrderResponseDM>? updateItemOutcome;
+
+  /// Espías F2b/F2c: qué recibió el repo en la última llamada.
   List<String>? lastCoverUuids;
   String? lastTransferTarget;
+  double? lastTipAmount;
+  String? lastSplitMode;
+  bool? lastSharedValue;
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async => getOutcome!;
@@ -294,11 +365,31 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> removeItem(String uuid, String itemUuid) async => removeItemOutcome!;
 
   @override
+  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid, {String? splitMode}) async {
+    lastSplitMode = splitMode;
+    return lockOutcome!;
+  }
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> updateItem(
+    String uuid,
+    String itemUuid, {
+    int? quantity,
+    String? notes,
+    bool? shared,
+  }) async {
+    lastSharedValue = shared;
+    return updateItemOutcome!;
+  }
+
+  @override
   Future<ApiResult<PayIntentResponseDM>> createPayIntent(
     String uuid, {
     List<String>? coverParticipantUuids,
+    double? tipAmount,
   }) async {
     lastCoverUuids = coverParticipantUuids;
+    lastTipAmount = tipAmount;
     return payIntentOutcome!;
   }
 

@@ -8765,6 +8765,106 @@ class S {
     );
   }
 
+  /// `Shared`
+  String get groupOrderSharedBadge {
+    return Intl.message(
+      'Shared',
+      name: 'groupOrderSharedBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share with the table`
+  String get groupOrderShareItemTooltip {
+    return Intl.message(
+      'Share with the table',
+      name: 'groupOrderShareItemTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How should we split the bill?`
+  String get groupOrderSplitModeTitle {
+    return Intl.message(
+      'How should we split the bill?',
+      name: 'groupOrderSplitModeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By items`
+  String get groupOrderSplitByItems {
+    return Intl.message(
+      'By items',
+      name: 'groupOrderSplitByItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Everyone pays for their own; shared items are split.`
+  String get groupOrderSplitByItemsDesc {
+    return Intl.message(
+      'Everyone pays for their own; shared items are split.',
+      name: 'groupOrderSplitByItemsDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Equal parts`
+  String get groupOrderSplitEqual {
+    return Intl.message(
+      'Equal parts',
+      name: 'groupOrderSplitEqual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The total is split evenly among everyone.`
+  String get groupOrderSplitEqualDesc {
+    return Intl.message(
+      'The total is split evenly among everyone.',
+      name: 'groupOrderSplitEqualDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to tip?`
+  String get groupOrderTipTitle {
+    return Intl.message(
+      'Would you like to tip?',
+      name: 'groupOrderTipTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tip`
+  String get groupOrderTipNone {
+    return Intl.message(
+      'No tip',
+      name: 'groupOrderTipNone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom amount`
+  String get groupOrderTipCustom {
+    return Intl.message(
+      'Custom amount',
+      name: 'groupOrderTipCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log in or sign up to start a group order.`
   String get guestGateGroupOrder {
     return Intl.message(

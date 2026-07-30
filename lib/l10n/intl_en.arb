@@ -1367,5 +1367,15 @@
       }
     }
   },
+  "groupOrderSharedBadge": "Shared",
+  "groupOrderShareItemTooltip": "Share with the table",
+  "groupOrderSplitModeTitle": "How should we split the bill?",
+  "groupOrderSplitByItems": "By items",
+  "groupOrderSplitByItemsDesc": "Everyone pays for their own; shared items are split.",
+  "groupOrderSplitEqual": "Equal parts",
+  "groupOrderSplitEqualDesc": "The total is split evenly among everyone.",
+  "groupOrderTipTitle": "Would you like to tip?",
+  "groupOrderTipNone": "No tip",
+  "groupOrderTipCustom": "Custom amount",
   "guestGateGroupOrder": "Log in or sign up to start a group order."
 }

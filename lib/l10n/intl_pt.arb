@@ -1367,5 +1367,15 @@
       }
     }
   },
+  "groupOrderSharedBadge": "Partilhado",
+  "groupOrderShareItemTooltip": "Partilhar com a mesa",
+  "groupOrderSplitModeTitle": "Como dividimos a conta?",
+  "groupOrderSplitByItems": "Por itens",
+  "groupOrderSplitByItemsDesc": "Cada um paga o seu; o partilhado divide-se.",
+  "groupOrderSplitEqual": "Em partes iguais",
+  "groupOrderSplitEqualDesc": "O total divide-se igualmente entre todos.",
+  "groupOrderTipTitle": "Queres deixar gorjeta?",
+  "groupOrderTipNone": "Sem gorjeta",
+  "groupOrderTipCustom": "Outro valor",
   "guestGateGroupOrder": "Inicia sessão ou regista-te para criar um pedido em grupo."
 }

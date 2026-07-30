@@ -1133,6 +1133,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderPaymentSucceeded": MessageLookupByLibrary.simpleMessage(
       "Pagamento efetuado",
     ),
+    "groupOrderShareItemTooltip": MessageLookupByLibrary.simpleMessage(
+      "Partilhar com a mesa",
+    ),
+    "groupOrderSharedBadge": MessageLookupByLibrary.simpleMessage("Partilhado"),
+    "groupOrderSplitByItems": MessageLookupByLibrary.simpleMessage("Por itens"),
+    "groupOrderSplitByItemsDesc": MessageLookupByLibrary.simpleMessage(
+      "Cada um paga o seu; o partilhado divide-se.",
+    ),
+    "groupOrderSplitEqual": MessageLookupByLibrary.simpleMessage(
+      "Em partes iguais",
+    ),
+    "groupOrderSplitEqualDesc": MessageLookupByLibrary.simpleMessage(
+      "O total divide-se igualmente entre todos.",
+    ),
+    "groupOrderSplitModeTitle": MessageLookupByLibrary.simpleMessage(
+      "Como dividimos a conta?",
+    ),
+    "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage("Outro valor"),
+    "groupOrderTipNone": MessageLookupByLibrary.simpleMessage("Sem gorjeta"),
+    "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
+      "Queres deixar gorjeta?",
+    ),
     "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Pedido em grupo"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Total do pedido"),
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(

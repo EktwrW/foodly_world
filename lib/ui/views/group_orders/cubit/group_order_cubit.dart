@@ -35,11 +35,20 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   }
 
   /// Host: cierra la orden (congela precios y habilita el pago).
-  Future<void> lock() async {
+  /// F2c §B.1: [splitMode] = 'by_items' | 'equal_split'.
+  Future<void> lock({String? splitMode}) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return;
     emit(GroupOrderState.loading(_vm));
-    final result = await _repo.lockGroupOrder(uuid);
+    final result = await _repo.lockGroupOrder(uuid, splitMode: splitMode);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
+  /// F2c: marca/desmarca un ítem como compartido (solo en OPEN).
+  Future<void> setItemShared(String itemUuid, bool shared) async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    final result = await _repo.updateItem(uuid, itemUuid, shared: shared);
     result.when(success: _applyResponse, failure: _onError);
   }
 
@@ -103,6 +112,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   /// esos participantes (el monto lo calcula el backend: Σ remaining_due).
   Future<PayIntentResponseDM?> createPayIntent({
     List<String>? coverParticipantUuids,
+    double? tipAmount,
   }) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return null;
@@ -113,6 +123,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     final result = await _repo.createPayIntent(
       uuid,
       coverParticipantUuids: coverParticipantUuids,
+      tipAmount: tipAmount,
     );
     return result.when(
       success: (r) {

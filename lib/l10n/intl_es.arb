@@ -1367,5 +1367,15 @@
       }
     }
   },
+  "groupOrderSharedBadge": "Compartido",
+  "groupOrderShareItemTooltip": "Compartir con la mesa",
+  "groupOrderSplitModeTitle": "¿Cómo dividimos la cuenta?",
+  "groupOrderSplitByItems": "Por ítems",
+  "groupOrderSplitByItemsDesc": "Cada quien paga lo suyo; lo compartido se reparte.",
+  "groupOrderSplitEqual": "En partes iguales",
+  "groupOrderSplitEqualDesc": "El total se divide entre todos por igual.",
+  "groupOrderTipTitle": "¿Quieres dejar propina?",
+  "groupOrderTipNone": "Sin propina",
+  "groupOrderTipCustom": "Otro monto",
   "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

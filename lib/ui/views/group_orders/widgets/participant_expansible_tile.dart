@@ -29,6 +29,9 @@ class ParticipantExpansibleTile extends StatefulWidget {
   /// quién puede borrar qué (dueño del ítem / host) la decide el caller.
   final void Function(GroupOrderItemDM item)? onRemoveItem;
 
+  /// F2c: alterna "compartido con la mesa" en un ítem (solo OPEN, dueño/host).
+  final void Function(GroupOrderItemDM item)? onToggleSharedItem;
+
   /// "Yo invito" (F2b §A.2): pagar la parte de ESTE participante. null =>
   /// sin CTA (la regla — pendiente, no soy yo, orden pagable — la decide el caller).
   final VoidCallback? onCover;
@@ -42,6 +45,7 @@ class ParticipantExpansibleTile extends StatefulWidget {
     required this.participant,
     this.initiallyExpanded = false,
     this.onRemoveItem,
+    this.onToggleSharedItem,
     this.onCover,
     this.paidByName,
   });
@@ -161,6 +165,9 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                       currency: widget.order.currency,
                       onRemove:
                           widget.onRemoveItem == null ? null : () => widget.onRemoveItem!(item),
+                      onToggleShared: widget.onToggleSharedItem == null
+                          ? null
+                          : () => widget.onToggleSharedItem!(item),
                     ),
                   ),
               // "Cubrir su parte" (F2b §A.2) — solo si el caller lo habilitó.

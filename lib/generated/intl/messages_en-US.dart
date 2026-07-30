@@ -1087,6 +1087,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderPaymentSucceeded": MessageLookupByLibrary.simpleMessage(
       "Payment completed",
     ),
+    "groupOrderShareItemTooltip": MessageLookupByLibrary.simpleMessage(
+      "Share with the table",
+    ),
+    "groupOrderSharedBadge": MessageLookupByLibrary.simpleMessage("Shared"),
+    "groupOrderSplitByItems": MessageLookupByLibrary.simpleMessage("By items"),
+    "groupOrderSplitByItemsDesc": MessageLookupByLibrary.simpleMessage(
+      "Everyone pays for their own; shared items are split.",
+    ),
+    "groupOrderSplitEqual": MessageLookupByLibrary.simpleMessage("Equal parts"),
+    "groupOrderSplitEqualDesc": MessageLookupByLibrary.simpleMessage(
+      "The total is split evenly among everyone.",
+    ),
+    "groupOrderSplitModeTitle": MessageLookupByLibrary.simpleMessage(
+      "How should we split the bill?",
+    ),
+    "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage(
+      "Custom amount",
+    ),
+    "groupOrderTipNone": MessageLookupByLibrary.simpleMessage("No tip"),
+    "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
+      "Would you like to tip?",
+    ),
     "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Group order"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Order total"),
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(

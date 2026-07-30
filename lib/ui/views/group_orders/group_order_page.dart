@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
@@ -36,11 +37,28 @@ class _GroupOrderView extends StatelessWidget {
 
   /// Flujo de pago con PaymentSheet. Sin [coverUuids] paga MI parte; con
   /// ellos cubre la parte de esos participantes ("yo invito", F2b §A.2).
+  /// Antes de crear el intent se ofrece la propina (F2c §B.2).
   Future<void> _onPay(BuildContext context, {List<String>? coverUuids}) async {
     final cubit = context.read<GroupOrderCubit>();
-    final uuid = cubit.vm.order?.uuid;
+    final order = cubit.vm.order;
+    final uuid = order?.uuid;
 
-    final intent = await cubit.createPayIntent(coverParticipantUuids: coverUuids);
+    // Base del pago (solo para mostrar los % de propina; el cobro real lo
+    // calcula SIEMPRE el backend).
+    final double base = coverUuids == null
+        ? cubit.vm.myShare
+        : (order?.participants
+                .where((p) => coverUuids.contains(p.uuid))
+                .fold<double>(0, (acc, p) => acc + p.remainingDue) ??
+            0);
+
+    final tip = await _askTip(context, base, order?.currency ?? 'EUR');
+    if (tip == null || !context.mounted) return; // canceló el selector
+
+    final intent = await cubit.createPayIntent(
+      coverParticipantUuids: coverUuids,
+      tipAmount: tip > 0 ? tip : null,
+    );
     if (!context.mounted) return;
 
     final secret = intent?.clientSecret;
@@ -66,11 +84,120 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
-  /// Host: cierra el pedido (congela precios) y sincroniza el carrito del menú.
+  /// Host: cierra el pedido (congela precios) y sincroniza el carrito del
+  /// menú. F2c §B.1: primero elige cómo dividir la cuenta.
   Future<void> _onLock(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
-    await cubit.lock();
+
+    final mode = await showModalBottomSheet<String>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+              child: Text(S.current.groupOrderSplitModeTitle, style: FoodlyTextStyles.sectionsTitle),
+            ),
+            ListTile(
+              leading: const Icon(Icons.receipt_long_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text(S.current.groupOrderSplitByItems, style: FoodlyTextStyles.labelBold),
+              subtitle: Text(S.current.groupOrderSplitByItemsDesc, style: FoodlyTextStyles.caption),
+              onTap: () => Navigator.pop(ctx, 'by_items'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.balance_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text(S.current.groupOrderSplitEqual, style: FoodlyTextStyles.labelBold),
+              subtitle: Text(S.current.groupOrderSplitEqualDesc, style: FoodlyTextStyles.caption),
+              onTap: () => Navigator.pop(ctx, 'equal_split'),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (mode == null || !context.mounted) return;
+
+    await cubit.lock(splitMode: mode);
     await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Selector de propina (F2c §B.2): 0% / 5% / 10% / monto libre.
+  /// Devuelve null si el usuario cancela (aborta el pago).
+  Future<double?> _askTip(BuildContext context, double base, String currency) async {
+    double pct(double p) => double.parse((base * p).toStringAsFixed(2));
+
+    final choice = await showModalBottomSheet<Object>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+              child: Text(S.current.groupOrderTipTitle, style: FoodlyTextStyles.sectionsTitle),
+            ),
+            ListTile(
+              leading: const Icon(Icons.money_off_rounded, color: FoodlyThemes.secondaryFoodly),
+              title: Text(S.current.groupOrderTipNone, style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, 0.0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite_outline_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text('5% · ${formatMoney(pct(0.05), currency)}', style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, pct(0.05)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text('10% · ${formatMoney(pct(0.10), currency)}', style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, pct(0.10)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text(S.current.groupOrderTipCustom, style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, 'custom'),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !context.mounted) return null;
+    if (choice is double) return choice;
+
+    // Monto libre.
+    final controller = TextEditingController();
+    final custom = await showDialog<double>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(S.current.groupOrderTipCustom),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          decoration: const InputDecoration(prefixText: '€ '),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
+          TextButton(
+            onPressed: () {
+              final v = double.tryParse(controller.text.replaceAll(',', '.'));
+              Navigator.pop(ctx, (v == null || v < 0) ? 0.0 : v);
+            },
+            child: Text(S.current.confirm),
+          ),
+        ],
+      ),
+    );
+    return custom;
   }
 
   Future<bool> _confirm(BuildContext context, String message) async {
@@ -345,6 +472,10 @@ class _Content extends StatelessWidget {
                   initiallyExpanded: p.uuid == vm.myParticipantUuid,
                   onRemoveItem: _canRemoveItemsOf(p)
                       ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid)
+                      : null,
+                  // F2c: misma regla que el borrado (OPEN + dueño/host).
+                  onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy)
+                      ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
                       : null,
                   onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
                   paidByName: _paidByNameFor(p),

@@ -24,7 +24,8 @@ mixin _$GroupOrderItemDM {
   double get unitPriceAtLock;
   @JsonKey(name: 'unit_price_preview', fromJson: _money)
   double get unitPricePreview;
-  int get quantity;
+  int get quantity; // Compartido (F2c): su importe se reparte entre todos en by_items.
+  bool get shared;
   String? get notes;
 
   /// Create a copy of GroupOrderItemDM
@@ -53,17 +54,18 @@ mixin _$GroupOrderItemDM {
                 other.unitPricePreview == unitPricePreview) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
+            (identical(other.shared, shared) || other.shared == shared) &&
             (identical(other.notes, notes) || other.notes == notes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name,
-      unitPriceAtLock, unitPricePreview, quantity, notes);
+      unitPriceAtLock, unitPricePreview, quantity, shared, notes);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, notes: $notes)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes)';
   }
 }
 
@@ -82,6 +84,7 @@ abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
       double unitPricePreview,
       int quantity,
+      bool shared,
       String? notes});
 }
 
@@ -104,6 +107,7 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
     Object? unitPriceAtLock = null,
     Object? unitPricePreview = null,
     Object? quantity = null,
+    Object? shared = null,
     Object? notes = freezed,
   }) {
     return _then(_self.copyWith(
@@ -131,6 +135,10 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      shared: null == shared
+          ? _self.shared
+          : shared // ignore: cast_nullable_to_non_nullable
+              as bool,
       notes: freezed == notes
           ? _self.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -241,6 +249,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
             double unitPricePreview,
             int quantity,
+            bool shared,
             String? notes)?
         $default, {
     required TResult orElse(),
@@ -255,6 +264,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
+            _that.shared,
             _that.notes);
       case _:
         return orElse();
@@ -285,6 +295,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
             double unitPricePreview,
             int quantity,
+            bool shared,
             String? notes)
         $default,
   ) {
@@ -298,6 +309,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
+            _that.shared,
             _that.notes);
       case _:
         throw StateError('Unexpected subclass');
@@ -327,6 +339,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
             double unitPricePreview,
             int quantity,
+            bool shared,
             String? notes)?
         $default,
   ) {
@@ -340,6 +353,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
+            _that.shared,
             _that.notes);
       case _:
         return null;
@@ -359,6 +373,7 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
       this.unitPricePreview = 0,
       this.quantity = 1,
+      this.shared = false,
       this.notes})
       : super._();
   factory _GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
@@ -382,6 +397,10 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
   @override
   @JsonKey()
   final int quantity;
+// Compartido (F2c): su importe se reparte entre todos en by_items.
+  @override
+  @JsonKey()
+  final bool shared;
   @override
   final String? notes;
 
@@ -415,17 +434,18 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
                 other.unitPricePreview == unitPricePreview) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
+            (identical(other.shared, shared) || other.shared == shared) &&
             (identical(other.notes, notes) || other.notes == notes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name,
-      unitPriceAtLock, unitPricePreview, quantity, notes);
+      unitPriceAtLock, unitPricePreview, quantity, shared, notes);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, notes: $notes)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes)';
   }
 }
 
@@ -446,6 +466,7 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
       double unitPricePreview,
       int quantity,
+      bool shared,
       String? notes});
 }
 
@@ -468,6 +489,7 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
     Object? unitPriceAtLock = null,
     Object? unitPricePreview = null,
     Object? quantity = null,
+    Object? shared = null,
     Object? notes = freezed,
   }) {
     return _then(_GroupOrderItemDM(
@@ -495,6 +517,10 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      shared: null == shared
+          ? _self.shared
+          : shared // ignore: cast_nullable_to_non_nullable
+              as bool,
       notes: freezed == notes
           ? _self.notes
           : notes // ignore: cast_nullable_to_non_nullable
@@ -1032,6 +1058,8 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'business_logo')
   String? get businessLogo;
   String get currency;
+  @JsonKey(name: 'split_mode')
+  GroupSplitMode get splitMode;
   @JsonKey(fromJson: _money)
   double get subtotal;
   @JsonKey(name: 'total_amount', fromJson: _money)
@@ -1072,6 +1100,8 @@ mixin _$GroupOrderDM {
                 other.businessLogo == businessLogo) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
+            (identical(other.splitMode, splitMode) ||
+                other.splitMode == splitMode) &&
             (identical(other.subtotal, subtotal) ||
                 other.subtotal == subtotal) &&
             (identical(other.totalAmount, totalAmount) ||
@@ -1097,6 +1127,7 @@ mixin _$GroupOrderDM {
       businessName,
       businessLogo,
       currency,
+      splitMode,
       subtotal,
       totalAmount,
       totalPaid,
@@ -1107,7 +1138,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1124,6 +1155,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
       String currency,
+      @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
@@ -1151,6 +1183,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? businessName = null,
     Object? businessLogo = freezed,
     Object? currency = null,
+    Object? splitMode = null,
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
@@ -1184,6 +1217,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      splitMode: null == splitMode
+          ? _self.splitMode
+          : splitMode // ignore: cast_nullable_to_non_nullable
+              as GroupSplitMode,
       subtotal: null == subtotal
           ? _self.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -1316,6 +1353,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
+            @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
@@ -1336,6 +1374,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessName,
             _that.businessLogo,
             _that.currency,
+            _that.splitMode,
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
@@ -1370,6 +1409,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
+            @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
@@ -1389,6 +1429,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessName,
             _that.businessLogo,
             _that.currency,
+            _that.splitMode,
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
@@ -1422,6 +1463,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
+            @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
@@ -1441,6 +1483,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessName,
             _that.businessLogo,
             _that.currency,
+            _that.splitMode,
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
@@ -1464,6 +1507,7 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(name: 'business_name') this.businessName = '',
       @JsonKey(name: 'business_logo') this.businessLogo,
       this.currency = 'EUR',
+      @JsonKey(name: 'split_mode') this.splitMode = GroupSplitMode.byItems,
       @JsonKey(fromJson: _money) this.subtotal = 0,
       @JsonKey(name: 'total_amount', fromJson: _money) this.totalAmount = 0,
       @JsonKey(name: 'total_paid', fromJson: _money) this.totalPaid = 0,
@@ -1495,6 +1539,9 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey()
   final String currency;
+  @override
+  @JsonKey(name: 'split_mode')
+  final GroupSplitMode splitMode;
   @override
   @JsonKey(fromJson: _money)
   final double subtotal;
@@ -1559,6 +1606,8 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.businessLogo == businessLogo) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
+            (identical(other.splitMode, splitMode) ||
+                other.splitMode == splitMode) &&
             (identical(other.subtotal, subtotal) ||
                 other.subtotal == subtotal) &&
             (identical(other.totalAmount, totalAmount) ||
@@ -1584,6 +1633,7 @@ class _GroupOrderDM extends GroupOrderDM {
       businessName,
       businessLogo,
       currency,
+      splitMode,
       subtotal,
       totalAmount,
       totalPaid,
@@ -1594,7 +1644,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1613,6 +1663,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
       String currency,
+      @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
@@ -1641,6 +1692,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? businessName = null,
     Object? businessLogo = freezed,
     Object? currency = null,
+    Object? splitMode = null,
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
@@ -1674,6 +1726,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as String,
+      splitMode: null == splitMode
+          ? _self.splitMode
+          : splitMode // ignore: cast_nullable_to_non_nullable
+              as GroupSplitMode,
       subtotal: null == subtotal
           ? _self.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -2472,7 +2528,12 @@ mixin _$PayIntentResponseDM {
   @JsonKey(name: 'transaction_uuid')
   String? get transactionUuid;
   @JsonKey(fromJson: _money)
-  double get amount;
+  double
+      get amount; // Propina (F2c §B.2) y total efectivamente cobrado (base + tip).
+  @JsonKey(name: 'tip_amount', fromJson: _money)
+  double get tipAmount;
+  @JsonKey(name: 'total_charged', fromJson: _money)
+  double get totalCharged;
   String get currency; // Participantes que este pago cubre ("yo invito", F2b).
   @JsonKey(name: 'covered_participant_uuids')
   List<String> get coveredParticipantUuids;
@@ -2498,6 +2559,10 @@ mixin _$PayIntentResponseDM {
             (identical(other.transactionUuid, transactionUuid) ||
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.tipAmount, tipAmount) ||
+                other.tipAmount == tipAmount) &&
+            (identical(other.totalCharged, totalCharged) ||
+                other.totalCharged == totalCharged) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             const DeepCollectionEquality().equals(
@@ -2511,12 +2576,14 @@ mixin _$PayIntentResponseDM {
       clientSecret,
       transactionUuid,
       amount,
+      tipAmount,
+      totalCharged,
       currency,
       const DeepCollectionEquality().hash(coveredParticipantUuids));
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -2530,6 +2597,8 @@ abstract mixin class $PayIntentResponseDMCopyWith<$Res> {
       {@JsonKey(name: 'client_secret') String? clientSecret,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
+      @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
+      @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
       String currency,
       @JsonKey(name: 'covered_participant_uuids')
       List<String> coveredParticipantUuids});
@@ -2551,6 +2620,8 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
     Object? clientSecret = freezed,
     Object? transactionUuid = freezed,
     Object? amount = null,
+    Object? tipAmount = null,
+    Object? totalCharged = null,
     Object? currency = null,
     Object? coveredParticipantUuids = null,
   }) {
@@ -2566,6 +2637,14 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      tipAmount: null == tipAmount
+          ? _self.tipAmount
+          : tipAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalCharged: null == totalCharged
+          ? _self.totalCharged
+          : totalCharged // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _self.currency
@@ -2676,6 +2755,9 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
+            @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money)
+            double totalCharged,
             String currency,
             @JsonKey(name: 'covered_participant_uuids')
             List<String> coveredParticipantUuids)?
@@ -2685,8 +2767,14 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
-        return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency, _that.coveredParticipantUuids);
+        return $default(
+            _that.clientSecret,
+            _that.transactionUuid,
+            _that.amount,
+            _that.tipAmount,
+            _that.totalCharged,
+            _that.currency,
+            _that.coveredParticipantUuids);
       case _:
         return orElse();
     }
@@ -2711,6 +2799,9 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
+            @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money)
+            double totalCharged,
             String currency,
             @JsonKey(name: 'covered_participant_uuids')
             List<String> coveredParticipantUuids)
@@ -2719,8 +2810,14 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM():
-        return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency, _that.coveredParticipantUuids);
+        return $default(
+            _that.clientSecret,
+            _that.transactionUuid,
+            _that.amount,
+            _that.tipAmount,
+            _that.totalCharged,
+            _that.currency,
+            _that.coveredParticipantUuids);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2744,6 +2841,9 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
             @JsonKey(name: 'client_secret') String? clientSecret,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
+            @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
+            @JsonKey(name: 'total_charged', fromJson: _money)
+            double totalCharged,
             String currency,
             @JsonKey(name: 'covered_participant_uuids')
             List<String> coveredParticipantUuids)?
@@ -2752,8 +2852,14 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
     final _that = this;
     switch (_that) {
       case _PayIntentResponseDM() when $default != null:
-        return $default(_that.clientSecret, _that.transactionUuid, _that.amount,
-            _that.currency, _that.coveredParticipantUuids);
+        return $default(
+            _that.clientSecret,
+            _that.transactionUuid,
+            _that.amount,
+            _that.tipAmount,
+            _that.totalCharged,
+            _that.currency,
+            _that.coveredParticipantUuids);
       case _:
         return null;
     }
@@ -2767,6 +2873,8 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
       {@JsonKey(name: 'client_secret') this.clientSecret,
       @JsonKey(name: 'transaction_uuid') this.transactionUuid,
       @JsonKey(fromJson: _money) this.amount = 0,
+      @JsonKey(name: 'tip_amount', fromJson: _money) this.tipAmount = 0,
+      @JsonKey(name: 'total_charged', fromJson: _money) this.totalCharged = 0,
       this.currency = 'EUR',
       @JsonKey(name: 'covered_participant_uuids')
       final List<String> coveredParticipantUuids = const <String>[]})
@@ -2783,6 +2891,13 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   @override
   @JsonKey(fromJson: _money)
   final double amount;
+// Propina (F2c §B.2) y total efectivamente cobrado (base + tip).
+  @override
+  @JsonKey(name: 'tip_amount', fromJson: _money)
+  final double tipAmount;
+  @override
+  @JsonKey(name: 'total_charged', fromJson: _money)
+  final double totalCharged;
   @override
   @JsonKey()
   final String currency;
@@ -2824,6 +2939,10 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
             (identical(other.transactionUuid, transactionUuid) ||
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.tipAmount, tipAmount) ||
+                other.tipAmount == tipAmount) &&
+            (identical(other.totalCharged, totalCharged) ||
+                other.totalCharged == totalCharged) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             const DeepCollectionEquality().equals(
@@ -2837,12 +2956,14 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
       clientSecret,
       transactionUuid,
       amount,
+      tipAmount,
+      totalCharged,
       currency,
       const DeepCollectionEquality().hash(_coveredParticipantUuids));
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -2858,6 +2979,8 @@ abstract mixin class _$PayIntentResponseDMCopyWith<$Res>
       {@JsonKey(name: 'client_secret') String? clientSecret,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
+      @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
+      @JsonKey(name: 'total_charged', fromJson: _money) double totalCharged,
       String currency,
       @JsonKey(name: 'covered_participant_uuids')
       List<String> coveredParticipantUuids});
@@ -2879,6 +3002,8 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
     Object? clientSecret = freezed,
     Object? transactionUuid = freezed,
     Object? amount = null,
+    Object? tipAmount = null,
+    Object? totalCharged = null,
     Object? currency = null,
     Object? coveredParticipantUuids = null,
   }) {
@@ -2894,6 +3019,14 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
       amount: null == amount
           ? _self.amount
           : amount // ignore: cast_nullable_to_non_nullable
+              as double,
+      tipAmount: null == tipAmount
+          ? _self.tipAmount
+          : tipAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalCharged: null == totalCharged
+          ? _self.totalCharged
+          : totalCharged // ignore: cast_nullable_to_non_nullable
               as double,
       currency: null == currency
           ? _self.currency
