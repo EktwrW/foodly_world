@@ -3118,7 +3118,10 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
 mixin _$GroupInviteResponseDM {
   bool get success;
   @JsonKey(name: 'invite_token')
-  String? get inviteToken;
+  String?
+      get inviteToken; // Código corto tipeable (F3a): lo comparte el host con la mesa.
+  @JsonKey(name: 'invite_code')
+  String? get inviteCode;
   @JsonKey(name: 'invite_url')
   String? get inviteUrl;
 
@@ -3141,17 +3144,20 @@ mixin _$GroupInviteResponseDM {
             (identical(other.success, success) || other.success == success) &&
             (identical(other.inviteToken, inviteToken) ||
                 other.inviteToken == inviteToken) &&
+            (identical(other.inviteCode, inviteCode) ||
+                other.inviteCode == inviteCode) &&
             (identical(other.inviteUrl, inviteUrl) ||
                 other.inviteUrl == inviteUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, inviteToken, inviteUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
 
   @override
   String toString() {
-    return 'GroupInviteResponseDM(success: $success, inviteToken: $inviteToken, inviteUrl: $inviteUrl)';
+    return 'GroupInviteResponseDM(success: $success, inviteToken: $inviteToken, inviteCode: $inviteCode, inviteUrl: $inviteUrl)';
   }
 }
 
@@ -3164,6 +3170,7 @@ abstract mixin class $GroupInviteResponseDMCopyWith<$Res> {
   $Res call(
       {bool success,
       @JsonKey(name: 'invite_token') String? inviteToken,
+      @JsonKey(name: 'invite_code') String? inviteCode,
       @JsonKey(name: 'invite_url') String? inviteUrl});
 }
 
@@ -3182,6 +3189,7 @@ class _$GroupInviteResponseDMCopyWithImpl<$Res>
   $Res call({
     Object? success = null,
     Object? inviteToken = freezed,
+    Object? inviteCode = freezed,
     Object? inviteUrl = freezed,
   }) {
     return _then(_self.copyWith(
@@ -3192,6 +3200,10 @@ class _$GroupInviteResponseDMCopyWithImpl<$Res>
       inviteToken: freezed == inviteToken
           ? _self.inviteToken
           : inviteToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inviteCode: freezed == inviteCode
+          ? _self.inviteCode
+          : inviteCode // ignore: cast_nullable_to_non_nullable
               as String?,
       inviteUrl: freezed == inviteUrl
           ? _self.inviteUrl
@@ -3297,6 +3309,7 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
     TResult Function(
             bool success,
             @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode,
             @JsonKey(name: 'invite_url') String? inviteUrl)?
         $default, {
     required TResult orElse(),
@@ -3304,7 +3317,8 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM() when $default != null:
-        return $default(_that.success, _that.inviteToken, _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode,
+            _that.inviteUrl);
       case _:
         return orElse();
     }
@@ -3328,13 +3342,15 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
     TResult Function(
             bool success,
             @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode,
             @JsonKey(name: 'invite_url') String? inviteUrl)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM():
-        return $default(_that.success, _that.inviteToken, _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode,
+            _that.inviteUrl);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -3357,13 +3373,15 @@ extension GroupInviteResponseDMPatterns on GroupInviteResponseDM {
     TResult? Function(
             bool success,
             @JsonKey(name: 'invite_token') String? inviteToken,
+            @JsonKey(name: 'invite_code') String? inviteCode,
             @JsonKey(name: 'invite_url') String? inviteUrl)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupInviteResponseDM() when $default != null:
-        return $default(_that.success, _that.inviteToken, _that.inviteUrl);
+        return $default(_that.success, _that.inviteToken, _that.inviteCode,
+            _that.inviteUrl);
       case _:
         return null;
     }
@@ -3376,6 +3394,7 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
   const _GroupInviteResponseDM(
       {this.success = true,
       @JsonKey(name: 'invite_token') this.inviteToken,
+      @JsonKey(name: 'invite_code') this.inviteCode,
       @JsonKey(name: 'invite_url') this.inviteUrl});
   factory _GroupInviteResponseDM.fromJson(Map<String, dynamic> json) =>
       _$GroupInviteResponseDMFromJson(json);
@@ -3386,6 +3405,10 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
   @override
   @JsonKey(name: 'invite_token')
   final String? inviteToken;
+// Código corto tipeable (F3a): lo comparte el host con la mesa.
+  @override
+  @JsonKey(name: 'invite_code')
+  final String? inviteCode;
   @override
   @JsonKey(name: 'invite_url')
   final String? inviteUrl;
@@ -3414,17 +3437,20 @@ class _GroupInviteResponseDM implements GroupInviteResponseDM {
             (identical(other.success, success) || other.success == success) &&
             (identical(other.inviteToken, inviteToken) ||
                 other.inviteToken == inviteToken) &&
+            (identical(other.inviteCode, inviteCode) ||
+                other.inviteCode == inviteCode) &&
             (identical(other.inviteUrl, inviteUrl) ||
                 other.inviteUrl == inviteUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, inviteToken, inviteUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, success, inviteToken, inviteCode, inviteUrl);
 
   @override
   String toString() {
-    return 'GroupInviteResponseDM(success: $success, inviteToken: $inviteToken, inviteUrl: $inviteUrl)';
+    return 'GroupInviteResponseDM(success: $success, inviteToken: $inviteToken, inviteCode: $inviteCode, inviteUrl: $inviteUrl)';
   }
 }
 
@@ -3439,6 +3465,7 @@ abstract mixin class _$GroupInviteResponseDMCopyWith<$Res>
   $Res call(
       {bool success,
       @JsonKey(name: 'invite_token') String? inviteToken,
+      @JsonKey(name: 'invite_code') String? inviteCode,
       @JsonKey(name: 'invite_url') String? inviteUrl});
 }
 
@@ -3457,6 +3484,7 @@ class __$GroupInviteResponseDMCopyWithImpl<$Res>
   $Res call({
     Object? success = null,
     Object? inviteToken = freezed,
+    Object? inviteCode = freezed,
     Object? inviteUrl = freezed,
   }) {
     return _then(_GroupInviteResponseDM(
@@ -3467,6 +3495,10 @@ class __$GroupInviteResponseDMCopyWithImpl<$Res>
       inviteToken: freezed == inviteToken
           ? _self.inviteToken
           : inviteToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inviteCode: freezed == inviteCode
+          ? _self.inviteCode
+          : inviteCode // ignore: cast_nullable_to_non_nullable
               as String?,
       inviteUrl: freezed == inviteUrl
           ? _self.inviteUrl

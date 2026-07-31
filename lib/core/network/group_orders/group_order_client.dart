@@ -55,6 +55,10 @@ abstract class GroupOrderClient {
   @POST('/group-orders/{uuid}/participants')
   Future<GroupOrderResponseDM> joinGroupOrder(@Path('uuid') String uuid);
 
+  /// F3a: unirse con el código corto de invitación de la mesa.
+  @POST('/group-orders/join')
+  Future<GroupOrderResponseDM> joinByCode({@Field('code') required String code});
+
   @DELETE('/group-orders/{uuid}/participants/{participantUuid}')
   Future<GroupOrderResponseDM> removeParticipant(
     @Path('uuid') String uuid,

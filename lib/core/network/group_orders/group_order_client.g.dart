@@ -254,6 +254,33 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
+  Future<GroupOrderResponseDM> joinByCode({required String code}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'code': code};
+    final _options = _setStreamType<GroupOrderResponseDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/group-orders/join',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GroupOrderResponseDM _value;
+    try {
+      _value = GroupOrderResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<GroupOrderResponseDM> removeParticipant(
     String uuid,
     String participantUuid,

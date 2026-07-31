@@ -1394,6 +1394,21 @@
       }
     }
   },
+  "groupOrderInviteCta": "Invite",
+  "groupOrderInviteTitle": "Invite your table",
+  "groupOrderInviteHint": "Share this code — valid for 24 hours",
+  "groupOrderInviteShareCta": "Share code",
+  "groupOrderInviteShareMsg": "Join our order at {business}! Open Foodly, go to the restaurant menu and use code {code}",
+  "@groupOrderInviteShareMsg": {"placeholders": {"business": {"type": "String"}, "code": {"type": "String"}}},
+  "groupOrderScanTitle": "Scan your table's QR",
+  "groupOrderScanHint": "Ask the host to show the order's QR code",
+  "groupOrderEnterCodeManually": "Enter code manually",
+  "groupOrderJoinCta": "Got invited? Join with a code",
+  "groupOrderJoinTitle": "Join an order",
+  "groupOrderJoinHint": "Invitation code",
+  "groupOrderJoinFailed": "Invalid or expired code",
+  "groupOrderOngoingChannelName": "Active group order",
+  "groupOrderOngoingChannelDesc": "Status of your ongoing group order",
   "groupOrderTipBaseSummary": "Your payment: {base} + {fee} processing fee",
   "@groupOrderTipBaseSummary": {
     "placeholders": {

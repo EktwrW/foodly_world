@@ -222,6 +222,7 @@ _GroupInviteResponseDM _$GroupInviteResponseDMFromJson(
     _GroupInviteResponseDM(
       success: json['success'] as bool? ?? true,
       inviteToken: json['invite_token'] as String?,
+      inviteCode: json['invite_code'] as String?,
       inviteUrl: json['invite_url'] as String?,
     );
 
@@ -230,5 +231,6 @@ Map<String, dynamic> _$GroupInviteResponseDMToJson(
     <String, dynamic>{
       'success': instance.success,
       if (instance.inviteToken case final value?) 'invite_token': value,
+      if (instance.inviteCode case final value?) 'invite_code': value,
       if (instance.inviteUrl case final value?) 'invite_url': value,
     };

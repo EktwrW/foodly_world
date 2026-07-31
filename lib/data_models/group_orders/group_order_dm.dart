@@ -251,6 +251,8 @@ abstract class GroupInviteResponseDM with _$GroupInviteResponseDM {
   const factory GroupInviteResponseDM({
     @Default(true) bool success,
     @JsonKey(name: 'invite_token') String? inviteToken,
+    // Código corto tipeable (F3a): lo comparte el host con la mesa.
+    @JsonKey(name: 'invite_code') String? inviteCode,
     @JsonKey(name: 'invite_url') String? inviteUrl,
   }) = _GroupInviteResponseDM;
 

@@ -5,6 +5,7 @@ import 'package:foodly_world/core/services/stripe_payment_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -15,6 +16,8 @@ import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
 /// Compone los widgets de la rebanada 1 con el GroupOrderCubit y el
@@ -26,7 +29,7 @@ class GroupOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GroupOrderCubit(repo: di(), logger: di())..load(orderUuid),
+      create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(orderUuid),
       child: const _GroupOrderView(),
     );
   }
@@ -273,6 +276,96 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
+  /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
+  Future<void> _onInvite(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    final businessName = cubit.vm.order?.businessName ?? 'Foodly';
+
+    final invite = await cubit.createInvitation();
+    if (!context.mounted) return;
+    final code = invite?.inviteCode ?? invite?.inviteToken;
+    if (code == null) {
+      FoodlySnackbars.errorGeneric(context, S.current.groupOrderJoinFailed);
+      return;
+    }
+
+    await showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(S.current.groupOrderInviteTitle,
+                  style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              // El QR es el protagonista (filosofía Foodly: escanear, no
+              // tipear); el código corto queda como fallback visible.
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.12),
+                        blurRadius: 18,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: QrImageView(
+                    data: '$kGroupOrderInvitePrefix$code',
+                    size: 190,
+                    eyeStyle: const QrEyeStyle(
+                      eyeShape: QrEyeShape.circle,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                    dataModuleStyle: const QrDataModuleStyle(
+                      dataModuleShape: QrDataModuleShape.circle,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              // Fallback: código tipeable (por si el QR falla o para web).
+              SelectableText(
+                code,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 8,
+                  color: FoodlyThemes.primaryFoodly,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(S.current.groupOrderInviteHint,
+                  style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderInviteShareCta,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () => Share.share(
+                  S.current.groupOrderInviteShareMsg(businessName, code),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Host: transfiere la titularidad (F2b §A.1). Bottom sheet con los
   /// participantes elegibles + confirmación.
   Future<void> _onTransferHost(
@@ -391,6 +484,13 @@ class _GroupOrderView extends StatelessWidget {
       ),
       centerTitle: true,
       actions: [
+        // F3a: invitar a la mesa (código corto) — mientras la orden esté OPEN.
+        if (order != null && order.isOpen)
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_1_rounded, color: Colors.white),
+            tooltip: S.current.groupOrderInviteCta,
+            onPressed: () => _onInvite(context),
+          ),
         if (canTransfer || canUnlock)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),

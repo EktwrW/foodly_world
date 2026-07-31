@@ -8895,6 +8895,146 @@ class S {
     );
   }
 
+  /// `Invite`
+  String get groupOrderInviteCta {
+    return Intl.message(
+      'Invite',
+      name: 'groupOrderInviteCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invite your table`
+  String get groupOrderInviteTitle {
+    return Intl.message(
+      'Invite your table',
+      name: 'groupOrderInviteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share this code — valid for 24 hours`
+  String get groupOrderInviteHint {
+    return Intl.message(
+      'Share this code — valid for 24 hours',
+      name: 'groupOrderInviteHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share code`
+  String get groupOrderInviteShareCta {
+    return Intl.message(
+      'Share code',
+      name: 'groupOrderInviteShareCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join our order at {business}! Open Foodly, go to the restaurant menu and use code {code}`
+  String groupOrderInviteShareMsg(String business, String code) {
+    return Intl.message(
+      'Join our order at $business! Open Foodly, go to the restaurant menu and use code $code',
+      name: 'groupOrderInviteShareMsg',
+      desc: '',
+      args: [business, code],
+    );
+  }
+
+  /// `Scan your table's QR`
+  String get groupOrderScanTitle {
+    return Intl.message(
+      'Scan your table\'s QR',
+      name: 'groupOrderScanTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask the host to show the order's QR code`
+  String get groupOrderScanHint {
+    return Intl.message(
+      'Ask the host to show the order\'s QR code',
+      name: 'groupOrderScanHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter code manually`
+  String get groupOrderEnterCodeManually {
+    return Intl.message(
+      'Enter code manually',
+      name: 'groupOrderEnterCodeManually',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Got invited? Join with a code`
+  String get groupOrderJoinCta {
+    return Intl.message(
+      'Got invited? Join with a code',
+      name: 'groupOrderJoinCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join an order`
+  String get groupOrderJoinTitle {
+    return Intl.message(
+      'Join an order',
+      name: 'groupOrderJoinTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invitation code`
+  String get groupOrderJoinHint {
+    return Intl.message(
+      'Invitation code',
+      name: 'groupOrderJoinHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid or expired code`
+  String get groupOrderJoinFailed {
+    return Intl.message(
+      'Invalid or expired code',
+      name: 'groupOrderJoinFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active group order`
+  String get groupOrderOngoingChannelName {
+    return Intl.message(
+      'Active group order',
+      name: 'groupOrderOngoingChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status of your ongoing group order`
+  String get groupOrderOngoingChannelDesc {
+    return Intl.message(
+      'Status of your ongoing group order',
+      name: 'groupOrderOngoingChannelDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Your payment: {base} + {fee} processing fee`
   String groupOrderTipBaseSummary(String base, String fee) {
     return Intl.message(

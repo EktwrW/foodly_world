@@ -113,6 +113,15 @@ class GroupOrderRepo {
     }
   }
 
+  /// F3a: unirse con código corto de invitación.
+  Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async {
+    try {
+      return ApiResult.success(await _client.joinByCode(code: code));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<GroupOrderResponseDM>> removeParticipant(
     String uuid,
     String participantUuid,
