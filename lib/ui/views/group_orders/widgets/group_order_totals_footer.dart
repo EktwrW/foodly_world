@@ -65,6 +65,9 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     final paid = order.paidCount;
     final total = order.participants.length;
     final isOpen = order.isOpen;
+    // Modo SOLO (e2e ronda 3): la barra de progreso y el lenguaje de "partes"
+    // existen para coordinar a VARIOS pagadores; con uno duplican el CTA.
+    final solo = total <= 1;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
@@ -77,8 +80,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Progreso de pago — solo tras el lock (antes nadie ha pagado).
-          if (!isOpen) ...[
+          // Progreso de pago — solo tras el lock y con VARIOS pagadores.
+          if (!isOpen && !solo) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -147,8 +150,11 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             // del comensal) — nunca un monto menor al del PaymentSheet.
             CustomNeumorphicButton(
               text: _canPay
-                  ? S.current.groupOrderPayMyShare(
-                      formatMoney(myShare + order.payerFixedFee, order.currency))
+                  ? (solo
+                      ? S.current.groupOrderPayFullOrder(
+                          formatMoney(myShare + order.payerFixedFee, order.currency))
+                      : S.current.groupOrderPayMyShare(
+                          formatMoney(myShare + order.payerFixedFee, order.currency)))
                   : S.current.groupOrderNoBalanceDue,
               disabled: !_canPay,
               margin: EdgeInsets.zero,

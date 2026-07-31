@@ -129,8 +129,9 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                   formatMoney(widget.order.liveSubtotalFor(widget.participant), widget.order.currency),
                   style: FoodlyTextStyles.itemPricePurpleBold,
                 ),
-                // Estado de pago: solo tiene sentido tras el lock.
-                if (!widget.order.isOpen) ...[
+                // Estado de pago: solo tras el lock y con VARIOS participantes
+                // (en solitario es ruido — el CTA del footer ya lo dice todo).
+                if (!widget.order.isOpen && widget.order.participants.length > 1) ...[
                   const SizedBox(width: 8),
                   GroupOrderPaymentStatusBadge(status: widget.participant.paymentStatus),
                 ],
