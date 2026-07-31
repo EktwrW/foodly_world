@@ -8,20 +8,19 @@ import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
+import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:foodly_world/core/routing/app_routes.dart';
-import 'package:foodly_world/core/services/pending_group_join.dart';
-import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 
 class AuthSessionService {
   final BaseConfig _config;

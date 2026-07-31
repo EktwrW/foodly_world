@@ -1,12 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:foodly_world/core/core_exports.dart';
-import 'package:foodly_world/core/routing/app_routes.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart'
-    show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/pending_group_join.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:go_router/go_router.dart';

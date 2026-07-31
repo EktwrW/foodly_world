@@ -2,7 +2,6 @@ import 'dart:async' show Timer;
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart' show FadeIn;
-import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart' show ListExtensions;
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;

@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page
 import 'package:foodly_world/ui/views/business/reservations/manage_reservations_page.dart';
 import 'package:foodly_world/ui/views/business/service_packages/manage_service_packages_page.dart';
 import 'package:foodly_world/ui/views/group_orders/group_order_page.dart';
+import 'package:foodly_world/ui/views/group_orders/join_by_link_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
@@ -48,7 +49,6 @@ import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/vi
 import 'package:foodly_world/ui/views/visited_business/service_packages/visit_service_packages_page.dart';
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:foodly_world/ui/views/group_orders/join_by_link_page.dart';
 
 /// True when the app is running on the menu.foodly.solutions subdomain.
 /// Production: Uri.base.host starts with 'menu.'

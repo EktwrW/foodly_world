@@ -89,7 +89,7 @@ class VisitBusinessFooterButtons extends StatelessWidget {
                         }
                       : () {},
                   dimension: 24,
-                  iconSize: 31,
+                  iconSize: 26,
                   iconData: Icons.table_restaurant_outlined,
                   buttonText: S.current.reservation,
                   textStyle: FoodlyTextStyles.footerButtonSmall,
