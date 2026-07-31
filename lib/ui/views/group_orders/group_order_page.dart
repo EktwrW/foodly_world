@@ -5,15 +5,19 @@ import 'package:foodly_world/core/services/stripe_payment_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
 /// Compone los widgets de la rebanada 1 con el GroupOrderCubit y el
@@ -25,7 +29,7 @@ class GroupOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GroupOrderCubit(repo: di(), logger: di())..load(orderUuid),
+      create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(orderUuid),
       child: const _GroupOrderView(),
     );
   }
@@ -36,11 +40,33 @@ class _GroupOrderView extends StatelessWidget {
 
   /// Flujo de pago con PaymentSheet. Sin [coverUuids] paga MI parte; con
   /// ellos cubre la parte de esos participantes ("yo invito", F2b §A.2).
+  /// Antes de crear el intent se ofrece la propina (F2c §B.2).
   Future<void> _onPay(BuildContext context, {List<String>? coverUuids}) async {
     final cubit = context.read<GroupOrderCubit>();
-    final uuid = cubit.vm.order?.uuid;
+    final order = cubit.vm.order;
+    final uuid = order?.uuid;
 
-    final intent = await cubit.createPayIntent(coverParticipantUuids: coverUuids);
+    // Base del pago (solo para mostrar los % de propina; el cobro real lo
+    // calcula SIEMPRE el backend).
+    final double base = coverUuids == null
+        ? cubit.vm.myShare
+        : (order?.participants
+                .where((p) => coverUuids.contains(p.uuid))
+                .fold<double>(0, (acc, p) => acc + p.remainingDue) ??
+            0);
+
+    final tip = await _askTip(
+      context,
+      base,
+      order?.currency ?? 'EUR',
+      serviceFee: order?.payerFixedFee ?? 0,
+    );
+    if (tip == null || !context.mounted) return; // canceló el selector
+
+    final intent = await cubit.createPayIntent(
+      coverParticipantUuids: coverUuids,
+      tipAmount: tip > 0 ? tip : null,
+    );
     if (!context.mounted) return;
 
     final secret = intent?.clientSecret;
@@ -66,11 +92,220 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
-  /// Host: cierra el pedido (congela precios) y sincroniza el carrito del menú.
+  /// Host: cierra el pedido (congela precios) y sincroniza el carrito del
+  /// menú. F2c §B.1: con VARIOS participantes primero elige cómo dividir;
+  /// con uno solo no hay nada que dividir y se cierra directo (feedback e2e
+  /// 2026-07-31).
   Future<void> _onLock(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
-    await cubit.lock();
+    final participants = cubit.vm.order?.participants.length ?? 1;
+
+    String? mode = 'by_items';
+    if (participants > 1) {
+      mode = await _askSplitMode(context);
+      if (mode == null || !context.mounted) return; // canceló
+    }
+
+    await cubit.lock(splitMode: mode);
     await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Diálogo de división estilo Foodly: dos opciones tipo tarjeta con radio,
+  /// sin selección inicial; el CTA se habilita al elegir.
+  Future<String?> _askSplitMode(BuildContext context) {
+    String? selected;
+
+    Widget option({
+      required StateSetter setState,
+      required String value,
+      required IconData icon,
+      required String title,
+      required String subtitle,
+    }) {
+      final isSelected = selected == value;
+      return InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => setState(() => selected = value),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected
+                  ? FoodlyThemes.primaryFoodly
+                  : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+              width: isSelected ? 2 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: FoodlyThemes.primaryFoodly, size: 26),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: FoodlyTextStyles.labelBold),
+                    const SizedBox(height: 2),
+                    Text(subtitle, style: FoodlyTextStyles.caption),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                isSelected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
+                color: isSelected
+                    ? FoodlyThemes.primaryFoodly
+                    : FoodlyThemes.secondaryFoodly,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(S.current.groupOrderSplitModeTitle,
+                    style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+                const SizedBox(height: 16),
+                option(
+                  setState: setState,
+                  value: 'by_items',
+                  icon: Icons.receipt_long_rounded,
+                  title: S.current.groupOrderSplitByItems,
+                  subtitle: S.current.groupOrderSplitByItemsDesc,
+                ),
+                const SizedBox(height: 10),
+                option(
+                  setState: setState,
+                  value: 'equal_split',
+                  icon: Icons.balance_rounded,
+                  title: S.current.groupOrderSplitEqual,
+                  subtitle: S.current.groupOrderSplitEqualDesc,
+                ),
+                const SizedBox(height: 16),
+                CustomNeumorphicButton(
+                  text: S.current.groupOrderLockCta,
+                  disabled: selected == null,
+                  margin: EdgeInsets.zero,
+                  onPressed: selected == null ? null : () => Navigator.pop(ctx, selected),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Selector de propina (F2c §B.2): 0% / 5% / 10% / monto libre.
+  /// Muestra el desglose del pago (parte + tarifa fija del comensal) para
+  /// transparencia total. Devuelve null si el usuario cancela (aborta el pago).
+  Future<double?> _askTip(
+    BuildContext context,
+    double base,
+    String currency, {
+    double serviceFee = 0,
+  }) async {
+    double pct(double p) => double.parse((base * p).toStringAsFixed(2));
+
+    final choice = await showModalBottomSheet<Object>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 2),
+              child: Text(S.current.groupOrderTipTitle, style: FoodlyTextStyles.sectionsTitle),
+            ),
+            // Desglose transparente: parte + tarifa de la plataforma de pagos.
+            if (serviceFee > 0)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+                child: Text(
+                  S.current.groupOrderTipBaseSummary(
+                    formatMoney(base, currency),
+                    formatMoney(serviceFee, currency),
+                  ),
+                  style: FoodlyTextStyles.caption,
+                ),
+              ),
+            ListTile(
+              leading: const Icon(Icons.money_off_rounded, color: FoodlyThemes.secondaryFoodly),
+              title: Text(S.current.groupOrderTipNone, style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, 0.0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite_outline_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text('5% · ${formatMoney(pct(0.05), currency)}', style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, pct(0.05)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text('10% · ${formatMoney(pct(0.10), currency)}', style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, pct(0.10)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_rounded, color: FoodlyThemes.primaryFoodly),
+              title: Text(S.current.groupOrderTipCustom, style: FoodlyTextStyles.labelBold),
+              onTap: () => Navigator.pop(ctx, 'custom'),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !context.mounted) return null;
+    if (choice is double) return choice;
+
+    // Monto libre.
+    final controller = TextEditingController();
+    final custom = await showDialog<double>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(S.current.groupOrderTipCustom),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          decoration: const InputDecoration(prefixText: '€ '),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
+          TextButton(
+            onPressed: () {
+              final v = double.tryParse(controller.text.replaceAll(',', '.'));
+              Navigator.pop(ctx, (v == null || v < 0) ? 0.0 : v);
+            },
+            child: Text(S.current.confirm),
+          ),
+        ],
+      ),
+    );
+    return custom;
   }
 
   Future<bool> _confirm(BuildContext context, String message) async {
@@ -121,6 +356,96 @@ class _GroupOrderView extends StatelessWidget {
       await cubit.unlock();
       await di<ActiveGroupOrderCubit>().refresh();
     }
+  }
+
+  /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
+  Future<void> _onInvite(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    final businessName = cubit.vm.order?.businessName ?? 'Foodly';
+
+    final invite = await cubit.createInvitation();
+    if (!context.mounted) return;
+    final code = invite?.inviteCode ?? invite?.inviteToken;
+    if (code == null) {
+      FoodlySnackbars.errorGeneric(context, S.current.groupOrderJoinFailed);
+      return;
+    }
+
+    await showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(S.current.groupOrderInviteTitle,
+                  style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              // El QR es el protagonista (filosofía Foodly: escanear, no
+              // tipear); el código corto queda como fallback visible.
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.12),
+                        blurRadius: 18,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: QrImageView(
+                    data: '$kGroupOrderInviteUrlBase$code',
+                    size: 190,
+                    eyeStyle: const QrEyeStyle(
+                      eyeShape: QrEyeShape.circle,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                    dataModuleStyle: const QrDataModuleStyle(
+                      dataModuleShape: QrDataModuleShape.circle,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              // Fallback: código tipeable (por si el QR falla o para web).
+              SelectableText(
+                code,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 8,
+                  color: FoodlyThemes.primaryFoodly,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(S.current.groupOrderInviteHint,
+                  style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderInviteShareCta,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () => Share.share(
+                  '${S.current.groupOrderInviteShareMsg(businessName, code)}\n$kGroupOrderInviteUrlBase$code',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   /// Host: transfiere la titularidad (F2b §A.1). Bottom sheet con los
@@ -241,6 +566,13 @@ class _GroupOrderView extends StatelessWidget {
       ),
       centerTitle: true,
       actions: [
+        // F3a: invitar a la mesa (código corto) — mientras la orden esté OPEN.
+        if (order != null && order.isOpen)
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_1_rounded, color: Colors.white),
+            tooltip: S.current.groupOrderInviteCta,
+            onPressed: () => _onInvite(context),
+          ),
         if (canTransfer || canUnlock)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
@@ -345,6 +677,12 @@ class _Content extends StatelessWidget {
                   initiallyExpanded: p.uuid == vm.myParticipantUuid,
                   onRemoveItem: _canRemoveItemsOf(p)
                       ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid)
+                      : null,
+                  // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
+                  // con VARIOS participantes — compartir "con la mesa" no
+                  // significa nada si estás solo (feedback e2e 2026-07-31).
+                  onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
+                      ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
                       : null,
                   onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
                   paidByName: _paidByNameFor(p),

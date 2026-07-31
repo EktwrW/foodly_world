@@ -37,6 +37,8 @@ import 'package:foodly_world/core/network/users/user_discovery_client.dart';
 import 'package:foodly_world/core/network/users/user_discovery_repo.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/services/first_launch_service.dart';
+import 'package:foodly_world/core/services/group_order_ongoing_notification_service.dart';
+import 'package:foodly_world/core/services/group_order_realtime_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/core/services/service_events_tracker.dart';
 import 'package:foodly_world/core/services/stripe_payment_service.dart';
@@ -123,7 +125,9 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => BuzzRepo(buzzClient: di()))
       ..registerLazySingleton(() => ReservationRepo(reservationClient: di()))
       ..registerLazySingleton(() => GroupOrderRepo(client: di()))
-      ..registerLazySingleton(() => ActiveGroupOrderCubit(repo: di(), logger: di()))
+      ..registerLazySingleton(() => GroupOrderRealtimeService(authSession: di())) // F3a
+      ..registerLazySingleton(() => GroupOrderOngoingNotificationService()) // F3a
+      ..registerLazySingleton(() => ActiveGroupOrderCubit(repo: di(), logger: di(), ongoingNotification: di()))
       ..registerLazySingleton(() => StripePaymentService())
       ..registerLazySingleton(() => BusinessAvailabilityRepo(client: di()))
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))

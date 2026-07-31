@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/views/business/promotions/manage_promotions_page
 import 'package:foodly_world/ui/views/business/reservations/manage_reservations_page.dart';
 import 'package:foodly_world/ui/views/business/service_packages/manage_service_packages_page.dart';
 import 'package:foodly_world/ui/views/group_orders/group_order_page.dart';
+import 'package:foodly_world/ui/views/group_orders/join_by_link_page.dart';
 import 'package:foodly_world/ui/views/home/home_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/categories_page.dart';
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/cubit/categories_cubit.dart';
@@ -552,6 +553,19 @@ class AppRouter {
               child: MenuImportPage(
                 businessMenuUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
               ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          GoRoute(
+            // App Link F3a: llega desde fuera de la app (QR/link). SIN
+            // redirectors: JoinByLinkPage espera la restauración de sesión y
+            // decide (join directo o login con código pendiente).
+            path: AppRoutes.joinGroupOrder.path,
+            name: AppRoutes.joinGroupOrder.name,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: JoinByLinkPage(code: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
             ),

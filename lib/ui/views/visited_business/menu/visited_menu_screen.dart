@@ -148,7 +148,7 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
           // activa para este negocio (spec v2 §D.1), flotando sobre el FAB.
           Positioned(
             right: 0,
-            bottom: 64, // fabSize (54) + 10 de separación
+            bottom: 124, // fabSize (54) + 70 — despegado del FAB (feedback e2e 2026-07-31)
             child: ActiveGroupOrderChip(businessUuid: vm.menuDM?.businessUuid ?? ''),
           ),
         ],

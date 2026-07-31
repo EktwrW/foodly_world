@@ -1,3 +1,4 @@
+import 'dart:async' show Timer;
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart' show FadeIn;

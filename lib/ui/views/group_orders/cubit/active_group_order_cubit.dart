@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
+import 'package:foodly_world/core/services/group_order_ongoing_notification_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:logger/logger.dart';
 
@@ -14,15 +15,57 @@ import 'package:logger/logger.dart';
 class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   final GroupOrderRepo _repo;
   final Logger _logger;
+  final GroupOrderOngoingNotificationService? _ongoingNotification;
   bool _busy = false;
 
-  ActiveGroupOrderCubit({required GroupOrderRepo repo, required Logger logger})
-      : _repo = repo,
+  ActiveGroupOrderCubit({
+    required GroupOrderRepo repo,
+    required Logger logger,
+    GroupOrderOngoingNotificationService? ongoingNotification,
+  })  : _repo = repo,
         _logger = logger,
+        _ongoingNotification = ongoingNotification,
         super(null);
+
+  /// F3a (spec v2 §D.2): la notificación ongoing de Android refleja SIEMPRE
+  /// el estado del carrito — un solo hook para todas las emisiones.
+  @override
+  void onChange(Change<GroupOrderDM?> change) {
+    super.onChange(change);
+    final order = change.nextState;
+    if (order == null || !(order.isOpen || order.isPayable)) {
+      _ongoingNotification?.dismiss();
+    } else {
+      _ongoingNotification?.show(
+        orderUuid: order.uuid,
+        businessName: order.businessName.isNotEmpty ? order.businessName : 'Foodly',
+        total: order.isOpen ? order.subtotal : order.totalAmount,
+        itemCount: order.items.fold<int>(0, (acc, i) => acc + i.quantity),
+        currency: order.currency,
+      );
+    }
+  }
 
   /// ¿Hay una orden activa para este negocio?
   bool isActiveFor(String businessUuid) => state != null && state!.businessUuid == businessUuid;
+
+  /// Bug e2e 2026-07-31: el carrito era SOLO memoria local — el mismo usuario
+  /// desde otro dispositivo no veía su orden activa (y podía crear otra).
+  /// Al entrar al menú de un negocio se sincroniza contra /mine y, si el
+  /// servidor tiene una orden activa para este negocio, se adopta.
+  Future<void> syncForBusiness(String businessUuid) async {
+    if (isActiveFor(businessUuid) || _busy) return;
+    final res = await _repo.getMyGroupOrders();
+    res.when(
+      success: (r) {
+        final remote = r.groupOrders
+            .where((o) => o.businessUuid == businessUuid && (o.isOpen || o.isPayable))
+            .toList();
+        if (remote.isNotEmpty) emit(remote.first);
+      },
+      failure: (_) {/* silencioso: sin red no bloqueamos el menú */},
+    );
+  }
 
   /// Total de unidades en la orden activa (para el badge del menú).
   int get itemCount => state?.items.fold<int>(0, (acc, i) => acc + i.quantity) ?? 0;
@@ -68,6 +111,26 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         return false;
       },
     );
+  }
+
+  /// F3a: unirse a la orden de OTRO usuario con el código de invitación.
+  /// Si funciona, la orden ajena pasa a ser el carrito activo.
+  Future<bool> joinWithCode(String code) async {
+    if (_busy) return false;
+    _busy = true;
+    final res = await _repo.joinByCode(code.trim().toUpperCase());
+    final ok = res.when(
+      success: (r) {
+        emit(r.groupOrder);
+        return true;
+      },
+      failure: (e) {
+        _logger.e(e);
+        return false;
+      },
+    );
+    _busy = false;
+    return ok;
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).

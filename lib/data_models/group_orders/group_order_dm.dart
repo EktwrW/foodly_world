@@ -36,6 +36,14 @@ enum GroupOrderStatus {
   cancelled,
 }
 
+/// Modo de división elegido por el host al cerrar la orden (F2c §B.1).
+enum GroupSplitMode {
+  @JsonValue('by_items')
+  byItems,
+  @JsonValue('equal_split')
+  equalSplit,
+}
+
 enum GroupParticipantRole {
   @JsonValue('host')
   host,
@@ -70,6 +78,8 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     @JsonKey(name: 'unit_price_at_lock', fromJson: _money) @Default(0) double unitPriceAtLock,
     @JsonKey(name: 'unit_price_preview', fromJson: _money) @Default(0) double unitPricePreview,
     @Default(1) int quantity,
+    // Compartido (F2c): su importe se reparte entre todos en by_items.
+    @Default(false) bool shared,
     String? notes,
   }) = _GroupOrderItemDM;
 
@@ -132,6 +142,10 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @JsonKey(name: 'business_name') @Default('') String businessName,
     @JsonKey(name: 'business_logo') String? businessLogo,
     @Default('EUR') String currency,
+    @JsonKey(name: 'split_mode') @Default(GroupSplitMode.byItems) GroupSplitMode splitMode,
+    // Tarifa fija por transacción a cargo del comensal (plataforma de pagos).
+    // La UI SIEMPRE la muestra en el desglose antes de pagar.
+    @JsonKey(name: 'payer_fixed_fee', fromJson: _money) @Default(0.25) double payerFixedFee,
     @JsonKey(fromJson: _money) @Default(0) double subtotal,
     @JsonKey(name: 'total_amount', fromJson: _money) @Default(0) double totalAmount,
     @JsonKey(name: 'total_paid', fromJson: _money) @Default(0) double totalPaid,
@@ -218,6 +232,10 @@ abstract class PayIntentResponseDM with _$PayIntentResponseDM {
     @JsonKey(name: 'client_secret') String? clientSecret,
     @JsonKey(name: 'transaction_uuid') String? transactionUuid,
     @JsonKey(fromJson: _money) @Default(0) double amount,
+    // Propina (F2c §B.2), tarifa del comensal y total cobrado (base+tip+fee).
+    @JsonKey(name: 'tip_amount', fromJson: _money) @Default(0) double tipAmount,
+    @JsonKey(name: 'service_fee_amount', fromJson: _money) @Default(0) double serviceFeeAmount,
+    @JsonKey(name: 'total_charged', fromJson: _money) @Default(0) double totalCharged,
     @Default('EUR') String currency,
     // Participantes que este pago cubre ("yo invito", F2b).
     @JsonKey(name: 'covered_participant_uuids') @Default(<String>[]) List<String> coveredParticipantUuids,
@@ -233,6 +251,8 @@ abstract class GroupInviteResponseDM with _$GroupInviteResponseDM {
   const factory GroupInviteResponseDM({
     @Default(true) bool success,
     @JsonKey(name: 'invite_token') String? inviteToken,
+    // Código corto tipeable (F3a): lo comparte el host con la mesa.
+    @JsonKey(name: 'invite_code') String? inviteCode,
     @JsonKey(name: 'invite_url') String? inviteUrl,
   }) = _GroupInviteResponseDM;
 

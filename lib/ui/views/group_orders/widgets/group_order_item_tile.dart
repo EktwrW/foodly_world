@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
@@ -9,16 +10,19 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formattin
 /// pidió. Estilo Foodly (Card temada + FoodlyTextStyles).
 ///
 /// `onRemove` se muestra solo cuando la orden está OPEN (editable).
+/// `onToggleShared` (F2c): alterna "compartido con la mesa"; null = sin toggle.
 class GroupOrderItemTile extends StatelessWidget {
   final GroupOrderItemDM item;
   final String currency;
   final VoidCallback? onRemove;
+  final VoidCallback? onToggleShared;
 
   const GroupOrderItemTile({
     super.key,
     required this.item,
     this.currency = 'EUR',
     this.onRemove,
+    this.onToggleShared,
   });
 
   @override
@@ -49,11 +53,32 @@ class GroupOrderItemTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    item.name,
-                    style: FoodlyTextStyles.labelBold,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          item.name,
+                          style: FoodlyTextStyles.labelBold,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      // Badge "Compartido" (F2c): se reparte entre todos.
+                      if (item.shared) ...[
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            S.current.groupOrderSharedBadge,
+                            style: FoodlyTextStyles.captionPurpleBold,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   if ((item.notes ?? '').trim().isNotEmpty)
                     Padding(
@@ -71,6 +96,23 @@ class GroupOrderItemTile extends StatelessWidget {
             const SizedBox(width: 8),
             // Total de línea
             Text(formatMoney(item.lineTotal, currency), style: FoodlyTextStyles.itemPriceBold),
+            // Toggle compartido (F2c, solo editable): resalta si está activo.
+            if (onToggleShared != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 6),
+                child: IconButton(
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  tooltip: S.current.groupOrderShareItemTooltip,
+                  onPressed: onToggleShared,
+                  icon: Icon(
+                    item.shared ? Icons.group_rounded : Icons.group_outlined,
+                    size: 18,
+                    color: item.shared ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                  ),
+                ),
+              ),
             // Botón de eliminar (solo si editable)
             if (onRemove != null)
               Padding(

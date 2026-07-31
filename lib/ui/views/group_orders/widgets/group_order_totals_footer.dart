@@ -41,6 +41,25 @@ class GroupOrderTotalsFooter extends StatelessWidget {
 
   bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
 
+  /// Explica la tarifa de procesamiento: es de la plataforma de pagos, no de
+  /// Foodly ni del restaurante.
+  void _showFeeInfo(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(S.current.groupOrderServiceFeeTitle),
+        content: Text(
+          S.current.groupOrderServiceFeeExplain(
+            formatMoney(order.payerFixedFee, order.currency),
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.confirm)),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final paid = order.paidCount;
@@ -124,9 +143,12 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               onPressed: onLock,
             )
           else ...[
+            // Los CTAs muestran el TOTAL real a cobrar (parte + tarifa fija
+            // del comensal) — nunca un monto menor al del PaymentSheet.
             CustomNeumorphicButton(
               text: _canPay
-                  ? S.current.groupOrderPayMyShare(formatMoney(myShare, order.currency))
+                  ? S.current.groupOrderPayMyShare(
+                      formatMoney(myShare + order.payerFixedFee, order.currency))
                   : S.current.groupOrderNoBalanceDue,
               disabled: !_canPay,
               margin: EdgeInsets.zero,
@@ -137,11 +159,40 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               const SizedBox(height: 8),
               CustomNeumorphicButton(
                 text: S.current.groupOrderPayAllRemaining(
-                  formatMoney(order.totalRemaining, order.currency),
+                  formatMoney(order.totalRemaining + order.payerFixedFee, order.currency),
                 ),
                 disabled: isBusy,
                 margin: EdgeInsets.zero,
                 onPressed: onPayAll,
+              ),
+            ],
+            // Transparencia del fee: nota discreta + detalle al tocar ⓘ.
+            if (order.payerFixedFee > 0 &&
+                (_canPay || (onPayAll != null && order.totalRemaining > 0))) ...[
+              const SizedBox(height: 8),
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () => _showFeeInfo(context),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.info_outline_rounded,
+                          size: 14, color: FoodlyThemes.secondaryFoodly),
+                      const SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          S.current.groupOrderServiceFeeNotice(
+                            formatMoney(order.payerFixedFee, order.currency),
+                          ),
+                          style: FoodlyTextStyles.caption,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ],

@@ -34,6 +34,8 @@ enum AppRoutes {
   visitPromotions('$mainRoute/$_routeIdParam/visit-business/visit-promotions', 'visitPromotions'),
   // Group Orders & Split Payments
   groupOrder('/group-order/$_routeIdParam', 'groupOrder'),
+  // App Link F3a: foodly.solutions/join/{code} → join automático.
+  joinGroupOrder('/join/$_routeIdParam', 'joinGroupOrder'),
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //

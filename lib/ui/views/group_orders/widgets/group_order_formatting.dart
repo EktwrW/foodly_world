@@ -18,3 +18,12 @@ String currencySymbol(String currency) {
 /// Formatea un monto con su símbolo: 12.5, 'EUR' -> "€12.50".
 String formatMoney(double amount, String currency) =>
     '${currencySymbol(currency)}${amount.toStringAsFixed(2)}';
+
+/// Prefijo del payload de los QR de invitación a órdenes grupales (F3a).
+/// El sheet de invitar lo codifica y el escáner de "unirse" lo parsea;
+/// el código corto tipeable queda como fallback.
+const String kGroupOrderInvitePrefix = 'FOODLY-GO:';
+
+/// URL base de invitación (App Links): abre Foodly y une automáticamente;
+/// sin app instalada, la landing sirve /join/{code} con fallback y stores.
+const String kGroupOrderInviteUrlBase = 'https://foodly.solutions/join/';

@@ -1367,5 +1367,58 @@
       }
     }
   },
+  "groupOrderSharedBadge": "Compartido",
+  "groupOrderShareItemTooltip": "Compartir con la mesa",
+  "groupOrderSplitModeTitle": "¿Cómo dividimos la cuenta?",
+  "groupOrderSplitByItems": "Por ítems",
+  "groupOrderSplitByItemsDesc": "Cada quien paga lo suyo; lo compartido se reparte.",
+  "groupOrderSplitEqual": "En partes iguales",
+  "groupOrderSplitEqualDesc": "El total se divide entre todos por igual.",
+  "groupOrderTipTitle": "¿Quieres dejar propina?",
+  "groupOrderTipNone": "Sin propina",
+  "groupOrderTipCustom": "Otro monto",
+  "groupOrderServiceFeeNotice": "Incluye {amount} de tarifa de la plataforma de pagos",
+  "@groupOrderServiceFeeNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderServiceFeeTitle": "Tarifa de procesamiento",
+  "groupOrderServiceFeeExplain": "Esta tarifa fija de {amount} por transacción corresponde a la plataforma que procesa tu pago con tarjeta de forma segura. No es un cobro de Foodly ni del restaurante.",
+  "@groupOrderServiceFeeExplain": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderInviteCta": "Invitar",
+  "groupOrderInviteTitle": "Invita a tu mesa",
+  "groupOrderInviteHint": "Comparte este código — vale por 24 horas",
+  "groupOrderInviteShareCta": "Compartir código",
+  "groupOrderInviteShareMsg": "¡Únete a nuestra orden en {business}! Abre Foodly, entra al menú del restaurante y usa el código {code}",
+  "@groupOrderInviteShareMsg": {"placeholders": {"business": {"type": "String"}, "code": {"type": "String"}}},
+  "groupOrderScanTitle": "Escanea el QR de tu mesa",
+  "groupOrderScanHint": "Pídele al anfitrión que muestre el QR de la orden",
+  "groupOrderEnterCodeManually": "Ingresar código manualmente",
+  "groupOrderJoinCta": "¿Te invitaron? Únete con un código",
+  "groupOrderJoinTitle": "Unirse a una orden",
+  "groupOrderJoinHint": "Código de invitación",
+  "groupOrderJoinFailed": "Código inválido o vencido",
+  "groupOrderOngoingChannelName": "Orden grupal activa",
+  "groupOrderOngoingChannelDesc": "Estado de tu orden grupal en curso",
+  "groupOrderTipBaseSummary": "Tu pago: {base} + {fee} de tarifa de procesamiento",
+  "@groupOrderTipBaseSummary": {
+    "placeholders": {
+      "base": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
 }

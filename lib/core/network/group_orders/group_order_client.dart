@@ -28,8 +28,13 @@ abstract class GroupOrderClient {
     @Field('origin') String? origin, // menu | qr | reservation
   });
 
+  /// F2c §B.1: el host elige el modo de división al cerrar
+  /// (by_items | equal_split; default backend: by_items).
   @PATCH('/group-orders/{uuid}/lock')
-  Future<GroupOrderResponseDM> lockGroupOrder(@Path('uuid') String uuid);
+  Future<GroupOrderResponseDM> lockGroupOrder(
+    @Path('uuid') String uuid, {
+    @Field('split_mode') String? splitMode,
+  });
 
   /// Reabre una orden cerrada SIN pagos (F2b §C.1, solo host).
   @PATCH('/group-orders/{uuid}/unlock')
@@ -50,6 +55,10 @@ abstract class GroupOrderClient {
   @POST('/group-orders/{uuid}/participants')
   Future<GroupOrderResponseDM> joinGroupOrder(@Path('uuid') String uuid);
 
+  /// F3a: unirse con el código corto de invitación de la mesa.
+  @POST('/group-orders/join')
+  Future<GroupOrderResponseDM> joinByCode({@Field('code') required String code});
+
   @DELETE('/group-orders/{uuid}/participants/{participantUuid}')
   Future<GroupOrderResponseDM> removeParticipant(
     @Path('uuid') String uuid,
@@ -65,6 +74,7 @@ abstract class GroupOrderClient {
     @Field('itemable_uuid') required String itemableUuid,
     @Field('quantity') required int quantity,
     @Field('notes') String? notes,
+    @Field('shared') bool? shared, // F2c: compartido con la mesa
   });
 
   @PATCH('/group-orders/{uuid}/items/{itemUuid}')
@@ -73,6 +83,7 @@ abstract class GroupOrderClient {
     @Path('itemUuid') String itemUuid, {
     @Field('quantity') int? quantity,
     @Field('notes') String? notes,
+    @Field('shared') bool? shared,
   });
 
   @DELETE('/group-orders/{uuid}/items/{itemUuid}')
@@ -97,5 +108,6 @@ abstract class GroupOrderClient {
   Future<PayIntentResponseDM> createPayIntent(
     @Path('uuid') String uuid, {
     @Field('cover_participant_uuids') List<String>? coverParticipantUuids,
+    @Field('tip_amount') double? tipAmount, // F2c §B.2
   });
 }

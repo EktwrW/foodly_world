@@ -1367,5 +1367,58 @@
       }
     }
   },
+  "groupOrderSharedBadge": "Partilhado",
+  "groupOrderShareItemTooltip": "Partilhar com a mesa",
+  "groupOrderSplitModeTitle": "Como dividimos a conta?",
+  "groupOrderSplitByItems": "Por itens",
+  "groupOrderSplitByItemsDesc": "Cada um paga o seu; o partilhado divide-se.",
+  "groupOrderSplitEqual": "Em partes iguais",
+  "groupOrderSplitEqualDesc": "O total divide-se igualmente entre todos.",
+  "groupOrderTipTitle": "Queres deixar gorjeta?",
+  "groupOrderTipNone": "Sem gorjeta",
+  "groupOrderTipCustom": "Outro valor",
+  "groupOrderServiceFeeNotice": "Inclui {amount} de taxa da plataforma de pagamentos",
+  "@groupOrderServiceFeeNotice": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderServiceFeeTitle": "Taxa de processamento",
+  "groupOrderServiceFeeExplain": "Esta taxa fixa de {amount} por transação corresponde à plataforma que processa o teu pagamento com cartão de forma segura. Não é uma cobrança da Foodly nem do restaurante.",
+  "@groupOrderServiceFeeExplain": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderInviteCta": "Convidar",
+  "groupOrderInviteTitle": "Convida a tua mesa",
+  "groupOrderInviteHint": "Partilha este código — válido por 24 horas",
+  "groupOrderInviteShareCta": "Partilhar código",
+  "groupOrderInviteShareMsg": "Junta-te ao nosso pedido em {business}! Abre a Foodly, entra no menu do restaurante e usa o código {code}",
+  "@groupOrderInviteShareMsg": {"placeholders": {"business": {"type": "String"}, "code": {"type": "String"}}},
+  "groupOrderScanTitle": "Digitaliza o QR da tua mesa",
+  "groupOrderScanHint": "Pede ao anfitrião para mostrar o QR do pedido",
+  "groupOrderEnterCodeManually": "Introduzir código manualmente",
+  "groupOrderJoinCta": "Foste convidado? Junta-te com um código",
+  "groupOrderJoinTitle": "Juntar-se a um pedido",
+  "groupOrderJoinHint": "Código de convite",
+  "groupOrderJoinFailed": "Código inválido ou expirado",
+  "groupOrderOngoingChannelName": "Pedido em grupo ativo",
+  "groupOrderOngoingChannelDesc": "Estado do teu pedido em grupo em curso",
+  "groupOrderTipBaseSummary": "O teu pagamento: {base} + {fee} de taxa de processamento",
+  "@groupOrderTipBaseSummary": {
+    "placeholders": {
+      "base": {
+        "type": "String"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
   "guestGateGroupOrder": "Inicia sessão ou regista-te para criar um pedido em grupo."
 }

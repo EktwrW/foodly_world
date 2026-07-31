@@ -8765,6 +8765,286 @@ class S {
     );
   }
 
+  /// `Shared`
+  String get groupOrderSharedBadge {
+    return Intl.message(
+      'Shared',
+      name: 'groupOrderSharedBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share with the table`
+  String get groupOrderShareItemTooltip {
+    return Intl.message(
+      'Share with the table',
+      name: 'groupOrderShareItemTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How should we split the bill?`
+  String get groupOrderSplitModeTitle {
+    return Intl.message(
+      'How should we split the bill?',
+      name: 'groupOrderSplitModeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By items`
+  String get groupOrderSplitByItems {
+    return Intl.message(
+      'By items',
+      name: 'groupOrderSplitByItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Everyone pays for their own; shared items are split.`
+  String get groupOrderSplitByItemsDesc {
+    return Intl.message(
+      'Everyone pays for their own; shared items are split.',
+      name: 'groupOrderSplitByItemsDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Equal parts`
+  String get groupOrderSplitEqual {
+    return Intl.message(
+      'Equal parts',
+      name: 'groupOrderSplitEqual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The total is split evenly among everyone.`
+  String get groupOrderSplitEqualDesc {
+    return Intl.message(
+      'The total is split evenly among everyone.',
+      name: 'groupOrderSplitEqualDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to tip?`
+  String get groupOrderTipTitle {
+    return Intl.message(
+      'Would you like to tip?',
+      name: 'groupOrderTipTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tip`
+  String get groupOrderTipNone {
+    return Intl.message(
+      'No tip',
+      name: 'groupOrderTipNone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom amount`
+  String get groupOrderTipCustom {
+    return Intl.message(
+      'Custom amount',
+      name: 'groupOrderTipCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Includes a {amount} payment platform fee`
+  String groupOrderServiceFeeNotice(String amount) {
+    return Intl.message(
+      'Includes a $amount payment platform fee',
+      name: 'groupOrderServiceFeeNotice',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Processing fee`
+  String get groupOrderServiceFeeTitle {
+    return Intl.message(
+      'Processing fee',
+      name: 'groupOrderServiceFeeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This flat {amount} per-transaction fee goes to the platform that securely processes your card payment. It is not charged by Foodly or the restaurant.`
+  String groupOrderServiceFeeExplain(String amount) {
+    return Intl.message(
+      'This flat $amount per-transaction fee goes to the platform that securely processes your card payment. It is not charged by Foodly or the restaurant.',
+      name: 'groupOrderServiceFeeExplain',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Invite`
+  String get groupOrderInviteCta {
+    return Intl.message(
+      'Invite',
+      name: 'groupOrderInviteCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invite your table`
+  String get groupOrderInviteTitle {
+    return Intl.message(
+      'Invite your table',
+      name: 'groupOrderInviteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share this code — valid for 24 hours`
+  String get groupOrderInviteHint {
+    return Intl.message(
+      'Share this code — valid for 24 hours',
+      name: 'groupOrderInviteHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share code`
+  String get groupOrderInviteShareCta {
+    return Intl.message(
+      'Share code',
+      name: 'groupOrderInviteShareCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join our order at {business}! Open Foodly, go to the restaurant menu and use code {code}`
+  String groupOrderInviteShareMsg(String business, String code) {
+    return Intl.message(
+      'Join our order at $business! Open Foodly, go to the restaurant menu and use code $code',
+      name: 'groupOrderInviteShareMsg',
+      desc: '',
+      args: [business, code],
+    );
+  }
+
+  /// `Scan your table's QR`
+  String get groupOrderScanTitle {
+    return Intl.message(
+      'Scan your table\'s QR',
+      name: 'groupOrderScanTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask the host to show the order's QR code`
+  String get groupOrderScanHint {
+    return Intl.message(
+      'Ask the host to show the order\'s QR code',
+      name: 'groupOrderScanHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter code manually`
+  String get groupOrderEnterCodeManually {
+    return Intl.message(
+      'Enter code manually',
+      name: 'groupOrderEnterCodeManually',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Got invited? Join with a code`
+  String get groupOrderJoinCta {
+    return Intl.message(
+      'Got invited? Join with a code',
+      name: 'groupOrderJoinCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join an order`
+  String get groupOrderJoinTitle {
+    return Intl.message(
+      'Join an order',
+      name: 'groupOrderJoinTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invitation code`
+  String get groupOrderJoinHint {
+    return Intl.message(
+      'Invitation code',
+      name: 'groupOrderJoinHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid or expired code`
+  String get groupOrderJoinFailed {
+    return Intl.message(
+      'Invalid or expired code',
+      name: 'groupOrderJoinFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active group order`
+  String get groupOrderOngoingChannelName {
+    return Intl.message(
+      'Active group order',
+      name: 'groupOrderOngoingChannelName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status of your ongoing group order`
+  String get groupOrderOngoingChannelDesc {
+    return Intl.message(
+      'Status of your ongoing group order',
+      name: 'groupOrderOngoingChannelDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your payment: {base} + {fee} processing fee`
+  String groupOrderTipBaseSummary(String base, String fee) {
+    return Intl.message(
+      'Your payment: $base + $fee processing fee',
+      name: 'groupOrderTipBaseSummary',
+      desc: '',
+      args: [base, fee],
+    );
+  }
+
   /// `Log in or sign up to start a group order.`
   String get guestGateGroupOrder {
     return Intl.message(

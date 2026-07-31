@@ -134,6 +134,15 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="menu.foodly.solutions"/>
             </intent-filter>
+            <!-- App Links F3a: invitaciones a órdenes grupales
+                 (foodly.solutions/join/{code} → join automático in-app).
+                 Verificado contra /.well-known/assetlinks.json de la landing. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="foodly.solutions" android:pathPrefix="/join"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -141,6 +150,14 @@
             android:theme="@style/Ucrop.CropTheme"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <!-- FCM: ícono monocromo + color de acento para pushes (bug e2e 4:
+             el launcher a color se veía invisible/deforme en la status bar). -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_foodly" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/notification_color" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

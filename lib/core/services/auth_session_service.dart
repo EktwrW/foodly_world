@@ -8,12 +8,14 @@ import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
+import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/nlp_search/device_info_dto.dart';
 import 'package:foodly_world/ui/shared_widgets/logout/logout_dialog_content.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
@@ -238,6 +240,24 @@ class AuthSessionService {
       _isLoggingOut = false;
       // Un login real cierra el modo invitado: a partir de acá hay sesión.
       isGuest = false;
+
+      // App Links F3a: si el usuario llegó por foodly.solutions/join/{code}
+      // sin sesión, el código quedó estacionado — se canjea apenas hay
+      // sesión válida y se navega directo a la orden. Post-frame para no
+      // pisar la navegación del propio flujo de login.
+      final pendingJoin = PendingGroupJoin.consume();
+      if (pendingJoin != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final cubit = di<ActiveGroupOrderCubit>();
+          final ok = await cubit.joinWithCode(pendingJoin);
+          if (ok && cubit.state != null) {
+            di<AppRouter>().appRouter.goNamed(
+              AppRoutes.groupOrder.name,
+              pathParameters: {AppRoutes.routeIdParam: cubit.state!.uuid},
+            );
+          }
+        });
+      }
     }
 
     // Prefer access_token (new dual-token field); fall back to token (legacy).
@@ -573,6 +593,11 @@ class AuthSessionService {
     _notificationsCubit?.clear();
     di<SocialCubit>().clear();
     di<NearbyPromotionsCubit>().clear();
+    // Bug e2e 2026-07-31: el carrito de orden grupal es singleton en memoria
+    // y sobrevivía al logout — el siguiente usuario del MISMO dispositivo
+    // heredaba la orden ajena ("Ver pedido" → 403, círculo vicioso). end()
+    // además retira la notificación ongoing de Android vía onChange.
+    di<ActiveGroupOrderCubit>().end();
     _rootBloc?.add(const RootEvent.userLogout());
     forceToLogin = true;
   }

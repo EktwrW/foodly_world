@@ -18,6 +18,7 @@ _GroupOrderItemDM _$GroupOrderItemDMFromJson(Map<String, dynamic> json) =>
           ? 0
           : _money(json['unit_price_preview']),
       quantity: (json['quantity'] as num?)?.toInt() ?? 1,
+      shared: json['shared'] as bool? ?? false,
       notes: json['notes'] as String?,
     );
 
@@ -29,6 +30,7 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
       'unit_price_at_lock': instance.unitPriceAtLock,
       'unit_price_preview': instance.unitPricePreview,
       'quantity': instance.quantity,
+      'shared': instance.shared,
       if (instance.notes case final value?) 'notes': value,
     };
 
@@ -83,6 +85,12 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       businessName: json['business_name'] as String? ?? '',
       businessLogo: json['business_logo'] as String?,
       currency: json['currency'] as String? ?? 'EUR',
+      splitMode:
+          $enumDecodeNullable(_$GroupSplitModeEnumMap, json['split_mode']) ??
+              GroupSplitMode.byItems,
+      payerFixedFee: json['payer_fixed_fee'] == null
+          ? 0.25
+          : _money(json['payer_fixed_fee']),
       subtotal: json['subtotal'] == null ? 0 : _money(json['subtotal']),
       totalAmount:
           json['total_amount'] == null ? 0 : _money(json['total_amount']),
@@ -112,6 +120,8 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'business_name': instance.businessName,
       if (instance.businessLogo case final value?) 'business_logo': value,
       'currency': instance.currency,
+      'split_mode': _$GroupSplitModeEnumMap[instance.splitMode]!,
+      'payer_fixed_fee': instance.payerFixedFee,
       'subtotal': instance.subtotal,
       'total_amount': instance.totalAmount,
       'total_paid': instance.totalPaid,
@@ -131,6 +141,11 @@ const _$GroupOrderStatusEnumMap = {
   GroupOrderStatus.completed: 'completed',
   GroupOrderStatus.expired: 'expired',
   GroupOrderStatus.cancelled: 'cancelled',
+};
+
+const _$GroupSplitModeEnumMap = {
+  GroupSplitMode.byItems: 'by_items',
+  GroupSplitMode.equalSplit: 'equal_split',
 };
 
 _GroupOrderResponseDM _$GroupOrderResponseDMFromJson(
@@ -175,6 +190,12 @@ _PayIntentResponseDM _$PayIntentResponseDMFromJson(Map<String, dynamic> json) =>
       clientSecret: json['client_secret'] as String?,
       transactionUuid: json['transaction_uuid'] as String?,
       amount: json['amount'] == null ? 0 : _money(json['amount']),
+      tipAmount: json['tip_amount'] == null ? 0 : _money(json['tip_amount']),
+      serviceFeeAmount: json['service_fee_amount'] == null
+          ? 0
+          : _money(json['service_fee_amount']),
+      totalCharged:
+          json['total_charged'] == null ? 0 : _money(json['total_charged']),
       currency: json['currency'] as String? ?? 'EUR',
       coveredParticipantUuids:
           (json['covered_participant_uuids'] as List<dynamic>?)
@@ -189,6 +210,9 @@ Map<String, dynamic> _$PayIntentResponseDMToJson(
       if (instance.clientSecret case final value?) 'client_secret': value,
       if (instance.transactionUuid case final value?) 'transaction_uuid': value,
       'amount': instance.amount,
+      'tip_amount': instance.tipAmount,
+      'service_fee_amount': instance.serviceFeeAmount,
+      'total_charged': instance.totalCharged,
       'currency': instance.currency,
       'covered_participant_uuids': instance.coveredParticipantUuids,
     };
@@ -198,6 +222,7 @@ _GroupInviteResponseDM _$GroupInviteResponseDMFromJson(
     _GroupInviteResponseDM(
       success: json['success'] as bool? ?? true,
       inviteToken: json['invite_token'] as String?,
+      inviteCode: json['invite_code'] as String?,
       inviteUrl: json['invite_url'] as String?,
     );
 
@@ -206,5 +231,6 @@ Map<String, dynamic> _$GroupInviteResponseDMToJson(
     <String, dynamic>{
       'success': instance.success,
       if (instance.inviteToken case final value?) 'invite_token': value,
+      if (instance.inviteCode case final value?) 'invite_code': value,
       if (instance.inviteUrl case final value?) 'invite_url': value,
     };
