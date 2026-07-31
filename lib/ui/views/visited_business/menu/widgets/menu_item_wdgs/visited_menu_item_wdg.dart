@@ -214,7 +214,12 @@ String _groupItemableType(MenuCategory c) => switch (c) {
 
 /// Botón "+" que suma el plato a la orden grupal ACTIVA. Solo aparece cuando
 /// hay una orden abierta para ESTE negocio (reacciona al ActiveGroupOrderCubit).
-class _AddToGroupOrderButton extends StatelessWidget {
+/// Botón "+" de agregar a la orden. Feedback e2e 2026-07-31: al agregar con
+/// éxito hace un morph elegante a verde con check (~200ms de transición,
+/// check visible ~900ms) y vuelve solo. Barato en performance: es un widget
+/// de 28px con un AnimatedContainer + AnimatedSwitcher — nada de rebuilds
+/// del tile ni listeners globales.
+class _AddToGroupOrderButton extends StatefulWidget {
   final String? businessUuid;
   final String itemableType;
   final String itemUuid;
@@ -226,8 +231,38 @@ class _AddToGroupOrderButton extends StatelessWidget {
   });
 
   @override
+  State<_AddToGroupOrderButton> createState() => _AddToGroupOrderButtonState();
+}
+
+class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
+  bool _success = false;
+  bool _busy = false;
+  Timer? _revert;
+
+  @override
+  void dispose() {
+    _revert?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _onTap(ActiveGroupOrderCubit cubit) async {
+    if (_busy || _success) return; // el check en pantalla ya confirma este tap
+    _busy = true;
+    final ok = await cubit.addFood(widget.itemableType, widget.itemUuid);
+    _busy = false;
+    if (!mounted || !ok) return;
+
+    HapticFeedback.lightImpact();
+    setState(() => _success = true);
+    _revert?.cancel();
+    _revert = Timer(const Duration(milliseconds: 900), () {
+      if (mounted) setState(() => _success = false);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final uuid = businessUuid;
+    final uuid = widget.businessUuid;
     if (uuid == null || uuid.isEmpty) return const SizedBox.shrink();
 
     final cubit = di<ActiveGroupOrderCubit>();
@@ -238,13 +273,38 @@ class _AddToGroupOrderButton extends StatelessWidget {
         if (!active) return const SizedBox.shrink();
 
         return InkWell(
-          onTap: () => cubit.addFood(itemableType, itemUuid),
+          onTap: () => _onTap(cubit),
           borderRadius: BorderRadius.circular(20),
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOut,
             width: 28,
             height: 28,
-            decoration: const BoxDecoration(color: FoodlyThemes.primaryFoodly, shape: BoxShape.circle),
-            child: const Icon(Icons.add_rounded, color: Colors.white, size: 18),
+            decoration: BoxDecoration(
+              color: _success ? FoodlyThemes.tertiaryFoodly : FoodlyThemes.primaryFoodly,
+              shape: BoxShape.circle,
+              boxShadow: _success
+                  ? [
+                      BoxShadow(
+                        color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.45),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ]
+                  : const [],
+            ),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              switchInCurve: Curves.easeOutBack,
+              transitionBuilder: (child, animation) =>
+                  ScaleTransition(scale: animation, child: child),
+              child: Icon(
+                _success ? Icons.check_rounded : Icons.add_rounded,
+                key: ValueKey(_success),
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
           ),
         );
       },

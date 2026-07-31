@@ -23,3 +23,7 @@ String formatMoney(double amount, String currency) =>
 /// El sheet de invitar lo codifica y el escáner de "unirse" lo parsea;
 /// el código corto tipeable queda como fallback.
 const String kGroupOrderInvitePrefix = 'FOODLY-GO:';
+
+/// URL base de invitación (App Links): abre Foodly y une automáticamente;
+/// sin app instalada, la landing sirve /join/{code} con fallback y stores.
+const String kGroupOrderInviteUrlBase = 'https://foodly.solutions/join/';

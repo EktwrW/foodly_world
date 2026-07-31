@@ -49,6 +49,24 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// ¿Hay una orden activa para este negocio?
   bool isActiveFor(String businessUuid) => state != null && state!.businessUuid == businessUuid;
 
+  /// Bug e2e 2026-07-31: el carrito era SOLO memoria local — el mismo usuario
+  /// desde otro dispositivo no veía su orden activa (y podía crear otra).
+  /// Al entrar al menú de un negocio se sincroniza contra /mine y, si el
+  /// servidor tiene una orden activa para este negocio, se adopta.
+  Future<void> syncForBusiness(String businessUuid) async {
+    if (isActiveFor(businessUuid) || _busy) return;
+    final res = await _repo.getMyGroupOrders();
+    res.when(
+      success: (r) {
+        final remote = r.groupOrders
+            .where((o) => o.businessUuid == businessUuid && (o.isOpen || o.isPayable))
+            .toList();
+        if (remote.isNotEmpty) emit(remote.first);
+      },
+      failure: (_) {/* silencioso: sin red no bloqueamos el menú */},
+    );
+  }
+
   /// Total de unidades en la orden activa (para el badge del menú).
   int get itemCount => state?.items.fold<int>(0, (acc, i) => acc + i.quantity) ?? 0;
 

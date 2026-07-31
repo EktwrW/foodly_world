@@ -93,45 +93,127 @@ class _GroupOrderView extends StatelessWidget {
   }
 
   /// Host: cierra el pedido (congela precios) y sincroniza el carrito del
-  /// menú. F2c §B.1: primero elige cómo dividir la cuenta.
+  /// menú. F2c §B.1: con VARIOS participantes primero elige cómo dividir;
+  /// con uno solo no hay nada que dividir y se cierra directo (feedback e2e
+  /// 2026-07-31).
   Future<void> _onLock(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
+    final participants = cubit.vm.order?.participants.length ?? 1;
 
-    final mode = await showModalBottomSheet<String>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
-              child: Text(S.current.groupOrderSplitModeTitle, style: FoodlyTextStyles.sectionsTitle),
-            ),
-            ListTile(
-              leading: const Icon(Icons.receipt_long_rounded, color: FoodlyThemes.primaryFoodly),
-              title: Text(S.current.groupOrderSplitByItems, style: FoodlyTextStyles.labelBold),
-              subtitle: Text(S.current.groupOrderSplitByItemsDesc, style: FoodlyTextStyles.caption),
-              onTap: () => Navigator.pop(ctx, 'by_items'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.balance_rounded, color: FoodlyThemes.primaryFoodly),
-              title: Text(S.current.groupOrderSplitEqual, style: FoodlyTextStyles.labelBold),
-              subtitle: Text(S.current.groupOrderSplitEqualDesc, style: FoodlyTextStyles.caption),
-              onTap: () => Navigator.pop(ctx, 'equal_split'),
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-    if (mode == null || !context.mounted) return;
+    String? mode = 'by_items';
+    if (participants > 1) {
+      mode = await _askSplitMode(context);
+      if (mode == null || !context.mounted) return; // canceló
+    }
 
     await cubit.lock(splitMode: mode);
     await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Diálogo de división estilo Foodly: dos opciones tipo tarjeta con radio,
+  /// sin selección inicial; el CTA se habilita al elegir.
+  Future<String?> _askSplitMode(BuildContext context) {
+    String? selected;
+
+    Widget option({
+      required StateSetter setState,
+      required String value,
+      required IconData icon,
+      required String title,
+      required String subtitle,
+    }) {
+      final isSelected = selected == value;
+      return InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => setState(() => selected = value),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected
+                  ? FoodlyThemes.primaryFoodly
+                  : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+              width: isSelected ? 2 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: FoodlyThemes.primaryFoodly, size: 26),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: FoodlyTextStyles.labelBold),
+                    const SizedBox(height: 2),
+                    Text(subtitle, style: FoodlyTextStyles.caption),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                isSelected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
+                color: isSelected
+                    ? FoodlyThemes.primaryFoodly
+                    : FoodlyThemes.secondaryFoodly,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(S.current.groupOrderSplitModeTitle,
+                    style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+                const SizedBox(height: 16),
+                option(
+                  setState: setState,
+                  value: 'by_items',
+                  icon: Icons.receipt_long_rounded,
+                  title: S.current.groupOrderSplitByItems,
+                  subtitle: S.current.groupOrderSplitByItemsDesc,
+                ),
+                const SizedBox(height: 10),
+                option(
+                  setState: setState,
+                  value: 'equal_split',
+                  icon: Icons.balance_rounded,
+                  title: S.current.groupOrderSplitEqual,
+                  subtitle: S.current.groupOrderSplitEqualDesc,
+                ),
+                const SizedBox(height: 16),
+                CustomNeumorphicButton(
+                  text: S.current.groupOrderLockCta,
+                  disabled: selected == null,
+                  margin: EdgeInsets.zero,
+                  onPressed: selected == null ? null : () => Navigator.pop(ctx, selected),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /// Selector de propina (F2c §B.2): 0% / 5% / 10% / monto libre.
@@ -322,7 +404,7 @@ class _GroupOrderView extends StatelessWidget {
                     ],
                   ),
                   child: QrImageView(
-                    data: '$kGroupOrderInvitePrefix$code',
+                    data: '$kGroupOrderInviteUrlBase$code',
                     size: 190,
                     eyeStyle: const QrEyeStyle(
                       eyeShape: QrEyeShape.circle,
@@ -356,7 +438,7 @@ class _GroupOrderView extends StatelessWidget {
                 disabled: false,
                 margin: EdgeInsets.zero,
                 onPressed: () => Share.share(
-                  S.current.groupOrderInviteShareMsg(businessName, code),
+                  '${S.current.groupOrderInviteShareMsg(businessName, code)}\n$kGroupOrderInviteUrlBase$code',
                 ),
               ),
             ],
@@ -596,8 +678,10 @@ class _Content extends StatelessWidget {
                   onRemoveItem: _canRemoveItemsOf(p)
                       ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid)
                       : null,
-                  // F2c: misma regla que el borrado (OPEN + dueño/host).
-                  onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy)
+                  // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
+                  // con VARIOS participantes — compartir "con la mesa" no
+                  // significa nada si estás solo (feedback e2e 2026-07-31).
+                  onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
                       ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
                       : null,
                   onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,

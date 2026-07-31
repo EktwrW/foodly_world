@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'dart:ui' show Color;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -22,8 +23,11 @@ class GroupOrderOngoingNotificationService {
 
   Future<void> _ensureInitialized() async {
     if (_initialized || !_supported) return;
+    // ic_stat_foodly: silueta MONOCROMA (la "F" del wordmark en blanco) —
+    // Android tiñe los status icons él mismo; el launcher a color se veía
+    // invisible en Android nuevos y con bordes en los viejos (bug e2e 4).
     const settings = InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      android: AndroidInitializationSettings('@drawable/ic_stat_foodly'),
     );
     await _plugin.initialize(settings: settings);
     _initialized = true;
@@ -52,7 +56,8 @@ class GroupOrderOngoingNotificationService {
       autoCancel: false,
       onlyAlertOnce: true,
       showWhen: false,
-      icon: '@mipmap/ic_launcher',
+      icon: '@drawable/ic_stat_foodly',
+      color: const Color(0xFF79005D), // acento Foodly al tintar
     );
 
     await _plugin.show(

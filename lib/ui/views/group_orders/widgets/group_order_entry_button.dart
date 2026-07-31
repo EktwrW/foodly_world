@@ -22,9 +22,24 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 ///
 /// Reacciona al [ActiveGroupOrderCubit] (singleton DI), el "carrito de grupo"
 /// que también alimenta el botón "+" de cada ítem del menú.
-class GroupOrderEntryButton extends StatelessWidget {
+class GroupOrderEntryButton extends StatefulWidget {
   final String businessUuid;
   const GroupOrderEntryButton({super.key, required this.businessUuid});
+
+  @override
+  State<GroupOrderEntryButton> createState() => _GroupOrderEntryButtonState();
+}
+
+class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
+  String get businessUuid => widget.businessUuid;
+
+  @override
+  void initState() {
+    super.initState();
+    // Bug e2e 2026-07-31: adopta la orden activa del servidor para este
+    // negocio (mismo usuario en otro dispositivo) antes de ofrecer "crear".
+    di<ActiveGroupOrderCubit>().syncForBusiness(businessUuid);
+  }
 
   /// F3a: unirse a la orden de otro. La vía PRINCIPAL es escanear el QR de
   /// la mesa (filosofía Foodly: cero fricción); tipear el código corto queda
@@ -68,10 +83,17 @@ class GroupOrderEntryButton extends StatelessWidget {
                             ? null
                             : capture.barcodes.first.rawValue;
                         if (raw == null) return;
-                        // Acepta el payload propio o un código pelado.
-                        final code = raw.startsWith(kGroupOrderInvitePrefix)
-                            ? raw.substring(kGroupOrderInvitePrefix.length)
-                            : (raw.length == 6 ? raw : null);
+                        // Acepta la URL de invitación (App Link), el
+                        // payload legacy FOODLY-GO: o un código pelado.
+                        String? code;
+                        if (raw.contains('/join/')) {
+                          code = raw.split('/join/').last.split(RegExp(r'[/?#]')).first;
+                        } else if (raw.startsWith(kGroupOrderInvitePrefix)) {
+                          code = raw.substring(kGroupOrderInvitePrefix.length);
+                        } else if (raw.length == 6) {
+                          code = raw;
+                        }
+                        code = (code != null && code.length == 6) ? code : null;
                         if (code == null) return;
                         handled = true;
                         Navigator.pop(ctx, code);
