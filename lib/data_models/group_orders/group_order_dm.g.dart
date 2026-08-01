@@ -82,6 +82,7 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       status: $enumDecodeNullable(_$GroupOrderStatusEnumMap, json['status']) ??
           GroupOrderStatus.open,
       businessUuid: json['business_uuid'] as String?,
+      businessMenuUuid: json['business_menu_uuid'] as String?,
       businessName: json['business_name'] as String? ?? '',
       businessLogo: json['business_logo'] as String?,
       currency: json['currency'] as String? ?? 'EUR',
@@ -117,6 +118,8 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'uuid': instance.uuid,
       'status': _$GroupOrderStatusEnumMap[instance.status]!,
       if (instance.businessUuid case final value?) 'business_uuid': value,
+      if (instance.businessMenuUuid case final value?)
+        'business_menu_uuid': value,
       'business_name': instance.businessName,
       if (instance.businessLogo case final value?) 'business_logo': value,
       'currency': instance.currency,

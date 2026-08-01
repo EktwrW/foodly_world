@@ -105,6 +105,26 @@ class GroupOrderRepo {
     }
   }
 
+  /// e2e r4: host elimina definitivamente una orden vacía.
+  Future<ApiResult<bool>> deleteGroupOrder(String uuid) async {
+    try {
+      await _client.deleteGroupOrder(uuid);
+      return const ApiResult.success(true);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// e2e r4: miembro sin ítems propios abandona la orden.
+  Future<ApiResult<bool>> leaveGroupOrder(String uuid) async {
+    try {
+      await _client.leaveGroupOrder(uuid);
+      return const ApiResult.success(true);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<GroupOrderResponseDM>> joinGroupOrder(String uuid) async {
     try {
       return ApiResult.success(await _client.joinGroupOrder(uuid));

@@ -26,6 +26,7 @@ class JoinByLinkPage extends StatefulWidget {
 
 class _JoinByLinkPageState extends State<JoinByLinkPage> {
   bool _failed = false;
+  String? _failureDetail;
 
   @override
   void initState() {
@@ -50,17 +51,40 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
       return;
     }
 
+    // Con sesión: esta página ES la dueña del join — se limpia cualquier
+    // código estacionado para que el redirect global no vuelva a desviar
+    // acá (loop) cuando naveguemos a la orden.
+    PendingGroupJoin.consume();
+
     final cubit = di<ActiveGroupOrderCubit>();
     final ok = await cubit.joinWithCode(widget.code);
     if (!mounted) return;
 
     if (ok && cubit.state != null) {
-      context.goNamed(
-        AppRoutes.groupOrder.name,
-        pathParameters: {AppRoutes.routeIdParam: cubit.state!.uuid},
-      );
+      // UX (decisión e2e r4): tras unirse se aterriza en el MENÚ del negocio
+      // para agregar ítems de una — la orden queda activa y visible en el
+      // chip flotante. OJO: /visit-menu/:id lleva el uuid del MENÚ (no del
+      // negocio) — el BE lo expone como business_menu_uuid. Fallback a la
+      // página de la orden si no vino.
+      final menuUuid = cubit.state!.businessMenuUuid;
+      if (menuUuid != null && menuUuid.isNotEmpty) {
+        context.goNamed(
+          AppRoutes.visitMenu.name,
+          pathParameters: {AppRoutes.routeIdParam: menuUuid},
+        );
+      } else {
+        context.goNamed(
+          AppRoutes.groupOrder.name,
+          pathParameters: {AppRoutes.routeIdParam: cubit.state!.uuid},
+        );
+      }
     } else {
-      setState(() => _failed = true);
+      // e2e r5: mostrar la causa REAL cuando el backend la manda ("la orden
+      // ya no admite participantes") en vez del genérico "código inválido".
+      setState(() {
+        _failed = true;
+        _failureDetail = cubit.lastJoinError;
+      });
     }
   }
 
@@ -82,7 +106,7 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
                 const Icon(Icons.link_off_rounded, size: 56, color: FoodlyThemes.secondaryFoodly),
                 const SizedBox(height: 16),
                 Text(
-                  S.current.groupOrderJoinFailed,
+                  _failureDetail ?? S.current.groupOrderJoinFailed,
                   style: FoodlyTextStyles.sectionsTitle,
                   textAlign: TextAlign.center,
                 ),
@@ -91,7 +115,21 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
                   text: S.current.groupOrderBackHome,
                   disabled: false,
                   margin: EdgeInsets.zero,
-                  onPressed: () => context.goNamed(AppRoutes.start.name),
+                  // e2e r5: salida DETERMINISTA. Ir a '/' disparaba la
+                  // restauración de LAST_PATH, que en storage viejo podía
+                  // ser el propio /join → re-render del error = botón
+                  // "muerto". Directo a la main page (o login sin sesión).
+                  onPressed: () {
+                    final auth = di<AuthSessionService>();
+                    if (auth.isLoggedIn) {
+                      context.goNamed(
+                        AppRoutes.foodlyMainPage.name,
+                        pathParameters: {AppRoutes.routeIdParam: auth.uuid},
+                      );
+                    } else {
+                      context.goNamed(AppRoutes.login.name);
+                    }
+                  },
                 ),
               ],
             ),

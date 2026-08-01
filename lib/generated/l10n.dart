@@ -8975,6 +8975,46 @@ class S {
     );
   }
 
+  /// `Delete order`
+  String get groupOrderDeleteCta {
+    return Intl.message(
+      'Delete order',
+      name: 'groupOrderDeleteCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete this empty order? This action cannot be undone.`
+  String get groupOrderDeleteConfirm {
+    return Intl.message(
+      'Delete this empty order? This action cannot be undone.',
+      name: 'groupOrderDeleteConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave the order`
+  String get groupOrderLeaveCta {
+    return Intl.message(
+      'Leave the order',
+      name: 'groupOrderLeaveCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave this order? You can rejoin by scanning the QR.`
+  String get groupOrderLeaveConfirm {
+    return Intl.message(
+      'Leave this order? You can rejoin by scanning the QR.',
+      name: 'groupOrderLeaveConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/stripe_payment_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
@@ -358,6 +359,34 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
+  /// e2e r4: la orden ya no existe / ya no soy parte — cerrar carrito y
+  /// volver al menú con el back jerárquico (nunca atascado).
+  void _exitOrder(BuildContext context) {
+    di<ActiveGroupOrderCubit>().end();
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      di<AppRouter>().goBackToLastRoute();
+    }
+  }
+
+  /// e2e r4: host elimina definitivamente una orden vacía.
+  Future<void> _onDelete(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    if (await _confirm(context, S.current.groupOrderDeleteConfirm) && context.mounted) {
+      if (await cubit.deleteOrder() && context.mounted) _exitOrder(context);
+    }
+  }
+
+  /// e2e r4: miembro sin ítems abandona la orden.
+  Future<void> _onLeave(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    if (await _confirm(context, S.current.groupOrderLeaveConfirm) && context.mounted) {
+      if (await cubit.leaveOrder() && context.mounted) _exitOrder(context);
+    }
+  }
+
   /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
   Future<void> _onInvite(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
@@ -545,6 +574,9 @@ class _GroupOrderView extends StatelessWidget {
     final isHost = order != null && _iAmHostOf(vm, order);
     final canTransfer = isHost && order.participants.length > 1;
     final canUnlock = isHost && order.isLocked && order.totalPaid <= 0;
+    // e2e r4: eliminar (host, orden vacía) / abandonar (miembro sin ítems).
+    final canDelete = order != null && order.canBeDeletedBy(vm.myParticipantUuid);
+    final canLeave = order != null && order.canBeLeftBy(vm.myParticipantUuid);
 
     return AppBar(
       backgroundColor: Colors.transparent,
@@ -552,7 +584,18 @@ class _GroupOrderView extends StatelessWidget {
       toolbarHeight: 60,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
-        onPressed: () => Navigator.of(context).maybePop(),
+        // Back jerárquico (e2e r4): con stack, pop normal (vuelve al menú
+        // preservando su estado); sin stack (deep link, notificación,
+        // chip global), goBackToLastRoute reconstruye el menú del negocio
+        // vía LAST_VISITED_MENU_UUID — nunca queda atascado.
+        onPressed: () {
+          final navigator = Navigator.of(context);
+          if (navigator.canPop()) {
+            navigator.pop();
+          } else {
+            di<AppRouter>().goBackToLastRoute();
+          }
+        },
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -573,7 +616,7 @@ class _GroupOrderView extends StatelessWidget {
             tooltip: S.current.groupOrderInviteCta,
             onPressed: () => _onInvite(context),
           ),
-        if (canTransfer || canUnlock)
+        if (canTransfer || canUnlock || canDelete || canLeave)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onSelected: (value) {
@@ -582,6 +625,10 @@ class _GroupOrderView extends StatelessWidget {
                   _onTransferHost(context, order, vm.myParticipantUuid);
                 case 'unlock':
                   _onUnlock(context);
+                case 'delete':
+                  _onDelete(context);
+                case 'leave':
+                  _onLeave(context);
               }
             },
             itemBuilder: (_) => [
@@ -589,6 +636,33 @@ class _GroupOrderView extends StatelessWidget {
                 PopupMenuItem(value: 'transfer', child: Text(S.current.groupOrderTransferHost)),
               if (canUnlock)
                 PopupMenuItem(value: 'unlock', child: Text(S.current.groupOrderUnlockCta)),
+              // Acciones de salida en rojo, al final del menú (destructivas).
+              if (canDelete)
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.delete_outline_rounded, size: 18, color: Colors.redAccent),
+                      const SizedBox(width: 8),
+                      Text(S.current.groupOrderDeleteCta,
+                          style: const TextStyle(color: Colors.redAccent)),
+                    ],
+                  ),
+                ),
+              if (canLeave)
+                PopupMenuItem(
+                  value: 'leave',
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.logout_rounded, size: 18, color: Colors.redAccent),
+                      const SizedBox(width: 8),
+                      Text(S.current.groupOrderLeaveCta,
+                          style: const TextStyle(color: Colors.redAccent)),
+                    ],
+                  ),
+                ),
             ],
           ),
       ],
