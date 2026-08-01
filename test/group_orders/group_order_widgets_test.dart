@@ -178,11 +178,25 @@ void main() {
     });
 
     testWidgets('orden LOCKED: subtotal = amount_due congelado y badge de pago visible', (tester) async {
-      final locked = openOrder.copyWith(status: GroupOrderStatus.locked);
+      // e2e r3: el badge solo aparece con VARIOS participantes (en solitario
+      // es ruido) — la orden lockeada del test necesita un segundo comensal.
+      const p2 = GroupOrderParticipantDM(uuid: 'p2', displayName: 'Beto', amountDue: 5.0);
+      final locked = openOrder.copyWith(
+        status: GroupOrderStatus.locked,
+        participants: [p1, p2],
+      );
       await tester.pumpWidget(_host(ParticipantExpansibleTile(order: locked, participant: p1)));
 
       expect(find.text('€99.00'), findsOneWidget);
       expect(find.byIcon(Icons.circle_outlined), findsOneWidget); // pendiente
+    });
+
+    testWidgets('orden LOCKED en solitario: sin badge de pago (modo solo)', (tester) async {
+      final locked = openOrder.copyWith(status: GroupOrderStatus.locked);
+      await tester.pumpWidget(_host(ParticipantExpansibleTile(order: locked, participant: p1)));
+
+      expect(find.text('€99.00'), findsOneWidget);
+      expect(find.byIcon(Icons.circle_outlined), findsNothing);
     });
 
     testWidgets('initiallyExpanded muestra los ítems sin tap (mi grupo)', (tester) async {

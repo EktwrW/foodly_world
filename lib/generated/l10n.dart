@@ -8975,6 +8975,26 @@ class S {
     );
   }
 
+  /// `Pay the order · {amount}`
+  String groupOrderPayFullOrder(String amount) {
+    return Intl.message(
+      'Pay the order · $amount',
+      name: 'groupOrderPayFullOrder',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Back to home`
+  String get groupOrderBackHome {
+    return Intl.message(
+      'Back to home',
+      name: 'groupOrderBackHome',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Got invited? Join with a code`
   String get groupOrderJoinCta {
     return Intl.message(

@@ -5,6 +5,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
@@ -321,6 +322,17 @@ class AppRouter {
       navigatorKey: rootNavigatorKey,
       observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
       redirect: (context, state) async {
+        // App Links F3a (bug e2e ronda 3): en cold-start sin sesión el
+        // redirector global intercepta ANTES de que /join/{code} construya
+        // su página — el código se captura acá y setSession lo canjea tras
+        // el login, garantizando el join aunque el flujo pase por auth.
+        if (state.uri.path.startsWith('/join/')) {
+          final seg = state.uri.pathSegments;
+          if (seg.length >= 2 && seg[1].length == 6) {
+            PendingGroupJoin.code = seg[1].toUpperCase();
+          }
+        }
+
         // Public menu subdomain — no auth, no session, no redirects.
         if (_isMenuSubdomain) return null;
 
