@@ -49,11 +49,16 @@ class GroupOrderFloatingChipHost extends StatelessWidget {
     return BlocBuilder<StateStreamable<GroupOrderDM?>, GroupOrderDM?>(
       bloc: source,
       builder: (context, order) => AnimatedBuilder(
-        // routerDelegate notifica en CADA cambio de ubicación (incl. pops) —
-        // así el chip aparece/desaparece al entrar/salir de la orden.
-        animation: routes,
+        // routerDelegate notifica en cambios de ubicación y el marcador de
+        // la página de la orden cubre los pushes imperativos que la URI no
+        // refleja (e2e r6) — con cualquiera de los dos, el chip reevalúa.
+        animation: Listenable.merge([routes, GroupOrderPageVisibility.openCount]),
         builder: (context, _) {
-          final visible = GroupOrderChipLogic.shouldShow(order: order, location: location());
+          final visible = GroupOrderChipLogic.shouldShow(
+            order: order,
+            location: location(),
+            orderPageOpen: GroupOrderPageVisibility.isOpen,
+          );
 
           return Stack(
             textDirection: TextDirection.ltr,

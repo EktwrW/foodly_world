@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/routing/app_router.dart';
+import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/stripe_payment_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
@@ -14,23 +15,45 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
 /// Compone los widgets de la rebanada 1 con el GroupOrderCubit y el
 /// PaymentSheet de Stripe. Ver docs/group-orders-design-spec.md §13.
-class GroupOrderPage extends StatelessWidget {
+///
+/// Stateful SOLO para marcar su visibilidad en [GroupOrderPageVisibility]
+/// (e2e r6): el chip flotante global se oculta mientras esta página viva.
+class GroupOrderPage extends StatefulWidget {
   final String orderUuid;
   const GroupOrderPage({super.key, required this.orderUuid});
 
   @override
+  State<GroupOrderPage> createState() => _GroupOrderPageState();
+}
+
+class _GroupOrderPageState extends State<GroupOrderPage> {
+  @override
+  void initState() {
+    super.initState();
+    GroupOrderPageVisibility.markOpened();
+  }
+
+  @override
+  void dispose() {
+    GroupOrderPageVisibility.markClosed();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(orderUuid),
+      create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(widget.orderUuid),
       child: const _GroupOrderView(),
     );
   }
@@ -359,10 +382,20 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
-  /// e2e r4: la orden ya no existe / ya no soy parte — cerrar carrito y
-  /// volver al menú con el back jerárquico (nunca atascado).
-  void _exitOrder(BuildContext context) {
+  /// e2e r6: la orden ya no existe / ya no soy parte — cerrar carrito y
+  /// navegar DETERMINISTA al menú del negocio (go reemplaza la ubicación:
+  /// la página de la orden desaparece sí o sí; nada de depender de pop).
+  void _exitOrder(BuildContext context, GroupOrderDM? order) {
     di<ActiveGroupOrderCubit>().end();
+    final menuUuid = order?.businessMenuUuid;
+    if (menuUuid != null && menuUuid.isNotEmpty) {
+      context.goNamed(
+        AppRoutes.visitMenu.name,
+        pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      );
+      return;
+    }
+    // Sin uuid de menú (DM viejo): back jerárquico como salida segura.
     final navigator = Navigator.of(context);
     if (navigator.canPop()) {
       navigator.pop();
@@ -374,16 +407,18 @@ class _GroupOrderView extends StatelessWidget {
   /// e2e r4: host elimina definitivamente una orden vacía.
   Future<void> _onDelete(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
+    final order = cubit.vm.order; // capturado ANTES de que la orden muera
     if (await _confirm(context, S.current.groupOrderDeleteConfirm) && context.mounted) {
-      if (await cubit.deleteOrder() && context.mounted) _exitOrder(context);
+      if (await cubit.deleteOrder() && context.mounted) _exitOrder(context, order);
     }
   }
 
   /// e2e r4: miembro sin ítems abandona la orden.
   Future<void> _onLeave(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
+    final order = cubit.vm.order;
     if (await _confirm(context, S.current.groupOrderLeaveConfirm) && context.mounted) {
-      if (await cubit.leaveOrder() && context.mounted) _exitOrder(context);
+      if (await cubit.leaveOrder() && context.mounted) _exitOrder(context, order);
     }
   }
 

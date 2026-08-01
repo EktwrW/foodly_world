@@ -15,7 +15,10 @@ class _FakeOrderSource extends Cubit<GroupOrderDM?> {
 
 void main() {
   setUpAll(() async => S.load(const Locale('es')));
-  tearDown(GroupOrderChipPositionStore.reset);
+  tearDown(() {
+    GroupOrderChipPositionStore.reset();
+    GroupOrderPageVisibility.reset();
+  });
 
   const openOrder = GroupOrderDM(uuid: 'o1', subtotal: 12.5);
 
@@ -204,6 +207,23 @@ void main() {
 
       await tester.pumpWidget(host(source: source, location: location));
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
+    });
+
+    testWidgets('e2e r6: abrir la PÁGINA de la orden oculta el chip aunque '
+        'la URI no cambie; cerrarla lo re-muestra', (tester) async {
+      final source = _FakeOrderSource(openOrder);
+      final location = ValueNotifier('/visit-menu/m1'); // URI quieta a propósito
+
+      await tester.pumpWidget(host(source: source, location: location));
+      expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
+
+      GroupOrderPageVisibility.markOpened(); // initState de GroupOrderPage
+      await tester.pump();
+      expect(find.byType(ActiveGroupOrderChip), findsNothing);
+
+      GroupOrderPageVisibility.markClosed(); // dispose de GroupOrderPage
+      await tester.pump();
+      expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
     });
   });
 }

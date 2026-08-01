@@ -247,10 +247,13 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
 
   Future<void> _onTap(ActiveGroupOrderCubit cubit) async {
     if (_busy || _success) return; // el check en pantalla ya confirma este tap
-    _busy = true;
+    // e2e r6: spinner visible durante la espera — sin él, el usuario
+    // re-tapea pensando que no registró (y el merge del BE lo colapsa a 1).
+    setState(() => _busy = true);
     final ok = await cubit.addFood(widget.itemableType, widget.itemUuid);
-    _busy = false;
-    if (!mounted || !ok) return;
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (!ok) return;
 
     HapticFeedback.lightImpact();
     setState(() => _success = true);
@@ -298,12 +301,19 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
               switchInCurve: Curves.easeOutBack,
               transitionBuilder: (child, animation) =>
                   ScaleTransition(scale: animation, child: child),
-              child: Icon(
-                _success ? Icons.check_rounded : Icons.add_rounded,
-                key: ValueKey(_success),
-                color: Colors.white,
-                size: 18,
-              ),
+              child: _busy
+                  ? const SizedBox(
+                      key: ValueKey('busy'),
+                      width: 14,
+                      height: 14,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                  : Icon(
+                      _success ? Icons.check_rounded : Icons.add_rounded,
+                      key: ValueKey(_success),
+                      color: Colors.white,
+                      size: 18,
+                    ),
             ),
           ),
         );

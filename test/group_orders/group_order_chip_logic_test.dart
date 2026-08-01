@@ -48,6 +48,41 @@ void main() {
       expect(GroupOrderChipLogic.shouldShow(order: open, location: '/visit-menu/m1?tab=2'), isTrue);
       expect(GroupOrderChipLogic.shouldShow(order: open, location: '/login?from=x'), isFalse);
     });
+
+    test('e2e r6: con la PÁGINA de la orden abierta el chip se oculta '
+        'SIEMPRE, sin importar la URI (los pushes imperativos no la mueven)', () {
+      // Aunque la URI diga menú/home (push imperativo no reflejado), el
+      // marcador de ciclo de vida manda.
+      for (final loc in ['/visit-menu/m1', '/main/u1/foodly-main-page']) {
+        expect(
+          GroupOrderChipLogic.shouldShow(order: open, location: loc, orderPageOpen: true),
+          isFalse,
+          reason: loc,
+        );
+      }
+      // Y al cerrarse la página, vuelve.
+      expect(
+        GroupOrderChipLogic.shouldShow(order: open, location: '/visit-menu/m1'),
+        isTrue,
+      );
+    });
+  });
+
+  group('GroupOrderPageVisibility (marcador de ciclo de vida)', () {
+    tearDown(GroupOrderPageVisibility.reset);
+
+    test('abre/cierra con contador (soporta apilado) y nunca queda negativo', () {
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+      GroupOrderPageVisibility.markOpened();
+      expect(GroupOrderPageVisibility.isOpen, isTrue);
+      GroupOrderPageVisibility.markOpened(); // dos páginas apiladas
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isTrue); // queda una viva
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+      GroupOrderPageVisibility.markClosed(); // extra: no-op, no negativo
+      expect(GroupOrderPageVisibility.openCount.value, 0);
+    });
   });
 
   group('initialOffset', () {
