@@ -9,12 +9,14 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formattin
 /// opcionales y total de línea. Opcionalmente muestra el avatar de quién lo
 /// pidió. Estilo Foodly (Card temada + FoodlyTextStyles).
 ///
-/// `onRemove` se muestra solo cuando la orden está OPEN (editable).
+/// `onRemove` se muestra solo cuando la orden está OPEN (editable). Es un
+/// `Future` a propósito (e2e r6): mientras el borrado viaja, la X se vuelve
+/// un spinner y se ignoran re-taps.
 /// `onToggleShared` (F2c): alterna "compartido con la mesa"; null = sin toggle.
-class GroupOrderItemTile extends StatelessWidget {
+class GroupOrderItemTile extends StatefulWidget {
   final GroupOrderItemDM item;
   final String currency;
-  final VoidCallback? onRemove;
+  final Future<void> Function()? onRemove;
   final VoidCallback? onToggleShared;
 
   const GroupOrderItemTile({
@@ -24,6 +26,28 @@ class GroupOrderItemTile extends StatelessWidget {
     this.onRemove,
     this.onToggleShared,
   });
+
+  @override
+  State<GroupOrderItemTile> createState() => _GroupOrderItemTileState();
+}
+
+class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
+  bool _removing = false;
+
+  GroupOrderItemDM get item => widget.item;
+  String get currency => widget.currency;
+  Future<void> Function()? get onRemove => widget.onRemove;
+  VoidCallback? get onToggleShared => widget.onToggleShared;
+
+  Future<void> _onRemoveTap() async {
+    if (_removing || onRemove == null) return;
+    setState(() => _removing = true);
+    try {
+      await onRemove!();
+    } finally {
+      if (mounted) setState(() => _removing = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,17 +137,28 @@ class GroupOrderItemTile extends StatelessWidget {
                   ),
                 ),
               ),
-            // Botón de eliminar (solo si editable)
+            // Botón de eliminar (solo si editable) — spinner mientras el
+            // borrado está en vuelo (e2e r6: evita re-taps por la espera).
             if (onRemove != null)
               Padding(
                 padding: const EdgeInsets.only(left: 6),
-                child: IconButton(
-                  visualDensity: VisualDensity.compact,
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: onRemove,
-                  icon: const Icon(Icons.close_rounded, size: 18, color: FoodlyThemes.secondaryFoodly),
-                ),
+                child: _removing
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: FoodlyThemes.secondaryFoodly,
+                        ),
+                      )
+                    : IconButton(
+                        visualDensity: VisualDensity.compact,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        onPressed: _onRemoveTap,
+                        icon: const Icon(Icons.close_rounded,
+                            size: 18, color: FoodlyThemes.secondaryFoodly),
+                      ),
               ),
           ],
         ),

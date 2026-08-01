@@ -27,7 +27,8 @@ class ParticipantExpansibleTile extends StatefulWidget {
 
   /// Callback de borrado por ítem; null => sin X para ese ítem. La regla de
   /// quién puede borrar qué (dueño del ítem / host) la decide el caller.
-  final void Function(GroupOrderItemDM item)? onRemoveItem;
+  /// Future (e2e r6): el tile muestra spinner hasta que el borrado termina.
+  final Future<void> Function(GroupOrderItemDM item)? onRemoveItem;
 
   /// F2c: alterna "compartido con la mesa" en un ítem (solo OPEN, dueño/host).
   final void Function(GroupOrderItemDM item)? onToggleSharedItem;

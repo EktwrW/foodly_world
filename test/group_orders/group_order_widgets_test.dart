@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
@@ -49,8 +51,38 @@ void main() {
       await tester.pumpWidget(_host(const GroupOrderItemTile(item: item)));
       expect(find.byIcon(Icons.close_rounded), findsNothing);
 
-      await tester.pumpWidget(_host(GroupOrderItemTile(item: item, onRemove: () {})));
+      await tester.pumpWidget(_host(GroupOrderItemTile(item: item, onRemove: () async {})));
       expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+    });
+
+    testWidgets('e2e r6: mientras el borrado está en vuelo la X es spinner, '
+        'ignora re-taps y vuelve al terminar', (tester) async {
+      const item = GroupOrderItemDM(uuid: 'i4', name: 'Nachos', unitPricePreview: 5.0);
+      final gate = Completer<void>();
+      var calls = 0;
+
+      await tester.pumpWidget(_host(GroupOrderItemTile(
+        item: item,
+        onRemove: () {
+          calls++;
+          return gate.future;
+        },
+      )));
+
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await tester.pump();
+
+      // En vuelo: spinner visible, X fuera, y no hay nada tapeable.
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byIcon(Icons.close_rounded), findsNothing);
+      expect(calls, 1);
+
+      // El borrado termina → vuelve la X y un solo call en total.
+      gate.complete();
+      await tester.pump();
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      expect(calls, 1);
     });
   });
 
@@ -157,7 +189,7 @@ void main() {
       await tester.pumpWidget(_host(ParticipantExpansibleTile(
         order: openOrder,
         participant: p1,
-        onRemoveItem: (_) {},
+        onRemoveItem: (_) async {},
       )));
 
       await tester.tap(find.text('Ana'));

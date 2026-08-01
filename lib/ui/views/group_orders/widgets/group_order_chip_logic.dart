@@ -19,8 +19,16 @@ class GroupOrderChipLogic {
   static const hiddenPrefixes = ['/group-order/', '/join/'];
   static const hiddenExact = ['/', '/login', '/sign-up', '/sign-up-business', '/no-access'];
 
-  /// ¿Debe verse el chip? Orden viva (abierta o pagable) + ruta permitida.
-  static bool shouldShow({required GroupOrderDM? order, required String location}) {
+  /// ¿Debe verse el chip? Orden viva (abierta o pagable) + ruta permitida +
+  /// la página de la orden NO abierta. [orderPageOpen] llega del marcador de
+  /// ciclo de vida ([GroupOrderPageVisibility]) porque la URI del router no
+  /// siempre refleja pushes imperativos (e2e r6: chip redundante en la orden).
+  static bool shouldShow({
+    required GroupOrderDM? order,
+    required String location,
+    bool orderPageOpen = false,
+  }) {
+    if (orderPageOpen) return false;
     if (order == null || !(order.isOpen || order.isPayable)) return false;
 
     final path = Uri.parse(location).path;
@@ -87,6 +95,27 @@ class GroupOrderChipLogic {
       safeArea: safeArea,
     );
   }
+}
+
+/// Marcador de ciclo de vida de GroupOrderPage (e2e r6): la página se
+/// registra al montarse y se des-registra al desmontarse. Es la señal
+/// FIABLE de "estoy viendo la orden" — la URI del router puede no reflejar
+/// un push imperativo. Contador (no bool) por si algún flujo apila dos.
+class GroupOrderPageVisibility {
+  GroupOrderPageVisibility._();
+
+  static final ValueNotifier<int> openCount = ValueNotifier<int>(0);
+
+  static bool get isOpen => openCount.value > 0;
+
+  static void markOpened() => openCount.value++;
+
+  static void markClosed() {
+    if (openCount.value > 0) openCount.value--;
+  }
+
+  /// Solo para tests.
+  static void reset() => openCount.value = 0;
 }
 
 /// Posición elegida por el usuario (drag) — vive en memoria para persistir
