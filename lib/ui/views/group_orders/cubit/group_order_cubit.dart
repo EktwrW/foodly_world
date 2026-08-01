@@ -89,6 +89,37 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     result.when(success: _applyResponse, failure: _onError);
   }
 
+  /// e2e r4: host elimina DEFINITIVAMENTE una orden vacía. true = eliminada
+  /// (el caller cierra el carrito y navega fuera — la orden ya no existe).
+  Future<bool> deleteOrder() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return false;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.deleteGroupOrder(uuid);
+    return result.when(
+      success: (_) => true,
+      failure: (e) {
+        _onError(e);
+        return false;
+      },
+    );
+  }
+
+  /// e2e r4: miembro sin ítems propios abandona la orden. true = fuera.
+  Future<bool> leaveOrder() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return false;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.leaveGroupOrder(uuid);
+    return result.when(
+      success: (_) => true,
+      failure: (e) {
+        _onError(e);
+        return false;
+      },
+    );
+  }
+
   /// Host: transfiere la titularidad a otro participante (F2b §A.1).
   Future<void> transferHost(String participantUuid) async {
     final uuid = _vm.order?.uuid;

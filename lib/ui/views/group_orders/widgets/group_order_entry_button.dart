@@ -156,12 +156,22 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
     if (!context.mounted) return;
 
     if (ok && cubit.state != null) {
-      context.pushNamed(
-        AppRoutes.groupOrder.name,
-        pathParameters: {AppRoutes.routeIdParam: cubit.state!.uuid},
-      );
+      // UX (e2e r4): tras unirse se aterriza en el MENÚ para agregar ítems.
+      // Si la orden es de ESTE negocio ya estamos en su menú (la barra pasa
+      // a "Ver pedido" sola); si es de otro, navegamos a su menú — con el
+      // uuid del MENÚ (business_menu_uuid), que es lo que lleva la ruta.
+      final order = cubit.state!;
+      final menuUuid = order.businessMenuUuid;
+      if (order.businessUuid != businessUuid && menuUuid != null && menuUuid.isNotEmpty) {
+        context.goNamed(
+          AppRoutes.visitMenu.name,
+          pathParameters: {AppRoutes.routeIdParam: menuUuid},
+        );
+      }
     } else {
-      FoodlySnackbars.errorGeneric(context, S.current.groupOrderJoinFailed);
+      // e2e r5: mostrar la causa real del backend cuando existe.
+      FoodlySnackbars.errorGeneric(
+          context, cubit.lastJoinError ?? S.current.groupOrderJoinFailed);
     }
   }
 

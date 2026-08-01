@@ -31,6 +31,21 @@ class AppRequestException implements Exception {
     return null;
   }
 
+  /// Mensaje legible que mandó el backend (`message` del body Laravel);
+  /// null si no hay respuesta, no es Dio o el body no lo trae. Permite a la
+  /// UI mostrar la causa real ("La orden ya no admite nuevos participantes")
+  /// en vez de un genérico (e2e r5).
+  String? get serverMessage {
+    if (error is DioException) {
+      final data = (error as DioException).response?.data;
+      if (data is Map) {
+        final msg = data['message'];
+        if (msg is String && msg.trim().isNotEmpty) return msg;
+      }
+    }
+    return null;
+  }
+
   /// Field-level validation errors keyed by field name. Empty when the
   /// response is not a Laravel-style 422 with `errors`.
   Map<String, List<String>> get fieldErrors {

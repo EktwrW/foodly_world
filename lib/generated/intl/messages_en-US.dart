@@ -1073,6 +1073,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Cover their share",
     ),
     "groupOrderCreating": MessageLookupByLibrary.simpleMessage("Creating…"),
+    "groupOrderDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "Delete this empty order? This action cannot be undone.",
+    ),
+    "groupOrderDeleteCta": MessageLookupByLibrary.simpleMessage("Delete order"),
     "groupOrderEnterCodeManually": MessageLookupByLibrary.simpleMessage(
       "Enter code manually",
     ),
@@ -1104,6 +1108,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderJoinTitle": MessageLookupByLibrary.simpleMessage(
       "Join an order",
+    ),
+    "groupOrderLeaveConfirm": MessageLookupByLibrary.simpleMessage(
+      "Leave this order? You can rejoin by scanning the QR.",
+    ),
+    "groupOrderLeaveCta": MessageLookupByLibrary.simpleMessage(
+      "Leave the order",
     ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage("Close order"),
     "groupOrderNoBalanceDue": MessageLookupByLibrary.simpleMessage(

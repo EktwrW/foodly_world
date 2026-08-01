@@ -113,11 +113,16 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     );
   }
 
+  /// e2e r5: causa real del último join fallido (mensaje del backend) para
+  /// que la UI no muestre siempre "código inválido"; null = sin detalle.
+  String? lastJoinError;
+
   /// F3a: unirse a la orden de OTRO usuario con el código de invitación.
   /// Si funciona, la orden ajena pasa a ser el carrito activo.
   Future<bool> joinWithCode(String code) async {
     if (_busy) return false;
     _busy = true;
+    lastJoinError = null;
     final res = await _repo.joinByCode(code.trim().toUpperCase());
     final ok = res.when(
       success: (r) {
@@ -126,6 +131,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
       },
       failure: (e) {
         _logger.e(e);
+        lastJoinError = e.serverMessage;
         return false;
       },
     );

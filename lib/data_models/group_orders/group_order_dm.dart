@@ -139,6 +139,9 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     required String uuid,
     @Default(GroupOrderStatus.open) GroupOrderStatus status,
     @JsonKey(name: 'business_uuid') String? businessUuid,
+    // Uuid del MENÚ del negocio: /visit-menu/:id lo necesita para aterrizar
+    // en el menú tras unirse (la ruta NO lleva el uuid del negocio).
+    @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
     @JsonKey(name: 'business_name') @Default('') String businessName,
     @JsonKey(name: 'business_logo') String? businessLogo,
     @Default('EUR') String currency,
@@ -192,6 +195,31 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   double liveSubtotalFor(GroupOrderParticipantDM p) {
     if (!isOpen) return p.amountDue;
     return itemsFor(p.uuid).fold<double>(0, (acc, i) => acc + i.lineTotal);
+  }
+
+  GroupOrderParticipantDM? participantByUuid(String? uuid) {
+    if (uuid == null) return null;
+    for (final p in participants) {
+      if (p.uuid == uuid) return p;
+    }
+    return null;
+  }
+
+  /// e2e r4: ¿[participantUuid] puede ELIMINAR la orden (definitivo)?
+  /// Solo el host, solo OPEN y solo VACÍA (sin ningún ítem de nadie).
+  bool canBeDeletedBy(String? participantUuid) {
+    if (!isOpen || items.isNotEmpty) return false;
+    return participantByUuid(participantUuid)?.isHost ?? false;
+  }
+
+  /// e2e r4: ¿[participantUuid] puede ABANDONAR la orden?
+  /// Solo miembros (el host transfiere o elimina), solo OPEN y solo sin
+  /// ítems bajo su responsabilidad.
+  bool canBeLeftBy(String? participantUuid) {
+    if (!isOpen) return false;
+    final p = participantByUuid(participantUuid);
+    if (p == null || p.isHost) return false;
+    return itemsFor(p.uuid).isEmpty;
   }
 }
 

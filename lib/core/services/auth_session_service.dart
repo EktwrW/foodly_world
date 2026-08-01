@@ -8,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
-import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
@@ -241,23 +240,11 @@ class AuthSessionService {
       // Un login real cierra el modo invitado: a partir de acá hay sesión.
       isGuest = false;
 
-      // App Links F3a: si el usuario llegó por foodly.solutions/join/{code}
-      // sin sesión, el código quedó estacionado — se canjea apenas hay
-      // sesión válida y se navega directo a la orden. Post-frame para no
-      // pisar la navegación del propio flujo de login.
-      final pendingJoin = PendingGroupJoin.consume();
-      if (pendingJoin != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          final cubit = di<ActiveGroupOrderCubit>();
-          final ok = await cubit.joinWithCode(pendingJoin);
-          if (ok && cubit.state != null) {
-            di<AppRouter>().appRouter.goNamed(
-              AppRoutes.groupOrder.name,
-              pathParameters: {AppRoutes.routeIdParam: cubit.state!.uuid},
-            );
-          }
-        });
-      }
+      // App Links F3a: el canje del código de join pendiente ya NO vive acá.
+      // El postFrame perdía la carrera contra el bootstrap del login (que
+      // navega a home al final y pisaba la navegación a la orden). Ahora el
+      // redirect global de GoRouter desvía cualquier navegación post-login
+      // a /join/{code} cuando hay código estacionado — sin carreras.
     }
 
     // Prefer access_token (new dual-token field); fall back to token (legacy).

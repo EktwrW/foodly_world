@@ -1052,7 +1052,11 @@ mixin _$GroupOrderDM {
   String get uuid;
   GroupOrderStatus get status;
   @JsonKey(name: 'business_uuid')
-  String? get businessUuid;
+  String?
+      get businessUuid; // Uuid del MENÚ del negocio: /visit-menu/:id lo necesita para aterrizar
+// en el menú tras unirse (la ruta NO lleva el uuid del negocio).
+  @JsonKey(name: 'business_menu_uuid')
+  String? get businessMenuUuid;
   @JsonKey(name: 'business_name')
   String get businessName;
   @JsonKey(name: 'business_logo')
@@ -1098,6 +1102,8 @@ mixin _$GroupOrderDM {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.businessUuid, businessUuid) ||
                 other.businessUuid == businessUuid) &&
+            (identical(other.businessMenuUuid, businessMenuUuid) ||
+                other.businessMenuUuid == businessMenuUuid) &&
             (identical(other.businessName, businessName) ||
                 other.businessName == businessName) &&
             (identical(other.businessLogo, businessLogo) ||
@@ -1130,6 +1136,7 @@ mixin _$GroupOrderDM {
       uuid,
       status,
       businessUuid,
+      businessMenuUuid,
       businessName,
       businessLogo,
       currency,
@@ -1145,7 +1152,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1159,6 +1166,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       {String uuid,
       GroupOrderStatus status,
       @JsonKey(name: 'business_uuid') String? businessUuid,
+      @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
       String currency,
@@ -1188,6 +1196,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? uuid = null,
     Object? status = null,
     Object? businessUuid = freezed,
+    Object? businessMenuUuid = freezed,
     Object? businessName = null,
     Object? businessLogo = freezed,
     Object? currency = null,
@@ -1213,6 +1222,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
       businessUuid: freezed == businessUuid
           ? _self.businessUuid
           : businessUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessMenuUuid: freezed == businessMenuUuid
+          ? _self.businessMenuUuid
+          : businessMenuUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       businessName: null == businessName
           ? _self.businessName
@@ -1363,6 +1376,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             String uuid,
             GroupOrderStatus status,
             @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
@@ -1386,6 +1400,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.uuid,
             _that.status,
             _that.businessUuid,
+            _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
             _that.currency,
@@ -1422,6 +1437,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             String uuid,
             GroupOrderStatus status,
             @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
@@ -1444,6 +1460,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.uuid,
             _that.status,
             _that.businessUuid,
+            _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
             _that.currency,
@@ -1479,6 +1496,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             String uuid,
             GroupOrderStatus status,
             @JsonKey(name: 'business_uuid') String? businessUuid,
+            @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
             String currency,
@@ -1501,6 +1519,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.uuid,
             _that.status,
             _that.businessUuid,
+            _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
             _that.currency,
@@ -1526,6 +1545,7 @@ class _GroupOrderDM extends GroupOrderDM {
       {required this.uuid,
       this.status = GroupOrderStatus.open,
       @JsonKey(name: 'business_uuid') this.businessUuid,
+      @JsonKey(name: 'business_menu_uuid') this.businessMenuUuid,
       @JsonKey(name: 'business_name') this.businessName = '',
       @JsonKey(name: 'business_logo') this.businessLogo,
       this.currency = 'EUR',
@@ -1554,6 +1574,11 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'business_uuid')
   final String? businessUuid;
+// Uuid del MENÚ del negocio: /visit-menu/:id lo necesita para aterrizar
+// en el menú tras unirse (la ruta NO lleva el uuid del negocio).
+  @override
+  @JsonKey(name: 'business_menu_uuid')
+  final String? businessMenuUuid;
   @override
   @JsonKey(name: 'business_name')
   final String businessName;
@@ -1629,6 +1654,8 @@ class _GroupOrderDM extends GroupOrderDM {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.businessUuid, businessUuid) ||
                 other.businessUuid == businessUuid) &&
+            (identical(other.businessMenuUuid, businessMenuUuid) ||
+                other.businessMenuUuid == businessMenuUuid) &&
             (identical(other.businessName, businessName) ||
                 other.businessName == businessName) &&
             (identical(other.businessLogo, businessLogo) ||
@@ -1661,6 +1688,7 @@ class _GroupOrderDM extends GroupOrderDM {
       uuid,
       status,
       businessUuid,
+      businessMenuUuid,
       businessName,
       businessLogo,
       currency,
@@ -1676,7 +1704,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1692,6 +1720,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       {String uuid,
       GroupOrderStatus status,
       @JsonKey(name: 'business_uuid') String? businessUuid,
+      @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
       String currency,
@@ -1722,6 +1751,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? uuid = null,
     Object? status = null,
     Object? businessUuid = freezed,
+    Object? businessMenuUuid = freezed,
     Object? businessName = null,
     Object? businessLogo = freezed,
     Object? currency = null,
@@ -1747,6 +1777,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
       businessUuid: freezed == businessUuid
           ? _self.businessUuid
           : businessUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      businessMenuUuid: freezed == businessMenuUuid
+          ? _self.businessMenuUuid
+          : businessMenuUuid // ignore: cast_nullable_to_non_nullable
               as String?,
       businessName: null == businessName
           ? _self.businessName

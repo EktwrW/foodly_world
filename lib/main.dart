@@ -9,6 +9,7 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/services/first_launch_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/firebase_options.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_floating_chip_host.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
@@ -178,7 +179,11 @@ Future<Widget> buildFoodlyApp() async {
                   child: isPublicMenu
                       ? childWidget ?? const SizedBox.shrink()
                       : FoodlyWrapper(
-                          child: FoodlyMainScaffold(child: childWidget),
+                          // Chip global de la orden activa (e2e r4): visible y
+                          // arrastrable en toda la app mientras haya orden viva.
+                          child: GroupOrderFloatingChipHost(
+                            child: FoodlyMainScaffold(child: childWidget),
+                          ),
                         ),
                   breakpoints: DeviceSize.breakpoints,
                 ),

@@ -1121,6 +1121,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Cubrir su parte",
     ),
     "groupOrderCreating": MessageLookupByLibrary.simpleMessage("Creando…"),
+    "groupOrderDeleteConfirm": MessageLookupByLibrary.simpleMessage(
+      "¿Eliminar esta orden vacía? Esta acción no se puede deshacer.",
+    ),
+    "groupOrderDeleteCta": MessageLookupByLibrary.simpleMessage(
+      "Eliminar orden",
+    ),
     "groupOrderEnterCodeManually": MessageLookupByLibrary.simpleMessage(
       "Ingresar código manualmente",
     ),
@@ -1152,6 +1158,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderJoinTitle": MessageLookupByLibrary.simpleMessage(
       "Unirse a una orden",
+    ),
+    "groupOrderLeaveConfirm": MessageLookupByLibrary.simpleMessage(
+      "¿Salir de esta orden? Podrás volver a unirte escaneando el QR.",
+    ),
+    "groupOrderLeaveCta": MessageLookupByLibrary.simpleMessage(
+      "Abandonar la orden",
     ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage(
       "Cerrar la orden",

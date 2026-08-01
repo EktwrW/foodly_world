@@ -43,6 +43,11 @@ abstract class GroupOrderClient {
   @PATCH('/group-orders/{uuid}/cancel')
   Future<GroupOrderResponseDM> cancelGroupOrder(@Path('uuid') String uuid);
 
+  /// e2e r4: el host elimina DEFINITIVAMENTE una orden vacía (OPEN, sin
+  /// ítems ni pagos). Con actividad, el camino es cancelGroupOrder.
+  @DELETE('/group-orders/{uuid}')
+  Future<void> deleteGroupOrder(@Path('uuid') String uuid);
+
   /// Transfiere la titularidad a otro participante (F2b §A.1, solo host).
   @POST('/group-orders/{uuid}/transfer-host')
   Future<GroupOrderResponseDM> transferHost(
@@ -58,6 +63,10 @@ abstract class GroupOrderClient {
   /// F3a: unirse con el código corto de invitación de la mesa.
   @POST('/group-orders/join')
   Future<GroupOrderResponseDM> joinByCode({@Field('code') required String code});
+
+  /// e2e r4: un miembro SIN ítems propios abandona una orden OPEN.
+  @POST('/group-orders/{uuid}/leave')
+  Future<void> leaveGroupOrder(@Path('uuid') String uuid);
 
   @DELETE('/group-orders/{uuid}/participants/{participantUuid}')
   Future<GroupOrderResponseDM> removeParticipant(

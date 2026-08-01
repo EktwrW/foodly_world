@@ -5,6 +5,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/routing/route_hierarchy.dart';
 import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
@@ -94,6 +95,18 @@ class AppRouter {
       }
     }
 
+    // Análogo para el MENÚ: /group-order/:id no lleva el uuid del menú, y
+    // el back de la orden necesita reconstruir /visit-menu/<menuUuid>.
+    if (loc.startsWith('/visit-menu/')) {
+      final menuUuid = state.pathParameters[AppRoutes.routeIdParam];
+      if (menuUuid != null && menuUuid.isNotEmpty) {
+        await localStorageService.saveString(
+          FoodlyStrings.LAST_VISITED_MENU_UUID,
+          menuUuid,
+        );
+      }
+    }
+
     if (_routeHistory.length >= 100) _routeHistory.removeAt(0);
     _routeHistory.add(state.uri.toString());
 
@@ -119,45 +132,44 @@ class AppRouter {
 
   /// Returns true when [route] is a navigation child of [potentialParent].
   /// Used by the ping-pong guard to detect back-button loops.
-  bool _isNavigationChildOf(String route, String potentialParent) {
-    // Synchronous parent derivation covers most cases.
-    final parent = _deriveParentRoute(route);
-    if (parent != null) return parent == potentialParent;
-
-    // visit-menu's parent is resolved asynchronously (the URL carries the
-    // menu UUID, not the business UUID). We know it's always a child of a
-    // visit-business route, so match structurally.
-    if (route.startsWith('/visit-menu/') && potentialParent.contains('/visit-business')) {
-      return true;
-    }
-
-    return false;
-  }
+  /// Lógica pura (testeada) en [RouteHierarchy].
+  bool _isNavigationChildOf(String route, String potentialParent) =>
+      RouteHierarchy.isNavigationChildOf(route, potentialParent, userUuid: authSessService.uuid);
 
   void goBackToLastRoute() async {
     if (_routeHistory.length > 2) {
-      final lastRoute = _routeHistory[_routeHistory.length - 2];
+      // Bug e2e r4 (back atascado orden↔menú): los flujos efímeros
+      // (/group-order, /join) y la propia ubicación actual NUNCA son
+      // destinos válidos de "atrás" — se saltan al buscar en el historial.
+      var idx = _routeHistory.length - 2;
+      while (idx >= 0 &&
+          (RouteHierarchy.isEphemeral(_routeHistory[idx]) || _routeHistory[idx] == currentLocation)) {
+        idx--;
+      }
 
-      // Ping-pong guard: if the previous route is a child of the current
-      // location, the user arrived here by pressing "back" from that child.
-      // Going back again must continue upward to the logical parent — not
-      // return to the child we just left (e.g. analytics ↔ myBusiness,
-      // visit-menu ↔ visit-business).
-      if (!_isNavigationChildOf(lastRoute, currentLocation)) {
-        // Normal history-based back.
-        _routeHistory.removeLast();
-        _routeHistory.removeLast();
+      if (idx >= 0) {
+        final lastRoute = _routeHistory[idx];
 
-        if (lastRoute == '/' && authSessService.isLoggedIn) {
-          _goToMainPage();
+        // Ping-pong guard: if the previous route is a child of the current
+        // location, the user arrived here by pressing "back" from that child.
+        // Going back again must continue upward to the logical parent — not
+        // return to the child we just left (e.g. analytics ↔ myBusiness,
+        // visit-menu ↔ visit-business, group-order ↔ visit-menu).
+        if (!_isNavigationChildOf(lastRoute, currentLocation)) {
+          // Normal history-based back (descarta lo salteado también).
+          _routeHistory.removeRange(idx, _routeHistory.length);
+
+          if (lastRoute == '/' && authSessService.isLoggedIn) {
+            _goToMainPage();
+            return;
+          }
+
+          await saveLastRoute(lastRoute);
+          appRouter.go(lastRoute);
           return;
         }
-
-        await saveLastRoute(lastRoute);
-        appRouter.go(lastRoute);
-        return;
+        // Ping-pong detected — fall through to _deriveParentRoute below.
       }
-      // Ping-pong detected — fall through to _deriveParentRoute below.
     }
 
     // No sufficient route history (cold start, deep link, route restoration),
@@ -175,6 +187,16 @@ class AppRouter {
         );
         if (bizUuid != null && bizUuid.isNotEmpty) {
           parent = '${AppRoutes.mainRoute}/$bizUuid/visit-business';
+        }
+      }
+      // El padre de la orden grupal es el MENÚ del negocio (uuid persistido
+      // al visitarlo — no viaja en la URL de la orden).
+      if (parent == null && currentLocation.startsWith('/group-order/')) {
+        final menuUuid = await localStorageService.getString(
+          FoodlyStrings.LAST_VISITED_MENU_UUID,
+        );
+        if (menuUuid != null && menuUuid.isNotEmpty) {
+          parent = '/visit-menu/$menuUuid';
         }
       }
       parent ??= _deriveParentRoute(currentLocation);
@@ -204,38 +226,16 @@ class AppRouter {
   ///   /main/:id/my-business                     → null (→ main page)
   ///   /main/:id/visit-business                  → null (→ main page)
   ///   everything else                           → null (→ main page)
-  String? _deriveParentRoute(String path) {
-    // Children of my-business or visit-business:
-    //   /main/<uuid>/my-business/<child>    → /main/<uuid>/my-business
-    //   /main/<uuid>/visit-business/<child> → /main/<uuid>/visit-business
-    final nestedChild = RegExp(
-      r'^(/main/[^/]+/(?:my-business|visit-business))/[^/]+$',
-    );
-    final nestedMatch = nestedChild.firstMatch(path);
-    if (nestedMatch != null) return nestedMatch.group(1);
-
-    // /manage-menu/<businessUuid> → manager's own business page.
-    // The myBusiness route uses the *user* UUID, not the business UUID.
-    if (path.startsWith('/manage-menu/')) {
-      return '${AppRoutes.mainRoute}/${authSessService.uuid}/my-business';
-    }
-
-    // /visit-menu/:id — the :id is the MENU UUID, not the business UUID.
-    // The correct parent is /main/<businessUuid>/visit-business, but the
-    // business UUID isn't in the URL. goBackToLastRoute() resolves this
-    // asynchronously via LAST_VISITED_BUSINESS_UUID in LocalStorage.
-    // Returning null here makes _deriveParentRoute stay synchronous and
-    // lets goBackToLastRoute() handle the async lookup.
-    if (path.startsWith('/visit-menu/')) return null;
-
-    // All other routes (myBusiness itself, visitBusiness itself, standalone
-    // pages like /about, /privacy, /terms, /my-reservations, profile, etc.)
-    // → no specific parent; caller falls back to _goToMainPage().
-    return null;
-  }
+  /// Padre lógico sincrónico — lógica pura (testeada) en [RouteHierarchy].
+  /// Los padres async (/visit-menu vía LAST_VISITED_BUSINESS_UUID,
+  /// /group-order vía LAST_VISITED_MENU_UUID) los resuelve goBackToLastRoute.
+  String? _deriveParentRoute(String path) =>
+      RouteHierarchy.deriveParentRoute(path, userUuid: authSessService.uuid);
 
   Future<void> saveLastRoute(String lastRoute) async {
-    if (lastRoute != '/' && !_isLoginRoute(lastRoute)) {
+    // Flujos efímeros (orden grupal, join) jamás se restauran post-boot:
+    // cold-start dentro de una orden vieja = usuario atascado (e2e r4).
+    if (RouteHierarchy.shouldPersistAsLastPath(lastRoute, loginPath: AppRoutes.login.path)) {
       await localStorageService.saveString(FoodlyStrings.LAST_PATH, lastRoute);
     }
   }
@@ -310,8 +310,6 @@ class AppRouter {
     return false;
   }
 
-  bool _isLoginRoute(String path) => path == AppRoutes.login.path;
-
   bool _isProfileRoute(String path) => path == AppRoutes.profileScreen.path;
 
   AppRouter({
@@ -322,16 +320,12 @@ class AppRouter {
       navigatorKey: rootNavigatorKey,
       observers: [FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)],
       redirect: (context, state) async {
-        // App Links F3a (bug e2e ronda 3): en cold-start sin sesión el
+        // App Links F3a (bug e2e ronda 3/4): en cold-start sin sesión el
         // redirector global intercepta ANTES de que /join/{code} construya
-        // su página — el código se captura acá y setSession lo canjea tras
-        // el login, garantizando el join aunque el flujo pase por auth.
-        if (state.uri.path.startsWith('/join/')) {
-          final seg = state.uri.pathSegments;
-          if (seg.length >= 2 && seg[1].length == 6) {
-            PendingGroupJoin.code = seg[1].toUpperCase();
-          }
-        }
+        // su página — el código se estaciona acá y el bloque de desvío de
+        // más abajo lo canjea apenas haya sesión. Lógica y tests en
+        // PendingGroupJoin.
+        PendingGroupJoin.captureFromUri(state.uri, isLoggedIn: authSessService.isLoggedIn);
 
         // Public menu subdomain — no auth, no session, no redirects.
         if (_isMenuSubdomain) return null;
@@ -372,10 +366,15 @@ class AppRouter {
         // Instead, let the app stay on the start page so biometric/auto-login can
         // complete first; fingerprint_button_login.dart handles route restoration
         // after authentication succeeds.
+        // e2e r5: guard de LECTURA además del de escritura — builds viejos
+        // pudieron persistir /join o /group-order como LAST_PATH; restaurar
+        // hacia un flujo efímero deja al usuario atascado (error de join en
+        // loop, orden muerta). Se ignora y se sigue el arranque normal.
         if (state.matchedLocation == AppRoutes.start.path &&
             authSessService.isLoggedIn &&
             lastPath != null &&
-            lastPath != state.matchedLocation) {
+            lastPath != state.matchedLocation &&
+            !RouteHierarchy.isEphemeral(lastPath)) {
           return lastPath;
         }
 
@@ -383,6 +382,15 @@ class AppRouter {
         if (authSessService.mustCompleteProfile && !_isProfileRoute(state.matchedLocation)) {
           return AppRoutes.profileScreen.path;
         }
+
+        // App Links F3a (bug e2e ronda 4): código de join pendiente + sesión
+        // válida ⇒ se desvía CUALQUIER navegación a la página de join. Antes
+        // el canje vivía en setSession (postFrame) y PERDÍA la carrera contra
+        // el bootstrap del login, que navegaba a home al final y pisaba la
+        // navegación a la orden. Acá no hay carrera: la última navegación del
+        // flujo de login — sea cual sea — termina interceptada y desviada.
+        final joinDivert = PendingGroupJoin.divertPath(state.uri, isLoggedIn: authSessService.isLoggedIn);
+        if (joinDivert != null) return joinDivert;
 
         return null;
       },
