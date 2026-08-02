@@ -26,7 +26,9 @@ mixin _$GroupOrderItemDM {
   double get unitPricePreview;
   int get quantity; // Compartido (F2c): su importe se reparte entre todos en by_items.
   bool get shared;
-  String? get notes;
+  String? get notes; // F4a: tilde de entrega del manager (checklist parcial).
+  @JsonKey(name: 'delivered_at')
+  DateTime? get deliveredAt;
 
   /// Create a copy of GroupOrderItemDM
   /// with the given fields replaced by the non-null parameter values.
@@ -55,17 +57,19 @@ mixin _$GroupOrderItemDM {
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.shared, shared) || other.shared == shared) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.deliveredAt, deliveredAt) ||
+                other.deliveredAt == deliveredAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name,
-      unitPriceAtLock, unitPricePreview, quantity, shared, notes);
+      unitPriceAtLock, unitPricePreview, quantity, shared, notes, deliveredAt);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt)';
   }
 }
 
@@ -85,7 +89,8 @@ abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
       double unitPricePreview,
       int quantity,
       bool shared,
-      String? notes});
+      String? notes,
+      @JsonKey(name: 'delivered_at') DateTime? deliveredAt});
 }
 
 /// @nodoc
@@ -109,6 +114,7 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
     Object? quantity = null,
     Object? shared = null,
     Object? notes = freezed,
+    Object? deliveredAt = freezed,
   }) {
     return _then(_self.copyWith(
       uuid: null == uuid
@@ -143,6 +149,10 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      deliveredAt: freezed == deliveredAt
+          ? _self.deliveredAt
+          : deliveredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -250,7 +260,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             double unitPricePreview,
             int quantity,
             bool shared,
-            String? notes)?
+            String? notes,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt)?
         $default, {
     required TResult orElse(),
   }) {
@@ -265,7 +276,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPricePreview,
             _that.quantity,
             _that.shared,
-            _that.notes);
+            _that.notes,
+            _that.deliveredAt);
       case _:
         return orElse();
     }
@@ -296,7 +308,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             double unitPricePreview,
             int quantity,
             bool shared,
-            String? notes)
+            String? notes,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt)
         $default,
   ) {
     final _that = this;
@@ -310,7 +323,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPricePreview,
             _that.quantity,
             _that.shared,
-            _that.notes);
+            _that.notes,
+            _that.deliveredAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -340,7 +354,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             double unitPricePreview,
             int quantity,
             bool shared,
-            String? notes)?
+            String? notes,
+            @JsonKey(name: 'delivered_at') DateTime? deliveredAt)?
         $default,
   ) {
     final _that = this;
@@ -354,7 +369,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.unitPricePreview,
             _that.quantity,
             _that.shared,
-            _that.notes);
+            _that.notes,
+            _that.deliveredAt);
       case _:
         return null;
     }
@@ -374,7 +390,8 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       this.unitPricePreview = 0,
       this.quantity = 1,
       this.shared = false,
-      this.notes})
+      this.notes,
+      @JsonKey(name: 'delivered_at') this.deliveredAt})
       : super._();
   factory _GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
       _$GroupOrderItemDMFromJson(json);
@@ -403,6 +420,10 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
   final bool shared;
   @override
   final String? notes;
+// F4a: tilde de entrega del manager (checklist parcial).
+  @override
+  @JsonKey(name: 'delivered_at')
+  final DateTime? deliveredAt;
 
   /// Create a copy of GroupOrderItemDM
   /// with the given fields replaced by the non-null parameter values.
@@ -435,17 +456,19 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.shared, shared) || other.shared == shared) &&
-            (identical(other.notes, notes) || other.notes == notes));
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.deliveredAt, deliveredAt) ||
+                other.deliveredAt == deliveredAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, uuid, participantUuid, name,
-      unitPriceAtLock, unitPricePreview, quantity, shared, notes);
+      unitPriceAtLock, unitPricePreview, quantity, shared, notes, deliveredAt);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt)';
   }
 }
 
@@ -467,7 +490,8 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
       double unitPricePreview,
       int quantity,
       bool shared,
-      String? notes});
+      String? notes,
+      @JsonKey(name: 'delivered_at') DateTime? deliveredAt});
 }
 
 /// @nodoc
@@ -491,6 +515,7 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
     Object? quantity = null,
     Object? shared = null,
     Object? notes = freezed,
+    Object? deliveredAt = freezed,
   }) {
     return _then(_GroupOrderItemDM(
       uuid: null == uuid
@@ -525,6 +550,10 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
+      deliveredAt: freezed == deliveredAt
+          ? _self.deliveredAt
+          : deliveredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -1073,7 +1102,15 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'total_amount', fromJson: _money)
   double get totalAmount;
   @JsonKey(name: 'total_paid', fromJson: _money)
-  double get totalPaid;
+  double get totalPaid; // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+  @JsonKey(
+      name: 'fulfillment_status',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  GroupFulfillmentStatus? get fulfillmentStatus;
+  @JsonKey(name: 'round_number')
+  int get roundNumber;
+  @JsonKey(name: 'table_label')
+  String? get tableLabel;
   @JsonKey(name: 'lock_expires_at')
   DateTime?
       get lockExpiresAt; // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
@@ -1120,6 +1157,12 @@ mixin _$GroupOrderDM {
                 other.totalAmount == totalAmount) &&
             (identical(other.totalPaid, totalPaid) ||
                 other.totalPaid == totalPaid) &&
+            (identical(other.fulfillmentStatus, fulfillmentStatus) ||
+                other.fulfillmentStatus == fulfillmentStatus) &&
+            (identical(other.roundNumber, roundNumber) ||
+                other.roundNumber == roundNumber) &&
+            (identical(other.tableLabel, tableLabel) ||
+                other.tableLabel == tableLabel) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
             (identical(other.graceEndsAt, graceEndsAt) ||
@@ -1131,28 +1174,32 @@ mixin _$GroupOrderDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      status,
-      businessUuid,
-      businessMenuUuid,
-      businessName,
-      businessLogo,
-      currency,
-      splitMode,
-      payerFixedFee,
-      subtotal,
-      totalAmount,
-      totalPaid,
-      lockExpiresAt,
-      graceEndsAt,
-      const DeepCollectionEquality().hash(participants),
-      const DeepCollectionEquality().hash(items));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        uuid,
+        status,
+        businessUuid,
+        businessMenuUuid,
+        businessName,
+        businessLogo,
+        currency,
+        splitMode,
+        payerFixedFee,
+        subtotal,
+        totalAmount,
+        totalPaid,
+        fulfillmentStatus,
+        roundNumber,
+        tableLabel,
+        lockExpiresAt,
+        graceEndsAt,
+        const DeepCollectionEquality().hash(participants),
+        const DeepCollectionEquality().hash(items)
+      ]);
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1175,6 +1222,12 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+      @JsonKey(
+          name: 'fulfillment_status',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      GroupFulfillmentStatus? fulfillmentStatus,
+      @JsonKey(name: 'round_number') int roundNumber,
+      @JsonKey(name: 'table_label') String? tableLabel,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
@@ -1205,6 +1258,9 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
+    Object? fulfillmentStatus = freezed,
+    Object? roundNumber = null,
+    Object? tableLabel = freezed,
     Object? lockExpiresAt = freezed,
     Object? graceEndsAt = freezed,
     Object? participants = null,
@@ -1259,6 +1315,18 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
           ? _self.totalPaid
           : totalPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      fulfillmentStatus: freezed == fulfillmentStatus
+          ? _self.fulfillmentStatus
+          : fulfillmentStatus // ignore: cast_nullable_to_non_nullable
+              as GroupFulfillmentStatus?,
+      roundNumber: null == roundNumber
+          ? _self.roundNumber
+          : roundNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      tableLabel: freezed == tableLabel
+          ? _self.tableLabel
+          : tableLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
           : lockExpiresAt // ignore: cast_nullable_to_non_nullable
@@ -1386,6 +1454,12 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(
+                name: 'fulfillment_status',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            GroupFulfillmentStatus? fulfillmentStatus,
+            @JsonKey(name: 'round_number') int roundNumber,
+            @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1409,6 +1483,9 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.fulfillmentStatus,
+            _that.roundNumber,
+            _that.tableLabel,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1447,6 +1524,12 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(
+                name: 'fulfillment_status',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            GroupFulfillmentStatus? fulfillmentStatus,
+            @JsonKey(name: 'round_number') int roundNumber,
+            @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1469,6 +1552,9 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.fulfillmentStatus,
+            _that.roundNumber,
+            _that.tableLabel,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1506,6 +1592,12 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(
+                name: 'fulfillment_status',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            GroupFulfillmentStatus? fulfillmentStatus,
+            @JsonKey(name: 'round_number') int roundNumber,
+            @JsonKey(name: 'table_label') String? tableLabel,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1528,6 +1620,9 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.fulfillmentStatus,
+            _that.roundNumber,
+            _that.tableLabel,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1555,6 +1650,12 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(fromJson: _money) this.subtotal = 0,
       @JsonKey(name: 'total_amount', fromJson: _money) this.totalAmount = 0,
       @JsonKey(name: 'total_paid', fromJson: _money) this.totalPaid = 0,
+      @JsonKey(
+          name: 'fulfillment_status',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      this.fulfillmentStatus,
+      @JsonKey(name: 'round_number') this.roundNumber = 1,
+      @JsonKey(name: 'table_label') this.tableLabel,
       @JsonKey(name: 'lock_expires_at') this.lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') this.graceEndsAt,
       final List<GroupOrderParticipantDM> participants =
@@ -1605,6 +1706,18 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'total_paid', fromJson: _money)
   final double totalPaid;
+// F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+  @override
+  @JsonKey(
+      name: 'fulfillment_status',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  final GroupFulfillmentStatus? fulfillmentStatus;
+  @override
+  @JsonKey(name: 'round_number')
+  final int roundNumber;
+  @override
+  @JsonKey(name: 'table_label')
+  final String? tableLabel;
   @override
   @JsonKey(name: 'lock_expires_at')
   final DateTime? lockExpiresAt;
@@ -1672,6 +1785,12 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.totalAmount == totalAmount) &&
             (identical(other.totalPaid, totalPaid) ||
                 other.totalPaid == totalPaid) &&
+            (identical(other.fulfillmentStatus, fulfillmentStatus) ||
+                other.fulfillmentStatus == fulfillmentStatus) &&
+            (identical(other.roundNumber, roundNumber) ||
+                other.roundNumber == roundNumber) &&
+            (identical(other.tableLabel, tableLabel) ||
+                other.tableLabel == tableLabel) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
             (identical(other.graceEndsAt, graceEndsAt) ||
@@ -1683,28 +1802,32 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      uuid,
-      status,
-      businessUuid,
-      businessMenuUuid,
-      businessName,
-      businessLogo,
-      currency,
-      splitMode,
-      payerFixedFee,
-      subtotal,
-      totalAmount,
-      totalPaid,
-      lockExpiresAt,
-      graceEndsAt,
-      const DeepCollectionEquality().hash(_participants),
-      const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        uuid,
+        status,
+        businessUuid,
+        businessMenuUuid,
+        businessName,
+        businessLogo,
+        currency,
+        splitMode,
+        payerFixedFee,
+        subtotal,
+        totalAmount,
+        totalPaid,
+        fulfillmentStatus,
+        roundNumber,
+        tableLabel,
+        lockExpiresAt,
+        graceEndsAt,
+        const DeepCollectionEquality().hash(_participants),
+        const DeepCollectionEquality().hash(_items)
+      ]);
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1729,6 +1852,12 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+      @JsonKey(
+          name: 'fulfillment_status',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      GroupFulfillmentStatus? fulfillmentStatus,
+      @JsonKey(name: 'round_number') int roundNumber,
+      @JsonKey(name: 'table_label') String? tableLabel,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
@@ -1760,6 +1889,9 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
+    Object? fulfillmentStatus = freezed,
+    Object? roundNumber = null,
+    Object? tableLabel = freezed,
     Object? lockExpiresAt = freezed,
     Object? graceEndsAt = freezed,
     Object? participants = null,
@@ -1814,6 +1946,18 @@ class __$GroupOrderDMCopyWithImpl<$Res>
           ? _self.totalPaid
           : totalPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      fulfillmentStatus: freezed == fulfillmentStatus
+          ? _self.fulfillmentStatus
+          : fulfillmentStatus // ignore: cast_nullable_to_non_nullable
+              as GroupFulfillmentStatus?,
+      roundNumber: null == roundNumber
+          ? _self.roundNumber
+          : roundNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      tableLabel: freezed == tableLabel
+          ? _self.tableLabel
+          : tableLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
           : lockExpiresAt // ignore: cast_nullable_to_non_nullable

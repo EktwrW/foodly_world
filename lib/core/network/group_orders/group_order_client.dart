@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'group_order_client.g.dart';
@@ -113,6 +114,41 @@ abstract class GroupOrderClient {
   ///
   /// F2b "yo invito": con [coverParticipantUuids] el pago cubre la parte de
   /// ESOS participantes (Σ remaining_due, calculado 100% server-side).
+  // ── F4a: panel "Órdenes en vivo" del negocio (solo dueño) ──────
+
+  @GET('/manager/businesses/{businessUuid}/group-orders')
+  Future<ManagerOrdersResponseDM> managerOrders(
+    @Path('businessUuid') String businessUuid, {
+    @Query('bucket') String? bucket,
+    @Query('page') int? page,
+  });
+
+  @PATCH('/manager/group-orders/{uuid}/fulfillment')
+  Future<GroupOrderResponseDM> managerSetFulfillment(
+    @Path('uuid') String uuid, {
+    @Field('status') required String status,
+  });
+
+  @PATCH('/manager/group-orders/{uuid}/items/{itemUuid}/delivery')
+  Future<GroupOrderResponseDM> managerSetItemDelivered(
+    @Path('uuid') String uuid,
+    @Path('itemUuid') String itemUuid, {
+    @Field('delivered') required bool delivered,
+  });
+
+  @POST('/manager/group-orders/{uuid}/items/deliver-all')
+  Future<GroupOrderResponseDM> managerDeliverAll(@Path('uuid') String uuid);
+
+  @PATCH('/manager/group-orders/{uuid}/table')
+  Future<GroupOrderResponseDM> managerSetTable(
+    @Path('uuid') String uuid, {
+    @Field('table_label') String? tableLabel,
+  });
+
+  /// F4a (caso bar): siguiente ronda de la mesa (lado cliente).
+  @POST('/group-orders/{uuid}/next-round')
+  Future<GroupOrderResponseDM> nextRound(@Path('uuid') String uuid);
+
   @POST('/group-orders/{uuid}/pay-intent')
   Future<PayIntentResponseDM> createPayIntent(
     @Path('uuid') String uuid, {

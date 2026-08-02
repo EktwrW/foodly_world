@@ -44,6 +44,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
       expect(find.textContaining('€12.50'), findsOneWidget);
@@ -54,10 +55,11 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
 
       source.set(openOrder);
-      await tester.pump();
+      await tester.pumpAndSettle(); // entrega del stream + entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
     });
 
@@ -67,6 +69,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
 
       location.value = '/group-order/o1';
@@ -83,6 +86,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       final topLeft = tester.getTopLeft(find.byType(ActiveGroupOrderChip));
       expect(topLeft.dx, GroupOrderChipLogic.edgeMargin);
@@ -94,6 +98,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       // El chip está montado dentro de un Draggable de verdad.
       expect(
@@ -125,6 +130,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       final before = tester.getTopLeft(find.byType(ActiveGroupOrderChip));
       await tester.drag(find.byType(ActiveGroupOrderChip), const Offset(500, -100));
@@ -144,6 +150,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       // Un poco a la derecha y arriba, sin cruzar el centro de pantalla.
       await tester.drag(find.byType(ActiveGroupOrderChip), const Offset(60, -150));
@@ -158,6 +165,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
 
       await tester.drag(find.byType(ActiveGroupOrderChip), const Offset(-999, -9999));
       await tester.pump();
@@ -173,6 +181,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       await tester.drag(find.byType(ActiveGroupOrderChip), const Offset(500, -100));
       await tester.pump();
       final dragged = tester.getTopLeft(find.byType(ActiveGroupOrderChip));
@@ -182,7 +191,7 @@ void main() {
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
 
       location.value = '/visit-menu/m1';
-      await tester.pump();
+      await tester.pumpAndSettle(); // el chip re-monta: re-corre la entrada
       expect(tester.getTopLeft(find.byType(ActiveGroupOrderChip)), dragged);
     });
 
@@ -206,6 +215,7 @@ void main() {
       final location = ValueNotifier('/login');
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
     });
 
@@ -215,6 +225,7 @@ void main() {
       final location = ValueNotifier('/visit-menu/m1'); // URI quieta a propósito
 
       await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
 
       GroupOrderPageVisibility.markOpened(); // initState de GroupOrderPage

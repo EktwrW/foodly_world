@@ -36,6 +36,17 @@ enum GroupOrderStatus {
   cancelled,
 }
 
+/// F4a: fulfillment del negocio — eje independiente del pago, opcional y
+/// saltable hacia adelante. null = el negocio aún no lo tocó.
+enum GroupFulfillmentStatus {
+  @JsonValue('preparing')
+  preparing,
+  @JsonValue('ready')
+  ready,
+  @JsonValue('delivered')
+  delivered,
+}
+
 /// Modo de división elegido por el host al cerrar la orden (F2c §B.1).
 enum GroupSplitMode {
   @JsonValue('by_items')
@@ -81,6 +92,8 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     // Compartido (F2c): su importe se reparte entre todos en by_items.
     @Default(false) bool shared,
     String? notes,
+    // F4a: tilde de entrega del manager (checklist parcial).
+    @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
   }) = _GroupOrderItemDM;
 
   factory GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
@@ -152,6 +165,11 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @JsonKey(fromJson: _money) @Default(0) double subtotal,
     @JsonKey(name: 'total_amount', fromJson: _money) @Default(0) double totalAmount,
     @JsonKey(name: 'total_paid', fromJson: _money) @Default(0) double totalPaid,
+    // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+    @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+    GroupFulfillmentStatus? fulfillmentStatus,
+    @JsonKey(name: 'round_number') @Default(1) int roundNumber,
+    @JsonKey(name: 'table_label') String? tableLabel,
     @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
     // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
     @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
@@ -221,6 +239,14 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     if (p == null || p.isHost) return false;
     return itemsFor(p.uuid).isEmpty;
   }
+
+  // ── F4a: helpers del panel "Órdenes en vivo" ──
+
+  /// Ítems ya entregados (checklist del manager).
+  int get deliveredItemsCount => items.where((i) => i.deliveredAt != null).length;
+
+  /// ¿Checklist completo? (habilita ENTREGADA).
+  bool get allItemsDelivered => items.isNotEmpty && deliveredItemsCount == items.length;
 }
 
 // ─────────────────────────────────────────────────────────────────────────

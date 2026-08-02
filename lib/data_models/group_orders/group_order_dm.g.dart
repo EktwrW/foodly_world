@@ -20,6 +20,9 @@ _GroupOrderItemDM _$GroupOrderItemDMFromJson(Map<String, dynamic> json) =>
       quantity: (json['quantity'] as num?)?.toInt() ?? 1,
       shared: json['shared'] as bool? ?? false,
       notes: json['notes'] as String?,
+      deliveredAt: json['delivered_at'] == null
+          ? null
+          : DateTime.parse(json['delivered_at'] as String),
     );
 
 Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
@@ -32,6 +35,8 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
       'quantity': instance.quantity,
       'shared': instance.shared,
       if (instance.notes case final value?) 'notes': value,
+      if (instance.deliveredAt?.toIso8601String() case final value?)
+        'delivered_at': value,
     };
 
 _GroupOrderParticipantDM _$GroupOrderParticipantDMFromJson(
@@ -96,6 +101,11 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       totalAmount:
           json['total_amount'] == null ? 0 : _money(json['total_amount']),
       totalPaid: json['total_paid'] == null ? 0 : _money(json['total_paid']),
+      fulfillmentStatus: $enumDecodeNullable(
+          _$GroupFulfillmentStatusEnumMap, json['fulfillment_status'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
+      roundNumber: (json['round_number'] as num?)?.toInt() ?? 1,
+      tableLabel: json['table_label'] as String?,
       lockExpiresAt: json['lock_expires_at'] == null
           ? null
           : DateTime.parse(json['lock_expires_at'] as String),
@@ -128,6 +138,11 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'subtotal': instance.subtotal,
       'total_amount': instance.totalAmount,
       'total_paid': instance.totalPaid,
+      if (_$GroupFulfillmentStatusEnumMap[instance.fulfillmentStatus]
+          case final value?)
+        'fulfillment_status': value,
+      'round_number': instance.roundNumber,
+      if (instance.tableLabel case final value?) 'table_label': value,
       if (instance.lockExpiresAt?.toIso8601String() case final value?)
         'lock_expires_at': value,
       if (instance.graceEndsAt?.toIso8601String() case final value?)
@@ -149,6 +164,12 @@ const _$GroupOrderStatusEnumMap = {
 const _$GroupSplitModeEnumMap = {
   GroupSplitMode.byItems: 'by_items',
   GroupSplitMode.equalSplit: 'equal_split',
+};
+
+const _$GroupFulfillmentStatusEnumMap = {
+  GroupFulfillmentStatus.preparing: 'preparing',
+  GroupFulfillmentStatus.ready: 'ready',
+  GroupFulfillmentStatus.delivered: 'delivered',
 };
 
 _GroupOrderResponseDM _$GroupOrderResponseDMFromJson(
