@@ -1411,6 +1411,7 @@
   "groupOrderPaymentSuccessBody": "Pagamentos completos · {total}. O recibo chegou ao seu email.",
   "@groupOrderPaymentSuccessBody": {"placeholders": {"total": {"type": "String"}}},
   "groupOrderBackToMenu": "Voltar ao menu",
+  "groupOrderLockConfirmSolo": "Fechar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
   "groupOrderPayFullOrder": "Pagar o pedido · {amount}",
   "@groupOrderPayFullOrder": {"placeholders": {"amount": {"type": "String"}}},
   "groupOrderBackHome": "Voltar ao início",

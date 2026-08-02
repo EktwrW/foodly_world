@@ -139,6 +139,13 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (participants > 1) {
       mode = await _askSplitMode(context);
       if (mode == null || !context.mounted) return; // canceló
+    } else {
+      // e2e r7 (lock fantasma): en solitario NO hay diálogo de split, y ese
+      // diálogo era la única confirmación — un tap suelto cerraba la orden
+      // sin aviso. Confirm explícito SIEMPRE antes de cerrar.
+      if (!await _confirm(context, S.current.groupOrderLockConfirmSolo) || !context.mounted) {
+        return;
+      }
     }
 
     await cubit.lock(splitMode: mode);
@@ -869,9 +876,15 @@ class _Content extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
-            children: [
+          // Pull-to-refresh (audit): re-consulta la orden a demanda — red
+          // de seguridad si el socket/polling se perdió algún evento.
+          child: RefreshIndicator(
+            color: FoodlyThemes.primaryFoodly,
+            onRefresh: () => context.read<GroupOrderCubit>().refetch(),
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
+              children: [
               _SectionTitle(S.current.groupOrderParticipants),
               const SizedBox(height: 8),
               // Ítems agrupados por participante (Expansible). Mi grupo abre
@@ -896,7 +909,8 @@ class _Content extends StatelessWidget {
                   paidByName: _paidByNameFor(p),
                 ),
               ),
-            ],
+              ],
+            ),
           ),
         ),
         GroupOrderTotalsFooter(

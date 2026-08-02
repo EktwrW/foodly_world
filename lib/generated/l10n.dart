@@ -9045,6 +9045,16 @@ class S {
     );
   }
 
+  /// `Close the order and proceed to payment? You won't be able to add more items.`
+  String get groupOrderLockConfirmSolo {
+    return Intl.message(
+      'Close the order and proceed to payment? You won\'t be able to add more items.',
+      name: 'groupOrderLockConfirmSolo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(

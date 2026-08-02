@@ -1121,6 +1121,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderLeaveCta": MessageLookupByLibrary.simpleMessage(
       "Leave the order",
     ),
+    "groupOrderLockConfirmSolo": MessageLookupByLibrary.simpleMessage(
+      "Close the order and proceed to payment? You won\'t be able to add more items.",
+    ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage("Close order"),
     "groupOrderNoBalanceDue": MessageLookupByLibrary.simpleMessage(
       "Nothing left to pay",

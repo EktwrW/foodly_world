@@ -49,6 +49,14 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     );
   }
 
+  /// Pull-to-refresh (hallazgo medio del audit): re-lee la orden a demanda
+  /// sin pasar por loading — la UI no parpadea, el RefreshIndicator ya da
+  /// el feedback visual.
+  Future<void> refetch() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid != null) await _refetchSilently(uuid);
+  }
+
   Future<void> _refetchSilently(String uuid) async {
     if (isClosed) return;
     final result = await _repo.getGroupOrder(uuid);
