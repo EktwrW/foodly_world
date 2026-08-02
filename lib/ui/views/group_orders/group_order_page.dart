@@ -16,6 +16,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
@@ -259,6 +260,31 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   }
 
   /// Selector de propina (F2c §B.2): 0% / 5% / 10% / monto libre.
+  /// Tarjeta de opción de propina (mismo lenguaje visual que split/transfer).
+  Widget _tipOption(BuildContext ctx, IconData icon, String label, Object value) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: () => Navigator.pop(ctx, value),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: FoodlyThemes.primaryFoodly, size: 22),
+            const SizedBox(width: 12),
+            Expanded(child: Text(label, style: FoodlyTextStyles.labelBold)),
+            const Icon(Icons.chevron_right_rounded,
+                size: 20, color: FoodlyThemes.secondaryFoodly),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// Muestra el desglose del pago (parte + tarifa fija del comensal) para
   /// transparencia total. Devuelve null si el usuario cancela (aborta el pago).
   Future<double?> _askTip(
@@ -272,7 +298,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     final choice = await showModalBottomSheet<Object>(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) => SafeArea(
         child: Column(
@@ -295,27 +321,25 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                   style: FoodlyTextStyles.caption,
                 ),
               ),
-            ListTile(
-              leading: const Icon(Icons.money_off_rounded, color: FoodlyThemes.secondaryFoodly),
-              title: Text(S.current.groupOrderTipNone, style: FoodlyTextStyles.labelBold),
-              onTap: () => Navigator.pop(ctx, 0.0),
+            // Opciones como tarjetas Foodly (mismo lenguaje que split/transfer);
+            // quick-pick: un tap elige y cierra.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 6, 18, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _tipOption(ctx, Icons.money_off_rounded, S.current.groupOrderTipNone, 0.0),
+                  const SizedBox(height: 8),
+                  _tipOption(ctx, Icons.favorite_outline_rounded,
+                      '5% · ${formatMoney(pct(0.05), currency)}', pct(0.05)),
+                  const SizedBox(height: 8),
+                  _tipOption(ctx, Icons.favorite_rounded,
+                      '10% · ${formatMoney(pct(0.10), currency)}', pct(0.10)),
+                  const SizedBox(height: 8),
+                  _tipOption(ctx, Icons.edit_rounded, S.current.groupOrderTipCustom, 'custom'),
+                ],
+              ),
             ),
-            ListTile(
-              leading: const Icon(Icons.favorite_outline_rounded, color: FoodlyThemes.primaryFoodly),
-              title: Text('5% · ${formatMoney(pct(0.05), currency)}', style: FoodlyTextStyles.labelBold),
-              onTap: () => Navigator.pop(ctx, pct(0.05)),
-            ),
-            ListTile(
-              leading: const Icon(Icons.favorite_rounded, color: FoodlyThemes.primaryFoodly),
-              title: Text('10% · ${formatMoney(pct(0.10), currency)}', style: FoodlyTextStyles.labelBold),
-              onTap: () => Navigator.pop(ctx, pct(0.10)),
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit_rounded, color: FoodlyThemes.primaryFoodly),
-              title: Text(S.current.groupOrderTipCustom, style: FoodlyTextStyles.labelBold),
-              onTap: () => Navigator.pop(ctx, 'custom'),
-            ),
-            const SizedBox(height: 8),
           ],
         ),
       ),
@@ -323,46 +347,53 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (choice == null || !context.mounted) return null;
     if (choice is double) return choice;
 
-    // Monto libre.
+    // Monto libre — dialog Foodly (shell compartido).
     final controller = TextEditingController();
     final custom = await showDialog<double>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(S.current.groupOrderTipCustom),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(prefixText: '€ '),
-        ),
+      builder: (ctx) => FoodlyDialogShell(
+        title: S.current.groupOrderTipCustom,
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
-          TextButton(
+          CustomNeumorphicButton(
+            text: S.current.confirm,
+            disabled: false,
+            margin: EdgeInsets.zero,
             onPressed: () {
               final v = double.tryParse(controller.text.replaceAll(',', '.'));
               Navigator.pop(ctx, (v == null || v < 0) ? 0.0 : v);
             },
-            child: Text(S.current.confirm),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
           ),
         ],
+        child: TextField(
+          controller: controller,
+          autofocus: true,
+          textAlign: TextAlign.center,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          style: FoodlyTextStyles.sectionsTitle,
+          decoration: InputDecoration(
+            prefixText: '€ ',
+            prefixStyle: FoodlyTextStyles.sectionsTitle,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3)),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly, width: 2),
+            ),
+          ),
+        ),
       ),
     );
     return custom;
   }
 
-  Future<bool> _confirm(BuildContext context, String message) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        content: Text(message),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(S.current.cancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(S.current.confirm)),
-        ],
-      ),
-    );
-    return ok ?? false;
-  }
+  /// Confirmación estilo Foodly (shell compartido) — refinamiento pre-F4a:
+  /// reemplaza al AlertDialog crudo en unlock/cover/pay-all/delete/leave/lock.
+  Future<bool> _confirm(BuildContext context, String message) =>
+      showFoodlyConfirm(context, message: message);
 
   /// "Cubrir su parte" de UN participante (F2b §A.2).
   Future<void> _onCover(
@@ -524,7 +555,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     await showModalBottomSheet<void>(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) => SafeArea(
         child: Padding(
@@ -598,8 +629,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     );
   }
 
-  /// Host: transfiere la titularidad (F2b §A.1). Bottom sheet con los
-  /// participantes elegibles + confirmación.
+  /// Host: transfiere la titularidad (F2b §A.1). Mismo lenguaje visual que
+  /// el selector de split (refinamiento UI pre-F4a): tarjetas por
+  /// participante con avatar + radio animado, sin selección inicial, y CTA
+  /// que se habilita al elegir — la selección resaltada ES la confirmación.
   Future<void> _onTransferHost(
     BuildContext context,
     GroupOrderDM order,
@@ -609,42 +642,105 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     final candidates = order.participants.where((p) => p.uuid != myUuid).toList();
     if (candidates.isEmpty) return;
 
-    final chosen = await showModalBottomSheet<GroupOrderParticipantDM>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
-              child: Text(S.current.groupOrderTransferHost, style: FoodlyTextStyles.sectionsTitle),
+    String? selected;
+
+    Widget candidateCard({
+      required StateSetter setState,
+      required GroupOrderParticipantDM p,
+    }) {
+      final isSelected = selected == p.uuid;
+      return InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => setState(() => selected = p.uuid),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isSelected ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08) : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isSelected
+                  ? FoodlyThemes.primaryFoodly
+                  : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+              width: isSelected ? 2 : 1,
             ),
-            for (final p in candidates)
-              ListTile(
-                leading: AvatarWidget(
-                  avatarUrl: p.avatarUrl,
-                  width: 38,
-                  height: 38,
-                  avatarType: AvatarType.user,
-                ),
-                title: Text(p.displayName, style: FoodlyTextStyles.labelBold),
-                onTap: () => Navigator.pop(ctx, p),
+          ),
+          child: Row(
+            children: [
+              AvatarWidget(
+                avatarUrl: p.avatarUrl,
+                width: 38,
+                height: 38,
+                avatarType: AvatarType.user,
               ),
-            const SizedBox(height: 8),
-          ],
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  p.displayName,
+                  style: FoodlyTextStyles.labelBold,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                isSelected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
+                color: isSelected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final chosenUuid = await showDialog<String>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(S.current.groupOrderTransferHost,
+                    style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+                const SizedBox(height: 16),
+                // Lista acotada y scrolleable (mesas grandes).
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (var i = 0; i < candidates.length; i++) ...[
+                          if (i > 0) const SizedBox(height: 10),
+                          candidateCard(setState: setState, p: candidates[i]),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                CustomNeumorphicButton(
+                  text: S.current.groupOrderTransferHost,
+                  disabled: selected == null,
+                  margin: EdgeInsets.zero,
+                  onPressed: selected == null ? null : () => Navigator.pop(ctx, selected),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
-    if (chosen == null || !context.mounted) return;
+    if (chosenUuid == null || !context.mounted) return;
 
-    if (await _confirm(context, S.current.groupOrderTransferHostConfirm(chosen.displayName)) &&
-        context.mounted) {
-      await cubit.transferHost(chosen.uuid);
-    }
+    await cubit.transferHost(chosenUuid);
   }
 
   @override

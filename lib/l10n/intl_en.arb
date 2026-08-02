@@ -1412,6 +1412,7 @@
   "@groupOrderPaymentSuccessBody": {"placeholders": {"total": {"type": "String"}}},
   "groupOrderBackToMenu": "Back to menu",
   "groupOrderLockConfirmSolo": "Close the order and proceed to payment? You won't be able to add more items.",
+  "groupOrderSharedBadgeTooltip": "This item is split among everyone at the table",
   "groupOrderPayFullOrder": "Pay the order · {amount}",
   "@groupOrderPayFullOrder": {"placeholders": {"amount": {"type": "String"}}},
   "groupOrderBackHome": "Back to home",

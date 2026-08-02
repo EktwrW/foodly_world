@@ -88,17 +88,31 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                         ),
                       ),
                       // Badge "Compartido" (F2c): se reparte entre todos.
+                      // Tooltip por TAP (e2e r7: el concepto confundía con
+                      // "yo invito") — explica qué significa compartir.
                       if (item.shared) ...[
                         const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            S.current.groupOrderSharedBadge,
-                            style: FoodlyTextStyles.captionPurpleBold,
+                        Tooltip(
+                          message: S.current.groupOrderSharedBadgeTooltip,
+                          triggerMode: TooltipTriggerMode.tap,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  S.current.groupOrderSharedBadge,
+                                  style: FoodlyTextStyles.captionPurpleBold,
+                                ),
+                                const SizedBox(width: 3),
+                                const Icon(Icons.info_outline_rounded,
+                                    size: 11, color: FoodlyThemes.primaryFoodly),
+                              ],
+                            ),
                           ),
                         ),
                       ],

@@ -1226,6 +1226,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Compartir con la mesa",
     ),
     "groupOrderSharedBadge": MessageLookupByLibrary.simpleMessage("Compartido"),
+    "groupOrderSharedBadgeTooltip": MessageLookupByLibrary.simpleMessage(
+      "Este ítem se divide entre todos los comensales de la mesa",
+    ),
     "groupOrderSplitByItems": MessageLookupByLibrary.simpleMessage("Por ítems"),
     "groupOrderSplitByItemsDesc": MessageLookupByLibrary.simpleMessage(
       "Cada quien paga lo suyo; lo compartido se reparte.",

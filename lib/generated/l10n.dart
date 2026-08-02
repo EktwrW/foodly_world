@@ -9055,6 +9055,16 @@ class S {
     );
   }
 
+  /// `This item is split among everyone at the table`
+  String get groupOrderSharedBadgeTooltip {
+    return Intl.message(
+      'This item is split among everyone at the table',
+      name: 'groupOrderSharedBadgeTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(

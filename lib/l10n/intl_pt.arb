@@ -1412,6 +1412,7 @@
   "@groupOrderPaymentSuccessBody": {"placeholders": {"total": {"type": "String"}}},
   "groupOrderBackToMenu": "Voltar ao menu",
   "groupOrderLockConfirmSolo": "Fechar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
+  "groupOrderSharedBadgeTooltip": "Este item é dividido por todos na mesa",
   "groupOrderPayFullOrder": "Pagar o pedido · {amount}",
   "@groupOrderPayFullOrder": {"placeholders": {"amount": {"type": "String"}}},
   "groupOrderBackHome": "Voltar ao início",

@@ -8,7 +8,6 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formattin
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_item_tile.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
-import 'package:foodly_world/ui/views/group_orders/widgets/participant_progress_row.dart';
 
 Widget _host(Widget child) => MaterialApp(home: Scaffold(body: child));
 
@@ -44,6 +43,36 @@ void main() {
       await tester.pumpWidget(_host(const GroupOrderItemTile(item: item)));
 
       expect(find.text('€9.50'), findsOneWidget);
+    });
+
+    testWidgets('e2e r7: el badge Compartido lleva tooltip por TAP que explica '
+        'el reparto (se confundía con "yo invito")', (tester) async {
+      const item = GroupOrderItemDM(
+        uuid: 'i5',
+        name: 'Jarra de sangría',
+        unitPricePreview: 12.0,
+        shared: true,
+      );
+
+      await tester.pumpWidget(_host(const GroupOrderItemTile(item: item)));
+
+      final tooltip = tester.widget<Tooltip>(find.byType(Tooltip));
+      expect(tooltip.message, S.current.groupOrderSharedBadgeTooltip);
+      expect(tooltip.triggerMode, TooltipTriggerMode.tap);
+
+      // Tap sobre el badge → aparece el texto explicativo en pantalla.
+      await tester.tap(find.byType(Tooltip));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.text(S.current.groupOrderSharedBadgeTooltip), findsOneWidget);
+
+      // Deja expirar el tooltip (drena su timer de auto-cierre).
+      await tester.pump(const Duration(seconds: 5));
+    });
+
+    testWidgets('sin shared no hay badge ni tooltip', (tester) async {
+      const item = GroupOrderItemDM(uuid: 'i6', name: 'Agua', unitPricePreview: 1.0);
+      await tester.pumpWidget(_host(const GroupOrderItemTile(item: item)));
+      expect(find.byType(Tooltip), findsNothing);
     });
 
     testWidgets('muestra botón de eliminar solo si onRemove != null', (tester) async {
@@ -112,38 +141,9 @@ void main() {
     });
   });
 
-  group('ParticipantProgressRow', () {
-    testWidgets('participante pagado: check verde, nombre y monto', (tester) async {
-      const p = GroupOrderParticipantDM(
-        uuid: 'p1',
-        displayName: 'María',
-        role: GroupParticipantRole.host,
-        paymentStatus: GroupPaymentStatus.paid,
-        amountDue: 12.5,
-      );
-
-      await tester.pumpWidget(_host(const ParticipantProgressRow(participant: p)));
-
-      expect(find.text('María'), findsOneWidget);
-      expect(find.text('Host'), findsOneWidget);
-      expect(find.text('€12.50'), findsOneWidget);
-      expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
-    });
-
-    testWidgets('participante pendiente: círculo hueco, sin badge host', (tester) async {
-      const p = GroupOrderParticipantDM(
-        uuid: 'p2',
-        displayName: 'Pedro',
-        amountDue: 20.0,
-      );
-
-      await tester.pumpWidget(_host(const ParticipantProgressRow(participant: p)));
-
-      expect(find.text('Pedro'), findsOneWidget);
-      expect(find.text('Host'), findsNothing);
-      expect(find.byIcon(Icons.circle_outlined), findsOneWidget);
-    });
-  });
+  // ParticipantProgressRow (F1) quedó obsoleto: lo reemplazó
+  // ParticipantExpansibleTile en F2a y ya no se usa en lib/ — sus tests se
+  // retiraron junto con el widget (refinamiento pre-F4a).
 
   group('GroupOrderTotalsFooter', () {
     const order = GroupOrderDM(

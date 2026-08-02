@@ -1172,6 +1172,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Share with the table",
     ),
     "groupOrderSharedBadge": MessageLookupByLibrary.simpleMessage("Shared"),
+    "groupOrderSharedBadgeTooltip": MessageLookupByLibrary.simpleMessage(
+      "This item is split among everyone at the table",
+    ),
     "groupOrderSplitByItems": MessageLookupByLibrary.simpleMessage("By items"),
     "groupOrderSplitByItemsDesc": MessageLookupByLibrary.simpleMessage(
       "Everyone pays for their own; shared items are split.",
