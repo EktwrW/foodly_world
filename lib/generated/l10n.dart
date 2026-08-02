@@ -9015,6 +9015,36 @@ class S {
     );
   }
 
+  /// `Order confirmed!`
+  String get groupOrderPaymentSuccessTitle {
+    return Intl.message(
+      'Order confirmed!',
+      name: 'groupOrderPaymentSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All payments complete · {total}. Receipt sent to your email.`
+  String groupOrderPaymentSuccessBody(String total) {
+    return Intl.message(
+      'All payments complete · $total. Receipt sent to your email.',
+      name: 'groupOrderPaymentSuccessBody',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Back to menu`
+  String get groupOrderBackToMenu {
+    return Intl.message(
+      'Back to menu',
+      name: 'groupOrderBackToMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(
@@ -9065,10 +9095,10 @@ class S {
     );
   }
 
-  /// `Invalid or expired code`
+  /// `We couldn't add you to the order`
   String get groupOrderJoinFailed {
     return Intl.message(
-      'Invalid or expired code',
+      'We couldn\'t add you to the order',
       name: 'groupOrderJoinFailed',
       desc: '',
       args: [],

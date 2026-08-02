@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_item_tile.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
@@ -83,6 +84,31 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byIcon(Icons.close_rounded), findsOneWidget);
       expect(calls, 1);
+    });
+  });
+
+  group('shouldCelebrateConfirmation (e2e r7: cierre del flujo de pago)', () {
+    test('celebra SOLO al transitar viva→confirmada, una única vez', () {
+      // Transición real: vimos la orden viva y ahora está confirmada.
+      expect(
+        shouldCelebrateConfirmation(alreadyShown: false, sawAliveOrder: true, isConfirmed: true),
+        isTrue,
+      );
+      // Ya se mostró → nunca más.
+      expect(
+        shouldCelebrateConfirmation(alreadyShown: true, sawAliveOrder: true, isConfirmed: true),
+        isFalse,
+      );
+      // Abrir una orden YA confirmada (historial) NO dispara festejo.
+      expect(
+        shouldCelebrateConfirmation(alreadyShown: false, sawAliveOrder: false, isConfirmed: true),
+        isFalse,
+      );
+      // Orden aún viva → nada que celebrar.
+      expect(
+        shouldCelebrateConfirmation(alreadyShown: false, sawAliveOrder: true, isConfirmed: false),
+        isFalse,
+      );
     });
   });
 

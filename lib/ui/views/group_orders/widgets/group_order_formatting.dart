@@ -27,3 +27,16 @@ const String kGroupOrderInvitePrefix = 'FOODLY-GO:';
 /// URL base de invitación (App Links): abre Foodly y une automáticamente;
 /// sin app instalada, la landing sirve /join/{code} con fallback y stores.
 const String kGroupOrderInviteUrlBase = 'https://foodly.solutions/join/';
+
+/// e2e r7: ¿corresponde celebrar la confirmación de la orden (sheet de éxito
+/// + salida al menú)? Pura para testear la matriz completa:
+///  - una sola vez ([alreadyShown]);
+///  - solo si VIMOS la orden viva antes ([sawAliveOrder]) — abrir una orden
+///    ya confirmada desde el historial NO debe disparar el festejo;
+///  - y solo cuando el estado actual es confirmado.
+bool shouldCelebrateConfirmation({
+  required bool alreadyShown,
+  required bool sawAliveOrder,
+  required bool isConfirmed,
+}) =>
+    !alreadyShown && sawAliveOrder && isConfirmed;

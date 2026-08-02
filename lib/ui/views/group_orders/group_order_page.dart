@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
@@ -59,8 +60,18 @@ class _GroupOrderPageState extends State<GroupOrderPage> {
   }
 }
 
-class _GroupOrderView extends StatelessWidget {
+class _GroupOrderView extends StatefulWidget {
   const _GroupOrderView();
+
+  @override
+  State<_GroupOrderView> createState() => _GroupOrderViewState();
+}
+
+class _GroupOrderViewState extends State<_GroupOrderView> {
+  // e2e r7: celebración de la confirmación — una sola vez y solo si vimos
+  // la orden viva antes (no al abrir una orden ya confirmada).
+  bool _celebrationShown = false;
+  bool _sawAliveOrder = false;
 
   /// Flujo de pago con PaymentSheet. Sin [coverUuids] paga MI parte; con
   /// ellos cubre la parte de esos participantes ("yo invito", F2b §A.2).
@@ -404,6 +415,74 @@ class _GroupOrderView extends StatelessWidget {
     }
   }
 
+  /// e2e r7: sheet de éxito al confirmarse la orden — check animado, total y
+  /// nota del recibo; CTA único "Volver al menú" (decisión de producto:
+  /// seguís en contexto del restaurante, no al home).
+  Future<void> _showPaymentSuccess(BuildContext context, GroupOrderDM order) async {
+    HapticFeedback.mediumImpact();
+    await showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 450),
+              curve: Curves.easeOutBack,
+              builder: (_, scale, child) => Transform.scale(scale: scale, child: child),
+              child: Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: FoodlyThemes.tertiaryFoodly,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.4),
+                      blurRadius: 16,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.check_rounded, color: Colors.white, size: 44),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              S.current.groupOrderPaymentSuccessTitle,
+              style: FoodlyTextStyles.sectionsTitle,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              S.current.groupOrderPaymentSuccessBody(
+                formatMoney(order.totalAmount, order.currency),
+              ),
+              style: FoodlyTextStyles.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            CustomNeumorphicButton(
+              text: S.current.groupOrderBackToMenu,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              onPressed: () {
+                Navigator.pop(ctx);
+                _exitOrder(context, order);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// e2e r4: host elimina definitivamente una orden vacía.
   Future<void> _onDelete(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
@@ -567,6 +646,26 @@ class _GroupOrderView extends StatelessWidget {
       listener: (context, state) {
         final msg = state.whenOrNull(error: (vm, message) => message);
         if (msg != null) FoodlySnackbars.errorGeneric(context, msg);
+
+        // e2e r7: cierre del flujo — al confirmarse la orden (todos pagaron,
+        // llega por realtime o refetch) se celebra UNA vez con el sheet de
+        // éxito y de ahí se sale al menú del negocio.
+        final order = state.when(
+          initial: (vm) => vm.order,
+          loading: (vm) => vm.order,
+          loaded: (vm) => vm.order,
+          error: (vm, _) => vm.order,
+        );
+        if (order != null && !order.isConfirmed) _sawAliveOrder = true;
+        if (order != null &&
+            shouldCelebrateConfirmation(
+              alreadyShown: _celebrationShown,
+              sawAliveOrder: _sawAliveOrder,
+              isConfirmed: order.isConfirmed,
+            )) {
+          _celebrationShown = true;
+          _showPaymentSuccess(context, order);
+        }
       },
       builder: (context, state) {
         final vm = state.when(
