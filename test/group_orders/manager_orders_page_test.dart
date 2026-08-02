@@ -7,6 +7,7 @@ import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/cubit/stripe_onboarding_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
@@ -62,9 +63,26 @@ void main() {
     items: [GroupOrderItemDM(uuid: 'i1', name: 'Sashimi', unitPricePreview: 12, quantity: 2, participantUuid: 'p1')],
   );
 
-  Widget app(Widget child, ManagerOrdersCubit cubit) => MaterialApp(
-        home: BlocProvider.value(value: cubit, child: child),
-      );
+  Widget app(Widget child, ManagerOrdersCubit cubit) {
+    // El banner de onboarding necesita su cubit en el árbol; sin load() su
+    // estado queda "desconocido" y el banner no se muestra ni toca el repo.
+    final stripeCubit = StripeOnboardingCubit(
+      repo: _FakeRepo(),
+      logger: Logger(level: Level.off),
+      businessUuid: 'biz-1',
+    );
+    addTearDown(stripeCubit.close);
+
+    return MaterialApp(
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: cubit),
+          BlocProvider.value(value: stripeCubit),
+        ],
+        child: child,
+      ),
+    );
+  }
 
   ManagerOrdersCubit buildCubit(_FakeRepo repo) => ManagerOrdersCubit(
         repo: repo,

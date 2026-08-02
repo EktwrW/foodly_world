@@ -10,6 +10,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
+import 'package:foodly_world/ui/views/manager_orders/widgets/stripe_onboarding_banner.dart';
 
 /// F4a — pestaña "Órdenes en vivo" del negocio (maquetas v3 aprobadas):
 /// chips de filtro con contadores live + tarjetas de orden. El cubit vive en
@@ -95,6 +96,8 @@ class ManagerOrdersPage extends StatelessWidget {
             top: false,
             child: Column(
               children: [
+                // F4a-6: banner de onboarding de pagos (dos estados).
+                const StripeOnboardingBanner(),
                 // Chips de filtro por bucket con contador live.
                 SizedBox(
                   height: 46,

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
+import 'package:foodly_world/data_models/group_orders/stripe_connect_dm.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'group_order_client.g.dart';
@@ -114,6 +115,14 @@ abstract class GroupOrderClient {
   ///
   /// F2b "yo invito": con [coverParticipantUuids] el pago cubre la parte de
   /// ESOS participantes (Σ remaining_due, calculado 100% server-side).
+  // ── F4a-6: onboarding de pagos del negocio (Stripe Connect) ────
+
+  @GET('/businesses/{businessUuid}/stripe/status')
+  Future<StripeConnectStatusDM> stripeStatus(@Path('businessUuid') String businessUuid);
+
+  @POST('/businesses/{businessUuid}/stripe/onboard')
+  Future<StripeOnboardResponseDM> stripeOnboard(@Path('businessUuid') String businessUuid);
+
   // ── F4a: panel "Órdenes en vivo" del negocio (solo dueño) ──────
 
   @GET('/manager/businesses/{businessUuid}/group-orders')

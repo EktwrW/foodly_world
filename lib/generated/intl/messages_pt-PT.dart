@@ -1445,6 +1445,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Gerir Reservas",
     ),
+    "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
+      "Verifique o seu negócio com a Stripe para receber os pagamentos dos pedidos diretamente na sua conta bancária. Demora ~5 minutos.",
+    ),
+    "managerActivatePaymentsTitle": MessageLookupByLibrary.simpleMessage(
+      "Ative os pagamentos do seu negócio",
+    ),
+    "managerActivateWithStripe": MessageLookupByLibrary.simpleMessage(
+      "Ativar com a Stripe →",
+    ),
     "managerAssignTable": MessageLookupByLibrary.simpleMessage("Atribuir mesa"),
     "managerBadgeConfirmed": MessageLookupByLibrary.simpleMessage("CONFIRMADO"),
     "managerBadgeDelivered": MessageLookupByLibrary.simpleMessage("ENTREGUE"),
@@ -1483,6 +1492,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerPaidComplete": MessageLookupByLibrary.simpleMessage(
       "Pago por completo",
+    ),
+    "managerPaymentsActive": MessageLookupByLibrary.simpleMessage(
+      "Pagamentos ativos",
+    ),
+    "managerPaymentsActiveSub": MessageLookupByLibrary.simpleMessage(
+      "Verificado com a Stripe · payouts ativados",
+    ),
+    "managerPaymentsRefresh": MessageLookupByLibrary.simpleMessage(
+      "Atualizar estado",
     ),
     "managerRound": m52,
     "managerTableHint": MessageLookupByLibrary.simpleMessage(

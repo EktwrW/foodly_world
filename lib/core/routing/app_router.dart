@@ -31,6 +31,7 @@ import 'package:foodly_world/ui/views/home/pages/notifications_page/notification
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/cubit/stripe_onboarding_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
@@ -699,13 +700,24 @@ class AppRouter {
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
-              child: BlocProvider(
-                create: (_) => ManagerOrdersCubit(
-                  repo: di(),
-                  logger: di(),
-                  realtime: di(),
-                  businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
-                )..load(),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => ManagerOrdersCubit(
+                      repo: di(),
+                      logger: di(),
+                      realtime: di(),
+                      businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                    )..load(),
+                  ),
+                  BlocProvider(
+                    create: (_) => StripeOnboardingCubit(
+                      repo: di(),
+                      logger: di(),
+                      businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                    )..load(),
+                  ),
+                ],
                 child: const ManagerOrdersPage(),
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>

@@ -9065,6 +9065,66 @@ class S {
     );
   }
 
+  /// `Activate payments for your business`
+  String get managerActivatePaymentsTitle {
+    return Intl.message(
+      'Activate payments for your business',
+      name: 'managerActivatePaymentsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.`
+  String get managerActivatePaymentsBody {
+    return Intl.message(
+      'Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.',
+      name: 'managerActivatePaymentsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate with Stripe →`
+  String get managerActivateWithStripe {
+    return Intl.message(
+      'Activate with Stripe →',
+      name: 'managerActivateWithStripe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments active`
+  String get managerPaymentsActive {
+    return Intl.message(
+      'Payments active',
+      name: 'managerPaymentsActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verified with Stripe · payouts enabled`
+  String get managerPaymentsActiveSub {
+    return Intl.message(
+      'Verified with Stripe · payouts enabled',
+      name: 'managerPaymentsActiveSub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh status`
+  String get managerPaymentsRefresh {
+    return Intl.message(
+      'Refresh status',
+      name: 'managerPaymentsRefresh',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Live orders`
   String get managerLiveOrders {
     return Intl.message(

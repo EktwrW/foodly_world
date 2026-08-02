@@ -3,6 +3,7 @@ import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
+import 'package:foodly_world/data_models/group_orders/stripe_connect_dm.dart';
 
 /// Repositorio de Group Orders. Cada método envuelve la llamada del cliente en
 /// un `ApiResult<T>` (mismo patrón que ReservationRepo).
@@ -101,6 +102,24 @@ class GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> cancelGroupOrder(String uuid) async {
     try {
       return ApiResult.success(await _client.cancelGroupOrder(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  // ── F4a-6: onboarding de pagos (Stripe Connect) ────────────────
+
+  Future<ApiResult<StripeConnectStatusDM>> stripeStatus(String businessUuid) async {
+    try {
+      return ApiResult.success(await _client.stripeStatus(businessUuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<StripeOnboardResponseDM>> stripeOnboard(String businessUuid) async {
+    try {
+      return ApiResult.success(await _client.stripeOnboard(businessUuid));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
