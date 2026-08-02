@@ -9065,6 +9065,221 @@ class S {
     );
   }
 
+  /// `Live orders`
+  String get managerLiveOrders {
+    return Intl.message(
+      'Live orders',
+      name: 'managerLiveOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get managerBucketAll {
+    return Intl.message('All', name: 'managerBucketAll', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get managerBucketPending {
+    return Intl.message(
+      'Active',
+      name: 'managerBucketPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preparing`
+  String get managerBucketPreparing {
+    return Intl.message(
+      'Preparing',
+      name: 'managerBucketPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ready`
+  String get managerBucketReady {
+    return Intl.message(
+      'Ready',
+      name: 'managerBucketReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivered`
+  String get managerBucketDelivered {
+    return Intl.message(
+      'Delivered',
+      name: 'managerBucketDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CONFIRMED`
+  String get managerBadgeConfirmed {
+    return Intl.message(
+      'CONFIRMED',
+      name: 'managerBadgeConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PREPARING`
+  String get managerBadgePreparing {
+    return Intl.message(
+      'PREPARING',
+      name: 'managerBadgePreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `READY`
+  String get managerBadgeReady {
+    return Intl.message('READY', name: 'managerBadgeReady', desc: '', args: []);
+  }
+
+  /// `DELIVERED`
+  String get managerBadgeDelivered {
+    return Intl.message(
+      'DELIVERED',
+      name: 'managerBadgeDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as PREPARING`
+  String get managerMarkPreparing {
+    return Intl.message(
+      'Mark as PREPARING',
+      name: 'managerMarkPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as READY`
+  String get managerMarkReady {
+    return Intl.message(
+      'Mark as READY',
+      name: 'managerMarkReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as DELIVERED`
+  String get managerMarkDelivered {
+    return Intl.message(
+      'Mark as DELIVERED',
+      name: 'managerMarkDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deliver everything at once`
+  String get managerDeliverAllAndClose {
+    return Intl.message(
+      'Deliver everything at once',
+      name: 'managerDeliverAllAndClose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check all`
+  String get managerDeliverAll {
+    return Intl.message(
+      'Check all',
+      name: 'managerDeliverAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{delivered}/{total} items delivered`
+  String managerItemsDelivered(int delivered, int total) {
+    return Intl.message(
+      '$delivered/$total items delivered',
+      name: 'managerItemsDelivered',
+      desc: '',
+      args: [delivered, total],
+    );
+  }
+
+  /// `ROUND {n}`
+  String managerRound(int n) {
+    return Intl.message('ROUND $n', name: 'managerRound', desc: '', args: [n]);
+  }
+
+  /// `Assign table`
+  String get managerAssignTable {
+    return Intl.message(
+      'Assign table',
+      name: 'managerAssignTable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: 7, Bar 2, Terrace`
+  String get managerTableHint {
+    return Intl.message(
+      'E.g.: 7, Bar 2, Terrace',
+      name: 'managerTableHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{guests} guests · {items} items`
+  String managerGuestsMeta(int guests, int items) {
+    return Intl.message(
+      '$guests guests · $items items',
+      name: 'managerGuestsMeta',
+      desc: '',
+      args: [guests, items],
+    );
+  }
+
+  /// `Fully paid`
+  String get managerPaidComplete {
+    return Intl.message(
+      'Fully paid',
+      name: 'managerPaidComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No orders yet`
+  String get managerNoOrders {
+    return Intl.message(
+      'No orders yet',
+      name: 'managerNoOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DELIVERED unlocks when every item is checked`
+  String get managerDeliveredNeedsChecklist {
+    return Intl.message(
+      'DELIVERED unlocks when every item is checked',
+      name: 'managerDeliveredNeedsChecklist',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(

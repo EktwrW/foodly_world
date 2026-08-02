@@ -1,0 +1,260 @@
+import 'package:flutter/material.dart';
+import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+
+/// F4a — widgets del panel "Órdenes en vivo" (maquetas v3): badge de
+/// fulfillment con código de color, chips de ronda/mesa y tarjeta de orden.
+
+const Color kManagerAmber = Color(0xFFB87400);
+
+/// Badge de estado con el código de color aprobado:
+/// plum (confirmada) → ámbar (preparando) → verde (lista) → gris (entregada).
+class ManagerFulfillmentBadge extends StatelessWidget {
+  final GroupFulfillmentStatus? status;
+
+  const ManagerFulfillmentBadge({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    final (label, fg, bg) = switch (status) {
+      GroupFulfillmentStatus.preparing => (
+          S.current.managerBadgePreparing,
+          kManagerAmber,
+          const Color(0xFFF5A623).withValues(alpha: 0.15),
+        ),
+      GroupFulfillmentStatus.ready => (
+          S.current.managerBadgeReady,
+          const Color(0xFF0B8A40),
+          FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.14),
+        ),
+      GroupFulfillmentStatus.delivered => (
+          S.current.managerBadgeDelivered,
+          FoodlyThemes.secondaryFoodly,
+          FoodlyThemes.secondaryFoodly.withValues(alpha: 0.15),
+        ),
+      null => (
+          S.current.managerBadgeConfirmed,
+          FoodlyThemes.primaryFoodly,
+          FoodlyThemes.primaryFoodly.withValues(alpha: 0.10),
+        ),
+    };
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(8)),
+      child: Text(
+        label,
+        style: FoodlyTextStyles.captionBold.copyWith(color: fg, fontSize: 9.5, letterSpacing: 0.3),
+      ),
+    );
+  }
+}
+
+/// Stepper de fulfillment (maqueta 2): 4 pasos, hechos en verde, actual en
+/// plum con halo; los saltados quedan sin marcar (sin timestamp, honesto).
+class ManagerFulfillmentStepper extends StatelessWidget {
+  final GroupFulfillmentStatus? status;
+
+  const ManagerFulfillmentStepper({super.key, required this.status});
+
+  int get _stage => switch (status) {
+        null => 0,
+        GroupFulfillmentStatus.preparing => 1,
+        GroupFulfillmentStatus.ready => 2,
+        GroupFulfillmentStatus.delivered => 3,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final labels = [
+      S.current.managerBadgeConfirmed,
+      S.current.managerBadgePreparing,
+      S.current.managerBadgeReady,
+      S.current.managerBadgeDelivered,
+    ];
+    final icons = [
+      Icons.check_rounded,
+      Icons.soup_kitchen_outlined,
+      Icons.notifications_active_outlined,
+      Icons.check_rounded,
+    ];
+
+    Widget dot(int i) {
+      final isDone = i < _stage || (i == 0) || (i == 3 && _stage == 3);
+      final isNow = i == _stage && _stage != 3;
+      final bg = isNow
+          ? FoodlyThemes.primaryFoodly
+          : isDone
+              ? FoodlyThemes.tertiaryFoodly
+              : FoodlyThemes.primaryFoodly.withValues(alpha: 0.08);
+      final fg = (isNow || isDone) ? Colors.white : FoodlyThemes.primaryFoodly;
+
+      return Expanded(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: bg,
+                shape: BoxShape.circle,
+                boxShadow: isNow
+                    ? [
+                        BoxShadow(
+                          color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.25),
+                          spreadRadius: 4,
+                        ),
+                      ]
+                    : const [],
+              ),
+              child: Icon(icons[i], size: 16, color: fg),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              labels[i],
+              style: FoodlyTextStyles.captionBold.copyWith(
+                fontSize: 7.5,
+                color: isNow ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+      ),
+      child: Row(children: [for (var i = 0; i < 4; i++) dot(i)]),
+    );
+  }
+}
+
+/// Chip pequeño (RONDA N / MESA X) — mismo lenguaje que los tags del cliente.
+class ManagerMiniChip extends StatelessWidget {
+  final String text;
+  final Color color;
+
+  const ManagerMiniChip({super.key, required this.text, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        text,
+        style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 8.5),
+      ),
+    );
+  }
+}
+
+/// Tarjeta de orden de la lista (maqueta 1): id/ronda/mesa + badge + meta +
+/// total + línea de pago.
+class ManagerOrderCard extends StatelessWidget {
+  final GroupOrderDM order;
+  final VoidCallback onTap;
+
+  const ManagerOrderCard({super.key, required this.order, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final delivered = order.fulfillmentStatus == GroupFulfillmentStatus.delivered;
+
+    return Opacity(
+      opacity: delivered ? 0.55 : 1,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        order.businessName.isNotEmpty ? order.businessName : order.uuid.substring(0, 8),
+                        style: FoodlyTextStyles.labelBold,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    if (order.roundNumber > 1)
+                      ManagerMiniChip(
+                        text: S.current.managerRound(order.roundNumber),
+                        color: FoodlyThemes.secondaryFoodly,
+                      ),
+                    if ((order.tableLabel ?? '').isNotEmpty) ...[
+                      const SizedBox(width: 4),
+                      ManagerMiniChip(
+                        text: order.tableLabel!.toUpperCase(),
+                        color: FoodlyThemes.primaryFoodly,
+                      ),
+                    ],
+                    const Spacer(),
+                    ManagerFulfillmentBadge(status: order.fulfillmentStatus),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(
+                      S.current.managerGuestsMeta(order.participants.length, order.items.length),
+                      style: FoodlyTextStyles.caption,
+                    ),
+                    const Spacer(),
+                    Text(
+                      formatMoney(order.totalAmount, order.currency),
+                      style: FoodlyTextStyles.itemPricePurpleBold,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.check_circle_rounded,
+                        size: 13, color: Color(0xFF0B8A40)),
+                    const SizedBox(width: 4),
+                    Text(
+                      S.current.managerPaidComplete,
+                      style: FoodlyTextStyles.captionBold
+                          .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                    ),
+                    const Spacer(),
+                    Text(
+                      S.current.managerItemsDelivered(order.deliveredItemsCount, order.items.length),
+                      style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

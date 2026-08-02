@@ -28,6 +28,8 @@ enum AppRoutes {
   manageServicePackages('$mainRoute/$_routeIdParam/my-business/service-packages', 'manageServicePackages'),
   manageAvailability('$mainRoute/$_routeIdParam/my-business/manage-availability', 'manageAvailability'),
   businessAnalytics('$mainRoute/$_routeIdParam/my-business/analytics', 'businessAnalytics'),
+  // F4a: panel "Órdenes en vivo" del negocio (el :id es el BUSINESS uuid).
+  liveOrders('$mainRoute/$_routeIdParam/my-business/live-orders', 'liveOrders'),
   visitBusiness('$mainRoute/$_routeIdParam/visit-business', 'visitBusiness'),
   visitMenu('/visit-menu/$_routeIdParam', 'visitMenu'),
   visitServicePackages('$mainRoute/$_routeIdParam/visit-business/visit-service-packages', 'visitServicePackages'),
