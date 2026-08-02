@@ -8,7 +8,9 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -52,7 +54,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) => SafeArea(
         child: SizedBox(
@@ -122,27 +124,50 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
   }
 
   /// Fallback: tipear el código (QR dañado, luz, o futura web sin cámara).
+  /// Dialog Foodly (shell compartido) con el campo en el estilo del código
+  /// del sheet de invitación (mayúsculas, espaciado ancho, morado).
   Future<String?> _askJoinCode(BuildContext context) {
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(S.current.groupOrderJoinTitle),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          textCapitalization: TextCapitalization.characters,
-          maxLength: 6,
-          style: const TextStyle(letterSpacing: 6, fontWeight: FontWeight.bold),
-          decoration: InputDecoration(hintText: S.current.groupOrderJoinHint, counterText: ''),
-        ),
+      builder: (ctx) => FoodlyDialogShell(
+        title: S.current.groupOrderJoinTitle,
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.cancel)),
-          TextButton(
+          CustomNeumorphicButton(
+            text: S.current.confirm,
+            disabled: false,
+            margin: EdgeInsets.zero,
             onPressed: () => Navigator.pop(ctx, controller.text),
-            child: Text(S.current.confirm),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
           ),
         ],
+        child: TextField(
+          controller: controller,
+          autofocus: true,
+          textAlign: TextAlign.center,
+          textCapitalization: TextCapitalization.characters,
+          maxLength: 6,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 8,
+            color: FoodlyThemes.primaryFoodly,
+          ),
+          decoration: InputDecoration(
+            hintText: S.current.groupOrderJoinHint,
+            hintStyle: FoodlyTextStyles.caption,
+            counterText: '',
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3)),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly, width: 2),
+            ),
+          ),
+        ),
       ),
     );
   }

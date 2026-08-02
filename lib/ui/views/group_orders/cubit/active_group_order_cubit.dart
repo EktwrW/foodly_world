@@ -139,6 +139,28 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     return ok;
   }
 
+  /// F4a (caso bar): abre la SIGUIENTE RONDA de la mesa — la orden nueva
+  /// (que hereda mesa y QR) pasa a ser el carrito activo. true = abierta.
+  Future<bool> startNextRound(String previousOrderUuid) async {
+    if (_busy) return false;
+    _busy = true;
+    lastJoinError = null;
+    final res = await _repo.nextRound(previousOrderUuid);
+    final ok = res.when(
+      success: (r) {
+        emit(r.groupOrder);
+        return true;
+      },
+      failure: (e) {
+        _logger.e(e);
+        lastJoinError = e.serverMessage;
+        return false;
+      },
+    );
+    _busy = false;
+    return ok;
+  }
+
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
   Future<void> refresh() async {
     final order = state;

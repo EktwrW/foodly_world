@@ -9015,6 +9015,351 @@ class S {
     );
   }
 
+  /// `Order confirmed!`
+  String get groupOrderPaymentSuccessTitle {
+    return Intl.message(
+      'Order confirmed!',
+      name: 'groupOrderPaymentSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All payments complete · {total}. Receipt sent to your email.`
+  String groupOrderPaymentSuccessBody(String total) {
+    return Intl.message(
+      'All payments complete · $total. Receipt sent to your email.',
+      name: 'groupOrderPaymentSuccessBody',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Back to menu`
+  String get groupOrderBackToMenu {
+    return Intl.message(
+      'Back to menu',
+      name: 'groupOrderBackToMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close the order and proceed to payment? You won't be able to add more items.`
+  String get groupOrderLockConfirmSolo {
+    return Intl.message(
+      'Close the order and proceed to payment? You won\'t be able to add more items.',
+      name: 'groupOrderLockConfirmSolo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This item is split among everyone at the table`
+  String get groupOrderSharedBadgeTooltip {
+    return Intl.message(
+      'This item is split among everyone at the table',
+      name: 'groupOrderSharedBadgeTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate payments for your business`
+  String get managerActivatePaymentsTitle {
+    return Intl.message(
+      'Activate payments for your business',
+      name: 'managerActivatePaymentsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.`
+  String get managerActivatePaymentsBody {
+    return Intl.message(
+      'Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.',
+      name: 'managerActivatePaymentsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activate with Stripe →`
+  String get managerActivateWithStripe {
+    return Intl.message(
+      'Activate with Stripe →',
+      name: 'managerActivateWithStripe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payments active`
+  String get managerPaymentsActive {
+    return Intl.message(
+      'Payments active',
+      name: 'managerPaymentsActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verified with Stripe · payouts enabled`
+  String get managerPaymentsActiveSub {
+    return Intl.message(
+      'Verified with Stripe · payouts enabled',
+      name: 'managerPaymentsActiveSub',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh status`
+  String get managerPaymentsRefresh {
+    return Intl.message(
+      'Refresh status',
+      name: 'managerPaymentsRefresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't complete that action. Try again.`
+  String get managerGenericError {
+    return Intl.message(
+      'We couldn\'t complete that action. Try again.',
+      name: 'managerGenericError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Live orders`
+  String get managerLiveOrders {
+    return Intl.message(
+      'Live orders',
+      name: 'managerLiveOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get managerBucketAll {
+    return Intl.message('All', name: 'managerBucketAll', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get managerBucketPending {
+    return Intl.message(
+      'Active',
+      name: 'managerBucketPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preparing`
+  String get managerBucketPreparing {
+    return Intl.message(
+      'Preparing',
+      name: 'managerBucketPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ready`
+  String get managerBucketReady {
+    return Intl.message(
+      'Ready',
+      name: 'managerBucketReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivered`
+  String get managerBucketDelivered {
+    return Intl.message(
+      'Delivered',
+      name: 'managerBucketDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CONFIRMED`
+  String get managerBadgeConfirmed {
+    return Intl.message(
+      'CONFIRMED',
+      name: 'managerBadgeConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PREPARING`
+  String get managerBadgePreparing {
+    return Intl.message(
+      'PREPARING',
+      name: 'managerBadgePreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `READY`
+  String get managerBadgeReady {
+    return Intl.message('READY', name: 'managerBadgeReady', desc: '', args: []);
+  }
+
+  /// `DELIVERED`
+  String get managerBadgeDelivered {
+    return Intl.message(
+      'DELIVERED',
+      name: 'managerBadgeDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as PREPARING`
+  String get managerMarkPreparing {
+    return Intl.message(
+      'Mark as PREPARING',
+      name: 'managerMarkPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as READY`
+  String get managerMarkReady {
+    return Intl.message(
+      'Mark as READY',
+      name: 'managerMarkReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as DELIVERED`
+  String get managerMarkDelivered {
+    return Intl.message(
+      'Mark as DELIVERED',
+      name: 'managerMarkDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deliver everything at once`
+  String get managerDeliverAllAndClose {
+    return Intl.message(
+      'Deliver everything at once',
+      name: 'managerDeliverAllAndClose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check all`
+  String get managerDeliverAll {
+    return Intl.message(
+      'Check all',
+      name: 'managerDeliverAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{delivered}/{total} items delivered`
+  String managerItemsDelivered(int delivered, int total) {
+    return Intl.message(
+      '$delivered/$total items delivered',
+      name: 'managerItemsDelivered',
+      desc: '',
+      args: [delivered, total],
+    );
+  }
+
+  /// `ROUND {n}`
+  String managerRound(int n) {
+    return Intl.message('ROUND $n', name: 'managerRound', desc: '', args: [n]);
+  }
+
+  /// `Assign table`
+  String get managerAssignTable {
+    return Intl.message(
+      'Assign table',
+      name: 'managerAssignTable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E.g.: 7, Bar 2, Terrace`
+  String get managerTableHint {
+    return Intl.message(
+      'E.g.: 7, Bar 2, Terrace',
+      name: 'managerTableHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{guests} guests · {items} items`
+  String managerGuestsMeta(int guests, int items) {
+    return Intl.message(
+      '$guests guests · $items items',
+      name: 'managerGuestsMeta',
+      desc: '',
+      args: [guests, items],
+    );
+  }
+
+  /// `Fully paid`
+  String get managerPaidComplete {
+    return Intl.message(
+      'Fully paid',
+      name: 'managerPaidComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No orders yet`
+  String get managerNoOrders {
+    return Intl.message(
+      'No orders yet',
+      name: 'managerNoOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DELIVERED unlocks when every item is checked`
+  String get managerDeliveredNeedsChecklist {
+    return Intl.message(
+      'DELIVERED unlocks when every item is checked',
+      name: 'managerDeliveredNeedsChecklist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order another round`
+  String get groupOrderNextRound {
+    return Intl.message(
+      'Order another round',
+      name: 'groupOrderNextRound',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay the order · {amount}`
   String groupOrderPayFullOrder(String amount) {
     return Intl.message(
@@ -9065,10 +9410,10 @@ class S {
     );
   }
 
-  /// `Invalid or expired code`
+  /// `We couldn't add you to the order`
   String get groupOrderJoinFailed {
     return Intl.message(
-      'Invalid or expired code',
+      'We couldn\'t add you to the order',
       name: 'groupOrderJoinFailed',
       desc: '',
       args: [],

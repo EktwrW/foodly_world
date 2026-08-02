@@ -4,6 +4,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 
 /// Pie de la orden grupal: progreso de pago ("3 de 5 pagado" + barra), total,
@@ -42,20 +43,14 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
 
   /// Explica la tarifa de procesamiento: es de la plataforma de pagos, no de
-  /// Foodly ni del restaurante.
+  /// Foodly ni del restaurante. Dialog Foodly (shell compartido).
   void _showFeeInfo(BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(S.current.groupOrderServiceFeeTitle),
-        content: Text(
-          S.current.groupOrderServiceFeeExplain(
-            formatMoney(order.payerFixedFee, order.currency),
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(S.current.confirm)),
-        ],
+    showFoodlyInfo(
+      context,
+      icon: Icons.info_outline_rounded,
+      title: S.current.groupOrderServiceFeeTitle,
+      message: S.current.groupOrderServiceFeeExplain(
+        formatMoney(order.payerFixedFee, order.currency),
       ),
     );
   }
@@ -90,13 +85,20 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
+            // Progreso ANIMADO (refinamiento pre-F4a): cuando alguien paga,
+            // la barra desliza suave hasta el nuevo valor en vez de saltar.
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                value: order.paymentProgress,
-                minHeight: 6,
-                backgroundColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.10),
-                valueColor: const AlwaysStoppedAnimation(FoodlyThemes.tertiaryFoodly),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: order.paymentProgress),
+                duration: const Duration(milliseconds: 450),
+                curve: Curves.easeOutCubic,
+                builder: (_, value, __) => LinearProgressIndicator(
+                  value: value,
+                  minHeight: 6,
+                  backgroundColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.10),
+                  valueColor: const AlwaysStoppedAnimation(FoodlyThemes.tertiaryFoodly),
+                ),
               ),
             ),
             const SizedBox(height: 14),

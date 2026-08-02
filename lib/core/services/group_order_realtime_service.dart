@@ -41,7 +41,10 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   final AuthSessionService _authSession;
 
   PusherChannelsFlutter? _pusher;
-  String? _watchingUuid;
+  // F4a: el servicio es canal-genérico — la orden (cliente) y el panel del
+  // negocio (manager) comparten TODO el plumbing (socket, polling, lifecycle).
+  String? _channelName;
+  String? _eventName;
   VoidCallback? _onTouched;
   Timer? _pollTimer;
   Timer? _retryTimer;
@@ -51,9 +54,18 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   /// Empieza a observar la orden [orderUuid]. [onTouched] se invoca ante
   /// cualquier cambio (evento realtime, tick de polling o resume de la app);
   /// el caller decide cómo refetchear.
-  Future<void> watch(String orderUuid, {required VoidCallback onTouched}) async {
+  Future<void> watch(String orderUuid, {required VoidCallback onTouched}) =>
+      _startWatch('private-group-order.$orderUuid', 'group-order.touched', onTouched);
+
+  /// F4a: observa el canal del PANEL del negocio (dueño) — lista live de
+  /// "Órdenes en vivo". Mismas garantías que watch (fallback polling, etc.).
+  Future<void> watchBusiness(String businessUuid, {required VoidCallback onTouched}) =>
+      _startWatch('private-business-orders.$businessUuid', 'business-orders.touched', onTouched);
+
+  Future<void> _startWatch(String channelName, String eventName, VoidCallback onTouched) async {
     await unwatch();
-    _watchingUuid = orderUuid;
+    _channelName = channelName;
+    _eventName = eventName;
     _onTouched = onTouched;
 
     if (!_observing) {
@@ -66,7 +78,8 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
   /// Deja de observar y libera TODO (socket, timers, observer).
   Future<void> unwatch() async {
-    _watchingUuid = null;
+    _channelName = null;
+    _eventName = null;
     _onTouched = null;
     _stopPolling();
     _retryTimer?.cancel();
@@ -81,7 +94,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   // ── Lifecycle: pantalla apagada / app minimizada ─────────────────────
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_watchingUuid == null) return;
+    if (_channelName == null) return;
 
     if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
       _stopPolling();
@@ -94,8 +107,9 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
   // ── Socket ───────────────────────────────────────────────────────────
   Future<void> _connect() async {
-    final uuid = _watchingUuid;
-    if (uuid == null) return;
+    final channel = _channelName;
+    final eventName = _eventName;
+    if (channel == null || eventName == null) return;
 
     try {
       final pusher = PusherChannelsFlutter.getInstance();
@@ -112,18 +126,18 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
           log('Pusher error: $message', name: 'GroupOrderRealtime');
         },
         onEvent: (event) {
-          if (event.eventName == 'group-order.touched') {
+          if (event.eventName == eventName) {
             _onTouched?.call();
           }
         },
       );
 
-      await pusher.subscribe(channelName: 'private-group-order.$uuid');
+      await pusher.subscribe(channelName: channel);
       await pusher.connect();
 
       _socketHealthy = true;
       _stopPolling(); // el socket manda; adiós fallback
-      log('Realtime conectado a la orden $uuid', name: 'GroupOrderRealtime');
+      log('Realtime conectado a $channel', name: 'GroupOrderRealtime');
     } catch (e) {
       // Fallback silencioso a polling (opción C) + reintento periódico.
       log('Socket no disponible ($e) — fallback a polling', name: 'GroupOrderRealtime');
@@ -175,7 +189,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   void _scheduleRetry() {
     _retryTimer?.cancel();
     _retryTimer = Timer(_retryInterval, () {
-      if (_watchingUuid != null && !_socketHealthy) _connect();
+      if (_channelName != null && !_socketHealthy) _connect();
     });
   }
 }

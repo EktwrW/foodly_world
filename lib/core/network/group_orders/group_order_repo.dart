@@ -2,6 +2,8 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
+import 'package:foodly_world/data_models/group_orders/stripe_connect_dm.dart';
 
 /// Repositorio de Group Orders. Cada método envuelve la llamada del cliente en
 /// un `ApiResult<T>` (mismo patrón que ReservationRepo).
@@ -100,6 +102,93 @@ class GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> cancelGroupOrder(String uuid) async {
     try {
       return ApiResult.success(await _client.cancelGroupOrder(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  // ── F4a-6: onboarding de pagos (Stripe Connect) ────────────────
+
+  Future<ApiResult<StripeConnectStatusDM>> stripeStatus(String businessUuid) async {
+    try {
+      return ApiResult.success(await _client.stripeStatus(businessUuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<StripeOnboardResponseDM>> stripeOnboard(String businessUuid) async {
+    try {
+      return ApiResult.success(await _client.stripeOnboard(businessUuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  // ── F4a: panel "Órdenes en vivo" (solo dueño) ──────────────────
+
+  Future<ApiResult<ManagerOrdersResponseDM>> managerOrders(
+    String businessUuid, {
+    String? bucket,
+    int? page,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _client.managerOrders(businessUuid, bucket: bucket, page: page),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> managerSetFulfillment(
+    String uuid, {
+    required String status,
+  }) async {
+    try {
+      return ApiResult.success(await _client.managerSetFulfillment(uuid, status: status));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> managerSetItemDelivered(
+    String uuid,
+    String itemUuid, {
+    required bool delivered,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _client.managerSetItemDelivered(uuid, itemUuid, delivered: delivered),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> managerDeliverAll(String uuid) async {
+    try {
+      return ApiResult.success(await _client.managerDeliverAll(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> managerSetTable(
+    String uuid, {
+    String? tableLabel,
+  }) async {
+    try {
+      return ApiResult.success(await _client.managerSetTable(uuid, tableLabel: tableLabel));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F4a (caso bar): siguiente ronda de la mesa.
+  Future<ApiResult<GroupOrderResponseDM>> nextRound(String uuid) async {
+    try {
+      return ApiResult.success(await _client.nextRound(uuid));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

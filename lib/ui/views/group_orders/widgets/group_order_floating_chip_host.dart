@@ -126,6 +126,16 @@ class _DraggableChipLayerState extends State<_DraggableChipLayer> {
         return Positioned(
           left: position.dx,
           top: position.dy,
+          // Entrada animada (refinamiento pre-F4a): scale+fade al aparecer
+          // en una pantalla — antes se materializaba en seco.
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0.0, end: 1.0),
+            duration: const Duration(milliseconds: 260),
+            curve: Curves.easeOutBack,
+            builder: (_, t, child) => Transform.scale(
+              scale: 0.6 + 0.4 * t,
+              child: Opacity(opacity: t.clamp(0.0, 1.0), child: child),
+            ),
           // Draggable nativo (pedido explícito e2e r4): el [feedback] sigue
           // el dedo vía overlay, el hijo queda como fantasma atenuado, y al
           // soltar la posición se clampea y se imanta al borde más cercano.
@@ -153,6 +163,7 @@ class _DraggableChipLayerState extends State<_DraggableChipLayer> {
               );
             },
             child: chip,
+          ),
           ),
         );
       },

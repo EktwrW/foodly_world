@@ -30,6 +30,9 @@ import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_
 import 'package:foodly_world/ui/views/home/pages/notifications_page/notifications_page.dart';
 import 'package:foodly_world/ui/views/home/pages/saved_promotions_page/saved_promotions_page.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/social_page.dart';
+import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/cubit/stripe_onboarding_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
 import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
@@ -682,6 +685,40 @@ class AppRouter {
                 child: ManageAvailabilityPage(
                   businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                 ),
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                  FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          // F4a: panel "Órdenes en vivo" (dueño). El cubit vive en la ruta:
+          // lista + realtime por negocio; el detalle se pushea con
+          // BlocProvider.value sobre el MISMO cubit.
+          GoRoute(
+            path: AppRoutes.liveOrders.path,
+            name: AppRoutes.liveOrders.name,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            pageBuilder: (context, state) => CustomTransitionPage<void>(
+              transitionDuration: Durations.medium4,
+              key: state.pageKey,
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) => ManagerOrdersCubit(
+                      repo: di(),
+                      logger: di(),
+                      realtime: di(),
+                      businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                    )..load(),
+                  ),
+                  BlocProvider(
+                    create: (_) => StripeOnboardingCubit(
+                      repo: di(),
+                      logger: di(),
+                      businessUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                    )..load(),
+                  ),
+                ],
+                child: const ManagerOrdersPage(),
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),

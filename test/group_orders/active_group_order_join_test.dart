@@ -25,12 +25,20 @@ AppRequestException _dioFailure({int status = 409, Object? body}) => AppRequestE
 
 class _FakeRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? joinByCodeOutcome;
+  ApiResult<GroupOrderResponseDM>? nextRoundOutcome;
   String? lastCodeSent;
+  String? lastNextRoundUuid;
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async {
     lastCodeSent = code;
     return joinByCodeOutcome!;
+  }
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> nextRound(String uuid) async {
+    lastNextRoundUuid = uuid;
+    return nextRoundOutcome!;
   }
 
   @override
@@ -92,6 +100,31 @@ void main() {
 
       expect(await cubit.joinWithCode('ABC234'), isFalse);
       expect(cubit.lastJoinError, isNull);
+    });
+
+    test('startNextRound (F4a): la ronda nueva pasa a ser el carrito activo', () async {
+      const round2 = GroupOrderDM(uuid: 'r2', roundNumber: 2, businessMenuUuid: 'm1');
+      repo.nextRoundOutcome = const ApiResult.success(GroupOrderResponseDM(groupOrder: round2));
+
+      final ok = await cubit.startNextRound('r1');
+
+      expect(ok, isTrue);
+      expect(repo.lastNextRoundUuid, 'r1');
+      expect(cubit.state?.uuid, 'r2');
+      expect(cubit.state?.roundNumber, 2);
+      expect(cubit.lastJoinError, isNull);
+    });
+
+    test('startNextRound con fallo: false + causa del backend, carrito intacto', () async {
+      repo.nextRoundOutcome = ApiResult.failure(
+        _dioFailure(body: {'message': 'La ronda anterior aún no está confirmada.'}),
+      );
+
+      final ok = await cubit.startNextRound('r1');
+
+      expect(ok, isFalse);
+      expect(cubit.state, isNull);
+      expect(cubit.lastJoinError, 'La ronda anterior aún no está confirmada.');
     });
 
     test('un join exitoso posterior LIMPIA el error anterior', () async {

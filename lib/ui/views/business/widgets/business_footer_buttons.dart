@@ -88,6 +88,20 @@ class BusinessFooterButtons extends StatelessWidget {
               secondButtonText: S.current.analytics,
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
+            // F4a: panel "Órdenes en vivo" (maquetas v3 aprobadas).
+            FooterButton(
+              onPressed: () => context.goNamed(
+                AppRoutes.liveOrders.name,
+                pathParameters: {AppRoutes.routeIdParam: vm.currentBusiness?.uuid ?? ''},
+                extra: vm.currentBusiness,
+              ),
+              dimension: 24,
+              iconSize: 26,
+              iconData: Icons.receipt_long_rounded,
+              buttonText: S.current.view,
+              secondButtonText: S.current.managerLiveOrders,
+              textStyle: FoodlyTextStyles.footerButtonSmall,
+            ),
           ],
         ).paddingHorizontal(6);
       },

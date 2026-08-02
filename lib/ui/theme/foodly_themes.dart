@@ -29,6 +29,26 @@ class FoodlyThemes {
   static const favourites = primaryFoodly;
 
   //Themes:
+  /// Tooltip Foodly (refinamiento pre-F4a): burbuja plum redondeada con
+  /// Poppins blanco — reemplaza el gris genérico de Material en TODA la app.
+  static TooltipThemeData get _tooltipTheme => TooltipThemeData(
+        decoration: BoxDecoration(
+          color: primaryFoodly,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: primaryFoodly.withValues(alpha: 0.35),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        textStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        preferBelow: false,
+      );
+
   static ThemeData lightTheme() {
     return FlexThemeData.light(
       visualDensity: _visualDensity,
@@ -48,6 +68,7 @@ class FoodlyThemes {
       ),
       textTheme: GoogleFonts.poppinsTextTheme(),
     ).copyWith(
+      tooltipTheme: _tooltipTheme,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
@@ -106,6 +127,7 @@ class FoodlyThemes {
       ),
       textTheme: GoogleFonts.poppinsTextTheme(),
     ).copyWith(
+      tooltipTheme: _tooltipTheme,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),

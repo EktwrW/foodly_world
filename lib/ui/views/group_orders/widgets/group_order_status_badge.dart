@@ -4,7 +4,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
 /// Indicador del estado de pago de un participante. Verde con check = pagado;
 /// spinner = procesando; naranja undo = reembolsado; gris hueco = pendiente.
-/// Compartido por ParticipantProgressRow y ParticipantExpansibleTile.
+/// Usado por ParticipantExpansibleTile (post-lock, mesas de 2+).
 class GroupOrderPaymentStatusBadge extends StatelessWidget {
   final GroupPaymentStatus status;
 
