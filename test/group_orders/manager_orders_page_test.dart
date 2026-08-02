@@ -191,6 +191,28 @@ void main() {
       expect(find.text(S.current.managerDeliverAllAndClose), findsNothing);
     });
 
+    testWidgets('Audit F4a: el detalle NO se cierra cuando la orden sale de '
+        'la lista filtrada — conserva la última copia', (tester) async {
+      final repo = _FakeRepo()
+        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
+      final cubit = buildCubit(repo);
+      addTearDown(cubit.close);
+      await cubit.load();
+
+      await tester.pumpWidget(app(const ManagerOrderDetailPage(orderUuid: 'o1'), cubit));
+      await tester.pumpAndSettle();
+      expect(find.text('Hector'), findsOneWidget);
+
+      // Refetch con la orden FUERA de la lista (cambió de bucket): el
+      // detalle sigue operativo con la última copia vista.
+      repo.listOutcome = const ApiResult.success(ManagerOrdersResponseDM());
+      await cubit.refetchSilently();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Hector'), findsOneWidget);
+      expect(find.byType(ManagerOrderDetailPage), findsOneWidget);
+    });
+
     testWidgets('orden ENTREGADA: sin CTA, estado final visible', (tester) async {
       final done = order.copyWith(
         fulfillmentStatus: GroupFulfillmentStatus.delivered,

@@ -16,10 +16,23 @@ import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dar
 /// checklist de ítems por comensal, mesa asignable y UN CTA que avanza al
 /// siguiente estado. Lee la orden del MISMO cubit de la lista (los updates
 /// del realtime la refrescan solos).
-class ManagerOrderDetailPage extends StatelessWidget {
+///
+/// Audit F4a: si la orden sale de la LISTA FILTRADA (p. ej. estás en el
+/// bucket "Activas" y la marcás PREPARANDO), el detalle NO se cierra en tu
+/// cara — conserva la última copia vista y seguís operando.
+class ManagerOrderDetailPage extends StatefulWidget {
   final String orderUuid;
 
   const ManagerOrderDetailPage({super.key, required this.orderUuid});
+
+  @override
+  State<ManagerOrderDetailPage> createState() => _ManagerOrderDetailPageState();
+}
+
+class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
+  GroupOrderDM? _lastSeen;
+
+  String get orderUuid => widget.orderUuid;
 
   (String, GroupFulfillmentStatus)? _nextStep(GroupOrderDM order) => switch (order.fulfillmentStatus) {
         null => (S.current.managerMarkPreparing, GroupFulfillmentStatus.preparing),
@@ -75,9 +88,11 @@ class ManagerOrderDetailPage extends StatelessWidget {
 
     return BlocBuilder<ManagerOrdersCubit, ManagerOrdersState>(
       builder: (context, state) {
-        final order = state.orders.where((o) => o.uuid == orderUuid).firstOrNull;
+        final fromList = state.orders.where((o) => o.uuid == orderUuid).firstOrNull;
+        if (fromList != null) _lastSeen = fromList;
+        final order = fromList ?? _lastSeen;
         if (order == null) {
-          // La orden salió de la lista (bucket filtrado/refetch): volvemos.
+          // Jamás la vimos (deep link raro): salida segura.
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (context.mounted && Navigator.of(context).canPop()) Navigator.of(context).pop();
           });

@@ -1132,6 +1132,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Close the order and proceed to payment? You won\'t be able to add more items.",
     ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage("Close order"),
+    "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
+      "Order another round",
+    ),
     "groupOrderNoBalanceDue": MessageLookupByLibrary.simpleMessage(
       "Nothing left to pay",
     ),
@@ -1417,6 +1420,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
       "DELIVERED unlocks when every item is checked",
+    ),
+    "managerGenericError": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t complete that action. Try again.",
     ),
     "managerGuestsMeta": m50,
     "managerItemsDelivered": m51,

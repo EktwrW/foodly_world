@@ -1184,6 +1184,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage(
       "Cerrar la orden",
     ),
+    "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
+      "Pedir otra ronda",
+    ),
     "groupOrderNoBalanceDue": MessageLookupByLibrary.simpleMessage(
       "Sin saldo pendiente",
     ),
@@ -1483,6 +1486,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
       "ENTREGADA se habilita al tildar todos los ítems",
+    ),
+    "managerGenericError": MessageLookupByLibrary.simpleMessage(
+      "No pudimos completar la acción. Probá de nuevo.",
     ),
     "managerGuestsMeta": m50,
     "managerItemsDelivered": m51,

@@ -9125,6 +9125,16 @@ class S {
     );
   }
 
+  /// `We couldn't complete that action. Try again.`
+  String get managerGenericError {
+    return Intl.message(
+      'We couldn\'t complete that action. Try again.',
+      name: 'managerGenericError',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Live orders`
   String get managerLiveOrders {
     return Intl.message(
@@ -9335,6 +9345,16 @@ class S {
     return Intl.message(
       'DELIVERED unlocks when every item is checked',
       name: 'managerDeliveredNeedsChecklist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order another round`
+  String get groupOrderNextRound {
+    return Intl.message(
+      'Order another round',
+      name: 'groupOrderNextRound',
       desc: '',
       args: [],
     );

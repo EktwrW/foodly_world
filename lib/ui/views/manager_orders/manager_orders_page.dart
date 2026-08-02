@@ -44,8 +44,10 @@ class ManagerOrdersPage extends StatelessWidget {
       listener: (context, state) {
         final err = state.error;
         if (err != null) {
+          // Audit F4a: copy genérico PROPIO del panel — el de join del
+          // cliente ("no pudimos unirte…") no tiene sentido acá.
           FoodlySnackbars.errorGeneric(
-              context, err.isEmpty ? S.current.groupOrderJoinFailed : err);
+              context, err.isEmpty ? S.current.managerGenericError : err);
         }
       },
       builder: (context, state) {

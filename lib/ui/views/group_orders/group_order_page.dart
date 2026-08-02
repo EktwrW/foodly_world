@@ -515,10 +515,41 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                 _exitOrder(context, order);
               },
             ),
+            // F4a (caso bar): otra ronda en la misma mesa — orden nueva que
+            // hereda QR y mesa; el que la abre queda como host.
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                _startNextRound(context, order);
+              },
+              child: Text(S.current.groupOrderNextRound, style: FoodlyTextStyles.captionPurpleBold),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  /// Abre la ronda siguiente y aterriza en el MENÚ con el carrito nuevo
+  /// activo (sin end(): la ronda ES el carrito ahora).
+  Future<void> _startNextRound(BuildContext context, GroupOrderDM previous) async {
+    final active = di<ActiveGroupOrderCubit>();
+    final ok = await active.startNextRound(previous.uuid);
+    if (!context.mounted) return;
+
+    if (!ok) {
+      FoodlySnackbars.errorGeneric(
+          context, active.lastJoinError ?? S.current.groupOrderJoinFailed);
+      return;
+    }
+
+    final menuUuid = active.state?.businessMenuUuid ?? previous.businessMenuUuid;
+    if (menuUuid != null && menuUuid.isNotEmpty) {
+      context.goNamed(
+        AppRoutes.visitMenu.name,
+        pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      );
+    }
   }
 
   /// e2e r4: host elimina definitivamente una orden vacía.

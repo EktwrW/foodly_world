@@ -1181,6 +1181,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage(
       "Fechar o pedido",
     ),
+    "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
+      "Pedir outra rodada",
+    ),
     "groupOrderNoBalanceDue": MessageLookupByLibrary.simpleMessage(
       "Sem saldo pendente",
     ),
@@ -1472,6 +1475,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
       "ENTREGUE desbloqueia ao marcar todos os itens",
+    ),
+    "managerGenericError": MessageLookupByLibrary.simpleMessage(
+      "Não foi possível concluir a ação. Tente novamente.",
     ),
     "managerGuestsMeta": m50,
     "managerItemsDelivered": m51,
