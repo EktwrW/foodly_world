@@ -166,6 +166,7 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @JsonKey(name: 'total_amount', fromJson: _money) @Default(0) double totalAmount,
     @JsonKey(name: 'total_paid', fromJson: _money) @Default(0) double totalPaid,
     // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+    @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
     @JsonKey(name: 'fulfillment_status', unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
     GroupFulfillmentStatus? fulfillmentStatus,
     @JsonKey(name: 'round_number') @Default(1) int roundNumber,

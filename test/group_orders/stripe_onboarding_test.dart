@@ -119,6 +119,47 @@ void main() {
       expect(repo.statusCalls, callsBefore + 1);
     });
 
+    testWidgets('al volver a la app (resumed, p. ej. cerraste el navegador '
+        'del onboarding) re-consulta solo y el banner pasa a activo', (tester) async {
+      // Estado inicial: sin activar → banner CTA.
+      repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
+      await cubit.load();
+      await tester.pumpWidget(app(null));
+      await tester.pumpAndSettle();
+      expect(find.text(S.current.managerActivatePaymentsTitle), findsOneWidget);
+
+      // El onboarding terminó en el navegador: Stripe ya reporta charges.
+      repo.statusOutcome = const ApiResult.success(
+        StripeConnectStatusDM(connected: true, chargesEnabled: true, payoutsEnabled: true),
+      );
+
+      // La app se fue a background (navegador) y volvió.
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+
+      // Sin tocar nada: confirmación activa, CTA fuera.
+      expect(find.text(S.current.managerPaymentsActive), findsOneWidget);
+      expect(find.text(S.current.managerActivateWithStripe), findsNothing);
+    });
+
+    testWidgets('con pagos YA activos, resumed no re-consulta (cero llamadas '
+        'de más)', (tester) async {
+      repo.statusOutcome = const ApiResult.success(
+        StripeConnectStatusDM(connected: true, chargesEnabled: true, payoutsEnabled: true),
+      );
+      await cubit.load();
+      await tester.pumpWidget(app(null));
+      await tester.pumpAndSettle();
+
+      final calls = repo.statusCalls;
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await tester.pumpAndSettle();
+
+      expect(repo.statusCalls, calls);
+    });
+
     testWidgets('activo: confirmación compacta, sin CTA', (tester) async {
       repo.statusOutcome = const ApiResult.success(
         StripeConnectStatusDM(connected: true, chargesEnabled: true, payoutsEnabled: true),

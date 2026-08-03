@@ -612,7 +612,13 @@
   "reportReasonOther": "Outro",
   "blockUser": "Bloquear utilizador",
   "blockUserConfirm": "Bloquear {name}? Deixarás de ver o conteúdo dele e ele o teu.",
-  "@blockUserConfirm": { "placeholders": { "name": { "type": "String" } } },
+  "@blockUserConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "blockedSuccess": "Utilizador bloqueado",
   "thisUser": "este utilizador",
   "blockedUsers": "Utilizadores bloqueados",
@@ -1399,7 +1405,16 @@
   "groupOrderInviteHint": "Partilha este código — válido por 24 horas",
   "groupOrderInviteShareCta": "Partilhar código",
   "groupOrderInviteShareMsg": "Junta-te ao nosso pedido em {business}! Abre a Foodly, entra no menu do restaurante e usa o código {code}",
-  "@groupOrderInviteShareMsg": {"placeholders": {"business": {"type": "String"}, "code": {"type": "String"}}},
+  "@groupOrderInviteShareMsg": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderScanTitle": "Digitaliza o QR da tua mesa",
   "groupOrderScanHint": "Pede ao anfitrião para mostrar o QR do pedido",
   "groupOrderEnterCodeManually": "Introduzir código manualmente",
@@ -1409,7 +1424,13 @@
   "groupOrderLeaveConfirm": "Sair deste pedido? Pode voltar a juntar-se lendo o QR.",
   "groupOrderPaymentSuccessTitle": "Pedido confirmado!",
   "groupOrderPaymentSuccessBody": "Pagamentos completos · {total}. O recibo chegou ao seu email.",
-  "@groupOrderPaymentSuccessBody": {"placeholders": {"total": {"type": "String"}}},
+  "@groupOrderPaymentSuccessBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderBackToMenu": "Voltar ao menu",
   "groupOrderLockConfirmSolo": "Fechar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
   "groupOrderSharedBadgeTooltip": "Este item é dividido por todos na mesa",
@@ -1421,6 +1442,7 @@
   "managerPaymentsRefresh": "Atualizar estado",
   "managerGenericError": "Não foi possível concluir a ação. Tente novamente.",
   "managerLiveOrders": "Pedidos ao vivo",
+  "managerOrders": "Pedidos",
   "managerBucketAll": "Todos",
   "managerBucketPending": "Ativos",
   "managerBucketPreparing": "A preparar",
@@ -1436,19 +1458,64 @@
   "managerDeliverAllAndClose": "Entregar tudo de uma vez",
   "managerDeliverAll": "Marcar todos",
   "managerItemsDelivered": "{delivered}/{total} itens entregues",
-  "@managerItemsDelivered": {"placeholders": {"delivered": {"type": "int"}, "total": {"type": "int"}}},
+  "@managerItemsDelivered": {
+    "placeholders": {
+      "delivered": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "managerRound": "RONDA {n}",
-  "@managerRound": {"placeholders": {"n": {"type": "int"}}},
+  "@managerRound": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "managerAssignTable": "Atribuir mesa",
   "managerTableHint": "Ex.: 7, Balcão 2, Esplanada",
   "managerGuestsMeta": "{guests} comensais · {items} itens",
-  "@managerGuestsMeta": {"placeholders": {"guests": {"type": "int"}, "items": {"type": "int"}}},
+  "@managerGuestsMeta": {
+    "placeholders": {
+      "guests": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
   "managerPaidComplete": "Pago por completo",
   "managerNoOrders": "Sem pedidos por agora",
   "managerDeliveredNeedsChecklist": "ENTREGUE desbloqueia ao marcar todos os itens",
+  "noAccessSection": "Você não tem acesso a essa seção",
+  "managerHistoryTitle": "Histórico",
+  "managerHistoryYesterday": "Ontem",
+  "managerHistoryEmpty": "Sem pedidos passados ainda",
+  "managerHistoryDaySummary": "{count} pedidos · {total}",
+  "@managerHistoryDaySummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderNextRound": "Pedir outra rodada",
   "groupOrderPayFullOrder": "Pagar o pedido · {amount}",
-  "@groupOrderPayFullOrder": {"placeholders": {"amount": {"type": "String"}}},
+  "@groupOrderPayFullOrder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderBackHome": "Voltar ao início",
   "groupOrderJoinCta": "Foste convidado? Junta-te com um código",
   "groupOrderJoinTitle": "Juntar-se a um pedido",

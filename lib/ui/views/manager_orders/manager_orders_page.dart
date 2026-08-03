@@ -7,8 +7,10 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/manager_orders/cubit/manager_history_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.dart';
+import 'package:foodly_world/ui/views/manager_orders/manager_order_history_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/stripe_onboarding_banner.dart';
 
@@ -93,6 +95,25 @@ class ManagerOrdersPage extends StatelessWidget {
               ],
             ),
             centerTitle: true,
+            actions: [
+              // F4a.1: historial de días anteriores (paginado por fecha).
+              IconButton(
+                tooltip: S.current.managerHistoryTitle,
+                icon: const Icon(Icons.history_rounded, color: Colors.white),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => BlocProvider(
+                      create: (_) => ManagerHistoryCubit(
+                        repo: di(),
+                        logger: di(),
+                        businessUuid: cubit.businessUuid,
+                      )..load(),
+                      child: const ManagerOrderHistoryPage(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           body: SafeArea(
             top: false,

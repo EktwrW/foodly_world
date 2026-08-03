@@ -50,6 +50,27 @@ Map<String, dynamic> _$ManagerOrdersResponseDMToJson(
       if (instance.meta?.toJson() case final value?) 'meta': value,
     };
 
+_ManagerHistoryResponseDM _$ManagerHistoryResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _ManagerHistoryResponseDM(
+      success: json['success'] as bool? ?? true,
+      orders: (json['orders'] as List<dynamic>?)
+              ?.map((e) => GroupOrderDM.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <GroupOrderDM>[],
+      hasMore: json['has_more'] as bool? ?? false,
+      nextBefore: json['next_before'] as String?,
+    );
+
+Map<String, dynamic> _$ManagerHistoryResponseDMToJson(
+        _ManagerHistoryResponseDM instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'orders': instance.orders.map((e) => e.toJson()).toList(),
+      'has_more': instance.hasMore,
+      if (instance.nextBefore case final value?) 'next_before': value,
+    };
+
 _ManagerOrdersMetaDM _$ManagerOrdersMetaDMFromJson(Map<String, dynamic> json) =>
     _ManagerOrdersMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,

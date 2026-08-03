@@ -1103,6 +1103,8 @@ mixin _$GroupOrderDM {
   double get totalAmount;
   @JsonKey(name: 'total_paid', fromJson: _money)
   double get totalPaid; // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+  @JsonKey(name: 'confirmed_at')
+  DateTime? get confirmedAt;
   @JsonKey(
       name: 'fulfillment_status',
       unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1157,6 +1159,8 @@ mixin _$GroupOrderDM {
                 other.totalAmount == totalAmount) &&
             (identical(other.totalPaid, totalPaid) ||
                 other.totalPaid == totalPaid) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt) &&
             (identical(other.fulfillmentStatus, fulfillmentStatus) ||
                 other.fulfillmentStatus == fulfillmentStatus) &&
             (identical(other.roundNumber, roundNumber) ||
@@ -1188,6 +1192,7 @@ mixin _$GroupOrderDM {
         subtotal,
         totalAmount,
         totalPaid,
+        confirmedAt,
         fulfillmentStatus,
         roundNumber,
         tableLabel,
@@ -1199,7 +1204,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1222,6 +1227,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
       @JsonKey(
           name: 'fulfillment_status',
           unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1258,6 +1264,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
+    Object? confirmedAt = freezed,
     Object? fulfillmentStatus = freezed,
     Object? roundNumber = null,
     Object? tableLabel = freezed,
@@ -1315,6 +1322,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
           ? _self.totalPaid
           : totalPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      confirmedAt: freezed == confirmedAt
+          ? _self.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       fulfillmentStatus: freezed == fulfillmentStatus
           ? _self.fulfillmentStatus
           : fulfillmentStatus // ignore: cast_nullable_to_non_nullable
@@ -1454,6 +1465,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
             @JsonKey(
                 name: 'fulfillment_status',
                 unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1483,6 +1495,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.confirmedAt,
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
@@ -1524,6 +1537,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
             @JsonKey(
                 name: 'fulfillment_status',
                 unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1552,6 +1566,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.confirmedAt,
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
@@ -1592,6 +1607,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(fromJson: _money) double subtotal,
             @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
             @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+            @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
             @JsonKey(
                 name: 'fulfillment_status',
                 unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1620,6 +1636,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.subtotal,
             _that.totalAmount,
             _that.totalPaid,
+            _that.confirmedAt,
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
@@ -1650,6 +1667,7 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(fromJson: _money) this.subtotal = 0,
       @JsonKey(name: 'total_amount', fromJson: _money) this.totalAmount = 0,
       @JsonKey(name: 'total_paid', fromJson: _money) this.totalPaid = 0,
+      @JsonKey(name: 'confirmed_at') this.confirmedAt,
       @JsonKey(
           name: 'fulfillment_status',
           unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1707,6 +1725,9 @@ class _GroupOrderDM extends GroupOrderDM {
   @JsonKey(name: 'total_paid', fromJson: _money)
   final double totalPaid;
 // F4a "Órdenes en vivo": fulfillment + rondas + mesa.
+  @override
+  @JsonKey(name: 'confirmed_at')
+  final DateTime? confirmedAt;
   @override
   @JsonKey(
       name: 'fulfillment_status',
@@ -1785,6 +1806,8 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.totalAmount == totalAmount) &&
             (identical(other.totalPaid, totalPaid) ||
                 other.totalPaid == totalPaid) &&
+            (identical(other.confirmedAt, confirmedAt) ||
+                other.confirmedAt == confirmedAt) &&
             (identical(other.fulfillmentStatus, fulfillmentStatus) ||
                 other.fulfillmentStatus == fulfillmentStatus) &&
             (identical(other.roundNumber, roundNumber) ||
@@ -1816,6 +1839,7 @@ class _GroupOrderDM extends GroupOrderDM {
         subtotal,
         totalAmount,
         totalPaid,
+        confirmedAt,
         fulfillmentStatus,
         roundNumber,
         tableLabel,
@@ -1827,7 +1851,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1852,6 +1876,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(fromJson: _money) double subtotal,
       @JsonKey(name: 'total_amount', fromJson: _money) double totalAmount,
       @JsonKey(name: 'total_paid', fromJson: _money) double totalPaid,
+      @JsonKey(name: 'confirmed_at') DateTime? confirmedAt,
       @JsonKey(
           name: 'fulfillment_status',
           unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
@@ -1889,6 +1914,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? subtotal = null,
     Object? totalAmount = null,
     Object? totalPaid = null,
+    Object? confirmedAt = freezed,
     Object? fulfillmentStatus = freezed,
     Object? roundNumber = null,
     Object? tableLabel = freezed,
@@ -1946,6 +1972,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
           ? _self.totalPaid
           : totalPaid // ignore: cast_nullable_to_non_nullable
               as double,
+      confirmedAt: freezed == confirmedAt
+          ? _self.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       fulfillmentStatus: freezed == fulfillmentStatus
           ? _self.fulfillmentStatus
           : fulfillmentStatus // ignore: cast_nullable_to_non_nullable

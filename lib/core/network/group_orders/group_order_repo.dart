@@ -141,6 +141,21 @@ class GroupOrderRepo {
     }
   }
 
+  /// F4a.1: historial con keyset pagination.
+  Future<ApiResult<ManagerHistoryResponseDM>> managerOrderHistory(
+    String businessUuid, {
+    String? before,
+    int? limit,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _client.managerOrderHistory(businessUuid, before: before, limit: limit),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<GroupOrderResponseDM>> managerSetFulfillment(
     String uuid, {
     required String status,

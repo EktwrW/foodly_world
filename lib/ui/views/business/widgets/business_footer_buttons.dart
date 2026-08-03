@@ -99,7 +99,7 @@ class BusinessFooterButtons extends StatelessWidget {
               iconSize: 26,
               iconData: Icons.receipt_long_rounded,
               buttonText: S.current.view,
-              secondButtonText: S.current.managerLiveOrders,
+              secondButtonText: S.current.managerOrders,
               textStyle: FoodlyTextStyles.footerButtonSmall,
             ),
           ],

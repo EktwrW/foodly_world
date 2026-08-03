@@ -5,8 +5,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/routing/no_access_notice.dart';
 import 'package:foodly_world/core/routing/route_hierarchy.dart';
 import 'package:foodly_world/core/services/pending_group_join.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/no_access_snackbar_gate.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
@@ -64,7 +66,10 @@ final _isMenuSubdomain =
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-enum RedirectRoute { requiresAppInitial, requiresLogin, requiresAccess }
+/// El guard de módulo (antes `requiresAccess`) ya no vive acá: se activa
+/// pasando `access: ModuleGuardType.x` a [_getRedirectors] — el compilador
+/// exige declarar el módulo junto con el guard (no hay "ruta sin mapear").
+enum RedirectRoute { requiresAppInitial, requiresLogin }
 
 class AppRouter {
   final RootBloc rootBloc;
@@ -243,10 +248,15 @@ class AppRouter {
     }
   }
 
-  List<FutureOr<String?> Function(BuildContext, GoRouterState)> _getRedirectors(List<RedirectRoute> redirectors) {
+  List<FutureOr<String?> Function(BuildContext, GoRouterState)> _getRedirectors(
+    List<RedirectRoute> redirectors, {
+    ModuleGuardType? access,
+  }) {
     return [
       if (redirectors.contains(RedirectRoute.requiresAppInitial)) GoRouterRedirector.requiresAppInitial(rootBloc),
-      if (redirectors.contains(RedirectRoute.requiresAccess)) GoRouterRedirector.requiresAccess(),
+      // Guard de módulo con módulo EXPLÍCITO (mismo orden que antes: corre
+      // antes que requiresLogin).
+      if (access != null) GoRouterRedirector.requiresAccess(access),
       if (redirectors.contains(RedirectRoute.requiresLogin)) GoRouterRedirector.requiresLogin(),
     ];
   }
@@ -260,10 +270,12 @@ class AppRouter {
                 FadeTransition(opacity: animation, child: child),
           );
 
-  GoRoute _goRouteWithTransition(AppRoutes appRoute, Widget page, List<RedirectRoute> redirectors) => GoRoute(
+  GoRoute _goRouteWithTransition(AppRoutes appRoute, Widget page, List<RedirectRoute> redirectors,
+          {ModuleGuardType? access}) =>
+      GoRoute(
         path: appRoute.path,
         name: appRoute.name,
-        redirect: Redirector(_getRedirectors(redirectors)).call,
+        redirect: Redirector(_getRedirectors(redirectors, access: access)).call,
         pageBuilder: _transitionPageBuilder(page),
       );
 
@@ -437,7 +449,8 @@ class AppRouter {
                   _goRouteForStatefulShell(
                     AppRoutes.home,
                     _goRouteWithTransition(AppRoutes.savedPromotions, const SavedPromotionsPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                        [RedirectRoute.requiresLogin],
+                        access: ModuleGuardType.home),
                   ),
                 ],
               ),
@@ -446,7 +459,8 @@ class AppRouter {
                   _goRouteForStatefulShell(
                     AppRoutes.home,
                     _goRouteWithTransition(AppRoutes.favedBusiness, const MyFavoritesPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                        [RedirectRoute.requiresLogin],
+                        access: ModuleGuardType.home),
                   ),
                 ],
               ),
@@ -455,7 +469,8 @@ class AppRouter {
                   _goRouteForStatefulShell(
                     AppRoutes.home,
                     _goRouteWithTransition(AppRoutes.usersCommunity, const SocialPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                        [RedirectRoute.requiresLogin],
+                        access: ModuleGuardType.home),
                   ),
                 ],
               ),
@@ -464,7 +479,8 @@ class AppRouter {
                   _goRouteForStatefulShell(
                     AppRoutes.home,
                     _goRouteWithTransition(AppRoutes.notifications, const NotificationsPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                        [RedirectRoute.requiresLogin],
+                        access: ModuleGuardType.home),
                   ),
                 ],
               ),
@@ -472,8 +488,12 @@ class AppRouter {
                 routes: [
                   _goRouteForStatefulShell(
                     AppRoutes.home,
-                    _goRouteWithTransition(AppRoutes.foodlyMainPage, const FoodlyMainPage(),
-                        [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin]),
+                    // Gate del aviso "/no-access con sesión": si el redirect
+                    // dejó un NoAccessNotice pendiente, muestra el snackbar.
+                    _goRouteWithTransition(
+                        AppRoutes.foodlyMainPage, const NoAccessSnackbarGate(child: FoodlyMainPage()),
+                        [RedirectRoute.requiresLogin],
+                        access: ModuleGuardType.home),
                   ),
                 ],
               ),
@@ -482,7 +502,9 @@ class AppRouter {
           GoRoute(
               path: AppRoutes.categories.path,
               name: AppRoutes.categories.name,
-              redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+              redirect: Redirector(
+                      _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.home))
+                  .call,
               pageBuilder: (context, state) {
                 final locationService = di<LocationService>();
                 final categoryIndex = state.extra as int?;
@@ -512,7 +534,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.profileScreen.path,
             name: AppRoutes.profileScreen.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(_getRedirectors([RedirectRoute.requiresLogin],
+                    access: ModuleGuardType.accountSettings))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -541,12 +565,15 @@ class AppRouter {
               ),
               child: const BusinessPage(),
             ),
-            [RedirectRoute.requiresAccess, RedirectRoute.requiresLogin],
+            [RedirectRoute.requiresLogin],
+            access: ModuleGuardType.business,
           ),
           GoRoute(
             path: AppRoutes.manageMenu.path,
             name: AppRoutes.manageMenu.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.menu))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -569,7 +596,9 @@ class AppRouter {
             // contra el manager logueado en `resolveMenuOrFail`.
             path: AppRoutes.manageMenuImport.path,
             name: AppRoutes.manageMenuImport.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.menu))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -596,11 +625,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.groupOrder.path,
             name: AppRoutes.groupOrder.name,
-            // Solo requiresLogin: ordenar en grupo es una acción de CLIENTE, no
-            // un módulo de negocio. requiresAccess (guard de módulo) mandaba la
-            // ruta a /no-access → /login porque groupOrder no está en el mapeo
-            // ModuleGuardType.getModuleGuardTypeByRoute. El guest-gate del CTA
-            // ya garantiza que solo usuarios logueados llegan aquí.
+            // Solo requiresLogin (sin `access:`): ordenar en grupo es una
+            // acción de CLIENTE, no un módulo de negocio. El guest-gate del
+            // CTA ya garantiza que solo usuarios logueados llegan aquí.
             redirect: Redirector(_getRedirectors([RedirectRoute.requiresLogin])).call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
@@ -613,7 +640,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.manageServicePackages.path,
             name: AppRoutes.manageServicePackages.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.business))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -632,7 +661,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.managePromotions.path,
             name: AppRoutes.managePromotions.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.business))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -653,7 +684,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.manageReservations.path,
             name: AppRoutes.manageReservations.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.home))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -672,7 +705,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.manageAvailability.path,
             name: AppRoutes.manageAvailability.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.business))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -696,7 +731,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.liveOrders.path,
             name: AppRoutes.liveOrders.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.business))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -727,7 +764,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.businessAnalytics.path,
             name: AppRoutes.businessAnalytics.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.business))
+                .call,
             pageBuilder: (context, state) {
               // [AnalyticsCubit] now needs the full BusinessDM (not just the
               // uuid) to derive [AnalyticsKind] from `categoryId` — that's
@@ -766,7 +805,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.visitBusiness.path,
             name: AppRoutes.visitBusiness.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.home))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -830,7 +871,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.visitPromotions.path,
             name: AppRoutes.visitPromotions.name,
-            redirect: Redirector(_getRedirectors([RedirectRoute.requiresAccess, RedirectRoute.requiresLogin])).call,
+            redirect: Redirector(
+                    _getRedirectors([RedirectRoute.requiresLogin], access: ModuleGuardType.home))
+                .call,
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
@@ -849,10 +892,19 @@ class AppRouter {
           ),
           // Safety net: noAccess must be registered ABOVE the /:businessUuid
           // catch-all so that /no-access doesn't match publicMenu with
-          // businessUuid='no-access'. Redirects to login as a safe fallback.
+          // businessUuid='no-access'. Destino según sesión: CON sesión va a
+          // su home con aviso (jamás al login teniendo sesión); SIN sesión,
+          // al login. Decisión pura en [GoRouterRedirector.noAccessLandingPath].
           GoRoute(
             path: AppRoutes.noAccess.path,
-            redirect: (_, __) => AppRoutes.login.path,
+            redirect: (_, __) {
+              final loggedIn = authSessService.isLoggedIn;
+              if (loggedIn) NoAccessNotice.raise();
+              return GoRouterRedirector.noAccessLandingPath(
+                isLoggedIn: loggedIn,
+                userUuid: authSessService.uuid,
+              );
+            },
             builder: (_, __) => const NotFoundPage(), // never reached
           ),
           // Deep link handler: menu.foodly.solutions/{uuid}
