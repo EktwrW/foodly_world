@@ -149,14 +149,16 @@ class ManagerMiniChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(6),
       ),
-      child: Text(
-        text,
-        style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 8.5),
+      child: Center(
+        child: Text(
+          text,
+          style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 8.5),
+        ),
       ),
     );
   }
@@ -235,13 +237,11 @@ class ManagerOrderCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    const Icon(Icons.check_circle_rounded,
-                        size: 13, color: Color(0xFF0B8A40)),
+                    const Icon(Icons.check_circle_rounded, size: 13, color: Color(0xFF0B8A40)),
                     const SizedBox(width: 4),
                     Text(
                       S.current.managerPaidComplete,
-                      style: FoodlyTextStyles.captionBold
-                          .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                      style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
                     ),
                     const Spacer(),
                     Text(
