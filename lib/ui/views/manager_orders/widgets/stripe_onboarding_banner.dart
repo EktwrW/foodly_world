@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/stripe_onboarding_cubit.dart';
@@ -23,6 +24,10 @@ class StripeOnboardingBanner extends StatefulWidget {
 
 class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
     with WidgetsBindingObserver {
+  /// Guard anti doble-tap: e2e F4a — el CTA sin feedback ni bloqueo generó
+  /// un POST (y una cuenta Express huérfana) POR CADA tap repetido.
+  bool _activating = false;
+
   @override
   void initState() {
     super.initState();
@@ -47,10 +52,23 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
   }
 
   Future<void> _activate(BuildContext context, StripeOnboardingCubit cubit) async {
-    final url = await cubit.startOnboarding();
-    if (url == null) return;
-    final launch = widget.onLaunch ?? (u) => launchUrl(u, mode: LaunchMode.externalApplication);
-    await launch(Uri.parse(url));
+    if (_activating) return;
+    setState(() => _activating = true);
+    try {
+      final url = await cubit.startOnboarding();
+      if (url == null) {
+        // El POST /stripe/onboard falló: error VISIBLE, jamás un tap mudo.
+        // El detalle real queda en los logs del BE (excepción de Stripe).
+        if (context.mounted) {
+          FoodlySnackbars.errorGeneric(context, S.current.managerGenericError);
+        }
+        return;
+      }
+      final launch = widget.onLaunch ?? (u) => launchUrl(u, mode: LaunchMode.externalApplication);
+      await launch(Uri.parse(url));
+    } finally {
+      if (mounted) setState(() => _activating = false);
+    }
   }
 
   @override
@@ -154,7 +172,7 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
                 borderRadius: BorderRadius.circular(12),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () => _activate(context, cubit),
+                  onTap: _activating ? null : () => _activate(context, cubit),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
                     child: Text(
