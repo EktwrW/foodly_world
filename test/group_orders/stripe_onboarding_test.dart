@@ -119,6 +119,27 @@ void main() {
       expect(repo.statusCalls, callsBefore + 1);
     });
 
+    testWidgets('si el onboard FALLA, el tap no es mudo: snackbar de error '
+        'visible', (tester) async {
+      repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
+      await cubit.load();
+      repo.onboardOutcome = const ApiResult.failure(AppRequestException(error: 'stripe 500'));
+
+      Uri? launched;
+      await tester.pumpWidget(app((u) async => launched = u));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(S.current.managerActivateWithStripe));
+      await tester.pumpAndSettle();
+
+      expect(launched, isNull); // no intentó abrir nada
+      expect(find.text(S.current.managerGenericError), findsOneWidget);
+
+      // Drena el timer del snackbar.
+      await tester.pump(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+    });
+
     testWidgets('al volver a la app (resumed, p. ej. cerraste el navegador '
         'del onboarding) re-consulta solo y el banner pasa a activo', (tester) async {
       // Estado inicial: sin activar → banner CTA.
