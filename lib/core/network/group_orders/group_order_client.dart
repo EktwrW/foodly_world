@@ -132,6 +132,14 @@ abstract class GroupOrderClient {
     @Query('page') int? page,
   });
 
+  /// F4a.1: historial (días anteriores), keyset por confirmed_at.
+  @GET('/manager/businesses/{businessUuid}/group-orders/history')
+  Future<ManagerHistoryResponseDM> managerOrderHistory(
+    @Path('businessUuid') String businessUuid, {
+    @Query('before') String? before,
+    @Query('limit') int? limit,
+  });
+
   @PATCH('/manager/group-orders/{uuid}/fulfillment')
   Future<GroupOrderResponseDM> managerSetFulfillment(
     @Path('uuid') String uuid, {

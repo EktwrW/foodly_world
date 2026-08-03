@@ -9145,6 +9145,11 @@ class S {
     );
   }
 
+  /// `Orders`
+  String get managerOrders {
+    return Intl.message('Orders', name: 'managerOrders', desc: '', args: []);
+  }
+
   /// `All`
   String get managerBucketAll {
     return Intl.message('All', name: 'managerBucketAll', desc: '', args: []);
@@ -9347,6 +9352,56 @@ class S {
       name: 'managerDeliveredNeedsChecklist',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `You don't have access to that section`
+  String get noAccessSection {
+    return Intl.message(
+      'You don\'t have access to that section',
+      name: 'noAccessSection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `History`
+  String get managerHistoryTitle {
+    return Intl.message(
+      'History',
+      name: 'managerHistoryTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yesterday`
+  String get managerHistoryYesterday {
+    return Intl.message(
+      'Yesterday',
+      name: 'managerHistoryYesterday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No past orders yet`
+  String get managerHistoryEmpty {
+    return Intl.message(
+      'No past orders yet',
+      name: 'managerHistoryEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} orders · {total}`
+  String managerHistoryDaySummary(int count, String total) {
+    return Intl.message(
+      '$count orders · $total',
+      name: 'managerHistoryDaySummary',
+      desc: '',
+      args: [count, total],
     );
   }
 

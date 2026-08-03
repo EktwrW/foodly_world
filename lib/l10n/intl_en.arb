@@ -608,7 +608,13 @@
   "reportReasonOther": "Other",
   "blockUser": "Block user",
   "blockUserConfirm": "Block {name}? You won't see their content anymore, and they won't see yours.",
-  "@blockUserConfirm": { "placeholders": { "name": { "type": "String" } } },
+  "@blockUserConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "blockedSuccess": "User blocked",
   "thisUser": "this user",
   "blockedUsers": "Blocked users",
@@ -1399,7 +1405,16 @@
   "groupOrderInviteHint": "Share this code — valid for 24 hours",
   "groupOrderInviteShareCta": "Share code",
   "groupOrderInviteShareMsg": "Join our order at {business}! Open Foodly, go to the restaurant menu and use code {code}",
-  "@groupOrderInviteShareMsg": {"placeholders": {"business": {"type": "String"}, "code": {"type": "String"}}},
+  "@groupOrderInviteShareMsg": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderScanTitle": "Scan your table's QR",
   "groupOrderScanHint": "Ask the host to show the order's QR code",
   "groupOrderEnterCodeManually": "Enter code manually",
@@ -1409,7 +1424,13 @@
   "groupOrderLeaveConfirm": "Leave this order? You can rejoin by scanning the QR.",
   "groupOrderPaymentSuccessTitle": "Order confirmed!",
   "groupOrderPaymentSuccessBody": "All payments complete · {total}. Receipt sent to your email.",
-  "@groupOrderPaymentSuccessBody": {"placeholders": {"total": {"type": "String"}}},
+  "@groupOrderPaymentSuccessBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderBackToMenu": "Back to menu",
   "groupOrderLockConfirmSolo": "Close the order and proceed to payment? You won't be able to add more items.",
   "groupOrderSharedBadgeTooltip": "This item is split among everyone at the table",
@@ -1421,6 +1442,7 @@
   "managerPaymentsRefresh": "Refresh status",
   "managerGenericError": "We couldn't complete that action. Try again.",
   "managerLiveOrders": "Live orders",
+  "managerOrders": "Orders",
   "managerBucketAll": "All",
   "managerBucketPending": "Active",
   "managerBucketPreparing": "Preparing",
@@ -1436,19 +1458,64 @@
   "managerDeliverAllAndClose": "Deliver everything at once",
   "managerDeliverAll": "Check all",
   "managerItemsDelivered": "{delivered}/{total} items delivered",
-  "@managerItemsDelivered": {"placeholders": {"delivered": {"type": "int"}, "total": {"type": "int"}}},
+  "@managerItemsDelivered": {
+    "placeholders": {
+      "delivered": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "managerRound": "ROUND {n}",
-  "@managerRound": {"placeholders": {"n": {"type": "int"}}},
+  "@managerRound": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "managerAssignTable": "Assign table",
   "managerTableHint": "E.g.: 7, Bar 2, Terrace",
   "managerGuestsMeta": "{guests} guests · {items} items",
-  "@managerGuestsMeta": {"placeholders": {"guests": {"type": "int"}, "items": {"type": "int"}}},
+  "@managerGuestsMeta": {
+    "placeholders": {
+      "guests": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
   "managerPaidComplete": "Fully paid",
   "managerNoOrders": "No orders yet",
   "managerDeliveredNeedsChecklist": "DELIVERED unlocks when every item is checked",
+  "noAccessSection": "You don't have access to that section",
+  "managerHistoryTitle": "History",
+  "managerHistoryYesterday": "Yesterday",
+  "managerHistoryEmpty": "No past orders yet",
+  "managerHistoryDaySummary": "{count} orders · {total}",
+  "@managerHistoryDaySummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderNextRound": "Order another round",
   "groupOrderPayFullOrder": "Pay the order · {amount}",
-  "@groupOrderPayFullOrder": {"placeholders": {"amount": {"type": "String"}}},
+  "@groupOrderPayFullOrder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderBackHome": "Back to home",
   "groupOrderJoinCta": "Got invited? Join with a code",
   "groupOrderJoinTitle": "Join an order",

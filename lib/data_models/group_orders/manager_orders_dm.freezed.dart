@@ -813,6 +813,400 @@ class __$ManagerOrdersResponseDMCopyWithImpl<$Res>
 }
 
 /// @nodoc
+mixin _$ManagerHistoryResponseDM {
+  bool get success;
+  List<GroupOrderDM> get orders;
+  @JsonKey(name: 'has_more')
+  bool get hasMore;
+  @JsonKey(name: 'next_before')
+  String? get nextBefore;
+
+  /// Create a copy of ManagerHistoryResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ManagerHistoryResponseDMCopyWith<ManagerHistoryResponseDM> get copyWith =>
+      _$ManagerHistoryResponseDMCopyWithImpl<ManagerHistoryResponseDM>(
+          this as ManagerHistoryResponseDM, _$identity);
+
+  /// Serializes this ManagerHistoryResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ManagerHistoryResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            const DeepCollectionEquality().equals(other.orders, orders) &&
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.nextBefore, nextBefore) ||
+                other.nextBefore == nextBefore));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success,
+      const DeepCollectionEquality().hash(orders), hasMore, nextBefore);
+
+  @override
+  String toString() {
+    return 'ManagerHistoryResponseDM(success: $success, orders: $orders, hasMore: $hasMore, nextBefore: $nextBefore)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ManagerHistoryResponseDMCopyWith<$Res> {
+  factory $ManagerHistoryResponseDMCopyWith(ManagerHistoryResponseDM value,
+          $Res Function(ManagerHistoryResponseDM) _then) =
+      _$ManagerHistoryResponseDMCopyWithImpl;
+  @useResult
+  $Res call(
+      {bool success,
+      List<GroupOrderDM> orders,
+      @JsonKey(name: 'has_more') bool hasMore,
+      @JsonKey(name: 'next_before') String? nextBefore});
+}
+
+/// @nodoc
+class _$ManagerHistoryResponseDMCopyWithImpl<$Res>
+    implements $ManagerHistoryResponseDMCopyWith<$Res> {
+  _$ManagerHistoryResponseDMCopyWithImpl(this._self, this._then);
+
+  final ManagerHistoryResponseDM _self;
+  final $Res Function(ManagerHistoryResponseDM) _then;
+
+  /// Create a copy of ManagerHistoryResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? orders = null,
+    Object? hasMore = null,
+    Object? nextBefore = freezed,
+  }) {
+    return _then(_self.copyWith(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      orders: null == orders
+          ? _self.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<GroupOrderDM>,
+      hasMore: null == hasMore
+          ? _self.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nextBefore: freezed == nextBefore
+          ? _self.nextBefore
+          : nextBefore // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [ManagerHistoryResponseDM].
+extension ManagerHistoryResponseDMPatterns on ManagerHistoryResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ManagerHistoryResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ManagerHistoryResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ManagerHistoryResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            @JsonKey(name: 'has_more') bool hasMore,
+            @JsonKey(name: 'next_before') String? nextBefore)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM() when $default != null:
+        return $default(
+            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            @JsonKey(name: 'has_more') bool hasMore,
+            @JsonKey(name: 'next_before') String? nextBefore)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM():
+        return $default(
+            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool success,
+            List<GroupOrderDM> orders,
+            @JsonKey(name: 'has_more') bool hasMore,
+            @JsonKey(name: 'next_before') String? nextBefore)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ManagerHistoryResponseDM() when $default != null:
+        return $default(
+            _that.success, _that.orders, _that.hasMore, _that.nextBefore);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _ManagerHistoryResponseDM implements ManagerHistoryResponseDM {
+  const _ManagerHistoryResponseDM(
+      {this.success = true,
+      final List<GroupOrderDM> orders = const <GroupOrderDM>[],
+      @JsonKey(name: 'has_more') this.hasMore = false,
+      @JsonKey(name: 'next_before') this.nextBefore})
+      : _orders = orders;
+  factory _ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ManagerHistoryResponseDMFromJson(json);
+
+  @override
+  @JsonKey()
+  final bool success;
+  final List<GroupOrderDM> _orders;
+  @override
+  @JsonKey()
+  List<GroupOrderDM> get orders {
+    if (_orders is EqualUnmodifiableListView) return _orders;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_orders);
+  }
+
+  @override
+  @JsonKey(name: 'has_more')
+  final bool hasMore;
+  @override
+  @JsonKey(name: 'next_before')
+  final String? nextBefore;
+
+  /// Create a copy of ManagerHistoryResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ManagerHistoryResponseDMCopyWith<_ManagerHistoryResponseDM> get copyWith =>
+      __$ManagerHistoryResponseDMCopyWithImpl<_ManagerHistoryResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ManagerHistoryResponseDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ManagerHistoryResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            const DeepCollectionEquality().equals(other._orders, _orders) &&
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.nextBefore, nextBefore) ||
+                other.nextBefore == nextBefore));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success,
+      const DeepCollectionEquality().hash(_orders), hasMore, nextBefore);
+
+  @override
+  String toString() {
+    return 'ManagerHistoryResponseDM(success: $success, orders: $orders, hasMore: $hasMore, nextBefore: $nextBefore)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ManagerHistoryResponseDMCopyWith<$Res>
+    implements $ManagerHistoryResponseDMCopyWith<$Res> {
+  factory _$ManagerHistoryResponseDMCopyWith(_ManagerHistoryResponseDM value,
+          $Res Function(_ManagerHistoryResponseDM) _then) =
+      __$ManagerHistoryResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool success,
+      List<GroupOrderDM> orders,
+      @JsonKey(name: 'has_more') bool hasMore,
+      @JsonKey(name: 'next_before') String? nextBefore});
+}
+
+/// @nodoc
+class __$ManagerHistoryResponseDMCopyWithImpl<$Res>
+    implements _$ManagerHistoryResponseDMCopyWith<$Res> {
+  __$ManagerHistoryResponseDMCopyWithImpl(this._self, this._then);
+
+  final _ManagerHistoryResponseDM _self;
+  final $Res Function(_ManagerHistoryResponseDM) _then;
+
+  /// Create a copy of ManagerHistoryResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? orders = null,
+    Object? hasMore = null,
+    Object? nextBefore = freezed,
+  }) {
+    return _then(_ManagerHistoryResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      orders: null == orders
+          ? _self._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<GroupOrderDM>,
+      hasMore: null == hasMore
+          ? _self.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nextBefore: freezed == nextBefore
+          ? _self.nextBefore
+          : nextBefore // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
 mixin _$ManagerOrdersMetaDM {
   @JsonKey(name: 'current_page')
   int get currentPage;

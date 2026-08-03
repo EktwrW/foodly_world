@@ -787,9 +787,6 @@ class AuthSessionService {
 
       case ModuleGuardType.accountSettings:
         return [UserRole.admin, UserRole.owner, UserRole.customer].contains(userSessionDM?.user.roleId);
-
-      case ModuleGuardType.unknown:
-        return false;
     }
   }
 }

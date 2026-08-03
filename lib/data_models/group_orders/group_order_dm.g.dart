@@ -101,6 +101,9 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       totalAmount:
           json['total_amount'] == null ? 0 : _money(json['total_amount']),
       totalPaid: json['total_paid'] == null ? 0 : _money(json['total_paid']),
+      confirmedAt: json['confirmed_at'] == null
+          ? null
+          : DateTime.parse(json['confirmed_at'] as String),
       fulfillmentStatus: $enumDecodeNullable(
           _$GroupFulfillmentStatusEnumMap, json['fulfillment_status'],
           unknownValue: JsonKey.nullForUndefinedEnumValue),
@@ -138,6 +141,8 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'subtotal': instance.subtotal,
       'total_amount': instance.totalAmount,
       'total_paid': instance.totalPaid,
+      if (instance.confirmedAt?.toIso8601String() case final value?)
+        'confirmed_at': value,
       if (_$GroupFulfillmentStatusEnumMap[instance.fulfillmentStatus]
           case final value?)
         'fulfillment_status': value,

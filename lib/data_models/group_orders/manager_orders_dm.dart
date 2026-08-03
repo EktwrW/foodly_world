@@ -34,6 +34,20 @@ abstract class ManagerOrdersResponseDM with _$ManagerOrdersResponseDM {
       _$ManagerOrdersResponseDMFromJson(json);
 }
 
+/// F4a.1 — página de historial con keyset pagination por confirmed_at.
+@freezed
+abstract class ManagerHistoryResponseDM with _$ManagerHistoryResponseDM {
+  const factory ManagerHistoryResponseDM({
+    @Default(true) bool success,
+    @Default(<GroupOrderDM>[]) List<GroupOrderDM> orders,
+    @JsonKey(name: 'has_more') @Default(false) bool hasMore,
+    @JsonKey(name: 'next_before') String? nextBefore,
+  }) = _ManagerHistoryResponseDM;
+
+  factory ManagerHistoryResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$ManagerHistoryResponseDMFromJson(json);
+}
+
 @freezed
 abstract class ManagerOrdersMetaDM with _$ManagerOrdersMetaDM {
   const factory ManagerOrdersMetaDM({

@@ -64,26 +64,40 @@ abstract class GoRouterRedirector {
         return path;
       };
 
-  /// For new routes that needs to be guarded:
-  /// Add an enum value to AppGuardedResource and parseLocation to use this redirector
-  static GoRouterRedirect requiresAccess() => (context, state) {
-        // Modo invitado (5.1.1.v): las rutas de descubrimiento no tienen módulo
-        // de permiso (no hay sesión). Sin este bypass, hasAccessToModule()
-        // devolvería false (userSessionDM == null) y el invitado caería a
-        // /no-access. Se permiten solo las rutas browsable.
-        if (authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation)) {
-          return null;
-        }
-
-        // While a session restore is in progress (tokens loading from secure
-        // storage), userSessionDM is still null so hasAccessToModule() would
-        // always return false. Allow through — the biometric/auto-login flow
-        // will set the session before the page makes any API calls.
-        if (authSessionService.hasPendingSessionRestore) return null;
-
-        if (!authSessionService.hasAccessToModule(ModuleGuardType.getModuleGuardTypeByRoute(state))) {
-          return AppRoutes.noAccess.path;
-        }
-        return null;
+  /// Guard de módulo. El [module] se declara EXPLÍCITO al registrar la ruta
+  /// (app_router `access:`) — "ruta guardada sin mapear" no puede existir por
+  /// construcción: el compilador exige el módulo junto con el guard.
+  static GoRouterRedirect requiresAccess(ModuleGuardType module) => (context, state) {
+        return accessRedirectPath(
+          // Modo invitado (5.1.1.v): las rutas de descubrimiento no tienen
+          // módulo de permiso (no hay sesión). Sin este bypass el invitado
+          // caería a /no-access. Se permiten solo las rutas browsable.
+          guestBrowsable:
+              authSessionService.isGuest && GuestRoutes.isBrowsable(state.matchedLocation),
+          // While a session restore is in progress (tokens loading from secure
+          // storage), userSessionDM is still null so hasAccessToModule() would
+          // always return false. Allow through — the biometric/auto-login flow
+          // will set the session before the page makes any API calls.
+          pendingRestore: authSessionService.hasPendingSessionRestore,
+          hasAccess: authSessionService.hasAccessToModule(module),
+        );
       };
+
+  /// Decisión pura de [requiresAccess] (testeable sin GoRouter).
+  static String? accessRedirectPath({
+    required bool guestBrowsable,
+    required bool pendingRestore,
+    required bool hasAccess,
+  }) {
+    if (guestBrowsable || pendingRestore) return null;
+    return hasAccess ? null : AppRoutes.noAccess.path;
+  }
+
+  /// Destino de /no-access según sesión (decisión pura, testeable):
+  /// CON sesión → su home (denegación real de permisos: jamás al login
+  /// teniendo sesión); SIN sesión → login.
+  static String noAccessLandingPath({required bool isLoggedIn, required String userUuid}) =>
+      isLoggedIn
+          ? '${AppRoutes.home.path}/${AppRoutes.foodlyMainPage.path.replaceFirst(':id', userUuid)}'
+          : AppRoutes.login.path;
 }
