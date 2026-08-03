@@ -48,8 +48,7 @@ class ManagerOrdersPage extends StatelessWidget {
         if (err != null) {
           // Audit F4a: copy genérico PROPIO del panel — el de join del
           // cliente ("no pudimos unirte…") no tiene sentido acá.
-          FoodlySnackbars.errorGeneric(
-              context, err.isEmpty ? S.current.managerGenericError : err);
+          FoodlySnackbars.errorGeneric(context, err.isEmpty ? S.current.managerGenericError : err);
         }
       },
       builder: (context, state) {
@@ -143,6 +142,7 @@ class ManagerOrdersPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
                         ),
+                        labelPadding: const EdgeInsets.all(6),
                         label: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -162,8 +162,7 @@ class ManagerOrdersPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   '$count',
-                                  style: FoodlyTextStyles.captionBold
-                                      .copyWith(color: Colors.white, fontSize: 10),
+                                  style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
                                 ),
                               ),
                             ],

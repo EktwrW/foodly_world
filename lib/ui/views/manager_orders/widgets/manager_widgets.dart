@@ -149,16 +149,14 @@ class ManagerMiniChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(6),
       ),
-      child: Center(
-        child: Text(
-          text,
-          style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 8.5),
-        ),
+      child: Text(
+        text,
+        style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 8.5),
       ),
     );
   }

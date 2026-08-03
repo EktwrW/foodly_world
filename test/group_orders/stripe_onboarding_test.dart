@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +19,11 @@ class _FakeRepo implements GroupOrderRepo {
   ApiResult<StripeConnectStatusDM>? statusOutcome;
   ApiResult<StripeOnboardResponseDM>? onboardOutcome;
   int statusCalls = 0;
+  int onboardCalls = 0;
+
+  /// Compuerta opcional: mantiene el onboard "en vuelo" hasta completarla
+  /// (para testear el guard anti doble-tap).
+  Completer<void>? onboardGate;
 
   @override
   Future<ApiResult<StripeConnectStatusDM>> stripeStatus(String businessUuid) async {
@@ -25,8 +32,11 @@ class _FakeRepo implements GroupOrderRepo {
   }
 
   @override
-  Future<ApiResult<StripeOnboardResponseDM>> stripeOnboard(String businessUuid) async =>
-      onboardOutcome!;
+  Future<ApiResult<StripeOnboardResponseDM>> stripeOnboard(String businessUuid) async {
+    onboardCalls++;
+    if (onboardGate != null) await onboardGate!.future;
+    return onboardOutcome!;
+  }
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -117,6 +127,32 @@ void main() {
       await tester.tap(find.byIcon(Icons.refresh_rounded));
       await tester.pumpAndSettle();
       expect(repo.statusCalls, callsBefore + 1);
+    });
+
+    testWidgets('guard anti doble-tap: machacar el CTA con el onboard en '
+        'vuelo dispara UN solo POST (e2e: 36 cuentas huérfanas)', (tester) async {
+      repo.statusOutcome = const ApiResult.success(StripeConnectStatusDM());
+      await cubit.load();
+      repo
+        ..onboardGate = Completer<void>()
+        ..onboardOutcome = const ApiResult.success(
+          StripeOnboardResponseDM(onboardingUrl: 'https://connect.stripe.com/setup/x'),
+        );
+
+      await tester.pumpWidget(app((u) async {}));
+      await tester.pumpAndSettle();
+
+      // Tres taps con el primero aún en vuelo.
+      await tester.tap(find.text(S.current.managerActivateWithStripe));
+      await tester.pump();
+      await tester.tap(find.text(S.current.managerActivateWithStripe));
+      await tester.tap(find.text(S.current.managerActivateWithStripe));
+      await tester.pump();
+
+      repo.onboardGate!.complete();
+      await tester.pumpAndSettle();
+
+      expect(repo.onboardCalls, 1);
     });
 
     testWidgets('si el onboard FALLA, el tap no es mudo: snackbar de error '
