@@ -9,17 +9,47 @@ import 'package:url_launcher/url_launcher.dart';
 /// F4a-6 — banner de onboarding de pagos (maqueta 3, dos estados):
 /// sin activar → gradiente vivid→plum con CTA que abre el AccountLink de
 /// Stripe (Express hosted, navegador externo); activo → confirmación
-/// compacta con refresco manual (al volver del onboarding).
-class StripeOnboardingBanner extends StatelessWidget {
+/// compacta. Al VOLVER del navegador (lifecycle resumed) refresca el estado
+/// solo — el ↻ manual queda como respaldo.
+class StripeOnboardingBanner extends StatefulWidget {
   /// Test hook: reemplaza el url_launcher (default: navegador externo).
   final Future<void> Function(Uri url)? onLaunch;
 
   const StripeOnboardingBanner({super.key, this.onLaunch});
 
+  @override
+  State<StripeOnboardingBanner> createState() => _StripeOnboardingBannerState();
+}
+
+class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Volviste a la app (p. ej. cerraste el navegador del onboarding de
+    // Stripe): re-consulta el estado — /stripe/status sincroniza contra la
+    // API de Stripe en vivo. Con pagos ya activos no hay nada que refrescar.
+    if (state == AppLifecycleState.resumed &&
+        context.read<StripeOnboardingCubit>().state.chargesEnabled != true) {
+      context.read<StripeOnboardingCubit>().load();
+    }
+  }
+
   Future<void> _activate(BuildContext context, StripeOnboardingCubit cubit) async {
     final url = await cubit.startOnboarding();
     if (url == null) return;
-    final launch = onLaunch ?? (u) => launchUrl(u, mode: LaunchMode.externalApplication);
+    final launch = widget.onLaunch ?? (u) => launchUrl(u, mode: LaunchMode.externalApplication);
     await launch(Uri.parse(url));
   }
 
