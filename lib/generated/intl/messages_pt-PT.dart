@@ -2162,6 +2162,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "stop": MessageLookupByLibrary.simpleMessage("Parar"),
     "stress": MessageLookupByLibrary.simpleMessage("Stresse"),
     "strict": MessageLookupByLibrary.simpleMessage("Rigorosa"),
+    "stripeBridgeRefreshBody": MessageLookupByLibrary.simpleMessage(
+      "Retome a ativação no app: Pedidos → Ativar pagamentos com Stripe.",
+    ),
+    "stripeBridgeRefreshTitle": MessageLookupByLibrary.simpleMessage(
+      "Ativação incompleta",
+    ),
+    "stripeBridgeReturnBody": MessageLookupByLibrary.simpleMessage(
+      "Você já pode fechar esta aba e voltar ao app Foodly.",
+    ),
+    "stripeBridgeReturnTitle": MessageLookupByLibrary.simpleMessage(
+      "Conta de pagamentos configurada",
+    ),
     "subject": MessageLookupByLibrary.simpleMessage("Assunto"),
     "submit": MessageLookupByLibrary.simpleMessage("Submeter"),
     "submitReview": MessageLookupByLibrary.simpleMessage("Enviar avaliação"),
