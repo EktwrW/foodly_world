@@ -125,24 +125,32 @@ class ManagerOrdersPage extends StatelessWidget {
                   height: 46,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.fromLTRB(14, 10, 14, 4),
+                    // Padding SIMÉTRICO — el asimétrico (10/4) empujaba los
+                    // chips hacia abajo y los recortaba (fix e2e F4a).
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     itemCount: _buckets.length,
                     separatorBuilder: (_, __) => const SizedBox(width: 6),
                     itemBuilder: (context, i) {
                       final b = _buckets[i];
                       final selected = state.bucket == b;
                       final count = _bucketCount(state, b);
-                      return ChoiceChip(
+                      // Center + shrinkWrap: sin esto el ChoiceChip reserva
+                      // su tap-target de 48px (más alto que la franja) y el
+                      // pill queda desalineado verticalmente.
+                      return Center(
+                        child: ChoiceChip(
                         selected: selected,
                         onSelected: (_) => cubit.selectBucket(b),
                         showCheckmark: false,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        visualDensity: VisualDensity.compact,
                         selectedColor: FoodlyThemes.primaryFoodly,
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
                         ),
-                        labelPadding: const EdgeInsets.all(6),
+                        labelPadding: const EdgeInsets.symmetric(horizontal: 6),
                         label: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -167,6 +175,7 @@ class ManagerOrdersPage extends StatelessWidget {
                               ),
                             ],
                           ],
+                        ),
                         ),
                       );
                     },

@@ -119,6 +119,34 @@ void main() {
       expect(find.text(S.current.managerItemsDelivered(0, 1)), findsOneWidget);
     });
 
+    testWidgets('fix e2e: chips centrados verticalmente en su franja, sin '
+        'recorte (el tap-target de 48px + padding asimétrico los empujaba '
+        'abajo)', (tester) async {
+      final repo = _FakeRepo()
+        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(
+          orders: [order],
+          counts: ManagerOrderCountsDM(pending: 3, ready: 1),
+        ));
+      final cubit = buildCubit(repo);
+      addTearDown(cubit.close);
+
+      await tester.pumpWidget(app(const ManagerOrdersPage(), cubit));
+      await cubit.load();
+      await tester.pumpAndSettle();
+
+      final chips = find.byType(ChoiceChip);
+      final n = tester.widgetList(chips).length;
+      expect(n, greaterThan(1));
+
+      // Todos comparten la MISMA línea media vertical…
+      final firstDy = tester.getCenter(chips.at(0)).dy;
+      for (var i = 1; i < n; i++) {
+        expect(tester.getCenter(chips.at(i)).dy, moreOrLessEquals(firstDy, epsilon: 0.5));
+      }
+      // …y el pill cabe entero en la franja de 46px.
+      expect(tester.getRect(chips.at(0)).height, lessThanOrEqualTo(46));
+    });
+
     testWidgets('tap en un chip manda el bucket al repo', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
