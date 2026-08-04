@@ -38,6 +38,7 @@ import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/not_found/not_found_page.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_page.dart';
 import 'package:foodly_world/ui/views/public_menu/public_menu_page.dart';
+import 'package:foodly_world/ui/views/public_menu/stripe_bridge_page.dart';
 import 'package:foodly_world/ui/views/reservations/my_reservations_page.dart';
 import 'package:foodly_world/ui/views/settings/blocked_users_page.dart';
 import 'package:foodly_world/ui/views/sign_up/cubit/sign_up_cubit.dart';
@@ -416,6 +417,17 @@ class AppRouter {
           GoRoute(
             path: '/',
             redirect: (_, __) => '/${const String.fromEnvironment('MENU_DEV_UUID')}',
+          ),
+          // Puente del onboarding de Stripe: la pestaña del navegador que
+          // queda tras el App Link carga estas URLs — página amable en vez
+          // del NotFound (bug e2e F4a). ANTES del catch-all /:businessUuid.
+          GoRoute(
+            path: AppRoutes.stripeReturn.path,
+            builder: (_, __) => const StripeBridgePage(completed: true),
+          ),
+          GoRoute(
+            path: AppRoutes.stripeRefresh.path,
+            builder: (_, __) => const StripeBridgePage(completed: false),
           ),
           GoRoute(
             path: AppRoutes.publicMenu.path,
@@ -888,6 +900,24 @@ class AppRouter {
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
+            ),
+          ),
+          // Puente del onboarding de Stripe (App Link): el botón "volver a
+          // Foodly" del onboarding hosteado navega a
+          // menu.foodly.solutions/stripe/{return|refresh} y Android abre LA
+          // APP acá (dominio verificado). Aterriza en "Órdenes en vivo" del
+          // negocio del owner — el banner consulta el estado real contra
+          // Stripe al montarse. Sin sesión/negocio (cold start), a start.
+          GoRoute(
+            path: AppRoutes.stripeReturn.path,
+            redirect: (_, __) => GoRouterRedirector.stripeBridgeLandingPath(
+              ownerBusinessUuid: authSessService.userSessionDM?.user.business.firstOrNull?.uuid,
+            ),
+          ),
+          GoRoute(
+            path: AppRoutes.stripeRefresh.path,
+            redirect: (_, __) => GoRouterRedirector.stripeBridgeLandingPath(
+              ownerBusinessUuid: authSessService.userSessionDM?.user.business.firstOrNull?.uuid,
             ),
           ),
           // Safety net: noAccess must be registered ABOVE the /:businessUuid

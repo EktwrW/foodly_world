@@ -41,6 +41,12 @@ enum AppRoutes {
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //
+  // Puente del onboarding de Stripe: return_url/refresh_url del AccountLink
+  // apuntan a menu.foodly.solutions/stripe/{return|refresh}. El dominio es
+  // App Link, así que el botón "volver" de Stripe abre LA APP en estas rutas
+  // (y la web del menú las atiende para la pestaña que queda en el navegador).
+  stripeReturn('/stripe/return', 'stripeReturn'),
+  stripeRefresh('/stripe/refresh', 'stripeRefresh'),
   publicMenu('/:businessUuid', 'publicMenu'),
   noAccess('/no-access', 'noAccess'),
   notFoundScreen('/not-found', 'notFoundScreen'),

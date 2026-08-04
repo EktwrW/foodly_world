@@ -9365,6 +9365,46 @@ class S {
     );
   }
 
+  /// `Payments account set up`
+  String get stripeBridgeReturnTitle {
+    return Intl.message(
+      'Payments account set up',
+      name: 'stripeBridgeReturnTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can close this tab and go back to the Foodly app.`
+  String get stripeBridgeReturnBody {
+    return Intl.message(
+      'You can close this tab and go back to the Foodly app.',
+      name: 'stripeBridgeReturnBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setup incomplete`
+  String get stripeBridgeRefreshTitle {
+    return Intl.message(
+      'Setup incomplete',
+      name: 'stripeBridgeRefreshTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume activation from the app: Orders → Activate payments with Stripe.`
+  String get stripeBridgeRefreshBody {
+    return Intl.message(
+      'Resume activation from the app: Orders → Activate payments with Stripe.',
+      name: 'stripeBridgeRefreshBody',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `History`
   String get managerHistoryTitle {
     return Intl.message(

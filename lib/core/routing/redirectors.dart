@@ -93,6 +93,15 @@ abstract class GoRouterRedirector {
     return hasAccess ? null : AppRoutes.noAccess.path;
   }
 
+  /// Aterrizaje del puente de Stripe (App Link return/refresh del onboarding,
+  /// decisión pura): con negocio → su panel "Órdenes en vivo" (el banner
+  /// consulta el estado real contra Stripe al montarse); sin sesión o sin
+  /// negocio (p. ej. cold start con restore pendiente) → start.
+  static String stripeBridgeLandingPath({required String? ownerBusinessUuid}) =>
+      ownerBusinessUuid == null
+          ? AppRoutes.start.path
+          : AppRoutes.liveOrders.path.replaceFirst(':id', ownerBusinessUuid);
+
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
   /// teniendo sesión); SIN sesión → login.
