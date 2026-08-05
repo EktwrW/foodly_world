@@ -71,6 +71,20 @@ Map<String, dynamic> _$ManagerHistoryResponseDMToJson(
       if (instance.nextBefore case final value?) 'next_before': value,
     };
 
+_PaymentModeResponseDM _$PaymentModeResponseDMFromJson(
+        Map<String, dynamic> json) =>
+    _PaymentModeResponseDM(
+      success: json['success'] as bool? ?? true,
+      groupPaymentMode: json['group_payment_mode'] as String? ?? 'per_round',
+    );
+
+Map<String, dynamic> _$PaymentModeResponseDMToJson(
+        _PaymentModeResponseDM instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'group_payment_mode': instance.groupPaymentMode,
+    };
+
 _ManagerOrdersMetaDM _$ManagerOrdersMetaDMFromJson(Map<String, dynamic> json) =>
     _ManagerOrdersMetaDM(
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,

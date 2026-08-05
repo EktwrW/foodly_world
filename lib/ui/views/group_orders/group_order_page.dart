@@ -153,6 +153,99 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     await di<ActiveGroupOrderCubit>().refresh();
   }
 
+  /// F4b (cuenta abierta) — "Enviar orden": la tanda actual viaja a cocina
+  /// SIN pago; al volver, sheet "¡Pedido enviado a cocina!" (maqueta B1).
+  Future<void> _onSend(BuildContext context, GroupOrderDM order) async {
+    final cubit = context.read<GroupOrderCubit>();
+    final ok = await cubit.sendBatch();
+    if (!ok || !context.mounted) return;
+
+    await di<ActiveGroupOrderCubit>().refresh();
+    if (!context.mounted) return;
+    _showBatchSentSheet(context, cubit.vm.order ?? order);
+  }
+
+  /// F4b — "Pedir la cuenta": confirma (es el fin de la visita), elige el
+  /// split si hay varios comensales y habilita el checkout.
+  Future<void> _onRequestBill(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    final participants = cubit.vm.order?.participants.length ?? 1;
+
+    String? mode = 'by_items';
+    if (participants > 1) {
+      mode = await _askSplitMode(context);
+      if (mode == null || !context.mounted) return; // canceló
+    } else if (!await _confirm(context, S.current.groupOrderRequestBillConfirm) ||
+        !context.mounted) {
+      return;
+    }
+
+    await cubit.requestBill(splitMode: mode);
+    await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Sheet "¡Pedido enviado a cocina!" (maqueta B1): sin celebración de pago
+  /// (no hubo pago). CTA principal: seguir pidiendo.
+  void _showBatchSentSheet(BuildContext context, GroupOrderDM order) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 62,
+              height: 62,
+              decoration: BoxDecoration(
+                color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.room_service_rounded,
+                  color: FoodlyThemes.primaryFoodly, size: 30),
+            ),
+            const SizedBox(height: 14),
+            Text(S.current.groupOrderBatchSentTitle,
+                style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+            const SizedBox(height: 6),
+            Text(
+              S.current.groupOrderBatchSentBody(
+                order.businessName.isNotEmpty ? order.businessName : 'Foodly',
+              ),
+              style: FoodlyTextStyles.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 18),
+            CustomNeumorphicButton(
+              text: S.current.groupOrderOrderMore,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              onPressed: () {
+                Navigator.pop(ctx);
+                final menuUuid = order.businessMenuUuid;
+                if (menuUuid == null) return;
+                di<AppRouter>().appRouter.goNamed(
+                  AppRoutes.visitMenu.name,
+                  pathParameters: {AppRoutes.routeIdParam: menuUuid},
+                );
+              },
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(S.current.groupOrderSeeStatus,
+                  style: FoodlyTextStyles.caption
+                      .copyWith(color: FoodlyThemes.secondaryFoodly)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   /// Diálogo de división estilo Foodly: dos opciones tipo tarjeta con radio,
   /// sin selección inicial; el CTA se habilita al elegir.
   Future<String?> _askSplitMode(BuildContext context) {
@@ -826,6 +919,8 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     isBusy: isBusy,
                     onPay: () => _onPay(context),
                     onLock: () => _onLock(context),
+                    onSend: () => _onSend(context, order),
+                    onRequestBill: () => _onRequestBill(context),
                     onCover: (p) => _onCover(context, order, p),
                     onPayAll: () => _onPayAll(context, order),
                   ),
@@ -952,6 +1047,8 @@ class _Content extends StatelessWidget {
   final bool isBusy;
   final VoidCallback onPay;
   final VoidCallback onLock;
+  final VoidCallback onSend;
+  final VoidCallback onRequestBill;
   final void Function(GroupOrderParticipantDM p) onCover;
   final VoidCallback onPayAll;
 
@@ -961,6 +1058,8 @@ class _Content extends StatelessWidget {
     required this.isBusy,
     required this.onPay,
     required this.onLock,
+    required this.onSend,
+    required this.onRequestBill,
     required this.onCover,
     required this.onPayAll,
   });
@@ -1052,6 +1151,9 @@ class _Content extends StatelessWidget {
           isBusy: isBusy,
           onPay: vm.canPay ? onPay : null,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,
+          // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
+          onSend: (order.isOpenTab && _iAmHost) ? onSend : null,
+          onRequestBill: (order.isOpenTab && _iAmHost) ? onRequestBill : null,
           onPayAll: _showPayAll ? onPayAll : null,
         ),
       ],

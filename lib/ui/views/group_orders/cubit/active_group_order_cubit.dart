@@ -33,7 +33,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   void onChange(Change<GroupOrderDM?> change) {
     super.onChange(change);
     final order = change.nextState;
-    if (order == null || !(order.isOpen || order.isPayable)) {
+    // F4b: la orden de cuenta abierta sigue viva tras confirmarse (isTracking
+    // la cubre) — la notificación ongoing debe seguir ahí hasta el pago.
+    if (order == null || !(order.isOpen || order.isPayable || order.isTracking)) {
       _ongoingNotification?.dismiss();
     } else {
       _ongoingNotification?.show(
@@ -58,8 +60,12 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     final res = await _repo.getMyGroupOrders();
     res.when(
       success: (r) {
+        // F4b: en cuenta abierta la orden CONFIRMADA sigue siendo el carrito
+        // (la mesa pide más tandas). Sin isTracking acá, volver al menú
+        // ofrecía "crear orden" y nacía una SEGUNDA orden en la misma mesa.
         final remote = r.groupOrders
-            .where((o) => o.businessUuid == businessUuid && (o.isOpen || o.isPayable))
+            .where((o) =>
+                o.businessUuid == businessUuid && (o.isOpen || o.isPayable || o.isTracking))
             .toList();
         if (remote.isNotEmpty) emit(remote.first);
       },

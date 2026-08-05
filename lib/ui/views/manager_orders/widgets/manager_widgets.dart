@@ -162,6 +162,50 @@ class ManagerMiniChip extends StatelessWidget {
   }
 }
 
+/// F4b — estado de COBRO de la orden (maqueta C1): en cuenta abierta la
+/// mesa come antes de pagar, así que el manager necesita ver de un vistazo
+/// qué mesas deben plata. En prepago siempre está pagada.
+class ManagerPaymentBadge extends StatelessWidget {
+  final GroupOrderDM order;
+
+  const ManagerPaymentBadge({super.key, required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    // total_paid cubre el total => PAGADA. En per_round es el caso normal
+    // (la comanda nace del pago); en open_tab, solo tras cobrar la cuenta.
+    final paid = order.totalPaid >= order.totalAmount && order.totalAmount > 0;
+
+    if (paid) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.check_circle_rounded, size: 13, color: Color(0xFF0B8A40)),
+          const SizedBox(width: 4),
+          Text(
+            S.current.managerPaidComplete,
+            style: FoodlyTextStyles.captionBold
+                .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+          ),
+        ],
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFDF1DC),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: kManagerAmber.withValues(alpha: 0.6)),
+      ),
+      child: Text(
+        S.current.managerUnpaidBadge,
+        style: FoodlyTextStyles.captionBold.copyWith(color: kManagerAmber, fontSize: 10),
+      ),
+    );
+  }
+}
+
 /// Tarjeta de orden de la lista (maqueta 1): id/ronda/mesa + badge + meta +
 /// total + línea de pago.
 class ManagerOrderCard extends StatelessWidget {
@@ -235,12 +279,9 @@ class ManagerOrderCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    const Icon(Icons.check_circle_rounded, size: 13, color: Color(0xFF0B8A40)),
-                    const SizedBox(width: 4),
-                    Text(
-                      S.current.managerPaidComplete,
-                      style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
-                    ),
+                    // F4b: en cuenta abierta el cobro es al final — badge
+                    // POR PAGAR (ámbar punteado) hasta que entre el pago.
+                    ManagerPaymentBadge(order: order),
                     const Spacer(),
                     Text(
                       S.current.managerItemsDelivered(order.deliveredItemsCount, order.items.length),

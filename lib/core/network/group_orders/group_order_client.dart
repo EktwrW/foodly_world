@@ -125,6 +125,24 @@ abstract class GroupOrderClient {
 
   // ── F4a: panel "Órdenes en vivo" del negocio (solo dueño) ──────
 
+  /// F4b (cuenta abierta): manda la tanda actual a cocina, SIN pago.
+  @POST('/group-orders/{uuid}/send')
+  Future<GroupOrderResponseDM> sendBatch(@Path('uuid') String uuid);
+
+  /// F4b: pide la cuenta — congela el agregado y habilita el checkout.
+  @POST('/group-orders/{uuid}/request-bill')
+  Future<GroupOrderResponseDM> requestBill(
+    @Path('uuid') String uuid, {
+    @Field('split_mode') String? splitMode,
+  });
+
+  /// F4b: modo de cobro del negocio (solo dueño).
+  @PATCH('/manager/businesses/{businessUuid}/payment-mode')
+  Future<PaymentModeResponseDM> updatePaymentMode(
+    @Path('businessUuid') String businessUuid, {
+    @Field('mode') required String mode,
+  });
+
   @GET('/manager/businesses/{businessUuid}/group-orders')
   Future<ManagerOrdersResponseDM> managerOrders(
     @Path('businessUuid') String businessUuid, {

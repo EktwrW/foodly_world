@@ -9405,6 +9405,116 @@ class S {
     );
   }
 
+  /// `UNPAID`
+  String get managerUnpaidBadge {
+    return Intl.message(
+      'UNPAID',
+      name: 'managerUnpaidBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BATCH {n}`
+  String managerBatchLabel(int n) {
+    return Intl.message(
+      'BATCH $n',
+      name: 'managerBatchLabel',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `How does your business charge?`
+  String get paymentModeTitle {
+    return Intl.message(
+      'How does your business charge?',
+      name: 'paymentModeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can change this anytime from your panel`
+  String get paymentModeSubtitle {
+    return Intl.message(
+      'You can change this anytime from your panel',
+      name: 'paymentModeSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open tab`
+  String get paymentModeOpenTabTitle {
+    return Intl.message(
+      'Open tab',
+      name: 'paymentModeOpenTabTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The table orders in batches and pays ONCE at the end. Ideal for table-service restaurants.`
+  String get paymentModeOpenTabBody {
+    return Intl.message(
+      'The table orders in batches and pays ONCE at the end. Ideal for table-service restaurants.',
+      name: 'paymentModeOpenTabBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order → eat → pay`
+  String get paymentModeOpenTabFlow {
+    return Intl.message(
+      'order → eat → pay',
+      name: 'paymentModeOpenTabFlow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prepaid per round`
+  String get paymentModePerRoundTitle {
+    return Intl.message(
+      'Prepaid per round',
+      name: 'paymentModePerRoundTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Each order is paid before it's prepared. Ideal for bars, food trucks and counters.`
+  String get paymentModePerRoundBody {
+    return Intl.message(
+      'Each order is paid before it\'s prepared. Ideal for bars, food trucks and counters.',
+      name: 'paymentModePerRoundBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order → pay → deliver`
+  String get paymentModePerRoundFlow {
+    return Intl.message(
+      'order → pay → deliver',
+      name: 'paymentModePerRoundFlow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Charging mode updated`
+  String get paymentModeUpdated {
+    return Intl.message(
+      'Charging mode updated',
+      name: 'paymentModeUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `New paid order!`
   String get managerNewOrderTitle {
     return Intl.message(
@@ -9472,6 +9582,106 @@ class S {
       name: 'managerHistoryDaySummary',
       desc: '',
       args: [count, total],
+    );
+  }
+
+  /// `Send order`
+  String get groupOrderSendCta {
+    return Intl.message(
+      'Send order',
+      name: 'groupOrderSendCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The kitchen gets it right away · you pay at the end`
+  String get groupOrderSendHint {
+    return Intl.message(
+      'The kitchen gets it right away · you pay at the end',
+      name: 'groupOrderSendHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment unlocks once everything is served`
+  String get groupOrderPayBlockedHint {
+    return Intl.message(
+      'Payment unlocks once everything is served',
+      name: 'groupOrderPayBlockedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay the bill · {amount}`
+  String groupOrderPayBillCta(String amount) {
+    return Intl.message(
+      'Pay the bill · $amount',
+      name: 'groupOrderPayBillCta',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `You can split it with the table however you like`
+  String get groupOrderPayBillHint {
+    return Intl.message(
+      'You can split it with the table however you like',
+      name: 'groupOrderPayBillHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask for the bill? You won't be able to add more items to this order.`
+  String get groupOrderRequestBillConfirm {
+    return Intl.message(
+      'Ask for the bill? You won\'t be able to add more items to this order.',
+      name: 'groupOrderRequestBillConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order sent to the kitchen!`
+  String get groupOrderBatchSentTitle {
+    return Intl.message(
+      'Order sent to the kitchen!',
+      name: 'groupOrderBatchSentTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{business} is already preparing it. Keep ordering — you pay it all at the end.`
+  String groupOrderBatchSentBody(String business) {
+    return Intl.message(
+      '$business is already preparing it. Keep ordering — you pay it all at the end.',
+      name: 'groupOrderBatchSentBody',
+      desc: '',
+      args: [business],
+    );
+  }
+
+  /// `Order more`
+  String get groupOrderOrderMore {
+    return Intl.message(
+      'Order more',
+      name: 'groupOrderOrderMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See order status`
+  String get groupOrderSeeStatus {
+    return Intl.message(
+      'See order status',
+      name: 'groupOrderSeeStatus',
+      desc: '',
+      args: [],
     );
   }
 

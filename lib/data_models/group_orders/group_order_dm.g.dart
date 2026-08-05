@@ -23,6 +23,10 @@ _GroupOrderItemDM _$GroupOrderItemDMFromJson(Map<String, dynamic> json) =>
       deliveredAt: json['delivered_at'] == null
           ? null
           : DateTime.parse(json['delivered_at'] as String),
+      batchNo: (json['batch_no'] as num?)?.toInt(),
+      sentAt: json['sent_at'] == null
+          ? null
+          : DateTime.parse(json['sent_at'] as String),
     );
 
 Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
@@ -37,6 +41,9 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
       if (instance.notes case final value?) 'notes': value,
       if (instance.deliveredAt?.toIso8601String() case final value?)
         'delivered_at': value,
+      if (instance.batchNo case final value?) 'batch_no': value,
+      if (instance.sentAt?.toIso8601String() case final value?)
+        'sent_at': value,
     };
 
 _GroupOrderParticipantDM _$GroupOrderParticipantDMFromJson(
@@ -109,6 +116,13 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
           unknownValue: JsonKey.nullForUndefinedEnumValue),
       roundNumber: (json['round_number'] as num?)?.toInt() ?? 1,
       tableLabel: json['table_label'] as String?,
+      paymentMode: $enumDecodeNullable(
+              _$GroupPaymentModeEnumMap, json['payment_mode'],
+              unknownValue: GroupPaymentMode.perRound) ??
+          GroupPaymentMode.perRound,
+      billRequestedAt: json['bill_requested_at'] == null
+          ? null
+          : DateTime.parse(json['bill_requested_at'] as String),
       lockExpiresAt: json['lock_expires_at'] == null
           ? null
           : DateTime.parse(json['lock_expires_at'] as String),
@@ -148,6 +162,9 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
         'fulfillment_status': value,
       'round_number': instance.roundNumber,
       if (instance.tableLabel case final value?) 'table_label': value,
+      'payment_mode': _$GroupPaymentModeEnumMap[instance.paymentMode]!,
+      if (instance.billRequestedAt?.toIso8601String() case final value?)
+        'bill_requested_at': value,
       if (instance.lockExpiresAt?.toIso8601String() case final value?)
         'lock_expires_at': value,
       if (instance.graceEndsAt?.toIso8601String() case final value?)
@@ -175,6 +192,11 @@ const _$GroupFulfillmentStatusEnumMap = {
   GroupFulfillmentStatus.preparing: 'preparing',
   GroupFulfillmentStatus.ready: 'ready',
   GroupFulfillmentStatus.delivered: 'delivered',
+};
+
+const _$GroupPaymentModeEnumMap = {
+  GroupPaymentMode.perRound: 'per_round',
+  GroupPaymentMode.openTab: 'open_tab',
 };
 
 _GroupOrderResponseDM _$GroupOrderResponseDMFromJson(

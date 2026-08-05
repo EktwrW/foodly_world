@@ -1207,6 +1207,341 @@ class __$ManagerHistoryResponseDMCopyWithImpl<$Res>
 }
 
 /// @nodoc
+mixin _$PaymentModeResponseDM {
+  bool get success;
+  @JsonKey(name: 'group_payment_mode')
+  String get groupPaymentMode;
+
+  /// Create a copy of PaymentModeResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PaymentModeResponseDMCopyWith<PaymentModeResponseDM> get copyWith =>
+      _$PaymentModeResponseDMCopyWithImpl<PaymentModeResponseDM>(
+          this as PaymentModeResponseDM, _$identity);
+
+  /// Serializes this PaymentModeResponseDM to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PaymentModeResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.groupPaymentMode, groupPaymentMode) ||
+                other.groupPaymentMode == groupPaymentMode));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, groupPaymentMode);
+
+  @override
+  String toString() {
+    return 'PaymentModeResponseDM(success: $success, groupPaymentMode: $groupPaymentMode)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PaymentModeResponseDMCopyWith<$Res> {
+  factory $PaymentModeResponseDMCopyWith(PaymentModeResponseDM value,
+          $Res Function(PaymentModeResponseDM) _then) =
+      _$PaymentModeResponseDMCopyWithImpl;
+  @useResult
+  $Res call(
+      {bool success,
+      @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
+}
+
+/// @nodoc
+class _$PaymentModeResponseDMCopyWithImpl<$Res>
+    implements $PaymentModeResponseDMCopyWith<$Res> {
+  _$PaymentModeResponseDMCopyWithImpl(this._self, this._then);
+
+  final PaymentModeResponseDM _self;
+  final $Res Function(PaymentModeResponseDM) _then;
+
+  /// Create a copy of PaymentModeResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = null,
+    Object? groupPaymentMode = null,
+  }) {
+    return _then(_self.copyWith(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      groupPaymentMode: null == groupPaymentMode
+          ? _self.groupPaymentMode
+          : groupPaymentMode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PaymentModeResponseDM].
+extension PaymentModeResponseDMPatterns on PaymentModeResponseDM {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PaymentModeResponseDM value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PaymentModeResponseDM value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PaymentModeResponseDM value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(bool success,
+            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM() when $default != null:
+        return $default(_that.success, _that.groupPaymentMode);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(bool success,
+            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM():
+        return $default(_that.success, _that.groupPaymentMode);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(bool success,
+            @JsonKey(name: 'group_payment_mode') String groupPaymentMode)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PaymentModeResponseDM() when $default != null:
+        return $default(_that.success, _that.groupPaymentMode);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _PaymentModeResponseDM implements PaymentModeResponseDM {
+  const _PaymentModeResponseDM(
+      {this.success = true,
+      @JsonKey(name: 'group_payment_mode')
+      this.groupPaymentMode = 'per_round'});
+  factory _PaymentModeResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$PaymentModeResponseDMFromJson(json);
+
+  @override
+  @JsonKey()
+  final bool success;
+  @override
+  @JsonKey(name: 'group_payment_mode')
+  final String groupPaymentMode;
+
+  /// Create a copy of PaymentModeResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PaymentModeResponseDMCopyWith<_PaymentModeResponseDM> get copyWith =>
+      __$PaymentModeResponseDMCopyWithImpl<_PaymentModeResponseDM>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PaymentModeResponseDMToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _PaymentModeResponseDM &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.groupPaymentMode, groupPaymentMode) ||
+                other.groupPaymentMode == groupPaymentMode));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, groupPaymentMode);
+
+  @override
+  String toString() {
+    return 'PaymentModeResponseDM(success: $success, groupPaymentMode: $groupPaymentMode)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PaymentModeResponseDMCopyWith<$Res>
+    implements $PaymentModeResponseDMCopyWith<$Res> {
+  factory _$PaymentModeResponseDMCopyWith(_PaymentModeResponseDM value,
+          $Res Function(_PaymentModeResponseDM) _then) =
+      __$PaymentModeResponseDMCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool success,
+      @JsonKey(name: 'group_payment_mode') String groupPaymentMode});
+}
+
+/// @nodoc
+class __$PaymentModeResponseDMCopyWithImpl<$Res>
+    implements _$PaymentModeResponseDMCopyWith<$Res> {
+  __$PaymentModeResponseDMCopyWithImpl(this._self, this._then);
+
+  final _PaymentModeResponseDM _self;
+  final $Res Function(_PaymentModeResponseDM) _then;
+
+  /// Create a copy of PaymentModeResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? success = null,
+    Object? groupPaymentMode = null,
+  }) {
+    return _then(_PaymentModeResponseDM(
+      success: null == success
+          ? _self.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool,
+      groupPaymentMode: null == groupPaymentMode
+          ? _self.groupPaymentMode
+          : groupPaymentMode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
 mixin _$ManagerOrdersMetaDM {
   @JsonKey(name: 'current_page')
   int get currentPage;

@@ -48,6 +48,18 @@ abstract class ManagerHistoryResponseDM with _$ManagerHistoryResponseDM {
       _$ManagerHistoryResponseDMFromJson(json);
 }
 
+/// F4b — respuesta del cambio de modo de cobro del negocio.
+@freezed
+abstract class PaymentModeResponseDM with _$PaymentModeResponseDM {
+  const factory PaymentModeResponseDM({
+    @Default(true) bool success,
+    @JsonKey(name: 'group_payment_mode') @Default('per_round') String groupPaymentMode,
+  }) = _PaymentModeResponseDM;
+
+  factory PaymentModeResponseDM.fromJson(Map<String, dynamic> json) =>
+      _$PaymentModeResponseDMFromJson(json);
+}
+
 @freezed
 abstract class ManagerOrdersMetaDM with _$ManagerOrdersMetaDM {
   const factory ManagerOrdersMetaDM({

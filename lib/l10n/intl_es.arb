@@ -1497,6 +1497,24 @@
   "stripeBridgeRefreshTitle": "Activación incompleta",
   "stripeBridgeRefreshBody": "Retomá la activación desde la app: Órdenes → Activar pagos con Stripe.",
   "managerChecklistHint": "Tocá cada ítem para marcarlo como entregado",
+  "managerUnpaidBadge": "POR PAGAR",
+  "managerBatchLabel": "TANDA {n}",
+  "@managerBatchLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentModeTitle": "¿Cómo cobra tu negocio?",
+  "paymentModeSubtitle": "Podés cambiarlo cuando quieras desde tu panel",
+  "paymentModeOpenTabTitle": "Cuenta abierta",
+  "paymentModeOpenTabBody": "La mesa pide en tandas y paga UNA vez al final. Ideal para restaurantes con servicio de mesa.",
+  "paymentModeOpenTabFlow": "pedir → comer → pagar",
+  "paymentModePerRoundTitle": "Prepago por ronda",
+  "paymentModePerRoundBody": "Cada pedido se paga antes de prepararse. Ideal para bares, food trucks y mostrador.",
+  "paymentModePerRoundFlow": "pedir → pagar → entregar",
+  "paymentModeUpdated": "Modo de cobro actualizado",
   "managerNewOrderTitle": "¡Nueva orden pagada!",
   "managerNewOrderGo": "Ir a atenderla",
   "managerNewOrderLater": "Ahora no",
@@ -1514,6 +1532,30 @@
       }
     }
   },
+  "groupOrderSendCta": "Enviar orden",
+  "groupOrderSendHint": "La cocina la recibe al instante · pagás al final",
+  "groupOrderPayBlockedHint": "El pago se habilita cuando te entreguen todo",
+  "groupOrderPayBillCta": "Pagar la cuenta · {amount}",
+  "@groupOrderPayBillCta": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayBillHint": "Podés dividirla entre la mesa como quieras",
+  "groupOrderRequestBillConfirm": "¿Pedir la cuenta? Ya no vas a poder agregar más ítems a este pedido.",
+  "groupOrderBatchSentTitle": "¡Pedido enviado a cocina!",
+  "groupOrderBatchSentBody": "{business} ya lo está preparando. Podés seguir pidiendo — pagás todo al final.",
+  "@groupOrderBatchSentBody": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderOrderMore": "Pedir más",
+  "groupOrderSeeStatus": "Ver el estado del pedido",
   "groupOrderTrackConfirmed": "El negocio recibió tu pedido",
   "groupOrderTrackPreparing": "Están preparando tu pedido",
   "groupOrderTrackReady": "¡Tu pedido está listo!",

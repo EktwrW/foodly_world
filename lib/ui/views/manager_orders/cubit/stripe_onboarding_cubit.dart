@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
+import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:logger/logger.dart';
 
 /// F4a-6 — estado del onboarding de pagos (maqueta 3, dos estados):
@@ -54,6 +55,22 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
         _logger.e(e);
         // Sin red no asumimos nada: chargesEnabled queda como estaba.
         emit(state.copyWith(loading: false));
+      },
+    );
+  }
+
+  /// F4b-2: guarda el modo de cobro elegido por el dueño (per_round |
+  /// open_tab). true si el backend lo aceptó.
+  Future<bool> setPaymentMode(GroupPaymentMode mode) async {
+    final res = await _repo.updatePaymentMode(
+      businessUuid,
+      mode: mode == GroupPaymentMode.openTab ? 'open_tab' : 'per_round',
+    );
+    return res.when(
+      success: (_) => true,
+      failure: (e) {
+        _logger.e(e);
+        return false;
       },
     );
   }
