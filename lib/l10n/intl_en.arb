@@ -1317,7 +1317,7 @@
   "groupOrderCreating": "Creating…",
   "groupOrderViewOrder": "View order",
   "groupOrderAddFromMenu": "Add dishes from the menu",
-  "groupOrderLockCta": "Close order",
+  "groupOrderLockCta": "Finish order",
   "groupOrderUnlockCta": "Reopen order",
   "groupOrderUnlockConfirm": "Reopen the order? Prices unfreeze and items can be edited again.",
   "groupOrderTransferHost": "Transfer ownership",
@@ -1432,7 +1432,7 @@
     }
   },
   "groupOrderBackToMenu": "Back to menu",
-  "groupOrderLockConfirmSolo": "Close the order and proceed to payment? You won't be able to add more items.",
+  "groupOrderLockConfirmSolo": "Finish the order and proceed to payment? You won't be able to add more items.",
   "groupOrderSharedBadgeTooltip": "This item is split among everyone at the table",
   "managerActivatePaymentsTitle": "Activate payments for your business",
   "managerActivatePaymentsBody": "Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.",
@@ -1497,6 +1497,11 @@
   "stripeBridgeReturnBody": "You can close this tab and go back to the Foodly app.",
   "stripeBridgeRefreshTitle": "Setup incomplete",
   "stripeBridgeRefreshBody": "Resume activation from the app: Orders → Activate payments with Stripe.",
+  "managerChecklistHint": "Tap each item to mark it as delivered",
+  "managerLastItemConfirm": "This is the last item: checking it marks the whole order as DELIVERED and it can't be unchecked. Confirm?",
+  "managerNewOrderTitle": "New paid order!",
+  "managerNewOrderGo": "Go handle it",
+  "managerNewOrderLater": "Not now",
   "managerHistoryTitle": "History",
   "managerHistoryYesterday": "Yesterday",
   "managerHistoryEmpty": "No past orders yet",
@@ -1511,6 +1516,10 @@
       }
     }
   },
+  "groupOrderTrackConfirmed": "The business got your order",
+  "groupOrderTrackPreparing": "Your order is being prepared",
+  "groupOrderTrackReady": "Your order is ready!",
+  "groupOrderTrackDelivered": "Order delivered — enjoy!",
   "groupOrderNextRound": "Order another round",
   "groupOrderPayFullOrder": "Pay the order · {amount}",
   "@groupOrderPayFullOrder": {

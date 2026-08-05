@@ -1317,7 +1317,7 @@
   "groupOrderCreating": "A criar…",
   "groupOrderViewOrder": "Ver o pedido",
   "groupOrderAddFromMenu": "Adiciona pratos do menu",
-  "groupOrderLockCta": "Fechar o pedido",
+  "groupOrderLockCta": "Finalizar o pedido",
   "groupOrderUnlockCta": "Reabrir o pedido",
   "groupOrderUnlockConfirm": "Reabrir o pedido? Os preços são descongelados e os itens poderão ser editados.",
   "groupOrderTransferHost": "Transferir titularidade",
@@ -1432,7 +1432,7 @@
     }
   },
   "groupOrderBackToMenu": "Voltar ao menu",
-  "groupOrderLockConfirmSolo": "Fechar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
+  "groupOrderLockConfirmSolo": "Finalizar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
   "groupOrderSharedBadgeTooltip": "Este item é dividido por todos na mesa",
   "managerActivatePaymentsTitle": "Ative os pagamentos do seu negócio",
   "managerActivatePaymentsBody": "Verifique o seu negócio com a Stripe para receber os pagamentos dos pedidos diretamente na sua conta bancária. Demora ~5 minutos.",
@@ -1497,6 +1497,11 @@
   "stripeBridgeReturnBody": "Você já pode fechar esta aba e voltar ao app Foodly.",
   "stripeBridgeRefreshTitle": "Ativação incompleta",
   "stripeBridgeRefreshBody": "Retome a ativação no app: Pedidos → Ativar pagamentos com Stripe.",
+  "managerChecklistHint": "Toque em cada item para marcá-lo como entregue",
+  "managerLastItemConfirm": "É o último item: ao marcá-lo, o pedido inteiro passa a ENTREGUE e não pode ser desmarcado. Confirmar?",
+  "managerNewOrderTitle": "Novo pedido pago!",
+  "managerNewOrderGo": "Ir atendê-lo",
+  "managerNewOrderLater": "Agora não",
   "managerHistoryTitle": "Histórico",
   "managerHistoryYesterday": "Ontem",
   "managerHistoryEmpty": "Sem pedidos passados ainda",
@@ -1511,6 +1516,10 @@
       }
     }
   },
+  "groupOrderTrackConfirmed": "O negócio recebeu seu pedido",
+  "groupOrderTrackPreparing": "Seu pedido está sendo preparado",
+  "groupOrderTrackReady": "Seu pedido está pronto!",
+  "groupOrderTrackDelivered": "Pedido entregue — bom apetite!",
   "groupOrderNextRound": "Pedir outra rodada",
   "groupOrderPayFullOrder": "Pagar o pedido · {amount}",
   "@groupOrderPayFullOrder": {

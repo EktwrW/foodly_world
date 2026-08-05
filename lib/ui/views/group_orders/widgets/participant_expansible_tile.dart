@@ -165,6 +165,8 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                     child: GroupOrderItemTile(
                       item: item,
                       currency: widget.order.currency,
+                      // e2e F4a: el cliente ve qué ítems ya le entregaron.
+                      delivered: widget.order.isConfirmed && item.deliveredAt != null,
                       onRemove:
                           widget.onRemoveItem == null ? null : () => widget.onRemoveItem!(item),
                       onToggleShared: widget.onToggleSharedItem == null

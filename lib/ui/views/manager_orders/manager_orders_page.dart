@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodly_world/core/routing/app_router.dart';
-import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
-import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_history_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.dart';
@@ -119,7 +114,7 @@ class ManagerOrdersPage extends StatelessWidget {
             child: Column(
               children: [
                 // F4a-6: banner de onboarding de pagos (dos estados).
-                const StripeOnboardingBanner(),
+                const StripeOnboardingBanner().paddingBottom(3),
                 // Chips de filtro por bucket con contador live.
                 SizedBox(
                   height: 46,
@@ -127,7 +122,7 @@ class ManagerOrdersPage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     // Padding SIMÉTRICO — el asimétrico (10/4) empujaba los
                     // chips hacia abajo y los recortaba (fix e2e F4a).
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
                     itemCount: _buckets.length,
                     separatorBuilder: (_, __) => const SizedBox(width: 6),
                     itemBuilder: (context, i) {
@@ -139,43 +134,43 @@ class ManagerOrdersPage extends StatelessWidget {
                       // pill queda desalineado verticalmente.
                       return Center(
                         child: ChoiceChip(
-                        selected: selected,
-                        onSelected: (_) => cubit.selectBucket(b),
-                        showCheckmark: false,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        visualDensity: VisualDensity.compact,
-                        selectedColor: FoodlyThemes.primaryFoodly,
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
-                        ),
-                        labelPadding: const EdgeInsets.symmetric(horizontal: 6),
-                        label: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              _bucketLabel(b),
-                              style: FoodlyTextStyles.captionBold.copyWith(
-                                color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
-                              ),
-                            ),
-                            if (count != null && count > 0) ...[
-                              const SizedBox(width: 4),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                decoration: BoxDecoration(
-                                  color: FoodlyThemes.secondaryFoodly,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  '$count',
-                                  style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
+                          selected: selected,
+                          onSelected: (_) => cubit.selectBucket(b),
+                          showCheckmark: false,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          visualDensity: VisualDensity.compact,
+                          selectedColor: FoodlyThemes.primaryFoodly,
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+                          ),
+                          labelPadding: const EdgeInsets.symmetric(horizontal: 6),
+                          label: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                _bucketLabel(b),
+                                style: FoodlyTextStyles.captionBold.copyWith(
+                                  color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
                                 ),
                               ),
+                              if (count != null && count > 0) ...[
+                                const SizedBox(width: 4),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                  decoration: BoxDecoration(
+                                    color: FoodlyThemes.secondaryFoodly,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    '$count',
+                                    style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
+                                  ),
+                                ),
+                              ],
                             ],
-                          ],
-                        ),
+                          ),
                         ),
                       );
                     },

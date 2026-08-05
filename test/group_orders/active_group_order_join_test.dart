@@ -26,8 +26,10 @@ AppRequestException _dioFailure({int status = 409, Object? body}) => AppRequestE
 class _FakeRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? joinByCodeOutcome;
   ApiResult<GroupOrderResponseDM>? nextRoundOutcome;
+  ApiResult<GroupOrdersListResponseDM>? mineOutcome;
   String? lastCodeSent;
   String? lastNextRoundUuid;
+  int mineCalls = 0;
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async {
@@ -39,6 +41,12 @@ class _FakeRepo implements GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> nextRound(String uuid) async {
     lastNextRoundUuid = uuid;
     return nextRoundOutcome!;
+  }
+
+  @override
+  Future<ApiResult<GroupOrdersListResponseDM>> getMyGroupOrders() async {
+    mineCalls++;
+    return mineOutcome!;
   }
 
   @override
@@ -57,6 +65,69 @@ void main() {
       expect(_dioFailure(body: 'plain text').serverMessage, isNull);
       expect(_dioFailure(body: {'message': '   '}).serverMessage, isNull);
       expect(const AppRequestException(error: 'boom').serverMessage, isNull);
+    });
+  });
+
+  group('ActiveGroupOrderCubit.syncAnyActive (e2e F4a: volver a la orden)', () {
+    late _FakeRepo repo;
+    late ActiveGroupOrderCubit cubit;
+
+    const open = GroupOrderDM(uuid: 'cart');
+    const tracking = GroupOrderDM(uuid: 'track', status: GroupOrderStatus.confirmed);
+    const delivered = GroupOrderDM(
+      uuid: 'done',
+      status: GroupOrderStatus.confirmed,
+      fulfillmentStatus: GroupFulfillmentStatus.delivered,
+    );
+
+    setUp(() {
+      repo = _FakeRepo();
+      cubit = ActiveGroupOrderCubit(repo: repo, logger: Logger(level: Level.off));
+    });
+
+    tearDown(() => cubit.close());
+
+    test('prioriza el carrito vivo sobre la orden en tracking', () async {
+      repo.mineOutcome = const ApiResult.success(
+          GroupOrdersListResponseDM(groupOrders: [tracking, open]));
+
+      await cubit.syncAnyActive();
+
+      expect(cubit.state?.uuid, 'cart');
+    });
+
+    test('sin carrito, adopta la orden pagada SIN entregar (tracking) — el '
+        'cliente que cerró la app recupera su pedido', () async {
+      repo.mineOutcome =
+          const ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking]));
+
+      await cubit.syncAnyActive();
+
+      expect(cubit.state?.uuid, 'track');
+    });
+
+    test('las entregadas no cuentan; con estado ya presente es no-op', () async {
+      repo.mineOutcome =
+          const ApiResult.success(GroupOrdersListResponseDM(groupOrders: [delivered]));
+      await cubit.syncAnyActive();
+      expect(cubit.state, isNull);
+
+      // Con estado presente no vuelve a pegarle a /mine.
+      repo.mineOutcome = const ApiResult.success(
+          GroupOrdersListResponseDM(groupOrders: [open]));
+      await cubit.syncAnyActive(); // state sigue null → consulta
+      expect(cubit.state?.uuid, 'cart');
+      final calls = repo.mineCalls;
+      await cubit.syncAnyActive(); // ahora hay estado → no-op
+      expect(repo.mineCalls, calls);
+    });
+
+    test('fallo de red: silencioso, sin estado', () async {
+      repo.mineOutcome = const ApiResult.failure(AppRequestException(error: 'down'));
+
+      await cubit.syncAnyActive();
+
+      expect(cubit.state, isNull);
     });
   });
 

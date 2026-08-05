@@ -186,6 +186,12 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   bool get isPayable => status == GroupOrderStatus.locked || status == GroupOrderStatus.paying;
   bool get isConfirmed => status == GroupOrderStatus.confirmed;
 
+  /// e2e F4a: pagada pero AÚN NO entregada — el cliente sigue "trackeando"
+  /// (chip visible + página de la orden en modo estado de cocina).
+  bool get isTracking =>
+      status == GroupOrderStatus.confirmed &&
+      fulfillmentStatus != GroupFulfillmentStatus.delivered;
+
   /// Cuántos participantes ya pagaron.
   int get paidCount => participants.where((p) => p.hasPaid).length;
 

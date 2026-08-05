@@ -1131,9 +1131,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Leave the order",
     ),
     "groupOrderLockConfirmSolo": MessageLookupByLibrary.simpleMessage(
-      "Close the order and proceed to payment? You won\'t be able to add more items.",
+      "Finish the order and proceed to payment? You won\'t be able to add more items.",
     ),
-    "groupOrderLockCta": MessageLookupByLibrary.simpleMessage("Close order"),
+    "groupOrderLockCta": MessageLookupByLibrary.simpleMessage("Finish order"),
     "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
       "Order another round",
     ),
@@ -1208,6 +1208,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Group order"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Order total"),
+    "groupOrderTrackConfirmed": MessageLookupByLibrary.simpleMessage(
+      "The business got your order",
+    ),
+    "groupOrderTrackDelivered": MessageLookupByLibrary.simpleMessage(
+      "Order delivered — enjoy!",
+    ),
+    "groupOrderTrackPreparing": MessageLookupByLibrary.simpleMessage(
+      "Your order is being prepared",
+    ),
+    "groupOrderTrackReady": MessageLookupByLibrary.simpleMessage(
+      "Your order is ready!",
+    ),
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(
       "Transfer ownership",
     ),
@@ -1416,6 +1428,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerBucketPending": MessageLookupByLibrary.simpleMessage("Active"),
     "managerBucketPreparing": MessageLookupByLibrary.simpleMessage("Preparing"),
     "managerBucketReady": MessageLookupByLibrary.simpleMessage("Ready"),
+    "managerChecklistHint": MessageLookupByLibrary.simpleMessage(
+      "Tap each item to mark it as delivered",
+    ),
     "managerDeliverAll": MessageLookupByLibrary.simpleMessage("Check all"),
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Deliver everything at once",
@@ -1436,6 +1451,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Yesterday",
     ),
     "managerItemsDelivered": m52,
+    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
+      "This is the last item: checking it marks the whole order as DELIVERED and it can\'t be unchecked. Confirm?",
+    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage("Live orders"),
     "managerMarkDelivered": MessageLookupByLibrary.simpleMessage(
       "Mark as DELIVERED",
@@ -1444,6 +1462,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mark as PREPARING",
     ),
     "managerMarkReady": MessageLookupByLibrary.simpleMessage("Mark as READY"),
+    "managerNewOrderGo": MessageLookupByLibrary.simpleMessage("Go handle it"),
+    "managerNewOrderLater": MessageLookupByLibrary.simpleMessage("Not now"),
+    "managerNewOrderTitle": MessageLookupByLibrary.simpleMessage(
+      "New paid order!",
+    ),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage("No orders yet"),
     "managerOrders": MessageLookupByLibrary.simpleMessage("Orders"),
     "managerPaidComplete": MessageLookupByLibrary.simpleMessage("Fully paid"),

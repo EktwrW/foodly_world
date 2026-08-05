@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_floating_
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/widgets/manager_order_alert_host.dart';
 
 void main() async {
   usePathUrlStrategy();
@@ -182,7 +183,11 @@ Future<Widget> buildFoodlyApp() async {
                           // Chip global de la orden activa (e2e r4): visible y
                           // arrastrable en toda la app mientras haya orden viva.
                           child: GroupOrderFloatingChipHost(
-                            child: FoodlyMainScaffold(child: childWidget),
+                            // F4a: modal global "nueva orden pagada" para el
+                            // owner cuando está fuera de su panel de órdenes.
+                            child: ManagerOrderAlertHost(
+                              child: FoodlyMainScaffold(child: childWidget),
+                            ),
                           ),
                         ),
                   breakpoints: DeviceSize.breakpoints,

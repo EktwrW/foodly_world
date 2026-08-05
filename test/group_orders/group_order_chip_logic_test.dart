@@ -10,6 +10,11 @@ void main() {
   const open = GroupOrderDM(uuid: 'o1');
   const locked = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.locked);
   const confirmed = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.confirmed);
+  const delivered = GroupOrderDM(
+    uuid: 'o1',
+    status: GroupOrderStatus.confirmed,
+    fulfillmentStatus: GroupFulfillmentStatus.delivered,
+  );
   const cancelled = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.cancelled);
 
   const screen = Size(400, 800);
@@ -28,8 +33,10 @@ void main() {
       }
     });
 
-    test('orden muerta (confirmada/cancelada) → oculto', () {
-      expect(GroupOrderChipLogic.shouldShow(order: confirmed, location: '/visit-menu/m1'), isFalse);
+    test('e2e F4a: confirmada SIN entregar sigue visible (tracking de '
+        'cocina); entregada o cancelada → oculto', () {
+      expect(GroupOrderChipLogic.shouldShow(order: confirmed, location: '/visit-menu/m1'), isTrue);
+      expect(GroupOrderChipLogic.shouldShow(order: delivered, location: '/visit-menu/m1'), isFalse);
       expect(GroupOrderChipLogic.shouldShow(order: cancelled, location: '/visit-menu/m1'), isFalse);
     });
 

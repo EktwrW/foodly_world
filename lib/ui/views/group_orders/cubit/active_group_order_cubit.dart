@@ -67,6 +67,24 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     );
   }
 
+  /// e2e F4a: recuperación GLOBAL de la orden activa (cold start / resume).
+  /// Sin esto, un cliente que pagó y cerró la app no tenía camino de vuelta
+  /// a su orden. Prioridad: carrito vivo (open/payable) > tracking (pagada
+  /// sin entregar). No-op si ya hay estado o sin sesión (401 silencioso).
+  Future<void> syncAnyActive() async {
+    if (state != null || _busy) return;
+    final res = await _repo.getMyGroupOrders();
+    res.when(
+      success: (r) {
+        final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
+        if (cart.isNotEmpty) return emit(cart.first);
+        final tracking = r.groupOrders.where((o) => o.isTracking).toList();
+        if (tracking.isNotEmpty) emit(tracking.first);
+      },
+      failure: (_) {/* silencioso: sin red/sesión no molestamos */},
+    );
+  }
+
   /// Total de unidades en la orden activa (para el badge del menú).
   int get itemCount => state?.items.fold<int>(0, (acc, i) => acc + i.quantity) ?? 0;
 

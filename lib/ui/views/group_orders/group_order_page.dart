@@ -1012,6 +1012,12 @@ class _Content extends StatelessWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
               children: [
+              // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
+              // de cocina (los eventos fulfillment_changed refrescan solos).
+              if (order.isConfirmed) ...[
+                _ClientFulfillmentBanner(order: order),
+                const SizedBox(height: 12),
+              ],
               _SectionTitle(S.current.groupOrderParticipants),
               const SizedBox(height: 8),
               // Ítems agrupados por participante (Expansible). Mi grupo abre
@@ -1049,6 +1055,81 @@ class _Content extends StatelessWidget {
           onPayAll: _showPayAll ? onPayAll : null,
         ),
       ],
+    );
+  }
+}
+
+/// e2e F4a — estado de cocina para el CLIENTE (orden confirmada): icono +
+/// copy por etapa + progreso de ítems entregados. Se actualiza en vivo.
+class _ClientFulfillmentBanner extends StatelessWidget {
+  final GroupOrderDM order;
+
+  const _ClientFulfillmentBanner({required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    final (icon, color, text) = switch (order.fulfillmentStatus) {
+      GroupFulfillmentStatus.preparing => (
+          Icons.soup_kitchen_rounded,
+          const Color(0xFFB87400),
+          S.current.groupOrderTrackPreparing,
+        ),
+      GroupFulfillmentStatus.ready => (
+          Icons.room_service_rounded,
+          FoodlyThemes.tertiaryFoodly,
+          S.current.groupOrderTrackReady,
+        ),
+      GroupFulfillmentStatus.delivered => (
+          Icons.check_circle_rounded,
+          FoodlyThemes.tertiaryFoodly,
+          S.current.groupOrderTrackDelivered,
+        ),
+      _ => (
+          Icons.receipt_long_rounded,
+          FoodlyThemes.primaryFoodly,
+          S.current.groupOrderTrackConfirmed,
+        ),
+    };
+
+    return Card(
+      color: Colors.white,
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: color.withValues(alpha: 0.35)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: color, size: 21),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(text, style: FoodlyTextStyles.labelBold),
+                  if (order.items.isNotEmpty &&
+                      order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
+                    Text(
+                      S.current.managerItemsDelivered(
+                          order.deliveredItemsCount, order.items.length),
+                      style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

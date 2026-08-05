@@ -51,6 +51,11 @@ class PushNotificationService with WidgetsBindingObserver {
   StreamSubscription<RemoteMessage>? _onMessageSub;
   StreamSubscription<RemoteMessage>? _onMessageOpenedAppSub;
 
+  /// F4a — pushes de "nueva orden pagada" (type=manager_group_order)
+  /// recibidos en FOREGROUND. Broadcast: lo consume ManagerOrderAlertHost.
+  final _managerOrderPushes = StreamController<Map<String, dynamic>>.broadcast();
+  Stream<Map<String, dynamic>> get managerOrderPushes => _managerOrderPushes.stream;
+
   /// Reentrancy guard for [registerCurrentToken].
   ///
   /// Two callers can invoke this simultaneously:
@@ -226,6 +231,15 @@ class PushNotificationService with WidgetsBindingObserver {
         _showForegroundLocalNotification(message);
         // Also refresh in-app notifications cubit so the badge updates.
         _bumpNotificationsCubit();
+        // F4a: "nueva orden pagada" con la app abierta → el
+        // ManagerOrderAlertHost escucha este stream y ofrece un modal para
+        // ir al panel si el owner está en otra pantalla.
+        if (message.data['type'] == 'manager_group_order') {
+          _managerOrderPushes.add({
+            ...message.data,
+            if (message.notification?.body != null) 'body': message.notification!.body!,
+          });
+        }
       });
 
       // Background (but app is alive) → user tapped the notification.
@@ -345,6 +359,7 @@ class PushNotificationService with WidgetsBindingObserver {
 
   Future<void> dispose() async {
     WidgetsBinding.instance.removeObserver(this);
+    await _managerOrderPushes.close();
     await _onTokenRefreshSub?.cancel();
     await _onMessageSub?.cancel();
     await _onMessageOpenedAppSub?.cancel();

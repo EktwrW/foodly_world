@@ -19,12 +19,17 @@ class GroupOrderItemTile extends StatefulWidget {
   final Future<void> Function()? onRemove;
   final VoidCallback? onToggleShared;
 
+  /// e2e F4a: check verde cuando el negocio marcó el ítem como ENTREGADO
+  /// (visible para el cliente con la orden confirmada).
+  final bool delivered;
+
   const GroupOrderItemTile({
     super.key,
     required this.item,
     this.currency = 'EUR',
     this.onRemove,
     this.onToggleShared,
+    this.delivered = false,
   });
 
   @override
@@ -87,6 +92,11 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      if (widget.delivered) ...[
+                        const SizedBox(width: 6),
+                        const Icon(Icons.check_circle_rounded,
+                            size: 15, color: FoodlyThemes.tertiaryFoodly),
+                      ],
                       // Badge "Compartido" (F2c): se reparte entre todos.
                       // Tooltip por TAP (e2e r7: el concepto confundía con
                       // "yo invito") — explica qué significa compartir.

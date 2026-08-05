@@ -195,8 +195,14 @@ void main() {
       // CTA del siguiente paso (sin fulfillment → PREPARANDO).
       expect(find.text(S.current.managerMarkPreparing), findsOneWidget);
 
-      // Tap en la línea del ítem → toggle de entrega hacia true.
+      // Tap en el ÚNICO ítem = último pendiente → primero la confirmación
+      // de auto-entrega (e2e F4a): el repo NO se toca hasta confirmar.
       await tester.tap(find.text('Sashimi'));
+      await tester.pumpAndSettle();
+      expect(repo.lastDelivered, isNull);
+      expect(find.text(S.current.managerLastItemConfirm), findsOneWidget);
+
+      await tester.tap(find.text(S.current.managerMarkDelivered));
       await tester.pumpAndSettle();
       expect(repo.lastDelivered, isTrue);
     });
