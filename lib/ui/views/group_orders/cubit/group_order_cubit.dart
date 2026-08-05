@@ -80,6 +80,36 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     result.when(success: _applyResponse, failure: _onError);
   }
 
+  /// F4b (cuenta abierta): "Enviar orden" — la tanda actual va a cocina sin
+  /// pago. Devuelve true si el envío salió bien (la UI muestra el sheet
+  /// "Pedido enviado a cocina").
+  Future<bool> sendBatch() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return false;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.sendBatch(uuid);
+    return result.when(
+      success: (r) {
+        _applyResponse(r);
+        return true;
+      },
+      failure: (e) {
+        _onError(e);
+        return false;
+      },
+    );
+  }
+
+  /// F4b: "Pedir la cuenta" — congela el agregado y habilita el checkout
+  /// (el split se elige igual que en el lock clásico).
+  Future<void> requestBill({String? splitMode}) async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.requestBill(uuid, splitMode: splitMode);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
   /// F2c: marca/desmarca un ítem como compartido (solo en OPEN).
   Future<void> setItemShared(String itemUuid, bool shared) async {
     final uuid = _vm.order?.uuid;

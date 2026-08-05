@@ -200,6 +200,36 @@ class GroupOrderRepo {
     }
   }
 
+  /// F4b (cuenta abierta): manda la tanda actual a cocina, sin pago.
+  Future<ApiResult<GroupOrderResponseDM>> sendBatch(String uuid) async {
+    try {
+      return ApiResult.success(await _client.sendBatch(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F4b: pide la cuenta (congela el agregado y habilita el checkout).
+  Future<ApiResult<GroupOrderResponseDM>> requestBill(String uuid, {String? splitMode}) async {
+    try {
+      return ApiResult.success(await _client.requestBill(uuid, splitMode: splitMode));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F4b: modo de cobro del negocio (solo dueño).
+  Future<ApiResult<PaymentModeResponseDM>> updatePaymentMode(
+    String businessUuid, {
+    required String mode,
+  }) async {
+    try {
+      return ApiResult.success(await _client.updatePaymentMode(businessUuid, mode: mode));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   /// F4a (caso bar): siguiente ronda de la mesa.
   Future<ApiResult<GroupOrderResponseDM>> nextRound(String uuid) async {
     try {

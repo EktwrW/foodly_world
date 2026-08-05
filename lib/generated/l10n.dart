@@ -9475,6 +9475,106 @@ class S {
     );
   }
 
+  /// `Send order`
+  String get groupOrderSendCta {
+    return Intl.message(
+      'Send order',
+      name: 'groupOrderSendCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The kitchen gets it right away · you pay at the end`
+  String get groupOrderSendHint {
+    return Intl.message(
+      'The kitchen gets it right away · you pay at the end',
+      name: 'groupOrderSendHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment unlocks once everything is served`
+  String get groupOrderPayBlockedHint {
+    return Intl.message(
+      'Payment unlocks once everything is served',
+      name: 'groupOrderPayBlockedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay the bill · {amount}`
+  String groupOrderPayBillCta(String amount) {
+    return Intl.message(
+      'Pay the bill · $amount',
+      name: 'groupOrderPayBillCta',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `You can split it with the table however you like`
+  String get groupOrderPayBillHint {
+    return Intl.message(
+      'You can split it with the table however you like',
+      name: 'groupOrderPayBillHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask for the bill? You won't be able to add more items to this order.`
+  String get groupOrderRequestBillConfirm {
+    return Intl.message(
+      'Ask for the bill? You won\'t be able to add more items to this order.',
+      name: 'groupOrderRequestBillConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order sent to the kitchen!`
+  String get groupOrderBatchSentTitle {
+    return Intl.message(
+      'Order sent to the kitchen!',
+      name: 'groupOrderBatchSentTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{business} is already preparing it. Keep ordering — you pay it all at the end.`
+  String groupOrderBatchSentBody(String business) {
+    return Intl.message(
+      '$business is already preparing it. Keep ordering — you pay it all at the end.',
+      name: 'groupOrderBatchSentBody',
+      desc: '',
+      args: [business],
+    );
+  }
+
+  /// `Order more`
+  String get groupOrderOrderMore {
+    return Intl.message(
+      'Order more',
+      name: 'groupOrderOrderMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See order status`
+  String get groupOrderSeeStatus {
+    return Intl.message(
+      'See order status',
+      name: 'groupOrderSeeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The business got your order`
   String get groupOrderTrackConfirmed {
     return Intl.message(

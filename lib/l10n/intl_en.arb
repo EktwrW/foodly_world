@@ -1514,6 +1514,30 @@
       }
     }
   },
+  "groupOrderSendCta": "Send order",
+  "groupOrderSendHint": "The kitchen gets it right away · you pay at the end",
+  "groupOrderPayBlockedHint": "Payment unlocks once everything is served",
+  "groupOrderPayBillCta": "Pay the bill · {amount}",
+  "@groupOrderPayBillCta": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayBillHint": "You can split it with the table however you like",
+  "groupOrderRequestBillConfirm": "Ask for the bill? You won't be able to add more items to this order.",
+  "groupOrderBatchSentTitle": "Order sent to the kitchen!",
+  "groupOrderBatchSentBody": "{business} is already preparing it. Keep ordering — you pay it all at the end.",
+  "@groupOrderBatchSentBody": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderOrderMore": "Order more",
+  "groupOrderSeeStatus": "See order status",
   "groupOrderTrackConfirmed": "The business got your order",
   "groupOrderTrackPreparing": "Your order is being prepared",
   "groupOrderTrackReady": "Your order is ready!",

@@ -22,6 +22,14 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// está OPEN; null para participantes que no son host.
   final VoidCallback? onLock;
 
+  /// F4b (cuenta abierta): "Enviar orden" — la tanda actual va a cocina sin
+  /// pago. null para quien no es host.
+  final VoidCallback? onSend;
+
+  /// F4b: "Pagar la cuenta" — pide la cuenta y abre el checkout. null para
+  /// quien no es host.
+  final VoidCallback? onRequestBill;
+
   /// "Yo invito" global (F2b §A.2): pagar TODO lo pendiente de la orden.
   /// null => sin botón (el caller decide cuándo tiene sentido mostrarlo).
   final VoidCallback? onPayAll;
@@ -36,6 +44,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     required this.myShare,
     this.onPay,
     this.onLock,
+    this.onSend,
+    this.onRequestBill,
     this.onPayAll,
     this.isBusy = false,
   });
@@ -139,7 +149,17 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 14),
-          if (isOpen)
+          // F4b (cuenta abierta): CTA mutante — enviar tandas y pagar al
+          // final. Mientras la cuenta no esté pedida manda esta rama; con la
+          // cuenta pedida (billed) cae al bloque de pago de siempre.
+          if (order.isOpenTab && order.openTabCtaState != OpenTabCtaState.billed)
+            _OpenTabCta(
+              order: order,
+              isBusy: isBusy,
+              onSend: onSend,
+              onRequestBill: onRequestBill,
+            )
+          else if (isOpen)
             // Host: cierra el pedido (congela precios y habilita el pago).
             CustomNeumorphicButton(
               text: S.current.groupOrderLockCta,
@@ -206,6 +226,70 @@ class GroupOrderTotalsFooter extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// F4b — CTA mutante de cuenta abierta (maquetas A1-A4 aprobadas):
+/// "Enviar orden" con ítems pendientes; pago BLOQUEADO mientras la cocina
+/// no entregue; "Pagar la cuenta · €total" cuando está todo servido.
+/// Solo el host acciona (los demás ven el estado, sin botón habilitado).
+class _OpenTabCta extends StatelessWidget {
+  final GroupOrderDM order;
+  final bool isBusy;
+  final VoidCallback? onSend;
+  final VoidCallback? onRequestBill;
+
+  const _OpenTabCta({
+    required this.order,
+    required this.isBusy,
+    this.onSend,
+    this.onRequestBill,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final state = order.openTabCtaState;
+    final isSend = state == OpenTabCtaState.send;
+    final isPay = state == OpenTabCtaState.pay;
+
+    final label = switch (state) {
+      OpenTabCtaState.send => S.current.groupOrderSendCta,
+      OpenTabCtaState.waiting => S.current.groupOrderPayBillCta(
+          formatMoney(order.sentTotal, order.currency)),
+      _ => S.current.groupOrderPayBillCta(formatMoney(order.sentTotal, order.currency)),
+    };
+
+    final hint = switch (state) {
+      OpenTabCtaState.send => S.current.groupOrderSendHint,
+      OpenTabCtaState.waiting => S.current.groupOrderPayBlockedHint,
+      _ => S.current.groupOrderPayBillHint,
+    };
+
+    // Habilitado solo en los estados accionables por el host: enviar (con
+    // ítems pendientes) o pagar (todo entregado). "waiting" nunca.
+    final action = isSend ? onSend : (isPay ? onRequestBill : null);
+    final enabled = !isBusy &&
+        action != null &&
+        (isSend ? order.pendingItems.isNotEmpty : isPay);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        CustomNeumorphicButton(
+          text: label,
+          disabled: !enabled,
+          margin: EdgeInsets.zero,
+          onPressed: enabled ? action : null,
+        ),
+        const SizedBox(height: 6),
+        Text(
+          hint,
+          style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

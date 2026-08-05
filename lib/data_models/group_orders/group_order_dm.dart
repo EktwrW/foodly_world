@@ -62,6 +62,32 @@ enum GroupParticipantRole {
   member,
 }
 
+/// F4b — modo de cobro del negocio (elección explícita del dueño).
+enum GroupPaymentMode {
+  /// Prepago por ronda: pedir → pagar → entregar (bares, food trucks).
+  @JsonValue('per_round')
+  perRound,
+
+  /// Cuenta abierta: pedir → comer → pagar (restaurante de mesa).
+  @JsonValue('open_tab')
+  openTab,
+}
+
+/// F4b — estado del CTA del cliente en cuenta abierta (maqueta A1-A4).
+enum OpenTabCtaState {
+  /// Hay ítems sin enviar → "Enviar orden".
+  send,
+
+  /// Tanda en cocina sin entregar → pago bloqueado con explicación.
+  waiting,
+
+  /// Todo enviado y entregado → "Pagar la cuenta · €total".
+  pay,
+
+  /// Cuenta ya pedida (orden lockeada) → checkout/split en curso.
+  billed,
+}
+
 enum GroupPaymentStatus {
   @JsonValue('pending')
   pending,
@@ -94,6 +120,10 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     String? notes,
     // F4a: tilde de entrega del manager (checklist parcial).
     @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
+    // F4b (cuenta abierta): tanda enviada a cocina. sentAt null = sigue en
+    // el carrito (editable) y es lo que habilita "Enviar orden".
+    @JsonKey(name: 'batch_no') int? batchNo,
+    @JsonKey(name: 'sent_at') DateTime? sentAt,
   }) = _GroupOrderItemDM;
 
   factory GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
@@ -104,6 +134,9 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
 
   /// Total de línea (precio efectivo × cantidad).
   double get lineTotal => effectiveUnitPrice * quantity;
+
+  /// F4b: ya viajó a cocina (inmutable) vs. sigue en el carrito.
+  bool get isSent => sentAt != null;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -171,6 +204,12 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     GroupFulfillmentStatus? fulfillmentStatus,
     @JsonKey(name: 'round_number') @Default(1) int roundNumber,
     @JsonKey(name: 'table_label') String? tableLabel,
+    // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
+    // "cuenta pedida" — de acá sale el CTA mutante del cliente.
+    @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
+    @Default(GroupPaymentMode.perRound)
+    GroupPaymentMode paymentMode,
+    @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
     @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
     // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
     @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
@@ -185,6 +224,41 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   bool get isLocked => status == GroupOrderStatus.locked;
   bool get isPayable => status == GroupOrderStatus.locked || status == GroupOrderStatus.paying;
   bool get isConfirmed => status == GroupOrderStatus.confirmed;
+
+  // ── F4b: cuenta abierta ───────────────────────────────────────────────
+
+  /// El negocio cobra con cuenta abierta (una orden por mesa, tandas).
+  bool get isOpenTab => paymentMode == GroupPaymentMode.openTab;
+
+  /// Ítems aún en el carrito (no enviados a cocina).
+  List<GroupOrderItemDM> get pendingItems => items.where((i) => !i.isSent).toList();
+
+  /// Ítems ya enviados a cocina (inmutables).
+  List<GroupOrderItemDM> get sentItems => items.where((i) => i.isSent).toList();
+
+  /// Número de la última tanda enviada (0 = ninguna).
+  int get lastBatchNo =>
+      sentItems.fold<int>(0, (acc, i) => (i.batchNo ?? 0) > acc ? i.batchNo! : acc);
+
+  /// Total de lo ENVIADO a cocina (la cuenta de la mesa hasta ahora).
+  double get sentTotal => sentItems.fold<double>(0, (acc, i) => acc + i.lineTotal);
+
+  /// Total de lo que está en el carrito sin enviar.
+  double get pendingTotal => pendingItems.fold<double>(0, (acc, i) => acc + i.lineTotal);
+
+  /// Máquina de estados del CTA en cuenta abierta (decisión Hector,
+  /// maquetas A1-A4). PURA: la UI solo pinta lo que esto devuelve.
+  ///  - hay ítems sin enviar          → send    ("Enviar orden")
+  ///  - cuenta ya pedida (locked/…)   → billed  (checkout en curso)
+  ///  - falta entregar algo enviado   → waiting (pago BLOQUEADO)
+  ///  - todo enviado y entregado      → pay     ("Pagar la cuenta")
+  OpenTabCtaState get openTabCtaState {
+    if (billRequestedAt != null || isPayable) return OpenTabCtaState.billed;
+    if (pendingItems.isNotEmpty) return OpenTabCtaState.send;
+    if (sentItems.isEmpty) return OpenTabCtaState.send;
+    final allDelivered = sentItems.every((i) => i.deliveredAt != null);
+    return allDelivered ? OpenTabCtaState.pay : OpenTabCtaState.waiting;
+  }
 
   /// e2e F4a: pagada pero AÚN NO entregada — el cliente sigue "trackeando"
   /// (chip visible + página de la orden en modo estado de cocina).

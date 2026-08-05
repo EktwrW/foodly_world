@@ -1514,6 +1514,30 @@
       }
     }
   },
+  "groupOrderSendCta": "Enviar pedido",
+  "groupOrderSendHint": "A cozinha recebe na hora · você paga no final",
+  "groupOrderPayBlockedHint": "O pagamento libera quando tudo for entregue",
+  "groupOrderPayBillCta": "Pagar a conta · {amount}",
+  "@groupOrderPayBillCta": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderPayBillHint": "Você pode dividi-la com a mesa como quiser",
+  "groupOrderRequestBillConfirm": "Pedir a conta? Você não poderá adicionar mais itens a este pedido.",
+  "groupOrderBatchSentTitle": "Pedido enviado à cozinha!",
+  "groupOrderBatchSentBody": "{business} já está preparando. Continue pedindo — você paga tudo no final.",
+  "@groupOrderBatchSentBody": {
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderOrderMore": "Pedir mais",
+  "groupOrderSeeStatus": "Ver o estado do pedido",
   "groupOrderTrackConfirmed": "O negócio recebeu seu pedido",
   "groupOrderTrackPreparing": "Seu pedido está sendo preparado",
   "groupOrderTrackReady": "Seu pedido está pronto!",
