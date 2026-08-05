@@ -1178,10 +1178,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sair do pedido",
     ),
     "groupOrderLockConfirmSolo": MessageLookupByLibrary.simpleMessage(
-      "Fechar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
+      "Finalizar o pedido e passar ao pagamento? Já não poderá adicionar itens.",
     ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage(
-      "Fechar o pedido",
+      "Finalizar o pedido",
     ),
     "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
       "Pedir outra rodada",
@@ -1259,6 +1259,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Pedido em grupo"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Total do pedido"),
+    "groupOrderTrackConfirmed": MessageLookupByLibrary.simpleMessage(
+      "O negócio recebeu seu pedido",
+    ),
+    "groupOrderTrackDelivered": MessageLookupByLibrary.simpleMessage(
+      "Pedido entregue — bom apetite!",
+    ),
+    "groupOrderTrackPreparing": MessageLookupByLibrary.simpleMessage(
+      "Seu pedido está sendo preparado",
+    ),
+    "groupOrderTrackReady": MessageLookupByLibrary.simpleMessage(
+      "Seu pedido está pronto!",
+    ),
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(
       "Transferir titularidade",
     ),
@@ -1471,6 +1483,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "A preparar",
     ),
     "managerBucketReady": MessageLookupByLibrary.simpleMessage("Prontos"),
+    "managerChecklistHint": MessageLookupByLibrary.simpleMessage(
+      "Toque em cada item para marcá-lo como entregue",
+    ),
     "managerDeliverAll": MessageLookupByLibrary.simpleMessage("Marcar todos"),
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Entregar tudo de uma vez",
@@ -1489,6 +1504,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerHistoryTitle": MessageLookupByLibrary.simpleMessage("Histórico"),
     "managerHistoryYesterday": MessageLookupByLibrary.simpleMessage("Ontem"),
     "managerItemsDelivered": m52,
+    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
+      "É o último item: ao marcá-lo, o pedido inteiro passa a ENTREGUE e não pode ser desmarcado. Confirmar?",
+    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage(
       "Pedidos ao vivo",
     ),

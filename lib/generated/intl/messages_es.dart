@@ -1181,10 +1181,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Abandonar la orden",
     ),
     "groupOrderLockConfirmSolo": MessageLookupByLibrary.simpleMessage(
-      "¿Cerrar la orden y pasar al pago? Ya no podrás agregar ítems.",
+      "¿Finalizar la orden y pasar al pago? Ya no podrás agregar ítems.",
     ),
     "groupOrderLockCta": MessageLookupByLibrary.simpleMessage(
-      "Cerrar la orden",
+      "Finalizar la orden",
     ),
     "groupOrderNextRound": MessageLookupByLibrary.simpleMessage(
       "Pedir otra ronda",
@@ -1263,6 +1263,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Orden grupal"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage(
       "Total de la orden",
+    ),
+    "groupOrderTrackConfirmed": MessageLookupByLibrary.simpleMessage(
+      "El negocio recibió tu pedido",
+    ),
+    "groupOrderTrackDelivered": MessageLookupByLibrary.simpleMessage(
+      "Pedido entregado — ¡buen provecho!",
+    ),
+    "groupOrderTrackPreparing": MessageLookupByLibrary.simpleMessage(
+      "Están preparando tu pedido",
+    ),
+    "groupOrderTrackReady": MessageLookupByLibrary.simpleMessage(
+      "¡Tu pedido está listo!",
     ),
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(
       "Transferir titularidad",
@@ -1482,6 +1494,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Preparando",
     ),
     "managerBucketReady": MessageLookupByLibrary.simpleMessage("Listas"),
+    "managerChecklistHint": MessageLookupByLibrary.simpleMessage(
+      "Tocá cada ítem para marcarlo como entregado",
+    ),
     "managerDeliverAll": MessageLookupByLibrary.simpleMessage("Tildar todo"),
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Entregar todo de una",
@@ -1500,6 +1515,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerHistoryTitle": MessageLookupByLibrary.simpleMessage("Historial"),
     "managerHistoryYesterday": MessageLookupByLibrary.simpleMessage("Ayer"),
     "managerItemsDelivered": m52,
+    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
+      "Es el último ítem: al tildarlo, la orden completa pasa a ENTREGADA y ya no se puede destildar. ¿Confirmar?",
+    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage(
       "Órdenes en vivo",
     ),

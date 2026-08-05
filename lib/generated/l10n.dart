@@ -8655,10 +8655,10 @@ class S {
     );
   }
 
-  /// `Close order`
+  /// `Finish order`
   String get groupOrderLockCta {
     return Intl.message(
-      'Close order',
+      'Finish order',
       name: 'groupOrderLockCta',
       desc: '',
       args: [],
@@ -9045,10 +9045,10 @@ class S {
     );
   }
 
-  /// `Close the order and proceed to payment? You won't be able to add more items.`
+  /// `Finish the order and proceed to payment? You won't be able to add more items.`
   String get groupOrderLockConfirmSolo {
     return Intl.message(
-      'Close the order and proceed to payment? You won\'t be able to add more items.',
+      'Finish the order and proceed to payment? You won\'t be able to add more items.',
       name: 'groupOrderLockConfirmSolo',
       desc: '',
       args: [],
@@ -9405,6 +9405,26 @@ class S {
     );
   }
 
+  /// `Tap each item to mark it as delivered`
+  String get managerChecklistHint {
+    return Intl.message(
+      'Tap each item to mark it as delivered',
+      name: 'managerChecklistHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This is the last item: checking it marks the whole order as DELIVERED and it can't be unchecked. Confirm?`
+  String get managerLastItemConfirm {
+    return Intl.message(
+      'This is the last item: checking it marks the whole order as DELIVERED and it can\'t be unchecked. Confirm?',
+      name: 'managerLastItemConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `New paid order!`
   String get managerNewOrderTitle {
     return Intl.message(
@@ -9472,6 +9492,46 @@ class S {
       name: 'managerHistoryDaySummary',
       desc: '',
       args: [count, total],
+    );
+  }
+
+  /// `The business got your order`
+  String get groupOrderTrackConfirmed {
+    return Intl.message(
+      'The business got your order',
+      name: 'groupOrderTrackConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your order is being prepared`
+  String get groupOrderTrackPreparing {
+    return Intl.message(
+      'Your order is being prepared',
+      name: 'groupOrderTrackPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your order is ready!`
+  String get groupOrderTrackReady {
+    return Intl.message(
+      'Your order is ready!',
+      name: 'groupOrderTrackReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order delivered — enjoy!`
+  String get groupOrderTrackDelivered {
+    return Intl.message(
+      'Order delivered — enjoy!',
+      name: 'groupOrderTrackDelivered',
+      desc: '',
+      args: [],
     );
   }
 

@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logi
 ///
 /// Inyectables para testing puro: [ordersSource] (cubit), [routeListenable] +
 /// [locationOf] (router) y [onOpenOrder] (navegación).
-class GroupOrderFloatingChipHost extends StatelessWidget {
+class GroupOrderFloatingChipHost extends StatefulWidget {
   final Widget child;
   final StateStreamable<GroupOrderDM?>? ordersSource;
   final Listenable? routeListenable;
@@ -31,8 +31,43 @@ class GroupOrderFloatingChipHost extends StatelessWidget {
     this.onOpenOrder,
   });
 
+  @override
+  State<GroupOrderFloatingChipHost> createState() => _GroupOrderFloatingChipHostState();
+}
+
+class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // e2e F4a: recuperar la orden activa/en tracking al arrancar — sin esto
+    // el cliente que cerró la app no volvía a ver su orden. Solo con el
+    // cubit real (los tests inyectan ordersSource y no tocan DI).
+    if (widget.ordersSource == null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => di<ActiveGroupOrderCubit>().syncAnyActive(),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Al volver del background: si no hay orden en memoria, re-consulta
+    // (cubre también el cold start donde la sesión aún restauraba → 401).
+    if (state == AppLifecycleState.resumed && widget.ordersSource == null) {
+      di<ActiveGroupOrderCubit>().syncAnyActive();
+    }
+  }
+
   void _openOrder(GroupOrderDM order) {
-    if (onOpenOrder != null) return onOpenOrder!(order);
+    if (widget.onOpenOrder != null) return widget.onOpenOrder!(order);
     di<AppRouter>().appRouter.pushNamed(
       AppRoutes.groupOrder.name,
       pathParameters: {AppRoutes.routeIdParam: order.uuid},
@@ -41,9 +76,9 @@ class GroupOrderFloatingChipHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final source = ordersSource ?? di<ActiveGroupOrderCubit>();
-    final routes = routeListenable ?? di<AppRouter>().appRouter.routerDelegate;
-    final location = locationOf ??
+    final source = widget.ordersSource ?? di<ActiveGroupOrderCubit>();
+    final routes = widget.routeListenable ?? di<AppRouter>().appRouter.routerDelegate;
+    final location = widget.locationOf ??
         () => di<AppRouter>().appRouter.routerDelegate.currentConfiguration.uri.toString();
 
     return BlocBuilder<StateStreamable<GroupOrderDM?>, GroupOrderDM?>(
@@ -63,7 +98,7 @@ class GroupOrderFloatingChipHost extends StatelessWidget {
           return Stack(
             textDirection: TextDirection.ltr,
             children: [
-              child,
+              widget.child,
               if (visible)
                 _DraggableChipLayer(
                   order: order!,

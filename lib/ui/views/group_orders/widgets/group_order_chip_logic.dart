@@ -19,17 +19,18 @@ class GroupOrderChipLogic {
   static const hiddenPrefixes = ['/group-order/', '/join/'];
   static const hiddenExact = ['/', '/login', '/sign-up', '/sign-up-business', '/no-access'];
 
-  /// ¿Debe verse el chip? Orden viva (abierta o pagable) + ruta permitida +
-  /// la página de la orden NO abierta. [orderPageOpen] llega del marcador de
-  /// ciclo de vida ([GroupOrderPageVisibility]) porque la URI del router no
-  /// siempre refleja pushes imperativos (e2e r6: chip redundante en la orden).
+  /// ¿Debe verse el chip? Orden viva (abierta, pagable o EN TRACKING: pagada
+  /// sin entregar — e2e F4a, el cliente debe poder volver a ver su estado) +
+  /// ruta permitida + la página de la orden NO abierta. [orderPageOpen] llega
+  /// del marcador de ciclo de vida ([GroupOrderPageVisibility]) porque la URI
+  /// del router no siempre refleja pushes imperativos (e2e r6).
   static bool shouldShow({
     required GroupOrderDM? order,
     required String location,
     bool orderPageOpen = false,
   }) {
     if (orderPageOpen) return false;
-    if (order == null || !(order.isOpen || order.isPayable)) return false;
+    if (order == null || !(order.isOpen || order.isPayable || order.isTracking)) return false;
 
     final path = Uri.parse(location).path;
     if (hiddenExact.contains(path)) return false;

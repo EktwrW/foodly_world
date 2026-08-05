@@ -157,6 +157,26 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                     ],
                   ),
                 ),
+                // Affordance del checklist (e2e F4a): antes NADA indicaba que
+                // los ítems se tocaban para marcar entrega.
+                if (order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.touch_app_rounded,
+                            size: 13, color: FoodlyThemes.secondaryFoodly),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            S.current.managerChecklistHint,
+                            style: FoodlyTextStyles.caption
+                                .copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
@@ -259,6 +279,22 @@ class _ParticipantChecklist extends StatelessWidget {
 
     final canCheck = order.fulfillmentStatus != GroupFulfillmentStatus.delivered;
 
+    Future<void> toggle(GroupOrderItemDM item) async {
+      final turningOn = item.deliveredAt == null;
+      // Auto-entrega (e2e F4a): tildar el ÚLTIMO ítem pasa la orden entera a
+      // ENTREGADA (BE auto-advance) y ya no se puede destildar — confirmar.
+      final isLastPending = turningOn && order.deliveredItemsCount == order.items.length - 1;
+      if (isLastPending) {
+        final ok = await showFoodlyConfirm(
+          context,
+          message: S.current.managerLastItemConfirm,
+          confirmText: S.current.managerMarkDelivered,
+        );
+        if (!ok) return;
+      }
+      cubit.setItemDelivered(order.uuid, item.uuid, turningOn);
+    }
+
     return Card(
       color: Colors.white,
       margin: const EdgeInsets.only(bottom: 8),
@@ -276,21 +312,21 @@ class _ParticipantChecklist extends StatelessWidget {
             for (final item in items)
               InkWell(
                 borderRadius: BorderRadius.circular(8),
-                onTap: canCheck
-                    ? () => cubit.setItemDelivered(order.uuid, item.uuid, item.deliveredAt == null)
-                    : null,
+                onTap: canCheck ? () => toggle(item) : null,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Row(
                     children: [
+                      // Affordance explícito (e2e F4a): checkbox cuadrado con
+                      // borde marcado — "esto se tilda", no un icono decorativo.
                       Icon(
                         item.deliveredAt != null
-                            ? Icons.check_circle_rounded
-                            : Icons.radio_button_off_rounded,
-                        size: 18,
+                            ? Icons.check_box_rounded
+                            : Icons.check_box_outline_blank_rounded,
+                        size: 20,
                         color: item.deliveredAt != null
                             ? FoodlyThemes.tertiaryFoodly
-                            : FoodlyThemes.secondaryFoodly,
+                            : FoodlyThemes.primaryFoodly.withValues(alpha: 0.45),
                       ),
                       const SizedBox(width: 8),
                       Text('${item.quantity}×', style: FoodlyTextStyles.captionPurpleBold),
