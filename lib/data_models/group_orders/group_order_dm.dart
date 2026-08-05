@@ -188,9 +188,16 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   /// e2e F4a: pagada pero AÚN NO entregada — el cliente sigue "trackeando"
   /// (chip visible + página de la orden en modo estado de cocina).
-  bool get isTracking =>
-      status == GroupOrderStatus.confirmed &&
-      fulfillmentStatus != GroupFulfillmentStatus.delivered;
+  /// TTL 12h: una orden confirmada hace días sin fulfillment (negocios que
+  /// no operan el panel) NO es tracking — es historia; sin el TTL, el chip
+  /// resucitaba órdenes viejas para siempre (e2e: fantasma de €163).
+  bool get isTracking {
+    if (status != GroupOrderStatus.confirmed) return false;
+    if (fulfillmentStatus == GroupFulfillmentStatus.delivered) return false;
+    final at = confirmedAt;
+    if (at == null) return false;
+    return DateTime.now().difference(at) < const Duration(hours: 12);
+  }
 
   /// Cuántos participantes ya pagaron.
   int get paidCount => participants.where((p) => p.hasPaid).length;

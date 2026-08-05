@@ -21,6 +21,16 @@ class _FakeRepo implements GroupOrderRepo {
   ApiResult<GroupOrderResponseDM>? actionOutcome;
   String? lastBucket;
   bool? lastDelivered;
+  String? lastFulfillmentStatus;
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> managerSetFulfillment(
+    String uuid, {
+    required String status,
+  }) async {
+    lastFulfillmentStatus = status;
+    return actionOutcome!;
+  }
 
   @override
   Future<ApiResult<ManagerOrdersResponseDM>> managerOrders(
@@ -195,23 +205,19 @@ void main() {
       // CTA del siguiente paso (sin fulfillment → PREPARANDO).
       expect(find.text(S.current.managerMarkPreparing), findsOneWidget);
 
-      // Tap en el ÚNICO ítem = último pendiente → primero la confirmación
-      // de auto-entrega (e2e F4a): el repo NO se toca hasta confirmar.
+      // Tap en la línea del ítem → toggle directo, SIN confirmaciones
+      // (decisión Hector e2e F4a: cero fricción en el checklist).
       await tester.tap(find.text('Sashimi'));
-      await tester.pumpAndSettle();
-      expect(repo.lastDelivered, isNull);
-      expect(find.text(S.current.managerLastItemConfirm), findsOneWidget);
-
-      await tester.tap(find.text(S.current.managerMarkDelivered));
       await tester.pumpAndSettle();
       expect(repo.lastDelivered, isTrue);
     });
 
-    testWidgets('con estado LISTA e ítems sin tildar, ENTREGADA queda '
-        'deshabilitada con la nota del checklist', (tester) async {
+    testWidgets('con estado LISTA e ítems sin tildar, ENTREGADA está '
+        'HABILITADA y auto-tilda (decisión Hector: cero fricción)', (tester) async {
       final ready = order.copyWith(fulfillmentStatus: GroupFulfillmentStatus.ready);
       final repo = _FakeRepo()
-        ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [ready]));
+        ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [ready]))
+        ..actionOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: ready));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
       await cubit.load();
@@ -219,8 +225,10 @@ void main() {
       await tester.pumpWidget(app(const ManagerOrderDetailPage(orderUuid: 'o1'), cubit));
       await tester.pumpAndSettle();
 
-      expect(find.text(S.current.managerMarkDelivered), findsOneWidget);
-      expect(find.text(S.current.managerDeliveredNeedsChecklist), findsOneWidget);
+      await tester.tap(find.text(S.current.managerMarkDelivered));
+      await tester.pumpAndSettle();
+      expect(repo.lastFulfillmentStatus, 'delivered');
+
       // El atajo "entregar todo de una" NO aparece en LISTA (solo queda un paso).
       expect(find.text(S.current.managerDeliverAllAndClose), findsNothing);
     });

@@ -440,7 +440,10 @@ class PushNotificationService with WidgetsBindingObserver {
       channelDescription: _androidChannel.description,
       importance: Importance.high,
       priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
+      // e2e F4a: el ISO de Foodly (ojitos) — el mismo small icon que usa el
+      // manifest para pushes en background; con @mipmap/ic_launcher Android
+      // renderizaba una silueta plana sin marca.
+      icon: '@drawable/ic_stat_foodly',
     );
     const iosDetails = DarwinNotificationDetails(
       presentAlert: true,

@@ -232,7 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Para Clientes",
     ),
     "aboutFree": MessageLookupByLibrary.simpleMessage(
-      "O Foodly e gratuito — para negocios e clientes. Quando os pagamentos na app estiverem disponiveis em breve, uma comissao opcional de 1% sera aplicada apenas as encomendas que os clientes escolham pagar atraves do Foodly. Sem subscricoes, sem taxas ocultas, sem surpresas.",
+      "O Foodly e gratuito — para negocios e clientes. Uma comissao de 3% aplica-se apenas aos pedidos que os clientes pagam atraves do Foodly, e ja cobre o processamento do pagamento. O que for pago ao balcao ou em dinheiro nao tem custo. Sem subscricoes, sem taxas ocultas, sem surpresas.",
     ),
     "aboutFreeTitle": MessageLookupByLibrary.simpleMessage("Gratis para Todos"),
     "aboutMission": MessageLookupByLibrary.simpleMessage(
@@ -1490,9 +1490,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Entregar tudo de uma vez",
     ),
-    "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
-      "ENTREGUE desbloqueia ao marcar todos os itens",
-    ),
     "managerGenericError": MessageLookupByLibrary.simpleMessage(
       "Não foi possível concluir a ação. Tente novamente.",
     ),
@@ -1504,9 +1501,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerHistoryTitle": MessageLookupByLibrary.simpleMessage("Histórico"),
     "managerHistoryYesterday": MessageLookupByLibrary.simpleMessage("Ontem"),
     "managerItemsDelivered": m52,
-    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
-      "É o último item: ao marcá-lo, o pedido inteiro passa a ENTREGUE e não pode ser desmarcado. Confirmar?",
-    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage(
       "Pedidos ao vivo",
     ),

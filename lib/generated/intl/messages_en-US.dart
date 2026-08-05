@@ -227,7 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "For Customers",
     ),
     "aboutFree": MessageLookupByLibrary.simpleMessage(
-      "Foodly is free to use — for businesses and customers alike. When in-app payments launch soon, an optional 1% commission will apply only to orders customers choose to pay through Foodly. No subscriptions, no hidden fees, no surprises.",
+      "Foodly is free to use — for businesses and customers alike. A 3% commission applies only to orders customers pay through Foodly, and it already covers payment processing. Anything paid at the counter or in cash costs nothing. No subscriptions, no hidden fees, no surprises.",
     ),
     "aboutFreeTitle": MessageLookupByLibrary.simpleMessage("Free for Everyone"),
     "aboutMission": MessageLookupByLibrary.simpleMessage(
@@ -1435,9 +1435,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Deliver everything at once",
     ),
-    "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
-      "DELIVERED unlocks when every item is checked",
-    ),
     "managerGenericError": MessageLookupByLibrary.simpleMessage(
       "We couldn\'t complete that action. Try again.",
     ),
@@ -1451,9 +1448,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Yesterday",
     ),
     "managerItemsDelivered": m52,
-    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
-      "This is the last item: checking it marks the whole order as DELIVERED and it can\'t be unchecked. Confirm?",
-    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage("Live orders"),
     "managerMarkDelivered": MessageLookupByLibrary.simpleMessage(
       "Mark as DELIVERED",

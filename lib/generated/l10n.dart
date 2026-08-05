@@ -6204,10 +6204,10 @@ class S {
     );
   }
 
-  /// `Foodly is free to use — for businesses and customers alike. When in-app payments launch soon, an optional 1% commission will apply only to orders customers choose to pay through Foodly. No subscriptions, no hidden fees, no surprises.`
+  /// `Foodly is free to use — for businesses and customers alike. A 3% commission applies only to orders customers pay through Foodly, and it already covers payment processing. Anything paid at the counter or in cash costs nothing. No subscriptions, no hidden fees, no surprises.`
   String get aboutFree {
     return Intl.message(
-      'Foodly is free to use — for businesses and customers alike. When in-app payments launch soon, an optional 1% commission will apply only to orders customers choose to pay through Foodly. No subscriptions, no hidden fees, no surprises.',
+      'Foodly is free to use — for businesses and customers alike. A 3% commission applies only to orders customers pay through Foodly, and it already covers payment processing. Anything paid at the counter or in cash costs nothing. No subscriptions, no hidden fees, no surprises.',
       name: 'aboutFree',
       desc: '',
       args: [],
@@ -9345,16 +9345,6 @@ class S {
     );
   }
 
-  /// `DELIVERED unlocks when every item is checked`
-  String get managerDeliveredNeedsChecklist {
-    return Intl.message(
-      'DELIVERED unlocks when every item is checked',
-      name: 'managerDeliveredNeedsChecklist',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `You don't have access to that section`
   String get noAccessSection {
     return Intl.message(
@@ -9410,16 +9400,6 @@ class S {
     return Intl.message(
       'Tap each item to mark it as delivered',
       name: 'managerChecklistHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This is the last item: checking it marks the whole order as DELIVERED and it can't be unchecked. Confirm?`
-  String get managerLastItemConfirm {
-    return Intl.message(
-      'This is the last item: checking it marks the whole order as DELIVERED and it can\'t be unchecked. Confirm?',
-      name: 'managerLastItemConfirm',
       desc: '',
       args: [],
     );

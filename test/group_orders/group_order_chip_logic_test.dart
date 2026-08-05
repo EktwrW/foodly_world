@@ -9,11 +9,22 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logi
 void main() {
   const open = GroupOrderDM(uuid: 'o1');
   const locked = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.locked);
-  const confirmed = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.confirmed);
-  const delivered = GroupOrderDM(
+  // Tracking = confirmada RECIENTE (TTL 12h) sin entregar.
+  final tracking = GroupOrderDM(
+    uuid: 'o1',
+    status: GroupOrderStatus.confirmed,
+    confirmedAt: DateTime.now().subtract(const Duration(minutes: 30)),
+  );
+  final trackingStale = GroupOrderDM(
+    uuid: 'o1',
+    status: GroupOrderStatus.confirmed,
+    confirmedAt: DateTime.now().subtract(const Duration(hours: 13)),
+  );
+  final delivered = GroupOrderDM(
     uuid: 'o1',
     status: GroupOrderStatus.confirmed,
     fulfillmentStatus: GroupFulfillmentStatus.delivered,
+    confirmedAt: DateTime.now().subtract(const Duration(minutes: 30)),
   );
   const cancelled = GroupOrderDM(uuid: 'o1', status: GroupOrderStatus.cancelled);
 
@@ -33,11 +44,28 @@ void main() {
       }
     });
 
-    test('e2e F4a: confirmada SIN entregar sigue visible (tracking de '
-        'cocina); entregada o cancelada → oculto', () {
-      expect(GroupOrderChipLogic.shouldShow(order: confirmed, location: '/visit-menu/m1'), isTrue);
+    test('e2e F4a: confirmada RECIENTE sin entregar sigue visible (tracking); '
+        'entregada, cancelada o confirmada VIEJA (TTL 12h) → oculto', () {
+      expect(GroupOrderChipLogic.shouldShow(order: tracking, location: '/visit-menu/m1'), isTrue);
       expect(GroupOrderChipLogic.shouldShow(order: delivered, location: '/visit-menu/m1'), isFalse);
       expect(GroupOrderChipLogic.shouldShow(order: cancelled, location: '/visit-menu/m1'), isFalse);
+      // El fantasma de €163: pagada hace días sin fulfillment NO es tracking.
+      expect(
+          GroupOrderChipLogic.shouldShow(order: trackingStale, location: '/visit-menu/m1'), isFalse);
+    });
+
+    test('e2e F4a: oculto en el módulo del MANAGER (el chip de cliente '
+        'encima del panel de órdenes es ruido de otro rol)', () {
+      expect(
+        GroupOrderChipLogic.shouldShow(
+            order: open, location: '/main/biz-1/my-business/live-orders'),
+        isFalse,
+      );
+      expect(
+        GroupOrderChipLogic.shouldShow(
+            order: tracking, location: '/main/biz-1/my-business/live-orders'),
+        isFalse,
+      );
     });
 
     test('oculto DENTRO de la orden y del flujo de join (redundante)', () {
