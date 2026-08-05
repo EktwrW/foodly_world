@@ -73,11 +73,22 @@ void main() {
     late ActiveGroupOrderCubit cubit;
 
     const open = GroupOrderDM(uuid: 'cart');
-    const tracking = GroupOrderDM(uuid: 'track', status: GroupOrderStatus.confirmed);
-    const delivered = GroupOrderDM(
+    final tracking = GroupOrderDM(
+      uuid: 'track',
+      status: GroupOrderStatus.confirmed,
+      confirmedAt: DateTime.now().subtract(const Duration(minutes: 10)),
+    );
+    // Confirmada VIEJA (TTL 12h vencido) — jamás debe adoptarse.
+    final stale = GroupOrderDM(
+      uuid: 'stale',
+      status: GroupOrderStatus.confirmed,
+      confirmedAt: DateTime.now().subtract(const Duration(hours: 13)),
+    );
+    final delivered = GroupOrderDM(
       uuid: 'done',
       status: GroupOrderStatus.confirmed,
       fulfillmentStatus: GroupFulfillmentStatus.delivered,
+      confirmedAt: DateTime.now().subtract(const Duration(minutes: 10)),
     );
 
     setUp(() {
@@ -88,8 +99,8 @@ void main() {
     tearDown(() => cubit.close());
 
     test('prioriza el carrito vivo sobre la orden en tracking', () async {
-      repo.mineOutcome = const ApiResult.success(
-          GroupOrdersListResponseDM(groupOrders: [tracking, open]));
+      repo.mineOutcome =
+          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking, open]));
 
       await cubit.syncAnyActive();
 
@@ -99,16 +110,17 @@ void main() {
     test('sin carrito, adopta la orden pagada SIN entregar (tracking) — el '
         'cliente que cerró la app recupera su pedido', () async {
       repo.mineOutcome =
-          const ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking]));
+          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [tracking]));
 
       await cubit.syncAnyActive();
 
       expect(cubit.state?.uuid, 'track');
     });
 
-    test('las entregadas no cuentan; con estado ya presente es no-op', () async {
+    test('las entregadas y las confirmadas VIEJAS (TTL 12h) no cuentan; '
+        'con estado ya presente es no-op', () async {
       repo.mineOutcome =
-          const ApiResult.success(GroupOrdersListResponseDM(groupOrders: [delivered]));
+          ApiResult.success(GroupOrdersListResponseDM(groupOrders: [delivered, stale]));
       await cubit.syncAnyActive();
       expect(cubit.state, isNull);
 

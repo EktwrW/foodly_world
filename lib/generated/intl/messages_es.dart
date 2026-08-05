@@ -231,7 +231,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Para Clientes",
     ),
     "aboutFree": MessageLookupByLibrary.simpleMessage(
-      "Foodly es gratis — para negocios y clientes por igual. Cuando los pagos en la app esten disponibles proximamente, una comision opcional del 1% se aplicara solo a las ordenes que los clientes elijan pagar a traves de Foodly. Sin suscripciones, sin cargos ocultos, sin sorpresas.",
+      "Foodly es gratis — para negocios y clientes por igual. Una comision del 3% se aplica solo a las ordenes que los clientes pagan a traves de Foodly, y ya cubre el procesamiento del pago. Lo que se paga en barra o en efectivo no tiene coste. Sin suscripciones, sin cargos ocultos, sin sorpresas.",
     ),
     "aboutFreeTitle": MessageLookupByLibrary.simpleMessage("Gratis para Todos"),
     "aboutMission": MessageLookupByLibrary.simpleMessage(
@@ -1501,9 +1501,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerDeliverAllAndClose": MessageLookupByLibrary.simpleMessage(
       "Entregar todo de una",
     ),
-    "managerDeliveredNeedsChecklist": MessageLookupByLibrary.simpleMessage(
-      "ENTREGADA se habilita al tildar todos los ítems",
-    ),
     "managerGenericError": MessageLookupByLibrary.simpleMessage(
       "No pudimos completar la acción. Probá de nuevo.",
     ),
@@ -1515,9 +1512,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerHistoryTitle": MessageLookupByLibrary.simpleMessage("Historial"),
     "managerHistoryYesterday": MessageLookupByLibrary.simpleMessage("Ayer"),
     "managerItemsDelivered": m52,
-    "managerLastItemConfirm": MessageLookupByLibrary.simpleMessage(
-      "Es el último ítem: al tildarlo, la orden completa pasa a ENTREGADA y ya no se puede destildar. ¿Confirmar?",
-    ),
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage(
       "Órdenes en vivo",
     ),

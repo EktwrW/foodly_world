@@ -115,65 +115,62 @@ class ManagerOrdersPage extends StatelessWidget {
               children: [
                 // F4a-6: banner de onboarding de pagos (dos estados).
                 const StripeOnboardingBanner().paddingBottom(3),
-                // Chips de filtro por bucket con contador live.
-                SizedBox(
-                  height: 46,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    // Padding SIMÉTRICO — el asimétrico (10/4) empujaba los
-                    // chips hacia abajo y los recortaba (fix e2e F4a).
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-                    itemCount: _buckets.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 6),
-                    itemBuilder: (context, i) {
-                      final b = _buckets[i];
-                      final selected = state.bucket == b;
-                      final count = _bucketCount(state, b);
-                      // Center + shrinkWrap: sin esto el ChoiceChip reserva
-                      // su tap-target de 48px (más alto que la franja) y el
-                      // pill queda desalineado verticalmente.
-                      return Center(
-                        child: ChoiceChip(
-                          selected: selected,
-                          onSelected: (_) => cubit.selectBucket(b),
-                          showCheckmark: false,
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          visualDensity: VisualDensity.compact,
-                          selectedColor: FoodlyThemes.primaryFoodly,
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
-                          ),
-                          labelPadding: const EdgeInsets.symmetric(horizontal: 6),
-                          label: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                _bucketLabel(b),
-                                style: FoodlyTextStyles.captionBold.copyWith(
-                                  color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
-                                ),
-                              ),
-                              if (count != null && count > 0) ...[
-                                const SizedBox(width: 4),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                  decoration: BoxDecoration(
-                                    color: FoodlyThemes.secondaryFoodly,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text(
-                                    '$count',
-                                    style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
+                // Chips de filtro por bucket con contador live. SIN altura
+                // fija (e2e F4a v2): la franja deriva su alto del contenido —
+                // con 46px clavados, cualquier ajuste de padding/márgenes los
+                // recortaba. shrinkWrap+compact evitan el tap-target de 48px.
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  child: Row(
+                    children: [
+                      for (final b in _buckets) ...[
+                        if (b != _buckets.first) const SizedBox(width: 6),
+                        Builder(builder: (context) {
+                          final selected = state.bucket == b;
+                          final count = _bucketCount(state, b);
+                          return ChoiceChip(
+                            selected: selected,
+                            onSelected: (_) => cubit.selectBucket(b),
+                            showCheckmark: false,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            visualDensity: VisualDensity.compact,
+                            selectedColor: FoodlyThemes.primaryFoodly,
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
+                            ),
+                            labelPadding: const EdgeInsets.symmetric(horizontal: 6),
+                            label: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  _bucketLabel(b),
+                                  style: FoodlyTextStyles.captionBold.copyWith(
+                                    color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
                                   ),
                                 ),
+                                if (count != null && count > 0) ...[
+                                  const SizedBox(width: 4),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      color: FoodlyThemes.secondaryFoodly,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      '$count',
+                                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
+                                    ),
+                                  ),
+                                ],
                               ],
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                            ),
+                          );
+                        }),
+                      ],
+                    ],
                   ),
                 ),
                 Expanded(

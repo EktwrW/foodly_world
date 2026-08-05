@@ -100,7 +100,6 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
         }
 
         final next = _nextStep(order);
-        final deliveredBlocked = next?.$2 == GroupFulfillmentStatus.delivered && !order.allItemsDelivered;
 
         return Scaffold(
           appBar: AppBar(
@@ -199,23 +198,14 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (next != null) ...[
+                        // Sin fricción (decisión Hector e2e F4a): ENTREGADA
+                        // siempre habilitada — el BE auto-tilda el checklist.
                         CustomNeumorphicButton(
                           text: next.$1,
-                          disabled: deliveredBlocked,
+                          disabled: false,
                           margin: EdgeInsets.zero,
-                          onPressed: deliveredBlocked
-                              ? null
-                              : () => cubit.advanceFulfillment(order.uuid, next.$2.name),
+                          onPressed: () => cubit.advanceFulfillment(order.uuid, next.$2.name),
                         ),
-                        if (deliveredBlocked)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 6),
-                            child: Text(
-                              S.current.managerDeliveredNeedsChecklist,
-                              style: FoodlyTextStyles.caption,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
                         // Saltable (decisión de producto): entregar TODO de una,
                         // sin pasar por los estados intermedios.
                         if (order.fulfillmentStatus != GroupFulfillmentStatus.ready)
@@ -279,21 +269,11 @@ class _ParticipantChecklist extends StatelessWidget {
 
     final canCheck = order.fulfillmentStatus != GroupFulfillmentStatus.delivered;
 
-    Future<void> toggle(GroupOrderItemDM item) async {
-      final turningOn = item.deliveredAt == null;
-      // Auto-entrega (e2e F4a): tildar el ÚLTIMO ítem pasa la orden entera a
-      // ENTREGADA (BE auto-advance) y ya no se puede destildar — confirmar.
-      final isLastPending = turningOn && order.deliveredItemsCount == order.items.length - 1;
-      if (isLastPending) {
-        final ok = await showFoodlyConfirm(
-          context,
-          message: S.current.managerLastItemConfirm,
-          confirmText: S.current.managerMarkDelivered,
-        );
-        if (!ok) return;
-      }
-      cubit.setItemDelivered(order.uuid, item.uuid, turningOn);
-    }
+    // Sin fricción (decisión Hector e2e F4a): tildar el último ítem entrega
+    // la orden SOLA, sin confirmaciones — checklist y CTA son dos caminos al
+    // mismo estado.
+    Future<void> toggle(GroupOrderItemDM item) async =>
+        cubit.setItemDelivered(order.uuid, item.uuid, item.deliveredAt == null);
 
     return Card(
       color: Colors.white,

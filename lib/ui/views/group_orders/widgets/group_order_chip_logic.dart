@@ -19,6 +19,11 @@ class GroupOrderChipLogic {
   static const hiddenPrefixes = ['/group-order/', '/join/'];
   static const hiddenExact = ['/', '/login', '/sign-up', '/sign-up-business', '/no-access'];
 
+  /// Rutas donde el chip TAMPOCO se muestra, matcheadas por contención (el
+  /// path lleva el :id en el medio): el módulo del MANAGER — el chip de
+  /// cliente encima del panel de órdenes es ruido de otro rol (e2e F4a).
+  static const hiddenContains = ['/my-business/live-orders'];
+
   /// ¿Debe verse el chip? Orden viva (abierta, pagable o EN TRACKING: pagada
   /// sin entregar — e2e F4a, el cliente debe poder volver a ver su estado) +
   /// ruta permitida + la página de la orden NO abierta. [orderPageOpen] llega
@@ -36,6 +41,9 @@ class GroupOrderChipLogic {
     if (hiddenExact.contains(path)) return false;
     for (final prefix in hiddenPrefixes) {
       if (path.startsWith(prefix)) return false;
+    }
+    for (final fragment in hiddenContains) {
+      if (path.contains(fragment)) return false;
     }
 
     return true;
