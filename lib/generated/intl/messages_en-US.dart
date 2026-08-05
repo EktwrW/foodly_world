@@ -1444,6 +1444,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mark as PREPARING",
     ),
     "managerMarkReady": MessageLookupByLibrary.simpleMessage("Mark as READY"),
+    "managerNewOrderGo": MessageLookupByLibrary.simpleMessage("Go handle it"),
+    "managerNewOrderLater": MessageLookupByLibrary.simpleMessage("Not now"),
+    "managerNewOrderTitle": MessageLookupByLibrary.simpleMessage(
+      "New paid order!",
+    ),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage("No orders yet"),
     "managerOrders": MessageLookupByLibrary.simpleMessage("Orders"),
     "managerPaidComplete": MessageLookupByLibrary.simpleMessage("Fully paid"),

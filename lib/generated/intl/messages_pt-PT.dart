@@ -1501,6 +1501,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerMarkReady": MessageLookupByLibrary.simpleMessage(
       "Marcar como PRONTO",
     ),
+    "managerNewOrderGo": MessageLookupByLibrary.simpleMessage("Ir atendê-lo"),
+    "managerNewOrderLater": MessageLookupByLibrary.simpleMessage("Agora não"),
+    "managerNewOrderTitle": MessageLookupByLibrary.simpleMessage(
+      "Novo pedido pago!",
+    ),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage(
       "Sem pedidos por agora",
     ),

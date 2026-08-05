@@ -9405,6 +9405,36 @@ class S {
     );
   }
 
+  /// `New paid order!`
+  String get managerNewOrderTitle {
+    return Intl.message(
+      'New paid order!',
+      name: 'managerNewOrderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go handle it`
+  String get managerNewOrderGo {
+    return Intl.message(
+      'Go handle it',
+      name: 'managerNewOrderGo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not now`
+  String get managerNewOrderLater {
+    return Intl.message(
+      'Not now',
+      name: 'managerNewOrderLater',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `History`
   String get managerHistoryTitle {
     return Intl.message(
