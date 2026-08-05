@@ -131,6 +131,49 @@ void main() {
     });
   });
 
+  group('isTracking en cuenta abierta (el cliente no pierde su mesa)', () {
+    GroupOrderDM tracking({
+      required GroupPaymentMode mode,
+      GroupFulfillmentStatus? fulfillment,
+      Duration age = const Duration(minutes: 20),
+    }) =>
+        GroupOrderDM(
+          uuid: 'o1',
+          status: GroupOrderStatus.confirmed,
+          paymentMode: mode,
+          fulfillmentStatus: fulfillment,
+          confirmedAt: DateTime.now().subtract(age),
+        );
+
+    test('open_tab ENTREGADA sigue en tracking — falta pagar la cuenta', () {
+      final o = tracking(
+        mode: GroupPaymentMode.openTab,
+        fulfillment: GroupFulfillmentStatus.delivered,
+      );
+      expect(o.isTracking, isTrue,
+          reason: 'sin esto el chip desaparece justo antes de pagar');
+    });
+
+    test('per_round ENTREGADA cierra el tracking (ya estaba pagada)', () {
+      final o = tracking(
+        mode: GroupPaymentMode.perRound,
+        fulfillment: GroupFulfillmentStatus.delivered,
+      );
+      expect(o.isTracking, isFalse);
+    });
+
+    test('el TTL de 12h aplica a ambos modos', () {
+      expect(
+        tracking(mode: GroupPaymentMode.openTab, age: const Duration(hours: 13)).isTracking,
+        isFalse,
+      );
+      expect(
+        tracking(mode: GroupPaymentMode.perRound, age: const Duration(hours: 13)).isTracking,
+        isFalse,
+      );
+    });
+  });
+
   group('modo de cobro', () {
     test('per_round (default) no es cuenta abierta', () {
       expect(order(mode: GroupPaymentMode.perRound).isOpenTab, isFalse);

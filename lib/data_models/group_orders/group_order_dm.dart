@@ -265,12 +265,17 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// TTL 12h: una orden confirmada hace días sin fulfillment (negocios que
   /// no operan el panel) NO es tracking — es historia; sin el TTL, el chip
   /// resucitaba órdenes viejas para siempre (e2e: fantasma de €163).
+  ///
+  /// F4b: en cuenta abierta la orden sigue VIVA tras la entrega — falta
+  /// pagar la cuenta. Sin esto el chip desaparecía justo cuando el cliente
+  /// más lo necesita (su único camino de vuelta a "Pagar la cuenta").
   bool get isTracking {
     if (status != GroupOrderStatus.confirmed) return false;
-    if (fulfillmentStatus == GroupFulfillmentStatus.delivered) return false;
     final at = confirmedAt;
     if (at == null) return false;
-    return DateTime.now().difference(at) < const Duration(hours: 12);
+    if (DateTime.now().difference(at) >= const Duration(hours: 12)) return false;
+    if (isOpenTab) return true; // entregada o no: la cuenta sigue abierta
+    return fulfillmentStatus != GroupFulfillmentStatus.delivered;
   }
 
   /// Cuántos participantes ya pagaron.

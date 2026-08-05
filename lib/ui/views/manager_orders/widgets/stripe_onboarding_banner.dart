@@ -5,6 +5,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/stripe_onboarding_cubit.dart';
+import 'package:foodly_world/ui/views/manager_orders/widgets/payment_mode_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// F4a-6 — banner de onboarding de pagos (maqueta 3, dos estados):
@@ -51,6 +52,19 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
     }
   }
 
+  /// F4b-2: "¿Cómo cobra tu negocio?" — elección explícita del dueño. Se
+  /// ofrece al terminar el onboarding y queda editable tocando el banner.
+  Future<void> _pickPaymentMode(BuildContext context, StripeOnboardingCubit cubit) async {
+    final mode = await PaymentModeSelector.show(context);
+    if (mode == null || !context.mounted) return;
+
+    final ok = await cubit.setPaymentMode(mode);
+    if (!context.mounted) return;
+    ok
+        ? FoodlySnackbars.successGeneric(context, S.current.paymentModeUpdated)
+        : FoodlySnackbars.errorGeneric(context, S.current.managerGenericError);
+  }
+
   Future<void> _activate(BuildContext context, StripeOnboardingCubit cubit) async {
     if (_activating) return;
     setState(() => _activating = true);
@@ -82,8 +96,11 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
         if (charges == null) return const SizedBox.shrink();
 
         if (charges) {
-          // Estado activo — compacto.
-          return Container(
+          // Estado activo — compacto, con acceso al modo de cobro (F4b-2).
+          return InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () => _pickPaymentMode(context, cubit),
+            child: Container(
             margin: const EdgeInsets.fromLTRB(14, 8, 14, 0),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
@@ -115,8 +132,12 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
                     ],
                   ),
                 ),
+                // Afordance del setting: tocar el banner abre el selector.
+                const Icon(Icons.tune_rounded,
+                    size: 16, color: FoodlyThemes.secondaryFoodly),
               ],
             ),
+          ),
           );
         }
 

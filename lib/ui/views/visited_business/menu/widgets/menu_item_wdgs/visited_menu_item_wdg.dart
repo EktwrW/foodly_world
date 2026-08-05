@@ -272,7 +272,12 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
     return BlocBuilder<ActiveGroupOrderCubit, GroupOrderDM?>(
       bloc: cubit,
       builder: (context, order) {
-        final active = order != null && order.businessUuid == uuid && order.isOpen;
+        // F4b: en cuenta abierta la mesa sigue agregando ítems con la orden
+        // ya CONFIRMADA (tandas) — mientras no se pida la cuenta.
+        final acceptsItems = order != null &&
+            (order.isOpen ||
+                (order.isOpenTab && order.isConfirmed && order.billRequestedAt == null));
+        final active = acceptsItems && order.businessUuid == uuid;
         if (!active) return const SizedBox.shrink();
 
         return InkWell(

@@ -250,6 +250,13 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
   }
 }
 
+/// F4b: batchNo del ítem anterior en la lista (null si es el primero) —
+/// sirve para dibujar el separador solo cuando CAMBIA la tanda.
+int? _batchNoBefore(List<GroupOrderItemDM> items, GroupOrderItemDM item) {
+  final idx = items.indexOf(item);
+  return idx <= 0 ? null : items[idx - 1].batchNo;
+}
+
 /// Grupo de ítems de un comensal con checkbox de entrega por línea.
 class _ParticipantChecklist extends StatelessWidget {
   final GroupOrderDM order;
@@ -289,7 +296,19 @@ class _ParticipantChecklist extends StatelessWidget {
           children: [
             Text(participant.displayName, style: FoodlyTextStyles.labelBold),
             const SizedBox(height: 4),
-            for (final item in items)
+            for (final item in items) ...[
+              // F4b: separador de tanda cuando la mesa pidió en varias
+              // vueltas — la cocina necesita saber qué entró después.
+              if (order.isOpenTab &&
+                  item.batchNo != null &&
+                  item.batchNo != _batchNoBefore(items, item))
+                Padding(
+                  padding: const EdgeInsets.only(top: 6, bottom: 2),
+                  child: Text(
+                    S.current.managerBatchLabel(item.batchNo!),
+                    style: FoodlyTextStyles.captionPurpleBold.copyWith(fontSize: 9.5),
+                  ),
+                ),
               InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: canCheck ? () => toggle(item) : null,
@@ -330,6 +349,7 @@ class _ParticipantChecklist extends StatelessWidget {
                   ),
                 ),
               ),
+            ],
           ],
         ),
       ),

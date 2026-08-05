@@ -1497,6 +1497,24 @@
   "stripeBridgeRefreshTitle": "Activación incompleta",
   "stripeBridgeRefreshBody": "Retomá la activación desde la app: Órdenes → Activar pagos con Stripe.",
   "managerChecklistHint": "Tocá cada ítem para marcarlo como entregado",
+  "managerUnpaidBadge": "POR PAGAR",
+  "managerBatchLabel": "TANDA {n}",
+  "@managerBatchLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentModeTitle": "¿Cómo cobra tu negocio?",
+  "paymentModeSubtitle": "Podés cambiarlo cuando quieras desde tu panel",
+  "paymentModeOpenTabTitle": "Cuenta abierta",
+  "paymentModeOpenTabBody": "La mesa pide en tandas y paga UNA vez al final. Ideal para restaurantes con servicio de mesa.",
+  "paymentModeOpenTabFlow": "pedir → comer → pagar",
+  "paymentModePerRoundTitle": "Prepago por ronda",
+  "paymentModePerRoundBody": "Cada pedido se paga antes de prepararse. Ideal para bares, food trucks y mostrador.",
+  "paymentModePerRoundFlow": "pedir → pagar → entregar",
+  "paymentModeUpdated": "Modo de cobro actualizado",
   "managerNewOrderTitle": "¡Nueva orden pagada!",
   "managerNewOrderGo": "Ir a atenderla",
   "managerNewOrderLater": "Ahora no",

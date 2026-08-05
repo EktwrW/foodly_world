@@ -1497,6 +1497,24 @@
   "stripeBridgeRefreshTitle": "Setup incomplete",
   "stripeBridgeRefreshBody": "Resume activation from the app: Orders → Activate payments with Stripe.",
   "managerChecklistHint": "Tap each item to mark it as delivered",
+  "managerUnpaidBadge": "UNPAID",
+  "managerBatchLabel": "BATCH {n}",
+  "@managerBatchLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "paymentModeTitle": "How does your business charge?",
+  "paymentModeSubtitle": "You can change this anytime from your panel",
+  "paymentModeOpenTabTitle": "Open tab",
+  "paymentModeOpenTabBody": "The table orders in batches and pays ONCE at the end. Ideal for table-service restaurants.",
+  "paymentModeOpenTabFlow": "order → eat → pay",
+  "paymentModePerRoundTitle": "Prepaid per round",
+  "paymentModePerRoundBody": "Each order is paid before it's prepared. Ideal for bars, food trucks and counters.",
+  "paymentModePerRoundFlow": "order → pay → deliver",
+  "paymentModeUpdated": "Charging mode updated",
   "managerNewOrderTitle": "New paid order!",
   "managerNewOrderGo": "Go handle it",
   "managerNewOrderLater": "Not now",
