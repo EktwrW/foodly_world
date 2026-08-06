@@ -122,102 +122,104 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m36(business) =>
       "${business} ya lo está preparando. Podés seguir pidiendo — pagás todo al final.";
 
-  static String m37(name, amount) => "¿Pagar la parte de ${name} (${amount})?";
+  static String m37(amount) => "Pagar la cuenta · ${amount}";
 
-  static String m38(amount) => "Tiempo extra: faltan ${amount}";
+  static String m38(name, amount) => "¿Pagar la parte de ${name} (${amount})?";
 
-  static String m39(business, code) =>
+  static String m39(amount) => "Tiempo extra: faltan ${amount}";
+
+  static String m40(business, code) =>
       "¡Únete a nuestra orden en ${business}! Abre Foodly, entra al menú del restaurante y usa el código ${code}";
 
-  static String m40(name) => "Pagado por ${name}";
+  static String m41(name) => "Pagado por ${name}";
 
-  static String m41(paid, total) => "${paid} de ${total} pagado";
+  static String m42(paid, total) => "${paid} de ${total} pagado";
 
-  static String m42(amount) => "¿Pagar todo lo pendiente (${amount})?";
+  static String m43(amount) => "¿Pagar todo lo pendiente (${amount})?";
 
-  static String m43(amount) => "Pagar todo lo pendiente · ${amount}";
+  static String m44(amount) => "Pagar todo lo pendiente · ${amount}";
 
-  static String m44(amount) => "Pagar la cuenta · ${amount}";
+  static String m45(amount) => "Pagar la cuenta · ${amount}";
 
-  static String m45(amount) => "Pagar la orden · ${amount}";
+  static String m46(amount) => "Pagar la orden · ${amount}";
 
-  static String m46(amount) => "Pagar mi parte · ${amount}";
+  static String m47(amount) => "Pagar mi parte · ${amount}";
 
-  static String m47(total) =>
+  static String m48(total) =>
       "Pagos completos · ${total}. El recibo llegó a tu email.";
 
-  static String m48(amount) =>
+  static String m49(amount) =>
       "Esta tarifa fija de ${amount} por transacción corresponde a la plataforma que procesa tu pago con tarjeta de forma segura. No es un cobro de Foodly ni del restaurante.";
 
-  static String m49(amount) =>
+  static String m50(amount) =>
       "Incluye ${amount} de tarifa de la plataforma de pagos";
 
-  static String m50(base, fee) =>
+  static String m51(base, fee) =>
       "Tu pago: ${base} + ${fee} de tarifa de procesamiento";
 
-  static String m51(name) => "¿Transferir la titularidad a ${name}?";
+  static String m52(name) => "¿Transferir la titularidad a ${name}?";
 
-  static String m52(n) => "TANDA ${n}";
+  static String m53(n) => "TANDA ${n}";
 
-  static String m53(guests, items) => "${guests} comensales · ${items} ítems";
+  static String m54(guests, items) => "${guests} comensales · ${items} ítems";
 
-  static String m54(count, total) => "${count} órdenes · ${total}";
+  static String m55(count, total) => "${count} órdenes · ${total}";
 
-  static String m55(delivered, total) =>
+  static String m56(delivered, total) =>
       "${delivered}/${total} ítems entregados";
 
-  static String m56(n) => "RONDA ${n}";
+  static String m57(n) => "RONDA ${n}";
 
-  static String m57(item) =>
+  static String m58(item) =>
       "¿Quitar \"${item}\" de la cuenta? Seguirá visible para el comensal, marcado como removido por el negocio.";
 
-  static String m58(size) => "máx. ${size}";
+  static String m59(size) => "máx. ${size}";
 
-  static String m59(maxSize) => "Máx. ${maxSize}";
+  static String m60(maxSize) => "Máx. ${maxSize}";
 
-  static String m60(count) => "${count} mensajes nuevos";
+  static String m61(count) => "${count} mensajes nuevos";
 
-  static String m61(radius) =>
+  static String m62(radius) =>
       "No hay comercios cercanos en esta categoría dentro de ${radius} km.";
 
-  static String m62(text) => "Notas: ${text}";
+  static String m63(text) => "Notas: ${text}";
 
-  static String m63(count) => "Comensales: ${count}";
+  static String m64(count) => "Comensales: ${count}";
 
-  static String m64(count) => "Tienes ${count} reservaciones pendientes";
+  static String m65(count) => "Tienes ${count} reservaciones pendientes";
 
-  static String m65(max) => "Máximo ${max} fotos";
+  static String m66(max) => "Máximo ${max} fotos";
 
-  static String m66(max) => "Fotos (opcional, hasta ${max})";
+  static String m67(max) => "Fotos (opcional, hasta ${max})";
 
-  static String m67(action, errorMsg) =>
+  static String m68(action, errorMsg) =>
       "Ocurrió un error al ${action} la(s) foto(s) del artículo: ${errorMsg}";
 
-  static String m68(maxImages) =>
+  static String m69(maxImages) =>
       "Presiona para agregar fotos, hasta un máximo de ${maxImages} imágenes";
 
-  static String m69(currency, price) => "desde ${currency}${price}";
+  static String m70(currency, price) => "desde ${currency}${price}";
 
-  static String m70(seconds) => "Reenviar en ${seconds}s";
+  static String m71(seconds) => "Reenviar en ${seconds}s";
 
-  static String m71(businessName) => "Reservar mesa en ${businessName}";
+  static String m72(businessName) => "Reservar mesa en ${businessName}";
 
-  static String m72(city) => "Search in ${city}...";
+  static String m73(city) => "Search in ${city}...";
 
-  static String m73(businessName, appName, menuUrl) =>
+  static String m74(businessName, appName, menuUrl) =>
       "🍽️ Échale un vistazo al menú de ${businessName} en 🌟 ${appName}: \n${menuUrl}";
 
-  static String m74(text) => "Solicitudes especiales: ${text}";
+  static String m75(text) => "Solicitudes especiales: ${text}";
 
-  static String m75(count) => "hace ${count}d";
+  static String m76(count) => "hace ${count}d";
 
-  static String m76(count) => "hace ${count}h";
+  static String m77(count) => "hace ${count}h";
 
-  static String m77(count) => "hace ${count}m";
+  static String m78(count) => "hace ${count}m";
 
-  static String m78(date) => "Visitado el ${date}";
+  static String m79(date) => "Visitado el ${date}";
 
-  static String m79(businessName) => "Escribe una reseña para ${businessName}";
+  static String m80(businessName) => "Escribe una reseña para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1145,7 +1147,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderBatchSentTitle": MessageLookupByLibrary.simpleMessage(
       "¡Pedido enviado a cocina!",
     ),
-    "groupOrderCoverConfirm": m37,
+    "groupOrderChipPreparing": MessageLookupByLibrary.simpleMessage(
+      "Preparando tu pedido",
+    ),
+    "groupOrderChipReady": MessageLookupByLibrary.simpleMessage(
+      "¡Tu pedido está listo!",
+    ),
+    "groupOrderChipSent": MessageLookupByLibrary.simpleMessage(
+      "Pedido enviado",
+    ),
+    "groupOrderChipToPay": m37,
+    "groupOrderCoverConfirm": m38,
     "groupOrderCoverShare": MessageLookupByLibrary.simpleMessage(
       "Cubrir su parte",
     ),
@@ -1162,7 +1174,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
       "Ordenar en grupo",
     ),
-    "groupOrderGraceNotice": m38,
+    "groupOrderGraceNotice": m39,
     "groupOrderHostBadge": MessageLookupByLibrary.simpleMessage("Host"),
     "groupOrderInviteCta": MessageLookupByLibrary.simpleMessage("Invitar"),
     "groupOrderInviteHint": MessageLookupByLibrary.simpleMessage(
@@ -1171,7 +1183,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderInviteShareCta": MessageLookupByLibrary.simpleMessage(
       "Compartir código",
     ),
-    "groupOrderInviteShareMsg": m39,
+    "groupOrderInviteShareMsg": m40,
     "groupOrderInviteTitle": MessageLookupByLibrary.simpleMessage(
       "Invita a tu mesa",
     ),
@@ -1219,22 +1231,22 @@ class MessageLookup extends MessageLookupByLibrary {
       "Orden grupal activa",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Pedir más"),
-    "groupOrderPaidBy": m40,
-    "groupOrderPaidProgress": m41,
+    "groupOrderPaidBy": m41,
+    "groupOrderPaidProgress": m42,
     "groupOrderParticipants": MessageLookupByLibrary.simpleMessage(
       "Participantes",
     ),
-    "groupOrderPayAllConfirm": m42,
-    "groupOrderPayAllRemaining": m43,
-    "groupOrderPayBillCta": m44,
+    "groupOrderPayAllConfirm": m43,
+    "groupOrderPayAllRemaining": m44,
+    "groupOrderPayBillCta": m45,
     "groupOrderPayBillHint": MessageLookupByLibrary.simpleMessage(
       "Podés dividirla entre la mesa como quieras",
     ),
     "groupOrderPayBlockedHint": MessageLookupByLibrary.simpleMessage(
       "El pago se habilita cuando te entreguen todo",
     ),
-    "groupOrderPayFullOrder": m45,
-    "groupOrderPayMyShare": m46,
+    "groupOrderPayFullOrder": m46,
+    "groupOrderPayMyShare": m47,
     "groupOrderPaymentCanceled": MessageLookupByLibrary.simpleMessage(
       "Pago cancelado",
     ),
@@ -1244,7 +1256,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderPaymentSucceeded": MessageLookupByLibrary.simpleMessage(
       "Pago realizado",
     ),
-    "groupOrderPaymentSuccessBody": m47,
+    "groupOrderPaymentSuccessBody": m48,
     "groupOrderPaymentSuccessTitle": MessageLookupByLibrary.simpleMessage(
       "¡Orden confirmada!",
     ),
@@ -1264,8 +1276,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderSendHint": MessageLookupByLibrary.simpleMessage(
       "La cocina la recibe al instante · pagás al final",
     ),
-    "groupOrderServiceFeeExplain": m48,
-    "groupOrderServiceFeeNotice": m49,
+    "groupOrderServiceFeeExplain": m49,
+    "groupOrderServiceFeeNotice": m50,
     "groupOrderServiceFeeTitle": MessageLookupByLibrary.simpleMessage(
       "Tarifa de procesamiento",
     ),
@@ -1289,7 +1301,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderSplitModeTitle": MessageLookupByLibrary.simpleMessage(
       "¿Cómo dividimos la cuenta?",
     ),
-    "groupOrderTipBaseSummary": m50,
+    "groupOrderTipBaseSummary": m51,
     "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage("Otro monto"),
     "groupOrderTipNone": MessageLookupByLibrary.simpleMessage("Sin propina"),
     "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
@@ -1314,7 +1326,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTransferHost": MessageLookupByLibrary.simpleMessage(
       "Transferir titularidad",
     ),
-    "groupOrderTransferHostConfirm": m51,
+    "groupOrderTransferHostConfirm": m52,
     "groupOrderUnlockConfirm": MessageLookupByLibrary.simpleMessage(
       "¿Reabrir la orden? Los precios se descongelan y se podrán editar los ítems.",
     ),
@@ -1520,7 +1532,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerBadgeDelivered": MessageLookupByLibrary.simpleMessage("ENTREGADA"),
     "managerBadgePreparing": MessageLookupByLibrary.simpleMessage("PREPARANDO"),
     "managerBadgeReady": MessageLookupByLibrary.simpleMessage("LISTA"),
-    "managerBatchLabel": m52,
+    "managerBatchLabel": m53,
     "managerBucketAll": MessageLookupByLibrary.simpleMessage("Todas"),
     "managerBucketDelivered": MessageLookupByLibrary.simpleMessage(
       "Entregadas",
@@ -1540,14 +1552,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerGenericError": MessageLookupByLibrary.simpleMessage(
       "No pudimos completar la acción. Probá de nuevo.",
     ),
-    "managerGuestsMeta": m53,
-    "managerHistoryDaySummary": m54,
+    "managerGuestsMeta": m54,
+    "managerHistoryDaySummary": m55,
     "managerHistoryEmpty": MessageLookupByLibrary.simpleMessage(
       "Sin órdenes pasadas todavía",
     ),
     "managerHistoryTitle": MessageLookupByLibrary.simpleMessage("Historial"),
     "managerHistoryYesterday": MessageLookupByLibrary.simpleMessage("Ayer"),
-    "managerItemsDelivered": m55,
+    "managerItemsDelivered": m56,
     "managerLiveOrders": MessageLookupByLibrary.simpleMessage(
       "Órdenes en vivo",
     ),
@@ -1581,12 +1593,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerPaymentsRefresh": MessageLookupByLibrary.simpleMessage(
       "Actualizar estado",
     ),
-    "managerRound": m56,
+    "managerRound": m57,
     "managerTableHint": MessageLookupByLibrary.simpleMessage(
       "Ej: 7, Barra 2, Terraza",
     ),
     "managerUnpaidBadge": MessageLookupByLibrary.simpleMessage("POR PAGAR"),
-    "managerVoidItemConfirm": m57,
+    "managerVoidItemConfirm": m58,
     "managerVoidItemCta": MessageLookupByLibrary.simpleMessage("No cobrar"),
     "managerVoidedItemTag": MessageLookupByLibrary.simpleMessage(
       "REMOVIDO · no se cobra",
@@ -1602,8 +1614,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mercados y Tiendas",
     ),
     "maxGuests": MessageLookupByLibrary.simpleMessage("Máx. invitados"),
-    "maxPartySize": m58,
-    "maxSize": m59,
+    "maxPartySize": m59,
+    "maxSize": m60,
     "maxSizeLabel": MessageLookupByLibrary.simpleMessage("Máx."),
     "maximum": MessageLookupByLibrary.simpleMessage("Máximo"),
     "may": MessageLookupByLibrary.simpleMessage("Mayo"),
@@ -1637,7 +1649,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "myFavorites": MessageLookupByLibrary.simpleMessage("Mis Favoritos"),
     "myHistory": MessageLookupByLibrary.simpleMessage("Mi Historial"),
     "myReservations": MessageLookupByLibrary.simpleMessage("Mis Reservaciones"),
-    "nNewMessages": m60,
+    "nNewMessages": m61,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "¿Necesitas las mejores recomendaciones?",
     ),
@@ -1682,7 +1694,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noMessagesYet": MessageLookupByLibrary.simpleMessage(
       "Aún no hay mensajes",
     ),
-    "noNearbyBusinessesInCategory": m61,
+    "noNearbyBusinessesInCategory": m62,
     "noNewBranches": MessageLookupByLibrary.simpleMessage(
       "Aún no hay negocios nuevos en tu zona",
     ),
@@ -1725,7 +1737,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Aún no está en tu país?",
     ),
     "note": MessageLookupByLibrary.simpleMessage("Nota"),
-    "notesLabel": m62,
+    "notesLabel": m63,
     "notification": MessageLookupByLibrary.simpleMessage("Notificación"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
     "november": MessageLookupByLibrary.simpleMessage("Noviembre"),
@@ -1768,7 +1780,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "packages": MessageLookupByLibrary.simpleMessage("Paquetes"),
     "parking": MessageLookupByLibrary.simpleMessage("Estacionamiento"),
     "partySize": MessageLookupByLibrary.simpleMessage("Comensales:"),
-    "partySizeCount": m63,
+    "partySizeCount": m64,
     "password": MessageLookupByLibrary.simpleMessage("Contraseña"),
     "passwordIncorrect": MessageLookupByLibrary.simpleMessage(
       "La contraseña no es correcta. Inténtalo de nuevo.",
@@ -1813,7 +1825,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Pago fuera de la plataforma",
     ),
     "pending": MessageLookupByLibrary.simpleMessage("Pendiente"),
-    "pendingReservationsAlertMany": m64,
+    "pendingReservationsAlertMany": m65,
     "pendingReservationsAlertOne": MessageLookupByLibrary.simpleMessage(
       "Tienes 1 reservación pendiente",
     ),
@@ -1827,15 +1839,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Número de teléfono"),
     "phoneSectionTitle1": MessageLookupByLibrary.simpleMessage("Tu"),
     "phoneSectionTitle2": MessageLookupByLibrary.simpleMessage("Teléfono"),
-    "photoLimitReached": m65,
+    "photoLimitReached": m66,
     "photoUploadFailed": MessageLookupByLibrary.simpleMessage(
       "No se pudieron subir todas las fotos. Edita el paquete para reintentar.",
     ),
     "photosDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Fotos del artículo eliminadas correctamente",
     ),
-    "photosOptionalMax": m66,
-    "photosSaveError": m67,
+    "photosOptionalMax": m67,
+    "photosSaveError": m68,
     "pizzerias": MessageLookupByLibrary.simpleMessage("Pizzerías"),
     "platformError": MessageLookupByLibrary.simpleMessage(
       "Error de plataforma",
@@ -1894,10 +1906,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Prefiero no decirlo",
     ),
     "preferences": MessageLookupByLibrary.simpleMessage("Preferencias"),
-    "pressToAddPhotosUpToMaxImages": m68,
+    "pressToAddPhotosUpToMaxImages": m69,
     "previousMonth": MessageLookupByLibrary.simpleMessage("Mes anterior"),
     "price": MessageLookupByLibrary.simpleMessage("Precio"),
-    "priceFromBadge": m69,
+    "priceFromBadge": m70,
     "priceType": MessageLookupByLibrary.simpleMessage("Tipo de precio"),
     "priceValidation": MessageLookupByLibrary.simpleMessage(
       "El precio no puede estar vacío y debe ser mayor a 0.09",
@@ -2044,7 +2056,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "requested": MessageLookupByLibrary.simpleMessage("Solicitado"),
     "resendCode": MessageLookupByLibrary.simpleMessage("Reenviar Código"),
-    "resendCodeIn": m70,
+    "resendCodeIn": m71,
     "reservation": MessageLookupByLibrary.simpleMessage("Reservación"),
     "reservationCancelled": MessageLookupByLibrary.simpleMessage(
       "Reserva cancelada.",
@@ -2077,7 +2089,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Reservas para hoy",
     ),
-    "reserveTableAt": m71,
+    "reserveTableAt": m72,
     "reserveToComplete": MessageLookupByLibrary.simpleMessage(
       "Reserva → Completada",
     ),
@@ -2138,7 +2150,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchBusinessOrAddress": MessageLookupByLibrary.simpleMessage(
       "Buscar negocio o dirección",
     ),
-    "searchInCity": m72,
+    "searchInCity": m73,
     "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Descubre excelentes lugares para comer y beber cerca de ti...",
     ),
@@ -2199,7 +2211,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareMenuError": MessageLookupByLibrary.simpleMessage(
       "Ups... ¡Algo salió mal! \n\nNo se pudo compartir el menú.",
     ),
-    "shareMenuMessage": m73,
+    "shareMenuMessage": m74,
     "shareMenuSubject": MessageLookupByLibrary.simpleMessage(
       "¡Te comparto un menú!",
     ),
@@ -2260,7 +2272,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "specialRequests": MessageLookupByLibrary.simpleMessage(
       "Solicitudes especiales",
     ),
-    "specialRequestsLabel": m74,
+    "specialRequestsLabel": m75,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Solicitudes especiales (opcional)",
     ),
@@ -2363,10 +2375,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisBusiness": MessageLookupByLibrary.simpleMessage("este negocio"),
     "thisUser": MessageLookupByLibrary.simpleMessage("este usuario"),
     "time": MessageLookupByLibrary.simpleMessage("Hora"),
-    "timeAgoDays": m75,
-    "timeAgoHours": m76,
+    "timeAgoDays": m76,
+    "timeAgoHours": m77,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Ahora mismo"),
-    "timeAgoMinutes": m77,
+    "timeAgoMinutes": m78,
     "title": MessageLookupByLibrary.simpleMessage("Título"),
     "today": MessageLookupByLibrary.simpleMessage("Hoy"),
     "topEvents": MessageLookupByLibrary.simpleMessage("Eventos principales"),
@@ -2465,7 +2477,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página del negocio",
     ),
-    "visitedOn": m78,
+    "visitedOn": m79,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -2519,7 +2531,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "¿Cuándo nos visitaste?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m79,
+    "writeReviewFor": m80,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escribe tu reseña aquí...",
     ),

@@ -1543,6 +1543,17 @@
       }
     }
   },
+  "groupOrderChipSent": "Order sent",
+  "groupOrderChipPreparing": "Preparing your order",
+  "groupOrderChipReady": "Your order is ready!",
+  "groupOrderChipToPay": "Pay the bill · {amount}",
+  "@groupOrderChipToPay": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderSendCta": "Send order",
   "groupOrderSendHint": "The kitchen gets it right away · you pay at the end",
   "groupOrderPayBlockedHint": "Payment unlocks once everything is served",

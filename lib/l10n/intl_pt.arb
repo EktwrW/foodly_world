@@ -1543,6 +1543,17 @@
       }
     }
   },
+  "groupOrderChipSent": "Pedido enviado",
+  "groupOrderChipPreparing": "Preparando seu pedido",
+  "groupOrderChipReady": "Seu pedido está pronto!",
+  "groupOrderChipToPay": "Pagar a conta · {amount}",
+  "@groupOrderChipToPay": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderSendCta": "Enviar pedido",
   "groupOrderSendHint": "A cozinha recebe na hora · você paga no final",
   "groupOrderPayBlockedHint": "O pagamento libera quando tudo for entregue",

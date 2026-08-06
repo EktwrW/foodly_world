@@ -1235,11 +1235,13 @@ class _ClientFulfillmentBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(text, style: FoodlyTextStyles.labelBold),
-                  if (order.items.isNotEmpty &&
+                  if (order.liveItemsCount > 0 &&
                       order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
                     Text(
+                      // liveItemsCount: los platos anulados por el negocio no
+                      // inflan el denominador ("1/3" con uno removido mentía).
                       S.current.managerItemsDelivered(
-                          order.deliveredItemsCount, order.items.length),
+                          order.deliveredItemsCount, order.liveItemsCount),
                       style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
                     ),
                 ],
