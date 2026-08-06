@@ -1498,6 +1498,17 @@
   "stripeBridgeRefreshBody": "Retome a ativação no app: Pedidos → Ativar pagamentos com Stripe.",
   "managerChecklistHint": "Toque em cada item para marcá-lo como entregue",
   "managerUnpaidBadge": "A PAGAR",
+  "managerVoidItemCta": "Não cobrar",
+  "managerVoidedItemTag": "REMOVIDO · não é cobrado",
+  "managerVoidItemConfirm": "Remover \"{item}\" da conta? Continuará visível para o cliente, marcado como removido pelo negócio.",
+  "@managerVoidItemConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderItemVoided": "Removido pelo negócio · não é cobrado",
   "managerBatchLabel": "RODADA {n}",
   "@managerBatchLabel": {
     "placeholders": {

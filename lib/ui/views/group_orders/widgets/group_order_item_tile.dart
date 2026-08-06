@@ -92,10 +92,16 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (widget.delivered) ...[
+                      if (widget.delivered && !item.isVoided) ...[
                         const SizedBox(width: 6),
                         const Icon(Icons.check_circle_rounded,
                             size: 15, color: FoodlyThemes.tertiaryFoodly),
+                      ],
+                      // F4b.1: el negocio anuló este plato — sigue visible,
+                      // pero no se cobra (transparencia con el comensal).
+                      if (item.isVoided) ...[
+                        const SizedBox(width: 6),
+                        const Icon(Icons.block_rounded, size: 14, color: Color(0xFFB3261E)),
                       ],
                       // Badge "Compartido" (F2c): se reparte entre todos.
                       // Tooltip por TAP (e2e r7: el concepto confundía con
@@ -138,12 +144,32 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                  // Motivo de la anulación (o el texto genérico).
+                  if (item.isVoided)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        (item.voidedReason ?? '').trim().isNotEmpty
+                            ? item.voidedReason!.trim()
+                            : S.current.groupOrderItemVoided,
+                        style: FoodlyTextStyles.captionBold
+                            .copyWith(color: const Color(0xFFB3261E), fontSize: 10),
+                      ),
+                    ),
                 ],
               ),
             ),
             const SizedBox(width: 8),
-            // Total de línea
-            Text(formatMoney(item.lineTotal, currency), style: FoodlyTextStyles.itemPriceBold),
+            // Total de línea — tachado y sin sumar si el negocio lo anuló.
+            Text(
+              formatMoney(item.lineTotal, currency),
+              style: item.isVoided
+                  ? FoodlyTextStyles.itemPriceBold.copyWith(
+                      decoration: TextDecoration.lineThrough,
+                      color: FoodlyThemes.secondaryFoodly,
+                    )
+                  : FoodlyTextStyles.itemPriceBold,
+            ),
             // Toggle compartido (F2c, solo editable): resalta si está activo.
             if (onToggleShared != null)
               Padding(

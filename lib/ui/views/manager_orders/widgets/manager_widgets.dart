@@ -162,6 +162,13 @@ class ManagerMiniChip extends StatelessWidget {
   }
 }
 
+/// e2e F4b: con ítems sin servir, una orden marcada ENTREGADA se muestra
+/// como PREPARANDO (la tanda nueva revive la comanda) — nunca "terminada".
+GroupFulfillmentStatus? _activeStatus(GroupOrderDM order) =>
+    order.fulfillmentStatus == GroupFulfillmentStatus.delivered
+        ? GroupFulfillmentStatus.preparing
+        : order.fulfillmentStatus;
+
 /// F4b — estado de COBRO de la orden (maqueta C1): en cuenta abierta la
 /// mesa come antes de pagar, así que el manager necesita ver de un vistazo
 /// qué mesas deben plata. En prepago siempre está pagada.
@@ -216,7 +223,11 @@ class ManagerOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final delivered = order.fulfillmentStatus == GroupFulfillmentStatus.delivered;
+    // e2e F4b: "terminada" = entregada Y sin ítems pendientes. Con tandas,
+    // una orden marcada ENTREGADA que recibe ítems nuevos volvía a estar
+    // activa pero se veía opaca y con el chip verde (tarjeta fantasma).
+    final delivered =
+        order.fulfillmentStatus == GroupFulfillmentStatus.delivered && order.allItemsDelivered;
 
     return Opacity(
       opacity: delivered ? 0.55 : 1,
@@ -259,7 +270,10 @@ class ManagerOrderCard extends StatelessWidget {
                       ),
                     ],
                     const Spacer(),
-                    ManagerFulfillmentBadge(status: order.fulfillmentStatus),
+                    // Con ítems pendientes el badge NUNCA dice ENTREGADA.
+                    ManagerFulfillmentBadge(
+                      status: delivered ? order.fulfillmentStatus : _activeStatus(order),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -284,7 +298,8 @@ class ManagerOrderCard extends StatelessWidget {
                     ManagerPaymentBadge(order: order),
                     const Spacer(),
                     Text(
-                      S.current.managerItemsDelivered(order.deliveredItemsCount, order.items.length),
+                      S.current
+                          .managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
                       style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
                     ),
                   ],

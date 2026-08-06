@@ -690,6 +690,40 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
+  Future<GroupOrderResponseDM> managerSetItemVoided(
+    String uuid,
+    String itemUuid, {
+    required bool voided,
+    String? reason,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {'voided': voided, 'reason': reason};
+    _data.removeWhere((k, v) => v == null);
+    final _options = _setStreamType<GroupOrderResponseDM>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/manager/group-orders/${uuid}/items/${itemUuid}/void',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GroupOrderResponseDM _value;
+    try {
+      _value = GroupOrderResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<GroupOrderResponseDM> managerSetFulfillment(
     String uuid, {
     required String status,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
+import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
@@ -23,12 +24,29 @@ class _FakeRepo implements GroupOrderRepo {
   bool? lastDelivered;
   String? lastFulfillmentStatus;
 
+  /// Fake que puede FALLAR por método (e2e F4b: con fakes siempre-exitosos,
+  /// un 409 del backend era inexpresable en los tests de UI — así se coló
+  /// el modal de error tras una acción correcta).
+  ApiResult<GroupOrderResponseDM>? fulfillmentOutcome;
+
+  /// Conteo de llamadas por endpoint: detecta llamadas REDUNDANTES (el bug
+  /// del 409 era exactamente una llamada de más).
+  int fulfillmentCalls = 0;
+  int deliverAllCalls = 0;
+
   @override
   Future<ApiResult<GroupOrderResponseDM>> managerSetFulfillment(
     String uuid, {
     required String status,
   }) async {
+    fulfillmentCalls++;
     lastFulfillmentStatus = status;
+    return fulfillmentOutcome ?? actionOutcome!;
+  }
+
+  @override
+  Future<ApiResult<GroupOrderResponseDM>> managerDeliverAll(String uuid) async {
+    deliverAllCalls++;
     return actionOutcome!;
   }
 
@@ -253,6 +271,91 @@ void main() {
 
       expect(find.text('Hector'), findsOneWidget);
       expect(find.byType(ManagerOrderDetailPage), findsOneWidget);
+    });
+
+    testWidgets('e2e F4b: "entregar todo de una" hace UNA sola llamada — sin '
+        'advance redundante (daba 409 y modal de error tras acción OK)',
+        (tester) async {
+      final repo = _FakeRepo()
+        ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]))
+        ..actionOutcome = const ApiResult.success(GroupOrderResponseDM(groupOrder: order));
+      final cubit = buildCubit(repo);
+      addTearDown(cubit.close);
+      await cubit.load();
+
+      await tester.pumpWidget(app(const ManagerOrderDetailPage(orderUuid: 'o1'), cubit));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(S.current.managerDeliverAllAndClose));
+      await tester.pumpAndSettle();
+
+      expect(repo.deliverAllCalls, 1);
+      expect(repo.fulfillmentCalls, 0,
+          reason: 'el BE ya auto-entrega: llamar advance después es redundante');
+      // Y por lo tanto NO hay error en pantalla tras una acción exitosa.
+      expect(find.text(S.current.managerGenericError), findsNothing);
+    });
+
+    testWidgets('acción FALLIDA sí muestra el error (el fake puede fallar)',
+        (tester) async {
+      final ready = order.copyWith(fulfillmentStatus: GroupFulfillmentStatus.ready);
+      final repo = _FakeRepo()
+        ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [ready]))
+        ..fulfillmentOutcome =
+            const ApiResult.failure(AppRequestException(error: 'conflicto 409'));
+      final cubit = buildCubit(repo);
+      addTearDown(cubit.close);
+      await cubit.load();
+
+      await tester.pumpWidget(app(const ManagerOrderDetailPage(orderUuid: 'o1'), cubit));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(S.current.managerMarkDelivered));
+      await tester.pumpAndSettle();
+
+      expect(repo.fulfillmentCalls, 1);
+      expect(cubit.state.error, isNotNull, reason: 'el fallo debe llegar a la UI');
+    });
+
+    testWidgets('e2e F4b: con ítems de una tanda NUEVA sin servir, la orden '
+        'no se ve terminada y el checklist responde', (tester) async {
+      // Orden marcada ENTREGADA que recibió un ítem nuevo (tanda 2).
+      final revivida = order.copyWith(
+        fulfillmentStatus: GroupFulfillmentStatus.delivered,
+        items: [
+          GroupOrderItemDM(
+            uuid: 'i1',
+            name: 'Sashimi',
+            unitPricePreview: 12,
+            participantUuid: 'p1',
+            sentAt: DateTime(2026, 8, 5, 20),
+            batchNo: 1,
+            deliveredAt: DateTime(2026, 8, 5, 20, 30),
+          ),
+          GroupOrderItemDM(
+            uuid: 'i2',
+            name: 'Postre',
+            unitPricePreview: 6,
+            participantUuid: 'p1',
+            sentAt: DateTime(2026, 8, 5, 21),
+            batchNo: 2,
+          ),
+        ],
+      );
+      final repo = _FakeRepo()
+        ..listOutcome = ApiResult.success(ManagerOrdersResponseDM(orders: [revivida]))
+        ..actionOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: revivida));
+      final cubit = buildCubit(repo);
+      addTearDown(cubit.close);
+      await cubit.load();
+
+      await tester.pumpWidget(app(const ManagerOrderDetailPage(orderUuid: 'o1'), cubit));
+      await tester.pumpAndSettle();
+
+      // El ítem de la tanda 2 DEBE responder al tap (checklist vivo).
+      await tester.tap(find.text('Postre'));
+      await tester.pumpAndSettle();
+      expect(repo.lastDelivered, isTrue);
     });
 
     testWidgets('orden ENTREGADA: sin CTA, estado final visible', (tester) async {

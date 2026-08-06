@@ -184,6 +184,17 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     await di<ActiveGroupOrderCubit>().refresh();
   }
 
+  /// F4b — "Pedir más": vuelve al menú del negocio con el carrito grupal
+  /// activo (los ítems nuevos entran como tanda siguiente).
+  void _onOrderMore(GroupOrderDM order) {
+    final menuUuid = order.businessMenuUuid;
+    if (menuUuid == null) return;
+    di<AppRouter>().appRouter.goNamed(
+      AppRoutes.visitMenu.name,
+      pathParameters: {AppRoutes.routeIdParam: menuUuid},
+    );
+  }
+
   /// Sheet "¡Pedido enviado a cocina!" (maqueta B1): sin celebración de pago
   /// (no hubo pago). CTA principal: seguir pidiendo.
   void _showBatchSentSheet(BuildContext context, GroupOrderDM order) {
@@ -921,6 +932,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     onLock: () => _onLock(context),
                     onSend: () => _onSend(context, order),
                     onRequestBill: () => _onRequestBill(context),
+                    onOrderMore: () => _onOrderMore(order),
                     onCover: (p) => _onCover(context, order, p),
                     onPayAll: () => _onPayAll(context, order),
                   ),
@@ -1049,6 +1061,7 @@ class _Content extends StatelessWidget {
   final VoidCallback onLock;
   final VoidCallback onSend;
   final VoidCallback onRequestBill;
+  final VoidCallback onOrderMore;
   final void Function(GroupOrderParticipantDM p) onCover;
   final VoidCallback onPayAll;
 
@@ -1060,6 +1073,7 @@ class _Content extends StatelessWidget {
     required this.onLock,
     required this.onSend,
     required this.onRequestBill,
+    required this.onOrderMore,
     required this.onCover,
     required this.onPayAll,
   });
@@ -1154,6 +1168,8 @@ class _Content extends StatelessWidget {
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
           onSend: (order.isOpenTab && _iAmHost) ? onSend : null,
           onRequestBill: (order.isOpenTab && _iAmHost) ? onRequestBill : null,
+          // "Pedir más" lo puede usar CUALQUIER comensal (agrega a su nombre).
+          onOrderMore: order.businessMenuUuid == null ? null : onOrderMore,
           onPayAll: _showPayAll ? onPayAll : null,
         ),
       ],

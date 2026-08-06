@@ -131,6 +131,64 @@ void main() {
     });
   });
 
+  group('F4b.1 — ítems anulados por el negocio (plato devuelto)', () {
+    GroupOrderItemDM voided(String uuid, {double price = 10}) => GroupOrderItemDM(
+          uuid: uuid,
+          name: 'Plato $uuid',
+          unitPricePreview: price,
+          sentAt: sent,
+          batchNo: 1,
+          voidedAt: DateTime(2026, 8, 5, 21),
+          voidedReason: 'Plato devuelto',
+        );
+
+    test('no cuentan para el checklist ni bloquean la entrega', () {
+      final o = order(
+        status: GroupOrderStatus.confirmed,
+        items: [
+          item(uuid: 'a', sentAt: sent, batchNo: 1, deliveredAt: delivered),
+          voided('b'),
+        ],
+      );
+
+      expect(o.liveItemsCount, 1);
+      expect(o.deliveredItemsCount, 1);
+      expect(o.allItemsDelivered, isTrue,
+          reason: 'el anulado no puede dejar la orden colgada para siempre');
+    });
+
+    test('no suman a la cuenta y no bloquean el pago', () {
+      final o = order(
+        status: GroupOrderStatus.confirmed,
+        items: [
+          item(uuid: 'a', price: 12, sentAt: sent, batchNo: 1, deliveredAt: delivered),
+          voided('b', price: 30),
+        ],
+      );
+
+      expect(o.sentTotal, 12, reason: 'el anulado no se cobra');
+      expect(o.openTabCtaState, OpenTabCtaState.pay);
+    });
+
+    test('un anulado sin enviar tampoco cuenta como pendiente', () {
+      final o = order(
+        status: GroupOrderStatus.confirmed,
+        items: [
+          item(uuid: 'a', sentAt: sent, batchNo: 1, deliveredAt: delivered),
+          GroupOrderItemDM(
+            uuid: 'z',
+            name: 'Cancelado antes de enviar',
+            unitPricePreview: 8,
+            voidedAt: DateTime(2026, 8, 5, 21),
+          ),
+        ],
+      );
+
+      expect(o.pendingItems, isEmpty);
+      expect(o.openTabCtaState, OpenTabCtaState.pay);
+    });
+  });
+
   group('isTracking en cuenta abierta (el cliente no pierde su mesa)', () {
     GroupOrderDM tracking({
       required GroupPaymentMode mode,

@@ -9415,6 +9415,46 @@ class S {
     );
   }
 
+  /// `Don't charge`
+  String get managerVoidItemCta {
+    return Intl.message(
+      'Don\'t charge',
+      name: 'managerVoidItemCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `REMOVED · not charged`
+  String get managerVoidedItemTag {
+    return Intl.message(
+      'REMOVED · not charged',
+      name: 'managerVoidedItemTag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove "{item}" from the bill? It stays visible to the guest, marked as removed by the business.`
+  String managerVoidItemConfirm(String item) {
+    return Intl.message(
+      'Remove "$item" from the bill? It stays visible to the guest, marked as removed by the business.',
+      name: 'managerVoidItemConfirm',
+      desc: '',
+      args: [item],
+    );
+  }
+
+  /// `Removed by the business · not charged`
+  String get groupOrderItemVoided {
+    return Intl.message(
+      'Removed by the business · not charged',
+      name: 'groupOrderItemVoided',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `BATCH {n}`
   String managerBatchLabel(int n) {
     return Intl.message(

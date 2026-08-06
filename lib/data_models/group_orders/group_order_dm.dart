@@ -124,6 +124,10 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     // el carrito (editable) y es lo que habilita "Enviar orden".
     @JsonKey(name: 'batch_no') int? batchNo,
     @JsonKey(name: 'sent_at') DateTime? sentAt,
+    // F4b.1: el negocio anuló el ítem (plato devuelto/mal preparado): sigue
+    // visible con su motivo, pero NO se cobra.
+    @JsonKey(name: 'voided_at') DateTime? voidedAt,
+    @JsonKey(name: 'voided_reason') String? voidedReason,
   }) = _GroupOrderItemDM;
 
   factory GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
@@ -137,6 +141,9 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
 
   /// F4b: ya viajó a cocina (inmutable) vs. sigue en el carrito.
   bool get isSent => sentAt != null;
+
+  /// F4b.1: anulado por el negocio — visible, pero fuera de la cuenta.
+  bool get isVoided => voidedAt != null;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -230,11 +237,16 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// El negocio cobra con cuenta abierta (una orden por mesa, tandas).
   bool get isOpenTab => paymentMode == GroupPaymentMode.openTab;
 
+  /// Ítems VIGENTES (los anulados por el negocio no cuentan para nada).
+  List<GroupOrderItemDM> get liveItems => items.where((i) => !i.isVoided).toList();
+
   /// Ítems aún en el carrito (no enviados a cocina).
-  List<GroupOrderItemDM> get pendingItems => items.where((i) => !i.isSent).toList();
+  List<GroupOrderItemDM> get pendingItems =>
+      items.where((i) => !i.isSent && !i.isVoided).toList();
 
   /// Ítems ya enviados a cocina (inmutables).
-  List<GroupOrderItemDM> get sentItems => items.where((i) => i.isSent).toList();
+  List<GroupOrderItemDM> get sentItems =>
+      items.where((i) => i.isSent && !i.isVoided).toList();
 
   /// Número de la última tanda enviada (0 = ninguna).
   int get lastBatchNo =>
@@ -335,11 +347,16 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   // ── F4a: helpers del panel "Órdenes en vivo" ──
 
-  /// Ítems ya entregados (checklist del manager).
-  int get deliveredItemsCount => items.where((i) => i.deliveredAt != null).length;
+  /// Ítems ya entregados (checklist del manager). Los ANULADOS no cuentan.
+  int get deliveredItemsCount =>
+      liveItems.where((i) => i.deliveredAt != null).length;
+
+  /// Total de ítems que el manager debe servir (sin los anulados).
+  int get liveItemsCount => liveItems.length;
 
   /// ¿Checklist completo? (habilita ENTREGADA).
-  bool get allItemsDelivered => items.isNotEmpty && deliveredItemsCount == items.length;
+  bool get allItemsDelivered =>
+      liveItems.isNotEmpty && deliveredItemsCount == liveItems.length;
 }
 
 // ─────────────────────────────────────────────────────────────────────────
