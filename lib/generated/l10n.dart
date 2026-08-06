@@ -9555,10 +9555,10 @@ class S {
     );
   }
 
-  /// `New paid order!`
+  /// `New order!`
   String get managerNewOrderTitle {
     return Intl.message(
-      'New paid order!',
+      'New order!',
       name: 'managerNewOrderTitle',
       desc: '',
       args: [],
@@ -9910,6 +9910,56 @@ class S {
     return Intl.message(
       'Log in or sign up to start a group order.',
       name: 'guestGateGroupOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tab closed!`
+  String get groupOrderTabClosedTitle {
+    return Intl.message(
+      'Tab closed!',
+      name: 'groupOrderTabClosedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bill settled · {total}. Receipt sent to your email.`
+  String groupOrderTabClosedBody(String total) {
+    return Intl.message(
+      'Bill settled · $total. Receipt sent to your email.',
+      name: 'groupOrderTabClosedBody',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Open another tab`
+  String get groupOrderNewTab {
+    return Intl.message(
+      'Open another tab',
+      name: 'groupOrderNewTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The table ordered more`
+  String get managerMoreItemsTitle {
+    return Intl.message(
+      'The table ordered more',
+      name: 'managerMoreItemsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New paid order!`
+  String get managerPaidOrderTitle {
+    return Intl.message(
+      'New paid order!',
+      name: 'managerPaidOrderTitle',
       desc: '',
       args: [],
     );

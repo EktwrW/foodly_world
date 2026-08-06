@@ -26,6 +26,18 @@ class ActiveGroupOrderChip extends StatelessWidget {
       );
     }
 
+    // e2e 2026-08-06 — en cuenta abierta el chip obedece a la MISMA máquina
+    // pura que el footer. Derivarlo de fulfillmentStatus a secas daba dos
+    // verdades: con ítems en el carrito el footer decía "Enviar orden" y el
+    // chip seguía diciendo "Pagar la cuenta".
+    if (order.isOpenTab && order.openTabCtaState == OpenTabCtaState.send) {
+      return (
+        Icons.outbox_rounded,
+        FoodlyThemes.primaryFoodly,
+        S.current.groupOrderSendCta,
+      );
+    }
+
     return switch (order.fulfillmentStatus) {
       GroupFulfillmentStatus.preparing => (
           Icons.soup_kitchen_rounded,

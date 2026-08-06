@@ -767,7 +767,8 @@ class AppRouter {
                     )..load(),
                   ),
                 ],
-                child: const ManagerOrdersPage(),
+                // ?order=<uuid> — el modal de aviso abre la orden concreta.
+                child: ManagerOrdersPage(openOrderUuid: state.uri.queryParameters['order']),
               ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
