@@ -28,15 +28,27 @@ const String kGroupOrderInvitePrefix = 'FOODLY-GO:';
 /// sin app instalada, la landing sirve /join/{code} con fallback y stores.
 const String kGroupOrderInviteUrlBase = 'https://foodly.solutions/join/';
 
-/// e2e r7: ¿corresponde celebrar la confirmación de la orden (sheet de éxito
-/// + salida al menú)? Pura para testear la matriz completa:
+/// e2e r7: ¿corresponde celebrar el cierre de la orden (sheet de éxito +
+/// salida al menú)? Pura para testear la matriz completa:
 ///  - una sola vez ([alreadyShown]);
 ///  - solo si VIMOS la orden viva antes ([sawAliveOrder]) — abrir una orden
-///    ya confirmada desde el historial NO debe disparar el festejo;
-///  - y solo cuando el estado actual es confirmado.
+///    ya cerrada desde el historial NO debe disparar el festejo;
+///  - y solo cuando la orden llegó de verdad a su final.
+///
+/// e2e 2026-08-06 — qué es "el final" DEPENDE del modo, y confundirlo fue el
+/// origen de dos bugs:
+///  · prepago por ronda: pagar ES confirmar → `confirmed` cierra el ciclo;
+///  · cuenta abierta: `confirmed` significa "primera tanda enviada a cocina",
+///    la orden recién empieza. Festejar ahí ponía "¡Orden confirmada!" detrás
+///    del sheet "Pedido enviado a cocina", y lo repetía en cada orden nueva.
+///    Acá el final es el PAGO.
 bool shouldCelebrateConfirmation({
   required bool alreadyShown,
   required bool sawAliveOrder,
   required bool isConfirmed,
-}) =>
-    !alreadyShown && sawAliveOrder && isConfirmed;
+  bool isOpenTab = false,
+  bool isPaid = false,
+}) {
+  if (alreadyShown || !sawAliveOrder) return false;
+  return isOpenTab ? isPaid : isConfirmed;
+}

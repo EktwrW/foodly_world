@@ -13,7 +13,12 @@ import 'package:foodly_world/ui/views/manager_orders/widgets/stripe_onboarding_b
 /// chips de filtro con contadores live + tarjetas de orden. El cubit vive en
 /// la ruta; el detalle se pushea con BlocProvider.value sobre el MISMO cubit.
 class ManagerOrdersPage extends StatelessWidget {
-  const ManagerOrdersPage({super.key});
+  /// Deep link del modal de aviso: uuid de la orden que disparó el push.
+  /// Abre su detalle directamente en vez de dejar al manager buscándola en
+  /// la lista con la mesa esperando (e2e 2026-08-06).
+  final String? openOrderUuid;
+
+  const ManagerOrdersPage({super.key, this.openOrderUuid});
 
   static const _buckets = <String?>[null, 'pending', 'preparing', 'ready', 'delivered'];
 
@@ -47,7 +52,10 @@ class ManagerOrdersPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Scaffold(
+        return _DeepLinkOpener(
+          orderUuid: openOrderUuid,
+          onOpen: (uuid) => _pushDetail(context, cubit, uuid),
+          child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -192,14 +200,7 @@ class ManagerOrdersPage extends StatelessWidget {
                                   final order = state.orders[i];
                                   return ManagerOrderCard(
                                     order: order,
-                                    onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute<void>(
-                                        builder: (_) => BlocProvider.value(
-                                          value: cubit,
-                                          child: ManagerOrderDetailPage(orderUuid: order.uuid),
-                                        ),
-                                      ),
-                                    ),
+                                    onTap: () => _pushDetail(context, cubit, order.uuid),
                                   );
                                 },
                               ),
@@ -208,8 +209,54 @@ class ManagerOrdersPage extends StatelessWidget {
               ],
             ),
           ),
+        ),
         );
       },
     );
   }
+
+  /// Detalle sobre el MISMO cubit (la lista y el detalle comparten realtime).
+  void _pushDetail(BuildContext context, ManagerOrdersCubit cubit, String orderUuid) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => BlocProvider.value(
+          value: cubit,
+          child: ManagerOrderDetailPage(orderUuid: orderUuid),
+        ),
+      ),
+    );
+  }
+}
+
+/// Abre UNA vez el detalle de [orderUuid] tras el primer frame. Aislado en su
+/// propio StatefulWidget para no volver stateful toda la página: lo único que
+/// necesita estado es recordar que ya abrió.
+class _DeepLinkOpener extends StatefulWidget {
+  final String? orderUuid;
+  final void Function(String orderUuid) onOpen;
+  final Widget child;
+
+  const _DeepLinkOpener({required this.orderUuid, required this.onOpen, required this.child});
+
+  @override
+  State<_DeepLinkOpener> createState() => _DeepLinkOpenerState();
+}
+
+class _DeepLinkOpenerState extends State<_DeepLinkOpener> {
+  bool _opened = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final uuid = widget.orderUuid;
+    if (uuid == null || uuid.isEmpty) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _opened) return;
+      _opened = true;
+      widget.onOpen(uuid);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

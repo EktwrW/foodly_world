@@ -69,10 +69,15 @@ class _GroupOrderView extends StatefulWidget {
 }
 
 class _GroupOrderViewState extends State<_GroupOrderView> {
-  // e2e r7: celebración de la confirmación — una sola vez y solo si vimos
-  // la orden viva antes (no al abrir una orden ya confirmada).
+  // e2e r7: celebración del cierre — una sola vez y solo si vimos la orden
+  // viva antes (no al abrir una orden ya cerrada desde el historial).
   bool _celebrationShown = false;
   bool _sawAliveOrder = false;
+
+  /// Orden a la que pertenece el festejo ya mostrado. En cuenta abierta el
+  /// mismo usuario encadena órdenes en la misma mesa: sin esto, el sheet de
+  /// la orden anterior sobrevivía a la siguiente (e2e 2026-08-06).
+  String? _celebratedOrderUuid;
 
   /// Flujo de pago con PaymentSheet. Sin [coverUuids] paga MI parte; con
   /// ellos cubre la parte de esos participantes ("yo invito", F2b §A.2).
@@ -597,15 +602,24 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             ),
             const SizedBox(height: 18),
             Text(
-              S.current.groupOrderPaymentSuccessTitle,
+              // Prepago por ronda: pagar ES confirmar la comanda. Cuenta
+              // abierta: la comanda se confirmó hace rato, lo que acaba de
+              // pasar es que la mesa cerró su cuenta y se va.
+              order.isOpenTab
+                  ? S.current.groupOrderTabClosedTitle
+                  : S.current.groupOrderPaymentSuccessTitle,
               style: FoodlyTextStyles.sectionsTitle,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              S.current.groupOrderPaymentSuccessBody(
-                formatMoney(order.totalAmount, order.currency),
-              ),
+              order.isOpenTab
+                  ? S.current.groupOrderTabClosedBody(
+                      formatMoney(order.totalAmount, order.currency),
+                    )
+                  : S.current.groupOrderPaymentSuccessBody(
+                      formatMoney(order.totalAmount, order.currency),
+                    ),
               style: FoodlyTextStyles.caption,
               textAlign: TextAlign.center,
             ),
@@ -620,13 +634,17 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
               },
             ),
             // F4a (caso bar): otra ronda en la misma mesa — orden nueva que
-            // hereda QR y mesa; el que la abre queda como host.
+            // hereda QR y mesa; el que la abre queda como host. En cuenta
+            // abierta no existen las "rondas": lo que se abre es otra cuenta.
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
                 _startNextRound(context, order);
               },
-              child: Text(S.current.groupOrderNextRound, style: FoodlyTextStyles.captionPurpleBold),
+              child: Text(
+                order.isOpenTab ? S.current.groupOrderNewTab : S.current.groupOrderNextRound,
+                style: FoodlyTextStyles.captionPurpleBold,
+              ),
             ),
           ],
         ),
@@ -894,14 +912,25 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
           loaded: (vm) => vm.order,
           error: (vm, _) => vm.order,
         );
-        if (order != null && !order.isConfirmed) _sawAliveOrder = true;
+        // El festejo pertenece a UNA orden concreta. Sin esto, al abrir una
+        // orden nueva quedaba vivo el sheet de la anterior mostrando su
+        // importe ya cobrado (e2e 2026-08-06).
+        if (order != null && _celebratedOrderUuid != null && _celebratedOrderUuid != order.uuid) {
+          _celebrationShown = false;
+          _sawAliveOrder = false;
+          _celebratedOrderUuid = null;
+        }
+        if (order != null && !order.isFullyPaid) _sawAliveOrder = true;
         if (order != null &&
             shouldCelebrateConfirmation(
               alreadyShown: _celebrationShown,
               sawAliveOrder: _sawAliveOrder,
               isConfirmed: order.isConfirmed,
+              isOpenTab: order.isOpenTab,
+              isPaid: order.isFullyPaid,
             )) {
           _celebrationShown = true;
+          _celebratedOrderUuid = order.uuid;
           _showPaymentSuccess(context, order);
         }
       },

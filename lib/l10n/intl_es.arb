@@ -1526,7 +1526,7 @@
   "paymentModePerRoundBody": "Cada pedido se paga antes de prepararse. Ideal para bares, food trucks y mostrador.",
   "paymentModePerRoundFlow": "pedir → pagar → entregar",
   "paymentModeUpdated": "Modo de cobro actualizado",
-  "managerNewOrderTitle": "¡Nueva orden pagada!",
+  "managerNewOrderTitle": "¡Nueva orden!",
   "managerNewOrderGo": "Ir a atenderla",
   "managerNewOrderLater": "Ahora no",
   "managerHistoryTitle": "Historial",
@@ -1609,5 +1609,19 @@
       }
     }
   },
-  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal."
+  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal.",
+  "groupOrderTabClosedTitle": "¡Orden finalizada!",
+  "groupOrderTabClosedBody": "Cuenta cerrada · {total}. El recibo llegó a tu email.",
+  "@groupOrderTabClosedBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderNewTab": "Abrir otra cuenta",
+  "managerMoreItemsTitle": "La mesa pidió más",
+  "managerPaidOrderTitle": "¡Nueva orden pagada!",
+  "managerTabClosedTitle": "Cuenta cerrada",
+  "managerViewOrderGo": "Ver el detalle"
 }

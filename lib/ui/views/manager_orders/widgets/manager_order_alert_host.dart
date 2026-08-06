@@ -23,7 +23,7 @@ class ManagerOrderAlertHost extends StatefulWidget {
   final Widget child;
   final Stream<Map<String, dynamic>>? pushes;
   final String Function()? locationOf;
-  final void Function(String businessUuid)? onGoToOrders;
+  final void Function(String businessUuid, String? orderUuid)? onGoToOrders;
   final String? Function()? fallbackBusinessUuid;
 
   const ManagerOrderAlertHost({
@@ -85,10 +85,15 @@ class _ManagerOrderAlertHostState extends State<ManagerOrderAlertHost> {
     _dismiss();
     final uuid = _businessUuid(data);
     if (uuid == null) return;
-    if (widget.onGoToOrders != null) return widget.onGoToOrders!(uuid);
-    di<AppRouter>().appRouter.pushNamed(
+    // El BE ya manda el uuid de la orden: "Ir a atenderla" debe abrir ESA
+    // orden, no dejar al manager buscándola en la lista (e2e 2026-08-06).
+    final orderUuid = data['uuid'] as String?;
+    if (widget.onGoToOrders != null) return widget.onGoToOrders!(uuid, orderUuid);
+    final router = di<AppRouter>().appRouter;
+    router.pushNamed(
       AppRoutes.liveOrders.name,
       pathParameters: {AppRoutes.routeIdParam: uuid},
+      queryParameters: orderUuid != null ? {'order': orderUuid} : const {},
     );
   }
 
@@ -116,6 +121,7 @@ class _ManagerOrderAlertHostState extends State<ManagerOrderAlertHost> {
                 child: Opacity(opacity: t.clamp(0.0, 1.0), child: child),
               ),
               child: _AlertCard(
+                kind: _pending!['kind'] as String?,
                 body: _pending!['body'] as String?,
                 onLater: _dismiss,
                 onGo: _goToOrders,
@@ -131,14 +137,54 @@ class _ManagerOrderAlertHostState extends State<ManagerOrderAlertHost> {
 /// Tarjeta del aviso — lenguaje visual Foodly: blanca, radius 24, icono en
 /// círculo plum, CTA verde (misma paleta del panel del manager).
 class _AlertCard extends StatelessWidget {
+  final String? kind;
   final String? body;
   final VoidCallback onLater;
   final VoidCallback onGo;
 
-  const _AlertCard({required this.body, required this.onLater, required this.onGo});
+  const _AlertCard({
+    required this.kind,
+    required this.body,
+    required this.onLater,
+    required this.onGo,
+  });
+
+  /// El aviso se discierne por MODO y ACCIÓN — no solo el título: también el
+  /// icono y, sobre todo, el CTA (e2e 2026-08-06).
+  ///
+  /// Antes todo se anunciaba como "¡Nueva orden pagada! · Ir a atenderla".
+  /// Eso rompía en los dos extremos del ciclo de la cuenta abierta: una tanda
+  /// recién enviada prometía un cobro que no ocurrió, y el pago final mandaba
+  /// al negocio a atender una mesa que acababa de irse.
+  ///
+  /// `tab_closed` es el único informativo: no hay nada que atender, solo algo
+  /// que mirar.
+  (String, IconData, String) get _look => switch (kind) {
+        'more_items' => (
+            S.current.managerMoreItemsTitle,
+            Icons.add_shopping_cart_rounded,
+            S.current.managerNewOrderGo,
+          ),
+        'paid' => (
+            S.current.managerPaidOrderTitle,
+            Icons.payments_rounded,
+            S.current.managerNewOrderGo,
+          ),
+        'tab_closed' => (
+            S.current.managerTabClosedTitle,
+            Icons.check_circle_rounded,
+            S.current.managerViewOrderGo,
+          ),
+        _ => (
+            S.current.managerNewOrderTitle,
+            Icons.room_service_rounded,
+            S.current.managerNewOrderGo,
+          ),
+      };
 
   @override
   Widget build(BuildContext context) {
+    final (title, icon, goLabel) = _look;
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -161,11 +207,11 @@ class _AlertCard extends StatelessWidget {
                 color: FoodlyThemes.primaryFoodly.withValues(alpha: .1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.room_service_rounded, color: FoodlyThemes.primaryFoodly, size: 30),
+              child: Icon(icon, color: FoodlyThemes.primaryFoodly, size: 30),
             ),
             const SizedBox(height: 14),
             Text(
-              S.current.managerNewOrderTitle,
+              title,
               textAlign: TextAlign.center,
               style: FoodlyTextStyles.sectionsTitle,
             ),
@@ -184,7 +230,7 @@ class _AlertCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
                 child: Text(
-                  S.current.managerNewOrderGo,
+                  goLabel,
                   style: FoodlyTextStyles.labelBold.copyWith(color: Colors.white),
                 ),
               ),

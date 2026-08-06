@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -45,7 +47,8 @@ void main() {
       expect(find.text('€9.50'), findsOneWidget);
     });
 
-    testWidgets('e2e r7: el badge Compartido lleva tooltip por TAP que explica '
+    testWidgets(
+        'e2e r7: el badge Compartido lleva tooltip por TAP que explica '
         'el reparto (se confundía con "yo invito")', (tester) async {
       const item = GroupOrderItemDM(
         uuid: 'i5',
@@ -85,7 +88,8 @@ void main() {
       expect(find.byIcon(Icons.close_rounded), findsOneWidget);
     });
 
-    testWidgets('e2e r6: mientras el borrado está en vuelo la X es spinner, '
+    testWidgets(
+        'e2e r6: mientras el borrado está en vuelo la X es spinner, '
         'ignora re-taps y vuelve al terminar', (tester) async {
       const item = GroupOrderItemDM(uuid: 'i4', name: 'Nachos', unitPricePreview: 5.0);
       final gate = Completer<void>();
@@ -138,6 +142,93 @@ void main() {
         shouldCelebrateConfirmation(alreadyShown: false, sawAliveOrder: true, isConfirmed: false),
         isFalse,
       );
+    });
+
+    // e2e 2026-08-06 — en cuenta abierta `confirmed` es el PRINCIPIO (primera
+    // tanda a cocina), no el final. Festejar ahí ponía "¡Orden confirmada!"
+    // detrás del sheet "Pedido enviado a cocina".
+    test('cuenta abierta: enviar la primera tanda NO se celebra', () {
+      expect(
+        shouldCelebrateConfirmation(
+          alreadyShown: false,
+          sawAliveOrder: true,
+          isConfirmed: true, // confirmed = comanda enviada
+          isOpenTab: true,
+          isPaid: false, // nadie pagó todavía
+        ),
+        isFalse,
+        reason: 'La mesa recién pidió: la orden empieza, no termina.',
+      );
+    });
+
+    test('cuenta abierta: se celebra al SALDAR la cuenta', () {
+      expect(
+        shouldCelebrateConfirmation(
+          alreadyShown: false,
+          sawAliveOrder: true,
+          isConfirmed: true,
+          isOpenTab: true,
+          isPaid: true,
+        ),
+        isTrue,
+      );
+    });
+
+    test('cuenta abierta: entregada pero SIN pagar tampoco se celebra', () {
+      expect(
+        shouldCelebrateConfirmation(
+          alreadyShown: false,
+          sawAliveOrder: true,
+          isConfirmed: true,
+          isOpenTab: true,
+          isPaid: false,
+        ),
+        isFalse,
+      );
+    });
+
+    test('prepago por ronda no cambia: pagar ES confirmar', () {
+      expect(
+        shouldCelebrateConfirmation(
+          alreadyShown: false,
+          sawAliveOrder: true,
+          isConfirmed: true,
+          isOpenTab: false,
+          isPaid: false, // el modo viejo no mira el dinero
+        ),
+        isTrue,
+      );
+    });
+
+    // Invariante sobre el producto cartesiano: ninguna combinación puede
+    // celebrar dos veces ni celebrar sin haber visto la orden viva.
+    test('invariante: alreadyShown o !sawAliveOrder ⇒ nunca celebra', () {
+      for (final confirmed in [true, false]) {
+        for (final openTab in [true, false]) {
+          for (final paid in [true, false]) {
+            expect(
+              shouldCelebrateConfirmation(
+                alreadyShown: true,
+                sawAliveOrder: true,
+                isConfirmed: confirmed,
+                isOpenTab: openTab,
+                isPaid: paid,
+              ),
+              isFalse,
+            );
+            expect(
+              shouldCelebrateConfirmation(
+                alreadyShown: false,
+                sawAliveOrder: false,
+                isConfirmed: confirmed,
+                isOpenTab: openTab,
+                isPaid: paid,
+              ),
+              isFalse,
+            );
+          }
+        }
+      }
     });
   });
 

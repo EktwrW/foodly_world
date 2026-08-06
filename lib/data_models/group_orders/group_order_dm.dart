@@ -309,6 +309,15 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   double get paymentProgress =>
       totalAmount <= 0 ? 0 : (totalPaid / totalAmount).clamp(0, 1);
 
+  /// La cuenta está SALDADA: entró todo el dinero.
+  ///
+  /// e2e 2026-08-06 — hace falta porque `confirmed` es ambiguo en cuenta
+  /// abierta: significa "primera tanda enviada a cocina" (el principio) y
+  /// también "pagada" (el final), porque el webhook reusa el mismo estado en
+  /// ambos modos. El estado no distingue; el dinero sí. Epsilon de medio
+  /// céntimo por el redondeo de los doubles.
+  bool get isFullyPaid => totalAmount > 0 && totalRemaining <= 0.005;
+
   /// Items pedidos por un participante dado.
   List<GroupOrderItemDM> itemsFor(String participantUuid) =>
       items.where((i) => i.participantUuid == participantUuid).toList();
