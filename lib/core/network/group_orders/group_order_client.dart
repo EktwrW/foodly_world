@@ -158,6 +158,15 @@ abstract class GroupOrderClient {
     @Query('limit') int? limit,
   });
 
+  /// F4b.1: anula/restaura un ítem (plato devuelto — no se cobra).
+  @PATCH('/manager/group-orders/{uuid}/items/{itemUuid}/void')
+  Future<GroupOrderResponseDM> managerSetItemVoided(
+    @Path('uuid') String uuid,
+    @Path('itemUuid') String itemUuid, {
+    @Field('voided') required bool voided,
+    @Field('reason') String? reason,
+  });
+
   @PATCH('/manager/group-orders/{uuid}/fulfillment')
   Future<GroupOrderResponseDM> managerSetFulfillment(
     @Path('uuid') String uuid, {

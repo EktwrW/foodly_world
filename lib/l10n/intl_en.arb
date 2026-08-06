@@ -1498,6 +1498,17 @@
   "stripeBridgeRefreshBody": "Resume activation from the app: Orders → Activate payments with Stripe.",
   "managerChecklistHint": "Tap each item to mark it as delivered",
   "managerUnpaidBadge": "UNPAID",
+  "managerVoidItemCta": "Don't charge",
+  "managerVoidedItemTag": "REMOVED · not charged",
+  "managerVoidItemConfirm": "Remove \"{item}\" from the bill? It stays visible to the guest, marked as removed by the business.",
+  "@managerVoidItemConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderItemVoided": "Removed by the business · not charged",
   "managerBatchLabel": "BATCH {n}",
   "@managerBatchLabel": {
     "placeholders": {
@@ -1528,6 +1539,17 @@
         "type": "int"
       },
       "total": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderChipSent": "Order sent",
+  "groupOrderChipPreparing": "Preparing your order",
+  "groupOrderChipReady": "Your order is ready!",
+  "groupOrderChipToPay": "Pay the bill · {amount}",
+  "@groupOrderChipToPay": {
+    "placeholders": {
+      "amount": {
         "type": "String"
       }
     }

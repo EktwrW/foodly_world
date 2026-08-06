@@ -34,7 +34,13 @@ mixin _$GroupOrderItemDM {
   @JsonKey(name: 'batch_no')
   int? get batchNo;
   @JsonKey(name: 'sent_at')
-  DateTime? get sentAt;
+  DateTime?
+      get sentAt; // F4b.1: el negocio anuló el ítem (plato devuelto/mal preparado): sigue
+// visible con su motivo, pero NO se cobra.
+  @JsonKey(name: 'voided_at')
+  DateTime? get voidedAt;
+  @JsonKey(name: 'voided_reason')
+  String? get voidedReason;
 
   /// Create a copy of GroupOrderItemDM
   /// with the given fields replaced by the non-null parameter values.
@@ -67,7 +73,11 @@ mixin _$GroupOrderItemDM {
             (identical(other.deliveredAt, deliveredAt) ||
                 other.deliveredAt == deliveredAt) &&
             (identical(other.batchNo, batchNo) || other.batchNo == batchNo) &&
-            (identical(other.sentAt, sentAt) || other.sentAt == sentAt));
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            (identical(other.voidedAt, voidedAt) ||
+                other.voidedAt == voidedAt) &&
+            (identical(other.voidedReason, voidedReason) ||
+                other.voidedReason == voidedReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -84,11 +94,13 @@ mixin _$GroupOrderItemDM {
       notes,
       deliveredAt,
       batchNo,
-      sentAt);
+      sentAt,
+      voidedAt,
+      voidedReason);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
   }
 }
 
@@ -111,7 +123,9 @@ abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
       String? notes,
       @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
       @JsonKey(name: 'batch_no') int? batchNo,
-      @JsonKey(name: 'sent_at') DateTime? sentAt});
+      @JsonKey(name: 'sent_at') DateTime? sentAt,
+      @JsonKey(name: 'voided_at') DateTime? voidedAt,
+      @JsonKey(name: 'voided_reason') String? voidedReason});
 }
 
 /// @nodoc
@@ -138,6 +152,8 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
     Object? deliveredAt = freezed,
     Object? batchNo = freezed,
     Object? sentAt = freezed,
+    Object? voidedAt = freezed,
+    Object? voidedReason = freezed,
   }) {
     return _then(_self.copyWith(
       uuid: null == uuid
@@ -184,6 +200,14 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      voidedAt: freezed == voidedAt
+          ? _self.voidedAt
+          : voidedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      voidedReason: freezed == voidedReason
+          ? _self.voidedReason
+          : voidedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -294,7 +318,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String? notes,
             @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
             @JsonKey(name: 'batch_no') int? batchNo,
-            @JsonKey(name: 'sent_at') DateTime? sentAt)?
+            @JsonKey(name: 'sent_at') DateTime? sentAt,
+            @JsonKey(name: 'voided_at') DateTime? voidedAt,
+            @JsonKey(name: 'voided_reason') String? voidedReason)?
         $default, {
     required TResult orElse(),
   }) {
@@ -312,7 +338,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.notes,
             _that.deliveredAt,
             _that.batchNo,
-            _that.sentAt);
+            _that.sentAt,
+            _that.voidedAt,
+            _that.voidedReason);
       case _:
         return orElse();
     }
@@ -346,7 +374,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String? notes,
             @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
             @JsonKey(name: 'batch_no') int? batchNo,
-            @JsonKey(name: 'sent_at') DateTime? sentAt)
+            @JsonKey(name: 'sent_at') DateTime? sentAt,
+            @JsonKey(name: 'voided_at') DateTime? voidedAt,
+            @JsonKey(name: 'voided_reason') String? voidedReason)
         $default,
   ) {
     final _that = this;
@@ -363,7 +393,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.notes,
             _that.deliveredAt,
             _that.batchNo,
-            _that.sentAt);
+            _that.sentAt,
+            _that.voidedAt,
+            _that.voidedReason);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -396,7 +428,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String? notes,
             @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
             @JsonKey(name: 'batch_no') int? batchNo,
-            @JsonKey(name: 'sent_at') DateTime? sentAt)?
+            @JsonKey(name: 'sent_at') DateTime? sentAt,
+            @JsonKey(name: 'voided_at') DateTime? voidedAt,
+            @JsonKey(name: 'voided_reason') String? voidedReason)?
         $default,
   ) {
     final _that = this;
@@ -413,7 +447,9 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.notes,
             _that.deliveredAt,
             _that.batchNo,
-            _that.sentAt);
+            _that.sentAt,
+            _that.voidedAt,
+            _that.voidedReason);
       case _:
         return null;
     }
@@ -436,7 +472,9 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       this.notes,
       @JsonKey(name: 'delivered_at') this.deliveredAt,
       @JsonKey(name: 'batch_no') this.batchNo,
-      @JsonKey(name: 'sent_at') this.sentAt})
+      @JsonKey(name: 'sent_at') this.sentAt,
+      @JsonKey(name: 'voided_at') this.voidedAt,
+      @JsonKey(name: 'voided_reason') this.voidedReason})
       : super._();
   factory _GroupOrderItemDM.fromJson(Map<String, dynamic> json) =>
       _$GroupOrderItemDMFromJson(json);
@@ -477,6 +515,14 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
   @override
   @JsonKey(name: 'sent_at')
   final DateTime? sentAt;
+// F4b.1: el negocio anuló el ítem (plato devuelto/mal preparado): sigue
+// visible con su motivo, pero NO se cobra.
+  @override
+  @JsonKey(name: 'voided_at')
+  final DateTime? voidedAt;
+  @override
+  @JsonKey(name: 'voided_reason')
+  final String? voidedReason;
 
   /// Create a copy of GroupOrderItemDM
   /// with the given fields replaced by the non-null parameter values.
@@ -513,7 +559,11 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
             (identical(other.deliveredAt, deliveredAt) ||
                 other.deliveredAt == deliveredAt) &&
             (identical(other.batchNo, batchNo) || other.batchNo == batchNo) &&
-            (identical(other.sentAt, sentAt) || other.sentAt == sentAt));
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            (identical(other.voidedAt, voidedAt) ||
+                other.voidedAt == voidedAt) &&
+            (identical(other.voidedReason, voidedReason) ||
+                other.voidedReason == voidedReason));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -530,11 +580,13 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       notes,
       deliveredAt,
       batchNo,
-      sentAt);
+      sentAt,
+      voidedAt,
+      voidedReason);
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
   }
 }
 
@@ -559,7 +611,9 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
       String? notes,
       @JsonKey(name: 'delivered_at') DateTime? deliveredAt,
       @JsonKey(name: 'batch_no') int? batchNo,
-      @JsonKey(name: 'sent_at') DateTime? sentAt});
+      @JsonKey(name: 'sent_at') DateTime? sentAt,
+      @JsonKey(name: 'voided_at') DateTime? voidedAt,
+      @JsonKey(name: 'voided_reason') String? voidedReason});
 }
 
 /// @nodoc
@@ -586,6 +640,8 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
     Object? deliveredAt = freezed,
     Object? batchNo = freezed,
     Object? sentAt = freezed,
+    Object? voidedAt = freezed,
+    Object? voidedReason = freezed,
   }) {
     return _then(_GroupOrderItemDM(
       uuid: null == uuid
@@ -632,6 +688,14 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      voidedAt: freezed == voidedAt
+          ? _self.voidedAt
+          : voidedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      voidedReason: freezed == voidedReason
+          ? _self.voidedReason
+          : voidedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

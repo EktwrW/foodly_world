@@ -181,6 +181,22 @@ class GroupOrderRepo {
     }
   }
 
+  /// F4b.1: anula/restaura un ítem (plato devuelto — no se cobra).
+  Future<ApiResult<GroupOrderResponseDM>> managerSetItemVoided(
+    String uuid,
+    String itemUuid, {
+    required bool voided,
+    String? reason,
+  }) async {
+    try {
+      return ApiResult.success(
+        await _client.managerSetItemVoided(uuid, itemUuid, voided: voided, reason: reason),
+      );
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<GroupOrderResponseDM>> managerDeliverAll(String uuid) async {
     try {
       return ApiResult.success(await _client.managerDeliverAll(uuid));

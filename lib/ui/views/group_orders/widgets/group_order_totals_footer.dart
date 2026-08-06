@@ -30,6 +30,9 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// quien no es host.
   final VoidCallback? onRequestBill;
 
+  /// F4b: "Pedir más" — vuelve al menú del negocio (cualquier comensal).
+  final VoidCallback? onOrderMore;
+
   /// "Yo invito" global (F2b §A.2): pagar TODO lo pendiente de la orden.
   /// null => sin botón (el caller decide cuándo tiene sentido mostrarlo).
   final VoidCallback? onPayAll;
@@ -46,6 +49,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     this.onLock,
     this.onSend,
     this.onRequestBill,
+    this.onOrderMore,
     this.onPayAll,
     this.isBusy = false,
   });
@@ -158,6 +162,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               isBusy: isBusy,
               onSend: onSend,
               onRequestBill: onRequestBill,
+              onOrderMore: onOrderMore,
             )
           else if (isOpen)
             // Host: cierra el pedido (congela precios y habilita el pago).
@@ -239,12 +244,14 @@ class _OpenTabCta extends StatelessWidget {
   final bool isBusy;
   final VoidCallback? onSend;
   final VoidCallback? onRequestBill;
+  final VoidCallback? onOrderMore;
 
   const _OpenTabCta({
     required this.order,
     required this.isBusy,
     this.onSend,
     this.onRequestBill,
+    this.onOrderMore,
   });
 
   @override
@@ -289,6 +296,17 @@ class _OpenTabCta extends StatelessWidget {
           style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
           textAlign: TextAlign.center,
         ),
+        // e2e F4b: sin esto, tras enviar la tanda NADA le decía al comensal
+        // que podía seguir pidiendo — tenía que intuirlo.
+        if (state != OpenTabCtaState.send && onOrderMore != null) ...[
+          const SizedBox(height: 4),
+          TextButton.icon(
+            onPressed: onOrderMore,
+            icon: const Icon(Icons.add_rounded, size: 16, color: FoodlyThemes.primaryFoodly),
+            label: Text(S.current.groupOrderOrderMore,
+                style: FoodlyTextStyles.captionPurpleBold),
+          ),
+        ],
       ],
     );
   }

@@ -27,6 +27,10 @@ _GroupOrderItemDM _$GroupOrderItemDMFromJson(Map<String, dynamic> json) =>
       sentAt: json['sent_at'] == null
           ? null
           : DateTime.parse(json['sent_at'] as String),
+      voidedAt: json['voided_at'] == null
+          ? null
+          : DateTime.parse(json['voided_at'] as String),
+      voidedReason: json['voided_reason'] as String?,
     );
 
 Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
@@ -44,6 +48,9 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
       if (instance.batchNo case final value?) 'batch_no': value,
       if (instance.sentAt?.toIso8601String() case final value?)
         'sent_at': value,
+      if (instance.voidedAt?.toIso8601String() case final value?)
+        'voided_at': value,
+      if (instance.voidedReason case final value?) 'voided_reason': value,
     };
 
 _GroupOrderParticipantDM _$GroupOrderParticipantDMFromJson(

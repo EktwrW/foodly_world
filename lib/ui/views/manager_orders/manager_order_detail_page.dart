@@ -148,7 +148,8 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          S.current.managerItemsDelivered(order.deliveredItemsCount, order.items.length),
+                          S.current.managerItemsDelivered(
+                              order.deliveredItemsCount, order.liveItemsCount),
                           style: FoodlyTextStyles.captionBold
                               .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
                         ),
@@ -210,12 +211,11 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                         // sin pasar por los estados intermedios.
                         if (order.fulfillmentStatus != GroupFulfillmentStatus.ready)
                           TextButton(
-                            onPressed: () async {
-                              if (await cubit.deliverAll(order.uuid)) {
-                                await cubit.advanceFulfillment(
-                                    order.uuid, GroupFulfillmentStatus.delivered.name);
-                              }
-                            },
+                            // e2e F4b: SOLO deliverAll — el BE ya auto-entrega
+                            // la orden al completarse el checklist. El advance
+                            // que había acá daba 409 (delivered→delivered) y
+                            // mostraba un modal de error tras una acción OK.
+                            onPressed: () => cubit.deliverAll(order.uuid),
                             child: Text(
                               S.current.managerDeliverAllAndClose,
                               style: FoodlyTextStyles.captionPurpleBold,
@@ -274,13 +274,33 @@ class _ParticipantChecklist extends StatelessWidget {
     final items = order.itemsFor(participant.uuid);
     if (items.isEmpty) return const SizedBox.shrink();
 
-    final canCheck = order.fulfillmentStatus != GroupFulfillmentStatus.delivered;
+    // e2e F4b: el checklist se opera mientras QUEDE algo por servir — no
+    // según el estado de la orden. Con tandas, una orden "entregada" recibe
+    // ítems nuevos y su checklist quedaba muerto (tap sin efecto).
+    final canCheck = !order.allItemsDelivered ||
+        order.fulfillmentStatus != GroupFulfillmentStatus.delivered;
 
     // Sin fricción (decisión Hector e2e F4a): tildar el último ítem entrega
     // la orden SOLA, sin confirmaciones — checklist y CTA son dos caminos al
     // mismo estado.
     Future<void> toggle(GroupOrderItemDM item) async =>
         cubit.setItemDelivered(order.uuid, item.uuid, item.deliveredAt == null);
+
+    /// F4b.1 — anular/restaurar un ítem (plato devuelto o mal preparado):
+    /// deja de cobrarse pero sigue visible para el comensal.
+    Future<void> toggleVoid(GroupOrderItemDM item) async {
+      if (item.isVoided) {
+        await cubit.setItemVoided(order.uuid, item.uuid, false);
+        return;
+      }
+      final ok = await showFoodlyConfirm(
+        context,
+        message: S.current.managerVoidItemConfirm(item.name),
+        confirmText: S.current.managerVoidItemCta,
+      );
+      if (!ok) return;
+      await cubit.setItemVoided(order.uuid, item.uuid, true);
+    }
 
     return Card(
       color: Colors.white,
@@ -311,7 +331,9 @@ class _ParticipantChecklist extends StatelessWidget {
                 ),
               InkWell(
                 borderRadius: BorderRadius.circular(8),
-                onTap: canCheck ? () => toggle(item) : null,
+                onTap: (canCheck && !item.isVoided) ? () => toggle(item) : null,
+                // F4b.1: mantener presionado = anular/restaurar el ítem.
+                onLongPress: () => toggleVoid(item),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Row(
@@ -319,29 +341,44 @@ class _ParticipantChecklist extends StatelessWidget {
                       // Affordance explícito (e2e F4a): checkbox cuadrado con
                       // borde marcado — "esto se tilda", no un icono decorativo.
                       Icon(
-                        item.deliveredAt != null
-                            ? Icons.check_box_rounded
-                            : Icons.check_box_outline_blank_rounded,
+                        item.isVoided
+                            ? Icons.block_rounded
+                            : (item.deliveredAt != null
+                                ? Icons.check_box_rounded
+                                : Icons.check_box_outline_blank_rounded),
                         size: 20,
-                        color: item.deliveredAt != null
-                            ? FoodlyThemes.tertiaryFoodly
-                            : FoodlyThemes.primaryFoodly.withValues(alpha: 0.45),
+                        color: item.isVoided
+                            ? const Color(0xFFB3261E)
+                            : (item.deliveredAt != null
+                                ? FoodlyThemes.tertiaryFoodly
+                                : FoodlyThemes.primaryFoodly.withValues(alpha: 0.45)),
                       ),
                       const SizedBox(width: 8),
                       Text('${item.quantity}×', style: FoodlyTextStyles.captionPurpleBold),
                       const SizedBox(width: 6),
                       Expanded(
-                        child: Text(
-                          item.name,
-                          style: item.deliveredAt != null
-                              ? FoodlyTextStyles.caption
-                                  .copyWith(decoration: TextDecoration.lineThrough)
-                              : FoodlyTextStyles.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.name,
+                              style: (item.deliveredAt != null || item.isVoided)
+                                  ? FoodlyTextStyles.caption
+                                      .copyWith(decoration: TextDecoration.lineThrough)
+                                  : FoodlyTextStyles.label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (item.isVoided)
+                              Text(
+                                S.current.managerVoidedItemTag,
+                                style: FoodlyTextStyles.captionBold
+                                    .copyWith(color: const Color(0xFFB3261E), fontSize: 9),
+                              ),
+                          ],
                         ),
                       ),
-                      if (item.shared)
+                      if (item.shared && !item.isVoided)
                         Text(S.current.groupOrderSharedBadge,
                             style: FoodlyTextStyles.captionBold
                                 .copyWith(color: const Color(0xFF0B8A40), fontSize: 9)),

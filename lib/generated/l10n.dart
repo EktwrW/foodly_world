@@ -9415,6 +9415,46 @@ class S {
     );
   }
 
+  /// `Don't charge`
+  String get managerVoidItemCta {
+    return Intl.message(
+      'Don\'t charge',
+      name: 'managerVoidItemCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `REMOVED · not charged`
+  String get managerVoidedItemTag {
+    return Intl.message(
+      'REMOVED · not charged',
+      name: 'managerVoidedItemTag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove "{item}" from the bill? It stays visible to the guest, marked as removed by the business.`
+  String managerVoidItemConfirm(String item) {
+    return Intl.message(
+      'Remove "$item" from the bill? It stays visible to the guest, marked as removed by the business.',
+      name: 'managerVoidItemConfirm',
+      desc: '',
+      args: [item],
+    );
+  }
+
+  /// `Removed by the business · not charged`
+  String get groupOrderItemVoided {
+    return Intl.message(
+      'Removed by the business · not charged',
+      name: 'groupOrderItemVoided',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `BATCH {n}`
   String managerBatchLabel(int n) {
     return Intl.message(
@@ -9582,6 +9622,46 @@ class S {
       name: 'managerHistoryDaySummary',
       desc: '',
       args: [count, total],
+    );
+  }
+
+  /// `Order sent`
+  String get groupOrderChipSent {
+    return Intl.message(
+      'Order sent',
+      name: 'groupOrderChipSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preparing your order`
+  String get groupOrderChipPreparing {
+    return Intl.message(
+      'Preparing your order',
+      name: 'groupOrderChipPreparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your order is ready!`
+  String get groupOrderChipReady {
+    return Intl.message(
+      'Your order is ready!',
+      name: 'groupOrderChipReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay the bill · {amount}`
+  String groupOrderChipToPay(String amount) {
+    return Intl.message(
+      'Pay the bill · $amount',
+      name: 'groupOrderChipToPay',
+      desc: '',
+      args: [amount],
     );
   }
 

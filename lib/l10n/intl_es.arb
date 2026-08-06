@@ -1498,6 +1498,17 @@
   "stripeBridgeRefreshBody": "Retomá la activación desde la app: Órdenes → Activar pagos con Stripe.",
   "managerChecklistHint": "Tocá cada ítem para marcarlo como entregado",
   "managerUnpaidBadge": "POR PAGAR",
+  "managerVoidItemCta": "No cobrar",
+  "managerVoidedItemTag": "REMOVIDO · no se cobra",
+  "managerVoidItemConfirm": "¿Quitar \"{item}\" de la cuenta? Seguirá visible para el comensal, marcado como removido por el negocio.",
+  "@managerVoidItemConfirm": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderItemVoided": "Removido por el negocio · no se cobra",
   "managerBatchLabel": "TANDA {n}",
   "@managerBatchLabel": {
     "placeholders": {
@@ -1528,6 +1539,17 @@
         "type": "int"
       },
       "total": {
+        "type": "String"
+      }
+    }
+  },
+  "groupOrderChipSent": "Pedido enviado",
+  "groupOrderChipPreparing": "Preparando tu pedido",
+  "groupOrderChipReady": "¡Tu pedido está listo!",
+  "groupOrderChipToPay": "Pagar la cuenta · {amount}",
+  "@groupOrderChipToPay": {
+    "placeholders": {
+      "amount": {
         "type": "String"
       }
     }
