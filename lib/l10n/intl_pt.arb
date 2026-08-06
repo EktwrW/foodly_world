@@ -1621,5 +1621,7 @@
   },
   "groupOrderNewTab": "Abrir outra conta",
   "managerMoreItemsTitle": "A mesa pediu mais",
-  "managerPaidOrderTitle": "Novo pedido pago!"
+  "managerPaidOrderTitle": "Novo pedido pago!",
+  "managerTabClosedTitle": "Conta fechada",
+  "managerViewOrderGo": "Ver o detalhe"
 }

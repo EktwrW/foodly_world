@@ -1599,10 +1599,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Atualizar estado",
     ),
     "managerRound": m58,
+    "managerTabClosedTitle": MessageLookupByLibrary.simpleMessage(
+      "Conta fechada",
+    ),
     "managerTableHint": MessageLookupByLibrary.simpleMessage(
       "Ex.: 7, Balcão 2, Esplanada",
     ),
     "managerUnpaidBadge": MessageLookupByLibrary.simpleMessage("A PAGAR"),
+    "managerViewOrderGo": MessageLookupByLibrary.simpleMessage("Ver o detalhe"),
     "managerVoidItemConfirm": m59,
     "managerVoidItemCta": MessageLookupByLibrary.simpleMessage("Não cobrar"),
     "managerVoidedItemTag": MessageLookupByLibrary.simpleMessage(

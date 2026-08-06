@@ -139,13 +139,43 @@ void main() {
     expect(find.text(S.current.managerNewOrderTitle), findsNothing);
   });
 
-  testWidgets('kind=paid → "¡Nueva orden pagada!" (único caso que habla de dinero)',
+  testWidgets('kind=paid (prepago) → "¡Nueva orden pagada!" e invita a atenderla',
       (tester) async {
     await tester.pumpWidget(host());
     pushes.add(push(businessUuid: 'biz-1', kind: 'paid'));
     await tester.pumpAndSettle();
 
     expect(find.text(S.current.managerPaidOrderTitle), findsOneWidget);
+    // En prepago el pago ES la comanda entrando a cocina: sí hay que atenderla.
+    expect(find.text(S.current.managerNewOrderGo), findsOneWidget);
+  });
+
+  testWidgets('kind=tab_closed (cuenta abierta) → "Cuenta cerrada" y NO invita '
+      'a atender una mesa que ya se fue', (tester) async {
+    await tester.pumpWidget(host());
+    pushes.add(push(businessUuid: 'biz-1', kind: 'tab_closed'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(S.current.managerTabClosedTitle), findsOneWidget);
+    expect(find.text(S.current.managerPaidOrderTitle), findsNothing);
+    expect(
+      find.text(S.current.managerNewOrderGo),
+      findsNothing,
+      reason: 'La comanda se cocinó y entregó hace rato; no hay nada que atender.',
+    );
+    expect(find.text(S.current.managerViewOrderGo), findsOneWidget);
+  });
+
+  testWidgets('tab_closed sigue navegando a la orden concreta', (tester) async {
+    String? order;
+    await tester.pumpWidget(host(onGo: (_, o) => order = o));
+
+    pushes.add(push(businessUuid: 'biz-1', kind: 'tab_closed'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(S.current.managerViewOrderGo));
+    await tester.pumpAndSettle();
+
+    expect(order, 'order-1');
   });
 
   testWidgets('sin kind (builds viejos del BE) cae en el título neutro', (tester) async {

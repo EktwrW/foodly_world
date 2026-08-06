@@ -1534,10 +1534,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Refresh status",
     ),
     "managerRound": m58,
+    "managerTabClosedTitle": MessageLookupByLibrary.simpleMessage("Tab closed"),
     "managerTableHint": MessageLookupByLibrary.simpleMessage(
       "E.g.: 7, Bar 2, Terrace",
     ),
     "managerUnpaidBadge": MessageLookupByLibrary.simpleMessage("UNPAID"),
+    "managerViewOrderGo": MessageLookupByLibrary.simpleMessage("View details"),
     "managerVoidItemConfirm": m59,
     "managerVoidItemCta": MessageLookupByLibrary.simpleMessage("Don\'t charge"),
     "managerVoidedItemTag": MessageLookupByLibrary.simpleMessage(

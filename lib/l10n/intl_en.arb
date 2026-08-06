@@ -1621,5 +1621,7 @@
   },
   "groupOrderNewTab": "Open another tab",
   "managerMoreItemsTitle": "The table ordered more",
-  "managerPaidOrderTitle": "New paid order!"
+  "managerPaidOrderTitle": "New paid order!",
+  "managerTabClosedTitle": "Tab closed",
+  "managerViewOrderGo": "View details"
 }

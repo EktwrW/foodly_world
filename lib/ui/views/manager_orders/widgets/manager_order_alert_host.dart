@@ -149,19 +149,42 @@ class _AlertCard extends StatelessWidget {
     required this.onGo,
   });
 
-  /// Título e icono según lo que REALMENTE pasó. Antes todo se anunciaba como
-  /// "¡Nueva orden pagada!", así que una cuenta abierta recién enviada —donde
-  /// nadie pagó nada todavía— le prometía al negocio un cobro inexistente
-  /// (e2e 2026-08-06). El `kind` lo manda el BE.
-  (String, IconData) get _look => switch (kind) {
-        'more_items' => (S.current.managerMoreItemsTitle, Icons.add_shopping_cart_rounded),
-        'paid' => (S.current.managerPaidOrderTitle, Icons.payments_rounded),
-        _ => (S.current.managerNewOrderTitle, Icons.room_service_rounded),
+  /// El aviso se discierne por MODO y ACCIÓN — no solo el título: también el
+  /// icono y, sobre todo, el CTA (e2e 2026-08-06).
+  ///
+  /// Antes todo se anunciaba como "¡Nueva orden pagada! · Ir a atenderla".
+  /// Eso rompía en los dos extremos del ciclo de la cuenta abierta: una tanda
+  /// recién enviada prometía un cobro que no ocurrió, y el pago final mandaba
+  /// al negocio a atender una mesa que acababa de irse.
+  ///
+  /// `tab_closed` es el único informativo: no hay nada que atender, solo algo
+  /// que mirar.
+  (String, IconData, String) get _look => switch (kind) {
+        'more_items' => (
+            S.current.managerMoreItemsTitle,
+            Icons.add_shopping_cart_rounded,
+            S.current.managerNewOrderGo,
+          ),
+        'paid' => (
+            S.current.managerPaidOrderTitle,
+            Icons.payments_rounded,
+            S.current.managerNewOrderGo,
+          ),
+        'tab_closed' => (
+            S.current.managerTabClosedTitle,
+            Icons.check_circle_rounded,
+            S.current.managerViewOrderGo,
+          ),
+        _ => (
+            S.current.managerNewOrderTitle,
+            Icons.room_service_rounded,
+            S.current.managerNewOrderGo,
+          ),
       };
 
   @override
   Widget build(BuildContext context) {
-    final (title, icon) = _look;
+    final (title, icon, goLabel) = _look;
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -207,7 +230,7 @@ class _AlertCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 ),
                 child: Text(
-                  S.current.managerNewOrderGo,
+                  goLabel,
                   style: FoodlyTextStyles.labelBold.copyWith(color: Colors.white),
                 ),
               ),

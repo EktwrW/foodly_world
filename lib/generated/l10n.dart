@@ -9964,6 +9964,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Tab closed`
+  String get managerTabClosedTitle {
+    return Intl.message(
+      'Tab closed',
+      name: 'managerTabClosedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View details`
+  String get managerViewOrderGo {
+    return Intl.message(
+      'View details',
+      name: 'managerViewOrderGo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
