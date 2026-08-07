@@ -22,8 +22,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// mientras el comensal navega otras pantallas. Ver [watchActive].
   final GroupOrderRealtimeService? _realtime;
 
-  /// uuid que el chip está observando ahora mismo (null = no es el dueño).
+  /// uuid observado ahora mismo, y su suscripción (para cancelar la NUESTRA).
   String? _watchedUuid;
+  RealtimeSubscription? _sub;
   bool _busy = false;
 
   ActiveGroupOrderCubit({
@@ -217,29 +218,26 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   // y el chip seguía mostrando una foto vieja: por eso decía "preparando"
   // cuando la tanda 2 ya estaba entregada.
   //
-  // El servicio realtime es SINGLETON y `watch()` desconecta lo anterior,
-  // así que no se pueden tener dos suscripciones vivas. No hace falta: el
-  // chip se OCULTA mientras la GroupOrderPage está abierta. Un solo socket
-  // con dueño explícito — la página manda mientras está abierta, el chip
-  // retoma al cerrarse.
+  // El servicio es multi-canal sobre UNA conexión, así que el chip sostiene
+  // su suscripción SIEMPRE mientras haya orden activa. No hay traspaso de
+  // dueño con la página de la orden: convivir es correcto y elimina la
+  // carrera que dejaba al chip suscrito pero sin socket.
 
-  /// Toma la suscripción del chip sobre la orden activa. Idempotente: si ya
-  /// está observando ese uuid no reconecta.
+  /// Observa la orden activa. Idempotente: si ya observa ese uuid no hace
+  /// nada; si cambió de orden, cancela la anterior primero.
   Future<void> watchActive() async {
     final uuid = state?.uuid;
     if (_realtime == null || uuid == null || _watchedUuid == uuid) return;
+    await _sub?.cancel();
     _watchedUuid = uuid;
-    await _realtime.watch(uuid, onTouched: refresh);
+    _sub = await _realtime.watch(uuid, onTouched: refresh);
   }
-
-  /// Cede la suscripción (la GroupOrderPage pasa a ser dueña) sin cortar el
-  /// socket: la página llama a `watch()` acto seguido sobre el mismo canal.
-  void releaseWatch() => _watchedUuid = null;
 
   /// Termina la orden activa (tras cerrar/pagar/cancelar): limpia el carrito.
   void end() {
     _watchedUuid = null;
-    _realtime?.unwatch();
+    _sub?.cancel();
+    _sub = null;
     emit(null);
   }
 }

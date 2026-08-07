@@ -54,6 +54,11 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   final GroupOrderRepo _repo;
   final Logger _logger;
   final GroupOrderRealtimeService? _realtime;
+
+  /// Suscripción PROPIA al canal del negocio. Antes el servicio era
+  /// mono-canal y cualquier otro consumidor (el chip del comensal) dejaba
+  /// mudo este panel al suscribirse (2026-08-06).
+  RealtimeSubscription? _sub;
   final String businessUuid;
 
   ManagerOrdersCubit({
@@ -70,7 +75,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     emit(state.copyWith(loading: true, error: null));
     await _fetch();
     // Canal live del panel: cualquier evento → refetch silencioso.
-    await _realtime?.watchBusiness(businessUuid, onTouched: refetchSilently);
+    _sub = await _realtime?.watchBusiness(businessUuid, onTouched: refetchSilently);
   }
 
   Future<void> selectBucket(String? bucket) async {
@@ -151,7 +156,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   @override
   Future<void> close() async {
-    await _realtime?.unwatch();
+    await _sub?.cancel();
     return super.close();
   }
 }

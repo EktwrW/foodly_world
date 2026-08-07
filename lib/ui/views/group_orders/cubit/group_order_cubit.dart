@@ -19,6 +19,10 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   /// F3a: realtime opcional (null en tests). Se suscribe al cargar la orden
   /// y se libera al cerrar el cubit (= salir de la pantalla).
   final GroupOrderRealtimeService? _realtime;
+
+  /// Suscripción PROPIA: se cancela solo la nuestra, nunca la de
+  /// otro consumidor del servicio (2026-08-06).
+  RealtimeSubscription? _sub;
   GroupOrderVM _vm;
 
   GroupOrderCubit({
@@ -43,7 +47,9 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         // Realtime tras la primera carga exitosa: cualquier cambio remoto
         // (evento socket, tick de polling fallback o resume de la app)
         // dispara un refetch SILENCIOSO — sin spinner, la UI solo se refresca.
-        _realtime?.watch(uuid, onTouched: () => _refetchSilently(uuid));
+        _realtime
+            ?.watch(uuid, onTouched: () => _refetchSilently(uuid))
+            .then((sub) => _sub = sub);
       },
       failure: _onError,
     );
@@ -66,7 +72,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   @override
   Future<void> close() async {
-    await _realtime?.unwatch();
+    await _sub?.cancel();
     return super.close();
   }
 
