@@ -127,7 +127,8 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => GroupOrderRepo(client: di()))
       ..registerLazySingleton(() => GroupOrderRealtimeService(authSession: di())) // F3a
       ..registerLazySingleton(() => GroupOrderOngoingNotificationService()) // F3a
-      ..registerLazySingleton(() => ActiveGroupOrderCubit(repo: di(), logger: di(), ongoingNotification: di()))
+      ..registerLazySingleton(() => ActiveGroupOrderCubit(
+          repo: di(), logger: di(), ongoingNotification: di(), realtime: di()))
       ..registerLazySingleton(() => StripePaymentService())
       ..registerLazySingleton(() => BusinessAvailabilityRepo(client: di()))
       ..registerLazySingleton(() => ServicePackageRepo(client: di()))

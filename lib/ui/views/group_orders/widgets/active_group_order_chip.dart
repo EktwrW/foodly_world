@@ -27,15 +27,30 @@ class ActiveGroupOrderChip extends StatelessWidget {
     }
 
     // e2e 2026-08-06 — en cuenta abierta el chip obedece a la MISMA máquina
-    // pura que el footer. Derivarlo de fulfillmentStatus a secas daba dos
-    // verdades: con ítems en el carrito el footer decía "Enviar orden" y el
-    // chip seguía diciendo "Pagar la cuenta".
-    if (order.isOpenTab && order.openTabCtaState == OpenTabCtaState.send) {
-      return (
-        Icons.outbox_rounded,
-        FoodlyThemes.primaryFoodly,
-        S.current.groupOrderSendCta,
-      );
+    // pura que el footer, derivada de los ÍTEMS.
+    //
+    // `fulfillmentStatus` es un único enum a nivel de ORDEN: un resumen con
+    // pérdida de lo que pasa por tanda. Creerle producía mentiras reales:
+    //  · orden entregada + el negocio anula un plato → decía "preparando";
+    //  · tanda 2 enviada y entregada → seguía diciendo "preparando".
+    // Los ítems no mienten: si todo lo enviado está entregado, no hay nada
+    // en cocina, diga lo que diga el agregado. El estado de cocina solo
+    // importa cuando SÍ hay algo esperando (waiting).
+    if (order.isOpenTab) {
+      return switch (order.openTabCtaState) {
+        OpenTabCtaState.send => (
+            Icons.outbox_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderSendCta,
+          ),
+        OpenTabCtaState.waiting => _kitchenLook,
+        // pay / billed: nada pendiente en cocina, la mesa puede cerrar.
+        _ => (
+            Icons.receipt_long_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderChipToPay(formatMoney(order.sentTotal, order.currency)),
+          ),
+      };
     }
 
     return switch (order.fulfillmentStatus) {
@@ -63,6 +78,30 @@ class ActiveGroupOrderChip extends StatelessWidget {
         ),
     };
   }
+
+  /// Señal de cocina — solo tiene sentido cuando hay algo enviado sin
+  /// entregar. "¡Listo!" es lo que hace valioso el chip en mostrador.
+  ///
+  /// Sin estado de fulfillment el negocio AÚN NO tocó la comanda: decir
+  /// "Preparando" sería inventar actividad que nadie confirmó. "Pedido
+  /// enviado" es lo único que sabemos de cierto.
+  (IconData, Color, String) get _kitchenLook => switch (order.fulfillmentStatus) {
+        GroupFulfillmentStatus.ready => (
+            Icons.room_service_rounded,
+            FoodlyThemes.tertiaryFoodly,
+            S.current.groupOrderChipReady,
+          ),
+        GroupFulfillmentStatus.preparing => (
+            Icons.soup_kitchen_rounded,
+            const Color(0xFFB87400),
+            S.current.groupOrderChipPreparing,
+          ),
+        _ => (
+            Icons.receipt_long_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderChipSent,
+          ),
+      };
 
   @override
   Widget build(BuildContext context) {

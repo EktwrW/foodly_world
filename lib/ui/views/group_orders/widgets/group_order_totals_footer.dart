@@ -178,10 +178,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             CustomNeumorphicButton(
               text: _canPay
                   ? (solo
-                      ? S.current.groupOrderPayFullOrder(
-                          formatMoney(myShare + order.payerFixedFee, order.currency))
-                      : S.current.groupOrderPayMyShare(
-                          formatMoney(myShare + order.payerFixedFee, order.currency)))
+                      ? S.current.groupOrderPayFullOrder(formatMoney(myShare + order.payerFixedFee, order.currency))
+                      : S.current.groupOrderPayMyShare(formatMoney(myShare + order.payerFixedFee, order.currency)))
                   : S.current.groupOrderNoBalanceDue,
               disabled: !_canPay,
               margin: EdgeInsets.zero,
@@ -200,8 +198,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               ),
             ],
             // Transparencia del fee: nota discreta + detalle al tocar ⓘ.
-            if (order.payerFixedFee > 0 &&
-                (_canPay || (onPayAll != null && order.totalRemaining > 0))) ...[
+            if (order.payerFixedFee > 0 && (_canPay || (onPayAll != null && order.totalRemaining > 0))) ...[
               const SizedBox(height: 8),
               InkWell(
                 borderRadius: BorderRadius.circular(8),
@@ -211,8 +208,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.info_outline_rounded,
-                          size: 14, color: FoodlyThemes.secondaryFoodly),
+                      const Icon(Icons.info_outline_rounded, size: 14, color: FoodlyThemes.secondaryFoodly),
                       const SizedBox(width: 4),
                       Flexible(
                         child: Text(
@@ -262,8 +258,7 @@ class _OpenTabCta extends StatelessWidget {
 
     final label = switch (state) {
       OpenTabCtaState.send => S.current.groupOrderSendCta,
-      OpenTabCtaState.waiting => S.current.groupOrderPayBillCta(
-          formatMoney(order.sentTotal, order.currency)),
+      OpenTabCtaState.waiting => S.current.groupOrderPayBillCta(formatMoney(order.sentTotal, order.currency)),
       _ => S.current.groupOrderPayBillCta(formatMoney(order.sentTotal, order.currency)),
     };
 
@@ -276,9 +271,7 @@ class _OpenTabCta extends StatelessWidget {
     // Habilitado solo en los estados accionables por el host: enviar (con
     // ítems pendientes) o pagar (todo entregado). "waiting" nunca.
     final action = isSend ? onSend : (isPay ? onRequestBill : null);
-    final enabled = !isBusy &&
-        action != null &&
-        (isSend ? order.pendingItems.isNotEmpty : isPay);
+    final enabled = !isBusy && action != null && (isSend ? order.pendingItems.isNotEmpty : isPay);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -303,8 +296,7 @@ class _OpenTabCta extends StatelessWidget {
           TextButton.icon(
             onPressed: onOrderMore,
             icon: const Icon(Icons.add_rounded, size: 16, color: FoodlyThemes.primaryFoodly),
-            label: Text(S.current.groupOrderOrderMore,
-                style: FoodlyTextStyles.captionPurpleBold),
+            label: Text(S.current.groupOrderOrderMore, style: FoodlyTextStyles.captionPurpleBold),
           ),
         ],
       ],

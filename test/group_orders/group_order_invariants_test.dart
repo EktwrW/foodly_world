@@ -202,6 +202,50 @@ void main() {
         expect(o.isTracking, isFalse, reason: o.uuid);
       }
     });
+
+    // e2e 2026-08-06 — la cuenta abierta sigue viva tras la ENTREGA porque
+    // falta pagar, pero MUERE con el pago. Antes `isTracking` devolvía true
+    // sin mirar el dinero: una cuenta saldada seguía "viva" 12h, así que
+    // syncAnyActive() la recuperaba en cada login y el chip la resucitaba
+    // ofreciendo pagar algo ya pagado.
+    test('cuenta abierta SALDADA deja de estar en tracking', () {
+      final pagada = GroupOrderDM(
+        uuid: 'saldada',
+        status: GroupOrderStatus.confirmed,
+        paymentMode: GroupPaymentMode.openTab,
+        fulfillmentStatus: GroupFulfillmentStatus.delivered,
+        confirmedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+        totalAmount: 379.99,
+        totalPaid: 379.99,
+        items: [itemShapes['entregado']!('a')],
+      );
+
+      expect(pagada.isFullyPaid, isTrue);
+      expect(pagada.isTracking, isFalse, reason: 'Pagada = terminada.');
+
+      // Y con saldo pendiente sigue viva (no romper el caso que sí importa).
+      expect(
+        pagada.copyWith(totalPaid: 100.0).isTracking,
+        isTrue,
+        reason: 'Falta dinero: el cliente necesita el camino de vuelta.',
+      );
+    });
+
+    test('el pago mata el tracking en CUALQUIER estado de cocina', () {
+      for (final f in GroupFulfillmentStatus.values) {
+        final o = GroupOrderDM(
+          uuid: 'pagada-${f.name}',
+          status: GroupOrderStatus.confirmed,
+          paymentMode: GroupPaymentMode.openTab,
+          fulfillmentStatus: f,
+          confirmedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+          totalAmount: 50,
+          totalPaid: 50,
+          items: [itemShapes['entregado']!('a')],
+        );
+        expect(o.isTracking, isFalse, reason: f.name);
+      }
+    });
   });
 
   group('invariantes de per_round (regresión F4a)', () {

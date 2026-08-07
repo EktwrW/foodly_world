@@ -286,7 +286,12 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     final at = confirmedAt;
     if (at == null) return false;
     if (DateTime.now().difference(at) >= const Duration(hours: 12)) return false;
-    if (isOpenTab) return true; // entregada o no: la cuenta sigue abierta
+    // F4b: en cuenta abierta la orden sigue viva tras la ENTREGA porque falta
+    // pagar — pero muere con el pago. Antes devolvía `true` sin mirar el
+    // dinero, así que una cuenta ya saldada seguía "en tracking" 12 horas:
+    // syncAnyActive() la recuperaba en cada login y el chip la resucitaba
+    // ofreciendo pagar algo ya pagado (e2e 2026-08-06).
+    if (isOpenTab) return !isFullyPaid;
     return fulfillmentStatus != GroupFulfillmentStatus.delivered;
   }
 

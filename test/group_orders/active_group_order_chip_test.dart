@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
@@ -31,6 +33,12 @@ void main() {
             unitPricePreview: 26,
             sentAt: status == GroupOrderStatus.open ? null : t0,
             batchNo: status == GroupOrderStatus.open ? null : 1,
+            // Coherencia con el BE (e2e 2026-08-06): la orden solo llega a
+            // ENTREGADA vía maybeAutoDeliver, que exige que TODOS los ítems
+            // vivos estén entregados. Un agregado "delivered" con ítems sin
+            // entregar es un estado que el backend no puede producir; el
+            // fixture lo fabricaba y por eso el chip parecía correcto.
+            deliveredAt: fulfillment == GroupFulfillmentStatus.delivered ? t0 : null,
           ),
         ],
       );
@@ -128,5 +136,101 @@ void main() {
       fulfillment: GroupFulfillmentStatus.delivered,
     ));
     expect(find.text(S.current.groupOrderSendCta), findsNothing);
+  });
+
+  // ── El agregado miente; los ítems no (e2e 2026-08-06) ──────────────
+  //
+  // `fulfillmentStatus` es UN enum a nivel de orden: un resumen con pérdida
+  // de lo que pasa por tanda. Estos son los dos casos reales donde mentía.
+
+  GroupOrderDM openTab({
+    required GroupFulfillmentStatus fulfillment,
+    required List<GroupOrderItemDM> items,
+  }) =>
+      GroupOrderDM(
+        uuid: 'o1',
+        status: GroupOrderStatus.confirmed,
+        paymentMode: GroupPaymentMode.openTab,
+        fulfillmentStatus: fulfillment,
+        confirmedAt: t0,
+        subtotal: 26,
+        items: items,
+      );
+
+  GroupOrderItemDM sent(String uuid, {DateTime? delivered, DateTime? voided, int batch = 1}) =>
+      GroupOrderItemDM(
+        uuid: uuid,
+        name: 'Plato',
+        unitPricePreview: 26,
+        sentAt: t0,
+        batchNo: batch,
+        deliveredAt: delivered,
+        voidedAt: voided,
+      );
+
+  testWidgets('entregada y luego el negocio ANULA un plato: no dice "preparando"',
+      (tester) async {
+    // El BE revierte el agregado a preparing, pero lo único que quedaba vivo
+    // ya estaba entregado: no hay nada en cocina.
+    final o = openTab(
+      fulfillment: GroupFulfillmentStatus.preparing,
+      items: [
+        sent('i1', delivered: t0),
+        sent('i2', voided: t0),
+      ],
+    );
+    expect(o.openTabCtaState, OpenTabCtaState.pay);
+
+    await pump(tester, o);
+
+    expect(find.text(S.current.groupOrderChipPreparing), findsNothing);
+    expect(find.textContaining('€26.00'), findsOneWidget);
+  });
+
+  testWidgets('tanda 2 enviada Y entregada: no se queda en "preparando"',
+      (tester) async {
+    final o = openTab(
+      fulfillment: GroupFulfillmentStatus.preparing, // agregado obsoleto
+      items: [
+        sent('i1', delivered: t0, batch: 1),
+        sent('i2', delivered: t0, batch: 2),
+      ],
+    );
+    expect(o.openTabCtaState, OpenTabCtaState.pay);
+
+    await pump(tester, o);
+
+    expect(find.text(S.current.groupOrderChipPreparing), findsNothing);
+  });
+
+  testWidgets('con algo REALMENTE en cocina sí muestra el estado', (tester) async {
+    final enCocina = openTab(
+      fulfillment: GroupFulfillmentStatus.preparing,
+      items: [sent('i1', delivered: t0), sent('i2', batch: 2)], // i2 sin entregar
+    );
+    expect(enCocina.openTabCtaState, OpenTabCtaState.waiting);
+    await pump(tester, enCocina);
+    expect(find.text(S.current.groupOrderChipPreparing), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+
+    final lista = openTab(
+      fulfillment: GroupFulfillmentStatus.ready,
+      items: [sent('i1', delivered: t0), sent('i2', batch: 2)],
+    );
+    await pump(tester, lista);
+    expect(find.text(S.current.groupOrderChipReady), findsOneWidget);
+  });
+
+  // Invariante: el chip NUNCA puede hablar de cocina si no hay nada esperando.
+  test('invariante: sin ítems enviados sin entregar, jamás estado de cocina', () {
+    for (final f in GroupFulfillmentStatus.values) {
+      final o = openTab(fulfillment: f, items: [sent('i1', delivered: t0)]);
+      expect(
+        o.openTabCtaState,
+        OpenTabCtaState.pay,
+        reason: 'Con todo entregado, "$f" en el agregado es irrelevante.',
+      );
+    }
   });
 }
