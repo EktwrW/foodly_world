@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/group_order_ongoing_notification_service.dart';
+import 'package:foodly_world/core/services/group_order_realtime_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:logger/logger.dart';
 
@@ -16,15 +17,24 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   final GroupOrderRepo _repo;
   final Logger _logger;
   final GroupOrderOngoingNotificationService? _ongoingNotification;
+
+  /// Realtime opcional (null en tests): mantiene FRESCO el chip flotante
+  /// mientras el comensal navega otras pantallas. Ver [watchActive].
+  final GroupOrderRealtimeService? _realtime;
+
+  /// uuid que el chip está observando ahora mismo (null = no es el dueño).
+  String? _watchedUuid;
   bool _busy = false;
 
   ActiveGroupOrderCubit({
     required GroupOrderRepo repo,
     required Logger logger,
     GroupOrderOngoingNotificationService? ongoingNotification,
+    GroupOrderRealtimeService? realtime,
   })  : _repo = repo,
         _logger = logger,
         _ongoingNotification = ongoingNotification,
+        _realtime = realtime,
         super(null);
 
   /// F3a (spec v2 §D.2): la notificación ongoing de Android refleja SIEMPRE
@@ -83,12 +93,18 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     res.when(
       success: (r) {
         final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
-        if (cart.isNotEmpty) return emit(cart.first);
-        final tracking = r.groupOrders.where((o) => o.isTracking).toList();
-        if (tracking.isNotEmpty) emit(tracking.first);
+        if (cart.isNotEmpty) {
+          emit(cart.first);
+        } else {
+          final tracking = r.groupOrders.where((o) => o.isTracking).toList();
+          if (tracking.isNotEmpty) emit(tracking.first);
+        }
       },
       failure: (_) {/* silencioso: sin red/sesión no molestamos */},
     );
+    // Recién acá hay uuid que observar (y si la página está abierta, ella es
+    // la dueña: watchActive es idempotente y el host cede/retoma).
+    await watchActive();
   }
 
   /// Total de unidades en la orden activa (para el badge del menú).
@@ -193,6 +209,37 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     res.when(success: (r) => emit(r.groupOrder), failure: (e) => _logger.e(e));
   }
 
+  // ── Realtime del chip flotante (e2e 2026-08-06) ─────────────────────
+  //
+  // Antes este cubit solo se refrescaba al arrancar la app, al volver del
+  // background o en mutaciones locales. Con el comensal sentado mirando el
+  // home, el negocio marcaba LISTO, entregaba una tanda o anulaba un plato
+  // y el chip seguía mostrando una foto vieja: por eso decía "preparando"
+  // cuando la tanda 2 ya estaba entregada.
+  //
+  // El servicio realtime es SINGLETON y `watch()` desconecta lo anterior,
+  // así que no se pueden tener dos suscripciones vivas. No hace falta: el
+  // chip se OCULTA mientras la GroupOrderPage está abierta. Un solo socket
+  // con dueño explícito — la página manda mientras está abierta, el chip
+  // retoma al cerrarse.
+
+  /// Toma la suscripción del chip sobre la orden activa. Idempotente: si ya
+  /// está observando ese uuid no reconecta.
+  Future<void> watchActive() async {
+    final uuid = state?.uuid;
+    if (_realtime == null || uuid == null || _watchedUuid == uuid) return;
+    _watchedUuid = uuid;
+    await _realtime.watch(uuid, onTouched: refresh);
+  }
+
+  /// Cede la suscripción (la GroupOrderPage pasa a ser dueña) sin cortar el
+  /// socket: la página llama a `watch()` acto seguido sobre el mismo canal.
+  void releaseWatch() => _watchedUuid = null;
+
   /// Termina la orden activa (tras cerrar/pagar/cancelar): limpia el carrito.
-  void end() => emit(null);
+  void end() {
+    _watchedUuid = null;
+    _realtime?.unwatch();
+    emit(null);
+  }
 }

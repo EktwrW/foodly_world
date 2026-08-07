@@ -53,7 +53,11 @@ class ManagerOrdersPage extends StatelessWidget {
       },
       builder: (context, state) {
         return _DeepLinkOpener(
-          orderUuid: openOrderUuid,
+          // Solo cuando la orden YA está en el state: el detalle se cierra
+          // solo si no la encuentra (manager_order_detail_page.dart:94), y
+          // abrirlo tras el primer frame —con load() aún en vuelo— hacía que
+          // el manager rebotara a la lista (e2e 2026-08-06).
+          orderUuid: state.orders.any((o) => o.uuid == openOrderUuid) ? openOrderUuid : null,
           onOpen: (uuid) => _pushDetail(context, cubit, uuid),
           child: Scaffold(
           appBar: AppBar(
@@ -228,9 +232,13 @@ class ManagerOrdersPage extends StatelessWidget {
   }
 }
 
-/// Abre UNA vez el detalle de [orderUuid] tras el primer frame. Aislado en su
-/// propio StatefulWidget para no volver stateful toda la página: lo único que
-/// necesita estado es recordar que ya abrió.
+/// Abre UNA vez el detalle de [orderUuid] en cuanto la orden está disponible.
+///
+/// [orderUuid] llega null mientras la lista aún carga y pasa a no-null cuando
+/// la orden existe en el state; por eso el disparo vive en [didUpdateWidget]
+/// además de [initState] (la lista puede llegar antes o después del montaje).
+/// Aislado en su propio StatefulWidget para no volver stateful toda la
+/// página: lo único que necesita estado es recordar que ya abrió.
 class _DeepLinkOpener extends StatefulWidget {
   final String? orderUuid;
   final void Function(String orderUuid) onOpen;
@@ -248,12 +256,21 @@ class _DeepLinkOpenerState extends State<_DeepLinkOpener> {
   @override
   void initState() {
     super.initState();
+    _maybeOpen();
+  }
+
+  @override
+  void didUpdateWidget(_DeepLinkOpener old) {
+    super.didUpdateWidget(old);
+    _maybeOpen();
+  }
+
+  void _maybeOpen() {
     final uuid = widget.orderUuid;
-    if (uuid == null || uuid.isEmpty) return;
+    if (_opened || uuid == null || uuid.isEmpty) return;
+    _opened = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || _opened) return;
-      _opened = true;
-      widget.onOpen(uuid);
+      if (mounted) widget.onOpen(uuid);
     });
   }
 
