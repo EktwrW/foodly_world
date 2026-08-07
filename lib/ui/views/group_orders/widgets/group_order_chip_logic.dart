@@ -1,3 +1,5 @@
+import 'dart:async' show scheduleMicrotask;
+
 import 'package:flutter/widgets.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 
@@ -115,16 +117,43 @@ class GroupOrderPageVisibility {
 
   static final ValueNotifier<int> openCount = ValueNotifier<int>(0);
 
-  static bool get isOpen => openCount.value > 0;
+  /// Valor REAL, actualizado en el acto. `openCount` es solo el canal de
+  /// notificación y puede ir un frame por detrás (ver [_bump]).
+  static int _count = 0;
 
-  static void markOpened() => openCount.value++;
+  static bool get isOpen => _count > 0;
 
-  static void markClosed() {
-    if (openCount.value > 0) openCount.value--;
+  static void markOpened() => _bump(1);
+
+  static void markClosed() => _bump(-1);
+
+  /// La GroupOrderPage se monta DURANTE el build del árbol, y el host del
+  /// chip ya se construyó en ese mismo frame. Notificar ahí no lo hace
+  /// repintar (y en debug es un `setState` en fase de build), así que el chip
+  /// quedaba dibujado ENCIMA de la orden — y estando dentro de ella nada más
+  /// vuelve a construir el host, con lo que se quedaba fijo (e2e 2026-08-06).
+  ///
+  /// El contador se actualiza ya; la notificación viaja en un microtask, que
+  /// corre cuando la fase de build sincrónica terminó. Se usa microtask y no
+  /// `addPostFrameCallback` a propósito: esto es un contador, no debe exigir
+  /// que el binding de Flutter exista para funcionar (con el binding de por
+  /// medio, un `test()` puro reventaba con "Binding has not yet been
+  /// initialized").
+  ///
+  /// CONSECUENCIA para los tests: [isOpen] cambia en el acto, pero el árbol
+  /// no. Hacen falta DOS `pump()` — el primero deja correr el microtask y
+  /// agenda el frame, el segundo lo dibuja. En la app da igual: el frame
+  /// siguiente llega solo, y el chip queda tapado por la transición de 400 ms.
+  static void _bump(int delta) {
+    _count = (_count + delta).clamp(0, 1 << 20);
+    scheduleMicrotask(() => openCount.value = _count);
   }
 
   /// Solo para tests.
-  static void reset() => openCount.value = 0;
+  static void reset() {
+    _count = 0;
+    openCount.value = 0;
+  }
 }
 
 /// Posición elegida por el usuario (drag) — vive en memoria para persistir

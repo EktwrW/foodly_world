@@ -106,7 +106,8 @@ void main() {
   group('GroupOrderPageVisibility (marcador de ciclo de vida)', () {
     tearDown(GroupOrderPageVisibility.reset);
 
-    test('abre/cierra con contador (soporta apilado) y nunca queda negativo', () {
+    test('abre/cierra con contador (soporta apilado) y nunca queda negativo',
+        () async {
       expect(GroupOrderPageVisibility.isOpen, isFalse);
       GroupOrderPageVisibility.markOpened();
       expect(GroupOrderPageVisibility.isOpen, isTrue);
@@ -116,7 +117,20 @@ void main() {
       GroupOrderPageVisibility.markClosed();
       expect(GroupOrderPageVisibility.isOpen, isFalse);
       GroupOrderPageVisibility.markClosed(); // extra: no-op, no negativo
+
+      // El notifier es el canal de aviso y viaja en microtask (ver _bump):
+      // hay que dejarlo correr antes de leerlo, o se lee el valor anterior.
+      await Future<void>.delayed(Duration.zero);
       expect(GroupOrderPageVisibility.openCount.value, 0);
+    });
+
+    test('el notifier ALCANZA al contador tras vaciar los microtasks', () async {
+      GroupOrderPageVisibility.markOpened();
+      expect(GroupOrderPageVisibility.isOpen, isTrue);
+
+      await Future<void>.delayed(Duration.zero);
+      expect(GroupOrderPageVisibility.openCount.value, 1,
+          reason: 'Sin esto el host del chip nunca se entera y queda encima.');
     });
   });
 
@@ -218,6 +232,51 @@ void main() {
       expect(GroupOrderChipPositionStore.offset.value, const Offset(10, 20));
       GroupOrderChipPositionStore.reset();
       expect(GroupOrderChipPositionStore.offset.value, isNull);
+    });
+  });
+
+  // e2e 2026-08-06 — la GroupOrderPage se monta DURANTE el build del árbol.
+  // Si el contador solo existiera en el ValueNotifier, `isOpen` dependería de
+  // una notificación que el host (ya construido en ese frame) se pierde, y el
+  // chip quedaba pintado encima de la orden.
+  group('GroupOrderPageVisibility — el valor no espera al frame', () {
+    tearDown(GroupOrderPageVisibility.reset);
+
+    test('funciona SIN binding de Flutter inicializado', () {
+      // Es un contador: exigir WidgetsBinding.instance lo hacía reventar en
+      // cualquier test() puro (e2e 2026-08-06). Que este test viva en un
+      // fichero sin binding es justamente la garantía.
+      expect(GroupOrderPageVisibility.markOpened, returnsNormally);
+      expect(GroupOrderPageVisibility.markClosed, returnsNormally);
+    });
+
+    test('isOpen es correcto EN EL ACTO, sin depender del notifier', () {
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+
+      GroupOrderPageVisibility.markOpened();
+      expect(GroupOrderPageVisibility.isOpen, isTrue,
+          reason: 'Debe valer ya, aunque la notificación se difiera.');
+
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+    });
+
+    test('anidar dos páginas requiere cerrar las dos', () {
+      GroupOrderPageVisibility.markOpened();
+      GroupOrderPageVisibility.markOpened();
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isTrue);
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+    });
+
+    test('cerrar de más no deja el contador en negativo', () {
+      GroupOrderPageVisibility.markClosed();
+      GroupOrderPageVisibility.markClosed();
+      expect(GroupOrderPageVisibility.isOpen, isFalse);
+      GroupOrderPageVisibility.markOpened();
+      expect(GroupOrderPageVisibility.isOpen, isTrue,
+          reason: 'Un contador hundido dejaría el chip visible para siempre.');
     });
   });
 }

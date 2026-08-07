@@ -26,6 +26,7 @@ void main() {
     required _FakeOrderSource source,
     required ValueNotifier<String> location,
     void Function(GroupOrderDM)? onOpenOrder,
+    Widget? child,
   }) {
     return MaterialApp(
       home: GroupOrderFloatingChipHost(
@@ -33,7 +34,7 @@ void main() {
         routeListenable: location,
         locationOf: () => location.value,
         onOpenOrder: onOpenOrder ?? (_) {},
-        child: const Scaffold(body: SizedBox.expand()),
+        child: child ?? const Scaffold(body: SizedBox.expand()),
       ),
     );
   }
@@ -228,13 +229,85 @@ void main() {
       await tester.pumpAndSettle(); // asienta la animación de entrada del chip
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
 
+      // La notificación de visibilidad viaja en un microtask (ver _bump), así
+      // que hacen falta DOS pumps: el primero deja correr el microtask y
+      // agenda el frame, el segundo lo dibuja. Con uno solo el estado ya
+      // cambió pero el árbol todavía muestra el chip.
       GroupOrderPageVisibility.markOpened(); // initState de GroupOrderPage
+      await tester.pump();
       await tester.pump();
       expect(find.byType(ActiveGroupOrderChip), findsNothing);
 
       GroupOrderPageVisibility.markClosed(); // dispose de GroupOrderPage
       await tester.pump();
+      await tester.pump();
+      expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
+    });
+
+    // e2e 2026-08-06 — el test de arriba marcaba la visibilidad desde el
+    // CUERPO del test, o sea fuera de la fase de build. La app real la marca
+    // en `initState`, es decir DURANTE el build del árbol y con el host ya
+    // construido en ese mismo frame: la notificación no lo hacía repintar y,
+    // estando dentro de la orden, nada más volvía a construirlo, así que el
+    // chip quedaba clavado encima. Este test reproduce ESA secuencia.
+    //
+    // Importa especialmente porque el chip y el FAB del menú abren la orden
+    // con `pushNamed`: ahí la URI no cambia y el marcador es el ÚNICO
+    // mecanismo que puede ocultarlo.
+    testWidgets('la página que marca su visibilidad en initState (durante el '
+        'build) igual oculta el chip', (tester) async {
+      final source = _FakeOrderSource(openOrder);
+      final location = ValueNotifier('/visit-menu/m1'); // URI quieta (pushNamed)
+
+      await tester.pumpWidget(host(source: source, location: location));
+      await tester.pumpAndSettle();
+      expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
+
+      // Monta la "página": su initState corre DURANTE este build.
+      await tester.pumpWidget(host(
+        source: source,
+        location: location,
+        child: const _PageMarkingVisibilityInInitState(),
+      ));
+      await tester.pump(); // deja correr el post-frame
+
+      expect(
+        find.byType(ActiveGroupOrderChip),
+        findsNothing,
+        reason: 'El chip no puede quedar dibujado encima de la propia orden.',
+      );
+
+      // Y al desmontarla vuelve, sin quedarse pegado en el estado anterior.
+      await tester.pumpWidget(host(source: source, location: location));
+      await tester.pump();
+      await tester.pumpAndSettle();
       expect(find.byType(ActiveGroupOrderChip), findsOneWidget);
     });
   });
+}
+
+/// Réplica fiel de lo que hace GroupOrderPage: marca visibilidad en
+/// `initState`/`dispose`, no desde el cuerpo del test.
+class _PageMarkingVisibilityInInitState extends StatefulWidget {
+  const _PageMarkingVisibilityInInitState();
+
+  @override
+  State<_PageMarkingVisibilityInInitState> createState() => _PageMarkingState();
+}
+
+class _PageMarkingState extends State<_PageMarkingVisibilityInInitState> {
+  @override
+  void initState() {
+    super.initState();
+    GroupOrderPageVisibility.markOpened();
+  }
+
+  @override
+  void dispose() {
+    GroupOrderPageVisibility.markClosed();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => const Scaffold(body: SizedBox.expand());
 }
