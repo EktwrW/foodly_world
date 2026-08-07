@@ -291,7 +291,16 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     // dinero, así que una cuenta ya saldada seguía "en tracking" 12 horas:
     // syncAnyActive() la recuperaba en cada login y el chip la resucitaba
     // ofreciendo pagar algo ya pagado (e2e 2026-08-06).
-    if (isOpenTab) return !isFullyPaid;
+    // En cuenta abierta la única razón para seguir la orden es que quede
+    // DINERO por pagar. Un solo concepto cubre los tres casos y no depende de
+    // que el array de ítems venga poblado (2026-08-06):
+    //   · cuenta viva sin pagar        → resta > 0  → sigue
+    //   · cuenta saldada               → resta = 0  → muere
+    //   · todo anulado por el negocio  → total 0    → muere
+    // El caso del importe cero era el que la dejaba "viva" 12 h: el chip
+    // ofrecía enviar una orden sin nada y syncForBusiness la readoptaba,
+    // bloqueando crear una nueva en ese negocio.
+    if (isOpenTab) return totalRemaining > 0.005;
     return fulfillmentStatus != GroupFulfillmentStatus.delivered;
   }
 

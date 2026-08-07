@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 
@@ -66,6 +68,11 @@ void main() {
               paymentMode: mode,
               fulfillmentStatus: f,
               confirmedAt: status == GroupOrderStatus.open ? null : t0,
+              // Una orden confirmada SIEMPRE tiene importe (`sendBatch` deja
+              // total_amount = subtotal). Sin esto, `isTracking` devolvía
+              // false por importe cero y el test del TTL de 12h pasaba sin
+              // llegar a evaluar el TTL (2026-08-06).
+              totalAmount: status == GroupOrderStatus.open ? 0 : 40,
               items: [a.value('a'), b.value('b')],
             );
           }
@@ -181,6 +188,11 @@ void main() {
           paymentMode: mode,
           fulfillmentStatus: GroupFulfillmentStatus.delivered,
           confirmedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+          // Cuenta abierta entregada y SIN pagar: es el escenario que el test
+          // describe. Sin el importe, el fixture modelaba una orden que el
+          // backend no puede producir (`sendBatch` deja total_amount =
+          // subtotal) y escondía que lo que la mantiene viva es el dinero.
+          totalAmount: 40,
           items: [itemShapes['entregado']!('a')],
         );
         expect(o.isTracking, mode == GroupPaymentMode.openTab, reason: mode.name);
@@ -229,6 +241,45 @@ void main() {
         isTrue,
         reason: 'Falta dinero: el cliente necesita el camino de vuelta.',
       );
+    });
+
+    test('una cuenta con TODO anulado deja de estar viva', () {
+      // total_amount queda en 0, así que isFullyPaid (que exige > 0) es false.
+      // Sin mirar los ítems vivos, la orden seguía en tracking 12h: el chip
+      // ofrecía enviar una orden vacía y bloqueaba crear otra en el negocio.
+      final anulada = GroupOrderDM(
+        uuid: 'todo-anulado',
+        status: GroupOrderStatus.confirmed,
+        paymentMode: GroupPaymentMode.openTab,
+        fulfillmentStatus: GroupFulfillmentStatus.delivered,
+        confirmedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+        totalAmount: 0,
+        totalPaid: 0,
+        items: [itemShapes['entregado-anulado']!('a')],
+      );
+
+      expect(anulada.liveItems, isEmpty);
+      expect(anulada.isFullyPaid, isFalse, reason: 'Precondición: importe cero.');
+      expect(anulada.totalRemaining, 0, reason: 'No queda nada que cobrar.');
+      expect(anulada.isTracking, isFalse);
+    });
+
+    test('lo que mantiene viva la cuenta es el dinero pendiente, no el estado', () {
+      GroupOrderDM tab({required double total, required double pagado}) => GroupOrderDM(
+            uuid: 'tab',
+            status: GroupOrderStatus.confirmed,
+            paymentMode: GroupPaymentMode.openTab,
+            fulfillmentStatus: GroupFulfillmentStatus.delivered,
+            confirmedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+            totalAmount: total,
+            totalPaid: pagado,
+            items: [itemShapes['entregado']!('a')],
+          );
+
+      expect(tab(total: 40, pagado: 0).isTracking, isTrue, reason: 'Debe €40.');
+      expect(tab(total: 40, pagado: 25).isTracking, isTrue, reason: 'Debe €15.');
+      expect(tab(total: 40, pagado: 40).isTracking, isFalse, reason: 'Saldada.');
+      expect(tab(total: 0, pagado: 0).isTracking, isFalse, reason: 'Nada que cobrar.');
     });
 
     test('el pago mata el tracking en CUALQUIER estado de cocina', () {

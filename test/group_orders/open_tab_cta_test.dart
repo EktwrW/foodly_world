@@ -201,6 +201,11 @@ void main() {
           paymentMode: mode,
           fulfillmentStatus: fulfillment,
           confirmedAt: DateTime.now().subtract(age),
+          // Una cuenta abierta llega a `confirmed` ENVIANDO una tanda, y
+          // `sendBatch` deja total_amount = subtotal. Un total de 0 describía
+          // una orden que el backend no puede producir, y escondía que lo
+          // que mantiene viva la orden es el dinero pendiente (2026-08-06).
+          totalAmount: 40,
         );
 
     test('open_tab ENTREGADA sigue en tracking — falta pagar la cuenta', () {
