@@ -1623,5 +1623,14 @@
   "managerMoreItemsTitle": "The table ordered more",
   "managerPaidOrderTitle": "New paid order!",
   "managerTabClosedTitle": "Tab closed",
-  "managerViewOrderGo": "View details"
+  "managerViewOrderGo": "View details",
+  "tooManyAttempts": "Too many attempts in a row. Try again in a moment.",
+  "tooManyAttemptsIn": "Too many attempts in a row. Try again in {seconds}s.",
+  "@tooManyAttemptsIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  }
 }

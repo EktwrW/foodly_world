@@ -1623,5 +1623,14 @@
   "managerMoreItemsTitle": "A mesa pediu mais",
   "managerPaidOrderTitle": "Novo pedido pago!",
   "managerTabClosedTitle": "Conta fechada",
-  "managerViewOrderGo": "Ver o detalhe"
+  "managerViewOrderGo": "Ver o detalhe",
+  "tooManyAttempts": "Demasiadas tentativas seguidas. Tente novamente daqui a pouco.",
+  "tooManyAttemptsIn": "Demasiadas tentativas seguidas. Tente novamente em {seconds}s.",
+  "@tooManyAttemptsIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -9984,6 +9984,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Too many attempts in a row. Try again in a moment.`
+  String get tooManyAttempts {
+    return Intl.message(
+      'Too many attempts in a row. Try again in a moment.',
+      name: 'tooManyAttempts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Too many attempts in a row. Try again in {seconds}s.`
+  String tooManyAttemptsIn(int seconds) {
+    return Intl.message(
+      'Too many attempts in a row. Try again in ${seconds}s.',
+      name: 'tooManyAttemptsIn',
+      desc: '',
+      args: [seconds],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

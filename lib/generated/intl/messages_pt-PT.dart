@@ -220,9 +220,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m79(count) => "há ${count}m";
 
-  static String m80(date) => "Visitado em ${date}";
+  static String m80(seconds) =>
+      "Demasiadas tentativas seguidas. Tente novamente em ${seconds}s.";
 
-  static String m81(businessName) =>
+  static String m81(date) => "Visitado em ${date}";
+
+  static String m82(businessName) =>
       "Escreva uma avaliação para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -2366,6 +2369,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeAgoMinutes": m79,
     "title": MessageLookupByLibrary.simpleMessage("Título"),
     "today": MessageLookupByLibrary.simpleMessage("Hoje"),
+    "tooManyAttempts": MessageLookupByLibrary.simpleMessage(
+      "Demasiadas tentativas seguidas. Tente novamente daqui a pouco.",
+    ),
+    "tooManyAttemptsIn": m80,
     "topEvents": MessageLookupByLibrary.simpleMessage("Principais eventos"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total de eventos"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Taxa deslocação/km"),
@@ -2460,7 +2467,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página do estabelecimento",
     ),
-    "visitedOn": m80,
+    "visitedOn": m81,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitalidade"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -2512,7 +2519,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "whenDidYouVisit": MessageLookupByLibrary.simpleMessage("Quando visitou?"),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m81,
+    "writeReviewFor": m82,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escreva sua avaliação aqui...",
     ),

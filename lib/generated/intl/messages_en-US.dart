@@ -216,9 +216,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m79(count) => "${count}m ago";
 
-  static String m80(date) => "Visited on ${date}";
+  static String m80(seconds) =>
+      "Too many attempts in a row. Try again in ${seconds}s.";
 
-  static String m81(businessName) => "Write a review for ${businessName}";
+  static String m81(date) => "Visited on ${date}";
+
+  static String m82(businessName) => "Write a review for ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -2257,6 +2260,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeAgoMinutes": m79,
     "title": MessageLookupByLibrary.simpleMessage("Title"),
     "today": MessageLookupByLibrary.simpleMessage("Today"),
+    "tooManyAttempts": MessageLookupByLibrary.simpleMessage(
+      "Too many attempts in a row. Try again in a moment.",
+    ),
+    "tooManyAttemptsIn": m80,
     "topEvents": MessageLookupByLibrary.simpleMessage("Top events"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total events"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Travel fee/km"),
@@ -2349,7 +2356,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Visit Business Page",
     ),
-    "visitedOn": m80,
+    "visitedOn": m81,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitor"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -2403,7 +2410,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "When did you visit?",
     ),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m81,
+    "writeReviewFor": m82,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Write your review here...",
     ),
