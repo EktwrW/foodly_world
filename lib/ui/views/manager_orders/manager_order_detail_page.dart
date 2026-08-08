@@ -101,6 +101,14 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
 
         final next = _nextStep(order);
 
+        // Misma regla que el checklist (_ParticipantChecklist): el cartel no
+        // puede invitar a tocar los platos si tocarlos no hace nada. Sobre una
+        // cuenta cerrada con el checklist a medias seguía diciéndolo y el tap
+        // era silencio (e2e 2026-08-08).
+        final canCheck = order.isConfirmed &&
+            (!order.allItemsDelivered ||
+                order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
@@ -159,7 +167,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                 ),
                 // Affordance del checklist (e2e F4a): antes NADA indicaba que
                 // los ítems se tocaban para marcar entrega.
-                if (order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
+                if (canCheck)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
                     child: Row(
@@ -198,7 +206,13 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (next != null) ...[
+                      // e2e 2026-08-08: el BE exige `confirmed` para TODA
+                      // acción de cocina (advance, setItemDelivered,
+                      // markAllDelivered). No alcanza con "no terminal":
+                      // `locked` también entra al panel y tampoco la acepta.
+                      if (!order.isConfirmed)
+                        _ClosedTabNotice(order: order)
+                      else if (next != null) ...[
                         // Sin fricción (decisión Hector e2e F4a): ENTREGADA
                         // siempre habilitada — el BE auto-tilda el checklist.
                         CustomNeumorphicButton(
@@ -331,6 +345,68 @@ int? _batchNoBefore(List<GroupOrderItemDM> items, GroupOrderItemDM item) {
 }
 
 /// Grupo de ítems de un comensal con checkbox de entrega por línea.
+/// Cierre de la orden: en vez de botones que el backend rechazaría, se dice
+/// CÓMO terminó. El desenlace importa para la contabilidad del negocio.
+class _ClosedTabNotice extends StatelessWidget {
+  final GroupOrderDM order;
+
+  const _ClosedTabNotice({required this.order});
+
+  (IconData, Color, String)? get _look => switch (order.closedReason) {
+        'paid_offline' => (
+            Icons.payments_rounded,
+            const Color(0xFF0B8A40),
+            S.current.managerClosedPaidOffline,
+          ),
+        'unpaid' => (
+            Icons.report_gmailerrorred_rounded,
+            const Color(0xFFB3261E),
+            S.current.managerClosedUnpaid,
+          ),
+        'abandoned' => (
+            Icons.schedule_rounded,
+            FoodlyThemes.secondaryFoodly,
+            S.current.managerClosedAbandoned,
+          ),
+        // Sin motivo: se cobró por Foodly, el ciclo normal.
+        //
+        // Pero acá NO se puede afirmar ENTREGADA: en cuenta abierta la mesa
+        // pide y paga la cuenta mientras la última tanda se cocina, y esa
+        // orden entra a esta pantalla con ff=preparing. El cartel verde decía
+        // "ENTREGADA" mientras el checklist, dos centímetros más arriba,
+        // decía 0/2 (e2e 2026-08-08). Lo que sí es siempre cierto es que la
+        // cuenta se cerró; el stepper de arriba cuenta el resto.
+        _ when order.isTerminal => (
+            Icons.check_circle_rounded,
+            const Color(0xFF0B8A40),
+            S.current.managerTabClosedTitle,
+          ),
+        // Cuenta pedida y todavía sin pagar (`locked`): no terminó nada
+        // que se pueda anunciar. El stepper y el botón de cerrar alcanzan.
+        _ => null,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final look = _look;
+    if (look == null) return const SizedBox.shrink();
+
+    final (icon, color, text) = look;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: 18),
+          const SizedBox(width: 6),
+          Text(text, style: FoodlyTextStyles.captionBold.copyWith(color: color)),
+        ],
+      ),
+    );
+  }
+}
+
 class _ParticipantChecklist extends StatelessWidget {
   final GroupOrderDM order;
   final GroupOrderParticipantDM participant;
@@ -351,10 +427,16 @@ class _ParticipantChecklist extends StatelessWidget {
     if (items.isEmpty) return const SizedBox.shrink();
 
     // e2e F4b: el checklist se opera mientras QUEDE algo por servir — no
-    // según el estado de la orden. Con tandas, una orden "entregada" recibe
-    // ítems nuevos y su checklist quedaba muerto (tap sin efecto).
-    final canCheck = !order.allItemsDelivered ||
-        order.fulfillmentStatus != GroupFulfillmentStatus.delivered;
+    // según el estado de fulfillment. Con tandas, una orden "entregada"
+    // recibe ítems nuevos y su checklist quedaba muerto (tap sin efecto).
+    //
+    // e2e 2026-08-08: pero SÍ importa el estado de la ORDEN. `close()` es la
+    // única vía a `completed` y esas órdenes siguen listadas en el panel;
+    // el backend rechaza todo fulfillment fuera de `confirmed`, así que
+    // dejarlo habilitado era regalar 409s en cada tap.
+    final canCheck = order.isConfirmed &&
+        (!order.allItemsDelivered ||
+            order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
 
     // Sin fricción (decisión Hector e2e F4a): tildar el último ítem entrega
     // la orden SOLA, sin confirmaciones — checklist y CTA son dos caminos al
@@ -409,7 +491,11 @@ class _ParticipantChecklist extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 onTap: (canCheck && !item.isVoided) ? () => toggle(item) : null,
                 // F4b.1: mantener presionado = anular/restaurar el ítem.
-                onLongPress: () => toggleVoid(item),
+                // Solo si el backend lo aceptaría: en prepago la orden llega
+                // al panel PORQUE se pagó, así que ofrecerlo siempre hacía
+                // que el manager confirmara "¿Anular X?" y recibiera un 409
+                // (e2e 2026-08-08).
+                onLongPress: order.canVoidItems ? () => toggleVoid(item) : null,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Row(

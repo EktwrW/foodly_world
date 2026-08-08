@@ -54,6 +54,76 @@ void main() {
     });
   });
 
+  // e2e 2026-08-08 — la UI no puede ofrecer lo que el backend rechazaría.
+  // Tres regresiones del mismo día tenían esta forma: guarda cambiada de un
+  // solo lado, botón visible, 409 al tocarlo.
+  group('paridad con las guardas del backend', () {
+    test('anular ítems: en prepago la orden llegó al panel PORQUE se pagó', () {
+      final pagada = GroupOrders.openTab(
+        items: [GroupOrders.sentItem(price: 30, delivered: true)],
+        fulfillment: GroupFulfillmentStatus.delivered,
+        paid: 30,
+      );
+
+      expect(
+        pagada.canVoidItems,
+        isFalse,
+        reason: 'Ofrecerlo hacía que el manager confirmara y recibiera un 409.',
+      );
+      expect(
+        GroupOrders.openTab(items: [GroupOrders.sentItem()]).canVoidItems,
+        isTrue,
+        reason: 'Sin dinero dentro sí se puede anular.',
+      );
+    });
+
+    test('pedida la cuenta ya no se anula (la cuenta está congelada)', () {
+      final conCuenta = GroupOrders.openTab(
+        items: [GroupOrders.sentItem(delivered: true)],
+        fulfillment: GroupFulfillmentStatus.delivered,
+        billRequestedAt: DateTime(2026, 8, 8, 22),
+      );
+
+      expect(conCuenta.canVoidItems, isFalse);
+    });
+
+    test('cuenta cerrada: el comensal NO ve el CTA de pagar habilitado', () {
+      final cerrada = GroupOrders.openTab(
+        items: [GroupOrders.sentItem(delivered: true)],
+        fulfillment: GroupFulfillmentStatus.delivered,
+      ).copyWith(status: GroupOrderStatus.completed);
+
+      expect(cerrada.isTerminal, isTrue);
+      expect(
+        cerrada.openTabCtaState,
+        OpenTabCtaState.billed,
+        reason: 'Tras cerrar en caja el CTA seguía activo y el tap daba 409.',
+      );
+      expect(cerrada.canVoidItems, isFalse);
+      expect(cerrada.canBeClosedByBusiness, isFalse, reason: 'Ya está cerrada.');
+    });
+
+    test('con un pago EN CURSO no se ofrece cerrar la cuenta', () {
+      final enCurso = GroupOrders.openTab(
+        items: [GroupOrders.sentItem(delivered: true)],
+        fulfillment: GroupFulfillmentStatus.delivered,
+      ).copyWith(participants: const [
+        GroupOrderParticipantDM(
+          uuid: 'p1',
+          displayName: 'Ana',
+          paymentStatus: GroupPaymentStatus.processing,
+        ),
+      ]);
+
+      expect(enCurso.hasProcessingPayment, isTrue);
+      expect(
+        enCurso.canBeClosedByBusiness,
+        isFalse,
+        reason: 'El BE lo rechaza; ofrecerlo daba 409 tras elegir el motivo.',
+      );
+    });
+  });
+
   group('isEditableCart — la mesa sigue viva tras la primera tanda', () {
     test('cuenta abierta confirmada: se puede invitar y editar el carrito', () {
       final o = GroupOrders.openTab(items: [GroupOrders.sentItem()]);

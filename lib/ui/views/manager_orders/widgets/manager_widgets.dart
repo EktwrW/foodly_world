@@ -179,9 +179,30 @@ class ManagerPaymentBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cobrada FUERA de Foodly: `total_paid` es 0 por definición, así que sin
+    // esto una cuenta cerrada en caja mostraba "POR PAGAR" para siempre —
+    // sobre mesas que el negocio efectivamente cobró, y en el desenlace que
+    // va a ser el más común (e2e 2026-08-08).
+    if (order.closedReason == 'paid_offline') {
+      return _badge(
+        Icons.payments_rounded,
+        const Color(0xFF0B8A40),
+        S.current.managerClosedPaidOffline,
+      );
+    }
+    if (order.closedReason == 'unpaid') {
+      return _badge(
+        Icons.report_gmailerrorred_rounded,
+        const Color(0xFFB3261E),
+        S.current.managerClosedUnpaid,
+      );
+    }
+
     // total_paid cubre el total => PAGADA. En per_round es el caso normal
     // (la comanda nace del pago); en open_tab, solo tras cobrar la cuenta.
-    final paid = order.totalPaid >= order.totalAmount && order.totalAmount > 0;
+    // Usa el epsilon del DM: con un céntimo de redondeo en un split de 3, el
+    // `>=` crudo dejaba "POR PAGAR" sobre una cuenta saldada.
+    final paid = order.isFullyPaid;
 
     if (paid) {
       return Row(
@@ -211,6 +232,18 @@ class ManagerPaymentBadge extends StatelessWidget {
       ),
     );
   }
+
+  Widget _badge(IconData icon, Color color, String text) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 13, color: color),
+          const SizedBox(width: 4),
+          Text(
+            text,
+            style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 10),
+          ),
+        ],
+      );
 }
 
 /// Tarjeta de orden de la lista (maqueta 1): id/ronda/mesa + badge + meta +

@@ -269,7 +269,13 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   ///  - falta entregar algo enviado   → waiting (pago BLOQUEADO)
   ///  - todo enviado y entregado      → pay     ("Pagar la cuenta")
   OpenTabCtaState get openTabCtaState {
-    if (billRequestedAt != null || isPayable) return OpenTabCtaState.billed;
+    // Terminal: la cuenta se cerró (pagada, cobrada en caja o cancelada). Sin
+    // esto el comensal seguía viendo "Pagar la cuenta" habilitado después de
+    // que el mesero cerrara en efectivo, y el tap devolvía 409 sin decir por
+    // qué (e2e 2026-08-08).
+    if (isTerminal || billRequestedAt != null || isPayable) {
+      return OpenTabCtaState.billed;
+    }
     if (pendingItems.isNotEmpty) return OpenTabCtaState.send;
     if (sentItems.isEmpty) return OpenTabCtaState.send;
     final allDelivered = sentItems.every((i) => i.deliveredAt != null);
@@ -343,6 +349,27 @@ abstract class GroupOrderDM with _$GroupOrderDM {
         billRequestedAt == null;
   }
 
+  /// La orden terminó: ya no admite ninguna acción de mesa ni de cocina.
+  bool get isTerminal =>
+      status == GroupOrderStatus.completed ||
+      status == GroupOrderStatus.cancelled ||
+      status == GroupOrderStatus.expired;
+
+  /// ¿Hay algún participante con un pago EN CURSO? Espeja el guard que el
+  /// backend aplica antes de cerrar o reabrir.
+  bool get hasProcessingPayment => participants.any((p) => p.isProcessing);
+
+  /// ¿El manager puede anular ítems? Espeja `setItemVoided` del backend.
+  ///
+  /// e2e 2026-08-08: la UI ofrecía el long-press SIEMPRE. En prepago una
+  /// orden llega al panel porque se pagó, así que `totalPaid > 0` es la
+  /// norma: el manager confirmaba "¿Anular X?" y recibía un 409 después.
+  bool get canVoidItems =>
+      !isTerminal &&
+      totalPaid <= 0 &&
+      billRequestedAt == null &&
+      (status == GroupOrderStatus.open || status == GroupOrderStatus.confirmed);
+
   /// ¿El negocio puede cerrar esta cuenta por fuera de Foodly?
   ///
   /// Espeja los guards del backend (`GroupOrderFulfillmentService::close`)
@@ -353,7 +380,10 @@ abstract class GroupOrderDM with _$GroupOrderDM {
       isOpenTab &&
       closedAt == null &&
       (status == GroupOrderStatus.confirmed || status == GroupOrderStatus.locked) &&
-      totalPaid <= 0;
+      totalPaid <= 0 &&
+      // El backend también lo rechaza: cerrar mientras alguien tiene el
+      // PaymentSheet abierto daría 409 tras elegir el motivo en la hoja.
+      !hasProcessingPayment;
 
   /// La cuenta está SALDADA: entró todo el dinero.
   ///
@@ -371,8 +401,18 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// Subtotal "vivo" de un participante: antes del lock suma sus líneas al
   /// precio preview; tras el lock devuelve su amount_due congelado.
   double liveSubtotalFor(GroupOrderParticipantDM p) {
-    if (!isOpen) return p.amountDue;
-    return itemsFor(p.uuid).fold<double>(0, (acc, i) => acc + i.lineTotal);
+    // `amount_due` NO existe hasta que se pide la cuenta: lo escribe `lock()`,
+    // y `sendBatch` lo dice explícito ("el reparto se calcula al pedir la
+    // cuenta"). Mirar `isOpen` hacía que en cuenta abierta —false desde la
+    // primera tanda— cada comensal mostrara €0,00 durante TODA la comida,
+    // con el footer enseñando el total correcto justo debajo: la pantalla se
+    // contradecía sola (e2e 2026-08-08).
+    if (billRequestedAt != null || isPayable || isTerminal) return p.amountDue;
+
+    // Los anulados no se cobran, así que tampoco se muestran en su parte.
+    return itemsFor(p.uuid)
+        .where((i) => !i.isVoided)
+        .fold<double>(0, (acc, i) => acc + i.lineTotal);
   }
 
   GroupOrderParticipantDM? participantByUuid(String? uuid) {
@@ -394,7 +434,11 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// Solo miembros (el host transfiere o elimina), solo OPEN y solo sin
   /// ítems bajo su responsabilidad.
   bool canBeLeftBy(String? participantUuid) {
-    if (!isOpen) return false;
+    // e2e 2026-08-08: usaba `isOpen`, igual que invitar. En cuenta abierta
+    // eso es false desde la primera tanda, así que quien escaneó el QR de la
+    // mesa equivocada quedaba atrapado — aunque el backend YA lo permite
+    // (GroupOrderParticipantController::leave usa isEditableCart).
+    if (!isEditableCart) return false;
     final p = participantByUuid(participantUuid);
     if (p == null || p.isHost) return false;
     return itemsFor(p.uuid).isEmpty;

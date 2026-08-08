@@ -77,6 +77,27 @@ void main() {
       expect(o.isTracking, isTrue);
     });
 
+    test('una orden prepaga llega al panel PAGADA y sin tandas', () {
+      final o = GroupOrders.perRound(items: [GroupOrders.pendingItem(price: 17)]);
+
+      expect(o.isOpenTab, isFalse);
+      expect(o.confirmedAt, isNotNull, reason: 'La confirma el webhook al cobrar.');
+      expect(o.isFullyPaid, isTrue, reason: 'En prepago, pagar ES la comanda.');
+      expect(o.items.every((i) => !i.isSent), isTrue);
+      expect(
+        o.kitchenItems.length,
+        1,
+        reason: 'Sin sentAt, la comanda es la orden entera: filtrar por él la vaciaba.',
+      );
+    });
+
+    test('en prepago un ítem "enviado" es un estado imposible', () {
+      expect(
+        () => GroupOrders.perRound(items: [GroupOrders.sentItem()]),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
     test('los ítems enviados llevan SIEMPRE sentAt y batchNo juntos', () {
       final i = GroupOrders.sentItem(batch: 3);
 

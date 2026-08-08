@@ -50,10 +50,20 @@ void main() {
     GroupFulfillmentStatus.delivered,
   ];
 
+  // e2e 2026-08-08 — faltaban los terminales y `paying`. Todo el trabajo de
+  // ese día (isTerminal, canVoidItems, el CTA en cuenta cerrada, y los
+  // estados que el panel empezó a listar) caía FUERA del producto cartesiano,
+  // así que los invariantes no podían cazarlo. El propio encabezado de este
+  // archivo dice que al agregar una dimensión al dominio se agrega acá
+  // primero; se agregó una y no se hizo.
   final statuses = <GroupOrderStatus>[
     GroupOrderStatus.open,
     GroupOrderStatus.confirmed,
     GroupOrderStatus.locked,
+    GroupOrderStatus.paying,
+    GroupOrderStatus.completed,
+    GroupOrderStatus.cancelled,
+    GroupOrderStatus.expired,
   ];
 
   /// Todas las órdenes posibles con 2 ítems (36 formas) × estados.
@@ -171,6 +181,52 @@ void main() {
         if (!faltaServir) continue;
         // allItemsDelivered es la fuente de verdad de la UI del panel.
         expect(o.allItemsDelivered, isFalse, reason: o.uuid);
+      }
+    });
+
+    // e2e 2026-08-08 — la regla que la UI debe respetar en TODO estado: el
+    // backend solo acepta acciones de cocina con la orden `confirmed`. Tres
+    // widgets se arreglaron con "no terminal", que deja pasar `locked` y
+    // `paying`; este invariante lo caza en cualquier combinación.
+    test('fuera de CONFIRMED, ninguna acción de cocina es ofrecible', () {
+      for (final mode in GroupPaymentMode.values) {
+        for (final o in allOrders(mode: mode)) {
+          if (o.status == GroupOrderStatus.confirmed) continue;
+          expect(
+            o.isConfirmed,
+            isFalse,
+            reason: '${o.uuid}: la UI debe gatear por isConfirmed, no por isTerminal',
+          );
+        }
+      }
+    });
+
+    test('anular ítems espeja al backend en TODO estado', () {
+      for (final mode in GroupPaymentMode.values) {
+        for (final o in allOrders(mode: mode)) {
+          if (!o.canVoidItems) continue;
+          // Las cuatro cláusulas de setItemVoided.
+          expect(o.isTerminal, isFalse, reason: o.uuid);
+          expect(o.totalPaid <= 0, isTrue, reason: o.uuid);
+          expect(o.billRequestedAt, isNull, reason: o.uuid);
+          expect(
+            o.status == GroupOrderStatus.open || o.status == GroupOrderStatus.confirmed,
+            isTrue,
+            reason: o.uuid,
+          );
+        }
+      }
+    });
+
+    test('una orden terminal nunca ofrece enviar ni pagar', () {
+      for (final o in allOrders(mode: GroupPaymentMode.openTab)) {
+        if (!o.isTerminal) continue;
+        expect(
+          o.openTabCtaState,
+          OpenTabCtaState.billed,
+          reason: '${o.uuid}: tras cerrar la cuenta el CTA daba 409 mudo',
+        );
+        expect(o.isTracking, isFalse, reason: o.uuid);
       }
     });
 
