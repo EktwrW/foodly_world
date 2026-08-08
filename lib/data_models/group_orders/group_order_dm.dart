@@ -427,9 +427,21 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// Total de ítems que el manager debe servir.
   int get liveItemsCount => kitchenItems.length;
 
-  /// ¿Checklist completo? (habilita ENTREGADA).
+  /// ¿Checklist completo? (habilita el CTA de ENTREGADA). Exige que haya algo
+  /// que entregar: una comanda vacía no se puede dar por servida.
   bool get allItemsDelivered =>
       kitchenItems.isNotEmpty && deliveredItemsCount == kitchenItems.length;
+
+  /// ¿Queda algo esperando en cocina?
+  ///
+  /// Distinto de [allItemsDelivered]: acá una comanda VACÍA cuenta como "nada
+  /// pendiente". La diferencia importa para decidir si una orden está
+  /// terminada (2026-08-08): usar allItemsDelivered hacía que el panel
+  /// degradara a PREPARANDO una orden que en la base estaba ENTREGADA y
+  /// pagada, solo porque su checklist había quedado vacío. La UI no debe
+  /// contradecir al backend cuando no tiene nada que objetar.
+  bool get hasPendingKitchenItems =>
+      kitchenItems.any((i) => i.deliveredAt == null);
 }
 
 // ─────────────────────────────────────────────────────────────────────────

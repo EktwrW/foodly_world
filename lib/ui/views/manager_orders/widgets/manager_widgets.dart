@@ -223,11 +223,16 @@ class ManagerOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // e2e F4b: "terminada" = entregada Y sin ítems pendientes. Con tandas,
-    // una orden marcada ENTREGADA que recibe ítems nuevos volvía a estar
-    // activa pero se veía opaca y con el chip verde (tarjeta fantasma).
-    final delivered =
-        order.fulfillmentStatus == GroupFulfillmentStatus.delivered && order.allItemsDelivered;
+    // e2e F4b: "terminada" = entregada Y sin nada esperando en cocina. Con
+    // tandas, una orden marcada ENTREGADA que recibe ítems nuevos volvía a
+    // estar activa pero se veía opaca y con el chip verde (tarjeta fantasma).
+    //
+    // 2026-08-08: la condición era `allItemsDelivered`, que exige checklist
+    // NO vacío. Una orden con la comanda vacía —p. ej. con todo anulado—
+    // caía a false y el panel la degradaba a PREPARANDO pese a estar
+    // ENTREGADA y pagada en la base. "Nada pendiente" es la pregunta real.
+    final delivered = order.fulfillmentStatus == GroupFulfillmentStatus.delivered &&
+        !order.hasPendingKitchenItems;
 
     return Opacity(
       opacity: delivered ? 0.55 : 1,
