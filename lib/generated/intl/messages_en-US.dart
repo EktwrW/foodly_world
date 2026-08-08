@@ -1134,6 +1134,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderGraceNotice": m39,
     "groupOrderHostBadge": MessageLookupByLibrary.simpleMessage("Host"),
     "groupOrderInviteCta": MessageLookupByLibrary.simpleMessage("Invite"),
+    "groupOrderInviteFailed": MessageLookupByLibrary.simpleMessage(
+      "We couldn\'t generate the invite code",
+    ),
     "groupOrderInviteHint": MessageLookupByLibrary.simpleMessage(
       "Share this code — valid for 24 hours",
     ),

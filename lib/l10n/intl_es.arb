@@ -1648,5 +1648,6 @@
   "managerClosedPaidOffline": "Cobrada en caja",
   "managerClosedUnpaid": "Impagada",
   "managerClosedAbandoned": "Sin cerrar",
-  "groupOrderTrackToPay": "Todo servido — falta pagar la cuenta"
+  "groupOrderTrackToPay": "Todo servido — falta pagar la cuenta",
+  "groupOrderInviteFailed": "No pudimos generar el código de invitación"
 }

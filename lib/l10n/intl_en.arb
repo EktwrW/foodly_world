@@ -1648,5 +1648,6 @@
   "managerClosedPaidOffline": "Paid at counter",
   "managerClosedUnpaid": "Unpaid",
   "managerClosedAbandoned": "Never closed",
-  "groupOrderTrackToPay": "All served — the bill is still open"
+  "groupOrderTrackToPay": "All served — the bill is still open",
+  "groupOrderInviteFailed": "We couldn't generate the invite code"
 }

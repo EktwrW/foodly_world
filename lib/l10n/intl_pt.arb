@@ -1648,5 +1648,6 @@
   "managerClosedPaidOffline": "Paga ao balcão",
   "managerClosedUnpaid": "Não paga",
   "managerClosedAbandoned": "Por fechar",
-  "groupOrderTrackToPay": "Tudo servido — falta pagar a conta"
+  "groupOrderTrackToPay": "Tudo servido — falta pagar a conta",
+  "groupOrderInviteFailed": "Não conseguimos gerar o código de convite"
 }

@@ -701,7 +701,13 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (!context.mounted) return;
     final code = invite?.inviteCode ?? invite?.inviteToken;
     if (code == null) {
-      FoodlySnackbars.errorGeneric(context, S.current.groupOrderJoinFailed);
+      // e2e 2026-08-08: acá el host INVITA, no se une. Decía "no pudimos
+      // unirte a la orden" —copy del flujo contrario, hecho por otra
+      // persona— y encima tapaba el motivo real que manda el backend.
+      FoodlySnackbars.errorGeneric(
+        context,
+        cubit.lastInviteError ?? S.current.groupOrderInviteFailed,
+      );
       return;
     }
 
