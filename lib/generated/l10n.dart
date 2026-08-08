@@ -10094,6 +10094,16 @@ class S {
       args: [],
     );
   }
+
+  /// `We couldn't generate the invite code`
+  String get groupOrderInviteFailed {
+    return Intl.message(
+      'We couldn\'t generate the invite code',
+      name: 'groupOrderInviteFailed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

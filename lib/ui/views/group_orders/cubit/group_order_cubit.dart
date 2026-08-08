@@ -201,14 +201,20 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   }
 
   /// F3a: genera (o reutiliza) el código de invitación de la orden.
+  /// Motivo del último fallo al generar la invitación, para poder mostrar lo
+  /// que dice el backend en vez de un genérico (e2e 2026-08-08).
+  String? lastInviteError;
+
   Future<GroupInviteResponseDM?> createInvitation() async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return null;
+    lastInviteError = null;
     final result = await _repo.createInvitation(uuid);
     return result.when(
       success: (r) => r,
       failure: (e) {
         _logger.e(e);
+        lastInviteError = e.serverMessage;
         return null;
       },
     );
