@@ -1013,8 +1013,11 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       ),
       centerTitle: true,
       actions: [
-        // F3a: invitar a la mesa (código corto) — mientras la orden esté OPEN.
-        if (order != null && order.isOpen)
+        // F3a: invitar a la mesa (código corto). En cuenta abierta la mesa
+        // sigue recibiendo gente DESPUÉS del primer envío — el BE lo permite
+        // explícitamente (join usa isEditableCart) y el FE lo negaba usando
+        // `isOpen` (e2e 2026-08-06).
+        if (order != null && order.isEditableCart)
           IconButton(
             icon: const Icon(Icons.person_add_alt_1_rounded, color: Colors.white),
             tooltip: S.current.groupOrderInviteCta,
@@ -1111,10 +1114,15 @@ class _Content extends StatelessWidget {
   /// eliminar ítems de cualquiera).
   bool get _iAmHost => _iAmHostOf(vm, order);
 
-  /// Regla de borrado (spec v2 §F): solo con la orden OPEN; cada quien borra
-  /// SUS ítems; el host puede borrar los de cualquiera.
+  /// Regla de borrado (spec v2 §F): mientras el carrito sea editable; cada
+  /// quien borra SUS ítems; el host puede borrar los de cualquiera.
+  ///
+  /// En cuenta abierta `isOpen` es false desde la primera tanda, así que con
+  /// la regla vieja los ítems del carrito quedaban congelados y no había
+  /// forma de quitarlos. El límite real es por ÍTEM (lo enviado es
+  /// inmutable) y lo aplica ParticipantExpansibleTile.
   bool _canRemoveItemsOf(GroupOrderParticipantDM p) =>
-      order.isOpen && (_iAmHost || p.uuid == vm.myParticipantUuid);
+      order.isEditableCart && (_iAmHost || p.uuid == vm.myParticipantUuid);
 
   /// "Cubrir su parte" (F2b §A.2): pendiente, sin pago en curso y no soy yo
   /// (mi parte se paga con el CTA principal).
@@ -1213,30 +1221,62 @@ class _ClientFulfillmentBanner extends StatelessWidget {
 
   const _ClientFulfillmentBanner({required this.order});
 
+  /// Estado de cocina según los ÍTEMS, no según el enum agregado.
+  ///
+  /// e2e 2026-08-06 — mismo bug que ya le quitamos al chip flotante y que
+  /// aquí había quedado: `fulfillmentStatus` es un resumen con pérdida por
+  /// tanda. Decía "Preparando" con la tanda 2 ya entregada, y celebraba
+  /// "¡buen provecho!" sobre una cuenta abierta que todavía debe dinero.
+  (IconData, Color, String) _look() {
+    if (order.isOpenTab) {
+      return switch (order.openTabCtaState) {
+        // Hay algo en el carrito sin mandar: lo que importa es enviarlo.
+        OpenTabCtaState.send => (
+            Icons.outbox_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderTrackConfirmed,
+          ),
+        // Algo espera en cocina: recién acá el estado agregado dice algo.
+        OpenTabCtaState.waiting => _kitchenLook(),
+        // Todo servido: falta la cuenta, así que NO se cierra con
+        // "¡buen provecho!" — la mesa todavía debe.
+        _ => (
+            Icons.receipt_long_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderTrackToPay,
+          ),
+      };
+    }
+
+    return _kitchenLook();
+  }
+
+  (IconData, Color, String) _kitchenLook() => switch (order.fulfillmentStatus) {
+        GroupFulfillmentStatus.preparing => (
+            Icons.soup_kitchen_rounded,
+            const Color(0xFFB87400),
+            S.current.groupOrderTrackPreparing,
+          ),
+        GroupFulfillmentStatus.ready => (
+            Icons.room_service_rounded,
+            FoodlyThemes.tertiaryFoodly,
+            S.current.groupOrderTrackReady,
+          ),
+        GroupFulfillmentStatus.delivered => (
+            Icons.check_circle_rounded,
+            FoodlyThemes.tertiaryFoodly,
+            S.current.groupOrderTrackDelivered,
+          ),
+        _ => (
+            Icons.receipt_long_rounded,
+            FoodlyThemes.primaryFoodly,
+            S.current.groupOrderTrackConfirmed,
+          ),
+      };
+
   @override
   Widget build(BuildContext context) {
-    final (icon, color, text) = switch (order.fulfillmentStatus) {
-      GroupFulfillmentStatus.preparing => (
-          Icons.soup_kitchen_rounded,
-          const Color(0xFFB87400),
-          S.current.groupOrderTrackPreparing,
-        ),
-      GroupFulfillmentStatus.ready => (
-          Icons.room_service_rounded,
-          FoodlyThemes.tertiaryFoodly,
-          S.current.groupOrderTrackReady,
-        ),
-      GroupFulfillmentStatus.delivered => (
-          Icons.check_circle_rounded,
-          FoodlyThemes.tertiaryFoodly,
-          S.current.groupOrderTrackDelivered,
-        ),
-      _ => (
-          Icons.receipt_long_rounded,
-          FoodlyThemes.primaryFoodly,
-          S.current.groupOrderTrackConfirmed,
-        ),
-    };
+    final (icon, color, text) = _look();
 
     return Card(
       color: Colors.white,

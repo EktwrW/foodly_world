@@ -10004,6 +10004,96 @@ class S {
       args: [seconds],
     );
   }
+
+  /// `Close tab`
+  String get managerCloseTab {
+    return Intl.message(
+      'Close tab',
+      name: 'managerCloseTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close this tab`
+  String get managerCloseTabTitle {
+    return Intl.message(
+      'Close this tab',
+      name: 'managerCloseTabTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The table ordered {total}. Foodly didn't process this payment, so there's no commission.`
+  String managerCloseTabBody(String total) {
+    return Intl.message(
+      'The table ordered $total. Foodly didn\'t process this payment, so there\'s no commission.',
+      name: 'managerCloseTabBody',
+      desc: '',
+      args: [total],
+    );
+  }
+
+  /// `Paid at the counter`
+  String get managerCloseTabPaidOffline {
+    return Intl.message(
+      'Paid at the counter',
+      name: 'managerCloseTabPaidOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `They left without paying`
+  String get managerCloseTabUnpaid {
+    return Intl.message(
+      'They left without paying',
+      name: 'managerCloseTabUnpaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid at counter`
+  String get managerClosedPaidOffline {
+    return Intl.message(
+      'Paid at counter',
+      name: 'managerClosedPaidOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get managerClosedUnpaid {
+    return Intl.message(
+      'Unpaid',
+      name: 'managerClosedUnpaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Never closed`
+  String get managerClosedAbandoned {
+    return Intl.message(
+      'Never closed',
+      name: 'managerClosedAbandoned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All served — the bill is still open`
+  String get groupOrderTrackToPay {
+    return Intl.message(
+      'All served — the bill is still open',
+      name: 'groupOrderTrackToPay',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

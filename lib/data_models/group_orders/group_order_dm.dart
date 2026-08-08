@@ -217,6 +217,10 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @Default(GroupPaymentMode.perRound)
     GroupPaymentMode paymentMode,
     @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+    // F4b: cómo terminó una cuenta que NO se cobró por Foodly
+    // (paid_offline | unpaid | abandoned). null = ciclo normal de pago.
+    @JsonKey(name: 'closed_reason') String? closedReason,
+    @JsonKey(name: 'closed_at') DateTime? closedAt,
     @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
     // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
     @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
@@ -323,6 +327,34 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   double get paymentProgress =>
       totalAmount <= 0 ? 0 : (totalPaid / totalAmount).clamp(0, 1);
 
+  /// ¿La orden sigue admitiendo ediciones de carrito? (sumar comensales,
+  /// quitar o editar los ítems NO enviados).
+  ///
+  /// Espeja `GroupOrder::isEditableCart()` del backend. El FE usaba `isOpen`,
+  /// que en cuenta abierta es false desde la PRIMERA tanda: la app dejaba de
+  /// ofrecer invitar y de permitir quitar ítems del carrito justo cuando la
+  /// mesa más lo necesita — y `requestBill` responde "envialos o quitalos"
+  /// sin que hubiera forma de quitarlos (e2e 2026-08-06).
+  bool get isEditableCart {
+    if (isOpen) return true;
+
+    return isOpenTab &&
+        status == GroupOrderStatus.confirmed &&
+        billRequestedAt == null;
+  }
+
+  /// ¿El negocio puede cerrar esta cuenta por fuera de Foodly?
+  ///
+  /// Espeja los guards del backend (`GroupOrderFulfillmentService::close`)
+  /// para no ofrecer un botón que va a dar 409: solo cuenta abierta, viva, y
+  /// SIN dinero cobrado por la app — marcar "cobrada en caja" algo ya cobrado
+  /// dejaría al comensal pagando dos veces.
+  bool get canBeClosedByBusiness =>
+      isOpenTab &&
+      closedAt == null &&
+      (status == GroupOrderStatus.confirmed || status == GroupOrderStatus.locked) &&
+      totalPaid <= 0;
+
   /// La cuenta está SALDADA: entró todo el dinero.
   ///
   /// e2e 2026-08-06 — hace falta porque `confirmed` es ambiguo en cuenta
@@ -370,16 +402,30 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   // ── F4a: helpers del panel "Órdenes en vivo" ──
 
-  /// Ítems ya entregados (checklist del manager). Los ANULADOS no cuentan.
-  int get deliveredItemsCount =>
-      liveItems.where((i) => i.deliveredAt != null).length;
+  /// Lo que la COCINA tiene que servir: enviado y no anulado.
+  ///
+  /// En cuenta abierta la mesa puede tener platos en el carrito sin enviar.
+  /// Contarlos hacía que el panel dijera "2/5 entregados" incluyendo 3 que
+  /// nadie había pedido aún, y que un postre en el carrito impidiera dar la
+  /// comanda por servida (e2e 2026-08-06). La comanda se juzga por lo que
+  /// llegó a cocina.
+  List<GroupOrderItemDM> get kitchenItems =>
+      items.where((i) => i.isSent && !i.isVoided).toList();
 
-  /// Total de ítems que el manager debe servir (sin los anulados).
-  int get liveItemsCount => liveItems.length;
+  /// Ítems de un participante que la cocina realmente recibió.
+  List<GroupOrderItemDM> kitchenItemsFor(String participantUuid) =>
+      kitchenItems.where((i) => i.participantUuid == participantUuid).toList();
+
+  /// Ítems ya entregados (checklist del manager).
+  int get deliveredItemsCount =>
+      kitchenItems.where((i) => i.deliveredAt != null).length;
+
+  /// Total de ítems que el manager debe servir.
+  int get liveItemsCount => kitchenItems.length;
 
   /// ¿Checklist completo? (habilita ENTREGADA).
   bool get allItemsDelivered =>
-      liveItems.isNotEmpty && deliveredItemsCount == liveItems.length;
+      kitchenItems.isNotEmpty && deliveredItemsCount == kitchenItems.length;
 }
 
 // ─────────────────────────────────────────────────────────────────────────

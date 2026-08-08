@@ -238,6 +238,23 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                             ],
                           ),
                         ),
+                      // F4b: cerrar la cuenta cobrada FUERA de Foodly. En un
+                      // restaurante tradicional es el desenlace más común, y
+                      // sin esto la orden quedaba viva para siempre en el
+                      // panel. Solo con cuenta abierta y sin pagos por la app:
+                      // marcar "cobrada en caja" algo ya cobrado dejaría al
+                      // comensal pagando dos veces (el BE también lo rechaza).
+                      if (order.canBeClosedByBusiness) ...[
+                        const SizedBox(height: 4),
+                        TextButton.icon(
+                          icon: const Icon(Icons.receipt_long_rounded, size: 18),
+                          label: Text(S.current.managerCloseTab),
+                          style: TextButton.styleFrom(
+                            foregroundColor: FoodlyThemes.secondaryFoodly,
+                          ),
+                          onPressed: () => _onCloseTab(context, cubit, order),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -247,6 +264,62 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
         );
       },
     );
+  }
+
+  /// Hoja de cierre: dos desenlaces, nombrados sin eufemismos. El negocio
+  /// tiene que poder distinguir después "cobré en caja" de "comieron gratis".
+  Future<void> _onCloseTab(
+    BuildContext context,
+    ManagerOrdersCubit cubit,
+    GroupOrderDM order,
+  ) async {
+    final reason = await showModalBottomSheet<String>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 22, 20, 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              S.current.managerCloseTabTitle,
+              style: FoodlyTextStyles.sectionsTitle,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              S.current.managerCloseTabBody(
+                formatMoney(order.totalAmount, order.currency),
+              ),
+              style: FoodlyTextStyles.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 18),
+            CustomNeumorphicButton(
+              text: S.current.managerCloseTabPaidOffline,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              onPressed: () => Navigator.pop(ctx, 'paid_offline'),
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, 'unpaid'),
+              child: Text(
+                S.current.managerCloseTabUnpaid,
+                style: FoodlyTextStyles.caption.copyWith(color: const Color(0xFFB3261E)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (reason == null || !context.mounted) return;
+    final ok = await cubit.closeTab(order.uuid, reason);
+    if (ok && context.mounted) Navigator.of(context).pop(); // vuelve a la lista
   }
 }
 
@@ -271,7 +344,10 @@ class _ParticipantChecklist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = order.itemsFor(participant.uuid);
+    // Solo lo que la cocina RECIBIÓ: en cuenta abierta el comensal puede
+    // tener platos en el carrito sin enviar, y aparecían en la comanda del
+    // manager como si los hubieran pedido (e2e 2026-08-06).
+    final items = order.kitchenItemsFor(participant.uuid);
     if (items.isEmpty) return const SizedBox.shrink();
 
     // e2e F4b: el checklist se opera mientras QUEDE algo por servir — no

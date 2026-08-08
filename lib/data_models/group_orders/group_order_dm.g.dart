@@ -130,6 +130,10 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       billRequestedAt: json['bill_requested_at'] == null
           ? null
           : DateTime.parse(json['bill_requested_at'] as String),
+      closedReason: json['closed_reason'] as String?,
+      closedAt: json['closed_at'] == null
+          ? null
+          : DateTime.parse(json['closed_at'] as String),
       lockExpiresAt: json['lock_expires_at'] == null
           ? null
           : DateTime.parse(json['lock_expires_at'] as String),
@@ -172,6 +176,9 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
       'payment_mode': _$GroupPaymentModeEnumMap[instance.paymentMode]!,
       if (instance.billRequestedAt?.toIso8601String() case final value?)
         'bill_requested_at': value,
+      if (instance.closedReason case final value?) 'closed_reason': value,
+      if (instance.closedAt?.toIso8601String() case final value?)
+        'closed_at': value,
       if (instance.lockExpiresAt?.toIso8601String() case final value?)
         'lock_expires_at': value,
       if (instance.graceEndsAt?.toIso8601String() case final value?)

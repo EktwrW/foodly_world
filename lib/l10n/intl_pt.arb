@@ -1632,5 +1632,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "managerCloseTab": "Fechar conta",
+  "managerCloseTabTitle": "Fechar esta conta",
+  "managerCloseTabBody": "A mesa consumiu {total}. A Foodly não processou este pagamento, por isso não cobra comissão.",
+  "@managerCloseTabBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "managerCloseTabPaidOffline": "Paga ao balcão",
+  "managerCloseTabUnpaid": "Saíram sem pagar",
+  "managerClosedPaidOffline": "Paga ao balcão",
+  "managerClosedUnpaid": "Não paga",
+  "managerClosedAbandoned": "Por fechar",
+  "groupOrderTrackToPay": "Tudo servido — falta pagar a conta"
 }

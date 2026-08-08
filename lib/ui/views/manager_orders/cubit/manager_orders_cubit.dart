@@ -127,6 +127,12 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   Future<bool> setTableLabel(String orderUuid, String? label) =>
       _applyAction(() => _repo.managerSetTable(orderUuid, tableLabel: label));
 
+  /// F4b: cierra una cuenta abierta cobrada EN CAJA (o impagada). Es el
+  /// desenlace más común en un restaurante tradicional y no cobra comisión:
+  /// Foodly no procesó el dinero.
+  Future<bool> closeTab(String orderUuid, String reason) =>
+      _applyAction(() => _repo.managerCloseTab(orderUuid, reason: reason));
+
   Future<bool> _applyAction(
     Future<ApiResult<GroupOrderResponseDM>> Function() call,
   ) async {

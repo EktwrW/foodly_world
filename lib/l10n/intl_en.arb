@@ -1632,5 +1632,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "managerCloseTab": "Close tab",
+  "managerCloseTabTitle": "Close this tab",
+  "managerCloseTabBody": "The table ordered {total}. Foodly didn't process this payment, so there's no commission.",
+  "@managerCloseTabBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "managerCloseTabPaidOffline": "Paid at the counter",
+  "managerCloseTabUnpaid": "They left without paying",
+  "managerClosedPaidOffline": "Paid at counter",
+  "managerClosedUnpaid": "Unpaid",
+  "managerClosedAbandoned": "Never closed",
+  "groupOrderTrackToPay": "All served — the bill is still open"
 }

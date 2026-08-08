@@ -167,9 +167,14 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                       currency: widget.order.currency,
                       // e2e F4a: el cliente ve qué ítems ya le entregaron.
                       delivered: widget.order.isConfirmed && item.deliveredAt != null,
-                      onRemove:
-                          widget.onRemoveItem == null ? null : () => widget.onRemoveItem!(item),
-                      onToggleShared: widget.onToggleSharedItem == null
+                      // F4b: lo ENVIADO a cocina es inmutable — es el registro
+                      // de lo que el negocio recibió. En cuenta abierta el
+                      // carrito sigue editable con la orden ya confirmada, así
+                      // que la frontera es el ítem, no el estado de la orden.
+                      onRemove: (widget.onRemoveItem == null || item.isSent)
+                          ? null
+                          : () => widget.onRemoveItem!(item),
+                      onToggleShared: (widget.onToggleSharedItem == null || item.isSent)
                           ? null
                           : () => widget.onToggleSharedItem!(item),
                     ),
