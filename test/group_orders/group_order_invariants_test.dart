@@ -163,10 +163,35 @@ void main() {
     test('si queda algo por servir, la orden NUNCA está "terminada" '
         '(bug e2e: tarjeta opaca con chip ENTREGADA y 2/3 ítems)', () {
       for (final o in allOrders(mode: GroupPaymentMode.openTab)) {
-        final faltaServir = o.liveItems.any((i) => i.deliveredAt == null);
+        // "Falta servir" se mide en términos de COCINA: un plato que sigue
+        // en el carrito de la mesa no está pendiente de servir, porque el
+        // negocio ni siquiera lo ha visto (e2e 2026-08-06). Antes esto usaba
+        // liveItems y por eso un carrito bloqueaba una tanda ya completa.
+        final faltaServir = o.kitchenItems.any((i) => i.deliveredAt == null);
         if (!faltaServir) continue;
         // allItemsDelivered es la fuente de verdad de la UI del panel.
         expect(o.allItemsDelivered, isFalse, reason: o.uuid);
+      }
+    });
+
+    test('el carrito de la mesa NUNCA entra en la comanda del negocio', () {
+      for (final o in allOrders(mode: GroupPaymentMode.openTab)) {
+        expect(
+          o.kitchenItems.every((i) => i.isSent && !i.isVoided),
+          isTrue,
+          reason: o.uuid,
+        );
+      }
+    });
+
+    test('en prepago la comanda es la orden ENTERA (no hay tandas)', () {
+      for (final o in allOrders(mode: GroupPaymentMode.perRound)) {
+        expect(
+          o.kitchenItems.length,
+          o.liveItems.length,
+          reason: 'Pagar ES la comanda: filtrar por sent_at dejaba el '
+              'checklist vacío y nada se entregaba (${o.uuid}).',
+        );
       }
     });
 

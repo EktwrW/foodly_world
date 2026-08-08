@@ -402,15 +402,19 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   // ── F4a: helpers del panel "Órdenes en vivo" ──
 
-  /// Lo que la COCINA tiene que servir: enviado y no anulado.
+  /// Lo que la COCINA tiene que servir. Los anulados nunca cuentan.
   ///
-  /// En cuenta abierta la mesa puede tener platos en el carrito sin enviar.
-  /// Contarlos hacía que el panel dijera "2/5 entregados" incluyendo 3 que
-  /// nadie había pedido aún, y que un postre en el carrito impidiera dar la
-  /// comanda por servida (e2e 2026-08-06). La comanda se juzga por lo que
-  /// llegó a cocina.
-  List<GroupOrderItemDM> get kitchenItems =>
-      items.where((i) => i.isSent && !i.isVoided).toList();
+  /// Depende del MODO, y confundirlo rompe uno u otro (e2e 2026-08-06):
+  ///  · per_round: no existen las tandas — pagar ES la comanda, así que al
+  ///    confirmarse la orden entera está en cocina y `sentAt` es SIEMPRE
+  ///    null. Filtrar por él dejaba el checklist vacío y el contador en 0/0.
+  ///  · open_tab: solo lo enviado. La mesa puede tener platos en el carrito
+  ///    que la cocina no ha visto; contarlos hacía que el panel dijera
+  ///    "2/5 entregados" incluyendo 3 que nadie pidió, y que un postre en el
+  ///    carrito impidiera dar por servida una tanda completa.
+  List<GroupOrderItemDM> get kitchenItems => isOpenTab
+      ? items.where((i) => i.isSent && !i.isVoided).toList()
+      : liveItems;
 
   /// Ítems de un participante que la cocina realmente recibió.
   List<GroupOrderItemDM> kitchenItemsFor(String participantUuid) =>
