@@ -91,7 +91,7 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
             for (final p in order.participants) ...[
               Text(p.displayName, style: FoodlyTextStyles.labelBold),
               const SizedBox(height: 2),
-              for (final item in order.itemsFor(p.uuid))
+              for (final item in order.kitchenItemsFor(p.uuid))
                 Padding(
                   padding: const EdgeInsets.only(left: 10, bottom: 2),
                   child: Row(

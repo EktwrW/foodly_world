@@ -115,6 +115,54 @@ class GroupOrders {
     );
   }
 
+  /// Orden PREPAGA (`per_round`): pagar ES la comanda.
+  ///
+  /// Invariantes que impone, y que el backend garantiza:
+  ///  · **ningún ítem lleva `sentAt`** — en prepago no existen las tandas, y
+  ///    `sent_at` es siempre null. Filtrar la comanda por él dejó el checklist
+  ///    vacío y rompió el modo entero (e2e 2026-08-06);
+  ///  · llega al panel PAGADA (`totalPaid == totalAmount`): es el webhook de
+  ///    Stripe el que la confirma, así que `confirmedAt` no es nulo;
+  ///  · si [fulfillment] es `delivered`, todos los ítems vivos quedan
+  ///    entregados — `maybeAutoDeliver` no admite otra cosa.
+  static GroupOrderDM perRound({
+    String uuid = 'o-round',
+    List<GroupOrderItemDM>? items,
+    GroupFulfillmentStatus? fulfillment,
+    int round = 1,
+  }) {
+    final base = items ?? [pendingItem()];
+
+    // No es una formalidad: un ítem "enviado" en prepago describe un estado
+    // que el backend no puede producir, y un test montado sobre él daría
+    // verde sobre un escenario inexistente.
+    assert(
+      base.every((i) => !i.isSent),
+      'En prepago no hay tandas: ningún ítem puede llevar sentAt.',
+    );
+
+    final resolved = fulfillment == GroupFulfillmentStatus.delivered
+        ? base
+            .map((i) => !i.isVoided && i.deliveredAt == null ? i.copyWith(deliveredAt: _t0) : i)
+            .toList()
+        : base;
+
+    final total = _sum(resolved.where((i) => !i.isVoided));
+
+    return GroupOrderDM(
+      uuid: uuid,
+      status: GroupOrderStatus.confirmed,
+      paymentMode: GroupPaymentMode.perRound,
+      fulfillmentStatus: fulfillment,
+      confirmedAt: _t0,
+      roundNumber: round,
+      subtotal: total,
+      totalAmount: total,
+      totalPaid: total,
+      items: resolved,
+    );
+  }
+
   /// Cuenta abierta ya saldada: la mesa pagó y se fue.
   static GroupOrderDM settledTab({
     String uuid = 'o-settled',

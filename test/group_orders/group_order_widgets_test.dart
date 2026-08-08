@@ -340,6 +340,43 @@ void main() {
       expect(find.byIcon(Icons.circle_outlined), findsOneWidget); // pendiente
     });
 
+    testWidgets('CUENTA ABIERTA en curso: subtotal VIVO, no el reparto vacío',
+        (tester) async {
+      // e2e 2026-08-08. `liveSubtotalFor` devolvía `amount_due` en cuanto la
+      // orden dejaba de estar `open`. En cuenta abierta eso pasa con la
+      // PRIMERA tanda —o sea, durante toda la comida— y el backend no reparte
+      // nada hasta que se pide la cuenta: cada comensal miraba su fila y veía
+      // €0,00 mientras comía. El reparto solo manda cuando existe.
+      const comiendo = GroupOrderParticipantDM(
+        uuid: 'p1',
+        displayName: 'Ana',
+        role: GroupParticipantRole.host,
+      );
+      final enCurso = openOrder.copyWith(
+        status: GroupOrderStatus.confirmed,
+        paymentMode: GroupPaymentMode.openTab,
+        participants: [comiendo],
+      );
+
+      await tester.pumpWidget(_host(ParticipantExpansibleTile(order: enCurso, participant: comiendo)));
+
+      expect(find.text('€11.50'), findsOneWidget, reason: '5.0×2 + 1.5 de lo consumido.');
+      expect(find.text('€0.00'), findsNothing);
+    });
+
+    testWidgets('CUENTA ABIERTA ya pedida: se congela en el reparto', (tester) async {
+      final pedida = openOrder.copyWith(
+        status: GroupOrderStatus.confirmed,
+        paymentMode: GroupPaymentMode.openTab,
+        billRequestedAt: DateTime(2026, 8, 8, 22),
+      );
+
+      await tester.pumpWidget(_host(ParticipantExpansibleTile(order: pedida, participant: p1)));
+
+      expect(find.text('€99.00'), findsOneWidget,
+          reason: 'Pedida la cuenta, manda lo repartido: es lo que se va a cobrar.');
+    });
+
     testWidgets('orden LOCKED en solitario: sin badge de pago (modo solo)', (tester) async {
       final locked = openOrder.copyWith(status: GroupOrderStatus.locked);
       await tester.pumpWidget(_host(ParticipantExpansibleTile(order: locked, participant: p1)));
