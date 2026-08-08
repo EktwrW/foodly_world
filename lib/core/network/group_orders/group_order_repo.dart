@@ -216,6 +216,19 @@ class GroupOrderRepo {
     }
   }
 
+  /// F4b: el negocio cierra una cuenta cobrada en caja (o impagada). No cobra
+  /// comisión — Foodly no procesó el dinero.
+  Future<ApiResult<GroupOrderResponseDM>> managerCloseTab(
+    String uuid, {
+    required String reason,
+  }) async {
+    try {
+      return ApiResult.success(await _client.managerCloseTab(uuid, reason: reason));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   /// F4b (cuenta abierta): manda la tanda actual a cocina, sin pago.
   Future<ApiResult<GroupOrderResponseDM>> sendBatch(String uuid) async {
     try {

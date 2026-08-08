@@ -189,6 +189,14 @@ abstract class GroupOrderClient {
     @Field('table_label') String? tableLabel,
   });
 
+  /// F4b: cerrar una cuenta abierta que NO se cobró por Foodly.
+  /// `reason`: paid_offline (cobrada en caja) | unpaid (se fueron sin pagar).
+  @POST('/manager/group-orders/{uuid}/close')
+  Future<GroupOrderResponseDM> managerCloseTab(
+    @Path('uuid') String uuid, {
+    @Field('reason') required String reason,
+  });
+
   /// F4a (caso bar): siguiente ronda de la mesa (lado cliente).
   @POST('/group-orders/{uuid}/next-round')
   Future<GroupOrderResponseDM> nextRound(@Path('uuid') String uuid);

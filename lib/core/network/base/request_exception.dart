@@ -78,9 +78,31 @@ class AppRequestException implements Exception {
         t == DioExceptionType.sendTimeout;
   }
 
+  /// Segundos que faltan para poder reintentar (header `Retry-After` de un
+  /// 429). null si el backend no lo mandó o no es un throttle.
+  int? get retryAfterSeconds {
+    if (error is! DioException) return null;
+    final res = (error as DioException).response;
+    if (res?.statusCode != 429) return null;
+    final raw = res?.headers.value('retry-after');
+    return raw == null ? null : int.tryParse(raw.trim());
+  }
+
   String get errorMsg {
     if (error is DioException) {
       final dio = error as DioException;
+
+      // 429 — Laravel devuelve "Too Many Attempts.", en inglés y sin decir
+      // cuánto esperar. El usuario que se topa con esto no hizo nada raro:
+      // suele ser una WiFi compartida (e2e 2026-08-06, login tras actualizar
+      // la app). Se traduce y se dice el tiempo concreto.
+      if (dio.response?.statusCode == 429) {
+        final secs = retryAfterSeconds;
+        return secs != null && secs > 0
+            ? S.current.tooManyAttemptsIn(secs)
+            : S.current.tooManyAttempts;
+      }
+
       final data = dio.response?.data;
       if (data is Map) {
         // If there are field-level validation errors, surface them.

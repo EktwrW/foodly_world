@@ -1623,5 +1623,30 @@
   "managerMoreItemsTitle": "La mesa pidió más",
   "managerPaidOrderTitle": "¡Nueva orden pagada!",
   "managerTabClosedTitle": "Cuenta cerrada",
-  "managerViewOrderGo": "Ver el detalle"
+  "managerViewOrderGo": "Ver el detalle",
+  "tooManyAttempts": "Demasiados intentos seguidos. Probá de nuevo en un momento.",
+  "tooManyAttemptsIn": "Demasiados intentos seguidos. Probá de nuevo en {seconds} s.",
+  "@tooManyAttemptsIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "managerCloseTab": "Cerrar cuenta",
+  "managerCloseTabTitle": "Cerrar esta cuenta",
+  "managerCloseTabBody": "La mesa consumió {total}. Foodly no procesó este pago, así que no cobra comisión.",
+  "@managerCloseTabBody": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "managerCloseTabPaidOffline": "Cobrada en caja",
+  "managerCloseTabUnpaid": "Se fueron sin pagar",
+  "managerClosedPaidOffline": "Cobrada en caja",
+  "managerClosedUnpaid": "Impagada",
+  "managerClosedAbandoned": "Sin cerrar",
+  "groupOrderTrackToPay": "Todo servido — falta pagar la cuenta"
 }

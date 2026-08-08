@@ -48,30 +48,25 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
       WidgetsBinding.instance.addPostFrameCallback(
         (_) => di<ActiveGroupOrderCubit>().syncAnyActive(),
       );
-      // e2e 2026-08-06: traspaso de dueño de la ÚNICA suscripción realtime.
-      // Mientras la GroupOrderPage está abierta ella manda (y el chip está
-      // oculto de todos modos); al cerrarse, el chip retoma para no quedarse
-      // con una foto vieja del estado de cocina.
-      GroupOrderPageVisibility.openCount.addListener(_syncWatchOwnership);
+      // Al volver del detalle, el estado pudo cambiar mientras el chip
+      // estaba oculto. El servicio realtime es multi-canal, así que la
+      // suscripción del chip nunca se cedió: solo hace falta refrescar.
+      GroupOrderPageVisibility.openCount.addListener(_refreshOnPageClose);
     }
   }
 
   @override
   void dispose() {
-    GroupOrderPageVisibility.openCount.removeListener(_syncWatchOwnership);
+    GroupOrderPageVisibility.openCount.removeListener(_refreshOnPageClose);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  void _syncWatchOwnership() {
+  void _refreshOnPageClose() {
+    if (GroupOrderPageVisibility.isOpen) return;
     final cubit = di<ActiveGroupOrderCubit>();
-    if (GroupOrderPageVisibility.isOpen) {
-      cubit.releaseWatch();
-    } else {
-      // Al volver del detalle el estado pudo cambiar mientras no mirábamos.
-      cubit.refresh();
-      cubit.watchActive();
-    }
+    cubit.refresh();
+    cubit.watchActive(); // no-op si ya observa esa orden
   }
 
   @override

@@ -1260,7 +1260,13 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
   GroupPaymentMode get paymentMode;
   @JsonKey(name: 'bill_requested_at')
-  DateTime? get billRequestedAt;
+  DateTime?
+      get billRequestedAt; // F4b: cómo terminó una cuenta que NO se cobró por Foodly
+// (paid_offline | unpaid | abandoned). null = ciclo normal de pago.
+  @JsonKey(name: 'closed_reason')
+  String? get closedReason;
+  @JsonKey(name: 'closed_at')
+  DateTime? get closedAt;
   @JsonKey(name: 'lock_expires_at')
   DateTime?
       get lockExpiresAt; // Ventana de gracia tras vencer el deadline (F2b §A.2); null = sin gracia.
@@ -1319,6 +1325,10 @@ mixin _$GroupOrderDM {
                 other.paymentMode == paymentMode) &&
             (identical(other.billRequestedAt, billRequestedAt) ||
                 other.billRequestedAt == billRequestedAt) &&
+            (identical(other.closedReason, closedReason) ||
+                other.closedReason == closedReason) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
             (identical(other.graceEndsAt, graceEndsAt) ||
@@ -1350,6 +1360,8 @@ mixin _$GroupOrderDM {
         tableLabel,
         paymentMode,
         billRequestedAt,
+        closedReason,
+        closedAt,
         lockExpiresAt,
         graceEndsAt,
         const DeepCollectionEquality().hash(participants),
@@ -1358,7 +1370,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1392,6 +1404,8 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       GroupPaymentMode paymentMode,
       @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+      @JsonKey(name: 'closed_reason') String? closedReason,
+      @JsonKey(name: 'closed_at') DateTime? closedAt,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
@@ -1428,6 +1442,8 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? tableLabel = freezed,
     Object? paymentMode = null,
     Object? billRequestedAt = freezed,
+    Object? closedReason = freezed,
+    Object? closedAt = freezed,
     Object? lockExpiresAt = freezed,
     Object? graceEndsAt = freezed,
     Object? participants = null,
@@ -1505,6 +1521,14 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
       billRequestedAt: freezed == billRequestedAt
           ? _self.billRequestedAt
           : billRequestedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      closedReason: freezed == closedReason
+          ? _self.closedReason
+          : closedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      closedAt: freezed == closedAt
+          ? _self.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
@@ -1645,6 +1669,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
                 unknownEnumValue: GroupPaymentMode.perRound)
             GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+            @JsonKey(name: 'closed_reason') String? closedReason,
+            @JsonKey(name: 'closed_at') DateTime? closedAt,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1674,6 +1700,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.tableLabel,
             _that.paymentMode,
             _that.billRequestedAt,
+            _that.closedReason,
+            _that.closedAt,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1724,6 +1752,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
                 unknownEnumValue: GroupPaymentMode.perRound)
             GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+            @JsonKey(name: 'closed_reason') String? closedReason,
+            @JsonKey(name: 'closed_at') DateTime? closedAt,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1752,6 +1782,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.tableLabel,
             _that.paymentMode,
             _that.billRequestedAt,
+            _that.closedReason,
+            _that.closedAt,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1801,6 +1833,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
                 unknownEnumValue: GroupPaymentMode.perRound)
             GroupPaymentMode paymentMode,
             @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+            @JsonKey(name: 'closed_reason') String? closedReason,
+            @JsonKey(name: 'closed_at') DateTime? closedAt,
             @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
             @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
             List<GroupOrderParticipantDM> participants,
@@ -1829,6 +1863,8 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.tableLabel,
             _that.paymentMode,
             _that.billRequestedAt,
+            _that.closedReason,
+            _that.closedAt,
             _that.lockExpiresAt,
             _that.graceEndsAt,
             _that.participants,
@@ -1867,6 +1903,8 @@ class _GroupOrderDM extends GroupOrderDM {
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       this.paymentMode = GroupPaymentMode.perRound,
       @JsonKey(name: 'bill_requested_at') this.billRequestedAt,
+      @JsonKey(name: 'closed_reason') this.closedReason,
+      @JsonKey(name: 'closed_at') this.closedAt,
       @JsonKey(name: 'lock_expires_at') this.lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') this.graceEndsAt,
       final List<GroupOrderParticipantDM> participants =
@@ -1940,6 +1978,14 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'bill_requested_at')
   final DateTime? billRequestedAt;
+// F4b: cómo terminó una cuenta que NO se cobró por Foodly
+// (paid_offline | unpaid | abandoned). null = ciclo normal de pago.
+  @override
+  @JsonKey(name: 'closed_reason')
+  final String? closedReason;
+  @override
+  @JsonKey(name: 'closed_at')
+  final DateTime? closedAt;
   @override
   @JsonKey(name: 'lock_expires_at')
   final DateTime? lockExpiresAt;
@@ -2019,6 +2065,10 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.paymentMode == paymentMode) &&
             (identical(other.billRequestedAt, billRequestedAt) ||
                 other.billRequestedAt == billRequestedAt) &&
+            (identical(other.closedReason, closedReason) ||
+                other.closedReason == closedReason) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt) &&
             (identical(other.lockExpiresAt, lockExpiresAt) ||
                 other.lockExpiresAt == lockExpiresAt) &&
             (identical(other.graceEndsAt, graceEndsAt) ||
@@ -2050,6 +2100,8 @@ class _GroupOrderDM extends GroupOrderDM {
         tableLabel,
         paymentMode,
         billRequestedAt,
+        closedReason,
+        closedAt,
         lockExpiresAt,
         graceEndsAt,
         const DeepCollectionEquality().hash(_participants),
@@ -2058,7 +2110,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -2094,6 +2146,8 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       GroupPaymentMode paymentMode,
       @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+      @JsonKey(name: 'closed_reason') String? closedReason,
+      @JsonKey(name: 'closed_at') DateTime? closedAt,
       @JsonKey(name: 'lock_expires_at') DateTime? lockExpiresAt,
       @JsonKey(name: 'grace_ends_at') DateTime? graceEndsAt,
       List<GroupOrderParticipantDM> participants,
@@ -2131,6 +2185,8 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? tableLabel = freezed,
     Object? paymentMode = null,
     Object? billRequestedAt = freezed,
+    Object? closedReason = freezed,
+    Object? closedAt = freezed,
     Object? lockExpiresAt = freezed,
     Object? graceEndsAt = freezed,
     Object? participants = null,
@@ -2208,6 +2264,14 @@ class __$GroupOrderDMCopyWithImpl<$Res>
       billRequestedAt: freezed == billRequestedAt
           ? _self.billRequestedAt
           : billRequestedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      closedReason: freezed == closedReason
+          ? _self.closedReason
+          : closedReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      closedAt: freezed == closedAt
+          ? _self.closedAt
+          : closedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       lockExpiresAt: freezed == lockExpiresAt
           ? _self.lockExpiresAt
