@@ -129,6 +129,39 @@ void main() {
       expect(o.allItemsDelivered, isTrue);
     });
 
+    // 2026-08-08 — la UI no contradice al backend cuando no tiene qué objetar.
+    test('una comanda VACÍA no tiene nada pendiente (no degrada a preparando)',
+        () {
+      // Caso real: dos órdenes de prepago quedaron etiquetadas como cuenta
+      // abierta por el backfill; sus ítems no tienen sent_at, así que el
+      // checklist queda vacío. El panel las mostraba PREPARANDO estando
+      // ENTREGADAS y pagadas en la base.
+      final o = GroupOrders.openTab(
+        items: [GroupOrders.pendingItem(uuid: 'c1')],
+        fulfillment: GroupFulfillmentStatus.delivered,
+      );
+
+      expect(o.kitchenItems, isEmpty);
+      expect(o.allItemsDelivered, isFalse, reason: 'No hay nada que entregar.');
+      expect(
+        o.hasPendingKitchenItems,
+        isFalse,
+        reason: 'Y tampoco hay nada esperando: la orden está terminada.',
+      );
+    });
+
+    test('con algo esperando en cocina SÍ hay pendiente', () {
+      final o = GroupOrders.openTab(
+        items: [
+          GroupOrders.sentItem(uuid: 's1', delivered: true),
+          GroupOrders.sentItem(uuid: 's2', batch: 2),
+        ],
+      );
+
+      expect(o.hasPendingKitchenItems, isTrue,
+          reason: 'La tanda 2 revive la comanda: la tarjeta no puede decir terminada.');
+    });
+
     test('con una tanda a medio servir, el checklist lo refleja', () {
       final o = GroupOrders.openTab(
         items: [
