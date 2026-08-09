@@ -27,6 +27,18 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
   /// Guards against stacking multiple proactive reservation dialogs.
   bool _isReservationDialogShowing = false;
 
+  /// Notificaciones cuyo detalle ya falló en esta sesión.
+  ///
+  /// La notificación solo se marca leída cuando el fetch tiene ÉXITO, así que
+  /// un fallo la deja pendiente y el polling la vuelve a traer: el usuario
+  /// come el mismo error una y otra vez. Le pasó a un cliente en producción
+  /// con una reserva de un negocio dado de baja (2026-08-09): el modal le
+  /// aparecía cada vez que abría la app.
+  ///
+  /// Un fallo transitorio —red caída, 500 pasajero— merece reintentarse en la
+  /// próxima sesión, pero no diez veces en esta.
+  final Set<String> _failedReservationFetches = {};
+
   /// Direct stream subscription to NotificationsCubit — avoids BlocListener
   /// context issues when showing global dialogs.
   StreamSubscription<NotificationsState>? _notificationsSubscription;
@@ -114,6 +126,7 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
     NotificationDM notification,
   ) async {
     if (_isReservationDialogShowing) return;
+    if (_failedReservationFetches.contains(notification.uuid)) return;
     _isReservationDialogShowing = true;
 
     final repo = di<ReservationRepo>();
@@ -295,8 +308,26 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
         // Mark the notification as read automatically
         di<NotificationsCubit>().markAsRead(notification.uuid);
       },
-      failure: (_) {
+      failure: (e) {
         _isReservationDialogShowing = false;
+        _failedReservationFetches.add(notification.uuid);
+
+        // Fallo PERMANENTE: la reserva ya no existe, o no es de este usuario.
+        // Reintentarla en cada arranque solo repite el mismo error, así que la
+        // notificación se marca leída y deja de resucitar. Tampoco se muestra
+        // el cartel: no hay nada que el usuario pueda hacer al respecto.
+        final code = e.statusCode;
+        if (code == 403 || code == 404 || code == 410) {
+          di<Logger>().w(
+            'Proactive reservation dialog: notificación ${notification.uuid} '
+            'apunta a una reserva inaccesible ($code); se marca leída.',
+          );
+          di<NotificationsCubit>().markAsRead(notification.uuid);
+          return;
+        }
+
+        // Transitorio (red, 5xx): se avisa una vez y se conserva sin leer para
+        // que la próxima sesión lo reintente.
         final navContext = rootNavigatorKey.currentContext;
         if (navContext != null && navContext.mounted) {
           FoodlySnackbars.errorGeneric(navContext, S.current.couldNotLoadReservationDetails);
