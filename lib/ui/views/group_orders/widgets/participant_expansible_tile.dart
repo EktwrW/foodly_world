@@ -174,7 +174,16 @@ class _ParticipantExpansibleTileState extends State<ParticipantExpansibleTile> {
                       onRemove: (widget.onRemoveItem == null || item.isSent)
                           ? null
                           : () => widget.onRemoveItem!(item),
-                      onToggleShared: (widget.onToggleSharedItem == null || item.isSent)
+                      // "Compartido" NO es un atributo de cocina, es de
+                      // REPARTO: no cambia lo que el negocio prepara, cambia
+                      // entre quiénes se divide. Gatearlo por `isSent` —la
+                      // regla correcta para cantidad y borrado— lo volvía
+                      // inalcanzable en cuenta abierta, donde todo se envía al
+                      // instante: la jarra de sangría para la mesa no se podía
+                      // marcar justo cuando hace falta (e2e 2026-08-09). El
+                      // reparto se congela al pedir la cuenta, y de eso ya se
+                      // ocupa `isEditableCart` en el caller.
+                      onToggleShared: widget.onToggleSharedItem == null
                           ? null
                           : () => widget.onToggleSharedItem!(item),
                     ),
