@@ -33,7 +33,31 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
     }
   }
 
-  bool get biometricAuthEnabled => _dto.deviceIsSupported && _dto.availableBiometrics.isNotEmpty;
+  /// ¿El dispositivo puede autenticar al usuario localmente?
+  ///
+  /// Es `isDeviceSupported()` a secas, y eso incluye el **desbloqueo del
+  /// dispositivo** (patrón, PIN, contraseña), no solo la biometría. Es la
+  /// pregunta correcta porque `authenticate()` se llama con `biometricOnly`
+  /// en false: el OS ofrece huella/cara si hay, y si no, cae al patrón.
+  ///
+  /// Antes esto exigía además `availableBiometrics.isNotEmpty`, y ahí estaba
+  /// el bug (tablet Android, 2026-08-09): `getAvailableBiometrics()` solo
+  /// lista biometría FUERTE enrolada. El reconocimiento facial de la mayoría
+  /// de los Android es clase 2 (débil) y no aparece; el patrón no es
+  /// biometría y nunca aparece. Con un dispositivo perfectamente capaz de
+  /// autenticar, la lista venía vacía y la app concluía "acá no se puede":
+  /// el botón de la starting page respondía "este dispositivo no admite
+  /// accesos de tipo patrón o biométricos" —falso, tenía patrón— y el logout
+  /// ni siquiera ofrecía guardar la sesión.
+  ///
+  /// El nombre viejo (`biometricAuthEnabled`) fue parte del problema: invitaba
+  /// a razonar en términos de "¿hay biometría?" cuando la pregunta es "¿puede
+  /// el usuario probar que es él?".
+  ///
+  /// Dato que zanja cuál de los dos estaba mal: el tooltip del botón ya decía
+  /// "Retomar sesión usando tu huella/rostro o patrón". La copy prometía el
+  /// patrón desde siempre; el gate lo negaba.
+  bool get localAuthAvailable => _dto.deviceIsSupported;
 
   /// True cuando `authenticate()` ya fue invocado (user tocó el botón
   /// biométrico) y el flow está en curso — desde el setteo de
@@ -87,7 +111,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
           await _getAvailableBiometrics();
         }
 
-        if (hasSession && biometricAuthEnabled) {
+        if (hasSession && localAuthAvailable) {
           // Gate de validación de sesión PREVIO al prompt biométrico.
           //
           // Bug 2026-05-22: con un token guardado ya muerto en el BE, el
@@ -226,7 +250,7 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
     // Esta re-evaluación es defensiva: si el primer check fue correcto,
     // el segundo retorna lo mismo y no cambia el flujo. Solo "rescata"
     // los casos donde el primer check fue víctima del race.
-    if (!kIsWeb && !biometricAuthEnabled) {
+    if (!kIsWeb && !localAuthAvailable) {
       try {
         final isSupported = await auth.isDeviceSupported();
         if (isSupported) {
@@ -240,9 +264,9 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
         _logger.w('Re-evaluación de biometrics falló: $e');
       }
 
-      // Si tras la re-evaluación seguimos sin biometría disponible,
-      // abortamos limpiamente — no tiene sentido pedir authenticate().
-      if (!biometricAuthEnabled) {
+      // Si tras la re-evaluación el dispositivo sigue sin ninguna forma de
+      // autenticación local (ni biometría ni patrón/PIN), abortamos limpio.
+      if (!localAuthAvailable) {
         _dto = _dto.copyWith(isAuthenticating: false);
         _authSessionService.setBiometricLoginInProgress(false);
         _authSessionService.completePendingServicesInit();
@@ -255,6 +279,9 @@ class LocalAuthCubit extends Cubit<LocalAuthState> {
       await auth
           .authenticate(
         localizedReason: S.current.secureAuthentication,
+        // `biometricOnly` queda en false A PROPÓSITO: es lo que permite que
+        // un dispositivo sin biometría fuerte enrolada —pero con patrón o
+        // PIN— pueda igual reanudar la sesión. El OS elige el método.
         options: const AuthenticationOptions(stickyAuth: true),
       )
           .then(

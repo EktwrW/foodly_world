@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:async';
 
 import 'package:dio/dio.dart';
@@ -216,31 +218,96 @@ void main() {
     );
 
     test(
-      'concurrent silentRefresh: el segundo retorna false sin pegar al BE',
+      'concurrent silentRefresh: el segundo ESPERA al primero y recibe su '
+      'resultado real, sin pegar al BE',
       () async {
-        // Configuro un delay en el primer refresh para que el segundo lo
-        // adelante mientras el primero sigue en vuelo.
+        // Este test aseveraba lo contrario —que el segundo recibía `false`—
+        // y con eso codificaba el bug (2026-08-09). La intención de no apilar
+        // requests al BE era correcta; devolver `false` para lograrlo, no:
+        // para quien llama, `false` significa "la sesión está muerta". El
+        // interceptor Dio lo lee así y dispara `notifyTokenExpired()`.
+        //
+        // Consecuencia en producción: el home dispara varias requests
+        // autenticadas a la vez, todas reciben 401, la primera refresca con
+        // ÉXITO y las demás echan al usuario con el modal "tu sesión expiró"
+        // mientras la pantalla todavía está cargando.
         service.setSession(_session(refreshToken: 'r1'));
         final firstCallCompleter = Completer<void>();
         fakeMeRepo.refreshDelay = firstCallCompleter.future;
 
-        // Primera llamada: queda en flight.
         final firstFuture = service.silentRefresh();
+        final secondFuture = service.silentRefresh();
+        final thirdFuture = service.silentRefresh();
 
-        // Mientras la primera espera, lanzamos la segunda.
-        // Como `_isRefreshingToken` ya está en true por la primera, debe
-        // retornar false inmediatamente sin tocar el repo.
-        final secondResult = await service.silentRefresh();
-
-        expect(secondResult, false,
-            reason: 'Mientras hay un refresh en vuelo, otro caller debe '
-                'recibir false en vez de apilar otro request al BE');
+        // Nadie resolvió todavía: los tres cuelgan del mismo refresco.
         expect(fakeMeRepo.refreshTokenCalls, 1,
-            reason: 'Solo el primer caller pega al BE; los simultáneos se cortan');
+            reason: 'Solo el primer caller pega al BE; los simultáneos se suman al suyo');
 
-        // Liberamos el primer refresh y limpiamos.
         firstCallCompleter.complete();
-        await firstFuture;
+        final results = await Future.wait([firstFuture, secondFuture, thirdFuture]);
+
+        expect(results, [true, true, true],
+            reason: 'Un refresco exitoso es exitoso para TODOS los que lo esperaron.');
+        expect(fakeMeRepo.refreshTokenCalls, 1);
+      },
+    );
+
+    test(
+      'un refresco de token NO cambia la generación de sesión',
+      () async {
+        // Regresión encontrada en autoreview (2026-08-09): al principio puse
+        // el incremento dentro de `setSession`, por donde también pasa
+        // `silentRefresh`. Con eso, dos requests concurrentes con el token
+        // vencido se rompían: A recibe 401, refresca, la generación cambia, y
+        // el 401 de B —sellado un instante antes— se descartaba como eco de
+        // una sesión vieja. B era legítima y debía reintentarse.
+        //
+        // Un refresco es la MISMA sesión con credenciales frescas.
+        service.setSession(_session(refreshToken: 'r1'));
+        final generationBefore = service.sessionGeneration;
+
+        expect(await service.silentRefresh(), true);
+
+        expect(service.sessionGeneration, generationBefore,
+            reason: 'La generación identifica la sesión, no la versión del token.');
+      },
+    );
+
+    test(
+      'establecer y cerrar sesión SÍ cambian la generación',
+      () async {
+        final atStart = service.sessionGeneration;
+
+        service.setSession(_session(uuid: 'u1'));
+        final afterLogin = service.sessionGeneration;
+        expect(afterLogin, greaterThan(atStart));
+
+        // Re-emitir la MISMA sesión (p. ej. tras editar el perfil) no cuenta.
+        service.setSession(_session(uuid: 'u1'));
+        expect(service.sessionGeneration, afterLogin);
+
+        service.clearInvalidSession();
+        expect(service.sessionGeneration, greaterThan(afterLogin),
+            reason: 'Los 401 en vuelo de la sesión que se fue quedan invalidados');
+      },
+    );
+
+    test(
+      'concurrent silentRefresh: si el refresco falla, todos reciben false',
+      () async {
+        service.setSession(_session(refreshToken: 'r1'));
+        final gate = Completer<void>();
+        fakeMeRepo
+          ..refreshDelay = gate.future
+          ..refreshOutcome = const ApiResult.failure(AppRequestException(error: '401'));
+
+        final a = service.silentRefresh();
+        final b = service.silentRefresh();
+        gate.complete();
+
+        expect(await Future.wait([a, b]), [false, false],
+            reason: 'La deduplicación comparte el veredicto, sea cual sea.');
+        expect(fakeMeRepo.refreshTokenCalls, 1);
       },
     );
 

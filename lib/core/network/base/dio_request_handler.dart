@@ -10,6 +10,16 @@ abstract class DioRequestHandler {
         ? options.headers[FoodlyStrings.AUTHORIZATION].toString()
         : '';
     final authSessionService = di<AuthSessionService>();
+
+    // Sello de generación, ANTES de cualquier rama: identifica a qué sesión
+    // pertenece esta request. Lo lee el error handler para descartar los 401
+    // que son eco de una sesión que ya no existe (ver [sessionGeneration]).
+    //
+    // Va acá arriba y no al final porque los endpoints de auth salen por un
+    // `return` temprano unas líneas más abajo: si el sello se pusiera después,
+    // esas requests viajarían sin él.
+    options.extra[_kSessionGenerationKey] = authSessionService.sessionGeneration;
+
     await authSessionService.validateAccessToken();
 
     // Public auth endpoints must NEVER be blocked by stale token checks.
@@ -103,6 +113,13 @@ abstract class DioRequestHandler {
           return;
         }
         // After refresh, fall through to use the new access token below.
+        //
+        // Re-sellar. El sello registra bajo QUÉ SESIÓN sale efectivamente la
+        // request, y unas líneas más abajo se le inyecta el token vigente.
+        // Un refresco no cambia la generación (es la misma sesión con
+        // credenciales frescas), así que normalmente esto no altera nada;
+        // importa si la sesión cambió por otro motivo durante el await.
+        options.extra[_kSessionGenerationKey] = authSessionService.sessionGeneration;
       } else {
         authSessionService.notifyTokenExpired();
         return;
@@ -133,6 +150,19 @@ abstract class DioRequestHandler {
     return handler.next(options);
   }
 
+  /// Clave del sello de generación dentro de `RequestOptions.extra`.
+  static const _kSessionGenerationKey = 'foodly_session_generation';
+
+  /// Marca de "esta request ya se reintentó una vez tras refrescar".
+  ///
+  /// `dio.fetch()` vuelve a recorrer los interceptores, así que un reintento
+  /// que también recibe 401 vuelve a caer acá: refresca, reintenta, 401,
+  /// refresca… sin fin, martillando `/token/refresh` y la batería. Basta con
+  /// que el BE devuelva 401 donde correspondería un 403 (permiso denegado)
+  /// para entrar en ese bucle. Un solo reintento es suficiente: si con un
+  /// token recién emitido sigue dando 401, el problema no es el token.
+  static const _kRetriedKey = 'foodly_retried_after_refresh';
+
   static void dioErrorHandler(DioException e, ErrorInterceptorHandler handler) async {
     final authSessionService = di<AuthSessionService>();
 
@@ -143,6 +173,25 @@ abstract class DioRequestHandler {
     // modal would confuse the user.
     // Also suppress during biometric login (token rotation race condition).
     if (e.response?.statusCode == 401) {
+      // Eco de una sesión anterior: la request salió bajo otra sesión (o sin
+      // ninguna) y su respuesta llegó tarde. No puede opinar sobre la sesión
+      // vigente — ni para refrescarla, ni mucho menos para declararla muerta.
+      //
+      // El caso real (2026-08-09): app actualizada desde Play Store, la sesión
+      // cacheada ya estaba muerta, salieron requests con el token viejo, el
+      // usuario entró de nuevo con Google, y esos 401 rezagados aterrizaron
+      // sobre la sesión NUEVA. `notifyTokenExpired` solo exige `isLoggedIn`,
+      // que ahora era true, así que pintaba "tu sesión expiró" encima de un
+      // login recién hecho, mientras cargaba el home.
+      //
+      // El guard vive DENTRO del bloque 401 a propósito: un 500 rezagado
+      // sigue mereciendo su aviso genérico, y acotarlo evita cambiarle el
+      // comportamiento a todo lo demás.
+      final stamp = e.requestOptions.extra[_kSessionGenerationKey];
+      if (stamp is int && stamp != authSessionService.sessionGeneration) {
+        return handler.reject(e);
+      }
+
       // Same whitelist pattern as the request handler — see Bug C comment
       // above. Never use endsWith here or `/device-tokens/register`,
       // `/businesses/.../token/refresh`-style paths will match falsely.
@@ -209,8 +258,18 @@ abstract class DioRequestHandler {
           !authSessionService.isLoggingOut &&
           !isAuthEndpoint &&
           !looksLikeSudoModeFailure) {
+        final alreadyRetried = e.requestOptions.extra[_kRetriedKey] == true;
+
         // Attempt a silent refresh before declaring the session dead.
-        if (authSessionService.hasRefreshToken && !authSessionService.isRefreshingToken) {
+        //
+        // Ya NO se pregunta por `isRefreshingToken`. Esa condición hacía que
+        // el segundo 401 concurrente cayera directo al `else` —
+        // `notifyTokenExpired()`— mientras el primero estaba refrescando con
+        // éxito: el home dispara varias requests juntas, todas 401ean, una
+        // refresca y las otras echaban al usuario. Ahora `silentRefresh()`
+        // deduplica y cada llamante espera el resultado REAL del refresco en
+        // curso (2026-08-09).
+        if (authSessionService.hasRefreshToken && !alreadyRetried) {
           final refreshed = await authSessionService.silentRefresh();
           if (refreshed) {
             // Retry the original request with the fresh access token.
@@ -219,6 +278,11 @@ abstract class DioRequestHandler {
                   authSessionService.userSessionDM?.token;
               e.requestOptions.headers[FoodlyStrings.AUTHORIZATION] =
                   '${authSessionService.userSessionDM?.tokenType ?? 'Bearer'} $activeToken';
+              // Marcar el reintento para que su propio 401 no vuelva a entrar
+              // al ciclo de refresco (ver [_kRetriedKey]). El sello no hace
+              // falta tocarlo: `fetch` recorre de nuevo el request handler,
+              // que lo pone con la generación del momento del envío.
+              e.requestOptions.extra[_kRetriedKey] = true;
               final response = await di<FoodlyApiProvider>().dio.fetch(e.requestOptions);
               return handler.resolve(response);
             } catch (retryError) {

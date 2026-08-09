@@ -59,6 +59,26 @@ class AuthSessionService {
   bool _isRefreshingToken = false;
   bool _isLoggingOut = false;
 
+  /// Refresco en vuelo, compartido por todos los llamantes concurrentes.
+  /// Ver [silentRefresh].
+  Future<bool>? _refreshInFlight;
+
+  /// Generación de la sesión: sube en cada login válido y en cada cierre.
+  ///
+  /// Cada request se sella con la generación vigente al salir. Si vuelve un
+  /// 401 sellado con una generación anterior, es el eco de una sesión que ya
+  /// no existe y no puede tener opinión sobre la sesión actual.
+  ///
+  /// Sin esto, al reabrir la app tras actualizarla pasaba lo siguiente: la
+  /// sesión cacheada ya estaba muerta, salían requests con el token viejo, el
+  /// usuario entraba con Google —sesión nueva y válida— y recién ahí
+  /// aterrizaban aquellos 401. Como `notifyTokenExpired` solo exige
+  /// `isLoggedIn` (y ahora sí lo estaba), el modal "tu sesión expiró" se
+  /// pintaba encima de un login recién hecho. Residuo puro (2026-08-09).
+  int _sessionGeneration = 0;
+
+  int get sessionGeneration => _sessionGeneration;
+
   /// Modo invitado (guest browsing, App Store 5.1.1.v). Cuando es `true`, el
   /// usuario navega el descubrimiento (home, promos, negocios, menús) SIN
   /// sesión. Es efímero EN MEMORIA — no se persiste, así que un cold-start
@@ -217,6 +237,8 @@ class AuthSessionService {
   }
 
   void setSession(UserSessionDM? newUserSessionDM) {
+    final previousUuid = userSessionDM?.user.uuid;
+
     userSessionDM = newUserSessionDM;
 
     // Bug E (2026-05-06): cuando recibimos una sesión válida nueva (uuid
@@ -233,6 +255,23 @@ class AuthSessionService {
     // un solo lugar — antes había que recordar de bajar el flag manualmente
     // en cada callsite, y los olvidos causaban este bug.
     if (newUserSessionDM != null && (newUserSessionDM.user.uuid?.isNotEmpty ?? false)) {
+      // La generación sube al ESTABLECER una sesión (no había ninguna) o al
+      // cambiar de usuario. NO sube cuando la misma sesión rota sus tokens.
+      //
+      // La distinción es crítica y me costó una regresión al escribirlo
+      // (2026-08-09): `silentRefresh` también pasa por acá. Si el refresco
+      // subiera la generación, dos requests concurrentes con el token vencido
+      // se romperían así — A recibe 401, refresca, la generación cambia, y el
+      // 401 de B (sellado un instante antes) se descartaría como eco de una
+      // sesión vieja. B es legítima y merecía reintentarse con el token
+      // nuevo; en pantalla quedaría un widget vacío sin explicación. Y es
+      // exactamente el escenario concurrente que este trabajo vino a arreglar.
+      //
+      // Un refresco de token no es una sesión nueva: es la misma sesión con
+      // credenciales frescas. La generación identifica la SESIÓN.
+      final isNewSession = previousUuid == null || previousUuid != newUserSessionDM.user.uuid;
+      if (isNewSession) _sessionGeneration++;
+
       forceToLogin = false;
       // Un login válido (email/password, Google, Apple, biométrico, silent
       // refresh) cancela cualquier guard de logout pendiente.
@@ -415,12 +454,16 @@ class AuthSessionService {
   /// el `_CachedState` y CADA arranque volvía a ofrecer login biométrico
   /// contra un token que el backend ya rechazó → loop 401 → starting page.
   void clearInvalidSession() {
+    // Cerrar también cierra generación: las requests que quedaron en vuelo
+    // pertenecen a una sesión que ya no existe. Ver [_sessionGeneration].
+    _sessionGeneration++;
     userSessionDM = null;
     _authHeader = null;
     _refreshToken = null;
     _pendingServicesInit = false;
     _isBiometricLoginInProgress = false;
     _isRefreshingToken = false;
+    _refreshInFlight = null;
     _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
     _secureTokenService.clearAll(); // fire-and-forget
     _favoritesCubit?.clearAllFavorites();
@@ -464,7 +507,12 @@ class AuthSessionService {
   }
 
   void logout(BuildContext context) {
-    if (context.read<LocalAuthCubit>().biometricAuthEnabled) {
+    // `localAuthAvailable`, no "¿hay biometría?": ofrecer guardar la sesión
+    // tiene sentido en cuanto el dispositivo pueda autenticar al usuario de
+    // ALGUNA forma, aunque sea el patrón. Con el gate viejo, una tablet con
+    // patrón y cara (biometría débil) caía al `else` y cerraba sesión sin
+    // preguntar — el usuario perdía la opción sin saber por qué (2026-08-09).
+    if (context.read<LocalAuthCubit>().localAuthAvailable) {
       di<DialogService>().showCustomDialog(const LogoutDialog(), 2);
     } else {
       endSession(context);
@@ -571,6 +619,11 @@ class AuthSessionService {
   /// conservaba la sesión vieja, y al reabrir la app restauraba una sesión
   /// fantasma → 401 → modal "sesión expirada".
   Future<void> _tearDownSession() async {
+    // Cerrar sesión cierra generación, igual que [clearInvalidSession]: los
+    // 401 de requests que quedaron en vuelo pertenecen a la sesión que se
+    // está yendo y no deben alcanzar a la próxima.
+    _sessionGeneration++;
+    _refreshInFlight = null;
     userSessionDM = null;
     _authHeader = null;
     _refreshToken = null;
@@ -653,6 +706,27 @@ class AuthSessionService {
     }
 
     // No tokens anywhere — session is invalid.
+    //
+    // Breadcrumb (2026-08-09): este branch es el sospechoso número uno del
+    // "tras actualizar por Play Store me pide autenticarme de nuevo". Había
+    // un `_CachedState` (alguien estuvo logueado en este dispositivo) pero el
+    // almacenamiento seguro no devolvió nada. En Android eso apunta a la clave
+    // del Keystore que respalda EncryptedSharedPreferences: si se vuelve
+    // inutilizable, la lectura falla y los tokens se pierden en silencio.
+    //
+    // Dejarlo registrado convierte el próximo caso en dato en vez de anécdota:
+    // si aparece en Crashlytics tras una actualización, es esto; si no
+    // aparece y el usuario igual tuvo que re-loguearse, hay que buscar en la
+    // validación contra el backend.
+    try {
+      FirebaseCrashlytics.instance.log(
+        'session_restore: cachedState presente pero secure storage vacío '
+        '(refresh=${storedRefresh != null}, type=${storedType != null})',
+      );
+    } catch (_) {
+      // Crashlytics ausente (tests / boot de Firebase fallido): no es crítico.
+    }
+
     return null;
   }
 
@@ -664,10 +738,28 @@ class AuthSessionService {
   /// Silently refreshes the access token using the stored refresh token.
   /// Returns true on success, false on failure (refresh token also expired).
   /// Prevents concurrent refresh attempts via [_isRefreshingToken] guard.
-  Future<bool> silentRefresh() async {
-    if (_isRefreshingToken) return false;
-    if (!hasRefreshToken) return false;
+  /// Refresco DEDUPLICADO: quien llegue mientras hay uno en curso espera ese
+  /// mismo refresco y recibe su resultado real.
+  ///
+  /// Antes devolvía `false` de inmediato si `_isRefreshingToken` estaba en
+  /// true, y el interceptor lee `false` como "la sesión está muerta". El
+  /// resultado era brutal y perfectamente reproducible: el home dispara
+  /// varias requests autenticadas a la vez; si el access token está vencido
+  /// todas reciben 401; la primera refresca con éxito y **las demás echan al
+  /// usuario** con el modal "tu sesión expiró". Un refresco exitoso
+  /// terminaba en logout por culpa de sus propios hermanos de carrera
+  /// (2026-08-09: reportado al reabrir la app tras actualizarla).
+  Future<bool> silentRefresh() {
+    final inFlight = _refreshInFlight;
+    if (inFlight != null) return inFlight;
+    if (!hasRefreshToken) return Future.value(false);
 
+    final future = _performRefresh().whenComplete(() => _refreshInFlight = null);
+    _refreshInFlight = future;
+    return future;
+  }
+
+  Future<bool> _performRefresh() async {
     _isRefreshingToken = true;
     try {
       // Temporarily set the refresh token as the active auth header so the
