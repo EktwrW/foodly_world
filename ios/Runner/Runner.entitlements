@@ -12,5 +12,15 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<!-- Apple Pay (2026-08-10). El identificador debe existir en el portal de
+	     Apple (Certificates → Identifiers → Merchant IDs) y coincidir con el
+	     que se pasa por la dart-define APPLE_MERCHANT_ID. Si no coincide, la
+	     hoja de pago simplemente NO ofrece Apple Pay, sin error visible.
+	     (Ojo: aquí no se puede escribir el doble guion de la flag; XML lo
+	     prohíbe dentro de un comentario y rompe el parseo del plist.) -->
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.solutions.foodly.app</string>
+	</array>
 </dict>
 </plist>

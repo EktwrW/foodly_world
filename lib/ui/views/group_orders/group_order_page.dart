@@ -118,7 +118,13 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       return;
     }
 
-    final result = await di<StripePaymentService>().presentPaymentSheet(clientSecret: secret);
+    final result = await di<StripePaymentService>().presentPaymentSheet(
+      clientSecret: secret,
+      // País del RESTAURANTE de esta orden (no el del comensal ni el de su
+      // sesión): es el merchant of record del destination charge. Null en
+      // órdenes anteriores al campo → la hoja cae a solo tarjeta.
+      merchantCountryCode: order?.businessCountry?.countryCode,
+    );
     if (!context.mounted) return;
 
     switch (result) {

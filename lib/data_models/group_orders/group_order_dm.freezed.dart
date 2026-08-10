@@ -1231,7 +1231,14 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'business_name')
   String get businessName;
   @JsonKey(name: 'business_logo')
-  String? get businessLogo;
+  String?
+      get businessLogo; // País del NEGOCIO de la orden — lo piden Apple Pay y Google Pay como
+// `merchantCountryCode`. Viene en la orden y no de la sesión: quien paga
+// es el comensal, y el restaurante no es suyo.
+  @JsonKey(
+      name: 'business_country',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  FoodlyCountries? get businessCountry;
   String get currency;
   @JsonKey(name: 'split_mode')
   GroupSplitMode
@@ -1306,6 +1313,8 @@ mixin _$GroupOrderDM {
                 other.businessName == businessName) &&
             (identical(other.businessLogo, businessLogo) ||
                 other.businessLogo == businessLogo) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.splitMode, splitMode) ||
@@ -1355,6 +1364,7 @@ mixin _$GroupOrderDM {
         businessMenuUuid,
         businessName,
         businessLogo,
+        businessCountry,
         currency,
         splitMode,
         payerFixedFee,
@@ -1378,7 +1388,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1395,6 +1405,10 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      FoodlyCountries? businessCountry,
       String currency,
       @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
       @JsonKey(name: 'payer_fixed_fee', fromJson: _money) double payerFixedFee,
@@ -1439,6 +1453,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? businessMenuUuid = freezed,
     Object? businessName = null,
     Object? businessLogo = freezed,
+    Object? businessCountry = freezed,
     Object? currency = null,
     Object? splitMode = null,
     Object? payerFixedFee = null,
@@ -1484,6 +1499,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
           ? _self.businessLogo
           : businessLogo // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessCountry: freezed == businessCountry
+          ? _self.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
       currency: null == currency
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -1664,6 +1683,10 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
@@ -1703,6 +1726,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
+            _that.businessCountry,
             _that.currency,
             _that.splitMode,
             _that.payerFixedFee,
@@ -1749,6 +1773,10 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
@@ -1787,6 +1815,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
+            _that.businessCountry,
             _that.currency,
             _that.splitMode,
             _that.payerFixedFee,
@@ -1832,6 +1861,10 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
             @JsonKey(name: 'business_name') String businessName,
             @JsonKey(name: 'business_logo') String? businessLogo,
+            @JsonKey(
+                name: 'business_country',
+                unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            FoodlyCountries? businessCountry,
             String currency,
             @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
             @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
@@ -1870,6 +1903,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.businessMenuUuid,
             _that.businessName,
             _that.businessLogo,
+            _that.businessCountry,
             _that.currency,
             _that.splitMode,
             _that.payerFixedFee,
@@ -1905,6 +1939,10 @@ class _GroupOrderDM extends GroupOrderDM {
       @JsonKey(name: 'business_menu_uuid') this.businessMenuUuid,
       @JsonKey(name: 'business_name') this.businessName = '',
       @JsonKey(name: 'business_logo') this.businessLogo,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      this.businessCountry,
       this.currency = 'EUR',
       @JsonKey(name: 'split_mode') this.splitMode = GroupSplitMode.byItems,
       @JsonKey(name: 'payer_fixed_fee', fromJson: _money)
@@ -1956,6 +1994,14 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'business_logo')
   final String? businessLogo;
+// País del NEGOCIO de la orden — lo piden Apple Pay y Google Pay como
+// `merchantCountryCode`. Viene en la orden y no de la sesión: quien paga
+// es el comensal, y el restaurante no es suyo.
+  @override
+  @JsonKey(
+      name: 'business_country',
+      unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  final FoodlyCountries? businessCountry;
   @override
   @JsonKey()
   final String currency;
@@ -2068,6 +2114,8 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.businessName == businessName) &&
             (identical(other.businessLogo, businessLogo) ||
                 other.businessLogo == businessLogo) &&
+            (identical(other.businessCountry, businessCountry) ||
+                other.businessCountry == businessCountry) &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.splitMode, splitMode) ||
@@ -2117,6 +2165,7 @@ class _GroupOrderDM extends GroupOrderDM {
         businessMenuUuid,
         businessName,
         businessLogo,
+        businessCountry,
         currency,
         splitMode,
         payerFixedFee,
@@ -2140,7 +2189,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -2159,6 +2208,10 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       @JsonKey(name: 'business_menu_uuid') String? businessMenuUuid,
       @JsonKey(name: 'business_name') String businessName,
       @JsonKey(name: 'business_logo') String? businessLogo,
+      @JsonKey(
+          name: 'business_country',
+          unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      FoodlyCountries? businessCountry,
       String currency,
       @JsonKey(name: 'split_mode') GroupSplitMode splitMode,
       @JsonKey(name: 'payer_fixed_fee', fromJson: _money) double payerFixedFee,
@@ -2204,6 +2257,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? businessMenuUuid = freezed,
     Object? businessName = null,
     Object? businessLogo = freezed,
+    Object? businessCountry = freezed,
     Object? currency = null,
     Object? splitMode = null,
     Object? payerFixedFee = null,
@@ -2249,6 +2303,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
           ? _self.businessLogo
           : businessLogo // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessCountry: freezed == businessCountry
+          ? _self.businessCountry
+          : businessCountry // ignore: cast_nullable_to_non_nullable
+              as FoodlyCountries?,
       currency: null == currency
           ? _self.currency
           : currency // ignore: cast_nullable_to_non_nullable

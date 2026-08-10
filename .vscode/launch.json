@@ -172,7 +172,8 @@
         "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
         "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}",
-        "--dart-define=STRIPE_PUBLISHABLE_KEY=${env:STRIPE_PUBLISHABLE_KEY}"
+        "--dart-define=STRIPE_PUBLISHABLE_KEY=${env:STRIPE_PUBLISHABLE_KEY}",
+        "--dart-define=APPLE_MERCHANT_ID=${env:APPLE_MERCHANT_ID}"
       ]
     }
   ]
