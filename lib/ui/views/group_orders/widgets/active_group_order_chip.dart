@@ -44,6 +44,13 @@ class ActiveGroupOrderChip extends StatelessWidget {
             S.current.groupOrderSendCta,
           ),
         OpenTabCtaState.waiting => _kitchenLook,
+        // Avisaron que pagan en caja: el chip NO puede seguir invitando a
+        // pagar en la app — el dinero se entrega en el mostrador.
+        OpenTabCtaState.cash => (
+            Icons.storefront_rounded,
+            const Color(0xFF0B8A40),
+            S.current.groupOrderCashRequestedCta,
+          ),
         // pay / billed: nada pendiente en cocina, la mesa puede cerrar.
         _ => (
             Icons.receipt_long_rounded,

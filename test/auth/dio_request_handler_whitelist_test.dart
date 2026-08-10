@@ -63,6 +63,13 @@ class _SpyAuthSessionService implements AuthSessionService {
   @override
   bool get isRefreshingToken => false;
 
+  /// El request handler sella cada request con la generación de sesión. Sin
+  /// override explícito esto caería en `noSuchMethod` → null, y devolver null
+  /// desde un getter declarado `int` revienta en runtime bajo null safety.
+  int sessionGenerationValue = 1;
+  @override
+  int get sessionGeneration => sessionGenerationValue;
+
   @override
   Future<void> validateAccessToken() async {}
 
@@ -340,6 +347,37 @@ void main() {
 
         expect(spy.silentRefreshCalls, 0);
         expect(spy.notifyTokenExpiredCalls, 0);
+      },
+    );
+  });
+
+  group('sello de generación de sesión', () {
+    test(
+      'toda request sale sellada con la generación vigente',
+      () async {
+        // El sello es lo que después permite al error handler distinguir un
+        // 401 legítimo del eco de una sesión que ya murió (2026-08-09).
+        spy.sessionGenerationValue = 42;
+
+        final options = await _runRequest(RequestOptions(
+          path: '/me',
+          headers: {'Authorization': 'Bearer tok'},
+        ));
+
+        expect(options.extra['foodly_session_generation'], 42);
+      },
+    );
+
+    test(
+      'los endpoints públicos también se sellan',
+      () async {
+        // Salen sin Bearer, pero un 401 sobre ellos igual pasa por el error
+        // handler: sin sello quedarían fuera del criterio.
+        spy.sessionGenerationValue = 3;
+
+        final options = await _runRequest(RequestOptions(path: '/login'));
+
+        expect(options.extra['foodly_session_generation'], 3);
       },
     );
   });

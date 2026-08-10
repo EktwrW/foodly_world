@@ -90,6 +90,7 @@ class GroupOrders {
     double paid = 0,
     Duration age = const Duration(minutes: 20),
     DateTime? billRequestedAt,
+    DateTime? cashRequestedAt,
   }) {
     final resolved = fulfillment == GroupFulfillmentStatus.delivered
         ? items
@@ -108,6 +109,7 @@ class GroupOrders {
       fulfillmentStatus: fulfillment,
       confirmedAt: DateTime.now().subtract(age),
       billRequestedAt: billRequestedAt,
+      cashRequestedAt: cashRequestedAt,
       subtotal: _sum(resolved.where((i) => !i.isVoided)),
       totalAmount: _sum(billable),
       totalPaid: paid,

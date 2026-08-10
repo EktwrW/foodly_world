@@ -46,6 +46,11 @@ class _SpyAuthSessionService implements AuthSessionService {
   bool get isRefreshingToken => _isRefreshingToken;
   set isRefreshingToken(bool v) => _isRefreshingToken = v;
 
+  int _sessionGeneration = 7;
+  @override
+  int get sessionGeneration => _sessionGeneration;
+  set sessionGeneration(int v) => _sessionGeneration = v;
+
   @override
   UserSessionDM? get userSessionDM => _session;
   set session(UserSessionDM s) => _session = s;
@@ -144,10 +149,17 @@ DioException _build401(
   String path, {
   Map<String, dynamic>? body,
   int statusCode = 401,
+  int? sessionGeneration,
 }) {
   final options = RequestOptions(
     path: path,
     headers: {'Authorization': 'Bearer something'},
+    // El request handler sella cada request con la generación vigente.
+    // `null` = sin sello (requests previas al cambio, o construidas fuera
+    // del interceptor): el guard las deja pasar al flujo normal.
+    extra: sessionGeneration == null
+        ? <String, dynamic>{}
+        : <String, dynamic>{'foodly_session_generation': sessionGeneration},
   );
   return DioException(
     requestOptions: options,
@@ -450,20 +462,105 @@ void main() {
     );
 
     test(
-      'isRefreshingToken=true (otro request ya está refrescando) → notifyTokenExpired',
+      'con un refresh ya en vuelo, el 401 concurrente ESPERA — no expulsa',
       () async {
-        // Cuando hay un refresh en vuelo el handler NO encadena otro;
-        // cae al else y dispara notifyTokenExpired. Esto evita storms de
-        // refresh durante bursts de 401s simultáneos.
+        // Este test aseveraba lo contrario: que con `isRefreshingToken=true`
+        // el handler saltaba al `else` y disparaba `notifyTokenExpired()`.
+        // Ese era el bug (2026-08-09): el home lanza varias requests
+        // autenticadas juntas, todas 401ean, la primera refresca bien y las
+        // hermanas de carrera echaban al usuario con "tu sesión expiró"
+        // mientras la pantalla cargaba.
+        //
+        // Ahora el handler siempre delega en `silentRefresh()`, que deduplica
+        // y devuelve el resultado REAL del refresco en curso.
         spy
           ..hasRefreshToken = true
-          ..isRefreshingToken = true;
+          ..isRefreshingToken = true
+          ..silentRefreshOutcome = true;
 
         await _runError(_build401('/me'));
 
+        expect(spy.silentRefreshCalls, 1,
+            reason: 'Delega en silentRefresh; la deduplicación vive allá adentro');
+        expect(spy.notifyTokenExpiredCalls, 0,
+            reason: 'Un refresco que va a salir bien no puede terminar en logout');
+      },
+    );
+  });
+
+  group('dioErrorHandler 401 — eco de una sesión anterior', () {
+    test(
+      '401 sellado con una generación vieja → se descarta sin tocar la sesión',
+      () async {
+        // El caso reportado (2026-08-09): app actualizada desde Play Store,
+        // la sesión cacheada ya estaba muerta, salieron requests con el token
+        // viejo, el usuario entró de nuevo con Google —sesión NUEVA y válida—
+        // y recién ahí aterrizaron aquellos 401. `notifyTokenExpired` solo
+        // exige `isLoggedIn`, que ahora era true, así que pintaba "tu sesión
+        // expiró" encima de un login recién hecho, mientras cargaba el home.
+        spy
+          ..sessionGeneration = 8
+          ..hasRefreshToken = true;
+
+        final handler = await _runError(_build401('/me', sessionGeneration: 7));
+
+        expect(spy.notifyTokenExpiredCalls, 0,
+            reason: 'Una sesión que ya no existe no puede opinar sobre la vigente');
         expect(spy.silentRefreshCalls, 0,
-            reason: 'Otro caller ya está refrescando — no apilar más');
+            reason: 'Tampoco tiene sentido refrescar por un eco');
+        expect(handler.rejectCalls, 1,
+            reason: 'El error igual propaga: quien pidió merece enterarse del fallo');
+      },
+    );
+
+    test(
+      '401 sellado con la generación VIGENTE → sigue el flujo normal',
+      () async {
+        // El complemento: el sello no puede volverse una excusa para ignorar
+        // expiraciones legítimas.
+        spy
+          ..sessionGeneration = 8
+          ..hasRefreshToken = false;
+
+        await _runError(_build401('/me', sessionGeneration: 8));
+
         expect(spy.notifyTokenExpiredCalls, 1);
+      },
+    );
+
+    test(
+      '401 sin sello → flujo normal (compatibilidad)',
+      () async {
+        spy.hasRefreshToken = false;
+
+        await _runError(_build401('/me'));
+
+        expect(spy.notifyTokenExpiredCalls, 1,
+            reason: 'Una request sin sello no debe quedar en tierra de nadie');
+      },
+    );
+  });
+
+  group('dioErrorHandler 401 — el reintento no entra en bucle', () {
+    test(
+      'una request ya reintentada NO vuelve a refrescar',
+      () async {
+        // `dio.fetch()` recorre los interceptores otra vez, así que un
+        // reintento que también recibe 401 vuelve a caer en este handler.
+        // Sin la marca sería: refrescar → reintentar → 401 → refrescar…
+        // indefinidamente, martillando /token/refresh. Basta con que el BE
+        // devuelva 401 donde correspondería 403.
+        spy.hasRefreshToken = true;
+
+        final e = _build401('/me', sessionGeneration: 7);
+        e.requestOptions.extra['foodly_retried_after_refresh'] = true;
+
+        await _runError(e);
+
+        expect(spy.silentRefreshCalls, 0,
+            reason: 'Con un token recién emitido y otro 401, el problema no es el token');
+        expect(spy.notifyTokenExpiredCalls, 1,
+            reason: 'Se corta el ciclo escalando una sola vez');
       },
     );
   });

@@ -1108,6 +1108,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderBatchSentTitle": MessageLookupByLibrary.simpleMessage(
       "Order sent to the kitchen!",
     ),
+    "groupOrderCashRequestUndo": MessageLookupByLibrary.simpleMessage(
+      "I\'d rather pay in the app",
+    ),
+    "groupOrderCashRequestedCta": MessageLookupByLibrary.simpleMessage(
+      "The venue has been notified",
+    ),
+    "groupOrderCashRequestedHint": MessageLookupByLibrary.simpleMessage(
+      "Head to the counter to pay. Staff will confirm once they receive it.",
+    ),
     "groupOrderChipPreparing": MessageLookupByLibrary.simpleMessage(
       "Preparing your order",
     ),
@@ -1197,6 +1206,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderPayAllConfirm": m43,
     "groupOrderPayAllRemaining": m44,
+    "groupOrderPayAtRegister": MessageLookupByLibrary.simpleMessage(
+      "Pay at the counter",
+    ),
+    "groupOrderPayAtRegisterConfirm": MessageLookupByLibrary.simpleMessage(
+      "Let the venue know you\'re paying at the counter? You won\'t be able to add more items to this order.",
+    ),
+    "groupOrderPayAtRegisterHint": MessageLookupByLibrary.simpleMessage(
+      "We\'ll let the venue know and you pay at the counter. No Foodly fee.",
+    ),
     "groupOrderPayBillCta": m45,
     "groupOrderPayBillHint": MessageLookupByLibrary.simpleMessage(
       "You can split it with the table however you like",
@@ -1486,6 +1504,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Activate with Stripe →",
     ),
     "managerAssignTable": MessageLookupByLibrary.simpleMessage("Assign table"),
+    "managerAwaitingCashBadge": MessageLookupByLibrary.simpleMessage(
+      "PAYING AT COUNTER",
+    ),
+    "managerAwaitingCashNotice": MessageLookupByLibrary.simpleMessage(
+      "The table said they\'re paying at the counter. Confirm once you receive the money.",
+    ),
     "managerBadgeConfirmed": MessageLookupByLibrary.simpleMessage("CONFIRMED"),
     "managerBadgeDelivered": MessageLookupByLibrary.simpleMessage("DELIVERED"),
     "managerBadgePreparing": MessageLookupByLibrary.simpleMessage("PREPARING"),

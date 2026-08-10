@@ -179,6 +179,18 @@ class ManagerPaymentBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // F4b: la mesa avisó que paga en el mostrador y está esperando. Va
+    // PRIMERO: mientras dure la espera es lo único que el mesero necesita
+    // saber de esta orden, y un "POR PAGAR" genérico no le dice que hay
+    // alguien parado en la caja.
+    if (order.isAwaitingCashPayment) {
+      return _badge(
+        Icons.storefront_rounded,
+        kManagerAmber,
+        S.current.managerAwaitingCashBadge,
+      );
+    }
+
     // Cobrada FUERA de Foodly: `total_paid` es 0 por definición, así que sin
     // esto una cuenta cerrada en caja mostraba "POR PAGAR" para siempre —
     // sobre mesas que el negocio efectivamente cobró, y en el desenlace que

@@ -1153,6 +1153,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderBatchSentTitle": MessageLookupByLibrary.simpleMessage(
       "Pedido enviado à cozinha!",
     ),
+    "groupOrderCashRequestUndo": MessageLookupByLibrary.simpleMessage(
+      "Prefiro pagar na app",
+    ),
+    "groupOrderCashRequestedCta": MessageLookupByLibrary.simpleMessage(
+      "O negócio já foi avisado",
+    ),
+    "groupOrderCashRequestedHint": MessageLookupByLibrary.simpleMessage(
+      "Dirige-te ao balcão para pagar. O empregado confirmará o pagamento.",
+    ),
     "groupOrderChipPreparing": MessageLookupByLibrary.simpleMessage(
       "Preparando seu pedido",
     ),
@@ -1250,6 +1259,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderPayAllConfirm": m43,
     "groupOrderPayAllRemaining": m44,
+    "groupOrderPayAtRegister": MessageLookupByLibrary.simpleMessage(
+      "Pagar ao balcão",
+    ),
+    "groupOrderPayAtRegisterConfirm": MessageLookupByLibrary.simpleMessage(
+      "Avisar que pagam ao balcão? Não poderás adicionar mais artigos a este pedido.",
+    ),
+    "groupOrderPayAtRegisterHint": MessageLookupByLibrary.simpleMessage(
+      "Avisas o negócio e pagas ao balcão. Sem comissão da Foodly.",
+    ),
     "groupOrderPayBillCta": m45,
     "groupOrderPayBillHint": MessageLookupByLibrary.simpleMessage(
       "Você pode dividi-la com a mesa como quiser",
@@ -1541,6 +1559,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ativar com a Stripe →",
     ),
     "managerAssignTable": MessageLookupByLibrary.simpleMessage("Atribuir mesa"),
+    "managerAwaitingCashBadge": MessageLookupByLibrary.simpleMessage(
+      "PAGA AO BALCÃO",
+    ),
+    "managerAwaitingCashNotice": MessageLookupByLibrary.simpleMessage(
+      "A mesa avisou que paga ao balcão. Confirma o pagamento quando receberes o dinheiro.",
+    ),
     "managerBadgeConfirmed": MessageLookupByLibrary.simpleMessage("CONFIRMADO"),
     "managerBadgeDelivered": MessageLookupByLibrary.simpleMessage("ENTREGUE"),
     "managerBadgePreparing": MessageLookupByLibrary.simpleMessage("A PREPARAR"),

@@ -19,7 +19,7 @@ class FingerprintButtonLogin extends StatelessWidget {
           style: FoodlyTextStyles.snackBarLightBody,
           children: <TextSpan>[
             TextSpan(
-              text: context.read<LocalAuthCubit>().biometricAuthEnabled
+              text: context.read<LocalAuthCubit>().localAuthAvailable
                   ? S.current.biometricSnackbarTextSpanB
                   : S.current.biometricSnackbarTextSpanA,
             ),
@@ -101,7 +101,7 @@ class FingerprintButtonLogin extends StatelessWidget {
           diameter: 56,
           iconSize: 43,
           onPressed: () {
-            switch (context.read<LocalAuthCubit>().biometricAuthEnabled) {
+            switch (context.read<LocalAuthCubit>().localAuthAvailable) {
               case true:
                 if (di<AuthSessionService>().isLoggedIn) {
                   context.read<LocalAuthCubit>().authenticate();

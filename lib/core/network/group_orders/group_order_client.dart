@@ -136,6 +136,15 @@ abstract class GroupOrderClient {
     @Field('split_mode') String? splitMode,
   });
 
+  /// F4b: la mesa avisa que paga EN CAJA. Solo cuenta abierta; el negocio
+  /// confirma después con su propio cierre. Foodly no cobra comisión.
+  @POST('/group-orders/{uuid}/request-cash')
+  Future<GroupOrderResponseDM> requestCashPayment(@Path('uuid') String uuid);
+
+  /// F4b: deshace el aviso — la mesa vuelve a poder pedir o pagar en la app.
+  @DELETE('/group-orders/{uuid}/request-cash')
+  Future<GroupOrderResponseDM> cancelCashPayment(@Path('uuid') String uuid);
+
   /// F4b: modo de cobro del negocio (solo dueño).
   @PATCH('/manager/businesses/{businessUuid}/payment-mode')
   Future<PaymentModeResponseDM> updatePaymentMode(

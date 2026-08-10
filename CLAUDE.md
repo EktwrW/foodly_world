@@ -370,6 +370,43 @@ Added 22 keys to all 3 `.arb` files (EN/ES/PT): `analyticsLabelBusinessOpen`, `a
 
 **Important**: After editing `.arb` files, run the l10n generator to update `lib/generated/`.
 
+---
+
+## Registro del idioma: `intl_es.arb` es español NEUTRO
+
+**Regla: español neutro con tuteo. Ni voseo rioplatense, ni vosotros de España.**
+
+La app se lanza en Portugal y apunta a España antes que a Latinoamérica; el
+diccionario tiene que leerse natural en Madrid, en Bogotá y en Buenos Aires.
+Hasta el 2026-08-10 estaba escrito en argentino y hubo que convertir 53
+strings.
+
+Al escribir o revisar un string en español:
+
+| No | Sí |
+|---|---|
+| Tocá, Pedí, Probá, Revisá, Activá, Subí, Andá | Toca, Pide, Prueba, Revisa, Activa, Sube, Ve |
+| podés, tenés, querés, sos, pagás, aceptás | puedes, tienes, quieres, eres, pagas, aceptas |
+| pagáis, tenéis, vuestro *(vosotros = solo España)* | pagas, tienes, tu *(o impersonal)* |
+| acá, allá | aquí, allí |
+| reservación *(México/Caribe)* | reserva |
+| manejar *(en sentido de gestionar)* | gestionar |
+
+Lo único que distingue voseo de tuteo suele ser **la tilde final**: `tocá` vs
+`toca`, `pagás` vs `pagas`. Un grep de `toc[aá]` da falsos positivos sobre las
+formas ya correctas — hay que buscar la forma acentuada exacta.
+
+Para verificar que no se coló nada:
+
+```bash
+grep -oE "\b(podés|querés|tenés|sos|pagás|aceptás|reportás|probá|revisá|tocá|activá|confirmá|ingresá|abrí|mostrá|usá|andá|establecé|verificá|retomá|digitalizá|subí|acá|allá|reservación|\w+áis|\w+éis)\b" lib/l10n/intl_es.arb
+```
+
+Sin salida = limpio.
+
+**`intl_pt.arb` es portugués de Portugal** (no de Brasil): "ao balcão", "estás",
+"dirige-te".
+
 ### Route Guard
 
 `businessAnalytics` route is registered in `permission_guarded_resource_enum.dart` → `_appModulesMap` mapped to `ModuleGuardType.business`, so only managers with an active business can access it.

@@ -1649,5 +1649,13 @@
   "managerClosedUnpaid": "Não paga",
   "managerClosedAbandoned": "Por fechar",
   "groupOrderTrackToPay": "Tudo servido — falta pagar a conta",
-  "groupOrderInviteFailed": "Não conseguimos gerar o código de convite"
+  "groupOrderInviteFailed": "Não conseguimos gerar o código de convite",
+  "groupOrderPayAtRegister": "Pagar ao balcão",
+  "groupOrderPayAtRegisterHint": "Avisas o negócio e pagas ao balcão. Sem comissão da Foodly.",
+  "groupOrderCashRequestedCta": "O negócio já foi avisado",
+  "groupOrderCashRequestedHint": "Dirige-te ao balcão para pagar. O empregado confirmará o pagamento.",
+  "groupOrderCashRequestUndo": "Prefiro pagar na app",
+  "groupOrderPayAtRegisterConfirm": "Avisar que pagam ao balcão? Não poderás adicionar mais artigos a este pedido.",
+  "managerAwaitingCashBadge": "PAGA AO BALCÃO",
+  "managerAwaitingCashNotice": "A mesa avisou que paga ao balcão. Confirma o pagamento quando receberes o dinheiro."
 }

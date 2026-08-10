@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 
+import 'fixtures/group_order_fixtures.dart' show GroupOrders;
+
 /// F4b — máquina de estados del CTA de cuenta abierta (maquetas A1-A4):
 /// A1 hay ítems sin enviar        → send    ("Enviar orden")
 /// A2 tanda en cocina sin entregar → waiting (pago BLOQUEADO)
@@ -131,6 +133,50 @@ void main() {
     });
   });
 
+  group('F4b — la mesa avisa que paga en caja (2026-08-09)', () {
+    GroupOrderDM tabAwaitingCash() => GroupOrders.openTab(
+          fulfillment: GroupFulfillmentStatus.delivered,
+          items: [GroupOrders.sentItem(price: 24, delivered: true)],
+          cashRequestedAt: DateTime(2026, 8, 9, 22),
+        );
+
+    test('el CTA pasa a `cash`, no a `billed`', () {
+      // `billed` cae al bloque de pago de la app, y acá justamente NO hay que
+      // ofrecer pagar: el dinero se entrega en el mostrador.
+      expect(tabAwaitingCash().openTabCtaState, OpenTabCtaState.cash);
+    });
+
+    test('el carrito queda congelado', () {
+      // El total ya se lo llevaron a la caja: sumar un postre después dejaría
+      // al negocio cobrando un importe distinto al que la mesa ve.
+      expect(tabAwaitingCash().isEditableCart, isFalse);
+    });
+
+    test('sin aviso, todo servido sigue siendo `pay`', () {
+      final servida = GroupOrders.openTab(
+        fulfillment: GroupFulfillmentStatus.delivered,
+        items: [GroupOrders.sentItem(price: 24, delivered: true)],
+      );
+
+      expect(servida.openTabCtaState, OpenTabCtaState.pay);
+      expect(servida.isEditableCart, isTrue);
+    });
+
+    test('el cierre del negocio le gana al aviso', () {
+      // Cobrada y cerrada, lo que manda es el cierre — no el aviso que lo
+      // precedió. Si no, el comensal seguiría viendo "esperá al mesero"
+      // después de haber pagado.
+      final cerrada = tabAwaitingCash().copyWith(
+        status: GroupOrderStatus.completed,
+        closedReason: 'paid_offline',
+        closedAt: DateTime(2026, 8, 9, 22, 30),
+      );
+
+      expect(cerrada.isAwaitingCashPayment, isFalse);
+      expect(cerrada.openTabCtaState, OpenTabCtaState.billed);
+    });
+  });
+
   group('F4b.1 — ítems anulados por el negocio (plato devuelto)', () {
     GroupOrderItemDM voided(String uuid, {double price = 10}) => GroupOrderItemDM(
           uuid: uuid,
@@ -153,8 +199,7 @@ void main() {
 
       expect(o.liveItemsCount, 1);
       expect(o.deliveredItemsCount, 1);
-      expect(o.allItemsDelivered, isTrue,
-          reason: 'el anulado no puede dejar la orden colgada para siempre');
+      expect(o.allItemsDelivered, isTrue, reason: 'el anulado no puede dejar la orden colgada para siempre');
     });
 
     test('no suman a la cuenta y no bloquean el pago', () {
@@ -213,8 +258,7 @@ void main() {
         mode: GroupPaymentMode.openTab,
         fulfillment: GroupFulfillmentStatus.delivered,
       );
-      expect(o.isTracking, isTrue,
-          reason: 'sin esto el chip desaparece justo antes de pagar');
+      expect(o.isTracking, isTrue, reason: 'sin esto el chip desaparece justo antes de pagar');
     });
 
     test('per_round ENTREGADA cierra el tracking (ya estaba pagada)', () {
@@ -240,8 +284,7 @@ void main() {
   group('modo de cobro', () {
     test('per_round (default) no es cuenta abierta', () {
       expect(order(mode: GroupPaymentMode.perRound).isOpenTab, isFalse);
-      expect(const GroupOrderDM(uuid: 'x').isOpenTab, isFalse,
-          reason: 'default seguro: per_round');
+      expect(const GroupOrderDM(uuid: 'x').isOpenTab, isFalse, reason: 'default seguro: per_round');
     });
 
     test('parsing: payment_mode desconocido degrada a per_round', () {
