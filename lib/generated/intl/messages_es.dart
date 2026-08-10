@@ -114,13 +114,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m33(businessName) => "Editar tu reseña para ${businessName}";
 
-  static String m34(phone) => "Ingresá el código enviado a ${phone}";
+  static String m34(phone) => "Ingresa el código enviado a ${phone}";
 
   static String m35(errorMsg) =>
       "Error al eliminar las fotos del artículo:\n\n${errorMsg}";
 
   static String m36(business) =>
-      "${business} ya lo está preparando. Podés seguir pidiendo — pagás todo al final.";
+      "${business} ya lo está preparando. Puedes seguir pidiendo — pagas todo al final.";
 
   static String m37(amount) => "Pagar la cuenta · ${amount}";
 
@@ -192,7 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m66(count) => "Comensales: ${count}";
 
-  static String m67(count) => "Tienes ${count} reservaciones pendientes";
+  static String m67(count) => "Tienes ${count} reservas pendientes";
 
   static String m68(max) => "Máximo ${max} fotos";
 
@@ -224,7 +224,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m80(count) => "hace ${count}m";
 
   static String m81(seconds) =>
-      "Demasiados intentos seguidos. Probá de nuevo en ${seconds} s.";
+      "Demasiados intentos seguidos. Prueba de nuevo en ${seconds} s.";
 
   static String m82(date) => "Visitado el ${date}";
 
@@ -339,26 +339,26 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "aiMenuImportCamera": MessageLookupByLibrary.simpleMessage("Cámara"),
     "aiMenuImportDisclaimer": MessageLookupByLibrary.simpleMessage(
-      "Esta función usa IA para extraer items del menú a partir de tus fotos. La IA puede cometer errores — revisá nombres, precios y descripciones antes de confirmar.",
+      "Esta función usa IA para extraer items del menú a partir de tus fotos. La IA puede cometer errores — revisa nombres, precios y descripciones antes de confirmar.",
     ),
     "aiMenuImportEmptyStateCta": MessageLookupByLibrary.simpleMessage(
       "Importar con IA",
     ),
     "aiMenuImportEmptyStateManualHint": MessageLookupByLibrary.simpleMessage(
-      "Para cargarlos a mano, abrí el menú flotante y tocá Editar",
+      "Para cargarlos a mano, abre el menú flotante y toca Editar",
     ),
     "aiMenuImportEmptyStateSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Subí fotos de las secciones de tu menú y la IA extrae los items, categorías y precios automáticamente.",
+      "Sube fotos de las secciones de tu menú y la IA extrae los items, categorías y precios automáticamente.",
     ),
     "aiMenuImportEmptyStateTitle": MessageLookupByLibrary.simpleMessage(
-      "Digitalizá tu menú",
+      "Digitaliza tu menú",
     ),
     "aiMenuImportGallery": MessageLookupByLibrary.simpleMessage("Galería"),
     "aiMenuImportHeroSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Subí fotos de tu menú y la IA extrae los items, categorías y precios automáticamente.",
+      "Sube fotos de tu menú y la IA extrae los items, categorías y precios automáticamente.",
     ),
     "aiMenuImportHeroTitle": MessageLookupByLibrary.simpleMessage(
-      "Digitalizá tu menú con IA",
+      "Digitaliza tu menú con IA",
     ),
     "aiMenuImportParsing": m0,
     "aiMenuImportParsingHint": MessageLookupByLibrary.simpleMessage(
@@ -384,14 +384,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "aiMenuImportReviewFooterCount": m1,
     "aiMenuImportReviewHeaderHint": MessageLookupByLibrary.simpleMessage(
-      "Revisá nombres y precios. Tocá la X para eliminar items que no quieras.",
+      "Revisa nombres y precios. Toca la X para eliminar items que no quieras.",
     ),
     "aiMenuImportReviewHeaderTitle": m2,
     "aiMenuImportReviewPending": MessageLookupByLibrary.simpleMessage(
       "Revisión en construcción — pronto podrás editar antes de confirmar",
     ),
     "aiMenuImportReviewTitle": MessageLookupByLibrary.simpleMessage(
-      "Revisá tu menú",
+      "Revisa tu menú",
     ),
     "aiMenuImportReviewVersionBig": MessageLookupByLibrary.simpleMessage(
       "Grande",
@@ -407,7 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ver mi menú",
     ),
     "aiMenuImportSuccessHint": MessageLookupByLibrary.simpleMessage(
-      "Ahora podés agregar fotos a cada item, ajustar precios o reordenarlos cuando quieras.",
+      "Ahora puedes agregar fotos a cada item, ajustar precios o reordenarlos cuando quieras.",
     ),
     "aiMenuImportSuccessStatCombos": m4,
     "aiMenuImportSuccessStatDrinks": m5,
@@ -569,7 +569,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "april": MessageLookupByLibrary.simpleMessage("Abril"),
     "arabic": MessageLookupByLibrary.simpleMessage("Árabe"),
     "areYouSureCancelReservation": MessageLookupByLibrary.simpleMessage(
-      "¿Estás seguro de que deseas cancelar esta reservación?",
+      "¿Estás seguro de que deseas cancelar esta reserva?",
     ),
     "argentinian": MessageLookupByLibrary.simpleMessage("Argentina"),
     "asian": MessageLookupByLibrary.simpleMessage("Asiática"),
@@ -759,7 +759,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "combosLabelSpecials": MessageLookupByLibrary.simpleMessage("Especiales"),
     "combosLabelTitle": m31,
     "communityGuidelinesNotice": MessageLookupByLibrary.simpleMessage(
-      "Al publicar, aceptás nuestras Normas de la Comunidad.",
+      "Al publicar, aceptas nuestras Normas de la Comunidad.",
     ),
     "complete": MessageLookupByLibrary.simpleMessage("Completar"),
     "completeSignUp": MessageLookupByLibrary.simpleMessage(
@@ -778,13 +778,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Confirmar contraseña",
     ),
     "confirmPasswordForEmailChange": MessageLookupByLibrary.simpleMessage(
-      "Por seguridad, ingresá tu contraseña actual para cambiar tu email.",
+      "Por seguridad, ingresa tu contraseña actual para cambiar tu email.",
     ),
     "confirmPasswordTitle": MessageLookupByLibrary.simpleMessage(
-      "Confirmá tu contraseña",
+      "Confirma tu contraseña",
     ),
     "confirmPhoneForVerification": MessageLookupByLibrary.simpleMessage(
-      "Confirmá el número de teléfono para recibir tu código de verificación.",
+      "Confirma el número de teléfono para recibir tu código de verificación.",
     ),
     "confirmRejectQuote": MessageLookupByLibrary.simpleMessage(
       "¿Rechazar esta cotización?",
@@ -816,7 +816,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "contactNumber": MessageLookupByLibrary.simpleMessage("Número de contacto"),
     "contactPrivacyNotice": MessageLookupByLibrary.simpleMessage(
-      "Visible solo para ti y los comercios donde tengas reservación activa.",
+      "Visible solo para ti y los comercios donde tengas reserva activa.",
     ),
     "contactRecipientHello": MessageLookupByLibrary.simpleMessage(
       "Consultas generales",
@@ -857,7 +857,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "No se pudieron cargar las promociones",
     ),
     "couldNotLoadReservationDetails": MessageLookupByLibrary.simpleMessage(
-      "No se pudieron cargar los detalles de la reservación.",
+      "No se pudieron cargar los detalles de la reserva.",
     ),
     "country": MessageLookupByLibrary.simpleMessage("País"),
     "countryArgentina": MessageLookupByLibrary.simpleMessage("Argentina"),
@@ -1003,7 +1003,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "editYourReviewFor": m33,
     "email": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
     "emailChangeBlockedForSocialUser": MessageLookupByLibrary.simpleMessage(
-      "Primero establecé una contraseña para tu cuenta y luego podrás cambiar tu email.",
+      "Primero establece una contraseña para tu cuenta y luego podrás cambiar tu email.",
     ),
     "emailSectionTitle1": MessageLookupByLibrary.simpleMessage("Tu"),
     "emailSectionTitle2": MessageLookupByLibrary.simpleMessage("Email"),
@@ -1014,7 +1014,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Habilitar menú digital",
     ),
     "enableDigitalMenuHint": MessageLookupByLibrary.simpleMessage(
-      "Mostrá una carta además de tus paquetes",
+      "Muestra una carta además de tus paquetes",
     ),
     "enableLocation": MessageLookupByLibrary.simpleMessage("Activar ubicación"),
     "enableLocationDescription": MessageLookupByLibrary.simpleMessage(
@@ -1072,13 +1072,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "exploreAsGuest": MessageLookupByLibrary.simpleMessage("Explorar"),
     "failedDeletePhotos": m35,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(
-      "No se pudo cancelar la reservación.",
+      "No se pudo cancelar la reserva.",
     ),
     "failedToCompleteReservation": MessageLookupByLibrary.simpleMessage(
-      "No se pudo completar la reservación.",
+      "No se pudo completar la reserva.",
     ),
     "failedToConfirmReservation": MessageLookupByLibrary.simpleMessage(
-      "No se pudo confirmar la reservación.",
+      "No se pudo confirmar la reserva.",
     ),
     "failedToLoadPromotionDetails": MessageLookupByLibrary.simpleMessage(
       "Error al cargar los detalles de la promoción.",
@@ -1087,7 +1087,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "No se pudo marcar como no asistió.",
     ),
     "failedToRejectReservation": MessageLookupByLibrary.simpleMessage(
-      "No se pudo rechazar la reservación.",
+      "No se pudo rechazar la reserva.",
     ),
     "fastFood": MessageLookupByLibrary.simpleMessage("Comida Rápida"),
     "favorites": MessageLookupByLibrary.simpleMessage("Favoritos"),
@@ -1099,7 +1099,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feedFilterFollowing": MessageLookupByLibrary.simpleMessage("Siguiendo"),
     "feedFilterNearby": MessageLookupByLibrary.simpleMessage("Cercanos"),
     "feedFollowingEmptySubtitle": MessageLookupByLibrary.simpleMessage(
-      "Sigue a usuarios desde la pestaña Usuarios para ver sus publicaciones acá.",
+      "Sigue a usuarios desde la pestaña Usuarios para ver sus publicaciones aquí.",
     ),
     "feedFollowingEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Aún no sigues a nadie",
@@ -1266,14 +1266,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Pagar en caja",
     ),
     "groupOrderPayAtRegisterConfirm": MessageLookupByLibrary.simpleMessage(
-      "¿Avisar que pagáis en caja? No podrás añadir más artículos a este pedido.",
+      "¿Avisar al negocio que pagas en caja? No podrás añadir más artículos a este pedido.",
     ),
     "groupOrderPayAtRegisterHint": MessageLookupByLibrary.simpleMessage(
       "Avisas al negocio y pagas en el mostrador. Sin comisión de Foodly.",
     ),
     "groupOrderPayBillCta": m45,
     "groupOrderPayBillHint": MessageLookupByLibrary.simpleMessage(
-      "Podés dividirla entre la mesa como quieras",
+      "Puedes dividirla entre la mesa como quieras",
     ),
     "groupOrderPayBlockedHint": MessageLookupByLibrary.simpleMessage(
       "El pago se habilita cuando te entreguen todo",
@@ -1307,7 +1307,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderSendCta": MessageLookupByLibrary.simpleMessage("Enviar orden"),
     "groupOrderSendHint": MessageLookupByLibrary.simpleMessage(
-      "La cocina la recibe al instante · pagás al final",
+      "La cocina la recibe al instante · pagas al final",
     ),
     "groupOrderServiceFeeExplain": m49,
     "groupOrderServiceFeeNotice": m50,
@@ -1559,10 +1559,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Gestionar Reservas",
     ),
     "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
-      "Verificá tu negocio con Stripe para recibir los pagos de las órdenes directo en tu cuenta bancaria. Toma ~5 minutos.",
+      "Verifica tu negocio con Stripe para recibir los pagos de las órdenes directo en tu cuenta bancaria. Toma ~5 minutos.",
     ),
     "managerActivatePaymentsTitle": MessageLookupByLibrary.simpleMessage(
-      "Activá los pagos de tu negocio",
+      "Activa los pagos de tu negocio",
     ),
     "managerActivateWithStripe": MessageLookupByLibrary.simpleMessage(
       "Activar con Stripe →",
@@ -1589,7 +1589,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerBucketReady": MessageLookupByLibrary.simpleMessage("Listas"),
     "managerChecklistHint": MessageLookupByLibrary.simpleMessage(
-      "Tocá cada ítem para marcarlo como entregado",
+      "Toca cada ítem para marcarlo como entregado",
     ),
     "managerCloseTab": MessageLookupByLibrary.simpleMessage("Cerrar cuenta"),
     "managerCloseTabBody": m55,
@@ -1614,7 +1614,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Entregar todo de una",
     ),
     "managerGenericError": MessageLookupByLibrary.simpleMessage(
-      "No pudimos completar la acción. Probá de nuevo.",
+      "No pudimos completar la acción. Prueba de nuevo.",
     ),
     "managerGuestsMeta": m56,
     "managerHistoryDaySummary": m57,
@@ -1724,7 +1724,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "myFavorites": MessageLookupByLibrary.simpleMessage("Mis Favoritos"),
     "myHistory": MessageLookupByLibrary.simpleMessage("Mi Historial"),
-    "myReservations": MessageLookupByLibrary.simpleMessage("Mis Reservaciones"),
+    "myReservations": MessageLookupByLibrary.simpleMessage("Mis Reservas"),
     "nNewMessages": m63,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "¿Necesitas las mejores recomendaciones?",
@@ -1732,7 +1732,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "newBranch": MessageLookupByLibrary.simpleMessage("Nuevos en Foodly"),
     "newPassword": MessageLookupByLibrary.simpleMessage("Nueva Contraseña"),
     "newReleasesEmptyErrorSubtitle": MessageLookupByLibrary.simpleMessage(
-      "No pudimos cargar los nuevos negocios. Probá de nuevo.",
+      "No pudimos cargar los nuevos negocios. Prueba de nuevo.",
     ),
     "newReleasesEmptyErrorTitle": MessageLookupByLibrary.simpleMessage(
       "Conexión interrumpida",
@@ -1747,7 +1747,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nextMonth": MessageLookupByLibrary.simpleMessage("Mes siguiente"),
     "nickName": MessageLookupByLibrary.simpleMessage("Nombre de usuario"),
     "noAccessSection": MessageLookupByLibrary.simpleMessage(
-      "No tenés acceso a esa sección",
+      "No tienes acceso a esa sección",
     ),
     "noAudioDetected": MessageLookupByLibrary.simpleMessage(
       "No se detectó audio. Por favor, intenta de nuevo.",
@@ -1889,7 +1889,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Prepago por ronda",
     ),
     "paymentModeSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Podés cambiarlo cuando quieras desde tu panel",
+      "Puedes cambiarlo cuando quieras desde tu panel",
     ),
     "paymentModeTitle": MessageLookupByLibrary.simpleMessage(
       "¿Cómo cobra tu negocio?",
@@ -1903,7 +1903,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pending": MessageLookupByLibrary.simpleMessage("Pendiente"),
     "pendingReservationsAlertMany": m67,
     "pendingReservationsAlertOne": MessageLookupByLibrary.simpleMessage(
-      "Tienes 1 reservación pendiente",
+      "Tienes 1 reserva pendiente",
     ),
     "pendingReservationsContent": MessageLookupByLibrary.simpleMessage(
       "Hay solicitudes de reserva esperando tu respuesta.",
@@ -2005,7 +2005,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "promoTabExpired": MessageLookupByLibrary.simpleMessage("Expiradas"),
     "promoTabUpcoming": MessageLookupByLibrary.simpleMessage("Próximas"),
     "promosEmptyErrorSubtitle": MessageLookupByLibrary.simpleMessage(
-      "No pudimos cargar las promos. Probá de nuevo.",
+      "No pudimos cargar las promos. Prueba de nuevo.",
     ),
     "promosEmptyErrorTitle": MessageLookupByLibrary.simpleMessage(
       "Conexión interrumpida",
@@ -2094,7 +2094,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reorder": MessageLookupByLibrary.simpleMessage("Reordenar"),
     "reportContent": MessageLookupByLibrary.simpleMessage("Reportar"),
     "reportContentSubtitle": MessageLookupByLibrary.simpleMessage(
-      "¿Por qué reportás este contenido?",
+      "¿Por qué reportas este contenido?",
     ),
     "reportReasonHarassment": MessageLookupByLibrary.simpleMessage(
       "Acoso o intimidación",
@@ -2133,15 +2133,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "requested": MessageLookupByLibrary.simpleMessage("Solicitado"),
     "resendCode": MessageLookupByLibrary.simpleMessage("Reenviar Código"),
     "resendCodeIn": m73,
-    "reservation": MessageLookupByLibrary.simpleMessage("Reservación"),
+    "reservation": MessageLookupByLibrary.simpleMessage("Reserva"),
     "reservationCancelled": MessageLookupByLibrary.simpleMessage(
       "Reserva cancelada.",
     ),
     "reservationCompleted": MessageLookupByLibrary.simpleMessage(
-      "Reservación completada.",
+      "Reserva completada.",
     ),
     "reservationConfirmed": MessageLookupByLibrary.simpleMessage(
-      "Reservación confirmada.",
+      "Reserva confirmada.",
     ),
     "reservationContactBody": MessageLookupByLibrary.simpleMessage(
       "El comercio necesita estos datos para confirmar tu solicitud.",
@@ -2150,10 +2150,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Datos de contacto",
     ),
     "reservationDetails": MessageLookupByLibrary.simpleMessage(
-      "Detalles de la reservación",
+      "Detalles de la reserva",
     ),
     "reservationRejected": MessageLookupByLibrary.simpleMessage(
-      "Reservación rechazada.",
+      "Reserva rechazada.",
     ),
     "reservationRequestFailed": MessageLookupByLibrary.simpleMessage(
       "No se pudo enviar la solicitud de reserva.",
@@ -2161,7 +2161,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationRequestSent": MessageLookupByLibrary.simpleMessage(
       "¡Solicitud de reserva enviada!",
     ),
-    "reservations": MessageLookupByLibrary.simpleMessage("Reservaciones"),
+    "reservations": MessageLookupByLibrary.simpleMessage("Reservas"),
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Reservas para hoy",
     ),
@@ -2337,7 +2337,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Un último paso",
     ),
     "socialEmailMissing": MessageLookupByLibrary.simpleMessage(
-      "No pudimos obtener tu correo de Apple. Probá de nuevo o usá otro método de inicio de sesión.",
+      "No pudimos obtener tu correo de Apple. Prueba de nuevo o usa otro método de inicio de sesión.",
     ),
     "socials": MessageLookupByLibrary.simpleMessage("Sociales"),
     "solo": MessageLookupByLibrary.simpleMessage("Solo"),
@@ -2372,13 +2372,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "stress": MessageLookupByLibrary.simpleMessage("Stress"),
     "strict": MessageLookupByLibrary.simpleMessage("Estricta"),
     "stripeBridgeRefreshBody": MessageLookupByLibrary.simpleMessage(
-      "Retomá la activación desde la app: Órdenes → Activar pagos con Stripe.",
+      "Retoma la activación desde la app: Órdenes → Activar pagos con Stripe.",
     ),
     "stripeBridgeRefreshTitle": MessageLookupByLibrary.simpleMessage(
       "Activación incompleta",
     ),
     "stripeBridgeReturnBody": MessageLookupByLibrary.simpleMessage(
-      "Ya podés cerrar esta pestaña y volver a la app Foodly.",
+      "Ya puedes cerrar esta pestaña y volver a la app Foodly.",
     ),
     "stripeBridgeReturnTitle": MessageLookupByLibrary.simpleMessage(
       "Cuenta de pagos configurada",
@@ -2458,7 +2458,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "title": MessageLookupByLibrary.simpleMessage("Título"),
     "today": MessageLookupByLibrary.simpleMessage("Hoy"),
     "tooManyAttempts": MessageLookupByLibrary.simpleMessage(
-      "Demasiados intentos seguidos. Probá de nuevo en un momento.",
+      "Demasiados intentos seguidos. Prueba de nuevo en un momento.",
     ),
     "tooManyAttemptsIn": m81,
     "topEvents": MessageLookupByLibrary.simpleMessage("Eventos principales"),
@@ -2530,7 +2530,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "users": MessageLookupByLibrary.simpleMessage("Usuarios"),
     "usersHaveTheAbilityToCreateAndManage":
         MessageLookupByLibrary.simpleMessage(
-          "son usuarios que tienen la capacidad de crear y manejar",
+          "son usuarios que tienen la capacidad de crear y gestionar",
         ),
     "valid": MessageLookupByLibrary.simpleMessage("Válido"),
     "validCategoryRequired": MessageLookupByLibrary.simpleMessage(
@@ -2579,7 +2579,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "weekdayShort6": MessageLookupByLibrary.simpleMessage("Vie"),
     "weekdayShort7": MessageLookupByLibrary.simpleMessage("Sáb"),
     "welcomeDialogSocialBusiness": MessageLookupByLibrary.simpleMessage(
-      "¿Querés publicar tu negocio en Foodly? Andá a tu perfil y activá la opción de cuenta empresarial para darlo de alta.",
+      "¿Quieres publicar tu negocio en Foodly? Ve a tu perfil y activa la opción de cuenta empresarial para darlo de alta.",
     ),
     "welcomeDialogTextSpan1": MessageLookupByLibrary.simpleMessage("En"),
     "welcomeDialogTextSpan2": MessageLookupByLibrary.simpleMessage(
