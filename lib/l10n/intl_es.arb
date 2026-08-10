@@ -1649,5 +1649,13 @@
   "managerClosedUnpaid": "Impagada",
   "managerClosedAbandoned": "Sin cerrar",
   "groupOrderTrackToPay": "Todo servido — falta pagar la cuenta",
-  "groupOrderInviteFailed": "No pudimos generar el código de invitación"
+  "groupOrderInviteFailed": "No pudimos generar el código de invitación",
+  "groupOrderPayAtRegister": "Pagar en caja",
+  "groupOrderPayAtRegisterHint": "Avisas al negocio y pagas en el mostrador. Sin comisión de Foodly.",
+  "groupOrderCashRequestedCta": "El negocio ya fue avisado",
+  "groupOrderCashRequestedHint": "Acércate a la caja para pagar. El camarero confirmará el cobro.",
+  "groupOrderCashRequestUndo": "Prefiero pagar en la app",
+  "groupOrderPayAtRegisterConfirm": "¿Avisar que pagáis en caja? No podrás añadir más artículos a este pedido.",
+  "managerAwaitingCashBadge": "PAGA EN CAJA",
+  "managerAwaitingCashNotice": "La mesa avisó que paga en el mostrador. Confirma el cobro cuando recibas el dinero."
 }

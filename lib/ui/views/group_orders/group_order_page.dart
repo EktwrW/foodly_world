@@ -189,6 +189,28 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     await di<ActiveGroupOrderCubit>().refresh();
   }
 
+  /// F4b — "Pagar en caja": avisa al negocio. Se confirma igual que pedir la
+  /// cuenta porque tiene el mismo efecto irreversible sobre el carrito — a
+  /// partir de acá la mesa ya no puede agregar nada.
+  Future<void> _onPayAtRegister(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+
+    if (!await _confirm(context, S.current.groupOrderPayAtRegisterConfirm) ||
+        !context.mounted) {
+      return;
+    }
+
+    await cubit.requestCashPayment();
+    await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// F4b — deshace el aviso. Sin confirmación: es la marcha atrás, y pedir
+  /// confirmación para cancelar algo es fricción sobre fricción.
+  Future<void> _onCancelCashPayment(BuildContext context) async {
+    await context.read<GroupOrderCubit>().cancelCashPayment();
+    await di<ActiveGroupOrderCubit>().refresh();
+  }
+
   /// F4b — "Pedir más": vuelve al menú del negocio con el carrito grupal
   /// activo (los ítems nuevos entran como tanda siguiente).
   void _onOrderMore(GroupOrderDM order) {
@@ -967,6 +989,8 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     onLock: () => _onLock(context),
                     onSend: () => _onSend(context, order),
                     onRequestBill: () => _onRequestBill(context),
+                    onPayAtRegister: () => _onPayAtRegister(context),
+                    onCancelCashPayment: () => _onCancelCashPayment(context),
                     onOrderMore: () => _onOrderMore(order),
                     onCover: (p) => _onCover(context, order, p),
                     onPayAll: () => _onPayAll(context, order),
@@ -1099,6 +1123,8 @@ class _Content extends StatelessWidget {
   final VoidCallback onLock;
   final VoidCallback onSend;
   final VoidCallback onRequestBill;
+  final VoidCallback onPayAtRegister;
+  final VoidCallback onCancelCashPayment;
   final VoidCallback onOrderMore;
   final void Function(GroupOrderParticipantDM p) onCover;
   final VoidCallback onPayAll;
@@ -1111,6 +1137,8 @@ class _Content extends StatelessWidget {
     required this.onLock,
     required this.onSend,
     required this.onRequestBill,
+    required this.onPayAtRegister,
+    required this.onCancelCashPayment,
     required this.onOrderMore,
     required this.onCover,
     required this.onPayAll,
@@ -1211,6 +1239,10 @@ class _Content extends StatelessWidget {
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
           onSend: (order.isOpenTab && _iAmHost) ? onSend : null,
           onRequestBill: (order.isOpenTab && _iAmHost) ? onRequestBill : null,
+          // F4b: pagar en caja también es del host — es él quien se compromete
+          // por la mesa frente al negocio.
+          onPayAtRegister: (order.isOpenTab && _iAmHost) ? onPayAtRegister : null,
+          onCancelCashPayment: (order.isOpenTab && _iAmHost) ? onCancelCashPayment : null,
           // "Pedir más" lo puede usar CUALQUIER comensal (agrega a su nombre).
           onOrderMore: order.businessMenuUuid == null ? null : onOrderMore,
           onPayAll: _showPayAll ? onPayAll : null,
@@ -1244,6 +1276,13 @@ class _ClientFulfillmentBanner extends StatelessWidget {
           ),
         // Algo espera en cocina: recién acá el estado agregado dice algo.
         OpenTabCtaState.waiting => _kitchenLook(),
+        // Avisaron que pagan en caja: la cabecera no puede seguir diciendo
+        // "falta pagar la cuenta" como si el pago fuera por la app.
+        OpenTabCtaState.cash => (
+            Icons.storefront_rounded,
+            const Color(0xFF0B8A40),
+            S.current.groupOrderCashRequestedCta,
+          ),
         // Todo servido: falta la cuenta, así que NO se cierra con
         // "¡buen provecho!" — la mesa todavía debe.
         _ => (

@@ -1649,5 +1649,13 @@
   "managerClosedUnpaid": "Unpaid",
   "managerClosedAbandoned": "Never closed",
   "groupOrderTrackToPay": "All served — the bill is still open",
-  "groupOrderInviteFailed": "We couldn't generate the invite code"
+  "groupOrderInviteFailed": "We couldn't generate the invite code",
+  "groupOrderPayAtRegister": "Pay at the counter",
+  "groupOrderPayAtRegisterHint": "We'll let the venue know and you pay at the counter. No Foodly fee.",
+  "groupOrderCashRequestedCta": "The venue has been notified",
+  "groupOrderCashRequestedHint": "Head to the counter to pay. Staff will confirm once they receive it.",
+  "groupOrderCashRequestUndo": "I'd rather pay in the app",
+  "groupOrderPayAtRegisterConfirm": "Let the venue know you're paying at the counter? You won't be able to add more items to this order.",
+  "managerAwaitingCashBadge": "PAYING AT COUNTER",
+  "managerAwaitingCashNotice": "The table said they're paying at the counter. Confirm once you receive the money."
 }

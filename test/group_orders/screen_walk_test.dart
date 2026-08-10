@@ -184,6 +184,23 @@ void main() {
           reason: 'Sin esto, la mesa que paga en efectivo no tiene dónde cerrarse.');
     });
 
+    testWidgets('4b· la mesa avisó que paga en caja: el panel lo destaca',
+        (tester) async {
+      // Mientras hay alguien parado en la caja, eso es lo único que el mesero
+      // necesita saber de esta orden. Un "POR PAGAR" genérico no se lo dice.
+      final enCaja = tab(ff: GroupFulfillmentStatus.delivered)
+          .copyWith(cashRequestedAt: DateTime(2026, 8, 9, 22));
+
+      await pumpCard(tester, enCaja);
+      expect(find.text(S.current.managerAwaitingCashBadge), findsOneWidget);
+      expect(find.text(S.current.managerUnpaidBadge), findsNothing);
+
+      await pumpDetail(tester, enCaja);
+      expect(find.text(S.current.managerAwaitingCashNotice), findsOneWidget);
+      expect(find.text(S.current.managerCloseTab), findsOneWidget,
+          reason: 'El mesero cobra y confirma en el mismo lugar donde lee el aviso.');
+    });
+
     testWidgets('5· cobrada EN CAJA: la tarjeta lo dice y deja de pedir plata',
         (tester) async {
       final enCaja = tab(ff: GroupFulfillmentStatus.delivered).copyWith(
@@ -301,6 +318,8 @@ void main() {
       VoidCallback? onOrderMore,
       VoidCallback? onPay,
       VoidCallback? onLock,
+      VoidCallback? onPayAtRegister,
+      VoidCallback? onCancelCashPayment,
     }) =>
         tester.pumpWidget(MaterialApp(
           home: Scaffold(
@@ -312,6 +331,8 @@ void main() {
               onOrderMore: onOrderMore,
               onPay: onPay,
               onLock: onLock,
+              onPayAtRegister: onPayAtRegister,
+              onCancelCashPayment: onCancelCashPayment,
             ),
           ),
         ));
@@ -392,6 +413,43 @@ void main() {
       expect(find.text(S.current.groupOrderPayFullOrder('€12.25')), findsOneWidget);
       expect(find.text(S.current.groupOrderSendCta), findsNothing);
       expect(find.text(S.current.groupOrderPayBlockedHint), findsNothing);
+    });
+
+    testWidgets('A3b · todo servido: además de pagar, se puede pagar en caja',
+        (tester) async {
+      var aviso = false;
+      final servida = conHost(GroupOrders.openTab(
+        fulfillment: GroupFulfillmentStatus.delivered,
+        items: [GroupOrders.sentItem(uuid: 'i1', price: 12, participantUuid: 'p1')],
+      ));
+
+      await pumpFooter(tester, servida,
+          onRequestBill: () {}, onPayAtRegister: () => aviso = true);
+
+      await tester.tap(find.text(S.current.groupOrderPayAtRegister));
+      await tester.pumpAndSettle();
+      expect(aviso, isTrue);
+    });
+
+    testWidgets('CAJA · avisado el negocio, el pie deja de ofrecer pagar',
+        (tester) async {
+      // El bug que esto previene: si el estado cayera en `billed`, el pie
+      // pintaría "Pagar la orden" sobre una mesa que ya se comprometió a
+      // pagar en el mostrador.
+      final enCaja = conHost(GroupOrders.openTab(
+        fulfillment: GroupFulfillmentStatus.delivered,
+        items: [GroupOrders.sentItem(uuid: 'i1', price: 12, participantUuid: 'p1')],
+        cashRequestedAt: DateTime(2026, 8, 9, 22),
+      ));
+
+      await pumpFooter(tester, enCaja, myShare: 12, onPay: () {}, onCancelCashPayment: () {});
+
+      expect(find.text(S.current.groupOrderCashRequestedCta), findsOneWidget);
+      expect(find.text(S.current.groupOrderCashRequestedHint), findsOneWidget);
+      expect(find.text(S.current.groupOrderCashRequestUndo), findsOneWidget,
+          reason: 'Sin marcha atrás el aviso sería un callejón sin salida.');
+      expect(find.text(S.current.groupOrderPayFullOrder('€12.25')), findsNothing);
+      expect(find.text(S.current.groupOrderPayAtRegister), findsNothing);
     });
 
     testWidgets('PREPAGO · el pie NUNCA ofrece el CTA de cuenta abierta',

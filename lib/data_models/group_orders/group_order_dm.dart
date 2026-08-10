@@ -86,6 +86,14 @@ enum OpenTabCtaState {
 
   /// Cuenta ya pedida (orden lockeada) → checkout/split en curso.
   billed,
+
+  /// La mesa avisó que paga EN CAJA y espera al mesero.
+  ///
+  /// Estado propio y no `billed` a propósito: `billed` cae al bloque de pago
+  /// de la app, y acá justamente NO hay que ofrecer pagar — el dinero se
+  /// entrega en el mostrador. Lo único que corresponde es decir que el
+  /// negocio ya fue avisado, y dejar deshacerlo.
+  cash,
 }
 
 enum GroupPaymentStatus {
@@ -217,6 +225,10 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     @Default(GroupPaymentMode.perRound)
     GroupPaymentMode paymentMode,
     @JsonKey(name: 'bill_requested_at') DateTime? billRequestedAt,
+    // F4b: la mesa avisó que paga en el mostrador. Campo propio y no
+    // `billRequestedAt` porque ese arrastra el lock, el reparto y el
+    // checkout — pagar en caja no necesita nada de eso.
+    @JsonKey(name: 'cash_requested_at') DateTime? cashRequestedAt,
     // F4b: cómo terminó una cuenta que NO se cobró por Foodly
     // (paid_offline | unpaid | abandoned). null = ciclo normal de pago.
     @JsonKey(name: 'closed_reason') String? closedReason,
@@ -262,9 +274,15 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// Total de lo que está en el carrito sin enviar.
   double get pendingTotal => pendingItems.fold<double>(0, (acc, i) => acc + i.lineTotal);
 
+  /// F4b: la mesa avisó que paga en el mostrador y espera al mesero.
+  /// Espeja `GroupOrder::isAwaitingCashPayment()` del backend.
+  bool get isAwaitingCashPayment =>
+      cashRequestedAt != null && !isTerminal && status == GroupOrderStatus.confirmed;
+
   /// Máquina de estados del CTA en cuenta abierta (decisión Hector,
   /// maquetas A1-A4). PURA: la UI solo pinta lo que esto devuelve.
   ///  - hay ítems sin enviar          → send    ("Enviar orden")
+  ///  - avisaron que pagan en caja    → cash    (esperando al mesero)
   ///  - cuenta ya pedida (locked/…)   → billed  (checkout en curso)
   ///  - falta entregar algo enviado   → waiting (pago BLOQUEADO)
   ///  - todo enviado y entregado      → pay     ("Pagar la cuenta")
@@ -276,6 +294,9 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     if (isTerminal || billRequestedAt != null || isPayable) {
       return OpenTabCtaState.billed;
     }
+    // Va DESPUÉS de terminal: una vez que el negocio cobró y cerró, lo que
+    // manda es el cierre, no el aviso que lo precedió.
+    if (isAwaitingCashPayment) return OpenTabCtaState.cash;
     if (pendingItems.isNotEmpty) return OpenTabCtaState.send;
     if (sentItems.isEmpty) return OpenTabCtaState.send;
     final allDelivered = sentItems.every((i) => i.deliveredAt != null);
@@ -346,7 +367,11 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
     return isOpenTab &&
         status == GroupOrderStatus.confirmed &&
-        billRequestedAt == null;
+        billRequestedAt == null &&
+        // Pedida la cuenta para pagar en caja, el total se lo llevaron al
+        // mostrador: sumar un postre después dejaría al negocio cobrando un
+        // importe distinto al que la mesa ve en la app.
+        cashRequestedAt == null;
   }
 
   /// La orden terminó: ya no admite ninguna acción de mesa ni de cocina.

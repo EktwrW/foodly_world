@@ -247,6 +247,24 @@ class GroupOrderRepo {
     }
   }
 
+  /// F4b: la mesa avisa que paga en caja (el negocio confirma al cobrar).
+  Future<ApiResult<GroupOrderResponseDM>> requestCashPayment(String uuid) async {
+    try {
+      return ApiResult.success(await _client.requestCashPayment(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// F4b: deshace el aviso de pago en caja.
+  Future<ApiResult<GroupOrderResponseDM>> cancelCashPayment(String uuid) async {
+    try {
+      return ApiResult.success(await _client.cancelCashPayment(uuid));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   /// F4b: modo de cobro del negocio (solo dueño).
   Future<ApiResult<PaymentModeResponseDM>> updatePaymentMode(
     String businessUuid, {

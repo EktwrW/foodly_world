@@ -258,6 +258,25 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                       // panel. Solo con cuenta abierta y sin pagos por la app:
                       // marcar "cobrada en caja" algo ya cobrado dejaría al
                       // comensal pagando dos veces (el BE también lo rechaza).
+                      // F4b: la mesa avisó que paga en el mostrador. El aviso
+                      // va junto al botón de cerrar porque son la misma
+                      // acción vista desde los dos lados — el mesero cobra y
+                      // confirma acá mismo.
+                      if (order.isAwaitingCashPayment) ...[
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Icon(Icons.storefront_rounded, size: 16, color: kManagerAmber),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                S.current.managerAwaitingCashNotice,
+                                style: FoodlyTextStyles.caption.copyWith(fontSize: 10.5),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                       if (order.canBeClosedByBusiness) ...[
                         const SizedBox(height: 4),
                         TextButton.icon(

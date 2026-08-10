@@ -10104,6 +10104,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Pay at the counter`
+  String get groupOrderPayAtRegister {
+    return Intl.message(
+      'Pay at the counter',
+      name: 'groupOrderPayAtRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We'll let the venue know and you pay at the counter. No Foodly fee.`
+  String get groupOrderPayAtRegisterHint {
+    return Intl.message(
+      'We\'ll let the venue know and you pay at the counter. No Foodly fee.',
+      name: 'groupOrderPayAtRegisterHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The venue has been notified`
+  String get groupOrderCashRequestedCta {
+    return Intl.message(
+      'The venue has been notified',
+      name: 'groupOrderCashRequestedCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Head to the counter to pay. Staff will confirm once they receive it.`
+  String get groupOrderCashRequestedHint {
+    return Intl.message(
+      'Head to the counter to pay. Staff will confirm once they receive it.',
+      name: 'groupOrderCashRequestedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I'd rather pay in the app`
+  String get groupOrderCashRequestUndo {
+    return Intl.message(
+      'I\'d rather pay in the app',
+      name: 'groupOrderCashRequestUndo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let the venue know you're paying at the counter? You won't be able to add more items to this order.`
+  String get groupOrderPayAtRegisterConfirm {
+    return Intl.message(
+      'Let the venue know you\'re paying at the counter? You won\'t be able to add more items to this order.',
+      name: 'groupOrderPayAtRegisterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PAYING AT COUNTER`
+  String get managerAwaitingCashBadge {
+    return Intl.message(
+      'PAYING AT COUNTER',
+      name: 'managerAwaitingCashBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The table said they're paying at the counter. Confirm once you receive the money.`
+  String get managerAwaitingCashNotice {
+    return Intl.message(
+      'The table said they\'re paying at the counter. Confirm once you receive the money.',
+      name: 'managerAwaitingCashNotice',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

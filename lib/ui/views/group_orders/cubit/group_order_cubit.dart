@@ -116,6 +116,25 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     result.when(success: _applyResponse, failure: _onError);
   }
 
+  /// F4b: "Pagar en caja" — la mesa avisa y el negocio confirma al cobrar.
+  /// No hay checkout: el dinero se entrega en el mostrador.
+  Future<void> requestCashPayment() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.requestCashPayment(uuid);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
+  /// F4b: deshace el aviso — vuelven a poder pedir o pagar en la app.
+  Future<void> cancelCashPayment() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return;
+    emit(GroupOrderState.loading(_vm));
+    final result = await _repo.cancelCashPayment(uuid);
+    result.when(success: _applyResponse, failure: _onError);
+  }
+
   /// F2c: marca/desmarca un ítem como compartido (solo en OPEN).
   Future<void> setItemShared(String itemUuid, bool shared) async {
     final uuid = _vm.order?.uuid;

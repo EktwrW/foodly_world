@@ -33,6 +33,13 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// F4b: "Pedir más" — vuelve al menú del negocio (cualquier comensal).
   final VoidCallback? onOrderMore;
 
+  /// F4b: "Pagar en caja" — avisa al negocio; el dinero se entrega en el
+  /// mostrador y Foodly no cobra comisión. null para quien no es host.
+  final VoidCallback? onPayAtRegister;
+
+  /// F4b: deshace el aviso de pago en caja. null para quien no es host.
+  final VoidCallback? onCancelCashPayment;
+
   /// "Yo invito" global (F2b §A.2): pagar TODO lo pendiente de la orden.
   /// null => sin botón (el caller decide cuándo tiene sentido mostrarlo).
   final VoidCallback? onPayAll;
@@ -50,6 +57,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     this.onSend,
     this.onRequestBill,
     this.onOrderMore,
+    this.onPayAtRegister,
+    this.onCancelCashPayment,
     this.onPayAll,
     this.isBusy = false,
   });
@@ -163,6 +172,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               onSend: onSend,
               onRequestBill: onRequestBill,
               onOrderMore: onOrderMore,
+              onPayAtRegister: onPayAtRegister,
+              onCancelCashPayment: onCancelCashPayment,
             )
           else if (isOpen)
             // Host: cierra el pedido (congela precios y habilita el pago).
@@ -241,6 +252,8 @@ class _OpenTabCta extends StatelessWidget {
   final VoidCallback? onSend;
   final VoidCallback? onRequestBill;
   final VoidCallback? onOrderMore;
+  final VoidCallback? onPayAtRegister;
+  final VoidCallback? onCancelCashPayment;
 
   const _OpenTabCta({
     required this.order,
@@ -248,11 +261,55 @@ class _OpenTabCta extends StatelessWidget {
     this.onSend,
     this.onRequestBill,
     this.onOrderMore,
+    this.onPayAtRegister,
+    this.onCancelCashPayment,
   });
 
   @override
   Widget build(BuildContext context) {
     final state = order.openTabCtaState;
+
+    // F4b: ya avisaron que pagan en el mostrador. Acá NO se ofrece pagar —
+    // el dinero se entrega en la caja. Solo se confirma que el negocio está
+    // al tanto, y se deja volver atrás por si cambian de idea.
+    if (state == OpenTabCtaState.cash) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.storefront_rounded, size: 18, color: Color(0xFF0B8A40)),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  S.current.groupOrderCashRequestedCta,
+                  style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            S.current.groupOrderCashRequestedHint,
+            style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
+            textAlign: TextAlign.center,
+          ),
+          if (onCancelCashPayment != null) ...[
+            const SizedBox(height: 4),
+            TextButton(
+              onPressed: isBusy ? null : onCancelCashPayment,
+              child: Text(
+                S.current.groupOrderCashRequestUndo,
+                style: FoodlyTextStyles.captionPurpleBold,
+              ),
+            ),
+          ],
+        ],
+      );
+    }
+
     final isSend = state == OpenTabCtaState.send;
     final isPay = state == OpenTabCtaState.pay;
 
@@ -289,6 +346,17 @@ class _OpenTabCta extends StatelessWidget {
           style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
           textAlign: TextAlign.center,
         ),
+        // F4b: alternativa al pago por la app, solo cuando la cuenta está
+        // lista para cobrarse. Antes de eso no tiene sentido: todavía falta
+        // servir algo, y el backend lo rechaza igual.
+        if (isPay && onPayAtRegister != null) ...[
+          const SizedBox(height: 4),
+          TextButton.icon(
+            onPressed: isBusy ? null : onPayAtRegister,
+            icon: const Icon(Icons.storefront_outlined, size: 16, color: FoodlyThemes.primaryFoodly),
+            label: Text(S.current.groupOrderPayAtRegister, style: FoodlyTextStyles.captionPurpleBold),
+          ),
+        ],
         // e2e F4b: sin esto, tras enviar la tanda NADA le decía al comensal
         // que podía seguir pidiendo — tenía que intuirlo.
         if (state != OpenTabCtaState.send && onOrderMore != null) ...[
