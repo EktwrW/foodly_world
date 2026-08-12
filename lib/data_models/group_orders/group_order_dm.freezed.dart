@@ -3150,6 +3150,11 @@ class __$GroupOrdersListResponseDMCopyWithImpl<$Res>
 mixin _$PayIntentResponseDM {
   @JsonKey(name: 'client_secret')
   String? get clientSecret;
+
+  /// Checkout hosteado: para MB WAY y demás métodos que el PaymentSheet
+  /// nativo no soporta.
+  @JsonKey(name: 'checkout_url')
+  String? get checkoutUrl;
   @JsonKey(name: 'transaction_uuid')
   String? get transactionUuid;
   @JsonKey(fromJson: _money)
@@ -3183,6 +3188,8 @@ mixin _$PayIntentResponseDM {
             other is PayIntentResponseDM &&
             (identical(other.clientSecret, clientSecret) ||
                 other.clientSecret == clientSecret) &&
+            (identical(other.checkoutUrl, checkoutUrl) ||
+                other.checkoutUrl == checkoutUrl) &&
             (identical(other.transactionUuid, transactionUuid) ||
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
@@ -3203,6 +3210,7 @@ mixin _$PayIntentResponseDM {
   int get hashCode => Object.hash(
       runtimeType,
       clientSecret,
+      checkoutUrl,
       transactionUuid,
       amount,
       tipAmount,
@@ -3213,7 +3221,7 @@ mixin _$PayIntentResponseDM {
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, serviceFeeAmount: $serviceFeeAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, checkoutUrl: $checkoutUrl, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, serviceFeeAmount: $serviceFeeAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -3225,6 +3233,7 @@ abstract mixin class $PayIntentResponseDMCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'client_secret') String? clientSecret,
+      @JsonKey(name: 'checkout_url') String? checkoutUrl,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
       @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
@@ -3250,6 +3259,7 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
   @override
   $Res call({
     Object? clientSecret = freezed,
+    Object? checkoutUrl = freezed,
     Object? transactionUuid = freezed,
     Object? amount = null,
     Object? tipAmount = null,
@@ -3262,6 +3272,10 @@ class _$PayIntentResponseDMCopyWithImpl<$Res>
       clientSecret: freezed == clientSecret
           ? _self.clientSecret
           : clientSecret // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checkoutUrl: freezed == checkoutUrl
+          ? _self.checkoutUrl
+          : checkoutUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       transactionUuid: freezed == transactionUuid
           ? _self.transactionUuid
@@ -3390,6 +3404,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'client_secret') String? clientSecret,
+            @JsonKey(name: 'checkout_url') String? checkoutUrl,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
@@ -3408,6 +3423,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
       case _PayIntentResponseDM() when $default != null:
         return $default(
             _that.clientSecret,
+            _that.checkoutUrl,
             _that.transactionUuid,
             _that.amount,
             _that.tipAmount,
@@ -3437,6 +3453,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
   TResult when<TResult extends Object?>(
     TResult Function(
             @JsonKey(name: 'client_secret') String? clientSecret,
+            @JsonKey(name: 'checkout_url') String? checkoutUrl,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
@@ -3454,6 +3471,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
       case _PayIntentResponseDM():
         return $default(
             _that.clientSecret,
+            _that.checkoutUrl,
             _that.transactionUuid,
             _that.amount,
             _that.tipAmount,
@@ -3482,6 +3500,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             @JsonKey(name: 'client_secret') String? clientSecret,
+            @JsonKey(name: 'checkout_url') String? checkoutUrl,
             @JsonKey(name: 'transaction_uuid') String? transactionUuid,
             @JsonKey(fromJson: _money) double amount,
             @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
@@ -3499,6 +3518,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
       case _PayIntentResponseDM() when $default != null:
         return $default(
             _that.clientSecret,
+            _that.checkoutUrl,
             _that.transactionUuid,
             _that.amount,
             _that.tipAmount,
@@ -3517,6 +3537,7 @@ extension PayIntentResponseDMPatterns on PayIntentResponseDM {
 class _PayIntentResponseDM implements PayIntentResponseDM {
   const _PayIntentResponseDM(
       {@JsonKey(name: 'client_secret') this.clientSecret,
+      @JsonKey(name: 'checkout_url') this.checkoutUrl,
       @JsonKey(name: 'transaction_uuid') this.transactionUuid,
       @JsonKey(fromJson: _money) this.amount = 0,
       @JsonKey(name: 'tip_amount', fromJson: _money) this.tipAmount = 0,
@@ -3533,6 +3554,12 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   @override
   @JsonKey(name: 'client_secret')
   final String? clientSecret;
+
+  /// Checkout hosteado: para MB WAY y demás métodos que el PaymentSheet
+  /// nativo no soporta.
+  @override
+  @JsonKey(name: 'checkout_url')
+  final String? checkoutUrl;
   @override
   @JsonKey(name: 'transaction_uuid')
   final String? transactionUuid;
@@ -3587,6 +3614,8 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
             other is _PayIntentResponseDM &&
             (identical(other.clientSecret, clientSecret) ||
                 other.clientSecret == clientSecret) &&
+            (identical(other.checkoutUrl, checkoutUrl) ||
+                other.checkoutUrl == checkoutUrl) &&
             (identical(other.transactionUuid, transactionUuid) ||
                 other.transactionUuid == transactionUuid) &&
             (identical(other.amount, amount) || other.amount == amount) &&
@@ -3607,6 +3636,7 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
   int get hashCode => Object.hash(
       runtimeType,
       clientSecret,
+      checkoutUrl,
       transactionUuid,
       amount,
       tipAmount,
@@ -3617,7 +3647,7 @@ class _PayIntentResponseDM implements PayIntentResponseDM {
 
   @override
   String toString() {
-    return 'PayIntentResponseDM(clientSecret: $clientSecret, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, serviceFeeAmount: $serviceFeeAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
+    return 'PayIntentResponseDM(clientSecret: $clientSecret, checkoutUrl: $checkoutUrl, transactionUuid: $transactionUuid, amount: $amount, tipAmount: $tipAmount, serviceFeeAmount: $serviceFeeAmount, totalCharged: $totalCharged, currency: $currency, coveredParticipantUuids: $coveredParticipantUuids)';
   }
 }
 
@@ -3631,6 +3661,7 @@ abstract mixin class _$PayIntentResponseDMCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'client_secret') String? clientSecret,
+      @JsonKey(name: 'checkout_url') String? checkoutUrl,
       @JsonKey(name: 'transaction_uuid') String? transactionUuid,
       @JsonKey(fromJson: _money) double amount,
       @JsonKey(name: 'tip_amount', fromJson: _money) double tipAmount,
@@ -3656,6 +3687,7 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? clientSecret = freezed,
+    Object? checkoutUrl = freezed,
     Object? transactionUuid = freezed,
     Object? amount = null,
     Object? tipAmount = null,
@@ -3668,6 +3700,10 @@ class __$PayIntentResponseDMCopyWithImpl<$Res>
       clientSecret: freezed == clientSecret
           ? _self.clientSecret
           : clientSecret // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checkoutUrl: freezed == checkoutUrl
+          ? _self.checkoutUrl
+          : checkoutUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       transactionUuid: freezed == transactionUuid
           ? _self.transactionUuid

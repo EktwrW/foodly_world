@@ -18,6 +18,9 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   final double myShare;
   final VoidCallback? onPay;
 
+  /// Checkout hosteado (MB WAY y demás). Null lo oculta.
+  final VoidCallback? onPayHosted;
+
   /// Cierre del pedido (lock) por el host. Solo se ofrece mientras la orden
   /// está OPEN; null para participantes que no son host.
   final VoidCallback? onLock;
@@ -53,6 +56,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     required this.order,
     required this.myShare,
     this.onPay,
+    this.onPayHosted,
     this.onLock,
     this.onSend,
     this.onRequestBill,
@@ -196,6 +200,21 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               margin: EdgeInsets.zero,
               onPressed: onPay,
             ),
+            // Checkout hosteado: MB WAY y demás métodos que el PaymentSheet
+            // nativo no puede ofrecer. Texto genérico a propósito — no sabemos
+            // de antemano si el comensal es portugués, y Stripe decide qué
+            // mostrarle; un botón que dijera "MB WAY" aparecería vacío para
+            // cualquier turista.
+            //
+            // Secundario y en texto plano: el camino principal sigue siendo el
+            // PaymentSheet, que no saca al comensal de la app.
+            if (onPayHosted != null && _canPay) ...[
+              const SizedBox(height: 4),
+              TextButton(
+                onPressed: isBusy ? null : onPayHosted,
+                child: Text(S.current.groupOrderPayOtherMethods),
+              ),
+            ],
             // "Pagar todo lo pendiente · €X" (F2b §A.2) — disponible para todos.
             if (onPayAll != null && order.totalRemaining > 0) ...[
               const SizedBox(height: 8),

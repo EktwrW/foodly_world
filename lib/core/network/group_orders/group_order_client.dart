@@ -216,4 +216,13 @@ abstract class GroupOrderClient {
     @Field('cover_participant_uuids') List<String>? coverParticipantUuids,
     @Field('tip_amount') double? tipAmount, // F2c §B.2
   });
+
+  /// Checkout hosteado. Mismos parámetros y misma economía que `pay-intent`:
+  /// lo único que cambia es que devuelve una URL en vez de un client_secret.
+  @POST('/group-orders/{uuid}/checkout-session')
+  Future<PayIntentResponseDM> createCheckoutSession(
+    @Path('uuid') String uuid, {
+    @Field('cover_participant_uuids') List<String>? coverParticipantUuids,
+    @Field('tip_amount') double? tipAmount,
+  });
 }

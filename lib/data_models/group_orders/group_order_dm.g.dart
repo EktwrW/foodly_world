@@ -271,6 +271,7 @@ Map<String, dynamic> _$GroupOrdersListResponseDMToJson(
 _PayIntentResponseDM _$PayIntentResponseDMFromJson(Map<String, dynamic> json) =>
     _PayIntentResponseDM(
       clientSecret: json['client_secret'] as String?,
+      checkoutUrl: json['checkout_url'] as String?,
       transactionUuid: json['transaction_uuid'] as String?,
       amount: json['amount'] == null ? 0 : _money(json['amount']),
       tipAmount: json['tip_amount'] == null ? 0 : _money(json['tip_amount']),
@@ -291,6 +292,7 @@ Map<String, dynamic> _$PayIntentResponseDMToJson(
         _PayIntentResponseDM instance) =>
     <String, dynamic>{
       if (instance.clientSecret case final value?) 'client_secret': value,
+      if (instance.checkoutUrl case final value?) 'checkout_url': value,
       if (instance.transactionUuid case final value?) 'transaction_uuid': value,
       'amount': instance.amount,
       'tip_amount': instance.tipAmount,

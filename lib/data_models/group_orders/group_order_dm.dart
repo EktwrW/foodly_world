@@ -549,11 +549,16 @@ abstract class GroupOrdersListResponseDM with _$GroupOrdersListResponseDM {
       _$GroupOrdersListResponseDMFromJson(json);
 }
 
-/// Respuesta de `pay-intent`: el client_secret para confirmar el pago en Stripe.
+/// Respuesta de las dos vías de cobro. Comparten todo salvo por dónde paga el
+/// comensal: `client_secret` abre el PaymentSheet nativo, `checkout_url` abre
+/// la página hosteada de Stripe. Nunca vienen las dos.
 @freezed
 abstract class PayIntentResponseDM with _$PayIntentResponseDM {
   const factory PayIntentResponseDM({
     @JsonKey(name: 'client_secret') String? clientSecret,
+    /// Checkout hosteado: para MB WAY y demás métodos que el PaymentSheet
+    /// nativo no soporta.
+    @JsonKey(name: 'checkout_url') String? checkoutUrl,
     @JsonKey(name: 'transaction_uuid') String? transactionUuid,
     @JsonKey(fromJson: _money) @Default(0) double amount,
     // Propina (F2c §B.2), tarifa del comensal y total cobrado (base+tip+fee).
