@@ -8625,6 +8625,26 @@ class S {
     );
   }
 
+  /// `We couldn't load this. Check your connection and try again.`
+  String get loadFailedMessage {
+    return Intl.message(
+      'We couldn\'t load this. Check your connection and try again.',
+      name: 'loadFailedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get loadFailedRetry {
+    return Intl.message(
+      'Try again',
+      name: 'loadFailedRetry',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Payment couldn't be completed`
   String get groupOrderPaymentFailed {
     return Intl.message(

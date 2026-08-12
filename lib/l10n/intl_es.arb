@@ -1314,6 +1314,8 @@
   "groupOrderPaymentCanceled": "Pago cancelado",
   "groupOrderPaymentInBrowser": "Abrimos el navegador para completar tu pago",
   "groupOrderPayOtherMethods": "Otros métodos de pago",
+  "loadFailedMessage": "No pudimos cargar esto. Revisa tu conexión e inténtalo de nuevo.",
+  "loadFailedRetry": "Reintentar",
   "groupOrderPaymentFailed": "No se pudo completar el pago",
   "groupOrderEntryCta": "Ordenar en grupo",
   "groupOrderCreating": "Creando…",

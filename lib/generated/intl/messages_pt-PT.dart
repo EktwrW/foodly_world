@@ -1499,6 +1499,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "likes": MessageLookupByLibrary.simpleMessage("Gostos"),
     "listening": MessageLookupByLibrary.simpleMessage("A ouvir"),
     "liveMusic": MessageLookupByLibrary.simpleMessage("Música ao Vivo"),
+    "loadFailedMessage": MessageLookupByLibrary.simpleMessage(
+      "Não conseguimos carregar. Verifica a tua ligação e tenta de novo.",
+    ),
+    "loadFailedRetry": MessageLookupByLibrary.simpleMessage("Tentar de novo"),
     "loadLogo": MessageLookupByLibrary.simpleMessage("Carregar Logo"),
     "loadingAvailability": MessageLookupByLibrary.simpleMessage(
       "A carregar disponibilidade…",
