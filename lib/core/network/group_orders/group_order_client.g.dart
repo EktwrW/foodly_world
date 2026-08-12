@@ -990,6 +990,42 @@ class _GroupOrderClient implements GroupOrderClient {
     return _value;
   }
 
+  @override
+  Future<PayIntentResponseDM> createCheckoutSession(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+    double? tipAmount,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'cover_participant_uuids': coverParticipantUuids,
+      'tip_amount': tipAmount,
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _options = _setStreamType<PayIntentResponseDM>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/group-orders/${uuid}/checkout-session',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PayIntentResponseDM _value;
+    try {
+      _value = PayIntentResponseDM.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

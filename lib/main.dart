@@ -44,6 +44,18 @@ Future<Widget> buildFoodlyApp() async {
   const stripeKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY');
   if (stripeKey.isNotEmpty) {
     Stripe.publishableKey = stripeKey;
+
+    // Apple Pay: el merchant identifier se registra en el portal de Apple y
+    // se declara en los entitlements de iOS. Sin esto la hoja de pago NO
+    // ofrece Apple Pay — falla en silencio, sin error visible.
+    //
+    // Por --dart-define para no hardcodear identidad de la cuenta en el repo,
+    // igual que la publishable key.
+    const appleMerchantId = String.fromEnvironment('APPLE_MERCHANT_ID');
+    if (appleMerchantId.isNotEmpty) {
+      Stripe.merchantIdentifier = appleMerchantId;
+    }
+
     await Stripe.instance.applySettings();
     log('Stripe inicializado (…${stripeKey.substring(stripeKey.length - 4)})', name: 'main');
   } else {

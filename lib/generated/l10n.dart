@@ -8605,6 +8605,26 @@ class S {
     );
   }
 
+  /// `We opened your browser to finish the payment`
+  String get groupOrderPaymentInBrowser {
+    return Intl.message(
+      'We opened your browser to finish the payment',
+      name: 'groupOrderPaymentInBrowser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other payment methods`
+  String get groupOrderPayOtherMethods {
+    return Intl.message(
+      'Other payment methods',
+      name: 'groupOrderPayOtherMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Payment couldn't be completed`
   String get groupOrderPaymentFailed {
     return Intl.message(

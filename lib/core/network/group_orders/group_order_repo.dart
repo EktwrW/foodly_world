@@ -387,4 +387,21 @@ class GroupOrderRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  /// Checkout hosteado (MB WAY y demás métodos fuera del PaymentSheet nativo).
+  Future<ApiResult<PayIntentResponseDM>> createCheckoutSession(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+    double? tipAmount,
+  }) async {
+    try {
+      return ApiResult.success(await _client.createCheckoutSession(
+        uuid,
+        coverParticipantUuids: coverParticipantUuids,
+        tipAmount: tipAmount,
+      ));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

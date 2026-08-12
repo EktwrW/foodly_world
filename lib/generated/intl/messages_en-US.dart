@@ -1224,11 +1224,17 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderPayFullOrder": m46,
     "groupOrderPayMyShare": m47,
+    "groupOrderPayOtherMethods": MessageLookupByLibrary.simpleMessage(
+      "Other payment methods",
+    ),
     "groupOrderPaymentCanceled": MessageLookupByLibrary.simpleMessage(
       "Payment canceled",
     ),
     "groupOrderPaymentFailed": MessageLookupByLibrary.simpleMessage(
       "Payment couldn\'t be completed",
+    ),
+    "groupOrderPaymentInBrowser": MessageLookupByLibrary.simpleMessage(
+      "We opened your browser to finish the payment",
     ),
     "groupOrderPaymentSucceeded": MessageLookupByLibrary.simpleMessage(
       "Payment completed",

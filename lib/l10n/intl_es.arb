@@ -1312,6 +1312,8 @@
   "groupOrderHostBadge": "Host",
   "groupOrderPaymentSucceeded": "Pago realizado",
   "groupOrderPaymentCanceled": "Pago cancelado",
+  "groupOrderPaymentInBrowser": "Abrimos el navegador para completar tu pago",
+  "groupOrderPayOtherMethods": "Otros métodos de pago",
   "groupOrderPaymentFailed": "No se pudo completar el pago",
   "groupOrderEntryCta": "Ordenar en grupo",
   "groupOrderCreating": "Creando…",

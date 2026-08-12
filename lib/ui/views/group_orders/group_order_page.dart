@@ -24,6 +24,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansibl
 import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
 /// Compone los widgets de la rebanada 1 con el GroupOrderCubit y el
@@ -82,7 +83,11 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   /// Flujo de pago con PaymentSheet. Sin [coverUuids] paga MI parte; con
   /// ellos cubre la parte de esos participantes ("yo invito", F2b §A.2).
   /// Antes de crear el intent se ofrece la propina (F2c §B.2).
-  Future<void> _onPay(BuildContext context, {List<String>? coverUuids}) async {
+  /// [hosted] cobra por la página hosteada de Stripe en vez del PaymentSheet.
+  /// Es la única vía capaz de ofrecer MB WAY: el Mobile Payment Element no lo
+  /// soporta y stripe-android ni lo implementa, así que dentro de la app no
+  /// hay forma de cobrarlo (verificado 2026-08-10).
+  Future<void> _onPay(BuildContext context, {List<String>? coverUuids, bool hosted = false}) async {
     final cubit = context.read<GroupOrderCubit>();
     final order = cubit.vm.order;
     final uuid = order?.uuid;
@@ -107,8 +112,31 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     final intent = await cubit.createPayIntent(
       coverParticipantUuids: coverUuids,
       tipAmount: tip > 0 ? tip : null,
+      hosted: hosted,
     );
     if (!context.mounted) return;
+
+    if (hosted) {
+      final url = Uri.tryParse(intent?.checkoutUrl ?? '');
+      if (url == null || !url.hasScheme) {
+        if (intent != null) FoodlySnackbars.errorGeneric(context, S.current.groupOrderPaymentFailed);
+        return;
+      }
+
+      // externalApplication y NO un WebView propio: MB WAY salta a la app del
+      // banco para autorizar, y volver de ahí a una vista embebida es frágil.
+      // El navegador del sistema conserva la sesión y el App Link nos devuelve
+      // a la app.
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+      if (!context.mounted) return;
+
+      // Deliberadamente NO se canta "pagado": quien sella el cobro es el
+      // webhook, y acá solo sabemos que se abrió el navegador. El refetch al
+      // volver a la pantalla trae el estado real.
+      FoodlySnackbars.infoGeneric(context, S.current.groupOrderPaymentInBrowser);
+      if (uuid != null) cubit.load(uuid);
+      return;
+    }
 
     final secret = intent?.clientSecret;
     if (secret == null) {
@@ -118,7 +146,13 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       return;
     }
 
-    final result = await di<StripePaymentService>().presentPaymentSheet(clientSecret: secret);
+    final result = await di<StripePaymentService>().presentPaymentSheet(
+      clientSecret: secret,
+      // País del RESTAURANTE de esta orden (no el del comensal ni el de su
+      // sesión): es el merchant of record del destination charge. Null en
+      // órdenes anteriores al campo → la hoja cae a solo tarjeta.
+      merchantCountryCode: order?.businessCountry?.countryCode,
+    );
     if (!context.mounted) return;
 
     switch (result) {
@@ -986,6 +1020,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     order: order,
                     isBusy: isBusy,
                     onPay: () => _onPay(context),
+                    onPayHosted: () => _onPay(context, hosted: true),
                     onLock: () => _onLock(context),
                     onSend: () => _onSend(context, order),
                     onRequestBill: () => _onRequestBill(context),
@@ -1120,6 +1155,7 @@ class _Content extends StatelessWidget {
   final GroupOrderDM order;
   final bool isBusy;
   final VoidCallback onPay;
+  final VoidCallback onPayHosted;
   final VoidCallback onLock;
   final VoidCallback onSend;
   final VoidCallback onRequestBill;
@@ -1134,6 +1170,7 @@ class _Content extends StatelessWidget {
     required this.order,
     required this.isBusy,
     required this.onPay,
+    required this.onPayHosted,
     required this.onLock,
     required this.onSend,
     required this.onRequestBill,
@@ -1235,6 +1272,7 @@ class _Content extends StatelessWidget {
           myShare: vm.myShare,
           isBusy: isBusy,
           onPay: vm.canPay ? onPay : null,
+          onPayHosted: vm.canPay ? onPayHosted : null,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
           onSend: (order.isOpenTab && _iAmHost) ? onSend : null,

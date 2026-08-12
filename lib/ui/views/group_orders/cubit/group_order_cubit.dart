@@ -255,6 +255,10 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   Future<PayIntentResponseDM?> createPayIntent({
     List<String>? coverParticipantUuids,
     double? tipAmount,
+    // Checkout hosteado en vez del PaymentSheet nativo: la única vía capaz de
+    // ofrecer MB WAY. Comparte todo lo demás, así que comparte también este
+    // método — el estado `isPaying` y el manejo de error son idénticos.
+    bool hosted = false,
   }) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return null;
@@ -262,11 +266,17 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     _vm = _vm.copyWith(isPaying: true, errorMessage: null);
     emit(GroupOrderState.loaded(_vm));
 
-    final result = await _repo.createPayIntent(
-      uuid,
-      coverParticipantUuids: coverParticipantUuids,
-      tipAmount: tipAmount,
-    );
+    final result = await (hosted
+        ? _repo.createCheckoutSession(
+            uuid,
+            coverParticipantUuids: coverParticipantUuids,
+            tipAmount: tipAmount,
+          )
+        : _repo.createPayIntent(
+            uuid,
+            coverParticipantUuids: coverParticipantUuids,
+            tipAmount: tipAmount,
+          ));
     return result.when(
       success: (r) {
         _vm = _vm.copyWith(isPaying: false);

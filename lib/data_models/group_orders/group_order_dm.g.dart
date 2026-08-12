@@ -104,6 +104,9 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
       businessMenuUuid: json['business_menu_uuid'] as String?,
       businessName: json['business_name'] as String? ?? '',
       businessLogo: json['business_logo'] as String?,
+      businessCountry: $enumDecodeNullable(
+          _$FoodlyCountriesEnumMap, json['business_country'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
       currency: json['currency'] as String? ?? 'EUR',
       splitMode:
           $enumDecodeNullable(_$GroupSplitModeEnumMap, json['split_mode']) ??
@@ -163,6 +166,8 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
         'business_menu_uuid': value,
       'business_name': instance.businessName,
       if (instance.businessLogo case final value?) 'business_logo': value,
+      if (_$FoodlyCountriesEnumMap[instance.businessCountry] case final value?)
+        'business_country': value,
       'currency': instance.currency,
       'split_mode': _$GroupSplitModeEnumMap[instance.splitMode]!,
       'payer_fixed_fee': instance.payerFixedFee,
@@ -200,6 +205,14 @@ const _$GroupOrderStatusEnumMap = {
   GroupOrderStatus.completed: 'completed',
   GroupOrderStatus.expired: 'expired',
   GroupOrderStatus.cancelled: 'cancelled',
+};
+
+const _$FoodlyCountriesEnumMap = {
+  FoodlyCountries.ARGENTINA: 'Argentina',
+  FoodlyCountries.SPAIN: 'Spain',
+  FoodlyCountries.PORTUGAL: 'Portugal',
+  FoodlyCountries.USA: 'United States',
+  FoodlyCountries.VENEZUELA: 'Venezuela',
 };
 
 const _$GroupSplitModeEnumMap = {
@@ -258,6 +271,7 @@ Map<String, dynamic> _$GroupOrdersListResponseDMToJson(
 _PayIntentResponseDM _$PayIntentResponseDMFromJson(Map<String, dynamic> json) =>
     _PayIntentResponseDM(
       clientSecret: json['client_secret'] as String?,
+      checkoutUrl: json['checkout_url'] as String?,
       transactionUuid: json['transaction_uuid'] as String?,
       amount: json['amount'] == null ? 0 : _money(json['amount']),
       tipAmount: json['tip_amount'] == null ? 0 : _money(json['tip_amount']),
@@ -278,6 +292,7 @@ Map<String, dynamic> _$PayIntentResponseDMToJson(
         _PayIntentResponseDM instance) =>
     <String, dynamic>{
       if (instance.clientSecret case final value?) 'client_secret': value,
+      if (instance.checkoutUrl case final value?) 'checkout_url': value,
       if (instance.transactionUuid case final value?) 'transaction_uuid': value,
       'amount': instance.amount,
       'tip_amount': instance.tipAmount,
