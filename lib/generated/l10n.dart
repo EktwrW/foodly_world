@@ -10105,6 +10105,36 @@ class S {
     );
   }
 
+  /// `I collected the rest in person`
+  String get managerCloseTabPartiallyPaid {
+    return Intl.message(
+      'I collected the rest in person',
+      name: 'managerCloseTabPartiallyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PART IN PERSON`
+  String get managerClosedPartiallyPaid {
+    return Intl.message(
+      'PART IN PERSON',
+      name: 'managerClosedPartiallyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{paid} was already collected in the app. {remaining} left for you to collect in person.`
+  String managerCloseTabAlreadyPaid(String paid, String remaining) {
+    return Intl.message(
+      '$paid was already collected in the app. $remaining left for you to collect in person.',
+      name: 'managerCloseTabAlreadyPaid',
+      desc: '',
+      args: [paid, remaining],
+    );
+  }
+
   /// `Unpaid`
   String get managerClosedUnpaid {
     return Intl.message(

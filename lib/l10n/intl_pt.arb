@@ -1650,6 +1650,12 @@
   "managerCloseTabPaidOffline": "Paga ao balcão",
   "managerCloseTabUnpaid": "Saíram sem pagar",
   "managerClosedPaidOffline": "Paga ao balcão",
+  "managerCloseTabPartiallyPaid": "Cobrei o resto no local",
+  "managerClosedPartiallyPaid": "PARTE AO BALCÃO",
+  "managerCloseTabAlreadyPaid": "Já foram cobrados {paid} pela app. Faltam {remaining} que cobras no local.",
+  "@managerCloseTabAlreadyPaid": {
+    "placeholders": { "paid": {"type": "String"}, "remaining": {"type": "String"} }
+  },
   "managerClosedUnpaid": "Não paga",
   "managerClosedAbandoned": "Por fechar",
   "groupOrderTrackToPay": "Tudo servido — falta pagar a conta",

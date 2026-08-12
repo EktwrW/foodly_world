@@ -1650,6 +1650,12 @@
   "managerCloseTabPaidOffline": "Cobrada en caja",
   "managerCloseTabUnpaid": "Se fueron sin pagar",
   "managerClosedPaidOffline": "Cobrada en caja",
+  "managerCloseTabPartiallyPaid": "Cobré el resto en el local",
+  "managerClosedPartiallyPaid": "PARTE EN CAJA",
+  "managerCloseTabAlreadyPaid": "Ya se cobraron {paid} por la app. Quedan {remaining} que cobras en el local.",
+  "@managerCloseTabAlreadyPaid": {
+    "placeholders": { "paid": {"type": "String"}, "remaining": {"type": "String"} }
+  },
   "managerClosedUnpaid": "Impagada",
   "managerClosedAbandoned": "Sin cerrar",
   "groupOrderTrackToPay": "Todo servido — falta pagar la cuenta",
