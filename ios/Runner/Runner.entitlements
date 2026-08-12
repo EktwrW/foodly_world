@@ -7,6 +7,13 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:menu.foodly.solutions</string>
+		<!-- Órdenes grupales (2026-08-12). Android ya declaraba
+		     foodly.solutions/join en su manifest; iOS no, así que en iPhone
+		     TODA invitación a una orden grupal abría Safari en vez de la app
+		     — el feature social simplemente no funcionaba en la mitad de los
+		     dispositivos. Cubre además el retorno del Checkout hosteado
+		     (/checkout/return/*), que vive en el mismo dominio. -->
+		<string>applinks:foodly.solutions</string>
 	</array>
 	<key>com.apple.developer.applesignin</key>
 	<array>
