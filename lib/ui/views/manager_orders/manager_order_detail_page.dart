@@ -255,9 +255,10 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                       // F4b: cerrar la cuenta cobrada FUERA de Foodly. En un
                       // restaurante tradicional es el desenlace más común, y
                       // sin esto la orden quedaba viva para siempre en el
-                      // panel. Solo con cuenta abierta y sin pagos por la app:
-                      // marcar "cobrada en caja" algo ya cobrado dejaría al
-                      // comensal pagando dos veces (el BE también lo rechaza).
+                      // panel. Solo con cuenta abierta y sin un pago en vuelo;
+                      // el MOTIVO lo decide la hoja según lo ya cobrado —
+                      // `partially_paid` cuando entró dinero por la app, que
+                      // es lo único que el BE acepta ahí.
                       // F4b: la mesa avisó que paga en el mostrador. El aviso
                       // va junto al botón de cerrar porque son la misma
                       // acción vista desde los dos lados — el mesero cobra y

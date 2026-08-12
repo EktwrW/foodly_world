@@ -405,13 +405,28 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   ///
   /// Espeja los guards del backend (`GroupOrderFulfillmentService::close`)
   /// para no ofrecer un botón que va a dar 409: solo cuenta abierta, viva, y
-  /// SIN dinero cobrado por la app — marcar "cobrada en caja" algo ya cobrado
-  /// dejaría al comensal pagando dos veces.
+  /// sin un pago en vuelo.
+  ///
+  /// **Con dinero dentro TAMBIÉN se cierra** (2026-08-12). Antes exigía
+  /// `totalPaid <= 0` y no aceptaba `paying`, que es el mismo razonamiento
+  /// circular que ya se deshizo en el backend: el motivo `partially_paid`
+  /// existe exactamente para la mesa donde tres pagaron por la app y el cuarto
+  /// se fue, y esa orden pasa a `paying` con el primer pago — o sea que el gate
+  /// la escondía dos veces, por importe y por estado, y el único desenlace
+  /// posible quedaba sin botón. La hoja de cierre ya se adapta a lo cobrado y
+  /// ofrece el único motivo que el backend acepta; lo que faltaba era dejarla
+  /// abrir.
+  ///
+  /// Lo que NO cambia es la cuenta SALDADA: ahí no queda nada por cobrar en el
+  /// local, y marcarla `partially_paid` sería mentir en el historial del
+  /// negocio. Lo que abre esta puerta es el SALDO PENDIENTE, no el pago.
   bool get canBeClosedByBusiness =>
       isOpenTab &&
       closedAt == null &&
-      (status == GroupOrderStatus.confirmed || status == GroupOrderStatus.locked) &&
-      totalPaid <= 0 &&
+      (status == GroupOrderStatus.confirmed ||
+          status == GroupOrderStatus.locked ||
+          status == GroupOrderStatus.paying) &&
+      !isFullyPaid &&
       // El backend también lo rechaza: cerrar mientras alguien tiene el
       // PaymentSheet abierto daría 409 tras elegir el motivo en la hoja.
       !hasProcessingPayment;
