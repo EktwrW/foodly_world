@@ -921,6 +921,21 @@ class AppRouter {
               ownerBusinessUuid: authSessService.userSessionDM?.user.business.firstOrNull?.uuid,
             ),
           ),
+          // Vuelta del Checkout hosteado (App Link F4b). El comensal paga con
+          // MB WAY en el navegador y vuelve acá; sin esta ruta el router no
+          // matcheaba nada y lo dejaba en NotFoundPage justo después de pagar.
+          //
+          // `hasSessionOrPending` y no `isLoggedIn`, por el mismo motivo que el
+          // deep link del menú: al volver del navegador la app puede estar
+          // arrancando en frío con HydratedBloc todavía rehidratando, y con
+          // `isLoggedIn` el comensal caía en start teniendo sesión válida.
+          GoRoute(
+            path: AppRoutes.checkoutReturn.path,
+            redirect: (_, state) => GoRouterRedirector.checkoutReturnLandingPath(
+              orderUuid: state.uri.queryParameters['order'],
+              hasSession: authSessService.hasSessionOrPending,
+            ),
+          ),
           // Safety net: noAccess must be registered ABOVE the /:businessUuid
           // catch-all so that /no-access doesn't match publicMenu with
           // businessUuid='no-access'. Destino según sesión: CON sesión va a

@@ -209,6 +209,16 @@ class ManagerPaymentBadge extends StatelessWidget {
         S.current.managerClosedUnpaid,
       );
     }
+    // Parte por la app, el resto en el local. Verde como `paid_offline`
+    // —el negocio cobró todo— pero con icono propio: en el historial la
+    // diferencia importa para cuadrar caja.
+    if (order.closedReason == 'partially_paid') {
+      return _badge(
+        Icons.call_split_rounded,
+        const Color(0xFF0B8A40),
+        S.current.managerClosedPartiallyPaid,
+      );
+    }
 
     // total_paid cubre el total => PAGADA. En per_round es el caso normal
     // (la comanda nace del pago); en open_tab, solo tras cobrar la cuenta.

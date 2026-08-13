@@ -11,6 +11,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
@@ -57,13 +58,16 @@ class _GroupOrderPageState extends State<GroupOrderPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(widget.orderUuid),
-      child: const _GroupOrderView(),
+      // El uuid baja a la vista para poder REINTENTAR: si la primera carga
+      // falla no hay orden en el estado de la que sacarlo.
+      child: _GroupOrderView(orderUuid: widget.orderUuid),
     );
   }
 }
 
 class _GroupOrderView extends StatefulWidget {
-  const _GroupOrderView();
+  final String orderUuid;
+  const _GroupOrderView({required this.orderUuid});
 
   @override
   State<_GroupOrderView> createState() => _GroupOrderViewState();
@@ -1013,8 +1017,16 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
           appBar: _buildAppBar(context, vm),
           body: SafeArea(
             top: false,
+            // Sin orden hay DOS situaciones distintas y antes se pintaban
+            // igual: "todavía cargando" y "falló y no hay nada que mostrar".
+            // La segunda dejaba el logo girando para siempre, sin forma de
+            // reintentar —el RefreshIndicator vive dentro de _Content, que no
+            // se renderiza sin orden— y con un snackbar de 4 segundos como
+            // única señal.
             child: order == null
-                ? const Center(child: LoadingWidgetFoodlyLogo())
+                ? (state.maybeWhen(error: (_, __) => true, orElse: () => false)
+                    ? LoadFailureView(onRetry: () => context.read<GroupOrderCubit>().load(widget.orderUuid))
+                    : const Center(child: LoadingWidgetFoodlyLogo()))
                 : _Content(
                     vm: vm,
                     order: order,

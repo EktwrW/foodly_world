@@ -67,13 +67,23 @@ void main() {
   ];
 
   /// Todas las órdenes posibles con 2 ítems (36 formas) × estados.
-  Iterable<GroupOrderDM> allOrders({required GroupPaymentMode mode}) sync* {
+  ///
+  /// `totalPaid` es dimensión desde el 2026-08-12 (R2) y por defecto sigue en
+  /// 0, que es lo que asumían todos los invariantes anteriores. Sin ella, la
+  /// mesa parcialmente pagada —tres pagan por la app, el cuarto se va— no
+  /// existía en el producto cartesiano, y el gate de cierre que la escondía
+  /// pasó una suite verde. Misma lección que la nota de los estados de arriba:
+  /// la dimensión se agrega ACÁ primero.
+  Iterable<GroupOrderDM> allOrders({
+    required GroupPaymentMode mode,
+    double totalPaid = 0,
+  }) sync* {
     for (final a in itemShapes.entries) {
       for (final b in itemShapes.entries) {
         for (final status in statuses) {
           for (final f in fulfillments) {
             yield GroupOrderDM(
-              uuid: 'o-${a.key}-${b.key}-${status.name}-${f?.name}',
+              uuid: 'o-${a.key}-${b.key}-${status.name}-${f?.name}-p$totalPaid',
               status: status,
               paymentMode: mode,
               fulfillmentStatus: f,
@@ -83,6 +93,7 @@ void main() {
               // false por importe cero y el test del TTL de 12h pasaba sin
               // llegar a evaluar el TTL (2026-08-06).
               totalAmount: status == GroupOrderStatus.open ? 0 : 40,
+              totalPaid: totalPaid,
               items: [a.value('a'), b.value('b')],
             );
           }
@@ -214,6 +225,86 @@ void main() {
             isTrue,
             reason: o.uuid,
           );
+        }
+      }
+    });
+
+    // R2 (2026-08-12) — el gate de cierre escondía el ÚNICO desenlace posible
+    // de la mesa parcialmente pagada. Exigía `totalPaid <= 0` y no aceptaba
+    // `paying`, así que la escondía dos veces: por importe y por estado. Es el
+    // lado Flutter del mismo bloqueante que se cerró en el backend.
+    test('cerrar la cuenta espeja a close() en TODO estado y con dinero dentro', () {
+      for (final mode in GroupPaymentMode.values) {
+        for (final paid in [0.0, 20.0, 40.0]) {
+          for (final o in allOrders(mode: mode, totalPaid: paid)) {
+            if (!o.canBeClosedByBusiness) continue;
+            // Las cuatro cláusulas que el backend evalúa en `close()`.
+            expect(o.isOpenTab, isTrue, reason: o.uuid);
+            expect(o.closedAt, isNull, reason: o.uuid);
+            expect(
+              o.status == GroupOrderStatus.confirmed ||
+                  o.status == GroupOrderStatus.locked ||
+                  o.status == GroupOrderStatus.paying,
+              isTrue,
+              reason: o.uuid,
+            );
+            expect(o.hasProcessingPayment, isFalse, reason: o.uuid);
+            // Lo que abre la puerta es el SALDO PENDIENTE, no el pago: sin
+            // nada que cobrar en el local el motivo sería falso.
+            expect(o.isFullyPaid, isFalse, reason: o.uuid);
+          }
+        }
+      }
+    });
+
+    test('la mesa con pago parcial SÍ ofrece cerrar (R2)', () {
+      // El caso exacto: cuatro comensales, dos pagaron por la app, los otros
+      // se fueron. Con el primer pago la orden pasó a `paying`.
+      final o = GroupOrderDM(
+        uuid: 'mesa-a-medio-pagar',
+        status: GroupOrderStatus.paying,
+        paymentMode: GroupPaymentMode.openTab,
+        fulfillmentStatus: GroupFulfillmentStatus.delivered,
+        confirmedAt: t0,
+        billRequestedAt: t0.add(const Duration(hours: 1)),
+        totalAmount: 40,
+        totalPaid: 20,
+        items: [itemShapes['entregado']!('a'), itemShapes['entregado']!('b')],
+      );
+
+      expect(o.canBeClosedByBusiness, isTrue,
+          reason: 'sin esto el negocio no tiene NINGÚN botón para esta mesa');
+    });
+
+    test('un pago en vuelo sigue bloqueando el cierre', () {
+      // El contrapeso: abrir el gate no puede regalar 409s. El backend
+      // rechaza cerrar mientras alguien tiene el PaymentSheet abierto.
+      final o = GroupOrderDM(
+        uuid: 'mesa-con-pago-en-vuelo',
+        status: GroupOrderStatus.paying,
+        paymentMode: GroupPaymentMode.openTab,
+        confirmedAt: t0,
+        totalAmount: 40,
+        totalPaid: 20,
+        participants: const [
+          GroupOrderParticipantDM(
+            uuid: 'p1',
+            paymentStatus: GroupPaymentStatus.processing,
+          ),
+        ],
+        items: [itemShapes['entregado']!('a'), itemShapes['entregado']!('b')],
+      );
+
+      expect(o.canBeClosedByBusiness, isFalse, reason: o.uuid);
+    });
+
+    test('en PREPAGO nunca se ofrece cerrar, con o sin dinero dentro', () {
+      // El otro modo. En prepago la comanda no llega a cocina hasta estar
+      // 100% cobrada, y el backend rechaza `partially_paid` fuera de cuenta
+      // abierta: su desenlace es expirar y reembolsar, no cerrar.
+      for (final paid in [0.0, 20.0, 40.0]) {
+        for (final o in allOrders(mode: GroupPaymentMode.perRound, totalPaid: paid)) {
+          expect(o.canBeClosedByBusiness, isFalse, reason: o.uuid);
         }
       }
     });

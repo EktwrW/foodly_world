@@ -1314,6 +1314,8 @@
   "groupOrderPaymentCanceled": "Payment canceled",
   "groupOrderPaymentInBrowser": "We opened your browser to finish the payment",
   "groupOrderPayOtherMethods": "Other payment methods",
+  "loadFailedMessage": "We couldn't load this. Check your connection and try again.",
+  "loadFailedRetry": "Try again",
   "groupOrderPaymentFailed": "Payment couldn't be completed",
   "groupOrderEntryCta": "Order as a group",
   "groupOrderCreating": "Creating…",
@@ -1648,6 +1650,12 @@
   "managerCloseTabPaidOffline": "Paid at the counter",
   "managerCloseTabUnpaid": "They left without paying",
   "managerClosedPaidOffline": "Paid at counter",
+  "managerCloseTabPartiallyPaid": "I collected the rest in person",
+  "managerClosedPartiallyPaid": "PART IN PERSON",
+  "managerCloseTabAlreadyPaid": "{paid} was already collected in the app. {remaining} left for you to collect in person.",
+  "@managerCloseTabAlreadyPaid": {
+    "placeholders": { "paid": {"type": "String"}, "remaining": {"type": "String"} }
+  },
   "managerClosedUnpaid": "Unpaid",
   "managerClosedAbandoned": "Never closed",
   "groupOrderTrackToPay": "All served — the bill is still open",

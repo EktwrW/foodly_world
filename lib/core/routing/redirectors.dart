@@ -102,6 +102,46 @@ abstract class GoRouterRedirector {
           ? AppRoutes.start.path
           : AppRoutes.liveOrders.path.replaceFirst(':id', ownerBusinessUuid);
 
+  /// Aterrizaje de la vuelta del Checkout hosteado (decisión pura).
+  ///
+  /// El comensal paga con MB WAY en el navegador y vuelve por App Link a
+  /// `foodly.solutions/checkout/return/{success|cancel}?order={uuid}`. Sin esta
+  /// ruta el router no matcheaba NADA y caía en `NotFoundPage`: la pantalla de
+  /// "no encontrado" justo después de pagar (2026-08-12).
+  ///
+  /// Aterriza en la orden tanto en éxito como en cancelación — es la pantalla
+  /// que el comensal quiere ver en los dos casos, y ya refleja el estado real:
+  /// quien sella el cobro es el webhook firmado, y F3a la actualiza en vivo.
+  /// Esta URL es adivinable y no está autenticada, así que NO se usa para
+  /// afirmar nada sobre el pago; solo para saber a qué mesa volver.
+  ///
+  /// Sin uuid (URL vieja o manipulada) o sin sesión → start, donde el redirect
+  /// global decide igual que en cualquier otro cold start.
+  ///
+  /// El `order` viene de una URL PÚBLICA que cualquiera puede fabricar, y
+  /// `go_router` ya lo percent-decodifica, así que se valida la FORMA antes de
+  /// interpolarlo: `Uri.parse` normaliza los `..`, y sin este filtro
+  /// `?order=..%2Fjoin%2FABC123` aterrizaba en `/join/ABC123` — o sea metía al
+  /// comensal en la mesa de otro. Con `%2F` a secas rompía el path y caía en
+  /// NotFound. Que el uuid exista y sea suyo lo decide la API; acá solo se
+  /// comprueba que no pueda navegar a otra ruta.
+  ///
+  /// PENDIENTE (no de este cambio): si NO hay sesión el redirect global manda a
+  /// login antes de llegar acá y el uuid se pierde. `/join/{code}` resuelve eso
+  /// estacionándolo en `PendingGroupJoin`; la vuelta del Checkout no tiene
+  /// equivalente, así que un comensal cuya sesión caducó mientras pagaba vuelve
+  /// a la app sin su mesa.
+  static String checkoutReturnLandingPath({
+    required String? orderUuid,
+    required bool hasSession,
+  }) =>
+      (orderUuid == null || !_uuid.hasMatch(orderUuid) || !hasSession)
+          ? AppRoutes.start.path
+          : AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid);
+
+  static final RegExp _uuid =
+      RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
   /// teniendo sesión); SIN sesión → login.

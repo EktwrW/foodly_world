@@ -24,7 +24,13 @@ void main() {
       expect(o.canBeClosedByBusiness, isTrue);
     });
 
-    test('con pagos por Foodly NO se puede: sería cobrar dos veces', () {
+    // R2 (2026-08-12) — este test afirmaba lo contrario, y era la suposición
+    // vieja: con dinero dentro NO se podía cerrar. Cerraba el único desenlace
+    // que esa mesa tiene. Lo que el backend rechaza con 409 es marcarla
+    // "cobrada en caja" —eso sí sería cobrar dos veces—, y por eso la hoja de
+    // cierre ya no ofrece ese motivo cuando entró dinero por la app: ofrece
+    // `partially_paid`, que es exactamente lo que pasó.
+    test('con un pago parcial por Foodly SÍ se cierra: el resto se pagó en el local', () {
       final o = GroupOrders.openTab(
         items: [GroupOrders.sentItem(price: 40, delivered: true)],
         fulfillment: GroupFulfillmentStatus.delivered,
@@ -33,13 +39,15 @@ void main() {
 
       expect(
         o.canBeClosedByBusiness,
-        isFalse,
-        reason: 'Marcar "cobrada en caja" algo ya cobrado por la app deja al '
-            'comensal pagando dos veces; el BE también lo rechaza con 409.',
+        isTrue,
+        reason: 'Tres pagan por la app y el cuarto se va: sin este botón la '
+            'mesa no tiene ninguna salida y desaparece del panel.',
       );
     });
 
     test('una cuenta ya saldada tampoco se cierra a mano', () {
+      // Lo que abre la puerta es el SALDO PENDIENTE, no el pago: sin nada que
+      // cobrar en el local, `partially_paid` sería falso en el historial.
       expect(GroupOrders.settledTab().canBeClosedByBusiness, isFalse);
     });
 

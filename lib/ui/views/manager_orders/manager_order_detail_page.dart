@@ -255,9 +255,10 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                       // F4b: cerrar la cuenta cobrada FUERA de Foodly. En un
                       // restaurante tradicional es el desenlace más común, y
                       // sin esto la orden quedaba viva para siempre en el
-                      // panel. Solo con cuenta abierta y sin pagos por la app:
-                      // marcar "cobrada en caja" algo ya cobrado dejaría al
-                      // comensal pagando dos veces (el BE también lo rechaza).
+                      // panel. Solo con cuenta abierta y sin un pago en vuelo;
+                      // el MOTIVO lo decide la hoja según lo ya cobrado —
+                      // `partially_paid` cuando entró dinero por la app, que
+                      // es lo único que el BE acepta ahí.
                       // F4b: la mesa avisó que paga en el mostrador. El aviso
                       // va junto al botón de cerrar porque son la misma
                       // acción vista desde los dos lados — el mesero cobra y
@@ -331,20 +332,44 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 18),
-            CustomNeumorphicButton(
-              text: S.current.managerCloseTabPaidOffline,
-              disabled: false,
-              margin: EdgeInsets.zero,
-              onPressed: () => Navigator.pop(ctx, 'paid_offline'),
-            ),
-            const SizedBox(height: 8),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, 'unpaid'),
-              child: Text(
-                S.current.managerCloseTabUnpaid,
-                style: FoodlyTextStyles.caption.copyWith(color: const Color(0xFFB3261E)),
+            // Con dinero cobrado por la app, el ÚNICO cierre válido es
+            // `partially_paid` — el backend rechaza los otros dos, y con
+            // razón: marcar "cobrada en caja" algo que ya se cobró por Foodly
+            // deja al comensal pagando dos veces. En vez de ofrecer opciones
+            // que van a devolver 409, la hoja se adapta a lo que de verdad
+            // pasó y dice cuánto entró ya (2026-08-12).
+            if (order.totalPaid > 0) ...[
+              Text(
+                S.current.managerCloseTabAlreadyPaid(
+                  formatMoney(order.totalPaid, order.currency),
+                  formatMoney(order.totalRemaining, order.currency),
+                ),
+                style: FoodlyTextStyles.caption,
+                textAlign: TextAlign.center,
               ),
-            ),
+              const SizedBox(height: 14),
+              CustomNeumorphicButton(
+                text: S.current.managerCloseTabPartiallyPaid,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () => Navigator.pop(ctx, 'partially_paid'),
+              ),
+            ] else ...[
+              CustomNeumorphicButton(
+                text: S.current.managerCloseTabPaidOffline,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () => Navigator.pop(ctx, 'paid_offline'),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, 'unpaid'),
+                child: Text(
+                  S.current.managerCloseTabUnpaid,
+                  style: FoodlyTextStyles.caption.copyWith(color: const Color(0xFFB3261E)),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -386,6 +411,11 @@ class _ClosedTabNotice extends StatelessWidget {
             Icons.schedule_rounded,
             FoodlyThemes.secondaryFoodly,
             S.current.managerClosedAbandoned,
+          ),
+        'partially_paid' => (
+            Icons.call_split_rounded,
+            const Color(0xFF0B8A40),
+            S.current.managerClosedPartiallyPaid,
           ),
         // Sin motivo: se cobró por Foodly, el ciclo normal.
         //

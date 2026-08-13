@@ -142,6 +142,12 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="foodly.solutions" android:pathPrefix="/join"/>
+                <!-- Retorno del Checkout hosteado (2026-08-12). Faltaba por
+                     completo: iOS lo cubría vía AASA pero Android no declaraba
+                     el path, así que en Android volver de MB WAY abría el
+                     navegador en vez de la app, con el comensal recién pagando.
+                     Mismo host ya verificado, solo un path más. -->
+                <data android:scheme="https" android:host="foodly.solutions" android:pathPrefix="/checkout/return"/>
             </intent-filter>
         </activity>
         <activity

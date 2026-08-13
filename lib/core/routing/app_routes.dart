@@ -38,6 +38,11 @@ enum AppRoutes {
   groupOrder('/group-order/$_routeIdParam', 'groupOrder'),
   // App Link F3a: foodly.solutions/join/{code} → join automático.
   joinGroupOrder('/join/$_routeIdParam', 'joinGroupOrder'),
+  // App Link F4b: vuelta del Checkout hosteado (MB WAY y demás).
+  // foodly.solutions/checkout/return/{success|cancel}?order={uuid}
+  // El :result es parte del path porque el AASA y el pathPrefix de Android
+  // matchean por path; el uuid viaja en query para no alterarlo.
+  checkoutReturn('/checkout/return/:result', 'checkoutReturn'),
   // Chat room
   chatRoom('$mainRoute/$_routeIdParam/chat-room', 'chatRoom'),
   //

@@ -11,7 +11,17 @@ class RouteHierarchy {
 
   /// Rutas efímeras de flujo (no destinos): nunca se vuelve "atrás" hacia
   /// ellas ni se restauran tras un cold-start.
-  static bool isEphemeral(String path) => path.startsWith('/group-order/') || path.startsWith('/join/');
+  ///
+  /// `/checkout/return` es efímera por el mismo motivo y con un agravante: lo
+  /// que se persiste es `matchedLocation`, que YA descartó la query — o sea el
+  /// path guardado nunca lleva el `?order=`. Restaurarlo mandaba al comensal a
+  /// una vuelta de pago sin orden, que redirige a `/`, que restaura otra vez:
+  /// `redirect loop detected` → NotFoundPage, y reescrito en cada arranque, así
+  /// que se quedaba pegado en todos los booteos siguientes. Sin barra final a
+  /// propósito: Android declara `pathPrefix="/checkout/return"`, así que
+  /// `/checkout/return` a secas también puede llegar acá.
+  static bool isEphemeral(String path) =>
+      path.startsWith('/group-order/') || path.startsWith('/join/') || path.startsWith('/checkout/return');
 
   /// ¿[path] merece persistirse como LAST_PATH (restauración post-boot)?
   static bool shouldPersistAsLastPath(String path, {String loginPath = '/login'}) =>
