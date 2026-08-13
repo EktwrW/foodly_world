@@ -102,7 +102,7 @@ The release keystore (`foodly-release.jks`) and `key.properties` are gitignored 
 
 ## API Documentation
 
-[API Documentation](https://foodly.solutions/api/documentation#/)
+[API Documentation](https://foodly.solutions/api/documentation#/) [Not available yet - coming soon].
 
 ## Credits
 
