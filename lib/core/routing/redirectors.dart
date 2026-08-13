@@ -102,6 +102,29 @@ abstract class GoRouterRedirector {
           ? AppRoutes.start.path
           : AppRoutes.liveOrders.path.replaceFirst(':id', ownerBusinessUuid);
 
+  /// Aterrizaje de la vuelta del Checkout hosteado (decisión pura).
+  ///
+  /// El comensal paga con MB WAY en el navegador y vuelve por App Link a
+  /// `foodly.solutions/checkout/return/{success|cancel}?order={uuid}`. Sin esta
+  /// ruta el router no matcheaba NADA y caía en `NotFoundPage`: la pantalla de
+  /// "no encontrado" justo después de pagar (2026-08-12).
+  ///
+  /// Aterriza en la orden tanto en éxito como en cancelación — es la pantalla
+  /// que el comensal quiere ver en los dos casos, y ya refleja el estado real:
+  /// quien sella el cobro es el webhook firmado, y F3a la actualiza en vivo.
+  /// Esta URL es adivinable y no está autenticada, así que NO se usa para
+  /// afirmar nada sobre el pago; solo para saber a qué mesa volver.
+  ///
+  /// Sin uuid (URL vieja o manipulada) o sin sesión → start, donde el redirect
+  /// global decide igual que en cualquier otro cold start.
+  static String checkoutReturnLandingPath({
+    required String? orderUuid,
+    required bool hasSession,
+  }) =>
+      (orderUuid == null || orderUuid.isEmpty || !hasSession)
+          ? AppRoutes.start.path
+          : AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid);
+
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
   /// teniendo sesión); SIN sesión → login.
