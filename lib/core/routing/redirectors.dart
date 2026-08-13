@@ -117,13 +117,30 @@ abstract class GoRouterRedirector {
   ///
   /// Sin uuid (URL vieja o manipulada) o sin sesión → start, donde el redirect
   /// global decide igual que en cualquier otro cold start.
+  ///
+  /// El `order` viene de una URL PÚBLICA que cualquiera puede fabricar, y
+  /// `go_router` ya lo percent-decodifica, así que se valida la FORMA antes de
+  /// interpolarlo: `Uri.parse` normaliza los `..`, y sin este filtro
+  /// `?order=..%2Fjoin%2FABC123` aterrizaba en `/join/ABC123` — o sea metía al
+  /// comensal en la mesa de otro. Con `%2F` a secas rompía el path y caía en
+  /// NotFound. Que el uuid exista y sea suyo lo decide la API; acá solo se
+  /// comprueba que no pueda navegar a otra ruta.
+  ///
+  /// PENDIENTE (no de este cambio): si NO hay sesión el redirect global manda a
+  /// login antes de llegar acá y el uuid se pierde. `/join/{code}` resuelve eso
+  /// estacionándolo en `PendingGroupJoin`; la vuelta del Checkout no tiene
+  /// equivalente, así que un comensal cuya sesión caducó mientras pagaba vuelve
+  /// a la app sin su mesa.
   static String checkoutReturnLandingPath({
     required String? orderUuid,
     required bool hasSession,
   }) =>
-      (orderUuid == null || orderUuid.isEmpty || !hasSession)
+      (orderUuid == null || !_uuid.hasMatch(orderUuid) || !hasSession)
           ? AppRoutes.start.path
           : AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid);
+
+  static final RegExp _uuid =
+      RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
 
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
