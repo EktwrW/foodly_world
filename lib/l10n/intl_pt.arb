@@ -1495,6 +1495,10 @@
   },
   "managerPaidComplete": "Pago por completo",
   "managerNoOrders": "Sem pedidos por agora",
+  "managerOrdersTruncated": "A mostrar {shown} de {total}. Trata destes e os restantes vão subindo.",
+  "@managerOrdersTruncated": {
+    "placeholders": { "shown": { "type": "int" }, "total": { "type": "int" } }
+  },
   "noAccessSection": "Você não tem acesso a essa seção",
   "stripeBridgeReturnTitle": "Conta de pagamentos configurada",
   "stripeBridgeReturnBody": "Você já pode fechar esta aba e voltar ao app Foodly.",
@@ -1536,6 +1540,12 @@
   "managerHistoryTitle": "Histórico",
   "managerHistoryYesterday": "Ontem",
   "managerHistoryEmpty": "Sem pedidos passados ainda",
+  "managerAmendTitle": "Corrigir o fecho",
+  "managerAmendToPaidOffline": "Foi pago, no balcão",
+  "managerAmendToUnpaid": "Nunca foi pago",
+  "managerAmendHint": "A Foodly não processou este dinheiro: corrigir só muda o teu registo.",
+  "managerAmendDone": "Fecho corrigido",
+  "managerHistoryReadOnly": "Pedido fechado — apenas leitura",
   "managerHistoryDaySummary": "{count} pedidos · {total}",
   "@managerHistoryDaySummary": {
     "placeholders": {

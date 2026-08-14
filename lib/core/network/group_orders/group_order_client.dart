@@ -206,6 +206,15 @@ abstract class GroupOrderClient {
     @Field('reason') required String reason,
   });
 
+  /// Corrige el MOTIVO de una orden YA cerrada: impagada ↔ cobrada en caja.
+  /// No reabre nada ni mueve dinero. Sin esto "se fueron sin pagar" era un
+  /// veredicto permanente aunque la mesa volviera al día siguiente a pagar.
+  @PATCH('/manager/group-orders/{uuid}/closure')
+  Future<GroupOrderResponseDM> managerAmendClosure(
+    @Path('uuid') String uuid, {
+    @Field('reason') required String reason,
+  });
+
   /// F4a (caso bar): siguiente ronda de la mesa (lado cliente).
   @POST('/group-orders/{uuid}/next-round')
   Future<GroupOrderResponseDM> nextRound(@Path('uuid') String uuid);

@@ -229,6 +229,18 @@ class GroupOrderRepo {
     }
   }
 
+  /// Corrige el motivo de una orden ya cerrada (impagada ↔ cobrada en caja).
+  Future<ApiResult<GroupOrderResponseDM>> managerAmendClosure(
+    String uuid, {
+    required String reason,
+  }) async {
+    try {
+      return ApiResult.success(await _client.managerAmendClosure(uuid, reason: reason));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   /// F4b (cuenta abierta): manda la tanda actual a cocina, sin pago.
   Future<ApiResult<GroupOrderResponseDM>> sendBatch(String uuid) async {
     try {

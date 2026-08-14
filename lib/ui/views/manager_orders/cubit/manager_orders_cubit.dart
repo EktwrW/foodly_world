@@ -20,13 +20,23 @@ class ManagerOrdersState {
   final String? bucket;
   final String? error;
 
+  /// Cuántas hay en el filtro actual según el BE, que puede ser MÁS que
+  /// [orders]: el panel pide una sola página y no pagina a propósito (ver
+  /// [ManagerOrdersCubit.refetchSilently]). Se guarda para poder decirlo en
+  /// pantalla en vez de mostrar 50 tarjetas como si fueran todas.
+  final int total;
+
   const ManagerOrdersState({
     this.loading = false,
     this.orders = const [],
     this.counts = const ManagerOrderCountsDM(),
     this.bucket,
     this.error,
+    this.total = 0,
   });
+
+  /// Hay más de las que caben en la página que pedimos.
+  bool get isTruncated => total > orders.length;
 
   ManagerOrdersState copyWith({
     bool? loading,
@@ -34,6 +44,7 @@ class ManagerOrdersState {
     ManagerOrderCountsDM? counts,
     Object? bucket = _sentinel,
     Object? error = _sentinel,
+    int? total,
   }) =>
       ManagerOrdersState(
         loading: loading ?? this.loading,
@@ -41,6 +52,7 @@ class ManagerOrdersState {
         counts: counts ?? this.counts,
         bucket: bucket == _sentinel ? this.bucket : bucket as String?,
         error: error == _sentinel ? this.error : error as String?,
+        total: total ?? this.total,
       );
 
   static const _sentinel = Object();
@@ -93,6 +105,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         loading: false,
         orders: r.orders,
         counts: r.counts,
+        // Sin meta (respuesta vieja o test) el total es lo que llegó: así
+        // `isTruncated` da false y la UI no inventa un aviso.
+        total: r.meta?.total ?? r.orders.length,
         error: null,
       )),
       failure: (e) {

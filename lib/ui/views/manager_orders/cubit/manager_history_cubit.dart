@@ -115,4 +115,34 @@ class ManagerHistoryCubit extends Cubit<ManagerHistoryState> {
       },
     );
   }
+
+  /// Corrige el motivo de una orden ya cerrada (impagada ↔ cobrada en caja) y
+  /// sustituye SU fila en la lista.
+  ///
+  /// No se recarga el historial entero a propósito: son páginas acumuladas por
+  /// scroll y volver a pedir la primera dejaría al manager arriba del todo,
+  /// perdiendo lo que había bajado a buscar.
+  Future<bool> amendClosure(String orderUuid, String reason) async {
+    final res = await _repo.managerAmendClosure(orderUuid, reason: reason);
+
+    return res.when(
+      success: (r) {
+        final actualizada = r.groupOrder;
+        emit(state.copyWith(
+          orders: [
+            for (final o in state.orders) o.uuid == actualizada.uuid ? actualizada : o,
+          ],
+          error: null,
+        ));
+
+        return true;
+      },
+      failure: (e) {
+        _logger.e(e);
+        emit(state.copyWith(error: e.serverMessage ?? ''));
+
+        return false;
+      },
+    );
+  }
 }
