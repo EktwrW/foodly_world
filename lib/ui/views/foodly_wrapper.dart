@@ -130,17 +130,31 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
     _isReservationDialogShowing = true;
 
     final repo = di<ReservationRepo>();
-    final dialogService = di<DialogService>();
 
-    dialogService.showLoading();
+    // SIN spinner: esta consulta no la pidió el usuario, y ahora además puede
+    // acabar en "no mostrar nada". Un velo de carga que aparece solo y no lleva
+    // a ninguna parte es peor que no verlo. Si hay que mostrar el diálogo, se
+    // muestra cuando esté listo.
     final result = await repo.getReservation(notification.reservationUuid!);
-    dialogService.hideLoading();
 
     result.when(
       success: (response) {
         final reservation = response.reservation;
         if (reservation == null || !context.mounted) {
           _isReservationDialogShowing = false;
+          return;
+        }
+
+        // Segunda mitad del filtro, con la reserva ya en mano: fecha por
+        // delante y estado sobre el que todavía se puede actuar. Una reserva
+        // cancelada o de fecha pasada no interrumpe — se queda en la campana.
+        if (!reservation.deservesProactiveDialog()) {
+          _isReservationDialogShowing = false;
+          di<Logger>().i(
+            'Proactive reservation dialog: omitido para ${notification.uuid} '
+            '(estado ${reservation.status}, fecha ${reservation.reservationDate}); '
+            'queda en la campana',
+          );
           return;
         }
 
