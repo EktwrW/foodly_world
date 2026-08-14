@@ -162,4 +162,44 @@ abstract class NotificationDM with _$NotificationDM {
         FoodlyNotificationSubType.serviceQuoteRejected,
         FoodlyNotificationSubType.serviceMessageNew,
       }.contains(subType);
+
+  /// Ventana en la que un aviso todavía es "algo que acaba de pasar".
+  static const proactiveDialogMaxAge = Duration(hours: 24);
+
+  /// ¿Este aviso merece INTERRUMPIR con un modal encima de la home?
+  ///
+  /// Primera de las dos mitades del filtro; la segunda vive en
+  /// [ReservationDM.deservesProactiveDialog] y necesita la reserva ya cargada.
+  /// Esta se resuelve sin red, así que un aviso viejo ni siquiera se pide al
+  /// servidor.
+  ///
+  /// El bug que arregla (2026-08-13): borrar una cuenta de prueba cancelaba sus
+  /// reservas —incluidas las de fecha ya pasada— y generaba un aviso al negocio
+  /// por cada una. Al entrar, el comerciante recibía un modal bloqueante por
+  /// cada reserva cancelada, de una en una y sesión tras sesión, sobre fechas de
+  /// hace dos meses y de usuarios ya borrados. Nada que decidir, todo fricción.
+  ///
+  /// Un modal es para lo que exige una decisión AHORA. Lo demás sigue en la
+  /// campana con su badge: no se pierde nada, se deja de interrumpir.
+  bool deservesProactiveDialog({DateTime? now}) {
+    if (!isReservationNotification || reservationUuid == null) return false;
+
+    // Cancelaciones y rechazos son informativos: no hay nada que hacer con
+    // ellos. Quedan en la campana.
+    const interrumpen = {
+      FoodlyNotificationSubType.newReservationRequest,
+      FoodlyNotificationSubType.reservationConfirmed,
+    };
+    if (!interrumpen.contains(subType)) return false;
+
+    final creado = createdAt;
+    if (creado == null) return false;
+
+    final ahora = now ?? DateTime.now();
+    final edad = ahora.difference(creado);
+
+    // Negativa = el aviso viene del futuro (reloj torcido). No se descarta: se
+    // trata como recién llegado, que es lo que casi seguro es.
+    return edad < proactiveDialogMaxAge;
+  }
 }

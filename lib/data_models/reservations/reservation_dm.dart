@@ -198,6 +198,28 @@ abstract class ReservationDM with _$ReservationDM {
   bool get isServiceBooking => bookingType == BookingType.service;
   bool get isTableBooking => bookingType == BookingType.table;
 
+  /// ¿Sigue viva? Fecha por delante y estado sobre el que aún se puede actuar.
+  ///
+  /// Segunda mitad del filtro del modal proactivo — la primera es
+  /// [NotificationDM.deservesProactiveDialog], que se resuelve sin red.
+  ///
+  /// Se compara contra el INICIO del día, no contra la hora exacta: una reserva
+  /// para hoy a las 21:00 sigue siendo de hoy a las 22:00, y el comerciante
+  /// todavía querría verla. Solo se descarta cuando el día ya pasó.
+  ///
+  /// `cancelled`, `rejected`, `completed` y `noShow` son historia: no abren
+  /// modal ni aunque el aviso sea de hace un minuto.
+  bool deservesProactiveDialog({DateTime? now}) {
+    final fecha = reservationDate;
+    if (fecha == null) return false;
+
+    final hoy = now ?? DateTime.now();
+    final inicioDeHoy = DateTime(hoy.year, hoy.month, hoy.day);
+    if (fecha.isBefore(inicioDeHoy)) return false;
+
+    return isPending || isQuoted || isConfirmed;
+  }
+
   // Action eligibility
   bool get canBeCancelledByCustomer => isPending || isConfirmed || isQuoted;
   bool get canBeActedOnByManager => isPending;

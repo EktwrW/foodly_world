@@ -118,7 +118,16 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         }
 
         for (final n in toCache!) {
-          if (n.isReservationNotification &&
+          // `deservesProactiveDialog` sustituye al viejo `isReservationNotification`:
+          // exige además que el subtipo sea accionable y que el aviso sea de las
+          // últimas 24 h. Sin eso, borrar una cuenta con reservas viejas generaba
+          // un modal bloqueante por cada una, sesión tras sesión, sobre fechas ya
+          // pasadas (2026-08-13). La segunda mitad del filtro —fecha futura y
+          // estado vivo— la aplica FoodlyWrapper con la reserva ya cargada.
+          //
+          // Lo filtrado NO desaparece: sigue en la campana, sin leer y contando
+          // en el badge.
+          if (n.deservesProactiveDialog() &&
               !n.isRead &&
               !_dialogShownForIds.contains(n.id)) {
             _pendingReservationNotification = n;

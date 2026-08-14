@@ -485,24 +485,48 @@ class PushNotificationService with WidgetsBindingObserver {
     if (data == null || data.isEmpty) return;
     _logger.i('Push tap deeplink data: $data');
 
-    final subType = data['subType']?.toString() ?? '';
-    final router = di<AppRouter>().appRouter;
-
-    // Default landing for any reservation-flavoured push.
+    // La decisión de destino es PURA y vive en [GoRouterRedirector.pushTapPath] —
+    // acá solo queda navegar. Antes la rama de reservas y el `goNamed` estaban
+    // enredados en este método, que no se puede montar en un test, y por eso
+    // convivieron dos ramas muertas y ningún destino para group orders sin que
+    // nadie se enterara hasta el e2e del 2026-08-14.
+    //
     // Detail navigation inside My Reservations / Manage Reservations is
     // handled by those pages reading the data['reservation_uuid'] from
     // HydratedBloc on mount. Keeping the initial nav minimal avoids
-    // fighting GoRouter guards when the app boots from terminated state.
-    if (subType.startsWith('reservation_') || subType.startsWith('message_') || subType.startsWith('quote_')) {
-      try {
-        router.goNamed(AppRoutes.myReservations.name);
-      } catch (e, s) {
-        _logger.w('Push deeplink navigation failed', error: e, stackTrace: s);
-      }
+    // fighting GoRouter guards when the app boots from terminated state — si
+    // la sesión aún no está, `requiresLogin` manda a /start con `return_url`
+    // y el destino no se pierde.
+    final destino = GoRouterRedirector.pushTapPath(
+      data: data,
+      ownerBusinessUuid: _ownerBusinessUuid(),
+    );
+
+    if (destino == null) {
+      _logger.d('Push sin destino: type="${data['type']}" subType="${data['subType']}"');
       return;
     }
 
-    _logger.d('Push subType "$subType" has no deeplink handler (fallthrough)');
+    try {
+      di<AppRouter>().appRouter.go(destino);
+    } catch (e, s) {
+      _logger.w('Push deeplink navigation failed', error: e, stackTrace: s);
+    }
+  }
+
+  /// Negocio del dueño logueado, como RESPALDO del `business_uuid` del push.
+  ///
+  /// En arranque desde app muerta la sesión puede no estar restaurada todavía
+  /// —o el servicio ni estar registrado en GetIt—, así que esto puede devolver
+  /// null sin que sea un error: el push del panel trae su propio
+  /// `business_uuid` y ése es el camino normal.
+  String? _ownerBusinessUuid() {
+    try {
+      final negocios = di<AuthSessionService>().userSessionDM?.user.business;
+      return (negocios == null || negocios.isEmpty) ? null : negocios.first.uuid;
+    } catch (_) {
+      return null;
+    }
   }
 
   String _encodePayload(Map<String, dynamic> data) {

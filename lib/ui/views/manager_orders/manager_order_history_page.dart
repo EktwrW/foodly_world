@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
@@ -49,70 +50,23 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
     return DateFormat.MMMEd(Intl.getCurrentLocale()).format(day);
   }
 
+  /// Detalle de una orden pasada. Solo lectura salvo UNA acción: corregir el
+  /// motivo del cierre. El resto no se opera — un stepper de cocina sobre una
+  /// mesa de hace tres días es ruido.
+  ///
+  /// El cubit va por parámetro y no por `context.read` dentro del sheet: el
+  /// `showModalBottomSheet` construye en un contexto de ruta distinto, que no
+  /// tiene el BlocProvider encima.
   void _showOrderSheet(BuildContext context, GroupOrderDM order) {
+    final cubit = context.read<ManagerHistoryCubit>();
+
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.6,
-        maxChildSize: 0.85,
-        builder: (ctx, scrollCtrl) => ListView(
-          controller: scrollCtrl,
-          padding: const EdgeInsets.fromLTRB(18, 18, 18, 24),
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '${(order.tableLabel ?? '').isNotEmpty ? '${order.tableLabel} · ' : ''}'
-                    '${formatMoney(order.totalAmount, order.currency)}',
-                    style: FoodlyTextStyles.sectionsTitle,
-                  ),
-                ),
-                ManagerFulfillmentBadge(status: order.fulfillmentStatus),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              [
-                if (order.confirmedAt != null)
-                  DateFormat.yMMMd(Intl.getCurrentLocale())
-                      .add_Hm()
-                      .format(order.confirmedAt!.toLocal()),
-                if (order.roundNumber > 1) S.current.managerRound(order.roundNumber),
-              ].join(' · '),
-              style: FoodlyTextStyles.caption,
-            ),
-            const SizedBox(height: 14),
-            for (final p in order.participants) ...[
-              Text(p.displayName, style: FoodlyTextStyles.labelBold),
-              const SizedBox(height: 2),
-              for (final item in order.kitchenItemsFor(p.uuid))
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, bottom: 2),
-                  child: Row(
-                    children: [
-                      Text('${item.quantity}×', style: FoodlyTextStyles.captionPurpleBold),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(item.name,
-                            style: FoodlyTextStyles.caption,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                      Text(formatMoney(item.lineTotal, order.currency),
-                          style: FoodlyTextStyles.caption),
-                    ],
-                  ),
-                ),
-              const SizedBox(height: 8),
-            ],
-          ],
-        ),
+      backgroundColor: Colors.transparent,
+      builder: (_) => BlocProvider.value(
+        value: cubit,
+        child: _HistoryOrderSheet(orderUuid: order.uuid),
       ),
     );
   }
@@ -217,6 +171,215 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
           },
         ),
       ),
+    );
+  }
+}
+
+/// Hoja de detalle de una orden del historial, en el lenguaje visual de la app
+/// (cabecera con el gradiente del panel, radius 24, badges propios).
+///
+/// Antes era un `showModalBottomSheet` pelado con un `ListView` sin estilo, y
+/// mostraba el badge de COCINA en vez del de cierre: en una orden cerrada como
+/// impagada, el dato que importa es justo ése.
+///
+/// Se lee del cubit por uuid en vez de recibir la orden congelada: al corregir
+/// el cierre el estado cambia, y así la hoja se repinta sola con el motivo
+/// nuevo sin cerrarse ni volver a abrirse.
+class _HistoryOrderSheet extends StatelessWidget {
+  final String orderUuid;
+
+  const _HistoryOrderSheet({required this.orderUuid});
+
+  Future<void> _corregir(BuildContext context, GroupOrderDM order) async {
+    // Se ofrece SIEMPRE el motivo contrario al actual: la acción es "esto que
+    // dice acá está mal", no un menú de opciones.
+    final destino = order.closedReason == 'unpaid' ? 'paid_offline' : 'unpaid';
+
+    final ok = await context.read<ManagerHistoryCubit>().amendClosure(order.uuid, destino);
+    if (!context.mounted) return;
+
+    if (ok) {
+      FoodlySnackbars.successGeneric(context, S.current.managerAmendDone);
+    } else {
+      FoodlySnackbars.errorGeneric(context, S.current.managerGenericError);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.62,
+      maxChildSize: 0.9,
+      builder: (_, scrollCtrl) => DecoratedBox(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
+            builder: (context, state) {
+              final order =
+                  state.orders.where((o) => o.uuid == orderUuid).firstOrNull;
+              if (order == null) return const SizedBox.shrink();
+
+              return ListView(
+                controller: scrollCtrl,
+                padding: EdgeInsets.zero,
+                children: [
+                  _Cabecera(order: order),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            ManagerPaymentBadge(order: order),
+                            const SizedBox(width: 8),
+                            ManagerFulfillmentBadge(status: order.fulfillmentStatus),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+                        for (final p in order.participants) ...[
+                          Text(p.displayName, style: FoodlyTextStyles.labelBold),
+                          const SizedBox(height: 2),
+                          for (final item in order.kitchenItemsFor(p.uuid))
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10, bottom: 2),
+                              child: Row(
+                                children: [
+                                  Text('${item.quantity}×',
+                                      style: FoodlyTextStyles.captionPurpleBold),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: Text(item.name,
+                                        style: FoodlyTextStyles.caption,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
+                                  Text(formatMoney(item.lineTotal, order.currency),
+                                      style: FoodlyTextStyles.caption),
+                                ],
+                              ),
+                            ),
+                          const SizedBox(height: 8),
+                        ],
+                        const Divider(height: 26),
+                        if (order.closureIsAmendable)
+                          _CorregirCierre(
+                            order: order,
+                            onCorregir: () => _corregir(context, order),
+                          )
+                        else
+                          Center(
+                            child: Text(
+                              S.current.managerHistoryReadOnly,
+                              style: FoodlyTextStyles.caption,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Cabecera con el gradiente del panel: mesa · total, y debajo la fecha.
+class _Cabecera extends StatelessWidget {
+  final GroupOrderDM order;
+
+  const _Cabecera({required this.order});
+
+  @override
+  Widget build(BuildContext context) {
+    final mesa = (order.tableLabel ?? '').isNotEmpty ? '${order.tableLabel} · ' : '';
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      decoration: BoxDecoration(gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 38,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: .5),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          Text(
+            '$mesa${formatMoney(order.totalAmount, order.currency)}',
+            style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 18),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            [
+              if (order.confirmedAt != null)
+                DateFormat.yMMMd(Intl.getCurrentLocale())
+                    .add_Hm()
+                    .format(order.confirmedAt!.toLocal()),
+              if (order.roundNumber > 1) S.current.managerRound(order.roundNumber),
+            ].join(' · '),
+            style: FoodlyTextStyles.caption.copyWith(color: Colors.white70),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// La única acción de una orden pasada: decir que el cierre está mal.
+class _CorregirCierre extends StatelessWidget {
+  final GroupOrderDM order;
+  final VoidCallback onCorregir;
+
+  const _CorregirCierre({required this.order, required this.onCorregir});
+
+  @override
+  Widget build(BuildContext context) {
+    final aCaja = order.closedReason == 'unpaid';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(S.current.managerAmendTitle, style: FoodlyTextStyles.labelBold),
+        const SizedBox(height: 4),
+        Text(S.current.managerAmendHint, style: FoodlyTextStyles.caption),
+        const SizedBox(height: 12),
+        OutlinedButton.icon(
+          onPressed: onCorregir,
+          icon: Icon(
+            aCaja ? Icons.payments_rounded : Icons.report_gmailerrorred_rounded,
+            size: 18,
+            color: aCaja ? const Color(0xFF0B8A40) : const Color(0xFFB3261E),
+          ),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            side: BorderSide(
+              color: (aCaja ? const Color(0xFF0B8A40) : const Color(0xFFB3261E))
+                  .withValues(alpha: .5),
+            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          ),
+          label: Text(
+            aCaja ? S.current.managerAmendToPaidOffline : S.current.managerAmendToUnpaid,
+            style: FoodlyTextStyles.labelBold.copyWith(
+              color: aCaja ? const Color(0xFF0B8A40) : const Color(0xFFB3261E),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

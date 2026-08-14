@@ -431,6 +431,23 @@ abstract class GroupOrderDM with _$GroupOrderDM {
       // PaymentSheet abierto daría 409 tras elegir el motivo en la hoja.
       !hasProcessingPayment;
 
+  /// El motivo de cierre se puede CORREGIR desde el historial.
+  ///
+  /// Solo entre "impagada" y "cobrada en caja", y solo sin un euro de Foodly
+  /// dentro — espeja `GroupOrderFulfillmentService::amendClosureReason`, que
+  /// es quien decide de verdad. `partially_paid` queda fuera porque describe
+  /// un reparto de dinero real, y `abandoned` porque lo firmó el barrido
+  /// automático, no una persona.
+  ///
+  /// Sin esto, "se fueron sin pagar" era permanente: la orden queda
+  /// `completed`, que no tiene transición de salida, así que si la mesa volvía
+  /// al día siguiente y pagaba, el historial del negocio seguía diciendo que
+  /// lo habían estafado.
+  bool get closureIsAmendable =>
+      closedAt != null &&
+      totalPaid <= 0 &&
+      (closedReason == 'unpaid' || closedReason == 'paid_offline');
+
   /// La cuenta está SALDADA: entró todo el dinero.
   ///
   /// e2e 2026-08-06 — hace falta porque `confirmed` es ambiguo en cuenta

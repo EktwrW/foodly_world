@@ -9385,6 +9385,16 @@ class S {
     );
   }
 
+  /// `Showing {shown} of {total}. Clear these and the rest will move up.`
+  String managerOrdersTruncated(int shown, int total) {
+    return Intl.message(
+      'Showing $shown of $total. Clear these and the rest will move up.',
+      name: 'managerOrdersTruncated',
+      desc: '',
+      args: [shown, total],
+    );
+  }
+
   /// `You don't have access to that section`
   String get noAccessSection {
     return Intl.message(
@@ -9650,6 +9660,66 @@ class S {
     return Intl.message(
       'No past orders yet',
       name: 'managerHistoryEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fix the closure`
+  String get managerAmendTitle {
+    return Intl.message(
+      'Fix the closure',
+      name: 'managerAmendTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It was paid, at the counter`
+  String get managerAmendToPaidOffline {
+    return Intl.message(
+      'It was paid, at the counter',
+      name: 'managerAmendToPaidOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It was never paid`
+  String get managerAmendToUnpaid {
+    return Intl.message(
+      'It was never paid',
+      name: 'managerAmendToUnpaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foodly didn't process this money — fixing it only changes your own record.`
+  String get managerAmendHint {
+    return Intl.message(
+      'Foodly didn\'t process this money — fixing it only changes your own record.',
+      name: 'managerAmendHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closure updated`
+  String get managerAmendDone {
+    return Intl.message(
+      'Closure updated',
+      name: 'managerAmendDone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed order — read only`
+  String get managerHistoryReadOnly {
+    return Intl.message(
+      'Closed order — read only',
+      name: 'managerHistoryReadOnly',
       desc: '',
       args: [],
     );

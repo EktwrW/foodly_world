@@ -1495,6 +1495,10 @@
   },
   "managerPaidComplete": "Fully paid",
   "managerNoOrders": "No orders yet",
+  "managerOrdersTruncated": "Showing {shown} of {total}. Clear these and the rest will move up.",
+  "@managerOrdersTruncated": {
+    "placeholders": { "shown": { "type": "int" }, "total": { "type": "int" } }
+  },
   "noAccessSection": "You don't have access to that section",
   "stripeBridgeReturnTitle": "Payments account set up",
   "stripeBridgeReturnBody": "You can close this tab and go back to the Foodly app.",
@@ -1536,6 +1540,12 @@
   "managerHistoryTitle": "History",
   "managerHistoryYesterday": "Yesterday",
   "managerHistoryEmpty": "No past orders yet",
+  "managerAmendTitle": "Fix the closure",
+  "managerAmendToPaidOffline": "It was paid, at the counter",
+  "managerAmendToUnpaid": "It was never paid",
+  "managerAmendHint": "Foodly didn't process this money — fixing it only changes your own record.",
+  "managerAmendDone": "Closure updated",
+  "managerHistoryReadOnly": "Closed order — read only",
   "managerHistoryDaySummary": "{count} orders · {total}",
   "@managerHistoryDaySummary": {
     "placeholders": {

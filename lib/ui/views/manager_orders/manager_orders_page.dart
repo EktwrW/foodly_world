@@ -207,9 +207,27 @@ class ManagerOrdersPage extends StatelessWidget {
                               child: ListView.separated(
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
-                                itemCount: state.orders.length,
+                                // +1 para el pie de "mostrando N de M". El
+                                // panel NO pagina (ver el comentario del
+                                // cubit): si hay más de las que caben, se dice
+                                // — un contador que no cuadra con la lista es
+                                // peor que una lista corta y honesta.
+                                itemCount: state.orders.length + (state.isTruncated ? 1 : 0),
                                 separatorBuilder: (_, __) => const SizedBox(height: 10),
                                 itemBuilder: (context, i) {
+                                  if (i >= state.orders.length) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(top: 6),
+                                      child: Text(
+                                        S.current.managerOrdersTruncated(
+                                          state.orders.length,
+                                          state.total,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        style: FoodlyTextStyles.caption,
+                                      ),
+                                    );
+                                  }
                                   final order = state.orders[i];
                                   return ManagerOrderCard(
                                     order: order,

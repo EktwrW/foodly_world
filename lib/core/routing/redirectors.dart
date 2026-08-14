@@ -142,6 +142,65 @@ abstract class GoRouterRedirector {
   static final RegExp _uuid =
       RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
 
+  /// A dónde lleva TOCAR un push (decisión pura). `null` = no navega.
+  ///
+  /// Vive acá y no dentro de `PushNotificationService` porque ahí era
+  /// intestable: el handler resolvía el router por DI y navegaba en la misma
+  /// línea, así que la única forma de comprobar el enrutado era abrir la app y
+  /// tocar una notificación real. Por eso nadie vio que los avisos de group
+  /// order no navegaban a ningún lado (e2e 2026-08-14): el handler solo tenía
+  /// ramas de reservas y todo lo demás caía a un log de debug.
+  ///
+  /// Se enruta por `data['type']` —la clave de ENRUTADO que pone quien crea el
+  /// aviso— y solo se cae a `subType` para reservas y servicios, que nunca
+  /// mandaron `type`.
+  ///
+  /// Los uuid se validan por FORMA antes de interpolarlos, por lo mismo que en
+  /// [checkoutReturnLandingPath]: un valor con `/` dentro convertiría el
+  /// destino en otra ruta. Acá el payload lo firma nuestro servidor, así que el
+  /// riesgo es teórico — pero el filtro es gratis y ya nos mordió una vez.
+  static String? pushTapPath({
+    required Map<String, dynamic> data,
+    String? ownerBusinessUuid,
+  }) {
+    final type = data['type']?.toString() ?? '';
+    final orderUuid = data['uuid']?.toString() ?? '';
+
+    // Aviso al NEGOCIO: su panel, abriendo esa orden. Sin el `?order=` el
+    // manager aterriza en la lista con la mesa esperando (e2e 2026-08-06).
+    if (type == 'manager_group_order') {
+      final delPush = data['business_uuid']?.toString() ?? '';
+      // FCM serializa todo a string y un null viaja como '' — por eso se
+      // comprueba vacío, no null, antes de caer al negocio de la sesión.
+      final business = delPush.isNotEmpty ? delPush : (ownerBusinessUuid ?? '');
+      if (!_uuid.hasMatch(business)) return null;
+
+      final destino = AppRoutes.liveOrders.path.replaceFirst(':id', business);
+      return _uuid.hasMatch(orderUuid) ? '$destino?order=$orderUuid' : destino;
+    }
+
+    // Aviso al COMENSAL (pagos, estado de cocina): su mesa.
+    if (type == 'group_order' || type == 'group_order_fulfillment') {
+      return _uuid.hasMatch(orderUuid)
+          ? AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid)
+          : null;
+    }
+
+    // Reservas y servicios. La condición era
+    // `startsWith('reservation_' | 'message_' | 'quote_')`, y contra los
+    // subTypes que el backend manda de verdad solo acertaba tres:
+    // `new_reservation_request` NO empieza por "reservation_", y ningún subType
+    // empieza por "message_" ni por "quote_" — los de la vertical de servicios
+    // son `service_quote_received`, `service_message_new`, etc. Dos de las tres
+    // ramas estaban muertas desde el día que se escribieron.
+    final subType = data['subType']?.toString() ?? '';
+    if (subType.contains('reservation') || subType.startsWith('service_')) {
+      return AppRoutes.myReservations.path;
+    }
+
+    return null;
+  }
+
   /// Destino de /no-access según sesión (decisión pura, testeable):
   /// CON sesión → su home (denegación real de permisos: jamás al login
   /// teniendo sesión); SIN sesión → login.
