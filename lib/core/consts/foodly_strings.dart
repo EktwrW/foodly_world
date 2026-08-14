@@ -6,6 +6,9 @@ class FoodlyStrings {
   static const APPLICATION_JSON = 'application/json';
   static const CONTENT_TYPE = 'content-type';
   static const ACCEPT = 'accept';
+  /// Idioma del comensal. Sin esta cabecera el backend responde en
+  /// inglés a todo, porque `SetLocaleFromHeader` no tiene qué leer.
+  static const ACCEPT_LANGUAGE = 'Accept-Language';
 
   // Media types:
   static const PNG = 'png';

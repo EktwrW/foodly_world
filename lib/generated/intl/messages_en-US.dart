@@ -1210,6 +1210,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Nothing left to pay",
     ),
     "groupOrderNoItems": MessageLookupByLibrary.simpleMessage("No items yet"),
+    "groupOrderNotNow": MessageLookupByLibrary.simpleMessage("Not now"),
     "groupOrderOngoingChannelDesc": MessageLookupByLibrary.simpleMessage(
       "Status of your ongoing group order",
     ),
@@ -1217,6 +1218,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Active group order",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Order more"),
+    "groupOrderOtherMethodsBody": MessageLookupByLibrary.simpleMessage(
+      "In your browser you can pay with MB WAY and other methods that do not show up here.",
+    ),
+    "groupOrderOtherMethodsTitle": MessageLookupByLibrary.simpleMessage(
+      "Looking for another way to pay?",
+    ),
     "groupOrderPaidBy": m41,
     "groupOrderPaidProgress": m42,
     "groupOrderParticipants": MessageLookupByLibrary.simpleMessage(
@@ -1241,6 +1248,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Payment unlocks once everything is served",
     ),
     "groupOrderPayFullOrder": m46,
+    "groupOrderPayInBrowser": MessageLookupByLibrary.simpleMessage(
+      "Pay in the browser",
+    ),
     "groupOrderPayMyShare": m47,
     "groupOrderPayOtherMethods": MessageLookupByLibrary.simpleMessage(
       "Other payment methods",

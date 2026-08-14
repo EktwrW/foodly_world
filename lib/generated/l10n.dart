@@ -8665,6 +8665,46 @@ class S {
     );
   }
 
+  /// `Looking for another way to pay?`
+  String get groupOrderOtherMethodsTitle {
+    return Intl.message(
+      'Looking for another way to pay?',
+      name: 'groupOrderOtherMethodsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In your browser you can pay with MB WAY and other methods that do not show up here.`
+  String get groupOrderOtherMethodsBody {
+    return Intl.message(
+      'In your browser you can pay with MB WAY and other methods that do not show up here.',
+      name: 'groupOrderOtherMethodsBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay in the browser`
+  String get groupOrderPayInBrowser {
+    return Intl.message(
+      'Pay in the browser',
+      name: 'groupOrderPayInBrowser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not now`
+  String get groupOrderNotNow {
+    return Intl.message(
+      'Not now',
+      name: 'groupOrderNotNow',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `We couldn't load this. Check your connection and try again.`
   String get loadFailedMessage {
     return Intl.message(

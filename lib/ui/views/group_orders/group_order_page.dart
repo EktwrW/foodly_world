@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -166,8 +168,69 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         if (uuid != null) cubit.load(uuid); // refetch — el webhook sella el estado
       case StripePaymentResult.canceled:
         FoodlySnackbars.infoGeneric(context, S.current.groupOrderPaymentCanceled);
+        // Y AQUÍ se ofrece el otro camino, no antes (2026-08-14).
+        //
+        // El acceso al Checkout hosteado vivía como un "Otros métodos de pago"
+        // permanente bajo el CTA: el comensal aún no había visto ni un método
+        // y ya le ofrecíamos alternativas a algo que no conocía. Ahora aparece
+        // justo después de cerrar la hoja sin pagar — el único momento en que
+        // "otro método" significa algo, porque acaba de ver la lista y no
+        // encontró el suyo.
+        //
+        // No es un detalle de Portugal: el e2e demostró que MB WAY SOLO
+        // aparece en el checkout hosteado, así que para un comensal portugués
+        // esta hoja no es un extra, es su camino.
+        if (!hosted) unawaited(_offerHostedCheckout(context));
       case StripePaymentResult.failed:
         FoodlySnackbars.errorGeneric(context, S.current.groupOrderPaymentFailed);
+    }
+  }
+
+  /// Ofrece el Checkout hosteado tras cerrar el PaymentSheet sin pagar.
+  ///
+  /// Es el reemplazo del botón permanente "Otros métodos de pago": mismo
+  /// destino, pero en el momento en que el comensal ya sabe qué le falta.
+  Future<void> _offerHostedCheckout(BuildContext context) async {
+    final quiere = await showModalBottomSheet<bool>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 26, 24, 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              S.current.groupOrderOtherMethodsTitle,
+              style: FoodlyTextStyles.sectionsTitle,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              S.current.groupOrderOtherMethodsBody,
+              style: FoodlyTextStyles.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 22),
+            CustomNeumorphicButton(
+              text: S.current.groupOrderPayInBrowser,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              onPressed: () => Navigator.pop(ctx, true),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(S.current.groupOrderNotNow),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (quiere == true && context.mounted) {
+      await _onPay(context, hosted: true);
     }
   }
 
@@ -1293,7 +1356,6 @@ class _Content extends StatelessWidget {
           myShare: vm.myShare,
           isBusy: isBusy,
           onPay: vm.canPay ? onPay : null,
-          onPayHosted: vm.canPay ? onPayHosted : null,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
           onSend: (order.isOpenTab && _iAmHost) ? onSend : null,

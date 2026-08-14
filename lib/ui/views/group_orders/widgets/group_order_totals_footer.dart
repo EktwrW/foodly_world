@@ -18,9 +18,6 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   final double myShare;
   final VoidCallback? onPay;
 
-  /// Checkout hosteado (MB WAY y demás). Null lo oculta.
-  final VoidCallback? onPayHosted;
-
   /// Cierre del pedido (lock) por el host. Solo se ofrece mientras la orden
   /// está OPEN; null para participantes que no son host.
   final VoidCallback? onLock;
@@ -63,7 +60,6 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     required this.order,
     required this.myShare,
     this.onPay,
-    this.onPayHosted,
     this.onLock,
     this.onSend,
     this.onRequestBill,
@@ -257,21 +253,23 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                 style: FoodlyTextStyles.caption,
               ),
             ],
-            // Checkout hosteado: MB WAY y demás métodos que el PaymentSheet
-            // nativo no puede ofrecer. Texto genérico a propósito — no sabemos
-            // de antemano si el comensal es portugués, y Stripe decide qué
-            // mostrarle; un botón que dijera "MB WAY" aparecería vacío para
-            // cualquier turista.
+            // El camino al Checkout hosteado (MB WAY y compañía) VIVÍA AQUÍ,
+            // como un "Otros métodos de pago" permanente debajo del CTA. Se
+            // quitó el 2026-08-14 por dos motivos que se refuerzan:
             //
-            // Secundario y en texto plano: el camino principal sigue siendo el
-            // PaymentSheet, que no saca al comensal de la app.
-            if (onPayHosted != null && _canPay) ...[
-              const SizedBox(height: 4),
-              TextButton(
-                onPressed: isBusy ? null : onPayHosted,
-                child: Text(S.current.groupOrderPayOtherMethods),
-              ),
-            ],
+            //  · "Otros" no tiene referente todavía. El comensal aún no ha
+            //    visto NINGÚN método —la hoja no se ha abierto— y ya le
+            //    ofrecemos alternativas a algo que no conoce, compitiendo con
+            //    el CTA principal antes de que lo pruebe.
+            //  · Y no es un "otros" cualquiera: el e2e demostró que MB WAY
+            //    SOLO existe en el checkout hosteado. La hoja nativa no lo
+            //    pinta, aunque el PaymentIntent lo ofrezca y la cuenta lo
+            //    tenga activo. En Portugal eso no es una alternativa, es EL
+            //    método — y estaba escondido tras una palabra vaga.
+            //
+            // Ahora se ofrece cuando significa algo: al cerrar la hoja sin
+            // pagar, que es exactamente cuando el comensal acaba de ver la
+            // lista y no encontró el suyo. Ver `_onPay` en group_order_page.
             // "Pagar todo lo pendiente · €X" (F2b §A.2) — disponible para todos.
             if (onPayAll != null && order.totalRemaining > 0) ...[
               const SizedBox(height: 8),
