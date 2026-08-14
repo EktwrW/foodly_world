@@ -8565,6 +8565,46 @@ class S {
     );
   }
 
+  /// `This order expired — the payment window ran out and nothing was charged. You can order again from the menu.`
+  String get groupOrderExpiredNotice {
+    return Intl.message(
+      'This order expired — the payment window ran out and nothing was charged. You can order again from the menu.',
+      name: 'groupOrderExpiredNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order was cancelled. Nothing was charged.`
+  String get groupOrderCancelledNotice {
+    return Intl.message(
+      'This order was cancelled. Nothing was charged.',
+      name: 'groupOrderCancelledNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order is already closed.`
+  String get groupOrderCompletedNotice {
+    return Intl.message(
+      'This order is already closed.',
+      name: 'groupOrderCompletedNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We are confirming your payment. It may take a few seconds.`
+  String get groupOrderConfirmingPayment {
+    return Intl.message(
+      'We are confirming your payment. It may take a few seconds.',
+      name: 'groupOrderConfirmingPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{paid} of {total} paid`
   String groupOrderPaidProgress(int paid, int total) {
     return Intl.message(

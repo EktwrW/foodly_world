@@ -51,6 +51,13 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// se deshabilitan para evitar dobles taps / pagos duplicados.
   final bool isBusy;
 
+  /// Salida de una orden TERMINAL (expirada, cancelada, cerrada).
+  ///
+  /// De una orden terminada no se sale sola, y hasta el 2026-08-14 tampoco a
+  /// mano: el comensal quedaba encerrado mirando un botón apagado que decía
+  /// "Sin saldo pendiente" sobre una cena que no había pagado.
+  final VoidCallback? onExit;
+
   const GroupOrderTotalsFooter({
     super.key,
     required this.order,
@@ -65,9 +72,22 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     this.onCancelCashPayment,
     this.onPayAll,
     this.isBusy = false,
+    this.onExit,
   });
 
   bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
+
+  /// Qué decirle al comensal cuando NO puede pagar.
+  ///
+  /// Ver [GroupOrderPayBlock]: cada motivo tiene su frase, y "sin saldo
+  /// pendiente" vuelve a ser cierta porque ya solo se usa cuando lo es.
+  String? _motivoDelBloqueo(GroupOrderPayBlock bloqueo) => switch (bloqueo) {
+        GroupOrderPayBlock.expired => S.current.groupOrderExpiredNotice,
+        GroupOrderPayBlock.cancelled => S.current.groupOrderCancelledNotice,
+        GroupOrderPayBlock.completed => S.current.groupOrderCompletedNotice,
+        GroupOrderPayBlock.confirming => S.current.groupOrderConfirmingPayment,
+        _ => null,
+      };
 
   /// Explica la tarifa de procesamiento: es de la plataforma de pagos, no de
   /// Foodly ni del restaurante. Dialog Foodly (shell compartido).
@@ -187,7 +207,33 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               margin: EdgeInsets.zero,
               onPressed: onLock,
             )
-          else ...[
+          else if (order.isTerminal) ...[
+            // La orden TERMINÓ (expirada, cancelada, cerrada). Antes esto caía
+            // en el bloque de pago de abajo y pintaba un botón apagado con
+            // "Sin saldo pendiente" — falso en dos de los tres casos — y sin
+            // ninguna salida: el comensal se quedaba encerrado en la pantalla
+            // (e2e 2026-08-14, una orden de prepago que expiró mientras estaba
+            // abierta).
+            //
+            // Acá se dice QUÉ pasó y se ofrece la puerta.
+            Text(
+              _motivoDelBloqueo(
+                    order.payBlockFor(myParticipantUuid: null, myShare: myShare),
+                  ) ??
+                  S.current.groupOrderCompletedNotice,
+              textAlign: TextAlign.center,
+              style: FoodlyTextStyles.caption,
+            ),
+            if (onExit != null) ...[
+              const SizedBox(height: 12),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderBackToMenu,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: onExit,
+              ),
+            ],
+          ] else ...[
             // Los CTAs muestran el TOTAL real a cobrar (parte + tarifa fija
             // del comensal) — nunca un monto menor al del PaymentSheet.
             CustomNeumorphicButton(
@@ -200,6 +246,17 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               margin: EdgeInsets.zero,
               onPressed: onPay,
             ),
+            // Un pago MÍO en vuelo: lo sella el webhook, no la app. Sin esta
+            // línea el comensal veía "Sin saldo pendiente" mientras su cobro
+            // se confirmaba, y no sabía si había pagado o no.
+            if (!_canPay && order.hasProcessingPayment) ...[
+              const SizedBox(height: 6),
+              Text(
+                S.current.groupOrderConfirmingPayment,
+                textAlign: TextAlign.center,
+                style: FoodlyTextStyles.caption,
+              ),
+            ],
             // Checkout hosteado: MB WAY y demás métodos que el PaymentSheet
             // nativo no puede ofrecer. Texto genérico a propósito — no sabemos
             // de antemano si el comensal es portugués, y Stripe decide qué

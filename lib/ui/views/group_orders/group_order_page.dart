@@ -1039,6 +1039,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     onPayAtRegister: () => _onPayAtRegister(context),
                     onCancelCashPayment: () => _onCancelCashPayment(context),
                     onOrderMore: () => _onOrderMore(order),
+                    onExit: () => _exitOrder(context, order),
                     onCover: (p) => _onCover(context, order, p),
                     onPayAll: () => _onPayAll(context, order),
                   ),
@@ -1174,6 +1175,13 @@ class _Content extends StatelessWidget {
   final VoidCallback onPayAtRegister;
   final VoidCallback onCancelCashPayment;
   final VoidCallback onOrderMore;
+
+  /// Salida de una orden TERMINAL. Va por `_exitOrder`, que navega con `go`
+  /// (reemplaza la ubicación) en vez de depender del pop: es el mismo camino
+  /// determinista que ya se usa cuando la orden deja de existir, y funciona
+  /// aunque no haya stack — que es justo el caso al llegar por deep link,
+  /// por el chip global o por una notificación.
+  final VoidCallback onExit;
   final void Function(GroupOrderParticipantDM p) onCover;
   final VoidCallback onPayAll;
 
@@ -1191,6 +1199,7 @@ class _Content extends StatelessWidget {
     required this.onOrderMore,
     required this.onCover,
     required this.onPayAll,
+    required this.onExit,
   });
 
   /// ¿El usuario actual es el host de la orden? (puede cerrar el pedido y
@@ -1296,6 +1305,8 @@ class _Content extends StatelessWidget {
           // "Pedir más" lo puede usar CUALQUIER comensal (agrega a su nombre).
           onOrderMore: order.businessMenuUuid == null ? null : onOrderMore,
           onPayAll: _showPayAll ? onPayAll : null,
+          // Solo en órdenes terminales: es la única pantalla sin salida propia.
+          onExit: order.isTerminal ? onExit : null,
         ),
       ],
     );

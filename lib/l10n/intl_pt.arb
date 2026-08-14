@@ -1298,6 +1298,10 @@
     }
   },
   "groupOrderNoBalanceDue": "Sem saldo pendente",
+  "groupOrderExpiredNotice": "Este pedido expirou: esgotou-se o prazo de pagamento e não foi cobrado nada. Podes pedir de novo a partir do menu.",
+  "groupOrderCancelledNotice": "Este pedido foi cancelado. Não foi cobrado nada.",
+  "groupOrderCompletedNotice": "Este pedido já está fechado.",
+  "groupOrderConfirmingPayment": "Estamos a confirmar o teu pagamento. Pode demorar alguns segundos.",
   "groupOrderPaidProgress": "{paid} de {total} pago",
   "@groupOrderPaidProgress": {
     "placeholders": {

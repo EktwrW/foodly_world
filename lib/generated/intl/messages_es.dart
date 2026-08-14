@@ -1162,6 +1162,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderBatchSentTitle": MessageLookupByLibrary.simpleMessage(
       "¡Pedido enviado a cocina!",
     ),
+    "groupOrderCancelledNotice": MessageLookupByLibrary.simpleMessage(
+      "Esta orden fue cancelada. No se cobró nada.",
+    ),
     "groupOrderCashRequestUndo": MessageLookupByLibrary.simpleMessage(
       "Prefiero pagar en la app",
     ),
@@ -1181,6 +1184,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Pedido enviado",
     ),
     "groupOrderChipToPay": m37,
+    "groupOrderCompletedNotice": MessageLookupByLibrary.simpleMessage(
+      "Esta orden ya está cerrada.",
+    ),
+    "groupOrderConfirmingPayment": MessageLookupByLibrary.simpleMessage(
+      "Estamos confirmando tu pago. Puede tardar unos segundos.",
+    ),
     "groupOrderCoverConfirm": m38,
     "groupOrderCoverShare": MessageLookupByLibrary.simpleMessage(
       "Cubrir su parte",
@@ -1197,6 +1206,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
       "Ordenar en grupo",
+    ),
+    "groupOrderExpiredNotice": MessageLookupByLibrary.simpleMessage(
+      "Esta orden expiró: se agotó el plazo de pago y no se cobró nada. Puedes pedir de nuevo desde el menú.",
     ),
     "groupOrderGraceNotice": m39,
     "groupOrderHostBadge": MessageLookupByLibrary.simpleMessage("Host"),

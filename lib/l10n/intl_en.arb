@@ -1298,6 +1298,10 @@
     }
   },
   "groupOrderNoBalanceDue": "Nothing left to pay",
+  "groupOrderExpiredNotice": "This order expired — the payment window ran out and nothing was charged. You can order again from the menu.",
+  "groupOrderCancelledNotice": "This order was cancelled. Nothing was charged.",
+  "groupOrderCompletedNotice": "This order is already closed.",
+  "groupOrderConfirmingPayment": "We are confirming your payment. It may take a few seconds.",
   "groupOrderPaidProgress": "{paid} of {total} paid",
   "@groupOrderPaidProgress": {
     "placeholders": {
