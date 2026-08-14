@@ -1266,7 +1266,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderNoItems": MessageLookupByLibrary.simpleMessage(
       "Aún no hay ítems",
     ),
-    "groupOrderNotNow": MessageLookupByLibrary.simpleMessage("Ahora no"),
     "groupOrderOngoingChannelDesc": MessageLookupByLibrary.simpleMessage(
       "Estado de tu orden grupal en curso",
     ),
@@ -1274,12 +1273,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Orden grupal activa",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Pedir más"),
-    "groupOrderOtherMethodsBody": MessageLookupByLibrary.simpleMessage(
-      "En el navegador puedes pagar con MB WAY y otros métodos que no aparecen aquí.",
-    ),
-    "groupOrderOtherMethodsTitle": MessageLookupByLibrary.simpleMessage(
-      "¿Buscabas otro método de pago?",
-    ),
     "groupOrderPaidBy": m41,
     "groupOrderPaidProgress": m42,
     "groupOrderParticipants": MessageLookupByLibrary.simpleMessage(
@@ -1304,12 +1297,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "El pago se habilita cuando te entreguen todo",
     ),
     "groupOrderPayFullOrder": m46,
-    "groupOrderPayInBrowser": MessageLookupByLibrary.simpleMessage(
-      "Pagar en el navegador",
-    ),
     "groupOrderPayMyShare": m47,
-    "groupOrderPayOtherMethods": MessageLookupByLibrary.simpleMessage(
-      "Otros métodos de pago",
+    "groupOrderPayWithBizum": MessageLookupByLibrary.simpleMessage(
+      "Pagar con Bizum",
+    ),
+    "groupOrderPayWithMbWay": MessageLookupByLibrary.simpleMessage(
+      "Pagar con MB WAY",
     ),
     "groupOrderPaymentCanceled": MessageLookupByLibrary.simpleMessage(
       "Pago cancelado",
@@ -1326,6 +1319,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderPaymentSuccessBody": m48,
     "groupOrderPaymentSuccessTitle": MessageLookupByLibrary.simpleMessage(
       "¡Orden confirmada!",
+    ),
+    "groupOrderPoweredByStripe": MessageLookupByLibrary.simpleMessage(
+      "Pagos procesados por Stripe Inc.",
     ),
     "groupOrderRequestBillConfirm": MessageLookupByLibrary.simpleMessage(
       "¿Pedir la cuenta? Ya no vas a poder agregar más ítems a este pedido.",

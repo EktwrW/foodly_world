@@ -6,6 +6,8 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Brand, Brands;
 
 /// Pie de la orden grupal: progreso de pago ("3 de 5 pagado" + barra), total,
 /// la parte del usuario actual y el CTA "Pagar mi parte". Estilo Foodly.
@@ -17,6 +19,14 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   final GroupOrderDM order;
   final double myShare;
   final VoidCallback? onPay;
+
+  /// Cobro por el Checkout hosteado de Stripe — la única vía capaz de ofrecer
+  /// MB WAY y Bizum. null en quien no puede accionarlo.
+  final VoidCallback? onPayHosted;
+
+  /// Método local de ESTE comensal (ver [HostedRail]). [HostedRail.none] deja
+  /// el pie con un único CTA, que es el caso de la mayoría del mundo.
+  final HostedRail hostedRail;
 
   /// Cierre del pedido (lock) por el host. Solo se ofrece mientras la orden
   /// está OPEN; null para participantes que no son host.
@@ -60,6 +70,8 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     required this.order,
     required this.myShare,
     this.onPay,
+    this.onPayHosted,
+    this.hostedRail = HostedRail.none,
     this.onLock,
     this.onSend,
     this.onRequestBill,
@@ -72,6 +84,13 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   });
 
   bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
+
+  /// El segundo botón (el método local del comensal) se rige por la MISMA
+  /// regla que el primero, con su propio callback. Va deliberadamente atado a
+  /// `_canPay` y no a una condición propia: si no se puede pagar, no se puede
+  /// pagar por ninguna vía, y dos botones con criterios distintos habrían
+  /// terminado divergiendo.
+  bool get _canPayLocalRail => _canPay && onPayHosted != null && hostedRail != HostedRail.none;
 
   /// Qué decirle al comensal cuando NO puede pagar.
   ///
@@ -107,8 +126,18 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     // existen para coordinar a VARIOS pagadores; con uno duplican el CTA.
     final solo = total <= 1;
 
+    // El pie llega hasta el borde FÍSICO de la pantalla y es su padding el
+    // que aparta el contenido de la barra de gestos, en vez de un SafeArea que
+    // dejaría una franja del color del Scaffold por debajo del blanco. Así la
+    // superficie se ve continua y los botones nunca quedan pisados (feedback
+    // 2026-08-14: "muy pegados al footer nativo, o por debajo").
+    //
+    // `viewPadding` y no `padding`: `padding` se pone a cero cuando el teclado
+    // tapa la zona, y eso encogería el pie justo mientras alguien teclea.
+    final respiroInferior = MediaQuery.viewPaddingOf(context).bottom;
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+      padding: EdgeInsets.fromLTRB(18, 16, 18, 18 + respiroInferior),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -253,23 +282,52 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                 style: FoodlyTextStyles.caption,
               ),
             ],
-            // El camino al Checkout hosteado (MB WAY y compañía) VIVÍA AQUÍ,
-            // como un "Otros métodos de pago" permanente debajo del CTA. Se
-            // quitó el 2026-08-14 por dos motivos que se refuerzan:
+            // El método local del comensal — MB WAY o Bizum, nunca los dos.
             //
-            //  · "Otros" no tiene referente todavía. El comensal aún no ha
-            //    visto NINGÚN método —la hoja no se ha abierto— y ya le
-            //    ofrecemos alternativas a algo que no conoce, compitiendo con
-            //    el CTA principal antes de que lo pruebe.
-            //  · Y no es un "otros" cualquiera: el e2e demostró que MB WAY
-            //    SOLO existe en el checkout hosteado. La hoja nativa no lo
-            //    pinta, aunque el PaymentIntent lo ofrezca y la cuenta lo
-            //    tenga activo. En Portugal eso no es una alternativa, es EL
-            //    método — y estaba escondido tras una palabra vaga.
+            // Aquí vivía "Otros métodos de pago", un TextButton permanente que
+            // llevaba a la misma página hosteada. Tenía dos problemas y el
+            // segundo es el grave:
             //
-            // Ahora se ofrece cuando significa algo: al cerrar la hoja sin
-            // pagar, que es exactamente cuando el comensal acaba de ver la
-            // lista y no encontró el suyo. Ver `_onPay` en group_order_page.
+            //  · "Otros" no tenía referente. El comensal todavía no había
+            //    visto NINGÚN método —la hoja ni se había abierto— y ya se le
+            //    ofrecían alternativas a algo que no conocía.
+            //  · Y no llevaba a "otros": llevaba a LO MISMO. La página
+            //    dinámica ofrecía tarjeta y carteras, igual que el
+            //    PaymentSheet. Dos botones para el mismo cobro.
+            //
+            // Ahora el backend restringe esa página al método del país de
+            // quien paga, así que el botón puede nombrarlo y ponerle su logo
+            // en vez de esconderlo tras una palabra vaga — y decir la verdad:
+            // es el único camino, porque la hoja nativa no lo pinta (e2e
+            // 2026-08-14, con capturas, aun teniendo la capability activa).
+            //
+            // Outlined y no un tercer estilo: es el secundario de Foodly, el
+            // mismo de "Entrar como invitado" en la portada.
+            if (_canPayLocalRail) ...[
+              const SizedBox(height: 8),
+              CustomNeumorphicButton(
+                text: switch (hostedRail) {
+                  HostedRail.mbWay => S.current.groupOrderPayWithMbWay,
+                  HostedRail.bizum => S.current.groupOrderPayWithBizum,
+                  HostedRail.none => '',
+                },
+                // El logo de MB WAY viene del paquete de marcas; el de Bizum
+                // todavía no está ahí, así que va un icono neutro. Los dos
+                // métodos se autorizan con el móvil, y eso es lo que dice.
+                leading: switch (hostedRail) {
+                  HostedRail.mbWay => Brand(Brands.mb_way, size: 20),
+                  _ => const Icon(
+                      Icons.smartphone_rounded,
+                      size: 18,
+                      color: FoodlyThemes.primaryFoodly,
+                    ),
+                },
+                type: CustomNeumorphicBtnType.outlined,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: onPayHosted,
+              ),
+            ],
             // "Pagar todo lo pendiente · €X" (F2b §A.2) — disponible para todos.
             if (onPayAll != null && order.totalRemaining > 0) ...[
               const SizedBox(height: 8),
@@ -280,6 +338,33 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                 disabled: isBusy,
                 margin: EdgeInsets.zero,
                 onPressed: onPayAll,
+              ),
+            ],
+            // Quién cobra, dicho una vez y en su sitio.
+            //
+            // No es adorno legal: en el extracto del banco estos cargos
+            // aparecen como Stripe y no como Foodly, y en MB WAY eso es
+            // FORZOSO —Stripe ignora el `statement_descriptor` de ese método y
+            // pone su propio nombre—. Un cargo que nadie reconoce es una
+            // disputa, y las de MB WAY se responden en 7 días. Vale más una
+            // línea gris ahora que un chargeback después.
+            //
+            // Va debajo de los botones y no arriba: informa, no decide.
+            if (_canPay || _canPayLocalRail || (onPayAll != null && order.totalRemaining > 0)) ...[
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Brand(Brands.stripe, size: 13),
+                  const SizedBox(width: 5),
+                  Flexible(
+                    child: Text(
+                      S.current.groupOrderPoweredByStripe,
+                      style: FoodlyTextStyles.caption.copyWith(fontSize: 10.5),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             ],
             // Transparencia del fee: nota discreta + detalle al tocar ⓘ.

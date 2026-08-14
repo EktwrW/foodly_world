@@ -8655,51 +8655,31 @@ class S {
     );
   }
 
-  /// `Other payment methods`
-  String get groupOrderPayOtherMethods {
+  /// `Pay with MB WAY`
+  String get groupOrderPayWithMbWay {
     return Intl.message(
-      'Other payment methods',
-      name: 'groupOrderPayOtherMethods',
+      'Pay with MB WAY',
+      name: 'groupOrderPayWithMbWay',
       desc: '',
       args: [],
     );
   }
 
-  /// `Looking for another way to pay?`
-  String get groupOrderOtherMethodsTitle {
+  /// `Pay with Bizum`
+  String get groupOrderPayWithBizum {
     return Intl.message(
-      'Looking for another way to pay?',
-      name: 'groupOrderOtherMethodsTitle',
+      'Pay with Bizum',
+      name: 'groupOrderPayWithBizum',
       desc: '',
       args: [],
     );
   }
 
-  /// `In your browser you can pay with MB WAY and other methods that do not show up here.`
-  String get groupOrderOtherMethodsBody {
+  /// `Payments processed by Stripe Inc.`
+  String get groupOrderPoweredByStripe {
     return Intl.message(
-      'In your browser you can pay with MB WAY and other methods that do not show up here.',
-      name: 'groupOrderOtherMethodsBody',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Pay in the browser`
-  String get groupOrderPayInBrowser {
-    return Intl.message(
-      'Pay in the browser',
-      name: 'groupOrderPayInBrowser',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Not now`
-  String get groupOrderNotNow {
-    return Intl.message(
-      'Not now',
-      name: 'groupOrderNotNow',
+      'Payments processed by Stripe Inc.',
+      name: 'groupOrderPoweredByStripe',
       desc: '',
       args: [],
     );
