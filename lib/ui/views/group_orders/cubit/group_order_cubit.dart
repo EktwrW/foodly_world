@@ -287,6 +287,23 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         _logger.e(e);
         _vm = _vm.copyWith(isPaying: false, errorMessage: e.toString());
         emit(GroupOrderState.error(_vm, e.toString()));
+
+        // Y se RE-LEE la orden (e2e 2026-08-14). Un pago puede fallar porque
+        // el estado cambió por debajo: la ventana de la cuenta dura 30 minutos
+        // y, vencida, el cron la reabre —`total_amount` y el `amount_due` de
+        // cada comensal a 0, la cuenta des-pedida—. Sin esto la pantalla se
+        // quedaba ofreciendo "Pagar la orden · €X" sobre algo que ya no
+        // existía así, y cada toque repetía el mismo 409 sin explicar nada.
+        //
+        // El mensaje al comensal ya salió: la página lo muestra desde el
+        // `listener` del BlocConsumer, que se dispara con el emit de arriba.
+        // Este refetch emite `loaded` después y solo corrige los botones que
+        // quedan debajo del aviso.
+        //
+        // Sin await a propósito: quien llamó necesita su `null` ya.
+        // ignore: unawaited_futures
+        _refetchSilently(uuid);
+
         return null;
       },
     );
