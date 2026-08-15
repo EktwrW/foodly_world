@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -167,9 +169,20 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         di<ActiveGroupOrderCubit>().end(); // resetea el carrito del menú
         if (uuid != null) cubit.load(uuid); // refetch — el webhook sella el estado
       case StripePaymentResult.canceled:
-        // Cerrar la hoja sin pagar no dispara NADA más (2026-08-14).
+        // Cerrar la hoja sin pagar SUELTA el intento (2026-08-15).
         //
-        // Hubo un intento intermedio de ofrecer aquí el Checkout hosteado, en
+        // Antes no: el participante quedaba en `processing` y la orden se
+        // congelaba —ni reabrirla para cambiar un plato, ni nada— hasta que el
+        // intento caducara solo. Cerrar una hoja no es pagar, y el sistema
+        // ahora lo dice.
+        //
+        // Sin await ni mensaje: el comensal ya vio "pago cancelado" y el
+        // backend se niega solo si el dinero está comprometido. El refetch que
+        // hace el cubit deja la pantalla al día.
+        unawaited(cubit.cancelPayment());
+        //
+        //
+        // (Hubo un intento intermedio de ofrecer aquí el Checkout hosteado, en
         // un bottom sheet: la idea era que "otro método de pago" solo
         // significa algo cuando el comensal acaba de ver la lista y no
         // encontró el suyo. Se descartó al restringir esa página a MB WAY: el
@@ -602,10 +615,63 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   /// Host: reabre la orden cerrada sin pagos (F2b §C.1).
   Future<void> _onUnlock(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
-    if (await _confirm(context, S.current.groupOrderUnlockConfirm) && context.mounted) {
-      await cubit.unlock();
-      await di<ActiveGroupOrderCubit>().refresh();
+    if (!await _confirm(context, S.current.groupOrderUnlockConfirm) || !context.mounted) {
+      return;
     }
+
+    // Primero se suelta MI intento en vuelo, si lo hay.
+    //
+    // Es la queja del e2e 2026-08-15: el host abría la hoja de pago, la cerraba
+    // y ya no podía reabrir su propia orden — "hay un pago en curso" — sin
+    // ninguna salida más que esperar. Ahora reabrir incluye soltarlo.
+    //
+    // Incondicional y sin preguntar de nuevo: el endpoint es idempotente (sin
+    // nada en vuelo responde OK) y quien pulsa "reabrir" ya dijo que quiere
+    // volver a editar la orden. Solo se niega si Stripe confirma que el dinero
+    // está comprometido, y entonces reabrir tampoco debería ocurrir.
+    //
+    // OJO: suelta el MÍO, no el de la mesa. Si otro comensal está pagando,
+    // `unlock` seguirá negándose — correctamente— y su mensaje lo explica.
+    await cubit.cancelPayment();
+    if (!context.mounted) return;
+
+    await cubit.unlock();
+    await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Salir de la pantalla SIN tocar la orden: es el botón "atrás" de la barra.
+  ///
+  /// EL CALLEJÓN QUE ARREGLA (e2e 2026-08-15). Antes era pop-si-se-puede y si
+  /// no `goBackToLastRoute()`. Ese fallback exige un historial de más de dos
+  /// entradas y descarta las rutas efímeras (`/group-order`, `/join`), así que
+  /// llegando por deep link, por el chip flotante o por un `go` desde el menú
+  /// se quedaba SIN destino y no hacía nada: el comensal atrapado en una orden
+  /// que además no podía reabrir ni pagar.
+  ///
+  /// Ahora, si no hay pila, hay un destino real: el menú del negocio, que la
+  /// propia orden conoce. Es el mismo camino determinista de `_exitOrder`.
+  ///
+  /// Lo que NO hace, y es la diferencia con `_exitOrder`: cerrar el carrito.
+  /// De "atrás" se vuelve, y la mesa sigue pidiendo.
+  void _leaveScreen(BuildContext context, GroupOrderDM? order) {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+
+      return;
+    }
+
+    final menuUuid = order?.businessMenuUuid;
+    if (menuUuid != null && menuUuid.isNotEmpty) {
+      context.goNamed(
+        AppRoutes.visitMenu.name,
+        pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      );
+
+      return;
+    }
+
+    di<AppRouter>().goBackToLastRoute();
   }
 
   /// e2e r6: la orden ya no existe / ya no soy parte — cerrar carrito y
@@ -1090,18 +1156,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       toolbarHeight: 60,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
-        // Back jerárquico (e2e r4): con stack, pop normal (vuelve al menú
-        // preservando su estado); sin stack (deep link, notificación,
-        // chip global), goBackToLastRoute reconstruye el menú del negocio
-        // vía LAST_VISITED_MENU_UUID — nunca queda atascado.
-        onPressed: () {
-          final navigator = Navigator.of(context);
-          if (navigator.canPop()) {
-            navigator.pop();
-          } else {
-            di<AppRouter>().goBackToLastRoute();
-          }
-        },
+        onPressed: () => _leaveScreen(context, order),
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(
