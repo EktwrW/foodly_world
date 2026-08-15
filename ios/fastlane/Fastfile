@@ -38,12 +38,31 @@ DART_DEFINES = [
   "OPENAI_API_KEY=#{ENV['OPENAI_API_KEY']}",
   "REPLICATE_API_KEY=#{ENV['REPLICATE_API_KEY']}",
   "ANALYTICS_TOKEN=#{ENV['ANALYTICS_TOKEN']}",
+  "STRIPE_PUBLISHABLE_KEY=#{ENV['STRIPE_PUBLISHABLE_KEY']}",
+  "APPLE_MERCHANT_ID=#{ENV['APPLE_MERCHANT_ID'] || 'merchant.solutions.foodly.app'}",
 ].freeze
+
+# Falla ANTES de compilar, no en el iPhone del tester.
+def verify_payment_env!
+  key = ENV['STRIPE_PUBLISHABLE_KEY'].to_s
+  UI.user_error!(
+    "Falta STRIPE_PUBLISHABLE_KEY. Sin ella la build sale sin pagos.\n" \
+    "  export STRIPE_PUBLISHABLE_KEY=pk_test_...   (o pk_live_ para producción)"
+  ) if key.empty?
+
+  UI.user_error!("STRIPE_PUBLISHABLE_KEY no parece una clave publicable (pk_test_/pk_live_)") \
+    unless key.start_with?('pk_test_', 'pk_live_')
+
+  UI.important("⚠️  Stripe en modo TEST — no sirve para la App Store") if key.start_with?('pk_test_')
+  UI.message("Stripe: …#{key[-4..]} · merchant: #{ENV['APPLE_MERCHANT_ID'] || 'merchant.solutions.foodly.app'}")
+end
 
 platform :ios do
 
   desc "Build Flutter IPA and upload to TestFlight"
   lane :beta do
+    verify_payment_env!
+
     # Step 1: Clean Flutter build
     Dir.chdir("../..") do
       sh("flutter", "clean")
@@ -115,6 +134,8 @@ platform :ios do
 
   desc "Build and submit to App Store for review"
   lane :release do
+    verify_payment_env!
+
     # Step 1: Clean Flutter build
     Dir.chdir("../..") do
       sh("flutter", "clean")
