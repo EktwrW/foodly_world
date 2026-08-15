@@ -20,6 +20,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/billing_country.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
@@ -154,12 +155,21 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       return;
     }
 
+    final comensal = di<AuthSessionService>().userSessionDM?.user;
+
     final result = await di<StripePaymentService>().presentPaymentSheet(
       clientSecret: secret,
       // País del RESTAURANTE de esta orden (no el del comensal ni el de su
       // sesión): es el merchant of record del destination charge. Null en
       // órdenes anteriores al campo → la hoja cae a solo tarjeta.
       merchantCountryCode: order?.businessCountry?.countryCode,
+      // País de FACTURACIÓN, que es otra cosa: el del dueño de la tarjeta.
+      // Sin esto el formulario venía con Estados Unidos (e2e 2026-08-15).
+      billingCountryCode: billingCountryFor(
+        payerCountry: comensal?.currentPhoneCountryCode,
+        businessCountry: order?.businessCountry?.countryCode,
+      ),
+      payerEmail: comensal?.email,
     );
     if (!context.mounted) return;
 
