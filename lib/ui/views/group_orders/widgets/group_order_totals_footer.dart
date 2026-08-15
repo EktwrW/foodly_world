@@ -311,16 +311,33 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                   HostedRail.bizum => S.current.groupOrderPayWithBizum,
                   HostedRail.none => '',
                 },
-                // El logo de MB WAY viene del paquete de marcas; el de Bizum
-                // todavía no está ahí, así que va un icono neutro. Los dos
-                // métodos se autorizan con el móvil, y eso es lo que dice.
+                // Cada método con SU logo (2026-08-15).
+                //
+                // El de MB WAY viene del paquete de marcas; el de Bizum no está
+                // ahí, así que es un asset propio. Hasta hoy Bizum llevaba un
+                // `Icons.smartphone_rounded` genérico, y eso le costaba lo
+                // único que justifica sacar al comensal de la app: que
+                // reconozca de un vistazo el método que usa todos los días. La
+                // marca ES el argumento del botón.
+                //
+                // `Image.asset` y no `Brand(...)`: `assets/images/` ya está
+                // declarado como directorio en el pubspec, así que no hace
+                // falta tocar nada más para que entre en el bundle.
                 leading: switch (hostedRail) {
-                  HostedRail.mbWay => Brand(Brands.mb_way, size: 36),
-                  _ => const Icon(
-                      Icons.smartphone_rounded,
-                      size: 18,
-                      color: FoodlyThemes.primaryFoodly,
+                  HostedRail.mbWay => Brand(Brands.mb_way, size: 20),
+                  HostedRail.bizum => Image.asset(
+                      'assets/images/bizum_icon.png',
+                      height: 20,
+                      // Si el asset faltara en el bundle, `Image.asset` pinta
+                      // un cuadro roto dentro del botón de pagar. El icono
+                      // viejo es un final más digno que ese.
+                      errorBuilder: (_, __, ___) => const Icon(
+                        Icons.smartphone_rounded,
+                        size: 18,
+                        color: FoodlyThemes.primaryFoodly,
+                      ),
                     ),
+                  HostedRail.none => const SizedBox.shrink(),
                 },
                 type: CustomNeumorphicBtnType.outlined,
                 disabled: false,
@@ -355,7 +372,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Brand(Brands.stripe, size: 26),
+                  Brand(Brands.stripe, size: 13),
                   const SizedBox(width: 5),
                   Flexible(
                     child: Text(

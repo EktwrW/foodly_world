@@ -98,6 +98,30 @@ void main() {
       expect(elBotonMbWay, findsNothing);
     });
 
+    /// CADA MÉTODO CON SU LOGO. El de Bizum es un asset propio (no está en el
+    /// paquete de marcas), y hasta el 2026-08-15 el botón llevaba un
+    /// `Icons.smartphone_rounded` genérico.
+    ///
+    /// Se afirma la RUTA del asset porque es lo único de este cambio que puede
+    /// romperse sin que nada se queje: si alguien renombra o mueve el png,
+    /// `Image.asset` cae en su `errorBuilder`, el botón se sigue pintando —con
+    /// el icono viejo— y no hay error, ni log, ni test rojo. Reconocer la marca
+    /// de un vistazo es lo único que justifica sacar al comensal de la app;
+    /// perderla en silencio es perder el argumento del botón.
+    testWidgets('el de Bizum lleva su logo, no un icono genérico', (tester) async {
+      await pintar(tester, order: orden(), rail: HostedRail.bizum);
+
+      final logo = tester.widget<Image>(
+        find.descendant(
+          of: find.byType(CustomNeumorphicButton),
+          matching: find.byType(Image),
+        ),
+      );
+
+      expect((logo.image as AssetImage).assetName, 'assets/images/bizum_icon.png');
+      expect(find.byIcon(Icons.smartphone_rounded), findsNothing);
+    });
+
     testWidgets('nunca los dos a la vez', (tester) async {
       // La página hosteada se restringe a UN método: dos botones prometerían
       // dos destinos que no existen.
