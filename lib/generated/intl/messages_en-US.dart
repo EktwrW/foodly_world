@@ -1114,6 +1114,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderBatchSentTitle": MessageLookupByLibrary.simpleMessage(
       "Order sent to the kitchen!",
     ),
+    "groupOrderCancelledNotice": MessageLookupByLibrary.simpleMessage(
+      "This order was cancelled. Nothing was charged.",
+    ),
     "groupOrderCashRequestUndo": MessageLookupByLibrary.simpleMessage(
       "I\'d rather pay in the app",
     ),
@@ -1131,6 +1134,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderChipSent": MessageLookupByLibrary.simpleMessage("Order sent"),
     "groupOrderChipToPay": m37,
+    "groupOrderCompletedNotice": MessageLookupByLibrary.simpleMessage(
+      "This order is already closed.",
+    ),
+    "groupOrderConfirmingPayment": MessageLookupByLibrary.simpleMessage(
+      "We are confirming your payment. It may take a few seconds.",
+    ),
     "groupOrderCoverConfirm": m38,
     "groupOrderCoverShare": MessageLookupByLibrary.simpleMessage(
       "Cover their share",
@@ -1145,6 +1154,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
       "Order as a group",
+    ),
+    "groupOrderExpiredNotice": MessageLookupByLibrary.simpleMessage(
+      "This order expired — the payment window ran out and nothing was charged. You can order again from the menu.",
     ),
     "groupOrderGraceNotice": m39,
     "groupOrderHostBadge": MessageLookupByLibrary.simpleMessage("Host"),
@@ -1230,8 +1242,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderPayFullOrder": m46,
     "groupOrderPayMyShare": m47,
-    "groupOrderPayOtherMethods": MessageLookupByLibrary.simpleMessage(
-      "Other payment methods",
+    "groupOrderPayWithBizum": MessageLookupByLibrary.simpleMessage(
+      "Pay with Bizum",
+    ),
+    "groupOrderPayWithMbWay": MessageLookupByLibrary.simpleMessage(
+      "Pay with MB WAY",
     ),
     "groupOrderPaymentCanceled": MessageLookupByLibrary.simpleMessage(
       "Payment canceled",
@@ -1248,6 +1263,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderPaymentSuccessBody": m48,
     "groupOrderPaymentSuccessTitle": MessageLookupByLibrary.simpleMessage(
       "Order confirmed!",
+    ),
+    "groupOrderPoweredByStripe": MessageLookupByLibrary.simpleMessage(
+      "Payments processed by Stripe Inc.",
     ),
     "groupOrderRequestBillConfirm": MessageLookupByLibrary.simpleMessage(
       "Ask for the bill? You won\'t be able to add more items to this order.",

@@ -47,9 +47,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         // Realtime tras la primera carga exitosa: cualquier cambio remoto
         // (evento socket, tick de polling fallback o resume de la app)
         // dispara un refetch SILENCIOSO — sin spinner, la UI solo se refresca.
-        _realtime
-            ?.watch(uuid, onTouched: () => _refetchSilently(uuid))
-            .then((sub) => _sub = sub);
+        _realtime?.watch(uuid, onTouched: () => _refetchSilently(uuid)).then((sub) => _sub = sub);
       },
       failure: _onError,
     );
@@ -144,12 +142,56 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   }
 
   /// Host: reabre una orden cerrada SIN pagos (F2b §C.1).
-  Future<void> unlock() async {
+  /// Devuelve si la orden quedó reabierta. El bool importa: reabrir puede
+  /// fallar porque OTRO comensal tiene un pago en curso, y ahí la pantalla no
+  /// debe seguir como si nada.
+  Future<bool> unlock() async {
     final uuid = _vm.order?.uuid;
-    if (uuid == null) return;
+    if (uuid == null) return false;
     emit(GroupOrderState.loading(_vm));
     final result = await _repo.unlockGroupOrder(uuid);
-    result.when(success: _applyResponse, failure: _onError);
+
+    return result.when(
+      success: (r) {
+        _applyResponse(r);
+
+        return true;
+      },
+      failure: (e) {
+        _onError(e);
+
+        return false;
+      },
+    );
+  }
+
+  /// Suelta el intento de pago en vuelo de ESTE comensal.
+  ///
+  /// POR QUÉ (e2e 2026-08-15). Cerrar la hoja de pago sin pagar dejaba al
+  /// participante en `processing`, y con eso la orden quedaba congelada: no se
+  /// podía reabrir para agregar o quitar un plato, y el único remedio era
+  /// esperar a que el intento caducara. Cerrar una hoja no es pagar.
+  ///
+  /// El backend NO cancela a ciegas: le pregunta a Stripe y se niega si el
+  /// dinero ya está comprometido —incluido el MB WAY o Bizum que el comensal
+  /// está aprobando en la app de su banco justo ahora—. Por eso esto puede
+  /// devolver false sin que sea un error de programación.
+  ///
+  /// Silencioso a propósito: se llama al cerrar la hoja, y el caso normal —no
+  /// había nada que soltar— no merece ni un mensaje. Quien necesite avisar al
+  /// comensal (el flujo de reabrir) mira el bool.
+  Future<bool> cancelPayment() async {
+    final uuid = _vm.order?.uuid;
+    if (uuid == null) return false;
+
+    final result = await _repo.cancelPayment(uuid);
+
+    // Se re-lee SIEMPRE, salga bien o mal: si se soltó, para que el pie deje de
+    // decir "confirmando"; si no se soltó, porque el motivo suele ser que el
+    // pago avanzó y la pantalla está desactualizada.
+    await _refetchSilently(uuid);
+
+    return result.when(success: (_) => true, failure: (_) => false);
   }
 
   /// e2e r4: host elimina DEFINITIVAMENTE una orden vacía. true = eliminada

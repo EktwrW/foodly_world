@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
+import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/stripe_payment_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
@@ -21,6 +24,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -165,6 +169,26 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         di<ActiveGroupOrderCubit>().end(); // resetea el carrito del menú
         if (uuid != null) cubit.load(uuid); // refetch — el webhook sella el estado
       case StripePaymentResult.canceled:
+        // Cerrar la hoja sin pagar SUELTA el intento (2026-08-15).
+        //
+        // Antes no: el participante quedaba en `processing` y la orden se
+        // congelaba —ni reabrirla para cambiar un plato, ni nada— hasta que el
+        // intento caducara solo. Cerrar una hoja no es pagar, y el sistema
+        // ahora lo dice.
+        //
+        // Sin await ni mensaje: el comensal ya vio "pago cancelado" y el
+        // backend se niega solo si el dinero está comprometido. El refetch que
+        // hace el cubit deja la pantalla al día.
+        unawaited(cubit.cancelPayment());
+        //
+        //
+        // (Hubo un intento intermedio de ofrecer aquí el Checkout hosteado, en
+        // un bottom sheet: la idea era que "otro método de pago" solo
+        // significa algo cuando el comensal acaba de ver la lista y no
+        // encontró el suyo. Se descartó al restringir esa página a MB WAY: el
+        // método ya tiene su propio botón, visible desde el principio y con su
+        // nombre puesto. Perseguir a alguien que acaba de cerrar una hoja con
+        // una segunda hoja es exactamente la fricción que estábamos quitando.
         FoodlySnackbars.infoGeneric(context, S.current.groupOrderPaymentCanceled);
       case StripePaymentResult.failed:
         FoodlySnackbars.errorGeneric(context, S.current.groupOrderPaymentFailed);
@@ -218,8 +242,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (participants > 1) {
       mode = await _askSplitMode(context);
       if (mode == null || !context.mounted) return; // canceló
-    } else if (!await _confirm(context, S.current.groupOrderRequestBillConfirm) ||
-        !context.mounted) {
+    } else if (!await _confirm(context, S.current.groupOrderRequestBillConfirm) || !context.mounted) {
       return;
     }
 
@@ -233,8 +256,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   Future<void> _onPayAtRegister(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
 
-    if (!await _confirm(context, S.current.groupOrderPayAtRegisterConfirm) ||
-        !context.mounted) {
+    if (!await _confirm(context, S.current.groupOrderPayAtRegisterConfirm) || !context.mounted) {
       return;
     }
 
@@ -269,54 +291,62 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 62,
-              height: 62,
-              decoration: BoxDecoration(
-                color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
+      // SafeArea: un bottom sheet NO aparta solo su contenido de la barra de
+      // gestos de Android — el CTA quedaba pegado a ella, y en gestos a
+      // pantalla completa directamente por debajo (feedback 2026-08-14). Con
+      // `minimum` el respiro existe también donde el sistema no reserva nada
+      // (iPhone con botón, Android con barra clásica), para que la altura del
+      // sheet no cambie de un teléfono a otro.
+      builder: (ctx) => SafeArea(
+        top: false,
+        minimum: const EdgeInsets.only(bottom: 8),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 62,
+                height: 62,
+                decoration: BoxDecoration(
+                  color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.room_service_rounded, color: FoodlyThemes.primaryFoodly, size: 30),
               ),
-              child: const Icon(Icons.room_service_rounded,
-                  color: FoodlyThemes.primaryFoodly, size: 30),
-            ),
-            const SizedBox(height: 14),
-            Text(S.current.groupOrderBatchSentTitle,
-                style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
-            const SizedBox(height: 6),
-            Text(
-              S.current.groupOrderBatchSentBody(
-                order.businessName.isNotEmpty ? order.businessName : 'Foodly',
+              const SizedBox(height: 14),
+              Text(S.current.groupOrderBatchSentTitle,
+                  style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+              const SizedBox(height: 6),
+              Text(
+                S.current.groupOrderBatchSentBody(
+                  order.businessName.isNotEmpty ? order.businessName : 'Foodly',
+                ),
+                style: FoodlyTextStyles.caption,
+                textAlign: TextAlign.center,
               ),
-              style: FoodlyTextStyles.caption,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 18),
-            CustomNeumorphicButton(
-              text: S.current.groupOrderOrderMore,
-              disabled: false,
-              margin: EdgeInsets.zero,
-              onPressed: () {
-                Navigator.pop(ctx);
-                final menuUuid = order.businessMenuUuid;
-                if (menuUuid == null) return;
-                di<AppRouter>().appRouter.goNamed(
-                  AppRoutes.visitMenu.name,
-                  pathParameters: {AppRoutes.routeIdParam: menuUuid},
-                );
-              },
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(S.current.groupOrderSeeStatus,
-                  style: FoodlyTextStyles.caption
-                      .copyWith(color: FoodlyThemes.secondaryFoodly)),
-            ),
-          ],
+              const SizedBox(height: 18),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderOrderMore,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  final menuUuid = order.businessMenuUuid;
+                  if (menuUuid == null) return;
+                  di<AppRouter>().appRouter.goNamed(
+                    AppRoutes.visitMenu.name,
+                    pathParameters: {AppRoutes.routeIdParam: menuUuid},
+                  );
+                },
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(S.current.groupOrderSeeStatus,
+                    style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodly)),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -342,14 +372,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: isSelected
-                ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08)
-                : Colors.white,
+            color: isSelected ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08) : Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected
-                  ? FoodlyThemes.primaryFoodly
-                  : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+              color: isSelected ? FoodlyThemes.primaryFoodly : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
               width: isSelected ? 2 : 1,
             ),
           ),
@@ -370,9 +396,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
               const SizedBox(width: 8),
               Icon(
                 isSelected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
-                color: isSelected
-                    ? FoodlyThemes.primaryFoodly
-                    : FoodlyThemes.secondaryFoodly,
+                color: isSelected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
               ),
             ],
           ),
@@ -446,8 +470,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             Icon(icon, color: FoodlyThemes.primaryFoodly, size: 22),
             const SizedBox(width: 12),
             Expanded(child: Text(label, style: FoodlyTextStyles.labelBold)),
-            const Icon(Icons.chevron_right_rounded,
-                size: 20, color: FoodlyThemes.secondaryFoodly),
+            const Icon(Icons.chevron_right_rounded, size: 20, color: FoodlyThemes.secondaryFoodly),
           ],
         ),
       ),
@@ -499,11 +522,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                 children: [
                   _tipOption(ctx, Icons.money_off_rounded, S.current.groupOrderTipNone, 0.0),
                   const SizedBox(height: 8),
-                  _tipOption(ctx, Icons.favorite_outline_rounded,
-                      '5% · ${formatMoney(pct(0.05), currency)}', pct(0.05)),
+                  _tipOption(
+                      ctx, Icons.favorite_outline_rounded, '5% · ${formatMoney(pct(0.05), currency)}', pct(0.05)),
                   const SizedBox(height: 8),
-                  _tipOption(ctx, Icons.favorite_rounded,
-                      '10% · ${formatMoney(pct(0.10), currency)}', pct(0.10)),
+                  _tipOption(ctx, Icons.favorite_rounded, '10% · ${formatMoney(pct(0.10), currency)}', pct(0.10)),
                   const SizedBox(height: 8),
                   _tipOption(ctx, Icons.edit_rounded, S.current.groupOrderTipCustom, 'custom'),
                 ],
@@ -561,8 +583,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
 
   /// Confirmación estilo Foodly (shell compartido) — refinamiento pre-F4a:
   /// reemplaza al AlertDialog crudo en unlock/cover/pay-all/delete/leave/lock.
-  Future<bool> _confirm(BuildContext context, String message) =>
-      showFoodlyConfirm(context, message: message);
+  Future<bool> _confirm(BuildContext context, String message) => showFoodlyConfirm(context, message: message);
 
   /// "Cubrir su parte" de UN participante (F2b §A.2).
   Future<void> _onCover(
@@ -594,10 +615,63 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   /// Host: reabre la orden cerrada sin pagos (F2b §C.1).
   Future<void> _onUnlock(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
-    if (await _confirm(context, S.current.groupOrderUnlockConfirm) && context.mounted) {
-      await cubit.unlock();
-      await di<ActiveGroupOrderCubit>().refresh();
+    if (!await _confirm(context, S.current.groupOrderUnlockConfirm) || !context.mounted) {
+      return;
     }
+
+    // Primero se suelta MI intento en vuelo, si lo hay.
+    //
+    // Es la queja del e2e 2026-08-15: el host abría la hoja de pago, la cerraba
+    // y ya no podía reabrir su propia orden — "hay un pago en curso" — sin
+    // ninguna salida más que esperar. Ahora reabrir incluye soltarlo.
+    //
+    // Incondicional y sin preguntar de nuevo: el endpoint es idempotente (sin
+    // nada en vuelo responde OK) y quien pulsa "reabrir" ya dijo que quiere
+    // volver a editar la orden. Solo se niega si Stripe confirma que el dinero
+    // está comprometido, y entonces reabrir tampoco debería ocurrir.
+    //
+    // OJO: suelta el MÍO, no el de la mesa. Si otro comensal está pagando,
+    // `unlock` seguirá negándose — correctamente— y su mensaje lo explica.
+    await cubit.cancelPayment();
+    if (!context.mounted) return;
+
+    await cubit.unlock();
+    await di<ActiveGroupOrderCubit>().refresh();
+  }
+
+  /// Salir de la pantalla SIN tocar la orden: es el botón "atrás" de la barra.
+  ///
+  /// EL CALLEJÓN QUE ARREGLA (e2e 2026-08-15). Antes era pop-si-se-puede y si
+  /// no `goBackToLastRoute()`. Ese fallback exige un historial de más de dos
+  /// entradas y descarta las rutas efímeras (`/group-order`, `/join`), así que
+  /// llegando por deep link, por el chip flotante o por un `go` desde el menú
+  /// se quedaba SIN destino y no hacía nada: el comensal atrapado en una orden
+  /// que además no podía reabrir ni pagar.
+  ///
+  /// Ahora, si no hay pila, hay un destino real: el menú del negocio, que la
+  /// propia orden conoce. Es el mismo camino determinista de `_exitOrder`.
+  ///
+  /// Lo que NO hace, y es la diferencia con `_exitOrder`: cerrar el carrito.
+  /// De "atrás" se vuelve, y la mesa sigue pidiendo.
+  void _leaveScreen(BuildContext context, GroupOrderDM? order) {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+
+      return;
+    }
+
+    final menuUuid = order?.businessMenuUuid;
+    if (menuUuid != null && menuUuid.isNotEmpty) {
+      context.goNamed(
+        AppRoutes.visitMenu.name,
+        pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      );
+
+      return;
+    }
+
+    di<AppRouter>().goBackToLastRoute();
   }
 
   /// e2e r6: la orden ya no existe / ya no soy parte — cerrar carrito y
@@ -632,81 +706,89 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.0, end: 1.0),
-              duration: const Duration(milliseconds: 450),
-              curve: Curves.easeOutBack,
-              builder: (_, scale, child) => Transform.scale(scale: scale, child: child),
-              child: Container(
-                width: 72,
-                height: 72,
-                decoration: BoxDecoration(
-                  color: FoodlyThemes.tertiaryFoodly,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.4),
-                      blurRadius: 16,
-                      spreadRadius: 2,
-                    ),
-                  ],
+      // SafeArea: un bottom sheet NO aparta solo su contenido de la barra de
+      // gestos de Android — el CTA quedaba pegado a ella, y en gestos a
+      // pantalla completa directamente por debajo (feedback 2026-08-14). Con
+      // `minimum` el respiro existe también donde el sistema no reserva nada
+      // (iPhone con botón, Android con barra clásica), para que la altura del
+      // sheet no cambie de un teléfono a otro.
+      builder: (ctx) => SafeArea(
+        top: false,
+        minimum: const EdgeInsets.only(bottom: 8),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.0, end: 1.0),
+                duration: const Duration(milliseconds: 450),
+                curve: Curves.easeOutBack,
+                builder: (_, scale, child) => Transform.scale(scale: scale, child: child),
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: FoodlyThemes.tertiaryFoodly,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.4),
+                        blurRadius: 16,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.check_rounded, color: Colors.white, size: 44),
                 ),
-                child: const Icon(Icons.check_rounded, color: Colors.white, size: 44),
               ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              // Prepago por ronda: pagar ES confirmar la comanda. Cuenta
-              // abierta: la comanda se confirmó hace rato, lo que acaba de
-              // pasar es que la mesa cerró su cuenta y se va.
-              order.isOpenTab
-                  ? S.current.groupOrderTabClosedTitle
-                  : S.current.groupOrderPaymentSuccessTitle,
-              style: FoodlyTextStyles.sectionsTitle,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              order.isOpenTab
-                  ? S.current.groupOrderTabClosedBody(
-                      formatMoney(order.totalAmount, order.currency),
-                    )
-                  : S.current.groupOrderPaymentSuccessBody(
-                      formatMoney(order.totalAmount, order.currency),
-                    ),
-              style: FoodlyTextStyles.caption,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            CustomNeumorphicButton(
-              text: S.current.groupOrderBackToMenu,
-              disabled: false,
-              margin: EdgeInsets.zero,
-              onPressed: () {
-                Navigator.pop(ctx);
-                _exitOrder(context, order);
-              },
-            ),
-            // F4a (caso bar): otra ronda en la misma mesa — orden nueva que
-            // hereda QR y mesa; el que la abre queda como host. En cuenta
-            // abierta no existen las "rondas": lo que se abre es otra cuenta.
-            TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                _startNextRound(context, order);
-              },
-              child: Text(
-                order.isOpenTab ? S.current.groupOrderNewTab : S.current.groupOrderNextRound,
-                style: FoodlyTextStyles.captionPurpleBold,
+              const SizedBox(height: 18),
+              Text(
+                // Prepago por ronda: pagar ES confirmar la comanda. Cuenta
+                // abierta: la comanda se confirmó hace rato, lo que acaba de
+                // pasar es que la mesa cerró su cuenta y se va.
+                order.isOpenTab ? S.current.groupOrderTabClosedTitle : S.current.groupOrderPaymentSuccessTitle,
+                style: FoodlyTextStyles.sectionsTitle,
+                textAlign: TextAlign.center,
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                order.isOpenTab
+                    ? S.current.groupOrderTabClosedBody(
+                        formatMoney(order.totalAmount, order.currency),
+                      )
+                    : S.current.groupOrderPaymentSuccessBody(
+                        formatMoney(order.totalAmount, order.currency),
+                      ),
+                style: FoodlyTextStyles.caption,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderBackToMenu,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  _exitOrder(context, order);
+                },
+              ),
+              // F4a (caso bar): otra ronda en la misma mesa — orden nueva que
+              // hereda QR y mesa; el que la abre queda como host. En cuenta
+              // abierta no existen las "rondas": lo que se abre es otra cuenta.
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  _startNextRound(context, order);
+                },
+                child: Text(
+                  order.isOpenTab ? S.current.groupOrderNewTab : S.current.groupOrderNextRound,
+                  style: FoodlyTextStyles.captionPurpleBold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -720,8 +802,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (!context.mounted) return;
 
     if (!ok) {
-      FoodlySnackbars.errorGeneric(
-          context, active.lastJoinError ?? S.current.groupOrderJoinFailed);
+      FoodlySnackbars.errorGeneric(context, active.lastJoinError ?? S.current.groupOrderJoinFailed);
       return;
     }
 
@@ -783,8 +864,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(S.current.groupOrderInviteTitle,
-                  style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+              Text(S.current.groupOrderInviteTitle, style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
               const SizedBox(height: 16),
               // El QR es el protagonista (filosofía Foodly: escanear, no
               // tipear); el código corto queda como fallback visible.
@@ -830,8 +910,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                 ),
               ),
               const SizedBox(height: 6),
-              Text(S.current.groupOrderInviteHint,
-                  style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
+              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
               const SizedBox(height: 16),
               CustomNeumorphicButton(
                 text: S.current.groupOrderInviteShareCta,
@@ -878,9 +957,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             color: isSelected ? FoodlyThemes.primaryFoodly.withValues(alpha: 0.08) : Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected
-                  ? FoodlyThemes.primaryFoodly
-                  : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+              color: isSelected ? FoodlyThemes.primaryFoodly : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
               width: isSelected ? 2 : 1,
             ),
           ),
@@ -1017,6 +1094,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
           appBar: _buildAppBar(context, vm),
           body: SafeArea(
             top: false,
+            // El pie se encarga él mismo de la barra de gestos (ver
+            // GroupOrderTotalsFooter). Con `bottom: true` el blanco del pie se
+            // cortaba antes del borde y quedaba una franja del Scaffold debajo.
+            bottom: false,
             // Sin orden hay DOS situaciones distintas y antes se pintaban
             // igual: "todavía cargando" y "falló y no hay nada que mostrar".
             // La segunda dejaba el logo girando para siempre, sin forma de
@@ -1033,12 +1114,22 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     isBusy: isBusy,
                     onPay: () => _onPay(context),
                     onPayHosted: () => _onPay(context, hosted: true),
+                    // El método local se decide por el país de QUIEN PAGA, no
+                    // por el del restaurante: Stripe muestra MB WAY y Bizum
+                    // por "customer location". En una mesa de Lisboa el
+                    // portugués y el turista español necesitan botones
+                    // distintos. El backend aplica la misma regla con el país
+                    // que este usuario tiene declarado en su ficha.
+                    hostedRail: hostedRailFor(
+                      di<AuthSessionService>().userSessionDM?.user.currentPhoneCountryCode,
+                    ),
                     onLock: () => _onLock(context),
                     onSend: () => _onSend(context, order),
                     onRequestBill: () => _onRequestBill(context),
                     onPayAtRegister: () => _onPayAtRegister(context),
                     onCancelCashPayment: () => _onCancelCashPayment(context),
                     onOrderMore: () => _onOrderMore(order),
+                    onExit: () => _exitOrder(context, order),
                     onCover: (p) => _onCover(context, order, p),
                     onPayAll: () => _onPayAll(context, order),
                   ),
@@ -1065,18 +1156,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       toolbarHeight: 60,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
-        // Back jerárquico (e2e r4): con stack, pop normal (vuelve al menú
-        // preservando su estado); sin stack (deep link, notificación,
-        // chip global), goBackToLastRoute reconstruye el menú del negocio
-        // vía LAST_VISITED_MENU_UUID — nunca queda atascado.
-        onPressed: () {
-          final navigator = Navigator.of(context);
-          if (navigator.canPop()) {
-            navigator.pop();
-          } else {
-            di<AppRouter>().goBackToLastRoute();
-          }
-        },
+        onPressed: () => _leaveScreen(context, order),
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -1116,10 +1196,8 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
               }
             },
             itemBuilder: (_) => [
-              if (canTransfer)
-                PopupMenuItem(value: 'transfer', child: Text(S.current.groupOrderTransferHost)),
-              if (canUnlock)
-                PopupMenuItem(value: 'unlock', child: Text(S.current.groupOrderUnlockCta)),
+              if (canTransfer) PopupMenuItem(value: 'transfer', child: Text(S.current.groupOrderTransferHost)),
+              if (canUnlock) PopupMenuItem(value: 'unlock', child: Text(S.current.groupOrderUnlockCta)),
               // Acciones de salida en rojo, al final del menú (destructivas).
               if (canDelete)
                 PopupMenuItem(
@@ -1129,8 +1207,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     children: [
                       const Icon(Icons.delete_outline_rounded, size: 18, color: Colors.redAccent),
                       const SizedBox(width: 8),
-                      Text(S.current.groupOrderDeleteCta,
-                          style: const TextStyle(color: Colors.redAccent)),
+                      Text(S.current.groupOrderDeleteCta, style: const TextStyle(color: Colors.redAccent)),
                     ],
                   ),
                 ),
@@ -1142,8 +1219,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     children: [
                       const Icon(Icons.logout_rounded, size: 18, color: Colors.redAccent),
                       const SizedBox(width: 8),
-                      Text(S.current.groupOrderLeaveCta,
-                          style: const TextStyle(color: Colors.redAccent)),
+                      Text(S.current.groupOrderLeaveCta, style: const TextStyle(color: Colors.redAccent)),
                     ],
                   ),
                 ),
@@ -1168,12 +1244,23 @@ class _Content extends StatelessWidget {
   final bool isBusy;
   final VoidCallback onPay;
   final VoidCallback onPayHosted;
+
+  /// Método local de ESTE comensal. Se resuelve en la página —donde vive la
+  /// sesión— y baja hasta el pie, que solo lo pinta.
+  final HostedRail hostedRail;
   final VoidCallback onLock;
   final VoidCallback onSend;
   final VoidCallback onRequestBill;
   final VoidCallback onPayAtRegister;
   final VoidCallback onCancelCashPayment;
   final VoidCallback onOrderMore;
+
+  /// Salida de una orden TERMINAL. Va por `_exitOrder`, que navega con `go`
+  /// (reemplaza la ubicación) en vez de depender del pop: es el mismo camino
+  /// determinista que ya se usa cuando la orden deja de existir, y funciona
+  /// aunque no haya stack — que es justo el caso al llegar por deep link,
+  /// por el chip global o por una notificación.
+  final VoidCallback onExit;
   final void Function(GroupOrderParticipantDM p) onCover;
   final VoidCallback onPayAll;
 
@@ -1183,6 +1270,7 @@ class _Content extends StatelessWidget {
     required this.isBusy,
     required this.onPay,
     required this.onPayHosted,
+    required this.hostedRail,
     required this.onLock,
     required this.onSend,
     required this.onRequestBill,
@@ -1191,6 +1279,7 @@ class _Content extends StatelessWidget {
     required this.onOrderMore,
     required this.onCover,
     required this.onPayAll,
+    required this.onExit,
   });
 
   /// ¿El usuario actual es el host de la orden? (puede cerrar el pedido y
@@ -1245,36 +1334,35 @@ class _Content extends StatelessWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
               children: [
-              // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
-              // de cocina (los eventos fulfillment_changed refrescan solos).
-              if (order.isConfirmed) ...[
-                _ClientFulfillmentBanner(order: order),
-                const SizedBox(height: 12),
-              ],
-              _SectionTitle(S.current.groupOrderParticipants),
-              const SizedBox(height: 8),
-              // Ítems agrupados por participante (Expansible). Mi grupo abre
-              // expandido; el estado de expansión sobrevive a refreshes del
-              // cubit gracias a la key estable por uuid.
-              ...order.participants.map(
-                (p) => ParticipantExpansibleTile(
-                  key: ValueKey(p.uuid),
-                  order: order,
-                  participant: p,
-                  initiallyExpanded: p.uuid == vm.myParticipantUuid,
-                  onRemoveItem: _canRemoveItemsOf(p)
-                      ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid)
-                      : null,
-                  // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
-                  // con VARIOS participantes — compartir "con la mesa" no
-                  // significa nada si estás solo (feedback e2e 2026-07-31).
-                  onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
-                      ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
-                      : null,
-                  onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
-                  paidByName: _paidByNameFor(p),
+                // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
+                // de cocina (los eventos fulfillment_changed refrescan solos).
+                if (order.isConfirmed) ...[
+                  _ClientFulfillmentBanner(order: order),
+                  const SizedBox(height: 12),
+                ],
+                _SectionTitle(S.current.groupOrderParticipants),
+                const SizedBox(height: 8),
+                // Ítems agrupados por participante (Expansible). Mi grupo abre
+                // expandido; el estado de expansión sobrevive a refreshes del
+                // cubit gracias a la key estable por uuid.
+                ...order.participants.map(
+                  (p) => ParticipantExpansibleTile(
+                    key: ValueKey(p.uuid),
+                    order: order,
+                    participant: p,
+                    initiallyExpanded: p.uuid == vm.myParticipantUuid,
+                    onRemoveItem:
+                        _canRemoveItemsOf(p) ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid) : null,
+                    // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
+                    // con VARIOS participantes — compartir "con la mesa" no
+                    // significa nada si estás solo (feedback e2e 2026-07-31).
+                    onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
+                        ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
+                        : null,
+                    onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
+                    paidByName: _paidByNameFor(p),
+                  ),
                 ),
-              ),
               ],
             ),
           ),
@@ -1284,7 +1372,10 @@ class _Content extends StatelessWidget {
           myShare: vm.myShare,
           isBusy: isBusy,
           onPay: vm.canPay ? onPay : null,
+          // MB WAY: mismo permiso que el CTA principal. El pie decide además
+          // si el restaurante lo ofrece (`order.offersMbWay`).
           onPayHosted: vm.canPay ? onPayHosted : null,
+          hostedRail: hostedRail,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
           onSend: (order.isOpenTab && _iAmHost) ? onSend : null,
@@ -1296,6 +1387,8 @@ class _Content extends StatelessWidget {
           // "Pedir más" lo puede usar CUALQUIER comensal (agrega a su nombre).
           onOrderMore: order.businessMenuUuid == null ? null : onOrderMore,
           onPayAll: _showPayAll ? onPayAll : null,
+          // Solo en órdenes terminales: es la única pantalla sin salida propia.
+          onExit: order.isTerminal ? onExit : null,
         ),
       ],
     );
@@ -1399,13 +1492,11 @@ class _ClientFulfillmentBanner extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(text, style: FoodlyTextStyles.labelBold),
-                  if (order.liveItemsCount > 0 &&
-                      order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
+                  if (order.liveItemsCount > 0 && order.fulfillmentStatus != GroupFulfillmentStatus.delivered)
                     Text(
                       // liveItemsCount: los platos anulados por el negocio no
                       // inflan el denominador ("1/3" con uno removido mentía).
-                      S.current.managerItemsDelivered(
-                          order.deliveredItemsCount, order.liveItemsCount),
+                      S.current.managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
                       style: FoodlyTextStyles.caption.copyWith(fontSize: 11),
                     ),
                 ],

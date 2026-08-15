@@ -37,6 +37,35 @@ enum GroupOrderStatus {
   cancelled,
 }
 
+/// Por qué el comensal no puede pagar en este momento.
+///
+/// Cada valor tiene un mensaje propio y decide si la pantalla ofrece SALIDA:
+/// de una orden terminal no se sale sola, y hasta el 2026-08-14 tampoco se
+/// salía a mano — el comensal quedaba encerrado mirando un botón apagado.
+enum GroupOrderPayBlock {
+  /// Se puede pagar.
+  none,
+
+  /// Venció el plazo y el barrido la cerró. No se cobró nada.
+  expired,
+
+  /// Alguien la canceló.
+  cancelled,
+
+  /// Ya terminó: pagada y cerrada.
+  completed,
+
+  /// Hay un pago MÍO en curso; lo sella el webhook.
+  confirming,
+
+  /// No queda saldo a mi nombre. El único caso en que "sin saldo pendiente"
+  /// era cierto.
+  settled,
+
+  /// Todavía no toca pagar (la cuenta no se pidió, el host no cerró el pedido).
+  notPayableYet,
+}
+
 /// F4a: fulfillment del negocio — eje independiente del pago, opcional y
 /// saltable hacia adelante. null = el negocio aún no lo tocó.
 enum GroupFulfillmentStatus {
@@ -389,6 +418,45 @@ abstract class GroupOrderDM with _$GroupOrderDM {
   /// ¿Hay algún participante con un pago EN CURSO? Espeja el guard que el
   /// backend aplica antes de cerrar o reabrir.
   bool get hasProcessingPayment => participants.any((p) => p.isProcessing);
+
+  /// POR QUÉ no se puede pagar ahora mismo.
+  ///
+  /// Existe porque el pie de la orden tenía un solo texto para todos los
+  /// motivos: `_canPay ? "Pagar · €X" : "Sin saldo pendiente"`. Y "sin saldo
+  /// pendiente" es verdad en UN caso y mentira en los demás.
+  ///
+  /// Lo que pasó en el e2e del 2026-08-14: una orden de prepago llevaba horas
+  /// abierta, se le venció el plazo de pago, el barrido la EXPIRÓ y canceló su
+  /// PaymentIntent. El comensal volvió, la app le dijo "Sin saldo pendiente"
+  /// sobre una cena que no había pagado, y se quedó ahí: el CTA deshabilitado,
+  /// sin explicación y sin salida.
+  ///
+  /// Decisión pura para poder probarla sin montar la pantalla.
+  GroupOrderPayBlock payBlockFor({
+    required String? myParticipantUuid,
+    required double myShare,
+  }) {
+    // Los estados terminales mandan sobre todo lo demás: da igual lo que se
+    // deba si la orden ya no existe como cosa viva.
+    if (status == GroupOrderStatus.expired) return GroupOrderPayBlock.expired;
+    if (status == GroupOrderStatus.cancelled) return GroupOrderPayBlock.cancelled;
+    if (status == GroupOrderStatus.completed) return GroupOrderPayBlock.completed;
+
+    // Un pago MÍO en vuelo: lo sella el webhook, no la app. Decirle "sin saldo
+    // pendiente" mientras se confirma es prometer un desenlace que aún no
+    // ocurrió; decirle "paga" invita a cobrarse dos veces.
+    final mios = participants.where((p) => p.uuid == myParticipantUuid).toList();
+    if (mios.isNotEmpty && mios.first.isProcessing) {
+      return GroupOrderPayBlock.confirming;
+    }
+
+    // El ÚNICO caso en que "sin saldo pendiente" era cierto.
+    if (myShare <= 0) return GroupOrderPayBlock.settled;
+
+    if (!isPayable) return GroupOrderPayBlock.notPayableYet;
+
+    return GroupOrderPayBlock.none;
+  }
 
   /// ¿El manager puede anular ítems? Espeja `setItemVoided` del backend.
   ///

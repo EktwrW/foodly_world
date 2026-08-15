@@ -20,6 +20,28 @@ abstract class DioRequestHandler {
     // esas requests viajarían sin él.
     options.extra[_kSessionGenerationKey] = authSessionService.sessionGeneration;
 
+    // EN QUÉ IDIOMA ESTÁ ESTE COMENSAL (2026-08-14).
+    //
+    // La app NUNCA mandaba `Accept-Language`. El backend tiene un middleware
+    // que lo lee (`SetLocaleFromHeader`) y, sin cabecera, `app()->getLocale()`
+    // se queda en el default de Laravel: inglés. Consecuencia: todo lo que la
+    // API devuelve con `__()` salía en inglés a una app en español — los
+    // errores de group orders, de reservas, de auth, y la página del Checkout
+    // hosteado de Stripe, que recibe este mismo locale.
+    //
+    // El modal que decía "We couldn't start the payment" en una app en español
+    // era exactamente esto, y estuvo a la vista toda la tarde del e2e sin que
+    // nadie —yo el primero— se preguntara por qué estaba en inglés.
+    //
+    // Va en el INTERCEPTOR y no en los `BaseOptions` del Dio para que se
+    // recalcule en cada petición: las cabeceras base se fijan al construir el
+    // cliente, y el idioma del dispositivo puede cambiar mientras la app vive.
+    //
+    // Misma fuente que el registro del DeviceToken (`FoodlyLocales`), para que
+    // el idioma del push y el de la API no puedan discrepar. Se manda el tag
+    // completo ('pt-PT', 'es-AR'); el backend se queda con el primario.
+    options.headers[FoodlyStrings.ACCEPT_LANGUAGE] = FoodlyLocales.deviceLocaleTag;
+
     await authSessionService.validateAccessToken();
 
     // Public auth endpoints must NEVER be blocked by stale token checks.

@@ -337,6 +337,72 @@ void main() {
       await cubit.close();
     });
   });
+
+  group('soltar el intento de pago en vuelo', () {
+    // e2e 2026-08-15: cerrar la hoja de pago sin pagar dejaba al participante
+    // en `processing` y la orden congelada — ni reabrirla para cambiar un
+    // plato. Cerrar una hoja no es pagar.
+
+    test('pide soltarlo y RE-LEE la orden', () async {
+      repo.getOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: sampleOrder()));
+      final cubit = buildCubit();
+      await cubit.load('o1');
+      final lecturasPrevias = repo.getCalls;
+
+      final ok = await cubit.cancelPayment();
+
+      expect(ok, isTrue);
+      expect(repo.cancelPaymentCalls, 1);
+      expect(repo.lastCancelledUuid, 'o1');
+      // El refetch no es un extra: sin él el pie sigue diciendo "confirmando
+      // tu pago" sobre un intento que acaba de soltarse.
+      expect(repo.getCalls, greaterThan(lecturasPrevias));
+    });
+
+    test('sin orden cargada no llama a nadie', () async {
+      final cubit = buildCubit();
+
+      expect(await cubit.cancelPayment(), isFalse);
+      expect(repo.cancelPaymentCalls, 0);
+    });
+
+    test('un 409 devuelve false, y AUN ASÍ re-lee', () async {
+      // 409 = Stripe dice que el dinero ya está comprometido (el comensal está
+      // aprobando en la app del banco). No se soltó nada, y justamente por eso
+      // interesa refrescar: lo más probable es que el pago haya avanzado.
+      repo.getOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: sampleOrder()));
+      repo.cancelPaymentOutcome = ApiResult.failure(boom());
+      final cubit = buildCubit();
+      await cubit.load('o1');
+      final lecturasPrevias = repo.getCalls;
+
+      expect(await cubit.cancelPayment(), isFalse);
+      expect(repo.getCalls, greaterThan(lecturasPrevias));
+    });
+  });
+
+  group('reabrir informa si pudo', () {
+    test('devuelve true al reabrir', () async {
+      repo.getOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: sampleOrder()));
+      repo.unlockOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: sampleOrder()));
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      expect(await cubit.unlock(), isTrue);
+    });
+
+    test('devuelve false si el backend se niega', () async {
+      // Pasa de verdad cuando el pago en curso es de OTRO comensal: soltar el
+      // propio no alcanza, y la pantalla no puede seguir como si nada.
+      repo.getOutcome = ApiResult.success(GroupOrderResponseDM(groupOrder: sampleOrder()));
+      repo.unlockOutcome = ApiResult.failure(boom());
+      final cubit = buildCubit();
+      await cubit.load('o1');
+
+      expect(await cubit.unlock(), isFalse);
+    });
+  });
+
 }
 
 /// Fake manual del repo: solo implementa lo que el cubit usa; el resto cae en
@@ -350,6 +416,12 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
 
   ApiResult<GroupOrderResponseDM>? lockOutcome;
   ApiResult<GroupOrderResponseDM>? updateItemOutcome;
+  ApiResult<void>? cancelPaymentOutcome;
+
+  /// Cuántas veces se leyó la orden y cuántas se pidió soltar el intento.
+  int getCalls = 0;
+  int cancelPaymentCalls = 0;
+  String? lastCancelledUuid;
 
   /// Espías F2b/F2c: qué recibió el repo en la última llamada.
   List<String>? lastCoverUuids;
@@ -359,7 +431,19 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   bool? lastSharedValue;
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async => getOutcome!;
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async {
+    getCalls++;
+
+    return getOutcome!;
+  }
+
+  @override
+  Future<ApiResult<void>> cancelPayment(String uuid) async {
+    cancelPaymentCalls++;
+    lastCancelledUuid = uuid;
+
+    return cancelPaymentOutcome ?? const ApiResult.success(null);
+  }
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> removeItem(String uuid, String itemUuid) async => removeItemOutcome!;

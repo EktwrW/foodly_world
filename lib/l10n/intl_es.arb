@@ -1298,6 +1298,10 @@
     }
   },
   "groupOrderNoBalanceDue": "Sin saldo pendiente",
+  "groupOrderExpiredNotice": "Esta orden expiró: se agotó el plazo de pago y no se cobró nada. Puedes pedir de nuevo desde el menú.",
+  "groupOrderCancelledNotice": "Esta orden fue cancelada. No se cobró nada.",
+  "groupOrderCompletedNotice": "Esta orden ya está cerrada.",
+  "groupOrderConfirmingPayment": "Estamos confirmando tu pago. Puede tardar unos segundos.",
   "groupOrderPaidProgress": "{paid} de {total} pagado",
   "@groupOrderPaidProgress": {
     "placeholders": {
@@ -1313,7 +1317,9 @@
   "groupOrderPaymentSucceeded": "Pago realizado",
   "groupOrderPaymentCanceled": "Pago cancelado",
   "groupOrderPaymentInBrowser": "Abrimos el navegador para completar tu pago",
-  "groupOrderPayOtherMethods": "Otros métodos de pago",
+  "groupOrderPayWithMbWay": "Pagar con MB WAY",
+  "groupOrderPayWithBizum": "Pagar con Bizum",
+  "groupOrderPoweredByStripe": "Pagos procesados por Stripe Inc.",
   "loadFailedMessage": "No pudimos cargar esto. Revisa tu conexión e inténtalo de nuevo.",
   "loadFailedRetry": "Reintentar",
   "groupOrderPaymentFailed": "No se pudo completar el pago",

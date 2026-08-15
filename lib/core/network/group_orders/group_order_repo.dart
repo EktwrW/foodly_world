@@ -416,4 +416,19 @@ class GroupOrderRepo {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
+
+  /// Suelta el intento de pago en vuelo (ver `GroupOrderClient.cancelPayment`).
+  ///
+  /// Falla —409— cuando Stripe dice que el dinero YA está comprometido: el
+  /// comensal que autoriza en la app de su banco no puede perder su pago
+  /// porque tocó atrás.
+  Future<ApiResult<void>> cancelPayment(String uuid) async {
+    try {
+      await _client.cancelPayment(uuid);
+
+      return const ApiResult.success(null);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
 }

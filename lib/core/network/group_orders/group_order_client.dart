@@ -234,4 +234,16 @@ abstract class GroupOrderClient {
     @Field('cover_participant_uuids') List<String>? coverParticipantUuids,
     @Field('tip_amount') double? tipAmount,
   });
+
+  /// Suelta el intento de pago en vuelo de este comensal.
+  ///
+  /// Cerrar la hoja de pago sin pagar dejaba al participante en `processing`, y
+  /// con eso la orden no se podía reabrir para agregar o quitar nada (e2e
+  /// 2026-08-15). El backend lo suelta SOLO si Stripe confirma que todavía no
+  /// hay dinero comprometido; si lo hay responde 409 y el comensal se entera.
+  ///
+  /// Idempotente: sin nada en vuelo responde 200 igual, así que se puede
+  /// llamar cada vez que se cierra la hoja sin comprobar nada antes.
+  @POST('/group-orders/{uuid}/cancel-payment')
+  Future<void> cancelPayment(@Path('uuid') String uuid);
 }
