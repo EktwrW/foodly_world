@@ -311,26 +311,12 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                   HostedRail.bizum => S.current.groupOrderPayWithBizum,
                   HostedRail.none => '',
                 },
-                // Cada método con SU logo (2026-08-15).
-                //
-                // El de MB WAY viene del paquete de marcas; el de Bizum no está
-                // ahí, así que es un asset propio. Hasta hoy Bizum llevaba un
-                // `Icons.smartphone_rounded` genérico, y eso le costaba lo
-                // único que justifica sacar al comensal de la app: que
-                // reconozca de un vistazo el método que usa todos los días. La
-                // marca ES el argumento del botón.
-                //
-                // `Image.asset` y no `Brand(...)`: `assets/images/` ya está
-                // declarado como directorio en el pubspec, así que no hace
-                // falta tocar nada más para que entre en el bundle.
                 leading: switch (hostedRail) {
                   HostedRail.mbWay => Brand(Brands.mb_way, size: 20),
                   HostedRail.bizum => Image.asset(
                       'assets/images/bizum_icon.png',
                       height: 20,
-                      // Si el asset faltara en el bundle, `Image.asset` pinta
-                      // un cuadro roto dentro del botón de pagar. El icono
-                      // viejo es un final más digno que ese.
+                      // Sin el asset, un cuadro roto dentro del botón de pagar.
                       errorBuilder: (_, __, ___) => const Icon(
                         Icons.smartphone_rounded,
                         size: 18,

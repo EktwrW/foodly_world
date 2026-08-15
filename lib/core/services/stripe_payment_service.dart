@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, visibleForTesting;
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 enum StripePaymentResult { completed, canceled, failed }
@@ -63,13 +63,8 @@ class StripePaymentService {
     }
   }
 
-  /// Todo lo que se le declara a la hoja, en un solo sitio y sin tocar Stripe.
-  ///
-  /// Está separado del `presentPaymentSheet` para poder PROBARLO. Este objeto
-  /// se serializa y cruza un MethodChannel hasta un parser nativo que descarta
-  /// EN SILENCIO lo que no le cuadra —ver [_DatosDeFacturacion]—, así que la
-  /// forma exacta del JSON importa tanto como su contenido.
-  /// `payment_sheet_params_test.dart` la fija.
+  /// Separado de `presentPaymentSheet` para poder probarlo: el parser nativo
+  /// descarta en silencio lo que no le cuadra (ver [_DatosDeFacturacion]).
   @visibleForTesting
   static SetupPaymentSheetParameters sheetParameters({
     required String clientSecret,
@@ -77,28 +72,15 @@ class StripePaymentService {
     String? merchantCountryCode,
     String? billingCountryCode,
     String? payerEmail,
+    TargetPlatform? platform,
   }) =>
       SetupPaymentSheetParameters(
         paymentIntentClientSecret: clientSecret,
         merchantDisplayName: merchantName,
 
-        // Con qué llega rellena la hoja (2026-08-15).
-        //
-        // El país arregla el "Estados Unidos" del formulario de tarjeta; el
-        // email le ahorra un paso a quien paga con Link, que se autentica
-        // justamente por email. Stripe lo recomienda explícito: "Stripe
-        // recommends prefilling as much information as possible to streamline
-        // the checkout process".
-        //
-        // Son PRE-RELLENOS, no datos del cobro: el comensal los puede cambiar
-        // en la hoja, y no se adjuntan al PaymentMethod porque
-        // `attachDefaultsToPaymentMethod` sigue en su default (false). Por eso
-        // pasarlos no tiene riesgo de mandar a Stripe un dato equivocado.
-        //
-        // Nombre y teléfono NO se pasan a propósito: el nombre de la cuenta
-        // de Foodly puede ser un apodo y no el del titular de la tarjeta, y un
-        // teléfono pre-rellenado arrastra al comensal a darse de alta en Link
-        // sin haberlo pedido.
+        // Pre-relleno: el país arregla el "Estados Unidos" del formulario de
+        // tarjeta y el email le ahorra un paso a Link. Nombre y teléfono no,
+        // a propósito (apodos, y alta en Link sin pedirla).
         billingDetails: _prefill(billingCountryCode, payerEmail),
 
         // Apple Pay y Google Pay (2026-08-10).
@@ -124,8 +106,13 @@ class StripePaymentService {
         // hace fallar la autorización DESPUÉS de que el usuario aprobó con
         // Face ID. Que no aparezca el botón es el modo de fallo barato: la
         // tarjeta sigue estando.
-        applePay: merchantCountryCode == null ? null : PaymentSheetApplePay(merchantCountryCode: merchantCountryCode),
-        googlePay: merchantCountryCode == null
+        // Cada cartera en su plataforma: `flutter_stripe` tiene un assert que
+        // exige `merchantIdentifier` en cuanto `applePay != null`, sin mirar
+        // dónde corre, y tumbaba el pago en debug/profile.
+        applePay: merchantCountryCode == null || (platform ?? defaultTargetPlatform) != TargetPlatform.iOS
+            ? null
+            : PaymentSheetApplePay(merchantCountryCode: merchantCountryCode),
+        googlePay: merchantCountryCode == null || (platform ?? defaultTargetPlatform) != TargetPlatform.android
             ? null
             : PaymentSheetGooglePay(
                 merchantCountryCode: merchantCountryCode,
@@ -133,11 +120,7 @@ class StripePaymentService {
               ),
       );
 
-  /// Lo que va pre-rellenado, o null si no hay nada que pre-rellenar.
-  ///
-  /// Null y no un objeto vacío: `defaultBillingDetails: {}` es una instrucción
-  /// para la hoja, y prefiero que cuando no sabemos nada la llamada salga tal
-  /// como salía antes de este cambio.
+  /// Null y no un objeto vacío: sin datos, la hoja se comporta como antes.
   static BillingDetails? _prefill(String? countryCode, String? email) {
     final pais = (countryCode ?? '').trim();
     final correo = (email ?? '').trim();
@@ -159,37 +142,15 @@ class StripePaymentService {
   }
 }
 
-/// `BillingDetails` cuya dirección SÍ la entiende iOS.
+/// `BillingDetails` que omite las claves nulas.
 ///
-/// EXISTE POR UN BUG DEL PAQUETE, y el bug es silencioso — que es lo que lo
-/// vuelve peligroso. El `Address` generado serializa SIEMPRE sus seis claves,
-/// aunque cinco vengan vacías:
+/// El `Address` generado serializa siempre sus seis claves, y iOS lee la
+/// dirección con `as? [String: String]` (`StripeSdkImpl+PaymentSheet.swift:79`),
+/// un cast que un solo `NSNull` tumba entero: la dirección se descartaba en
+/// silencio y el país no se pre-rellenaba. Android filtra los nulos y no sufre.
 ///
-/// ```json
-/// "address":{"city":null,"country":"ES","line1":null,"line2":null,
-///            "postalCode":null,"state":null}
-/// ```
-///
-/// Y el lado iOS del paquete lo lee con un cast que es todo-o-nada:
-///
-/// ```swift
-/// // stripe_ios/.../StripeSdkImpl+PaymentSheet.swift:79
-/// if let address = defaultBillingDetails["address"] as? [String: String] {
-/// ```
-///
-/// Un `NSNull` dentro del diccionario hace fallar el cast ENTERO, así que en
-/// iPhone la dirección se descarta sin error, sin log y sin síntoma legible: el
-/// email se pre-rellena y el país no. En Android no pasa, porque su parser
-/// filtra las claves nulas con `hasKey()`. Por eso este `toJson()` OMITE lo que
-/// no tiene valor en vez de mandarlo en null.
-///
-/// LO QUE ESTA CLASE **NO** ARREGLA, y conviene no volver a creérselo: al
-/// `toJson()` generado le falta `explicitToJson` y mete el objeto `Address`
-/// crudo en el mapa, pero eso da IGUAL — el canal es
-/// `MethodChannel('flutter.stripe/payments', JSONMethodCodec())` y `json.encode`
-/// llama solo al `toJson()` de lo anidado. Con `StandardMessageCodec` sí
-/// reventaría; ese codec no interviene acá. Verificado el 2026-08-15 ejecutando
-/// el codec real, después de haberme creído lo contrario.
+/// No es por el `explicitToJson` que le falta al paquete: el canal usa
+/// `JSONMethodCodec` y `json.encode` resuelve el anidado solo.
 class _DatosDeFacturacion implements BillingDetails {
   const _DatosDeFacturacion({this.email, this.address});
 
@@ -199,7 +160,6 @@ class _DatosDeFacturacion implements BillingDetails {
   @override
   final Address? address;
 
-  /// No se pre-rellenan; el porqué está en [StripePaymentService.sheetParameters].
   @override
   String? get phone => null;
 
@@ -217,21 +177,16 @@ class _DatosDeFacturacion implements BillingDetails {
       if (address?.state != null) 'state': address!.state,
     };
 
-    // Las de primer nivel iOS las lee una a una y sí toleran null; se omiten
-    // igual para no tener dos reglas distintas en el mismo mapa.
     return <String, dynamic>{
       if (email != null) 'email': email,
-      // Un mapa vacío pasaría el cast y pisaría la dirección con nada.
+      // Vacío pasaría el cast de iOS y pisaría la dirección con nada.
       if (direccion.isNotEmpty) 'address': direccion,
       if (phone != null) 'phone': phone,
       if (name != null) 'name': name,
     };
   }
 
-  /// `flutter_stripe` nunca lo llama —verificado por grep sobre el paquete— y
-  /// esta clase no sale de este archivo. Se delega en un `BillingDetails` de
-  /// verdad en vez de lanzar: lo que devuelve serializa bien en este canal, solo
-  /// pierde el filtrado de nulos que motiva toda esta clase.
+  /// `flutter_stripe` nunca lo llama; se delega en vez de lanzar.
   @override
   $BillingDetailsCopyWith<BillingDetails> get copyWith => BillingDetails(email: email, address: address).copyWith;
 }

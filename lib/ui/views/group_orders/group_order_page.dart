@@ -132,10 +132,11 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         return;
       }
 
-      // externalApplication y NO un WebView propio: MB WAY salta a la app del
-      // banco para autorizar, y volver de ahí a una vista embebida es frágil.
-      // El navegador del sistema conserva la sesión y el App Link nos devuelve
-      // a la app.
+      // Navegador del SISTEMA, nunca una vista embebida. MB WAY y Bizum
+      // saltan a la app del banco, y sobre todo: Apple no sigue Universal
+      // Links dentro de un SFSafariViewController ("Opening a link in
+      // SFSafariViewController does not follow a Universal Link to an app",
+      // rdar://32840565), así que embebido el comensal NO vuelve solo.
       await launchUrl(url, mode: LaunchMode.externalApplication);
       if (!context.mounted) return;
 

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -32,11 +34,17 @@ void main() {
     return decodificado['args']['params'] as Map<String, dynamic>;
   }
 
-  SetupPaymentSheetParameters conPais(String? pais, {String? email}) => StripePaymentService.sheetParameters(
+  SetupPaymentSheetParameters conPais(
+    String? pais, {
+    String? email,
+    TargetPlatform platform = TargetPlatform.android,
+  }) =>
+      StripePaymentService.sheetParameters(
         clientSecret: 'pi_3U4_secret_abc',
         merchantCountryCode: 'PT',
         billingCountryCode: pais,
         payerEmail: email,
+        platform: platform,
       );
 
   group('la forma que exige el parser nativo', () {
@@ -125,16 +133,30 @@ void main() {
     /// y las carteras se declaran en PT porque el merchant of record es el
     /// restaurante.
     test('el país de facturación no pisa el del comercio', () {
-      final json = comoLlegaAlNativo(
-        StripePaymentService.sheetParameters(
-          clientSecret: 'pi_3U4_secret_abc',
-          merchantCountryCode: 'PT',
-          billingCountryCode: 'ES',
-        ),
-      );
+      final json = comoLlegaAlNativo(conPais('ES'));
 
       expect(json['defaultBillingDetails']['address']['country'], 'ES');
       expect(json['googlePay']['merchantCountryCode'], 'PT');
+    });
+  });
+
+  group('cada cartera en su plataforma', () {
+    /// EL BUG: `flutter_stripe` tiene un assert que exige
+    /// `Stripe.merchantIdentifier` en cuanto `applePay != null`, sin mirar la
+    /// plataforma. Declarar Apple Pay en Android tumbaba el pago entero en
+    /// debug/profile —con un "el pago falló" sin pista— y en release no,
+    /// porque ahí los asserts no se compilan. Por eso el e2e nunca lo vio.
+    test('en Android no se declara Apple Pay', () {
+      final json = comoLlegaAlNativo(conPais('ES', platform: TargetPlatform.android));
+
+      expect(json['applePay'], isNull);
+      expect(json['googlePay']['merchantCountryCode'], 'PT');
+    });
+
+    test('en iOS no se declara Google Pay', () {
+      final json = comoLlegaAlNativo(conPais('ES', platform: TargetPlatform.iOS));
+
+      expect(json['googlePay'], isNull);
       expect(json['applePay']['merchantCountryCode'], 'PT');
     });
   });
@@ -145,6 +167,7 @@ void main() {
         StripePaymentService.sheetParameters(
           clientSecret: 'pi_3U4_secret_abc',
           billingCountryCode: 'ES',
+          platform: TargetPlatform.android,
         ),
       );
 
