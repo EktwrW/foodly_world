@@ -139,51 +139,31 @@ class AppRouter {
     );
   }
 
-  /// Returns true when [route] is a navigation child of [potentialParent].
-  /// Used by the ping-pong guard to detect back-button loops.
-  /// Lógica pura (testeada) en [RouteHierarchy].
-  bool _isNavigationChildOf(String route, String potentialParent) =>
-      RouteHierarchy.isNavigationChildOf(route, potentialParent, userUuid: authSessService.uuid);
-
   void goBackToLastRoute() async {
-    if (_routeHistory.length > 2) {
-      // Bug e2e r4 (back atascado orden↔menú): los flujos efímeros
-      // (/group-order, /join) y la propia ubicación actual NUNCA son
-      // destinos válidos de "atrás" — se saltan al buscar en el historial.
-      var idx = _routeHistory.length - 2;
-      while (idx >= 0 && (RouteHierarchy.isEphemeral(_routeHistory[idx]) || _routeHistory[idx] == currentLocation)) {
-        idx--;
+    // Decisión pura y testeada en RouteHierarchy.backStep: qué destino y qué
+    // truncar. El truncado va acá y no en cada rama a propósito — tenerlo en
+    // una sola le da al test un solo sitio que vigilar.
+    final paso = RouteHierarchy.backStep(
+      _routeHistory,
+      currentLocation,
+      userUuid: authSessService.uuid,
+    );
+    final lastRoute = paso.destino == null ? null : _routeHistory[paso.destino!];
+    _routeHistory.removeRange(paso.truncarDesde, _routeHistory.length);
+
+    if (lastRoute != null) {
+      if (lastRoute == '/' && authSessService.isLoggedIn) {
+        _goToMainPage();
+        return;
       }
 
-      if (idx >= 0) {
-        final lastRoute = _routeHistory[idx];
-
-        // Ping-pong guard: if the previous route is a child of the current
-        // location, the user arrived here by pressing "back" from that child.
-        // Going back again must continue upward to the logical parent — not
-        // return to the child we just left (e.g. analytics ↔ myBusiness,
-        // visit-menu ↔ visit-business, group-order ↔ visit-menu).
-        if (!_isNavigationChildOf(lastRoute, currentLocation)) {
-          // Normal history-based back (descarta lo salteado también).
-          _routeHistory.removeRange(idx, _routeHistory.length);
-
-          if (lastRoute == '/' && authSessService.isLoggedIn) {
-            _goToMainPage();
-            return;
-          }
-
-          await saveLastRoute(lastRoute);
-          appRouter.go(lastRoute);
-          return;
-        }
-        // Ping-pong detected — fall through to _deriveParentRoute below.
-      }
+      await saveLastRoute(lastRoute);
+      appRouter.go(lastRoute);
+      return;
     }
 
-    // No sufficient route history (cold start, deep link, route restoration),
-    // or previous route was a child (ping-pong avoidance).
-    // Derive the logical parent from the current path so the user lands on a
-    // sensible screen instead of login or a blank main page.
+    // Sin destino en el historial (arranque en frío, deep link, o el anterior
+    // era un hijo): se deriva el padre lógico. El historial ya quedó vacío.
     if (authSessService.isLoggedIn) {
       // visit-menu carries the MENU UUID in the URL, not the business UUID.
       // _deriveParentRoute returns null for it, so we resolve the parent

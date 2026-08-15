@@ -48,6 +48,45 @@ class RouteHierarchy {
     return false;
   }
 
+  /// Índice del historial al que lleva el "atrás", o null si no hay destino
+  /// válido y hay que derivar el padre. El caller trunca desde ese índice.
+  ///
+  /// Vivía dentro de `AppRouter.goBackToLastRoute` y por eso no tenía tests:
+  /// los predicados de arriba estaban cubiertos y el RECORRIDO no, que es
+  /// donde se esconden los loops.
+  static int? backTargetIndex(List<String> history, String current, {String? userUuid}) {
+    if (history.length <= 2) return null;
+
+    var idx = history.length - 2;
+    while (idx >= 0 && (isEphemeral(history[idx]) || history[idx] == current)) {
+      idx--;
+    }
+    if (idx < 0) return null;
+
+    // Si el anterior es HIJO de donde estoy, llegué acá con un back: seguir
+    // hacia arriba, no volver al hijo.
+    return isNavigationChildOf(history[idx], current, userUuid: userUuid) ? null : idx;
+  }
+
+  /// El "atrás" completo: a qué entrada del historial ir y desde dónde
+  /// truncarlo.
+  ///
+  /// `destino` null = no hay destino válido y el caller deriva el padre lógico.
+  ///
+  /// `truncarDesde` se aplica SIEMPRE, también en ese caso: si el historial no
+  /// sirvió para decidir, tampoco sirve para el back siguiente. Sin eso la
+  /// entrada recién dejada seguía debajo y el back volvía a ella — home ↔
+  /// visit-business en bucle, sin salida (e2e 2026-08-15).
+  static ({int? destino, int truncarDesde}) backStep(
+    List<String> history,
+    String current, {
+    String? userUuid,
+  }) {
+    final idx = backTargetIndex(history, current, userUuid: userUuid);
+
+    return (destino: idx, truncarDesde: idx ?? 0);
+  }
+
   /// Padre lógico sincrónico de [path]; null cuando no se puede determinar
   /// (el caller decide: resolución async o main page).
   ///
