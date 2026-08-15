@@ -315,7 +315,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                 // todavía no está ahí, así que va un icono neutro. Los dos
                 // métodos se autorizan con el móvil, y eso es lo que dice.
                 leading: switch (hostedRail) {
-                  HostedRail.mbWay => Brand(Brands.mb_way, size: 20),
+                  HostedRail.mbWay => Brand(Brands.mb_way, size: 36),
                   _ => const Icon(
                       Icons.smartphone_rounded,
                       size: 18,
@@ -355,7 +355,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Brand(Brands.stripe, size: 13),
+                  Brand(Brands.stripe, size: 26),
                   const SizedBox(width: 5),
                   Flexible(
                     child: Text(
