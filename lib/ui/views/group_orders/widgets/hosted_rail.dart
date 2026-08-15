@@ -55,13 +55,34 @@ const _aliases = <String, String>{
   'ESPANA': 'ES',
 };
 
-/// El método local de un comensal de [payerCountry].
+/// El ISO-2 de [country], o null si no se puede afirmar cuál es.
 ///
 /// Acepta ISO-2 o nombre, en cualquier caja y con espacios de sobra: el dato
 /// llega de un formulario de registro y de una dirección tecleada a mano.
-HostedRail hostedRailFor(String? payerCountry) {
-  final normalizado = (payerCountry ?? '').trim().toUpperCase();
+///
+/// DEVUELVE NULL EN VEZ DE ADIVINAR. Un nombre largo que no esté en la tabla
+/// —'França', 'Deutschland'— no se recorta a dos letras ni se pasa tal cual:
+/// recortar 'PRT' daría 'PR', que es Puerto Rico. Quien pregunta prefiere no
+/// saber a que le contesten otro país.
+///
+/// LO QUE VALIDA ES LA FORMA, NO QUE EXISTA. 'XX' y 'UK' pasan, porque son dos
+/// letras. No hay tabla ISO acá y no la va a haber: quien consume esto o busca
+/// en un mapa cerrado ([hostedRailFor], que solo conoce PT y ES) o se lo pasa a
+/// Stripe, que valida por su cuenta y como mucho ignora el pre-relleno. La
+/// alternativa —arrastrar las 249 entradas de ISO 3166— cuesta más de lo que
+/// evita.
+String? countryIsoOrNull(String? country) {
+  final normalizado = (country ?? '').trim().toUpperCase();
   final iso = _aliases[normalizado] ?? normalizado;
 
-  return _railByCountry[iso] ?? HostedRail.none;
+  return _dosLetras.hasMatch(iso) ? iso : null;
+}
+
+/// `static`/tope de archivo y no dentro de la función: [hostedRailFor] se llama
+/// desde un `build`, y compilar la expresión en cada frame es gratis de evitar.
+final _dosLetras = RegExp(r'^[A-Z]{2}$');
+
+/// El método local de un comensal de [payerCountry].
+HostedRail hostedRailFor(String? payerCountry) {
+  return _railByCountry[countryIsoOrNull(payerCountry)] ?? HostedRail.none;
 }
