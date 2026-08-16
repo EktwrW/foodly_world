@@ -1211,7 +1211,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ingresar código manualmente",
     ),
     "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
-      "Ordenar en grupo",
+      "Ordenar en vivo",
     ),
     "groupOrderExpiredNotice": MessageLookupByLibrary.simpleMessage(
       "Esta orden expiró: se agotó el plazo de pago y no se cobró nada. Puedes pedir de nuevo desde el menú.",
@@ -1273,10 +1273,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Aún no hay ítems",
     ),
     "groupOrderOngoingChannelDesc": MessageLookupByLibrary.simpleMessage(
-      "Estado de tu orden grupal en curso",
+      "Estado de tu orden en curso",
     ),
     "groupOrderOngoingChannelName": MessageLookupByLibrary.simpleMessage(
-      "Orden grupal activa",
+      "Orden activa",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Pedir más"),
     "groupOrderPaidBy": m41,
@@ -1380,7 +1380,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
       "¿Quieres dejar propina?",
     ),
-    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Orden grupal"),
+    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Ordenar en vivo"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage(
       "Total de la orden",
     ),
@@ -1425,7 +1425,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Inicia sesión o regístrate para usar esta función.",
     ),
     "guestGateGroupOrder": MessageLookupByLibrary.simpleMessage(
-      "Inicia sesión o regístrate para crear una orden grupal.",
+      "Inicia sesión o regístrate para crear una orden.",
     ),
     "guestGateNotifications": MessageLookupByLibrary.simpleMessage(
       "Inicia sesión o regístrate para ver tus notificaciones.",

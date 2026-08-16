@@ -1289,7 +1289,7 @@
   "unavailableDaysHint": "Days in grey are not available.",
   "dateUnavailable": "That date was just blocked. Please pick another one.",
   "datePartiallyBlockedInfo": "That day has partially booked time slots. We may ask you to adjust the time.",
-  "groupOrderTitle": "Group order",
+  "groupOrderTitle": "Live order",
   "groupOrderParticipants": "Participants",
   "groupOrderItemsSection": "Items",
   "groupOrderNoItems": "No items yet",
@@ -1329,7 +1329,7 @@
   "loadFailedMessage": "We couldn't load this. Check your connection and try again.",
   "loadFailedRetry": "Try again",
   "groupOrderPaymentFailed": "Payment couldn't be completed",
-  "groupOrderEntryCta": "Order as a group",
+  "groupOrderEntryCta": "Order live",
   "groupOrderCreating": "Creating…",
   "groupOrderViewOrder": "View order",
   "groupOrderAddFromMenu": "Add dishes from the menu",
@@ -1629,8 +1629,8 @@
   "groupOrderJoinTitle": "Join an order",
   "groupOrderJoinHint": "Invitation code",
   "groupOrderJoinFailed": "We couldn't add you to the order",
-  "groupOrderOngoingChannelName": "Active group order",
-  "groupOrderOngoingChannelDesc": "Status of your ongoing group order",
+  "groupOrderOngoingChannelName": "Active order",
+  "groupOrderOngoingChannelDesc": "Status of your ongoing order",
   "groupOrderTipBaseSummary": "Your payment: {base} + {fee} processing fee",
   "@groupOrderTipBaseSummary": {
     "placeholders": {
@@ -1642,7 +1642,7 @@
       }
     }
   },
-  "guestGateGroupOrder": "Log in or sign up to start a group order.",
+  "guestGateGroupOrder": "Log in or sign up to start an order.",
   "groupOrderTabClosedTitle": "Tab closed!",
   "groupOrderTabClosedBody": "Bill settled · {total}. Receipt sent to your email.",
   "@groupOrderTabClosedBody": {

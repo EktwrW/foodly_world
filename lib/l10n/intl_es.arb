@@ -1289,7 +1289,7 @@
   "unavailableDaysHint": "Los días en gris no están disponibles.",
   "dateUnavailable": "Esa fecha acaba de bloquearse. Elige otra, por favor.",
   "datePartiallyBlockedInfo": "Ese día tiene horarios parcialmente reservados. Puede que te pidamos ajustar la hora.",
-  "groupOrderTitle": "Orden grupal",
+  "groupOrderTitle": "Ordenar en vivo",
   "groupOrderParticipants": "Participantes",
   "groupOrderItemsSection": "Ítems",
   "groupOrderNoItems": "Aún no hay ítems",
@@ -1329,7 +1329,7 @@
   "loadFailedMessage": "No pudimos cargar esto. Revisa tu conexión e inténtalo de nuevo.",
   "loadFailedRetry": "Reintentar",
   "groupOrderPaymentFailed": "No se pudo completar el pago",
-  "groupOrderEntryCta": "Ordenar en grupo",
+  "groupOrderEntryCta": "Ordenar en vivo",
   "groupOrderCreating": "Creando…",
   "groupOrderViewOrder": "Ver la orden",
   "groupOrderAddFromMenu": "Agrega platos del menú",
@@ -1629,8 +1629,8 @@
   "groupOrderJoinTitle": "Unirse a una orden",
   "groupOrderJoinHint": "Código de invitación",
   "groupOrderJoinFailed": "No pudimos unirte a la orden",
-  "groupOrderOngoingChannelName": "Orden grupal activa",
-  "groupOrderOngoingChannelDesc": "Estado de tu orden grupal en curso",
+  "groupOrderOngoingChannelName": "Orden activa",
+  "groupOrderOngoingChannelDesc": "Estado de tu orden en curso",
   "groupOrderTipBaseSummary": "Tu pago: {base} + {fee} de tarifa de procesamiento",
   "@groupOrderTipBaseSummary": {
     "placeholders": {
@@ -1642,7 +1642,7 @@
       }
     }
   },
-  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden grupal.",
+  "guestGateGroupOrder": "Inicia sesión o regístrate para crear una orden.",
   "groupOrderTabClosedTitle": "¡Orden finalizada!",
   "groupOrderTabClosedBody": "Cuenta cerrada · {total}. El recibo llegó a tu email.",
   "@groupOrderTabClosedBody": {

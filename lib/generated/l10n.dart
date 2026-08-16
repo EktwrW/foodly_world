@@ -8535,10 +8535,10 @@ class S {
     );
   }
 
-  /// `Group order`
+  /// `Live order`
   String get groupOrderTitle {
     return Intl.message(
-      'Group order',
+      'Live order',
       name: 'groupOrderTitle',
       desc: '',
       args: [],
@@ -8765,10 +8765,10 @@ class S {
     );
   }
 
-  /// `Order as a group`
+  /// `Order live`
   String get groupOrderEntryCta {
     return Intl.message(
-      'Order as a group',
+      'Order live',
       name: 'groupOrderEntryCta',
       desc: '',
       args: [],
@@ -10095,20 +10095,20 @@ class S {
     );
   }
 
-  /// `Active group order`
+  /// `Active order`
   String get groupOrderOngoingChannelName {
     return Intl.message(
-      'Active group order',
+      'Active order',
       name: 'groupOrderOngoingChannelName',
       desc: '',
       args: [],
     );
   }
 
-  /// `Status of your ongoing group order`
+  /// `Status of your ongoing order`
   String get groupOrderOngoingChannelDesc {
     return Intl.message(
-      'Status of your ongoing group order',
+      'Status of your ongoing order',
       name: 'groupOrderOngoingChannelDesc',
       desc: '',
       args: [],
@@ -10125,10 +10125,10 @@ class S {
     );
   }
 
-  /// `Log in or sign up to start a group order.`
+  /// `Log in or sign up to start an order.`
   String get guestGateGroupOrder {
     return Intl.message(
-      'Log in or sign up to start a group order.',
+      'Log in or sign up to start an order.',
       name: 'guestGateGroupOrder',
       desc: '',
       args: [],

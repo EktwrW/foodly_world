@@ -1158,9 +1158,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderEnterCodeManually": MessageLookupByLibrary.simpleMessage(
       "Enter code manually",
     ),
-    "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
-      "Order as a group",
-    ),
+    "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage("Order live"),
     "groupOrderExpiredNotice": MessageLookupByLibrary.simpleMessage(
       "This order expired — the payment window ran out and nothing was charged. You can order again from the menu.",
     ),
@@ -1217,10 +1215,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "groupOrderNoItems": MessageLookupByLibrary.simpleMessage("No items yet"),
     "groupOrderOngoingChannelDesc": MessageLookupByLibrary.simpleMessage(
-      "Status of your ongoing group order",
+      "Status of your ongoing order",
     ),
     "groupOrderOngoingChannelName": MessageLookupByLibrary.simpleMessage(
-      "Active group order",
+      "Active order",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Order more"),
     "groupOrderPaidBy": m41,
@@ -1324,7 +1322,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
       "Would you like to tip?",
     ),
-    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Group order"),
+    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Live order"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Order total"),
     "groupOrderTrackConfirmed": MessageLookupByLibrary.simpleMessage(
       "The business got your order",
@@ -1365,7 +1363,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Log in or sign up to use this feature.",
     ),
     "guestGateGroupOrder": MessageLookupByLibrary.simpleMessage(
-      "Log in or sign up to start a group order.",
+      "Log in or sign up to start an order.",
     ),
     "guestGateNotifications": MessageLookupByLibrary.simpleMessage(
       "Log in or sign up to see your notifications.",

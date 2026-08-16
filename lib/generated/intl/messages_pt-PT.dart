@@ -1208,7 +1208,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Introduzir código manualmente",
     ),
     "groupOrderEntryCta": MessageLookupByLibrary.simpleMessage(
-      "Pedir em grupo",
+      "Pedir em direto",
     ),
     "groupOrderExpiredNotice": MessageLookupByLibrary.simpleMessage(
       "Este pedido expirou: esgotou-se o prazo de pagamento e não foi cobrado nada. Podes pedir de novo a partir do menu.",
@@ -1270,10 +1270,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ainda não há itens",
     ),
     "groupOrderOngoingChannelDesc": MessageLookupByLibrary.simpleMessage(
-      "Estado do teu pedido em grupo em curso",
+      "Estado do teu pedido em curso",
     ),
     "groupOrderOngoingChannelName": MessageLookupByLibrary.simpleMessage(
-      "Pedido em grupo ativo",
+      "Pedido ativo",
     ),
     "groupOrderOrderMore": MessageLookupByLibrary.simpleMessage("Pedir mais"),
     "groupOrderPaidBy": m41,
@@ -1377,7 +1377,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTipTitle": MessageLookupByLibrary.simpleMessage(
       "Queres deixar gorjeta?",
     ),
-    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Pedido em grupo"),
+    "groupOrderTitle": MessageLookupByLibrary.simpleMessage("Pedido em direto"),
     "groupOrderTotal": MessageLookupByLibrary.simpleMessage("Total do pedido"),
     "groupOrderTrackConfirmed": MessageLookupByLibrary.simpleMessage(
       "O negócio recebeu seu pedido",
@@ -1420,7 +1420,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Inicia sessão ou regista-te para usar esta funcionalidade.",
     ),
     "guestGateGroupOrder": MessageLookupByLibrary.simpleMessage(
-      "Inicia sessão ou regista-te para criar um pedido em grupo.",
+      "Inicia sessão ou regista-te para criar um pedido.",
     ),
     "guestGateNotifications": MessageLookupByLibrary.simpleMessage(
       "Inicia sessão ou regista-te para ver as tuas notificações.",
