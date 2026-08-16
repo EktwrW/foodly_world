@@ -58,67 +58,69 @@ class WelcomeDialog extends StatelessWidget {
               right: UIDimens.SCREEN_PADDING_MOB,
               left: UIDimens.SCREEN_PADDING_MOB,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ZoomOut(
-                      from: 1.3,
-                      child: const Asset(FoodlyAssets.wellDone, height: 80),
-                    ),
-                    ElasticIn(child: const Asset(FoodlyAssets.wellDone, height: 80)),
-                  ],
-                ),
-                Text(
-                  S.current.userSuccessfullyCreated,
-                  textAlign: TextAlign.center,
-                  style: FoodlyTextStyles.confirmationTextPrimary,
-                ),
-                Text.rich(
-                  (user?.isManager ?? false)
-                      ? TextSpan(
-                          children: [
-                            TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
-                            const WidgetSpan(
-                                child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
-                            TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
-                            if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
-                            TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
-                            getBoldTextSpan(S.current.owner),
-                            const TextSpan(text: '. '),
-                            TextSpan(text: '${S.current.welcomeDialogTextSpanOwner}.'),
-                          ],
-                        )
-                      : TextSpan(
-                          children: [
-                            TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
-                            const WidgetSpan(
-                                child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
-                            TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
-                            if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
-                            TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
-                            getBoldTextSpan(S.current.customer),
-                            const TextSpan(text: '. '),
-                            TextSpan(text: S.current.welcomeDialogTextSpanClient1),
-                            getBoldTextSpan(' ${S.current.welcomeDialogTextSpanClient2}'),
-                            TextSpan(text: ', ${S.current.welcomeDialogTextSpanClient3}.'),
-                          ],
-                        ),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(height: (user?.isManager ?? false) ? 1.8 : 1.5),
-                ),
-                // Guía solo para altas sociales: cómo crear un negocio (migrar a
-                // cuenta empresarial desde el perfil), ya que el alta social no
-                // ofrece la opción de negocio.
-                if (isSocialSignUp)
-                  Text(
-                    S.current.welcomeDialogSocialBusiness,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(height: 1.4),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ZoomOut(
+                        from: 1.3,
+                        child: const Asset(FoodlyAssets.wellDone, height: 80),
+                      ),
+                      ElasticIn(child: const Asset(FoodlyAssets.wellDone, height: 80)),
+                    ],
                   ),
-              ],
+                  Text(
+                    S.current.userSuccessfullyCreated,
+                    textAlign: TextAlign.center,
+                    style: FoodlyTextStyles.confirmationTextPrimary,
+                  ),
+                  Text.rich(
+                    (user?.isManager ?? false)
+                        ? TextSpan(
+                            children: [
+                              TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
+                              const WidgetSpan(
+                                  child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
+                              TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
+                              if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
+                              TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
+                              getBoldTextSpan(S.current.owner),
+                              const TextSpan(text: '. '),
+                              TextSpan(text: '${S.current.welcomeDialogTextSpanOwner}.'),
+                            ],
+                          )
+                        : TextSpan(
+                            children: [
+                              TextSpan(text: '${S.current.welcomeDialogTextSpan1} '),
+                              const WidgetSpan(
+                                  child: Asset(FoodlyAssets.logo, height: 14), alignment: PlaceholderAlignment.middle),
+                              TextSpan(text: ' ${S.current.welcomeDialogTextSpan2}'),
+                              if (user != null) getBoldTextSpan(' ${user?.fullName} ') else const TextSpan(text: ', '),
+                              TextSpan(text: '${S.current.welcomeDialogTextSpan3} '),
+                              getBoldTextSpan(S.current.customer),
+                              const TextSpan(text: '. '),
+                              TextSpan(text: S.current.welcomeDialogTextSpanClient1),
+                              getBoldTextSpan(' ${S.current.welcomeDialogTextSpanClient2}'),
+                              TextSpan(text: ', ${S.current.welcomeDialogTextSpanClient3}.'),
+                            ],
+                          ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(height: (user?.isManager ?? false) ? 1.8 : 1.5),
+                  ),
+                  // Guía solo para altas sociales: cómo crear un negocio (migrar a
+                  // cuenta empresarial desde el perfil), ya que el alta social no
+                  // ofrece la opción de negocio.
+                  if (isSocialSignUp)
+                    Text(
+                      S.current.welcomeDialogSocialBusiness,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(height: 1.4),
+                    ),
+                ],
+              ),
             ),
           ),
         ],
