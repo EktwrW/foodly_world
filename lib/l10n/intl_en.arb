@@ -128,6 +128,10 @@
   "addTagline": "Add a catchy tagline",
   "addTitle": "Add a title",
   "addToFavorites": "Add to your favorites",
+  "addedToFavorites": "added to your favorites",
+  "removedFromFavorites": "removed from your favorites",
+  "addedToFavoritesFem": "added to your favorites",
+  "removedFromFavoritesFem": "removed from your favorites",
   "addYoutubeUrl": "Add YouTube URL",
   "admin": "Administrator",
   "aiPromoContent": "Generates title (max 36 chars), subtitle (max 99) and description (max 369) for your promotion. You have {count} uses left this month.",
@@ -410,6 +414,7 @@
   "menus": "Menus",
   "message": "Message",
   "items": "Items",
+  "item": "Item",
   "alphabetical": "A-Z",
   "viewMenuOf": "View menu of",
   "mexicanCuisine": "Mexican",
@@ -526,6 +531,7 @@
   "promoTabExpired": "Expired",
   "promotionDays": "Promotion days",
   "promotions": "Promotions",
+  "promotion": "Promotion",
   "savedPromotions": "Saved Promotions",
   "noSavedPromotions": "You don't have any saved promotions yet",
   "noSavedPromotionsInSection": "You don't have any saved promotions in this section",
@@ -1503,7 +1509,14 @@
   "managerNoOrders": "No orders yet",
   "managerOrdersTruncated": "Showing {shown} of {total}. Clear these and the rest will move up.",
   "@managerOrdersTruncated": {
-    "placeholders": { "shown": { "type": "int" }, "total": { "type": "int" } }
+    "placeholders": {
+      "shown": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   },
   "noAccessSection": "You don't have access to that section",
   "stripeBridgeReturnTitle": "Payments account set up",
@@ -1670,7 +1683,14 @@
   "managerClosedPartiallyPaid": "PART IN PERSON",
   "managerCloseTabAlreadyPaid": "{paid} was already collected in the app. {remaining} left for you to collect in person.",
   "@managerCloseTabAlreadyPaid": {
-    "placeholders": { "paid": {"type": "String"}, "remaining": {"type": "String"} }
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
   },
   "managerClosedUnpaid": "Unpaid",
   "managerClosedAbandoned": "Never closed",

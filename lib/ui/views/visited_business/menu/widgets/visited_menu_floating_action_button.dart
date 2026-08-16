@@ -15,7 +15,7 @@ import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubi
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_snackbars.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Iconsax;
 import 'package:share_plus/share_plus.dart';
 
 class MenuFloatingActionButton extends StatelessWidget {
@@ -61,10 +61,10 @@ class MenuFloatingActionButton extends StatelessWidget {
             }
           },
           tooltip: active ? S.current.groupOrderViewOrder : S.current.groupOrderEntryCta,
-          iconSize: 25,
+          iconSize: 26,
           diameter: 38,
           depth: 4,
-          iconData: active ? Icons.receipt_long_rounded : Icons.groups_rounded,
+          iconData: active ? Iconsax.receipt_1_outline : Iconsax.receipt_add_outline,
         );
       },
     );

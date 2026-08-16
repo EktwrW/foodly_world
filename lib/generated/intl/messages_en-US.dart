@@ -322,6 +322,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Add to your favorites",
     ),
     "addYoutubeUrl": MessageLookupByLibrary.simpleMessage("Add YouTube URL"),
+    "addedToFavorites": MessageLookupByLibrary.simpleMessage(
+      "added to your favorites",
+    ),
+    "addedToFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "added to your favorites",
+    ),
     "address": MessageLookupByLibrary.simpleMessage("Address"),
     "admin": MessageLookupByLibrary.simpleMessage("Administrator"),
     "aiMenuImportAnalyzeCta": MessageLookupByLibrary.simpleMessage(
@@ -1438,6 +1444,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Coming very soon to iPhone! Foodly arrives on the App Store during June 2026.",
     ),
     "italian": MessageLookupByLibrary.simpleMessage("Italian"),
+    "item": MessageLookupByLibrary.simpleMessage("Item"),
     "itemAvailable": MessageLookupByLibrary.simpleMessage("Available Item"),
     "itemCreatedSuccess": MessageLookupByLibrary.simpleMessage(
       "Item created successfully",
@@ -1974,6 +1981,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Flavors near you, soon",
     ),
+    "promotion": MessageLookupByLibrary.simpleMessage("Promotion"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
     "qrSavedToGallery": MessageLookupByLibrary.simpleMessage(
@@ -2037,6 +2045,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Remove this time period",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remove video"),
+    "removedFromFavorites": MessageLookupByLibrary.simpleMessage(
+      "removed from your favorites",
+    ),
+    "removedFromFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "removed from your favorites",
+    ),
     "reorder": MessageLookupByLibrary.simpleMessage("Reorder"),
     "reportContent": MessageLookupByLibrary.simpleMessage("Report"),
     "reportContentSubtitle": MessageLookupByLibrary.simpleMessage(

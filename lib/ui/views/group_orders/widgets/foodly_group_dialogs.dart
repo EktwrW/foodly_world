@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
 /// Shell de diálogo Foodly (refinamiento UI pre-F4a): bordes 24, título
 /// centrado, CTA neumórfico y cancelar discreto — el MISMO lenguaje visual
@@ -13,6 +11,7 @@ class FoodlyDialogShell extends StatelessWidget {
   final IconData? icon;
   final Widget child;
   final List<Widget> actions;
+  final Color? backgroundColor;
 
   const FoodlyDialogShell({
     super.key,
@@ -20,12 +19,14 @@ class FoodlyDialogShell extends StatelessWidget {
     this.icon,
     required this.child,
     required this.actions,
+    this.backgroundColor = Colors.white,
   });
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: backgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
         child: Column(
@@ -63,7 +64,7 @@ Future<bool> showFoodlyConfirm(
         CustomNeumorphicButton(
           text: confirmText ?? S.current.confirm,
           disabled: false,
-          margin: EdgeInsets.zero,
+          margin: const EdgeInsets.only(bottom: 16),
           onPressed: () => Navigator.pop(ctx, true),
         ),
         TextButton(
@@ -71,7 +72,7 @@ Future<bool> showFoodlyConfirm(
           child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
         ),
       ],
-      child: Text(message, style: FoodlyTextStyles.label, textAlign: TextAlign.center),
+      child: Text(message, style: FoodlyTextStyles.label, textAlign: TextAlign.center).paddingVertical(16),
     ),
   );
   return ok ?? false;

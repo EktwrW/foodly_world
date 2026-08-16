@@ -51,7 +51,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
           CustomNeumorphicButton(
             text: S.current.confirm,
             disabled: false,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.symmetric(vertical: 6),
             onPressed: () => Navigator.pop(ctx, controller.text),
           ),
           TextButton(
@@ -106,8 +106,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
         // cuenta cerrada con el checklist a medias seguía diciéndolo y el tap
         // era silencio (e2e 2026-08-08).
         final canCheck = order.isConfirmed &&
-            (!order.allItemsDelivered ||
-                order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
+            (!order.allItemsDelivered || order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
 
         return Scaffold(
           appBar: AppBar(
@@ -156,10 +155,8 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          S.current.managerItemsDelivered(
-                              order.deliveredItemsCount, order.liveItemsCount),
-                          style: FoodlyTextStyles.captionBold
-                              .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                          S.current.managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
+                          style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
                         ),
                       ),
                     ],
@@ -172,14 +169,13 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
                     child: Row(
                       children: [
-                        const Icon(Icons.touch_app_rounded,
-                            size: 13, color: FoodlyThemes.secondaryFoodly),
+                        const Icon(Icons.touch_app_rounded, size: 13, color: FoodlyThemes.secondaryFoodly),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             S.current.managerChecklistHint,
-                            style: FoodlyTextStyles.caption
-                                .copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
+                            style:
+                                FoodlyTextStyles.caption.copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
                           ),
                         ),
                       ],
@@ -218,7 +214,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                         CustomNeumorphicButton(
                           text: next.$1,
                           disabled: false,
-                          margin: EdgeInsets.zero,
+                          margin: const EdgeInsets.symmetric(vertical: 6),
                           onPressed: () => cubit.advanceFulfillment(order.uuid, next.$2.name),
                         ),
                         // Saltable (decisión de producto): entregar TODO de una,
@@ -241,13 +237,11 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.check_circle_rounded,
-                                  color: Color(0xFF0B8A40), size: 18),
+                              const Icon(Icons.check_circle_rounded, color: Color(0xFF0B8A40), size: 18),
                               const SizedBox(width: 6),
                               Text(
                                 S.current.managerBadgeDelivered,
-                                style: FoodlyTextStyles.captionBold
-                                    .copyWith(color: const Color(0xFF0B8A40)),
+                                style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40)),
                               ),
                             ],
                           ),
@@ -483,9 +477,8 @@ class _ParticipantChecklist extends StatelessWidget {
     // única vía a `completed` y esas órdenes siguen listadas en el panel;
     // el backend rechaza todo fulfillment fuera de `confirmed`, así que
     // dejarlo habilitado era regalar 409s en cada tap.
-    final canCheck = order.isConfirmed &&
-        (!order.allItemsDelivered ||
-            order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
+    final canCheck =
+        order.isConfirmed && (!order.allItemsDelivered || order.fulfillmentStatus != GroupFulfillmentStatus.delivered);
 
     // Sin fricción (decisión Hector e2e F4a): tildar el último ítem entrega
     // la orden SOLA, sin confirmaciones — checklist y CTA son dos caminos al
@@ -526,9 +519,7 @@ class _ParticipantChecklist extends StatelessWidget {
             for (final item in items) ...[
               // F4b: separador de tanda cuando la mesa pidió en varias
               // vueltas — la cocina necesita saber qué entró después.
-              if (order.isOpenTab &&
-                  item.batchNo != null &&
-                  item.batchNo != _batchNoBefore(items, item))
+              if (order.isOpenTab && item.batchNo != null && item.batchNo != _batchNoBefore(items, item))
                 Padding(
                   padding: const EdgeInsets.only(top: 6, bottom: 2),
                   child: Text(
@@ -574,8 +565,7 @@ class _ParticipantChecklist extends StatelessWidget {
                             Text(
                               item.name,
                               style: (item.deliveredAt != null || item.isVoided)
-                                  ? FoodlyTextStyles.caption
-                                      .copyWith(decoration: TextDecoration.lineThrough)
+                                  ? FoodlyTextStyles.caption.copyWith(decoration: TextDecoration.lineThrough)
                                   : FoodlyTextStyles.label,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -583,16 +573,15 @@ class _ParticipantChecklist extends StatelessWidget {
                             if (item.isVoided)
                               Text(
                                 S.current.managerVoidedItemTag,
-                                style: FoodlyTextStyles.captionBold
-                                    .copyWith(color: const Color(0xFFB3261E), fontSize: 9),
+                                style:
+                                    FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFFB3261E), fontSize: 9),
                               ),
                           ],
                         ),
                       ),
                       if (item.shared && !item.isVoided)
                         Text(S.current.groupOrderSharedBadge,
-                            style: FoodlyTextStyles.captionBold
-                                .copyWith(color: const Color(0xFF0B8A40), fontSize: 9)),
+                            style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 9)),
                     ],
                   ),
                 ),

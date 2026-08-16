@@ -8,6 +8,7 @@ import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 
@@ -23,6 +24,25 @@ enum FavoriteItemType {
 
   bool get isMenuOrBusinessPage => this == menu || this == businessPage;
   bool get isBusinessCard => this == businessCard;
+
+  String get addedToFavoritesText => switch (this) {
+        businessPage || businessCard => '${S.current.business} ${S.current.addedToFavorites}',
+        menu => '${S.current.menu} ${S.current.addedToFavorites}',
+        foodItem => '${S.current.item} ${S.current.addedToFavorites}',
+        drinkItem => '${S.current.item} ${S.current.addedToFavorites}',
+        comboItem => '${S.current.item} ${S.current.addedToFavorites}',
+        // `promotion` es femenino en es/pt: el adjetivo tiene que concordar.
+        promotion => '${S.current.promotion} ${S.current.addedToFavoritesFem}',
+      };
+
+  String get removedFromFavoritesText => switch (this) {
+        businessPage || businessCard => '${S.current.business} ${S.current.removedFromFavorites}',
+        menu => '${S.current.menu} ${S.current.removedFromFavorites}',
+        foodItem => '${S.current.item} ${S.current.removedFromFavorites}',
+        drinkItem => '${S.current.item} ${S.current.removedFromFavorites}',
+        comboItem => '${S.current.item} ${S.current.removedFromFavorites}',
+        promotion => '${S.current.promotion} ${S.current.removedFromFavoritesFem}',
+      };
 }
 
 /// Un widget que encapsula la funcionalidad de favoritos integrándose con el FavoritesCubit
@@ -304,14 +324,16 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   bool _isFirstBuild = true;
   // Flag para mantener el estado previo de favorito
   bool _wasFavorite = false;
-  
+
   /// Determina si el elemento actual es favorito basado en su tipo
   bool _isFavorite(FavoritesState state) {
     if (widget.itemId.isEmpty) return false;
 
     return state.maybeWhen(
       loaded: (vm) => switch (widget.type) {
-        FavoriteItemType.businessPage || FavoriteItemType.businessCard => vm.favoriteBusinessIds.contains(widget.itemId),
+        FavoriteItemType.businessPage ||
+        FavoriteItemType.businessCard =>
+          vm.favoriteBusinessIds.contains(widget.itemId),
         FavoriteItemType.menu => vm.favoriteMenuIds.contains(widget.itemId),
         FavoriteItemType.promotion => vm.savedPromotionIds.contains(widget.itemId),
         _ => vm.favoriteItemIds.contains(widget.itemId),
@@ -332,6 +354,18 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         FavoriteItemType.promotion => favoritesCubit.togglePromotionFavorite(widget.item as PromotionDM),
       };
 
+  static const _avisoDuracion = Duration(seconds: 3);
+
+  void _avisar(BuildContext context, {required bool agregado}) {
+    if (widget.itemId.isEmpty) return;
+
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+    agregado
+        ? FoodlySnackbars.successGeneric(context, widget.type.addedToFavoritesText, duration: _avisoDuracion)
+        : FoodlySnackbars.infoGeneric(context, widget.type.removedFromFavoritesText, duration: _avisoDuracion);
+  }
+
   @override
   Widget build(BuildContext context) {
     final favoritesCubit = context.read<FavoritesCubit>();
@@ -346,22 +380,22 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       builder: (context, state) {
         // Determinar si el ítem es favorito actualmente
         final isFavorite = _isFavorite(state);
-        
+
         // Determinar si debemos animar basado en el cambio de estado
         // Solo animamos cuando:
         // 1. No es el primer renderizado (evitar animación en la carga inicial)
         // 2. El elemento es ahora favorito (no animamos al quitar favorito)
         // 3. No era favorito antes (sólo animamos cuando cambia de no-favorito a favorito)
         bool shouldAnimate = false;
-        
+
         if (!_isFirstBuild && isFavorite && !_wasFavorite) {
           shouldAnimate = true;
         }
-        
+
         // Actualizamos nuestros flags de estado
         _wasFavorite = isFavorite;
         _isFirstBuild = false;
-        
+
         return UIFavoriteWidget(
           key: widget.key,
           addFavoriteIcon: widget.addFavoriteIcon,
@@ -371,6 +405,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             // Modo invitado (5.1.1.v): guardar favoritos requiere cuenta.
             if (!GuestGuard.requireAuth(GuestGateAction.favorite)) return;
             _toggleFavorite(favoritesCubit);
+            _avisar(context, agregado: !isFavorite);
           },
           iconSize: widget.iconSize,
           diameter: widget.diameter,

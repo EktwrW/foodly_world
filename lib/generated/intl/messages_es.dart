@@ -338,6 +338,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "addYoutubeUrl": MessageLookupByLibrary.simpleMessage(
       "Agregar URL de YouTube",
     ),
+    "addedToFavorites": MessageLookupByLibrary.simpleMessage(
+      "añadido a tus favoritos",
+    ),
+    "addedToFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "añadida a tus favoritos",
+    ),
     "address": MessageLookupByLibrary.simpleMessage("Dirección"),
     "admin": MessageLookupByLibrary.simpleMessage("Administrador"),
     "aiMenuImportAnalyzeCta": MessageLookupByLibrary.simpleMessage(
@@ -1496,6 +1502,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "¡Muy pronto en iPhone! Foodly llega a la App Store durante junio de 2026.",
     ),
     "italian": MessageLookupByLibrary.simpleMessage("Italiana"),
+    "item": MessageLookupByLibrary.simpleMessage("Item"),
     "itemAvailable": MessageLookupByLibrary.simpleMessage(
       "Artículo disponible",
     ),
@@ -2076,6 +2083,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Pronto, sabores cerca tuyo",
     ),
+    "promotion": MessageLookupByLibrary.simpleMessage("Promo"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Días de promoción"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promos"),
     "qrSavedToGallery": MessageLookupByLibrary.simpleMessage(
@@ -2151,6 +2159,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Eliminar este periodo de tiempo",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remover video"),
+    "removedFromFavorites": MessageLookupByLibrary.simpleMessage(
+      "eliminado de tus favoritos",
+    ),
+    "removedFromFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "eliminada de tus favoritos",
+    ),
     "reorder": MessageLookupByLibrary.simpleMessage("Reordenar"),
     "reportContent": MessageLookupByLibrary.simpleMessage("Reportar"),
     "reportContentSubtitle": MessageLookupByLibrary.simpleMessage(

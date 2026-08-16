@@ -337,6 +337,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "addYoutubeUrl": MessageLookupByLibrary.simpleMessage(
       "Adicionar URL do YouTube",
     ),
+    "addedToFavorites": MessageLookupByLibrary.simpleMessage(
+      "adicionado aos favoritos",
+    ),
+    "addedToFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "adicionada aos favoritos",
+    ),
     "address": MessageLookupByLibrary.simpleMessage("Morada"),
     "admin": MessageLookupByLibrary.simpleMessage("Administrador"),
     "aiMenuImportAnalyzeCta": MessageLookupByLibrary.simpleMessage(
@@ -1491,6 +1497,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Muito em breve no iPhone! O Foodly chega à App Store durante junho de 2026.",
     ),
     "italian": MessageLookupByLibrary.simpleMessage("Italiana"),
+    "item": MessageLookupByLibrary.simpleMessage("Item"),
     "itemAvailable": MessageLookupByLibrary.simpleMessage("Item disponível"),
     "itemCreatedSuccess": MessageLookupByLibrary.simpleMessage(
       "Item criado com sucesso",
@@ -2063,6 +2070,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Sabores perto de ti, em breve",
     ),
+    "promotion": MessageLookupByLibrary.simpleMessage("Promoção"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Dias de promoção"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promoções"),
     "qrSavedToGallery": MessageLookupByLibrary.simpleMessage(
@@ -2128,6 +2136,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Remover este período de tempo",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remover vídeo"),
+    "removedFromFavorites": MessageLookupByLibrary.simpleMessage(
+      "removido dos favoritos",
+    ),
+    "removedFromFavoritesFem": MessageLookupByLibrary.simpleMessage(
+      "removida dos favoritos",
+    ),
     "reorder": MessageLookupByLibrary.simpleMessage("Reordenar"),
     "reportContent": MessageLookupByLibrary.simpleMessage("Denunciar"),
     "reportContentSubtitle": MessageLookupByLibrary.simpleMessage(

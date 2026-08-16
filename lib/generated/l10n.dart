@@ -597,6 +597,46 @@ class S {
     );
   }
 
+  /// `added to your favorites`
+  String get addedToFavorites {
+    return Intl.message(
+      'added to your favorites',
+      name: 'addedToFavorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `removed from your favorites`
+  String get removedFromFavorites {
+    return Intl.message(
+      'removed from your favorites',
+      name: 'removedFromFavorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `added to your favorites`
+  String get addedToFavoritesFem {
+    return Intl.message(
+      'added to your favorites',
+      name: 'addedToFavoritesFem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `removed from your favorites`
+  String get removedFromFavoritesFem {
+    return Intl.message(
+      'removed from your favorites',
+      name: 'removedFromFavoritesFem',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add YouTube URL`
   String get addYoutubeUrl {
     return Intl.message(
@@ -2619,6 +2659,11 @@ class S {
     return Intl.message('Items', name: 'items', desc: '', args: []);
   }
 
+  /// `Item`
+  String get item {
+    return Intl.message('Item', name: 'item', desc: '', args: []);
+  }
+
   /// `A-Z`
   String get alphabetical {
     return Intl.message('A-Z', name: 'alphabetical', desc: '', args: []);
@@ -3457,6 +3502,11 @@ class S {
   /// `Promotions`
   String get promotions {
     return Intl.message('Promotions', name: 'promotions', desc: '', args: []);
+  }
+
+  /// `Promotion`
+  String get promotion {
+    return Intl.message('Promotion', name: 'promotion', desc: '', args: []);
   }
 
   /// `Saved Promotions`

@@ -10,13 +10,13 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart' sh
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/qr/foodly_qr_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:gal/gal.dart';
 import 'package:logger/logger.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 bool _hasRealLogo(String? url) => url != null && url.isNotEmpty && url != FoodlyStrings.LOGO_PLACEHOLDER;
 
@@ -251,24 +251,7 @@ class MenuQrPoster extends StatelessWidget {
           const SizedBox(height: 18),
 
           // ── QR del menú ──
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: _purple.withValues(alpha: 0.16), width: 1.4),
-            ),
-            child: QrImageView(
-              data: menuUrl,
-              size: 208,
-              backgroundColor: Colors.white,
-              eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: _purple),
-              dataModuleStyle: const QrDataModuleStyle(
-                dataModuleShape: QrDataModuleShape.square,
-                color: Color(0xFF1A1A1A),
-              ),
-            ),
-          ),
+          FoodlyQrCard(data: menuUrl, size: 208),
           const SizedBox(height: 10),
           Text(
             S.current.scanForMenu,

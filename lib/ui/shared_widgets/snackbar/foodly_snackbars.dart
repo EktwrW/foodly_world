@@ -6,7 +6,10 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 class FoodlySnackbars {
   const FoodlySnackbars._();
 
-  static void successGeneric(BuildContext context, String? message) {
+  /// `duration` con el valor de siempre por defecto: los avisos que ya
+  /// existían no cambian de comportamiento por pasar a ser configurable.
+  static void successGeneric(BuildContext context, String? message,
+      {Duration duration = const Duration(seconds: 4)}) {
     if (context.mounted) {
       final snackBar = SnackBarWdg(
         type: SnackBarType.success,
@@ -15,7 +18,7 @@ class FoodlySnackbars {
           textAlign: TextAlign.center,
           style: FoodlyTextStyles.snackBarLightBody,
         ),
-        duration: const Duration(seconds: 4),
+        duration: duration,
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));

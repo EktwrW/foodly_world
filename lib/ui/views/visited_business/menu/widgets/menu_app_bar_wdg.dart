@@ -30,45 +30,47 @@ class SecondaryMenuSliverAppBar extends StatelessWidget {
           collapsedHeight: 66,
           surfaceTintColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ToggleSwitch(
-                initialLabelIndex: record.$2,
-                onToggle: (i) {
-                  record.$1?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
-                  cubit.updateView(i ?? 0);
-                },
-                animate: true,
-                animationDuration: 500,
-                minHeight: 32,
-                labels: record.$3,
-                minWidth: context.screenWidth,
-                cornerRadius: 6.0,
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.white,
-                totalSwitches: MenuCategory.values.length,
-                customTextStyles: [
-                  FoodlyTextStyles.toogleButtonText,
-                  FoodlyTextStyles.toogleButtonText,
-                  FoodlyTextStyles.toogleButtonText,
-                ],
-                borderWidth: 1.5,
-                borderColor: const [
-                  FoodlyThemes.primaryFoodly,
-                  FoodlyThemes.primaryFoodly,
-                  FoodlyThemes.tertiaryFoodly,
-                  FoodlyThemes.primaryFoodly,
-                  FoodlyThemes.primaryFoodly,
-                ],
-                dividerColor: FoodlyThemes.secondaryFoodly,
-                activeBgColors: const [
-                  [FoodlyThemes.primaryFoodly],
-                  [FoodlyThemes.primaryFoodly],
-                  [FoodlyThemes.primaryFoodly],
-                ],
-              ),
-            ],
+          title: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ToggleSwitch(
+                  initialLabelIndex: record.$2,
+                  onToggle: (i) {
+                    record.$1?.animateToPage(i ?? 0, duration: Durations.short4, curve: Curves.decelerate);
+                    cubit.updateView(i ?? 0);
+                  },
+                  animate: true,
+                  animationDuration: 500,
+                  minHeight: 32,
+                  labels: record.$3,
+                  minWidth: context.screenWidth,
+                  cornerRadius: 6.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.white,
+                  totalSwitches: MenuCategory.values.length,
+                  customTextStyles: [
+                    FoodlyTextStyles.toogleButtonText,
+                    FoodlyTextStyles.toogleButtonText,
+                    FoodlyTextStyles.toogleButtonText,
+                  ],
+                  borderWidth: 1.5,
+                  borderColor: const [
+                    FoodlyThemes.primaryFoodly,
+                    FoodlyThemes.primaryFoodly,
+                    FoodlyThemes.tertiaryFoodly,
+                    FoodlyThemes.primaryFoodly,
+                    FoodlyThemes.primaryFoodly,
+                  ],
+                  dividerColor: FoodlyThemes.secondaryFoodly,
+                  activeBgColors: const [
+                    [FoodlyThemes.primaryFoodly],
+                    [FoodlyThemes.primaryFoodly],
+                    [FoodlyThemes.primaryFoodly],
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },

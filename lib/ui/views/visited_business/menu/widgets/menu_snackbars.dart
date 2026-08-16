@@ -1,8 +1,7 @@
 import 'package:foodly_world/core/core_exports.dart';
-
+import 'package:foodly_world/ui/shared_widgets/qr/foodly_qr_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class MenuSnackbars {
   const MenuSnackbars._();
@@ -16,10 +15,11 @@ class MenuSnackbars {
     final snackBar = SnackBarWdg(
       content: Row(
         children: [
-          QrImageView(
+          FoodlyQrCard(
+            // El ancho total no cambia: el QR encoge lo que crece la
+            // tarjeta, para no empujar al texto de al lado.
             data: menuUrl,
-            backgroundColor: Colors.white,
-            size: context.screenWidth * .46,
+            size: context.screenWidth * .46 - FoodlyQrCard.chrome,
           ),
           Expanded(
             child: Text.rich(

@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
-import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
@@ -199,10 +197,10 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             label: S.current.groupOrderTotal,
             value: formatMoney(isOpen ? order.subtotal : order.totalAmount, order.currency),
             style: FoodlyTextStyles.label,
-          ),
+            valueStyle: FoodlyTextStyles.captionBold,
+          ).paddingBottom(6),
           // Tu parte — solo relevante tras el lock.
-          if (!isOpen) ...[
-            const SizedBox(height: 4),
+          if (!isOpen && order.participants.length > 1) ...[
             _AmountRow(
               label: S.current.groupOrderYourShare,
               value: formatMoney(myShare, order.currency),
@@ -229,7 +227,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             CustomNeumorphicButton(
               text: S.current.groupOrderLockCta,
               disabled: onLock == null || order.items.isEmpty || isBusy,
-              margin: EdgeInsets.zero,
+              margin: const EdgeInsets.only(bottom: 16),
               onPressed: onLock,
             )
           else if (order.isTerminal) ...[
@@ -268,43 +266,20 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                       : S.current.groupOrderPayMyShare(formatMoney(myShare + order.payerFixedFee, order.currency)))
                   : S.current.groupOrderNoBalanceDue,
               disabled: !_canPay,
-              margin: EdgeInsets.zero,
+              margin: const EdgeInsets.only(bottom: 6),
               onPressed: onPay,
             ),
             // Un pago MÍO en vuelo: lo sella el webhook, no la app. Sin esta
             // línea el comensal veía "Sin saldo pendiente" mientras su cobro
             // se confirmaba, y no sabía si había pagado o no.
             if (!_canPay && order.hasProcessingPayment) ...[
-              const SizedBox(height: 6),
               Text(
                 S.current.groupOrderConfirmingPayment,
                 textAlign: TextAlign.center,
                 style: FoodlyTextStyles.caption,
-              ),
+              ).paddingVertical(6),
             ],
-            // El método local del comensal — MB WAY o Bizum, nunca los dos.
-            //
-            // Aquí vivía "Otros métodos de pago", un TextButton permanente que
-            // llevaba a la misma página hosteada. Tenía dos problemas y el
-            // segundo es el grave:
-            //
-            //  · "Otros" no tenía referente. El comensal todavía no había
-            //    visto NINGÚN método —la hoja ni se había abierto— y ya se le
-            //    ofrecían alternativas a algo que no conocía.
-            //  · Y no llevaba a "otros": llevaba a LO MISMO. La página
-            //    dinámica ofrecía tarjeta y carteras, igual que el
-            //    PaymentSheet. Dos botones para el mismo cobro.
-            //
-            // Ahora el backend restringe esa página al método del país de
-            // quien paga, así que el botón puede nombrarlo y ponerle su logo
-            // en vez de esconderlo tras una palabra vaga — y decir la verdad:
-            // es el único camino, porque la hoja nativa no lo pinta (e2e
-            // 2026-08-14, con capturas, aun teniendo la capability activa).
-            //
-            // Outlined y no un tercer estilo: es el secundario de Foodly, el
-            // mismo de "Entrar como invitado" en la portada.
             if (_canPayLocalRail) ...[
-              const SizedBox(height: 8),
               CustomNeumorphicButton(
                 text: switch (hostedRail) {
                   HostedRail.mbWay => S.current.groupOrderPayWithMbWay,
@@ -312,22 +287,22 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                   HostedRail.none => '',
                 },
                 leading: switch (hostedRail) {
-                  HostedRail.mbWay => Brand(Brands.mb_way, size: 20),
+                  HostedRail.mbWay => Brand(Brands.mb_way, size: 38),
                   HostedRail.bizum => Image.asset(
                       'assets/images/bizum_icon.png',
-                      height: 20,
+                      height: 26,
                       // Sin el asset, un cuadro roto dentro del botón de pagar.
                       errorBuilder: (_, __, ___) => const Icon(
                         Icons.smartphone_rounded,
-                        size: 18,
                         color: FoodlyThemes.primaryFoodly,
                       ),
-                    ),
+                    ).paddingVertical(6),
                   HostedRail.none => const SizedBox.shrink(),
                 },
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 type: CustomNeumorphicBtnType.outlined,
                 disabled: false,
-                margin: EdgeInsets.zero,
+                margin: const EdgeInsets.only(top: 6),
                 onPressed: onPayHosted,
               ),
             ],
@@ -358,7 +333,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Brand(Brands.stripe, size: 13),
+                  Brand(Brands.stripe, size: 30),
                   const SizedBox(width: 5),
                   Flexible(
                     child: Text(

@@ -36,7 +36,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  currentBusiness?.name ?? '-',
+                  currentBusiness?.name ?? ' ',
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -62,7 +62,7 @@ class VisitBusinessSliverAppBar extends StatelessWidget {
           ).paddingLeft(16),
           actions: [
             currentBusiness == null
-                ? const LoadingWidgetFoodlyIso(height: 36)
+                ? const SizedBox.shrink()
                 : SizedBox.square(
                     dimension: 48,
                     child: FavoriteButton.forBusinessPage(

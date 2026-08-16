@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
 import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
@@ -12,7 +13,9 @@ import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/qr/foodly_qr_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -28,7 +31,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_fo
 import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -714,15 +717,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     HapticFeedback.mediumImpact();
     await showModalBottomSheet<void>(
       context: context,
+      backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      // SafeArea: un bottom sheet NO aparta solo su contenido de la barra de
-      // gestos de Android — el CTA quedaba pegado a ella, y en gestos a
-      // pantalla completa directamente por debajo (feedback 2026-08-14). Con
-      // `minimum` el respiro existe también donde el sistema no reserva nada
-      // (iPhone con botón, Android con barra clásica), para que la altura del
-      // sheet no cambie de un teléfono a otro.
       builder: (ctx) => SafeArea(
         top: false,
         minimum: const EdgeInsets.only(bottom: 8),
@@ -779,7 +777,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
               CustomNeumorphicButton(
                 text: S.current.groupOrderBackToMenu,
                 disabled: false,
-                margin: EdgeInsets.zero,
+                margin: const EdgeInsets.only(bottom: 6),
                 onPressed: () {
                   Navigator.pop(ctx);
                   _exitOrder(context, order);
@@ -842,100 +840,6 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     if (await _confirm(context, S.current.groupOrderLeaveConfirm) && context.mounted) {
       if (await cubit.leaveOrder() && context.mounted) _exitOrder(context, order);
     }
-  }
-
-  /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
-  Future<void> _onInvite(BuildContext context) async {
-    final cubit = context.read<GroupOrderCubit>();
-    final businessName = cubit.vm.order?.businessName ?? 'Foodly';
-
-    final invite = await cubit.createInvitation();
-    if (!context.mounted) return;
-    final code = invite?.inviteCode ?? invite?.inviteToken;
-    if (code == null) {
-      // e2e 2026-08-08: acá el host INVITA, no se une. Decía "no pudimos
-      // unirte a la orden" —copy del flujo contrario, hecho por otra
-      // persona— y encima tapaba el motivo real que manda el backend.
-      FoodlySnackbars.errorGeneric(
-        context,
-        cubit.lastInviteError ?? S.current.groupOrderInviteFailed,
-      );
-      return;
-    }
-
-    await showModalBottomSheet<void>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(S.current.groupOrderInviteTitle, style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
-              // El QR es el protagonista (filosofía Foodly: escanear, no
-              // tipear); el código corto queda como fallback visible.
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.12),
-                        blurRadius: 18,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: QrImageView(
-                    data: '$kGroupOrderInviteUrlBase$code',
-                    size: 190,
-                    eyeStyle: const QrEyeStyle(
-                      eyeShape: QrEyeShape.circle,
-                      color: FoodlyThemes.primaryFoodly,
-                    ),
-                    dataModuleStyle: const QrDataModuleStyle(
-                      dataModuleShape: QrDataModuleShape.circle,
-                      color: FoodlyThemes.primaryFoodly,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              // Fallback: código tipeable (por si el QR falla o para web).
-              SelectableText(
-                code,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 8,
-                  color: FoodlyThemes.primaryFoodly,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
-              CustomNeumorphicButton(
-                text: S.current.groupOrderInviteShareCta,
-                disabled: false,
-                margin: EdgeInsets.zero,
-                onPressed: () => Share.share(
-                  '${S.current.groupOrderInviteShareMsg(businessName, code)}\n$kGroupOrderInviteUrlBase$code',
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   /// Host: transfiere la titularidad (F2b §A.1). Mismo lenguaje visual que
@@ -1165,10 +1069,13 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: 60,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+      leading: CustomRoundedNeumorphicButton(
+        iconSize: 26,
+        diameter: 32,
+        iconData: Bootstrap.caret_left_fill,
         onPressed: () => _leaveScreen(context, order),
-      ),
+      ).paddingSymmetric(vertical: 8, horizontal: 8),
+      leadingWidth: 60,
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
@@ -1185,12 +1092,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         // sigue recibiendo gente DESPUÉS del primer envío — el BE lo permite
         // explícitamente (join usa isEditableCart) y el FE lo negaba usando
         // `isOpen` (e2e 2026-08-06).
-        if (order != null && order.isEditableCart)
-          IconButton(
-            icon: const Icon(Icons.person_add_alt_1_rounded, color: Colors.white),
-            tooltip: S.current.groupOrderInviteCta,
-            onPressed: () => _onInvite(context),
-          ),
+
         if (canTransfer || canUnlock || canDelete || canLeave)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
@@ -1331,6 +1233,74 @@ class _Content extends StatelessWidget {
     return !(coverables.length == 1 && coverables.first.uuid == vm.myParticipantUuid);
   }
 
+  /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
+  Future<void> _onInvite(BuildContext context) async {
+    final cubit = context.read<GroupOrderCubit>();
+    final businessName = cubit.vm.order?.businessName ?? 'Foodly';
+
+    final invite = await cubit.createInvitation();
+    if (!context.mounted) return;
+    final code = invite?.inviteCode ?? invite?.inviteToken;
+    if (code == null) {
+      // e2e 2026-08-08: acá el host INVITA, no se une. Decía "no pudimos
+      // unirte a la orden" —copy del flujo contrario, hecho por otra
+      // persona— y encima tapaba el motivo real que manda el backend.
+      FoodlySnackbars.errorGeneric(
+        context,
+        cubit.lastInviteError ?? S.current.groupOrderInviteFailed,
+      );
+      return;
+    }
+
+    await showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(S.current.groupOrderInviteTitle, style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              // El QR es el protagonista (filosofía Foodly: escanear, no
+              // tipear); el código corto queda como fallback visible.
+              Center(
+                child: FoodlyQrCard(data: '$kGroupOrderInviteUrlBase$code'),
+              ),
+              const SizedBox(height: 14),
+              // Fallback: código tipeable (por si el QR falla o para web).
+              SelectableText(
+                code,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 8,
+                  color: FoodlyThemes.primaryFoodly,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              CustomNeumorphicButton(
+                text: S.current.groupOrderInviteShareCta,
+                disabled: false,
+                margin: EdgeInsets.zero,
+                onPressed: () => Share.share(
+                  '${S.current.groupOrderInviteShareMsg(businessName, code)}\n$kGroupOrderInviteUrlBase$code',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -1351,8 +1321,19 @@ class _Content extends StatelessWidget {
                   _ClientFulfillmentBanner(order: order),
                   const SizedBox(height: 12),
                 ],
-                _SectionTitle(S.current.groupOrderParticipants),
-                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _SectionTitle(S.current.groupOrderParticipants),
+                    if (order.isEditableCart)
+                      CustomRoundedNeumorphicButton(
+                        diameter: 26,
+                        tooltip: S.current.groupOrderInviteCta,
+                        onPressed: () => _onInvite(context),
+                        child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 19),
+                      ),
+                  ],
+                ).paddingBottom(16),
                 // Ítems agrupados por participante (Expansible). Mi grupo abre
                 // expandido; el estado de expansión sobrevive a refreshes del
                 // cubit gracias a la key estable por uuid.
