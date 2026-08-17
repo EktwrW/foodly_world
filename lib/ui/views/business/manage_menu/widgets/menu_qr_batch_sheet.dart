@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show FilteringTextInputFormatter;
+import 'package:flutter/services.dart' show FilteringTextInputFormatter, rootBundle;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
@@ -18,6 +18,7 @@ import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_qr_poste
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/qr_batch_spec.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:share_plus/share_plus.dart';
 
 /// Genera el lote de QRs por mesa y lo entrega al share sheet.
@@ -46,6 +47,11 @@ Future<void> downloadMenuQrBatch(
       await resolveImage(AssetImage(FoodlyAssets.logo.assetPath)),
     );
 
+    // Quicksand, la misma familia que usa la app: sin esto el PDF cae a
+    // Helvetica y el cartel impreso se ve distinto del que se descarga suelto.
+    // Si no cargan, el PDF sale igual con la fuente estándar.
+    final (baseFont, boldFont) = await _quicksand();
+
     final bytes = await MenuQrBatchPdf.build(
       businessName: businessName,
       labels: labels,
@@ -54,6 +60,8 @@ Future<void> downloadMenuQrBatch(
       foodlyLogo: foodlyLogo,
       scanHint: S.current.scanForMenu,
       poweredBy: S.current.poweredBy,
+      baseFont: baseFont,
+      boldFont: boldFont,
     );
 
     final safe = businessName.replaceAll(RegExp(r'[^\w\s-]'), '').trim().replaceAll(RegExp(r'\s+'), '_');
@@ -75,6 +83,21 @@ Future<void> downloadMenuQrBatch(
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       FoodlySnackbars.errorGeneric(context, S.current.shareMenuError);
     }
+  }
+}
+
+/// Carga la tipografía de la app para empotrarla en el PDF. Devuelve
+/// `(null, null)` si algo falla — el lote se genera igual, solo que con la
+/// fuente estándar del PDF.
+Future<(pw.Font?, pw.Font?)> _quicksand() async {
+  try {
+    return (
+      pw.Font.ttf(await rootBundle.load('assets/fonts/Quicksand-Medium.ttf')),
+      pw.Font.ttf(await rootBundle.load('assets/fonts/Quicksand-Bold.ttf')),
+    );
+  } catch (e) {
+    di<Logger>().w('Quicksand no disponible para el PDF, se usa la fuente estandar: $e');
+    return (null, null);
   }
 }
 
