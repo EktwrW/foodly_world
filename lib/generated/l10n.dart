@@ -6294,6 +6294,11 @@ class S {
     );
   }
 
+  /// `Share`
+  String get share {
+    return Intl.message('Share', name: 'share', desc: '', args: []);
+  }
+
   /// `Discover the best food spots near you with Foodly — explore menus, grab promotions, and book tables, all in one app!`
   String get shareAppMessage {
     return Intl.message(

@@ -2315,6 +2315,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setupProfessionalProfile": MessageLookupByLibrary.simpleMessage(
       "Configure o seu perfil profissional",
     ),
+    "share": MessageLookupByLibrary.simpleMessage("Partilhar"),
     "shareAppMessage": MessageLookupByLibrary.simpleMessage(
       "Descubra os melhores locais perto de si com o Foodly — explore menus, aproveite promocoes e reserve mesa, tudo numa unica app!",
     ),
