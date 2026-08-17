@@ -57,6 +57,61 @@ def verify_payment_env!
   UI.message("Stripe: …#{key[-4..]} · merchant: #{ENV['APPLE_MERCHANT_ID'] || 'merchant.solutions.foodly.app'}")
 end
 
+# Sube a Crashlytics los dSYM del archive ENTERO: Runner MÁS los de
+# Flutter.framework, App.framework y cada plugin nativo.
+#
+# No se solapa con la fase "FlutterFire" del pbxproj, que sube únicamente
+# `Runner.app.dSYM`. Sin esto, un crash dentro de Pusher, Stripe o Google Maps
+# llega a Crashlytics sin simbolizar.
+#
+# El binario dejó de estar en Pods cuando Firebase pasó a SPM (be690c2, Flutter
+# 3.44). Se busca en el mismo orden que usa la fase del pbxproj. Las rutas se
+# anclan con `__dir__` y no con el CWD: este archivo mezclaba `Dir.chdir("../..")`
+# —que asume `ios/fastlane`— con `"./Runner/..."` —que asume `ios/`—, y solo una
+# de las dos podía ser cierta.
+def upload_dsyms_to_crashlytics!
+  ios_dir  = File.expand_path("..", __dir__)
+  repo_dir = File.expand_path("../..", __dir__)
+
+  dsyms_dir = File.join(repo_dir, "build/ios/archive/Runner.xcarchive/dSYMs")
+  unless File.directory?(dsyms_dir)
+    UI.important("⚠️  No dSYMs directory found — skipping Crashlytics upload")
+    return
+  end
+
+  binario = [
+    File.join(ios_dir, "Pods/FirebaseCrashlytics/upload-symbols"),
+    File.join(repo_dir, "build/ios/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols"),
+    *Dir.glob(File.expand_path("~/Library/Developer/Xcode/DerivedData/*/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/upload-symbols")),
+  ].find { |ruta| File.exist?(ruta) }
+
+  if binario.nil?
+    UI.important("⚠️  No encontré `upload-symbols`: los dSYM del archive NO se subieron.")
+    UI.important("   Buscado en Pods, en build/ios/SourcePackages y en DerivedData.")
+    return
+  end
+
+  dsym_zip = File.join(File.dirname(dsyms_dir), "dSYMs.zip")
+  # `zip -r` sobre un archivo que ya existe AGREGA en vez de reemplazar.
+  File.delete(dsym_zip) if File.exist?(dsym_zip)
+
+  UI.message("Zipping dSYMs from: #{dsyms_dir}")
+  Dir.chdir(dsyms_dir) do
+    sh("zip", "-r", dsym_zip, ".")
+  end
+
+  UI.message("upload-symbols: #{binario}")
+  upload_symbols_to_crashlytics(
+    dsym_path: dsym_zip,
+    gsp_path: File.join(ios_dir, "Runner/GoogleService-Info.plist"),
+    binary_path: binario,
+  )
+  UI.success("✅ dSYMs uploaded to Crashlytics!")
+rescue => e
+  # El IPA ya está compilado: que falle el monitoreo no puede impedir publicarlo.
+  UI.important("⚠️  Falló la subida de dSYMs (#{e.message}) — la lane sigue.")
+end
+
 platform :ios do
 
   desc "Build Flutter IPA and upload to TestFlight"
@@ -88,24 +143,7 @@ platform :ios do
     UI.message("Found IPA: #{ipa_path}")
 
     # Step 5: Upload dSYMs to Firebase Crashlytics
-    dsyms_dir = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
-    if dsyms_dir && File.directory?(File.expand_path(dsyms_dir))
-      dsyms_dir = File.expand_path(dsyms_dir)
-      dsym_zip = File.join(File.dirname(dsyms_dir), "dSYMs.zip")
-      UI.message("Zipping dSYMs from: #{dsyms_dir}")
-      Dir.chdir(dsyms_dir) do
-        sh("zip", "-r", dsym_zip, ".")
-      end
-      UI.message("Uploading dSYMs zip: #{dsym_zip}")
-      upload_symbols_to_crashlytics(
-        dsym_path: dsym_zip,
-        gsp_path: "./Runner/GoogleService-Info.plist",
-        binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
-      )
-      UI.success("✅ dSYMs uploaded to Crashlytics!")
-    else
-      UI.important("⚠️  No dSYMs directory found — skipping Crashlytics upload")
-    end
+    upload_dsyms_to_crashlytics!
 
     # Step 6: Upload to TestFlight
     upload_to_testflight(
@@ -160,24 +198,7 @@ platform :ios do
     ipa_path = File.expand_path(ipa_path)
 
     # Step 5: Upload dSYMs to Firebase Crashlytics
-    dsyms_dir = Dir.glob("../../build/ios/archive/Runner.xcarchive/dSYMs").first
-    if dsyms_dir && File.directory?(File.expand_path(dsyms_dir))
-      dsyms_dir = File.expand_path(dsyms_dir)
-      dsym_zip = File.join(File.dirname(dsyms_dir), "dSYMs.zip")
-      UI.message("Zipping dSYMs from: #{dsyms_dir}")
-      Dir.chdir(dsyms_dir) do
-        sh("zip", "-r", dsym_zip, ".")
-      end
-      UI.message("Uploading dSYMs zip: #{dsym_zip}")
-      upload_symbols_to_crashlytics(
-        dsym_path: dsym_zip,
-        gsp_path: "./Runner/GoogleService-Info.plist",
-        binary_path: "./Pods/FirebaseCrashlytics/upload-symbols",
-      )
-      UI.success("✅ dSYMs uploaded to Crashlytics!")
-    else
-      UI.important("⚠️  No dSYMs directory found — skipping Crashlytics upload")
-    end
+    upload_dsyms_to_crashlytics!
 
     # Step 6: Upload to App Store
     upload_to_app_store(
