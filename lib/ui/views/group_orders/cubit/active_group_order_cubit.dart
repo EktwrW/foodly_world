@@ -3,6 +3,7 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/group_order_ongoing_notification_service.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
+import 'package:foodly_world/core/services/pending_table.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:logger/logger.dart';
 
@@ -117,9 +118,24 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     if (isActiveFor(businessUuid)) return true;
     if (_busy) return false;
     _busy = true;
-    final res = await _repo.createGroupOrder(businessUuid: businessUuid, origin: 'menu');
+    // Mesa del QR, si el comensal entró escaneando el de SU mesa. `null` en
+    // todo el resto de los casos, que es como venía funcionando: sin mesa, el
+    // request es idéntico al de antes salvo por un campo que no se manda.
+    //
+    // `origin: 'qr'` solo cuando de verdad vino del QR — hasta ahora era
+    // siempre 'menu'. Es descriptivo (nada se bifurca por él en el backend),
+    // pero deja de mentirle a la analítica.
+    final tableLabel = PendingTable.forBusiness(businessUuid);
+    final res = await _repo.createGroupOrder(
+      businessUuid: businessUuid,
+      origin: tableLabel != null ? 'qr' : 'menu',
+      tableLabel: tableLabel,
+    );
     final ok = res.when(
       success: (r) {
+        // Se consume solo si la orden se creó. Si falló, la mesa queda
+        // estacionada y el reintento la conserva.
+        PendingTable.clearFor(businessUuid);
         emit(r.groupOrder);
         return true;
       },

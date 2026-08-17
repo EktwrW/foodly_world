@@ -33,6 +33,7 @@ class GroupOrderRepo {
     String? branchUuid,
     String? reservationUuid,
     String? origin,
+    String? tableLabel,
   }) async {
     try {
       return ApiResult.success(await _client.createGroupOrder(
@@ -40,6 +41,7 @@ class GroupOrderRepo {
         branchUuid: branchUuid,
         reservationUuid: reservationUuid,
         origin: origin,
+        tableLabel: tableLabel,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
