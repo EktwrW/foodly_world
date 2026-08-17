@@ -28,6 +28,9 @@ abstract class GroupOrderClient {
     @Field('branch_uuid') String? branchUuid,
     @Field('reservation_uuid') String? reservationUuid,
     @Field('origin') String? origin, // menu | qr | reservation
+    // Mesa del QR pegado en la mesa. Opcional: el backend la usa para RELLENAR
+    // un hueco, nunca para pisar una mesa ya asignada por el manager.
+    @Field('table_label') String? tableLabel,
   });
 
   /// F2c §B.1: el host elige el modo de división al cerrar

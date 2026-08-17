@@ -8,6 +8,7 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/routing/no_access_notice.dart';
 import 'package:foodly_world/core/routing/route_hierarchy.dart';
 import 'package:foodly_world/core/services/pending_group_join.dart';
+import 'package:foodly_world/core/services/pending_table.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/no_access_snackbar_gate.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
 import 'package:foodly_world/ui/views/analytics/analytics_dashboard_page.dart';
@@ -320,6 +321,12 @@ class AppRouter {
         // más abajo lo canjea apenas haya sesión. Lógica y tests en
         // PendingGroupJoin.
         PendingGroupJoin.captureFromUri(state.uri, isLoggedIn: authSessService.isLoggedIn);
+
+        // Mesa del QR (`/{businessUuid}?t=12`). Se rescata ACÁ porque el
+        // redirect de publicMenu → visitBusiness arma el destino con
+        // `replaceFirst(':id', uuid)` y descarta el query string: más abajo
+        // el `?t=` ya no existe. Ver PendingTable.
+        PendingTable.captureFromUri(state.uri);
 
         // Public menu subdomain — no auth, no session, no redirects.
         if (_isMenuSubdomain) return null;

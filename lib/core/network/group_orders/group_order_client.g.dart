@@ -77,6 +77,7 @@ class _GroupOrderClient implements GroupOrderClient {
     String? branchUuid,
     String? reservationUuid,
     String? origin,
+    String? tableLabel,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -87,6 +88,7 @@ class _GroupOrderClient implements GroupOrderClient {
       'branch_uuid': branchUuid,
       'reservation_uuid': reservationUuid,
       'origin': origin,
+      'table_label': tableLabel,
     };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
