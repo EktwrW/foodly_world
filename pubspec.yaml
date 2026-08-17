@@ -74,6 +74,7 @@ dependencies:
   nova_places_api: ^2.0.0
   package_info_plus: ^8.1.3
   path_provider: ^2.1.2
+  pdf: ^3.12.0 # F-QR: lote de QRs por mesa en un PDF imprimible
   pusher_channels_flutter: ^2.2.1 # F3a realtime group orders
   mobile_scanner: ^7.1.2 # F3a: escanear QR de invitación (nativo — requiere release)
   qr_flutter: ^4.1.0
