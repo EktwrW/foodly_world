@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -17,6 +18,8 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:gal/gal.dart';
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 bool _hasRealLogo(String? url) => url != null && url.isNotEmpty && url != FoodlyStrings.LOGO_PLACEHOLDER;
 
@@ -102,12 +105,33 @@ Future<void> downloadMenuQrPng(
 
     await Gal.putImageBytes(bytes, name: fileName);
 
+    // Copia en temporales para poder compartirla. `Gal` guarda en la galería
+    // pero no devuelve una ruta, así que no hay archivo que pasarle al share
+    // sheet: hay que escribir el PNG aparte.
+    //
+    // Va en su propio try: si falla (disco lleno, por ejemplo), la imagen YA
+    // quedó en la galería y sería mentira reportar un error. Se degrada a
+    // mostrar solo "Ver".
+    File? shareable;
+    try {
+      shareable = File('${(await getTemporaryDirectory()).path}/$fileName.png');
+      await shareable.writeAsBytes(bytes, flush: true);
+    } catch (e) {
+      di<Logger>().w('QR saved to gallery but temp copy failed, share disabled: $e');
+      shareable = null;
+    }
+
     if (context.mounted) {
       // Cierra el snackbar del QR para que el de éxito aparezca de inmediato
       // (si no, queda encolado hasta que el usuario cierre el del QR a mano).
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      // Snackbar de éxito con acción "Ver": abre la app de galería nativa
-      // (Fotos en iOS / galería en Android), donde queda el QR recién guardado.
+      // Dos salidas, porque "Ver" sola no alcanzaba: `Gal.open()` abre la app
+      // de galería pero NO puede hacer deep-link a la imagen concreta, así que
+      // en Android el manager termina buscándola a mano en Colecciones → En
+      // este dispositivo. "Compartir" entrega el archivo directo al share
+      // sheet, donde ya se ve cuál es y se elige destino (mail, WhatsApp,
+      // Drive, imprimir) sin buscar nada.
+      final localShareable = shareable;
       final saved = SnackBarWdg(
         type: SnackBarType.success,
         content: Text(
@@ -115,9 +139,40 @@ Future<void> downloadMenuQrPng(
           textAlign: TextAlign.center,
           style: FoodlyTextStyles.snackBarLightBody,
         ),
-        buttonText: S.current.view,
-        onPressed: () => unawaited(Gal.open()),
-        duration: const Duration(seconds: 6),
+        // 8s y no 6: ahora hay que decidir entre dos acciones, y si el
+        // snackbar se va antes se pierde la de compartir.
+        duration: const Duration(seconds: 8),
+        buttonBuilder: (dismiss) => Row(
+          spacing: 16,
+          children: [
+            Expanded(
+              child: CustomNeumorphicButton(
+                onPressed: () {
+                  unawaited(Gal.open());
+                  dismiss();
+                },
+                disabled: false,
+                text: S.current.view,
+                margin: EdgeInsets.zero,
+                fontSize: 14,
+              ),
+            ),
+            if (localShareable != null)
+              Expanded(
+                child: CustomNeumorphicButton(
+                  onPressed: () {
+                    unawaited(_shareQrPng(localShareable, businessName));
+                    dismiss();
+                  },
+                  type: CustomNeumorphicBtnType.secondary,
+                  disabled: false,
+                  text: S.current.share,
+                  margin: EdgeInsets.zero,
+                  fontSize: 14,
+                ),
+              ),
+          ],
+        ),
       );
       ScaffoldMessenger.of(context).showSnackBar(saved.getSnackBar(context));
     }
@@ -129,6 +184,24 @@ Future<void> downloadMenuQrPng(
     }
   } finally {
     entry.remove();
+  }
+}
+
+/// Entrega el PNG ya guardado al share sheet nativo. El `subject` solo lo usan
+/// las apps de correo; el resto lo ignora.
+///
+/// Borra la copia temporal al cerrarse la hoja, igual que
+/// [SharePromotionHelper]: `shareXFiles` no retorna hasta que termina.
+Future<void> _shareQrPng(File file, String businessName) async {
+  try {
+    await Share.shareXFiles(
+      [XFile(file.path, mimeType: 'image/png')],
+      subject: businessName.isEmpty ? 'Foodly' : businessName,
+    );
+  } catch (e) {
+    di<Logger>().e('Error sharing menu QR PNG: $e');
+  } finally {
+    if (file.existsSync()) file.deleteSync();
   }
 }
 
