@@ -2149,6 +2149,91 @@ class S {
     return Intl.message('Powered by', name: 'poweredBy', desc: '', args: []);
   }
 
+  /// `{count} QRs · {first} to {last}`
+  String qrBatchCount(Object count, Object first, Object last) {
+    return Intl.message(
+      '$count QRs · $first to $last',
+      name: 'qrBatchCount',
+      desc: '',
+      args: [count, first, last],
+    );
+  }
+
+  /// `One QR per table`
+  String get qrBatchDownload {
+    return Intl.message(
+      'One QR per table',
+      name: 'qrBatchDownload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get qrBatchFrom {
+    return Intl.message('From', name: 'qrBatchFrom', desc: '', args: []);
+  }
+
+  /// `Generate PDF`
+  String get qrBatchGenerate {
+    return Intl.message(
+      'Generate PDF',
+      name: 'qrBatchGenerate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Each table gets its own QR. When a guest scans it, their order already knows the table.`
+  String get qrBatchHint {
+    return Intl.message(
+      'Each table gets its own QR. When a guest scans it, their order already knows the table.',
+      name: 'qrBatchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check the range — up to {max} tables.`
+  String qrBatchInvalidRange(Object max) {
+    return Intl.message(
+      'Check the range — up to $max tables.',
+      name: 'qrBatchInvalidRange',
+      desc: '',
+      args: [max],
+    );
+  }
+
+  /// `Label`
+  String get qrBatchPrefix {
+    return Intl.message('Label', name: 'qrBatchPrefix', desc: '', args: []);
+  }
+
+  /// `Table`
+  String get qrBatchPrefixDefault {
+    return Intl.message(
+      'Table',
+      name: 'qrBatchPrefixDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `One QR per table`
+  String get qrBatchTitle {
+    return Intl.message(
+      'One QR per table',
+      name: 'qrBatchTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To`
+  String get qrBatchTo {
+    return Intl.message('To', name: 'qrBatchTo', desc: '', args: []);
+  }
+
   /// `Saved to your photos`
   String get qrSavedToGallery {
     return Intl.message(

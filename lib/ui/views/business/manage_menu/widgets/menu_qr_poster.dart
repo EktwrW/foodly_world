@@ -26,7 +26,7 @@ bool _hasRealLogo(String? url) => url != null && url.isNotEmpty && url != Foodly
 /// Resuelve un [ImageProvider] a un [ui.Image] ya decodificado. Devuelve `null`
 /// si la imagen no se puede decodificar (formato no soportado, URL que devolvió
 /// HTML/SVG, error de red, etc.) en lugar de propagar la excepción al árbol.
-Future<ui.Image?> _resolveImage(ImageProvider provider) {
+Future<ui.Image?> resolveImage(ImageProvider provider) {
   final completer = Completer<ui.Image?>();
   final stream = provider.resolve(const ImageConfiguration());
   late final ImageStreamListener listener;
@@ -70,7 +70,7 @@ Future<void> downloadMenuQrPng(
       // El logo de Foodly es un asset local; si fallara seguimos igual.
     }
   }
-  final ui.Image? logoImage = _hasRealLogo(logoUrl) ? await _resolveImage(CachedNetworkImageProvider(logoUrl!)) : null;
+  final ui.Image? logoImage = _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!)) : null;
 
   final entry = OverlayEntry(
     builder: (_) => Positioned(
