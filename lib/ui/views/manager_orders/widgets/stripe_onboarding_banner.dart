@@ -23,8 +23,7 @@ class StripeOnboardingBanner extends StatefulWidget {
   State<StripeOnboardingBanner> createState() => _StripeOnboardingBannerState();
 }
 
-class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
-    with WidgetsBindingObserver {
+class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with WidgetsBindingObserver {
   /// Guard anti doble-tap: e2e F4a — el CTA sin feedback ni bloqueo generó
   /// un POST (y una cuenta Express huérfana) POR CADA tap repetido.
   bool _activating = false;
@@ -46,8 +45,7 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
     // Volviste a la app (p. ej. cerraste el navegador del onboarding de
     // Stripe): re-consulta el estado — /stripe/status sincroniza contra la
     // API de Stripe en vivo. Con pagos ya activos no hay nada que refrescar.
-    if (state == AppLifecycleState.resumed &&
-        context.read<StripeOnboardingCubit>().state.chargesEnabled != true) {
+    if (state == AppLifecycleState.resumed && context.read<StripeOnboardingCubit>().state.chargesEnabled != true) {
       context.read<StripeOnboardingCubit>().load();
     }
   }
@@ -101,43 +99,42 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner>
             borderRadius: BorderRadius.circular(14),
             onTap: () => _pickPaymentMode(context, cubit),
             child: Container(
-            margin: const EdgeInsets.fromLTRB(14, 8, 14, 0),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.35)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 26,
-                  height: 26,
-                  decoration: const BoxDecoration(
-                    color: FoodlyThemes.tertiaryFoodly,
-                    shape: BoxShape.circle,
+              margin: const EdgeInsets.fromLTRB(14, 8, 14, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.35)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 26,
+                    height: 26,
+                    decoration: const BoxDecoration(
+                      color: FoodlyThemes.tertiaryFoodly,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.check_rounded, color: Colors.white, size: 16),
                   ),
-                  child: const Icon(Icons.check_rounded, color: Colors.white, size: 16),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(S.current.managerPaymentsActive, style: FoodlyTextStyles.labelBold),
-                      Text(
-                        S.current.managerPaymentsActiveSub,
-                        style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
-                      ),
-                    ],
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(S.current.managerPaymentsActive, style: FoodlyTextStyles.labelBold),
+                        Text(
+                          S.current.managerPaymentsActiveSub,
+                          style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                // Afordance del setting: tocar el banner abre el selector.
-                const Icon(Icons.tune_rounded,
-                    size: 16, color: FoodlyThemes.secondaryFoodly),
-              ],
+                  // Afordance del setting: tocar el banner abre el selector.
+                  const Icon(Icons.tune_rounded, color: FoodlyThemes.secondaryFoodly),
+                ],
+              ),
             ),
-          ),
           );
         }
 

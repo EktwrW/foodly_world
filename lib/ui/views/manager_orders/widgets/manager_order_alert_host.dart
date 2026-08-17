@@ -8,6 +8,7 @@ import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/services/push_notification_service.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
@@ -60,8 +61,7 @@ class _ManagerOrderAlertHostState extends State<ManagerOrderAlertHost> {
   }
 
   String _location() =>
-      widget.locationOf?.call() ??
-      di<AppRouter>().appRouter.routerDelegate.currentConfiguration.uri.toString();
+      widget.locationOf?.call() ?? di<AppRouter>().appRouter.routerDelegate.currentConfiguration.uri.toString();
 
   String? _businessUuid(Map<String, dynamic> data) =>
       (data['business_uuid'] as String?) ??
@@ -192,7 +192,7 @@ class _AlertCard extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(22, 24, 22, 16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(color: Colors.black.withValues(alpha: .25), blurRadius: 24, offset: const Offset(0, 10)),
           ],
@@ -220,26 +220,17 @@ class _AlertCard extends StatelessWidget {
               Text(body!, textAlign: TextAlign.center, style: FoodlyTextStyles.caption),
             ],
             const SizedBox(height: 18),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onGo,
-                style: FilledButton.styleFrom(
-                  backgroundColor: FoodlyThemes.tertiaryFoodly,
-                  padding: const EdgeInsets.symmetric(vertical: 13),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                ),
-                child: Text(
-                  goLabel,
-                  style: FoodlyTextStyles.labelBold.copyWith(color: Colors.white),
-                ),
-              ),
+            CustomNeumorphicButton(
+              onPressed: onGo,
+              text: goLabel,
+              disabled: false,
+              margin: const EdgeInsets.symmetric(vertical: 12),
             ),
             TextButton(
               onPressed: onLater,
               child: Text(
                 S.current.managerNewOrderLater,
-                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodly),
+                style: FoodlyTextStyles.actionsBody,
               ),
             ),
           ],

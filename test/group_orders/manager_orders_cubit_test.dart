@@ -168,6 +168,38 @@ void main() {
     expect(cubit.state.orders.length, 2);
   });
 
+  /// EL BUG DEL 2026-08-17. Con la pantalla apagada el polling seguía vivo y
+  /// cada tick que fallaba emitía `error`, que la página convierte en snackbar
+  /// (manager_orders_page.dart). Se encolaban: el manager encendía el teléfono
+  /// y veía diez modales de "No pudimos completar la acción" en fila.
+  ///
+  /// La regla es la que dice el nombre del método: un refetch SILENCIOSO no
+  /// interrumpe. Los datos buenos siguen en pantalla y el próximo tick corrige.
+  test('refetchSilently que falla no levanta error ni tira los datos', () async {
+    repo.managerOrdersOutcome = okList();
+    await cubit.load();
+
+    repo.managerOrdersOutcome = const ApiResult.failure(AppRequestException(error: 'red caída'));
+    await cubit.refetchSilently();
+
+    expect(cubit.state.error, isNull, reason: 'un tick de fondo no se le cuenta al manager');
+    expect(cubit.state.orders.map((o) => o.uuid), ['a', 'b'], reason: 'se conserva lo último bueno');
+    expect(cubit.state.counts.pending, 2);
+  });
+
+  /// Y el contrapeso: silenciar el fondo no puede silenciar lo que el manager
+  /// provocó. Un fallo tras una acción suya sí tiene que verse.
+  test('el silencio es SOLO del fondo: load y acciones siguen mostrando error', () async {
+    repo.managerOrdersOutcome = okList();
+    await cubit.load();
+
+    repo.actionOutcome = const ApiResult.failure(AppRequestException(error: 'boom'));
+    final ok = await cubit.setItemDelivered('a', 'i1', true);
+
+    expect(ok, isFalse);
+    expect(cubit.state.error, isNotNull);
+  });
+
   test('fallo de load: error visible y loading apagado', () async {
     repo.managerOrdersOutcome = const ApiResult.failure(AppRequestException(error: 'red caída'));
 

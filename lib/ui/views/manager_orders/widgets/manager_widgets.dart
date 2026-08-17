@@ -164,10 +164,9 @@ class ManagerMiniChip extends StatelessWidget {
 
 /// e2e F4b: con ítems sin servir, una orden marcada ENTREGADA se muestra
 /// como PREPARANDO (la tanda nueva revive la comanda) — nunca "terminada".
-GroupFulfillmentStatus? _activeStatus(GroupOrderDM order) =>
-    order.fulfillmentStatus == GroupFulfillmentStatus.delivered
-        ? GroupFulfillmentStatus.preparing
-        : order.fulfillmentStatus;
+GroupFulfillmentStatus? _activeStatus(GroupOrderDM order) => order.fulfillmentStatus == GroupFulfillmentStatus.delivered
+    ? GroupFulfillmentStatus.preparing
+    : order.fulfillmentStatus;
 
 /// F4b — estado de COBRO de la orden (maqueta C1): en cuenta abierta la
 /// mesa come antes de pagar, así que el manager necesita ver de un vistazo
@@ -234,8 +233,7 @@ class ManagerPaymentBadge extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             S.current.managerPaidComplete,
-            style: FoodlyTextStyles.captionBold
-                .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+            style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
           ),
         ],
       );
@@ -286,86 +284,85 @@ class ManagerOrderCard extends StatelessWidget {
     // NO vacío. Una orden con la comanda vacía —p. ej. con todo anulado—
     // caía a false y el panel la degradaba a PREPARANDO pese a estar
     // ENTREGADA y pagada en la base. "Nada pendiente" es la pregunta real.
-    final delivered = order.fulfillmentStatus == GroupFulfillmentStatus.delivered &&
-        !order.hasPendingKitchenItems;
+    final delivered = order.fulfillmentStatus == GroupFulfillmentStatus.delivered && !order.hasPendingKitchenItems;
 
-    return Opacity(
-      opacity: delivered ? 0.55 : 1,
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        order.businessName.isNotEmpty ? order.businessName : order.uuid.substring(0, 8),
-                        style: FoodlyTextStyles.labelBold,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+    return Material(
+      color: delivered ? const Color(0xFFFFFBFE) : Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      elevation: 3,
+      shadowColor: delivered ? Colors.white : FoodlyThemes.primaryFoodly,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: delivered ? 0.15 : 1)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          order.businessName.isNotEmpty ? order.businessName : order.uuid.substring(0, 8),
+                          style: FoodlyTextStyles.labelBold,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(width: 6),
+                        if (order.roundNumber > 1)
+                          ManagerMiniChip(
+                            text: S.current.managerRound(order.roundNumber),
+                            color: FoodlyThemes.secondaryFoodly,
+                          ),
+                        if ((order.tableLabel ?? '').isNotEmpty) ...[
+                          const SizedBox(width: 6),
+                          ManagerMiniChip(
+                            text: order.tableLabel!.toUpperCase(),
+                            color: FoodlyThemes.primaryFoodly,
+                          ),
+                        ],
+                      ],
                     ),
-                    const SizedBox(width: 6),
-                    if (order.roundNumber > 1)
-                      ManagerMiniChip(
-                        text: S.current.managerRound(order.roundNumber),
-                        color: FoodlyThemes.secondaryFoodly,
-                      ),
-                    if ((order.tableLabel ?? '').isNotEmpty) ...[
-                      const SizedBox(width: 4),
-                      ManagerMiniChip(
-                        text: order.tableLabel!.toUpperCase(),
-                        color: FoodlyThemes.primaryFoodly,
-                      ),
-                    ],
-                    const Spacer(),
-                    // Con ítems pendientes el badge NUNCA dice ENTREGADA.
-                    ManagerFulfillmentBadge(
-                      status: delivered ? order.fulfillmentStatus : _activeStatus(order),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      S.current.managerGuestsMeta(order.participants.length, order.items.length),
-                      style: FoodlyTextStyles.caption,
-                    ),
-                    const Spacer(),
-                    Text(
-                      formatMoney(order.totalAmount, order.currency),
-                      style: FoodlyTextStyles.itemPricePurpleBold,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    // F4b: en cuenta abierta el cobro es al final — badge
-                    // POR PAGAR (ámbar punteado) hasta que entre el pago.
-                    ManagerPaymentBadge(order: order),
-                    const Spacer(),
-                    Text(
-                      S.current
-                          .managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
-                      style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  ManagerFulfillmentBadge(
+                    status: delivered ? order.fulfillmentStatus : _activeStatus(order),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Text(
+                    S.current.managerGuestsMeta(order.participants.length, order.items.length),
+                    style: FoodlyTextStyles.caption,
+                  ),
+                  const Spacer(),
+                  Text(
+                    formatMoney(order.totalAmount, order.currency),
+                    style: FoodlyTextStyles.itemPricePurpleBold,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  // F4b: en cuenta abierta el cobro es al final — badge
+                  // POR PAGAR (ámbar punteado) hasta que entre el pago.
+                  ManagerPaymentBadge(order: order),
+                  const Spacer(),
+                  Text(
+                    S.current.managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
+                    style: FoodlyTextStyles.caption.copyWith(fontSize: 10),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

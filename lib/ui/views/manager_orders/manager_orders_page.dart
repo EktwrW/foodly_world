@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -9,6 +10,8 @@ import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.d
 import 'package:foodly_world/ui/views/manager_orders/manager_order_history_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/stripe_onboarding_banner.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Iconsax;
+import 'package:toggle_switch/toggle_switch.dart';
 
 /// F4a — pestaña "Órdenes en vivo" del negocio (maquetas v3 aprobadas):
 /// chips de filtro con contadores live + tarjetas de orden. El cubit vive en
@@ -39,6 +42,35 @@ class ManagerOrdersPage extends StatelessWidget {
         _ => null,
       };
 
+  /// Un segmento del selector: el número arriba —que es lo que la cocina
+  /// escanea de un vistazo— y el nombre del bucket debajo.
+  ///
+  /// En "Todas" el número es el total que reporta el backend, que puede ser
+  /// mayor que las tarjetas en pantalla (el panel pide una sola página).
+  Widget _bucketSegment(ManagerOrdersState state, String? b) {
+    final activo = state.bucket == b;
+    final color = activo ? Colors.white : FoodlyThemes.primaryFoodly;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '${_bucketCount(state, b) ?? state.total}',
+          style: FoodlyTextStyles.captionBold.copyWith(color: color, fontSize: 15, height: 1.1),
+        ),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            _bucketLabel(b),
+            maxLines: 1,
+            style: FoodlyTextStyles.caption.copyWith(color: color, fontSize: 10, height: 1.2),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ManagerOrdersCubit>();
@@ -61,186 +93,165 @@ class ManagerOrdersPage extends StatelessWidget {
           orderUuid: state.orders.any((o) => o.uuid == openOrderUuid) ? openOrderUuid : null,
           onOpen: (uuid) => _pushDetail(context, cubit, uuid),
           child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 60,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
-              onPressed: () => di<AppRouter>().goBackToLastRoute(),
-            ),
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              toolbarHeight: 60,
+              leadingWidth: 60,
+              leading: CustomRoundedNeumorphicButton(
+                iconSize: 26,
+                diameter: 32,
+                iconData: Bootstrap.caret_left_fill,
+                onPressed: () => di<AppRouter>().goBackToLastRoute(),
+              ).paddingSymmetric(vertical: 8, horizontal: 8),
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+                ),
               ),
-            ),
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  S.current.managerLiveOrders,
-                  style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 18),
-                ),
-                const SizedBox(width: 8),
-                // Punto "live" verde (maqueta 1).
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: FoodlyThemes.tertiaryFoodly,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.7),
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                      ),
-                    ],
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    S.current.managerLiveOrders,
+                    style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 18),
                   ),
-                ),
-              ],
-            ),
-            centerTitle: true,
-            actions: [
-              // F4a.1: historial de días anteriores (paginado por fecha).
-              IconButton(
-                tooltip: S.current.managerHistoryTitle,
-                icon: const Icon(Icons.history_rounded, color: Colors.white),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => BlocProvider(
-                      create: (_) => ManagerHistoryCubit(
-                        repo: di(),
-                        logger: di(),
-                        businessUuid: cubit.businessUuid,
-                      )..load(),
-                      child: const ManagerOrderHistoryPage(),
+                  const SizedBox(width: 8),
+                  // Punto "live" verde (maqueta 1).
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: FoodlyThemes.tertiaryFoodly,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.7),
+                          blurRadius: 6,
+                          spreadRadius: 1,
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-          body: SafeArea(
-            top: false,
-            child: Column(
-              children: [
-                // F4a-6: banner de onboarding de pagos (dos estados).
-                const StripeOnboardingBanner().paddingBottom(3),
-                // Chips de filtro por bucket con contador live. SIN altura
-                // fija (e2e F4a v2): la franja deriva su alto del contenido —
-                // con 46px clavados, cualquier ajuste de padding/márgenes los
-                // recortaba. shrinkWrap+compact evitan el tap-target de 48px.
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  child: Row(
-                    children: [
-                      for (final b in _buckets) ...[
-                        if (b != _buckets.first) const SizedBox(width: 6),
-                        Builder(builder: (context) {
-                          final selected = state.bucket == b;
-                          final count = _bucketCount(state, b);
-                          return ChoiceChip(
-                            selected: selected,
-                            onSelected: (_) => cubit.selectBucket(b),
-                            showCheckmark: false,
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            visualDensity: VisualDensity.compact,
-                            selectedColor: FoodlyThemes.primaryFoodly,
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.15)),
-                            ),
-                            labelPadding: const EdgeInsets.symmetric(horizontal: 6),
-                            label: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  _bucketLabel(b),
-                                  style: FoodlyTextStyles.captionBold.copyWith(
-                                    color: selected ? Colors.white : FoodlyThemes.primaryFoodly,
-                                  ),
-                                ),
-                                if (count != null && count > 0) ...[
-                                  const SizedBox(width: 4),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                    decoration: BoxDecoration(
-                                      color: FoodlyThemes.secondaryFoodly,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Text(
-                                      '$count',
-                                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white, fontSize: 10),
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          );
-                        }),
-                      ],
-                    ],
+              centerTitle: true,
+              actions: [
+                // F4a.1: historial de días anteriores (paginado por fecha).
+                IconButton(
+                  tooltip: S.current.managerHistoryTitle,
+                  icon: const Icon(Icons.history_rounded, color: Colors.white),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => BlocProvider(
+                        create: (_) => ManagerHistoryCubit(
+                          repo: di(),
+                          logger: di(),
+                          businessUuid: cubit.businessUuid,
+                        )..load(),
+                        child: const ManagerOrderHistoryPage(),
+                      ),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: state.loading && state.orders.isEmpty
-                      ? const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly))
-                      // "No hay órdenes" y "falló la llamada" NO son lo mismo.
-                      // Antes se pintaban igual: el camarero leía que no había
-                      // mesas mientras las tenía vivas esperando, y el único
-                      // aviso era un snackbar de 4 segundos sin reintento
-                      // (auditoría 2026-08-12). Para quien atiende una sala,
-                      // un dato falso es peor que un error.
-                      : state.error != null && state.orders.isEmpty
-                          ? LoadFailureView(onRetry: cubit.refetchSilently)
-                          : state.orders.isEmpty
-                          ? Center(
-                              child: Text(S.current.managerNoOrders, style: FoodlyTextStyles.caption),
-                            )
-                          : RefreshIndicator(
-                              color: FoodlyThemes.primaryFoodly,
-                              onRefresh: cubit.refetchSilently,
-                              child: ListView.separated(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
-                                // +1 para el pie de "mostrando N de M". El
-                                // panel NO pagina (ver el comentario del
-                                // cubit): si hay más de las que caben, se dice
-                                // — un contador que no cuadra con la lista es
-                                // peor que una lista corta y honesta.
-                                itemCount: state.orders.length + (state.isTruncated ? 1 : 0),
-                                separatorBuilder: (_, __) => const SizedBox(height: 10),
-                                itemBuilder: (context, i) {
-                                  if (i >= state.orders.length) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child: Text(
-                                        S.current.managerOrdersTruncated(
-                                          state.orders.length,
-                                          state.total,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                        style: FoodlyTextStyles.caption,
-                                      ),
-                                    );
-                                  }
-                                  final order = state.orders[i];
-                                  return ManagerOrderCard(
-                                    order: order,
-                                    onTap: () => _pushDetail(context, cubit, order.uuid),
-                                  );
-                                },
-                              ),
-                            ),
-                ),
+                ).paddingRight(4),
               ],
             ),
+            body: SafeArea(
+              top: false,
+              child: Column(
+                children: [
+                  // F4a-6: banner de onboarding de pagos (dos estados).
+                  const StripeOnboardingBanner().paddingVertical(4),
+                  ToggleSwitch(
+                    initialLabelIndex: _buckets.indexOf(state.bucket),
+                    onToggle: (i) => cubit.selectBucket(_buckets[i ?? 0]),
+                    totalSwitches: _buckets.length,
+                    animate: true,
+                    animationDuration: 500,
+                    minWidth: MediaQuery.sizeOf(context).width,
+                    minHeight: 42,
+                    cornerRadius: 6.0,
+                    inactiveBgColor: Colors.white,
+                    borderWidth: 1.5,
+                    borderColor: const [
+                      FoodlyThemes.primaryFoodly,
+                      FoodlyThemes.primaryFoodly,
+                      FoodlyThemes.tertiaryFoodly,
+                      FoodlyThemes.primaryFoodly,
+                      FoodlyThemes.primaryFoodly,
+                    ],
+                    dividerColor: FoodlyThemes.secondaryFoodly,
+                    activeBgColors: List.filled(
+                      _buckets.length,
+                      const [FoodlyThemes.primaryFoodly],
+                    ),
+                    customWidgets: [
+                      for (final b in _buckets) _bucketSegment(state, b),
+                    ],
+                  ).paddingVertical(10),
+                  Expanded(
+                    child: state.loading && state.orders.isEmpty
+                        ? const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly))
+                        // "No hay órdenes" y "falló la llamada" NO son lo mismo.
+                        // Antes se pintaban igual: el camarero leía que no había
+                        // mesas mientras las tenía vivas esperando, y el único
+                        // aviso era un snackbar de 4 segundos sin reintento
+                        // (auditoría 2026-08-12). Para quien atiende una sala,
+                        // un dato falso es peor que un error.
+                        : state.error != null && state.orders.isEmpty
+                            ? LoadFailureView(onRetry: cubit.refetchSilently)
+                            : state.orders.isEmpty
+                                ? Center(
+                                    child: Column(
+                                      spacing: 12,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
+                                        Text(S.current.managerNoOrders, style: FoodlyTextStyles.caption),
+                                      ],
+                                    ),
+                                  )
+                                : RefreshIndicator(
+                                    color: FoodlyThemes.primaryFoodly,
+                                    onRefresh: cubit.refetchSilently,
+                                    child: ListView.separated(
+                                      physics: const AlwaysScrollableScrollPhysics(),
+                                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
+                                      // +1 para el pie de "mostrando N de M". El
+                                      // panel NO pagina (ver el comentario del
+                                      // cubit): si hay más de las que caben, se dice
+                                      // — un contador que no cuadra con la lista es
+                                      // peor que una lista corta y honesta.
+                                      itemCount: state.orders.length + (state.isTruncated ? 1 : 0),
+                                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                                      itemBuilder: (context, i) {
+                                        if (i >= state.orders.length) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(top: 6),
+                                            child: Text(
+                                              S.current.managerOrdersTruncated(
+                                                state.orders.length,
+                                                state.total,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              style: FoodlyTextStyles.caption,
+                                            ),
+                                          );
+                                        }
+                                        final order = state.orders[i];
+                                        return ManagerOrderCard(
+                                          order: order,
+                                          onTap: () => _pushDetail(context, cubit, order.uuid),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
         );
       },
     );

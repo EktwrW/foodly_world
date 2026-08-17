@@ -95,10 +95,11 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     await _fetch();
   }
 
-  /// Refetch sin loading (realtime/polling): la lista no parpadea.
-  Future<void> refetchSilently() => _fetch();
+  /// Refetch sin loading NI error (realtime/polling): la lista no parpadea y
+  /// un tick que falla no interrumpe al manager.
+  Future<void> refetchSilently() => _fetch(silent: true);
 
-  Future<void> _fetch() async {
+  Future<void> _fetch({bool silent = false}) async {
     final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
     res.when(
       success: (r) => emit(state.copyWith(
@@ -112,6 +113,13 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
       )),
       failure: (e) {
         _logger.e(e);
+        // Un refetch de FONDO que falla no se le cuenta al manager: en pantalla
+        // siguen los últimos datos buenos y el próximo tick los corrige.
+        // Emitirlo encolaba un snackbar por tick — con la pantalla apagada el
+        // manager veía diez seguidos al encenderla (bug 2026-08-17). Los
+        // errores que sí se muestran son los de `load`, `selectBucket` y las
+        // acciones, que son los que el manager provocó.
+        if (silent) return;
         // '' = error sin detalle (la UI muestra el genérico i18n). Nunca
         // e.toString(): resuelve DI por dentro y explota fuera de la app.
         emit(state.copyWith(loading: false, error: e.serverMessage ?? ''));

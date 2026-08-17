@@ -1,16 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 /// F4a — detalle de una orden en el panel (maqueta 2): stepper saltable,
 /// checklist de ítems por comensal, mesa asignable y UN CTA que avanza al
@@ -113,10 +116,13 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             toolbarHeight: 60,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+            leadingWidth: 60,
+            leading: CustomRoundedNeumorphicButton(
+              iconSize: 26,
+              diameter: 32,
+              iconData: Bootstrap.caret_left_fill,
               onPressed: () => Navigator.of(context).pop(),
-            ),
+            ).paddingSymmetric(vertical: 8, horizontal: 8),
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
@@ -186,7 +192,15 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                     padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                     children: [
                       for (final p in order.participants)
-                        _ParticipantChecklist(order: order, participant: p, cubit: cubit),
+                        // Con key: ahora la fila guarda estado propio (el ítem
+                        // en vuelo) y sin ella un reordenamiento de la lista se
+                        // lo pasaría al comensal de al lado.
+                        _ParticipantChecklist(
+                          key: ValueKey(p.uuid),
+                          order: order,
+                          participant: p,
+                          cubit: cubit,
+                        ),
                     ],
                   ),
                 ),
@@ -230,7 +244,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                               S.current.managerDeliverAllAndClose,
                               style: FoodlyTextStyles.captionPurpleBold,
                             ),
-                          ),
+                          ).paddingTop(12),
                       ] else
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
@@ -278,7 +292,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                           icon: const Icon(Icons.receipt_long_rounded, size: 18),
                           label: Text(S.current.managerCloseTab),
                           style: TextButton.styleFrom(
-                            foregroundColor: FoodlyThemes.secondaryFoodly,
+                            foregroundColor: FoodlyThemes.primaryFoodly,
                           ),
                           onPressed: () => _onCloseTab(context, cubit, order),
                         ),
@@ -303,6 +317,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
   ) async {
     final reason = await showModalBottomSheet<String>(
       context: context,
+      backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -352,10 +367,9 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
               CustomNeumorphicButton(
                 text: S.current.managerCloseTabPaidOffline,
                 disabled: false,
-                margin: EdgeInsets.zero,
+                margin: const EdgeInsets.symmetric(vertical: 12),
                 onPressed: () => Navigator.pop(ctx, 'paid_offline'),
               ),
-              const SizedBox(height: 8),
               TextButton(
                 onPressed: () => Navigator.pop(ctx, 'unpaid'),
                 child: Text(
@@ -363,6 +377,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                   style: FoodlyTextStyles.caption.copyWith(color: const Color(0xFFB3261E)),
                 ),
               ),
+              const SizedBox(height: 26),
             ],
           ],
         ),
@@ -450,19 +465,45 @@ class _ClosedTabNotice extends StatelessWidget {
   }
 }
 
-class _ParticipantChecklist extends StatelessWidget {
+class _ParticipantChecklist extends StatefulWidget {
   final GroupOrderDM order;
   final GroupOrderParticipantDM participant;
   final ManagerOrdersCubit cubit;
 
   const _ParticipantChecklist({
+    super.key,
     required this.order,
     required this.participant,
     required this.cubit,
   });
 
   @override
+  State<_ParticipantChecklist> createState() => _ParticipantChecklistState();
+}
+
+class _ParticipantChecklistState extends State<_ParticipantChecklist> {
+  /// Ítems con una llamada en vuelo. La comanda se opera con el local lleno y
+  /// la respuesta tarda ~2s: sin esto el tap no acusa recibo y el manager
+  /// vuelve a tildar, que además manda la acción contraria.
+  final _enVuelo = <String>{};
+
+  /// Corre la acción marcando el ítem mientras dura. Devuelve al `Set` el
+  /// control de la doble pulsación: si ya está en vuelo, el tap se ignora.
+  Future<void> _conSpinner(String itemUuid, Future<void> Function() accion) async {
+    if (_enVuelo.contains(itemUuid)) return;
+    setState(() => _enVuelo.add(itemUuid));
+    try {
+      await accion();
+    } finally {
+      if (mounted) setState(() => _enVuelo.remove(itemUuid));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final order = widget.order;
+    final participant = widget.participant;
+    final cubit = widget.cubit;
     // Solo lo que la cocina RECIBIÓ: en cuenta abierta el comensal puede
     // tener platos en el carrito sin enviar, y aparecían en la comanda del
     // manager como si los hubieran pedido (e2e 2026-08-06).
@@ -483,14 +524,16 @@ class _ParticipantChecklist extends StatelessWidget {
     // Sin fricción (decisión Hector e2e F4a): tildar el último ítem entrega
     // la orden SOLA, sin confirmaciones — checklist y CTA son dos caminos al
     // mismo estado.
-    Future<void> toggle(GroupOrderItemDM item) async =>
-        cubit.setItemDelivered(order.uuid, item.uuid, item.deliveredAt == null);
+    Future<void> toggle(GroupOrderItemDM item) => _conSpinner(
+          item.uuid,
+          () => cubit.setItemDelivered(order.uuid, item.uuid, item.deliveredAt == null),
+        );
 
     /// F4b.1 — anular/restaurar un ítem (plato devuelto o mal preparado):
     /// deja de cobrarse pero sigue visible para el comensal.
     Future<void> toggleVoid(GroupOrderItemDM item) async {
       if (item.isVoided) {
-        await cubit.setItemVoided(order.uuid, item.uuid, false);
+        await _conSpinner(item.uuid, () => cubit.setItemVoided(order.uuid, item.uuid, false));
         return;
       }
       final ok = await showFoodlyConfirm(
@@ -499,7 +542,7 @@ class _ParticipantChecklist extends StatelessWidget {
         confirmText: S.current.managerVoidItemCta,
       );
       if (!ok) return;
-      await cubit.setItemVoided(order.uuid, item.uuid, true);
+      await _conSpinner(item.uuid, () => cubit.setItemVoided(order.uuid, item.uuid, true));
     }
 
     return Card(
@@ -529,7 +572,7 @@ class _ParticipantChecklist extends StatelessWidget {
                 ),
               InkWell(
                 borderRadius: BorderRadius.circular(8),
-                onTap: (canCheck && !item.isVoided) ? () => toggle(item) : null,
+                onTap: (canCheck && !item.isVoided && !_enVuelo.contains(item.uuid)) ? () => toggle(item) : null,
                 // F4b.1: mantener presionado = anular/restaurar el ítem.
                 // Solo si el backend lo aceptaría: en prepago la orden llega
                 // al panel PORQUE se pagó, así que ofrecerlo siempre hacía
@@ -542,18 +585,30 @@ class _ParticipantChecklist extends StatelessWidget {
                     children: [
                       // Affordance explícito (e2e F4a): checkbox cuadrado con
                       // borde marcado — "esto se tilda", no un icono decorativo.
-                      Icon(
-                        item.isVoided
-                            ? Icons.block_rounded
-                            : (item.deliveredAt != null
-                                ? Icons.check_box_rounded
-                                : Icons.check_box_outline_blank_rounded),
-                        size: 20,
-                        color: item.isVoided
-                            ? const Color(0xFFB3261E)
-                            : (item.deliveredAt != null
-                                ? FoodlyThemes.tertiaryFoodly
-                                : FoodlyThemes.primaryFoodly.withValues(alpha: 0.45)),
+                      // Mismo cuadro de 20 mientras carga: la fila no salta.
+                      SizedBox.square(
+                        dimension: 20,
+                        child: _enVuelo.contains(item.uuid)
+                            ? const Padding(
+                                padding: EdgeInsets.all(2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: FoodlyThemes.primaryFoodly,
+                                ),
+                              )
+                            : Icon(
+                                item.isVoided
+                                    ? Icons.block_rounded
+                                    : (item.deliveredAt != null
+                                        ? Icons.check_box_rounded
+                                        : Icons.check_box_outline_blank_rounded),
+                                size: 20,
+                                color: item.isVoided
+                                    ? const Color(0xFFB3261E)
+                                    : (item.deliveredAt != null
+                                        ? FoodlyThemes.tertiaryFoodly
+                                        : FoodlyThemes.primaryFoodly.withValues(alpha: 0.45)),
+                              ),
                       ),
                       const SizedBox(width: 8),
                       Text('${item.quantity}×', style: FoodlyTextStyles.captionPurpleBold),

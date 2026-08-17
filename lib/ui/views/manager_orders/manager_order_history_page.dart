@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_history_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, Iconsax;
 import 'package:intl/intl.dart';
 
 /// F4a.1 — historial del negocio (días anteriores a hoy): scroll infinito
@@ -78,10 +81,13 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 60,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+        leadingWidth: 60,
+        leading: CustomRoundedNeumorphicButton(
+          iconSize: 26,
+          diameter: 32,
+          iconData: Bootstrap.caret_left_fill,
           onPressed: () => Navigator.of(context).pop(),
-        ),
+        ).paddingSymmetric(vertical: 8, horizontal: 8),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
@@ -99,17 +105,15 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
           builder: (context, state) {
             if (state.loading) {
-              return const Center(
-                  child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
+              return const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
             }
             if (state.orders.isEmpty) {
               return Center(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  spacing: 12,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.history_rounded,
-                        size: 42, color: FoodlyThemes.secondaryFoodly),
-                    const SizedBox(height: 8),
+                    const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
                     Text(S.current.managerHistoryEmpty, style: FoodlyTextStyles.caption),
                   ],
                 ),
@@ -125,13 +129,12 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
                 for (final g in groups) ...[
                   // Header del día: etiqueta + resumen (N órdenes · €total).
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 10, 2, 8),
+                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 8),
                     child: Row(
                       children: [
                         Text(
                           _dayLabel(g.day).toUpperCase(),
-                          style: FoodlyTextStyles.captionPurpleBold
-                              .copyWith(letterSpacing: 0.5),
+                          style: FoodlyTextStyles.captionPurpleBold.copyWith(letterSpacing: 0.5),
                         ),
                         const Expanded(child: Divider(indent: 10, endIndent: 10)),
                         Text(
@@ -139,8 +142,7 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
                             g.orders.length,
                             formatMoney(g.dayTotal, g.orders.first.currency),
                           ),
-                          style: FoodlyTextStyles.captionBold
-                              .copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                          style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
                         ),
                       ],
                     ),
@@ -161,8 +163,7 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
                       child: SizedBox(
                         width: 22,
                         height: 22,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
+                        child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
                       ),
                     ),
                   ),
@@ -220,8 +221,7 @@ class _HistoryOrderSheet extends StatelessWidget {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
             builder: (context, state) {
-              final order =
-                  state.orders.where((o) => o.uuid == orderUuid).firstOrNull;
+              final order = state.orders.where((o) => o.uuid == orderUuid).firstOrNull;
               if (order == null) return const SizedBox.shrink();
 
               return ListView(
@@ -250,17 +250,13 @@ class _HistoryOrderSheet extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10, bottom: 2),
                               child: Row(
                                 children: [
-                                  Text('${item.quantity}×',
-                                      style: FoodlyTextStyles.captionPurpleBold),
+                                  Text('${item.quantity}×', style: FoodlyTextStyles.captionPurpleBold),
                                   const SizedBox(width: 6),
                                   Expanded(
                                     child: Text(item.name,
-                                        style: FoodlyTextStyles.caption,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
+                                        style: FoodlyTextStyles.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
                                   ),
-                                  Text(formatMoney(item.lineTotal, order.currency),
-                                      style: FoodlyTextStyles.caption),
+                                  Text(formatMoney(item.lineTotal, order.currency), style: FoodlyTextStyles.caption),
                                 ],
                               ),
                             ),
@@ -309,13 +305,15 @@ class _Cabecera extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 38,
-            height: 4,
-            margin: const EdgeInsets.only(bottom: 12),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .5),
-              borderRadius: BorderRadius.circular(2),
+          Center(
+            child: Container(
+              width: 38,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: .5),
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
           ),
           Text(
@@ -326,9 +324,7 @@ class _Cabecera extends StatelessWidget {
           Text(
             [
               if (order.confirmedAt != null)
-                DateFormat.yMMMd(Intl.getCurrentLocale())
-                    .add_Hm()
-                    .format(order.confirmedAt!.toLocal()),
+                DateFormat.yMMMd(Intl.getCurrentLocale()).add_Hm().format(order.confirmedAt!.toLocal()),
               if (order.roundNumber > 1) S.current.managerRound(order.roundNumber),
             ].join(' · '),
             style: FoodlyTextStyles.caption.copyWith(color: Colors.white70),
@@ -367,8 +363,7 @@ class _CorregirCierre extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 12),
             side: BorderSide(
-              color: (aCaja ? const Color(0xFF0B8A40) : const Color(0xFFB3261E))
-                  .withValues(alpha: .5),
+              color: (aCaja ? const Color(0xFF0B8A40) : const Color(0xFFB3261E)).withValues(alpha: .5),
             ),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           ),

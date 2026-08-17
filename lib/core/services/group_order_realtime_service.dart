@@ -64,6 +64,25 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   bool _socketHealthy = false;
   bool _observing = false;
 
+  /// Canales que YA están puestos en el cliente NATIVO de Pusher.
+  ///
+  /// `disconnect()` cierra el socket pero no toca el registro de canales
+  /// (verificado en pusher_channels_flutter 2.6.0), y el cliente los vuelve a
+  /// suscribir solo al reconectar. Volver a pedirlos lanza "Already subscribed
+  /// to a channel with name…" desde `ChannelManager`, que este servicio leía
+  /// como "no hay socket": caía a polling y el reintento repetía la misma
+  /// excepción cada 60 s. El socket quedaba muerto el resto de la sesión
+  /// después del primer apagado de pantalla (bug 2026-08-17).
+  final _suscritosNativos = <String>{};
+
+  /// Estado de los timers, para que un test pueda afirmar que la pausa no deja
+  /// trabajo corriendo en background.
+  @visibleForTesting
+  bool get pollingActivo => _pollTimer?.isActive ?? false;
+
+  @visibleForTesting
+  bool get reintentoProgramado => _retryTimer?.isActive ?? false;
+
   /// Observa la orden [orderUuid]. [onTouched] se invoca ante cualquier
   /// cambio (evento realtime, tick de polling o resume de la app); el caller
   /// decide cómo refetchear. Cancelá la suscripción devuelta al salir.
@@ -102,6 +121,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
     try {
       await _pusher?.unsubscribe(channelName: channel);
     } catch (_) {/* la conexión ya podía estar caída */}
+    _suscritosNativos.remove(channel);
 
     if (_subs.isEmpty) {
       await _teardown();
@@ -116,8 +136,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
   Future<void> _teardown() async {
     _stopPolling();
-    _retryTimer?.cancel();
-    _retryTimer = null;
+    _cancelRetry();
     if (_observing) {
       WidgetsBinding.instance.removeObserver(this);
       _observing = false;
@@ -139,6 +158,11 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
     if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
       _stopPolling();
+      // Y el reintento. Sin esto sobrevivía a la pausa, disparaba `_connect()`
+      // con la pantalla apagada y su `catch` volvía a arrancar el polling en
+      // background: un GET cada 10 s en reposo, y cada fallo un snackbar
+      // encolado que el manager veía en tanda al encender (bug 2026-08-17).
+      _cancelRetry();
       _disconnect(); // corte inmediato: cero consumo en background
     } else if (state == AppLifecycleState.resumed) {
       _notifyAll(); // refetch: recupera lo ocurrido mientras tanto
@@ -179,7 +203,9 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
       }
 
       for (final channel in List<String>.from(_subs.keys)) {
+        if (_suscritosNativos.contains(channel)) continue;
         await pusher.subscribe(channelName: channel);
+        _suscritosNativos.add(channel);
       }
       await pusher.connect();
 
@@ -208,6 +234,9 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
     if (_subs.isEmpty) {
       _pusher = null;
       _initialized = false;
+      // El próximo `_connect` re-inicializa el plugin, que construye un Pusher
+      // nuevo sin canales: lo que creíamos suscrito ya no existe.
+      _suscritosNativos.clear();
     }
   }
 
@@ -237,6 +266,11 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   void _stopPolling() {
     _pollTimer?.cancel();
     _pollTimer = null;
+  }
+
+  void _cancelRetry() {
+    _retryTimer?.cancel();
+    _retryTimer = null;
   }
 
   void _scheduleRetry() {

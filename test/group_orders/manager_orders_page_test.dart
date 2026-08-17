@@ -13,8 +13,9 @@ import 'package:foodly_world/ui/views/manager_orders/manager_order_detail_page.d
 import 'package:foodly_world/ui/views/manager_orders/manager_orders_page.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
 import 'package:logger/logger.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-/// F4a-5 — widget tests del panel "Órdenes en vivo": chips con contadores,
+/// F4a-5 — widget tests del panel "Órdenes en vivo": selector con contadores,
 /// tarjeta con ronda/mesa/badge, y detalle con checklist + CTA gateado.
 
 class _FakeRepo implements GroupOrderRepo {
@@ -124,7 +125,10 @@ void main() {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(
           orders: [order],
-          counts: ManagerOrderCountsDM(pending: 3, ready: 1),
+          // Valores distintos entre sí Y del total: el selector muestra
+          // ahora el contador de los CINCO segmentos, así que un 1 repetido
+          // haría ambiguo el `findsOneWidget`.
+          counts: ManagerOrderCountsDM(pending: 3, ready: 7),
         ));
       final cubit = buildCubit(repo);
       addTearDown(cubit.close);
@@ -133,10 +137,10 @@ void main() {
       await cubit.load();
       await tester.pumpAndSettle();
 
-      // Chips: contador de Activas=3 y Listas=1 visibles.
+      // Selector: cada segmento lleva su contador.
       expect(find.text(S.current.managerBucketPending), findsOneWidget);
       expect(find.text('3'), findsOneWidget);
-      expect(find.text('1'), findsOneWidget);
+      expect(find.text('7'), findsOneWidget);
 
       // Tarjeta: negocio, RONDA 2, MESA 7, total y badge CONFIRMADA.
       expect(find.text('Best Sushi Lounge'), findsOneWidget);
@@ -147,9 +151,17 @@ void main() {
       expect(find.text(S.current.managerItemsDelivered(0, 1)), findsOneWidget);
     });
 
-    testWidgets('fix e2e: chips centrados verticalmente en su franja, sin '
-        'recorte (el tap-target de 48px + padding asimétrico los empujaba '
-        'abajo)', (tester) async {
+    /// El selector pasó de chips en scroll horizontal —que podían ser tan
+    /// anchos como quisieran— a un ToggleSwitch de ancho fijo.
+    ///
+    /// Lo que se afirma acá es geometría, no ausencia de overflow: a 320dp la
+    /// página trae desbordes PROPIOS y anteriores a este cambio (el título del
+    /// AppBar y dos `Row`+`Spacer` de la tarjeta), así que un
+    /// `takeException(), isNull` a ese tamaño estaría midiendo el resto de la
+    /// pantalla y no el selector. Cuando esos tres estén limpios, este test
+    /// puede volver a 320dp y afirmar el desborde de verdad.
+    testWidgets('el selector muestra los cinco buckets y se lleva el ancho '
+        'disponible', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(
           orders: [order],
@@ -162,20 +174,30 @@ void main() {
       await cubit.load();
       await tester.pumpAndSettle();
 
-      final chips = find.byType(ChoiceChip);
-      final n = tester.widgetList(chips).length;
-      expect(n, greaterThan(1));
+      final selector = find.byType(ToggleSwitch);
+      expect(selector, findsOneWidget);
 
-      // Todos comparten la MISMA línea media vertical…
-      final firstDy = tester.getCenter(chips.at(0)).dy;
-      for (var i = 1; i < n; i++) {
-        expect(tester.getCenter(chips.at(i)).dy, moreOrLessEquals(firstDy, epsilon: 0.5));
+      for (final etiqueta in [
+        S.current.managerBucketAll,
+        S.current.managerBucketPending,
+        S.current.managerBucketPreparing,
+        S.current.managerBucketReady,
+        S.current.managerBucketDelivered,
+      ]) {
+        expect(find.text(etiqueta), findsOneWidget, reason: 'falta el segmento "$etiqueta"');
       }
-      // …y el pill cabe entero en la franja de 46px.
-      expect(tester.getRect(chips.at(0)).height, lessThanOrEqualTo(46));
+
+      // El reparto lo hace el paquete a partir de `minWidth`. Si alguien le
+      // pasara un valor chico —o volviera a una fuente de ancho que no
+      // resuelve— el selector encogería y dejaría de leerse como una barra;
+      // si le pasara uno mal calculado, se saldría de la pantalla.
+      final pantalla = tester.getSize(find.byType(MaterialApp)).width;
+      final ancho = tester.getSize(selector).width;
+      expect(ancho, lessThanOrEqualTo(pantalla), reason: 'se sale de la pantalla');
+      expect(ancho, greaterThan(pantalla * 0.8), reason: 'quedó como un botón, no como una barra');
     });
 
-    testWidgets('tap en un chip manda el bucket al repo', (tester) async {
+    testWidgets('tap en un segmento manda el bucket al repo', (tester) async {
       final repo = _FakeRepo()
         ..listOutcome = const ApiResult.success(ManagerOrdersResponseDM(orders: [order]));
       final cubit = buildCubit(repo);
