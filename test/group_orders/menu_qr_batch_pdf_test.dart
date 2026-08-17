@@ -34,14 +34,27 @@ void main() {
     expect(bytes.length, greaterThan(1000), reason: 'un PDF con un QR no puede ser trivialmente chico');
   });
 
-  test('genera una página por mesa', () async {
-    final bytes = await buildFor(QrBatchSpec.labelsForRange(from: 1, to: 8, prefix: 'Mesa'));
-
-    expectWellFormedPdf(bytes);
-    // Cada página declara su /Type /Page en el documento.
-    final content = String.fromCharCodes(bytes);
+  /// Cuatro carteles por hoja A4: mismo tamaño físico que un A6 por página,
+  /// pero una cuarta parte de las hojas y sin depender de que el usuario
+  /// encuentre la opción "4 por hoja" del diálogo de impresión.
+  test('agrupa de a cuatro carteles por hoja', () async {
+    final content = String.fromCharCodes(await buildFor(
+      QrBatchSpec.labelsForRange(from: 1, to: 8, prefix: 'Mesa'),
+    ));
     final pages = RegExp(r'/Type\s*/Page[^s]').allMatches(content).length;
-    expect(pages, 8);
+
+    expect(pages, 2, reason: '8 mesas entran en 2 hojas');
+  });
+
+  test('una hoja incompleta no estira los carteles que sí hay', () async {
+    for (final (mesas, hojas) in [(1, 1), (3, 1), (5, 2), (7, 2)]) {
+      final content = String.fromCharCodes(await buildFor(
+        QrBatchSpec.labelsForRange(from: 1, to: mesas, prefix: 'Mesa'),
+      ));
+      final pages = RegExp(r'/Type\s*/Page[^s]').allMatches(content).length;
+
+      expect(pages, hojas, reason: '$mesas mesas -> $hojas hojas');
+    }
   });
 
   /// El caso que motivó toda la fase: 40 mesas en UN archivo, no 40 archivos.
@@ -52,7 +65,7 @@ void main() {
 
     expectWellFormedPdf(bytes);
     final pages = RegExp(r'/Type\s*/Page[^s]').allMatches(String.fromCharCodes(bytes)).length;
-    expect(pages, 40);
+    expect(pages, 10, reason: '40 mesas en 10 hojas, no en 40');
 
     // Holgado a propósito: la máquina de CI es más lenta que la de desarrollo.
     // Solo interesa detectar un derrumbe de orden de magnitud.
