@@ -38,7 +38,13 @@ abstract final class MenuQrBatchPdf {
     ' ': ' ',
   };
 
-  /// Visible para tests: es la regla que decide qué se imprime.
+  /// Cuando el documento lleva la fuente de la app, no hace falta sanear: el
+  /// TTF cubre la puntuación tipográfica. El saneo queda para el caso de
+  /// respaldo, en que la fuente no se pudo cargar y se dibuja con Helvetica.
+  static String _texto(String v, {required bool conFuentePropia}) => conFuentePropia ? v : printable(v);
+
+  /// Visible para tests: es la regla que decide qué se imprime cuando el PDF
+  /// cae a las fuentes estándar.
   @visibleForTesting
   static String printable(String text) {
     var out = text;
@@ -75,8 +81,17 @@ abstract final class MenuQrBatchPdf {
     required String poweredBy,
     pw.ImageProvider? businessLogo,
     pw.ImageProvider? foodlyLogo,
+    pw.Font? baseFont,
+    pw.Font? boldFont,
   }) async {
-    final doc = pw.Document(title: businessName.isEmpty ? 'Foodly' : businessName);
+    // Con la fuente de la app empotrada el cartel impreso usa la MISMA
+    // tipografía que el que se descarga suelto (Quicksand). Sin ella el PDF
+    // cae a Helvetica, que se nota al lado del otro.
+    final tieneFuente = baseFont != null && boldFont != null;
+    final doc = pw.Document(
+      title: businessName.isEmpty ? 'Foodly' : businessName,
+      theme: tieneFuente ? pw.ThemeData.withFont(base: baseFont, bold: boldFont) : null,
+    );
 
     // De a 4: la página se arma como dos filas de dos celdas.
     for (var i = 0; i < labels.length; i += 4) {
@@ -88,9 +103,9 @@ abstract final class MenuQrBatchPdf {
           margin: pw.EdgeInsets.zero,
           build: (_) => pw.Column(
             children: [
-              _fila(hoja, 0, businessName, urlForLabel, businessLogo, foodlyLogo, scanHint, poweredBy),
+              _fila(hoja, 0, businessName, urlForLabel, businessLogo, foodlyLogo, scanHint, poweredBy, tieneFuente),
               _guiaHorizontal(),
-              _fila(hoja, 2, businessName, urlForLabel, businessLogo, foodlyLogo, scanHint, poweredBy),
+              _fila(hoja, 2, businessName, urlForLabel, businessLogo, foodlyLogo, scanHint, poweredBy, tieneFuente),
             ],
           ),
         ),
@@ -111,6 +126,7 @@ abstract final class MenuQrBatchPdf {
     pw.ImageProvider? foodlyLogo,
     String scanHint,
     String poweredBy,
+    bool conFuentePropia,
   ) {
     pw.Widget celda(int i) => pw.Expanded(
           child: i < hoja.length
@@ -122,6 +138,7 @@ abstract final class MenuQrBatchPdf {
                   foodlyLogo: foodlyLogo,
                   scanHint: scanHint,
                   poweredBy: poweredBy,
+                  conFuentePropia: conFuentePropia,
                 )
               : pw.SizedBox(),
         );
@@ -145,6 +162,7 @@ abstract final class MenuQrBatchPdf {
     required pw.ImageProvider? foodlyLogo,
     required String scanHint,
     required String poweredBy,
+    required bool conFuentePropia,
   }) {
     final matrix = QrDotMatrix.of(url);
 
@@ -159,19 +177,26 @@ abstract final class MenuQrBatchPdf {
           // ── Logo del negocio, en círculo con anillo morado ──
           if (businessLogo != null) ...[
             pw.Container(
-              width: 46,
-              height: 46,
+              width: 52,
+              height: 52,
               decoration: pw.BoxDecoration(
                 shape: pw.BoxShape.circle,
-                border: pw.Border.all(color: const PdfColor.fromInt(0x2E79005D), width: 1.6),
+                border: pw.Border.all(color: const PdfColor.fromInt(0x2E79005D), width: 1.4),
               ),
-              child: pw.ClipOval(child: pw.Image(businessLogo, fit: pw.BoxFit.cover)),
+              // `contain` y con margen, no `cover`: con `cover` la imagen se
+              // escala hasta tapar el círculo y se le come los bordes — en un
+              // logo con texto (p.ej. "APPS 369") eso recorta las letras. El
+              // margen la separa del anillo para que no quede pisada por él.
+              child: pw.Container(
+                margin: const pw.EdgeInsets.all(4),
+                child: pw.ClipOval(child: pw.Image(businessLogo)),
+              ),
             ),
             pw.SizedBox(height: 8),
           ],
 
           pw.Text(
-            printable(businessName.isEmpty ? 'Foodly' : businessName),
+            _texto(businessName.isEmpty ? 'Foodly' : businessName, conFuentePropia: conFuentePropia),
             textAlign: pw.TextAlign.center,
             maxLines: 2,
             style: pw.TextStyle(color: _purple, fontSize: 16, fontWeight: pw.FontWeight.bold),
@@ -183,10 +208,14 @@ abstract final class MenuQrBatchPdf {
             padding: const pw.EdgeInsets.symmetric(horizontal: 16, vertical: 5),
             decoration: pw.BoxDecoration(
               color: _purple,
-              borderRadius: pw.BorderRadius.circular(20),
+              // El radio NO puede pasar la mitad del alto de la píldora (~24pt):
+              // cuando lo hace, el trazado de las esquinas se cruza sobre sí
+              // mismo y salen esos picos raros en los extremos. Con 12 queda el
+              // borde semicircular limpio.
+              borderRadius: pw.BorderRadius.circular(12),
             ),
             child: pw.Text(
-              printable(label),
+              _texto(label, conFuentePropia: conFuentePropia),
               style: pw.TextStyle(color: PdfColors.white, fontSize: 14, fontWeight: pw.FontWeight.bold),
             ),
           ),
@@ -212,7 +241,7 @@ abstract final class MenuQrBatchPdf {
           pw.SizedBox(height: 8),
 
           pw.Text(
-            printable(scanHint),
+            _texto(scanHint, conFuentePropia: conFuentePropia),
             textAlign: pw.TextAlign.center,
             style: const pw.TextStyle(fontSize: 8.5, color: PdfColor.fromInt(0x8C000000)),
           ),
@@ -224,7 +253,7 @@ abstract final class MenuQrBatchPdf {
             mainAxisAlignment: pw.MainAxisAlignment.end,
             children: [
               pw.Text(
-                printable(poweredBy),
+                _texto(poweredBy, conFuentePropia: conFuentePropia),
                 style: const pw.TextStyle(fontSize: 6.5, color: PdfColor.fromInt(0x6B000000)),
               ),
               pw.SizedBox(width: 5),
