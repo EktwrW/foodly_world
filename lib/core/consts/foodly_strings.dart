@@ -6,6 +6,7 @@ class FoodlyStrings {
   static const APPLICATION_JSON = 'application/json';
   static const CONTENT_TYPE = 'content-type';
   static const ACCEPT = 'accept';
+
   /// Idioma del comensal. Sin esta cabecera el backend responde en
   /// inglés a todo, porque `SetLocaleFromHeader` no tiene qué leer.
   static const ACCEPT_LANGUAGE = 'Accept-Language';
@@ -54,10 +55,6 @@ class FoodlyStrings {
   static const NEW_MENU = 'new_menu';
   static const NEW_CATEGORY = 'new_category';
   static const NEW_ITEM = 'new_item';
-
-  // AI models for service configuration:
-  static const GPT_4_MODEL = 'gpt-4';
-  static const GPT_4O_MINI_MODEL = 'gpt-4o-mini';
 
   // Avatar placeholders
   static const LOGO_PLACEHOLDER = 'https://foodly.s3.us-east-1.amazonaws.com/images/business-placeholder.png';

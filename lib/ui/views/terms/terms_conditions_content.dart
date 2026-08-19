@@ -110,7 +110,7 @@ const _en = [
   TermsSection(
     heading: 'AI-Powered Features',
     body: 'Foodly offers AI-assisted tools exclusively for Manager accounts:\n\n'
-        '• AI Text Generation: promotional descriptions generated via the OpenAI API. Your prompts are processed by OpenAI under their terms (openai.com/terms).\n'
+        '• AI Text Generation: promotional descriptions generated via the Google Gemini API. Your prompts are processed by Google under their terms (policies.google.com/terms).\n'
         '• AI Image Generation: promotional images generated via the Replicate API. Your prompts are processed by Replicate under their terms (replicate.com/terms).\n'
         '• AI Menu Digitization: menu photos you upload are processed by Google\'s Gemini AI to automatically extract dishes and prices, under Google\'s terms of service (policies.google.com/terms).\n\n'
         'You are solely responsible for reviewing and approving all AI-generated content before publishing. Foodly does not guarantee the accuracy, appropriateness, or originality of AI-generated output. Do not submit sensitive personal data as part of AI prompts.',
@@ -290,7 +290,7 @@ const _es = [
   TermsSection(
     heading: 'Funciones de Inteligencia Artificial',
     body: 'Foodly ofrece herramientas asistidas por IA exclusivamente para cuentas Manager:\n\n'
-        '• Generación de texto con IA: descripciones promocionales generadas mediante la API de OpenAI (openai.com/terms).\n'
+        '• Generación de texto con IA: descripciones promocionales generadas mediante la API de Google Gemini (policies.google.com/terms).\n'
         '• Generación de imágenes con IA: imágenes promocionales generadas mediante la API de Replicate (replicate.com/terms).\n'
         '• Digitalización de menús con IA: las fotos de menú que cargues son procesadas por la IA Gemini de Google para extraer automáticamente platos y precios, bajo los términos de servicio de Google (policies.google.com/terms).\n\n'
         'Eres el único/a responsable de revisar y aprobar todo el contenido generado por IA antes de publicarlo. No envíes datos personales sensibles como parte de los prompts de IA.',
@@ -467,7 +467,7 @@ const _pt = [
   TermsSection(
     heading: 'Funcionalidades de Inteligência Artificial',
     body: 'A Foodly oferece ferramentas assistidas por IA exclusivamente para contas Manager:\n\n'
-        '• Geração de texto com IA: descrições promocionais geradas via API da OpenAI (openai.com/terms).\n'
+        '• Geração de texto com IA: descrições promocionais geradas via API da Google Gemini (policies.google.com/terms).\n'
         '• Geração de imagens com IA: imagens promocionais geradas via API da Replicate (replicate.com/terms).\n'
         '• Digitalização de menus com IA: as fotografias de menu que carrega são processadas pela IA Gemini da Google para extrair automaticamente pratos e preços, ao abrigo dos termos de serviço da Google (policies.google.com/terms).\n\n'
         'É o único/a responsável por rever e aprovar todo o conteúdo gerado por IA antes de o publicar. Não submeta dados pessoais sensíveis como parte dos prompts de IA.',

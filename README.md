@@ -17,7 +17,7 @@ The app targets iOS and Android (deployed to the App Store and Google Play).
 - **Social Posts**: Users and businesses share posts with photos; community feed with likes
 - **Business Management**: Owners manage their business profile, menu, photos, promotions, combos, and reservations
 - **Multi-language**: Full localization in English, Spanish, and Portuguese
-- **AI Features**: OpenAI integration for promo image generation and smart recommendations
+- **AI Features**: generación de promos (texto + imagen) vía el backend, y recomendaciones inteligentes
 - **Notifications**: In-app polling notification system for reservations, reviews, favorites, and business activity
 
 ## Tech Stack

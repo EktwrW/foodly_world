@@ -15,7 +15,7 @@ class MenuImportParseResponseDM {
   final List<ParsedCategoryGroupDM> groupedMenu;
 
   /// Qué motor usó el parser para esta foto: `tesseract` (solo OCR) o
-  /// `tesseract+openai` (fallback Vision). Útil para telemetría — no se
+  /// `tesseract+vision` (fallback). Útil para telemetría — no se
   /// muestra al manager.
   @JsonKey(name: 'parser_used')
   final String? parserUsed;

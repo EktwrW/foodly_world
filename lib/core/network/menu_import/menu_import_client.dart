@@ -63,7 +63,7 @@ abstract class MenuImportClient {
   ///
   /// El FE itera las URLs del upload y llama esto una vez por foto. El BE
   /// lee el binary de GCS, lo manda al NLP de Mateo, y retorna
-  /// `grouped_menu`. Latencia esperada: 5–30 s por foto (fallback OpenAI
+  /// `grouped_menu`. Latencia esperada: 5–30 s por foto (el fallback de
   /// Vision puede ser lento). Si hay 502 → reintentar opcional o skipear
   /// esa foto.
   ///

@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_generation_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:video_player/video_player.dart';
@@ -52,6 +53,15 @@ abstract class ManagePromotionsVM with _$ManagePromotionsVM {
     PageController? controller,
     (String, MediaType)? newPromoMediaPath,
     Uint8List? imageBytes,
+
+    /// Las tres artes que devolvió la última generación con IA. Vive en el VM
+    /// y no en el estado porque el selector tiene que sobrevivir a los rebuilds
+    /// mientras el manager compara y edita el resto del formulario.
+    /// Se limpia al guardar o al subir una foto propia.
+    @Default([]) List<AiPromoImageOption> aiImageOptions,
+
+    /// Índice dentro de [aiImageOptions] de la que está aplicada.
+    @Default(0) int selectedAiImageIndex,
     VideoPlayerController? videoController,
     ScrollController? activePromosScrollController,
     ScrollController? upcomingPromosScrollController,

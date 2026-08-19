@@ -102,7 +102,6 @@ Future<Widget> buildFoodlyApp() async {
     Bloc.observer = AppBlocObserver(config: config);
   }
 
-  OpenAI.apiKey = baseConfig.openaiApiKey;
 
   final isMenuSubdomain =
       const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.') || Uri.base.port == 8889;

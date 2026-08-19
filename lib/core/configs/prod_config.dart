@@ -11,8 +11,6 @@ class ProdConfig extends BaseConfig {
   final String envGoogleDefaultPublicToken;
   final bool? regPrefill;
   final String envGoogleSignInClientId;
-  final String envOpenaiApiKey;
-  final String envReplicateApiKey;
 
   ProdConfig({
     required this.envLogLevel,
@@ -23,8 +21,6 @@ class ProdConfig extends BaseConfig {
     required this.envGoogleDefaultPublicToken,
     this.regPrefill,
     required this.envGoogleSignInClientId,
-    required this.envOpenaiApiKey,
-    required this.envReplicateApiKey,
   });
 
   @override
@@ -51,9 +47,4 @@ class ProdConfig extends BaseConfig {
   @override
   String get googleSignInClientId => envGoogleSignInClientId;
 
-  @override
-  String get openaiApiKey => envOpenaiApiKey;
-
-  @override
-  String get replicateApiKey => envReplicateApiKey;
 }

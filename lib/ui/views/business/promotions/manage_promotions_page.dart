@@ -4,6 +4,8 @@ import 'package:clay_containers/widgets/clay_text.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
+import 'package:foodly_world/core/enums/promo_art_context_enum.dart';
+import 'package:foodly_world/core/enums/promo_image_style_enum.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
@@ -63,7 +65,7 @@ class ManagePromotionsPage extends StatelessWidget {
               dialogService.hideLoading();
               ManagePromotionsSnackbars.showAiPromoQuotaExhausted(
                 context,
-                vm.businessDM?.aiPromoMonthlyLimit ?? 6,
+                vm.businessDM?.aiPromoMonthlyLimit ?? 3,
               );
             },
           );

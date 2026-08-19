@@ -60,7 +60,7 @@ _BusinessDM _$BusinessDMFromJson(Map<String, dynamic> json) => _BusinessDM(
       menuEnabled: json['menu_enabled'] as bool? ?? false,
       combosLabel: json['combos_label'] as String?,
       aiPromoMonthlyLimit:
-          (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 6,
+          (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 3,
       aiPromosUsedThisMonth:
           (json['ai_promos_used_this_month'] as num?)?.toInt() ?? 0,
       minServicePrice: _doubleFromJson(json['min_service_price']),

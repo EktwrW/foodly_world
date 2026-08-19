@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:foodly_world/core/enums/promo_art_context_enum.dart';
+import 'package:foodly_world/core/enums/promo_image_style_enum.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/business/business_client.dart';
@@ -16,6 +18,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_generation_dm.dart';
 import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
@@ -481,6 +484,33 @@ class BusinessRepo {
   Future<ApiResult<AiPromoQuotaResponse>> useAiPromoQuota(String businessUuid) async {
     try {
       final response = await _businessClient.useAiPromoQuota({'business_uuid': businessUuid});
+      return ApiResult.success(response);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  /// Genera una promo con IA en el BE (copy + imagen en un solo round-trip).
+  ///
+  Future<ApiResult<AiPromoGenerationResponse>> generateAiPromo({
+    required String businessUuid,
+    required String prompt,
+    required bool generateImage,
+    required PromoImageStyle style,
+    required PromoArtContext artContext,
+    required bool includePeople,
+    required String locale,
+  }) async {
+    try {
+      final response = await _businessClient.generateAiPromo({
+        'business_uuid': businessUuid,
+        'prompt': prompt,
+        'generate_image': generateImage,
+        'style': style.value,
+        'art_context': artContext.value,
+        'include_people': includePeople,
+        'locale': locale,
+      });
       return ApiResult.success(response);
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

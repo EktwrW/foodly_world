@@ -3,7 +3,7 @@ description: "The best gastronomic app."
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+92
+version: 2.0.0+93
 
 environment:
   sdk: ^3.6.01
@@ -27,7 +27,6 @@ dependencies:
   carousel_slider: ^5.1.2
   clay_containers: ^0.3.4
   cupertino_icons: ^1.0.8
-  dart_openai: ^5.1.0
   device_info_plus: ^12.3.0
   dio: ^5.9.2
   fab_circular_menu_plus: ^0.0.4

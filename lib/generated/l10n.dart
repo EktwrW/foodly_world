@@ -647,6 +647,16 @@ class S {
     );
   }
 
+  /// `Remove YouTube URL`
+  String get removeYoutubeUrl {
+    return Intl.message(
+      'Remove YouTube URL',
+      name: 'removeYoutubeUrl',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Administrator`
   String get admin {
     return Intl.message('Administrator', name: 'admin', desc: '', args: []);
@@ -677,6 +687,56 @@ class S {
     return Intl.message(
       'Include promotional image (16:9)',
       name: 'aiPromoImageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the image you like best`
+  String get aiPromoPickImage {
+    return Intl.message(
+      'Choose the image you like best',
+      name: 'aiPromoPickImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product`
+  String get aiPromoContextProduct {
+    return Intl.message(
+      'Product',
+      name: 'aiPromoContextProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table`
+  String get aiPromoContextScene {
+    return Intl.message(
+      'Table',
+      name: 'aiPromoContextScene',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event`
+  String get aiPromoContextEvent {
+    return Intl.message(
+      'Event',
+      name: 'aiPromoContextEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Allow people in the image`
+  String get aiPromoIncludePeople {
+    return Intl.message(
+      'Allow people in the image',
+      name: 'aiPromoIncludePeople',
       desc: '',
       args: [],
     );

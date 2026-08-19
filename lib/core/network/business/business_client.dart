@@ -9,6 +9,7 @@ import 'package:foodly_world/data_models/favorites/favorite_menus_response_dm.da
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_generation_dm.dart';
 import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart' hide CategoryDM;
@@ -211,6 +212,14 @@ abstract class BusinessClient {
 
   @POST('/promotions/ai-quota-use')
   Future<AiPromoQuotaResponse> useAiPromoQuota(@Body() Map<String, String> body);
+
+  /// Genera copy + imagen de una promo del lado servidor.
+  ///
+  /// Antes esto eran dos llamadas desde el cliente (una por proveedor, texto
+  /// e imagen) con las API keys compiladas en el binario.
+  /// Ver `AiPromoGenerationResponse`.
+  @POST('/promotions/ai-generate')
+  Future<AiPromoGenerationResponse> generateAiPromo(@Body() Map<String, dynamic> body);
 
   @POST('/promotions-media/store')
   @MultiPart()

@@ -9,7 +9,7 @@ abstract class AiPromoQuotaResponse with _$AiPromoQuotaResponse {
 
   const factory AiPromoQuotaResponse({
     @Default(false) bool granted,
-    @JsonKey(name: 'ai_promo_monthly_limit') @Default(6) int aiPromoMonthlyLimit,
+    @JsonKey(name: 'ai_promo_monthly_limit') @Default(3) int aiPromoMonthlyLimit,
     @JsonKey(name: 'ai_promos_used_this_month') @Default(0) int aiPromosUsedThisMonth,
     @Default(0) int remaining,
     String? message,

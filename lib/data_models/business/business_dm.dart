@@ -87,7 +87,7 @@ abstract class BusinessDM with _$BusinessDM {
     // show their menu; catering shows it only when the manager enables it.
     @JsonKey(name: 'menu_enabled') @Default(false) bool menuEnabled,
     @JsonKey(name: 'combos_label') String? combosLabel,
-    @JsonKey(name: 'ai_promo_monthly_limit') @Default(6) int aiPromoMonthlyLimit,
+    @JsonKey(name: 'ai_promo_monthly_limit') @Default(3) int aiPromoMonthlyLimit,
     @JsonKey(name: 'ai_promos_used_this_month') @Default(0) int aiPromosUsedThisMonth,
     // Catering & Chefs vertical — MIN price across ACTIVE service_packages
     // for this business (EUR). Only populated by endpoints that join the

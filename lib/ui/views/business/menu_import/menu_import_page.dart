@@ -530,7 +530,7 @@ class _AnalyzeButton extends StatelessWidget {
 ///   - mensaje contextual ("Subiendo X de Y" / "Analizando X de Y")
 ///   - LinearProgressIndicator real con el progress
 ///   - subtítulo "Esto puede tardar unos segundos por foto" para gestionar
-///     expectativas (parse de OpenAI Vision puede ser lento)
+///     expectativas (el parse con visión puede ser lento)
 class _ProcessingOverlay extends StatelessWidget {
   final MenuImportState state;
   const _ProcessingOverlay({required this.state});

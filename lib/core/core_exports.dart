@@ -1,4 +1,3 @@
-export 'package:dart_openai/dart_openai.dart';
 export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
@@ -29,7 +28,6 @@ export 'package:foodly_world/core/network/business/business_client.dart';
 export 'package:foodly_world/core/network/business/business_repo.dart';
 export 'package:foodly_world/core/network/notifications/notifications_client.dart';
 export 'package:foodly_world/core/network/notifications/notifications_repo.dart';
-export 'package:foodly_world/core/network/openai/ai_promos_service.dart';
 export 'package:foodly_world/core/network/users/me_client.dart';
 export 'package:foodly_world/core/network/users/me_repo.dart';
 export 'package:foodly_world/core/routing/app_router.dart';

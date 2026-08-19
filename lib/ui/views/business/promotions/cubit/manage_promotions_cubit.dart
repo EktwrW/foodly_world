@@ -1,8 +1,9 @@
 import 'package:collection/collection.dart' as itr show IterableExtension;
+import 'package:foodly_world/core/enums/promo_art_context_enum.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
-import 'package:foodly_world/data_models/promotions/ai_promo_quota_dm.dart';
+import 'package:foodly_world/data_models/promotions/ai_promo_generation_dm.dart';
 import 'package:foodly_world/data_transfer_objects/promotion/promotion_dto.dart';
 import 'package:foodly_world/ui/views/business/promotions/view_model/manage_promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -188,6 +189,119 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
     emit(_Loaded(_vm));
   }
 
+  /// Borra la foto actual de la promo en el backend y la saca de la vista.
+  ///
+  /// El item "Eliminar fotos" del menú llamaba a `_editImage()`, que sólo
+  /// abría el selector de imágenes: nunca borraba nada. Quien quería sacar la
+  /// foto terminaba obligado a elegir otra.
+  ///
+  /// Emite `loading` mientras el backend confirma, así el editor puede mostrar
+  /// el iso de carga en lugar de la foto — sin eso el borrado se siente
+  /// instantáneo y engañoso, porque la imagen desaparecería antes de que el
+  /// servidor la haya borrado de verdad.
+  Future<void> deletePromoMedia() async {
+    final promo = _vm.newPromo;
+
+    // Enlace externo (YouTube): no hay archivo en storage. El enlace es una
+    // columna de la promo, así que se limpia por otro camino.
+    if (promo?.mediaFileIsExternalLink ?? false) {
+      await _deletePromoExternalLink(promo!);
+      return;
+    }
+
+    final persisted = promo?.promoMedia ?? const [];
+    final media = persisted.isNotEmpty ? persisted.first : null;
+
+    // Sin media persistida no hay nada que borrar en el servidor: es una
+    // imagen recién generada o recién elegida que todavía vive sólo en el VM.
+    if (media == null) {
+      clearPromoMedia();
+      return;
+    }
+
+    emit(_Loading(_vm));
+
+    final result = await _businessRepo.deletePromotionMedia(media.uuid);
+
+    result.when(
+      success: (_) {
+        _vm = _vm.copyWith(
+          newPromo: _vm.newPromo?.copyWith(promoMedia: const []),
+          newPromoMediaPath: null,
+          imageBytes: null,
+          aiImageOptions: const [],
+          selectedAiImageIndex: 0,
+        );
+        emit(_Loaded(_vm));
+      },
+      failure: (e) {
+        _logger.e('Promo media delete failed: $e');
+        _handleError(e);
+      },
+    );
+  }
+
+  /// Quita el enlace de YouTube de una promo.
+  ///
+  /// No pasa por `DELETE /promotions-media`: un enlace externo no tiene
+  /// archivo en nuestro storage, vive en la columna `media_link` de la propia
+  /// promoción. Se limpia con un `updatePromotion`.
+  ///
+  /// **Se manda string vacío y no `null` a propósito.** `PromotionDTO` omite
+  /// del JSON los campos nulos (`if (instance.mediaLink case final value?)` en
+  /// el `.g.dart`), y el backend hace `$promotion->update($request->validated())`:
+  /// un campo ausente deja la columna intacta. Con `null` el enlace sobreviviría
+  /// al borrado. Con `''` el campo viaja, pasa la validación `nullable|string`
+  /// y la columna queda vacía — que es lo que `mediaFileIsExternalLink` lee.
+  Future<void> _deletePromoExternalLink(PromotionDM promo) async {
+    // El editor también mira el controller para decidir si renderiza el
+    // player, así que limpiarlo es parte del borrado y no un detalle de UI.
+    _vm.youtubeUrlCtrl?.clear();
+
+    // Promo todavía no creada en el servidor: alcanza con limpiar el VM.
+    if (promo.uuid.isEmpty || _vm.businessDM == null) {
+      _vm = _vm.copyWith(newPromo: promo.copyWith(mediaLink: null));
+      emit(_Loaded(_vm));
+      return;
+    }
+
+    emit(_Loading(_vm));
+
+    final result = await _businessRepo.updatePromotion(
+      uuid: promo.uuid,
+      body: PromotionDTO(
+        businessUuid: _vm.businessDM!.uuid,
+        title: _vm.titleCtrl?.text ?? promo.title,
+        subTitle: _vm.subtitleCtrl?.text ?? promo.subTitle,
+        description: _vm.descriptionCtrl?.text ?? promo.description,
+        startDate: promo.startDate.toIso8601String(),
+        expireDate: promo.expireDate.toIso8601String(),
+        versions: promo.versions,
+        prices: promo.prices,
+        promoActiveDays: promo.promoDays,
+        available: true,
+        mediaLink: '',
+      ),
+    );
+
+    result.when(
+      success: (updated) {
+        _vm = _vm.copyWith(
+          newPromo: updated.copyWith(mediaLink: null),
+          newPromoMediaPath: null,
+          imageBytes: null,
+          aiImageOptions: const [],
+          selectedAiImageIndex: 0,
+        );
+        emit(_Loaded(_vm));
+      },
+      failure: (e) {
+        _logger.e('Promo youtube link delete failed: $e');
+        _handleError(e);
+      },
+    );
+  }
+
   void clearPromoMedia() {
     _vm = _vm.copyWith(
       newPromoMediaPath: null,
@@ -196,15 +310,20 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
     emit(_Loaded(_vm));
   }
 
-  void updateImageBytes(Uint8List bytes) {
-    _vm = _vm.copyWith(
-      imageBytes: bytes,
-      newPromoMediaPath: null, // Clear any picked image path
-    );
-    emit(_Loaded(_vm));
-  }
-
-  void generatePromotion({required (bool, OpenAIImageStyle) generateImage}) async {
+  /// Genera copy + imagen de la promo llamando al BE.
+  ///
+  /// Antes esto hacía tres cosas desde el cliente: pegarle a
+  /// `/promotions/ai-quota-use`, después al proveedor de texto y después al
+  /// de imagen, con las dos API keys compiladas dentro del binario.
+  /// Ahora es un solo
+  /// round-trip a `/promotions/ai-generate` y las credenciales viven en
+  /// Cloud Run.
+  ///
+  /// El chequeo de cuota también dejó de ser fail-open: antes, si la llamada
+  /// de cuota fallaba, el cubit generaba igual "para no bloquear al usuario",
+  /// lo que convertía el límite de 6/mes en decorativo. Ahora el límite lo
+  /// aplica el BE en la misma transacción que genera.
+  void generatePromotion({required AiPromoImageOptions options}) async {
     try {
       emit(_Loading(_vm));
 
@@ -218,54 +337,83 @@ class ManagePromotionsCubit extends Cubit<ManagePromotionsState> {
         return;
       }
 
-      // Check and decrement AI promo quota via backend.
-      final quotaResult = await _businessRepo.useAiPromoQuota(_businessUuid);
-      final quotaGranted = quotaResult.when(
-        success: (AiPromoQuotaResponse quota) {
-          // Update local businessDM with fresh quota values.
+      final result = await _businessRepo.generateAiPromo(
+        businessUuid: _businessUuid,
+        prompt: _vm.promptCtrl?.text ?? '',
+        generateImage: options.generate,
+        style: options.style,
+        artContext: options.context,
+        includePeople: options.people,
+        locale: _authSessionService.lang,
+      );
+
+      result.when(
+        success: (AiPromoGenerationResponse response) {
+          // Refrescar la cuota local con lo que devolvió el BE.
           _vm = _vm.copyWith(
             businessDM: _vm.businessDM?.copyWith(
-              aiPromoMonthlyLimit: quota.aiPromoMonthlyLimit,
-              aiPromosUsedThisMonth: quota.aiPromosUsedThisMonth,
+              aiPromoMonthlyLimit: response.aiPromoMonthlyLimit,
+              aiPromosUsedThisMonth: response.aiPromosUsedThisMonth,
             ),
           );
 
-          if (!quota.granted) {
+          if (!response.granted) {
             emit(_AiQuotaExhausted(_vm));
-            return false;
+            return;
           }
-          return true;
+
+          _vm.titleCtrl?.controller?.text = response.title;
+          _vm.subtitleCtrl?.controller?.text = response.subtitle;
+          _vm.descriptionCtrl?.controller?.text = response.description;
+
+          // Las imágenes son best-effort: si Replicate falló, el BE devuelve
+          // el copy igual y la lista viene vacía. En ese caso dejamos los
+          // textos y el manager sube su propia foto.
+          final images = response.usableImages;
+          if (images.isNotEmpty) {
+            _vm = _vm.copyWith(
+              aiImageOptions: images,
+              selectedAiImageIndex: 0,
+              newPromoMediaPath: null,
+              imageBytes: images.first.bytes,
+            );
+          }
+          emit(_Loaded(_vm));
         },
         failure: (e) {
-          _logger.e('AI promo quota check failed: $e');
-          // On network error, allow generation (fail-open) so user isn't blocked.
-          return true;
+          _logger.e('AI promo generation failed: $e');
+          _handleError(e);
         },
       );
-
-      if (!quotaGranted) return;
-
-      final response = await di<AIPromoService>().generatePromotion(
-        _vm.promptCtrl?.text ?? '',
-        businessName: _vm.businessDM!.name ?? '',
-        businessUuid: _vm.businessDM!.uuid,
-        generateImage: generateImage,
-        language: _authSessionService.lang,
-        businessCategory: _vm.businessDM!.category?.categoryName ?? 'gastronomic establishment',
-      );
-
-      _vm.titleCtrl?.controller?.text = response.title;
-      _vm.subtitleCtrl?.controller?.text = response.subtitle;
-      _vm.descriptionCtrl?.controller?.text = response.description;
-
-      if (generateImage.$1 && response.imageBytes != null) {
-        updateImageBytes(response.imageBytes!);
-      }
-
-      emit(_Loaded(_vm));
     } catch (e) {
       _handleError(e);
     }
+  }
+
+  /// Aplica una de las artes generadas. No vuelve a pegarle al BE: las tres
+  /// ya vinieron en el mismo round-trip, así que cambiar de opción es gratis
+  /// e instantáneo.
+  void selectAiImage(int index) {
+    final options = _vm.aiImageOptions;
+    if (index < 0 || index >= options.length) return;
+
+    final bytes = options[index].bytes;
+    if (bytes == null) return;
+
+    _vm = _vm.copyWith(
+      selectedAiImageIndex: index,
+      imageBytes: bytes,
+      newPromoMediaPath: null,
+    );
+    emit(_Loaded(_vm));
+  }
+
+  /// Descarta el selector. Se llama cuando el manager sube su propia foto o
+  /// borra la media: a partir de ahí las opciones de IA ya no aplican.
+  void clearAiImageOptions() {
+    if (_vm.aiImageOptions.isEmpty) return;
+    _vm = _vm.copyWith(aiImageOptions: const [], selectedAiImageIndex: 0);
+    emit(_Loaded(_vm));
   }
 
   void createPromotion() async {

@@ -46,8 +46,6 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=\"https://maps.googleapis.com/maps/api/geocode/json?latlng=\"",
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "dependsOn": ["Foodly - Clean"],
@@ -76,8 +74,6 @@
         "--dart-define=GOOGLE_MAPS_GEOCODING_URL=\"https://maps.googleapis.com/maps/api/geocode/json?latlng=\"",
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "dependsOn": ["Foodly - Clean"],
@@ -106,8 +102,6 @@
         {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "dependsOn": ["Foodly - Clean"],
@@ -135,8 +129,6 @@
         {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "problemMatcher": [],
@@ -163,8 +155,6 @@
         {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "problemMatcher": [],
@@ -199,8 +189,6 @@
         {"value": "--dart-define=GOOGLE_MAPS_GEOCODING_URL=https://maps.googleapis.com/maps/api/geocode/json?latlng=", "quoting": "strong"},
         "--dart-define=GOOGLE_MAPS_API_KEY=${env:GOOGLE_MAPS_API_KEY}",
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
-        "--dart-define=OPENAI_API_KEY=${env:OPENAI_API_KEY}",
-        "--dart-define=REPLICATE_API_KEY=${env:REPLICATE_API_KEY}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
       "problemMatcher": [],

@@ -13,8 +13,6 @@ class DevConfig extends BaseConfig {
   final String envGooglePlacesBaseUrl;
   final String envGoogleDefaultPublicToken;
   final String envGoogleSignInClientId;
-  final String envOpenaiApiKey;
-  final String envReplicateApiKey;
 
   DevConfig({
     required this.envLogLevel,
@@ -27,8 +25,6 @@ class DevConfig extends BaseConfig {
     this.testUserPassword,
     this.regPrefill,
     required this.envGoogleSignInClientId,
-    required this.envOpenaiApiKey,
-    required this.envReplicateApiKey,
   });
 
   @override
@@ -55,9 +51,4 @@ class DevConfig extends BaseConfig {
   @override
   String get googleSignInClientId => envGoogleSignInClientId;
 
-  @override
-  String get openaiApiKey => envOpenaiApiKey;
-
-  @override
-  String get replicateApiKey => envReplicateApiKey;
 }

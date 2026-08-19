@@ -248,7 +248,13 @@ bundle exec fastlane release       # Build + upload to App Store (manual submit)
 - `ios/fastlane/.env.default` — Template for `.env` (safe to commit)
 
 **Environment variables required in `.env`:**
-- `OPENAI_API_KEY`, `REPLICATE_API_KEY`, `ANALYTICS_TOKEN` — dart-define values
+- `ANALYTICS_TOKEN` — dart-define value
+
+> **Las claves de los proveedores de IA ya no se inyectan** (2026-08-18). Se pasaban
+> por `--dart-define`, lo que las compilaba dentro de `libapp.so` / el IPA: extraíbles
+> con `strings` desde cualquier APK publicado. La generación de AI promos se movió al
+> backend (`POST /promotions/ai-generate`) y las credenciales viven en Secret Manager.
+> Si ves estas variables en un `.env` local, borralas.
 - `FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD` — Generated at account.apple.com > Sign-In and Security > App-Specific Passwords
 
 ### iOS Build (without Fastlane)

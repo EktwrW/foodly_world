@@ -443,18 +443,27 @@ class MessageLookup extends MessageLookupByLibrary {
       "A carregar as tuas fotos para o Foodly de forma segura",
     ),
     "aiPromoContent": m9,
+    "aiPromoContextEvent": MessageLookupByLibrary.simpleMessage("Evento"),
+    "aiPromoContextProduct": MessageLookupByLibrary.simpleMessage("Produto"),
+    "aiPromoContextScene": MessageLookupByLibrary.simpleMessage("Mesa"),
     "aiPromoGenerate": MessageLookupByLibrary.simpleMessage("Gerar"),
     "aiPromoImageLabel": MessageLookupByLibrary.simpleMessage(
       "Incluir imagem promocional (16:9)",
     ),
     "aiPromoImageNatural": MessageLookupByLibrary.simpleMessage("Natural"),
     "aiPromoImageVivid": MessageLookupByLibrary.simpleMessage("Vibrante"),
+    "aiPromoIncludePeople": MessageLookupByLibrary.simpleMessage(
+      "Permitir pessoas na imagem",
+    ),
+    "aiPromoPickImage": MessageLookupByLibrary.simpleMessage(
+      "Escolhe a imagem de que mais gostas",
+    ),
     "aiPromoQuotaExhaustedContent": m10,
     "aiPromoQuotaExhaustedTitle": MessageLookupByLibrary.simpleMessage(
       "Quota Mensal Atingida",
     ),
     "aiPromoTitle": MessageLookupByLibrary.simpleMessage(
-      "Gerador de Promoções IA",
+      "IA Gerador de Promoções",
     ),
     "all": MessageLookupByLibrary.simpleMessage("Todos"),
     "allBookings": MessageLookupByLibrary.simpleMessage("Todos"),
@@ -2153,6 +2162,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Remover este período de tempo",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remover vídeo"),
+    "removeYoutubeUrl": MessageLookupByLibrary.simpleMessage(
+      "Remover URL do YouTube",
+    ),
     "removedFromFavorites": MessageLookupByLibrary.simpleMessage(
       "removido dos favoritos",
     ),

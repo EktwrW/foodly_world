@@ -1,6 +1,6 @@
 part of '../../manage_promotions_page.dart';
 
-enum MediaMenuAction { removePhotos, removeVideo, uploadImage, uploadVideo, addYoutubeUrl }
+enum MediaMenuAction { removePhotos, removeVideo, uploadImage, uploadVideo, addYoutubeUrl, removeYoutubeUrl }
 
 class _EditPromoMediaWdg extends StatelessWidget {
   const _EditPromoMediaWdg({
@@ -32,6 +32,17 @@ class _EditPromoMediaWdg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildPreview(context),
+        if (vm.aiImageOptions.length > 1) _AiImageOptionsStrip(vm: vm),
+      ],
+    );
+  }
+
+  Widget _buildPreview(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.topEnd,
       children: [
@@ -41,7 +52,18 @@ class _EditPromoMediaWdg extends StatelessWidget {
             color: FoodlyThemes.success.withValues(alpha: 0.1),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: _buildMediaContent(),
+              // Mientras el backend confirma el borrado se muestra el iso en
+              // lugar de la foto. Sacarla del árbol antes de la confirmación
+              // haría parecer instantáneo algo que todavía puede fallar.
+              // `_Loading` es privado del library del cubit, así que acá se
+              // discrimina con `maybeWhen` en vez de un `is`.
+              child: BlocBuilder<ManagePromotionsCubit, ManagePromotionsState>(
+                buildWhen: (previous, current) => previous.runtimeType != current.runtimeType,
+                builder: (context, state) => state.maybeWhen(
+                  loading: (_) => const Center(child: LoadingWidgetFoodlyIso(height: 48)),
+                  orElse: _buildMediaContent,
+                ),
+              ),
             ),
           ),
         ),
@@ -56,10 +78,8 @@ class _EditPromoMediaWdg extends StatelessWidget {
           ),
           onSelected: (MediaMenuAction action) {
             switch (action) {
-              case MediaMenuAction.removePhotos:
-                _editImage(context);
-              case MediaMenuAction.removeVideo:
-                _editVideo(context);
+              case MediaMenuAction.removePhotos || MediaMenuAction.removeVideo || MediaMenuAction.removeYoutubeUrl:
+                _deletePromoMedia(context);
               case MediaMenuAction.uploadImage:
                 _pickImage(context);
               case MediaMenuAction.uploadVideo:
@@ -79,6 +99,11 @@ class _EditPromoMediaWdg extends StatelessWidget {
                 value: MediaMenuAction.removeVideo,
                 child: Text(S.current.removeVideo),
               ),
+            if (vm.newPromo?.mediaFileIsExternalLink ?? false)
+              PopupMenuItem(
+                value: MediaMenuAction.removeYoutubeUrl,
+                child: Text(S.current.removeYoutubeUrl),
+              ),
             PopupMenuItem(
               value: MediaMenuAction.uploadImage,
               child: Text(S.current.uploadImage),
@@ -97,8 +122,10 @@ class _EditPromoMediaWdg extends StatelessWidget {
     );
   }
 
+  void _deletePromoMedia(BuildContext context) => context.read<ManagePromotionsCubit>().deletePromoMedia();
+
   Widget _buildMediaContent() {
-    if (vm.newPromo?.mediaFileIsExternalLink ?? false || (vm.youtubeUrlCtrl?.text.isNotEmpty ?? false)) {
+    if ((vm.newPromo?.mediaFileIsExternalLink ?? false) || (vm.youtubeUrlCtrl?.text.isNotEmpty ?? false)) {
       final url =
           (vm.youtubeUrlCtrl?.text.isNotEmpty ?? false) ? vm.youtubeUrlCtrl!.text : (vm.newPromo?.mediaFileUrl ?? '');
 
@@ -217,18 +244,6 @@ class _EditPromoMediaWdg extends StatelessWidget {
       }
     }
   }
-
-  void _editImage(BuildContext context) {
-    if (vm.newPromo?.promoMedia.isNotEmpty ?? false) {
-      _pickImage(context);
-    }
-  }
-
-  void _editVideo(BuildContext context) {
-    if (vm.newPromo?.promoMedia.isNotEmpty ?? false) {
-      _pickVideo(context);
-    }
-  }
 }
 
 class YoutubeUrlDialog extends StatefulWidget {
@@ -297,6 +312,7 @@ class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
                   SaveAndCancelButtons(
                     btnType: SaveAndCancelBtnType.dialog,
                     onCancelPressed: () => Navigator.of(context).pop(),
+                    onCancelPressedSecondary: () => Navigator.of(context).pop(),
                     showSaveButton: isValid,
                     onSavePressed: isValid ? widget.onTap : null,
                     saveButtonText: S.current.attachVideo,
@@ -346,6 +362,77 @@ class YoutubeUrlDialogState extends State<YoutubeUrlDialog> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Las tres artes generadas por IA, para que el manager elija.
+///
+/// Sólo se muestra con más de una opción: si Replicate devolvió una sola no
+/// hay nada que elegir y la tira sería ruido. Cambiar de opción no vuelve a
+/// pegarle al backend — las tres vinieron en el mismo round-trip, así que la
+/// selección es instantánea y no consume cuota.
+class _AiImageOptionsStrip extends StatelessWidget {
+  const _AiImageOptionsStrip({required this.vm});
+
+  final ManagePromotionsVM vm;
+
+  static const _thumbHeight = 58.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ManagePromotionsCubit>();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            S.current.aiPromoPickImage,
+            style: FoodlyTextStyles.captionBold,
+          ),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: _thumbHeight,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: vm.aiImageOptions.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 8),
+              itemBuilder: (context, index) {
+                final bytes = vm.aiImageOptions[index].bytes;
+                if (bytes == null) return const SizedBox.shrink();
+
+                final isSelected = index == vm.selectedAiImageIndex;
+
+                return GestureDetector(
+                  onTap: () => cubit.selectAiImage(index),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isSelected ? FoodlyThemes.primaryFoodly : Colors.transparent,
+                        width: 2.5,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Opacity(
+                        opacity: isSelected ? 1 : .55,
+                        child: AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Image.memory(bytes, fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

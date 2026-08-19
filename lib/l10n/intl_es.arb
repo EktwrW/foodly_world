@@ -134,6 +134,7 @@
   "addedToFavoritesFem": "añadida a tus favoritos",
   "removedFromFavoritesFem": "eliminada de tus favoritos",
   "addYoutubeUrl": "Agregar URL de YouTube",
+  "removeYoutubeUrl": "Quitar URL de YouTube",
   "admin": "Administrador",
   "aiPromoContent": "Genera título (máx. 36 caracteres), subtítulo (máx. 99) y descripción (máx. 369) para tu promoción. Te quedan {count} usos este mes.",
   "@aiPromoContent": {
@@ -145,6 +146,11 @@
   },
   "aiPromoGenerate": "Generar",
   "aiPromoImageLabel": "Incluir imagen promocional (16:9)",
+  "aiPromoPickImage": "Elige la imagen que más te guste",
+  "aiPromoContextProduct": "Producto",
+  "aiPromoContextScene": "Mesa",
+  "aiPromoContextEvent": "Evento",
+  "aiPromoIncludePeople": "Permitir personas en la imagen",
   "aiPromoImageNatural": "Natural",
   "aiPromoImageVivid": "Vívido",
   "aiPromoQuotaExhaustedTitle": "Cuota Mensual Alcanzada",
@@ -156,7 +162,7 @@
       }
     }
   },
-  "aiPromoTitle": "Generador de Promociones AI",
+  "aiPromoTitle": "IA Generador de Promociones",
   "analytics": "Analíticas",
   "and": "y",
   "andCreateContentToThese": "y gestionar contenido, promociones y más",
@@ -355,13 +361,23 @@
   "scanForMenu": "Escanea para ver nuestro menú",
   "poweredBy": "Con tecnología de",
   "qrBatchCount": "{count} QRs · de {first} a {last}",
-  "@qrBatchCount": {"placeholders": {"count": {}, "first": {}, "last": {}}},
+  "@qrBatchCount": {
+    "placeholders": {
+      "count": {},
+      "first": {},
+      "last": {}
+    }
+  },
   "qrBatchDownload": "Un QR por mesa",
   "qrBatchFrom": "Desde",
   "qrBatchGenerate": "Generar PDF",
   "qrBatchHint": "Cada mesa tiene su QR. Cuando un cliente lo escanea, su pedido ya sabe en qué mesa está.",
   "qrBatchInvalidRange": "Revisa el rango — hasta {max} mesas.",
-  "@qrBatchInvalidRange": {"placeholders": {"max": {}}},
+  "@qrBatchInvalidRange": {
+    "placeholders": {
+      "max": {}
+    }
+  },
   "qrBatchPrefix": "Etiqueta",
   "qrBatchPrefixDefault": "Mesa",
   "qrBatchTitle": "Un QR por mesa",

@@ -134,6 +134,7 @@
   "addedToFavoritesFem": "adicionada aos favoritos",
   "removedFromFavoritesFem": "removida dos favoritos",
   "addYoutubeUrl": "Adicionar URL do YouTube",
+  "removeYoutubeUrl": "Remover URL do YouTube",
   "admin": "Administrador",
   "aiPromoContent": "Gera título (máx. 36 caracteres), subtítulo (máx. 99) e descrição (máx. 369) para a sua promoção. Tem {count} utilizações restantes este mês.",
   "@aiPromoContent": {
@@ -145,6 +146,11 @@
   },
   "aiPromoGenerate": "Gerar",
   "aiPromoImageLabel": "Incluir imagem promocional (16:9)",
+  "aiPromoPickImage": "Escolhe a imagem de que mais gostas",
+  "aiPromoContextProduct": "Produto",
+  "aiPromoContextScene": "Mesa",
+  "aiPromoContextEvent": "Evento",
+  "aiPromoIncludePeople": "Permitir pessoas na imagem",
   "aiPromoImageNatural": "Natural",
   "aiPromoImageVivid": "Vibrante",
   "aiPromoQuotaExhaustedTitle": "Quota Mensal Atingida",
@@ -156,7 +162,7 @@
       }
     }
   },
-  "aiPromoTitle": "Gerador de Promoções IA",
+  "aiPromoTitle": "IA Gerador de Promoções",
   "analytics": "Análises",
   "and": "e",
   "andCreateContentToThese": "e gerir conteúdo, promoções e mais",
@@ -355,13 +361,23 @@
   "scanForMenu": "Lê para ver o nosso menu",
   "poweredBy": "Com tecnologia de",
   "qrBatchCount": "{count} QRs · de {first} a {last}",
-  "@qrBatchCount": {"placeholders": {"count": {}, "first": {}, "last": {}}},
+  "@qrBatchCount": {
+    "placeholders": {
+      "count": {},
+      "first": {},
+      "last": {}
+    }
+  },
   "qrBatchDownload": "Um QR por mesa",
   "qrBatchFrom": "De",
   "qrBatchGenerate": "Gerar PDF",
   "qrBatchHint": "Cada mesa tem o seu QR. Quando um cliente o lê, o pedido já sabe em que mesa está.",
   "qrBatchInvalidRange": "Verifica o intervalo — até {max} mesas.",
-  "@qrBatchInvalidRange": {"placeholders": {"max": {}}},
+  "@qrBatchInvalidRange": {
+    "placeholders": {
+      "max": {}
+    }
+  },
   "qrBatchPrefix": "Etiqueta",
   "qrBatchPrefixDefault": "Mesa",
   "qrBatchTitle": "Um QR por mesa",

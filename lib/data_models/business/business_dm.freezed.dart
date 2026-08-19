@@ -929,7 +929,7 @@ class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'reservations_count') this.reservationsSizeLimit = 6,
       @JsonKey(name: 'menu_enabled') this.menuEnabled = false,
       @JsonKey(name: 'combos_label') this.combosLabel,
-      @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 6,
+      @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 3,
       @JsonKey(name: 'ai_promos_used_this_month')
       this.aiPromosUsedThisMonth = 0,
       @JsonKey(name: 'min_service_price', fromJson: _doubleFromJson)

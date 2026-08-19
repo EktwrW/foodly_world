@@ -35,7 +35,7 @@ jobs:
         # `menu.foodly.solutions` SÓLO muestra el menú de un negocio — no usa
         # auth, no usa Maps/Geocoding, no usa AI. Por eso NO se inyectan los
         # dart-defines GOOGLE_MAPS_API_KEY / GOOGLE_MAPS_GEOCODING_URL /
-        # GOOGLE_SIGN_IN_CLIENT_ID / OPENAI_API_KEY / REPLICATE_API_KEY:
+        # GOOGLE_SIGN_IN_CLIENT_ID:
         # serían string vacío (los secrets ni existen en el repo) y abultan
         # el bundle servido al usuario público. ANALYTICS_TOKEN se mantiene
         # para trackear views del menú.

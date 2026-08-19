@@ -24,7 +24,7 @@ import 'package:path/path.dart' as p;
 /// **Timeout del parse:** este repo le pasa al endpoint `/parse` un
 /// `Options(receiveTimeout: 90s)` per-request, deliberadamente alto.
 /// Razones:
-///   1. El NLP de Mateo cae al fallback OpenAI Vision en fotos difíciles
+///   1. El NLP de Mateo cae al fallback de visión en fotos difíciles
 ///      — observamos hasta 50 s de cola legítima.
 ///   2. El BE Laravel proxiea sincrónicamente (no hay queue worker), así
 ///      que la latencia del FE = latencia del NLP + ~200 ms de overhead.
@@ -33,7 +33,7 @@ import 'package:path/path.dart' as p;
 class MenuImportRepo {
   final MenuImportClient _client;
 
-  /// Timeout por foto parseada — generoso porque el fallback OpenAI Vision
+  /// Timeout por foto parseada — generoso porque el fallback de visión
   /// es lento. La pantalla de revisión muestra progreso "X/Y procesadas"
   /// para que el manager no sienta que la app se colgó.
   static const Duration _parseTimeout = Duration(seconds: 90);

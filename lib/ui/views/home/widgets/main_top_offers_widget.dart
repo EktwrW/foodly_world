@@ -233,15 +233,16 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Flexible(
-                              child: Text(
-                                promo.subTitle,
-                                style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                                maxLines: 3,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
+                            if (!promo.hasMedia)
+                              Flexible(
+                                child: Text(
+                                  promo.subTitle,
+                                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                                  maxLines: 3,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
                             // Business name + rating
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

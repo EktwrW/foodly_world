@@ -303,7 +303,7 @@ extension AiPromoQuotaResponsePatterns on AiPromoQuotaResponse {
 class _AiPromoQuotaResponse extends AiPromoQuotaResponse {
   const _AiPromoQuotaResponse(
       {this.granted = false,
-      @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 6,
+      @JsonKey(name: 'ai_promo_monthly_limit') this.aiPromoMonthlyLimit = 3,
       @JsonKey(name: 'ai_promos_used_this_month')
       this.aiPromosUsedThisMonth = 0,
       this.remaining = 0,

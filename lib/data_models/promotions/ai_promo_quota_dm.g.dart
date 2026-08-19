@@ -11,7 +11,7 @@ _AiPromoQuotaResponse _$AiPromoQuotaResponseFromJson(
     _AiPromoQuotaResponse(
       granted: json['granted'] as bool? ?? false,
       aiPromoMonthlyLimit:
-          (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 6,
+          (json['ai_promo_monthly_limit'] as num?)?.toInt() ?? 3,
       aiPromosUsedThisMonth:
           (json['ai_promos_used_this_month'] as num?)?.toInt() ?? 0,
       remaining: (json['remaining'] as num?)?.toInt() ?? 0,

@@ -427,12 +427,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "Securely uploading your photos to Foodly",
     ),
     "aiPromoContent": m9,
+    "aiPromoContextEvent": MessageLookupByLibrary.simpleMessage("Event"),
+    "aiPromoContextProduct": MessageLookupByLibrary.simpleMessage("Product"),
+    "aiPromoContextScene": MessageLookupByLibrary.simpleMessage("Table"),
     "aiPromoGenerate": MessageLookupByLibrary.simpleMessage("Generate"),
     "aiPromoImageLabel": MessageLookupByLibrary.simpleMessage(
       "Include promotional image (16:9)",
     ),
     "aiPromoImageNatural": MessageLookupByLibrary.simpleMessage("Natural"),
     "aiPromoImageVivid": MessageLookupByLibrary.simpleMessage("Vivid"),
+    "aiPromoIncludePeople": MessageLookupByLibrary.simpleMessage(
+      "Allow people in the image",
+    ),
+    "aiPromoPickImage": MessageLookupByLibrary.simpleMessage(
+      "Choose the image you like best",
+    ),
     "aiPromoQuotaExhaustedContent": m10,
     "aiPromoQuotaExhaustedTitle": MessageLookupByLibrary.simpleMessage(
       "Monthly Quota Reached",
@@ -2059,6 +2068,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Remove this time period",
     ),
     "removeVideo": MessageLookupByLibrary.simpleMessage("Remove video"),
+    "removeYoutubeUrl": MessageLookupByLibrary.simpleMessage(
+      "Remove YouTube URL",
+    ),
     "removedFromFavorites": MessageLookupByLibrary.simpleMessage(
       "removed from your favorites",
     ),

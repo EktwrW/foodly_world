@@ -15,10 +15,6 @@ abstract class NearbyPromotionDM with _$NearbyPromotionDM {
     @JsonKey(name: 'sub_title') @Default('') String subTitle,
     @JsonKey(name: 'media_link') String? mediaLink,
     @JsonKey(name: 'promo_media') PromoMediaLiteDM? promoMedia,
-    // Defensivo: business_name es nullable en la tabla businesses (BE) y
-    // business_uuid podría faltar en datos de borde. Con @Default('') una sola
-    // promo con esos campos vacíos no aborta el parse de toda la lista
-    // (json_serializable mapea la List entera; si un item tira, caen todos).
     @JsonKey(name: 'business_uuid') @Default('') String businessUuid,
     @JsonKey(name: 'business_name') @Default('') String businessName,
     @JsonKey(name: 'business_logo') String? businessLogo,
@@ -29,8 +25,9 @@ abstract class NearbyPromotionDM with _$NearbyPromotionDM {
     @JsonKey(name: 'expire_date') DateTime? expireDate,
   }) = _NearbyPromotionDM;
 
-  factory NearbyPromotionDM.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionDMFromJson(json);
+  factory NearbyPromotionDM.fromJson(Map<String, dynamic> json) => _$NearbyPromotionDMFromJson(json);
+
+  bool get hasMedia => promoMedia != null || mediaLink?.isNotEmpty == false;
 
   /// True if the promo is currently running. Defaults to true when dates are absent.
   bool get isActive {
@@ -56,8 +53,7 @@ abstract class PromoMediaLiteDM with _$PromoMediaLiteDM {
     @JsonKey(name: 'media_type') @Default('Image') String mediaType,
   }) = _PromoMediaLiteDM;
 
-  factory PromoMediaLiteDM.fromJson(Map<String, dynamic> json) =>
-      _$PromoMediaLiteDMFromJson(json);
+  factory PromoMediaLiteDM.fromJson(Map<String, dynamic> json) => _$PromoMediaLiteDMFromJson(json);
 
   bool get isVideo => mediaType.toLowerCase() == 'video';
   bool get isImage => !isVideo;
@@ -70,8 +66,7 @@ abstract class NearbyPromotionsResponseDM with _$NearbyPromotionsResponseDM {
     required NearbyPromotionsMeta meta,
   }) = _NearbyPromotionsResponseDM;
 
-  factory NearbyPromotionsResponseDM.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionsResponseDMFromJson(json);
+  factory NearbyPromotionsResponseDM.fromJson(Map<String, dynamic> json) => _$NearbyPromotionsResponseDMFromJson(json);
 }
 
 @freezed
@@ -85,6 +80,5 @@ abstract class NearbyPromotionsMeta with _$NearbyPromotionsMeta {
     @JsonKey(name: 'radius_km') @Default(10.0) double radiusKm,
   }) = _NearbyPromotionsMeta;
 
-  factory NearbyPromotionsMeta.fromJson(Map<String, dynamic> json) =>
-      _$NearbyPromotionsMetaFromJson(json);
+  factory NearbyPromotionsMeta.fromJson(Map<String, dynamic> json) => _$NearbyPromotionsMetaFromJson(json);
 }

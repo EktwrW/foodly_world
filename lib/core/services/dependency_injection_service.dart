@@ -108,9 +108,7 @@ class DependencyInjectionService {
       ..registerLazySingleton(() => MenuImportClient(di<FoodlyApiProvider>().dio))
       ..registerLazySingleton(() => AnalyticsApiProvider())
       ..registerLazySingleton(() => EventsClient(di<AnalyticsApiProvider>().dio))
-      ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio))
-      ..registerLazySingleton(() => ReplicateService())
-      ..registerLazySingleton(() => AIPromoService(di()));
+      ..registerLazySingleton(() => DashboardClient(di<AnalyticsApiProvider>().dio));
 
     /// Register singleton repositories
     di
@@ -150,7 +148,7 @@ class DependencyInjectionService {
       // MenuImportRepo wrapping del MenuImportClient en ApiResult,
       // con timeouts per-request específicos por endpoint:
       //   - upload: 60 s   (multipart, 25 fotos × 6 MB sobre 4G mediocre)
-      //   - parse:  90 s   (NLP cae a OpenAI Vision en peor caso)
+      //   - parse:  90 s   (NLP cae al fallback de visión en peor caso)
       //   - bulk:   30 s   (transacción atómica, normalmente <2 s pero damos colchón)
       ..registerLazySingleton(() => MenuImportRepo(client: di()));
 

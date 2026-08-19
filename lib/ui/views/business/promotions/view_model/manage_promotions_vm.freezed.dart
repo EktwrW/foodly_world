@@ -30,6 +30,15 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
   PageController? get controller;
   (String, MediaType)? get newPromoMediaPath;
   Uint8List? get imageBytes;
+
+  /// Las tres artes que devolvió la última generación con IA. Vive en el VM
+  /// y no en el estado porque el selector tiene que sobrevivir a los rebuilds
+  /// mientras el manager compara y edita el resto del formulario.
+  /// Se limpia al guardar o al subir una foto propia.
+  List<AiPromoImageOption> get aiImageOptions;
+
+  /// Índice dentro de [aiImageOptions] de la que está aplicada.
+  int get selectedAiImageIndex;
   VideoPlayerController? get videoController;
   ScrollController? get activePromosScrollController;
   ScrollController? get upcomingPromosScrollController;
@@ -62,6 +71,8 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('controller', controller))
       ..add(DiagnosticsProperty('newPromoMediaPath', newPromoMediaPath))
       ..add(DiagnosticsProperty('imageBytes', imageBytes))
+      ..add(DiagnosticsProperty('aiImageOptions', aiImageOptions))
+      ..add(DiagnosticsProperty('selectedAiImageIndex', selectedAiImageIndex))
       ..add(DiagnosticsProperty('videoController', videoController))
       ..add(DiagnosticsProperty(
           'activePromosScrollController', activePromosScrollController))
@@ -105,6 +116,10 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
                 other.newPromoMediaPath == newPromoMediaPath) &&
             const DeepCollectionEquality()
                 .equals(other.imageBytes, imageBytes) &&
+            const DeepCollectionEquality()
+                .equals(other.aiImageOptions, aiImageOptions) &&
+            (identical(other.selectedAiImageIndex, selectedAiImageIndex) ||
+                other.selectedAiImageIndex == selectedAiImageIndex) &&
             (identical(other.videoController, videoController) ||
                 other.videoController == videoController) &&
             (identical(other.activePromosScrollController,
@@ -136,6 +151,8 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
         controller,
         newPromoMediaPath,
         const DeepCollectionEquality().hash(imageBytes),
+        const DeepCollectionEquality().hash(aiImageOptions),
+        selectedAiImageIndex,
         videoController,
         activePromosScrollController,
         upcomingPromosScrollController
@@ -143,7 +160,7 @@ mixin _$ManagePromotionsVM implements DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsVM(editing: $editing, promotions: $promotions, titleCtrl: $titleCtrl, subtitleCtrl: $subtitleCtrl, descriptionCtrl: $descriptionCtrl, promptCtrl: $promptCtrl, youtubeUrlCtrl: $youtubeUrlCtrl, youtubeUrlFormKey: $youtubeUrlFormKey, activeDays: $activeDays, autovalidateMode: $autovalidateMode, newPromo: $newPromo, businessDM: $businessDM, indexView: $indexView, controller: $controller, newPromoMediaPath: $newPromoMediaPath, imageBytes: $imageBytes, videoController: $videoController, activePromosScrollController: $activePromosScrollController, upcomingPromosScrollController: $upcomingPromosScrollController)';
+    return 'ManagePromotionsVM(editing: $editing, promotions: $promotions, titleCtrl: $titleCtrl, subtitleCtrl: $subtitleCtrl, descriptionCtrl: $descriptionCtrl, promptCtrl: $promptCtrl, youtubeUrlCtrl: $youtubeUrlCtrl, youtubeUrlFormKey: $youtubeUrlFormKey, activeDays: $activeDays, autovalidateMode: $autovalidateMode, newPromo: $newPromo, businessDM: $businessDM, indexView: $indexView, controller: $controller, newPromoMediaPath: $newPromoMediaPath, imageBytes: $imageBytes, aiImageOptions: $aiImageOptions, selectedAiImageIndex: $selectedAiImageIndex, videoController: $videoController, activePromosScrollController: $activePromosScrollController, upcomingPromosScrollController: $upcomingPromosScrollController)';
   }
 }
 
@@ -170,6 +187,8 @@ abstract mixin class $ManagePromotionsVMCopyWith<$Res> {
       PageController? controller,
       (String, MediaType)? newPromoMediaPath,
       Uint8List? imageBytes,
+      List<AiPromoImageOption> aiImageOptions,
+      int selectedAiImageIndex,
       VideoPlayerController? videoController,
       ScrollController? activePromosScrollController,
       ScrollController? upcomingPromosScrollController});
@@ -211,6 +230,8 @@ class _$ManagePromotionsVMCopyWithImpl<$Res>
     Object? controller = freezed,
     Object? newPromoMediaPath = freezed,
     Object? imageBytes = freezed,
+    Object? aiImageOptions = null,
+    Object? selectedAiImageIndex = null,
     Object? videoController = freezed,
     Object? activePromosScrollController = freezed,
     Object? upcomingPromosScrollController = freezed,
@@ -280,6 +301,14 @@ class _$ManagePromotionsVMCopyWithImpl<$Res>
           ? _self.imageBytes
           : imageBytes // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      aiImageOptions: null == aiImageOptions
+          ? _self.aiImageOptions
+          : aiImageOptions // ignore: cast_nullable_to_non_nullable
+              as List<AiPromoImageOption>,
+      selectedAiImageIndex: null == selectedAiImageIndex
+          ? _self.selectedAiImageIndex
+          : selectedAiImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       videoController: freezed == videoController
           ? _self.videoController
           : videoController // ignore: cast_nullable_to_non_nullable
@@ -490,6 +519,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             PageController? controller,
             (String, MediaType)? newPromoMediaPath,
             Uint8List? imageBytes,
+            List<AiPromoImageOption> aiImageOptions,
+            int selectedAiImageIndex,
             VideoPlayerController? videoController,
             ScrollController? activePromosScrollController,
             ScrollController? upcomingPromosScrollController)?
@@ -516,6 +547,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             _that.controller,
             _that.newPromoMediaPath,
             _that.imageBytes,
+            _that.aiImageOptions,
+            _that.selectedAiImageIndex,
             _that.videoController,
             _that.activePromosScrollController,
             _that.upcomingPromosScrollController);
@@ -556,6 +589,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             PageController? controller,
             (String, MediaType)? newPromoMediaPath,
             Uint8List? imageBytes,
+            List<AiPromoImageOption> aiImageOptions,
+            int selectedAiImageIndex,
             VideoPlayerController? videoController,
             ScrollController? activePromosScrollController,
             ScrollController? upcomingPromosScrollController)
@@ -581,6 +616,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             _that.controller,
             _that.newPromoMediaPath,
             _that.imageBytes,
+            _that.aiImageOptions,
+            _that.selectedAiImageIndex,
             _that.videoController,
             _that.activePromosScrollController,
             _that.upcomingPromosScrollController);
@@ -620,6 +657,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             PageController? controller,
             (String, MediaType)? newPromoMediaPath,
             Uint8List? imageBytes,
+            List<AiPromoImageOption> aiImageOptions,
+            int selectedAiImageIndex,
             VideoPlayerController? videoController,
             ScrollController? activePromosScrollController,
             ScrollController? upcomingPromosScrollController)?
@@ -645,6 +684,8 @@ extension ManagePromotionsVMPatterns on ManagePromotionsVM {
             _that.controller,
             _that.newPromoMediaPath,
             _that.imageBytes,
+            _that.aiImageOptions,
+            _that.selectedAiImageIndex,
             _that.videoController,
             _that.activePromosScrollController,
             _that.upcomingPromosScrollController);
@@ -674,11 +715,14 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
       this.controller,
       this.newPromoMediaPath,
       this.imageBytes,
+      final List<AiPromoImageOption> aiImageOptions = const [],
+      this.selectedAiImageIndex = 0,
       this.videoController,
       this.activePromosScrollController,
       this.upcomingPromosScrollController})
       : _promotions = promotions,
         _activeDays = activeDays,
+        _aiImageOptions = aiImageOptions,
         super._();
 
   @override
@@ -730,6 +774,29 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
   final (String, MediaType)? newPromoMediaPath;
   @override
   final Uint8List? imageBytes;
+
+  /// Las tres artes que devolvió la última generación con IA. Vive en el VM
+  /// y no en el estado porque el selector tiene que sobrevivir a los rebuilds
+  /// mientras el manager compara y edita el resto del formulario.
+  /// Se limpia al guardar o al subir una foto propia.
+  final List<AiPromoImageOption> _aiImageOptions;
+
+  /// Las tres artes que devolvió la última generación con IA. Vive en el VM
+  /// y no en el estado porque el selector tiene que sobrevivir a los rebuilds
+  /// mientras el manager compara y edita el resto del formulario.
+  /// Se limpia al guardar o al subir una foto propia.
+  @override
+  @JsonKey()
+  List<AiPromoImageOption> get aiImageOptions {
+    if (_aiImageOptions is EqualUnmodifiableListView) return _aiImageOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_aiImageOptions);
+  }
+
+  /// Índice dentro de [aiImageOptions] de la que está aplicada.
+  @override
+  @JsonKey()
+  final int selectedAiImageIndex;
   @override
   final VideoPlayerController? videoController;
   @override
@@ -765,6 +832,8 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('controller', controller))
       ..add(DiagnosticsProperty('newPromoMediaPath', newPromoMediaPath))
       ..add(DiagnosticsProperty('imageBytes', imageBytes))
+      ..add(DiagnosticsProperty('aiImageOptions', aiImageOptions))
+      ..add(DiagnosticsProperty('selectedAiImageIndex', selectedAiImageIndex))
       ..add(DiagnosticsProperty('videoController', videoController))
       ..add(DiagnosticsProperty(
           'activePromosScrollController', activePromosScrollController))
@@ -808,6 +877,10 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
                 other.newPromoMediaPath == newPromoMediaPath) &&
             const DeepCollectionEquality()
                 .equals(other.imageBytes, imageBytes) &&
+            const DeepCollectionEquality()
+                .equals(other._aiImageOptions, _aiImageOptions) &&
+            (identical(other.selectedAiImageIndex, selectedAiImageIndex) ||
+                other.selectedAiImageIndex == selectedAiImageIndex) &&
             (identical(other.videoController, videoController) ||
                 other.videoController == videoController) &&
             (identical(other.activePromosScrollController,
@@ -839,6 +912,8 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
         controller,
         newPromoMediaPath,
         const DeepCollectionEquality().hash(imageBytes),
+        const DeepCollectionEquality().hash(_aiImageOptions),
+        selectedAiImageIndex,
         videoController,
         activePromosScrollController,
         upcomingPromosScrollController
@@ -846,7 +921,7 @@ class _PromotionsVM extends ManagePromotionsVM with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ManagePromotionsVM(editing: $editing, promotions: $promotions, titleCtrl: $titleCtrl, subtitleCtrl: $subtitleCtrl, descriptionCtrl: $descriptionCtrl, promptCtrl: $promptCtrl, youtubeUrlCtrl: $youtubeUrlCtrl, youtubeUrlFormKey: $youtubeUrlFormKey, activeDays: $activeDays, autovalidateMode: $autovalidateMode, newPromo: $newPromo, businessDM: $businessDM, indexView: $indexView, controller: $controller, newPromoMediaPath: $newPromoMediaPath, imageBytes: $imageBytes, videoController: $videoController, activePromosScrollController: $activePromosScrollController, upcomingPromosScrollController: $upcomingPromosScrollController)';
+    return 'ManagePromotionsVM(editing: $editing, promotions: $promotions, titleCtrl: $titleCtrl, subtitleCtrl: $subtitleCtrl, descriptionCtrl: $descriptionCtrl, promptCtrl: $promptCtrl, youtubeUrlCtrl: $youtubeUrlCtrl, youtubeUrlFormKey: $youtubeUrlFormKey, activeDays: $activeDays, autovalidateMode: $autovalidateMode, newPromo: $newPromo, businessDM: $businessDM, indexView: $indexView, controller: $controller, newPromoMediaPath: $newPromoMediaPath, imageBytes: $imageBytes, aiImageOptions: $aiImageOptions, selectedAiImageIndex: $selectedAiImageIndex, videoController: $videoController, activePromosScrollController: $activePromosScrollController, upcomingPromosScrollController: $upcomingPromosScrollController)';
   }
 }
 
@@ -875,6 +950,8 @@ abstract mixin class _$PromotionsVMCopyWith<$Res>
       PageController? controller,
       (String, MediaType)? newPromoMediaPath,
       Uint8List? imageBytes,
+      List<AiPromoImageOption> aiImageOptions,
+      int selectedAiImageIndex,
       VideoPlayerController? videoController,
       ScrollController? activePromosScrollController,
       ScrollController? upcomingPromosScrollController});
@@ -922,6 +999,8 @@ class __$PromotionsVMCopyWithImpl<$Res>
     Object? controller = freezed,
     Object? newPromoMediaPath = freezed,
     Object? imageBytes = freezed,
+    Object? aiImageOptions = null,
+    Object? selectedAiImageIndex = null,
     Object? videoController = freezed,
     Object? activePromosScrollController = freezed,
     Object? upcomingPromosScrollController = freezed,
@@ -991,6 +1070,14 @@ class __$PromotionsVMCopyWithImpl<$Res>
           ? _self.imageBytes
           : imageBytes // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      aiImageOptions: null == aiImageOptions
+          ? _self._aiImageOptions
+          : aiImageOptions // ignore: cast_nullable_to_non_nullable
+              as List<AiPromoImageOption>,
+      selectedAiImageIndex: null == selectedAiImageIndex
+          ? _self.selectedAiImageIndex
+          : selectedAiImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       videoController: freezed == videoController
           ? _self.videoController
           : videoController // ignore: cast_nullable_to_non_nullable
