@@ -5,7 +5,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
-import 'package:icons_plus_pro/icons_plus_pro.dart' show Brand, Brands;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Brand, Brands, FontAwesome;
 
 /// Pie de la orden grupal: progreso de pago ("3 de 5 pagado" + barra), total,
 /// la parte del usuario actual y el CTA "Pagar mi parte". Estilo Foodly.
@@ -331,10 +331,10 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             if (_canPay || _canPayLocalRail || (onPayAll != null && order.totalRemaining > 0)) ...[
               const SizedBox(height: 10),
               Row(
+                spacing: 16,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Brand(Brands.stripe, size: 30),
-                  const SizedBox(width: 5),
+                  const Icon(FontAwesome.stripe_brand),
                   Flexible(
                     child: Text(
                       S.current.groupOrderPoweredByStripe,

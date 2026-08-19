@@ -27,7 +27,7 @@ abstract class NearbyPromotionDM with _$NearbyPromotionDM {
 
   factory NearbyPromotionDM.fromJson(Map<String, dynamic> json) => _$NearbyPromotionDMFromJson(json);
 
-  bool get hasMedia => promoMedia != null || mediaLink?.isNotEmpty == false;
+  bool get hasMedia => (promoMedia != null) || (mediaLink?.isNotEmpty == true);
 
   /// True if the promo is currently running. Defaults to true when dates are absent.
   bool get isActive {
