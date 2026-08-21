@@ -12,7 +12,22 @@ class PromoCarouselShimmer extends StatelessWidget {
   const PromoCarouselShimmer({super.key});
 
   static const _carouselH = 333.0;
-  static const _sideH = 350.0; // slightly shorter → non-enlarged side cards
+
+  /// Visible para el centro, que comparte la geometría.
+  static const carouselHeight = _carouselH;
+
+  /// Las tarjetas de al lado NO están agrandadas (`enlargeCenterPage: true` en
+  /// el carousel real), así que se ven más bajas que la del centro.
+  ///
+  /// Antes esto era 350 —o sea MÁS alto que `_carouselH`, pese a que el
+  /// comentario decía lo contrario— y de ahí salían los dos defectos: la
+  /// tarjeta lateral no entraba en la ventana del `ClipRect`, así que sus
+  /// esquinas redondeadas quedaban recortadas arriba y abajo y el borde que da
+  /// al centro se veía RECTO. Al bajar la altura entra completa y el redondeo
+  /// aparece solo.
+  static const _sideScale = .85;
+  static const _sideH = _carouselH * _sideScale;
+
   static const _peekW = 24.0; // visible slice of each side card
 
   @override
@@ -93,7 +108,9 @@ class _CenterPromoCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (_, constraints) {
         final w = constraints.maxWidth;
-        return _PromoCardSkeleton(width: w, height: 367);
+        // `_carouselH` y no un número suelto: la Row acota igual a esa altura,
+        // y dejarlo explícito hace comparable la altura lateral con esta.
+        return _PromoCardSkeleton(width: w, height: PromoCarouselShimmer.carouselHeight);
       },
     );
   }
