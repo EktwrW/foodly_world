@@ -17,7 +17,7 @@ void main() {
       GroupPaymentMode? confirmed;
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: PaymentModeSelector(onConfirm: (m) => confirmed = m),
+          body: PaymentModeSelector(onConfirm: (s) => confirmed = s.mode),
         ),
       ));
 
@@ -34,7 +34,7 @@ void main() {
       GroupPaymentMode? confirmed;
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: PaymentModeSelector(onConfirm: (m) => confirmed = m),
+          body: PaymentModeSelector(onConfirm: (s) => confirmed = s.mode),
         ),
       ));
 
@@ -53,7 +53,7 @@ void main() {
         home: Scaffold(
           body: PaymentModeSelector(
             initial: GroupPaymentMode.openTab,
-            onConfirm: (m) => confirmed = m,
+            onConfirm: (s) => confirmed = s.mode,
           ),
         ),
       ));

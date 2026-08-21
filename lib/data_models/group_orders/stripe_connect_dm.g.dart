@@ -14,6 +14,8 @@ _StripeConnectStatusDM _$StripeConnectStatusDMFromJson(
       chargesEnabled: json['charges_enabled'] as bool? ?? false,
       payoutsEnabled: json['payouts_enabled'] as bool? ?? false,
       detailsSubmitted: json['details_submitted'] as bool? ?? false,
+      groupPaymentMode: json['group_payment_mode'] as String?,
+      cardMinAmountMinor: (json['card_min_amount_minor'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$StripeConnectStatusDMToJson(
@@ -24,6 +26,10 @@ Map<String, dynamic> _$StripeConnectStatusDMToJson(
       'charges_enabled': instance.chargesEnabled,
       'payouts_enabled': instance.payoutsEnabled,
       'details_submitted': instance.detailsSubmitted,
+      if (instance.groupPaymentMode case final value?)
+        'group_payment_mode': value,
+      if (instance.cardMinAmountMinor case final value?)
+        'card_min_amount_minor': value,
     };
 
 _StripeOnboardResponseDM _$StripeOnboardResponseDMFromJson(

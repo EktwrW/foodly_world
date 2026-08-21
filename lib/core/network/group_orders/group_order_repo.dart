@@ -283,9 +283,13 @@ class GroupOrderRepo {
   Future<ApiResult<PaymentModeResponseDM>> updatePaymentMode(
     String businessUuid, {
     required String mode,
+    int? cardMinAmountMinor,
   }) async {
     try {
-      return ApiResult.success(await _client.updatePaymentMode(businessUuid, mode: mode));
+      return ApiResult.success(await _client.updatePaymentMode(
+        businessUuid,
+        paymentModeBody(mode: mode, cardMinAmountMinor: cardMinAmountMinor),
+      ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

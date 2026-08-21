@@ -9775,6 +9775,76 @@ class S {
     );
   }
 
+  /// `Minimum {amount} to pay in the app`
+  String menuCardMinimumNotice(Object amount) {
+    return Intl.message(
+      'Minimum $amount to pay in the app',
+      name: 'menuCardMinimumNotice',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Below that, payment is at the counter.`
+  String get menuCardMinimumNoticeBody {
+    return Intl.message(
+      'Below that, payment is at the counter.',
+      name: 'menuCardMinimumNoticeBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders below {amount} are paid at the counter.`
+  String paymentModeMinConsequence(Object amount) {
+    return Intl.message(
+      'Orders below $amount are paid at the counter.',
+      name: 'paymentModeMinConsequence',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Other`
+  String get paymentModeMinCustom {
+    return Intl.message(
+      'Other',
+      name: 'paymentModeMinCustom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No minimum`
+  String get paymentModeMinOff {
+    return Intl.message(
+      'No minimum',
+      name: 'paymentModeMinOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose an amount to continue.`
+  String get paymentModeMinPrompt {
+    return Intl.message(
+      'Choose an amount to continue.',
+      name: 'paymentModeMinPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum to pay in the app`
+  String get paymentModeMinTitle {
+    return Intl.message(
+      'Minimum to pay in the app',
+      name: 'paymentModeMinTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `How does your business charge?`
   String get paymentModeTitle {
     return Intl.message(

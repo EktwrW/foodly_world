@@ -84,6 +84,12 @@ mixin _$BusinessDM {
   String? get introMessage;
   @JsonKey(name: 'allow_reservations')
   bool get allowReservations;
+
+  /// Mínimo para pagar en la app, en céntimos. null = sin mínimo.
+  /// Llega al comensal a propósito: la ASAE exige informarlo de forma clara
+  /// ANTES de que arme la cuenta, no como un bloqueo sorpresa al pagar.
+  @JsonKey(name: 'card_min_amount_minor')
+  int? get cardMinAmountMinor;
   @JsonKey(name: 'reservations_count')
   int get reservationsSizeLimit; // Catering & Chefs vertical — opt-in digital menu. Other verticals always
 // show their menu; catering shows it only when the manager enables it.
@@ -162,6 +168,8 @@ mixin _$BusinessDM {
                 other.introMessage == introMessage) &&
             (identical(other.allowReservations, allowReservations) ||
                 other.allowReservations == allowReservations) &&
+            (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
+                other.cardMinAmountMinor == cardMinAmountMinor) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
             (identical(other.menuEnabled, menuEnabled) ||
@@ -210,6 +218,7 @@ mixin _$BusinessDM {
         followersLength,
         introMessage,
         allowReservations,
+        cardMinAmountMinor,
         reservationsSizeLimit,
         menuEnabled,
         combosLabel,
@@ -221,7 +230,7 @@ mixin _$BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, cardMinAmountMinor: $cardMinAmountMinor, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 }
 
@@ -262,6 +271,7 @@ abstract mixin class $BusinessDMCopyWith<$Res> {
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
+      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
       @JsonKey(name: 'menu_enabled') bool menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel,
@@ -316,6 +326,7 @@ class _$BusinessDMCopyWithImpl<$Res> implements $BusinessDMCopyWith<$Res> {
     Object? followersLength = null,
     Object? introMessage = freezed,
     Object? allowReservations = null,
+    Object? cardMinAmountMinor = freezed,
     Object? reservationsSizeLimit = null,
     Object? menuEnabled = null,
     Object? combosLabel = freezed,
@@ -441,6 +452,10 @@ class _$BusinessDMCopyWithImpl<$Res> implements $BusinessDMCopyWith<$Res> {
           ? _self.allowReservations
           : allowReservations // ignore: cast_nullable_to_non_nullable
               as bool,
+      cardMinAmountMinor: freezed == cardMinAmountMinor
+          ? _self.cardMinAmountMinor
+          : cardMinAmountMinor // ignore: cast_nullable_to_non_nullable
+              as int?,
       reservationsSizeLimit: null == reservationsSizeLimit
           ? _self.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable
@@ -623,6 +638,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'intro_message') String? introMessage,
             @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
             @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
@@ -668,6 +684,7 @@ extension BusinessDMPatterns on BusinessDM {
             _that.followersLength,
             _that.introMessage,
             _that.allowReservations,
+            _that.cardMinAmountMinor,
             _that.reservationsSizeLimit,
             _that.menuEnabled,
             _that.combosLabel,
@@ -728,6 +745,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'intro_message') String? introMessage,
             @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
             @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
@@ -772,6 +790,7 @@ extension BusinessDMPatterns on BusinessDM {
             _that.followersLength,
             _that.introMessage,
             _that.allowReservations,
+            _that.cardMinAmountMinor,
             _that.reservationsSizeLimit,
             _that.menuEnabled,
             _that.combosLabel,
@@ -831,6 +850,7 @@ extension BusinessDMPatterns on BusinessDM {
             @JsonKey(name: 'followers_length') int followersLength,
             @JsonKey(name: 'intro_message') String? introMessage,
             @JsonKey(name: 'allow_reservations') bool allowReservations,
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
             @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
             @JsonKey(name: 'menu_enabled') bool menuEnabled,
             @JsonKey(name: 'combos_label') String? combosLabel,
@@ -875,6 +895,7 @@ extension BusinessDMPatterns on BusinessDM {
             _that.followersLength,
             _that.introMessage,
             _that.allowReservations,
+            _that.cardMinAmountMinor,
             _that.reservationsSizeLimit,
             _that.menuEnabled,
             _that.combosLabel,
@@ -926,6 +947,7 @@ class _BusinessDM extends BusinessDM {
       @JsonKey(name: 'followers_length') this.followersLength = 0,
       @JsonKey(name: 'intro_message') this.introMessage,
       @JsonKey(name: 'allow_reservations') this.allowReservations = false,
+      @JsonKey(name: 'card_min_amount_minor') this.cardMinAmountMinor,
       @JsonKey(name: 'reservations_count') this.reservationsSizeLimit = 6,
       @JsonKey(name: 'menu_enabled') this.menuEnabled = false,
       @JsonKey(name: 'combos_label') this.combosLabel,
@@ -1078,6 +1100,13 @@ class _BusinessDM extends BusinessDM {
   @override
   @JsonKey(name: 'allow_reservations')
   final bool allowReservations;
+
+  /// Mínimo para pagar en la app, en céntimos. null = sin mínimo.
+  /// Llega al comensal a propósito: la ASAE exige informarlo de forma clara
+  /// ANTES de que arme la cuenta, no como un bloqueo sorpresa al pagar.
+  @override
+  @JsonKey(name: 'card_min_amount_minor')
+  final int? cardMinAmountMinor;
   @override
   @JsonKey(name: 'reservations_count')
   final int reservationsSizeLimit;
@@ -1177,6 +1206,8 @@ class _BusinessDM extends BusinessDM {
                 other.introMessage == introMessage) &&
             (identical(other.allowReservations, allowReservations) ||
                 other.allowReservations == allowReservations) &&
+            (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
+                other.cardMinAmountMinor == cardMinAmountMinor) &&
             (identical(other.reservationsSizeLimit, reservationsSizeLimit) ||
                 other.reservationsSizeLimit == reservationsSizeLimit) &&
             (identical(other.menuEnabled, menuEnabled) ||
@@ -1225,6 +1256,7 @@ class _BusinessDM extends BusinessDM {
         followersLength,
         introMessage,
         allowReservations,
+        cardMinAmountMinor,
         reservationsSizeLimit,
         menuEnabled,
         combosLabel,
@@ -1236,7 +1268,7 @@ class _BusinessDM extends BusinessDM {
 
   @override
   String toString() {
-    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
+    return 'BusinessDM(intId: $intId, logo: $logo, coverImages: $coverImages, branches: $branches, uuid: $uuid, name: $name, aboutUs: $aboutUs, services: $services, promotions: $promotions, additionalInfo: $additionalInfo, email: $email, phoneNumber: $phoneNumber, address: $address, zipCode: $zipCode, city: $city, country: $country, menus: $menus, latitude: $latitude, longitude: $longitude, categoryId: $categoryId, category: $category, rating: $rating, ratingsCount: $ratingsCount, businessDays: $businessDays, status: $status, hoursDisplay: $hoursDisplay, followersLength: $followersLength, introMessage: $introMessage, allowReservations: $allowReservations, cardMinAmountMinor: $cardMinAmountMinor, reservationsSizeLimit: $reservationsSizeLimit, menuEnabled: $menuEnabled, combosLabel: $combosLabel, aiPromoMonthlyLimit: $aiPromoMonthlyLimit, aiPromosUsedThisMonth: $aiPromosUsedThisMonth, minServicePrice: $minServicePrice, reviews: $reviews)';
   }
 }
 
@@ -1279,6 +1311,7 @@ abstract mixin class _$BusinessDMCopyWith<$Res>
       @JsonKey(name: 'followers_length') int followersLength,
       @JsonKey(name: 'intro_message') String? introMessage,
       @JsonKey(name: 'allow_reservations') bool allowReservations,
+      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
       @JsonKey(name: 'reservations_count') int reservationsSizeLimit,
       @JsonKey(name: 'menu_enabled') bool menuEnabled,
       @JsonKey(name: 'combos_label') String? combosLabel,
@@ -1335,6 +1368,7 @@ class __$BusinessDMCopyWithImpl<$Res> implements _$BusinessDMCopyWith<$Res> {
     Object? followersLength = null,
     Object? introMessage = freezed,
     Object? allowReservations = null,
+    Object? cardMinAmountMinor = freezed,
     Object? reservationsSizeLimit = null,
     Object? menuEnabled = null,
     Object? combosLabel = freezed,
@@ -1460,6 +1494,10 @@ class __$BusinessDMCopyWithImpl<$Res> implements _$BusinessDMCopyWith<$Res> {
           ? _self.allowReservations
           : allowReservations // ignore: cast_nullable_to_non_nullable
               as bool,
+      cardMinAmountMinor: freezed == cardMinAmountMinor
+          ? _self.cardMinAmountMinor
+          : cardMinAmountMinor // ignore: cast_nullable_to_non_nullable
+              as int?,
       reservationsSizeLimit: null == reservationsSizeLimit
           ? _self.reservationsSizeLimit
           : reservationsSizeLimit // ignore: cast_nullable_to_non_nullable

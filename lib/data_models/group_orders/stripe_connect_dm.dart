@@ -14,6 +14,12 @@ abstract class StripeConnectStatusDM with _$StripeConnectStatusDM {
     @JsonKey(name: 'charges_enabled') @Default(false) bool chargesEnabled,
     @JsonKey(name: 'payouts_enabled') @Default(false) bool payoutsEnabled,
     @JsonKey(name: 'details_submitted') @Default(false) bool detailsSubmitted,
+    // Ajustes de cobro, que viajan en este mismo payload porque es el que el
+    // banner del panel ya pollea: así el selector de "¿cómo cobra tu negocio?"
+    // abre con los valores puestos en vez de en blanco.
+    @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
+    // Mínimo para pagar en la app, en CÉNTIMOS. null = sin mínimo.
+    @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
   }) = _StripeConnectStatusDM;
 
   factory StripeConnectStatusDM.fromJson(Map<String, dynamic> json) =>

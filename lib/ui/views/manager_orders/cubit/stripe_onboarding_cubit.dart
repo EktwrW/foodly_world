@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -13,17 +14,37 @@ class StripeOnboardingState {
   final bool? chargesEnabled;
   final bool payoutsEnabled;
 
+  /// Ajustes de cobro, que llegan en el MISMO payload del estado Connect: así
+  /// el selector abre con lo que el negocio ya tiene, sin una llamada aparte.
+  final String? groupPaymentMode;
+
+  /// Mínimo para pagar en la app, en céntimos. null = sin mínimo.
+  final int? cardMinAmountMinor;
+
   const StripeOnboardingState({
     this.loading = false,
     this.chargesEnabled,
     this.payoutsEnabled = false,
+    this.groupPaymentMode,
+    this.cardMinAmountMinor,
   });
 
-  StripeOnboardingState copyWith({bool? loading, bool? chargesEnabled, bool? payoutsEnabled}) =>
+  /// `copyWith` NO sirve para limpiar el mínimo —`??` conserva el viejo—, y no
+  /// hace falta que sirva: el estado se reemplaza entero al recargar, que es
+  /// como se refleja un mínimo quitado.
+  StripeOnboardingState copyWith({
+    bool? loading,
+    bool? chargesEnabled,
+    bool? payoutsEnabled,
+    String? groupPaymentMode,
+    int? cardMinAmountMinor,
+  }) =>
       StripeOnboardingState(
         loading: loading ?? this.loading,
         chargesEnabled: chargesEnabled ?? this.chargesEnabled,
         payoutsEnabled: payoutsEnabled ?? this.payoutsEnabled,
+        groupPaymentMode: groupPaymentMode ?? this.groupPaymentMode,
+        cardMinAmountMinor: cardMinAmountMinor ?? this.cardMinAmountMinor,
       );
 }
 
@@ -50,6 +71,8 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
       success: (s) => emit(StripeOnboardingState(
         chargesEnabled: s.chargesEnabled,
         payoutsEnabled: s.payoutsEnabled,
+        groupPaymentMode: s.groupPaymentMode,
+        cardMinAmountMinor: s.cardMinAmountMinor,
       )),
       failure: (e) {
         _logger.e(e);
@@ -61,13 +84,22 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
 
   /// F4b-2: guarda el modo de cobro elegido por el dueño (per_round |
   /// open_tab). true si el backend lo aceptó.
-  Future<bool> setPaymentMode(GroupPaymentMode mode) async {
+  /// [cardMinAmountMinor] en céntimos; null QUITA el mínimo. La clave viaja
+  /// siempre en el body, así que el backend puede distinguir "quitar" de "no
+  /// tocar" — ver la nota de `updatePaymentMode` en el cliente.
+  Future<bool> setPaymentMode(GroupPaymentMode mode, {int? cardMinAmountMinor}) async {
     final res = await _repo.updatePaymentMode(
       businessUuid,
       mode: mode == GroupPaymentMode.openTab ? 'open_tab' : 'per_round',
+      cardMinAmountMinor: cardMinAmountMinor,
     );
     return res.when(
-      success: (_) => true,
+      // Se recarga para que el banner y el selector queden con lo que el
+      // backend guardó de verdad, y no con lo que creemos haber mandado.
+      success: (_) {
+        unawaited(load());
+        return true;
+      },
       failure: (e) {
         _logger.e(e);
         return false;

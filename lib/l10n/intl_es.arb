@@ -1573,6 +1573,15 @@
       }
     }
   },
+  "menuCardMinimumNotice": "Mínimo {amount} para pagar en la app",
+  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "menuCardMinimumNoticeBody": "Por debajo de ese monto, el pago es en caja.",
+  "paymentModeMinConsequence": "Los pedidos por debajo de {amount} se pagan en caja.",
+  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "paymentModeMinCustom": "Otro",
+  "paymentModeMinOff": "Sin mínimo",
+  "paymentModeMinPrompt": "Elige un monto para continuar.",
+  "paymentModeMinTitle": "Monto mínimo en la app",
   "paymentModeTitle": "¿Cómo cobra tu negocio?",
   "paymentModeSubtitle": "Puedes cambiarlo cuando quieras desde tu panel",
   "paymentModeOpenTabTitle": "Cuenta abierta",
