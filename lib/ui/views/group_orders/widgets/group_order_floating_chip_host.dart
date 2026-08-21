@@ -4,9 +4,12 @@ import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
+import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/active_group_order_chip.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_invite_snackbar.dart';
 
 /// Host GLOBAL del chip flotante de la orden activa (e2e r4). Envuelve el
 /// árbol de la app (main.dart, builder de MaterialApp.router): con una orden
@@ -14,13 +17,19 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logi
 /// cualquier pantalla (salvo la propia orden, el join y las de auth).
 ///
 /// Inyectables para testing puro: [ordersSource] (cubit), [routeListenable] +
-/// [locationOf] (router) y [onOpenOrder] (navegación).
+/// [locationOf] (router), [onOpenOrder] (navegación) e [inviteSource] (el
+/// cubit que genera el código de invitación).
 class GroupOrderFloatingChipHost extends StatefulWidget {
   final Widget child;
   final StateStreamable<GroupOrderDM?>? ordersSource;
   final Listenable? routeListenable;
   final String Function()? locationOf;
   final void Function(GroupOrderDM order)? onOpenOrder;
+
+  /// Separado de [ordersSource] porque aquél es un `StateStreamable` a secas
+  /// —cualquier cosa que emita la orden sirve para PINTAR el chip— y esto
+  /// necesita el cubit de verdad, que es quien sabe invitar.
+  final ActiveGroupOrderCubit? inviteSource;
 
   const GroupOrderFloatingChipHost({
     super.key,
@@ -29,14 +38,14 @@ class GroupOrderFloatingChipHost extends StatefulWidget {
     this.routeListenable,
     this.locationOf,
     this.onOpenOrder,
+    this.inviteSource,
   });
 
   @override
   State<GroupOrderFloatingChipHost> createState() => _GroupOrderFloatingChipHostState();
 }
 
-class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
-    with WidgetsBindingObserver {
+class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -78,6 +87,32 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
     }
   }
 
+  /// Invita a la mesa desde el chip: pide el código y muestra el QR.
+  ///
+  /// Vive acá y no en el chip porque el host es el que tiene DI. El chip lo
+  /// monta el builder de MaterialApp, fuera del árbol de providers, así que
+  /// un `context.read<ActiveGroupOrderCubit>()` allá abajo no encuentra nada.
+  Future<void> _onInvite(BuildContext context, GroupOrderDM order) async {
+    final cubit = widget.inviteSource ?? di<ActiveGroupOrderCubit>();
+    final businessName = order.businessName.isNotEmpty ? order.businessName : 'Foodly';
+
+    final invite = await cubit.createInvitation();
+    if (!context.mounted) return;
+
+    final code = invite?.inviteCode ?? invite?.inviteToken;
+    if (code == null) {
+      // El motivo del backend es lo único accionable ("la orden ya fue
+      // cerrada"); un genérico lo taparía.
+      FoodlySnackbars.errorGeneric(
+        context,
+        cubit.lastInviteError ?? S.current.groupOrderInviteFailed,
+      );
+      return;
+    }
+
+    showGroupOrderInviteSnackBar(context, code: code, businessName: businessName);
+  }
+
   void _openOrder(GroupOrderDM order) {
     if (widget.onOpenOrder != null) return widget.onOpenOrder!(order);
     di<AppRouter>().appRouter.pushNamed(
@@ -90,8 +125,8 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
   Widget build(BuildContext context) {
     final source = widget.ordersSource ?? di<ActiveGroupOrderCubit>();
     final routes = widget.routeListenable ?? di<AppRouter>().appRouter.routerDelegate;
-    final location = widget.locationOf ??
-        () => di<AppRouter>().appRouter.routerDelegate.currentConfiguration.uri.toString();
+    final location =
+        widget.locationOf ?? () => di<AppRouter>().appRouter.routerDelegate.currentConfiguration.uri.toString();
 
     return BlocBuilder<StateStreamable<GroupOrderDM?>, GroupOrderDM?>(
       bloc: source,
@@ -115,6 +150,7 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
                 _DraggableChipLayer(
                   order: order!,
                   onTap: () => _openOrder(order),
+                  onInvite: () => _onInvite(context, order),
                 ),
             ],
           );
@@ -129,8 +165,13 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
 class _DraggableChipLayer extends StatefulWidget {
   final GroupOrderDM order;
   final VoidCallback onTap;
+  final VoidCallback onInvite;
 
-  const _DraggableChipLayer({required this.order, required this.onTap});
+  const _DraggableChipLayer({
+    required this.order,
+    required this.onTap,
+    required this.onInvite,
+  });
 
   @override
   State<_DraggableChipLayer> createState() => _DraggableChipLayerState();
@@ -168,6 +209,7 @@ class _DraggableChipLayerState extends State<_DraggableChipLayer> {
           key: _chipKey,
           order: widget.order,
           onTap: widget.onTap,
+          onInvite: widget.onInvite,
         );
 
         return Positioned(
@@ -183,34 +225,41 @@ class _DraggableChipLayerState extends State<_DraggableChipLayer> {
               scale: 0.6 + 0.4 * t,
               child: Opacity(opacity: t.clamp(0.0, 1.0), child: child),
             ),
-          // Draggable nativo (pedido explícito e2e r4): el [feedback] sigue
-          // el dedo vía overlay, el hijo queda como fantasma atenuado, y al
-          // soltar la posición se clampea y se imanta al borde más cercano.
-          child: Draggable<GroupOrderDM>(
-            data: widget.order,
-            feedback: Transform.scale(
-              scale: 1.05,
-              child: ActiveGroupOrderChip(order: widget.order, onTap: () {}),
-            ),
-            childWhenDragging: Opacity(opacity: 0.25, child: chip),
-            onDragEnd: (details) {
-              // details.offset = esquina superior izquierda del feedback en
-              // coordenadas globales al soltar; el Stack del host ocupa la
-              // pantalla completa, así que coincide con nuestro sistema.
-              GroupOrderChipPositionStore.offset.value = GroupOrderChipLogic.snapToEdge(
-                current: GroupOrderChipLogic.clamp(
-                  desired: details.offset,
+            // Draggable nativo (pedido explícito e2e r4): el [feedback] sigue
+            // el dedo vía overlay, el hijo queda como fantasma atenuado, y al
+            // soltar la posición se clampea y se imanta al borde más cercano.
+            child: Draggable<GroupOrderDM>(
+              data: widget.order,
+              feedback: Transform.scale(
+                scale: 1.05,
+                // Mismo `onInvite` que el real —aunque sea inerte bajo el
+                // dedo— porque si no, el chip ENCOGE al levantarlo: el botón
+                // ocupa ancho y el feedback quedaría más angosto.
+                child: ActiveGroupOrderChip(
+                  order: widget.order,
+                  onTap: () {},
+                  onInvite: () {},
+                ),
+              ),
+              childWhenDragging: Opacity(opacity: 0.25, child: chip),
+              onDragEnd: (details) {
+                // details.offset = esquina superior izquierda del feedback en
+                // coordenadas globales al soltar; el Stack del host ocupa la
+                // pantalla completa, así que coincide con nuestro sistema.
+                GroupOrderChipPositionStore.offset.value = GroupOrderChipLogic.snapToEdge(
+                  current: GroupOrderChipLogic.clamp(
+                    desired: details.offset,
+                    screen: screen,
+                    chip: _chipSize(),
+                    safeArea: safeArea,
+                  ),
                   screen: screen,
                   chip: _chipSize(),
                   safeArea: safeArea,
-                ),
-                screen: screen,
-                chip: _chipSize(),
-                safeArea: safeArea,
-              );
-            },
-            child: chip,
-          ),
+                );
+              },
+              child: chip,
+            ),
           ),
         );
       },
