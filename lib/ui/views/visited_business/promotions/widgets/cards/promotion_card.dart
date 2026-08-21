@@ -42,7 +42,7 @@ class _PromotionCardState extends State<PromotionCard> with AutomaticKeepAliveCl
                               promoMedia: widget.promo.mediaFileIsExternalLink ? null : widget.promo.promoMedia.first,
                               title: widget.promo.title,
                             )
-                          : const Asset(FoodlyAssets.promoPlaceholder, fit: BoxFit.none),
+                          : const Asset(FoodlyAssets.promoPlaceholder),
                     ),
                   ),
                   Positioned(

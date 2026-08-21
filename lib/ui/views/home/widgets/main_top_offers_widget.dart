@@ -165,7 +165,15 @@ class NearbyPromoCard extends StatelessWidget {
       return CachedNetworkImage(imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
     }
 
-    return const Asset(FoodlyAssets.promoPlaceholder, fit: BoxFit.scaleDown);
+    return Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(bottom: 36),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Asset(FoodlyAssets.promoPlaceholder),
+          ],
+        ));
   }
 }
 
@@ -233,16 +241,6 @@ class _BackdropRoundedRectangle extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            if (!promo.hasMedia)
-                              Flexible(
-                                child: Text(
-                                  promo.subTitle,
-                                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                                  maxLines: 3,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
                             // Business name + rating
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

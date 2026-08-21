@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -26,7 +27,8 @@ class PaymentModeSelector extends StatefulWidget {
     return showDialog<GroupPaymentMode>(
       context: context,
       builder: (ctx) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        insetPadding: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(18, 22, 18, 16),
           child: PaymentModeSelector(
@@ -92,6 +94,7 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
           text: S.current.confirm,
           disabled: _selected == null,
           margin: EdgeInsets.zero,
+          padding: const EdgeInsets.all(12),
           onPressed: _selected == null ? null : () => widget.onConfirm(_selected!),
         ),
       ],
@@ -123,18 +126,16 @@ class _ModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: selected
-                ? FoodlyThemes.primaryFoodly
-                : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
+            color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.primaryFoodly.withValues(alpha: 0.15),
             width: selected ? 2 : 1,
           ),
           boxShadow: selected

@@ -96,14 +96,14 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with Wi
         if (charges) {
           // Estado activo — compacto, con acceso al modo de cobro (F4b-2).
           return InkWell(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(8),
             onTap: () => _pickPaymentMode(context, cubit),
             child: Container(
               margin: const EdgeInsets.fromLTRB(14, 8, 14, 0),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.35)),
               ),
               child: Row(

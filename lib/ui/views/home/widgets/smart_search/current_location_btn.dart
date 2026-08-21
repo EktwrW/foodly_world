@@ -404,43 +404,41 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                 );
                                 _refreshFeedsAfterLocationChange();
                               },
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               style: ui.NeumorphicStyle(
                                 color: FoodlyThemes.primaryLighten73,
                                 depth: 2,
                               ),
-                              child: SizedBox(
-                                height: 66,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: 8,
-                                  children: [
-                                    Row(
-                                      spacing: 8,
-                                      children: [
-                                        const Icon(Icons.my_location, size: 18),
-                                        Expanded(
-                                          child: Text(
-                                            S.current.useDeviceLocation,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: FoodlyTextStyles.captionPurpleBold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 6,
+                                children: [
+                                  Row(
+                                    spacing: 8,
+                                    children: [
+                                      const Icon(Icons.my_location, size: 18),
+                                      Expanded(
                                         child: Text(
-                                          '${locationDM.address ?? ''}, ${locationDM.city ?? ''} ${locationDM.zipCode != null ? ', ${locationDM.zipCode}' : ''}',
-                                          style: FoodlyTextStyles.addressSmallText,
-                                          maxLines: 2,
+                                          S.current.useDeviceLocation,
+                                          maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
+                                          style: FoodlyTextStyles.captionPurpleBold,
                                         ),
                                       ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '${locationDM.address ?? ''}, ${locationDM.city ?? ''} ${locationDM.zipCode != null ? ', ${locationDM.zipCode}' : ''}',
+                                        style: FoodlyTextStyles.addressSmallText,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                             orElse: () => const Text('-'),
@@ -463,46 +461,44 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                                   _refreshFeedsAfterLocationChange();
                                 }
                               : null,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           tooltip: savedLocationNotAvailable ? S.current.noSavedAddress : '',
                           style: ui.NeumorphicStyle(
                             color: savedLocationNotAvailable ? Colors.grey.shade400 : FoodlyThemes.primaryLighten73,
                             depth: 2,
                           ),
-                          child: SizedBox(
-                            height: 66,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: [
-                                Row(
-                                  spacing: 8,
-                                  children: [
-                                    Icon(Icons.location_history_rounded,
-                                        size: 18, color: savedLocationNotAvailable ? Colors.black54 : null),
-                                    Expanded(
-                                      child: Text(
-                                        S.current.useSavedLocation,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: FoodlyTextStyles.captionPurpleBold
-                                            .copyWith(color: savedLocationNotAvailable ? Colors.black54 : null),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 6,
+                            children: [
+                              Row(
+                                spacing: 8,
+                                children: [
+                                  Icon(Icons.location_history_rounded,
+                                      size: 18, color: savedLocationNotAvailable ? Colors.black54 : null),
+                                  Expanded(
                                     child: Text(
-                                      '${principalAddress?.address ?? ''}${principalAddress?.address.isNotEmpty == true ? ', ' : ''} ${principalAddress?.city ?? ''} ${principalAddress?.zipCode != null ? ', ${principalAddress?.zipCode}' : '-'}',
-                                      style: FoodlyTextStyles.addressSmallText,
-                                      maxLines: 2,
+                                      S.current.useSavedLocation,
+                                      maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
+                                      style: FoodlyTextStyles.captionPurpleBold
+                                          .copyWith(color: savedLocationNotAvailable ? Colors.black54 : null),
                                     ),
                                   ),
+                                ],
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    '${principalAddress?.address ?? ''}${principalAddress?.address.isNotEmpty == true ? ', ' : ''} ${principalAddress?.city ?? ''} ${principalAddress?.zipCode != null ? ', ${principalAddress?.zipCode}' : '-'}',
+                                    style: FoodlyTextStyles.addressSmallText,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       )
