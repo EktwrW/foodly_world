@@ -1,4 +1,5 @@
 import 'package:foodly_world/core/enums/foodly_countries.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'group_order_dm.freezed.dart';
@@ -149,6 +150,10 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
     required String uuid,
     @JsonKey(name: 'participant_uuid') String? participantUuid,
     @JsonKey(name: 'name_snapshot') @Default('') String name,
+    // Tamaño elegido por el comensal. null = regular, que es la versión por
+    // defecto y no se muestra: sólo mediana y grande dicen algo. Un valor
+    // desconocido cae a null en vez de romper la orden entera.
+    @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) Version? version,
     // Precio congelado en el lock; antes del lock se usa el preview.
     @JsonKey(name: 'unit_price_at_lock', fromJson: _money) @Default(0) double unitPriceAtLock,
     @JsonKey(name: 'unit_price_preview', fromJson: _money) @Default(0) double unitPricePreview,
@@ -182,6 +187,9 @@ abstract class GroupOrderItemDM with _$GroupOrderItemDM {
 
   /// F4b.1: anulado por el negocio — visible, pero fuera de la cuenta.
   bool get isVoided => voidedAt != null;
+
+  /// ¿Hay tamaño que mostrar? Regular es la versión por defecto y no se etiqueta.
+  bool get hasVersion => version != null && version != Version.regular;
 }
 
 // ─────────────────────────────────────────────────────────────────────────

@@ -11,6 +11,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/item_version_badge.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:foodly_world/ui/views/manager_orders/widgets/manager_widgets.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
@@ -617,13 +618,29 @@ class _ParticipantChecklistState extends State<_ParticipantChecklist> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              item.name,
-                              style: (item.deliveredAt != null || item.isVoided)
-                                  ? FoodlyTextStyles.caption.copyWith(decoration: TextDecoration.lineThrough)
-                                  : FoodlyTextStyles.label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    item.name,
+                                    style: (item.deliveredAt != null || item.isVoided)
+                                        ? FoodlyTextStyles.caption
+                                            .copyWith(decoration: TextDecoration.lineThrough)
+                                        : FoodlyTextStyles.label,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                // Quien sirve necesita ver el tamaño de un
+                                // vistazo: el nombre solo no lo distingue.
+                                if (item.hasVersion) ...[
+                                  const SizedBox(width: 5),
+                                  ItemVersionBadge(
+                                    item: item,
+                                    dimmed: item.deliveredAt != null || item.isVoided,
+                                  ),
+                                ],
+                              ],
                             ),
                             if (item.isVoided)
                               Text(

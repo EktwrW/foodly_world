@@ -19,7 +19,12 @@ mixin _$GroupOrderItemDM {
   String? get participantUuid;
   @JsonKey(name: 'name_snapshot')
   String
-      get name; // Precio congelado en el lock; antes del lock se usa el preview.
+      get name; // Tamaño elegido por el comensal. null = regular, que es la versión por
+// defecto y no se muestra: sólo mediana y grande dicen algo. Un valor
+// desconocido cae a null en vez de romper la orden entera.
+  @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  Version?
+      get version; // Precio congelado en el lock; antes del lock se usa el preview.
   @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
   double get unitPriceAtLock;
   @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -62,6 +67,7 @@ mixin _$GroupOrderItemDM {
             (identical(other.participantUuid, participantUuid) ||
                 other.participantUuid == participantUuid) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.unitPriceAtLock, unitPriceAtLock) ||
                 other.unitPriceAtLock == unitPriceAtLock) &&
             (identical(other.unitPricePreview, unitPricePreview) ||
@@ -87,6 +93,7 @@ mixin _$GroupOrderItemDM {
       uuid,
       participantUuid,
       name,
+      version,
       unitPriceAtLock,
       unitPricePreview,
       quantity,
@@ -100,7 +107,7 @@ mixin _$GroupOrderItemDM {
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, version: $version, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
   }
 }
 
@@ -114,6 +121,8 @@ abstract mixin class $GroupOrderItemDMCopyWith<$Res> {
       {String uuid,
       @JsonKey(name: 'participant_uuid') String? participantUuid,
       @JsonKey(name: 'name_snapshot') String name,
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      Version? version,
       @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
       double unitPriceAtLock,
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -144,6 +153,7 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
     Object? uuid = null,
     Object? participantUuid = freezed,
     Object? name = null,
+    Object? version = freezed,
     Object? unitPriceAtLock = null,
     Object? unitPricePreview = null,
     Object? quantity = null,
@@ -168,6 +178,10 @@ class _$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      version: freezed == version
+          ? _self.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as Version?,
       unitPriceAtLock: null == unitPriceAtLock
           ? _self.unitPriceAtLock
           : unitPriceAtLock // ignore: cast_nullable_to_non_nullable
@@ -309,6 +323,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            Version? version,
             @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
             double unitPriceAtLock,
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -331,6 +347,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.uuid,
             _that.participantUuid,
             _that.name,
+            _that.version,
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
@@ -365,6 +382,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            Version? version,
             @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
             double unitPriceAtLock,
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -386,6 +405,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.uuid,
             _that.participantUuid,
             _that.name,
+            _that.version,
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
@@ -419,6 +439,8 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             String uuid,
             @JsonKey(name: 'participant_uuid') String? participantUuid,
             @JsonKey(name: 'name_snapshot') String name,
+            @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+            Version? version,
             @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
             double unitPriceAtLock,
             @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -440,6 +462,7 @@ extension GroupOrderItemDMPatterns on GroupOrderItemDM {
             _that.uuid,
             _that.participantUuid,
             _that.name,
+            _that.version,
             _that.unitPriceAtLock,
             _that.unitPricePreview,
             _that.quantity,
@@ -463,6 +486,8 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       {required this.uuid,
       @JsonKey(name: 'participant_uuid') this.participantUuid,
       @JsonKey(name: 'name_snapshot') this.name = '',
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      this.version,
       @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
       this.unitPriceAtLock = 0,
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -487,6 +512,12 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
   @override
   @JsonKey(name: 'name_snapshot')
   final String name;
+// Tamaño elegido por el comensal. null = regular, que es la versión por
+// defecto y no se muestra: sólo mediana y grande dicen algo. Un valor
+// desconocido cae a null en vez de romper la orden entera.
+  @override
+  @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+  final Version? version;
 // Precio congelado en el lock; antes del lock se usa el preview.
   @override
   @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
@@ -548,6 +579,7 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
             (identical(other.participantUuid, participantUuid) ||
                 other.participantUuid == participantUuid) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.unitPriceAtLock, unitPriceAtLock) ||
                 other.unitPriceAtLock == unitPriceAtLock) &&
             (identical(other.unitPricePreview, unitPricePreview) ||
@@ -573,6 +605,7 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
       uuid,
       participantUuid,
       name,
+      version,
       unitPriceAtLock,
       unitPricePreview,
       quantity,
@@ -586,7 +619,7 @@ class _GroupOrderItemDM extends GroupOrderItemDM {
 
   @override
   String toString() {
-    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
+    return 'GroupOrderItemDM(uuid: $uuid, participantUuid: $participantUuid, name: $name, version: $version, unitPriceAtLock: $unitPriceAtLock, unitPricePreview: $unitPricePreview, quantity: $quantity, shared: $shared, notes: $notes, deliveredAt: $deliveredAt, batchNo: $batchNo, sentAt: $sentAt, voidedAt: $voidedAt, voidedReason: $voidedReason)';
   }
 }
 
@@ -602,6 +635,8 @@ abstract mixin class _$GroupOrderItemDMCopyWith<$Res>
       {String uuid,
       @JsonKey(name: 'participant_uuid') String? participantUuid,
       @JsonKey(name: 'name_snapshot') String name,
+      @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue)
+      Version? version,
       @JsonKey(name: 'unit_price_at_lock', fromJson: _money)
       double unitPriceAtLock,
       @JsonKey(name: 'unit_price_preview', fromJson: _money)
@@ -632,6 +667,7 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
     Object? uuid = null,
     Object? participantUuid = freezed,
     Object? name = null,
+    Object? version = freezed,
     Object? unitPriceAtLock = null,
     Object? unitPricePreview = null,
     Object? quantity = null,
@@ -656,6 +692,10 @@ class __$GroupOrderItemDMCopyWithImpl<$Res>
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      version: freezed == version
+          ? _self.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as Version?,
       unitPriceAtLock: null == unitPriceAtLock
           ? _self.unitPriceAtLock
           : unitPriceAtLock // ignore: cast_nullable_to_non_nullable

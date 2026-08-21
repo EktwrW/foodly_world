@@ -118,6 +118,9 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                           businessUuid: widget.vm?.menuDM?.business?.uuid,
                           itemableType: _groupItemableType(widget.menuCategory),
                           itemUuid: widget.item.uuid,
+                          // El tamaño que está viendo AHORA: es el precio que
+                          // el toggle de arriba le está mostrando.
+                          version: _selectedVersion,
                         ).paddingOnly(left: 6, right: 4),
                     ],
                   ).paddingBottom(widget.item.available ? 0 : 8),
@@ -223,11 +226,13 @@ class _AddToGroupOrderButton extends StatefulWidget {
   final String? businessUuid;
   final String itemableType;
   final String itemUuid;
+  final Version version;
 
   const _AddToGroupOrderButton({
     required this.businessUuid,
     required this.itemableType,
     required this.itemUuid,
+    required this.version,
   });
 
   @override
@@ -250,7 +255,11 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
     // e2e r6: spinner visible durante la espera — sin él, el usuario
     // re-tapea pensando que no registró (y el merge del BE lo colapsa a 1).
     setState(() => _busy = true);
-    final ok = await cubit.addFood(widget.itemableType, widget.itemUuid);
+    final ok = await cubit.addFood(
+      widget.itemableType,
+      widget.itemUuid,
+      version: widget.version,
+    );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!ok) return;

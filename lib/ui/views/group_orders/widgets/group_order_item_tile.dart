@@ -4,6 +4,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/item_version_badge.dart';
 
 /// Línea de carrito en una orden grupal: cantidad, nombre del ítem, notas
 /// opcionales y total de línea. Opcionalmente muestra el avatar de quién lo
@@ -92,6 +93,12 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      // Tamaño elegido (mediana/grande) — pegado al nombre
+                      // porque es parte de QUÉ se pidió, no de su estado.
+                      if (item.hasVersion) ...[
+                        const SizedBox(width: 6),
+                        ItemVersionBadge(item: item, dimmed: item.isVoided),
+                      ],
                       if (widget.delivered && !item.isVoided) ...[
                         const SizedBox(width: 6),
                         const Icon(Icons.check_circle_rounded,
