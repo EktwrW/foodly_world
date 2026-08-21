@@ -15,7 +15,6 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
-import 'package:foodly_world/ui/shared_widgets/qr/foodly_qr_card.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -27,12 +26,12 @@ import 'package:foodly_world/ui/views/group_orders/widgets/billing_country.dart'
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_invite_snackbar.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
@@ -1233,7 +1232,7 @@ class _Content extends StatelessWidget {
     return !(coverables.length == 1 && coverables.first.uuid == vm.myParticipantUuid);
   }
 
-  /// F3a: invita a la mesa — sheet con el código corto y botón de compartir.
+  /// F3a: invita a la mesa — QR, código corto y compartir.
   Future<void> _onInvite(BuildContext context) async {
     final cubit = context.read<GroupOrderCubit>();
     final businessName = cubit.vm.order?.businessName ?? 'Foodly';
@@ -1252,53 +1251,7 @@ class _Content extends StatelessWidget {
       return;
     }
 
-    await showModalBottomSheet<void>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (ctx) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(S.current.groupOrderInviteTitle, style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
-              // El QR es el protagonista (filosofía Foodly: escanear, no
-              // tipear); el código corto queda como fallback visible.
-              Center(
-                child: FoodlyQrCard(data: '$kGroupOrderInviteUrlBase$code'),
-              ),
-              const SizedBox(height: 14),
-              // Fallback: código tipeable (por si el QR falla o para web).
-              SelectableText(
-                code,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 8,
-                  color: FoodlyThemes.primaryFoodly,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
-              CustomNeumorphicButton(
-                text: S.current.groupOrderInviteShareCta,
-                disabled: false,
-                margin: EdgeInsets.zero,
-                onPressed: () => Share.share(
-                  '${S.current.groupOrderInviteShareMsg(businessName, code)}\n$kGroupOrderInviteUrlBase$code',
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    showGroupOrderInviteSnackBar(context, code: code, businessName: businessName);
   }
 
   @override

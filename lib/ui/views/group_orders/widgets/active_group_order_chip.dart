@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
+import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_invite_snackbar.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show FontAwesome;
 
 /// Visual del chip "Ver pedido · €X" (spec v2 §D.1). Widget TONTO: recibe la
 /// orden y el tap — la visibilidad, posición global y drag los maneja
@@ -110,6 +117,29 @@ class ActiveGroupOrderChip extends StatelessWidget {
           ),
       };
 
+  /// Suma a alguien a la mesa sin pasar por la orden.
+  ///
+  /// Lee el cubit del CARRITO, no el de la página: el chip es global y se
+  /// toca desde el home o el menú, donde la GroupOrderPage ni existe.
+  Future<void> _onInvite(BuildContext context) async {
+    final cubit = context.read<ActiveGroupOrderCubit>();
+    final businessName = order.businessName.isNotEmpty ? order.businessName : 'Foodly';
+
+    final invite = await cubit.createInvitation();
+    if (!context.mounted) return;
+
+    final code = invite?.inviteCode ?? invite?.inviteToken;
+    if (code == null) {
+      FoodlySnackbars.errorGeneric(
+        context,
+        cubit.lastInviteError ?? S.current.groupOrderInviteFailed,
+      );
+      return;
+    }
+
+    showGroupOrderInviteSnackBar(context, code: code, businessName: businessName);
+  }
+
   @override
   Widget build(BuildContext context) {
     final (icon, color, label) = _look;
@@ -118,22 +148,36 @@ class ActiveGroupOrderChip extends StatelessWidget {
       color: color,
       elevation: 4,
       borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: Colors.white, size: 16),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white),
+      child: AnimatedSize(
+        duration: Durations.medium2,
+        child: Row(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, color: Colors.white, size: 16),
+                    const SizedBox(width: 6),
+                    Text(
+                      label,
+                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            if (order.isEditableCart)
+              CustomRoundedNeumorphicButton(
+                diameter: 14,
+                tooltip: S.current.groupOrderInviteCta,
+                onPressed: () => _onInvite(context),
+                child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 14),
+              ).paddingAll(2),
+          ],
         ),
       ),
     );

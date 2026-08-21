@@ -22,6 +22,11 @@ class SnackBarWdg {
   final Widget Function(VoidCallback handleDismiss)? buttonBuilder;
   final VoidCallback? onDismiss;
 
+  /// Pisa el icono que le tocaría al [type]. Para avisos con identidad
+  /// propia —invitar a la mesa, por ejemplo— donde el ícono ES el mensaje.
+  /// null = el del tipo, que es lo que hacían todos hasta ahora.
+  final IconData? icon;
+
   const SnackBarWdg({
     required this.content,
     this.onPressed,
@@ -31,6 +36,7 @@ class SnackBarWdg {
     this.topBtnPadding = 10,
     this.buttonBuilder,
     this.onDismiss,
+    this.icon,
   });
 
   Color get _getColor => switch (type) {
@@ -40,7 +46,7 @@ class SnackBarWdg {
         _ => FoodlyThemes.primaryFoodly,
       };
 
-  IconData get _getIcon => switch (type) {
+  IconData get _getIcon => icon ?? switch (type) {
         SnackBarType.success => FontAwesome.circle_check_solid,
         SnackBarType.error => Clarity.error_line,
         SnackBarType.warning => Clarity.warning_standard_solid,
@@ -98,7 +104,10 @@ class SnackBarWdg {
                   child: Column(
                     children: [
                       Visibility(
-                        visible: type != SnackBarType.action,
+                        // `action` no lleva icono por diseño, pero pedir uno
+                        // explícito es decir "este sí" — si no, el parámetro
+                        // se ignoraría en silencio justo donde más se usa.
+                        visible: type != SnackBarType.action || icon != null,
                         child: Icon(_getIcon, size: 34, color: _getColor),
                       ),
                       content.paddingSymmetric(vertical: 20),
