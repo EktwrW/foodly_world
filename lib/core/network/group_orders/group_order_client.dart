@@ -6,6 +6,14 @@ import 'package:retrofit/retrofit.dart';
 
 part 'group_order_client.g.dart';
 
+/// Body de `updatePaymentMode`. [cardMinAmountMinor] en céntimos; `null`
+/// QUITA el mínimo, y por eso la clave viaja siempre (ver la nota del método).
+Map<String, dynamic> paymentModeBody({
+  required String mode,
+  required int? cardMinAmountMinor,
+}) =>
+    {'mode': mode, 'card_min_amount_minor': cardMinAmountMinor};
+
 /// Cliente HTTP de Group Orders & Split Payments.
 /// Endpoints según docs/group-orders-design-spec.md §5.
 @RestApi()
@@ -150,10 +158,17 @@ abstract class GroupOrderClient {
 
   /// F4b: modo de cobro del negocio (solo dueño).
   @PATCH('/manager/businesses/{businessUuid}/payment-mode')
+  ///
+  /// Va con `@Body` y no con `@Field` por el mínimo de pago: Retrofit OMITE
+  /// del body los `@Field` en null, y el backend distingue "campo ausente"
+  /// (no tocar el mínimo) de "campo en null" (quitarlo). Con `@Field` la
+  /// segunda intención era inexpresable y no se podía apagar el mínimo nunca.
+  /// Con el Map explícito mandamos la clave con null y `$request->exists()`
+  /// la ve. Armalo con [paymentModeBody].
   Future<PaymentModeResponseDM> updatePaymentMode(
-    @Path('businessUuid') String businessUuid, {
-    @Field('mode') required String mode,
-  });
+    @Path('businessUuid') String businessUuid,
+    @Body() Map<String, dynamic> body,
+  );
 
   @GET('/manager/businesses/{businessUuid}/group-orders')
   Future<ManagerOrdersResponseDM> managerOrders(

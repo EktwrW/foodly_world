@@ -30,6 +30,8 @@ class MenuFloatingActionButton extends StatelessWidget {
   final String menuUrl;
   final MenuDM? menu;
 
+  static String _fmtMinor(int minor) => '${(minor / 100).toStringAsFixed(2).replaceAll('.', ',')} €';
+
   void _closeFAB() {
     if (floatingButtonKey?.currentState?.isOpen ?? false) {
       floatingButtonKey?.currentState?.close();
@@ -57,7 +59,18 @@ class MenuFloatingActionButton extends StatelessWidget {
             } else {
               if (!GuestGuard.requireAuth(GuestGateAction.groupOrder)) return;
               cubit.startForBusiness(businessUuid);
-              FoodlySnackbars.infoGeneric(context, S.current.groupOrderAddFromMenu);
+              // El mínimo se informa ACÁ, al empezar la cuenta, y no al pagar:
+              // la ASAE exige que el comensal lo sepa de forma clara y
+              // adecuada, y enterarse recién en el checkout no lo es.
+              final minMinor = menu?.business?.cardMinAmountMinor;
+              FoodlySnackbars.infoGeneric(
+                context,
+                minMinor == null
+                    ? S.current.groupOrderAddFromMenu
+                    : '${S.current.groupOrderAddFromMenu}\n\n'
+                        '${S.current.menuCardMinimumNotice(_fmtMinor(minMinor))} — '
+                        '${S.current.menuCardMinimumNoticeBody}',
+              );
             }
           },
           tooltip: active ? S.current.groupOrderViewOrder : S.current.groupOrderEntryCta,

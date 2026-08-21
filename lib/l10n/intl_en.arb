@@ -1563,6 +1563,15 @@
       }
     }
   },
+  "menuCardMinimumNotice": "Minimum {amount} to pay in the app",
+  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "menuCardMinimumNoticeBody": "Below that, payment is at the counter.",
+  "paymentModeMinConsequence": "Orders below {amount} are paid at the counter.",
+  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "paymentModeMinCustom": "Other",
+  "paymentModeMinOff": "No minimum",
+  "paymentModeMinPrompt": "Choose an amount to continue.",
+  "paymentModeMinTitle": "Minimum to pay in the app",
   "paymentModeTitle": "How does your business charge?",
   "paymentModeSubtitle": "You can change this anytime from your panel",
   "paymentModeOpenTabTitle": "Open tab",

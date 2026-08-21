@@ -56,6 +56,7 @@ _BusinessDM _$BusinessDMFromJson(Map<String, dynamic> json) => _BusinessDM(
       followersLength: (json['followers_length'] as num?)?.toInt() ?? 0,
       introMessage: json['intro_message'] as String?,
       allowReservations: json['allow_reservations'] as bool? ?? false,
+      cardMinAmountMinor: (json['card_min_amount_minor'] as num?)?.toInt(),
       reservationsSizeLimit: (json['reservations_count'] as num?)?.toInt() ?? 6,
       menuEnabled: json['menu_enabled'] as bool? ?? false,
       combosLabel: json['combos_label'] as String?,
@@ -107,6 +108,8 @@ Map<String, dynamic> _$BusinessDMToJson(_BusinessDM instance) =>
       'followers_length': instance.followersLength,
       if (instance.introMessage case final value?) 'intro_message': value,
       'allow_reservations': instance.allowReservations,
+      if (instance.cardMinAmountMinor case final value?)
+        'card_min_amount_minor': value,
       'reservations_count': instance.reservationsSizeLimit,
       'menu_enabled': instance.menuEnabled,
       if (instance.combosLabel case final value?) 'combos_label': value,

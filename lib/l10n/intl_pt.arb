@@ -1573,6 +1573,15 @@
       }
     }
   },
+  "menuCardMinimumNotice": "Mínimo {amount} para pagar na app",
+  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "menuCardMinimumNoticeBody": "Abaixo desse valor, o pagamento é ao balcão.",
+  "paymentModeMinConsequence": "Pedidos abaixo de {amount} pagam-se ao balcão.",
+  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "paymentModeMinCustom": "Outro",
+  "paymentModeMinOff": "Sem mínimo",
+  "paymentModeMinPrompt": "Escolhe um valor para continuar.",
+  "paymentModeMinTitle": "Valor mínimo na app",
   "paymentModeTitle": "Como o seu negócio cobra?",
   "paymentModeSubtitle": "Pode alterar quando quiser no seu painel",
   "paymentModeOpenTabTitle": "Conta aberta",

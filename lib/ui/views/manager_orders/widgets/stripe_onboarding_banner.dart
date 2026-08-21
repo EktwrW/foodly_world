@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -53,10 +54,21 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with Wi
   /// F4b-2: "¿Cómo cobra tu negocio?" — elección explícita del dueño. Se
   /// ofrece al terminar el onboarding y queda editable tocando el banner.
   Future<void> _pickPaymentMode(BuildContext context, StripeOnboardingCubit cubit) async {
-    final mode = await PaymentModeSelector.show(context);
-    if (mode == null || !context.mounted) return;
+    // Abre con lo que el negocio ya tiene puesto: el estado viene en el mismo
+    // payload que el banner pollea, así que no hay que pedirlo aparte.
+    final estado = cubit.state;
+    final settings = await PaymentModeSelector.show(
+      context,
+      initial: switch (estado.groupPaymentMode) {
+        'open_tab' => GroupPaymentMode.openTab,
+        'per_round' => GroupPaymentMode.perRound,
+        _ => null,
+      },
+      initialMinMinor: estado.cardMinAmountMinor,
+    );
+    if (settings == null || !context.mounted) return;
 
-    final ok = await cubit.setPaymentMode(mode);
+    final ok = await cubit.setPaymentMode(settings.mode, cardMinAmountMinor: settings.minMinor);
     if (!context.mounted) return;
     ok
         ? FoodlySnackbars.successGeneric(context, S.current.paymentModeUpdated)

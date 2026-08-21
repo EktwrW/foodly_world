@@ -650,13 +650,14 @@ class _GroupOrderClient implements GroupOrderClient {
 
   @override
   Future<PaymentModeResponseDM> updatePaymentMode(
-    String businessUuid, {
-    required String mode,
-  }) async {
+    String businessUuid,
+    Map<String, dynamic> body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'mode': mode};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<PaymentModeResponseDM>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
