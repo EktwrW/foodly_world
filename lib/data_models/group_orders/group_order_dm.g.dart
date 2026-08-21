@@ -11,6 +11,8 @@ _GroupOrderItemDM _$GroupOrderItemDMFromJson(Map<String, dynamic> json) =>
       uuid: json['uuid'] as String,
       participantUuid: json['participant_uuid'] as String?,
       name: json['name_snapshot'] as String? ?? '',
+      version: $enumDecodeNullable(_$VersionEnumMap, json['version'],
+          unknownValue: JsonKey.nullForUndefinedEnumValue),
       unitPriceAtLock: json['unit_price_at_lock'] == null
           ? 0
           : _money(json['unit_price_at_lock']),
@@ -38,6 +40,8 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
       'uuid': instance.uuid,
       if (instance.participantUuid case final value?) 'participant_uuid': value,
       'name_snapshot': instance.name,
+      if (_$VersionEnumMap[instance.version] case final value?)
+        'version': value,
       'unit_price_at_lock': instance.unitPriceAtLock,
       'unit_price_preview': instance.unitPricePreview,
       'quantity': instance.quantity,
@@ -52,6 +56,12 @@ Map<String, dynamic> _$GroupOrderItemDMToJson(_GroupOrderItemDM instance) =>
         'voided_at': value,
       if (instance.voidedReason case final value?) 'voided_reason': value,
     };
+
+const _$VersionEnumMap = {
+  Version.regular: 'regular',
+  Version.medium: 'medium',
+  Version.big: 'big',
+};
 
 _GroupOrderParticipantDM _$GroupOrderParticipantDMFromJson(
         Map<String, dynamic> json) =>

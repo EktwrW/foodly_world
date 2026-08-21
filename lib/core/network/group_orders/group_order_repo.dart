@@ -358,6 +358,7 @@ class GroupOrderRepo {
     required String itemableUuid,
     required int quantity,
     String? notes,
+    String? version,
   }) async {
     try {
       return ApiResult.success(await _client.addItem(
@@ -366,6 +367,7 @@ class GroupOrderRepo {
         itemableUuid: itemableUuid,
         quantity: quantity,
         notes: notes,
+        version: version,
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

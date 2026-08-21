@@ -97,6 +97,7 @@ abstract class GroupOrderClient {
     @Field('quantity') required int quantity,
     @Field('notes') String? notes,
     @Field('shared') bool? shared, // F2c: compartido con la mesa
+    @Field('version') String? version, // tamaño elegido; null/regular = la default
   });
 
   @PATCH('/group-orders/{uuid}/items/{itemUuid}')

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
@@ -240,6 +241,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     required String itemableUuid,
     int quantity = 1,
     String? notes,
+    Version? version,
   }) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return;
@@ -249,6 +251,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
       itemableUuid: itemableUuid,
       quantity: quantity,
       notes: notes,
+      version: version?.value,
     );
     result.when(success: _applyResponse, failure: _onError);
   }
