@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formatting.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show FontAwesome;
 
 /// Visual del chip "Ver pedido · €X" (spec v2 §D.1). Widget TONTO: recibe la
 /// orden y el tap — la visibilidad, posición global y drag los maneja
@@ -12,7 +15,18 @@ class ActiveGroupOrderChip extends StatelessWidget {
   final GroupOrderDM order;
   final VoidCallback onTap;
 
-  const ActiveGroupOrderChip({super.key, required this.order, required this.onTap});
+  /// Suma a alguien a la mesa. null = sin botón. Lo cablea el host, que es
+  /// el que tiene DI: el chip vive FUERA del árbol de providers (lo monta el
+  /// builder de MaterialApp), así que acá un `context.read` no encuentra
+  /// nada — comprobado en device, no en teoría.
+  final VoidCallback? onInvite;
+
+  const ActiveGroupOrderChip({
+    super.key,
+    required this.order,
+    required this.onTap,
+    this.onInvite,
+  });
 
   /// Estado de cocina en el chip (e2e F4b): con la orden ya confirmada, el
   /// chip informa en vez de repetir "Ver pedido" — "¡Listo!" es la señal que
@@ -118,22 +132,36 @@ class ActiveGroupOrderChip extends StatelessWidget {
       color: color,
       elevation: 4,
       borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: Colors.white, size: 16),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white),
+      child: AnimatedSize(
+        duration: Durations.medium2,
+        child: Row(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, color: Colors.white, size: 16),
+                    const SizedBox(width: 6),
+                    Text(
+                      label,
+                      style: FoodlyTextStyles.captionBold.copyWith(color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            if (order.isEditableCart && onInvite != null)
+              CustomRoundedNeumorphicButton(
+                diameter: 14,
+                tooltip: S.current.groupOrderInviteCta,
+                onPressed: onInvite,
+                child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 14),
+              ).paddingAll(2),
+          ],
         ),
       ),
     );

@@ -44,7 +44,7 @@ class MenuItemPriceTag extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceText = (price == null || price!.isEmpty) ? '-' : price!;
     return SizedBox(
-      width: 110,
+      width: 104,
       height: 36,
       child: Card.filled(
         elevation: 3,
@@ -59,6 +59,8 @@ class MenuItemPriceTag extends StatelessWidget {
             ).paddingHorizontal(3),
             Text(
               priceText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: FoodlyTextStyles.bodyWhiteSemibold,
             ),
           ],

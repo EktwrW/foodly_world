@@ -279,9 +279,8 @@ class _NewReleasesCardContent extends StatelessWidget {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(6)),
                                   color: FoodlyThemes.tertiaryFoodly,
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const SizedBox(width: 6),
                                       Flexible(
                                         child: Text(
                                           [
@@ -291,10 +290,9 @@ class _NewReleasesCardContent extends StatelessWidget {
                                           style: FoodlyTextStyles.captionWhite,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
-                                        ),
+                                        ).paddingLeft(6),
                                       ),
                                       const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16),
-                                      const SizedBox(width: 3),
                                     ],
                                   ).paddingAll(3),
                                 ).paddingOnly(left: 4),

@@ -185,6 +185,31 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// que la UI no muestre siempre "código inválido"; null = sin detalle.
   String? lastJoinError;
 
+  /// Motivo del último fallo al invitar, para mostrar lo que dice el backend
+  /// en vez de un genérico; null = sin detalle.
+  String? lastInviteError;
+
+  /// Código de invitación de la orden ACTIVA (lo genera o reutiliza el
+  /// backend). Es el mismo método que ya tenía `GroupOrderCubit`, pero
+  /// colgado del carrito: el chip flotante vive fuera de la GroupOrderPage y
+  /// no alcanza su provider. Pasarle el cubit de la página por
+  /// `BlocProvider.value` ataría un widget GLOBAL al ciclo de vida de una
+  /// ruta que casi nunca está montada cuando se toca el chip.
+  Future<GroupInviteResponseDM?> createInvitation() async {
+    final uuid = state?.uuid;
+    if (uuid == null) return null;
+    lastInviteError = null;
+    final result = await _repo.createInvitation(uuid);
+    return result.when(
+      success: (r) => r,
+      failure: (e) {
+        _logger.e(e);
+        lastInviteError = e.serverMessage;
+        return null;
+      },
+    );
+  }
+
   /// F3a: unirse a la orden de OTRO usuario con el código de invitación.
   /// Si funciona, la orden ajena pasa a ser el carrito activo.
   Future<bool> joinWithCode(String code) async {
