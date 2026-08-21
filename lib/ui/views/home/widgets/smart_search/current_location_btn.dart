@@ -367,28 +367,35 @@ class _ChangeLocationDialogState extends State<ChangeLocationDialog> {
                         onPickedPlaceDetail: _handlePlaceSelected,
                       ),
                     ),
-                    if (_selectedPlace != null)
-                      FadeInRight(
-                        duration: Durations.medium4,
-                        child: Column(
-                          spacing: 4,
-                          children: [
-                            Text(
-                              '${S.current.selectedPlace}:',
-                              style: FoodlyTextStyles.captionPurpleBold,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              _selectedPlace?.formattedAddress ?? _selectedPlace?.name ?? '-',
-                              style: FoodlyTextStyles.caption,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                    AnimatedSize(
+                      duration: Durations.medium2,
+                      child: Visibility(
+                        visible: _selectedPlace != null,
+                        replacement: const SizedBox(height: 16),
+                        child: FadeInRight(
+                          duration: Durations.long1,
+                          curve: Curves.decelerate,
+                          child: Column(
+                            spacing: 4,
+                            children: [
+                              Text(
+                                '${S.current.selectedPlace}:',
+                                style: FoodlyTextStyles.captionPurpleBold,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                _selectedPlace?.formattedAddress ?? _selectedPlace?.name ?? '-',
+                                style: FoodlyTextStyles.caption,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ),
                     Flexible(
                       child: BlocBuilder<LocationBloc, LocationState>(
                         builder: (context, state) {

@@ -89,10 +89,22 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                         flex: 9,
                         child: VisitedItemNameAndDescriptionWdg(item: widget.item),
                       ),
-                      FavMenuItemBtns(
-                        key: Key(widget.item.uuid),
-                        item: widget.item,
-                        menuCategory: widget.menuCategory,
+                      Column(
+                        spacing: 16,
+                        children: [
+                          FavMenuItemBtns(
+                            key: Key(widget.item.uuid),
+                            item: widget.item,
+                            menuCategory: widget.menuCategory,
+                          ),
+                          // "+" para sumar el plato a la orden grupal activa (si la hay).
+                          if (widget.item.available)
+                            _AddToGroupOrderButton(
+                              businessUuid: widget.vm?.menuDM?.business?.uuid,
+                              itemableType: _groupItemableType(widget.menuCategory),
+                              itemUuid: widget.item.uuid,
+                            ),
+                        ],
                       ).paddingAll(2),
                     ],
                   ),
@@ -112,13 +124,6 @@ class _VisitedMenuItemWdgState extends State<VisitedMenuItemWdg> {
                           currency: widget.vm?.currency ?? widget.currency ?? '\$',
                           price: _itemNotAvailable ? null : '$_currentPrice',
                         ),
-                      // "+" para sumar el plato a la orden grupal activa (si la hay).
-                      if (widget.item.available)
-                        _AddToGroupOrderButton(
-                          businessUuid: widget.vm?.menuDM?.business?.uuid,
-                          itemableType: _groupItemableType(widget.menuCategory),
-                          itemUuid: widget.item.uuid,
-                        ).paddingOnly(left: 6, right: 4),
                     ],
                   ).paddingBottom(widget.item.available ? 0 : 8),
                 ],
@@ -274,9 +279,8 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
       builder: (context, order) {
         // F4b: en cuenta abierta la mesa sigue agregando ítems con la orden
         // ya CONFIRMADA (tandas) — mientras no se pida la cuenta.
-        final acceptsItems = order != null &&
-            (order.isOpen ||
-                (order.isOpenTab && order.isConfirmed && order.billRequestedAt == null));
+        final acceptsItems =
+            order != null && (order.isOpen || (order.isOpenTab && order.isConfirmed && order.billRequestedAt == null));
         final active = acceptsItems && order.businessUuid == uuid;
         if (!active) return const SizedBox.shrink();
 
@@ -291,6 +295,7 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
             decoration: BoxDecoration(
               color: _success ? FoodlyThemes.tertiaryFoodly : FoodlyThemes.primaryFoodly,
               shape: BoxShape.circle,
+              gradient: RadialGradient(colors: UIDecorations.NEUMORPHIC_PURPLE_GRADIENT.colors),
               boxShadow: _success
                   ? [
                       BoxShadow(
@@ -304,8 +309,7 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               switchInCurve: Curves.easeOutBack,
-              transitionBuilder: (child, animation) =>
-                  ScaleTransition(scale: animation, child: child),
+              transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
               child: _busy
                   ? const SizedBox(
                       key: ValueKey('busy'),

@@ -35,7 +35,7 @@ void showGroupOrderInviteSnackBar(
   final snackBar = SnackBarWdg(
     // El icono ES el mensaje acá: sumar a alguien a la mesa. El de info
     // genérico no decía nada.
-    icon: FontAwesome.user_plus_solid,
+    icon: FontAwesome.users_viewfinder_solid,
     content: Row(
       children: [
         FoodlyQrCard(data: link, size: qrSide),

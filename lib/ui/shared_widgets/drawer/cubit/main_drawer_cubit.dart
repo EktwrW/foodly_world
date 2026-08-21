@@ -18,10 +18,10 @@ class MainDrawerCubit extends Cubit<MainDrawerState> {
   )   : _meRepo = meRepo,
         _authSessionService = authSessionService,
         _vm = MainDrawerVM(
-          sidebarController: SidebarXController(selectedIndex: 0),
+          sidebarController: SidebarXController(selectedIndex: 0, extended: true),
         ),
         super(_Loaded(MainDrawerVM(
-          sidebarController: SidebarXController(selectedIndex: 0),
+          sidebarController: SidebarXController(selectedIndex: 0, extended: true),
         ))) {
     emit(_Loaded(_vm));
   }
