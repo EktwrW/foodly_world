@@ -358,6 +358,7 @@ class _GroupOrderClient implements GroupOrderClient {
     required int quantity,
     String? notes,
     bool? shared,
+    String? version,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -369,6 +370,7 @@ class _GroupOrderClient implements GroupOrderClient {
       'quantity': quantity,
       'notes': notes,
       'shared': shared,
+      'version': version,
     };
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(

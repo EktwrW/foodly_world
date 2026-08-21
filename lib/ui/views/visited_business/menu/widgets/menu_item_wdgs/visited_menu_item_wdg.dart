@@ -228,11 +228,13 @@ class _AddToGroupOrderButton extends StatefulWidget {
   final String? businessUuid;
   final String itemableType;
   final String itemUuid;
+  final Version version;
 
   const _AddToGroupOrderButton({
     required this.businessUuid,
     required this.itemableType,
     required this.itemUuid,
+    required this.version,
   });
 
   @override
@@ -255,7 +257,11 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
     // e2e r6: spinner visible durante la espera — sin él, el usuario
     // re-tapea pensando que no registró (y el merge del BE lo colapsa a 1).
     setState(() => _busy = true);
-    final ok = await cubit.addFood(widget.itemableType, widget.itemUuid);
+    final ok = await cubit.addFood(
+      widget.itemableType,
+      widget.itemUuid,
+      version: widget.version,
+    );
     if (!mounted) return;
     setState(() => _busy = false);
     if (!ok) return;

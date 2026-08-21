@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/group_order_ongoing_notification_service.dart';
@@ -149,7 +150,16 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   }
 
   /// Agrega un ítem del menú a la orden activa. [itemableType] = food/drink/combo.
-  Future<bool> addFood(String itemableType, String itemableUuid, {int quantity = 1}) async {
+  ///
+  /// [version] es el tamaño que el comensal eligió en el menú. Sin él el
+  /// backend cobraba siempre el precio de regular aunque la app mostrara el
+  /// de grande — la mesa pagaba de menos y el negocio ponía la diferencia.
+  Future<bool> addFood(
+    String itemableType,
+    String itemableUuid, {
+    int quantity = 1,
+    Version? version,
+  }) async {
     final order = state;
     if (order == null) return false;
     final res = await _repo.addItem(
@@ -157,6 +167,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
       itemableType: itemableType,
       itemableUuid: itemableUuid,
       quantity: quantity,
+      version: version?.value,
     );
     return res.when(
       success: (r) {
