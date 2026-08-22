@@ -1332,6 +1332,16 @@
       }
     }
   },
+  "groupOrderAmountMyShare": "A minha parte",
+  "groupOrderAmountAll": "Toda a conta",
+  "groupOrderPayAmount": "Pagar {amount}",
+  "@groupOrderPayAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderNoBalanceDue": "Sem saldo pendente",
   "groupOrderExpiredNotice": "Este pedido expirou: esgotou-se o prazo de pagamento e não foi cobrado nada. Podes pedir de novo a partir do menu.",
   "groupOrderCancelledNotice": "Este pedido foi cancelado. Não foi cobrado nada.",

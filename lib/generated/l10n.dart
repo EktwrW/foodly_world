@@ -8755,6 +8755,36 @@ class S {
     );
   }
 
+  /// `My share`
+  String get groupOrderAmountMyShare {
+    return Intl.message(
+      'My share',
+      name: 'groupOrderAmountMyShare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whole bill`
+  String get groupOrderAmountAll {
+    return Intl.message(
+      'Whole bill',
+      name: 'groupOrderAmountAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay {amount}`
+  String groupOrderPayAmount(String amount) {
+    return Intl.message(
+      'Pay $amount',
+      name: 'groupOrderPayAmount',
+      desc: '',
+      args: [amount],
+    );
+  }
+
   /// `Nothing left to pay`
   String get groupOrderNoBalanceDue {
     return Intl.message(

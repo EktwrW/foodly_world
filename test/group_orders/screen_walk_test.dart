@@ -316,7 +316,7 @@ void main() {
       VoidCallback? onSend,
       VoidCallback? onRequestBill,
       VoidCallback? onOrderMore,
-      VoidCallback? onPay,
+      void Function(bool)? onPay,
       VoidCallback? onLock,
       VoidCallback? onPayAtRegister,
       VoidCallback? onCancelCashPayment,
@@ -406,7 +406,7 @@ void main() {
         billRequestedAt: DateTime(2026, 8, 8, 22),
       )).copyWith(status: GroupOrderStatus.locked);
 
-      await pumpFooter(tester, pedida, myShare: 12, onPay: () {});
+      await pumpFooter(tester, pedida, myShare: 12, onPay: (_) {});
 
       // El CTA muestra el TOTAL real: la parte MÁS la tarifa fija del
       // comensal — nunca un monto menor al que verá en el PaymentSheet.
@@ -442,7 +442,7 @@ void main() {
         cashRequestedAt: DateTime(2026, 8, 9, 22),
       ));
 
-      await pumpFooter(tester, enCaja, myShare: 12, onPay: () {}, onCancelCashPayment: () {});
+      await pumpFooter(tester, enCaja, myShare: 12, onPay: (_) {}, onCancelCashPayment: () {});
 
       expect(find.text(S.current.groupOrderCashRequestedCta), findsOneWidget);
       expect(find.text(S.current.groupOrderCashRequestedHint), findsOneWidget);

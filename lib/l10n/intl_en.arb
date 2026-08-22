@@ -1322,6 +1322,16 @@
       }
     }
   },
+  "groupOrderAmountMyShare": "My share",
+  "groupOrderAmountAll": "Whole bill",
+  "groupOrderPayAmount": "Pay {amount}",
+  "@groupOrderPayAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "groupOrderNoBalanceDue": "Nothing left to pay",
   "groupOrderExpiredNotice": "This order expired — the payment window ran out and nothing was charged. You can order again from the menu.",
   "groupOrderCancelledNotice": "This order was cancelled. Nothing was charged.",

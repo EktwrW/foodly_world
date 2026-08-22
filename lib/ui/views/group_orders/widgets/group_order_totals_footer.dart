@@ -13,14 +13,24 @@ import 'package:icons_plus_pro/icons_plus_pro.dart' show Brand, Brands, FontAwes
 /// [myShare] es lo que debe pagar el usuario actual; [onPay] dispara el flujo
 /// de pago (PaymentSheet de Stripe). El botón se desactiva si no hay nada que
 /// pagar o la orden no admite pagos.
-class GroupOrderTotalsFooter extends StatelessWidget {
+class GroupOrderTotalsFooter extends StatefulWidget {
   final GroupOrderDM order;
   final double myShare;
-  final VoidCallback? onPay;
 
-  /// Cobro por el Checkout hosteado de Stripe — la única vía capaz de ofrecer
-  /// MB WAY y Bizum. null en quien no puede accionarlo.
-  final VoidCallback? onPayHosted;
+  /// Cobro por el PaymentSheet nativo. El bool es CUÁNTO: `true` = todo lo
+  /// pendiente de la mesa, `false` = solo mi parte.
+  ///
+  /// Monto y método son dimensiones independientes y ahora la UI lo refleja:
+  /// antes "pagar todo" era un tercer BOTÓN, y como los botones son el método,
+  /// pagar la mesa entera obligaba a tarjeta. Un portugués no podía invitar
+  /// con MB WAY. El backend nunca tuvo ese límite: `checkoutSession` y
+  /// `payIntent` comparten `runPayment`, que acepta `cover_participant_uuids`
+  /// desde F2b.
+  final void Function(bool coverAll)? onPay;
+
+  /// Lo mismo por el Checkout hosteado de Stripe — la única vía capaz de
+  /// ofrecer MB WAY y Bizum. null en quien no puede accionarlo.
+  final void Function(bool coverAll)? onPayHosted;
 
   /// Método local de ESTE comensal (ver [HostedRail]). [HostedRail.none] deja
   /// el pie con un único CTA, que es el caso de la mayoría del mundo.
@@ -48,9 +58,10 @@ class GroupOrderTotalsFooter extends StatelessWidget {
   /// F4b: deshace el aviso de pago en caja. null para quien no es host.
   final VoidCallback? onCancelCashPayment;
 
-  /// "Yo invito" global (F2b §A.2): pagar TODO lo pendiente de la orden.
-  /// null => sin botón (el caller decide cuándo tiene sentido mostrarlo).
-  final VoidCallback? onPayAll;
+  /// "Yo invito" global (F2b §A.2): ¿tiene sentido ofrecer pagar TODO lo
+  /// pendiente? Lo decide el caller, que es quien sabe si el único que debe
+  /// soy yo. false => sin selector, se cobra mi parte y ya.
+  final bool canCoverAll;
 
   /// Operación en curso (loading del cubit o PaymentSheet abierto): los CTAs
   /// se deshabilitan para evitar dobles taps / pagos duplicados.
@@ -76,19 +87,76 @@ class GroupOrderTotalsFooter extends StatelessWidget {
     this.onOrderMore,
     this.onPayAtRegister,
     this.onCancelCashPayment,
-    this.onPayAll,
+    this.canCoverAll = false,
     this.isBusy = false,
     this.onExit,
   });
 
-  bool get _canPay => order.isPayable && myShare > 0 && onPay != null && !isBusy;
+  @override
+  State<GroupOrderTotalsFooter> createState() => _GroupOrderTotalsFooterState();
+}
+
+class _GroupOrderTotalsFooterState extends State<GroupOrderTotalsFooter> {
+  /// Elección del selector. Arranca en `false` SIEMPRE: un toque distraído
+  /// que paga la mesa entera en vez de una parte es daño real, y la tarifa
+  /// fija del comensal no se devuelve sola.
+  bool _coverAllSel = false;
+
+  GroupOrderDM get order => widget.order;
+  double get myShare => widget.myShare;
+  bool get isBusy => widget.isBusy;
+  HostedRail get hostedRail => widget.hostedRail;
+  VoidCallback? get onLock => widget.onLock;
+  VoidCallback? get onSend => widget.onSend;
+  VoidCallback? get onRequestBill => widget.onRequestBill;
+  VoidCallback? get onOrderMore => widget.onOrderMore;
+  VoidCallback? get onPayAtRegister => widget.onPayAtRegister;
+  VoidCallback? get onCancelCashPayment => widget.onCancelCashPayment;
+  VoidCallback? get onExit => widget.onExit;
+
+  /// Debo algo yo.
+  bool get _iOwe => order.isPayable && myShare > 0;
+
+  /// Hay saldo de OTROS que puedo cubrir.
+  bool get _coverableExists => widget.canCoverAll && order.isPayable && order.totalRemaining > 0;
+
+  /// Solo hay elección cuando las dos cosas son ciertas. Con una sola opción
+  /// el selector sería un control de un botón.
+  bool get _showSelector => _iOwe && _coverableExists && !isBusy;
+
+  /// Qué se cobra. Si ya pagué lo mío, lo único que queda es cubrir al resto
+  /// — y ahí no hay nada que elegir.
+  bool get _coverAll => _iOwe ? _coverAllSel : true;
+
+  double get _amount => _coverAll ? order.totalRemaining : myShare;
+
+  bool get _canPay => (_iOwe || _coverableExists) && widget.onPay != null && !isBusy;
+
+  /// Copy del CTA principal. Los montos SIEMPRE incluyen la tarifa fija del
+  /// comensal: el botón nunca puede prometer menos que el PaymentSheet.
+  ///
+  /// Con selector el texto se vuelve "Pagar X" a secas — decir de nuevo "mi
+  /// parte" repetiría lo que el selector ya dice, y encima podría contradecirlo.
+  /// Sin selector se conservan los textos de siempre, que no cambiaron.
+  String _tituloDelCta(bool solo) {
+    if (!_canPay) return S.current.groupOrderNoBalanceDue;
+
+    final monto = formatMoney(_amount + order.payerFixedFee, order.currency);
+
+    if (_showSelector) return S.current.groupOrderPayAmount(monto);
+    // Ya pagué lo mío y lo único que queda es cubrir al resto.
+    if (!_iOwe) return S.current.groupOrderPayAllRemaining(monto);
+    return solo
+        ? S.current.groupOrderPayFullOrder(monto)
+        : S.current.groupOrderPayMyShare(monto);
+  }
 
   /// El segundo botón (el método local del comensal) se rige por la MISMA
   /// regla que el primero, con su propio callback. Va deliberadamente atado a
   /// `_canPay` y no a una condición propia: si no se puede pagar, no se puede
   /// pagar por ninguna vía, y dos botones con criterios distintos habrían
   /// terminado divergiendo.
-  bool get _canPayLocalRail => _canPay && onPayHosted != null && hostedRail != HostedRail.none;
+  bool get _canPayLocalRail => _canPay && widget.onPayHosted != null && hostedRail != HostedRail.none;
 
   /// Qué decirle al comensal cuando NO puede pagar.
   ///
@@ -259,15 +327,22 @@ class GroupOrderTotalsFooter extends StatelessWidget {
           ] else ...[
             // Los CTAs muestran el TOTAL real a cobrar (parte + tarifa fija
             // del comensal) — nunca un monto menor al del PaymentSheet.
+            // El selector aparece SOLO cuando hay dos opciones reales.
+            if (_showSelector) ...[
+              _AmountSelector(
+                coverAll: _coverAllSel,
+                myShare: myShare,
+                allRemaining: order.totalRemaining,
+                currency: order.currency,
+                onChanged: (v) => setState(() => _coverAllSel = v),
+              ),
+              const SizedBox(height: 10),
+            ],
             CustomNeumorphicButton(
-              text: _canPay
-                  ? (solo
-                      ? S.current.groupOrderPayFullOrder(formatMoney(myShare + order.payerFixedFee, order.currency))
-                      : S.current.groupOrderPayMyShare(formatMoney(myShare + order.payerFixedFee, order.currency)))
-                  : S.current.groupOrderNoBalanceDue,
+              text: _tituloDelCta(solo),
               disabled: !_canPay,
               margin: const EdgeInsets.only(bottom: 6),
-              onPressed: onPay,
+              onPressed: _canPay ? () => widget.onPay?.call(_coverAll) : null,
             ),
             // Un pago MÍO en vuelo: lo sella el webhook, no la app. Sin esta
             // línea el comensal veía "Sin saldo pendiente" mientras su cobro
@@ -303,19 +378,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
                 type: CustomNeumorphicBtnType.outlined,
                 disabled: false,
                 margin: const EdgeInsets.only(top: 6),
-                onPressed: onPayHosted,
-              ),
-            ],
-            // "Pagar todo lo pendiente · €X" (F2b §A.2) — disponible para todos.
-            if (onPayAll != null && order.totalRemaining > 0) ...[
-              const SizedBox(height: 8),
-              CustomNeumorphicButton(
-                text: S.current.groupOrderPayAllRemaining(
-                  formatMoney(order.totalRemaining + order.payerFixedFee, order.currency),
-                ),
-                disabled: isBusy,
-                margin: EdgeInsets.zero,
-                onPressed: onPayAll,
+                onPressed: _canPay ? () => widget.onPayHosted?.call(_coverAll) : null,
               ),
             ],
             // Quién cobra, dicho una vez y en su sitio.
@@ -328,7 +391,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
             // línea gris ahora que un chargeback después.
             //
             // Va debajo de los botones y no arriba: informa, no decide.
-            if (_canPay || _canPayLocalRail || (onPayAll != null && order.totalRemaining > 0)) ...[
+            if (_canPay || _canPayLocalRail) ...[
               const SizedBox(height: 10),
               Row(
                 spacing: 16,
@@ -346,7 +409,7 @@ class GroupOrderTotalsFooter extends StatelessWidget {
               ),
             ],
             // Transparencia del fee: nota discreta + detalle al tocar ⓘ.
-            if (order.payerFixedFee > 0 && (_canPay || (onPayAll != null && order.totalRemaining > 0))) ...[
+            if (order.payerFixedFee > 0 && _canPay) ...[
               const SizedBox(height: 8),
               InkWell(
                 borderRadius: BorderRadius.circular(8),
@@ -525,6 +588,131 @@ class _AmountRow extends StatelessWidget {
         Text(label, style: style),
         Text(value, style: valueStyle ?? style),
       ],
+    );
+  }
+}
+
+/// Selector de MONTO (mi parte / toda la cuenta). El método de pago lo eligen
+/// los botones de abajo — son dimensiones distintas y separarlas es lo que
+/// permite pagar la mesa entera con MB WAY.
+///
+/// Segmentado y no un switch: un switch obliga a leer la etiqueta para saber
+/// qué lado está activo, y acá los dos lados son montos concretos que conviene
+/// ver juntos antes de elegir.
+class _AmountSelector extends StatelessWidget {
+  final bool coverAll;
+  final double myShare;
+  final double allRemaining;
+  final String currency;
+  final ValueChanged<bool> onChanged;
+
+  const _AmountSelector({
+    required this.coverAll,
+    required this.myShare,
+    required this.allRemaining,
+    required this.currency,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: Row(
+          children: [
+            Expanded(
+              child: _Option(
+                label: S.current.groupOrderAmountMyShare,
+                amount: formatMoney(myShare, currency),
+                selected: !coverAll,
+                onTap: () => onChanged(false),
+              ),
+            ),
+            Expanded(
+              child: _Option(
+                label: S.current.groupOrderAmountAll,
+                amount: formatMoney(allRemaining, currency),
+                selected: coverAll,
+                onTap: () => onChanged(true),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Option extends StatelessWidget {
+  final String label;
+  final String amount;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _Option({
+    required this.label,
+    required this.amount,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: Durations.short4,
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+          decoration: BoxDecoration(
+            color: selected ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 4,
+                      offset: const Offset(0, 1),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: FoodlyTextStyles.caption.copyWith(
+                  fontSize: 11.5,
+                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                ),
+              ),
+              Text(
+                amount,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: FoodlyTextStyles.labelBold.copyWith(
+                  fontSize: 14,
+                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

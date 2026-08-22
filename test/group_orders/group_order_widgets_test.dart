@@ -255,7 +255,7 @@ void main() {
       await tester.pumpWidget(_host(GroupOrderTotalsFooter(
         order: order,
         myShare: 20.0,
-        onPay: () => paid = true,
+        onPay: (_) => paid = true,
       )));
 
       expect(find.text('2 de 3 pagado'), findsOneWidget);
