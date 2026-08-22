@@ -614,15 +614,18 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   }
 
   /// "Pagar todo lo pendiente" de la orden (F2b §A.2).
-  Future<void> _onPayAll(BuildContext context, GroupOrderDM order) async {
+  /// A quién cubre este pago. `null` = solo yo, que es el caso corriente y
+  /// el único request que el backend ya recibía antes de F2b.
+  ///
+  /// Sin diálogo de confirmación: el selector de monto YA es una elección
+  /// deliberada, y `_askTip` muestra el importe con la tarifa antes de que se
+  /// cobre nada. Un "¿estás seguro?" encima era la tercera pantalla de
+  /// revisión seguida, que es como se enseña a la gente a tocar Aceptar sin
+  /// leer.
+  List<String>? _coverUuids(GroupOrderDM order, bool coverAll) {
+    if (!coverAll) return null;
     final uuids = order.coverableParticipants.map((p) => p.uuid).toList();
-    if (uuids.isEmpty) return;
-    final msg = S.current.groupOrderPayAllConfirm(
-      formatMoney(order.totalRemaining, order.currency),
-    );
-    if (await _confirm(context, msg) && context.mounted) {
-      await _onPay(context, coverUuids: uuids);
-    }
+    return uuids.isEmpty ? null : uuids;
   }
 
   /// Host: reabre la orden cerrada sin pagos (F2b §C.1).
@@ -1026,8 +1029,9 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     vm: vm,
                     order: order,
                     isBusy: isBusy,
-                    onPay: () => _onPay(context),
-                    onPayHosted: () => _onPay(context, hosted: true),
+                    onPay: (coverAll) => _onPay(context, coverUuids: _coverUuids(order, coverAll)),
+                    onPayHosted: (coverAll) =>
+                        _onPay(context, coverUuids: _coverUuids(order, coverAll), hosted: true),
                     // El método local se decide por el país de QUIEN PAGA, no
                     // por el del restaurante: Stripe muestra MB WAY y Bizum
                     // por "customer location". En una mesa de Lisboa el
@@ -1045,7 +1049,6 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     onOrderMore: () => _onOrderMore(order),
                     onExit: () => _exitOrder(context, order),
                     onCover: (p) => _onCover(context, order, p),
-                    onPayAll: () => _onPayAll(context, order),
                   ),
           ),
         );
@@ -1154,8 +1157,9 @@ class _Content extends StatelessWidget {
   final GroupOrderVM vm;
   final GroupOrderDM order;
   final bool isBusy;
-  final VoidCallback onPay;
-  final VoidCallback onPayHosted;
+  /// El bool es CUÁNTO se cobra: `true` = todo lo pendiente de la mesa.
+  final void Function(bool coverAll) onPay;
+  final void Function(bool coverAll) onPayHosted;
 
   /// Método local de ESTE comensal. Se resuelve en la página —donde vive la
   /// sesión— y baja hasta el pie, que solo lo pinta.
@@ -1174,7 +1178,6 @@ class _Content extends StatelessWidget {
   /// por el chip global o por una notificación.
   final VoidCallback onExit;
   final void Function(GroupOrderParticipantDM p) onCover;
-  final VoidCallback onPayAll;
 
   const _Content({
     required this.vm,
@@ -1190,7 +1193,6 @@ class _Content extends StatelessWidget {
     required this.onCancelCashPayment,
     required this.onOrderMore,
     required this.onCover,
-    required this.onPayAll,
     required this.onExit,
   });
 
@@ -1316,10 +1318,14 @@ class _Content extends StatelessWidget {
           order: order,
           myShare: vm.myShare,
           isBusy: isBusy,
-          onPay: vm.canPay ? onPay : null,
+          // Quien ya pagó lo suyo sigue pudiendo cubrir al resto: el backend
+          // lo permite explícitamente ("con covers el pagador puede haber
+          // pagado ya SU parte y aun así invitar"), y hasta ahora la UI se lo
+          // negaba en cuanto su parte quedaba saldada.
+          onPay: (vm.canPay || _showPayAll) ? onPay : null,
           // MB WAY: mismo permiso que el CTA principal. El pie decide además
           // si el restaurante lo ofrece (`order.offersMbWay`).
-          onPayHosted: vm.canPay ? onPayHosted : null,
+          onPayHosted: (vm.canPay || _showPayAll) ? onPayHosted : null,
           hostedRail: hostedRail,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,
           // F4b: enviar tandas y pedir la cuenta son acciones del HOST.
@@ -1331,7 +1337,7 @@ class _Content extends StatelessWidget {
           onCancelCashPayment: (order.isOpenTab && _iAmHost) ? onCancelCashPayment : null,
           // "Pedir más" lo puede usar CUALQUIER comensal (agrega a su nombre).
           onOrderMore: order.businessMenuUuid == null ? null : onOrderMore,
-          onPayAll: _showPayAll ? onPayAll : null,
+          canCoverAll: _showPayAll,
           // Solo en órdenes terminales: es la única pantalla sin salida propia.
           onExit: order.isTerminal ? onExit : null,
         ),

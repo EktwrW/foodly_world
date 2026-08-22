@@ -66,15 +66,15 @@ void main() {
     required GroupOrderDM order,
     HostedRail rail = HostedRail.mbWay,
     double myShare = 20,
-    VoidCallback? onPayHosted,
+    void Function(bool)? onPayHosted,
     bool isBusy = false,
   }) => tester.pumpWidget(
     host(
       GroupOrderTotalsFooter(
         order: order,
         myShare: myShare,
-        onPay: () {},
-        onPayHosted: onPayHosted ?? () {},
+        onPay: (_) {},
+        onPayHosted: onPayHosted ?? (_) {},
         hostedRail: rail,
         isBusy: isBusy,
       ),
@@ -181,7 +181,7 @@ void main() {
           GroupOrderTotalsFooter(
             order: orden(),
             myShare: 20,
-            onPay: () {},
+            onPay: (_) {},
             hostedRail: HostedRail.mbWay,
           ),
         ),
@@ -284,8 +284,8 @@ void main() {
           GroupOrderTotalsFooter(
             order: orden(),
             myShare: 20,
-            onPay: () => nativo++,
-            onPayHosted: () => hosteado++,
+            onPay: (_) => nativo++,
+            onPayHosted: (_) => hosteado++,
             hostedRail: HostedRail.bizum,
           ),
         ),
@@ -317,8 +317,8 @@ void main() {
             GroupOrderTotalsFooter(
               order: orden(),
               myShare: 20,
-              onPay: () {},
-              onPayHosted: () {},
+              onPay: (_) {},
+              onPayHosted: (_) {},
               hostedRail: HostedRail.mbWay,
             ),
           ),
