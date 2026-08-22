@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -101,8 +102,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                       ],
                       if (widget.delivered && !item.isVoided) ...[
                         const SizedBox(width: 6),
-                        const Icon(Icons.check_circle_rounded,
-                            size: 15, color: FoodlyThemes.tertiaryFoodly),
+                        const Icon(Icons.check_circle_rounded, size: 15, color: FoodlyThemes.tertiaryFoodly),
                       ],
                       // F4b.1: el negocio anuló este plato — sigue visible,
                       // pero no se cobra (transparencia con el comensal).
@@ -132,8 +132,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                                   style: FoodlyTextStyles.captionPurpleBold,
                                 ),
                                 const SizedBox(width: 3),
-                                const Icon(Icons.info_outline_rounded,
-                                    size: 11, color: FoodlyThemes.primaryFoodly),
+                                const Icon(Icons.info_outline_rounded, size: 11, color: FoodlyThemes.primaryFoodly),
                               ],
                             ),
                           ),
@@ -159,8 +158,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                         (item.voidedReason ?? '').trim().isNotEmpty
                             ? item.voidedReason!.trim()
                             : S.current.groupOrderItemVoided,
-                        style: FoodlyTextStyles.captionBold
-                            .copyWith(color: const Color(0xFFB3261E), fontSize: 10),
+                        style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFFB3261E), fontSize: 10),
                       ),
                     ),
                 ],
@@ -197,26 +195,19 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
             // Botón de eliminar (solo si editable) — spinner mientras el
             // borrado está en vuelo (e2e r6: evita re-taps por la espera).
             if (onRemove != null)
-              Padding(
-                padding: const EdgeInsets.only(left: 6),
-                child: _removing
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: FoodlyThemes.secondaryFoodly,
-                        ),
+              IconButton(
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: _removing ? null : _onRemoveTap,
+                icon: _removing
+                    ? const CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: FoodlyThemes.secondaryFoodly,
+                        constraints: BoxConstraints.tightFor(width: 16, height: 16),
                       )
-                    : IconButton(
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        onPressed: _onRemoveTap,
-                        icon: const Icon(Icons.close_rounded,
-                            size: 18, color: FoodlyThemes.secondaryFoodly),
-                      ),
-              ),
+                    : const Icon(Icons.close_rounded, size: 18, color: FoodlyThemes.secondaryFoodly),
+              ).paddingLeft(6),
           ],
         ),
       ),
