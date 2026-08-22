@@ -48,6 +48,17 @@ class RouteHierarchy {
     return false;
   }
 
+  /// La misma pantalla, sin la query.
+  ///
+  /// El historial guarda `state.uri.toString()`, o sea CON query, y comparar
+  /// así trataba a `/visit-menu/m1?t=Mesa%205` y `/visit-menu/m1` como dos
+  /// destinos distintos. Con eso, quien entraba escaneando el QR de su mesa
+  /// y terminaba la orden volvía —al tocar atrás— al mismo menú otra vez,
+  /// re-montando la mesa del QR, en vez de subir al perfil del negocio.
+  /// `_exitOrder` navega al menú SIN el `?t=`, que es lo que destapaba la
+  /// diferencia.
+  static String pathOf(String uri) => Uri.parse(uri).path;
+
   /// Índice del historial al que lleva el "atrás", o null si no hay destino
   /// válido y hay que derivar el padre. El caller trunca desde ese índice.
   ///
@@ -57,15 +68,17 @@ class RouteHierarchy {
   static int? backTargetIndex(List<String> history, String current, {String? userUuid}) {
     if (history.length <= 2) return null;
 
+    final actual = pathOf(current);
+
     var idx = history.length - 2;
-    while (idx >= 0 && (isEphemeral(history[idx]) || history[idx] == current)) {
+    while (idx >= 0 && (isEphemeral(history[idx]) || pathOf(history[idx]) == actual)) {
       idx--;
     }
     if (idx < 0) return null;
 
     // Si el anterior es HIJO de donde estoy, llegué acá con un back: seguir
     // hacia arriba, no volver al hijo.
-    return isNavigationChildOf(history[idx], current, userUuid: userUuid) ? null : idx;
+    return isNavigationChildOf(pathOf(history[idx]), actual, userUuid: userUuid) ? null : idx;
   }
 
   /// El "atrás" completo: a qué entrada del historial ir y desde dónde

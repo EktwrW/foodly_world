@@ -87,7 +87,7 @@ class MenuSnackbars {
                 // El ancho total no cambia: el QR encoge lo que crece la
                 // tarjeta, para no empujar al texto de al lado.
                 data: menuUrl,
-                size: context.screenWidth * .46 - FoodlyQrCard.chrome,
+                size: _ladoDelQr(context),
               ),
               Expanded(
                 child: Column(
@@ -145,3 +145,16 @@ class MenuSnackbars {
     ScaffoldMessenger.of(context).showSnackBar(snackBar.getSnackBar(context));
   }
 }
+
+/// Lado del QR dentro del aviso.
+///
+/// `context.screenWidth` (ResponsiveBreakpoints) devuelve 0 hasta que su
+/// LayoutBuilder mide, y ahí `* .46 - chrome` daba un lado NEGATIVO: el
+/// layout revienta, no encoge. Ya mordió una vez en el snackbar de invitar a
+/// la mesa (2026-08-22), que se abre desde el chip global. Acá el disparo es
+/// menos probable —estas pantallas ya están asentadas— pero es el mismo
+/// cálculo. MediaQuery está resuelto siempre, y el clamp deja el QR
+/// escaneable en un Z Fold cerrado sin comerse el texto de al lado.
+double _ladoDelQr(BuildContext context) =>
+    (MediaQuery.sizeOf(context).width * .46 - FoodlyQrCard.chrome).clamp(120.0, 190.0);
+

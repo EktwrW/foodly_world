@@ -266,4 +266,47 @@ void main() {
       }
     });
   });
+
+  group('entrando por el QR de la mesa', () {
+    /// EL BUG (reportado en device). El comensal escanea el QR de SU mesa
+    /// —que lleva `?t=`—, hace la orden, y al terminar `_exitOrder` lo
+    /// devuelve al menú SIN la query. El historial guarda la URI completa, así
+    /// que `/visit-menu/m1?t=Mesa%205` y `/visit-menu/m1` se comparaban como
+    /// destinos DISTINTOS: el back "volvía" al mismo menú re-montando la mesa
+    /// del QR en vez de subir al negocio.
+    const qr = '$_menu?t=Mesa%205';
+
+    test('atrás sube al negocio, no vuelve al menú con la mesa puesta', () {
+      final s = _Sesion(qr)
+        ..ir(_orden)
+        ..ir(_menu); // _exitOrder al terminar la orden
+
+      expect(s.atras(), _negocio);
+    });
+
+    test('dos backs seguidos no se quedan dando vueltas en el menú', () {
+      final s = _Sesion(qr)
+        ..ir(_orden)
+        ..ir(_menu);
+
+      // Ni uno solo de los aterrizajes puede ser el menú otra vez.
+      expect(s.atrasVarias(2), isNot(contains(_menu)));
+    });
+
+    test('ningún back vuelve a la orden ya cerrada', () {
+      final s = _Sesion(qr)
+        ..ir(_orden)
+        ..ir(_menu);
+
+      expect(s.atrasVarias(3), isNot(contains(_orden)));
+    });
+
+    test('llegando por el QR sin pasar por el negocio, se termina en casa', () {
+      // Cold start por deep link: no hay negocio en el historial, pero el
+      // fallback resuelve el padre desde LAST_VISITED_BUSINESS_UUID.
+      final s = _Sesion(qr)..ir(_orden)..ir(_menu);
+
+      expect(s.atrasVarias(3).last, anyOf(_home, _negocio));
+    });
+  });
 }

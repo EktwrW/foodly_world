@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -300,72 +301,69 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
 
   /// Sheet "¡Pedido enviado a cocina!" (maqueta B1): sin celebración de pago
   /// (no hubo pago). CTA principal: seguir pidiendo.
+  /// F4b — "tanda enviada a cocina". Aviso puro: informa y ofrece dos
+  /// salidas, ninguna irreversible.
+  ///
+  /// Era un `showModalBottomSheet` propio con su SafeArea y su icono en un
+  /// círculo dibujado a mano. Ahora es el `SnackBarWdg` de la casa: el icono
+  /// arriba ya viene con el componente, y el respiro sobre la barra de gestos
+  /// también — que era lo que el sheet resolvía a mano.
   void _showBatchSentSheet(BuildContext context, GroupOrderDM order) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      // SafeArea: un bottom sheet NO aparta solo su contenido de la barra de
-      // gestos de Android — el CTA quedaba pegado a ella, y en gestos a
-      // pantalla completa directamente por debajo (feedback 2026-08-14). Con
-      // `minimum` el respiro existe también donde el sistema no reserva nada
-      // (iPhone con botón, Android con barra clásica), para que la altura del
-      // sheet no cambie de un teléfono a otro.
-      builder: (ctx) => SafeArea(
-        top: false,
-        minimum: const EdgeInsets.only(bottom: 8),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 62,
-                height: 62,
-                decoration: BoxDecoration(
-                  color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.room_service_rounded, color: FoodlyThemes.primaryFoodly, size: 30),
-              ),
-              const SizedBox(height: 14),
-              Text(S.current.groupOrderBatchSentTitle,
-                  style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
-              const SizedBox(height: 6),
-              Text(
-                S.current.groupOrderBatchSentBody(
-                  order.businessName.isNotEmpty ? order.businessName : 'Foodly',
-                ),
-                style: FoodlyTextStyles.caption,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 18),
-              CustomNeumorphicButton(
-                text: S.current.groupOrderOrderMore,
-                disabled: false,
-                margin: EdgeInsets.zero,
-                onPressed: () {
-                  Navigator.pop(ctx);
-                  final menuUuid = order.businessMenuUuid;
-                  if (menuUuid == null) return;
-                  di<AppRouter>().appRouter.goNamed(
-                    AppRoutes.visitMenu.name,
-                    pathParameters: {AppRoutes.routeIdParam: menuUuid},
-                  );
-                },
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: Text(S.current.groupOrderSeeStatus,
-                    style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodly)),
-              ),
-            ],
+    final negocio = order.businessName.isNotEmpty ? order.businessName : 'Foodly';
+
+    final aviso = SnackBarWdg(
+      icon: Icons.room_service_rounded,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            S.current.groupOrderBatchSentTitle,
+            style: FoodlyTextStyles.sectionsTitle,
+            textAlign: TextAlign.center,
           ),
-        ),
+          const SizedBox(height: 6),
+          Text(
+            S.current.groupOrderBatchSentBody(negocio),
+            style: FoodlyTextStyles.caption,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      buttonBuilder: (dismiss) => Row(
+        spacing: 16,
+        children: [
+          Expanded(
+            child: CustomNeumorphicButton(
+              text: S.current.groupOrderOrderMore,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              fontSize: 14,
+              onPressed: () {
+                dismiss();
+                final menuUuid = order.businessMenuUuid;
+                if (menuUuid == null) return;
+                di<AppRouter>().appRouter.goNamed(
+                  AppRoutes.visitMenu.name,
+                  pathParameters: {AppRoutes.routeIdParam: menuUuid},
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: CustomNeumorphicButton(
+              text: S.current.groupOrderSeeStatus,
+              type: CustomNeumorphicBtnType.secondary,
+              disabled: false,
+              margin: EdgeInsets.zero,
+              fontSize: 14,
+              onPressed: dismiss,
+            ),
+          ),
+        ],
       ),
     );
+
+    ScaffoldMessenger.of(context).showSnackBar(aviso.getSnackBar(context));
   }
 
   /// Diálogo de división estilo Foodly: dos opciones tipo tarjeta con radio,
