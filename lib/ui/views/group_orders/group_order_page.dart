@@ -1280,10 +1280,10 @@ class _Content extends StatelessWidget {
                     _SectionTitle(S.current.groupOrderParticipants),
                     if (order.isEditableCart)
                       CustomRoundedNeumorphicButton(
-                        diameter: 26,
+                        diameter: 24,
                         tooltip: S.current.groupOrderInviteCta,
                         onPressed: () => _onInvite(context),
-                        child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 19),
+                        child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 18),
                       ),
                   ],
                 ).paddingBottom(16),

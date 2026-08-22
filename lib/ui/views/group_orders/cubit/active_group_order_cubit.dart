@@ -152,13 +152,20 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// Agrega un ítem del menú a la orden activa. [itemableType] = food/drink/combo.
   ///
   /// [version] es el tamaño que el comensal eligió en el menú. Sin él el
-  /// backend cobraba siempre el precio de regular aunque la app mostrara el
-  /// de grande — la mesa pagaba de menos y el negocio ponía la diferencia.
+  /// backend cobra siempre el precio de regular aunque la app muestre el de
+  /// grande — la mesa paga de menos y el negocio pone la diferencia. Peor
+  /// todavía: el BE fusiona la grande con la chica en UNA línea, así que un
+  /// roll de 2 € y uno grande de 6 € salían "2× roll · 4 €" en las dos UIs.
+  ///
+  /// Es REQUERIDO y no opcional con default a propósito. Ya se perdió una
+  /// vez en un merge y nada lo agarró: siendo opcional, borrar el argumento
+  /// compila igual y el bug vuelve en silencio. Ahora no compila. Para la
+  /// versión por defecto se pasa [Version.regular], que es explícito.
   Future<bool> addFood(
     String itemableType,
     String itemableUuid, {
+    required Version version,
     int quantity = 1,
-    Version? version,
   }) async {
     final order = state;
     if (order == null) return false;
@@ -167,7 +174,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
       itemableType: itemableType,
       itemableUuid: itemableUuid,
       quantity: quantity,
-      version: version?.value,
+      version: version.value,
     );
     return res.when(
       success: (r) {
