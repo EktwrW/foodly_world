@@ -564,6 +564,24 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   /// e2e r4: ¿[participantUuid] puede ELIMINAR la orden (definitivo)?
   /// Solo el host, solo OPEN y solo VACÍA (sin ningún ítem de nadie).
+  /// La cuenta ya no admite decisiones: se pagó entera, o se cobró en caja.
+  ///
+  /// `closedAt` cuenta: una cuenta cobrada EN CAJA tiene `totalPaid` = 0 por
+  /// definición, así que mirar solo el saldo la dejaría "abierta" para
+  /// siempre. Es el mismo criterio que usa el backend en `createNextRound`.
+  bool get isSettled => (totalPaid > 0 && totalRemaining <= 0) || closedAt != null;
+
+  /// F4a: ¿se puede encadenar otra ronda (o abrir otra cuenta) sobre esta?
+  ///
+  /// El backend exige `confirmed`/`completed` y, en cuenta abierta, que esté
+  /// saldada o cerrada. Acá se pide ADEMÁS que esté entregada: encadenar con
+  /// la anterior todavía en cocina cambia el carrito activo y le tapa al
+  /// comensal el seguimiento de lo que aún no llegó.
+  bool get canStartNextRound =>
+      (isConfirmed || status == GroupOrderStatus.completed) &&
+      fulfillmentStatus == GroupFulfillmentStatus.delivered &&
+      isSettled;
+
   bool canBeDeletedBy(String? participantUuid) {
     if (!isOpen || items.isNotEmpty) return false;
     return participantByUuid(participantUuid)?.isHost ?? false;

@@ -34,7 +34,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_fo
 import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome, Iconsax;
 import 'package:url_launcher/url_launcher.dart';
 
 /// Pantalla de detalle de una orden grupal (split payments).
@@ -1081,11 +1081,26 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
 
     // Menú del host (F2b): transferir titularidad y/o reabrir la orden.
     final isHost = order != null && _iAmHostOf(vm, order);
-    final canTransfer = isHost && order.participants.length > 1;
+    // Al host ya no le queda nada que decidir cuando la cuenta está saldada:
+    // no hay qué cerrar, ni qué pedir, ni qué reabrir. Es el mismo criterio
+    // que `canUnlock`, que desaparece en cuanto entra el primer pago.
+    //
+    // Transferir tampoco miraba el estado, así que se ofrecía sobre una orden
+    // ya pagada — y sobre una terminal el backend responde 409
+    // (`transfer_invalid_state` en completed/expired/cancelled). Era una
+    // opción muerta: abría el selector de participantes para fallar después.
+    final canTransfer = isHost && order.participants.length > 1 && !order.isTerminal && !order.isSettled;
     final canUnlock = isHost && order.isLocked && order.totalPaid <= 0;
     // e2e r4: eliminar (host, orden vacía) / abandonar (miembro sin ítems).
     final canDelete = order != null && order.canBeDeletedBy(vm.myParticipantUuid);
     final canLeave = order != null && order.canBeLeftBy(vm.myParticipantUuid);
+    // F4a: otra ronda / otra cuenta en la misma mesa.
+    //
+    // Hasta ahora esto SOLO vivía dentro del sheet de "pago exitoso", que ve
+    // quien paga. Si pagaba otro comensal, al resto de la mesa no le quedaba
+    // ninguna puerta: volvían al menú, el FAB seguía mostrando la orden
+    // activa y los devolvía a la que ya estaba pagada.
+    final canNextRound = order != null && order.canStartNextRound;
 
     return AppBar(
       backgroundColor: Colors.transparent,
@@ -1115,7 +1130,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         // explícitamente (join usa isEditableCart) y el FE lo negaba usando
         // `isOpen` (e2e 2026-08-06).
 
-        if (canTransfer || canUnlock || canDelete || canLeave)
+        if (canTransfer || canUnlock || canNextRound || canDelete || canLeave)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
             onSelected: (value) {
@@ -1124,6 +1139,8 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                   _onTransferHost(context, order, vm.myParticipantUuid);
                 case 'unlock':
                   _onUnlock(context);
+                case 'next_round':
+                  _startNextRound(context, order);
                 case 'delete':
                   _onDelete(context);
                 case 'leave':
@@ -1131,38 +1148,64 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
               }
             },
             itemBuilder: (_) => [
-              if (canTransfer) PopupMenuItem(value: 'transfer', child: Text(S.current.groupOrderTransferHost)),
-              if (canUnlock) PopupMenuItem(value: 'unlock', child: Text(S.current.groupOrderUnlockCta)),
+              if (canTransfer)
+                _menuItem(value: 'transfer', icon: Icons.swap_horiz_rounded, text: S.current.groupOrderTransferHost),
+              if (canUnlock) _menuItem(value: 'unlock', icon: Bootstrap.unlock, text: S.current.groupOrderUnlockCta),
+              if (canNextRound)
+                _menuItem(
+                  value: 'next_round',
+                  // El mismo icono que el FAB usa para "orden nueva": es
+                  // exactamente lo que el comensal viene a buscar acá.
+                  icon: Iconsax.receipt_add_outline,
+                  text: order.isOpenTab ? S.current.groupOrderNewTab : S.current.groupOrderNextRound,
+                ),
               // Acciones de salida en rojo, al final del menú (destructivas).
               if (canDelete)
-                PopupMenuItem(
+                _menuItem(
                   value: 'delete',
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.delete_outline_rounded, size: 18, color: Colors.redAccent),
-                      const SizedBox(width: 8),
-                      Text(S.current.groupOrderDeleteCta, style: const TextStyle(color: Colors.redAccent)),
-                    ],
-                  ),
+                  icon: Bootstrap.trash3,
+                  text: S.current.groupOrderDeleteCta,
+                  destructiva: true,
                 ),
               if (canLeave)
-                PopupMenuItem(
+                _menuItem(
                   value: 'leave',
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.logout_rounded, size: 18, color: Colors.redAccent),
-                      const SizedBox(width: 8),
-                      Text(S.current.groupOrderLeaveCta, style: const TextStyle(color: Colors.redAccent)),
-                    ],
-                  ),
+                  icon: Bootstrap.door_open,
+                  text: S.current.groupOrderLeaveCta,
+                  destructiva: true,
                 ),
             ],
           ),
       ],
     );
   }
+}
+
+/// Ítem del menú de la orden: icono + texto, con el rojo reservado a las
+/// acciones destructivas.
+///
+/// Antes solo eliminar y abandonar llevaban icono, y transferir y reabrir
+/// eran texto pelado — en un menú donde todo lo demás sí lo tiene, las dos
+/// sin icono se leían como de otra categoría.
+PopupMenuItem<String> _menuItem({
+  required String value,
+  required IconData icon,
+  required String text,
+  bool destructiva = false,
+}) {
+  final color = destructiva ? Colors.redAccent : FoodlyThemes.primaryFoodly;
+
+  return PopupMenuItem<String>(
+    value: value,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 18, color: color),
+        const SizedBox(width: 8),
+        Text(text, style: destructiva ? const TextStyle(color: Colors.redAccent) : null),
+      ],
+    ),
+  );
 }
 
 /// ¿El usuario actual es el host de la orden?

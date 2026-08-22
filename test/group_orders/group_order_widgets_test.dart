@@ -10,10 +10,16 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formattin
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_item_tile.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 Widget _host(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 void main() {
+  /// El icono del botón de eliminar un ítem. Nombrado una vez: cambió de
+  /// `Icons.close_rounded` a `Bootstrap.trash3` y estaba escrito en ocho
+  /// aserciones distintas.
+  const iconoEliminar = Bootstrap.trash3;
+
   // Carga las traducciones (locale es) para que S.current funcione en los
   // widgets; las aserciones de abajo usan los textos en español.
   setUpAll(() async => S.load(const Locale('es')));
@@ -82,10 +88,10 @@ void main() {
       const item = GroupOrderItemDM(uuid: 'i3', name: 'Agua', unitPricePreview: 1.0);
 
       await tester.pumpWidget(_host(const GroupOrderItemTile(item: item)));
-      expect(find.byIcon(Icons.close_rounded), findsNothing);
+      expect(find.byIcon(iconoEliminar), findsNothing);
 
       await tester.pumpWidget(_host(GroupOrderItemTile(item: item, onRemove: () async {})));
-      expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      expect(find.byIcon(iconoEliminar), findsOneWidget);
     });
 
     testWidgets(
@@ -103,19 +109,19 @@ void main() {
         },
       )));
 
-      await tester.tap(find.byIcon(Icons.close_rounded));
+      await tester.tap(find.byIcon(iconoEliminar));
       await tester.pump();
 
       // En vuelo: spinner visible, X fuera, y no hay nada tapeable.
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      expect(find.byIcon(Icons.close_rounded), findsNothing);
+      expect(find.byIcon(iconoEliminar), findsNothing);
       expect(calls, 1);
 
       // El borrado termina → vuelve la X y un solo call en total.
       gate.complete();
       await tester.pump();
       expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      expect(find.byIcon(iconoEliminar), findsOneWidget);
       expect(calls, 1);
     });
   });
@@ -314,7 +320,7 @@ void main() {
 
       expect(find.text('Nachos'), findsOneWidget);
       expect(find.text('Agua'), findsOneWidget);
-      expect(find.byIcon(Icons.close_rounded), findsNWidgets(2));
+      expect(find.byIcon(iconoEliminar), findsNWidgets(2));
     });
 
     testWidgets('sin onRemoveItem no hay X en los ítems', (tester) async {
@@ -323,7 +329,7 @@ void main() {
       await tester.tap(find.text('Ana'));
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.close_rounded), findsNothing);
+      expect(find.byIcon(iconoEliminar), findsNothing);
     });
 
     testWidgets('orden LOCKED: subtotal = amount_due congelado y badge de pago visible', (tester) async {
@@ -374,7 +380,7 @@ void main() {
 
       expect(find.byIcon(Icons.group_outlined), findsOneWidget,
           reason: 'Sin este toggle no hay forma de dividir la jarra.');
-      expect(find.byIcon(Icons.close_rounded), findsNothing,
+      expect(find.byIcon(iconoEliminar), findsNothing,
           reason: 'Borrar sí toca a la cocina: la jarra ya se sirvió.');
     });
 

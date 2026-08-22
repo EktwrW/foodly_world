@@ -57,7 +57,10 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   bool _initialized = false;
 
   /// Suscripciones vivas por nombre de canal.
-  final Map<String, _ChannelSub> _subs = {};
+  final Map<String, ChannelListeners> _subs = {};
+
+  /// Identifica a cada oyente dentro de su canal. Monótono: no se reusa.
+  int _ultimoOyenteId = 0;
 
   Timer? _pollTimer;
   Timer? _retryTimer;
@@ -99,9 +102,11 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
     String eventName,
     VoidCallback onTouched,
   ) async {
-    // Re-suscribirse al MISMO canal reemplaza el callback (p. ej. la página
-    // se reconstruye) en vez de duplicar la suscripción.
-    _subs[channel] = _ChannelSub(eventName: eventName, onTouched: onTouched);
+    // Cada consumidor SUMA su oyente: el canal es compartido y la conexión
+    // también, pero las suscripciones son independientes.
+    final sub = _subs.putIfAbsent(channel, () => ChannelListeners(eventName: eventName));
+    final id = ++_ultimoOyenteId;
+    sub.add(id, onTouched);
 
     if (!_observing) {
       WidgetsBinding.instance.addObserver(this);
@@ -110,13 +115,17 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
     await _connect();
 
-    return RealtimeSubscription._(this, channel);
+    return RealtimeSubscription._(this, channel, id);
   }
 
-  /// Cancela UNA suscripción. La conexión solo se cierra cuando no queda
-  /// ninguna: así el consumidor que se va nunca deja mudos a los demás.
-  Future<void> _cancel(String channel) async {
-    if (_subs.remove(channel) == null) return;
+  /// Cancela UNA suscripción. El canal nativo se suelta cuando se va su
+  /// ÚLTIMO oyente, y la conexión cuando no queda ningún canal: así el
+  /// consumidor que se va nunca deja mudos a los demás.
+  Future<void> _cancel(String channel, int id) async {
+    final sub = _subs[channel];
+    if (sub == null || !sub.remove(id)) return;
+
+    _subs.remove(channel);
 
     try {
       await _pusher?.unsubscribe(channelName: channel);
@@ -146,8 +155,8 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
 
   /// Avisa a TODOS los interesados (polling y resume no distinguen canal).
   void _notifyAll() {
-    for (final sub in List<_ChannelSub>.from(_subs.values)) {
-      sub.onTouched();
+    for (final sub in List<ChannelListeners>.from(_subs.values)) {
+      sub.notificar();
     }
   }
 
@@ -195,7 +204,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
           onEvent: (event) {
             final sub = _subs[event.channelName];
             if (sub != null && event.eventName == sub.eventName) {
-              sub.onTouched();
+              sub.notificar();
             }
           },
         );
@@ -281,11 +290,40 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   }
 }
 
-class _ChannelSub {
+/// Un canal y TODOS los que lo escuchan.
+///
+/// Pública para poder testearla: es lógica pura y es exactamente la pieza
+/// que se rompía.
+///
+/// Era un solo `onTouched` por canal, y eso rompía justo donde más se nota:
+/// el chip flotante y la página de la orden observan el MISMO
+/// `private-group-order.{uuid}`. Al abrir la página su callback reemplazaba
+/// al del chip, y al cerrarla el `cancel` borraba el canal entero — el chip
+/// quedaba sordo para siempre, porque `watchActive` se cree suscrito
+/// (`_watchedUuid` sigue seteado) y no reintenta.
+class ChannelListeners {
   final String eventName;
-  final VoidCallback onTouched;
+  final Map<int, VoidCallback> _oyentes = {};
 
-  const _ChannelSub({required this.eventName, required this.onTouched});
+  ChannelListeners({required this.eventName});
+
+  bool get vacio => _oyentes.isEmpty;
+
+  void add(int id, VoidCallback onTouched) => _oyentes[id] = onTouched;
+
+  /// Devuelve true si el canal se quedó sin oyentes.
+  bool remove(int id) {
+    _oyentes.remove(id);
+    return vacio;
+  }
+
+  /// Copia antes de iterar: un oyente puede cancelarse desde su propio
+  /// callback (la página cerrándose por un evento, sin ir más lejos).
+  void notificar() {
+    for (final oyente in List<VoidCallback>.from(_oyentes.values)) {
+      oyente();
+    }
+  }
 }
 
 /// Handle de una suscripción. Cada consumidor cancela LA SUYA: nadie puede
@@ -294,9 +332,10 @@ class _ChannelSub {
 class RealtimeSubscription {
   final GroupOrderRealtimeService _service;
   final String _channel;
+  final int _id;
   bool _cancelled = false;
 
-  RealtimeSubscription._(this._service, this._channel);
+  RealtimeSubscription._(this._service, this._channel, this._id);
 
   String get channel => _channel;
   bool get isCancelled => _cancelled;
@@ -304,6 +343,6 @@ class RealtimeSubscription {
   Future<void> cancel() async {
     if (_cancelled) return;
     _cancelled = true;
-    await _service._cancel(_channel);
+    await _service._cancel(_channel, _id);
   }
 }

@@ -222,7 +222,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                             color: FoodlyThemes.secondaryFoodly,
                             constraints: BoxConstraints.tightFor(width: 16, height: 16),
                           )
-                        : const Icon(Bootstrap.trash3, size: 16, color: FoodlyThemes.secondaryFoodly),
+                        : const Icon(Bootstrap.trash3, size: 15, color: FoodlyThemes.secondaryFoodly),
                   ).paddingLeft(6),
               ],
             ),

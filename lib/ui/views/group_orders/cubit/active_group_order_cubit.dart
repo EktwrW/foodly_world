@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
@@ -42,10 +44,22 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
 
   /// F3a (spec v2 §D.2): la notificación ongoing de Android refleja SIEMPRE
   /// el estado del carrito — un solo hook para todas las emisiones.
+  ///
+  /// La suscripción realtime va por el MISMO hook desde el 2026-08-22, y por
+  /// la misma razón. Antes se pedía a mano y solo desde dos sitios —el cold
+  /// start y el cierre de la página de la orden—, así que quien entraba por
+  /// `joinWithCode` o `startForBusiness` se quedaba SIN socket: el invitado
+  /// agregaba platos desde el menú y el chip flotante no reflejaba nada de lo
+  /// que hiciera el host, hasta que él mismo tocaba algo y el response del
+  /// backend traía el estado nuevo de rebote. Dentro de la orden sí se veía
+  /// en vivo porque esa página tiene su propia suscripción.
   @override
   void onChange(Change<GroupOrderDM?> change) {
     super.onChange(change);
     final order = change.nextState;
+    // El uuid se pasa explícito: `onChange` corre ANTES de que bloc asigne el
+    // estado nuevo, así que `state` acá todavía es el anterior.
+    if (order != null) unawaited(watchActive(order.uuid));
     // F4b: la orden de cuenta abierta sigue viva tras confirmarse (isTracking
     // la cubre) — la notificación ongoing debe seguir ahí hasta el pago.
     if (order == null || !(order.isOpen || order.isPayable || order.isTracking)) {
@@ -306,12 +320,26 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
 
   /// Observa la orden activa. Idempotente: si ya observa ese uuid no hace
   /// nada; si cambió de orden, cancela la anterior primero.
-  Future<void> watchActive() async {
-    final uuid = state?.uuid;
-    if (_realtime == null || uuid == null || _watchedUuid == uuid) return;
+  ///
+  /// [uuid] permite nombrar la orden a observar en vez de leerla del estado,
+  /// para poder llamarla desde `onChange` — donde el estado nuevo todavía no
+  /// está asignado.
+  Future<void> watchActive([String? uuid]) async {
+    final objetivo = uuid ?? state?.uuid;
+    if (_realtime == null || objetivo == null || _watchedUuid == objetivo) return;
     await _sub?.cancel();
-    _watchedUuid = uuid;
-    _sub = await _realtime.watch(uuid, onTouched: refresh);
+    _watchedUuid = objetivo;
+    _sub = await _realtime.watch(objetivo, onTouched: refresh);
+  }
+
+  /// El singleton no se cierra en producción, pero los tests sí lo hacen y
+  /// la suscripción quedaba viva detrás.
+  @override
+  Future<void> close() {
+    _watchedUuid = null;
+    _sub?.cancel();
+    _sub = null;
+    return super.close();
   }
 
   /// Termina la orden activa (tras cerrar/pagar/cancelar): limpia el carrito.

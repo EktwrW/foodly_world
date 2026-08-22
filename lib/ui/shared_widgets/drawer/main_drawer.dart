@@ -110,7 +110,6 @@ class FoodlyDrawer extends StatelessWidget {
                   icon: extended
                       ? const Icon(Bootstrap.caret_left_fill, size: 40)
                       : const Icon(Bootstrap.caret_right_fill, size: 40),
-                  tooltip: S.current.logout,
                 ),
               ),
               Row(
