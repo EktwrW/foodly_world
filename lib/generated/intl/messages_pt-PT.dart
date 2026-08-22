@@ -1390,6 +1390,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderSplitEqualDesc": MessageLookupByLibrary.simpleMessage(
       "O total divide-se igualmente entre todos.",
     ),
+    "groupOrderSplitModeHint": MessageLookupByLibrary.simpleMessage(
+      "É assim que a conta se divide se cada um pagar o seu. Vais oferecer? No passo seguinte podes pagar tudo.",
+    ),
     "groupOrderSplitModeTitle": MessageLookupByLibrary.simpleMessage(
       "Como dividimos a conta?",
     ),

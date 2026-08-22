@@ -266,7 +266,29 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     final order = state;
     if (order == null) return;
     final res = await _repo.getGroupOrder(order.uuid);
-    res.when(success: (r) => emit(r.groupOrder), failure: (e) => _logger.e(e));
+    res.when(
+      success: (r) => emit(r.groupOrder),
+      failure: (e) {
+        _logger.e(e);
+        // La orden dejó de ser mía. El backend ya avisaba —`destroy` emite
+        // `GroupOrderTouched('deleted')` ANTES de borrar, justamente para que
+        // los demás refetcheen y reciban el 404— pero acá el fallo se
+        // registraba y nada más: el estado se quedaba con la orden vieja, y
+        // con ella el chip flotante, su monto y la notificación ongoing.
+        // El comensal invitado seguía viendo una cuenta que ya no existía, y
+        // tocarla lo llevaba a una pantalla de error.
+        //
+        //   404 → el host la borró.
+        //   403 → sigue viva pero me sacaron de la mesa (`show` lo devuelve
+        //         para quien no participa).
+        //
+        // SOLO esos dos. Un corte de red, un 500 o un timeout no pueden
+        // vaciarle el carrito a nadie: ahí la orden sigue existiendo y lo
+        // correcto es conservarla hasta poder confirmarlo.
+        final code = e.statusCode;
+        if (code == 404 || code == 403) end();
+      },
+    );
   }
 
   // ── Realtime del chip flotante (e2e 2026-08-06) ─────────────────────

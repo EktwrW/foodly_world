@@ -217,7 +217,7 @@ class _EntryRow extends StatelessWidget {
           else
             IconButton(
               tooltip: S.current.delete,
-              icon: Icon(Bootstrap.trash, size: 18, color: Colors.red.shade400),
+              icon: Icon(Bootstrap.trash3, size: 18, color: Colors.red.shade400),
               onPressed: entry.availabilityUuid == null ? null : () => _confirmDelete(context, entry.availabilityUuid!),
             ),
         ],

@@ -58,7 +58,7 @@ void showGroupOrderInviteSnackBar(
                 ),
               ),
               const SizedBox(height: 4),
-              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption),
+              Text(S.current.groupOrderInviteHint, style: FoodlyTextStyles.caption.copyWith(color: Colors.black)),
             ],
           ).paddingLeft(12),
         ),

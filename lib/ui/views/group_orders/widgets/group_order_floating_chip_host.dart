@@ -80,10 +80,17 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Al volver del background: si no hay orden en memoria, re-consulta
-    // (cubre también el cold start donde la sesión aún restauraba → 401).
+    // Al volver del background hay DOS situaciones y antes solo se atendía
+    // una. Sin orden en memoria se re-consulta (cubre el cold start donde la
+    // sesión aún restauraba → 401). Con orden en memoria `syncAnyActive` sale
+    // temprano a propósito —no debe pisar el carrito— y así el estado viejo
+    // se quedaba intacto: si el host había borrado la orden mientras la app
+    // estaba en segundo plano, el invitado volvía a un chip que ya no
+    // correspondía a nada. `refresh` sí la vuelve a pedir, y con el 404
+    // limpia el carrito.
     if (state == AppLifecycleState.resumed && widget.ordersSource == null) {
-      di<ActiveGroupOrderCubit>().syncAnyActive();
+      final cubit = di<ActiveGroupOrderCubit>();
+      cubit.state == null ? cubit.syncAnyActive() : cubit.refresh();
     }
   }
 

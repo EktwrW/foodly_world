@@ -306,7 +306,7 @@ class _AddToGroupOrderButtonState extends State<_AddToGroupOrderButton> {
             decoration: BoxDecoration(
               color: _success ? FoodlyThemes.tertiaryFoodly : FoodlyThemes.primaryFoodly,
               shape: BoxShape.circle,
-              gradient: RadialGradient(colors: UIDecorations.NEUMORPHIC_PURPLE_GRADIENT.colors),
+              gradient: _success ? null : RadialGradient(colors: UIDecorations.NEUMORPHIC_PURPLE_GRADIENT.colors),
               boxShadow: _success
                   ? [
                       BoxShadow(

@@ -1435,6 +1435,7 @@
   "groupOrderSplitByItemsDesc": "Cada um paga o seu; o partilhado divide-se.",
   "groupOrderSplitEqual": "Em partes iguais",
   "groupOrderSplitEqualDesc": "O total divide-se igualmente entre todos.",
+  "groupOrderSplitModeHint": "É assim que a conta se divide se cada um pagar o seu. Vais oferecer? No passo seguinte podes pagar tudo.",
   "groupOrderTipTitle": "Queres deixar gorjeta?",
   "groupOrderTipNone": "Sem gorjeta",
   "groupOrderTipCustom": "Outro valor",

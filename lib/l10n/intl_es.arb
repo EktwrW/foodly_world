@@ -1435,6 +1435,7 @@
   "groupOrderSplitByItemsDesc": "Cada quien paga lo suyo; lo compartido se reparte.",
   "groupOrderSplitEqual": "En partes iguales",
   "groupOrderSplitEqualDesc": "El total se divide entre todos por igual.",
+  "groupOrderSplitModeHint": "Así se reparte si cada uno paga lo suyo. ¿Invitas tú? En el siguiente paso puedes pagar el total.",
   "groupOrderTipTitle": "¿Quieres dejar propina?",
   "groupOrderTipNone": "Sin propina",
   "groupOrderTipCustom": "Otro monto",

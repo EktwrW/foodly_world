@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocConsumer;
 import 'package:foodly_world/core/core_exports.dart'
-    show NotificationsCubit, NotificationsState, FoodlyThemes, ReadContext, di, DialogService, PaddingExtension, S, NotificationsStatePatterns;
+    show
+        NotificationsCubit,
+        NotificationsState,
+        FoodlyThemes,
+        ReadContext,
+        di,
+        DialogService,
+        PaddingExtension,
+        S,
+        NotificationsStatePatterns;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
@@ -148,7 +157,7 @@ class NotificationsPage extends StatelessWidget {
                                   onTap: () => context.read<NotificationsCubit>().deleteNotification(notification.uuid),
                                   splashFactory: InkRipple.splashFactory,
                                   customBorder: const CircleBorder(),
-                                  child: const Icon(Bootstrap.trash, size: 20),
+                                  child: const Icon(Bootstrap.trash3, size: 20),
                                 ).paddingRight(notification.isRead ? 2 : 0),
                               ),
                             ],

@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
 import 'package:foodly_world/core/routing/app_router.dart';
 import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di, LoadingWidgetFoodlyLogo;
 import 'package:foodly_world/core/services/stripe_payment_service.dart';
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -421,16 +424,21 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setState) => Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          backgroundColor: Colors.white,
+          insetPadding: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(S.current.groupOrderSplitModeTitle,
-                    style: FoodlyTextStyles.sectionsTitle, textAlign: TextAlign.center),
-                const SizedBox(height: 16),
+                Text(
+                  S.current.groupOrderSplitModeTitle,
+                  style: FoodlyTextStyles.sectionsTitle,
+                  textAlign: TextAlign.center,
+                ).paddingBottom(16),
+                const Asset(FoodlyAssets.payment, height: 46).paddingBottom(26),
                 option(
                   setState: setState,
                   value: 'by_items',
@@ -446,11 +454,24 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                   title: S.current.groupOrderSplitEqual,
                   subtitle: S.current.groupOrderSplitEqualDesc,
                 ),
-                const SizedBox(height: 16),
+                // El anfitrión que INVITA llega acá con la pregunta
+                // equivocada: se le pide repartir cuando ya decidió no
+                // repartir, y sin saber que pagar todo se ofrece después.
+                //
+                // El texto no dice "da igual cuál elijas" porque no da igual:
+                // el modo es lo que queda si al final cada uno paga lo suyo.
+                // Dice para qué sirve elegir Y que invitar sigue disponible.
+                const SizedBox(height: 14),
+                Text(
+                  S.current.groupOrderSplitModeHint,
+                  style: FoodlyTextStyles.caption,
+                  textAlign: TextAlign.center,
+                ),
                 CustomNeumorphicButton(
                   text: S.current.groupOrderLockCta,
                   disabled: selected == null,
-                  margin: EdgeInsets.zero,
+                  margin: const EdgeInsets.only(top: 16, bottom: 6),
+                  padding: const EdgeInsets.all(12),
                   onPressed: selected == null ? null : () => Navigator.pop(ctx, selected),
                 ),
                 TextButton(
@@ -1030,8 +1051,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     order: order,
                     isBusy: isBusy,
                     onPay: (coverAll) => _onPay(context, coverUuids: _coverUuids(order, coverAll)),
-                    onPayHosted: (coverAll) =>
-                        _onPay(context, coverUuids: _coverUuids(order, coverAll), hosted: true),
+                    onPayHosted: (coverAll) => _onPay(context, coverUuids: _coverUuids(order, coverAll), hosted: true),
                     // El método local se decide por el país de QUIEN PAGA, no
                     // por el del restaurante: Stripe muestra MB WAY y Bizum
                     // por "customer location". En una mesa de Lisboa el
@@ -1157,6 +1177,7 @@ class _Content extends StatelessWidget {
   final GroupOrderVM vm;
   final GroupOrderDM order;
   final bool isBusy;
+
   /// El bool es CUÁNTO se cobra: `true` = todo lo pendiente de la mesa.
   final void Function(bool coverAll) onPay;
   final void Function(bool coverAll) onPayHosted;

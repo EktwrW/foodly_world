@@ -159,7 +159,7 @@ class ServicePackageCard extends StatelessWidget {
                       if (onDelete != null)
                         TextButton.icon(
                           onPressed: onDelete,
-                          icon: const Icon(Bootstrap.trash, size: 14),
+                          icon: const Icon(Bootstrap.trash3, size: 14),
                           label: Text(S.current.delete, style: const TextStyle(fontSize: 12)),
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.red.shade700,

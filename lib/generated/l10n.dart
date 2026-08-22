@@ -9165,6 +9165,16 @@ class S {
     );
   }
 
+  /// `This is how the bill splits if everyone pays their own. Treating the table? You can pay the full amount on the next step.`
+  String get groupOrderSplitModeHint {
+    return Intl.message(
+      'This is how the bill splits if everyone pays their own. Treating the table? You can pay the full amount on the next step.',
+      name: 'groupOrderSplitModeHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Would you like to tip?`
   String get groupOrderTipTitle {
     return Intl.message(

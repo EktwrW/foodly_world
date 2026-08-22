@@ -282,8 +282,8 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
     return BlocConsumer<LocationBloc, LocationState>(
       listener: (context, state) {
         state.whenOrNull(
-          initial: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
-          checkingLocation: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
+          // initial: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
+          // checkingLocation: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
           locationChecked: (locationDM) async {
             _locationService.updateLocation(locationDM);
             // Subscribe to cubit streams BEFORE calling load() so we don't miss
