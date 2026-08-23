@@ -12,6 +12,14 @@
     },
     {
       "type": "shell",
+      "command": "./tool/verify_payment_env.sh",
+      "options": { "env": { "REQUIRE_LIVE": "1" } },
+      "problemMatcher": [],
+      "label": "Foodly - Verificar Stripe (tienda)",
+      "detail": "Falla si STRIPE_PUBLISHABLE_KEY falta, no es publicable, o es de TEST. Solo para builds que van a Play Store / App Store."
+    },
+    {
+      "type": "shell",
       "command": "flutter",
       "args": ["clean"],
       "problemMatcher": [],
@@ -104,7 +112,7 @@
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
-      "dependsOn": ["Foodly - Clean"],
+      "dependsOn": ["Foodly - Verificar Stripe (tienda)", "Foodly - Clean"],
       "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
@@ -131,6 +139,8 @@
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
+      "dependsOn": ["Foodly - Verificar Stripe (tienda)"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Shorebird - Patch Android (OTA)",
@@ -157,6 +167,8 @@
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
+      "dependsOn": ["Foodly - Verificar Stripe (tienda)"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Shorebird - Release iOS (App Store)",
@@ -191,6 +203,8 @@
         "--dart-define=GOOGLE_SIGN_IN_CLIENT_ID=${env:GOOGLE_SIGN_IN_CLIENT_ID}",
         "--dart-define=ANALYTICS_TOKEN=${env:ANALYTICS_TOKEN}"
       ],
+      "dependsOn": ["Foodly - Verificar Stripe (tienda)"],
+      "dependsOrder": "sequence",
       "problemMatcher": [],
       "group": "build",
       "label": "Shorebird - Patch iOS (OTA)",
