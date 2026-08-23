@@ -13,6 +13,7 @@
     {
       "type": "shell",
       "command": "./tool/verify_payment_env.sh",
+      "args": ["${env:STRIPE_PUBLISHABLE_KEY}"],
       "options": { "env": { "REQUIRE_LIVE": "1" } },
       "problemMatcher": [],
       "label": "Foodly - Verificar Stripe (tienda)",
@@ -125,7 +126,7 @@
       "args": [
         "patch",
         "android",
-        "--release-version=2.0.1+96",
+        "--release-version=2.0.2+97",
         "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",
@@ -191,7 +192,7 @@
       "args": [
         "patch",
         "ios",
-        "--release-version=2.0.1+96",
+        "--release-version=2.0.2+97",
         "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",

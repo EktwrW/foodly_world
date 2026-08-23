@@ -16,7 +16,15 @@ die() {
   exit 1
 }
 
-key="${STRIPE_PUBLISHABLE_KEY:-}"
+# La clave llega por ARGUMENTO, no por el entorno, y esa distinción es todo
+# el punto: las tasks de VS Code sustituyen `${env:...}` desde el entorno que
+# VS Code cacheó AL ARRANCAR, no desde el shell donde corre el script. Leyendo
+# la variable, esta guarda validaba un valor distinto del que se compilaba —
+# dio verde con la live mientras el build inyectaba la de test (2026-08-23).
+#
+# Pasándola como argumento, VS Code sustituye lo MISMO en la verificación y en
+# el build. El fallback al entorno es para cuando se corre a mano.
+key="${1:-${STRIPE_PUBLISHABLE_KEY:-}}"
 
 [ -n "$key" ] || die "Falta STRIPE_PUBLISHABLE_KEY. Sin ella la build sale sin pagos.
     export STRIPE_PUBLISHABLE_KEY=pk_live_...   (o pk_test_ para probar)"
