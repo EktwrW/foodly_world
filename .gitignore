@@ -161,3 +161,7 @@ zihqbsLb
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Checkouts de SPM que resuelve .vscode/upload_dsyms.sh para encontrar
+# upload-symbols (Firebase migró de CocoaPods a Swift Package Manager).
+ios/.spm-tools/
