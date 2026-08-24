@@ -10,15 +10,14 @@ import 'package:foodly_world/ui/views/group_orders/widgets/group_order_formattin
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_item_tile.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_totals_footer.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/participant_expansible_tile.dart';
-import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 Widget _host(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 void main() {
-  /// El icono del botón de eliminar un ítem. Nombrado una vez: cambió de
-  /// `Icons.close_rounded` a `Bootstrap.trash3` y estaba escrito en ocho
-  /// aserciones distintas.
-  const iconoEliminar = Bootstrap.trash3;
+  /// El icono del botón de eliminar un ítem. Nombrado UNA vez porque ya
+  /// cambió tres veces —`Icons.close_rounded` → `Bootstrap.trash3` →
+  /// `Icons.remove_circle_outline`— y estaba escrito en ocho aserciones.
+  const iconoEliminar = Icons.remove_circle_outline;
 
   // Carga las traducciones (locale es) para que S.current funcione en los
   // widgets; las aserciones de abajo usan los textos en español.

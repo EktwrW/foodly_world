@@ -3,6 +3,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_utilities.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
+import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/widgets/menu_app_bar_wdg.dart';
@@ -24,6 +25,9 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
   final _isFabVisible = ValueNotifier<bool>(true);
   bool _isProcessingScroll = false;
   late final DialogService _dialogService;
+
+  /// Un solo intento de adopción por montaje de la pantalla.
+  String? _ordenSincronizadaPara;
 
   @override
   void initState() {
@@ -117,7 +121,31 @@ class _VisitedMenuScreenState extends State<VisitedMenuScreen> with AutomaticKee
     );
   }
 
+  /// Adopta la orden grupal abierta de ESTE negocio, si la hay.
+  ///
+  /// El cubit del carrito solo se sincronizaba en dos momentos: al montar el
+  /// árbol (`initState` del chip flotante) y al volver del background. En un
+  /// arranque en frío donde el comensal SE LOGUEA, el primero ya corrió sin
+  /// sesión —401 silencioso— y el segundo nunca ocurre. El carrito quedaba en
+  /// null: sin chip, y el FAB mostrando "orden nueva" sobre una orden que
+  /// estaba abierta. Tocarlo funcionaba igual porque el backend es idempotente
+  /// y devolvía la existente, pero el icono mentía (device, 2026-08-23).
+  ///
+  /// Va acá y no en `initState` porque el uuid del negocio llega con el menú,
+  /// que carga asincrónicamente. La guarda evita repetirlo en cada rebuild;
+  /// `syncForBusiness` además no hace nada si ya hay carrito para este negocio.
+  void _adoptarOrdenAbierta(MenuVM vm) {
+    final businessUuid = vm.menuDM?.businessUuid;
+    if (businessUuid == null || businessUuid.isEmpty) return;
+    if (_ordenSincronizadaPara == businessUuid) return;
+
+    _ordenSincronizadaPara = businessUuid;
+    di<ActiveGroupOrderCubit>().syncForBusiness(businessUuid);
+  }
+
   Widget _buildMenuWdg(BuildContext context, MenuVM vm) {
+    _adoptarOrdenAbierta(vm);
+
     // La entrada a la orden grupal vive ahora en el FAB (MenuFloatingActionButton),
     // gateada por el flag group_orders_enabled.
     return Scaffold(
