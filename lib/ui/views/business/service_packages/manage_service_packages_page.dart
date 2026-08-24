@@ -57,7 +57,8 @@ class ManageServicePackagesPage extends StatelessWidget {
                   di<AppRouter>().goBackToLastRoute();
                 }
               },
-            ).paddingSymmetric(vertical: 8, horizontal: 8),
+              padding: const EdgeInsets.all(6),
+            ).paddingSymmetric(vertical: 10, horizontal: 10),
             leadingWidth: 60,
           ),
           floatingActionButton: Builder(

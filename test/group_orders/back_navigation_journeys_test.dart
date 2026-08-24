@@ -309,4 +309,56 @@ void main() {
       expect(s.atrasVarias(3).last, anyOf(_home, _negocio));
     });
   });
+
+  group('vuelta del onboarding de Stripe', () {
+    /// EL BUG (device 2026-08-23). El manager arranca el onboarding de
+    /// Connect, vuelve a la app por App Link sin completarlo, y aterriza en
+    /// "Órdenes en vivo". Ahí el back se quedaba clavado: el historial
+    /// guardaba `/stripe/return` —`updateCurrentRoute` corre dentro del
+    /// redirect global, con la URI PEDIDA, antes de resolverla— y como no era
+    /// efímera el back la elegía como destino. Esa ruta redirige de vuelta a
+    /// Órdenes en vivo: bucle. Reiniciar la app lo tapaba porque vaciaba el
+    /// historial.
+    // LA CADENA REAL del historial: un App Link entra con esquema y host,
+    // no como path. Un test con '/stripe/return' pelado pasaba en verde
+    // mientras el device seguía atascado (2026-08-23, segunda vuelta).
+    const puente = 'https://menu.foodly.solutions/stripe/return';
+    const panel = '/main/b1/my-business';
+    const ordenes = '/main/b1/my-business/live-orders';
+
+    test('el puente NUNCA es destino de atrás', () {
+      final historial = [panel, puente, ordenes];
+
+      expect(RouteHierarchy.backTargetIndex(historial, ordenes), 0);
+    });
+
+    test('aunque el App Link se re-procese varias veces', () {
+      // El log real mostró CUATRO redirects seguidos del mismo deep link.
+      final historial = [panel, puente, ordenes, puente, ordenes, puente, ordenes];
+
+      final destino = RouteHierarchy.backTargetIndex(historial, ordenes);
+      expect(historial[destino!], panel);
+    });
+
+    test('efímera tanto como path como con esquema y host', () {
+      for (final s in [
+        '/stripe/return',
+        '/stripe/refresh',
+        'https://menu.foodly.solutions/stripe/return',
+        'https://menu.foodly.solutions/stripe/refresh',
+        'https://foodly.solutions/join/ABC123',
+      ]) {
+        expect(RouteHierarchy.isEphemeral(s), isTrue, reason: s);
+      }
+      expect(RouteHierarchy.isEphemeral(ordenes), isFalse);
+    });
+
+    test('el puente no se persiste como LAST_PATH', () {
+      // Si se persistía, un arranque en frío restauraba el puente de Stripe.
+      expect(RouteHierarchy.shouldPersistAsLastPath(puente), isFalse);
+      expect(RouteHierarchy.shouldPersistAsLastPath('/stripe/return'), isFalse);
+      expect(RouteHierarchy.shouldPersistAsLastPath('/stripe/refresh'), isFalse);
+      expect(RouteHierarchy.shouldPersistAsLastPath(ordenes), isTrue);
+    });
+  });
 }

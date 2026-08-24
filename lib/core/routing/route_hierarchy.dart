@@ -9,6 +9,17 @@
 class RouteHierarchy {
   RouteHierarchy._();
 
+  /// La misma pantalla, sin la query.
+  ///
+  /// El historial guarda `state.uri.toString()`, o sea CON query, y comparar
+  /// así trataba a `/visit-menu/m1?t=Mesa%205` y `/visit-menu/m1` como dos
+  /// destinos distintos. Con eso, quien entraba escaneando el QR de su mesa
+  /// y terminaba la orden volvía —al tocar atrás— al mismo menú otra vez,
+  /// re-montando la mesa del QR, en vez de subir al perfil del negocio.
+  /// `_exitOrder` navega al menú SIN el `?t=`, que es lo que destapaba la
+  /// diferencia.
+  static String pathOf(String uri) => Uri.parse(uri).path;
+
   /// Rutas efímeras de flujo (no destinos): nunca se vuelve "atrás" hacia
   /// ellas ni se restauran tras un cold-start.
   ///
@@ -20,8 +31,35 @@ class RouteHierarchy {
   /// que se quedaba pegado en todos los booteos siguientes. Sin barra final a
   /// propósito: Android declara `pathPrefix="/checkout/return"`, así que
   /// `/checkout/return` a secas también puede llegar acá.
-  static bool isEphemeral(String path) =>
-      path.startsWith('/group-order/') || path.startsWith('/join/') || path.startsWith('/checkout/return');
+  /// `/stripe/return` y `/stripe/refresh` son el puente del onboarding de
+  /// Connect y son efímeras por la MISMA razón, con el mismo agravante que
+  /// `/checkout/return` y uno propio.
+  ///
+  /// EL BUG (device, 2026-08-23). El manager vuelve de Stripe por App Link,
+  /// aterriza en "Órdenes en vivo" — y el back se queda ahí clavado. El
+  /// historial lo alimenta `updateCurrentRoute`, que corre DENTRO del
+  /// redirect global con `state.uri` = la URI PEDIDA, o sea `/stripe/return`,
+  /// antes de que el redirect de ruta la resuelva. Sin ser efímera, el back
+  /// la elegía como destino y esa ruta redirige de vuelta a Órdenes en vivo:
+  /// bucle cerrado. Reiniciar la app lo "arreglaba" porque vaciaba el
+  /// historial, no porque la ruta estuviera bien.
+  ///
+  /// Y como `shouldPersistAsLastPath` se apoya en esto, también se guardaba
+  /// como LAST_PATH: un arranque en frío restauraba el puente de Stripe.
+  /// Se NORMALIZA la entrada antes de comparar: el historial guarda
+  /// `state.uri.toString()`, y un App Link entra con esquema y host
+  /// (`https://menu.foodly.solutions/stripe/return`). Comparando la cadena
+  /// cruda contra prefijos de path, ninguna URL absoluta era nunca efímera —
+  /// que es como el puente de Stripe seguía siendo destino de "atrás" incluso
+  /// después de agregarlo a esta lista.
+  static bool isEphemeral(String pathOrUri) {
+    final path = pathOf(pathOrUri);
+
+    return path.startsWith('/group-order/') ||
+        path.startsWith('/join/') ||
+        path.startsWith('/checkout/return') ||
+        path.startsWith('/stripe/');
+  }
 
   /// ¿[path] merece persistirse como LAST_PATH (restauración post-boot)?
   static bool shouldPersistAsLastPath(String path, {String loginPath = '/login'}) =>
@@ -48,16 +86,7 @@ class RouteHierarchy {
     return false;
   }
 
-  /// La misma pantalla, sin la query.
-  ///
-  /// El historial guarda `state.uri.toString()`, o sea CON query, y comparar
-  /// así trataba a `/visit-menu/m1?t=Mesa%205` y `/visit-menu/m1` como dos
-  /// destinos distintos. Con eso, quien entraba escaneando el QR de su mesa
-  /// y terminaba la orden volvía —al tocar atrás— al mismo menú otra vez,
-  /// re-montando la mesa del QR, en vez de subir al perfil del negocio.
-  /// `_exitOrder` navega al menú SIN el `?t=`, que es lo que destapaba la
-  /// diferencia.
-  static String pathOf(String uri) => Uri.parse(uri).path;
+
 
   /// Índice del historial al que lleva el "atrás", o null si no hay destino
   /// válido y hay que derivar el padre. El caller trunca desde ese índice.

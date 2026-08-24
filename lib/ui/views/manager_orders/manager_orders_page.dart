@@ -99,11 +99,12 @@ class ManagerOrdersPage extends StatelessWidget {
               toolbarHeight: 60,
               leadingWidth: 60,
               leading: CustomRoundedNeumorphicButton(
-                iconSize: 26,
-                diameter: 32,
-                iconData: Bootstrap.caret_left_fill,
                 onPressed: () => di<AppRouter>().goBackToLastRoute(),
-              ).paddingSymmetric(vertical: 8, horizontal: 8),
+                iconSize: 26,
+                diameter: 26,
+                iconData: Bootstrap.caret_left_fill,
+                padding: const EdgeInsets.all(6),
+              ).paddingSymmetric(vertical: 10, horizontal: 10),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,

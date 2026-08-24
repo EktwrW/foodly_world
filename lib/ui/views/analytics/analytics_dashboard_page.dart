@@ -66,7 +66,8 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
               di<AppRouter>().goBackToLastRoute();
             }
           },
-        ).paddingSymmetric(vertical: 8, horizontal: 8),
+          padding: const EdgeInsets.all(6),
+        ).paddingSymmetric(vertical: 10, horizontal: 10),
         leadingWidth: 60,
       ),
       body: BlocBuilder<AnalyticsCubit, AnalyticsState>(
@@ -202,20 +203,16 @@ class _RestaurantDashboardBody extends StatelessWidget {
               onChanged: onPeriodChanged,
             ),
             const SizedBox(height: 16),
-
             if (overview.kpis != null) KpiRow(kpis: overview.kpis!),
             const SizedBox(height: 20),
-
             if (overview.series != null)
               DailyTrendsChart(
                 eventsDaily: overview.series!.eventsDaily,
                 reservationsDaily: overview.series!.reservationsDaily,
               ),
             const SizedBox(height: 20),
-
             if (overview.funnel != null && overview.funnel!.steps.isNotEmpty) FunnelChart(funnel: overview.funnel!),
             const SizedBox(height: 20),
-
             if (overview.breakdowns != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -288,10 +285,8 @@ class _ServiceDashboardBody extends StatelessWidget {
               onChanged: onPeriodChanged,
             ),
             const SizedBox(height: 16),
-
             if (overview.kpis != null) ServiceKpiRow(kpis: overview.kpis!),
             const SizedBox(height: 20),
-
             if (overview.series != null)
               DailyTrendsChart(
                 eventsDaily: overview.series!.eventsDaily,
@@ -302,11 +297,9 @@ class _ServiceDashboardBody extends StatelessWidget {
                 primaryLabel: S.current.analyticsBookings,
               ),
             const SizedBox(height: 20),
-
             if (overview.funnel != null && overview.funnel!.steps.isNotEmpty)
               ServiceFunnelChart(funnel: overview.funnel!),
             const SizedBox(height: 20),
-
             if (overview.breakdowns != null)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -61,7 +61,8 @@ class PrivacyPolicyPage extends StatelessWidget {
               }
               context.read<MainDrawerCubit>().goToPreviousIndex();
             },
-          ).paddingSymmetric(vertical: 8, horizontal: 8),
+            padding: const EdgeInsets.all(6),
+          ).paddingSymmetric(vertical: 10, horizontal: 10),
           leadingWidth: 60,
         ),
         body: SafeArea(
