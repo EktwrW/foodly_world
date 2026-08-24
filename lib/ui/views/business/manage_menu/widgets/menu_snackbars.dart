@@ -74,6 +74,8 @@ class MenuSnackbars {
     bool canEdit = false,
     String businessName = '',
     String? logoUrl,
+    /// F4c: generar el lote de QRs por mesa declara "sirvo en mesa".
+    String? businessUuid,
   }) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -129,6 +131,7 @@ class MenuSnackbars {
                 menuUrl: menuUrl,
                 businessName: businessName,
                 logoUrl: logoUrl,
+                businessUuid: businessUuid,
               ),
               disabled: false,
               type: CustomNeumorphicBtnType.secondary,

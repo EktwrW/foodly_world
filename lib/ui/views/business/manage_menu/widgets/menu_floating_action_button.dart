@@ -110,6 +110,7 @@ class MenuFloatingActionButton extends StatelessWidget {
                               canEdit: loggedUserCanEdit,
                               businessName: ownBusiness?.name ?? menu?.businessName ?? '',
                               logoUrl: ownBusiness?.logo,
+                              businessUuid: menu?.businessUuid,
                             );
                             _closeFAB();
                           }

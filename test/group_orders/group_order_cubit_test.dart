@@ -449,7 +449,7 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> removeItem(String uuid, String itemUuid) async => removeItemOutcome!;
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid, {String? splitMode}) async {
+  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid, {String? splitMode, String? tableLabel}) async {
     lastSplitMode = splitMode;
     return lockOutcome!;
   }

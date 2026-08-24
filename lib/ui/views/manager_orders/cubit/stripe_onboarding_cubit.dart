@@ -21,12 +21,17 @@ class StripeOnboardingState {
   /// Mínimo para pagar en la app, en céntimos. null = sin mínimo.
   final int? cardMinAmountMinor;
 
+  /// ¿El negocio sirve EN MESA? Decide si al comensal que no llegó por el QR
+  /// de su mesa se le pide antes de que el pedido salga a cocina.
+  final bool tableService;
+
   const StripeOnboardingState({
     this.loading = false,
     this.chargesEnabled,
     this.payoutsEnabled = false,
     this.groupPaymentMode,
     this.cardMinAmountMinor,
+    this.tableService = false,
   });
 
   /// `copyWith` NO sirve para limpiar el mínimo —`??` conserva el viejo—, y no
@@ -38,6 +43,7 @@ class StripeOnboardingState {
     bool? payoutsEnabled,
     String? groupPaymentMode,
     int? cardMinAmountMinor,
+    bool? tableService,
   }) =>
       StripeOnboardingState(
         loading: loading ?? this.loading,
@@ -45,6 +51,7 @@ class StripeOnboardingState {
         payoutsEnabled: payoutsEnabled ?? this.payoutsEnabled,
         groupPaymentMode: groupPaymentMode ?? this.groupPaymentMode,
         cardMinAmountMinor: cardMinAmountMinor ?? this.cardMinAmountMinor,
+        tableService: tableService ?? this.tableService,
       );
 }
 
@@ -73,6 +80,7 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
         payoutsEnabled: s.payoutsEnabled,
         groupPaymentMode: s.groupPaymentMode,
         cardMinAmountMinor: s.cardMinAmountMinor,
+        tableService: s.tableService,
       )),
       failure: (e) {
         _logger.e(e);
@@ -87,11 +95,16 @@ class StripeOnboardingCubit extends Cubit<StripeOnboardingState> {
   /// [cardMinAmountMinor] en céntimos; null QUITA el mínimo. La clave viaja
   /// siempre en el body, así que el backend puede distinguir "quitar" de "no
   /// tocar" — ver la nota de `updatePaymentMode` en el cliente.
-  Future<bool> setPaymentMode(GroupPaymentMode mode, {int? cardMinAmountMinor}) async {
+  Future<bool> setPaymentMode(
+    GroupPaymentMode mode, {
+    int? cardMinAmountMinor,
+    bool? tableService,
+  }) async {
     final res = await _repo.updatePaymentMode(
       businessUuid,
       mode: mode == GroupPaymentMode.openTab ? 'open_tab' : 'per_round',
       cardMinAmountMinor: cardMinAmountMinor,
+      tableService: tableService,
     );
     return res.when(
       // Se recarga para que el banner y el selector queden con lo que el

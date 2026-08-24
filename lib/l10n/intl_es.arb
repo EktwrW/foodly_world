@@ -1342,6 +1342,13 @@
       }
     }
   },
+  "groupOrderTableTitle": "¿En qué mesa estás?",
+  "groupOrderTableBody": "Para que el negocio sepa dónde llevarte el pedido.",
+  "groupOrderTableHint": "Mesa 12",
+  "groupOrderTableRequired": "Escribe tu mesa para continuar.",
+  "groupOrderTableServiceTitle": "Sirvo en mesa",
+  "groupOrderTableServiceBody": "Se le pedirá la mesa a quien no llegue por el QR de la suya.",
+  "managerOrderSettings": "Ajustes del pedido",
   "groupOrderNoBalanceDue": "Sin saldo pendiente",
   "groupOrderExpiredNotice": "Esta orden expiró: se agotó el plazo de pago y no se cobró nada. Puedes pedir de nuevo desde el menú.",
   "groupOrderCancelledNotice": "Esta orden fue cancelada. No se cobró nada.",

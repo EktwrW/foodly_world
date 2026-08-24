@@ -31,6 +31,10 @@ mixin _$StripeConnectStatusDM {
   @JsonKey(name: 'card_min_amount_minor')
   int? get cardMinAmountMinor;
 
+  /// F4c: ¿el negocio sirve EN MESA? Abre el selector con el valor real.
+  @JsonKey(name: 'table_service')
+  bool get tableService;
+
   /// Create a copy of StripeConnectStatusDM
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -59,7 +63,9 @@ mixin _$StripeConnectStatusDM {
             (identical(other.groupPaymentMode, groupPaymentMode) ||
                 other.groupPaymentMode == groupPaymentMode) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
-                other.cardMinAmountMinor == cardMinAmountMinor));
+                other.cardMinAmountMinor == cardMinAmountMinor) &&
+            (identical(other.tableService, tableService) ||
+                other.tableService == tableService));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -72,11 +78,12 @@ mixin _$StripeConnectStatusDM {
       payoutsEnabled,
       detailsSubmitted,
       groupPaymentMode,
-      cardMinAmountMinor);
+      cardMinAmountMinor,
+      tableService);
 
   @override
   String toString() {
-    return 'StripeConnectStatusDM(success: $success, connected: $connected, chargesEnabled: $chargesEnabled, payoutsEnabled: $payoutsEnabled, detailsSubmitted: $detailsSubmitted, groupPaymentMode: $groupPaymentMode, cardMinAmountMinor: $cardMinAmountMinor)';
+    return 'StripeConnectStatusDM(success: $success, connected: $connected, chargesEnabled: $chargesEnabled, payoutsEnabled: $payoutsEnabled, detailsSubmitted: $detailsSubmitted, groupPaymentMode: $groupPaymentMode, cardMinAmountMinor: $cardMinAmountMinor, tableService: $tableService)';
   }
 }
 
@@ -93,7 +100,8 @@ abstract mixin class $StripeConnectStatusDMCopyWith<$Res> {
       @JsonKey(name: 'payouts_enabled') bool payoutsEnabled,
       @JsonKey(name: 'details_submitted') bool detailsSubmitted,
       @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
-      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor});
+      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+      @JsonKey(name: 'table_service') bool tableService});
 }
 
 /// @nodoc
@@ -116,6 +124,7 @@ class _$StripeConnectStatusDMCopyWithImpl<$Res>
     Object? detailsSubmitted = null,
     Object? groupPaymentMode = freezed,
     Object? cardMinAmountMinor = freezed,
+    Object? tableService = null,
   }) {
     return _then(_self.copyWith(
       success: null == success
@@ -146,6 +155,10 @@ class _$StripeConnectStatusDMCopyWithImpl<$Res>
           ? _self.cardMinAmountMinor
           : cardMinAmountMinor // ignore: cast_nullable_to_non_nullable
               as int?,
+      tableService: null == tableService
+          ? _self.tableService
+          : tableService // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -250,7 +263,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             @JsonKey(name: 'payouts_enabled') bool payoutsEnabled,
             @JsonKey(name: 'details_submitted') bool detailsSubmitted,
             @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
-            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor)?
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+            @JsonKey(name: 'table_service') bool tableService)?
         $default, {
     required TResult orElse(),
   }) {
@@ -264,7 +278,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             _that.payoutsEnabled,
             _that.detailsSubmitted,
             _that.groupPaymentMode,
-            _that.cardMinAmountMinor);
+            _that.cardMinAmountMinor,
+            _that.tableService);
       case _:
         return orElse();
     }
@@ -292,7 +307,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             @JsonKey(name: 'payouts_enabled') bool payoutsEnabled,
             @JsonKey(name: 'details_submitted') bool detailsSubmitted,
             @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
-            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor)
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+            @JsonKey(name: 'table_service') bool tableService)
         $default,
   ) {
     final _that = this;
@@ -305,7 +321,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             _that.payoutsEnabled,
             _that.detailsSubmitted,
             _that.groupPaymentMode,
-            _that.cardMinAmountMinor);
+            _that.cardMinAmountMinor,
+            _that.tableService);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -332,7 +349,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             @JsonKey(name: 'payouts_enabled') bool payoutsEnabled,
             @JsonKey(name: 'details_submitted') bool detailsSubmitted,
             @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
-            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor)?
+            @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+            @JsonKey(name: 'table_service') bool tableService)?
         $default,
   ) {
     final _that = this;
@@ -345,7 +363,8 @@ extension StripeConnectStatusDMPatterns on StripeConnectStatusDM {
             _that.payoutsEnabled,
             _that.detailsSubmitted,
             _that.groupPaymentMode,
-            _that.cardMinAmountMinor);
+            _that.cardMinAmountMinor,
+            _that.tableService);
       case _:
         return null;
     }
@@ -362,7 +381,8 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
       @JsonKey(name: 'payouts_enabled') this.payoutsEnabled = false,
       @JsonKey(name: 'details_submitted') this.detailsSubmitted = false,
       @JsonKey(name: 'group_payment_mode') this.groupPaymentMode,
-      @JsonKey(name: 'card_min_amount_minor') this.cardMinAmountMinor});
+      @JsonKey(name: 'card_min_amount_minor') this.cardMinAmountMinor,
+      @JsonKey(name: 'table_service') this.tableService = false});
   factory _StripeConnectStatusDM.fromJson(Map<String, dynamic> json) =>
       _$StripeConnectStatusDMFromJson(json);
 
@@ -391,6 +411,11 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
   @override
   @JsonKey(name: 'card_min_amount_minor')
   final int? cardMinAmountMinor;
+
+  /// F4c: ¿el negocio sirve EN MESA? Abre el selector con el valor real.
+  @override
+  @JsonKey(name: 'table_service')
+  final bool tableService;
 
   /// Create a copy of StripeConnectStatusDM
   /// with the given fields replaced by the non-null parameter values.
@@ -425,7 +450,9 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
             (identical(other.groupPaymentMode, groupPaymentMode) ||
                 other.groupPaymentMode == groupPaymentMode) &&
             (identical(other.cardMinAmountMinor, cardMinAmountMinor) ||
-                other.cardMinAmountMinor == cardMinAmountMinor));
+                other.cardMinAmountMinor == cardMinAmountMinor) &&
+            (identical(other.tableService, tableService) ||
+                other.tableService == tableService));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -438,11 +465,12 @@ class _StripeConnectStatusDM implements StripeConnectStatusDM {
       payoutsEnabled,
       detailsSubmitted,
       groupPaymentMode,
-      cardMinAmountMinor);
+      cardMinAmountMinor,
+      tableService);
 
   @override
   String toString() {
-    return 'StripeConnectStatusDM(success: $success, connected: $connected, chargesEnabled: $chargesEnabled, payoutsEnabled: $payoutsEnabled, detailsSubmitted: $detailsSubmitted, groupPaymentMode: $groupPaymentMode, cardMinAmountMinor: $cardMinAmountMinor)';
+    return 'StripeConnectStatusDM(success: $success, connected: $connected, chargesEnabled: $chargesEnabled, payoutsEnabled: $payoutsEnabled, detailsSubmitted: $detailsSubmitted, groupPaymentMode: $groupPaymentMode, cardMinAmountMinor: $cardMinAmountMinor, tableService: $tableService)';
   }
 }
 
@@ -461,7 +489,8 @@ abstract mixin class _$StripeConnectStatusDMCopyWith<$Res>
       @JsonKey(name: 'payouts_enabled') bool payoutsEnabled,
       @JsonKey(name: 'details_submitted') bool detailsSubmitted,
       @JsonKey(name: 'group_payment_mode') String? groupPaymentMode,
-      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor});
+      @JsonKey(name: 'card_min_amount_minor') int? cardMinAmountMinor,
+      @JsonKey(name: 'table_service') bool tableService});
 }
 
 /// @nodoc
@@ -484,6 +513,7 @@ class __$StripeConnectStatusDMCopyWithImpl<$Res>
     Object? detailsSubmitted = null,
     Object? groupPaymentMode = freezed,
     Object? cardMinAmountMinor = freezed,
+    Object? tableService = null,
   }) {
     return _then(_StripeConnectStatusDM(
       success: null == success
@@ -514,6 +544,10 @@ class __$StripeConnectStatusDMCopyWithImpl<$Res>
           ? _self.cardMinAmountMinor
           : cardMinAmountMinor // ignore: cast_nullable_to_non_nullable
               as int?,
+      tableService: null == tableService
+          ? _self.tableService
+          : tableService // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

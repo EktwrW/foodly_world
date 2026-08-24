@@ -136,6 +136,7 @@ _GroupOrderDM _$GroupOrderDMFromJson(Map<String, dynamic> json) =>
           unknownValue: JsonKey.nullForUndefinedEnumValue),
       roundNumber: (json['round_number'] as num?)?.toInt() ?? 1,
       tableLabel: json['table_label'] as String?,
+      businessTableService: json['business_table_service'] as bool? ?? false,
       paymentMode: $enumDecodeNullable(
               _$GroupPaymentModeEnumMap, json['payment_mode'],
               unknownValue: GroupPaymentMode.perRound) ??
@@ -191,6 +192,7 @@ Map<String, dynamic> _$GroupOrderDMToJson(_GroupOrderDM instance) =>
         'fulfillment_status': value,
       'round_number': instance.roundNumber,
       if (instance.tableLabel case final value?) 'table_label': value,
+      'business_table_service': instance.businessTableService,
       'payment_mode': _$GroupPaymentModeEnumMap[instance.paymentMode]!,
       if (instance.billRequestedAt?.toIso8601String() case final value?)
         'bill_requested_at': value,

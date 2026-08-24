@@ -8785,6 +8785,76 @@ class S {
     );
   }
 
+  /// `Which table are you at?`
+  String get groupOrderTableTitle {
+    return Intl.message(
+      'Which table are you at?',
+      name: 'groupOrderTableTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `So the venue knows where to bring your order.`
+  String get groupOrderTableBody {
+    return Intl.message(
+      'So the venue knows where to bring your order.',
+      name: 'groupOrderTableBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table 12`
+  String get groupOrderTableHint {
+    return Intl.message(
+      'Table 12',
+      name: 'groupOrderTableHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your table to continue.`
+  String get groupOrderTableRequired {
+    return Intl.message(
+      'Enter your table to continue.',
+      name: 'groupOrderTableRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Table service`
+  String get groupOrderTableServiceTitle {
+    return Intl.message(
+      'Table service',
+      name: 'groupOrderTableServiceTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diners who didn't scan their table's QR will be asked for it.`
+  String get groupOrderTableServiceBody {
+    return Intl.message(
+      'Diners who didn\'t scan their table\'s QR will be asked for it.',
+      name: 'groupOrderTableServiceBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order settings`
+  String get managerOrderSettings {
+    return Intl.message(
+      'Order settings',
+      name: 'managerOrderSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nothing left to pay`
   String get groupOrderNoBalanceDue {
     return Intl.message(

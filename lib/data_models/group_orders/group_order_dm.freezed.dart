@@ -1301,8 +1301,13 @@ mixin _$GroupOrderDM {
   @JsonKey(name: 'round_number')
   int get roundNumber;
   @JsonKey(name: 'table_label')
-  String?
-      get tableLabel; // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
+  String? get tableLabel;
+
+  /// ¿El negocio sirve EN MESA? Si sí y la orden no tiene mesa, hay que
+  /// pedírsela al comensal antes de que el pedido salga a cocina.
+  @JsonKey(name: 'business_table_service')
+  bool
+      get businessTableService; // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
 // "cuenta pedida" — de acá sale el CTA mutante del cliente.
   @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
   GroupPaymentMode get paymentMode;
@@ -1375,6 +1380,8 @@ mixin _$GroupOrderDM {
                 other.roundNumber == roundNumber) &&
             (identical(other.tableLabel, tableLabel) ||
                 other.tableLabel == tableLabel) &&
+            (identical(other.businessTableService, businessTableService) ||
+                other.businessTableService == businessTableService) &&
             (identical(other.paymentMode, paymentMode) ||
                 other.paymentMode == paymentMode) &&
             (identical(other.billRequestedAt, billRequestedAt) ||
@@ -1415,6 +1422,7 @@ mixin _$GroupOrderDM {
         fulfillmentStatus,
         roundNumber,
         tableLabel,
+        businessTableService,
         paymentMode,
         billRequestedAt,
         cashRequestedAt,
@@ -1428,7 +1436,7 @@ mixin _$GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, businessTableService: $businessTableService, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -1462,6 +1470,7 @@ abstract mixin class $GroupOrderDMCopyWith<$Res> {
       GroupFulfillmentStatus? fulfillmentStatus,
       @JsonKey(name: 'round_number') int roundNumber,
       @JsonKey(name: 'table_label') String? tableLabel,
+      @JsonKey(name: 'business_table_service') bool businessTableService,
       @JsonKey(
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       GroupPaymentMode paymentMode,
@@ -1504,6 +1513,7 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
     Object? fulfillmentStatus = freezed,
     Object? roundNumber = null,
     Object? tableLabel = freezed,
+    Object? businessTableService = null,
     Object? paymentMode = null,
     Object? billRequestedAt = freezed,
     Object? cashRequestedAt = freezed,
@@ -1583,6 +1593,10 @@ class _$GroupOrderDMCopyWithImpl<$Res> implements $GroupOrderDMCopyWith<$Res> {
           ? _self.tableLabel
           : tableLabel // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessTableService: null == businessTableService
+          ? _self.businessTableService
+          : businessTableService // ignore: cast_nullable_to_non_nullable
+              as bool,
       paymentMode: null == paymentMode
           ? _self.paymentMode
           : paymentMode // ignore: cast_nullable_to_non_nullable
@@ -1741,6 +1755,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
+            @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(
                 name: 'payment_mode',
                 unknownEnumValue: GroupPaymentMode.perRound)
@@ -1777,6 +1792,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
+            _that.businessTableService,
             _that.paymentMode,
             _that.billRequestedAt,
             _that.cashRequestedAt,
@@ -1831,6 +1847,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
+            @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(
                 name: 'payment_mode',
                 unknownEnumValue: GroupPaymentMode.perRound)
@@ -1866,6 +1883,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
+            _that.businessTableService,
             _that.paymentMode,
             _that.billRequestedAt,
             _that.cashRequestedAt,
@@ -1919,6 +1937,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             GroupFulfillmentStatus? fulfillmentStatus,
             @JsonKey(name: 'round_number') int roundNumber,
             @JsonKey(name: 'table_label') String? tableLabel,
+            @JsonKey(name: 'business_table_service') bool businessTableService,
             @JsonKey(
                 name: 'payment_mode',
                 unknownEnumValue: GroupPaymentMode.perRound)
@@ -1954,6 +1973,7 @@ extension GroupOrderDMPatterns on GroupOrderDM {
             _that.fulfillmentStatus,
             _that.roundNumber,
             _that.tableLabel,
+            _that.businessTableService,
             _that.paymentMode,
             _that.billRequestedAt,
             _that.cashRequestedAt,
@@ -1997,6 +2017,8 @@ class _GroupOrderDM extends GroupOrderDM {
       this.fulfillmentStatus,
       @JsonKey(name: 'round_number') this.roundNumber = 1,
       @JsonKey(name: 'table_label') this.tableLabel,
+      @JsonKey(name: 'business_table_service')
+      this.businessTableService = false,
       @JsonKey(
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       this.paymentMode = GroupPaymentMode.perRound,
@@ -2077,6 +2099,12 @@ class _GroupOrderDM extends GroupOrderDM {
   @override
   @JsonKey(name: 'table_label')
   final String? tableLabel;
+
+  /// ¿El negocio sirve EN MESA? Si sí y la orden no tiene mesa, hay que
+  /// pedírsela al comensal antes de que el pedido salga a cocina.
+  @override
+  @JsonKey(name: 'business_table_service')
+  final bool businessTableService;
 // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
 // "cuenta pedida" — de acá sale el CTA mutante del cliente.
   @override
@@ -2176,6 +2204,8 @@ class _GroupOrderDM extends GroupOrderDM {
                 other.roundNumber == roundNumber) &&
             (identical(other.tableLabel, tableLabel) ||
                 other.tableLabel == tableLabel) &&
+            (identical(other.businessTableService, businessTableService) ||
+                other.businessTableService == businessTableService) &&
             (identical(other.paymentMode, paymentMode) ||
                 other.paymentMode == paymentMode) &&
             (identical(other.billRequestedAt, billRequestedAt) ||
@@ -2216,6 +2246,7 @@ class _GroupOrderDM extends GroupOrderDM {
         fulfillmentStatus,
         roundNumber,
         tableLabel,
+        businessTableService,
         paymentMode,
         billRequestedAt,
         cashRequestedAt,
@@ -2229,7 +2260,7 @@ class _GroupOrderDM extends GroupOrderDM {
 
   @override
   String toString() {
-    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
+    return 'GroupOrderDM(uuid: $uuid, status: $status, businessUuid: $businessUuid, businessMenuUuid: $businessMenuUuid, businessName: $businessName, businessLogo: $businessLogo, businessCountry: $businessCountry, currency: $currency, splitMode: $splitMode, payerFixedFee: $payerFixedFee, subtotal: $subtotal, totalAmount: $totalAmount, totalPaid: $totalPaid, confirmedAt: $confirmedAt, fulfillmentStatus: $fulfillmentStatus, roundNumber: $roundNumber, tableLabel: $tableLabel, businessTableService: $businessTableService, paymentMode: $paymentMode, billRequestedAt: $billRequestedAt, cashRequestedAt: $cashRequestedAt, closedReason: $closedReason, closedAt: $closedAt, lockExpiresAt: $lockExpiresAt, graceEndsAt: $graceEndsAt, participants: $participants, items: $items)';
   }
 }
 
@@ -2265,6 +2296,7 @@ abstract mixin class _$GroupOrderDMCopyWith<$Res>
       GroupFulfillmentStatus? fulfillmentStatus,
       @JsonKey(name: 'round_number') int roundNumber,
       @JsonKey(name: 'table_label') String? tableLabel,
+      @JsonKey(name: 'business_table_service') bool businessTableService,
       @JsonKey(
           name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
       GroupPaymentMode paymentMode,
@@ -2308,6 +2340,7 @@ class __$GroupOrderDMCopyWithImpl<$Res>
     Object? fulfillmentStatus = freezed,
     Object? roundNumber = null,
     Object? tableLabel = freezed,
+    Object? businessTableService = null,
     Object? paymentMode = null,
     Object? billRequestedAt = freezed,
     Object? cashRequestedAt = freezed,
@@ -2387,6 +2420,10 @@ class __$GroupOrderDMCopyWithImpl<$Res>
           ? _self.tableLabel
           : tableLabel // ignore: cast_nullable_to_non_nullable
               as String?,
+      businessTableService: null == businessTableService
+          ? _self.businessTableService
+          : businessTableService // ignore: cast_nullable_to_non_nullable
+              as bool,
       paymentMode: null == paymentMode
           ? _self.paymentMode
           : paymentMode // ignore: cast_nullable_to_non_nullable

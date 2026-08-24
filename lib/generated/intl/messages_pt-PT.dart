@@ -1400,6 +1400,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTabClosedTitle": MessageLookupByLibrary.simpleMessage(
       "Pedido finalizado!",
     ),
+    "groupOrderTableBody": MessageLookupByLibrary.simpleMessage(
+      "Para o negócio saber onde levar o teu pedido.",
+    ),
+    "groupOrderTableHint": MessageLookupByLibrary.simpleMessage("Mesa 12"),
+    "groupOrderTableRequired": MessageLookupByLibrary.simpleMessage(
+      "Escreve a tua mesa para continuar.",
+    ),
+    "groupOrderTableServiceBody": MessageLookupByLibrary.simpleMessage(
+      "Será pedida a mesa a quem não chegar pelo QR da sua.",
+    ),
+    "groupOrderTableServiceTitle": MessageLookupByLibrary.simpleMessage(
+      "Sirvo à mesa",
+    ),
+    "groupOrderTableTitle": MessageLookupByLibrary.simpleMessage(
+      "Em que mesa estás?",
+    ),
     "groupOrderTipBaseSummary": m53,
     "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage("Outro valor"),
     "groupOrderTipNone": MessageLookupByLibrary.simpleMessage("Sem gorjeta"),
@@ -1728,6 +1744,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage(
       "Sem pedidos por agora",
+    ),
+    "managerOrderSettings": MessageLookupByLibrary.simpleMessage(
+      "Definições do pedido",
     ),
     "managerOrders": MessageLookupByLibrary.simpleMessage("Pedidos"),
     "managerOrdersTruncated": m61,

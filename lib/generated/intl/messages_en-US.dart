@@ -1340,6 +1340,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTabClosedTitle": MessageLookupByLibrary.simpleMessage(
       "Tab closed!",
     ),
+    "groupOrderTableBody": MessageLookupByLibrary.simpleMessage(
+      "So the venue knows where to bring your order.",
+    ),
+    "groupOrderTableHint": MessageLookupByLibrary.simpleMessage("Table 12"),
+    "groupOrderTableRequired": MessageLookupByLibrary.simpleMessage(
+      "Enter your table to continue.",
+    ),
+    "groupOrderTableServiceBody": MessageLookupByLibrary.simpleMessage(
+      "Diners who didn\'t scan their table\'s QR will be asked for it.",
+    ),
+    "groupOrderTableServiceTitle": MessageLookupByLibrary.simpleMessage(
+      "Table service",
+    ),
+    "groupOrderTableTitle": MessageLookupByLibrary.simpleMessage(
+      "Which table are you at?",
+    ),
     "groupOrderTipBaseSummary": m53,
     "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage(
       "Custom amount",
@@ -1661,6 +1677,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "managerNewOrderLater": MessageLookupByLibrary.simpleMessage("Not now"),
     "managerNewOrderTitle": MessageLookupByLibrary.simpleMessage("New order!"),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage("No orders yet"),
+    "managerOrderSettings": MessageLookupByLibrary.simpleMessage(
+      "Order settings",
+    ),
     "managerOrders": MessageLookupByLibrary.simpleMessage("Orders"),
     "managerOrdersTruncated": m61,
     "managerPaidComplete": MessageLookupByLibrary.simpleMessage("Fully paid"),

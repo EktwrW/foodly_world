@@ -21,11 +21,7 @@ mixin _$NearbyPromotionDM {
   @JsonKey(name: 'media_link')
   String? get mediaLink;
   @JsonKey(name: 'promo_media')
-  PromoMediaLiteDM?
-      get promoMedia; // Defensivo: business_name es nullable en la tabla businesses (BE) y
-// business_uuid podría faltar en datos de borde. Con @Default('') una sola
-// promo con esos campos vacíos no aborta el parse de toda la lista
-// (json_serializable mapea la List entera; si un item tira, caen todos).
+  PromoMediaLiteDM? get promoMedia;
   @JsonKey(name: 'business_uuid')
   String get businessUuid;
   @JsonKey(name: 'business_name')
@@ -503,10 +499,6 @@ class _NearbyPromotionDM extends NearbyPromotionDM {
   @override
   @JsonKey(name: 'promo_media')
   final PromoMediaLiteDM? promoMedia;
-// Defensivo: business_name es nullable en la tabla businesses (BE) y
-// business_uuid podría faltar en datos de borde. Con @Default('') una sola
-// promo con esos campos vacíos no aborta el parse de toda la lista
-// (json_serializable mapea la List entera; si un item tira, caen todos).
   @override
   @JsonKey(name: 'business_uuid')
   final String businessUuid;

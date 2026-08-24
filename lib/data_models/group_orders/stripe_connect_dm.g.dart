@@ -16,6 +16,7 @@ _StripeConnectStatusDM _$StripeConnectStatusDMFromJson(
       detailsSubmitted: json['details_submitted'] as bool? ?? false,
       groupPaymentMode: json['group_payment_mode'] as String?,
       cardMinAmountMinor: (json['card_min_amount_minor'] as num?)?.toInt(),
+      tableService: json['table_service'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$StripeConnectStatusDMToJson(
@@ -30,6 +31,7 @@ Map<String, dynamic> _$StripeConnectStatusDMToJson(
         'group_payment_mode': value,
       if (instance.cardMinAmountMinor case final value?)
         'card_min_amount_minor': value,
+      'table_service': instance.tableService,
     };
 
 _StripeOnboardResponseDM _$StripeOnboardResponseDMFromJson(

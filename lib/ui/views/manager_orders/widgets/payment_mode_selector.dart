@@ -16,19 +16,31 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 /// decide si es onboarding (diálogo) o edición (bottom sheet).
 /// Lo que el dueño decidió: cómo cobra y, opcionalmente, desde qué monto
 /// acepta pagos en la app. [minMinor] en céntimos; null = sin mínimo.
-typedef PaymentSettings = ({GroupPaymentMode mode, int? minMinor});
+/// [tableService]: ¿el pedido va a un sitio físico? Decide si al comensal que
+/// no llegó por el QR de su mesa se le pide la mesa antes de enviar.
+typedef PaymentSettings = ({GroupPaymentMode mode, int? minMinor, bool tableService});
 
 class PaymentModeSelector extends StatefulWidget {
+  /// Los dos switches del selector, nombrados para que los tests apunten a
+  /// uno concreto: `find.byType(NeumorphicSwitch)` se volvió ambiguo al
+  /// agregar el segundo.
+  static const switchMinimoKey = Key('payment-selector-min-switch');
+  static const switchMesaKey = Key('payment-selector-table-switch');
+
   final GroupPaymentMode? initial;
 
   /// Mínimo actual en céntimos, para abrir con el valor puesto. null = sin mínimo.
   final int? initialMinMinor;
+
+  /// ¿El negocio sirve EN MESA? Ver [PaymentSettings.tableService].
+  final bool initialTableService;
   final ValueChanged<PaymentSettings> onConfirm;
 
   const PaymentModeSelector({
     super.key,
     this.initial,
     this.initialMinMinor,
+    this.initialTableService = false,
     required this.onConfirm,
   });
 
@@ -38,6 +50,7 @@ class PaymentModeSelector extends StatefulWidget {
     BuildContext context, {
     GroupPaymentMode? initial,
     int? initialMinMinor,
+    bool initialTableService = false,
   }) {
     return showDialog<PaymentSettings>(
       context: context,
@@ -49,6 +62,7 @@ class PaymentModeSelector extends StatefulWidget {
           child: PaymentModeSelector(
             initial: initial,
             initialMinMinor: initialMinMinor,
+            initialTableService: initialTableService,
             onConfirm: (settings) => Navigator.pop(ctx, settings),
           ),
         ),
@@ -68,6 +82,11 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
 
   GroupPaymentMode? _selected;
   bool _minEnabled = false;
+
+  /// ¿El negocio sirve EN MESA? Decide si se le pide la mesa al comensal que
+  /// no llegó escaneando el QR de la suya. Apagado = mostrador, barra o food
+  /// truck: ahí la mesa no existe y preguntarla sería fricción inventada.
+  late bool _tableService;
   int? _minMinor;
   bool _custom = false;
   late final TextEditingController _customCtrl;
@@ -78,6 +97,7 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
     _selected = widget.initial;
     _minMinor = widget.initialMinMinor;
     _minEnabled = _minMinor != null;
+    _tableService = widget.initialTableService;
     // Un mínimo que no es preset abre directo en "Otro", con su valor puesto.
     _custom = _minMinor != null && !_presets.contains(_minMinor);
     _customCtrl = TextEditingController(
@@ -171,6 +191,16 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
           onCustomChanged: (raw) => setState(() => _minMinor = _parseCustom(raw)),
         ),
         const SizedBox(height: 16),
+        // Sin esto, el pedido de un comensal que no escaneó el QR de su mesa
+        // llegaba al negocio sin decir a dónde llevarlo: en un local de 30
+        // mesas, indespachable.
+        _FilaSwitch(
+          titulo: S.current.groupOrderTableServiceTitle,
+          detalle: S.current.groupOrderTableServiceBody,
+          valor: _tableService,
+          onChanged: (v) => setState(() => _tableService = v),
+        ),
+        const SizedBox(height: 16),
         CustomNeumorphicButton(
           text: S.current.confirm,
           disabled: _selected == null || !_minReady,
@@ -178,7 +208,7 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
           padding: const EdgeInsets.all(12),
           onPressed: _selected == null || !_minReady
               ? null
-              : () => widget.onConfirm((mode: _selected!, minMinor: _minEnabled ? _minMinor : null)),
+              : () => widget.onConfirm((mode: _selected!, minMinor: _minEnabled ? _minMinor : null, tableService: _tableService)),
         ),
       ],
     );
@@ -326,6 +356,7 @@ class _MinimumSection extends StatelessWidget {
           spacing: 14,
           children: [
             ui.NeumorphicSwitch(
+              key: PaymentModeSelector.switchMinimoKey,
               value: enabled,
               duration: Durations.medium2,
               curve: Curves.decelerate,
@@ -424,6 +455,49 @@ class _Chip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+/// Fila de ajuste con switch, en el lenguaje visual del selector.
+class _FilaSwitch extends StatelessWidget {
+  final String titulo;
+  final String detalle;
+  final bool valor;
+  final ValueChanged<bool> onChanged;
+
+  const _FilaSwitch({
+    required this.titulo,
+    required this.detalle,
+    required this.valor,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(titulo, style: FoodlyTextStyles.labelBold),
+              const SizedBox(height: 2),
+              Text(detalle, style: FoodlyTextStyles.caption),
+            ],
+          ),
+        ),
+        const SizedBox(width: 12),
+        ui.NeumorphicSwitch(
+          key: PaymentModeSelector.switchMesaKey,
+          value: valor,
+          height: 26,
+          style: const ui.NeumorphicSwitchStyle(activeTrackColor: FoodlyThemes.primaryFoodly),
+          onChanged: onChanged,
+        ),
+      ],
     );
   }
 }

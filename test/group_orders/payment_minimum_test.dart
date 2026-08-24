@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
@@ -76,7 +75,7 @@ void main() {
       await tester.tap(find.text(S.current.paymentModeOpenTabTitle));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(ui.NeumorphicSwitch), warnIfMissed: false);
+      await tester.tap(find.byKey(PaymentModeSelector.switchMinimoKey), warnIfMissed: false);
       await tester.pumpAndSettle();
 
       expect(find.text('5,00 €'), findsOneWidget);

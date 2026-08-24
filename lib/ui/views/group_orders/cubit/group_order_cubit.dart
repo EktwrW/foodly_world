@@ -77,22 +77,26 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   /// Host: cierra la orden (congela precios y habilita el pago).
   /// F2c §B.1: [splitMode] = 'by_items' | 'equal_split'.
-  Future<void> lock({String? splitMode}) async {
+  /// [tableLabel] F4c: la mesa que el comensal escribió recién ahora, si el
+  /// negocio sirve en mesa y la orden no la traía del QR. Viaja en la MISMA
+  /// petición que el cierre: un endpoint aparte podría dejar la mesa puesta y
+  /// el cierre fallando, o al revés.
+  Future<void> lock({String? splitMode, String? tableLabel}) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return;
     emit(GroupOrderState.loading(_vm));
-    final result = await _repo.lockGroupOrder(uuid, splitMode: splitMode);
+    final result = await _repo.lockGroupOrder(uuid, splitMode: splitMode, tableLabel: tableLabel);
     result.when(success: _applyResponse, failure: _onError);
   }
 
   /// F4b (cuenta abierta): "Enviar orden" — la tanda actual va a cocina sin
   /// pago. Devuelve true si el envío salió bien (la UI muestra el sheet
   /// "Pedido enviado a cocina").
-  Future<bool> sendBatch() async {
+  Future<bool> sendBatch({String? tableLabel}) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return false;
     emit(GroupOrderState.loading(_vm));
-    final result = await _repo.sendBatch(uuid);
+    final result = await _repo.sendBatch(uuid, tableLabel: tableLabel);
     return result.when(
       success: (r) {
         _applyResponse(r);
@@ -107,11 +111,11 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   /// F4b: "Pedir la cuenta" — congela el agregado y habilita el checkout
   /// (el split se elige igual que en el lock clásico).
-  Future<void> requestBill({String? splitMode}) async {
+  Future<void> requestBill({String? splitMode, String? tableLabel}) async {
     final uuid = _vm.order?.uuid;
     if (uuid == null) return;
     emit(GroupOrderState.loading(_vm));
-    final result = await _repo.requestBill(uuid, splitMode: splitMode);
+    final result = await _repo.requestBill(uuid, splitMode: splitMode, tableLabel: tableLabel);
     result.when(success: _applyResponse, failure: _onError);
   }
 

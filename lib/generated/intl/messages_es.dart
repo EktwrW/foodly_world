@@ -1403,6 +1403,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "groupOrderTabClosedTitle": MessageLookupByLibrary.simpleMessage(
       "¡Orden finalizada!",
     ),
+    "groupOrderTableBody": MessageLookupByLibrary.simpleMessage(
+      "Para que el negocio sepa dónde llevarte el pedido.",
+    ),
+    "groupOrderTableHint": MessageLookupByLibrary.simpleMessage("Mesa 12"),
+    "groupOrderTableRequired": MessageLookupByLibrary.simpleMessage(
+      "Escribe tu mesa para continuar.",
+    ),
+    "groupOrderTableServiceBody": MessageLookupByLibrary.simpleMessage(
+      "Se le pedirá la mesa a quien no llegue por el QR de la suya.",
+    ),
+    "groupOrderTableServiceTitle": MessageLookupByLibrary.simpleMessage(
+      "Sirvo en mesa",
+    ),
+    "groupOrderTableTitle": MessageLookupByLibrary.simpleMessage(
+      "¿En qué mesa estás?",
+    ),
     "groupOrderTipBaseSummary": m53,
     "groupOrderTipCustom": MessageLookupByLibrary.simpleMessage("Otro monto"),
     "groupOrderTipNone": MessageLookupByLibrary.simpleMessage("Sin propina"),
@@ -1741,6 +1757,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "managerNoOrders": MessageLookupByLibrary.simpleMessage(
       "Sin órdenes por ahora",
+    ),
+    "managerOrderSettings": MessageLookupByLibrary.simpleMessage(
+      "Ajustes del pedido",
     ),
     "managerOrders": MessageLookupByLibrary.simpleMessage("Órdenes"),
     "managerOrdersTruncated": m61,

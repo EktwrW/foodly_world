@@ -10,14 +10,12 @@ _AiPromoImageOption _$AiPromoImageOptionFromJson(Map<String, dynamic> json) =>
     _AiPromoImageOption(
       look: json['look'] as String? ?? '',
       imageBase64: json['image_base64'] as String? ?? '',
-      seed: (json['seed'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AiPromoImageOptionToJson(_AiPromoImageOption instance) =>
     <String, dynamic>{
       'look': instance.look,
       'image_base64': instance.imageBase64,
-      if (instance.seed case final value?) 'seed': value,
     };
 
 _AiPromoGenerationResponse _$AiPromoGenerationResponseFromJson(

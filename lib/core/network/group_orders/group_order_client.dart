@@ -8,11 +8,19 @@ part 'group_order_client.g.dart';
 
 /// Body de `updatePaymentMode`. [cardMinAmountMinor] en céntimos; `null`
 /// QUITA el mínimo, y por eso la clave viaja siempre (ver la nota del método).
+/// [tableService]: ¿el pedido va a un sitio físico? A diferencia del mínimo,
+/// la clave solo viaja si se pasó — `null` significa "no lo toques", porque el
+/// selector puede guardar el modo de cobro sin opinar sobre el servicio.
 Map<String, dynamic> paymentModeBody({
   required String mode,
   required int? cardMinAmountMinor,
+  bool? tableService,
 }) =>
-    {'mode': mode, 'card_min_amount_minor': cardMinAmountMinor};
+    {
+      'mode': mode,
+      'card_min_amount_minor': cardMinAmountMinor,
+      if (tableService != null) 'table_service': tableService,
+    };
 
 /// Cliente HTTP de Group Orders & Split Payments.
 /// Endpoints según docs/group-orders-design-spec.md §5.
@@ -47,6 +55,7 @@ abstract class GroupOrderClient {
   Future<GroupOrderResponseDM> lockGroupOrder(
     @Path('uuid') String uuid, {
     @Field('split_mode') String? splitMode,
+    @Field('table_label') String? tableLabel,
   });
 
   /// Reabre una orden cerrada SIN pagos (F2b §C.1, solo host).
@@ -139,13 +148,17 @@ abstract class GroupOrderClient {
 
   /// F4b (cuenta abierta): manda la tanda actual a cocina, SIN pago.
   @POST('/group-orders/{uuid}/send')
-  Future<GroupOrderResponseDM> sendBatch(@Path('uuid') String uuid);
+  Future<GroupOrderResponseDM> sendBatch(
+    @Path('uuid') String uuid, {
+    @Field('table_label') String? tableLabel,
+  });
 
   /// F4b: pide la cuenta — congela el agregado y habilita el checkout.
   @POST('/group-orders/{uuid}/request-bill')
   Future<GroupOrderResponseDM> requestBill(
     @Path('uuid') String uuid, {
     @Field('split_mode') String? splitMode,
+    @Field('table_label') String? tableLabel,
   });
 
   /// F4b: la mesa avisa que paga EN CAJA. Solo cuenta abierta; el negocio
@@ -158,6 +171,13 @@ abstract class GroupOrderClient {
   Future<GroupOrderResponseDM> cancelCashPayment(@Path('uuid') String uuid);
 
   /// F4b: modo de cobro del negocio (solo dueño).
+  /// F4c: declara servicio EN MESA sin tocar el modo de cobro.
+  @PATCH('/manager/businesses/{businessUuid}/table-service')
+  Future<void> updateTableService(
+    @Path('businessUuid') String businessUuid, {
+    @Field('table_service') required bool tableService,
+  });
+
   @PATCH('/manager/businesses/{businessUuid}/payment-mode')
   ///
   /// Va con `@Body` y no con `@Field` por el mínimo de pago: Retrofit OMITE

@@ -26,6 +26,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_cubit.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/group_order_vm.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/ask_table_dialog.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/billing_country.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
@@ -233,15 +234,52 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       }
     }
 
-    await cubit.lock(splitMode: mode);
+    final mesa = await _resolverMesa(context, cubit.vm.order);
+    if (!context.mounted) return;
+    if (mesa == _mesaCancelada) {
+      FoodlySnackbars.infoGeneric(context, S.current.groupOrderTableRequired);
+
+      return;
+    }
+
+    await cubit.lock(splitMode: mode, tableLabel: mesa);
     await di<ActiveGroupOrderCubit>().refresh();
   }
+
+  /// F4c: la mesa que hay que mandar con esta acción, o `null` si no hace
+  /// falta preguntar. Devuelve el sentinel [_mesaCancelada] si el comensal
+  /// cerró el diálogo, para que el caller aborte en vez de enviar sin mesa.
+  ///
+  /// Se pregunta UNA sola vez por orden: apenas el backend guarda la mesa,
+  /// `needsTable` se apaga para todos los participantes.
+  Future<String?> _resolverMesa(BuildContext context, GroupOrderDM? order) async {
+    if (order == null || !order.needsTable) return null;
+
+    final mesa = await askTableDialog(context);
+
+    return mesa ?? _mesaCancelada;
+  }
+
+  /// Se distingue de `null` a propósito: `null` es "no hacía falta preguntar",
+  /// esto es "se preguntó y el comensal no contestó".
+  static const _mesaCancelada = '\u0000cancelada';
 
   /// F4b (cuenta abierta) — "Enviar orden": la tanda actual viaja a cocina
   /// SIN pago; al volver, sheet "¡Pedido enviado a cocina!" (maqueta B1).
   Future<void> _onSend(BuildContext context, GroupOrderDM order) async {
     final cubit = context.read<GroupOrderCubit>();
-    final ok = await cubit.sendBatch();
+
+    final mesa = await _resolverMesa(context, cubit.vm.order ?? order);
+    if (!context.mounted) return;
+    if (mesa == _mesaCancelada) {
+      // Sin aviso, el botón "Enviar orden" parecía roto: se abría el diálogo,
+      // el comensal lo cerraba tocando fuera, y no pasaba nada visible.
+      FoodlySnackbars.infoGeneric(context, S.current.groupOrderTableRequired);
+
+      return;
+    }
+
+    final ok = await cubit.sendBatch(tableLabel: mesa);
     if (!ok || !context.mounted) return;
 
     await di<ActiveGroupOrderCubit>().refresh();
@@ -263,7 +301,15 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       return;
     }
 
-    await cubit.requestBill(splitMode: mode);
+    final mesa = await _resolverMesa(context, cubit.vm.order);
+    if (!context.mounted) return;
+    if (mesa == _mesaCancelada) {
+      FoodlySnackbars.infoGeneric(context, S.current.groupOrderTableRequired);
+
+      return;
+    }
+
+    await cubit.requestBill(splitMode: mode, tableLabel: mesa);
     await di<ActiveGroupOrderCubit>().refresh();
   }
 

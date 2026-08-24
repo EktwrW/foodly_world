@@ -116,12 +116,13 @@ class _GroupOrderClient implements GroupOrderClient {
   Future<GroupOrderResponseDM> lockGroupOrder(
     String uuid, {
     String? splitMode,
+    String? tableLabel,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'split_mode': splitMode};
+    final _data = {'split_mode': splitMode, 'table_label': tableLabel};
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
@@ -538,11 +539,16 @@ class _GroupOrderClient implements GroupOrderClient {
   }
 
   @override
-  Future<GroupOrderResponseDM> sendBatch(String uuid) async {
+  Future<GroupOrderResponseDM> sendBatch(
+    String uuid, {
+    String? tableLabel,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = {'table_label': tableLabel};
+    _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -568,12 +574,13 @@ class _GroupOrderClient implements GroupOrderClient {
   Future<GroupOrderResponseDM> requestBill(
     String uuid, {
     String? splitMode,
+    String? tableLabel,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'split_mode': splitMode};
+    final _data = {'split_mode': splitMode, 'table_label': tableLabel};
     _data.removeWhere((k, v) => v == null);
     final _options = _setStreamType<GroupOrderResponseDM>(
       Options(method: 'POST', headers: _headers, extra: _extra)
@@ -648,6 +655,28 @@ class _GroupOrderClient implements GroupOrderClient {
       rethrow;
     }
     return _value;
+  }
+
+  @override
+  Future<void> updateTableService(
+    String businessUuid, {
+    required bool tableService,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'table_service': tableService};
+    final _options = _setStreamType<void>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/manager/businesses/${businessUuid}/table-service',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
   }
 
   @override

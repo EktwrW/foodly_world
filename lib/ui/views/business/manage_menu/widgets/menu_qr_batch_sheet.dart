@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show FilteringTextInputFormatter, rootBundle;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
@@ -113,6 +114,10 @@ void showMenuQrBatchSheet(
   required String menuUrl,
   required String businessName,
   String? logoUrl,
+  /// F4c: con el uuid, generar el lote declara "sirvo en mesa" — ver
+  /// `_QrBatchFormState._generate`. null = no se puede declarar (no debería
+  /// pasar desde el menú propio, pero el PDF se genera igual).
+  String? businessUuid,
 }) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -134,6 +139,7 @@ void showMenuQrBatchSheet(
       ],
     ),
     buttonBuilder: (dismiss) => _QrBatchForm(
+      businessUuid: businessUuid,
       menuUrl: menuUrl,
       businessName: businessName,
       logoUrl: logoUrl,
@@ -150,11 +156,13 @@ class _QrBatchForm extends StatefulWidget {
     required this.businessName,
     required this.onDone,
     this.logoUrl,
+    this.businessUuid,
   });
 
   final String menuUrl;
   final String businessName;
   final String? logoUrl;
+  final String? businessUuid;
   final VoidCallback onDone;
 
   @override
@@ -201,6 +209,21 @@ class _QrBatchFormState extends State<_QrBatchForm> {
       labels: labels,
       logoUrl: widget.logoUrl,
     );
+
+    // F4c: imprimir un lote de mesas numeradas YA declara "sirvo en mesa".
+    // Pedirle al dueño que además lo marque en otra pantalla sería hacerle
+    // decir dos veces lo mismo — y sin esto la feature se queda apagada en
+    // todos los negocios, que es como no tenerla.
+    //
+    // Silencioso a propósito: el PDF ya se generó y es lo que el dueño vino a
+    // buscar. Si la red falla, el ajuste sigue disponible en "Ajustes del
+    // pedido"; convertir eso en un error rojo sería castigarlo por algo que
+    // ni pidió.
+    final uuid = widget.businessUuid;
+    if (uuid != null && uuid.isNotEmpty) {
+      unawaited(di<GroupOrderRepo>().updateTableService(uuid, tableService: true));
+    }
+
     if (mounted) {
       setState(() => _busy = false);
       widget.onDone();

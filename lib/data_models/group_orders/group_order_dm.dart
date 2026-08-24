@@ -262,6 +262,9 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     GroupFulfillmentStatus? fulfillmentStatus,
     @JsonKey(name: 'round_number') @Default(1) int roundNumber,
     @JsonKey(name: 'table_label') String? tableLabel,
+    /// ¿El negocio sirve EN MESA? Si sí y la orden no tiene mesa, hay que
+    /// pedírsela al comensal antes de que el pedido salga a cocina.
+    @JsonKey(name: 'business_table_service') @Default(false) bool businessTableService,
     // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
     // "cuenta pedida" — de acá sale el CTA mutante del cliente.
     @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
@@ -295,6 +298,12 @@ abstract class GroupOrderDM with _$GroupOrderDM {
 
   /// El negocio cobra con cuenta abierta (una orden por mesa, tandas).
   bool get isOpenTab => paymentMode == GroupPaymentMode.openTab;
+
+  /// F4c: ¿hay que preguntarle la mesa al comensal antes de enviar?
+  ///
+  /// Solo cuando el negocio sirve en mesa Y la orden no la tiene todavía. El
+  /// que entró por el QR de su mesa nunca ve el diálogo.
+  bool get needsTable => businessTableService && (tableLabel ?? '').trim().isEmpty;
 
   /// Ítems VIGENTES (los anulados por el negocio no cuentan para nada).
   List<GroupOrderItemDM> get liveItems => items.where((i) => !i.isVoided).toList();

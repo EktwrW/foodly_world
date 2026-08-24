@@ -66,10 +66,15 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with Wi
         _ => null,
       },
       initialMinMinor: estado.cardMinAmountMinor,
+      initialTableService: estado.tableService,
     );
     if (settings == null || !context.mounted) return;
 
-    final ok = await cubit.setPaymentMode(settings.mode, cardMinAmountMinor: settings.minMinor);
+    final ok = await cubit.setPaymentMode(
+      settings.mode,
+      cardMinAmountMinor: settings.minMinor,
+      tableService: settings.tableService,
+    );
     if (!context.mounted) return;
     ok
         ? FoodlySnackbars.successGeneric(context, S.current.paymentModeUpdated)
@@ -196,6 +201,19 @@ class _StripeOnboardingBannerState extends State<StripeOnboardingBanner> with Wi
               Text(
                 S.current.managerActivatePaymentsBody,
                 style: FoodlyTextStyles.caption.copyWith(color: Colors.white.withValues(alpha: 0.9)),
+              ),
+              // Los ajustes de la mesa y del reparto NO dependen de Stripe:
+              // un negocio que cobra en caja recibe órdenes igual y necesita
+              // poder declarar que sirve en mesa. Hasta ahora el selector solo
+              // se alcanzaba desde la rama "pagos activos", así que ese negocio
+              // —el tradicional de mesas, justo al que apunta la feature— no
+              // tenía forma de encenderlo.
+              TextButton(
+                onPressed: () => _pickPaymentMode(context, cubit),
+                child: Text(
+                  S.current.managerOrderSettings,
+                  style: FoodlyTextStyles.caption.copyWith(color: Colors.white),
+                ),
               ),
               CustomNeumorphicButton(
                 onPressed: _activating ? null : () => _activate(context, cubit),

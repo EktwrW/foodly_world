@@ -49,9 +49,14 @@ class GroupOrderRepo {
   }
 
   /// F2c §B.1: [splitMode] = 'by_items' | 'equal_split' (null → default backend).
-  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(String uuid, {String? splitMode}) async {
+  Future<ApiResult<GroupOrderResponseDM>> lockGroupOrder(
+    String uuid, {
+    String? splitMode,
+    String? tableLabel,
+  }) async {
     try {
-      return ApiResult.success(await _client.lockGroupOrder(uuid, splitMode: splitMode));
+      return ApiResult.success(
+          await _client.lockGroupOrder(uuid, splitMode: splitMode, tableLabel: tableLabel));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -244,18 +249,23 @@ class GroupOrderRepo {
   }
 
   /// F4b (cuenta abierta): manda la tanda actual a cocina, sin pago.
-  Future<ApiResult<GroupOrderResponseDM>> sendBatch(String uuid) async {
+  Future<ApiResult<GroupOrderResponseDM>> sendBatch(String uuid, {String? tableLabel}) async {
     try {
-      return ApiResult.success(await _client.sendBatch(uuid));
+      return ApiResult.success(await _client.sendBatch(uuid, tableLabel: tableLabel));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
   }
 
   /// F4b: pide la cuenta (congela el agregado y habilita el checkout).
-  Future<ApiResult<GroupOrderResponseDM>> requestBill(String uuid, {String? splitMode}) async {
+  Future<ApiResult<GroupOrderResponseDM>> requestBill(
+    String uuid, {
+    String? splitMode,
+    String? tableLabel,
+  }) async {
     try {
-      return ApiResult.success(await _client.requestBill(uuid, splitMode: splitMode));
+      return ApiResult.success(
+          await _client.requestBill(uuid, splitMode: splitMode, tableLabel: tableLabel));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }
@@ -280,15 +290,34 @@ class GroupOrderRepo {
   }
 
   /// F4b: modo de cobro del negocio (solo dueño).
+  /// F4c: enciende (o apaga) el servicio en mesa. Lo usa el generador de
+  /// QRs por mesa: imprimir un lote de mesas numeradas YA declara "tengo
+  /// mesas", y pedirle al dueño que además lo marque en otra pantalla sería
+  /// hacerle decir dos veces lo mismo.
+  Future<ApiResult<void>> updateTableService(String businessUuid, {required bool tableService}) async {
+    try {
+      await _client.updateTableService(businessUuid, tableService: tableService);
+
+      return const ApiResult.success(null);
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
   Future<ApiResult<PaymentModeResponseDM>> updatePaymentMode(
     String businessUuid, {
     required String mode,
     int? cardMinAmountMinor,
+    bool? tableService,
   }) async {
     try {
       return ApiResult.success(await _client.updatePaymentMode(
         businessUuid,
-        paymentModeBody(mode: mode, cardMinAmountMinor: cardMinAmountMinor),
+        paymentModeBody(
+          mode: mode,
+          cardMinAmountMinor: cardMinAmountMinor,
+          tableService: tableService,
+        ),
       ));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));

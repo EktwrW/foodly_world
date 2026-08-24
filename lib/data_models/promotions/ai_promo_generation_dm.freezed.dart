@@ -14,12 +14,11 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$AiPromoImageOption {
-  /// `moment` | `hero` | `scene`. Sólo para telemetría y para el label —
-  /// el FE no debería ramificar lógica sobre esto.
+  /// `product` | `people`. Sólo para telemetría y para el label — el FE no
+  /// debería ramificar lógica sobre esto.
   String get look;
   @JsonKey(name: 'image_base64')
   String get imageBase64;
-  int? get seed;
 
   /// Create a copy of AiPromoImageOption
   /// with the given fields replaced by the non-null parameter values.
@@ -39,17 +38,16 @@ mixin _$AiPromoImageOption {
             other is AiPromoImageOption &&
             (identical(other.look, look) || other.look == look) &&
             (identical(other.imageBase64, imageBase64) ||
-                other.imageBase64 == imageBase64) &&
-            (identical(other.seed, seed) || other.seed == seed));
+                other.imageBase64 == imageBase64));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, look, imageBase64, seed);
+  int get hashCode => Object.hash(runtimeType, look, imageBase64);
 
   @override
   String toString() {
-    return 'AiPromoImageOption(look: $look, imageBase64: $imageBase64, seed: $seed)';
+    return 'AiPromoImageOption(look: $look, imageBase64: $imageBase64)';
   }
 }
 
@@ -59,10 +57,7 @@ abstract mixin class $AiPromoImageOptionCopyWith<$Res> {
           AiPromoImageOption value, $Res Function(AiPromoImageOption) _then) =
       _$AiPromoImageOptionCopyWithImpl;
   @useResult
-  $Res call(
-      {String look,
-      @JsonKey(name: 'image_base64') String imageBase64,
-      int? seed});
+  $Res call({String look, @JsonKey(name: 'image_base64') String imageBase64});
 }
 
 /// @nodoc
@@ -80,7 +75,6 @@ class _$AiPromoImageOptionCopyWithImpl<$Res>
   $Res call({
     Object? look = null,
     Object? imageBase64 = null,
-    Object? seed = freezed,
   }) {
     return _then(_self.copyWith(
       look: null == look
@@ -91,10 +85,6 @@ class _$AiPromoImageOptionCopyWithImpl<$Res>
           ? _self.imageBase64
           : imageBase64 // ignore: cast_nullable_to_non_nullable
               as String,
-      seed: freezed == seed
-          ? _self.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -192,15 +182,15 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String look,
-            @JsonKey(name: 'image_base64') String imageBase64, int? seed)?
+    TResult Function(
+            String look, @JsonKey(name: 'image_base64') String imageBase64)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _AiPromoImageOption() when $default != null:
-        return $default(_that.look, _that.imageBase64, _that.seed);
+        return $default(_that.look, _that.imageBase64);
       case _:
         return orElse();
     }
@@ -221,14 +211,14 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String look,
-            @JsonKey(name: 'image_base64') String imageBase64, int? seed)
+    TResult Function(
+            String look, @JsonKey(name: 'image_base64') String imageBase64)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AiPromoImageOption():
-        return $default(_that.look, _that.imageBase64, _that.seed);
+        return $default(_that.look, _that.imageBase64);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -248,14 +238,14 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String look,
-            @JsonKey(name: 'image_base64') String imageBase64, int? seed)?
+    TResult? Function(
+            String look, @JsonKey(name: 'image_base64') String imageBase64)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _AiPromoImageOption() when $default != null:
-        return $default(_that.look, _that.imageBase64, _that.seed);
+        return $default(_that.look, _that.imageBase64);
       case _:
         return null;
     }
@@ -266,23 +256,19 @@ extension AiPromoImageOptionPatterns on AiPromoImageOption {
 @JsonSerializable()
 class _AiPromoImageOption extends AiPromoImageOption {
   const _AiPromoImageOption(
-      {this.look = '',
-      @JsonKey(name: 'image_base64') this.imageBase64 = '',
-      this.seed})
+      {this.look = '', @JsonKey(name: 'image_base64') this.imageBase64 = ''})
       : super._();
   factory _AiPromoImageOption.fromJson(Map<String, dynamic> json) =>
       _$AiPromoImageOptionFromJson(json);
 
-  /// `moment` | `hero` | `scene`. Sólo para telemetría y para el label —
-  /// el FE no debería ramificar lógica sobre esto.
+  /// `product` | `people`. Sólo para telemetría y para el label — el FE no
+  /// debería ramificar lógica sobre esto.
   @override
   @JsonKey()
   final String look;
   @override
   @JsonKey(name: 'image_base64')
   final String imageBase64;
-  @override
-  final int? seed;
 
   /// Create a copy of AiPromoImageOption
   /// with the given fields replaced by the non-null parameter values.
@@ -306,17 +292,16 @@ class _AiPromoImageOption extends AiPromoImageOption {
             other is _AiPromoImageOption &&
             (identical(other.look, look) || other.look == look) &&
             (identical(other.imageBase64, imageBase64) ||
-                other.imageBase64 == imageBase64) &&
-            (identical(other.seed, seed) || other.seed == seed));
+                other.imageBase64 == imageBase64));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, look, imageBase64, seed);
+  int get hashCode => Object.hash(runtimeType, look, imageBase64);
 
   @override
   String toString() {
-    return 'AiPromoImageOption(look: $look, imageBase64: $imageBase64, seed: $seed)';
+    return 'AiPromoImageOption(look: $look, imageBase64: $imageBase64)';
   }
 }
 
@@ -328,10 +313,7 @@ abstract mixin class _$AiPromoImageOptionCopyWith<$Res>
       __$AiPromoImageOptionCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String look,
-      @JsonKey(name: 'image_base64') String imageBase64,
-      int? seed});
+  $Res call({String look, @JsonKey(name: 'image_base64') String imageBase64});
 }
 
 /// @nodoc
@@ -349,7 +331,6 @@ class __$AiPromoImageOptionCopyWithImpl<$Res>
   $Res call({
     Object? look = null,
     Object? imageBase64 = null,
-    Object? seed = freezed,
   }) {
     return _then(_AiPromoImageOption(
       look: null == look
@@ -360,10 +341,6 @@ class __$AiPromoImageOptionCopyWithImpl<$Res>
           ? _self.imageBase64
           : imageBase64 // ignore: cast_nullable_to_non_nullable
               as String,
-      seed: freezed == seed
-          ? _self.seed
-          : seed // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -375,9 +352,9 @@ mixin _$AiPromoGenerationResponse {
   String get subtitle;
   String get description;
 
-  /// Hasta tres artes. Puede venir con menos —o vacía— sin que la
-  /// generación se considere fallida: el BE entrega el copy igual porque es
-  /// lo caro de rehacer a mano, y dos opciones son mejores que un error.
+  /// Hasta dos artes. Puede venir con una —o vacía— sin que la generación
+  /// se considere fallida: el BE entrega el copy igual porque es lo caro de
+  /// rehacer a mano, y una imagen es mejor que un error.
   List<AiPromoImageOption> get images;
   @JsonKey(name: 'ai_promo_monthly_limit')
   int get aiPromoMonthlyLimit;
@@ -769,14 +746,14 @@ class _AiPromoGenerationResponse extends AiPromoGenerationResponse {
   @JsonKey()
   final String description;
 
-  /// Hasta tres artes. Puede venir con menos —o vacía— sin que la
-  /// generación se considere fallida: el BE entrega el copy igual porque es
-  /// lo caro de rehacer a mano, y dos opciones son mejores que un error.
+  /// Hasta dos artes. Puede venir con una —o vacía— sin que la generación
+  /// se considere fallida: el BE entrega el copy igual porque es lo caro de
+  /// rehacer a mano, y una imagen es mejor que un error.
   final List<AiPromoImageOption> _images;
 
-  /// Hasta tres artes. Puede venir con menos —o vacía— sin que la
-  /// generación se considere fallida: el BE entrega el copy igual porque es
-  /// lo caro de rehacer a mano, y dos opciones son mejores que un error.
+  /// Hasta dos artes. Puede venir con una —o vacía— sin que la generación
+  /// se considere fallida: el BE entrega el copy igual porque es lo caro de
+  /// rehacer a mano, y una imagen es mejor que un error.
   @override
   @JsonKey()
   List<AiPromoImageOption> get images {
