@@ -1347,7 +1347,7 @@
   "groupOrderTableHint": "Mesa 12",
   "groupOrderTableRequired": "Escribe tu mesa para continuar.",
   "groupOrderTableServiceTitle": "Sirvo en mesa",
-  "groupOrderTableServiceBody": "Se le pedirá la mesa a quien no llegue por el QR de la suya.",
+  "groupOrderTableServiceBody": "Se le pedirá el número de mesa a quien no llegue por el QR de la suya.",
   "managerOrderSettings": "Ajustes del pedido",
   "groupOrderNoBalanceDue": "Sin saldo pendiente",
   "groupOrderExpiredNotice": "Esta orden expiró: se agotó el plazo de pago y no se cobró nada. Puedes pedir de nuevo desde el menú.",

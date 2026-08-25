@@ -128,89 +128,97 @@ class _PaymentModeSelectorState extends State<PaymentModeSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          S.current.paymentModeTitle,
-          style: FoodlyTextStyles.sectionsTitle,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          S.current.paymentModeSubtitle,
-          style: FoodlyTextStyles.caption,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 14),
-        _ModeCard(
-          mode: GroupPaymentMode.openTab,
-          icon: Icons.restaurant_rounded,
-          title: S.current.paymentModeOpenTabTitle,
-          body: S.current.paymentModeOpenTabBody,
-          flow: S.current.paymentModeOpenTabFlow,
-          selected: _selected == GroupPaymentMode.openTab,
-          onTap: () => setState(() => _selected = GroupPaymentMode.openTab),
-        ),
-        const SizedBox(height: 10),
-        _ModeCard(
-          mode: GroupPaymentMode.perRound,
-          icon: Icons.bolt_rounded,
-          title: S.current.paymentModePerRoundTitle,
-          body: S.current.paymentModePerRoundBody,
-          flow: S.current.paymentModePerRoundFlow,
-          selected: _selected == GroupPaymentMode.perRound,
-          onTap: () => setState(() => _selected = GroupPaymentMode.perRound),
-        ),
-        const SizedBox(height: 16),
-        _MinimumSection(
-          enabled: _minEnabled,
-          minMinor: _minMinor,
-          custom: _custom,
-          customCtrl: _customCtrl,
-          presets: _presets,
-          format: _fmt,
-          onToggle: (on) => setState(() {
-            _minEnabled = on;
-            // Apagarlo limpia el monto: si no, volver a encenderlo resucitaría
-            // en silencio un valor que el dueño ya había descartado.
-            if (!on) {
-              _minMinor = null;
+    // Scrollable a propósito: el diálogo creció al sumarse el ajuste de mesa
+    // y en su configuración más alta —mínimo personalizado, que despliega el
+    // campo "Otro"— desbordaba 13px. Un diálogo de ajustes que gana filas con
+    // el tiempo, o que se abre con el texto del sistema en grande, tiene que
+    // poder desplazarse en vez de romperse.
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            S.current.paymentModeTitle,
+            style: FoodlyTextStyles.sectionsTitle,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            S.current.paymentModeSubtitle,
+            style: FoodlyTextStyles.caption,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 14),
+          _ModeCard(
+            mode: GroupPaymentMode.openTab,
+            icon: Icons.restaurant_rounded,
+            title: S.current.paymentModeOpenTabTitle,
+            body: S.current.paymentModeOpenTabBody,
+            flow: S.current.paymentModeOpenTabFlow,
+            selected: _selected == GroupPaymentMode.openTab,
+            onTap: () => setState(() => _selected = GroupPaymentMode.openTab),
+          ),
+          const SizedBox(height: 10),
+          _ModeCard(
+            mode: GroupPaymentMode.perRound,
+            icon: Icons.bolt_rounded,
+            title: S.current.paymentModePerRoundTitle,
+            body: S.current.paymentModePerRoundBody,
+            flow: S.current.paymentModePerRoundFlow,
+            selected: _selected == GroupPaymentMode.perRound,
+            onTap: () => setState(() => _selected = GroupPaymentMode.perRound),
+          ),
+          const SizedBox(height: 16),
+          _MinimumSection(
+            enabled: _minEnabled,
+            minMinor: _minMinor,
+            custom: _custom,
+            customCtrl: _customCtrl,
+            presets: _presets,
+            format: _fmt,
+            onToggle: (on) => setState(() {
+              _minEnabled = on;
+              // Apagarlo limpia el monto: si no, volver a encenderlo resucitaría
+              // en silencio un valor que el dueño ya había descartado.
+              if (!on) {
+                _minMinor = null;
+                _custom = false;
+                _customCtrl.clear();
+              }
+            }),
+            onPreset: (minor) => setState(() {
               _custom = false;
-              _customCtrl.clear();
-            }
-          }),
-          onPreset: (minor) => setState(() {
-            _custom = false;
-            _minMinor = minor;
-          }),
-          onCustomTap: () => setState(() {
-            _custom = true;
-            _minMinor = _parseCustom(_customCtrl.text);
-          }),
-          onCustomChanged: (raw) => setState(() => _minMinor = _parseCustom(raw)),
-        ),
-        const SizedBox(height: 16),
-        // Sin esto, el pedido de un comensal que no escaneó el QR de su mesa
-        // llegaba al negocio sin decir a dónde llevarlo: en un local de 30
-        // mesas, indespachable.
-        _FilaSwitch(
-          titulo: S.current.groupOrderTableServiceTitle,
-          detalle: S.current.groupOrderTableServiceBody,
-          valor: _tableService,
-          onChanged: (v) => setState(() => _tableService = v),
-        ),
-        const SizedBox(height: 16),
-        CustomNeumorphicButton(
-          text: S.current.confirm,
-          disabled: _selected == null || !_minReady,
-          margin: EdgeInsets.zero,
-          padding: const EdgeInsets.all(12),
-          onPressed: _selected == null || !_minReady
-              ? null
-              : () => widget.onConfirm((mode: _selected!, minMinor: _minEnabled ? _minMinor : null, tableService: _tableService)),
-        ),
-      ],
+              _minMinor = minor;
+            }),
+            onCustomTap: () => setState(() {
+              _custom = true;
+              _minMinor = _parseCustom(_customCtrl.text);
+            }),
+            onCustomChanged: (raw) => setState(() => _minMinor = _parseCustom(raw)),
+          ),
+          const SizedBox(height: 16),
+          // Sin esto, el pedido de un comensal que no escaneó el QR de su mesa
+          // llegaba al negocio sin decir a dónde llevarlo: en un local de 30
+          // mesas, indespachable.
+          _FilaSwitch(
+            titulo: S.current.groupOrderTableServiceTitle,
+            detalle: S.current.groupOrderTableServiceBody,
+            valor: _tableService,
+            onChanged: (v) => setState(() => _tableService = v),
+          ),
+          const SizedBox(height: 16),
+          CustomNeumorphicButton(
+            text: S.current.confirm,
+            disabled: _selected == null || !_minReady,
+            margin: EdgeInsets.zero,
+            padding: const EdgeInsets.all(12),
+            onPressed: _selected == null || !_minReady
+                ? null
+                : () => widget.onConfirm(
+                    (mode: _selected!, minMinor: _minEnabled ? _minMinor : null, tableService: _tableService)),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -355,22 +363,6 @@ class _MinimumSection extends StatelessWidget {
         Row(
           spacing: 14,
           children: [
-            ui.NeumorphicSwitch(
-              key: PaymentModeSelector.switchMinimoKey,
-              value: enabled,
-              duration: Durations.medium2,
-              curve: Curves.decelerate,
-              onChanged: onToggle,
-              height: 28,
-              style: ui.NeumorphicSwitchStyle(
-                activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
-                inactiveTrackColor: Colors.black12,
-                activeThumbColor: FoodlyThemes.success,
-                inactiveThumbColor: FoodlyThemes.secondaryFoodly,
-                thumbShape: ui.NeumorphicShape.convex,
-                lightSource: ui.LightSource.topRight,
-              ),
-            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,6 +374,22 @@ class _MinimumSection extends StatelessWidget {
                     Text(S.current.paymentModeMinOff, style: FoodlyTextStyles.caption),
                   ],
                 ],
+              ),
+            ),
+            ui.NeumorphicSwitch(
+              key: PaymentModeSelector.switchMinimoKey,
+              value: enabled,
+              duration: Durations.medium2,
+              curve: Curves.decelerate,
+              onChanged: onToggle,
+              height: 26,
+              style: ui.NeumorphicSwitchStyle(
+                activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
+                inactiveTrackColor: Colors.black12,
+                activeThumbColor: FoodlyThemes.success,
+                inactiveThumbColor: FoodlyThemes.secondaryFoodly,
+                thumbShape: ui.NeumorphicShape.convex,
+                lightSource: ui.LightSource.topRight,
               ),
             ),
           ],
@@ -413,9 +421,7 @@ class _MinimumSection extends StatelessWidget {
           // La CONSECUENCIA, no el ajuste: "mínimo 5 €" solo repite lo que
           // acaba de tocar; esto le dice qué va a pasar en su mesa.
           Text(
-            minMinor == null
-                ? S.current.paymentModeMinPrompt
-                : S.current.paymentModeMinConsequence(format(minMinor!)),
+            minMinor == null ? S.current.paymentModeMinPrompt : S.current.paymentModeMinConsequence(format(minMinor!)),
             textAlign: TextAlign.center,
             style: FoodlyTextStyles.caption.copyWith(
               color: minMinor == null ? FoodlyThemes.error : null,
@@ -459,7 +465,6 @@ class _Chip extends StatelessWidget {
   }
 }
 
-
 /// Fila de ajuste con switch, en el lenguaje visual del selector.
 class _FilaSwitch extends StatelessWidget {
   final String titulo;
@@ -483,7 +488,9 @@ class _FilaSwitch extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(titulo, style: FoodlyTextStyles.labelBold),
+              // El mismo estilo que el título del mínimo, dos filas más
+              // arriba: son dos ajustes hermanos en el mismo diálogo.
+              Text(titulo, style: FoodlyTextStyles.actionsBody),
               const SizedBox(height: 2),
               Text(detalle, style: FoodlyTextStyles.caption),
             ],
@@ -494,7 +501,14 @@ class _FilaSwitch extends StatelessWidget {
           key: PaymentModeSelector.switchMesaKey,
           value: valor,
           height: 26,
-          style: const ui.NeumorphicSwitchStyle(activeTrackColor: FoodlyThemes.primaryFoodly),
+          style: ui.NeumorphicSwitchStyle(
+            activeTrackColor: FoodlyThemes.primaryFoodly.withValues(alpha: .73),
+            inactiveTrackColor: Colors.black12,
+            activeThumbColor: FoodlyThemes.success,
+            inactiveThumbColor: FoodlyThemes.secondaryFoodly,
+            thumbShape: ui.NeumorphicShape.convex,
+            lightSource: ui.LightSource.topRight,
+          ),
           onChanged: onChanged,
         ),
       ],

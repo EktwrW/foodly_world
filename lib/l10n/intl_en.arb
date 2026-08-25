@@ -1337,7 +1337,7 @@
   "groupOrderTableHint": "Table 12",
   "groupOrderTableRequired": "Enter your table to continue.",
   "groupOrderTableServiceTitle": "Table service",
-  "groupOrderTableServiceBody": "Diners who didn't scan their table's QR will be asked for it.",
+  "groupOrderTableServiceBody": "Diners who didn't scan their table's QR will be asked for their table number.",
   "managerOrderSettings": "Order settings",
   "groupOrderNoBalanceDue": "Nothing left to pay",
   "groupOrderExpiredNotice": "This order expired — the payment window ran out and nothing was charged. You can order again from the menu.",

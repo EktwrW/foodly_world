@@ -8,6 +8,7 @@ import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/routing/no_access_notice.dart';
 import 'package:foodly_world/core/routing/route_hierarchy.dart';
 import 'package:foodly_world/core/services/pending_group_join.dart';
+import 'package:foodly_world/core/services/pending_menu_jump.dart';
 import 'package:foodly_world/core/services/pending_table.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/no_access_snackbar_gate.dart';
 import 'package:foodly_world/ui/views/about/about_page.dart';
@@ -934,6 +935,13 @@ class AppRouter {
             redirect: (context, state) {
               if (authSessService.hasSessionOrPending) {
                 final uuid = state.pathParameters['businessUuid'] ?? '';
+                // Escanear el QR del menú lleva AL MENÚ, no al perfil: el
+                // comensal escaneó desde su mesa para pedir. No se puede
+                // redirigir directo —esta ruta trae el uuid del NEGOCIO y la
+                // del menú pide el del MENÚ— así que la intención se estaciona
+                // y la consume la pantalla del negocio cuando ya lo cargó.
+                PendingMenuJump.park(uuid);
+
                 return AppRoutes.visitBusiness.path.replaceFirst(':id', uuid);
               }
               return null;

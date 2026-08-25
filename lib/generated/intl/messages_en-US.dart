@@ -1348,7 +1348,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter your table to continue.",
     ),
     "groupOrderTableServiceBody": MessageLookupByLibrary.simpleMessage(
-      "Diners who didn\'t scan their table\'s QR will be asked for it.",
+      "Diners who didn\'t scan their table\'s QR will be asked for their table number.",
     ),
     "groupOrderTableServiceTitle": MessageLookupByLibrary.simpleMessage(
       "Table service",

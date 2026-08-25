@@ -8835,10 +8835,10 @@ class S {
     );
   }
 
-  /// `Diners who didn't scan their table's QR will be asked for it.`
+  /// `Diners who didn't scan their table's QR will be asked for their table number.`
   String get groupOrderTableServiceBody {
     return Intl.message(
-      'Diners who didn\'t scan their table\'s QR will be asked for it.',
+      'Diners who didn\'t scan their table\'s QR will be asked for their table number.',
       name: 'groupOrderTableServiceBody',
       desc: '',
       args: [],

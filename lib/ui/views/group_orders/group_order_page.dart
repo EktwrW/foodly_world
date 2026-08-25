@@ -370,7 +370,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
           const SizedBox(height: 6),
           Text(
             S.current.groupOrderBatchSentBody(negocio),
-            style: FoodlyTextStyles.caption,
+            style: FoodlyTextStyles.caption.copyWith(color: Colors.black87),
             textAlign: TextAlign.center,
           ),
         ],

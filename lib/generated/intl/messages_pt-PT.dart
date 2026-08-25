@@ -1408,7 +1408,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Escreve a tua mesa para continuar.",
     ),
     "groupOrderTableServiceBody": MessageLookupByLibrary.simpleMessage(
-      "Será pedida a mesa a quem não chegar pelo QR da sua.",
+      "Será pedido o número da mesa a quem não chegar pelo QR da sua.",
     ),
     "groupOrderTableServiceTitle": MessageLookupByLibrary.simpleMessage(
       "Sirvo à mesa",

@@ -19,8 +19,9 @@ import 'package:foodly_world/core/core_exports.dart'
         Weekday,
         BusinessDays,
         ScreenSizeExtension;
-import 'package:foodly_world/core/enums/business_enums.dart' show BusinessServices;
+import 'package:foodly_world/core/routing/app_routes.dart';
 import 'package:foodly_world/core/services/event_tracking_service.dart';
+import 'package:foodly_world/core/services/pending_menu_jump.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
@@ -32,9 +33,11 @@ import 'package:foodly_world/ui/shared_widgets/texts/email_phone_text_links.dart
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/view_model/visit_business_vm.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_footer_buttons.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_sliver_app_bar.dart';
 import 'package:foodly_world/ui/views/visited_business/widgets/visit_business_snackbars.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
@@ -78,6 +81,31 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
     super.dispose();
   }
 
+  /// Si el comensal llegó escaneando el QR del negocio, lo lleva al menú.
+  ///
+  /// El QR codifica `menu.foodly.solutions/{businessUuid}` y aterrizaba en el
+  /// perfil: había que encontrar y tocar "Menu" para poder pedir, cuando el
+  /// comensal escaneó desde su mesa justamente para eso. El salto no se puede
+  /// hacer en el redirect porque la ruta del menú pide el uuid del MENÚ, que
+  /// solo se conoce con el negocio ya cargado.
+  ///
+  /// `go` y no `push`: el perfil no debe quedar debajo. Y si el negocio no
+  /// tiene menú, no se salta — el comensal se queda en el perfil, que es el
+  /// destino de antes.
+  void _saltarAlMenuSiVieneDelQr(BuildContext context, VisitBusinessVM vm) {
+    final businessUuid = vm.currentBusiness?.uuid;
+    if (businessUuid == null || !PendingMenuJump.take(businessUuid)) return;
+
+    final menuUuid = vm.currentBusiness?.menus.firstOrNull?.uuid;
+    if (menuUuid == null || menuUuid.isEmpty) return;
+
+    context.goNamed(
+      AppRoutes.visitMenu.name,
+      pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      extra: vm.currentBusiness,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FoodlyWrapper(
@@ -86,7 +114,10 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
         listener: (context, state) {
           state.whenOrNull(
             loading: (vm) => _dialogService.showLoading(),
-            loaded: (vm) => _dialogService.hideLoading(),
+            loaded: (vm) {
+              _dialogService.hideLoading();
+              _saltarAlMenuSiVieneDelQr(context, vm);
+            },
             error: (e, vm) async {
               _dialogService.hideLoading();
               await Future.delayed(Durations.long1)
