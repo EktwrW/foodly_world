@@ -63,7 +63,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
       color: Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 6, 6, 10),
+        padding: const EdgeInsets.fromLTRB(12, 6, 4, 10),
         child: Column(
           children: [
             // Badge "Compartido" (F2c): se reparte entre todos.
@@ -221,7 +221,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                             color: FoodlyThemes.secondaryFoodly,
                             constraints: BoxConstraints.tightFor(width: 16, height: 16),
                           )
-                        : const Icon(Icons.remove_circle_outline, size: 16, color: FoodlyThemes.secondaryFoodly),
+                        : const Icon(Icons.remove_circle_outline, size: 18, color: FoodlyThemes.secondaryFoodly),
                   ).paddingLeft(6),
               ],
             ),
