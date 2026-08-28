@@ -166,21 +166,34 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
   }
 
   Future<MenuDM> _handleSuccessMenuResponse(MenuDM data) async {
-    late final MenuDM menuData;
-
     if (_vm.menuDM?.business != null) {
-      menuData = data.copyWith(business: _vm.menuDM?.business);
-    } else {
-      await _businessRepo.fetchBusinessById(data.businessUuid).then((result) async {
-        result.when(
-          success: (business) => menuData = data.copyWith(business: business),
-          failure: (e) {
-            if (!isClosed) emit(_Error(e.errorMsg, _vm));
-          },
-        );
-      });
+      return data.copyWith(business: _vm.menuDM?.business);
     }
-    return menuData;
+
+    final result = await _businessRepo.fetchBusinessById(data.businessUuid);
+
+    return result.when(
+      success: (business) => data.copyWith(business: business),
+      // El menú YA vino completo —el que salió bien fue `getMenu`—; lo único
+      // que falló es la hidratación del negocio. `business` solo aporta logo,
+      // nombre, símbolo de moneda y página inicial, y todos sus consumidores
+      // lo null-guardean (`MenuVM.currency` cae a '$', `businessLogo` y
+      // `businessName` son nullable, `menuInitialPageIndex` cae a 0). De
+      // hecho `BusinessMenuResource` lo manda null de fábrica — ver el doc de
+      // `MenuDM.business`: null acá es la forma NORMAL del payload.
+      //
+      // Por eso devolvemos el menú sin hidratar en vez de propagar el fallo:
+      // la pantalla no tiene vista de error —`visited_menu_screen` monta
+      // `_buildMenuWdg` también en `_Error`—, así que quedarse en error no
+      // pintaría un cartel, pintaría el menú VACÍO del constructor. Mejor el
+      // menú de verdad sin logo que una pantalla en blanco; del fallo avisa
+      // el snackbar.
+      failure: (e) {
+        if (!isClosed) emit(_Error(e.errorMsg, _vm));
+
+        return data;
+      },
+    );
   }
 
   void updateView(int index) => emit(_Loaded(_vm = _vm.copyWith(indexView: index)));
