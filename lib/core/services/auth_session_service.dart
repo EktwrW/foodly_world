@@ -154,6 +154,29 @@ class AuthSessionService {
 
   bool get mustCompleteProfile => false; //TODO: HW - define the logic to get this value
 
+  /// El dispositivo, en la forma que espera el backend al abrir sesión.
+  ///
+  /// Son los MISMOS datos que ya se recogen para analíticas — no se le pide
+  /// nada nuevo al aparato. Van con cada login, registro, refresco y entrada
+  /// por biometría para que la pantalla de sesiones activas pueda decir de qué
+  /// dispositivo es cada una; sin ellos la lista serían seis filas idénticas
+  /// con una fecha.
+  ///
+  /// `null` cuando `initDeviceMetadata` todavía no corrió o falló entera: es
+  /// opcional de punta a punta, así que la sesión nace sin estos datos y la
+  /// app la pinta como "sin identificar" en vez de impedir el login.
+  Map<String, dynamic>? get deviceForSession {
+    final info = deviceInfo;
+    final datos = <String, dynamic>{
+      if (platform != null) 'platform': platform!.name,
+      if (info?.model != null) 'model': info!.model,
+      if (info?.osVersion != null) 'os_version': info!.osVersion,
+      if (info?.appVersion != null) 'app_version': info!.appVersion,
+    };
+
+    return datos.isEmpty ? null : datos;
+  }
+
   /// Detects and caches platform + device metadata once at app startup.
   /// Safe to call without await — failures are swallowed to never block startup.
   Future<void> initDeviceMetadata() async {

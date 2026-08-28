@@ -5,6 +5,7 @@ import 'package:foodly_world/core/network/users/me_client.dart';
 import 'package:foodly_world/core/utils/file_handler/file_handler_selector.dart';
 import 'package:foodly_world/data_models/availability/username_dm.dart';
 import 'package:foodly_world/data_models/logout/logout_dm.dart';
+import 'package:foodly_world/data_models/user/active_session_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
@@ -55,6 +56,22 @@ class MeRepo {
   Future<ApiResult<UserSessionDM>> login({required UserBodyLoginDTO loginDTO}) async {
     try {
       return ApiResult.success(await _meClient.login(loginDTO));
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<ActiveSessionsDM>> getActiveSessions() async {
+    try {
+      return ApiResult.success(await _meClient.getActiveSessions());
+    } catch (e, s) {
+      return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
+    }
+  }
+
+  Future<ApiResult<void>> closeSession(String sessionId) async {
+    try {
+      return ApiResult.success(await _meClient.closeSession(sessionId));
     } catch (e, s) {
       return ApiResult.failure(AppRequestException(error: e, stackTrace: s));
     }

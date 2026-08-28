@@ -18,6 +18,7 @@ enum AppRoutes {
   termsConditions('/terms', 'termsConditions'),
   myReservations('/my-reservations', 'myReservations'),
   blockedUsers('/blocked-users', 'blockedUsers'),
+  activeSessions('/active-sessions', 'activeSessions'),
   about('/about', 'about'),
   manageReservations('$mainRoute/$_routeIdParam/my-business/manage-reservations', 'manageReservations'),
   // Business routes

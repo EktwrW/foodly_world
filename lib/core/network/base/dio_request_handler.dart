@@ -84,6 +84,12 @@ abstract class DioRequestHandler {
     };
     final path = options.path;
 
+    // El dispositivo viaja con toda petición que ABRA o RENUEVE una sesión.
+    // Va acá y no dentro de cuatro DTOs distintos porque es exactamente el
+    // mismo dato para las cinco rutas, el backend lo trata como opcional en
+    // todas, y así una ruta de sesión que se añada mañana lo hereda sola.
+    _adjuntarDispositivo(options, authSessionService);
+
     // `/public/places/details/{placeId}` es una ruta pública CON segmento
     // dinámico — no cabe en el Set exacto (cada placeId es diferente).
     // Usamos `startsWith('/public/places/details/')` SOLO para este caso,
@@ -170,6 +176,36 @@ abstract class DioRequestHandler {
     }
 
     return handler.next(options);
+  }
+
+  /// Rutas que abren o renuevan una sesión, y por tanto crean una fila en la
+  /// lista de sesiones activas del usuario.
+  static const _rutasDeSesion = <String>{
+    '/login',
+    '/social-login',
+    '/register',
+    '/token/refresh',
+    '/biometric-login',
+  };
+
+  /// Adjunta el dispositivo al cuerpo, sin pisar nada.
+  ///
+  /// `/token/refresh` y `/biometric-login` salen SIN cuerpo (Retrofit manda
+  /// `null`), así que hay que crearlo. Y si alguien ya puso un `device`
+  /// explícito, manda el suyo: esto es un valor por defecto, no una
+  /// imposición.
+  static void _adjuntarDispositivo(RequestOptions options, AuthSessionService authSessionService) {
+    if (!_rutasDeSesion.contains(options.path)) return;
+
+    final dispositivo = authSessionService.deviceForSession;
+    if (dispositivo == null) return;
+
+    final cuerpo = options.data;
+    if (cuerpo == null) {
+      options.data = <String, dynamic>{'device': dispositivo};
+    } else if (cuerpo is Map<String, dynamic> && !cuerpo.containsKey('device')) {
+      cuerpo['device'] = dispositivo;
+    }
   }
 
   /// Clave del sello de generación dentro de `RequestOptions.extra`.

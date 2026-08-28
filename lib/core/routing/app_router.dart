@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -49,6 +48,7 @@ import 'package:foodly_world/ui/views/sign_up/sign_up_user_page.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
 import 'package:foodly_world/ui/views/terms/terms_conditions_page.dart';
 import 'package:foodly_world/ui/views/user_profile/cubit/user_profile_cubit.dart';
+import 'package:foodly_world/ui/views/user_profile/sessions/active_sessions_page.dart';
 import 'package:foodly_world/ui/views/user_profile/user_profile_page.dart';
 import 'package:foodly_world/ui/views/visited_business/cubit/visited_business_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
@@ -59,6 +59,7 @@ import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/vi
 import 'package:foodly_world/ui/views/visited_business/service_packages/visit_service_packages_page.dart';
 import 'package:foodly_world/ui/views/visited_business/visit_business_page.dart';
 import 'package:go_router/go_router.dart';
+
 
 /// True when the app is running on the menu.foodly.solutions subdomain.
 /// Production: Uri.base.host starts with 'menu.'
@@ -82,7 +83,32 @@ class AppRouter {
   final LocalStorageService localStorageService = di<LocalStorageService>();
   final authSessService = di<AuthSessionService>();
 
-  String get currentLocation => _currentRoute.uri.toString();
+  /// La ubicación REAL, preguntándosela al router en vez de recordarla.
+  ///
+  /// EL BUG QUE ARREGLA (device, 2026-08-28). `_currentRoute` lo alimenta
+  /// `updateCurrentRoute` desde el redirect global, y el redirect NO CORRE EN
+  /// UN `pop`. El botón "atrás" de la orden hace `pop`, así que al volver al
+  /// menú `_currentRoute` seguía valiendo `/group-order/...`. El back del menú
+  /// calculaba entonces el destino "desde la orden" y elegía el menú — la
+  /// pantalla en la que ya estabas:
+  ///
+  ///     going to /visit-menu/8cf979a6…             <- primer toque: nada
+  ///     going to /main/8b2f0a4c…/visit-business    <- segundo: el que se ve
+  ///
+  /// El primer toque sí pasaba por el redirect, y eso refrescaba
+  /// `_currentRoute`; por eso el segundo funcionaba. Dos toques para un back.
+  ///
+  /// Los cuatro usos de esto —el back y `isOnShellRoute`— salen de un gesto
+  /// del usuario, nunca de dentro del redirect, así que ninguno necesita la
+  /// ubicación PEDIDA: todos quieren la que se está viendo.
+  ///
+  /// El respaldo cubre el arranque, cuando el router todavía no resolvió nada
+  /// y `currentConfiguration` viene vacío.
+  String get currentLocation {
+    final config = appRouter.routerDelegate.currentConfiguration;
+
+    return config.isEmpty ? _currentRoute.uri.toString() : config.uri.toString();
+  }
   GoRouterState get currentRoute => _currentRoute;
   UnmodifiableListView<String> get routeHistory => UnmodifiableListView(_routeHistory);
 
@@ -645,6 +671,8 @@ class AppRouter {
           _goRouteWithTransition(AppRoutes.termsConditions, const TermsConditionsPage(), []),
           _goRouteWithTransition(AppRoutes.myReservations, const MyReservationsPage(), [RedirectRoute.requiresLogin]),
           _goRouteWithTransition(AppRoutes.blockedUsers, const BlockedUsersPage(), [RedirectRoute.requiresLogin]),
+          _goRouteWithTransition(
+              AppRoutes.activeSessions, const ActiveSessionsPage(), [RedirectRoute.requiresLogin]),
           _goRouteWithTransition(AppRoutes.about, const AboutPage(), [RedirectRoute.requiresLogin]),
           GoRoute(
             path: AppRoutes.managePromotions.path,

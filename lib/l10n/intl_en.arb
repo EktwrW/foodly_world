@@ -360,13 +360,23 @@
   "scanForMenu": "Scan to view our menu",
   "poweredBy": "Powered by",
   "qrBatchCount": "{count} QRs · {first} to {last}",
-  "@qrBatchCount": {"placeholders": {"count": {}, "first": {}, "last": {}}},
+  "@qrBatchCount": {
+    "placeholders": {
+      "count": {},
+      "first": {},
+      "last": {}
+    }
+  },
   "qrBatchDownload": "One QR per table",
   "qrBatchFrom": "From",
   "qrBatchGenerate": "Generate PDF",
   "qrBatchHint": "Each table gets its own QR. When a guest scans it, their order already knows the table.",
   "qrBatchInvalidRange": "Check the range — up to {max} tables.",
-  "@qrBatchInvalidRange": {"placeholders": {"max": {}}},
+  "@qrBatchInvalidRange": {
+    "placeholders": {
+      "max": {}
+    }
+  },
   "qrBatchPrefix": "Label",
   "qrBatchPrefixDefault": "Table",
   "qrBatchTitle": "One QR per table",
@@ -1582,10 +1592,18 @@
     }
   },
   "menuCardMinimumNotice": "Minimum {amount} to pay in the app",
-  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "@menuCardMinimumNotice": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "menuCardMinimumNoticeBody": "Below that, payment is at the counter.",
   "paymentModeMinConsequence": "Orders below {amount} are paid at the counter.",
-  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "@paymentModeMinConsequence": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "paymentModeMinCustom": "Other",
   "paymentModeMinOff": "No minimum",
   "paymentModeMinPrompt": "Choose an amount to continue.",
@@ -1749,5 +1767,54 @@
   "groupOrderCashRequestUndo": "I'd rather pay in the app",
   "groupOrderPayAtRegisterConfirm": "Let the venue know you're paying at the counter? You won't be able to add more items to this order.",
   "managerAwaitingCashBadge": "PAYING AT COUNTER",
-  "managerAwaitingCashNotice": "The table said they're paying at the counter. Confirm once you receive the money."
+  "managerAwaitingCashNotice": "The table said they're paying at the counter. Confirm once you receive the money.",
+  "activeSessionsTitle": "Active sessions",
+  "activeSessionsProfileFooter": "Check where your account is signed in and close anything you don't recognise.",
+  "activeSessionsDevicesCount": "{used} of {max} devices",
+  "@activeSessionsDevicesCount": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsCapHint": "At {max}, the least used one is closed",
+  "@activeSessionsCapHint": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsThisDevice": "This device",
+  "activeSessionsUnknownDevice": "Unidentified device",
+  "activeSessionsBrowser": "Browser",
+  "activeSessionsDesktop": "Desktop",
+  "activeSessionsStartedOn": "Signed in on {date}",
+  "@activeSessionsStartedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsPrivacyNote": "We only store the device and when it was last used. We don't record your location.",
+  "activeSessionsLegacyNotice": "For sessions opened before this update we only know the date. Next time you sign in on that device it will show up identified.",
+  "activeSessionsCloseTitle": "Close this session?",
+  "activeSessionsCloseBody": "{device} will have to sign in again to use Foodly. Your other devices aren't affected.",
+  "@activeSessionsCloseBody": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsCloseCta": "Close session",
+  "activeSessionsClosed": "Session closed",
+  "activeSessionsLoadError": "We couldn't load your sessions.",
+  "activeSessionsTitle1": "Active ",
+  "activeSessionsTitle2": "sessions"
 }

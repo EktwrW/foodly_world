@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:foodly_world/data_models/availability/username_dm.dart';
 import 'package:foodly_world/data_models/logout/logout_dm.dart';
+import 'package:foodly_world/data_models/user/active_session_dm.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/auth_social_login_dto.dart';
@@ -31,6 +32,15 @@ abstract class MeClient {
 
   @POST('/token/refresh')
   Future<UserSessionDM> refreshToken();
+
+  /// Las sesiones abiertas de la cuenta, la actual primero.
+  @GET('/user/sessions')
+  Future<ActiveSessionsDM> getActiveSessions();
+
+  /// Cierra UNA sesión. El backend rechaza la actual con 422: cerrarla desde
+  /// esta pantalla desloguearía al usuario sin que lo haya pedido.
+  @DELETE('/user/sessions/{sessionId}')
+  Future<void> closeSession(@Path('sessionId') String sessionId);
 
   @POST('/logout')
   Future<LogoutDM> logout();

@@ -1592,10 +1592,18 @@
     }
   },
   "menuCardMinimumNotice": "Mínimo {amount} para pagar na app",
-  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "@menuCardMinimumNotice": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "menuCardMinimumNoticeBody": "Abaixo desse valor, o pagamento é ao balcão.",
   "paymentModeMinConsequence": "Pedidos abaixo de {amount} pagam-se ao balcão.",
-  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "@paymentModeMinConsequence": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "paymentModeMinCustom": "Outro",
   "paymentModeMinOff": "Sem mínimo",
   "paymentModeMinPrompt": "Escolhe um valor para continuar.",
@@ -1759,5 +1767,54 @@
   "groupOrderCashRequestUndo": "Prefiro pagar na app",
   "groupOrderPayAtRegisterConfirm": "Avisar que pagam ao balcão? Não poderás adicionar mais artigos a este pedido.",
   "managerAwaitingCashBadge": "PAGA AO BALCÃO",
-  "managerAwaitingCashNotice": "A mesa avisou que paga ao balcão. Confirma o pagamento quando receberes o dinheiro."
+  "managerAwaitingCashNotice": "A mesa avisou que paga ao balcão. Confirma o pagamento quando receberes o dinheiro.",
+  "activeSessionsTitle": "Sessões ativas",
+  "activeSessionsProfileFooter": "Vê onde tens a sessão aberta e fecha aquela que não reconheceres.",
+  "activeSessionsDevicesCount": "{used} de {max} dispositivos",
+  "@activeSessionsDevicesCount": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsCapHint": "Ao chegar a {max}, fecha-se a menos usada",
+  "@activeSessionsCapHint": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsThisDevice": "Este dispositivo",
+  "activeSessionsUnknownDevice": "Dispositivo não identificado",
+  "activeSessionsBrowser": "Navegador",
+  "activeSessionsDesktop": "Computador",
+  "activeSessionsStartedOn": "Sessão iniciada a {date}",
+  "@activeSessionsStartedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsPrivacyNote": "Só guardamos o dispositivo e a última vez que foi usado. Não registamos a tua localização.",
+  "activeSessionsLegacyNotice": "Das sessões abertas antes desta atualização só sabemos a data. Da próxima vez que iniciares sessão nesse dispositivo, aparecerá identificado.",
+  "activeSessionsCloseTitle": "Fechar esta sessão?",
+  "activeSessionsCloseBody": "O {device} terá de iniciar sessão novamente para usar o Foodly. Os teus outros dispositivos não são afetados.",
+  "@activeSessionsCloseBody": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsCloseCta": "Fechar sessão",
+  "activeSessionsClosed": "Sessão fechada",
+  "activeSessionsLoadError": "Não conseguimos carregar as tuas sessões.",
+  "activeSessionsTitle1": "Sessões ",
+  "activeSessionsTitle2": "ativas"
 }
