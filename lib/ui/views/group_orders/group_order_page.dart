@@ -376,9 +376,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         ],
       ),
       buttonBuilder: (dismiss) => Row(
-        spacing: 16,
+        spacing: 8,
         children: [
           Expanded(
+            flex: 3,
             child: CustomNeumorphicButton(
               text: S.current.groupOrderOrderMore,
               disabled: false,
@@ -396,6 +397,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             ),
           ),
           Expanded(
+            flex: 4,
             child: CustomNeumorphicButton(
               text: S.current.groupOrderSeeStatus,
               type: CustomNeumorphicBtnType.secondary,
@@ -975,7 +977,8 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setState) => Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          insetPadding: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
             child: Column(

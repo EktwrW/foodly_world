@@ -1,7 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart' show PaddingExtension;
+import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
@@ -63,23 +65,29 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
             child: Text(S.current.cancel, style: FoodlyTextStyles.caption),
           ),
         ],
-        child: TextField(
-          controller: controller,
-          autofocus: true,
-          textAlign: TextAlign.center,
-          maxLength: 30,
-          style: FoodlyTextStyles.sectionsTitle,
-          decoration: InputDecoration(
-            hintText: S.current.managerTableHint,
-            hintStyle: FoodlyTextStyles.caption,
-            counterText: '',
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3)),
+        child: Column(
+          children: [
+            const SizedBox(height: 6),
+            const Asset(FoodlyAssets.reserveTable, height: 40).paddingBottom(16),
+            TextField(
+              controller: controller,
+              autofocus: true,
+              textAlign: TextAlign.center,
+              maxLength: 30,
+              style: FoodlyTextStyles.sectionsTitle,
+              decoration: InputDecoration(
+                hintText: S.current.managerTableHint,
+                hintStyle: FoodlyTextStyles.caption,
+                counterText: '',
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.3)),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: FoodlyThemes.primaryFoodly, width: 2),
+                ),
+              ),
             ),
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: FoodlyThemes.primaryFoodly, width: 2),
-            ),
-          ),
+          ],
         ),
       ),
     );
@@ -333,7 +341,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
               style: FoodlyTextStyles.sectionsTitle,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 6),
+            const Asset(FoodlyAssets.payment, height: 40).paddingOnly(top: 8, bottom: 24),
             Text(
               S.current.managerCloseTabBody(
                 formatMoney(order.totalAmount, order.currency),
@@ -624,8 +632,7 @@ class _ParticipantChecklistState extends State<_ParticipantChecklist> {
                                   child: Text(
                                     item.name,
                                     style: (item.deliveredAt != null || item.isVoided)
-                                        ? FoodlyTextStyles.caption
-                                            .copyWith(decoration: TextDecoration.lineThrough)
+                                        ? FoodlyTextStyles.caption.copyWith(decoration: TextDecoration.lineThrough)
                                         : FoodlyTextStyles.label,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
