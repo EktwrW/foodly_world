@@ -74,7 +74,7 @@ class ActiveSessionsPage extends StatelessWidget {
         ),
         body: BlocBuilder<ActiveSessionsCubit, ActiveSessionsState>(
           builder: (context, state) => switch (state) {
-            ActiveSessionsLoading() => const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly)),
+            ActiveSessionsLoading() => const Center(child: LoadingWidgetFoodlyIso(height: 48)),
             ActiveSessionsError(:final message) => _ErrorWdg(message: message),
             ActiveSessionsLoaded(:final data, :final closingId) => _Lista(data: data, closingId: closingId),
           },
@@ -213,14 +213,14 @@ class _Tarjeta extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.06),
-              blurRadius: 10,
+              color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.16),
+              blurRadius: 6,
               offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -251,7 +251,8 @@ class _Tarjeta extends StatelessWidget {
                     if (session.lastUsedAt != null)
                       Text(
                         session.lastUsedAt!.toLocal().timeAgo,
-                        style: FoodlyTextStyles.caption.copyWith(fontSize: 13, color: Colors.black.withValues(alpha: 0.66)),
+                        style: FoodlyTextStyles.caption
+                            .copyWith(fontSize: 13, color: Colors.black.withValues(alpha: 0.66)),
                       ).paddingTop(5),
                     if (detalle.isNotEmpty)
                       Text(
@@ -283,9 +284,8 @@ class _Icono extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = actual
-        ? FoodlyThemes.tertiaryFoodly
-        : (session.isIdentified ? FoodlyThemes.primaryFoodly : Colors.black38);
+    final color =
+        actual ? FoodlyThemes.tertiaryFoodly : (session.isIdentified ? FoodlyThemes.primaryFoodly : Colors.black38);
 
     return Container(
       width: 44,
@@ -347,7 +347,7 @@ class _BotonCerrar extends StatelessWidget {
     return IconButton(
       onPressed: bloqueada ? null : () => confirmarCierreDeSesion(context, session),
       icon: const Icon(Bootstrap.door_open_fill, size: 19),
-      color: FoodlyThemes.secondaryFoodly,
+      color: FoodlyThemes.primaryFoodly,
       tooltip: S.current.activeSessionsCloseCta,
       constraints: const BoxConstraints.tightFor(width: 44, height: 44),
       padding: EdgeInsets.zero,
