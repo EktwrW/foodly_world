@@ -2,11 +2,14 @@ import 'package:animate_do/animate_do.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/user/active_session_dm.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/user_profile/sessions/cubit/active_sessions_cubit.dart';
 import 'package:foodly_world/ui/views/user_profile/sessions/session_presentation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 import 'package:intl/intl.dart';
 
@@ -32,11 +35,42 @@ class ActiveSessionsPage extends StatelessWidget {
       create: (_) => ActiveSessionsCubit(di()),
       child: Scaffold(
         backgroundColor: _fondo,
+        // Nav bar secundaria de Foodly (gradiente glassmórfico + back redondo),
+        // la misma de About, Mis reservas y Usuarios bloqueados. Esta pantalla
+        // se cuelga del perfil como esas, así que llega por el mismo sitio y
+        // tiene que verse igual.
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text(S.current.activeSessionsTitle, style: FoodlyTextStyles.sectionsTitle),
+          toolbarHeight: 60,
+          actions: [
+            Text(
+              S.current.activeSessionsTitle,
+              overflow: TextOverflow.ellipsis,
+              style: FoodlyTextStyles.secondaryTitle.copyWith(color: Colors.white, fontSize: 20),
+            ).paddingOnly(right: 18),
+          ],
+          leading: CustomRoundedNeumorphicButton(
+            iconSize: 26,
+            diameter: 32,
+            iconData: Bootstrap.caret_left_fill,
+            onPressed: () {
+              if (context.canPop()) {
+                di<AppRouter>().removeLastRouteHistory();
+                context.pop();
+              } else {
+                di<AppRouter>().goBackToLastRoute();
+              }
+            },
+            padding: const EdgeInsets.all(6),
+          ).paddingSymmetric(vertical: 10, horizontal: 10),
+          leadingWidth: 60,
         ),
         body: BlocBuilder<ActiveSessionsCubit, ActiveSessionsState>(
           builder: (context, state) => switch (state) {
