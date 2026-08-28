@@ -63,7 +63,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
       color: Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 6, 4, 10),
+        padding: const EdgeInsets.fromLTRB(10, 6, 8, 10),
         child: Column(
           children: [
             // Badge "Compartido" (F2c): se reparte entre todos.
@@ -106,15 +106,20 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                 // Badge de cantidad
                 Container(
                   width: 30,
-                  height: 30,
+                  height: 26,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: FoodlyThemes.primaryFoodly.withValues(alpha: 0.10),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text('${item.quantity}×', style: FoodlyTextStyles.labelPurpleBold),
+                  margin: const EdgeInsets.only(right: 6),
+                  child: Text(
+                    '${item.quantity}×',
+                    style: FoodlyTextStyles.labelPurpleBold,
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
-                const SizedBox(width: 12),
+
                 // Nombre + notas
                 Expanded(
                   child: Column(
