@@ -57,7 +57,8 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
         return result.when(
           success: (data) async => await _handleSuccessMenuResponse(data),
           failure: (e) {
-            emit(_Error(e.errorMsg, _vm));
+            if (!isClosed) emit(_Error(e.errorMsg, _vm));
+
             return _vm.menuDM!;
           },
         );
@@ -67,7 +68,8 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
         return result.when(
           success: (data) async => await _handleSuccessMenuResponse(data),
           failure: (e) {
-            emit(_Error(e.errorMsg, _vm));
+            if (!isClosed) emit(_Error(e.errorMsg, _vm));
+
             return _vm.menuDM!;
           },
         );
@@ -86,6 +88,15 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
     );
 
     if (_vm.menuDM != null) await _precacheMenuImages(_vm.menuDM!);
+
+    // Entre el `await` de la red y este emit la página puede haberse ido, y
+    // con ella el cubit. Pasó en producción (Crashlytics, 2026-08-28): al
+    // abrir el menú de un negocio, el backend invalidó la sesión —otra
+    // sesión del mismo usuario había rotado los tokens—, el router mandó a
+    // /login y el `emit` de acá reventó con "Cannot emit new states after
+    // calling close". No hace falta un logout para provocarlo: basta con
+    // volver atrás mientras se precachean las imágenes.
+    if (isClosed) return;
     emit(_Loaded(_vm));
 
     // Sincronizar el `PageController` SOLO en el caso edge:
@@ -163,7 +174,9 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
       await _businessRepo.fetchBusinessById(data.businessUuid).then((result) async {
         result.when(
           success: (business) => menuData = data.copyWith(business: business),
-          failure: (e) => emit(_Error(e.errorMsg, _vm)),
+          failure: (e) {
+            if (!isClosed) emit(_Error(e.errorMsg, _vm));
+          },
         );
       });
     }
