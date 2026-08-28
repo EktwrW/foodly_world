@@ -215,10 +215,10 @@ class _HistoryOrderSheet extends StatelessWidget {
       builder: (_, scrollCtrl) => DecoratedBox(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         ),
         child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
           child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
             builder: (context, state) {
               final order = state.orders.where((o) => o.uuid == orderUuid).firstOrNull;

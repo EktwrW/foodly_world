@@ -283,7 +283,7 @@ class MenuQrPoster extends StatelessWidget {
       width: 320,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.fromLTRB(24, 26, 24, 16),
       child: Column(

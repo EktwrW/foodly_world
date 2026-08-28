@@ -54,7 +54,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (ctx) => SafeArea(
         child: SizedBox(
@@ -69,8 +69,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: Text(S.current.groupOrderScanHint,
-                    style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
+                child: Text(S.current.groupOrderScanHint, style: FoodlyTextStyles.caption, textAlign: TextAlign.center),
               ),
               const SizedBox(height: 12),
               Expanded(
@@ -81,9 +80,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
                     child: MobileScanner(
                       onDetect: (capture) {
                         if (handled) return;
-                        final raw = capture.barcodes.isEmpty
-                            ? null
-                            : capture.barcodes.first.rawValue;
+                        final raw = capture.barcodes.isEmpty ? null : capture.barcodes.first.rawValue;
                         if (raw == null) return;
                         // Acepta la URL de invitación (App Link), el
                         // payload legacy FOODLY-GO: o un código pelado.
@@ -106,8 +103,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
               ),
               TextButton(
                 onPressed: () => Navigator.pop(ctx, '__manual__'),
-                child: Text(S.current.groupOrderEnterCodeManually,
-                    style: FoodlyTextStyles.captionPurpleBold),
+                child: Text(S.current.groupOrderEnterCodeManually, style: FoodlyTextStyles.captionPurpleBold),
               ),
               const SizedBox(height: 8),
             ],
@@ -195,8 +191,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
       }
     } else {
       // e2e r5: mostrar la causa real del backend cuando existe.
-      FoodlySnackbars.errorGeneric(
-          context, cubit.lastJoinError ?? S.current.groupOrderJoinFailed);
+      FoodlySnackbars.errorGeneric(context, cubit.lastJoinError ?? S.current.groupOrderJoinFailed);
     }
   }
 
