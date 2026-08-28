@@ -10764,6 +10764,186 @@ class S {
       args: [],
     );
   }
+
+  /// `Active sessions`
+  String get activeSessionsTitle {
+    return Intl.message(
+      'Active sessions',
+      name: 'activeSessionsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check where your account is signed in and close anything you don't recognise.`
+  String get activeSessionsProfileFooter {
+    return Intl.message(
+      'Check where your account is signed in and close anything you don\'t recognise.',
+      name: 'activeSessionsProfileFooter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{used} of {max} devices`
+  String activeSessionsDevicesCount(int used, int max) {
+    return Intl.message(
+      '$used of $max devices',
+      name: 'activeSessionsDevicesCount',
+      desc: '',
+      args: [used, max],
+    );
+  }
+
+  /// `At {max}, the least used one is closed`
+  String activeSessionsCapHint(int max) {
+    return Intl.message(
+      'At $max, the least used one is closed',
+      name: 'activeSessionsCapHint',
+      desc: '',
+      args: [max],
+    );
+  }
+
+  /// `This device`
+  String get activeSessionsThisDevice {
+    return Intl.message(
+      'This device',
+      name: 'activeSessionsThisDevice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unidentified device`
+  String get activeSessionsUnknownDevice {
+    return Intl.message(
+      'Unidentified device',
+      name: 'activeSessionsUnknownDevice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Browser`
+  String get activeSessionsBrowser {
+    return Intl.message(
+      'Browser',
+      name: 'activeSessionsBrowser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Desktop`
+  String get activeSessionsDesktop {
+    return Intl.message(
+      'Desktop',
+      name: 'activeSessionsDesktop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Signed in on {date}`
+  String activeSessionsStartedOn(String date) {
+    return Intl.message(
+      'Signed in on $date',
+      name: 'activeSessionsStartedOn',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `We only store the device and when it was last used. We don't record your location.`
+  String get activeSessionsPrivacyNote {
+    return Intl.message(
+      'We only store the device and when it was last used. We don\'t record your location.',
+      name: 'activeSessionsPrivacyNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For sessions opened before this update we only know the date. Next time you sign in on that device it will show up identified.`
+  String get activeSessionsLegacyNotice {
+    return Intl.message(
+      'For sessions opened before this update we only know the date. Next time you sign in on that device it will show up identified.',
+      name: 'activeSessionsLegacyNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close this session?`
+  String get activeSessionsCloseTitle {
+    return Intl.message(
+      'Close this session?',
+      name: 'activeSessionsCloseTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{device} will have to sign in again to use Foodly. Your other devices aren't affected.`
+  String activeSessionsCloseBody(String device) {
+    return Intl.message(
+      '$device will have to sign in again to use Foodly. Your other devices aren\'t affected.',
+      name: 'activeSessionsCloseBody',
+      desc: '',
+      args: [device],
+    );
+  }
+
+  /// `Close session`
+  String get activeSessionsCloseCta {
+    return Intl.message(
+      'Close session',
+      name: 'activeSessionsCloseCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session closed`
+  String get activeSessionsClosed {
+    return Intl.message(
+      'Session closed',
+      name: 'activeSessionsClosed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn't load your sessions.`
+  String get activeSessionsLoadError {
+    return Intl.message(
+      'We couldn\'t load your sessions.',
+      name: 'activeSessionsLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active `
+  String get activeSessionsTitle1 {
+    return Intl.message(
+      'Active ',
+      name: 'activeSessionsTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sessions`
+  String get activeSessionsTitle2 {
+    return Intl.message(
+      'sessions',
+      name: 'activeSessionsTitle2',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

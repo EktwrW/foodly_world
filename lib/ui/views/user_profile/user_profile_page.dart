@@ -34,6 +34,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
+part 'widgets/active_sessions_section.dart';
 part 'widgets/delete_account_section.dart';
 part 'widgets/user_birthday_date.dart';
 part 'widgets/user_contacts.dart';
@@ -139,6 +140,16 @@ class UserProfilePage extends StatelessWidget {
                           editingWidget:
                               _EditUsersPassword(vm: vm, key: Key('Edit-${vm.currentUser?.fullName}-password')),
                         ),
+                        if (vm.loggedUserCanEdit)
+                          _UserProfileSectionWdg(
+                            key: const Key('Active-sessions'),
+                            titleFirstText: S.current.activeSessionsTitle1,
+                            titleSecondText: S.current.activeSessionsTitle2,
+                            footerText: S.current.activeSessionsProfileFooter,
+                            editing: false,
+                            readOnlyWidget: const _ActiveSessionsPlaceholder(),
+                            editingWidget: const SizedBox.shrink(),
+                          ),
                         _UserProfileSectionWdg(
                           onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingAddress
                               ? null

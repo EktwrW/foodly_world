@@ -1592,10 +1592,18 @@
     }
   },
   "menuCardMinimumNotice": "Mínimo {amount} para pagar en la app",
-  "@menuCardMinimumNotice": {"placeholders": {"amount": {}}},
+  "@menuCardMinimumNotice": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "menuCardMinimumNoticeBody": "Por debajo de ese monto, el pago es en caja.",
   "paymentModeMinConsequence": "Los pedidos por debajo de {amount} se pagan en caja.",
-  "@paymentModeMinConsequence": {"placeholders": {"amount": {}}},
+  "@paymentModeMinConsequence": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
   "paymentModeMinCustom": "Otro",
   "paymentModeMinOff": "Sin mínimo",
   "paymentModeMinPrompt": "Elige un monto para continuar.",
@@ -1759,5 +1767,54 @@
   "groupOrderCashRequestUndo": "Prefiero pagar en la app",
   "groupOrderPayAtRegisterConfirm": "¿Avisar al negocio que pagas en caja? No podrás añadir más artículos a este pedido.",
   "managerAwaitingCashBadge": "PAGA EN CAJA",
-  "managerAwaitingCashNotice": "La mesa avisó que paga en el mostrador. Confirma el cobro cuando recibas el dinero."
+  "managerAwaitingCashNotice": "La mesa avisó que paga en el mostrador. Confirma el cobro cuando recibas el dinero.",
+  "activeSessionsTitle": "Sesiones activas",
+  "activeSessionsProfileFooter": "Revisa desde dónde tienes la sesión abierta y cierra la que no reconozcas.",
+  "activeSessionsDevicesCount": "{used} de {max} dispositivos",
+  "@activeSessionsDevicesCount": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsCapHint": "Al llegar a {max}, se cierra la menos usada",
+  "@activeSessionsCapHint": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activeSessionsThisDevice": "Este dispositivo",
+  "activeSessionsUnknownDevice": "Dispositivo sin identificar",
+  "activeSessionsBrowser": "Navegador",
+  "activeSessionsDesktop": "Escritorio",
+  "activeSessionsStartedOn": "Sesión iniciada el {date}",
+  "@activeSessionsStartedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsPrivacyNote": "Solo guardamos el dispositivo y la última vez que se usó. No registramos tu ubicación.",
+  "activeSessionsLegacyNotice": "De las sesiones abiertas antes de esta actualización solo conocemos la fecha. La próxima vez que inicies sesión en ese dispositivo, aparecerá identificado.",
+  "activeSessionsCloseTitle": "¿Cerrar esta sesión?",
+  "activeSessionsCloseBody": "{device} tendrá que volver a iniciar sesión para usar Foodly. Tus otros dispositivos no se ven afectados.",
+  "@activeSessionsCloseBody": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "activeSessionsCloseCta": "Cerrar sesión",
+  "activeSessionsClosed": "Sesión cerrada",
+  "activeSessionsLoadError": "No pudimos cargar tus sesiones.",
+  "activeSessionsTitle1": "Sesiones ",
+  "activeSessionsTitle2": "activas"
 }
