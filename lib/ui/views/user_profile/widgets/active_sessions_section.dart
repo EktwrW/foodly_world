@@ -20,7 +20,7 @@ class _ActiveSessionsPlaceholder extends StatelessWidget {
         onPressed: () => context.pushNamed(AppRoutes.activeSessions.name),
         child: Row(
           children: [
-            const Icon(Bootstrap.display, color: FoodlyThemes.primaryFoodly, size: 20),
+            const Icon(Clarity.devices_line, color: FoodlyThemes.primaryFoodly, size: 20),
             Expanded(
               child: Text(S.current.activeSessionsTitle, style: FoodlyTextStyles.primaryBodySemiBold).paddingLeft(12),
             ),
