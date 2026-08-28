@@ -453,6 +453,28 @@ class AuthSessionService {
   /// [_rootBloc]). Sin esto, una sesión muerta del lado servidor quedaba en
   /// el `_CachedState` y CADA arranque volvía a ofrecer login biométrico
   /// contra un token que el backend ya rechazó → loop 401 → starting page.
+  /// Vacía todo lo que pertenece AL USUARIO que se va.
+  ///
+  /// Existe para que las DOS salidas de sesión —la manual y la automática—
+  /// limpien lo mismo. Estaban divergidas: `_tearDownSession` apagaba estos
+  /// cinco y `clearInvalidSession` solo dos, así que tras un logout AUTOMÁTICO
+  /// el carrito de orden grupal —singleton en memoria— sobrevivía. En una
+  /// tablet compartida eso es la orden del usuario anterior, con su monto,
+  /// esperando al siguiente que entre; es el mismo bug que ya se arregló para
+  /// el logout manual (ver el comentario en `_tearDownSession`, 2026-07-31) y
+  /// que había quedado abierto por el otro lado.
+  ///
+  /// Todos son `registerLazySingleton`, así que se pueden pedir en cualquier
+  /// momento posterior al setup del locator — incluido el arranque, donde
+  /// `initializeSessionOrClear` puede invalidar una sesión cacheada.
+  void _clearUserScopedState() {
+    _favoritesCubit?.clearAllFavorites();
+    _notificationsCubit?.clear();
+    di<SocialCubit>().clear();
+    di<NearbyPromotionsCubit>().clear();
+    di<ActiveGroupOrderCubit>().end();
+  }
+
   void clearInvalidSession() {
     // Cerrar también cierra generación: las requests que quedaron en vuelo
     // pertenecen a una sesión que ya no existe. Ver [_sessionGeneration].
@@ -466,8 +488,7 @@ class AuthSessionService {
     _refreshInFlight = null;
     _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
     _secureTokenService.clearAll(); // fire-and-forget
-    _favoritesCubit?.clearAllFavorites();
-    _notificationsCubit?.clear();
+    _clearUserScopedState();
 
     // Devuelve la starting page a un estado renderable. Tras un login, el
     // StartingCubit singleton queda en `_UserAuthenticated`; StartingPage369
@@ -629,15 +650,11 @@ class AuthSessionService {
     _refreshToken = null;
     _appApiProvider.dio.options.headers.remove(FoodlyStrings.AUTHORIZATION);
     await _secureTokenService.clearAll();
-    _favoritesCubit?.clearAllFavorites();
-    _notificationsCubit?.clear();
-    di<SocialCubit>().clear();
-    di<NearbyPromotionsCubit>().clear();
     // Bug e2e 2026-07-31: el carrito de orden grupal es singleton en memoria
     // y sobrevivía al logout — el siguiente usuario del MISMO dispositivo
-    // heredaba la orden ajena ("Ver pedido" → 403, círculo vicioso). end()
+    // heredaba la orden ajena ("Ver pedido" → 403, círculo vicioso). `end()`
     // además retira la notificación ongoing de Android vía onChange.
-    di<ActiveGroupOrderCubit>().end();
+    _clearUserScopedState();
     _rootBloc?.add(const RootEvent.userLogout());
     forceToLogin = true;
   }

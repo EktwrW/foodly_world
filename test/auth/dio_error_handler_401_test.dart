@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'user_scoped_cubit_fakes.dart';
 
 /// Spy del [AuthSessionService] que trackea las llamadas relevantes al
 /// 401 path: notifyTokenExpired, silentRefresh, y los flags de guard.
@@ -186,6 +187,8 @@ void main() {
   late _FakeApiProvider apiProvider;
 
   setUp(() {
+    // Las rutas de cierre de sesión los piden por el locator.
+    registrarCubitsDeUsuario();
     if (di.isRegistered<AuthSessionService>()) di.unregister<AuthSessionService>();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
 
@@ -206,6 +209,7 @@ void main() {
   });
 
   tearDown(() {
+    desregistrarCubitsDeUsuario();
     if (di.isRegistered<AuthSessionService>()) di.unregister<AuthSessionService>();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
   });

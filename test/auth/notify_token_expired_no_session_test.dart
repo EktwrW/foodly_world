@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'user_scoped_cubit_fakes.dart';
 
 /// Stubs mínimos para satisfacer el constructor de [AuthSessionService].
 ///
@@ -67,7 +68,11 @@ void main() {
 
   late AuthSessionService service;
 
+  tearDown(desregistrarCubitsDeUsuario);
+
   setUp(() {
+    // Las rutas de cierre de sesión los piden por el locator.
+    registrarCubitsDeUsuario();
     // Limpiamos di entre tests para no contaminar (el método podría llegar
     // a usar `di<AppRouter>` o `di<Logger>` en el path tras los guards;
     // si llega ahí, lanzaría StateError y el test fallaría — exactamente

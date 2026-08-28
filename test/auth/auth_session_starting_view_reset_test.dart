@@ -6,6 +6,7 @@ import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
 import 'package:foodly_world/data_transfer_objects/user/user_body_login_dto.dart';
 import 'package:foodly_world/ui/views/starting/starting_page.dart';
+import 'user_scoped_cubit_fakes.dart';
 
 /// Tests del reset de la starting page tras invalidar la sesión.
 ///
@@ -128,6 +129,8 @@ void main() {
   late _FakeMeRepo fakeMeRepo;
 
   setUp(() {
+    // Las rutas de cierre de sesión los piden por el locator.
+    registrarCubitsDeUsuario();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
     if (di.isRegistered<Logger>()) di.unregister<Logger>();
     if (di.isRegistered<BaseConfig>()) di.unregister<BaseConfig>();
@@ -153,6 +156,7 @@ void main() {
   });
 
   tearDown(() {
+    desregistrarCubitsDeUsuario();
     startingCubit.close();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
     if (di.isRegistered<Logger>()) di.unregister<Logger>();

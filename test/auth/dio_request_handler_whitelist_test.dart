@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'user_scoped_cubit_fakes.dart';
 
 /// Fake AuthSessionService que TRACKEA cuántas veces se invoca cada API
 /// pública relevante para los tests del interceptor. No usa la real porque
@@ -113,6 +114,8 @@ void main() {
   late _SpyAuthSessionService spy;
 
   setUp(() {
+    // Las rutas de cierre de sesión los piden por el locator.
+    registrarCubitsDeUsuario();
     if (di.isRegistered<AuthSessionService>()) {
       di.unregister<AuthSessionService>();
     }
@@ -121,6 +124,7 @@ void main() {
   });
 
   tearDown(() {
+    desregistrarCubitsDeUsuario();
     if (di.isRegistered<AuthSessionService>()) {
       di.unregister<AuthSessionService>();
     }

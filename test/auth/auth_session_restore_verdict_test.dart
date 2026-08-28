@@ -5,6 +5,7 @@ import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'user_scoped_cubit_fakes.dart';
 
 /// Tests del veredicto de validación de sesión — `sessionRestoreVerdict`.
 ///
@@ -143,6 +144,8 @@ void main() {
   late _FakeMeRepo fakeMeRepo;
 
   setUp(() {
+    // Las rutas de cierre de sesión los piden por el locator.
+    registrarCubitsDeUsuario();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
     if (di.isRegistered<Logger>()) di.unregister<Logger>();
     di.registerSingleton<FoodlyApiProvider>(_FakeApiProvider());
@@ -161,6 +164,7 @@ void main() {
   });
 
   tearDown(() {
+    desregistrarCubitsDeUsuario();
     if (di.isRegistered<FoodlyApiProvider>()) di.unregister<FoodlyApiProvider>();
     if (di.isRegistered<Logger>()) di.unregister<Logger>();
   });
