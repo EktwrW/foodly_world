@@ -11,6 +11,19 @@ class FoodlyThemes {
   //Foodly colors:
   static const primaryFoodly = Color(0xFF79005D);
   static const secondaryFoodly = Color(0xFFAF8B96);
+
+  /// `secondaryFoodly` para TEXTO: mismo tono (342°) y misma saturación (18%),
+  /// bajado de 62% a 44% de luz.
+  ///
+  /// POR QUÉ EXISTE. `secondaryFoodly` sobre blanco da 2.76:1 y no llega al
+  /// mínimo de 4.5:1 que la WCAG pide para texto por debajo de ~18px — con
+  /// alpha encima, 2.49:1. No es un tecnicismo: la pantalla de sesiones salió
+  /// así y no se podía leer (2026-08-28). Este tono da 5.63:1 sobre blanco y
+  /// 5.14:1 sobre el gris de fondo, con margen para no quedar al filo.
+  ///
+  /// Se usa para TEXTO. Para bordes, iconos decorativos y fondos teñidos sigue
+  /// valiendo `secondaryFoodly`: ahí no hay nada que leer.
+  static const secondaryFoodlyText = Color(0xFF855C68);
   static const tertiaryFoodly = Color(0xFF14C45D);
   static final accentColor = const Color(0xFF79005D).lighten(20);
 

@@ -104,7 +104,7 @@ class _Lista extends StatelessWidget {
           if (_hayHeredadas) const _AvisoHeredadas().paddingTop(4),
           Text(
             S.current.activeSessionsPrivacyNote,
-            style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodly, height: 1.5),
+            style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodlyText, height: 1.5),
           ).paddingOnly(top: 20, left: 6, right: 6),
         ],
       ),
@@ -130,7 +130,7 @@ class _Capacidad extends StatelessWidget {
               Text(S.current.activeSessionsDevicesCount(usadas, max), style: FoodlyTextStyles.labelBold),
               Text(
                 S.current.activeSessionsCapHint(max),
-                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodly),
+                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.secondaryFoodlyText),
               ).paddingTop(3),
             ],
           ),
@@ -205,8 +205,9 @@ class _Tarjeta extends StatelessWidget {
                               // La heredada se nombra en gris: no es un aparato
                               // reconocido, y decirlo con el mismo peso que a
                               // los demás sería fingir que sí lo es.
-                              color: identificada ? Colors.black87 : Colors.black54,
+                              color: identificada ? Colors.black87 : Colors.black.withValues(alpha: 0.70),
                             ),
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -216,14 +217,14 @@ class _Tarjeta extends StatelessWidget {
                     if (session.lastUsedAt != null)
                       Text(
                         session.lastUsedAt!.toLocal().timeAgo,
-                        style: FoodlyTextStyles.caption.copyWith(fontSize: 13, color: Colors.black54),
+                        style: FoodlyTextStyles.caption.copyWith(fontSize: 13, color: Colors.black.withValues(alpha: 0.66)),
                       ).paddingTop(5),
                     if (detalle.isNotEmpty)
                       Text(
                         detalle,
                         style: FoodlyTextStyles.caption.copyWith(
                           fontSize: 11,
-                          color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.85),
+                          color: FoodlyThemes.secondaryFoodlyText,
                         ),
                       ).paddingTop(5),
                   ],
@@ -337,7 +338,7 @@ class _AvisoHeredadas extends StatelessWidget {
           Expanded(
             child: Text(
               S.current.activeSessionsLegacyNotice,
-              style: FoodlyTextStyles.caption.copyWith(color: Colors.black54, height: 1.55),
+              style: FoodlyTextStyles.caption.copyWith(color: Colors.black87, height: 1.55),
             ).paddingLeft(12),
           ),
         ],
