@@ -143,7 +143,7 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
                                       style: FoodlyTextStyles.labelBold, overflow: TextOverflow.ellipsis),
                                   if (u.username.isNotEmpty)
                                     Text('@${u.username}',
-                                        style: FoodlyTextStyles.caption.copyWith(color: Colors.grey)),
+                                        style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey)),
                                 ],
                               ),
                             ),

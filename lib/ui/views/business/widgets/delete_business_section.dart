@@ -90,7 +90,7 @@ class DeleteBusinessSection extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(S.current.cancel, style: const TextStyle(color: Colors.grey)),
+            child: Text(S.current.cancel, style: const TextStyle(color: FoodlyThemes.neutralTextGrey)),
           ),
           ElevatedButton(
             onPressed: () {

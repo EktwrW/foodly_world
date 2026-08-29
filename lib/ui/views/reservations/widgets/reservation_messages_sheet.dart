@@ -447,7 +447,7 @@ class _ReservationMessagesSheetState extends State<_ReservationMessagesSheet> wi
                 const SizedBox(height: 12),
                 Text(
                   S.current.noMessagesYet,
-                  style: FoodlyTextStyles.caption.copyWith(color: Colors.grey),
+                  style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey),
                 ),
               ],
             ),
@@ -623,7 +623,7 @@ class _MessageBubble extends StatelessWidget {
                 if (message.createdAt != null)
                   Text(
                     DateFormat.Hm().format(message.createdAt!),
-                    style: TextStyle(fontSize: 10, color: Colors.grey.shade500),
+                    style: const TextStyle(fontSize: 10, color: FoodlyThemes.neutralTextGrey),
                   ),
               ],
             ),

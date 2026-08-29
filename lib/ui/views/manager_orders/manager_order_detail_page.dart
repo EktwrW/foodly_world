@@ -190,7 +190,7 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
                           child: Text(
                             S.current.managerChecklistHint,
                             style:
-                                FoodlyTextStyles.caption.copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
+                                FoodlyTextStyles.caption.copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodlyText),
                           ),
                         ),
                       ],

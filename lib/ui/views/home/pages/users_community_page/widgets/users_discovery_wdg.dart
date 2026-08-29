@@ -132,7 +132,7 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
           const SizedBox(height: 8),
           Text(
             'Try increasing your search radius',
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
+            style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey),
           ),
         ],
       ).paddingBottom(60),

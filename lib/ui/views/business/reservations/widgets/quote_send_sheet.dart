@@ -175,7 +175,7 @@ class _QuoteSendSheetState extends State<_QuoteSendSheet> {
         labelText: S.current.enterQuoteAmount,
         labelStyle: FoodlyTextStyles.hintText,
         prefixText: '$currency ',
-        prefixStyle: const TextStyle(color: FoodlyThemes.secondaryFoodly, fontWeight: FontWeight.w600),
+        prefixStyle: const TextStyle(color: FoodlyThemes.secondaryFoodlyText, fontWeight: FontWeight.w600),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),

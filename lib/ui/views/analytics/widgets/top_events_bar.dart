@@ -70,7 +70,7 @@ class TopEventsBar extends StatelessWidget {
                         final short = label.length > 12 ? '${label.substring(0, 10)}…' : label;
                         return Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: Text(short, style: const TextStyle(fontSize: 9, color: Colors.grey)),
+                          child: Text(short, style: const TextStyle(fontSize: 9, color: FoodlyThemes.neutralTextGrey)),
                         );
                       },
                     ),

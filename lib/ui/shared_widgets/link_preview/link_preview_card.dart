@@ -225,7 +225,7 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
                 Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: FoodlyTextStyles.captionBold),
                 const SizedBox(height: 2),
                 Text(_domain, maxLines: 1, overflow: TextOverflow.ellipsis,
-                    style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11)),
+                    style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey, fontSize: 11)),
               ],
             ),
           ),
@@ -273,7 +273,7 @@ class _LinkPreviewCardState extends State<LinkPreviewCard> {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(_domain, maxLines: 1, overflow: TextOverflow.ellipsis,
-                        style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11)),
+                        style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey, fontSize: 11)),
                   ),
                 ],
               ),

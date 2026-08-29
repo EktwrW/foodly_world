@@ -55,7 +55,7 @@ class _CombosLabelContent extends StatelessWidget {
         ),
         Text(
           S.current.combosLabelHint,
-          style: FoodlyTextStyles.label.copyWith(fontSize: 12, color: Colors.grey),
+          style: FoodlyTextStyles.label.copyWith(fontSize: 12, color: FoodlyThemes.neutralTextGrey),
         ),
       ],
     );

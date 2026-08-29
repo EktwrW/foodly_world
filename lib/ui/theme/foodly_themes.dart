@@ -24,6 +24,21 @@ class FoodlyThemes {
   /// Se usa para TEXTO. Para bordes, iconos decorativos y fondos teñidos sigue
   /// valiendo `secondaryFoodly`: ahí no hay nada que leer.
   static const secondaryFoodlyText = Color(0xFF855C68);
+
+  /// Gris para texto secundario que NO es de marca (fechas, contadores,
+  /// etiquetas de gráficos, subtítulos de tarjeta).
+  ///
+  /// Es `grey.shade700`. Los que se usaban antes no llegaban al 4.5:1 de la
+  /// WCAG: `Colors.grey` y `black38` dan 2.68, `black45` 3.36 y `shade400`
+  /// 1.88. Este da 5.92 sobre blanco.
+  ///
+  /// Se declara como literal y no como `Colors.grey.shade700` porque ese
+  /// getter NO es `const`, y media docena de estos textos viven dentro de un
+  /// `const TextStyle`.
+  ///
+  /// Para el rosa de marca está `secondaryFoodlyText`; este es para donde el
+  /// texto YA era gris y teñirlo de rosa cambiaría el diseño.
+  static const neutralTextGrey = Color(0xFF616161);
   static const tertiaryFoodly = Color(0xFF14C45D);
   static final accentColor = const Color(0xFF79005D).lighten(20);
 
