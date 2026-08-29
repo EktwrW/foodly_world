@@ -222,13 +222,25 @@ class PushNotificationService with WidgetsBindingObserver {
         _handleMessageTap(initial.data);
       }
 
-      // Foreground: show a local notification so the user sees it without
-      // being in-app blind. iOS already shows it thanks to
-      // setForegroundNotificationPresentationOptions, but the local plugin
-      // gives us a consistent onTap hook on both platforms.
+      // Foreground: SOLO Android muestra la notificación local.
+      //
+      // En iOS la presenta ya el sistema por
+      // `setForegroundNotificationPresentationOptions(alert: true)` unas
+      // líneas más arriba. Mostrar además la del plugin duplicaba TODOS los
+      // avisos con la app en primer plano —dos entradas idénticas por push,
+      // que quedaban apiladas en el centro de notificaciones (verificado en
+      // el simulador iOS el 2026-08-29). No era del simulador: esta rama no
+      // tenía guard de plataforma y viajaba igual a producción.
+      //
+      // El `onTap` de iOS no se pierde: al tocar el banner del sistema en
+      // primer plano, FlutterFire entrega el evento por `onMessageOpenedApp`,
+      // que ya está escuchado abajo. El hook del plugin
+      // (`onDidReceiveNotificationResponse`) queda para Android.
       _onMessageSub = FirebaseMessaging.onMessage.listen((message) {
         _logger.d('FCM foreground message: ${message.messageId} data=${message.data}');
-        _showForegroundLocalNotification(message);
+        if (!kIsWeb && Platform.isAndroid) {
+          _showForegroundLocalNotification(message);
+        }
         // Also refresh in-app notifications cubit so the badge updates.
         _bumpNotificationsCubit();
         // F4a: "nueva orden pagada" con la app abierta → el
