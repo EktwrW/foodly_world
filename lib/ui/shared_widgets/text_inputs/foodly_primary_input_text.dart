@@ -99,7 +99,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             hintText: hintText ?? inputTextType.text,
             hintStyle: TextStyle(
               overflow: TextOverflow.ellipsis,
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             label: label,
@@ -139,11 +139,11 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             hintText: hintText ?? inputTextType.text,
             hintStyle: TextStyle(
               overflow: TextOverflow.ellipsis,
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             labelStyle: TextStyle(
-              color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .70) : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             label: label,
@@ -195,11 +195,11 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 hintText: hintText ?? inputTextType.text,
                 hintStyle: TextStyle(
                   letterSpacing: 0,
-                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
                 labelStyle: TextStyle(
-                  color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .70) : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
                 prefixIcon: inputTextType.icon,

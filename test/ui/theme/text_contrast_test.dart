@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
 /// Contraste de los colores de marca cuando se usan para TEXTO.
@@ -49,6 +50,15 @@ void main() {
   /// los dos sobra — pero hay que decidirlo a propósito, no de rebote.
   test('el tono decorativo NO sirve para texto, que es por lo que hay dos', () {
     expect(contraste(FoodlyThemes.secondaryFoodly, blanco), lessThan(minimoAA));
+  });
+
+  /// El estilo compartido de los hints: 17 pantallas dependen de él, así que
+  /// es el único sitio donde una regresión se multiplica sola.
+  test('el hint de los inputs es legible', () {
+    final color = FoodlyTextStyles.hintText.color;
+
+    expect(color, isNotNull, reason: 'si deja de traer color, hereda el del tema y esto ya no mide nada');
+    expect(contraste(color!, blanco), greaterThanOrEqualTo(minimoAA));
   });
 
   /// El alpha fue lo que hundió el caso peor: 0.85 sobre blanco bajaba de

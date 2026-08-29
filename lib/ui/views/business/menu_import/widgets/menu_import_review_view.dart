@@ -574,7 +574,7 @@ class _EditableItemCardState extends State<_EditableItemCard> {
                         hintText: S.current.aiMenuImportReviewDescriptionHint,
                         hintStyle: FoodlyTextStyles.cardsSmallSubtitle.copyWith(
                           fontSize: 12,
-                          color: FoodlyThemes.secondaryFoodly,
+                          color: FoodlyThemes.secondaryFoodlyText,
                         ),
                       ),
                     ),
