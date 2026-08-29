@@ -15,6 +15,9 @@ The app targets iOS and Android (deployed to the App Store and Google Play).
 - **Reservations System**: Customers request table reservations; managers confirm or reject with in-app notifications
 - **Buzz Feed**: Anonymous community activity feed showing recent interactions at nearby businesses
 - **Social Posts**: Users and businesses share posts with photos; community feed with likes
+- **Group Orders (live orders)**: diners scan a table QR, build a shared order from the menu and split the bill. Payment by card (native PaymentSheet) or by local rail — MB WAY in Portugal, Bizum in Spain — through Stripe Connect destination charges, with the restaurant as the settlement merchant. Two modes: **per round** (pay before each round is sent) and **open tab** (order all night, request the bill at the end). One diner can also cover the whole table. Managers watch orders arrive live and mark them served.
+- **Table service**: businesses that serve at the table can require a table number before an order is sent, so no order arrives without knowing where it goes. Numbered-table QRs fill it in automatically; anyone arriving by search or by a shared link is asked once.
+- **Active sessions**: an account can be signed in on up to 6 devices at once. The profile lists them — device, last activity — and closes any one of them.
 - **Business Management**: Owners manage their business profile, menu, photos, promotions, combos, and reservations
 - **Multi-language**: Full localization in English, Spanish, and Portuguese
 - **AI Features**: generación de promos (texto + imagen) vía el backend, y recomendaciones inteligentes
