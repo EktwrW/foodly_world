@@ -132,7 +132,7 @@ class _FoodlyPhoneInputTextState extends State<FoodlyPhoneInputText> {
             fontSize: widget.hintTextSize,
           ),
           labelStyle: TextStyle(
-            color: widget.enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+            color: widget.enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .70) : ui.NeumorphicColors.disabled,
             fontSize: widget.hintTextSize,
           ),
           prefixIcon: FoodlyInputType.businessPhone.icon,

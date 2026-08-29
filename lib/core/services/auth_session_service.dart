@@ -186,16 +186,29 @@ class AuthSessionService {
     String? osVersion;
     String? appVersion;
 
+    // El modelo y la versión del sistema salen del MISMO plugin y en la misma
+    // pasada. Antes la versión venía de `Platform.operatingSystemVersion`, que
+    // en iOS devuelve la cadena entera: "Version 18.6 (Build 22G86)". Eso se
+    // guardaba tal cual y se pintaba tal cual en la lista de sesiones, donde
+    // el número de build no le importa a nadie y encima partía la línea en dos.
+    // El plugin da el dato limpio: `systemVersion` = "18.6",
+    // `version.release` = "14".
     try {
       final plugin = DeviceInfoPlugin();
       if (kIsWeb) {
         model = (await plugin.webBrowserInfo).browserName.name;
       } else if (Platform.isAndroid) {
-        model = (await plugin.androidInfo).model;
+        final info = await plugin.androidInfo;
+        model = info.model;
+        osVersion = info.version.release;
       } else if (Platform.isIOS) {
-        model = (await plugin.iosInfo).utsname.machine;
+        final info = await plugin.iosInfo;
+        model = info.utsname.machine;
+        osVersion = info.systemVersion;
       } else if (Platform.isMacOS) {
-        model = (await plugin.macOsInfo).model;
+        final info = await plugin.macOsInfo;
+        model = info.model;
+        osVersion = info.osRelease;
       } else if (Platform.isWindows) {
         model = (await plugin.windowsInfo).computerName;
       } else if (Platform.isLinux) {
@@ -203,7 +216,9 @@ class AuthSessionService {
       }
     } catch (_) {}
 
-    if (!kIsWeb) {
+    // Windows y Linux no tienen un campo limpio en el plugin: ahí se cae a la
+    // cadena del sistema, que es fea pero es lo que hay.
+    if (!kIsWeb && osVersion == null) {
       try {
         osVersion = Platform.operatingSystemVersion;
       } catch (_) {}

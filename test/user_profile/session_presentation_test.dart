@@ -53,11 +53,29 @@ void main() {
   });
 
   group('la línea de detalle', () {
+    /// El caso que motivó el arreglo: iOS guardaba la cadena entera, con el
+    /// número de build incluido, y así se pintaba.
+    test('la versión del sistema se limpia y se etiqueta', () {
+      final linea = sesion(platform: 'ios', model: 'iPhone17,1', os: 'Version 18.6 (Build 22G86)', app: '2.0.3')
+          .detailLine((d) => 'x');
+
+      expect(linea, 'iPhone17,1 · iOS 18.6 · Foodly 2.0.3');
+    });
+
+    test('un valor ya limpio se etiqueta igual', () {
+      expect(sesion(platform: 'android', os: '14').detailLine((d) => 'x'), 'Android 14');
+    });
+
+    /// En escritorio no se sabe si es macOS, Windows o Linux: no se inventa.
+    test('en escritorio no se pone nombre de sistema', () {
+      expect(sesion(platform: 'desktop', os: '15.1').detailLine((d) => 'x'), '15.1');
+    });
+
     test('junta modelo, sistema y versión de la app', () {
       final linea = sesion(platform: 'ios', model: 'iPhone16,1', os: '18.2', app: '2.0.2')
           .detailLine((d) => 'ignorada');
 
-      expect(linea, 'iPhone16,1 · 18.2 · Foodly 2.0.2');
+      expect(linea, 'iPhone16,1 · iOS 18.2 · Foodly 2.0.2');
     });
 
     /// En web el modelo ya está en el título; repetirlo sería ruido.
@@ -65,6 +83,7 @@ void main() {
       final linea = sesion(platform: 'web', model: 'chrome', os: 'MacIntel', app: '1.9.4')
           .detailLine((d) => 'ignorada');
 
+      // Sin dígitos que extraer, se conserva el valor tal cual.
       expect(linea, 'MacIntel · Foodly 1.9.4');
     });
 

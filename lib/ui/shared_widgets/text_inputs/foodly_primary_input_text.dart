@@ -143,7 +143,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
               fontSize: hintTextSize,
             ),
             labelStyle: TextStyle(
-              color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .70) : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             label: label,
@@ -199,7 +199,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                   fontSize: hintTextSize,
                 ),
                 labelStyle: TextStyle(
-                  color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .63) : ui.NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.primaryFoodly.withValues(alpha: .70) : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
                 prefixIcon: inputTextType.icon,

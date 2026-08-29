@@ -66,8 +66,34 @@ extension SessionPresentation on ActiveSessionDM {
 
     return [
       if (model != null && platform != 'web') model!,
-      if (osVersion != null) osVersion!,
+      if (sistema != null) sistema!,
       if (appVersion != null) 'Foodly $appVersion',
     ].join(' · ');
+  }
+
+  /// La versión del sistema, con su nombre delante y sin la morralla.
+  ///
+  /// Se normaliza al PINTAR, no solo en el origen. Las sesiones abiertas antes
+  /// de este arreglo guardaron la cadena entera que devuelve iOS —"Version
+  /// 18.6 (Build 22G86)"— y siguen vivas hasta que cada aparato vuelva a
+  /// pasar por el login o por un refresco. El número de build no le importa a
+  /// nadie, y además hacía que la línea se partiera en dos y las tarjetas
+  /// quedaran de distinto alto.
+  ///
+  /// El nombre del sistema se pone SOLO donde se sabe con certeza. En
+  /// `desktop` no: puede ser macOS, Windows o Linux, y ponerle uno sería
+  /// adivinar.
+  String? get sistema {
+    final crudo = osVersion;
+    if (crudo == null || crudo.isEmpty) return null;
+
+    final numero = RegExp(r'\d+(?:\.\d+)*').firstMatch(crudo)?.group(0) ?? crudo;
+    final nombre = switch (platform) {
+      'ios' => 'iOS',
+      'android' => 'Android',
+      _ => null,
+    };
+
+    return nombre == null ? numero : '$nombre $numero';
   }
 }
