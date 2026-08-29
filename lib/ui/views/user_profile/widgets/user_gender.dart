@@ -51,7 +51,7 @@ class _EditUserGenderWdg extends StatelessWidget {
               hintText: S.current.gender,
               contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               hintStyle: const TextStyle(
-                color: FoodlyThemes.secondaryFoodly,
+                color: FoodlyThemes.secondaryFoodlyText,
               ),
             ),
             onChanged: (UserGender? newValue) => cubit.setUserGender(newValue),

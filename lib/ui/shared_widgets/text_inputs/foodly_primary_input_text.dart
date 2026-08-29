@@ -99,7 +99,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             hintText: hintText ?? inputTextType.text,
             hintStyle: TextStyle(
               overflow: TextOverflow.ellipsis,
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             label: label,
@@ -139,7 +139,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
             hintText: hintText ?? inputTextType.text,
             hintStyle: TextStyle(
               overflow: TextOverflow.ellipsis,
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: hintTextSize,
             ),
             labelStyle: TextStyle(
@@ -195,7 +195,7 @@ class FoodlyPrimaryInputText extends StatelessWidget {
                 hintText: hintText ?? inputTextType.text,
                 hintStyle: TextStyle(
                   letterSpacing: 0,
-                  color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                  color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
                   fontSize: hintTextSize,
                 ),
                 labelStyle: TextStyle(

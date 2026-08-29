@@ -76,7 +76,7 @@ class EditUsersLocationWidgets extends StatelessWidget {
               prefixIconColor: Colors.black87,
               hintText: S.current.country,
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
-              hintStyle: const TextStyle(color: FoodlyThemes.secondaryFoodly),
+              hintStyle: const TextStyle(color: FoodlyThemes.secondaryFoodlyText),
             ),
             enabled: true,
             onChanged: (FoodlyCountries? newValue) {

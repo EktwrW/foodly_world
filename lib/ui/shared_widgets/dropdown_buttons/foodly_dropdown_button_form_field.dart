@@ -70,7 +70,7 @@ class FoodlyDropdownButtonFormField<T> extends StatelessWidget {
               errorStyle: FoodlyTextStyles.errorInputText,
               enabledBorder: enabledBorder,
               hintStyle: TextStyle(
-                color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
                 fontSize: 12,
               ),
               contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

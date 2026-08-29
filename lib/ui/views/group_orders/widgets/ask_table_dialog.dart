@@ -95,7 +95,7 @@ class _AskTableDialogState extends State<_AskTableDialog> {
               decoration: InputDecoration(
                 hintText: S.current.groupOrderTableHint,
                 errorText: _error,
-                hintStyle: const TextStyle(color: FoodlyThemes.secondaryFoodly),
+                hintStyle: const TextStyle(color: FoodlyThemes.secondaryFoodlyText),
                 counterText: '',
                 border: const OutlineInputBorder(),
               ),

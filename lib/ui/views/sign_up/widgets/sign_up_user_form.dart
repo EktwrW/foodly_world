@@ -156,7 +156,7 @@ class SignUpUserForm extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             iconColor: enabled ? null : ui.NeumorphicColors.disabled,
             hintStyle: TextStyle(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),
@@ -250,7 +250,7 @@ class SignUpUserForm extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: S.current.dateOfBirth,
                           hintStyle: TextStyle(
-                            color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+                            color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
                             fontSize: 14,
                           ),
                           prefixIcon: const Icon(Bootstrap.calendar2_event, size: 22),
@@ -283,7 +283,7 @@ class SignUpUserForm extends StatelessWidget {
           hint: Text(
             S.current.gender,
             style: FoodlyTextStyles.hintText.copyWith(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),
@@ -294,7 +294,7 @@ class SignUpUserForm extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             hintText: S.current.gender,
             hintStyle: FoodlyTextStyles.hintText.copyWith(
-              color: enabled ? FoodlyThemes.secondaryFoodly : ui.NeumorphicColors.disabled,
+              color: enabled ? FoodlyThemes.secondaryFoodlyText : ui.NeumorphicColors.disabled,
               fontSize: 14,
             ),
           ),

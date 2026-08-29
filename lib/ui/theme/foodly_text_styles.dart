@@ -144,8 +144,14 @@ class FoodlyTextStyles {
     color: FoodlyThemes.primaryFoodly,
   );
 
+  /// El texto de sugerencia de los inputs.
+  ///
+  /// Usa `secondaryFoodlyText` y no `secondaryFoodly` porque un hint ES texto y
+  /// le aplica el 4.5:1 de la WCAG — el de marca da 2.76:1 sobre blanco. Sigue
+  /// leyéndose como sugerencia y no como valor escrito: lo tecleado va casi en
+  /// negro (16:1), así que la diferencia de peso se mantiene entera.
   static const hintText = TextStyle(
-    color: FoodlyThemes.secondaryFoodly,
+    color: FoodlyThemes.secondaryFoodlyText,
     fontSize: 14,
   );
 
