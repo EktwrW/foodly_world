@@ -324,6 +324,58 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### Multi-dispositivo y sesiones activas (2026-08-29)
+
+Una cuenta admite hasta **6 sesiones simultáneas**. Antes admitía una sola:
+`createDualTokens()` borraba todos los tokens del usuario, así que entrar en la
+tablet echaba del teléfono — sin aviso y a mitad de lo que estuvieras haciendo.
+No estaba escrito como requisito y se leía como un bug (la app cerraba sola).
+
+Al llegar al tope se desaloja la sesión **menos usada**, nunca se bloquea el
+login: rechazar el séptimo inicio dejaría fuera justo a quien perdió el teléfono
+y entra desde otro aparato.
+
+**El dispositivo viaja en el interceptor**, no dentro de cuatro DTOs:
+`DioRequestHandler._adjuntarDispositivo` adjunta `device` al cuerpo de `/login`,
+`/social-login`, `/register`, `/token/refresh` y `/biometric-login`. Sale de
+`AuthSessionService.deviceForSession`, que reusa lo que `initDeviceMetadata()` ya
+recoge al arrancar para analíticas — no se le pide nada nuevo al aparato. Es
+opcional de punta a punta: una versión vieja de la app no manda nada y el login
+sigue siendo válido.
+
+**El modelo NO se traduce a nombre comercial.** El aparato devuelve códigos
+(`iPhone17,1`, `SM-G991B`); la tabla que los convierte en "iPhone 15 Pro"
+envejece con cada teléfono que sale. El título dice la plataforma —y si es iPad
+o iPhone, que el prefijo del código sí distingue— y el código queda como
+detalle. Ver `session_presentation.dart`.
+
+**Pantalla**: `ActiveSessionsPage`, colgada del perfil junto a la contraseña.
+Lista las sesiones (la actual primero) y cierra una concreta. La actual no
+ofrece botón de cerrar, y el backend además la rechaza con 422.
+
+La lista NO se recorta en local antes de que el backend confirme: si el cierre
+falla, "parecía cerrada y volvió" deja al usuario sin saber si echó a alguien.
+
+### Accesibilidad: los dos tonos de texto secundario (2026-08-29)
+
+`FoodlyThemes.secondaryFoodly` (#AF8B96) es color de marca para **bordes, iconos
+y fondos teñidos**. Sobre blanco da 3.02:1 y NO llega al 4.5:1 que la WCAG pide
+para texto por debajo de ~18px. Para texto hay dos constantes:
+
+- `secondaryFoodlyText` (#855C68) — 5.63:1. Mismo tono y saturación, más oscuro.
+- `neutralTextGrey` (#616161) — 5.92:1. Donde el texto YA era gris; teñir de
+  rosa fechas, gráficos y pies de página habría cambiado el diseño.
+
+`neutralTextGrey` es un literal y no `Colors.grey.shade700` porque ese getter no
+es `const` y varios de estos textos viven dentro de un `const TextStyle`.
+
+Aplicar `alpha` a un color de texto **siempre** le quita contraste: fue lo que
+hundió el peor caso a 2.49:1. `test/ui/theme/text_contrast_test.dart` fija los
+mínimos y deja escrito qué colores se retiraron y por qué.
+
+El texto **deshabilitado está exento** de la norma y debe seguir viéndose
+apagado: oscurecerlo sería mentir sobre el estado del control.
+
 ### One-Time Migration
 
 Existing users who upgrade from the old single-token system are transparently migrated: `restoreTokensFromSecureStorage()` checks if tokens exist in secure storage. If not but a session exists in HydratedBloc, it copies the legacy `token` to secure storage as the access token.
