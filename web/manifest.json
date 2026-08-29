@@ -1,11 +1,11 @@
 {
-    "name": "foodly_world",
-    "short_name": "foodly_world",
+    "name": "Foodly Solutions",
+    "short_name": "Foodly",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#fafbfd",
+    "theme_color": "#79005D",
+    "description": "Discover, order, and enjoy the best food near you. Explore menus, promotions, and more in your city.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
