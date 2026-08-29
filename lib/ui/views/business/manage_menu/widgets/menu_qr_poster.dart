@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:gal/gal.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart' show EvaIcons, Bootstrap;
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -244,7 +245,7 @@ class _MenuQrDownloadButtonState extends State<MenuQrDownloadButton> {
     return CustomNeumorphicButton(
       onPressed: _busy ? null : _onPressed,
       disabled: _busy,
-      type: CustomNeumorphicBtnType.outlined,
+      type: CustomNeumorphicBtnType.secondary,
       text: _busy ? S.current.generatingQr : S.current.downloadQrImage,
       margin: EdgeInsets.zero,
       fontSize: 14,
@@ -254,7 +255,8 @@ class _MenuQrDownloadButtonState extends State<MenuQrDownloadButton> {
               height: 16,
               child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
             )
-          : const Icon(Icons.download_rounded, color: FoodlyThemes.primaryFoodly, size: 18),
+          : const Icon(EvaIcons.download, color: FoodlyThemes.primaryFoodly, size: 20),
+      trailing: const Icon(Bootstrap.qr_code_scan, color: FoodlyThemes.primaryFoodly, size: 18),
     );
   }
 }

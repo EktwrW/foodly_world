@@ -171,7 +171,7 @@ class NearbyPromoCard extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Asset(FoodlyAssets.promoPlaceholder),
+            Expanded(child: Asset(FoodlyAssets.promoPlaceholder)),
           ],
         ));
   }

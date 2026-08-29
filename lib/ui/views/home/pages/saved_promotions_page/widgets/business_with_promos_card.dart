@@ -28,7 +28,10 @@ class _BusinessWithPromosCard extends StatelessWidget {
           children: [
             Flexible(child: MyFavoritesBusinessMiniCard(savedPromoBusiness: business)),
             ...promos.map((p) => Flexible(
-                key: Key('promo-card-${p.uuid}'), child: SizedBox(height: 400, child: NearbyPromoCard(promo: p)))),
+                key: Key('promo-card-${p.uuid}'),
+                child: AspectRatio(
+                    aspectRatio: 16 / 10,
+                    child: NearbyPromoCard(promo: p).paddingSymmetric(horizontal: 16, vertical: 8)))),
           ],
         ).paddingBottom(8),
       ),

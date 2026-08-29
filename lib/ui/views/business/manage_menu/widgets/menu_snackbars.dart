@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/cubit/manage_menu_cubit.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_qr_batch_sheet.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_qr_poster.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 class MenuSnackbars {
   const MenuSnackbars._();
@@ -74,6 +75,7 @@ class MenuSnackbars {
     bool canEdit = false,
     String businessName = '',
     String? logoUrl,
+
     /// F4c: generar el lote de QRs por mesa declara "sirvo en mesa".
     String? businessUuid,
   }) {
@@ -120,11 +122,6 @@ class MenuSnackbars {
           // el QR suelto del negocio (PNG, para pegar en la puerta o compartir)
           // y el lote por mesa (PDF imprimible, un QR por mesa).
           if (canEdit) ...[
-            MenuQrDownloadButton(
-              menuUrl: menuUrl,
-              businessName: businessName,
-              logoUrl: logoUrl,
-            ),
             CustomNeumorphicButton(
               onPressed: () => showMenuQrBatchSheet(
                 context,
@@ -134,11 +131,17 @@ class MenuSnackbars {
                 businessUuid: businessUuid,
               ),
               disabled: false,
-              type: CustomNeumorphicBtnType.secondary,
+              type: CustomNeumorphicBtnType.outlined,
               text: S.current.qrBatchDownload,
               margin: EdgeInsets.zero,
               fontSize: 14,
-              leading: const Icon(Icons.grid_view_rounded, color: FoodlyThemes.primaryFoodly, size: 20),
+              leading: const Icon(EvaIcons.download, color: FoodlyThemes.primaryFoodly, size: 20),
+              trailing: const Icon(EvaIcons.grid, color: FoodlyThemes.primaryFoodly, size: 20),
+            ),
+            MenuQrDownloadButton(
+              menuUrl: menuUrl,
+              businessName: businessName,
+              logoUrl: logoUrl,
             ),
           ],
         ],
@@ -160,4 +163,3 @@ class MenuSnackbars {
 /// escaneable en un Z Fold cerrado sin comerse el texto de al lado.
 double _ladoDelQr(BuildContext context) =>
     (MediaQuery.sizeOf(context).width * .46 - FoodlyQrCard.chrome).clamp(120.0, 190.0);
-
