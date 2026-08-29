@@ -35,9 +35,17 @@ class FakeNearbyPromotionsCubit implements NearbyPromotionsCubit {
 
 class FakeActiveGroupOrderCubit implements ActiveGroupOrderCubit {
   bool fueTerminado = false;
+  int vecesSincronizado = 0;
 
   @override
   void end() => fueTerminado = true;
+
+  /// `setSession` la invoca al establecer sesión nueva para recuperar la orden
+  /// activa. Tiene que estar declarada: el `noSuchMethod` de abajo devuelve
+  /// `null`, y como acá se espera un `Future` el test reventaba con
+  /// `type 'Null' is not a subtype of type 'Future<void>'`.
+  @override
+  Future<void> syncAnyActive() async => vecesSincronizado++;
 
   @override
   dynamic noSuchMethod(Invocation invocation) => null;

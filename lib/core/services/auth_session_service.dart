@@ -276,6 +276,9 @@ class AuthSessionService {
 
   void setSession(UserSessionDM? newUserSessionDM) {
     final previousUuid = userSessionDM?.user.uuid;
+    // Se resuelve dentro del bloque de sesión válida y se consume AL FINAL,
+    // cuando el header de auth ya está puesto. Ver el porqué abajo.
+    var establecioSesionNueva = false;
 
     userSessionDM = newUserSessionDM;
 
@@ -309,6 +312,7 @@ class AuthSessionService {
       // credenciales frescas. La generación identifica la SESIÓN.
       final isNewSession = previousUuid == null || previousUuid != newUserSessionDM.user.uuid;
       if (isNewSession) _sessionGeneration++;
+      establecioSesionNueva = isNewSession;
 
       forceToLogin = false;
       // Un login válido (email/password, Google, Apple, biométrico, silent
@@ -359,6 +363,29 @@ class AuthSessionService {
       } catch (_) {
         // No-op por diseño.
       }
+    }
+
+    // Recuperar la orden activa DESPUÉS de tener sesión.
+    //
+    // El chip flotante llama a `syncAnyActive()` en su postFrame de arranque,
+    // que en frío gana la carrera contra la restauración de sesión: el
+    // GET /group-orders/mine sale sin header, el backend responde 401, y ese
+    // 401 se descarta en silencio a propósito. Nadie lo reintentaba, así que
+    // el comensal entraba al menú sin chip, sin orden activa y sin botón de
+    // agregar ítems, aunque el servidor sí tuviera su orden abierta. Se veía
+    // en los logs de producción del 2026-08-29: seis arranques, seis veces
+    // `/mine` 401 unos segundos ANTES del login, y ningún reintento después.
+    //
+    // Va al final del método a propósito: `_authHeader` y el token del
+    // provider se setean más arriba en este mismo cuerpo, así que llamarlo
+    // dentro del bloque de `isNewSession` repetiría exactamente el 401 que
+    // esto viene a evitar.
+    //
+    // Solo en sesión NUEVA: un `silentRefresh` también pasa por acá y no
+    // necesita re-sincronizar. Y `syncAnyActive` ya sale temprano si hay
+    // estado, así que no pisa un carrito en memoria.
+    if (establecioSesionNueva && di.isRegistered<ActiveGroupOrderCubit>()) {
+      unawaited(di<ActiveGroupOrderCubit>().syncAnyActive());
     }
   }
 

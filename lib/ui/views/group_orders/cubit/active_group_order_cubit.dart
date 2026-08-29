@@ -91,8 +91,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         // (la mesa pide más tandas). Sin isTracking acá, volver al menú
         // ofrecía "crear orden" y nacía una SEGUNDA orden en la misma mesa.
         final remote = r.groupOrders
-            .where((o) =>
-                o.businessUuid == businessUuid && (o.isOpen || o.isPayable || o.isTracking))
+            .where((o) => o.businessUuid == businessUuid && (o.isOpen || o.isPayable || o.isTracking))
             .toList();
         if (remote.isNotEmpty) emit(remote.first);
       },
@@ -133,34 +132,36 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     if (isActiveFor(businessUuid)) return true;
     if (_busy) return false;
     _busy = true;
-    // Mesa del QR, si el comensal entró escaneando el de SU mesa. `null` en
-    // todo el resto de los casos, que es como venía funcionando: sin mesa, el
-    // request es idéntico al de antes salvo por un campo que no se manda.
-    //
-    // `origin: 'qr'` solo cuando de verdad vino del QR — hasta ahora era
-    // siempre 'menu'. Es descriptivo (nada se bifurca por él en el backend),
-    // pero deja de mentirle a la analítica.
-    final tableLabel = PendingTable.forBusiness(businessUuid);
-    final res = await _repo.createGroupOrder(
-      businessUuid: businessUuid,
-      origin: tableLabel != null ? 'qr' : 'menu',
-      tableLabel: tableLabel,
-    );
-    final ok = res.when(
-      success: (r) {
-        // Se consume solo si la orden se creó. Si falló, la mesa queda
-        // estacionada y el reintento la conserva.
-        PendingTable.clearFor(businessUuid);
-        emit(r.groupOrder);
-        return true;
-      },
-      failure: (e) {
-        _logger.e(e);
-        return false;
-      },
-    );
-    _busy = false;
-    return ok;
+    try {
+      // Mesa del QR, si el comensal entró escaneando el de SU mesa. `null` en
+      // todo el resto de los casos, que es como venía funcionando: sin mesa, el
+      // request es idéntico al de antes salvo por un campo que no se manda.
+      //
+      // `origin: 'qr'` solo cuando de verdad vino del QR — hasta ahora era
+      // siempre 'menu'. Es descriptivo (nada se bifurca por él en el backend),
+      // pero deja de mentirle a la analítica.
+      final tableLabel = PendingTable.forBusiness(businessUuid);
+      final res = await _repo.createGroupOrder(
+        businessUuid: businessUuid,
+        origin: tableLabel != null ? 'qr' : 'menu',
+        tableLabel: tableLabel,
+      );
+      return res.when(
+        success: (r) {
+          // Se consume solo si la orden se creó. Si falló, la mesa queda
+          // estacionada y el reintento la conserva.
+          PendingTable.clearFor(businessUuid);
+          emit(r.groupOrder);
+          return true;
+        },
+        failure: (e) {
+          _logger.e(e);
+          return false;
+        },
+      );
+    } finally {
+      _busy = false;
+    }
   }
 
   /// Agrega un ítem del menú a la orden activa. [itemableType] = food/drink/combo.
@@ -236,21 +237,23 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   Future<bool> joinWithCode(String code) async {
     if (_busy) return false;
     _busy = true;
-    lastJoinError = null;
-    final res = await _repo.joinByCode(code.trim().toUpperCase());
-    final ok = res.when(
-      success: (r) {
-        emit(r.groupOrder);
-        return true;
-      },
-      failure: (e) {
-        _logger.e(e);
-        lastJoinError = e.serverMessage;
-        return false;
-      },
-    );
-    _busy = false;
-    return ok;
+    try {
+      lastJoinError = null;
+      final res = await _repo.joinByCode(code.trim().toUpperCase());
+      return res.when(
+        success: (r) {
+          emit(r.groupOrder);
+          return true;
+        },
+        failure: (e) {
+          _logger.e(e);
+          lastJoinError = e.serverMessage;
+          return false;
+        },
+      );
+    } finally {
+      _busy = false;
+    }
   }
 
   /// F4a (caso bar): abre la SIGUIENTE RONDA de la mesa — la orden nueva
@@ -258,21 +261,23 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   Future<bool> startNextRound(String previousOrderUuid) async {
     if (_busy) return false;
     _busy = true;
-    lastJoinError = null;
-    final res = await _repo.nextRound(previousOrderUuid);
-    final ok = res.when(
-      success: (r) {
-        emit(r.groupOrder);
-        return true;
-      },
-      failure: (e) {
-        _logger.e(e);
-        lastJoinError = e.serverMessage;
-        return false;
-      },
-    );
-    _busy = false;
-    return ok;
+    try {
+      lastJoinError = null;
+      final res = await _repo.nextRound(previousOrderUuid);
+      return res.when(
+        success: (r) {
+          emit(r.groupOrder);
+          return true;
+        },
+        failure: (e) {
+          _logger.e(e);
+          lastJoinError = e.serverMessage;
+          return false;
+        },
+      );
+    } finally {
+      _busy = false;
+    }
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
@@ -347,6 +352,10 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     _watchedUuid = null;
     _sub?.cancel();
     _sub = null;
+    // El cerrojo también se suelta al cerrar sesión. Sin esto, un `_busy`
+    // trabado sobrevivía al logout —este cubit es un lazy singleton— y
+    // seguía bloqueando al siguiente usuario en el mismo aparato.
+    _busy = false;
     emit(null);
   }
 }
