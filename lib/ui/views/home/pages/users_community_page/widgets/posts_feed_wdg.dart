@@ -184,7 +184,7 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
+            style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey),
           ).paddingSymmetric(horizontal: 24),
         ],
       ).paddingBottom(60),

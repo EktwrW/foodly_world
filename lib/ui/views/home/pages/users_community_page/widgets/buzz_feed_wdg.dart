@@ -102,7 +102,7 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
           const SizedBox(height: 8),
           Text(
             S.current.buzzEmptySubtitle,
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
+            style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey),
           ),
         ],
       ).paddingBottom(60),
@@ -222,7 +222,7 @@ class _BuzzItemCard extends StatelessWidget {
                       if (item.createdAt != null)
                         Text(
                           item.createdAt!.timeAgo,
-                          style: const TextStyle(fontSize: 10, color: Colors.black38),
+                          style: const TextStyle(fontSize: 10, color: FoodlyThemes.neutralTextGrey),
                         ),
                     ],
                   ),

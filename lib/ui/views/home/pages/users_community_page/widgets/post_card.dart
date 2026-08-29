@@ -88,7 +88,7 @@ class PostCard extends StatelessWidget {
               ),
               Text(
                 post.createdAt?.timeAgo ?? '',
-                style: FoodlyTextStyles.caption.copyWith(color: Colors.grey.shade500, fontSize: 11),
+                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey, fontSize: 11),
               ),
             ],
           ).paddingOnly(left: 10),

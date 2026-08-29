@@ -696,7 +696,7 @@ class _Option extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: FoodlyTextStyles.caption.copyWith(
                   fontSize: 11.5,
-                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodlyText,
                 ),
               ),
               Text(
@@ -706,7 +706,7 @@ class _Option extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: FoodlyTextStyles.labelBold.copyWith(
                   fontSize: 14,
-                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                  color: selected ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodlyText,
                 ),
               ),
             ],

@@ -91,7 +91,7 @@ class DailyTrendsChart extends StatelessWidget {
                       reservedSize: 32,
                       getTitlesWidget: (value, _) => Text(
                         value.toInt().toString(),
-                        style: const TextStyle(fontSize: 10, color: Colors.grey),
+                        style: const TextStyle(fontSize: 10, color: FoodlyThemes.neutralTextGrey),
                       ),
                     ),
                   ),
@@ -108,7 +108,7 @@ class DailyTrendsChart extends StatelessWidget {
                         final label = parsed != null ? DateFormat.MMMd().format(parsed) : raw;
                         return Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: Text(label, style: const TextStyle(fontSize: 9, color: Colors.grey)),
+                          child: Text(label, style: const TextStyle(fontSize: 9, color: FoodlyThemes.neutralTextGrey)),
                         );
                       },
                     ),

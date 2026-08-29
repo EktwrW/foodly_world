@@ -346,7 +346,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
             const SizedBox(height: 12),
             Text(
               S.current.locationRationaleBody,
-              style: const TextStyle(fontSize: 13, color: Colors.grey),
+              style: const TextStyle(fontSize: 13, color: FoodlyThemes.neutralTextGrey),
             ),
           ],
         ),

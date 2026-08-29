@@ -243,7 +243,7 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
           '$length/1000',
           style: FoodlyTextStyles.caption.copyWith(
             fontSize: 11,
-            color: nearLimit ? FoodlyThemes.warning : FoodlyThemes.secondaryFoodly,
+            color: nearLimit ? FoodlyThemes.warning : FoodlyThemes.secondaryFoodlyText,
           ),
         ),
         const SizedBox(width: 12),

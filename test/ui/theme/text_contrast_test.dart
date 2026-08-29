@@ -52,6 +52,21 @@ void main() {
     expect(contraste(FoodlyThemes.secondaryFoodly, blanco), lessThan(minimoAA));
   });
 
+  /// El gris de los textos secundarios que NO son de marca. Los que había
+  /// antes —`Colors.grey` y `black38` (2.68), `black45` (3.36),
+  /// `grey.shade400` (1.88)— no llegaban a la mitad de lo necesario.
+  test('el gris neutro de texto es legible', () {
+    expect(contraste(FoodlyThemes.neutralTextGrey, blanco), greaterThanOrEqualTo(minimoAA));
+    expect(contraste(FoodlyThemes.neutralTextGrey, fondoPantalla), greaterThanOrEqualTo(minimoAA));
+  });
+
+  /// Los que se reemplazaron, para que quede escrito POR QUÉ se fueron.
+  test('los grises que se reemplazaron no llegaban', () {
+    for (final c in [Colors.grey, Colors.black38, Colors.black45, Colors.grey.shade400]) {
+      expect(contraste(Color.alphaBlend(c, blanco), blanco), lessThan(minimoAA));
+    }
+  });
+
   /// El estilo compartido de los hints: 17 pantallas dependen de él, así que
   /// es el único sitio donde una regresión se multiplica sola.
   test('el hint de los inputs es legible', () {

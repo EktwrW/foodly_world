@@ -191,7 +191,7 @@ class _GroupOrderItemTileState extends State<GroupOrderItemTile> {
                   style: item.isVoided
                       ? FoodlyTextStyles.itemPriceBold.copyWith(
                           decoration: TextDecoration.lineThrough,
-                          color: FoodlyThemes.secondaryFoodly,
+                          color: FoodlyThemes.secondaryFoodlyText,
                         )
                       : FoodlyTextStyles.itemPriceBold,
                 ),

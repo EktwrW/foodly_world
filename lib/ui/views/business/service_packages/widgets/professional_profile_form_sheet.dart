@@ -249,7 +249,7 @@ class _ProfessionalProfileFormSheetState extends State<ProfessionalProfileFormSh
                   '(${_getTagList(section).length})',
                   style: TextStyle(
                     fontSize: 10,
-                    color: selected ? Colors.white70 : FoodlyThemes.secondaryFoodly,
+                    color: selected ? Colors.white : FoodlyThemes.secondaryFoodlyText,
                   ),
                 ),
               ],

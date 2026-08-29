@@ -38,7 +38,7 @@ class PublicMenuFooterWdg extends StatelessWidget {
               ),
               Text(
                 '  ·  ',
-                style: FoodlyTextStyles.caption.copyWith(color: Colors.black38, fontSize: 11),
+                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey, fontSize: 11),
               ),
               GestureDetector(
                 onTap: () => _launch(_termsUrl),
@@ -59,7 +59,7 @@ class PublicMenuFooterWdg extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 '© ${DateTime.now().year}',
-                style: FoodlyTextStyles.caption.copyWith(color: Colors.black45, fontSize: 12),
+                style: FoodlyTextStyles.caption.copyWith(color: FoodlyThemes.neutralTextGrey, fontSize: 12),
               ),
             ],
           ),

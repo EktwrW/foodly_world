@@ -119,7 +119,7 @@ class TopPackagesBar extends StatelessWidget {
                       Text(
                         '${pkg.bookingsCount} · ${S.current.analyticsBookings.toLowerCase()}',
                         style: FoodlyTextStyles.caption.copyWith(
-                          color: Colors.grey.shade700,
+                          color: FoodlyThemes.neutralTextGrey,
                           fontSize: 11,
                         ),
                       ),

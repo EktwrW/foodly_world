@@ -118,7 +118,7 @@ class ManagerFulfillmentStepper extends StatelessWidget {
               labels[i],
               style: FoodlyTextStyles.captionBold.copyWith(
                 fontSize: 7.5,
-                color: isNow ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodly,
+                color: isNow ? FoodlyThemes.primaryFoodly : FoodlyThemes.secondaryFoodlyText,
               ),
             ),
           ],

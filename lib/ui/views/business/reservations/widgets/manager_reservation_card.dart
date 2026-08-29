@@ -157,7 +157,7 @@ class ManagerReservationCard extends StatelessWidget {
                 style: const TextStyle(fontSize: 12),
               ),
               style: TextButton.styleFrom(
-                foregroundColor: FoodlyThemes.secondaryFoodly,
+                foregroundColor: FoodlyThemes.secondaryFoodlyText,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
