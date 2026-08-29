@@ -102,7 +102,6 @@ Future<Widget> buildFoodlyApp() async {
     Bloc.observer = AppBlocObserver(config: config);
   }
 
-
   final isMenuSubdomain =
       const bool.fromEnvironment('IS_MENU_SUBDOMAIN') || Uri.base.host.startsWith('menu.') || Uri.base.port == 8889;
 
@@ -136,7 +135,7 @@ Future<Widget> buildFoodlyApp() async {
       ],
     ],
     child: MaterialApp.router(
-      title: 'Foodly App',
+      title: 'Foodly Solutions',
       debugShowCheckedModeBanner: false,
       routerConfig: di<AppRouter>().appRouter,
       supportedLocales: FoodlyLocales.supportedLocales,
