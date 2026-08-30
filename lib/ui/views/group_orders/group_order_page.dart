@@ -376,10 +376,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
         ],
       ),
       buttonBuilder: (dismiss) => Row(
-        spacing: 8,
+        spacing: 9,
         children: [
           Expanded(
-            flex: 3,
+            flex: 6,
             child: CustomNeumorphicButton(
               text: S.current.groupOrderOrderMore,
               disabled: false,
@@ -397,7 +397,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 9,
             child: CustomNeumorphicButton(
               text: S.current.groupOrderSeeStatus,
               type: CustomNeumorphicBtnType.secondary,
@@ -1379,7 +1379,7 @@ class _Content extends StatelessWidget {
             onRefresh: () => context.read<GroupOrderCubit>().refetch(),
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
+              padding: const EdgeInsets.fromLTRB(12, 16, 12, 24),
               children: [
                 // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
                 // de cocina (los eventos fulfillment_changed refrescan solos).

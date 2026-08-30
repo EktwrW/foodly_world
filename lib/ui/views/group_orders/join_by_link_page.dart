@@ -57,7 +57,22 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
     PendingGroupJoin.consume();
 
     final cubit = di<ActiveGroupOrderCubit>();
-    final ok = await cubit.joinWithCode(widget.code);
+    // `_run` se lanza sin await desde initState: si algo lanza acá, el
+    // `setState` del final nunca corre y `build` sigue devolviendo el
+    // spinner — pantalla colgada sin salida, que es justo lo que el
+    // encabezado de esta clase dice haber arreglado. El estado de error
+    // solo cubría `ApiResult.failure`.
+    final bool ok;
+    try {
+      ok = await cubit.joinWithCode(widget.code);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _failed = true;
+        _failureDetail = null;
+      });
+      return;
+    }
     if (!mounted) return;
 
     if (ok && cubit.state != null) {
