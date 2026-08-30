@@ -40,6 +40,12 @@ class FakeActiveGroupOrderCubit implements ActiveGroupOrderCubit {
   @override
   void end() => fueTerminado = true;
 
+  /// El cierre de sesión ya no llama a `end()` directo: usa `resetForLogout`,
+  /// que además suelta el cerrojo `_busy`. En el cubit real delega en `end()`,
+  /// así que el fake hace lo mismo y la aserción de paridad sigue valiendo.
+  @override
+  void resetForLogout() => end();
+
   /// `setSession` la invoca al establecer sesión nueva para recuperar la orden
   /// activa. Tiene que estar declarada: el `noSuchMethod` de abajo devuelve
   /// `null`, y como acá se espera un `Future` el test reventaba con

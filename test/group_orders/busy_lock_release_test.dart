@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -27,6 +29,11 @@ class _RepoQueRevienta implements GroupOrderRepo {
   bool reventarProximaLlamada = true;
   int llamadasAJoin = 0;
   int llamadasAMine = 0;
+  List<GroupOrderDM> ordenesDeMine = const [];
+  bool retenerMine = false;
+  Completer<void>? _puertaMine;
+
+  void liberarMine() => _puertaMine?.complete();
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async {
@@ -47,7 +54,11 @@ class _RepoQueRevienta implements GroupOrderRepo {
       reventarProximaLlamada = false;
       throw StateError('caída de red simulada');
     }
-    return const ApiResult.success(GroupOrdersListResponseDM());
+    if (retenerMine) {
+      _puertaMine = Completer<void>();
+      await _puertaMine!.future;
+    }
+    return ApiResult.success(GroupOrdersListResponseDM(groupOrders: ordenesDeMine));
   }
 
   @override
@@ -85,12 +96,31 @@ void main() {
     expect(repo.llamadasAMine, 1, reason: 'el sync no puede quedar bloqueado por el join anterior');
   });
 
-  test('end() suelta el cerrojo: el logout no puede dejarlo trabado', () async {
+  test('resetForLogout suelta el cerrojo; end() a secas NO', () async {
     await expectLater(cubit.joinWithCode('ABC123'), throwsA(isA<StateError>()));
+
+    // `end()` corre también ante un 404/403 de realtime, con una operación
+    // posiblemente en vuelo. Si soltara el cerrojo, dos peticiones saldrían
+    // a la vez y la mesa podría abrir dos rondas.
     cubit.end();
+    cubit.resetForLogout();
 
     final ok = await cubit.joinWithCode('ABC123');
     expect(ok, isTrue);
     expect(repo.llamadasAJoin, 2);
+  });
+
+  test('un sync en vuelo no emite si la sesión se limpió mientras viajaba', () async {
+    repo.reventarProximaLlamada = false;
+    repo.ordenesDeMine = const [GroupOrderDM(uuid: 'orden-vieja')];
+    repo.retenerMine = true;
+
+    final enVuelo = cubit.syncAnyActive();
+    cubit.end(); // el teardown ocurre con la respuesta a mitad de camino
+    repo.liberarMine();
+    await enVuelo;
+
+    expect(cubit.state, isNull,
+        reason: 'la orden del usuario anterior no puede resucitar el chip');
   });
 }

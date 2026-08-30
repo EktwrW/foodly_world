@@ -31,6 +31,13 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   RealtimeSubscription? _sub;
   bool _busy = false;
 
+  /// Sube en cada [end]. Un `syncAnyActive` que quedó en vuelo compara contra
+  /// este valor antes de emitir: si la sesión se limpió mientras la respuesta
+  /// viajaba, el resultado ya no corresponde a nadie y se descarta. Sin esto,
+  /// `_validateRestoredSession` podía invalidar la sesión y el sync repoblaba
+  /// el chip igual, resucitando la orden del usuario anterior.
+  int _generacion = 0;
+
   ActiveGroupOrderCubit({
     required GroupOrderRepo repo,
     required Logger logger,
@@ -105,7 +112,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// sin entregar). No-op si ya hay estado o sin sesión (401 silencioso).
   Future<void> syncAnyActive() async {
     if (state != null || _busy) return;
+    final generacionAlPedir = _generacion;
     final res = await _repo.getMyGroupOrders();
+    if (generacionAlPedir != _generacion) return; // la sesión se limpió mientras viajaba
     res.when(
       success: (r) {
         final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
@@ -235,7 +244,15 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// F3a: unirse a la orden de OTRO usuario con el código de invitación.
   /// Si funciona, la orden ajena pasa a ser el carrito activo.
   Future<bool> joinWithCode(String code) async {
-    if (_busy) return false;
+    if (_busy) {
+      // Este camino NO debería alcanzarse: el repo nunca lanza (envuelve todo
+      // en ApiResult.failure), así que no hay throw conocido que trabe el
+      // cerrojo. Se registra porque el síntoma reportado el 2026-08-29 —cero
+      // peticiones de join en el backend pese a varios intentos— encaja con
+      // llegar acá, y sin traza no hay forma de confirmarlo.
+      _logger.w('joinWithCode ignorado: cerrojo _busy tomado');
+      return false;
+    }
     _busy = true;
     try {
       lastJoinError = null;
@@ -352,10 +369,21 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     _watchedUuid = null;
     _sub?.cancel();
     _sub = null;
-    // El cerrojo también se suelta al cerrar sesión. Sin esto, un `_busy`
-    // trabado sobrevivía al logout —este cubit es un lazy singleton— y
-    // seguía bloqueando al siguiente usuario en el mismo aparato.
-    _busy = false;
+    // OJO: acá NO se toca `_busy`. `end()` no es solo el hook de logout —
+    // `refresh()` la llama ante un 404/403 y `refresh` es el callback de
+    // realtime, así que un evento de Pusher soltaría un cerrojo que sostiene
+    // otra operación en vuelo y dos peticiones saldrían a la vez. Para el
+    // caso de cierre de sesión existe `resetForLogout()`.
+    _generacion++;
     emit(null);
+  }
+
+  /// Suelta el cerrojo al cerrar sesión.
+  ///
+  /// Separado de [end] a propósito: `end()` también corre ante un 404/403 de
+  /// realtime, y ahí soltar el cerrojo habilita peticiones concurrentes.
+  void resetForLogout() {
+    _busy = false;
+    end();
   }
 }

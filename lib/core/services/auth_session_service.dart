@@ -537,7 +537,7 @@ class AuthSessionService {
     _notificationsCubit?.clear();
     di<SocialCubit>().clear();
     di<NearbyPromotionsCubit>().clear();
-    di<ActiveGroupOrderCubit>().end();
+    di<ActiveGroupOrderCubit>().resetForLogout();
   }
 
   void clearInvalidSession() {
