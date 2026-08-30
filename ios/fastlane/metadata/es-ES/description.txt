@@ -19,8 +19,10 @@ Descubre los mejores lugares para comer cerca de ti, explora menús digitales, r
 GRATIS
 Foodly es gratis, tanto para negocios como para comensales. Sin suscripciones, sin costos ocultos. El negocio paga una comisión del 3% solo sobre los pedidos que se pagan por la app, y quien paga suma una tarifa de plataforma de 0,25 € por transacción, siempre visible antes de confirmar. Si se paga en caja, no se aplica ninguna de las dos.
 
-YA DISPONIBLE — PIDE DESDE LA MESA Y DIVIDE LA CUENTA
-Escanea el código QR de la mesa y haz el pedido con quien esté contigo: cada uno añade lo que quiere al mismo pedido, sin pasarse el móvil ni esperar a que alguien venga a tomar nota. Al final se divide la cuenta y cada uno paga solo lo suyo — con tarjeta, con Bizum, o en caja si lo prefieren. Del otro lado, el negocio ve el pedido entrar en tiempo real y siempre sabe a qué mesa pertenece.
+YA DISPONIBLE — PIDE DESDE LA MESA, SIN ESPERAR
+Escanea el código QR de la mesa y haz el pedido con quien esté contigo: cada uno añade lo que quiere al mismo pedido, sin pasarse el móvil ni esperar a que alguien venga a tomar nota. La cuenta se divide sola —por artículos o en partes iguales— y cada uno ve exactamente cuánto le toca antes de pasar por caja. Del otro lado, el negocio ve el pedido entrar en tiempo real y siempre sabe a qué mesa pertenece.
+
+Los negocios que activen pagos pueden además cobrar dentro de la app, con tarjeta o Bizum.
 
 Disponible ahora en Portugal, España, Argentina y Venezuela, con más mercados muy pronto.
 
