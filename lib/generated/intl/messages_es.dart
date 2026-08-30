@@ -1412,7 +1412,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Escanea el QR de tu mesa",
     ),
     "groupOrderSeeStatus": MessageLookupByLibrary.simpleMessage(
-      "Ver el estado del pedido",
+      "Ver estado del pedido",
     ),
     "groupOrderSendCta": MessageLookupByLibrary.simpleMessage("Enviar orden"),
     "groupOrderSendHint": MessageLookupByLibrary.simpleMessage(
