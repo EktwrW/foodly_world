@@ -1148,8 +1148,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                     // portugués y el turista español necesitan botones
                     // distintos. El backend aplica la misma regla con el país
                     // que este usuario tiene declarado en su ficha.
-                    hostedRail: hostedRailFor(
-                      di<AuthSessionService>().userSessionDM?.user.currentPhoneCountryCode,
+                    hostedRail: hostedRailOffered(
+                      payerCountry: di<AuthSessionService>().userSessionDM?.user.currentPhoneCountryCode,
+                      businessOffersMbWay: order.offersMbWay,
+                      businessOffersBizum: order.offersBizum,
                     ),
                     onLock: () => _onLock(context),
                     onSend: () => _onSend(context, order),
@@ -1477,8 +1479,8 @@ class _Content extends StatelessWidget {
           // pagado ya SU parte y aun así invitar"), y hasta ahora la UI se lo
           // negaba en cuanto su parte quedaba saldada.
           onPay: (vm.canPay || _showPayAll) ? onPay : null,
-          // MB WAY: mismo permiso que el CTA principal. El pie decide además
-          // si el restaurante lo ofrece (`order.offersMbWay`).
+          // MB WAY: mismo permiso que el CTA principal. Que el restaurante lo
+          // acepte lo decide `hostedRail`, que ya viene resuelto de arriba.
           onPayHosted: (vm.canPay || _showPayAll) ? onPayHosted : null,
           hostedRail: hostedRail,
           onLock: (order.isOpen && _iAmHost) ? onLock : null,

@@ -74,6 +74,28 @@ String? countryIsoOrNull(String? country) {
 final _dosLetras = RegExp(r'^[A-Z]{2}$');
 
 /// El método local de un comensal de [payerCountry].
+///
+/// Dice qué método le CORRESPONDE por su país, no si se le puede ofrecer: para
+/// eso está [hostedRailOffered], que además mira al restaurante.
 HostedRail hostedRailFor(String? payerCountry) {
   return _railByCountry[countryIsoOrNull(payerCountry)] ?? HostedRail.none;
 }
+
+/// El método local que de verdad se le puede ofrecer a este comensal: el de su
+/// país, y solo si el restaurante puede cobrarlo.
+///
+/// Son dos condiciones y hasta el 2026-08-31 solo se comprobaba una. Stripe
+/// muestra MB WAY y Bizum por "customer location", así que el país manda sobre
+/// CUÁL; pero quien cobra es el restaurante, y si su cuenta no tiene esa
+/// capability activa la página hosteada sale con tarjeta y nada más. El botón
+/// prometía y la página no cumplía.
+HostedRail hostedRailOffered({
+  required String? payerCountry,
+  required bool businessOffersMbWay,
+  required bool businessOffersBizum,
+}) =>
+    switch (hostedRailFor(payerCountry)) {
+      HostedRail.mbWay => businessOffersMbWay ? HostedRail.mbWay : HostedRail.none,
+      HostedRail.bizum => businessOffersBizum ? HostedRail.bizum : HostedRail.none,
+      HostedRail.none => HostedRail.none,
+    };
