@@ -47,7 +47,13 @@ import 'package:url_launcher/url_launcher.dart';
 /// (e2e r6): el chip flotante global se oculta mientras esta página viva.
 class GroupOrderPage extends StatefulWidget {
   final String orderUuid;
-  const GroupOrderPage({super.key, required this.orderUuid});
+
+  /// El comensal vuelve de haber CANCELADO en la página hosteada de Stripe.
+  /// Lo pone el router leyendo `/checkout/return/cancel`; ver
+  /// [GoRouterRedirector.checkoutReturnLandingPath].
+  final bool checkoutCanceled;
+
+  const GroupOrderPage({super.key, required this.orderUuid, this.checkoutCanceled = false});
 
   @override
   State<GroupOrderPage> createState() => _GroupOrderPageState();
@@ -72,14 +78,15 @@ class _GroupOrderPageState extends State<GroupOrderPage> {
       create: (_) => GroupOrderCubit(repo: di(), logger: di(), realtime: di())..load(widget.orderUuid),
       // El uuid baja a la vista para poder REINTENTAR: si la primera carga
       // falla no hay orden en el estado de la que sacarlo.
-      child: _GroupOrderView(orderUuid: widget.orderUuid),
+      child: _GroupOrderView(orderUuid: widget.orderUuid, checkoutCanceled: widget.checkoutCanceled),
     );
   }
 }
 
 class _GroupOrderView extends StatefulWidget {
   final String orderUuid;
-  const _GroupOrderView({required this.orderUuid});
+  final bool checkoutCanceled;
+  const _GroupOrderView({required this.orderUuid, this.checkoutCanceled = false});
 
   @override
   State<_GroupOrderView> createState() => _GroupOrderViewState();
@@ -90,6 +97,42 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
   // viva antes (no al abrir una orden ya cerrada desde el historial).
   bool _celebrationShown = false;
   bool _sawAliveOrder = false;
+
+  /// Para no soltar el pago dos veces si el widget se reconstruye.
+  bool _cancelacionAtendida = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _atenderCancelacionDelCheckout();
+  }
+
+  /// Volver del navegador puede REUSAR este State en vez de crear uno nuevo
+  /// —depende de si go_router considera que la página cambió—, así que la
+  /// señal se atiende también acá. El latch la deja en una sola vez.
+  @override
+  void didUpdateWidget(covariant _GroupOrderView old) {
+    super.didUpdateWidget(old);
+    if (widget.checkoutCanceled && !old.checkoutCanceled) _atenderCancelacionDelCheckout();
+  }
+
+  /// Suelta el `processing` que el backend puso al abrir la sesión de Checkout.
+  ///
+  /// Se pide SIEMPRE que el retorno diga `cancel`, sin mirar antes el estado
+  /// local: la orden que hay en pantalla es la de antes de irse al navegador y
+  /// todavía no sabe nada. Decidir con ella era el bug.
+  ///
+  /// Es seguro insistir: el endpoint es idempotente y se niega solo si el
+  /// dinero ya está comprometido —el caso de MB WAY aprobándose en el banco
+  /// mientras el comensal vuelve—, y entonces `cancelPayment` refetchea igual y
+  /// la pantalla queda con el estado real.
+  void _atenderCancelacionDelCheckout() {
+    if (!widget.checkoutCanceled || _cancelacionAtendida) return;
+    _cancelacionAtendida = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) context.read<GroupOrderCubit>().cancelPayment(orderUuid: widget.orderUuid);
+    });
+  }
 
   /// Orden a la que pertenece el festejo ya mostrado. En cuenta abierta el
   /// mismo usuario encadena órdenes en la misma mesa: sin esto, el sheet de

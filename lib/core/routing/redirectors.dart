@@ -131,13 +131,35 @@ abstract class GoRouterRedirector {
   /// estacionándolo en `PendingGroupJoin`; la vuelta del Checkout no tiene
   /// equivalente, así que un comensal cuya sesión caducó mientras pagaba vuelve
   /// a la app sin su mesa.
+  /// [result] es el segmento `{success|cancel}` que Stripe rellena al volver.
+  /// Hasta ahora se ignoraba y las dos vueltas aterrizaban idénticas, y eso era
+  /// el bug: al crear la sesión de Checkout el backend marca al pagador como
+  /// `processing`, y lo único que lo soltaba era el webhook
+  /// `checkout.session.expired`, treinta minutos después. Quien cancelaba en la
+  /// página de Stripe volvía a un botón gris que decía "confirmando tu pago"
+  /// sin que hubiera pago ninguno (producción, 2026-08-31).
+  ///
+  /// La cancelación viaja como query y no como otra ruta para no duplicar el
+  /// destino: es la MISMA pantalla, con una cosa más que hacer al llegar.
   static String checkoutReturnLandingPath({
     required String? orderUuid,
     required bool hasSession,
-  }) =>
-      (orderUuid == null || !_uuid.hasMatch(orderUuid) || !hasSession)
-          ? AppRoutes.start.path
-          : AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid);
+    String? result,
+  }) {
+    if (orderUuid == null || !_uuid.hasMatch(orderUuid) || !hasSession) {
+      return AppRoutes.start.path;
+    }
+
+    final destino = AppRoutes.groupOrder.path.replaceFirst(':id', orderUuid);
+
+    // Solo `cancel` hace algo. El éxito lo sella el webhook firmado, y esta URL
+    // es pública y adivinable: no puede afirmar que alguien pagó.
+    return result == checkoutCanceledResult ? '$destino?$checkoutQueryParam=$checkoutCanceledResult' : destino;
+  }
+
+  /// Compartidos con el router y con los tests para no repetir literales.
+  static const String checkoutQueryParam = 'checkout';
+  static const String checkoutCanceledResult = 'cancel';
 
   static final RegExp _uuid =
       RegExp(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');

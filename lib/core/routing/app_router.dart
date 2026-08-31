@@ -648,7 +648,11 @@ class AppRouter {
             pageBuilder: (context, state) => CustomTransitionPage<void>(
               transitionDuration: Durations.medium4,
               key: state.pageKey,
-              child: GroupOrderPage(orderUuid: state.pathParameters[AppRoutes.routeIdParam] ?? ''),
+              child: GroupOrderPage(
+                orderUuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
+                checkoutCanceled: state.uri.queryParameters[GoRouterRedirector.checkoutQueryParam] ==
+                    GoRouterRedirector.checkoutCanceledResult,
+              ),
               transitionsBuilder: (context, animation, secondaryAnimation, child) =>
                   FadeTransition(opacity: animation, child: child),
             ),
@@ -924,6 +928,7 @@ class AppRouter {
             redirect: (_, state) => GoRouterRedirector.checkoutReturnLandingPath(
               orderUuid: state.uri.queryParameters['order'],
               hasSession: authSessService.hasSessionOrPending,
+              result: state.pathParameters['result'],
             ),
           ),
           // Safety net: noAccess must be registered ABOVE the /:businessUuid
