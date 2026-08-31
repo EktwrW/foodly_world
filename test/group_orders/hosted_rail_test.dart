@@ -15,6 +15,7 @@ import 'package:foodly_world/ui/views/group_orders/widgets/hosted_rail.dart';
 /// dinámica — feo, pero se paga. Por eso el mismo juego de casos vive en los
 /// dos lados.
 void main() {
+  _offeredTests();
   group('el país del comensal elige el método', () {
     test('portugués → MB WAY', () {
       expect(hostedRailFor('PT'), HostedRail.mbWay);
@@ -74,6 +75,59 @@ void main() {
       // Viene de un formulario y de una dirección tecleada a mano.
       expect(hostedRailFor('  Portugal  '), HostedRail.mbWay);
       expect(hostedRailFor(' ES '), HostedRail.bizum);
+    });
+  });
+}
+
+/// El rail que de verdad se puede OFRECER: país del comensal Y capability del
+/// restaurante.
+///
+/// EL BUG (producción, 2026-08-31): solo se miraba el país. Cualquier portugués
+/// veía "Pagar con MB WAY" aunque el restaurante no tuviera la capability
+/// activa, y al pulsarlo aterrizaba en una página hosteada con tarjeta y nada
+/// más. El backend ya lo sabía y ya restringía la sesión de Checkout; lo que
+/// faltaba era decírselo a quien dibuja el botón.
+void _offeredTests() {
+  group('hostedRailOffered', () {
+    test('el país manda sobre CUÁL, el negocio sobre SI', () {
+      expect(
+        hostedRailOffered(payerCountry: 'PT', businessOffersMbWay: true, businessOffersBizum: false),
+        HostedRail.mbWay,
+      );
+      expect(
+        hostedRailOffered(payerCountry: 'ES', businessOffersMbWay: false, businessOffersBizum: true),
+        HostedRail.bizum,
+      );
+    });
+
+    test('sin la capability no hay botón, aunque el país la pida', () {
+      // Es el bug exacto. El comensal es portugués y el restaurante cobra con
+      // tarjeta: antes se le ofrecía MB WAY igual.
+      expect(
+        hostedRailOffered(payerCountry: 'PT', businessOffersMbWay: false, businessOffersBizum: true),
+        HostedRail.none,
+      );
+      expect(
+        hostedRailOffered(payerCountry: 'ES', businessOffersMbWay: true, businessOffersBizum: false),
+        HostedRail.none,
+      );
+    });
+
+    test('no cruza los métodos: la capability del OTRO no habilita el propio', () {
+      expect(
+        hostedRailOffered(payerCountry: 'PT', businessOffersMbWay: false, businessOffersBizum: false),
+        HostedRail.none,
+      );
+    });
+
+    test('un comensal de fuera sigue sin botón local aunque el negocio acepte todo', () {
+      for (final pais in ['FR', 'US', 'BR', null, '']) {
+        expect(
+          hostedRailOffered(payerCountry: pais, businessOffersMbWay: true, businessOffersBizum: true),
+          HostedRail.none,
+          reason: 'país = $pais',
+        );
+      }
     });
   });
 }

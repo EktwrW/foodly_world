@@ -265,6 +265,18 @@ abstract class GroupOrderDM with _$GroupOrderDM {
     /// ¿El negocio sirve EN MESA? Si sí y la orden no tiene mesa, hay que
     /// pedírsela al comensal antes de que el pedido salga a cocina.
     @JsonKey(name: 'business_table_service') @Default(false) bool businessTableService,
+    /// ¿El restaurante puede cobrar el método local? Lo decide su cuenta de
+    /// Stripe, no el país de nadie.
+    ///
+    /// Hasta el 2026-08-31 el botón "Pagar con MB WAY" se dibujaba solo con el
+    /// país del comensal, así que se lo ofrecía a cualquier portugués aunque el
+    /// restaurante no lo tuviera activo: prometía un método y la página
+    /// hosteada mostraba tarjeta.
+    ///
+    /// `false` por defecto a propósito: una app vieja hablando con un backend
+    /// nuevo, o al revés, no debe ofrecer lo que no puede cumplir.
+    @JsonKey(name: 'business_offers_mb_way') @Default(false) bool offersMbWay,
+    @JsonKey(name: 'business_offers_bizum') @Default(false) bool offersBizum,
     // F4b: modo de cobro del NEGOCIO (per_round | open_tab) + marca de
     // "cuenta pedida" — de acá sale el CTA mutante del cliente.
     @JsonKey(name: 'payment_mode', unknownEnumValue: GroupPaymentMode.perRound)
