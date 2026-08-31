@@ -28,14 +28,43 @@ void main() {
   const uuid = '3f8c1d2e-9a4b-4c7d-8e10-5b6a7c8d9e0f';
 
   group('checkoutReturnLandingPath (decisión pura)', () {
-    test('con orden y sesión → la orden, tanto en éxito como en cancelación', () {
-      // El destino no depende del resultado: es la pantalla que el comensal
-      // quiere ver en los dos casos, y ya refleja el estado real. Quien sella
-      // el cobro es el webhook firmado, no esta URL — que es adivinable.
+    test('con orden y sesión → la orden', () {
+      // La PANTALLA es la misma en los dos casos: es la que el comensal quiere
+      // ver tanto si pagó como si no. Lo que cambia es lo que hay que hacer al
+      // llegar, y eso viaja en la query (test siguiente).
       expect(
         GoRouterRedirector.checkoutReturnLandingPath(orderUuid: uuid, hasSession: true),
         '/group-order/$uuid',
       );
+      expect(
+        GoRouterRedirector.checkoutReturnLandingPath(orderUuid: uuid, hasSession: true, result: 'success'),
+        '/group-order/$uuid',
+      );
+    });
+
+    test('cancelar marca la vuelta para que la pantalla suelte el pago', () {
+      // EL BUG (producción, 2026-08-31): `:result` se ignoraba. Al abrir la
+      // sesión de Checkout el backend deja al pagador en `processing`, y lo
+      // único que lo soltaba era el webhook `checkout.session.expired`, media
+      // hora después. Quien cancelaba volvía a un botón gris que decía
+      // "confirmando tu pago" sin haber pago ninguno.
+      expect(
+        GoRouterRedirector.checkoutReturnLandingPath(orderUuid: uuid, hasSession: true, result: 'cancel'),
+        '/group-order/$uuid?checkout=cancel',
+      );
+    });
+
+    test('un `result` inventado no cancela nada', () {
+      // La URL es pública y adivinable. Solo el literal exacto hace algo, y lo
+      // que hace es SOLTAR un pago que no avanzó: pedirlo de más no cobra a
+      // nadie, y el backend se niega igual si el dinero está comprometido.
+      for (final raro in <String?>[null, '', 'CANCEL', 'cancelado', 'success']) {
+        expect(
+          GoRouterRedirector.checkoutReturnLandingPath(orderUuid: uuid, hasSession: true, result: raro),
+          '/group-order/$uuid',
+          reason: 'result = ${raro == null ? 'null' : '"$raro"'}',
+        );
+      }
     });
 
     test('sin sesión → start, que decide el redirect global', () {
@@ -177,6 +206,7 @@ void main() {
               redirect: (_, state) => GoRouterRedirector.checkoutReturnLandingPath(
                 orderUuid: state.uri.queryParameters['order'],
                 hasSession: sess.hasSessionOrPending,
+                result: state.pathParameters['result'],
               ),
             ),
           ],
@@ -195,6 +225,20 @@ void main() {
     setUp(() {
       sess = _Sess()..isLoggedIn = true;
       store = _Store();
+    });
+
+    testWidgets('cancelar aterriza en la mesa CON la marca de cancelación', (tester) async {
+      // Contra el árbol vivo a propósito: la vez anterior este archivo probó
+      // solo la función pura y el fallo se escapó porque la decisión era
+      // correcta y el router no la usaba. Que es exactamente lo que pasó aquí:
+      // `checkoutReturnLandingPath` nunca recibía `:result`.
+      final router = await pump(tester);
+
+      router.go('/checkout/return/cancel?order=$uuid');
+      await tester.pumpAndSettle();
+
+      expect(loc(router), '/group-order/$uuid?checkout=cancel');
+      expect(find.text('ORDER:$uuid'), findsOneWidget);
     });
 
     testWidgets('el camino feliz aterriza en la mesa', (tester) async {

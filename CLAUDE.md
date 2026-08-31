@@ -84,141 +84,75 @@ Multiplataforma: Considera las particularidades de cada plataforma.
 3. **Prevención**: Sugerencias para evitar problemas similares en el futuro.
 4. **Herramientas de Diagnóstico**: Consejos sobre cómo utilizar DevTools u otras herramientas.
 
-## Tecnologías y Librerías Relevantes
+## El stack REAL de este proyecto
 
-### Manejo de Estado
+Verificado contra `pubspec.yaml`. No proponer alternativas a esto sin que te lo
+pidan: la versión anterior de este archivo listaba Riverpod, GraphQL, Isar,
+ObjectBox, drift, auto_route, flutter_hooks, Rive, Provider y mockito, y
+**ninguna de las catorce estaba en el proyecto**.
 
-- BLoC / flutter_bloc / Cubit
-- Provider
+| Capa | Lo que se usa |
+|---|---|
+| Estado | `flutter_bloc` + `bloc`, cubits; `hydrated_bloc` para persistir |
+| Navegación | `go_router` |
+| Inyección | `get_it` (`dependency_injection_service.dart`), sin `injectable` |
+| Red | `dio` + `retrofit` (+ `retrofit_generator`) |
+| Modelos | `freezed` + `json_serializable` |
+| Almacenamiento | `shared_preferences`, `flutter_secure_storage` (tokens) |
+| Tiempo real | `pusher_channels_flutter` |
+| Pagos | `flutter_stripe` |
+| Firebase | core, auth, analytics, crashlytics, messaging |
+| Mapas y lugares | `google_maps_flutter`, `geolocator`, `nova_places_api` (legacy, ver proxy de Places) |
+| Tema | `flex_color_scheme` + `google_fonts`; Material 3 |
+| OTA | `shorebird_code_push` |
+| Tests | `flutter_test` a secas — **no hay** mockito ni bloc_test; los dobles se escriben a mano |
 
-### Arquitectura
-
-- Features are organized by view/widget/bloc pattern
-- BLoC/Cubit for state management
-- Repository pattern for data access
-- Dependency injection with GetIt
-
-### Networking
-
-- Dio
-- http
-- Retrofit
-- GraphQL (graphql_flutter)
-
-### Base de Datos y Almacenamiento
-
-- Hive
-- SQLite (sqflite, drift)
-- Firebase
-- Isar
-- ObjectBox
-
-### Inyección de Dependencias
-
-- get_it
-- injectable
-
-### Testing
-
-- flutter_test
-- mockito / mocktail
-- integration_test
-- flutter_driver
-- bloc_test 9.1+
-
-### UI/UX
-
-- Material 3
-- Cupertino
-- flutter_hooks
-- animations
-- lottie
-- rive
-
-### Navegación
-
-- go_router
-- auto_route
-- navigator 2.0
-
-## Ejemplos de Implementación
-
-Incluye ejemplos concretos de patrones comunes como:
-
-```dart
-// Ejemplo de un BLoC básico en Flutter 3.29 con Dart 3
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-
-// Evento
-sealed class CounterEvent {}
-final class CounterIncremented extends CounterEvent {}
-final class CounterDecremented extends CounterEvent {}
-
-// Estado
-class CounterState extends Equatable {
-  final int count;
-
-  const CounterState({required this.count});
-
-  CounterState copyWith({int? count}) {
-    return CounterState(count: count ?? this.count);
-  }
-
-  @override
-  List<Object> get props => [count];
-}
-
-// BLoC
-class CounterBloc extends Bloc<CounterEvent, CounterState> {
-  CounterBloc() : super(const CounterState(count: 0)) {
-    on<CounterIncremented>(_onIncrement);
-    on<CounterDecremented>(_onDecrement);
-  }
-
-  void _onIncrement(CounterIncremented event, Emitter<CounterState> emit) {
-    emit(state.copyWith(count: state.count + 1));
-  }
-
-  void _onDecrement(CounterDecremented event, Emitter<CounterState> emit) {
-    emit(state.copyWith(count: state.count - 1));
-  }
-}
-```
-
-## Guía para Solicitar Ayuda
-
-Para obtener la mejor asistencia, proporciona:
-
-1. **Contexto del Proyecto**: Describe brevemente el propósito de la aplicación.
-2. **Requisitos Específicos**: Detalla lo que necesitas implementar.
-3. **Restricciones**: Menciona limitaciones técnicas o de negocio.
-4. **Código Existente**: Comparte fragmentos relevantes del código actual.
-5. **Preferencias**: Indica tus preferencias en cuanto a patrones, librerías o enfoques.
-
-## Comandos Específicos
-
-Puedes utilizar estos comandos para obtener ayuda específica:
-
-- `/architecture [tipo]`: Genera una propuesta de arquitectura completa
-- `/pattern [nombre]`: Muestra implementación de un patrón de diseño específico
-- `/refactor [código]`: Sugiere mejoras para el código proporcionado
-- `/optimize [área]`: Proporciona consejos de optimización para un área específica
-- `/test [componente]`: Genera pruebas para el componente especificado
-- `/example [feature]`: Proporciona ejemplo completo de implementación
-- `/compare [opción1] vs [opción2]`: Compara dos enfoques o tecnologías
-
-## Ejemplo de Uso
-
-```
-/architecture clean-architecture-bloc
-
-# Respuesta esperada: Una propuesta completa de arquitectura Clean Architecture con BLoC incluyendo estructura de carpetas, componentes principales y ejemplos de código.
-```
+79 dependencias directas en total. Antes de añadir una, comprobar si algo de la
+lista ya lo cubre.
 
 ---
 
-## iOS Deployment & TestFlight
+## Publicación en tiendas (App Store y Play)
+
+### Foodly YA está publicada. Una versión nueva no es un alta.
+
+La app lleva meses en producción en **las dos** tiendas — el registro del
+backend menciona un «post-go-live 1.6.4 en Play Store» de junio de 2026. Por lo
+tanto, al subir una versión:
+
+**Se heredan** la clasificación por edad, el cuestionario IARC, la seguridad de
+los datos, la declaración del ID de publicidad, la URL de borrado de cuenta, el
+público objetivo y el resto de formularios. **Sólo se toca lo que cambió de
+verdad en esa versión.** Volver a contestarlos es trabajo inventado, y en Play
+tocar respuestas ya aprobadas puede reabrir revisiones que estaban cerradas.
+
+Antes de decir que algo «falta», hay que preguntarse si es nuevo **en esta
+versión** o si ya estaba publicado. Los posts, el feed por proximidad, los
+likes y los seguidores existen desde mucho antes que los pedidos en vivo: no
+son un cambio a declarar.
+
+**La excepción es cuando cambia la PREGUNTA, no la app.** En julio de 2026
+Apple añadió preguntas sobre capacidades de redes sociales al cuestionario de
+edad; ésas hay que contestarlas aunque el feed lleve meses publicado. Es de
+Apple y no se traslada a Play por analogía.
+
+### Los límites de cada tienda no son iguales
+
+|  | App Store | Play |
+|---|---|---|
+| Capturas | 10 por localización | **8** por tipo de dispositivo |
+| Notas de versión | 4000 caracteres | **500** |
+| Feature graphic | no existe | 1024×500, obligatorio |
+| Tamaño de captura | 1290×2796 | 1290×2580 |
+
+Los assets salen de `brand-assets/store-assets`: `render.js` compone las slides
+a 2x y `downscale.py` las baja a medida. Un solo comando produce los dos
+tamaños, en `appstore/<lang>/` y `play/<lang>/`.
+
+**Las capturas del simulador de iOS sirven para Play.** Flutter dibuja la misma
+interfaz en los dos sistemas, y el único elemento que delata el aparato —la
+barra de inicio de iOS— cae fuera del encuadre del render. No hay que
+recapturar en Android.
 
 ### Apple Developer Account
 - **Apple ID:** owentours@gmail.com
@@ -230,38 +164,72 @@ Puedes utilizar estos comandos para obtener ayuda específica:
 
 > **Note:** There is an old app record "Foodly World" (ID: 6741719812) with bundle ID `world.foodly.mobile` — this is deprecated and should not be used. The active app uses `com.foodlysolutions.app`.
 
-### Fastlane Setup (Local)
-Fastlane is configured in `ios/fastlane/` for automated builds and uploads:
+### Runbook de release iOS
+
+El orden importa y hay tres trampas dentro. Los comandos van desde `ios/`.
+
+1. `export STRIPE_PUBLISHABLE_KEY=pk_live_...` — ya está en `~/.zprofile`, pero
+   **antes de abrir VS Code**: las tasks sustituyen `${env:...}` desde el
+   entorno que VS Code cacheó al arrancar, no desde el shell donde corren.
+2. Task **«Shorebird - Release iOS (App Store)»**. Depende de
+   «Foodly - Verificar Stripe (tienda)», que con `REQUIRE_LIVE=1` mata la
+   compilación si la clave es de test. Debe imprimir `✓ Stripe LIVE · …xxxx`.
+3. `sh .vscode/upload_dsyms.sh` — **antes de cualquier `flutter clean`**, que se
+   lleva el `.xcarchive`.
+4. `bundle exec fastlane beta_upload`
+5. Si la versión no existe en App Store Connect, crearla a mano:
+   **+ Versión o plataforma**.
+6. `bundle exec fastlane metadata`
+7. Capturas a mano en la consola, información de revisión, y enviar.
+
+**Nunca `fastlane release` sobre una build de Shorebird.** Ese lane hace
+`flutter clean` + `flutter build ipa`: reconstruye con Flutter puro, tira la
+build de Shorebird y la deja sin tracking para futuros patches OTA. Usa
+`beta_upload`, que sube el IPA existente; entra igual en App Store Connect y
+aparece en el selector de build de la versión de App Store, no sólo en
+TestFlight.
+
+**`beta_upload` no sube los dSYMs** — sólo lo hacía el lane `release`. Sin ellos
+los crashes de esa versión llegan a Crashlytics sin simbolizar.
+
+**`fastlane metadata` necesita que la versión ya exista.** Con
+`skip_binary_upload: true` deliver no la crea, sólo la busca, y falla con
+«Cannot find edit app store version» reintentando siete veces con backoff.
+
+**El JS/CSS que se inyecte en un HTML no va antes del último `</script>`**: si
+ese script tiene `src`, su contenido inline se ignora y el código no se ejecuta
+nunca, sin error en consola. (Aprendido en la landing, aplica igual aquí.)
+
+### Lanes disponibles
 
 ```bash
-cd ios/
-bundle exec fastlane beta          # Clean build + upload to TestFlight
-bundle exec fastlane beta_upload   # Upload existing IPA only (skip build)
-bundle exec fastlane release       # Build + upload to App Store (manual submit)
+bundle exec fastlane beta          # build limpio + TestFlight
+bundle exec fastlane beta_upload   # sube el IPA existente (el de Shorebird)
+bundle exec fastlane release       # build con Flutter puro + App Store — ver aviso arriba
+bundle exec fastlane metadata      # sólo textos de la ficha, sin binario ni capturas
 ```
 
-**Configuration files:**
-- `ios/Gemfile` — Ruby dependencies (fastlane, cocoapods)
-- `ios/fastlane/Appfile` — App identifier, Apple ID, Team ID
-- `ios/fastlane/Fastfile` — Build and upload lanes
-- `ios/fastlane/.env` — API keys and app-specific password (**NOT in git**)
-- `ios/fastlane/.env.default` — Template for `.env` (safe to commit)
+**Configuración:** `ios/Gemfile`, `ios/fastlane/Appfile`, `ios/fastlane/Fastfile`,
+`ios/fastlane/.env` (**no está en git**) y `ios/fastlane/.env.default`.
 
-**Environment variables required in `.env`:**
-- `ANALYTICS_TOKEN` — dart-define value
+`.env` necesita `ANALYTICS_TOKEN` y `FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD`
+(se genera en account.apple.com → Sign-In and Security → App-Specific Passwords).
 
-> **Las claves de los proveedores de IA ya no se inyectan** (2026-08-18). Se pasaban
-> por `--dart-define`, lo que las compilaba dentro de `libapp.so` / el IPA: extraíbles
-> con `strings` desde cualquier APK publicado. La generación de AI promos se movió al
-> backend (`POST /promotions/ai-generate`) y las credenciales viven en Secret Manager.
-> Si ves estas variables en un `.env` local, borralas.
-- `FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD` — Generated at account.apple.com > Sign-In and Security > App-Specific Passwords
+> **Las claves de los proveedores de IA ya no se inyectan** (2026-08-18). Se
+> pasaban por `--dart-define`, o sea compiladas dentro de `libapp.so` / el IPA:
+> extraíbles con `strings` desde cualquier binario publicado. La generación de
+> AI promos se movió al backend (`POST /promotions/ai-generate`) y las
+> credenciales viven en Secret Manager. Si ves `OPENAI_API_KEY` o
+> `REPLICATE_API_KEY` en un `.env` local, borralas.
 
-### iOS Build (without Fastlane)
-Existing VS Code tasks also work:
-- "Shorebird - Release iOS (App Store)" — Generates IPA with Shorebird tracking
-- "Shorebird - Patch iOS (OTA)" — Dart-only OTA patch via Shorebird
-- "Foodly - Build IPA Release" — Vanilla Flutter IPA build
+### Build de Android
+
+Task **«Shorebird - Release Android (Play Store)»**, con el mismo guard de
+Stripe. Produce `build/app/outputs/bundle/release/app-release.aab`. Para leer
+qué lleva dentro (versionCode, targetSdk, permisos reales tras la fusión de
+manifiestos), el manifiesto empaquetado está en
+`build/app/intermediates/packaged_manifests/release/processReleaseManifestForPackage/AndroidManifest.xml`
+— no el de `app/src/main/`, que no incluye lo que aportan los plugins.
 
 ### Signing
 - **Automatic signing** via Xcode with Team V76AZLAYJ4
@@ -278,7 +246,11 @@ iOS permission descriptions are localized in:
 - `ios/Runner/pt.lproj/InfoPlist.strings`
 
 ### Security Notes
-- API keys are currently hardcoded in `.vscode/tasks.json` — plan to migrate to `.env` files
+- `.vscode/tasks.json` todavía trae en claro `GOOGLE_MAPS_API_KEY`,
+  `GOOGLE_SIGN_IN_CLIENT_ID` y `ANALYTICS_TOKEN`. `STRIPE_PUBLISHABLE_KEY` ya
+  no: se lee de `${env:...}`. Las tres primeras viajan igualmente dentro del
+  binario publicado —son claves de cliente—, así que lo que las protege son
+  las restricciones del lado del servidor, no el secreto
 - `android/key.properties` and `android/app/foodly-release.jks` are committed to repo despite being in `.gitignore` — need to rotate and clean git history
 - `NSAllowsArbitraryLoads` is set to `true` in Info.plist (needed for some image URLs) — may need justification during App Review
 

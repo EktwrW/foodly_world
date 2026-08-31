@@ -185,8 +185,13 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   /// Silencioso a propósito: se llama al cerrar la hoja, y el caso normal —no
   /// había nada que soltar— no merece ni un mensaje. Quien necesite avisar al
   /// comensal (el flujo de reabrir) mira el bool.
-  Future<bool> cancelPayment() async {
-    final uuid = _vm.order?.uuid;
+  /// [orderUuid] para poder soltar el pago ANTES de que la orden haya cargado.
+  /// Lo necesita la vuelta de un Checkout cancelado: si el sistema mató la app
+  /// mientras el comensal estaba en el navegador, al volver por el deep link
+  /// `_vm.order` todavía es null y la cancelación se perdía en silencio —
+  /// justo el caso en que el comensal más necesita que se suelte.
+  Future<bool> cancelPayment({String? orderUuid}) async {
+    final uuid = orderUuid ?? _vm.order?.uuid;
     if (uuid == null) return false;
 
     final result = await _repo.cancelPayment(uuid);
