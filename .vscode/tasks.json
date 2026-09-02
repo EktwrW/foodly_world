@@ -126,7 +126,6 @@
       "args": [
         "${workspaceFolder}/.vscode/shorebird_patch.sh",
         "android",
-        "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
@@ -191,7 +190,6 @@
       "args": [
         "${workspaceFolder}/.vscode/shorebird_patch.sh",
         "ios",
-        "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
