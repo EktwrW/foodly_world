@@ -16,9 +16,15 @@ class StripePaymentService {
   /// El entorno de Google Pay tiene que coincidir con el MODO DE STRIPE, no
   /// con el modo de compilación de Flutter. Son ejes distintos y se cruzan:
   /// el APK de e2e se buildea `--release` con una `pk_test_`, así que atarlo
-  /// a `kDebugMode` lo mandaba a PRODUCTION contra una cuenta en test —
-  /// Google devuelve un token real que Stripe test no puede cobrar, y encima
-  /// PRODUCTION exige el production access aprobado por Google.
+  /// a `kDebugMode` lo mandaba a PRODUCTION contra una cuenta en test, y Google
+  /// devuelve ahí un token real que Stripe test no puede cobrar.
+  ///
+  /// Este comentario decía además que PRODUCTION exige el production access
+  /// aprobado por Google. **Es falso** y costó una tarde de diagnóstico
+  /// equivocado (2026-08-31): con el PaymentSheet el gateway registrado ante
+  /// Google es Stripe, no nosotros — `PaymentSheetGooglePay` ni siquiera acepta
+  /// un merchant id. Google pide ese alta para el flujo del botón dedicado
+  /// (`GooglePayLauncher`) y para el escaneo de tarjeta, que no usamos.
   ///
   /// Misma constante que consume `main.dart` para `Stripe.publishableKey`.
   /// `final` y no `const`: `startsWith` no es evaluable en tiempo de
