@@ -231,6 +231,26 @@ manifiestos), el manifiesto empaquetado está en
 `build/app/intermediates/packaged_manifests/release/processReleaseManifestForPackage/AndroidManifest.xml`
 — no el de `app/src/main/`, que no incluye lo que aportan los plugins.
 
+### Patches OTA (Shorebird)
+
+Tasks **«Shorebird - Patch Android/iOS (OTA)»**. Llaman a
+`.vscode/shorebird_patch.sh`, que **lee la versión de `pubspec.yaml`** en lugar
+de llevarla escrita. Antes iba a mano y se quedó en `2.0.2+97` mientras
+producción iba por `2.0.6+99`; como esa release vieja SIGUE activa, el patch se
+subía en silencio a una release que ya no usa nadie.
+
+**`shorebird patch` NO acepta `--flutter-version`** — es exclusiva de
+`shorebird release`. El patch toma la revisión de Flutter de la release que
+parchea, que es justo el punto. Copiar los argumentos de la task de release a
+la de patch falla con `Could not find an option named "--flutter-version"`.
+
+Antes de subir nada: `--dry-run` compila, verifica que el patch se aplica a la
+release y detecta diffs nativos o de assets, sin publicar. Termina en
+`No issues detected.`
+
+Un patch OTA sólo lleva **Dart**. Si el cambio toca un plugin, un permiso o el
+manifiesto, hace falta release nueva.
+
 ### Signing
 - **Automatic signing** via Xcode with Team V76AZLAYJ4
 - Provisioning profiles are managed automatically by Xcode
