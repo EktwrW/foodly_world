@@ -122,11 +122,10 @@
     },
     {
       "type": "shell",
-      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
+      "command": "sh",
       "args": [
-        "patch",
+        "${workspaceFolder}/.vscode/shorebird_patch.sh",
         "android",
-        "--release-version=2.0.2+97",
         "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",
@@ -188,11 +187,10 @@
     },
     {
       "type": "shell",
-      "command": "/Users/hectorwaldman/.shorebird/bin/shorebird",
+      "command": "sh",
       "args": [
-        "patch",
+        "${workspaceFolder}/.vscode/shorebird_patch.sh",
         "ios",
-        "--release-version=2.0.2+97",
         "--flutter-version=3.44.6",
         "--",
         "--dart-define=ENV=prod",
