@@ -23,6 +23,17 @@ class LocationService {
   bool awaitingSettingsReturn = false;
 
   LocationDetailsDM get currentLocation => _locationDM;
+
+  /// ¿La posición nueva está lo bastante lejos de la anterior como para que
+  /// merezca recargar lo que depende de ella (cercanos, promos, novedades)?
+  /// El bloc emite dos veces —última conocida y fix preciso— y casi siempre
+  /// son el mismo sitio con distinta precisión: recargar dos veces sería
+  /// gastar red para pintar lo mismo. Sin posición anterior, siempre sí.
+  static bool movedSignificantly(Position? before, Position? after, {double meters = 150}) {
+    if (after == null) return false;
+    if (before == null) return true;
+    return Geolocator.distanceBetween(before.latitude, before.longitude, after.latitude, after.longitude) >= meters;
+  }
   bool get mustFetchLocation => !_hasBeenInitialized;
   bool get hasLocationData => _locationDM.position != null;
 

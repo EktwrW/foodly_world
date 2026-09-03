@@ -334,6 +334,36 @@ void main() {
   });
 
   group('eventos', () {
+    test('12. con última posición conocida, emite ANTES con ella y DESPUÉS con el fix preciso', () async {
+      final lastKnown = _samplePosition(latitude: 38.7169);
+      final fresh = _samplePosition(); // 40.2791, la de por defecto
+      fakeGeolocator
+        ..serviceEnabled = true
+        ..permission = LocationPermission.whileInUse
+        ..nextLastKnownPosition = lastKnown
+        ..nextPosition = fresh;
+      final bloc = buildBloc();
+      final emitted = await runCheckLocationFlow(bloc);
+      final checked = emitted.where(isLocationChecked).toList();
+      expect(checked, hasLength(2), reason: 'provisional + definitiva');
+      expect(extractCheckedDM(checked.first).position?.latitude, closeTo(38.7169, 0.001),
+          reason: 'la primera emisión es la última conocida, sin esperar al fix');
+      expect(extractCheckedDM(checked.last).position?.latitude, closeTo(40.2791, 0.001),
+          reason: 'la última emisión lleva el fix preciso');
+      await bloc.close();
+    });
+
+    test('13. sin última posición conocida sigue habiendo UNA sola emisión con el fix', () async {
+      fakeGeolocator
+        ..serviceEnabled = true
+        ..permission = LocationPermission.whileInUse
+        ..nextPosition = _samplePosition();
+      final bloc = buildBloc();
+      final emitted = await runCheckLocationFlow(bloc);
+      expect(emitted.where(isLocationChecked).toList(), hasLength(1));
+      await bloc.close();
+    });
+
     test('11. setManualLocation → emite LocationChecked con el DM exacto', () async {
       final bloc = buildBloc();
 

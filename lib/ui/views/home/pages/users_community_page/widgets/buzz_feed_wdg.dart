@@ -162,6 +162,7 @@ class _BuzzItemCard extends StatelessWidget {
         router.goNamed(
           AppRoutes.visitMenu.name,
           pathParameters: {AppRoutes.routeIdParam: item.menuUuid!},
+          queryParameters: {if (item.businessUuid?.isNotEmpty ?? false) 'b': item.businessUuid!},
         );
       case 'new_promotion' || 'promotion_update' || 'new_favorite_promotion' when item.businessUuid != null:
         router.goNamed(

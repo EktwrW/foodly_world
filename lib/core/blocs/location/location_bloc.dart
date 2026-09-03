@@ -248,13 +248,33 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         return;
       }
 
-      // Estrategia: fix rápido con timeLimit de 10 s; si expira o falla,
-      // fallback a lastKnownPosition. Si AMBOS fallan, emitimos con position
-      // null y downstream (cubits + UI) maneja "sin ubicación" elegantemente.
+      // Estrategia (2026-09-03): PRIMERO la última posición conocida del
+      // sistema, que está en caché y llega en milisegundos, y se emite ya
+      // para que la home cargue; DESPUÉS el fix preciso (timeLimit 10 s), que
+      // se vuelve a emitir al final con el reverse-geocoding. Antes la home
+      // esperaba hasta 10-12 s al fix en interiores antes de pedir nada. Quien
+      // consume la posición decide si el segundo aviso merece recargar (ver
+      // LocationService.movedSignificantly). Si el fix falla, se queda la
+      // última conocida; si ambas fallan, position null y downstream lo lleva.
       //
       // Future.any con Future.delayed(12s) = belt-and-suspenders sobre el
       // timeLimit nativo por si el plugin no lo propaga al isolate Dart.
       Position? currentPosition;
+      Position? provisional;
+      if (!kIsWeb) {
+        try {
+          provisional = await Geolocator.getLastKnownPosition().timeout(
+            const Duration(milliseconds: 1500),
+            onTimeout: () => null,
+          );
+        } catch (e) {
+          _logger.w('getLastKnownPosition (provisional) falló: $e');
+        }
+        if (provisional != null && !emit.isDone) {
+          _locationDM = _locationDM.copyWith(position: provisional);
+          emit(_LocationChecked(_locationDM));
+        }
+      }
       try {
         currentPosition = await Future.any<Position?>([
           Geolocator.getCurrentPosition(
@@ -277,6 +297,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         // reads the OS-level cache.
         if (kIsWeb) {
           _logger.w('Skipping getLastKnownPosition fallback on web — not supported by geolocator_web');
+        } else if (provisional != null) {
+          currentPosition = provisional; // ya la teníamos: no hace falta pedirla otra vez
         } else {
           try {
             // Timeout 5 s: `getLastKnownPosition` lee el cache del sistema

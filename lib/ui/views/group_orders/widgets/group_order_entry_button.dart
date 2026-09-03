@@ -187,6 +187,7 @@ class _GroupOrderEntryButtonState extends State<GroupOrderEntryButton> {
         context.goNamed(
           AppRoutes.visitMenu.name,
           pathParameters: {AppRoutes.routeIdParam: menuUuid},
+          queryParameters: {if (order.businessUuid?.isNotEmpty ?? false) 'b': order.businessUuid!},
         );
       }
     } else {

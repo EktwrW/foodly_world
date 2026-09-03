@@ -848,6 +848,9 @@ class AppRouter {
                   di(),
                   uuid: state.pathParameters[AppRoutes.routeIdParam] ?? '',
                   businessDM: state.extra as BusinessDM?,
+                  // `?b=<uuid del negocio>`: lo mandan los callers que no tienen
+                  // el BusinessDM pero sí su uuid, para pedirlo en paralelo.
+                  businessUuid: state.uri.queryParameters['b'],
                 ),
                 child: const VisitedMenuScreen(),
               ),

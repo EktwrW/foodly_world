@@ -86,6 +86,7 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
         context.goNamed(
           AppRoutes.visitMenu.name,
           pathParameters: {AppRoutes.routeIdParam: menuUuid},
+          queryParameters: {if (cubit.state!.businessUuid?.isNotEmpty ?? false) 'b': cubit.state!.businessUuid!},
         );
       } else {
         context.goNamed(
