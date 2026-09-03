@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart' show RenderRepaintBoundary;
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
@@ -71,7 +72,7 @@ Future<void> downloadMenuQrPng(
       // El logo de Foodly es un asset local; si fallara seguimos igual.
     }
   }
-  final ui.Image? logoImage = _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!)) : null;
+  final ui.Image? logoImage = _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager)) : null;
 
   final entry = OverlayEntry(
     builder: (_) => Positioned(

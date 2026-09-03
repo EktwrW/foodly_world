@@ -7,6 +7,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/network/moderation/moderation_repo.dart' show ReportableType;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/posts/post_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
@@ -176,8 +177,7 @@ class PostCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 280),
-        child: CachedNetworkImage(
-          imageUrl: post.photoUrl!,
+        child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: post.photoUrl!,
           width: double.infinity,
           fit: BoxFit.cover,
           placeholder: (_, __) => Container(

@@ -8,6 +8,7 @@ import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -42,7 +43,7 @@ Future<void> downloadMenuQrBatch(
     // Los logos se resuelven UNA vez y se reusan en todas las páginas: son la
     // única parte del lote que toca la red.
     final businessLogo = await MenuQrBatchPdf.imageProviderFrom(
-      _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!)) : null,
+      _hasRealLogo(logoUrl) ? await resolveImage(CachedNetworkImageProvider(logoUrl!, cacheManager: FoodlyImageCache.manager)) : null,
     );
     final foodlyLogo = await MenuQrBatchPdf.imageProviderFrom(
       await resolveImage(AssetImage(FoodlyAssets.logo.assetPath)),

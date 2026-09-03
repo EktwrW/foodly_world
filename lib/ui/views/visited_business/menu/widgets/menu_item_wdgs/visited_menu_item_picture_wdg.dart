@@ -25,6 +25,10 @@ class VisitedMenuItemPictureWdg extends StatelessWidget {
 
     if (_imageSource.startsWith('http://') || _imageSource.startsWith('https://')) {
       return CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        // Se pinta a ~100 px: decodificar los 1280 px del original costaba
+        // ~5 MB de RAM por foto y desalojaba la caché en memoria al hacer scroll.
+        memCacheWidth: menuCardMemCacheWidth,
         imageUrl: _imageSource,
         fit: BoxFit.cover,
         placeholder: (context, url) => const LoadingWidgetFoodlyIso(height: 28),

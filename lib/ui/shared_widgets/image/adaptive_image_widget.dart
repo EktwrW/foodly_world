@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 
 class AdaptiveImage extends StatelessWidget {
   final String imagePath;
@@ -19,8 +20,7 @@ class AdaptiveImage extends StatelessWidget {
     final isNetwork = imagePath.startsWith('http') || imagePath.startsWith('https');
 
     if ((isNetwork && isUrl) || kIsWeb) {
-      return CachedNetworkImage(
-        imageUrl: imagePath,
+      return CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: imagePath,
         fit: fit ?? BoxFit.cover,
         placeholder: (context, url) =>
             Center(heightFactor: 2.5, child: loadingWdg ?? const CircularProgressIndicator()),

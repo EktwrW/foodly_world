@@ -4,8 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/scheduler.dart' show SchedulerBinding;
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/data_transfer_objects/menu/menu_register_dto.dart';
+import 'package:foodly_world/ui/constants/image_decode_sizes.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_precache.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -119,31 +122,20 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
   }
 
   Future<void> _precacheMenuImages(MenuDM menu) {
-    final futures = <Future<void>>[];
-    for (final category in menu.foodCategories) {
-      for (final item in category.items) {
-        for (final photo in item.foodPhotos ?? []) {
-          final f = _precacheUrlFuture(photo.businessFoodPhotoUrl);
-          if (f != null) futures.add(f);
-        }
-      }
-    }
-    for (final category in menu.drinkCategories) {
-      for (final item in category.items) {
-        for (final photo in item.drinkPhotos ?? []) {
-          final f = _precacheUrlFuture(photo.businessDrinkPhotoUrl);
-          if (f != null) futures.add(f);
-        }
-      }
-    }
-    for (final combo in menu.combos) {
-      for (final photo in combo.comboPhotos ?? []) {
-        final f = _precacheUrlFuture(photo.businessComboPhotoUrl);
-        if (f != null) futures.add(f);
-      }
-    }
+    // Solo la primera pantalla (ver menu_precache.dart). Tope de 1,5 s: la
+    // pantalla no espera más que eso por ninguna foto.
+    // PlatformDispatcher y no WidgetsBinding: no exige binding inicializado,
+    // así que los tests del cubit (test() a secas) siguen funcionando. Sin
+    // vista —tests, arranque muy temprano— se asume un móvil.
+    final view = PlatformDispatcher.instance.views.firstOrNull;
+    final urls = menuPhotosToPrecache(
+      menu,
+      drinksFirst: (menu.business?.menuInitialPageIndex ?? 0) == 1,
+      viewportHeight: view == null ? 800 : view.physicalSize.height / view.devicePixelRatio,
+    );
+    final futures = urls.map(_precacheUrlFuture).whereType<Future<void>>().toList();
     if (futures.isEmpty) return Future.value();
-    return Future.wait(futures).timeout(const Duration(seconds: 4), onTimeout: () => []);
+    return Future.wait(futures).timeout(const Duration(milliseconds: 1500), onTimeout: () => []);
   }
 
   Future<void>? _precacheUrlFuture(String? url) {
@@ -153,15 +145,31 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
-    stream.addListener(ImageStreamListener(
-      (_, __) {
-        if (!completer.isCompleted) completer.complete();
+    // Misma clave que las tarjetas (`memCacheWidth`): así lo que decodifica la
+    // precarga es lo que ellas pintan. Sin `ResizeImage` se decodificaba el
+    // original entero (~5 MB) y, como las tarjetas usan otra clave, no servía
+    // de nada en memoria. Y el listener se suelta: un stream con listeners
+    // vivos no lo libera ni `ImageCache.clear()` bajo presión de memoria.
+    final stream = ResizeImage(
+      CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager),
+      width: menuCardMemCacheWidth,
+    ).resolve(const ImageConfiguration());
+    late final ImageStreamListener listener;
+    void listo() {
+      stream.removeListener(listener);
+      if (!completer.isCompleted) completer.complete();
+    }
+
+    // El `ImageInfo` que llega es un clon: el SDK exige disponerlo, si no el
+    // bitmap vive hasta que el GC finalice el handle huérfano.
+    listener = ImageStreamListener(
+      (info, __) {
+        info.dispose();
+        listo();
       },
-      onError: (_, __) {
-        if (!completer.isCompleted) completer.complete();
-      },
-    ));
+      onError: (_, __) => listo(),
+    );
+    stream.addListener(listener);
     return completer.future;
   }
 

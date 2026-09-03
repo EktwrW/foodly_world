@@ -167,8 +167,7 @@ class _EditPromoMediaWdg extends StatelessWidget {
       }
       return ImageSliderFade(
         imageList: vm.newPromo!.promoMedia
-            .map((e) => CachedNetworkImage(
-                  imageUrl: e.mediaUrl,
+            .map((e) => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: e.mediaUrl,
                   width: double.infinity,
                   fadeInDuration: Durations.medium2,
                   fit: BoxFit.cover,
