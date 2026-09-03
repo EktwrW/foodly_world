@@ -77,7 +77,10 @@ class CurrentLocationButton extends StatelessWidget {
                   : hasLocation
                       ? locationService.currentAddress.isNotEmpty == true
                           ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
-                          : '${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+                          // Provisional sin geocoding: sin ciudad el tooltip quedaba ", , ."
+                          : locationService.currentCity.isNotEmpty
+                              ? '${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
+                              : S.current.useDeviceLocation
                       : noLocTooltip,
               child: Material(
                 color: Colors.transparent,

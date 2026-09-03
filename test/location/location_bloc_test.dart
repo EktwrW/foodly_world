@@ -258,7 +258,10 @@ void main() {
         ..serviceEnabled = true
         ..permission = LocationPermission.whileInUse
         ..currentPositionThrows = TimeoutException('simulated current timeout')
-        ..nextLastKnownPosition = lastKnown;
+        // Solo la PRIMERA llamada devuelve algo: si el bloc perdiera el atajo
+        // `provisional != null` y volviera a pedirla, recibiría null y el test
+        // fallaría. Así distingue el atajo del re-fetch.
+        ..lastKnownSequence = [lastKnown];
 
       final bloc = buildBloc();
       final emitted = await runCheckLocationFlow(bloc);
