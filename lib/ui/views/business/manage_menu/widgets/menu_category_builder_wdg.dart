@@ -14,6 +14,7 @@ import 'package:foodly_world/core/extensions/iterable_extension.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';

@@ -8,6 +8,7 @@ import 'package:foodly_world/core/consts/foodly_locales.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/notifications/notifications_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
@@ -404,7 +405,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
       (_, __) { if (!completer.isCompleted) completer.complete(); },
       onError: (_, __) { if (!completer.isCompleted) completer.complete(); },

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:foodly_world/core/core_exports.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -379,8 +380,7 @@ class _YoutubeThumbnail extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CachedNetworkImage(
-            imageUrl: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
+          CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg',
             fit: BoxFit.cover,
             errorWidget: (_, __, ___) => const ColoredBox(
               color: Colors.black87,

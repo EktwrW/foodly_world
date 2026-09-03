@@ -3,6 +3,7 @@ import 'dart:async' show Completer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/ui/views/visited_business/promotions/view_model/promotions_vm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -74,7 +75,7 @@ class PromotionsCubit extends Cubit<PromotionsState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
       (_, __) {
         if (!completer.isCompleted) completer.complete();

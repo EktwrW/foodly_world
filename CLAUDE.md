@@ -347,6 +347,30 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### Imágenes: una sola caché de disco, `memCacheWidth` y precarga acotada (2026-09-03)
+
+Toda imagen remota pasa por `FoodlyImageCache.manager`
+(`core/services/foodly_image_cache.dart`): 1000 objetos, 30 días. Widget
+(`CachedNetworkImage`) y provider (`CachedNetworkImageProvider`) tienen que
+usar el MISMO gestor; con dos, la precarga escribe en uno y la pantalla lee del
+otro y se descarga dos veces. `DefaultCacheManager` (200 objetos, 7 días) se
+quedaba corto: entre menús, promos y avatares se desalojaba en dos sesiones.
+
+El bucket sirve las fotos con caché inmutable de un año (be-foodly,
+2026-09-03) y cada subida tiene URL nueva, así que guardar mucho tiempo es
+seguro: una foto reemplazada nunca llega con la misma URL.
+
+**`memCacheWidth` siempre que la imagen se pinte pequeña.** Sin él, una foto de
+1280 px se decodifica entera (~5 MB de RAM) para una tarjeta de 100 px, la
+caché en memoria de Flutter (100 MB) se llena con veinte y redecodifica al
+hacer scroll. Tarjetas de menú: 400. Avatares: `width * 3`.
+
+**La precarga del menú solo cubre la primera pantalla**
+(`menu_precache.dart`): `ceil(alto / 110) + 2`, entre 6 y 16, tope 1,5 s. Antes
+eran todas las fotos con tope de 4 s, que en móvil se agotaba siempre: spinner
+de 4 s y las fotos entraban igual a cuentagotas. Usa `PlatformDispatcher`, no
+`WidgetsBinding`, para que los tests del cubit no necesiten binding.
+
 ### Multi-dispositivo y sesiones activas (2026-08-29)
 
 Una cuenta admite hasta **6 sesiones simultáneas**. Antes admitía una sola:

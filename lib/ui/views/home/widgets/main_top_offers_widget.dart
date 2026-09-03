@@ -12,6 +12,7 @@ import 'package:foodly_world/core/core_exports.dart' show LoadingWidgetFoodlyIso
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
@@ -162,7 +163,7 @@ class NearbyPromoCard extends StatelessWidget {
 
     // GCS image
     if (promo.promoMedia != null && promo.promoMedia!.mediaUrl.isNotEmpty) {
-      return CachedNetworkImage(imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
+      return CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
     }
 
     return Container(

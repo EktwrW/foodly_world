@@ -8,6 +8,7 @@ import 'package:foodly_world/core/enums/promo_art_context_enum.dart';
 import 'package:foodly_world/core/enums/promo_image_style_enum.dart';
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';

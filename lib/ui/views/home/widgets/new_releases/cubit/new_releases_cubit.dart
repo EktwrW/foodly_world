@@ -7,6 +7,7 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/core/services/location_service.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_state.dart';
@@ -133,7 +134,7 @@ class NewReleasesCubit extends Cubit<NewReleasesState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url).resolve(const ImageConfiguration());
+    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
     stream.addListener(ImageStreamListener(
       (_, __) { if (!completer.isCompleted) completer.complete(); },
       onError: (_, __) { if (!completer.isCompleted) completer.complete(); },

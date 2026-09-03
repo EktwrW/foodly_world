@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/consts/foodly_strings.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
 enum AvatarType { generic, user, business }
@@ -42,8 +43,7 @@ class AvatarWidget extends StatelessWidget {
       );
 
   // Placeholders optimizados
-  Widget get userAvatarPlaceholder => CachedNetworkImage(
-        imageUrl: FoodlyStrings.USER_AVATAR_PLACEHOLDER,
+  Widget get userAvatarPlaceholder => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: (width * 3).ceil(), imageUrl: FoodlyStrings.USER_AVATAR_PLACEHOLDER,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),
@@ -55,8 +55,7 @@ class AvatarWidget extends StatelessWidget {
         fadeOutDuration: Durations.medium3,
       );
 
-  Widget get businessPlaceholder => CachedNetworkImage(
-        imageUrl: FoodlyStrings.LOGO_PLACEHOLDER,
+  Widget get businessPlaceholder => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: (width * 3).ceil(), imageUrl: FoodlyStrings.LOGO_PLACEHOLDER,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),
@@ -100,8 +99,7 @@ class AvatarWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: CachedNetworkImage(
-        imageUrl: avatarUrl!,
+      child: CachedNetworkImage(cacheManager: FoodlyImageCache.manager, memCacheWidth: (width * 3).ceil(), imageUrl: avatarUrl!,
         fit: boxFit,
         imageBuilder: (context, imageProvider) => Container(
           constraints: BoxConstraints.tight(Size(width, height)),

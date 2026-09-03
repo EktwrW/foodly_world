@@ -1,0 +1,38 @@
+import 'package:foodly_world/data_models/menu/item_dm.dart';
+import 'package:foodly_world/data_models/menu/menu_dm.dart';
+
+/// Qué fotos del menú precargar antes de mostrar la pantalla.
+///
+/// Antes se precargaban TODAS (hasta 26 fotos de ~290 KB) con tope de 4 s: en
+/// móvil el tope se agotaba casi siempre, el comensal miraba un spinner 4 s y
+/// las fotos entraban igual a cuentagotas. Ahora solo las que caben en la
+/// primera pantalla, más dos de margen: en un móvil 6–8, en una tablet 10–12,
+/// en escritorio hasta 16. El resto entra con el fundido de `CachedNetworkImage`.
+///
+/// El orden es el de pantalla: la página inicial primero (bebidas si el
+/// negocio es una casa de bebidas), y solo si sobra cupo, las siguientes.
+List<String> menuPhotosToPrecache(
+  MenuDM menu, {
+  required bool drinksFirst,
+  required double viewportHeight,
+  double cardHeight = 110,
+}) {
+  final n = ((viewportHeight / cardHeight).ceil() + 2).clamp(6, 16);
+
+  String? url(ItemDM item) =>
+      item.foodPhotos?.lastOrNull?.businessFoodPhotoUrl ??
+      item.drinkPhotos?.lastOrNull?.businessDrinkPhotoUrl ??
+      item.comboPhotos?.lastOrNull?.businessComboPhotoUrl;
+
+  final food = menu.foodCategories.expand((c) => c.items);
+  final drinks = menu.drinkCategories.expand((c) => c.items);
+  final pages = drinksFirst ? [drinks, food, menu.combos] : [food, drinks, menu.combos];
+
+  return pages
+      .expand((items) => items)
+      .map(url)
+      .whereType<String>()
+      .where((u) => u.isNotEmpty)
+      .take(n)
+      .toList();
+}

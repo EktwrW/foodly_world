@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/animations/sliver_app_bar_animations.dart';
@@ -111,8 +112,7 @@ class BusinessSliverAppBar extends StatelessWidget {
                                           ? ImageSliderFade(
                                               imageList: vm.currentBusiness!.coverImageUrls
                                                   .map(
-                                                    (e) => CachedNetworkImage(
-                                                      imageUrl: e,
+                                                    (e) => CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: e,
                                                       height: 209,
                                                       width: double.infinity,
                                                       fadeInDuration: Durations.medium2,

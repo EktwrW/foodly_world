@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:foodly_world/core/services/dependency_injection_service.dart' hide CategoryDM;
+import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
@@ -387,6 +388,10 @@ class _PublicMenuItemPictureWdg extends StatelessWidget {
   Widget get _imageWidget {
     if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
       return CachedNetworkImage(
+        cacheManager: FoodlyImageCache.manager,
+        // Se pinta a ~100 px: decodificar los 1280 px del original costaba
+        // ~5 MB de RAM por foto y desalojaba la caché en memoria al hacer scroll.
+        memCacheWidth: 400,
         imageUrl: photoUrl,
         fit: BoxFit.cover,
         placeholder: (_, __) => const LoadingWidgetFoodlyIso(height: 28),
