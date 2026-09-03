@@ -251,6 +251,37 @@ release y detecta diffs nativos o de assets, sin publicar. Termina en
 Un patch OTA sólo lleva **Dart**. Si el cambio toca un plugin, un permiso o el
 manifiesto, hace falta release nueva.
 
+### App Review: cómo dejar que el revisor llegue a Apple Pay (2026-09-03)
+
+Apple pidió probar las órdenes y ver Apple Pay. Lo que funcionó:
+
+- **Cuenta demo de comensal, no de dueño**: `userdemo2@mail.com` (la contraseña
+  va en App Store Connect, nunca en el repo). `userdemo1` es el manager de The
+  Pizzeria Restaurant y verlo desde dentro no es el flujo del revisor.
+- **Favoritos en vez de geolocalización**: el revisor está en California y la
+  home va por GPS. Con The Pizzeria en favoritos de userdemo2, el camino es
+  icono de favoritos → Businesses → The Pizzeria Restaurant → Menu → botón
+  "Order live" → "+" en un plato → "View order" → "Finish order" → "Pay the
+  order · €X" → PaymentSheet con Apple Pay arriba.
+- **El negocio en modo prepago** y con Stripe activo en live; el sheet solo
+  declara Apple Pay si la orden trae `business_country` (viene del negocio).
+- Un vídeo de ese recorrido, grabado en simulador, acompañó las notas. En
+  simulador Apple Pay muestra la hoja pero no completa un pago live: sirve
+  para el vídeo, no para probar de verdad.
+- Si el revisor completa el pago es dinero real a nuestra propia cuenta: se
+  reembolsa desde Stripe. Dejar un plato barato (mínimo €0,50).
+
+**Sign in with Apple en el simulador**: "Ocultar mi email" falla con
+`AuthorizationError 1000` (el simulador no provisiona el relay) y el token
+suele llegar sin claim `email`, que el código frena a propósito. No es bug de
+la app; en dispositivo real funciona. Probar con "Compartir mi email" o en un
+iPhone por TestFlight.
+
+**Nombres en las tiendas** desde 2.0.6: "Foodly Solutions: QR Menu" (en-US),
+"Carta QR" (es-ES), "Menú QR" (es-MX), "Menu QR" (pt-PT). En App Store viven
+en `ios/fastlane/metadata/*/name.txt` y los sube `fastlane metadata`; en Play
+el nombre es un campo manual de la consola — nada en el repo lo escribe.
+
 ### Signing
 - **Automatic signing** via Xcode with Team V76AZLAYJ4
 - Provisioning profiles are managed automatically by Xcode
