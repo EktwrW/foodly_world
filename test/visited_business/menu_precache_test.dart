@@ -73,10 +73,11 @@ void main() {
   });
 
   test('una altura que no es un número no revienta: se asume móvil', () {
-    for (final h in [double.nan, double.infinity, double.negativeInfinity, 0.0]) {
-      final urls = menuPhotosToPrecache(menu(), drinksFirst: false, viewportHeight: h);
-      expect(urls.length, anyOf(10, 6), reason: 'altura $h');
+    // No finita → se asume un móvil de 800 px (10 fotos). Cero → mínimo (6).
+    for (final h in [double.nan, double.infinity, double.negativeInfinity]) {
+      expect(menuPhotosToPrecache(menu(), drinksFirst: false, viewportHeight: h), hasLength(10), reason: 'altura $h');
     }
+    expect(menuPhotosToPrecache(menu(), drinksFirst: false, viewportHeight: 0), hasLength(6));
   });
 
   test('un menú sin fotos no precarga nada', () {

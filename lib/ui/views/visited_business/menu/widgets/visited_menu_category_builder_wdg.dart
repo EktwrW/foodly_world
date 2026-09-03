@@ -9,6 +9,7 @@ import 'package:foodly_world/core/core_exports.dart' hide CategoryDM;
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/ui/constants/image_decode_sizes.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
@@ -18,7 +19,6 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_category_builder_wdg.dart'
     show MenuDisclaimerWdg;
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_precache.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:google_fonts/google_fonts.dart';

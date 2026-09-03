@@ -7,11 +7,11 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart' hi
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
+import 'package:foodly_world/ui/constants/image_decode_sizes.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
-import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_precache.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PublicMenuCategoryPage extends StatefulWidget {
