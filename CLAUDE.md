@@ -347,6 +347,34 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### Ubicación: la última conocida primero, el fix después (2026-09-03)
+
+`LocationBloc.determinePosition` emite `locationChecked` DOS veces por
+arranque en nativo: primero con `getLastKnownPosition()` (caché del sistema,
+milisegundos) y después con el fix preciso de `getCurrentPosition` (hasta
+10-12 s en interiores). Antes la home no pedía nada hasta el fix. Quien
+consuma la posición tiene que tolerar la segunda emisión:
+`FoodlyLocationWrapper` y la página de categorías solo recargan si
+`LocationService.movedSignificantly(antes, después)` (≥ 1 km: con radios de
+15-20 km, menos no cambia lo que se ve). Una última conocida de más de una
+hora se descarta (es la última fix del sistema, de cualquier app; en iOS puede
+ser de hace días y pintaría otra ciudad). La provisional NO trae ciudad ni
+dirección (el reverse-geocoding corre tras el fix): el chip de la home cae a
+"Usar ubicación del dispositivo" en vez de pintar `" ."`, y el registro sigue
+actualizando las coordenadas con cada emisión mientras vengan del dispositivo.
+En web no hay última conocida (`geolocator_web` no la implementa) y sigue
+habiendo una sola emisión.
+
+### Menú visitado: negocio y menú en paralelo (2026-09-03)
+
+`VisitedMenuCubit` pedía el menú y DESPUÉS el negocio (`fetchBusinessById`)
+cuando el caller no traía el `BusinessDM`: dos viajes en serie de ~0,7 s. Los
+callers que conocen el uuid del negocio (pedidos en vivo, buzz, join por
+link) lo mandan en la ruta como `?b=<uuid>` y el cubit lo pide a la vez que el
+menú (`businessUuid:` en el constructor, `_businessInFlight`). Con `extra:
+BusinessDM` no hay petición; sin `?b=` ni `extra`, se sigue pidiendo después.
+Si el `?b=` no coincide con el negocio que trae el menú, se pide el correcto.
+
 ### Imágenes: una sola caché de disco, `memCacheWidth` y precarga acotada (2026-09-03)
 
 Toda imagen que pasa por `CachedNetworkImage` usa `FoodlyImageCache.manager`

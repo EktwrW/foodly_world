@@ -19,11 +19,19 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
   MenuVM _vm;
   final BusinessRepo _businessRepo;
 
+  /// Negocio en vuelo cuando el caller no traía el `BusinessDM` pero sí su
+  /// uuid (pedidos, buzz, join por link): se pide A LA VEZ que el menú en vez
+  /// de después. Antes eran dos viajes en serie, ~0,7 s cada uno (2026-09-03).
+  Future<ApiResult<BusinessDM>>? _businessInFlight;
+  final String? _businessUuidHint;
+
   VisitedMenuCubit(
     BusinessRepo businessRepo, {
     required String? uuid,
     required BusinessDM? businessDM,
-  })  : _vm = MenuVM(
+    String? businessUuid,
+  })  : _businessUuidHint = businessDM == null && (businessUuid?.isNotEmpty ?? false) ? businessUuid : null,
+        _vm = MenuVM(
           menuDM: MenuDM(
             uuid: uuid ?? FoodlyStrings.NEW_MENU,
             business: businessDM,
@@ -50,6 +58,9 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
     // — es el único caso donde el controller puede terminar
     // desalineado con `indexView`.
     final businessWasNull = _vm.menuDM?.business == null;
+    if (_businessUuidHint != null && _vm.menuDM?.uuid != FoodlyStrings.NEW_MENU) {
+      _businessInFlight = _businessRepo.fetchBusinessById(_businessUuidHint);
+    }
 
     late final MenuDM menuData;
 
@@ -178,7 +189,13 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
       return data.copyWith(business: _vm.menuDM?.business);
     }
 
-    final result = await _businessRepo.fetchBusinessById(data.businessUuid);
+    // Si el negocio ya se pidió en paralelo y es el mismo que trae el menú, se
+    // usa esa respuesta; si no coincide (no debería), se pide el correcto.
+    final inFlight = _businessInFlight;
+    _businessInFlight = null;
+    final result = inFlight != null && _businessUuidHint == data.businessUuid
+        ? await inFlight
+        : await _businessRepo.fetchBusinessById(data.businessUuid);
 
     return result.when(
       success: (business) => data.copyWith(business: business),

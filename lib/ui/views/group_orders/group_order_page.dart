@@ -385,6 +385,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     di<AppRouter>().appRouter.goNamed(
       AppRoutes.visitMenu.name,
       pathParameters: {AppRoutes.routeIdParam: menuUuid},
+      queryParameters: {if (order.businessUuid?.isNotEmpty ?? false) 'b': order.businessUuid!},
     );
   }
 
@@ -435,6 +436,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
                 di<AppRouter>().appRouter.goNamed(
                   AppRoutes.visitMenu.name,
                   pathParameters: {AppRoutes.routeIdParam: menuUuid},
+                  queryParameters: {if (order.businessUuid?.isNotEmpty ?? false) 'b': order.businessUuid!},
                 );
               },
             ),
@@ -792,6 +794,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context.goNamed(
         AppRoutes.visitMenu.name,
         pathParameters: {AppRoutes.routeIdParam: menuUuid},
+        queryParameters: {if (order?.businessUuid?.isNotEmpty ?? false) 'b': order!.businessUuid!},
       );
 
       return;
@@ -810,6 +813,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context.goNamed(
         AppRoutes.visitMenu.name,
         pathParameters: {AppRoutes.routeIdParam: menuUuid},
+        queryParameters: {if (order?.businessUuid?.isNotEmpty ?? false) 'b': order!.businessUuid!},
       );
       return;
     }
@@ -932,6 +936,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context.goNamed(
         AppRoutes.visitMenu.name,
         pathParameters: {AppRoutes.routeIdParam: menuUuid},
+        queryParameters: {if ((active.state?.businessUuid ?? previous.businessUuid)?.isNotEmpty ?? false) 'b': (active.state?.businessUuid ?? previous.businessUuid)!},
       );
     }
   }

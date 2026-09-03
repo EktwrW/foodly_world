@@ -285,7 +285,17 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
           // initial: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
           // checkingLocation: () => _dialogService.isDialogShown ? null : _dialogService.showLoading(),
           locationChecked: (locationDM) async {
+            // El bloc emite dos veces por arranque: la última posición conocida
+            // (al instante) y el fix preciso (segundos después). Se recarga
+            // con la primera; la segunda solo si movió el mapa de verdad (≥ 1 km).
+            final before = _locationService.hasLocationData ? _locationService.currentLocation.position : null;
+            final reload = !_locationService.hasLocationData ||
+                LocationService.movedSignificantly(before, locationDM.position);
             _locationService.updateLocation(locationDM);
+            if (!reload) {
+              _tryRemoveSplash();
+              return;
+            }
             // Subscribe to cubit streams BEFORE calling load() so we don't miss
             // the loading→loaded transition. The spinner stays visible until both
             // cubits finish, preventing the 1-second home-page flash.

@@ -285,7 +285,8 @@ void main() {
     await tester.pump();
     await asentarNavegacion(tester);
 
-    expect(ubicacion(router), '/visit-menu/menu-9');
+    // `?b=`: el uuid del negocio viaja en la ruta para pedirlo en paralelo con el menú.
+    expect(ubicacion(router), '/visit-menu/menu-9?b=negocio-1');
     expect(find.text('MENU'), findsOneWidget);
     // La página entrega el código TAL CUAL vino en el enlace: normalizar es
     // trabajo del cubit (`code.trim().toUpperCase()`), y hacerlo dos veces
