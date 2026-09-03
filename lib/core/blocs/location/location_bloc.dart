@@ -270,6 +270,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         } catch (e) {
           _logger.w('getLastKnownPosition (provisional) falló: $e');
         }
+        // La última conocida es la última fix del SISTEMA, de cualquier app: en
+        // iOS puede ser de hace días. Con más de una hora se descarta: pintar
+        // cercanos de otra ciudad hasta que llegue el fix es peor que esperar.
+        if (provisional != null && DateTime.now().difference(provisional.timestamp) > const Duration(hours: 1)) {
+          _logger.i('Última posición conocida de hace más de una hora: se descarta como provisional');
+          provisional = null;
+        }
         if (provisional != null && !emit.isDone) {
           _locationDM = _locationDM.copyWith(position: provisional);
           emit(_LocationChecked(_locationDM));

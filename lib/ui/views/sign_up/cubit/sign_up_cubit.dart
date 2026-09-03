@@ -14,6 +14,8 @@ part 'sign_up_cubit.freezed.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
+  /// True mientras `userLocation` venga del dispositivo y no de una dirección elegida a mano.
+  bool _userLocationFromDevice = false;
   UserProfileVM _vm;
   final LocationService _locationService;
   final AuthSessionService _authService;
@@ -291,6 +293,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       final location = detail.geometry!.location;
 
       _vm = _vm.copyWith(userLocation: LatLngLiteral(lat: location.lat, lng: location.lng));
+      _userLocationFromDevice = false;
     }
 
     _vm.phoneNumberController?.focusNode?.requestFocus();
@@ -370,10 +373,14 @@ class SignUpCubit extends Cubit<SignUpState> {
     // 3) userLocation (coords): el constructor ya la setea si
     // `_locationService.hasLocationData` era true al nacer el cubit. En el
     // flujo pre-login el service estaba virgen, así que la sembramos acá.
-    if (_vm.userLocation == null && dm.position != null) {
+    // La ubicación llega DOS veces (última conocida y luego el fix preciso):
+    // mientras las coordenadas vengan del dispositivo se actualizan con cada
+    // emisión; si el usuario ya eligió una dirección a mano, no se tocan.
+    if ((_vm.userLocation == null || _userLocationFromDevice) && dm.position != null) {
       _vm = _vm.copyWith(
         userLocation: LatLngLiteral(lat: dm.position!.latitude, lng: dm.position!.longitude),
       );
+      _userLocationFromDevice = true;
       changed = true;
     }
 

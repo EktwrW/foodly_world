@@ -183,7 +183,11 @@ class CurrentLocationButton extends StatelessWidget {
                                             ? S.current.outsideCoverage
                                             : locationService.currentAddress.isNotEmpty == true
                                                 ? '${locationService.currentAddress}, ${locationService.currentCity}.'
-                                                : '${locationService.currentCity} ${locationService.currentZipCode}.',
+                                                // Con la posición provisional (antes del fix y del geocoding)
+                                                // no hay ciudad ni código postal: sin esto se veía " .".
+                                                : locationService.currentCity.isNotEmpty
+                                                    ? '${locationService.currentCity} ${locationService.currentZipCode}.'
+                                                    : S.current.useDeviceLocation,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: FoodlyTextStyles.captionBold.copyWith(

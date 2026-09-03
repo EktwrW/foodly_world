@@ -354,10 +354,16 @@ arranque en nativo: primero con `getLastKnownPosition()` (caché del sistema,
 milisegundos) y después con el fix preciso de `getCurrentPosition` (hasta
 10-12 s en interiores). Antes la home no pedía nada hasta el fix. Quien
 consuma la posición tiene que tolerar la segunda emisión:
-`FoodlyLocationWrapper` solo recarga cercanos/promos/novedades si
-`LocationService.movedSignificantly(antes, después)` (≥ 150 m); si no, se
-queda con lo cargado. En web no hay última conocida (`geolocator_web` no la
-implementa) y sigue habiendo una sola emisión.
+`FoodlyLocationWrapper` y la página de categorías solo recargan si
+`LocationService.movedSignificantly(antes, después)` (≥ 1 km: con radios de
+15-20 km, menos no cambia lo que se ve). Una última conocida de más de una
+hora se descarta (es la última fix del sistema, de cualquier app; en iOS puede
+ser de hace días y pintaría otra ciudad). La provisional NO trae ciudad ni
+dirección (el reverse-geocoding corre tras el fix): el chip de la home cae a
+"Usar ubicación del dispositivo" en vez de pintar `" ."`, y el registro sigue
+actualizando las coordenadas con cada emisión mientras vengan del dispositivo.
+En web no hay última conocida (`geolocator_web` no la implementa) y sigue
+habiendo una sola emisión.
 
 ### Menú visitado: negocio y menú en paralelo (2026-09-03)
 

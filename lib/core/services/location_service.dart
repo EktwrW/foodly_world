@@ -28,8 +28,9 @@ class LocationService {
   /// merezca recargar lo que depende de ella (cercanos, promos, novedades)?
   /// El bloc emite dos veces —última conocida y fix preciso— y casi siempre
   /// son el mismo sitio con distinta precisión: recargar dos veces sería
-  /// gastar red para pintar lo mismo. Sin posición anterior, siempre sí.
-  static bool movedSignificantly(Position? before, Position? after, {double meters = 150}) {
+  /// gastar red para pintar lo mismo. Con radios de 15-20 km, 1 km no cambia
+  /// nada de lo que se ve. Sin posición anterior, siempre sí.
+  static bool movedSignificantly(Position? before, Position? after, {double meters = 1000}) {
     if (after == null) return false;
     if (before == null) return true;
     return Geolocator.distanceBetween(before.latitude, before.longitude, after.latitude, after.longitude) >= meters;

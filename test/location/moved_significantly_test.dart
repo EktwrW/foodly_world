@@ -29,7 +29,11 @@ void main() {
     expect(LocationService.movedSignificantly(_p(40.2800, -7.5000), _p(40.28036, -7.5000)), isFalse);
   });
 
-  test('a 300 m sí recarga', () {
-    expect(LocationService.movedSignificantly(_p(40.2800, -7.5000), _p(40.2827, -7.5000)), isTrue);
+  test('a 300 m (misma zona con otra precisión) no recarga', () {
+    expect(LocationService.movedSignificantly(_p(40.2800, -7.5000), _p(40.2827, -7.5000)), isFalse);
+  });
+
+  test('a 1,5 km sí recarga', () {
+    expect(LocationService.movedSignificantly(_p(40.2800, -7.5000), _p(40.2935, -7.5000)), isTrue);
   });
 }

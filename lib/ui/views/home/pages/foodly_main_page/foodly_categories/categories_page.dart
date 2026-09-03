@@ -14,6 +14,7 @@ import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categor
 import 'package:foodly_world/ui/views/home/pages/foodly_main_page/foodly_categories/view_model/categories_vm.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart' show CurrentLocationButton;
+import 'package:geolocator/geolocator.dart' show Position;
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 part 'widgets/categories_app_bar.dart';
@@ -31,6 +32,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   StreamSubscription<LocationDetailsDM>? _locationSub;
 
+  Position? _lastAppliedPosition;
+
   /// The last category we physically scrolled the carousel to. Tracked
   /// separately from `prev.vm.currentCategory` in `listenWhen` because on
   /// first entry the cubit is constructed with `currentCategory` already
@@ -46,7 +49,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
     super.initState();
     _locationSub = di<LocationService>().locationChanged.listen((locationDM) {
       final pos = locationDM.position;
-      if (pos != null && mounted) {
+      // La ubicación llega dos veces por arranque (última conocida y fix):
+      // sin este guard, la segunda repetía el fetch y sacaba el spinner modal.
+      if (pos != null && mounted && LocationService.movedSignificantly(_lastAppliedPosition, pos)) {
+        _lastAppliedPosition = pos;
         context.read<CategoriesCubit>().refreshWithNewLocation(pos.latitude, pos.longitude);
       }
     });

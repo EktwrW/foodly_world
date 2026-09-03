@@ -287,7 +287,7 @@ class _FoodlyLocationWrapperState extends State<FoodlyLocationWrapper> with Widg
           locationChecked: (locationDM) async {
             // El bloc emite dos veces por arranque: la última posición conocida
             // (al instante) y el fix preciso (segundos después). Se recarga
-            // con la primera; la segunda solo si movió el mapa de verdad.
+            // con la primera; la segunda solo si movió el mapa de verdad (≥ 1 km).
             final before = _locationService.hasLocationData ? _locationService.currentLocation.position : null;
             final reload = !_locationService.hasLocationData ||
                 LocationService.movedSignificantly(before, locationDM.position);

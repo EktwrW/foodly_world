@@ -263,7 +263,7 @@ void main() {
       final bloc = buildBloc();
       final emitted = await runCheckLocationFlow(bloc);
 
-      final checked = emitted.firstWhere(isLocationChecked);
+      final checked = emitted.where(isLocationChecked).last;
       expect(extractCheckedDM(checked).position?.latitude, closeTo(38.7169, 0.001),
           reason: 'Cuando getCurrentPosition timeoutea, debe usar la position de getLastKnownPosition');
 
@@ -364,6 +364,35 @@ void main() {
       await bloc.close();
     });
 
+    test('7b. sin provisional y con el fix caído, el fallback a la última conocida sigue funcionando', () async {
+      final lastKnown = _samplePosition(latitude: 38.7169);
+      fakeGeolocator
+        ..serviceEnabled = true
+        ..permission = LocationPermission.whileInUse
+        ..currentPositionThrows = TimeoutException('simulated current timeout')
+        ..lastKnownSequence = [null, lastKnown]; // 1.ª (provisional): nada; 2.ª (fallback): la última conocida
+      final bloc = buildBloc();
+      final emitted = await runCheckLocationFlow(bloc);
+      final checked = emitted.where(isLocationChecked).toList();
+      expect(checked, hasLength(1), reason: 'sin provisional solo emite al final');
+      expect(extractCheckedDM(checked.single).position?.latitude, closeTo(38.7169, 0.001));
+      await bloc.close();
+    });
+
+    test('14. una última conocida de hace más de una hora se descarta: una sola emisión con el fix', () async {
+      fakeGeolocator
+        ..serviceEnabled = true
+        ..permission = LocationPermission.whileInUse
+        ..nextLastKnownPosition = _samplePosition(latitude: 38.7169, timestamp: DateTime.now().subtract(const Duration(hours: 3)))
+        ..nextPosition = _samplePosition();
+      final bloc = buildBloc();
+      final emitted = await runCheckLocationFlow(bloc);
+      final checked = emitted.where(isLocationChecked).toList();
+      expect(checked, hasLength(1));
+      expect(extractCheckedDM(checked.single).position?.latitude, closeTo(40.2791, 0.001));
+      await bloc.close();
+    });
+
     test('11. setManualLocation → emite LocationChecked con el DM exacto', () async {
       final bloc = buildBloc();
 
@@ -390,11 +419,11 @@ void main() {
 
 // ───────────────────────────── Helpers / Fakes ─────────────────────────────
 
-Position _samplePosition({double latitude = 40.2791, double longitude = -7.5063}) {
+Position _samplePosition({double latitude = 40.2791, double longitude = -7.5063, DateTime? timestamp}) {
   return Position(
     latitude: latitude,
     longitude: longitude,
-    timestamp: DateTime(2026, 5, 9),
+    timestamp: timestamp ?? DateTime.now(), // reciente: la provisional caduca a la hora
     accuracy: 5.0,
     altitude: 500.0,
     heading: 0.0,
@@ -462,8 +491,14 @@ class _FakeGeolocatorPlatform extends GeolocatorPlatform with MockPlatformInterf
     return nextPosition!;
   }
 
+  /// Si se define, cada llamada consume el siguiente valor; si no, siempre
+  /// `nextLastKnownPosition`.
+  List<Position?>? lastKnownSequence;
+
   @override
   Future<Position?> getLastKnownPosition({bool forceLocationManager = false}) async {
+    final seq = lastKnownSequence;
+    if (seq != null && seq.isNotEmpty) return seq.removeAt(0);
     return nextLastKnownPosition;
   }
 }
