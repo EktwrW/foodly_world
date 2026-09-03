@@ -349,7 +349,7 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 ### Imágenes: una sola caché de disco, `memCacheWidth` y precarga acotada (2026-09-03)
 
-Toda imagen remota pasa por `FoodlyImageCache.manager`
+Toda imagen que pasa por `CachedNetworkImage` usa `FoodlyImageCache.manager`
 (`core/services/foodly_image_cache.dart`): 1000 objetos, 30 días. Widget
 (`CachedNetworkImage`) y provider (`CachedNetworkImageProvider`) tienen que
 usar el MISMO gestor; con dos, la precarga escribe en uno y la pantalla lee del
@@ -360,7 +360,17 @@ El bucket sirve las fotos con caché inmutable de un año (be-foodly,
 2026-09-03) y cada subida tiene URL nueva, así que guardar mucho tiempo es
 seguro: una foto reemplazada nunca llega con la misma URL.
 
-**`memCacheWidth` siempre que la imagen se pinte pequeña.** Sin él, una foto de
+Quedan `Image.network` sueltos (paquetes de servicio, reservas del manager,
+snackbars de negocio) que no pasan por ninguna caché de disco: pendiente.
+
+**`memCacheWidth` siempre que la imagen se pinte pequeña, y con dos trampas.**
+Si el widget usa `imageBuilder`, `memCacheWidth` NO afecta a lo que se pinta
+(OctoImage descarta su `Image` interno): hay que envolver el provider con
+`ResizeImage` del mismo ancho, como hace `AvatarWidget._resized`. Y si el ancho
+puede ser `double.infinity` (tarjetas en rejilla), `(width * 3).ceil()` lanza:
+`AvatarWidget._memCacheWidth` devuelve null en ese caso. La precarga del menú
+resuelve con `ResizeImage(…, width: menuCardMemCacheWidth)` y suelta el
+listener; sin eso decodificaba el original entero y nunca lo liberaba. Sin él, una foto de
 1280 px se decodifica entera (~5 MB de RAM) para una tarjeta de 100 px, la
 caché en memoria de Flutter (100 MB) se llena con veinte y redecodifica al
 hacer scroll. Tarjetas de menú: 400. Avatares: `width * 3`.

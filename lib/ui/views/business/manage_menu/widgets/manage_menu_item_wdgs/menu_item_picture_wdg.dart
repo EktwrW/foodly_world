@@ -32,7 +32,7 @@ class MenuItemPictureWdg extends StatelessWidget {
         cacheManager: FoodlyImageCache.manager,
         // Se pinta a ~100 px: decodificar los 1280 px del original costaba
         // ~5 MB de RAM por foto y desalojaba la caché en memoria al hacer scroll.
-        memCacheWidth: 400,
+        memCacheWidth: menuCardMemCacheWidth,
         imageUrl: _imageSource,
         fit: BoxFit.cover,
         placeholder: (context, url) => const LoadingWidgetFoodlyIso(height: 28),

@@ -144,15 +144,23 @@ class VisitedMenuCubit extends Cubit<VisitedMenuState> {
     final lp = uri.path.toLowerCase();
     if (lp.endsWith('.mp4') || lp.endsWith('.mov') || lp.endsWith('.webm') || lp.endsWith('.m4v')) return null;
     final completer = Completer<void>();
-    final stream = CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager).resolve(const ImageConfiguration());
-    stream.addListener(ImageStreamListener(
-      (_, __) {
-        if (!completer.isCompleted) completer.complete();
-      },
-      onError: (_, __) {
-        if (!completer.isCompleted) completer.complete();
-      },
-    ));
+    // Misma clave que las tarjetas (`memCacheWidth`): así lo que decodifica la
+    // precarga es lo que ellas pintan. Sin `ResizeImage` se decodificaba el
+    // original entero (~5 MB) y, como las tarjetas usan otra clave, no servía
+    // de nada en memoria. Y el listener se suelta: un stream con listeners
+    // vivos no lo libera ni `ImageCache.clear()` bajo presión de memoria.
+    final stream = ResizeImage(
+      CachedNetworkImageProvider(url, cacheManager: FoodlyImageCache.manager),
+      width: menuCardMemCacheWidth,
+    ).resolve(const ImageConfiguration());
+    late final ImageStreamListener listener;
+    void listo() {
+      stream.removeListener(listener);
+      if (!completer.isCompleted) completer.complete();
+    }
+
+    listener = ImageStreamListener((_, __) => listo(), onError: (_, __) => listo());
+    stream.addListener(listener);
     return completer.future;
   }
 

@@ -1,6 +1,11 @@
 import 'package:foodly_world/data_models/menu/item_dm.dart';
 import 'package:foodly_world/data_models/menu/menu_dm.dart';
 
+/// Ancho de decodificación de las fotos en las tarjetas del menú (se pintan a
+/// ~100 px). La precarga usa el mismo para compartir la clave de la caché en
+/// memoria.
+const int menuCardMemCacheWidth = 400;
+
 /// Qué fotos del menú precargar antes de mostrar la pantalla.
 ///
 /// Antes se precargaban TODAS (hasta 26 fotos de ~290 KB) con tope de 4 s: en
@@ -17,7 +22,9 @@ List<String> menuPhotosToPrecache(
   required double viewportHeight,
   double cardHeight = 110,
 }) {
-  final n = ((viewportHeight / cardHeight).ceil() + 2).clamp(6, 16);
+  // Con NaN o infinito `ceil()` lanza; se asume un móvil.
+  final alto = viewportHeight.isFinite ? viewportHeight : 800.0;
+  final n = ((alto / cardHeight).ceil() + 2).clamp(6, 16);
 
   String? url(ItemDM item) =>
       item.foodPhotos?.lastOrNull?.businessFoodPhotoUrl ??

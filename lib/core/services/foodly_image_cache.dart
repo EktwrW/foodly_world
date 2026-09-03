@@ -18,11 +18,19 @@ class FoodlyImageCache {
 
   static const String key = 'foodlyImages';
 
-  static final CacheManager manager = CacheManager(
-    Config(
-      key,
-      stalePeriod: const Duration(days: 30),
-      maxNrOfCacheObjects: 1000,
-    ),
-  );
+  static final CacheManager manager = _FoodlyCacheManager();
+}
+
+/// Con `ImageCacheManager`, como `DefaultCacheManager`: sin el mixin,
+/// `maxWidthDiskCache` / `maxHeightDiskCache` se ignorarían en silencio en
+/// release (solo hay un assert en debug).
+class _FoodlyCacheManager extends CacheManager with ImageCacheManager {
+  _FoodlyCacheManager()
+      : super(
+          Config(
+            FoodlyImageCache.key,
+            stalePeriod: const Duration(days: 30),
+            maxNrOfCacheObjects: 1000,
+          ),
+        );
 }

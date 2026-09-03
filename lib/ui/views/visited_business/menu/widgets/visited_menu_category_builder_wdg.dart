@@ -18,6 +18,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_category_builder_wdg.dart'
     show MenuDisclaimerWdg;
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
+import 'package:foodly_world/ui/views/visited_business/menu/cubit/menu_precache.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/cubit/visited_menu_cubit.dart';
 import 'package:foodly_world/ui/views/visited_business/menu/view_model/menu_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
