@@ -394,12 +394,25 @@ registrar el mismo, eligiendo el sistema cuál gana. El sufijo `stripe-redirect`
 lo separa del `<bundle-id>://firebaseauth/link` de Firebase Auth. Un test ata la
 constante de Dart al esquema del plist para que no se separen.
 
-Riesgo asumido y ya cubierto: Revolut Pay es el primer método del sheet que SACA
-al comensal de la app. Si vuelve sin completar, iOS reporta `Canceled` y la
-pantalla llama a `cancelPayment()`. No es peligroso: el backend pregunta primero
-a Stripe con `hasCommittedFunds()` y devuelve 409 sin soltar nada si el dinero
-está comprometido (`GroupOrderRefundService::abandonTransaction`). Conviene
-probarlo en vivo igualmente antes de publicar.
+Riesgo asumido, acotado y NO del todo cubierto: Revolut Pay es el primer método
+del sheet que SACA al comensal de la app. Si vuelve sin aprobar, el intento queda
+en `requires_action`, iOS reporta `Canceled` y la pantalla llama a
+`cancelPayment()`.
+
+El dinero está a salvo —`hasCommittedFunds()` pregunta a Stripe antes de soltar
+nada—, pero **la orden se queda bloqueada hasta 6 minutos**: sin Checkout Session
+(y el PI de la hoja nativa nunca la tiene) esa función devuelve `true` durante
+`REQUIRES_ACTION_TTL_MINUTES = 6` contados desde `intent->created`, así que
+`cancelPayment` responde 409, el participante sigue en `processing` y no hay
+webhook que lo libere. `group_order_page.dart` se traga ese 409 en silencio, así
+que el comensal no ve por qué no puede reintentar.
+
+No es una regresión de este cambio: la ventana existe desde el 2026-08-15 para el
+3DS de tarjeta abandonado en la hoja nativa, que llega al mismo sitio. Revolut
+sólo añade otro camino hacia ella, y probablemente más transitado (saltar a otra
+app y volverse atrás es más fácil que abandonar un 3DS). Si se vuelve molesto, el
+arreglo no es tocar el TTL sino que la pantalla distinga el 409 y lo explique.
+Probarlo en vivo antes de publicar.
 
 ### Ubicación: la última conocida primero, el fix después (2026-09-03)
 

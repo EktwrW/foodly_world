@@ -59,7 +59,9 @@ class StripePaymentService {
   /// Custom Tab que abre el propio SDK y el regreso no pasa por un esquema.
   /// **Revisar esto si algún día se habilita en Android un método que salte a
   /// una app nativa** (Revolut Pay entre ellos): ahí el regreso sí necesita un
-  /// esquema registrado y habría que setear `Stripe.urlScheme` en `main.dart`.
+  /// esquema registrado. Y no basta con `Stripe.urlScheme`: el plugin lo anula
+  /// (`urlScheme = if (setReturnUrlSchemeOnAndroid) urlScheme else null`), así
+  /// que hay que poner ADEMÁS `Stripe.setReturnUrlSchemeOnAndroid = true`.
   ///
   /// El esquema va registrado en `ios/Runner/Info.plist` (`CFBundleURLTypes`)
   /// y lo consume el propio plugin, que ya implementa
