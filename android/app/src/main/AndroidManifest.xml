@@ -97,7 +97,7 @@
         </intent>
     </queries>
     <application
-        android:label="Foodly"
+        android:label="Foodly Solutions"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="false"
