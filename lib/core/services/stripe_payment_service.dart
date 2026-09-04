@@ -32,6 +32,56 @@ class StripePaymentService {
   static const _publishableKey = String.fromEnvironment('STRIPE_PUBLISHABLE_KEY');
   static final _isStripeTestMode = _publishableKey.startsWith('pk_test_');
 
+  /// A dónde vuelve la app cuando un método de pago sale a autenticarse fuera
+  /// de la hoja.
+  ///
+  /// Sin esto, en iOS **Revolut Pay no se dibuja siquiera**. No es una
+  /// preferencia nuestra: `stripe-ios` lo filtra antes de pintar. En
+  /// `PaymentMethodType.swift` cada método declara sus requisitos y
+  /// `.revolutPay` pide `.returnURL`; en `PaymentElementConfiguration.swift`
+  /// ese requisito solo se da por cumplido `if returnURL != nil`. Como la app
+  /// nunca lo mandaba, el comensal de iOS veía solo tarjeta, Link y Apple Pay
+  /// (comprobado en 2.0.6+99 con un PaymentIntent que SÍ ofrecía
+  /// `revolut_pay`).
+  ///
+  /// En Android aparecía igualmente: su plugin no traslada este parámetro y
+  /// su SDK no condiciona la visibilidad a tenerlo. De ahí que el mismo código
+  /// Dart diera dos hojas distintas según la plataforma. Mandarlo en ambas es
+  /// inocuo: en Android es una clave que el lado nativo ignora.
+  ///
+  /// **Android hoy recibe `null` como return URL.** El plugin lo deriva de
+  /// `Stripe.urlScheme` (`mapToReturnURL()` en `Mappers.kt` devuelve
+  /// `"$urlScheme://safepay"`, o `null` si no está seteado) y `main.dart`
+  /// nunca lo setea: sólo asigna `publishableKey`, `merchantIdentifier` y
+  /// llama a `applySettings()`.
+  ///
+  /// No molesta con los métodos que usamos, porque todos resuelven dentro del
+  /// Custom Tab que abre el propio SDK y el regreso no pasa por un esquema.
+  /// **Revisar esto si algún día se habilita en Android un método que salte a
+  /// una app nativa** (Revolut Pay entre ellos): ahí el regreso sí necesita un
+  /// esquema registrado. Y no basta con `Stripe.urlScheme`: el plugin lo anula
+  /// (`urlScheme = if (setReturnUrlSchemeOnAndroid) urlScheme else null`), así
+  /// que hay que poner ADEMÁS `Stripe.setReturnUrlSchemeOnAndroid = true`.
+  ///
+  /// El esquema va registrado en `ios/Runner/Info.plist` (`CFBundleURLTypes`)
+  /// y lo consume el propio plugin, que ya implementa
+  /// `application(_:open:options:)` y se lo pasa a `StripeAPI.handleURLCallback`.
+  /// No hace falta tocar el `AppDelegate`: el plugin se registra como
+  /// application delegate (`StripePlugin.swift`, `addApplicationDelegate`) y
+  /// `FlutterAppDelegate` consulta a los plugins ANTES de mirar el deep linking
+  /// de Flutter, así que el regreso llega aunque se active
+  /// `FlutterDeepLinkingEnabled`. (El plugin imprime en debug un aviso que dice
+  /// lo contrario; en Flutter 3.44.6 no aplica — comprobado en
+  /// `FlutterAppDelegate.mm`.)
+  ///
+  /// Reverse-DNS y no algo como `foodly://` a propósito. iOS NO reserva
+  /// esquemas —otra app puede registrar el mismo y el sistema elige— así que
+  /// esto no es una garantía de seguridad, sino que baja muchísimo la
+  /// probabilidad de choque. El sufijo `stripe-redirect` separa este regreso
+  /// del `<bundle-id>://firebaseauth/link` de Firebase Auth.
+  @visibleForTesting
+  static const stripeReturnUrl = 'com.foodlysolutions.app://stripe-redirect';
+
   Future<StripePaymentResult> presentPaymentSheet({
     required String clientSecret,
     String merchantName = 'Foodly',
@@ -83,6 +133,8 @@ class StripePaymentService {
       SetupPaymentSheetParameters(
         paymentIntentClientSecret: clientSecret,
         merchantDisplayName: merchantName,
+        // Ver [stripeReturnUrl]: sin esto iOS esconde Revolut Pay.
+        returnURL: stripeReturnUrl,
 
         // Pre-relleno: el país arregla el "Estados Unidos" del formulario de
         // tarjeta y el email le ahorra un paso a Link. Nombre y teléfono no,

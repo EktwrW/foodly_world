@@ -45,6 +45,14 @@
 					<string>com.googleusercontent.apps.951890938827-2hgpslnumba6gmm17ainu8flp4q5ctl4</string>
 				</array>
 			</dict>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>stripe-redirect</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.foodlysolutions.app</string>
+				</array>
+			</dict>
 		</array>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
