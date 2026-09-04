@@ -101,7 +101,32 @@ class SnackBarWdg {
                   ),
                   margin: const EdgeInsets.only(top: 20),
                   padding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB, vertical: 20),
-                  child: Column(
+                  child: Builder(builder: (ctx) {
+                    final mq = MediaQuery.of(ctx);
+
+                    // Techo de altura para la tarjeta. Sin esto, un contenido
+                    // alto -el formulario de reserva- crece hasta pasarse de la
+                    // pantalla y empuja el boton de accion fuera del viewport,
+                    // donde no se puede tocar. Apple lo rechazo por eso el
+                    // 2026-09-04 (Guideline 4), revisando en un iPad Air: una
+                    // app solo-iPhone corre ahi en modo compatibilidad, y ese
+                    // viewport es MAS BAJO que el de los iPhone altos para los
+                    // que se ajusto el layout. No es un bug de iPad: pasa igual
+                    // en un iPhone SE, con texto grande accesible o con el
+                    // teclado abierto.
+                    // Sin `clamp`: `num.clamp` devuelve `num`, no `double`,
+                    // y `BoxConstraints.maxHeight` exige `double`.
+                    final available =
+                        mq.size.height - mq.padding.top - mq.padding.bottom - mq.viewInsets.bottom - 96;
+                    final maxCardHeight = available < 240 ? 240.0 : available;
+
+                    return ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: maxCardHeight),
+                      child: Column(
+                    // `min` es obligatorio junto al techo de arriba: con `max`
+                    // cualquier aviso corto se estiraria hasta ocupar la
+                    // pantalla entera.
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Visibility(
                         // `action` no lleva icono por diseño, pero pedir uno
@@ -110,7 +135,13 @@ class SnackBarWdg {
                         visible: type != SnackBarType.action || icon != null,
                         child: Icon(_getIcon, size: 34, color: _getColor),
                       ),
-                      content.paddingSymmetric(vertical: 20),
+                      // El contenido scrollea; el boton queda FUERA del
+                      // scroll para que siempre este visible y alcanzable.
+                      Flexible(
+                        child: SingleChildScrollView(
+                          child: content.paddingSymmetric(vertical: 20),
+                        ),
+                      ),
                       (buttonBuilder?.call(handleDismiss) ??
                               SizedBox(
                                 height: 46,
@@ -145,6 +176,8 @@ class SnackBarWdg {
                           .paddingOnly(bottom: 5, top: topBtnPadding),
                     ],
                   ),
+                );
+                  }),
                 ),
               ),
               Align(
