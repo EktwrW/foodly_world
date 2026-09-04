@@ -347,6 +347,60 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### Revolut Pay no salía en iOS: el sheet lo filtra sin `returnURL` (2026-09-04)
+
+En producción (2.0.6+99) Revolut Pay aparecía en el PaymentSheet de **Android**
+y no en el de **iOS**, con el mismo código Dart y el mismo negocio. No era la
+cuenta ni la configuración de Stripe: el PaymentIntent de esa misma pantalla
+ofrecía `["card", "link", "mb_way", "revolut_pay"]` y la payment method
+configuration tenía `revolut_pay` activo.
+
+Lo filtra `stripe-ios` antes de dibujar. En `PaymentMethodType.swift`
+(`supportsAdding`) cada método declara sus requisitos y `.revolutPay` devuelve
+`[.returnURL]`; en `PaymentElementConfiguration.swift`, `fulfilledRequirements`
+solo añade `.returnURL` `if returnURL != nil`. La app nunca lo mandaba, así que
+el requisito no se cumplía y el método desaparecía. Misma regla para PayPal,
+Klarna, Amazon Pay, Satispay, TWINT y compañía.
+
+**Android no lo exige**, y de ahí la asimetría que despistaba: su SDK trae su
+propio retorno (`stripesdk://payment_return_url/<applicationId>`) y no
+condiciona la visibilidad a nada nuestro. Su plugin ni siquiera lee `returnURL`
+del mapa de la hoja; el `urlScheme` de `Stripe.initialise` que sí existe
+alimenta `confirmPayment`/`confirmSetupIntent`, no el PaymentSheet, y la app no
+lo usa. Mandar la clave en ambas plataformas es inocuo: en Android **ya viajaba
+como `null` en todos los builds** (`payment_sheet.g.dart` la emite siempre) y el
+parser nativo ignora lo que no conoce. No es ni una clave nueva.
+
+Arreglo: `StripePaymentService.stripeReturnUrl` +
+`CFBundleURLTypes` en `ios/Runner/Info.plist`. El plugin ya implementa
+`application(_:open:options:)` y llama a `StripeAPI.handleURLCallback`, así que
+**no hay que tocar el `AppDelegate`**: se registra con `addApplicationDelegate`
+y `FlutterAppDelegate` consulta a los plugins ANTES de mirar el deep linking de
+Flutter. El plugin imprime en debug un aviso diciendo que con
+`FlutterDeepLinkingEnabled` hay que llamar a mano a `Stripe.handleURLCallback`;
+en Flutter 3.44.6 **eso no aplica** (comprobado en `FlutterAppDelegate.mm`).
+
+Dos cosas que conviene no repetir:
+
+- **Es cambio nativo: no viaja por patch OTA.** Registrar el esquema toca el
+  bundle, así que necesita build nueva de tienda.
+- **MB WAY no es el mismo caso.** Nunca estuvo en el sheet nativo (por eso
+  existe el botón aparte a la página alojada). Que faltara a la vez que Revolut
+  invitaba a juntarlos y es una pista falsa.
+
+El esquema es reverse-DNS (`com.foodlysolutions.app`, el propio bundle id) por
+anti-colisión, no por seguridad: iOS no reserva esquemas y otra app puede
+registrar el mismo, eligiendo el sistema cuál gana. El sufijo `stripe-redirect`
+lo separa del `<bundle-id>://firebaseauth/link` de Firebase Auth. Un test ata la
+constante de Dart al esquema del plist para que no se separen.
+
+Riesgo asumido y ya cubierto: Revolut Pay es el primer método del sheet que SACA
+al comensal de la app. Si vuelve sin completar, iOS reporta `Canceled` y la
+pantalla llama a `cancelPayment()`. No es peligroso: el backend pregunta primero
+a Stripe con `hasCommittedFunds()` y devuelve 409 sin soltar nada si el dinero
+está comprometido (`GroupOrderRefundService::abandonTransaction`). Conviene
+probarlo en vivo igualmente antes de publicar.
+
 ### Ubicación: la última conocida primero, el fix después (2026-09-03)
 
 `LocationBloc.determinePosition` emite `locationChecked` DOS veces por

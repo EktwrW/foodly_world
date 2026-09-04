@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_redundant_argument_values
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -46,6 +47,52 @@ void main() {
         payerEmail: email,
         platform: platform,
       );
+
+  group('la URL de retorno (Revolut Pay en iOS)', () {
+    /// Los esquemas que el proyecto de iOS declara en `CFBundleURLTypes`.
+    List<String> esquemasRegistradosEnIOS() {
+      final plist = File('ios/Runner/Info.plist').readAsStringSync();
+      final bloques = RegExp(
+        r'<key>CFBundleURLSchemes</key>\s*<array>(.*?)</array>',
+        dotAll: true,
+      ).allMatches(plist);
+
+      return bloques
+          .expand((b) => RegExp(r'<string>(.*?)</string>').allMatches(b.group(1)!))
+          .map((m) => m.group(1)!.trim())
+          .toList();
+    }
+
+    test('se declara, y llega intacta al lado nativo', () {
+      final params = comoLlegaAlNativo(conPais('PT', email: 'a@b.com'));
+
+      expect(
+        params['returnURL'],
+        StripePaymentService.stripeReturnUrl,
+        reason: 'sin esta clave stripe-ios filtra Revolut Pay antes de dibujar la hoja',
+      );
+    });
+
+    test('su esquema está registrado en Info.plist', () {
+      final esquema = StripePaymentService.stripeReturnUrl.split('://').first;
+
+      expect(
+        esquemasRegistradosEnIOS(),
+        contains(esquema),
+        reason: 'si el esquema y la URL se separan, iOS abre la web y no vuelve nunca a la app',
+      );
+    });
+
+    test('el esquema es reverse-DNS y el sufijo lo separa de Firebase Auth', () {
+      // Anti-colisión, NO seguridad: iOS no reserva esquemas y otra app puede
+      // registrar el mismo. Y `<bundle-id>://firebaseauth/link` ya existe, de
+      // ahí el sufijo propio.
+      final esquema = StripePaymentService.stripeReturnUrl.split('://').first;
+
+      expect(esquema.split('.').length, greaterThanOrEqualTo(3));
+      expect(StripePaymentService.stripeReturnUrl, endsWith('://stripe-redirect'));
+    });
+  });
 
   group('la forma que exige el parser nativo', () {
     /// EL TEST QUE JUSTIFICA TODO ESTE ARCHIVO. Si vuelve a haber un null
