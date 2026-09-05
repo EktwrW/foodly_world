@@ -155,6 +155,27 @@ class FoodlyTextStyles {
     fontSize: 14,
   );
 
+  /// El saludo del appbar del home.
+  ///
+  /// Antes era `homeAppBarSmallSubtitle` con `copyWith(fontSize: 24)`: el
+  /// saludo y la pregunta de debajo eran LITERALMENTE el mismo estilo a dos
+  /// tamaños, así que no había jerarquía, solo escala. Ahora el saludo es
+  /// Poppins 800 en el ciruela de los títulos de tarjeta, y la pregunta baja a
+  /// voz de apoyo — ver [homeGreetingSubtitle].
+  static const homeGreeting = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.44,
+    height: 1.2,
+    color: FoodlyThemes.titleOnGlass,
+  );
+
+  static final homeGreetingSubtitle = GoogleFonts.quicksand(
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: FoodlyThemes.secondaryFoodlyTextOnTint,
+  );
+
   static final homeAppBarSmallSubtitle = GoogleFonts.quicksand(
     fontSize: 12,
     fontWeight: FontWeight.bold,
@@ -260,6 +281,82 @@ class FoodlyTextStyles {
   static const promoBusinessName = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.bold,
+  );
+
+  /// Título de la promo sobre la cinta de vidrio.
+  ///
+  /// El gancho tiene que ganarle al cuerpo por peso, no por 3px: antes iban
+  /// 17/700 contra 14/500 y la card se leía plana.
+  static const promoTitleOnGlass = TextStyle(
+    fontSize: 23,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.35,
+    height: 1.16,
+    color: FoodlyThemes.titleOnGlass,
+  );
+
+  static final promoSubtitleOnGlass = GoogleFonts.quicksand(
+    fontSize: 13.5,
+    fontWeight: FontWeight.w700,
+    height: 1.45,
+    color: FoodlyThemes.promoSubtitleOnGlass,
+  );
+
+  static const cardDescription = TextStyle(
+    fontSize: 14,
+    height: 1.62,
+    color: FoodlyThemes.promoBody,
+  );
+
+  /// Nombre del negocio sobre la cinta de vidrio. Misma familia que
+  /// `promoTitleOnGlass` pero un punto más chico: acá el nombre convive con el
+  /// logo y las estrellas, no es el gancho único de la tarjeta.
+  static const businessNameOnGlass = TextStyle(
+    fontSize: 19,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.22,
+    height: 1.18,
+    color: FoodlyThemes.titleOnGlass,
+  );
+
+  /// Texto de las pastillas de la tarjeta (la ubicación del negocio).
+  static const chipLabel = TextStyle(
+    fontSize: 12.5,
+    fontWeight: FontWeight.w600,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  /// Etiqueta del botón de la tarjeta ("+ info").
+  static const cardActionLabel = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static const promoDate = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    height: 1.3,
+    color: FoodlyThemes.primaryFoodly,
+  );
+
+  static const promoSectionLabel = TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1.1,
+    color: FoodlyThemes.secondaryFoodlyText,
+  );
+
+  static const promoDayOff = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: FoodlyThemes.promoDayOffText,
+  );
+
+  static const promoShareLabel = TextStyle(
+    fontSize: 14.5,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
   );
 
   static final promoTitle = TextStyle(

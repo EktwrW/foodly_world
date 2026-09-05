@@ -31,7 +31,7 @@ class FoodlyMainPage extends StatelessWidget {
                 child: ColoredBox(
                   color: ui.NeumorphicColors.background,
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 100),
+                    padding: const EdgeInsets.only(bottom: 140),
                     child: Column(
                       children: [
                         Text(
@@ -42,7 +42,7 @@ class FoodlyMainPage extends StatelessWidget {
                         Text(
                           S.current.newBranch,
                           style: FoodlyTextStyles.sectionsTitle,
-                        ).paddingOnly(top: 30, bottom: 12),
+                        ).paddingOnly(top: 26, bottom: 12),
                         const NewReleasesCard().paddingSymmetric(horizontal: 12),
                       ],
                     ).paddingSymmetric(vertical: 25),

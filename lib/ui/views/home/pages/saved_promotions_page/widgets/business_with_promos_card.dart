@@ -18,6 +18,7 @@ class _BusinessWithPromosCard extends StatelessWidget {
     }
 
     return Card(
+      color: Colors.white,
       child: AnimatedSize(
         key: ValueKey(business),
         duration: Durations.long1,

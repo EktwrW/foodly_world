@@ -4,16 +4,16 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 
 class GreetingWidget extends StatelessWidget {
   final String? userName;
-  final double? titleFontSize;
 
-  const GreetingWidget({super.key, this.userName, this.titleFontSize});
+  const GreetingWidget({super.key, this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       userName != null ? '$_getGreetingMessage, $userName.' : '$_getGreetingMessage!',
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: FoodlyTextStyles.homeAppBarSmallSubtitle.copyWith(fontSize: titleFontSize),
+      style: FoodlyTextStyles.homeGreeting,
     );
   }
 

@@ -65,7 +65,7 @@ class _ManageAvailabilityPageState extends State<ManageAvailabilityPage> {
           key: const Key('manage-availability-app-bar'),
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+              gradient: UIDecorations.glassmorphicPurpleGradient,
               borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
             ),
           ),

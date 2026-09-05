@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
@@ -72,5 +74,87 @@ void main() {
     );
 
     expect(translucido, lessThan(solido));
+  });
+
+  /// LOS COLORES DE LA CARD DE PROMO SOBRE VIDRIO (2026-09-04).
+  ///
+  /// El rediseño puso el título y el subtítulo encima de la foto, sobre una
+  /// cinta de vidrio. Eso rompe la suposición del resto del archivo: el
+  /// fondo ya no es blanco ni el gris de la app, sino el vidrio con la foto
+  /// asomando por detrás, y la foto puede ser cualquier cosa.
+  ///
+  /// El peor caso es calculable: el vidrio claro es blanco al 74%, así que
+  /// sobre una foto completamente negra queda en un gris medio. Ese gris es
+  /// el suelo contra el que tiene que medir cualquier texto de la cinta —
+  /// y se saca del propio token, no a mano, para que si alguien baja el
+  /// alpha del vidrio el test lo cace.
+  final vidrioSobreFotoNegra = Color.alphaBlend(FoodlyGlassTone.light.fill, Colors.black);
+
+  test('el título de la promo se lee sobre el vidrio, aunque la foto sea negra', () {
+    expect(contraste(FoodlyThemes.titleOnGlass, vidrioSobreFotoNegra), greaterThanOrEqualTo(minimoAA));
+    expect(contraste(FoodlyThemes.titleOnGlass, blanco), greaterThanOrEqualTo(minimoAA));
+  });
+
+  /// El subtítulo va a 13.5px, o sea muy por debajo de "texto grande", y es
+  /// el que menos margen tiene de toda la cinta: si alguien lo aclara para
+  /// que "pese menos" que el título, cae por debajo del mínimo.
+  test('y el subtítulo también, que es el que va más justo', () {
+    expect(contraste(FoodlyThemes.promoSubtitleOnGlass, vidrioSobreFotoNegra), greaterThanOrEqualTo(minimoAA));
+  });
+
+  test('el cuerpo de la promo se lee sobre el blanco de la card', () {
+    expect(contraste(FoodlyThemes.promoBody, blanco), greaterThanOrEqualTo(minimoAA));
+  });
+
+  /// Los días en los que la promo NO aplica se dibujan apagados. Apagado no
+  /// puede querer decir ilegible: el usuario tiene que poder leer "Dom" para
+  /// entender que el domingo está fuera.
+  test('el día apagado sigue siendo legible sobre su propio fondo', () {
+    expect(contraste(FoodlyThemes.promoDayOffText, FoodlyThemes.promoDayOff), greaterThanOrEqualTo(minimoAA));
+  });
+
+  /// EL BUG DEL CORAZÓN (2026-09-04). El rediseño puso el botón de favoritos
+  /// sobre vidrio CIRUELA y le apagó su propio fondo. El corazón guardado se
+  /// pinta con `favourites`, que es ese mismo ciruela: quedaba ciruela sobre
+  /// ciruela y no se distinguía la forma.
+  ///
+  /// Ahora el estado lo cuenta el tono del vidrio, y el corazón guardado vive
+  /// sobre el vidrio CLARO. Los iconos piden 3:1, no 4.5:1 — no son texto —,
+  /// pero el punto del test es que si alguien vuelve a poner el corazón de
+  /// marca sobre un fondo de marca, esto se cae en vez de llegar al simulador.
+  test('el corazón guardado no queda sobre su propio color', () {
+    final vidrioClaroSobreFotoNegra = Color.alphaBlend(FoodlyGlassTone.light.fill, Colors.black);
+
+    expect(contraste(FoodlyThemes.favourites, vidrioClaroSobreFotoNegra), greaterThanOrEqualTo(3));
+  });
+
+  /// Y que los dos estados sigan siendo distinguibles entre sí: si alguien
+  /// iguala los tonos, guardada y sin guardar se ven igual.
+  test('el vidrio del corazón cambia de verdad entre estados', () {
+    expect(FoodlyGlassTone.light.fill, isNot(FoodlyGlassTone.dark.fill));
+  });
+
+  /// EL APPBAR DEL HOME (2026-09-05). El saludo y la pregunta viven sobre un
+  /// degradado teñido, no sobre blanco, así que el suelo es el extremo OSCURO
+  /// del degradado — que es donde caen los dos textos.
+  ///
+  /// Es el caso que obligó a que exista `secondaryFoodlyTextOnTint`: el tono
+  /// normal de texto secundario da 3,75:1 ahí, por debajo del mínimo a 13px.
+  final fondoAppBar = UIDecorations.HOME_APP_BAR_GRADIENT.colors.last;
+
+  test('el saludo se lee sobre el degradado del appbar', () {
+    expect(contraste(FoodlyThemes.titleOnGlass, fondoAppBar), greaterThanOrEqualTo(minimoAA));
+  });
+
+  test('y la pregunta de debajo también, que es la que iba justa', () {
+    expect(contraste(FoodlyThemes.secondaryFoodlyTextOnTint, fondoAppBar), greaterThanOrEqualTo(minimoAA));
+  });
+
+  /// La razón de que haya dos tonos de texto secundario, igual que con
+  /// `secondaryFoodly` / `secondaryFoodlyText`. Si este test empieza a fallar
+  /// es que alguien oscureció el de blanco o aclaró el de fondo teñido, y
+  /// entonces uno de los dos sobra — pero hay que decidirlo a propósito.
+  test('el tono secundario normal NO sirve sobre el degradado teñido', () {
+    expect(contraste(FoodlyThemes.secondaryFoodlyText, fondoAppBar), lessThan(minimoAA));
   });
 }

@@ -24,7 +24,7 @@ class _ManagePromotionsHeader extends StatelessWidget {
               height: 120,
               width: context.screenWidth,
               decoration: BoxDecoration(
-                gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                gradient: UIDecorations.glassmorphicPurpleGradient,
                 borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
               child: Center(

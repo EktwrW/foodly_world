@@ -107,7 +107,7 @@ class ManagerOrdersPage extends StatelessWidget {
               ).paddingSymmetric(vertical: 10, horizontal: 10),
               flexibleSpace: Container(
                 decoration: BoxDecoration(
-                  gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                  gradient: UIDecorations.glassmorphicPurpleGradient,
                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
                 ),
               ),

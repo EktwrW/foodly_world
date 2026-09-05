@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:developer' show log;
-import 'dart:ui' as dart_ui show ImageFilter;
 
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicShape, NeumorphicColors;
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
+import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
@@ -89,52 +89,94 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AnimatedSwitcher(
-                      duration: Durations.long2,
-                      transitionBuilder: (child, animation) => FadeTransition(
-                        opacity: animation,
-                        child: child,
-                      ),
-                      child: _NewReleasesCardContent(
-                        key: ValueKey(business.uuid),
-                        business: business,
-                      ),
+                    // LO QUE RECORTABA LA SOMBRA (2026-09-05). Eran dos capas,
+                    // las dos por defecto y las dos invisibles hasta que se
+                    // mira el borde de la tarjeta:
+                    //
+                    //  1. El `layoutBuilder` por defecto de `AnimatedSwitcher`
+                    //     es un `Stack`, y `Stack` recorta (`Clip.hardEdge`) a
+                    //     la caja de la tarjeta.
+                    //  2. `SizeTransition` envuelve a su hijo en un `ClipRect`
+                    //     — es como consigue el efecto de crecer —, así que
+                    //     recorta también, y al terminar la animación sigue
+                    //     recortando a la caja.
+                    //
+                    // La altura ya la anima el `AnimatedSize` de acá abajo, así
+                    // que la transición del hijo solo tiene que ser un fundido:
+                    // no necesita recortar nada.
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        // La portada de la tarjeta es 4:3 y ocupa todo el
+                        // ancho, así que su centro vertical es calculable sin
+                        // medir nada. Es donde se anclan las flechas.
+                        final coverCenter = constraints.maxWidth * 3 / 4 / 2;
+
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            AnimatedSize(
+                              duration: Durations.long2,
+                              curve: Curves.decelerate,
+                              alignment: Alignment.topCenter,
+                              clipBehavior: Clip.none,
+                              child: AnimatedSwitcher(
+                                duration: Durations.long2,
+                                switchOutCurve: const Threshold(0),
+                                layoutBuilder: (currentChild, previousChildren) => Stack(
+                                  clipBehavior: Clip.none,
+                                  alignment: Alignment.center,
+                                  children: [...previousChildren, if (currentChild != null) currentChild],
+                                ),
+                                transitionBuilder: (child, animation) => FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                                child: NewReleaseBusinessCard(
+                                  key: ValueKey(business.uuid),
+                                  business: business,
+                                ),
+                              ),
+                            ),
+                            if (total > 1) ...[
+                              Positioned(
+                                left: 10,
+                                top: coverCenter - _NavArrow.size / 2,
+                                child: _NavArrow(
+                                  icon: Bootstrap.chevron_left,
+                                  onPressed: () => _navigate(-1, total),
+                                ),
+                              ),
+                              Positioned(
+                                right: 10,
+                                top: coverCenter - _NavArrow.size / 2,
+                                child: _NavArrow(
+                                  icon: Bootstrap.chevron_right,
+                                  onPressed: () => _navigate(1, total),
+                                ),
+                              ),
+                            ],
+                          ],
+                        );
+                      },
                     ),
                     if (total > 1)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 8,
-                        children: [
-                          CustomRoundedNeumorphicButton(
-                            onPressed: () => _navigate(-1, total),
-                            iconData: Bootstrap.chevron_left,
-                            diameter: 20,
-                            iconSize: 20,
-                            shape: ui.NeumorphicShape.concave,
-                          ),
-                          ...List.generate(
-                            total,
-                            (i) => AnimatedContainer(
-                              duration: Durations.short3,
-                              width: i == idx ? 18 : 7,
-                              height: 7,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: i == idx
-                                    ? FoodlyThemes.primaryFoodly
-                                    : FoodlyThemes.primaryFoodly.withValues(alpha: .25),
-                              ),
+                        children: List.generate(
+                          total,
+                          (i) => AnimatedContainer(
+                            duration: Durations.short3,
+                            width: i == idx ? 18 : 7,
+                            height: 7,
+                            margin: const EdgeInsets.symmetric(horizontal: 3),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: i == idx
+                                  ? FoodlyThemes.primaryFoodly
+                                  : FoodlyThemes.primaryFoodly.withValues(alpha: .25),
                             ),
                           ),
-                          CustomRoundedNeumorphicButton(
-                            onPressed: () => _navigate(1, total),
-                            iconData: Bootstrap.chevron_right,
-                            diameter: 20,
-                            iconSize: 20,
-                            shape: ui.NeumorphicShape.concave,
-                          ),
-                        ],
+                        ),
                       ).paddingSymmetric(vertical: 10),
                   ],
                 );
@@ -153,168 +195,288 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
   }
 }
 
-class _NewReleasesCardContent extends StatelessWidget {
+/// La tarjeta de un negocio nuevo, en la home.
+///
+/// REDISEÑO 2026-09-04 (propuesta A). El contenido es el mismo de antes —
+/// nombre, valoración, portada, logo, descripción, categoría, ciudad y país,
+/// y "+ info" — y lo que cambia es cómo está armado. Lo anterior tenía tres
+/// cosas rotas y varias de andamiaje:
+///
+///  * **El nombre podía desbordar.** Vivía en un `Text` dentro de un `Column`
+///    dentro de un `Row`, sin `Expanded` ni `Flexible`: un nombre largo se
+///    salía de la tarjeta con las rayas de overflow. Ahora va en un
+///    `Expanded` a dos líneas.
+///  * **Tocar la foto no abría el negocio.** La portada usaba
+///    `FeedMultipleImageView`, que trae su propio `GestureDetector` y abre el
+///    visor de imágenes; el gesto que navega es el de fuera, así que solo
+///    respondía tocando *fuera* de la foto — justo la zona más grande de la
+///    tarjeta hacía otra cosa. Ahora se dibuja `MultipleImageView`, que es el
+///    mismo collage SIN gesto, y toda la tarjeta navega.
+///  * **La pastilla verde no se leía.** Blanco sobre `tertiaryFoodly` da
+///    2,3:1, la mitad del mínimo de la WCAG. Pasa a tinte ciruela.
+///  * La cabecera morada eran **dos `Card` apiladas**: una de 90 px detrás y
+///    la principal con `paddingOnly(top: 55)` encima. Ahora es una sola
+///    tarjeta y la identidad del negocio sube a una cinta de vidrio sobre la
+///    foto, como el título en la card de promo.
+///  * El logo pasa de 100 px flotando en 50 px de zona muerta a 52 px al lado
+///    del nombre, y la descripción deja de vivir en un `SizedBox(60)` cuyo
+///    fallback era la cadena `'\n \n'`.
+///
+/// Alto total: ~434 px contra los ~489 de antes.
+class NewReleaseBusinessCard extends StatelessWidget {
   final BusinessDM business;
 
-  const _NewReleasesCardContent({required this.business, super.key});
+  const NewReleaseBusinessCard({required this.business, super.key});
+
+  /// Igual que en la card de promo: la cinta sobresale SIEMPRE esta cantidad
+  /// exacta por debajo de la portada, ocupe lo que ocupe el nombre, y por eso
+  /// el cuerpo puede reservar arriba `_ribbonOverflow + 14`.
+  static const double _ribbonOverflow = 26;
+
+  static const double _cardRadius = 24;
+
+  static const _scrim = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0x4D180413), Color(0x00180413), Color(0x00180413), Color(0x8C180413)],
+    stops: [0, .30, .44, 1],
+  );
 
   Widget get _placeholderImage => (business.categoryId?.isDrinkHouse == true)
       ? const Asset(FoodlyAssets.newBarPlaceholder, fit: BoxFit.cover)
       : const Asset(FoodlyAssets.newBusinessPlaceholder, fit: BoxFit.cover);
+
+  void _open() => di<AppRouter>().appRouter.goNamed(
+        AppRoutes.visitBusiness.name,
+        pathParameters: {AppRoutes.routeIdParam: business.uuid},
+        extra: business,
+      );
 
   @override
   Widget build(BuildContext context) {
     final imageUrls =
         business.coverImages.map((c) => c.url).whereType<String>().where((url) => url.isNotEmpty).toList();
     final description = (business.introMessage?.trim().isNotEmpty ?? false) ? business.introMessage : business.aboutUs;
-
     final category = business.categoryId;
+    final location = [business.city, business.country?.value].whereType<String>().join(', ');
 
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        // Header badge
-        Card(
-          color: FoodlyThemes.primaryFoodly,
-          child: SizedBox(
-            height: 90,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  spacing: 3,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(_cardRadius),
+        boxShadow: UIDecorations.CARD_SHADOW,
+      ),
+      child: Material(
+        color: Colors.white,
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.circular(_cardRadius),
+        child: InkWell(
+          onTap: _open,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 4 / 3,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        // `MultipleImageView` y no `FeedMultipleImageView`: el
+                        // mismo collage, sin el gesto que se comía el tap.
+                        imageUrls.isNotEmpty ? MultipleImageView(imageUrls: imageUrls, radius: 0) : _placeholderImage,
+                        const IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(gradient: _scrim))),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    left: 14,
+                    right: 14,
+                    bottom: -_ribbonOverflow,
+                    child: FoodlyGlassPanel(
+                      borderRadius: BorderRadius.circular(20),
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      shadows: const [
+                        BoxShadow(color: Color(0x80260419), blurRadius: 34, spreadRadius: -14, offset: Offset(0, 14)),
+                      ],
+                      child: Row(
+                        children: [
+                          _BusinessLogo(logo: business.logo),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  business.name ?? '',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FoodlyTextStyles.businessNameOnGlass,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: RatingBar.builder(
+                                    initialRating: business.rating ?? 0.0,
+                                    itemSize: 12,
+                                    minRating: 1,
+                                    allowHalfRating: true,
+                                    ignoreGestures: true,
+                                    itemBuilder: (_, __) => const Icon(Icons.star, color: Colors.amber, size: 12),
+                                    unratedColor: FoodlyThemes.secondaryFoodly,
+                                    glowColor: FoodlyThemes.warning,
+                                    onRatingUpdate: (_) {},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, _ribbonOverflow + 14, 18, 18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      business.name ?? '',
-                      style: FoodlyTextStyles.cardsHeader,
-                      overflow: TextOverflow.ellipsis,
-                    ).paddingOnly(top: 7.3),
-                    RatingBar.builder(
-                      initialRating: business.rating ?? 0.0,
-                      itemSize: 12,
-                      minRating: 1,
-                      allowHalfRating: true,
-                      ignoreGestures: true,
-                      itemBuilder: (_, __) => const Icon(Icons.star, color: Colors.amber, size: 10),
-                      unratedColor: FoodlyThemes.secondaryFoodly,
-                      glowColor: FoodlyThemes.warning,
-                      onRatingUpdate: (_) {},
+                    if (description?.trim().isNotEmpty ?? false)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Text(
+                          description!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: FoodlyTextStyles.cardDescription,
+                        ),
+                      ),
+                    Row(
+                      children: [
+                        if (category != null) ...[
+                          SizedBox.square(dimension: 34, child: category.avatar),
+                          const SizedBox(width: 8),
+                        ],
+                        if (location.isNotEmpty) ...[
+                          Expanded(child: _LocationChip(location: location)),
+                          const SizedBox(width: 8),
+                        ] else
+                          const Spacer(),
+                        _MoreInfoButton(onPressed: _open),
+                      ],
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BusinessLogo extends StatelessWidget {
+  final String? logo;
+
+  const _BusinessLogo({required this.logo});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white.withValues(alpha: .95), width: 2),
+        boxShadow: const [BoxShadow(color: Color(0x80260419), blurRadius: 12, spreadRadius: -4, offset: Offset(0, 4))],
+      ),
+      child: AvatarWidget(
+        avatarUrl: logo,
+        width: 52,
+        height: 52,
+        avatarType: AvatarType.business,
+      ),
+    );
+  }
+}
+
+/// La ubicación del negocio.
+///
+/// Antes era una `Card` verde (`tertiaryFoodly`) con texto blanco: 2,3:1, muy
+/// por debajo del 4,5:1 de la WCAG, y además el verde de "éxito" no significa
+/// nada para una ciudad.
+class _LocationChip extends StatelessWidget {
+  final String location;
+
+  const _LocationChip({required this.location});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 34,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: FoodlyThemes.primaryFoodly.withValues(alpha: .06),
+        border: Border.all(color: FoodlyThemes.primaryFoodly.withValues(alpha: .12)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Clarity.map_marker_solid, color: FoodlyThemes.primaryFoodly, size: 15),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              location,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: FoodlyTextStyles.chipLabel,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// "+ info" era un texto azul (#2196F3), el único azul de la pantalla y sin
+/// nada que dijera que se podía tocar. Ahora es un botón, con el mismo texto.
+class _MoreInfoButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const _MoreInfoButton({required this.onPressed});
+
+  static const _radius = BorderRadius.all(Radius.circular(12));
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        height: 34,
+        decoration: const BoxDecoration(
+          borderRadius: _radius,
+          gradient: UIDecorations.NEUMORPHIC_PURPLE_GRADIENT,
+          boxShadow: [BoxShadow(color: Color(0xD979005D), blurRadius: 18, spreadRadius: -8, offset: Offset(0, 8))],
+        ),
+        child: InkWell(
+          borderRadius: _radius,
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(S.current.moreInfo, style: FoodlyTextStyles.cardActionLabel),
+                const SizedBox(width: 5),
+                const Icon(Bootstrap.chevron_right, color: Colors.white, size: 13),
               ],
             ),
           ),
         ),
-        // Main card
-        GestureDetector(
-          onTap: () => di<AppRouter>().appRouter.goNamed(
-                AppRoutes.visitBusiness.name,
-                pathParameters: {AppRoutes.routeIdParam: business.uuid},
-                extra: business,
-              ),
-          child: Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 320,
-                  child: Stack(
-                    children: [
-                      // Cover photos
-                      SizedBox(
-                        height: 270,
-                        width: context.screenWidth - 32,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: imageUrls.isNotEmpty
-                              ? FeedMultipleImageView(imageUrls: imageUrls, radius: 12)
-                              : _placeholderImage,
-                        ).paddingAll(.9),
-                      ),
-                      // Logo + name overlay
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        left: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AvatarWidget(
-                              avatarUrl: business.logo,
-                              width: 100,
-                              height: 100,
-                              avatarType: AvatarType.business,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Bottom info row
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 60,
-                            child: Center(
-                              child: Text(
-                                description ?? '\n \n',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              if (category != null) SizedBox.square(dimension: 30, child: category.avatar),
-                              Expanded(
-                                child: Card(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(6)),
-                                  color: FoodlyThemes.tertiaryFoodly,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          [
-                                            business.city,
-                                            business.country?.value,
-                                          ].whereType<String>().join(', '),
-                                          style: FoodlyTextStyles.captionWhite,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ).paddingLeft(6),
-                                      ),
-                                      const Icon(Clarity.map_marker_solid, color: Colors.white, size: 16),
-                                    ],
-                                  ).paddingAll(3),
-                                ).paddingOnly(left: 4),
-                              ),
-                              Text.rich(
-                                TextSpan(
-                                  text: S.current.moreInfo,
-                                  style: FoodlyTextStyles.cardTextButtonBlue,
-                                ),
-                              ).paddingHorizontal(3),
-                            ],
-                          ).paddingOnly(top: 4),
-                        ],
-                      ),
-                    ),
-                  ],
-                ).paddingAll(12),
-              ],
-            ),
-          ).paddingOnly(top: 55),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -430,15 +592,15 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
     final subtitle = widget.isError ? s.newReleasesEmptyErrorSubtitle : s.newReleasesEmptySubtitle;
 
     return SizedBox(
-      // Mantiene aproximadamente la altura del card real con su contenido
-      // (320 stack + 55 paddingTop + botón retry abajo). Evita layout
-      // shift cuando aparezcan negocios nuevos y se reemplace este widget
-      // por el `_NewReleasesCardContent` real.
+      // Mantiene aproximadamente la altura de la card real (portada 4:3 +
+      // cuerpo + botón retry abajo). Evita layout shift cuando aparezcan
+      // negocios nuevos y se reemplace este widget por el
+      // `NewReleaseBusinessCard` real.
       height: 430,
       child: Column(
         children: [
           // Card con video + blur backdrop overlay — mismo shape que la
-          // `Card` interna de `_NewReleasesCardContent` (ver ese widget
+          // `Card` interna de `NewReleaseBusinessCard` (ver ese widget
           // arriba en este archivo), garantizando que la transición
           // empty → real no se sienta como un cambio de layout.
           Card(
@@ -447,9 +609,9 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
             child: Column(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(24)),
                   child: AspectRatio(
-                    aspectRatio: 16 / 9,
+                    aspectRatio: 4 / 3,
                     child: _buildVideo(),
                   ),
                 ),
@@ -509,7 +671,8 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
 
 /// Backdrop blur con título + subtítulo encima del video del placeholder.
 ///
-/// Réplica del `_BackdropEmptyMessage` de `main_top_offers_widget.dart`.
+/// Réplica del `_BackdropEmptyMessage` de `main_top_offers_widget.dart`, con
+/// el mismo `FoodlyGlassPanel` que usan las dos cards reales.
 /// Existe como clase privada acá (en vez de compartir una sola desde un
 /// shared widget) por simetría con TopOffers — ambos widgets son
 /// auto-contenidos y mantienen su placeholder local. Si en el futuro
@@ -526,50 +689,58 @@ class _BackdropEmptyMessage extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: BackdropFilter(
-            filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Container(
-              decoration: BoxDecoration(
-                color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    title,
-                    style: FoodlyTextStyles.secondaryTitle.copyWith(
-                      color: FoodlyThemes.primaryFoodly,
-                      fontSize: 17,
-                      shadows: const [
-                        Shadow(color: Colors.white, offset: Offset(0, 1), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(0, -1), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(1, 0), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(-1, 0), blurRadius: 16),
-                      ],
-                    ),
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
+          child: FoodlyGlassPanel(
+            borderRadius: BorderRadius.circular(16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: FoodlyTextStyles.promoTitleOnGlass.copyWith(fontSize: 17, height: 1.18),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
         ),
       );
     });
+  }
+}
+
+/// Las flechas para pasar de un negocio al siguiente.
+///
+/// Estaban abajo, flanqueando los puntos, a 20 px de diámetro y en neumórfico:
+/// lejos del contenido que mueven y por debajo del mínimo táctil. Ahora van
+/// sobre la portada, a los costados, en el mismo vidrio oscuro que los
+/// controles flotantes de las cards de promo — que es el sitio donde el
+/// usuario ya espera encontrar algo que se toca sobre una foto.
+///
+/// Los puntos se quedan abajo: siguen contando cuántos hay y en cuál estás,
+/// que es lo que las flechas no dicen.
+class _NavArrow extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const _NavArrow({required this.icon, required this.onPressed});
+
+  static const double size = 44;
+
+  @override
+  Widget build(BuildContext context) {
+    return FoodlyGlassButton(icon: icon, onPressed: onPressed, iconSize: 20);
   }
 }

@@ -28,9 +28,19 @@ class VoiceSearchButton extends StatelessWidget {
                       }
                     });
                   },
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
-              padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.white.withValues(alpha: .62)),
+              elevation: const WidgetStatePropertyAll(0),
+              shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+              padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+              fixedSize: const WidgetStatePropertyAll(Size(52, 44)),
+              minimumSize: const WidgetStatePropertyAll(Size(52, 44)),
+              shape: WidgetStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: BorderSide(color: Colors.white.withValues(alpha: .85)),
+                ),
+              ),
             ),
             child: const Icon(FontAwesome.microphone_lines_solid, size: 23),
           ),

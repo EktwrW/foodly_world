@@ -90,7 +90,7 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         ).paddingSymmetric(vertical: 8, horizontal: 8),
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+            gradient: UIDecorations.glassmorphicPurpleGradient,
             borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
           ),
         ),
@@ -301,7 +301,7 @@ class _Cabecera extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-      decoration: BoxDecoration(gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT),
+      decoration: BoxDecoration(gradient: UIDecorations.glassmorphicPurpleGradient),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

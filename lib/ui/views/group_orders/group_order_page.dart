@@ -936,7 +936,10 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       context.goNamed(
         AppRoutes.visitMenu.name,
         pathParameters: {AppRoutes.routeIdParam: menuUuid},
-        queryParameters: {if ((active.state?.businessUuid ?? previous.businessUuid)?.isNotEmpty ?? false) 'b': (active.state?.businessUuid ?? previous.businessUuid)!},
+        queryParameters: {
+          if ((active.state?.businessUuid ?? previous.businessUuid)?.isNotEmpty ?? false)
+            'b': (active.state?.businessUuid ?? previous.businessUuid)!
+        },
       );
     }
   }
@@ -1212,7 +1215,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       leadingWidth: 60,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+          gradient: UIDecorations.glassmorphicPurpleGradient,
           borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
       ),

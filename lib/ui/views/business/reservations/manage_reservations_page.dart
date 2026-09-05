@@ -47,7 +47,7 @@ class ManageReservationsPage extends StatelessWidget {
             key: const Key('manage-reservations-app-bar'),
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                gradient: UIDecorations.glassmorphicPurpleGradient,
                 borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
             ),
@@ -81,7 +81,7 @@ class ManageReservationsPage extends StatelessWidget {
                   di<AppRouter>().goBackToLastRoute();
                 }
               },
-            padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(6),
             ).paddingSymmetric(vertical: 10, horizontal: 10),
             leadingWidth: 60,
           ),

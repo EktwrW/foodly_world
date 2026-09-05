@@ -31,7 +31,7 @@ class ManageServicePackagesPage extends StatelessWidget {
             key: const Key('manage-service-packages-app-bar'),
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                gradient: UIDecorations.glassmorphicPurpleGradient,
                 borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
             ),

@@ -6589,6 +6589,16 @@ class S {
     );
   }
 
+  /// `Expand image`
+  String get expandImage {
+    return Intl.message(
+      'Expand image',
+      name: 'expandImage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Are you sure you want to cancel this reservation?`
   String get areYouSureCancelReservation {
     return Intl.message(

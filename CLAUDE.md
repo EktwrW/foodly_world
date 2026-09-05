@@ -347,6 +347,269 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### El appbar del home (2026-09-05)
+
+No tenía ningún bug: tenía cosas sin decidir. Después de rediseñar las dos
+tarjetas, el header había quedado siendo lo menos diseñado de la pantalla.
+
+**El `BackdropFilter` no difuminaba nada.** El fondo era un `Stack` con un
+`Container` blanco y encima un `BackdropFilter` de sigma .75 con
+`primaryFoodly` al 30%. `BackdropFilter` difumina lo que hay DETRÁS, y detrás
+solo había blanco uniforme: difuminar blanco da blanco. Era una capa de
+composición por frame —en un header `pinned`, que repinta con cada scroll de
+la lista— sin ningún píxel de salida. Lo único que pintaba era el tinte, y ese
+tinte (#D7B3CE) no era un color elegido: era el morado de marca diluido.
+
+**El saludo y la pregunta eran el mismo estilo.** Los dos usaban
+`homeAppBarSmallSubtitle` y el saludo solo le hacía `copyWith(fontSize: 24)`,
+así que no había jerarquía, solo escala. Y el eje cambiaba dos veces: saludo a
+la izquierda, pregunta centrada, búsqueda a lo ancho.
+
+**El saludo se encogía en vez de recortarse.** Iba en un `FittedBox(scaleDown)`
+dentro de un `SizedBox(width: screenWidth * .73)`: a un usuario con nombre
+largo le bajaba el tamaño de letra, o sea que el saludo medía distinto según
+quién entrara.
+
+**El botón del drawer: círculo sí, neumórfico no.** Se mantiene circular
+porque el OTRO botón que abre el drawer —el de
+`sliver_app_bar_animations.dart`, que usan el appbar de negocio y el perfil—
+también lo es; pero aquel muestra el AVATAR, no el icono de menú, así que el
+del home es el único de su tipo y no hay con qué desentonar. Pasa a ciruela
+sólido (`NEUMORPHIC_PURPLE_GRADIENT`, el mismo de la barra de compartir y del
+"+ info") porque sobre el fondo claro nuevo un círculo blanco no se separaba
+de nada, siendo el único control de navegación del header. Sin tooltip, como
+estaba: `S.current.menu` es "Menú" y acá se leería como la carta del negocio.
+Los iconos, en todo el header, son exactamente los que ya estaban.
+
+**El chip de ubicación tiene variante, no copia.** `CurrentLocationButton` vive
+en tres pantallas (home, Sociales, Categorías) y su lógica —los tres casos de
+"no tengo ubicación", el aviso de cobertura, el diálogo— es lo caro de
+mantener. En vez de un widget nuevo para el home, tiene un
+`CurrentLocationStyle`: `translucent` (el de siempre, que funciona igual sobre
+el morado de Sociales que sobre el claro de Categorías) y `homeAppBar`. Solo
+cambia el envase. Los botones de teclado y micrófono sí se alinearon a esa
+familia sin variante porque viven únicamente en el `SearchWidget` del home.
+
+**`secondaryFoodlyTextOnTint` existe por el mismo motivo que
+`secondaryFoodlyText`.** Sobre el extremo oscuro del degradado del header
+(#E6CBE0), el tono normal de texto secundario da 3,75:1 — por debajo del 4,5:1
+que pide la WCAG a 13 px. `text_contrast_test.dart` mide los dos, y también
+comprueba que el normal NO llegue: si algún día uno de los dos sobra, que sea
+una decisión y no un descuido.
+
+**El icono del teclado no estaba descentrado por layout.** El `ElevatedButton`
+ya centra a su hijo: envolverlo en un `Center` no cambia un píxel (medido, las
+dos capturas salen idénticas). Lo que está descentrado es la TINTA del glifo
+dentro de su cuadro em. Renderizando a 10× y midiendo la caja de tinta:
+`FontAwesome.keyboard` cae 0,7 px a la derecha y 0,5 px abajo a tamaño 23;
+`FontAwesome.microphone_lines_solid` mide 0,0 y por eso no lleva corrección.
+
+El código anterior ya compensaba esto —el padding asimétrico `left: 6,
+right: 9`— pero empujaba 1,5 px, o sea que corregía de más y dejaba el icono
+descentrado hacia el otro lado. Ahora va con un `Transform.translate`, que no
+toca ni el tamaño ni el área táctil. Si algún día se cambia el icono, la
+corrección hay que volver a medirla o quitarla.
+
+**El degradado del fondo se reparte sobre ~208 px, no sobre 149.** El
+`SliverAppBar` pinta también la zona de la status bar, así que su caja real es
+`expandedHeight + topPadding`. El borde inferior queda en el color final
+exacto, pero el tramo donde cae el saludo se ve más claro que en el mock. Es
+deliberado que se haya dejado así; y el test de contraste mide contra el
+extremo oscuro del degradado, o sea el peor caso, así que sigue siendo una
+cota segura.
+
+**La variante en morado quedó guardada para el tema oscuro.** Es el mismo
+layout con `UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT` —el degradado que ya
+usa la cabecera de Promos— y los controles en vidrio blanco. En claro
+competía con los títulos de sección y endurecía el salto contra las tarjetas;
+en oscuro es exactamente lo que hace falta. Está en el canvas `AppBar del home
+Foodly` (claude.ai/code/artifact/7c00f489-508f-4ab1-b917-f939f901c84f).
+
+### La card de negocio de "Nuevos en Foodly" (2026-09-04)
+
+Mismo rediseño que la card de promo, y por eso comparte el sistema:
+`FoodlyGlassPanel` para la cinta, `UIDecorations.CARD_SHADOW` para la sombra,
+`FoodlyThemes.titleOnGlass` para el título. El widget dejó de ser privado
+(`NewReleaseBusinessCard`) para poder testearlo.
+
+**Aquí no había solo un problema de jerarquía: había tres bugs.**
+
+1.  **El nombre desbordaba.** Vivía en un `Text` dentro de un `Column` dentro
+    de un `Row`, sin `Expanded` ni `Flexible`. Con un nombre corto entraba;
+    con uno largo se salía de la tarjeta con las rayas de overflow. El test a
+    320 dp es lo que impide que vuelva.
+2.  **Tocar la foto no abría el negocio.** La portada usaba
+    `FeedMultipleImageView`, que trae su propio `GestureDetector` y abre el
+    visor de imágenes. El gesto que navegaba estaba por fuera, así que la
+    zona más grande de la tarjeta hacía algo distinto del resto. Ahora se
+    dibuja `MultipleImageView` — el mismo collage, sin gesto.
+3.  **La descripción se rellenaba con saltos de línea.** Vivía en un
+    `SizedBox(height: 60)` cuyo valor por defecto era la cadena `'\n \n'`.
+
+Y de andamiaje: la cabecera morada eran **dos `Card` apiladas** (una de 90 px
+detrás, la principal con `paddingOnly(top: 55)` encima) y el logo de 100 px
+flotaba en 50 px de zona muerta. La pastilla de ubicación era blanco sobre
+`tertiaryFoodly` — 2,3:1, la mitad del mínimo WCAG — y `+ info` era el único
+azul de la pantalla.
+
+**Lo que recortaba la sombra de la tarjeta (2026-09-05).** Eran DOS capas, las
+dos por defecto y las dos invisibles hasta que se mira el borde:
+
+1.  El `layoutBuilder` por defecto de `AnimatedSwitcher` es un `Stack`, y
+    `Stack` recorta (`Clip.hardEdge`) a la caja de la tarjeta.
+2.  `SizeTransition` envuelve a su hijo en un `ClipRect` — es como consigue el
+    efecto de crecer —, así que recorta también, y al terminar la animación
+    sigue recortando.
+
+La altura ya la anima el `AnimatedSize`, así que la transición del hijo solo
+tiene que ser un fundido: no necesita recortar nada. Si alguien vuelve a poner
+`SizeTransition` ahí, la sombra se corta otra vez.
+
+**Las flechas se fueron a los costados de la portada.** Estaban abajo
+flanqueando los puntos, a 20 px de diámetro y en neumórfico: lejos del
+contenido que mueven y por debajo del mínimo táctil. Ahora son
+`FoodlyGlassButton` de 44 px sobre la foto, ancladas al centro vertical de la
+portada — que es calculable sin medir nada, porque la portada es 4:3 a todo el
+ancho. Los puntos se quedan abajo: siguen diciendo cuántos hay y en cuál
+estás, que es lo que las flechas no dicen.
+
+**Dos cosas del carrusel que salieron de mirarlo en el simulador
+(2026-09-05).**
+
+`AnimatedSwitcher` desvanece la tarjeta saliente y la entrante A LA VEZ,
+apiladas: durante ~450 ms se veían los dos negocios encima uno del otro, con
+el nombre y la descripción de cada uno cruzados. Se arregla con
+`switchOutCurve: const Threshold(0)` — la saliente se va de golpe y solo entra
+la nueva.
+
+Y al dejar de reservar el hueco fijo de la descripción, pasar de un negocio
+con descripción a uno sin ella daba un tirón de ~58 px. Lo envuelve un
+`AnimatedSize` anclado en `topCenter` (para que el borde de arriba no se
+mueva) y con `clipBehavior: Clip.none` (para no cortar la sombra de la tarjeta
+durante la transición). Si alguien vuelve a poner una altura fija ahí, el
+`AnimatedSize` sobra.
+
+**El placeholder vacío espeja la card a propósito.** Si se cambia una,
+`_EmptyNewReleasesWidget` tiene que cambiar con ella: su docblock promete el
+mismo shape, y con radios distintos la transición vacío → real se siente como
+un salto de layout.
+
+**La propuesta B quedó guardada, sin implementar**, igual que la de promos:
+portada 4:5 a sangre con todo en vidrio oscuro encima. Aquí sale más barata
+que en promos (458 px contra los 489 de antes, porque desaparece el cuerpo
+blanco), pero pide encuadre 4:5 y un degradado que aguante portadas claras.
+Está en el canvas `Card de negocio Foodly`
+(claude.ai/code/artifact/ac8db81c-a23f-4335-b1a7-daa8b35f9731), segunda página.
+
+**Lo que quedó descolgado:** el `BusinessCard` compartido de búsqueda y
+favoritos es un cuarto lenguaje visual para el mismo objeto. No se tocó.
+
+### La card de promoción: rediseño y por qué la B quedó guardada (2026-09-04)
+
+La promo se dibujaba en tres sitios que no se parecían entre sí: el carrusel
+de la home (`main_top_offers_widget.dart`), la card grande en modo visita y la
+misma card en modo dueño. Las dos grandes eran **el mismo archivo copiado**,
+con `PromotionCard` y `PromoMedia` declarados dos veces, idénticos salvo el
+control de arriba a la derecha.
+
+**Lo que estaba mal, en orden de impacto:**
+
+1.  Jerarquía plana. Título a 17 px contra descripción a 14: el gancho ganaba
+    3 px. Todo centrado, todo con el mismo peso.
+2.  Colores fuera del sistema. `Colors.green[900]` en el título y
+    `Colors.green[700]` en el megáfono — ninguno es token Foodly — y
+    `FoodlyThemes.error` (#F31708) en la fecha de fin, rojo de alarma para un
+    dato que no es un error.
+3.  Los días envolvían. `Wrap` con `minWidth: 54` y `spacing: 12`: siete no
+    entran en 390 dp (7 × 54 + 6 × 12 = 450) y caían 6 + 1.
+4.  Áreas táctiles por debajo del mínimo: 28 px el corazón, 32 px el expandir
+    del carrusel.
+5.  Ampliar la imagen era un tap invisible sobre la foto, sin ninguna pista.
+6.  `Card(elevation: 3)` envolviendo un `ui.NeumorphicButton` **sin
+    `onPressed`**: dos sistemas de sombra superpuestos y un contenedor
+    disfrazado de botón.
+
+**Lo que se hizo (propuesta A).** La card vive una sola vez en
+`lib/ui/shared_widgets/cards/promotion_card_view.dart`; las dos `part` de las
+páginas quedan como envoltorio que solo elige el control superior derecho. El
+vidrio se centralizó en `lib/ui/shared_widgets/glass/foodly_glass.dart`: antes
+cada sitio inventaba su sigma y su blanco (6 y `embossMaxWhiteColor` al 50% en
+el carrusel, 6 y negro al 45% en el visor, 3 y `Colors.white38` en el sheet).
+
+El contenido es **exactamente** el de antes. Lo único que se añadió es el
+tooltip `expandImage` y que los días inactivos ahora también se dibujan, en
+gris: es el complemento del mismo dato y es lo que permite la fila fija.
+
+**Dos cosas que no son obvias mirando el código:**
+
+-   **La cinta se ancla con `bottom: -_ribbonOverflow` a propósito.** Sobresale
+    siempre 30 px exactos por debajo de la foto, cuánto mida el título dentro.
+    Por eso el cuerpo puede reservar arriba `_ribbonOverflow + 16` y el hueco
+    bajo la cinta es siempre 16. Si se cambia a `Transform.translate` deja de
+    cuadrar: el transform no ocupa layout y el cuerpo se sube 30 px.
+-   **El peor caso de contraste del vidrio claro es calculable.** Es blanco al
+    74%, así que sobre una foto negra queda en un gris medio, y ese gris es el
+    suelo contra el que miden el título y el subtítulo. Está en
+    `test/ui/theme/text_contrast_test.dart`, sacado del propio token: si
+    alguien baja el alpha del vidrio, el test lo caza.
+
+**El corazón de favoritos, dos intentos.** La primera versión lo envolvía en
+vidrio CIRUELA y le apagaba su fondo con `enableBackground: false`.
+`FavoriteButton` pinta el corazón guardado con `FoodlyThemes.favourites`, que
+es ese mismo ciruela: guardada, el corazón desaparecía en el vidrio.
+
+El segundo intento fue devolverle su fondo (blanco cuando guardada). Se leía,
+pero `UIFavoriteWidget` dibuja ese fondo como un CÍRCULO y el vidrio es un
+cuadrado redondeado: aparecía un círculo blanco metido en un squircle, con las
+esquinas del vidrio asomando, y al lado del botón de ampliar se veía
+descuadrado.
+
+Lo que quedó es que el estado lo cuente **el tono del vidrio**, que ya tiene la
+forma correcta: `FoodlyGlassTone.dark` sin guardar, `light` guardada, con el
+corazón blanco o ciruela encima. Misma silueta en los dos estados. Por eso
+`PromoFavoriteButton` tiene su propio `BlocBuilder` aunque `FavoriteButton` ya
+tenga uno: el tono se decide FUERA del botón. El carrusel no puede usar ese
+widget —su modelo es `NearbyPromotionDM`, con el estado en `isFavorited`— así
+que ambos comparten `PromoFavoriteGlass`.
+
+Ninguno de los dos problemas lo vieron los tests: los dos salieron de mirar el
+simulador.
+
+**La sombra de la card en el carrusel.** El `PageView` de `carousel_slider`
+recorta su viewport (`Clip.hardEdge` por defecto) y la sombra esparcida moría
+en seco contra el borde de abajo. Darle hueco dentro del item NO alcanza: con
+`blurRadius: 30` la sombra se desvanece a lo largo de unos 40 px y ese hueco se
+come la card en un viewport de 219 dp. La salida es
+`CarouselOptions(clipBehavior: Clip.none)` — lo único que se sale del viewport
+es sombra.
+
+**El favorito del carrusel no avisaba de nada.** Venía de antes del rediseño.
+`NearbyPromoCard` usa `UIFavoriteWidget` directo en vez del `FavoriteButton`
+compartido, porque su modelo es `NearbyPromotionDM` y el estado viaja en
+`isFavorited`. Al saltarse el botón compartido se saltaba también lo que ESE
+hace además de dibujar: la animación al pasar a favorito y el snackbar de
+"añadida"/"eliminada". Guardar una promo desde la home no daba ninguna
+respuesta; la misma promo desde la vista completa, sí. `_NearbyFavoriteButton`
+replica esas dos cosas; el toggle sigue yendo por `NearbyPromotionsCubit`.
+
+Si alguien vuelve a usar `UIFavoriteWidget` directo en otra pantalla, esto es
+lo que hay que acordarse de replicar.
+
+**La propuesta B quedó guardada, sin implementar.** Es la misma card con la
+foto en 4:5 en vez de 16:9 — 458 px de alto contra 206, título en vidrio
+oscuro sobre la imagen y hoja blanca montada abajo. No entró ahora porque
+pide tres cosas que A no pide:
+
+1.  El carrusel de la home crece ~142 px por card.
+2.  Las fotos apaisadas ya publicadas se recortan. La salida es marco 4:5 con
+    la imagen `contain` encima de una copia difuminada de sí misma, que es lo
+    que evita que ninguna promo existente pierda encuadre.
+3.  El editor de promociones tendría que enseñar el marco 4:5 al subir.
+
+El diseño de las dos está en el canvas `Widget de promoción Foodly`
+(claude.ai/code/artifact/7d36652a-5bac-47da-8165-59290f29f361), con la hoja de
+valores exactos.
+
 ### Revolut Pay no salía en iOS: el sheet lo filtra sin `returnURL` (2026-09-04)
 
 En producción (2.0.6+99) Revolut Pay aparecía en el PaymentSheet de **Android**

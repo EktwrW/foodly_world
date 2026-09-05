@@ -40,7 +40,7 @@ class _AnalyticsDashboardPageState extends State<AnalyticsDashboardPage> {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+            gradient: UIDecorations.glassmorphicPurpleGradient,
             borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
           ),
         ),

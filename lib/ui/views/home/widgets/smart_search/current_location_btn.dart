@@ -16,10 +16,34 @@ part of '../main_search_widget.dart';
 ///                        → volver a disparar `LocationEvent.checkLocation()`.
 enum _NoLocationCase { serviceDisabled, permanentlyDenied, retry }
 
+/// Cómo se PINTA el chip de ubicación. La lógica —estados del bloc, los tres
+/// casos de "no tengo ubicación", el aviso de cobertura, el diálogo— es la
+/// misma en los tres sitios donde vive este widget; lo único que cambia es el
+/// envase.
+///
+/// Se hizo así, y no con un segundo widget para el home, justamente porque esa
+/// lógica es lo caro de mantener: duplicarla habría sido el mismo problema que
+/// tenían las dos copias de la card de promo.
+///
+/// [translucent] es el original: blanco al 39% con un borde casi invisible.
+/// Funciona igual sobre el morado de Sociales que sobre el claro de
+/// Categorías, precisamente por no comprometerse con ningún fondo.
+///
+/// [homeAppBar] es el del rediseño del header (2026-09-05): más blanco, radio
+/// 14 y alto fijo de 44, para que forme una sola familia con los botones de
+/// teclado y micrófono que van al lado. Sobre fondos oscuros no sirve, y por
+/// eso es una variante y no el nuevo defecto.
+enum CurrentLocationStyle { translucent, homeAppBar }
+
 class CurrentLocationButton extends StatelessWidget {
   final bool isSocialFeature;
+  final CurrentLocationStyle style;
 
-  const CurrentLocationButton({super.key, this.isSocialFeature = false});
+  const CurrentLocationButton({
+    super.key,
+    this.isSocialFeature = false,
+    this.style = CurrentLocationStyle.translucent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +71,7 @@ class CurrentLocationButton extends StatelessWidget {
           builder: (context, state) {
             final locationService = di<LocationService>();
             final hasLocation = locationService.hasLocationData;
+            final isHomeAppBar = style == CurrentLocationStyle.homeAppBar;
 
             // Precomputo de label/tooltip/icon del "no location" para no
             // duplicar switches entre Tooltip y Row.
@@ -134,16 +159,19 @@ class CurrentLocationButton extends StatelessWidget {
                             onDialogClose: () => context.read<SmartSearchCubit>().resetToInitial(),
                           );
                         },
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(isHomeAppBar ? 14 : 10),
                   splashColor: FoodlyThemes.primaryFoodly.withValues(alpha: .5),
                   highlightColor: FoodlyThemes.primaryFoodly.withValues(alpha: 0.2),
                   child: Container(
+                    height: isHomeAppBar ? 44 : null,
                     decoration: BoxDecoration(
-                      color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .39),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+                      color: isHomeAppBar
+                          ? Colors.white.withValues(alpha: .62)
+                          : ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .39),
+                      borderRadius: BorderRadius.circular(isHomeAppBar ? 14 : 10),
+                      border: Border.all(color: Colors.white.withValues(alpha: isHomeAppBar ? .85 : 0.08)),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                    padding: EdgeInsets.symmetric(horizontal: isHomeAppBar ? 11 : 9, vertical: isHomeAppBar ? 0 : 6),
                     child: isChecking
                         ? Row(
                             spacing: 9,
@@ -194,7 +222,7 @@ class CurrentLocationButton extends StatelessWidget {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: FoodlyTextStyles.captionBold.copyWith(
-                                          fontSize: 11.3,
+                                          fontSize: isHomeAppBar ? 13 : 11.3,
                                           color: showCoverageInfo ? FoodlyThemes.error : null,
                                         ),
                                       ),

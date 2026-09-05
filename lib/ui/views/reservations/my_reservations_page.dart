@@ -49,7 +49,7 @@ class MyReservationsPage extends StatelessWidget {
             key: const Key('my-reservations-app-bar'),
             flexibleSpace: Container(
               decoration: BoxDecoration(
-                gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT,
+                gradient: UIDecorations.glassmorphicPurpleGradient,
                 borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
             ),

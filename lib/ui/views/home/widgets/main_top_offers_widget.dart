@@ -18,9 +18,10 @@ import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
-    show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
+import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart'
+    show PromoFavoriteButton, PromoFavoriteGlass, PromotionCardView;
+import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
@@ -29,7 +30,6 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
-import 'package:foodly_world/ui/views/visited_business/promotions/promotions_page.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 import 'package:video_player/video_player.dart';
 
@@ -88,13 +88,20 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
             return CarouselSlider(
               carouselController: _carouselController,
               options: CarouselOptions(
+                // `carousel_slider` le pasa esto al PageView, que por defecto
+                // recorta (`Clip.hardEdge`) y cortaba en seco la sombra de la
+                // card contra el borde de abajo. Darle hueco dentro del item no
+                // alcanzaba: con blur 26 la sombra se desvanece a lo largo de
+                // ~40 px y eso se comía la card. Lo que sobra fuera del viewport
+                // es sombra, así que se deja salir.
+                clipBehavior: Clip.none,
                 viewportFraction: .83,
                 enableInfiniteScroll: promotions.length > 2,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 onPageChanged: (index, reason) => _onPageChanged(index, promotions, vm.hasMore),
               ),
-              items: promotions.asMap().entries.map((e) => NearbyPromoCard(promo: e.value)).toList(),
+              items: promotions.map((p) => NearbyPromoCard(promo: p)).toList(),
             );
           },
         );
@@ -103,50 +110,59 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
   }
 }
 
+/// La card de promo del carrusel de la home y de Promos guardadas.
+///
+/// REDISEÑO 2026-09-04 (propuesta A). Mismo contenido que antes — título,
+/// negocio, valoración, favorito y expandir — con el lenguaje de vidrio de
+/// la card grande: [FoodlyGlassPanel] para la cinta del título y
+/// [FoodlyGlassButton] para los dos controles flotantes, que suben de 32 y
+/// 34 px a 44. Expandir se va de dentro del panel a la esquina superior
+/// izquierda, en el mismo sitio que en la card grande.
 class NearbyPromoCard extends StatelessWidget {
   final NearbyPromotionDM promo;
   const NearbyPromoCard({super.key, required this.promo});
 
+  static const _radius = BorderRadius.all(Radius.circular(20));
+
+  /// Mismo degradado que la card grande: despega el vidrio y los iconos
+  /// blancos de la foto, sea cual sea la foto.
+  static const _scrim = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0x5C180413), Color(0x00180413), Color(0x00180413), Color(0x80180413)],
+    stops: [0, .30, .40, 1],
+  );
+
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<NearbyPromotionsCubit>();
-
-    return Stack(
-      children: [
-        Column(
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        borderRadius: _radius,
+        boxShadow: [BoxShadow(color: Color(0x7A3B0A2C), blurRadius: 30, spreadRadius: -14, offset: Offset(0, 14))],
+      ),
+      child: ClipRRect(
+        borderRadius: _radius,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            // Media (external link, GCS image, or placeholder)
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                child: _buildMedia(),
+            _buildMedia(),
+            const IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(gradient: _scrim))),
+            Positioned(
+              top: 10,
+              left: 10,
+              right: 10,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _ViewPromoButton(promo: promo),
+                  _NearbyFavoriteButton(promo: promo),
+                ],
               ),
             ),
+            Positioned(left: 10, right: 10, bottom: 10, child: _PromoRibbon(promo: promo)),
           ],
         ),
-        Align(
-          alignment: AlignmentGeometry.bottomCenter,
-          child: _BackdropRoundedRectangle(promo),
-        ),
-
-        // Favorite button
-        Positioned(
-          right: 6,
-          top: 6,
-          child: UIFavoriteWidget(
-            liked: promo.isFavorited,
-            addFavoriteIcon: FontAwesome.heart_circle_plus_solid,
-            isFavoriteIcon: FontAwesome.heart_circle_check_solid,
-            onPressed: () {
-              // Modo invitado (5.1.1.v): guardar promos requiere cuenta. Esta
-              // card usa UIFavoriteWidget directo (no el FavoriteButton compartido),
-              // así que el gate va acá explícito.
-              if (!GuestGuard.requireAuth(GuestGateAction.favorite)) return;
-              cubit.toggleFavorite(promo.uuid);
-            },
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -163,165 +179,197 @@ class NearbyPromoCard extends StatelessWidget {
 
     // GCS image
     if (promo.promoMedia != null && promo.promoMedia!.mediaUrl.isNotEmpty) {
-      return CachedNetworkImage(cacheManager: FoodlyImageCache.manager, imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
+      return CachedNetworkImage(
+          cacheManager: FoodlyImageCache.manager, imageUrl: promo.promoMedia!.mediaUrl, fit: BoxFit.cover);
     }
 
-    return Container(
-        color: Colors.white,
-        padding: const EdgeInsets.only(bottom: 36),
-        child: const Row(
+    return const ColoredBox(
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 36),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(child: Asset(FoodlyAssets.promoPlaceholder)),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
 
-class _BackdropRoundedRectangle extends StatelessWidget {
+/// El corazón de favoritos del carrusel.
+///
+/// EL HUECO (venía de antes del rediseño). Esta card usa `UIFavoriteWidget`
+/// directo en vez del `FavoriteButton` compartido, porque su modelo es
+/// `NearbyPromotionDM` y el estado viaja en `isFavorited`. Al saltarse el
+/// botón compartido se saltaba también lo que ESE hace además de dibujar: la
+/// animación al pasar a favorito y el aviso de "añadida"/"eliminada". Guardar
+/// una promo desde la home no daba ninguna respuesta; la misma promo, desde la
+/// vista completa, sí.
+///
+/// Acá se replica esa parte. Lo que no se replica es el toggle: sigue yendo
+/// por `NearbyPromotionsCubit`, que actualiza la lista de forma optimista y
+/// después sincroniza `FavoritesCubit`.
+class _NearbyFavoriteButton extends StatefulWidget {
   final NearbyPromotionDM promo;
 
-  const _BackdropRoundedRectangle(this.promo);
+  const _NearbyFavoriteButton({required this.promo});
+
+  @override
+  State<_NearbyFavoriteButton> createState() => _NearbyFavoriteButtonState();
+}
+
+class _NearbyFavoriteButtonState extends State<_NearbyFavoriteButton> {
+  /// Solo se anima al PASAR a favorito: ni al quitar, ni en el primer dibujo.
+  /// Mismo criterio que `FavoriteButton`.
+  bool _isFirstBuild = true;
+  bool _wasFavorite = false;
+
+  static const _avisoDuracion = Duration(seconds: 3);
+
+  void _avisar({required bool agregado}) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+    agregado
+        ? FoodlySnackbars.successGeneric(context, FavoriteItemType.promotion.addedToFavoritesText,
+            duration: _avisoDuracion)
+        : FoodlySnackbars.infoGeneric(context, FavoriteItemType.promotion.removedFromFavoritesText,
+            duration: _avisoDuracion);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      bool isLoading = false;
+    final saved = widget.promo.isFavorited;
+    final shouldAnimate = !_isFirstBuild && saved && !_wasFavorite;
 
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Flexible(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: BackdropFilter(
-                filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.all(6),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Title + subtitle
-                      Flexible(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                promo.title,
-                                style: FoodlyTextStyles.secondaryTitle.copyWith(
-                                  color: FoodlyThemes.primaryFoodly,
-                                  fontSize: 17,
-                                  shadows: [
-                                    const Shadow(
-                                      color: Colors.white,
-                                      offset: Offset(0, 1),
-                                      blurRadius: 16,
-                                    ),
-                                    const Shadow(
-                                      color: Colors.white,
-                                      offset: Offset(0, -1),
-                                      blurRadius: 16,
-                                    ),
-                                    const Shadow(
-                                      color: Colors.white,
-                                      offset: Offset(1, 0),
-                                      blurRadius: 16,
-                                    ),
-                                  ],
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            // Business name + rating
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      promo.businessName,
-                                      style: FoodlyTextStyles.promoBusinessName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    RatingBar.builder(
-                                      initialRating: promo.ratingAvg,
-                                      itemSize: 13,
-                                      minRating: 1,
-                                      allowHalfRating: true,
-                                      ignoreGestures: true,
-                                      itemBuilder: (context, _) =>
-                                          const Icon(Icons.star, color: Colors.amber, size: 13),
-                                      onRatingUpdate: (_) {},
-                                    ),
-                                  ],
-                                ).paddingSymmetric(horizontal: 6, vertical: 6),
-                                Row(
-                                  children: [
-                                    StatefulBuilder(
-                                      builder: (_, setState) {
-                                        return CustomRoundedNeumorphicButton(
-                                          onPressed: () async {
-                                            if (isLoading) return;
+    _wasFavorite = saved;
+    _isFirstBuild = false;
 
-                                            await Future.microtask(() => setState(() => isLoading = true));
+    return PromoFavoriteGlass(
+      saved: saved,
+      child: UIFavoriteWidget(
+        liked: saved,
+        diameter: 44,
+        enableBackground: false,
+        shouldAnimate: shouldAnimate,
+        addFavoriteIcon: FontAwesome.heart_circle_plus_solid,
+        isFavoriteIcon: FontAwesome.heart_circle_check_solid,
+        onPressed: () {
+          // Modo invitado (5.1.1.v): guardar promos requiere cuenta. El gate va
+          // acá explícito porque no pasamos por el FavoriteButton compartido.
+          if (!GuestGuard.requireAuth(GuestGateAction.favorite)) return;
 
-                                            await di<BusinessRepo>().getPromotionByUuid(promo.uuid).then((result) {
-                                              result.when(
-                                                success: (promo) => showModalBottomSheet(
-                                                  context: context,
-                                                  isScrollControlled: true,
-                                                  backgroundColor: Colors.transparent,
-                                                  barrierColor: Colors.black45,
-                                                  builder: (_) => _PromoDetailSheet(promoDM: promo),
-                                                ),
-                                                failure: (e) => FoodlySnackbars.errorGeneric(
-                                                    context, S.current.failedToLoadPromotionDetails),
-                                              );
-                                            });
+          context.read<NearbyPromotionsCubit>().toggleFavorite(widget.promo.uuid);
+          _avisar(agregado: !saved);
+        },
+      ),
+    );
+  }
+}
 
-                                            Future.microtask(() => setState(() => isLoading = false));
-                                          },
-                                          tooltip: S.current.viewPromotion,
-                                          iconSize: 16,
-                                          diameter: 16,
-                                          iconData: Bootstrap.arrows_fullscreen,
-                                          child: isLoading
-                                              ? const SizedBox.square(
-                                                  dimension: 16,
-                                                  child: CircularProgressIndicator.adaptive(strokeWidth: 2),
-                                                )
-                                              : null,
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ).paddingSymmetric(vertical: 6),
-                              ],
-                            ).paddingSymmetric(horizontal: 6),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+/// Abre el detalle completo de la promo.
+///
+/// El estado de carga vivía en un `bool` declarado dentro del `builder` de un
+/// `LayoutBuilder` y manejado por un `StatefulBuilder`: se reiniciaba en cada
+/// reconstrucción del padre. Al mover el botón fuera del panel, pasa a ser un
+/// `State` de verdad.
+class _ViewPromoButton extends StatefulWidget {
+  final NearbyPromotionDM promo;
+
+  const _ViewPromoButton({required this.promo});
+
+  @override
+  State<_ViewPromoButton> createState() => _ViewPromoButtonState();
+}
+
+class _ViewPromoButtonState extends State<_ViewPromoButton> {
+  bool _isLoading = false;
+
+  Future<void> _open() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+
+    final result = await di<BusinessRepo>().getPromotionByUuid(widget.promo.uuid);
+    if (!mounted) return;
+
+    result.when(
+      success: (promo) => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.black45,
+        builder: (_) => _PromoDetailSheet(promoDM: promo),
+      ),
+      failure: (e) => FoodlySnackbars.errorGeneric(context, S.current.failedToLoadPromotionDetails),
+    );
+
+    if (mounted) setState(() => _isLoading = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FoodlyGlassButton(
+      icon: Bootstrap.arrows_fullscreen,
+      tooltip: S.current.viewPromotion,
+      onPressed: _open,
+      child: _isLoading
+          ? const SizedBox.square(
+              dimension: 18,
+              child: CircularProgressIndicator.adaptive(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation(Colors.white),
               ),
-            ),
+            )
+          : null,
+    );
+  }
+}
+
+/// Cinta de vidrio con el título de la promo y el negocio que la publica.
+class _PromoRibbon extends StatelessWidget {
+  final NearbyPromotionDM promo;
+
+  const _PromoRibbon({required this.promo});
+
+  @override
+  Widget build(BuildContext context) {
+    return FoodlyGlassPanel(
+      borderRadius: BorderRadius.circular(16),
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 11),
+      shadows: const [
+        BoxShadow(color: Color(0x8C260419), blurRadius: 30, spreadRadius: -14, offset: Offset(0, 12)),
+      ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            promo.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: FoodlyTextStyles.promoTitleOnGlass.copyWith(fontSize: 17, letterSpacing: -0.2, height: 1.18),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            promo.businessName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: FoodlyTextStyles.promoBusinessName,
+          ),
+          const SizedBox(height: 3),
+          RatingBar.builder(
+            initialRating: promo.ratingAvg,
+            itemSize: 13,
+            minRating: 1,
+            allowHalfRating: true,
+            ignoreGestures: true,
+            itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber, size: 13),
+            onRatingUpdate: (_) {},
           ),
         ],
-      );
-    }).paddingAll(6);
+      ),
+    );
   }
 }
 
@@ -330,9 +378,9 @@ class _BackdropRoundedRectangle extends StatelessWidget {
 ///
 /// Diseño (refactor 2026-05-08): el placeholder anterior era un icono +
 /// texto plano que daba sensación de "app vacía" y no enganchaba. La nueva
-/// versión replica el shape exacto de la PromoCard real (Card con
-/// borderRadius 8, AspectRatio 16/9, blur backdrop encima al estilo del
-/// `_BackdropRoundedRectangle` de la card de promo) pero con un video
+/// versión replica el shape exacto de la PromoCard real (borderRadius 20,
+/// AspectRatio 16/9, cinta de vidrio encima con la misma receta que
+/// `_PromoRibbon`) pero con un video
 /// `assets/videos/promos.mp4` en loop muteado en lugar de la imagen de la
 /// promo. Mensaje motivador encima del video ("Pronto, sabores cerca tuyo")
 /// + botón Reintentar abajo. Sin controles de play/pause, sin heart, sin
@@ -440,7 +488,7 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
             alignment: Alignment.bottomCenter,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: _buildVideo(),
@@ -502,14 +550,12 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
 
 /// Backdrop blur con título + subtítulo encima del video del placeholder.
 ///
-/// Misma técnica visual que `_BackdropRoundedRectangle` (la card de promo
-/// real): `BackdropFilter` con sigma 6 + container semi-translúcido encima
-/// del video, texto purple primario con multi-shadow blanco para legibilidad
-/// independientemente del frame del video que esté detrás.
+/// Mismo `FoodlyGlassPanel` que `_PromoRibbon` (la card de promo real), con
+/// el mismo tono claro, para que el placeholder y la card compartan
+/// superficie.
 ///
-/// La diferencia con `_BackdropRoundedRectangle` es que este NO renderiza
-/// business name / rating / icons — es solo el "hero text" porque no hay
-/// negocio detrás del placeholder.
+/// La diferencia es que este NO renderiza business name / rating / icons —
+/// es solo el "hero text" porque no hay negocio detrás del placeholder.
 class _BackdropEmptyMessage extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -521,46 +567,30 @@ class _BackdropEmptyMessage extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 6),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: BackdropFilter(
-            filter: dart_ui.ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Container(
-              decoration: BoxDecoration(
-                color: ui.NeumorphicColors.embossMaxWhiteColor.withValues(alpha: .5),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    title,
-                    style: FoodlyTextStyles.secondaryTitle.copyWith(
-                      color: FoodlyThemes.primaryFoodly,
-                      fontSize: 17,
-                      shadows: const [
-                        Shadow(color: Colors.white, offset: Offset(0, 1), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(0, -1), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(1, 0), blurRadius: 16),
-                        Shadow(color: Colors.white, offset: Offset(-1, 0), blurRadius: 16),
-                      ],
-                    ),
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
+          child: FoodlyGlassPanel(
+            borderRadius: BorderRadius.circular(16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: FoodlyTextStyles.promoTitleOnGlass.copyWith(fontSize: 17, height: 1.18),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
         ),
@@ -600,7 +630,13 @@ class _PromoDetailSheet extends StatelessWidget {
               Flexible(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.only(bottom: 120),
-                  child: PromotionCard(promo: promoDM),
+                  child: PromotionCardView(
+                    promo: promoDM,
+                    trailingAction: PromoFavoriteButton(
+                      promo: promoDM,
+                      favoriteKey: Key('fav-promo-sheet-${promoDM.uuid}'),
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -1106,6 +1106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "eventTypeDinner": MessageLookupByLibrary.simpleMessage("Dinner"),
     "eventTypeLunch": MessageLookupByLibrary.simpleMessage("Lunch"),
     "eventTypeWedding": MessageLookupByLibrary.simpleMessage("Wedding"),
+    "expandImage": MessageLookupByLibrary.simpleMessage("Expand image"),
     "exploreAsGuest": MessageLookupByLibrary.simpleMessage("Explore"),
     "failedDeletePhotos": m39,
     "failedToCancelReservation": MessageLookupByLibrary.simpleMessage(

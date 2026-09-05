@@ -25,6 +25,12 @@ class FoodlyThemes {
   /// valiendo `secondaryFoodly`: ahí no hay nada que leer.
   static const secondaryFoodlyText = Color(0xFF855C68);
   static const tertiaryFoodly = Color(0xFF14C45D);
+  /// `secondaryFoodlyText` no alcanza sobre fondos teñidos: sobre el extremo
+  /// oscuro del degradado del appbar (#E6CBE0) da 3,75:1, por debajo del 4,5:1
+  /// que pide la WCAG a 13px. Este es el mismo tono, más oscuro: 5,0:1 ahí y
+  /// 7,5:1 sobre blanco. Ver [secondaryFoodlyText] para el caso sobre blanco.
+  static const secondaryFoodlyTextOnTint = Color(0xFF6E4A55);
+
   static final accentColor = const Color(0xFF79005D).lighten(20);
 
   //Some dark colors:
@@ -35,6 +41,30 @@ class FoodlyThemes {
   static const error = Color(0xFFF31708);
   static const warning = Color(0xFFCFCC06);
   static const success = tertiaryFoodly;
+
+  //Promos (rediseño de la card, 2026-09-04):
+  /// Ciruela profundo para el título sobre la cinta de vidrio: lo usan la
+  /// card de promo y la de negocio.
+  ///
+  /// `primaryFoodly` a 23px sobre vidrio blanco al 74% se lee lavado. Este
+  /// tono conserva el matiz de marca y baja la luz: 15.6:1 sobre blanco y
+  /// 8.3:1 en el peor caso (vidrio claro sobre una foto negra, que queda en
+  /// #BDBDBD). Es lo que hace que el gancho pese más que el cuerpo.
+  static const titleOnGlass = Color(0xFF4A0039);
+
+  /// Subtítulo sobre la misma cinta. 4.7:1 contra ese mismo peor caso, que
+  /// es el mínimo AA para 13.5px.
+  static const promoSubtitleOnGlass = Color(0xFF53464F);
+
+  /// Tinta del cuerpo de la promo: casi negro con una punta de ciruela para
+  /// que no choque con el morado de marca. 14.9:1 sobre blanco.
+  static const promoBody = Color(0xFF2E2430);
+
+  /// Fondo del día en el que la promo NO aplica.
+  static const promoDayOff = Color(0xFFEDE3EA);
+
+  /// Texto del día inactivo sobre `promoDayOff` (5:1).
+  static const promoDayOffText = Color(0xFF7A5766);
 
   //Variances:
   static const alternativeUnselectedLightColor = Color(0xFFF1EAEF);

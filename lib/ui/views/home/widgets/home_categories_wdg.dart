@@ -74,7 +74,7 @@ class _HomeCategoriesState extends State<HomeCategories> {
 
   Widget _buildCarousel(BuildContext context, List<FoodlyCategories> categories) {
     return DecoratedBox(
-      decoration: BoxDecoration(gradient: UIDecorations.GLASSMORPHIC_PURPLE_GRADIENT),
+      decoration: BoxDecoration(gradient: UIDecorations.glassmorphicPurpleGradient),
       child: Column(
         children: [
           FoodlyCarousel(

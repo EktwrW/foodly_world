@@ -125,17 +125,22 @@ abstract class PromoDaysDM with _$PromoDaysDM {
 
   bool get hasAnyDay => sunday || monday || tuesday || wednesday || thursday || friday || saturday;
 
-  List<String> get activeDays {
-    final days = <String>[];
-    if (sunday) days.add(S.current.weekdayShort1);
-    if (monday) days.add(S.current.weekdayShort2);
-    if (tuesday) days.add(S.current.weekdayShort3);
-    if (wednesday) days.add(S.current.weekdayShort4);
-    if (thursday) days.add(S.current.weekdayShort5);
-    if (friday) days.add(S.current.weekdayShort6);
-    if (saturday) days.add(S.current.weekdayShort7);
-    return days;
-  }
+  /// Los siete días con su etiqueta corta y si la promo aplica ese día.
+  ///
+  /// Antes esto devolvía solo los activos y la card los pintaba en un `Wrap`
+  /// de chips con `minWidth: 54`: siete no entran en una fila de 390 dp y
+  /// caían 6 + 1, con el último suelto y centrado. Devolviendo los siete, la
+  /// card dibuja una fila fija de 7 que no envuelve nunca, y de paso se ve
+  /// qué días NO aplica la promo, que es la misma información.
+  List<({String label, bool isActive})> get allDays => [
+        (label: S.current.weekdayShort1, isActive: sunday),
+        (label: S.current.weekdayShort2, isActive: monday),
+        (label: S.current.weekdayShort3, isActive: tuesday),
+        (label: S.current.weekdayShort4, isActive: wednesday),
+        (label: S.current.weekdayShort5, isActive: thursday),
+        (label: S.current.weekdayShort6, isActive: friday),
+        (label: S.current.weekdayShort7, isActive: saturday),
+      ];
 }
 
 @freezed
