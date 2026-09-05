@@ -87,6 +87,20 @@ extension DateExtension on DateTime {
     return _birthdayStringUS;
   }
 
+  /// Esta fecha sin hora, en local.
+  ///
+  /// Existe para comparar por DÍA DE CALENDARIO, que es como filtra el
+  /// backend: `NearbyPromotionsController` usa `whereDate('expire_date', '>=',
+  /// $today)`, o sea que una promo que vence hoy sigue siendo válida todo el
+  /// día. Comparando instantes —`expireDate.isAfter(now)`— la promo se caía a
+  /// las 00:00 de su último día y desaparecía del front aunque el backend la
+  /// siguiera devolviendo.
+  DateTime get dateOnly {
+    final local = toLocal();
+
+    return DateTime(local.year, local.month, local.day);
+  }
+
   bool isBetween(DateTime start, DateTime end) => isAfter(start.toLocal()) && isBefore(end.toLocal());
 
   bool get isBeforeNow => DateTime.now().isBefore(toLocal());

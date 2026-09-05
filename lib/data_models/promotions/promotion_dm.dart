@@ -72,9 +72,25 @@ abstract class PromotionDM with _$PromotionDM {
     return promoMedia.first.mediaUrl;
   }
 
-  bool get isActive => DateTime.now().isBetween(startDate, expireDate);
-  bool get isUpcoming => startDate.isBeforeNow;
-  bool get isExpired => expireDate.isAfterNow;
+  /// LAS TRES SE COMPARAN POR DÍA DE CALENDARIO, NO POR INSTANTE.
+  ///
+  /// Es la regla del backend (`whereDate` en `NearbyPromotionsController`):
+  /// una promo vale desde el primer minuto de su día de inicio hasta el último
+  /// de su día de fin. Con comparación por instante, una promo que vencía
+  /// "hoy" se daba por terminada a las 00:00 de ese mismo día: seguía saliendo
+  /// en la home —que la filtra el backend— y no aparecía en promociones
+  /// guardadas ni en las pestañas de promos, que la filtraban acá.
+  bool get isActive {
+    final today = DateTime.now().dateOnly;
+
+    return !today.isBefore(startDate.dateOnly) && !today.isAfter(expireDate.dateOnly);
+  }
+
+  /// Empieza en un día posterior a hoy.
+  bool get isUpcoming => startDate.dateOnly.isAfter(DateTime.now().dateOnly);
+
+  /// Terminó en un día anterior a hoy.
+  bool get isExpired => expireDate.dateOnly.isBefore(DateTime.now().dateOnly);
 }
 
 @JsonEnum()

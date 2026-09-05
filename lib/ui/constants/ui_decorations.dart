@@ -36,8 +36,9 @@ class UIDecorations {
     ],
   );
 
-  static final glassmorphicCenterPurpleGradient = SweepGradient(
+  static final glassmorphicCenterPurpleGradient = RadialGradient(
     colors: [
+      const Color(0xFFF80BC5).withValues(alpha: 0.9),
       const Color(0xFFD604A8).withValues(alpha: 0.9),
       const Color(0xFFA2007F).withValues(alpha: 0.9),
       const Color(0xFF79005D).withValues(alpha: 0.85),

@@ -112,20 +112,14 @@ abstract class ManagePromotionsVM with _$ManagePromotionsVM {
     };
   }
 
-  List<PromotionDM> get upcomingPromotions {
-    final now = DateTime.now();
-    return sortedPromotions.where((promo) => promo.startDate.isAfter(now)).toList();
-  }
+  /// Las tres reglas viven en [PromotionDM]. Acá estaban reimplementadas con
+  /// comparación por instante, que es lo que dejaba fuera a una promo el mismo
+  /// día en que vencía. Ver el docblock de `PromotionDM.isActive`.
+  List<PromotionDM> get upcomingPromotions => sortedPromotions.where((promo) => promo.isUpcoming).toList();
 
-  List<PromotionDM> get activePromotions {
-    final now = DateTime.now();
-    return sortedPromotions.where((promo) => promo.startDate.isBefore(now) && promo.expireDate.isAfter(now)).toList();
-  }
+  List<PromotionDM> get activePromotions => sortedPromotions.where((promo) => promo.isActive).toList();
 
-  List<PromotionDM> get expiredPromotions {
-    final now = DateTime.now();
-    return sortedPromotions.where((promo) => promo.expireDate.isBefore(now)).toList();
-  }
+  List<PromotionDM> get expiredPromotions => sortedPromotions.where((promo) => promo.isExpired).toList();
 
   List<PromotionDM> get sortedPromotions {
     return List<PromotionDM>.from(promotions)..sort((a, b) => b.startDate.compareTo(a.startDate));

@@ -43,16 +43,14 @@ abstract class PromotionsVM with _$PromotionsVM {
   }
 
   /// Promociones que aún no han comenzado
-  List<PromotionDM> get upcomingPromotions {
-    final now = DateTime.now();
-    return sortedPromotions.where((promo) => promo.startDate.isAfter(now)).toList();
-  }
+  ///
+  /// La regla vive en [PromotionDM]: acá se reimplementaba con comparación por
+  /// instante y se desincronizó del backend, que compara por día. Ver el
+  /// docblock de `PromotionDM.isActive`.
+  List<PromotionDM> get upcomingPromotions => sortedPromotions.where((promo) => promo.isUpcoming).toList();
 
   /// Promociones que están activas actualmente
-  List<PromotionDM> get activePromotions {
-    final now = DateTime.now();
-    return sortedPromotions.where((promo) => promo.startDate.isBefore(now) && promo.expireDate.isAfter(now)).toList();
-  }
+  List<PromotionDM> get activePromotions => sortedPromotions.where((promo) => promo.isActive).toList();
 
   /// Promociones ordenadas por fecha de inicio (más recientes primero)
   List<PromotionDM> get sortedPromotions {

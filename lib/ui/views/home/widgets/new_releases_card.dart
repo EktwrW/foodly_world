@@ -89,21 +89,13 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // LO QUE RECORTABA LA SOMBRA (2026-09-05). Eran dos capas,
-                    // las dos por defecto y las dos invisibles hasta que se
-                    // mira el borde de la tarjeta:
-                    //
-                    //  1. El `layoutBuilder` por defecto de `AnimatedSwitcher`
-                    //     es un `Stack`, y `Stack` recorta (`Clip.hardEdge`) a
-                    //     la caja de la tarjeta.
-                    //  2. `SizeTransition` envuelve a su hijo en un `ClipRect`
-                    //     — es como consigue el efecto de crecer —, así que
-                    //     recorta también, y al terminar la animación sigue
-                    //     recortando a la caja.
-                    //
-                    // La altura ya la anima el `AnimatedSize` de acá abajo, así
-                    // que la transición del hijo solo tiene que ser un fundido:
-                    // no necesita recortar nada.
+                    // LO QUE RECORTABA LA SOMBRA (2026-09-05). El
+                    // `layoutBuilder` por defecto de `AnimatedSwitcher` es un
+                    // `Stack`, y `Stack` recorta (`Clip.hardEdge`) a la caja de
+                    // la tarjeta; `SizeTransition`, que estuvo un rato acá,
+                    // recortaba además por su `ClipRect` interno. Por eso la
+                    // transición es un fundido y el `Stack` va con `Clip.none`:
+                    // ninguno de los dos necesita recortar nada.
                     LayoutBuilder(
                       builder: (context, constraints) {
                         // La portada de la tarjeta es 4:3 y ocupa todo el
@@ -114,27 +106,28 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
                         return Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            AnimatedSize(
+                            // Ya no hace falta `AnimatedSize`: todas las
+                            // tarjetas miden lo mismo por construcción — el
+                            // nombre va a una línea y el hueco de la
+                            // descripción se reserva siempre. Animar el alto
+                            // era tratar el síntoma; lo que molestaba no era
+                            // que el cambio fuera brusco, sino que hubiera
+                            // cambio.
+                            AnimatedSwitcher(
                               duration: Durations.long2,
-                              curve: Curves.decelerate,
-                              alignment: Alignment.topCenter,
-                              clipBehavior: Clip.none,
-                              child: AnimatedSwitcher(
-                                duration: Durations.long2,
-                                switchOutCurve: const Threshold(0),
-                                layoutBuilder: (currentChild, previousChildren) => Stack(
-                                  clipBehavior: Clip.none,
-                                  alignment: Alignment.center,
-                                  children: [...previousChildren, if (currentChild != null) currentChild],
-                                ),
-                                transitionBuilder: (child, animation) => FadeTransition(
-                                  opacity: animation,
-                                  child: child,
-                                ),
-                                child: NewReleaseBusinessCard(
-                                  key: ValueKey(business.uuid),
-                                  business: business,
-                                ),
+                              switchOutCurve: const Threshold(0),
+                              layoutBuilder: (currentChild, previousChildren) => Stack(
+                                clipBehavior: Clip.none,
+                                alignment: Alignment.center,
+                                children: [...previousChildren, if (currentChild != null) currentChild],
+                              ),
+                              transitionBuilder: (child, animation) => FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              ),
+                              child: NewReleaseBusinessCard(
+                                key: ValueKey(business.uuid),
+                                business: business,
                               ),
                             ),
                             if (total > 1) ...[
@@ -310,7 +303,10 @@ class NewReleaseBusinessCard extends StatelessWidget {
                               children: [
                                 Text(
                                   business.name ?? '',
-                                  maxLines: 2,
+                                  // Una línea a propósito: con dos, un nombre
+                                  // largo hacía la tarjeta más alta que las
+                                  // demás y el carrusel movía la página.
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: FoodlyTextStyles.businessNameOnGlass,
                                 ),
@@ -343,16 +339,31 @@ class NewReleaseBusinessCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (description?.trim().isNotEmpty ?? false)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 14),
+                    // EL HUECO SE RESERVA SIEMPRE, TENGA TEXTO O NO.
+                    //
+                    // No es estético, es de comportamiento: esta sección rota
+                    // sola cada 4 segundos dentro de un scroll. Si las
+                    // tarjetas miden distinto, cada rotación mueve todo lo que
+                    // hay debajo — sin que el usuario haya tocado nada, y
+                    // pudiendo desplazar lo que estaba a punto de tocar.
+                    //
+                    // El alto sale de la métrica del propio estilo y del ajuste
+                    // de texto del sistema, no de un número clavado: con un
+                    // `SizedBox(height: 60)` fijo, subir el tamaño de letra en
+                    // Ajustes recorta el texto.
+                    SizedBox(
+                      height: _reservedLines(context, FoodlyTextStyles.cardDescription, 2),
+                      child: Align(
+                        alignment: Alignment.topLeft,
                         child: Text(
-                          description!,
+                          description ?? '',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: FoodlyTextStyles.cardDescription,
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 14),
                     Row(
                       children: [
                         if (category != null) ...[
@@ -377,6 +388,15 @@ class NewReleaseBusinessCard extends StatelessWidget {
     );
   }
 }
+
+/// Alto de [lines] líneas de [style], respetando el ajuste de tamaño de texto
+/// del sistema.
+///
+/// Es lo que mantiene todas las tarjetas del mismo alto sin clavar un número:
+/// cuando un `TextStyle` trae `height`, cada línea mide exactamente
+/// `fontSize * height`.
+double _reservedLines(BuildContext context, TextStyle style, int lines) =>
+    MediaQuery.textScalerOf(context).scale(style.fontSize!) * (style.height ?? 1) * lines;
 
 class _BusinessLogo extends StatelessWidget {
   final String? logo;
@@ -606,10 +626,11 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 6),
             color: ui.NeumorphicColors.decorationMaxWhiteColor,
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
             child: Column(
               children: [
                 ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(24)),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: AspectRatio(
                     aspectRatio: 4 / 3,
                     child: _buildVideo(),

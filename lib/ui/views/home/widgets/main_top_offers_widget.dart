@@ -484,6 +484,7 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
         Card(
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           color: ui.NeumorphicColors.decorationMaxWhiteColor,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [

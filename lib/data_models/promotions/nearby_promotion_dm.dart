@@ -1,3 +1,4 @@
+import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'nearby_promotion_dm.freezed.dart';
@@ -29,17 +30,23 @@ abstract class NearbyPromotionDM with _$NearbyPromotionDM {
 
   bool get hasMedia => (promoMedia != null) || (mediaLink?.isNotEmpty == true);
 
-  /// True if the promo is currently running. Defaults to true when dates are absent.
+  /// Vigente hoy. Por defecto `true` cuando no vienen fechas.
+  ///
+  /// Se compara por DÍA DE CALENDARIO, igual que [PromotionDM.isActive] y que
+  /// el backend: una promo que vence hoy vale todo el día. Ver el docblock de
+  /// `DateTimeExtension.dateOnly` para el bug que esto arregla.
   bool get isActive {
     if (startDate == null || expireDate == null) return true;
-    final now = DateTime.now();
-    return !now.isBefore(startDate!) && now.isBefore(expireDate!);
+    final today = DateTime.now().dateOnly;
+
+    return !today.isBefore(startDate!.dateOnly) && !today.isAfter(expireDate!.dateOnly);
   }
 
-  /// True if the promo hasn't started yet.
+  /// Empieza en un día posterior a hoy.
   bool get isUpcoming {
     if (startDate == null) return false;
-    return DateTime.now().isBefore(startDate!);
+
+    return startDate!.dateOnly.isAfter(DateTime.now().dateOnly);
   }
 }
 

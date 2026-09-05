@@ -6,7 +6,7 @@ import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/data_models/business/business_dm.dart' show BusinessDM;
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
 import 'package:foodly_world/generated/l10n.dart' show S;
-import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart' show AvatarStyle, AvatarWidget;
+import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart' show AvatarStyle, AvatarType, AvatarWidget;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 
@@ -66,51 +66,47 @@ class MyFavoritesBusinessMiniCard extends StatelessWidget {
               orElse: () => null,
             );
 
-    return ClayContainer(
-      spread: 2,
-      borderRadius: 6,
-      child: Row(
-        children: [
-          AvatarWidget(
-            avatarUrl: b.logo,
-            avatarStyle: AvatarStyle.square,
-            height: 46,
-            width: 46,
-          ),
-          Expanded(
-            flex: 3,
-            child: Column(
-              spacing: 4,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  b.name,
-                  style: FoodlyTextStyles.actionsBodyBold,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Row(
-                  spacing: 8,
-                  children: [
-                    _buildStatusBadge(status),
-                    if (b.hoursDisplay != null)
-                      Text(
-                        b.hoursDisplay!,
-                        style: FoodlyTextStyles.labelBoldMini,
-                      ),
-                  ],
-                ),
-              ],
-            ).paddingLeft(8),
-          ),
-          const Spacer(),
-          SizedBox.square(
-            dimension: 28,
-            child: categoryEnum?.avatar ?? const SizedBox.shrink(),
-          ),
-        ],
-      ).paddingAll(6),
-    ).paddingAll(8);
+    return Row(
+      children: [
+        AvatarWidget(
+          avatarUrl: b.logo,
+          height: 46,
+          width: 46,
+          avatarType: AvatarType.business,
+        ),
+        Expanded(
+          flex: 3,
+          child: Column(
+            spacing: 4,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                b.name,
+                style: FoodlyTextStyles.actionsBodyBold,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                spacing: 8,
+                children: [
+                  _buildStatusBadge(status),
+                  if (b.hoursDisplay != null)
+                    Text(
+                      b.hoursDisplay!,
+                      style: FoodlyTextStyles.labelBoldMini,
+                    ),
+                ],
+              ),
+            ],
+          ).paddingLeft(8),
+        ),
+        const Spacer(),
+        SizedBox.square(
+          dimension: 28,
+          child: categoryEnum?.avatar ?? const SizedBox.shrink(),
+        ),
+      ],
+    ).paddingAll(6).paddingAll(8);
   }
 
   Widget _buildFromBusinessDM() {

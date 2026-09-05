@@ -19,6 +19,8 @@ class _BusinessWithPromosCard extends StatelessWidget {
 
     return Card(
       color: Colors.white,
+      surfaceTintColor: Colors.white,
+      margin: const EdgeInsets.all(6),
       child: AnimatedSize(
         key: ValueKey(business),
         duration: Durations.long1,
@@ -32,7 +34,7 @@ class _BusinessWithPromosCard extends StatelessWidget {
                 key: Key('promo-card-${p.uuid}'),
                 child: AspectRatio(
                     aspectRatio: 16 / 10,
-                    child: NearbyPromoCard(promo: p).paddingSymmetric(horizontal: 16, vertical: 8)))),
+                    child: NearbyPromoCard(promo: p).paddingSymmetric(horizontal: 12, vertical: 6)))),
           ],
         ).paddingBottom(8),
       ),

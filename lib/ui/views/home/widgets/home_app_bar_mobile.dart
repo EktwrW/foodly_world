@@ -11,6 +11,10 @@ class Home369AppBarMobile extends StatelessWidget {
     super.key,
   });
 
+  /// Hueco entre el borde inferior del degradado y el final del sliver.
+  /// Es lo que la sombra necesita para desvanecerse sin que la recorten.
+  static const double _bottomMargin = 16;
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -68,26 +72,22 @@ class Home369AppBarMobile extends StatelessWidget {
                     // separaba de nada. El icono es el mismo de siempre.
                     const _DrawerButton().paddingHorizontal(6),
                   ],
-                ).paddingOnly(left: 12, right: 6),
-                const SearchWidget().paddingBottom(12),
+                ).paddingOnly(left: 12, right: 6, bottom: 2),
+                // 26 = `_bottomMargin` (24) menos los 6 de padding interno del
+                // propio SearchWidget, más los 8 de aire hasta el borde del
+                // degradado. Sube con el margen; ver el comentario del fondo.
+                const SearchWidget().paddingBottom(20),
               ],
             ),
-            // EL BLUR QUE NO DIFUMINABA NADA (2026-09-05). Esto era un
-            // `Stack` con un `Container` blanco y, encima, un `BackdropFilter`
-            // de sigma .75 con `primaryFoodly` al 30%. `BackdropFilter`
-            // difumina lo que hay DETRÁS, y detrás solo había blanco uniforme:
-            // difuminar blanco da blanco. Era una capa de composición por
-            // frame —en un header `pinned`, que repinta con cada scroll de la
-            // lista— sin ningún píxel de salida. Lo único que pintaba era el
-            // tinte, y ese tinte era el morado de marca diluido.
             background: Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: _bottomMargin),
               decoration: const BoxDecoration(
                 gradient: UIDecorations.HOME_APP_BAR_GRADIENT,
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
                 boxShadow: [
                   BoxShadow(color: Color(0x123B0A2C), blurRadius: 6, offset: Offset(0, 2)),
-                  BoxShadow(color: Color(0x613B0A2C), blurRadius: 30, spreadRadius: -16, offset: Offset(0, 14)),
+                  // Alcance hacia abajo: 8 + 22 − 10 = 20, dentro de los 24.
+                  BoxShadow(color: Color(0x613B0A2C), blurRadius: 12, spreadRadius: -6, offset: Offset(0, 6)),
                 ],
               ),
             ),
@@ -98,13 +98,6 @@ class Home369AppBarMobile extends StatelessWidget {
   }
 }
 
-/// El botón que abre el drawer, en el appbar del home.
-///
-/// Deja de ser neumórfico y pasa al ciruela sólido del sistema — el mismo
-/// degradado que la barra de compartir de la card de promo y el botón
-/// "+ info" de la de negocio—, porque es la acción de navegación del header y
-/// tiene que pesar como tal. Sigue siendo un círculo de 47 px, que es lo que
-/// lo mantiene emparentado con el botón de avatar de los otros appbars.
 class _DrawerButton extends StatelessWidget {
   const _DrawerButton();
 

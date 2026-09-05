@@ -347,6 +347,39 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### La vigencia de una promo se mide por DÍA, no por instante (2026-09-05)
+
+**EL BUG.** Una promo que vencía HOY salía en la home pero no en promociones
+guardadas, ni en las pestañas de promos del cliente y del dueño.
+
+La home la filtra el BACKEND, y `NearbyPromotionsController` usa
+`whereDate('start_date', '<=', $today)` y `whereDate('expire_date', '>=',
+$today)`: compara días de calendario, así que la promo vale todo su último
+día. El front comparaba instantes (`expireDate.isAfter(now)`), o sea que la
+daba por terminada a las **00:00 de ese mismo día**. Las dos fuentes decían
+cosas distintas sobre la misma promo.
+
+Y no estaba en un sitio: la misma regla estaba reimplementada en cinco —
+`PromotionDM`, `NearbyPromotionDM`, `promotions_vm` (visita),
+`manage_promotions_vm` (dueño) y la página de guardadas. Los dos view models
+la tenían copiada a mano ignorando los getters del modelo, que es cómo se
+desincronizaron. Ahora la regla vive solo en los dos modelos y el resto
+delega.
+
+`DateTimeExtension.dateOnly` es la pieza: normaliza a día local. Si aparece
+otro sitio que filtre promos, tiene que usar los getters del modelo, no
+comparar fechas a mano.
+
+**Un detalle de los helpers de fecha, que confunde:** `isBeforeNow` NO
+significa "esta fecha es anterior a ahora" — está implementado como
+`DateTime.now().isBefore(this)`, o sea que devuelve `true` cuando la fecha
+está en el FUTURO. `isAfterNow` es el espejo. Los usos que había eran
+correctos, pero se leen al revés de lo que dicen.
+
+**Lo que NO es un bug:** una promo guardada que ya expiró no aparece en
+"mis promociones favoritas" — la página solo separa activas y próximas, y las
+expiradas no caen en ninguna de las dos.
+
 ### El appbar del home (2026-09-05)
 
 No tenía ningún bug: tenía cosas sin decidir. Después de rediseñar las dos
@@ -473,21 +506,30 @@ portada — que es calculable sin medir nada, porque la portada es 4:3 a todo el
 ancho. Los puntos se quedan abajo: siguen diciendo cuántos hay y en cuál
 estás, que es lo que las flechas no dicen.
 
-**Dos cosas del carrusel que salieron de mirarlo en el simulador
-(2026-09-05).**
+**El fantasma al cambiar de tarjeta.** `AnimatedSwitcher` desvanece la saliente
+y la entrante A LA VEZ, apiladas: durante ~450 ms se veían los dos negocios
+encima uno del otro, con el nombre y la descripción de cada uno cruzados. Se
+arregla con `switchOutCurve: const Threshold(0)`.
 
-`AnimatedSwitcher` desvanece la tarjeta saliente y la entrante A LA VEZ,
-apiladas: durante ~450 ms se veían los dos negocios encima uno del otro, con
-el nombre y la descripción de cada uno cruzados. Se arregla con
-`switchOutCurve: const Threshold(0)` — la saliente se va de golpe y solo entra
-la nueva.
+**TODAS LAS TARJETAS MIDEN LO MISMO, Y ES A PROPÓSITO.** Es la regla que más
+fácil se rompe sin querer, así que: el nombre va a UNA línea y el hueco de la
+descripción se reserva SIEMPRE, tenga texto o no.
 
-Y al dejar de reservar el hueco fijo de la descripción, pasar de un negocio
-con descripción a uno sin ella daba un tirón de ~58 px. Lo envuelve un
-`AnimatedSize` anclado en `topCenter` (para que el borde de arriba no se
-mueva) y con `clipBehavior: Clip.none` (para no cortar la sombra de la tarjeta
-durante la transición). Si alguien vuelve a poner una altura fija ahí, el
-`AnimatedSize` sobra.
+No es estético. Esta sección rota sola cada 4 segundos dentro de un
+`SingleChildScrollView`: si las tarjetas miden distinto, cada rotación mueve
+todo lo que hay debajo sin que el usuario haya tocado nada, y puede desplazar
+justo lo que estaba por tocar.
+
+Hubo un intento intermedio de animar ese cambio de alto con `AnimatedSize`.
+Suavizaba el tirón pero no lo quitaba: lo que molesta no es que el cambio sea
+brusco, es que haya cambio. Se quitó cuando las alturas pasaron a ser
+constantes por construcción.
+
+El alto reservado sale de `_reservedLines`, que lo calcula desde la métrica del
+`TextStyle` y el `textScaler` del sistema — no de un número clavado. Con un
+`SizedBox(height: 60)` fijo, subir el tamaño de letra en Ajustes recorta el
+texto. El test `todas las tarjetas miden lo mismo` cubre las cuatro
+combinaciones (sin descripción, con, con una larga, y con nombre largo).
 
 **El placeholder vacío espeja la card a propósito.** Si se cambia una,
 `_EmptyNewReleasesWidget` tiene que cambiar con ella: su docblock promete el

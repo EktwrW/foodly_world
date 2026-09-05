@@ -74,10 +74,42 @@ void main() {
         reason: 'FeedMultipleImageView abre el visor de imágenes y se come el tap de la tarjeta');
   });
 
-  testWidgets('sin descripción no se dibuja un hueco con saltos de línea', (tester) async {
+  testWidgets('sin descripción no se rellena con saltos de línea', (tester) async {
     await pump(tester, negocio());
 
+    // El hueco se reserva —ver el test de abajo— pero vacío, no con la cadena
+    // '\n \n' que usaba el diseño anterior para empujar el layout.
     expect(find.textContaining('\n'), findsNothing);
+  });
+
+  /// EL SALTO DEL SCROLL (2026-09-05). Esta sección rota sola cada 4 segundos
+  /// dentro de un `SingleChildScrollView`. Cuando las tarjetas medían distinto
+  /// según tuvieran descripción o no, cada rotación movía todo lo que había
+  /// debajo — sin que el usuario tocara nada, y pudiendo desplazar justo lo que
+  /// estaba por tocar.
+  ///
+  /// Animar ese cambio de alto (`AnimatedSize`) lo suavizaba pero no lo
+  /// quitaba. Lo que lo quita es que todas las tarjetas midan lo mismo por
+  /// construcción: nombre a una línea y hueco de descripción siempre
+  /// reservado. Este test es lo que impide que vuelva.
+  testWidgets('todas las tarjetas miden lo mismo, tengan descripción o no', (tester) async {
+    Future<double> alto(BusinessDM b) async {
+      await pump(tester, b);
+
+      return tester.getSize(find.byType(NewReleaseBusinessCard)).height;
+    }
+
+    final conDescripcion = await alto(negocio(intro: 'Esperamos por ti na nossa fantástica taberna.'));
+    final sinDescripcion = await alto(negocio());
+    final descripcionLarga = await alto(negocio(
+      intro: 'Uma casa de comida tradicional da Beira Interior, com forno a lenha, adega própria e uma esplanada '
+          'com vista para a serra que vale a pena conhecer com tempo.',
+    ));
+    final nombreLargo = await alto(negocio(name: 'Restaurante Tradicional da Serra da Estrela e Adega do Vale'));
+
+    expect(sinDescripcion, conDescripcion);
+    expect(descripcionLarga, conDescripcion);
+    expect(nombreLargo, conDescripcion);
   });
 
   testWidgets('con descripción, se muestra junto al resto del contenido', (tester) async {
