@@ -49,6 +49,51 @@ class LocationService {
   String get currentAddress => _locationDM.address ?? '';
   String get currentZipCode => _locationDM.zipCode ?? '';
 
+  /// Une las partes de una dirección para mostrarlas, saltándose las que no
+  /// vienen.
+  ///
+  /// EL BUG (2026-09-05). El texto se armaba concatenando a mano
+  /// (`'$currentAddress, $currentCity.'`), así que en cuanto una parte llegaba
+  /// vacía quedaban los separadores sueltos: `"Rua Irmãos Bonina, ."` en el
+  /// chip del appbar y `"Rua X, , , ."` en su tooltip. Había un parche para
+  /// UNA de las combinaciones —la de ciudad vacía en el tooltip— y el resto
+  /// seguían rotas, que es lo que pasa cuando se arregla el caso en vez de la
+  /// clase.
+  ///
+  /// Acá se resuelve la clase entera:
+  ///
+  ///  * cada parte se limpia de espacios y de separadores pegados, así que da
+  ///    igual si el geocoding devuelve `"Covilhã,"` o `" Covilhã "`;
+  ///  * las vacías se caen, y con ellas su separador;
+  ///  * las repetidas seguidas también — el geocoding a veces devuelve la
+  ///    misma cadena como dirección y como ciudad;
+  ///  * el punto final solo se pone si quedó algo que puntuar.
+  ///
+  /// Devuelve cadena vacía cuando no hay nada: el llamador decide qué poner en
+  /// su lugar.
+  static String formatAddress(Iterable<String?> parts) {
+    final pieces = <String>[];
+
+    for (final part in parts) {
+      final clean = (part ?? '').trim().replaceAll(RegExp(r'^[,.\s]+|[,.\s]+$'), '');
+      if (clean.isEmpty) continue;
+      if (pieces.isNotEmpty && pieces.last.toLowerCase() == clean.toLowerCase()) continue;
+      pieces.add(clean);
+    }
+
+    return pieces.isEmpty ? '' : '${pieces.join(', ')}.';
+  }
+
+  /// Etiqueta corta, para el chip de ubicación: calle y ciudad; o ciudad y
+  /// código postal cuando todavía no hay calle (posición provisional, antes
+  /// de que resuelva el geocoding).
+  String get addressLabel => formatAddress(
+        currentAddress.isNotEmpty ? [currentAddress, currentCity] : [currentCity, currentZipCode],
+      );
+
+  /// Etiqueta completa, para el tooltip.
+  String get addressTooltip => formatAddress([currentAddress, currentCity, currentZipCode, currentCountry]);
+
   void updateLocation(LocationDetailsDM newValue) {
     _locationDM = newValue;
     _hasBeenInitialized = true;

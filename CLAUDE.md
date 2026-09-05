@@ -347,6 +347,28 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### El texto de la dirección en el chip de ubicación (2026-09-05)
+
+Se armaba concatenando a mano —`'$currentAddress, $currentCity.'`— así que en
+cuanto una parte llegaba vacía quedaban los separadores sueltos. En pantalla
+se vio como `"Rua Irmãos Bonina, ."`: dirección sin ciudad. El tooltip tenía
+la misma familia de fallos y podía llegar a `"Rua X, , , ."`.
+
+Ya había un parche para UNA de las combinaciones —ciudad vacía en el
+tooltip— con su comentario y todo. El resto seguían rotas: es lo que pasa
+cuando se arregla el caso y no la clase.
+
+Ahora hay un solo formateador, `LocationService.formatAddress`, y los dos
+sitios lo usan a través de `addressLabel` (chip) y `addressTooltip`. Limpia
+espacios y separadores pegados, se salta las partes vacías con su separador,
+no repite una parte igual a la anterior —el geocoding a veces devuelve la
+misma cadena como dirección y como ciudad— y solo pone el punto final si
+quedó algo que puntuar. Devuelve cadena vacía cuando no hay nada, y el
+llamador decide el reemplazo.
+
+Es `static` a propósito: así se prueba sin DI. `address_format_test.dart`
+cubre las combinaciones, no un caso.
+
 ### La vigencia de una promo se mide por DÍA, no por instante (2026-09-05)
 
 **EL BUG.** Una promo que vencía HOY salía en la home pero no en promociones

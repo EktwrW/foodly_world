@@ -97,15 +97,15 @@ class CurrentLocationButton extends StatelessWidget {
             }
 
             return Tooltip(
+              // Las combinaciones de partes vacías las resuelve
+              // `LocationService.formatAddress`; acá solo queda el caso de que
+              // no haya nada que mostrar. Ver su docblock.
               message: isChecking
                   ? S.current.checkingLocation
                   : hasLocation
-                      ? locationService.currentAddress.isNotEmpty == true
-                          ? '${locationService.currentAddress}, ${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
-                          // Provisional sin geocoding: sin ciudad el tooltip quedaba ", , ."
-                          : locationService.currentCity.isNotEmpty
-                              ? '${locationService.currentCity}, ${locationService.currentZipCode}, ${locationService.currentCountry}.'
-                              : S.current.useDeviceLocation
+                      ? locationService.addressTooltip.isNotEmpty
+                          ? locationService.addressTooltip
+                          : S.current.useDeviceLocation
                       : noLocTooltip,
               child: Material(
                 color: Colors.transparent,
@@ -212,13 +212,9 @@ class CurrentLocationButton extends StatelessWidget {
                                       child: Text(
                                         showCoverageInfo
                                             ? S.current.outsideCoverage
-                                            : locationService.currentAddress.isNotEmpty == true
-                                                ? '${locationService.currentAddress}, ${locationService.currentCity}.'
-                                                // Con la posición provisional (antes del fix y del geocoding)
-                                                // no hay ciudad ni código postal: sin esto se veía " .".
-                                                : locationService.currentCity.isNotEmpty
-                                                    ? '${locationService.currentCity} ${locationService.currentZipCode}.'
-                                                    : S.current.useDeviceLocation,
+                                            : locationService.addressLabel.isNotEmpty
+                                                ? locationService.addressLabel
+                                                : S.current.useDeviceLocation,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: FoodlyTextStyles.captionBold.copyWith(
