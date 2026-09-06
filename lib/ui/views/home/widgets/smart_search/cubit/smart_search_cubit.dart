@@ -352,16 +352,6 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
   }
 
   void checkForResetToInitial() async {
-    // `_Searching` también cuenta como «no resetear», y esa es la corrección.
-    //
-    // Este método lo dispara el `onDismiss` del snackbar, y el botón de buscar
-    // hace `searchBusinesses()` y justo después `dismiss()`. Con la guarda
-    // anterior el estado en ese momento era `_Searching` —no `_SearchComplete`—
-    // así que reseteaba a `initial`: el wrapper caía en su `orElse`, repintaba
-    // el home y se veía **el home recargándose con sus shimmers** durante toda
-    // la espera, hasta que llegaban los resultados. Con el NLP dormido eran 14
-    // segundos de home falso; ahora que responde en 0,12 s es un parpadeo, pero
-    // sigue estando mal: mientras hay una búsqueda en vuelo no se resetea nada.
     if (state is! _SearchComplete && state is! _Searching) {
       await resetToInitial();
     }
