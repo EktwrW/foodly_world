@@ -352,7 +352,7 @@ class SmartSearchCubit extends Cubit<SmartSearchState> {
   }
 
   void checkForResetToInitial() async {
-    if (state is! _SearchComplete) {
+    if (state is! _SearchComplete && state is! _Searching) {
       await resetToInitial();
     }
   }

@@ -950,6 +950,42 @@ Sin salida = limpio.
 
 ---
 
+## El home parpadeaba durante la búsqueda del smart search (2026-09-06)
+
+**Síntoma**: tras pulsar buscar, el snackbar se cerraba y durante un instante se
+veía **el home recargándose con sus shimmers** (promos cercanas, nuevos en
+Foodly); un momento después aparecían los resultados del NLP.
+
+**Causa**, y es de una línea:
+
+```dart
+void checkForResetToInitial() async {
+  if (state is! _SearchComplete) {   // <- le faltaba _Searching
+    await resetToInitial();
+  }
+}
+```
+
+Lo dispara el `onDismiss` del snackbar, y el botón de buscar hace
+`searchBusinesses()` **y justo después `dismiss()`**. En ese momento el estado es
+`_Searching`, no `_SearchComplete`, así que reseteaba a `initial` — y
+`_SmartSearchWrapper` pinta el `child` (el home) para todo lo que no sea
+`searching` ni `searchComplete`, con su `orElse`. De ahí el home falso.
+
+**Regla: mientras hay una búsqueda en vuelo no se resetea nada.**
+
+**Cuánto se notaba**: con el Cloud Run del NLP dormido eran **14 segundos** de
+home falso —el arranque en frío medido el 2026-09-06—; desde que se mantiene
+caliente con un ping son 0,12 s y queda en parpadeo. El arreglo del backend
+disimuló el bug del front, no lo quitó.
+
+**Sin test unitario, y a propósito.** `SmartSearchCubit` arrastra unos diez
+colaboradores para llegar a `_Searching` —`AuthSessionService` con 5
+dependencias, `EventTrackingService` con 3, `SpeechToText`, `LocalStorageService`,
+el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
+constructores: sería un lastre, no una red. Verificado con `flutter analyze`
+limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
+
 ## Visited Business Mode (2026-04-12)
 
 ### Two-Page Architecture
