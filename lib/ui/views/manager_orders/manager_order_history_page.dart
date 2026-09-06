@@ -5,6 +5,7 @@ import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -100,76 +101,78 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         ),
         centerTitle: true,
       ),
-      body: SafeArea(
-        top: false,
-        child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
-          builder: (context, state) {
-            if (state.loading) {
-              return const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
-            }
-            if (state.orders.isEmpty) {
-              return Center(
-                child: Column(
-                  spacing: 12,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
-                    Text(S.current.managerHistoryEmpty, style: FoodlyTextStyles.caption),
-                  ],
-                ),
-              );
-            }
-
-            final groups = groupOrdersByDay(state.orders);
-
-            return ListView(
-              controller: _scroll,
-              padding: const EdgeInsets.fromLTRB(14, 10, 14, 20),
-              children: [
-                for (final g in groups) ...[
-                  // Header del día: etiqueta + resumen (N órdenes · €total).
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 16, 2, 8),
-                    child: Row(
-                      children: [
-                        Text(
-                          _dayLabel(g.day).toUpperCase(),
-                          style: FoodlyTextStyles.captionPurpleBold.copyWith(letterSpacing: 0.5),
-                        ),
-                        const Expanded(child: Divider(indent: 10, endIndent: 10)),
-                        Text(
-                          S.current.managerHistoryDaySummary(
-                            g.orders.length,
-                            formatMoney(g.dayTotal, g.orders.first.currency),
-                          ),
-                          style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
-                        ),
-                      ],
-                    ),
+      body: ContentColumn.list(
+        child: SafeArea(
+          top: false,
+          child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
+            builder: (context, state) {
+              if (state.loading) {
+                return const Center(child: CircularProgressIndicator(color: FoodlyThemes.primaryFoodly));
+              }
+              if (state.orders.isEmpty) {
+                return Center(
+                  child: Column(
+                    spacing: 12,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Iconsax.receipt_minus_outline, color: FoodlyThemes.primaryFoodly),
+                      Text(S.current.managerHistoryEmpty, style: FoodlyTextStyles.caption),
+                    ],
                   ),
-                  for (final order in g.orders)
+                );
+              }
+
+              final groups = groupOrdersByDay(state.orders);
+
+              return ListView(
+                controller: _scroll,
+                padding: const EdgeInsets.fromLTRB(14, 10, 14, 20),
+                children: [
+                  for (final g in groups) ...[
+                    // Header del día: etiqueta + resumen (N órdenes · €total).
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: ManagerOrderCard(
-                        order: order,
-                        onTap: () => _showOrderSheet(context, order),
+                      padding: const EdgeInsets.fromLTRB(2, 16, 2, 8),
+                      child: Row(
+                        children: [
+                          Text(
+                            _dayLabel(g.day).toUpperCase(),
+                            style: FoodlyTextStyles.captionPurpleBold.copyWith(letterSpacing: 0.5),
+                          ),
+                          const Expanded(child: Divider(indent: 10, endIndent: 10)),
+                          Text(
+                            S.current.managerHistoryDaySummary(
+                              g.orders.length,
+                              formatMoney(g.dayTotal, g.orders.first.currency),
+                            ),
+                            style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
+                          ),
+                        ],
+                      ),
+                    ),
+                    for (final order in g.orders)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: ManagerOrderCard(
+                          order: order,
+                          onTap: () => _showOrderSheet(context, order),
+                        ),
+                      ),
+                  ],
+                  if (state.loadingMore)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      child: Center(
+                        child: SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
+                        ),
                       ),
                     ),
                 ],
-                if (state.loadingMore)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                    child: Center(
-                      child: SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: FoodlyThemes.primaryFoodly),
-                      ),
-                    ),
-                  ),
-              ],
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

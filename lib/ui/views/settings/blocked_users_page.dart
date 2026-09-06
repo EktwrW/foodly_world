@@ -7,6 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:go_router/go_router.dart';
@@ -108,62 +109,64 @@ class _BlockedUsersPageState extends State<BlockedUsersPage> {
           ).paddingSymmetric(vertical: 10, horizontal: 10),
           leadingWidth: 60,
         ),
-        body: _loading
-            ? const Center(child: CircularProgressIndicator.adaptive())
-            : _users.isEmpty
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(32),
-                      child: Text(
-                        S.current.blockedUsersEmpty,
-                        textAlign: TextAlign.center,
-                        style: FoodlyTextStyles.label,
-                      ),
-                    ),
-                  )
-                : ListView.separated(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _users.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (_, i) {
-                      final u = _users[i];
-                      final busy = _busy.contains(u.uuid);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          children: [
-                            AvatarWidget(avatarUrl: u.avatarUrl),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(u.name.isEmpty ? u.username : u.name,
-                                      style: FoodlyTextStyles.labelBold, overflow: TextOverflow.ellipsis),
-                                  if (u.username.isNotEmpty)
-                                    Text('@${u.username}',
-                                        style: FoodlyTextStyles.caption.copyWith(color: Colors.grey)),
-                                ],
-                              ),
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: CustomNeumorphicButton(
-                                onPressed: busy ? null : () => _unblock(u),
-                                type: CustomNeumorphicBtnType.outlined,
-                                text: busy ? '...' : S.current.unblock,
-                                disabled: busy,
-                                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-                                fontSize: 11,
-                                margin: const EdgeInsets.all(3),
-                              ),
-                            ),
-                          ],
+        body: ContentColumn.list(
+          child: _loading
+              ? const Center(child: CircularProgressIndicator.adaptive())
+              : _users.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32),
+                        child: Text(
+                          S.current.blockedUsersEmpty,
+                          textAlign: TextAlign.center,
+                          style: FoodlyTextStyles.label,
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: _users.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      itemBuilder: (_, i) {
+                        final u = _users[i];
+                        final busy = _busy.contains(u.uuid);
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            children: [
+                              AvatarWidget(avatarUrl: u.avatarUrl),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(u.name.isEmpty ? u.username : u.name,
+                                        style: FoodlyTextStyles.labelBold, overflow: TextOverflow.ellipsis),
+                                    if (u.username.isNotEmpty)
+                                      Text('@${u.username}',
+                                          style: FoodlyTextStyles.caption.copyWith(color: Colors.grey)),
+                                  ],
+                                ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: CustomNeumorphicButton(
+                                  onPressed: busy ? null : () => _unblock(u),
+                                  type: CustomNeumorphicBtnType.outlined,
+                                  text: busy ? '...' : S.current.unblock,
+                                  disabled: busy,
+                                  padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                                  fontSize: 11,
+                                  margin: const EdgeInsets.all(3),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+        ),
       ),
     );
   }

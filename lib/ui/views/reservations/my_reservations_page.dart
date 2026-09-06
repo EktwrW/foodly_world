@@ -7,6 +7,7 @@ import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -80,13 +81,15 @@ class MyReservationsPage extends StatelessWidget {
             ).paddingSymmetric(vertical: 10, horizontal: 10),
             leadingWidth: 60,
           ),
-          body: const SafeArea(
-            child: Column(
-              children: [
-                _BookingTypeFilter(),
-                _StatusFilterDropdown(),
-                Expanded(child: _ReservationsList()),
-              ],
+          body: const ContentColumn.list(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  _BookingTypeFilter(),
+                  _StatusFilterDropdown(),
+                  Expanded(child: _ReservationsList()),
+                ],
+              ),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, ScreenSizeExtension, S;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart' show CustomNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/link_preview/link_preview_card.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -86,7 +87,7 @@ class _CreatePostDialogState extends State<CreatePostDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return FoodlyDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       // Material 3 default tiñe el surface del Dialog con el primary del

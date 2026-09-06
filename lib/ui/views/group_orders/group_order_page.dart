@@ -17,6 +17,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
@@ -514,7 +515,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     return showDialog<String>(
       context: context,
       builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => Dialog(
+        builder: (ctx, setState) => FoodlyDialog(
           backgroundColor: Colors.white,
           insetPadding: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -1027,7 +1028,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
     final chosenUuid = await showDialog<String>(
       context: context,
       builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => Dialog(
+        builder: (ctx, setState) => FoodlyDialog(
           insetPadding: const EdgeInsets.all(UIDimens.SCREEN_PADDING_MOB),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(

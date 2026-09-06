@@ -17,7 +17,9 @@ import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -38,144 +40,146 @@ class NotificationsPage extends StatelessWidget {
           key: const Key('notifications-app-bar'),
           actionText: S.current.notifications,
         ),
-        body: BlocConsumer<NotificationsCubit, NotificationsState>(
-          listener: (context, state) {
-            state.whenOrNull(
-              error: (vm, message) {
-                FoodlySnackbars.errorGeneric(context, message);
-              },
-            );
-          },
-          builder: (context, state) {
-            if (state.vm.notifications.isEmpty && state.maybeMap(loading: (_) => true, orElse: () => false)) {
-              return const NotificationsShimmer();
-            }
-
-            final vm = state.vm;
-
-            if (vm.notifications.isEmpty) {
-              return Center(
-                child: Column(
-                  spacing: 16,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
-                    Text(S.current.noNotificationsYet),
-                  ],
-                ).paddingBottom(48),
+        body: ContentColumn.list(
+          child: BlocConsumer<NotificationsCubit, NotificationsState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                error: (vm, message) {
+                  FoodlySnackbars.errorGeneric(context, message);
+                },
               );
-            }
+            },
+            builder: (context, state) {
+              if (state.vm.notifications.isEmpty && state.maybeMap(loading: (_) => true, orElse: () => false)) {
+                return const NotificationsShimmer();
+              }
 
-            return Column(
-              spacing: 16,
-              children: [
-                const SizedBox(height: 9),
-                Row(
-                  children: [
-                    const Spacer(flex: 2),
-                    Flexible(
-                      flex: 3,
-                      child: CustomNeumorphicButton(
-                        onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
-                        type: CustomNeumorphicBtnType.outlined,
-                        text: S.current.markAllAsRead,
-                        fontSize: 14,
-                        disabled: !vm.hasUnread,
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.all(16).copyWith(bottom: 150),
-                    itemCount: vm.notifications.length,
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final notification = vm.notifications[index];
+              final vm = state.vm;
 
-                      return DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: notification.isRead
-                              ? []
-                              : [
-                                  BoxShadow(
-                                    color: Colors.white.withValues(alpha: .16),
-                                    blurRadius: 6,
-                                    spreadRadius: 3,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
+              if (vm.notifications.isEmpty) {
+                return Center(
+                  child: Column(
+                    spacing: 16,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
+                      Text(S.current.noNotificationsYet),
+                    ],
+                  ).paddingBottom(48),
+                );
+              }
+
+              return Column(
+                spacing: 16,
+                children: [
+                  const SizedBox(height: 9),
+                  Row(
+                    children: [
+                      const Spacer(flex: 2),
+                      Flexible(
+                        flex: 3,
+                        child: CustomNeumorphicButton(
+                          onPressed: () => context.read<NotificationsCubit>().markAllAsRead(),
+                          type: CustomNeumorphicBtnType.outlined,
+                          text: S.current.markAllAsRead,
+                          fontSize: 14,
+                          disabled: !vm.hasUnread,
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                         ),
-                        child: ListTile(
-                          onTap: () {
-                            context.read<NotificationsCubit>().markAsRead(notification.uuid);
-                            if (notification.isReservationNotification && notification.reservationUuid != null) {
-                              _showReservationDialog(context, notification);
-                            }
-                          },
-                          leading: AvatarWidget(
-                            avatarUrl: notification.actorPhotoUrl,
-                            width: 40,
-                            height: 40,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(16).copyWith(bottom: 150),
+                      itemCount: vm.notifications.length,
+                      separatorBuilder: (context, index) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final notification = vm.notifications[index];
+
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: notification.isRead
+                                ? []
+                                : [
+                                    BoxShadow(
+                                      color: Colors.white.withValues(alpha: .16),
+                                      blurRadius: 6,
+                                      spreadRadius: 3,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                           ),
-                          title: Text(
-                            notification.title,
-                            style: FoodlyTextStyles.labelBold,
-                          ),
-                          subtitle: Column(
-                            spacing: 2,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(notification.message, style: FoodlyTextStyles.label).paddingTop(2),
-                              Row(
-                                spacing: 6,
-                                children: [
-                                  Icon(notification.type?.icon ?? Bootstrap.bell,
-                                      size: 16, color: FoodlyThemes.primaryFoodly),
-                                  Text(notification.createdAt?.timeAgo ?? '', style: FoodlyTextStyles.captionPurple),
-                                ],
-                              ),
-                            ],
-                          ),
-                          trailing: Column(
-                            mainAxisAlignment:
-                                notification.isRead ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
-                            children: [
-                              if (!notification.isRead)
+                          child: ListTile(
+                            onTap: () {
+                              context.read<NotificationsCubit>().markAsRead(notification.uuid);
+                              if (notification.isReservationNotification && notification.reservationUuid != null) {
+                                _showReservationDialog(context, notification);
+                              }
+                            },
+                            leading: AvatarWidget(
+                              avatarUrl: notification.actorPhotoUrl,
+                              width: 40,
+                              height: 40,
+                            ),
+                            title: Text(
+                              notification.title,
+                              style: FoodlyTextStyles.labelBold,
+                            ),
+                            subtitle: Column(
+                              spacing: 2,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(notification.message, style: FoodlyTextStyles.label).paddingTop(2),
+                                Row(
+                                  spacing: 6,
+                                  children: [
+                                    Icon(notification.type?.icon ?? Bootstrap.bell,
+                                        size: 16, color: FoodlyThemes.primaryFoodly),
+                                    Text(notification.createdAt?.timeAgo ?? '', style: FoodlyTextStyles.captionPurple),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            trailing: Column(
+                              mainAxisAlignment:
+                                  notification.isRead ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (!notification.isRead)
+                                  Flexible(
+                                    child: InkWell(
+                                      onTap: () => context.read<NotificationsCubit>().markAsRead(notification.uuid),
+                                      splashFactory: InkRipple.splashFactory,
+                                      customBorder: const CircleBorder(),
+                                      child: const Icon(Bootstrap.check2, size: 24),
+                                    ),
+                                  ),
                                 Flexible(
                                   child: InkWell(
-                                    onTap: () => context.read<NotificationsCubit>().markAsRead(notification.uuid),
+                                    onTap: () => context.read<NotificationsCubit>().deleteNotification(notification.uuid),
                                     splashFactory: InkRipple.splashFactory,
                                     customBorder: const CircleBorder(),
-                                    child: const Icon(Bootstrap.check2, size: 24),
-                                  ),
+                                    child: const Icon(Bootstrap.trash3, size: 20),
+                                  ).paddingRight(notification.isRead ? 2 : 0),
                                 ),
-                              Flexible(
-                                child: InkWell(
-                                  onTap: () => context.read<NotificationsCubit>().deleteNotification(notification.uuid),
-                                  splashFactory: InkRipple.splashFactory,
-                                  customBorder: const CircleBorder(),
-                                  child: const Icon(Bootstrap.trash3, size: 20),
-                                ).paddingRight(notification.isRead ? 2 : 0),
-                              ),
-                            ],
+                              ],
+                            ),
+                            contentPadding: const EdgeInsets.fromLTRB(16, 4, 14, 4),
+                            tileColor: notification.isRead ? Colors.white : FoodlyThemes.primaryLighten73,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            enableFeedback: !notification.isRead,
                           ),
-                          contentPadding: const EdgeInsets.fromLTRB(16, 4, 14, 4),
-                          tileColor: notification.isRead ? Colors.white : FoodlyThemes.primaryLighten73,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enableFeedback: !notification.isRead,
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -197,7 +201,7 @@ class NotificationsPage extends StatelessWidget {
         showDialog(
           context: context,
           builder: (ctx) {
-            return Dialog(
+            return FoodlyDialog(
               backgroundColor: reservation.isConfirmed ? Colors.white : null,
               insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 13),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

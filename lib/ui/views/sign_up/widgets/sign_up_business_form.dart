@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
-import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
@@ -27,23 +26,28 @@ class SignUpBusinessForm extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: SizedBox(
-                height: 166,
-                width: context.screenWidth - 36,
-                child: GoogleMap(
-                  mapType: MapType.satellite,
-                  myLocationEnabled: true,
-                  webGestureHandling: WebGestureHandling.auto,
-                  onMapCreated: cubit.onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: cubit.getCurrentPosition != null
-                        ? LatLng(cubit.getCurrentPosition!.latitude, cubit.getCurrentPosition!.longitude)
-                        : cubit.center,
-                    zoom: 16.0,
+            // Expanded en vez de `screenWidth - 36`: el Row no acota el
+            // ancho, asi que aqui double.infinity no sirve. Da lo mismo en
+            // movil (el padding lateral del scroll ya restaba esos 36) y
+            // respeta el tope de ContentColumn en tablet.
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: SizedBox(
+                  height: 166,
+                  child: GoogleMap(
+                    mapType: MapType.satellite,
+                    myLocationEnabled: true,
+                    webGestureHandling: WebGestureHandling.auto,
+                    onMapCreated: cubit.onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: cubit.getCurrentPosition != null
+                          ? LatLng(cubit.getCurrentPosition!.latitude, cubit.getCurrentPosition!.longitude)
+                          : cubit.center,
+                      zoom: 16.0,
+                    ),
+                    markers: vm.markers,
                   ),
-                  markers: vm.markers,
                 ),
               ),
             ),

@@ -9,6 +9,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart' show YouTubeVideoPlayer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -86,106 +87,108 @@ class AboutPage extends StatelessWidget {
           leadingWidth: 60,
         ),
         body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
-                  children: [
-                    // Header: logo + tagline
-                    FadeIn(
-                      child: Column(
-                        children: [
-                          const Asset(FoodlyAssets.logo, height: 30),
-                          const SizedBox(height: 10),
-                          Text(
-                            s.aboutTagline,
-                            textAlign: TextAlign.center,
-                            style: FoodlyTextStyles.label.copyWith(
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              color: colorScheme.onSurface.withValues(alpha: 0.6),
-                              letterSpacing: 0.3,
+          child: ContentColumn(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                    children: [
+                      // Header: logo + tagline
+                      FadeIn(
+                        child: Column(
+                          children: [
+                            const Asset(FoodlyAssets.logo, height: 30),
+                            const SizedBox(height: 10),
+                            Text(
+                              s.aboutTagline,
+                              textAlign: TextAlign.center,
+                              style: FoodlyTextStyles.label.copyWith(
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                color: colorScheme.onSurface.withValues(alpha: 0.6),
+                                letterSpacing: 0.3,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 28),
+                      const SizedBox(height: 28),
 
-                    // Manifesto video — locale-aware YouTube embed
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 100),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(14),
-                        child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: YouTubeVideoPlayer(
-                            url: AboutPage.manifestoVideoUrl,
-                            videoTitle: s.aboutVideoPlaceholder,
+                      // Manifesto video — locale-aware YouTube embed
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 100),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: AspectRatio(
+                            aspectRatio: 16 / 9,
+                            child: YouTubeVideoPlayer(
+                              url: AboutPage.manifestoVideoUrl,
+                              videoTitle: s.aboutVideoPlaceholder,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 28),
+                      const SizedBox(height: 28),
 
-                    // Content sections
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 200),
-                      child: _ContentSection(
-                        icon: Bootstrap.lightbulb,
-                        title: s.aboutMissionTitle,
-                        body: s.aboutMission,
-                        colorScheme: colorScheme,
+                      // Content sections
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 200),
+                        child: _ContentSection(
+                          icon: Bootstrap.lightbulb,
+                          title: s.aboutMissionTitle,
+                          body: s.aboutMission,
+                          colorScheme: colorScheme,
+                        ),
                       ),
-                    ),
-                    const Divider(height: 32),
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 300),
-                      child: _ContentSection(
-                        icon: Bootstrap.shop,
-                        title: s.aboutForBusinessTitle,
-                        body: s.aboutForBusiness,
-                        colorScheme: colorScheme,
+                      const Divider(height: 32),
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 300),
+                        child: _ContentSection(
+                          icon: Bootstrap.shop,
+                          title: s.aboutForBusinessTitle,
+                          body: s.aboutForBusiness,
+                          colorScheme: colorScheme,
+                        ),
                       ),
-                    ),
-                    const Divider(height: 32),
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 400),
-                      child: _ContentSection(
-                        icon: Bootstrap.people,
-                        title: s.aboutForCustomersTitle,
-                        body: s.aboutForCustomers,
-                        colorScheme: colorScheme,
+                      const Divider(height: 32),
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 400),
+                        child: _ContentSection(
+                          icon: Bootstrap.people,
+                          title: s.aboutForCustomersTitle,
+                          body: s.aboutForCustomers,
+                          colorScheme: colorScheme,
+                        ),
                       ),
-                    ),
-                    const Divider(height: 32),
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 500),
-                      child: _ContentSection(
-                        icon: Bootstrap.gift,
-                        title: s.aboutFreeTitle,
-                        body: s.aboutFree,
-                        colorScheme: colorScheme,
+                      const Divider(height: 32),
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 500),
+                        child: _ContentSection(
+                          icon: Bootstrap.gift,
+                          title: s.aboutFreeTitle,
+                          body: s.aboutFree,
+                          colorScheme: colorScheme,
+                        ),
                       ),
-                    ),
-                    const Divider(height: 32),
-                    FadeInUp(
-                      delay: const Duration(milliseconds: 600),
-                      child: _ContentSection(
-                        icon: Bootstrap.rocket_takeoff,
-                        title: s.aboutEvolvingTitle,
-                        body: s.aboutEvolving,
-                        colorScheme: colorScheme,
+                      const Divider(height: 32),
+                      FadeInUp(
+                        delay: const Duration(milliseconds: 600),
+                        child: _ContentSection(
+                          icon: Bootstrap.rocket_takeoff,
+                          title: s.aboutEvolvingTitle,
+                          body: s.aboutEvolving,
+                          colorScheme: colorScheme,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              // Footer: share buttons
-              _ShareFooter(s: s),
-            ],
+                // Footer: share buttons
+                _ShareFooter(s: s),
+              ],
+            ),
           ),
         ),
       ),

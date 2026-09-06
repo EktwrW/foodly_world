@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/padding_extension.dart';
 import 'package:foodly_world/core/routing/app_router.dart' show rootNavigatorKey;
 import 'package:foodly_world/ui/constants/ui_loading.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 
 part '../loading/loading_logo_wdg.dart';
 part '../loading/loading_iso_wdg.dart';
@@ -45,7 +46,7 @@ class DialogService {
         barrierDismissible: false,
         builder: (_) => PopScope(
           canPop: false,
-          child: Dialog(
+          child: FoodlyDialog(
             backgroundColor: Colors.transparent,
             insetPadding: insetPadding ?? EdgeInsets.zero,
             elevation: elevation ?? 0,

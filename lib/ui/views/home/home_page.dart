@@ -13,6 +13,7 @@ import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/image/logo_foodly_icon_behavior.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/business_results_view.dart' show ViewModeToggleButton;
+import 'package:foodly_world/ui/views/home/widgets/foodly_navigation_rail.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
@@ -230,6 +231,17 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
   Widget _buildContent(int indexValue, bool isHidden, SmartSearchVM vm) {
     final smartSearchCubit = context.read<SmartSearchCubit>();
 
+    // En tablet apaisado la navegación se va a un rail lateral. En teléfono
+    // —cualquier orientación— esto es false y se devuelve exactamente el mismo
+    // Scaffold de siempre, sin tocar nada. Ver [debeUsarNavigationRail].
+    if (debeUsarNavigationRail(
+      esTablet: context.isTablet,
+      esDesktop: context.isDesktop,
+      orientacion: context.orientation,
+    )) {
+      return _buildContentConRail(indexValue, isHidden, vm, smartSearchCubit);
+    }
+
     return Scaffold(
       body: _buildTabBarView(),
       extendBody: true,
@@ -276,4 +288,85 @@ class _HomePage369State extends State<HomePage369> with TickerProviderStateMixin
       ),
     );
   }
+
+  /// La misma home con la navegación en un rail lateral.
+  ///
+  /// Cambia SOLO la presentación: los índices, el gate de invitado, el
+  /// `navigateTo` y el globo de la campana son los mismos de la barra inferior.
+  ///
+  /// Dos diferencias deliberadas respecto al teléfono, las dos por lo mismo —un
+  /// rail cuesta ancho, no alto:
+  ///
+  /// 1. El rail NO se esconde durante la búsqueda. La barra inferior sí lo
+  ///    hace, para devolverle alto a los resultados; aquí no hay alto que
+  ///    devolver, y encima el usuario conserva la navegación mientras busca.
+  /// 2. Por eso el `hideBottomBarAnimationController` no se usa en esta rama.
+  ///    Se sigue creando y liberando igual, que es del estado del widget.
+  Widget _buildContentConRail(
+    int indexValue,
+    bool isHidden,
+    SmartSearchVM vm,
+    SmartSearchCubit smartSearchCubit,
+  ) {
+    return Scaffold(
+      body: Row(
+        children: [
+          BlocSelector<NotificationsCubit, NotificationsState, bool>(
+            selector: (state) => state.vm.hasUnread,
+            builder: (context, hasUnread) => FoodlyNavigationRail(
+              activeIndex: indexValue,
+              hasUnread: hasUnread,
+              leading: _fabPaginaPrincipal(indexValue),
+              onTap: (index) {
+                // Mismo gate que la barra inferior: el invitado no pasa.
+                if (_maybeGuestGate(index)) return;
+                _bottomNavIndex.value = index;
+                navigateTo(index);
+              },
+            ),
+          ),
+          const VerticalDivider(width: 1, thickness: 1),
+          Expanded(child: _buildTabBarView()),
+        ],
+      ),
+      floatingActionButton: isHidden ? _controlesDeBusqueda(vm, smartSearchCubit) : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  /// El FAB del iso, que en el rail va en el hueco de `leading`.
+  Widget _fabPaginaPrincipal(int indexValue) => FloatingActionButton(
+        splashColor: FoodlyThemes.tertiaryFoodly.withValues(alpha: .5),
+        onPressed: () {
+          _bottomNavIndex.value = FoodlyNavigationRail.paginaPrincipal;
+          navigateTo(FoodlyNavigationRail.paginaPrincipal);
+        },
+        shape: const CircleBorder(),
+        child: FoodlyIsoIconBehavior(
+          height: 26,
+          version: indexValue == FoodlyNavigationRail.paginaPrincipal
+              ? FoodlyLogoVersion.original
+              : FoodlyLogoVersion.black,
+        ),
+      );
+
+  /// Los dos botones que salen mientras hay una búsqueda activa.
+  Widget _controlesDeBusqueda(SmartSearchVM vm, SmartSearchCubit smartSearchCubit) => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        spacing: 6,
+        children: [
+          ViewModeToggleButton(
+            key: const Key('rail-smart-search-view-mode-toggle-button'),
+            onPressed: vm.searchResults.isNotEmpty ? () => smartSearchCubit.toggleViewMode() : null,
+            isGrid: vm.viewMode.isGrid,
+          ).paddingAll(6),
+          CustomRoundedNeumorphicButton(
+            onPressed: () => smartSearchCubit.clearSearch(),
+            diameter: 26,
+            depth: 3,
+            shape: ui.NeumorphicShape.concave,
+            child: const Icon(Bootstrap.eraser_fill, color: FoodlyThemes.primaryFoodly),
+          ).paddingAll(6),
+        ],
+      );
 }

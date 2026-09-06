@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -8,51 +9,71 @@ const _kHighlightColor = Color(0xFFF3F3F3);
 
 // ─── Promo Carousel Shimmer ───────────────────────────────────────────────────
 
+/// Esqueleto de la tira de promos de la home mientras cargan.
+///
+/// EL SALTO QUE TENÍA (2026-09-06). El alto era una constante `_carouselH =
+/// 333` que nadie volvió a comparar con el carrusel de verdad. Medido: el
+/// `CarouselSlider` de `TopOffersWidget` da 226 px en un iPhone 16 Pro y 211
+/// en un iPhone SE, porque sin `height` cae a su `aspectRatio` 16/9 sobre el
+/// ancho disponible. O sea que al terminar de cargar las promos la tira
+/// encogía ~107 px de golpe y el título "Nuevos en Foodly" y su tarjeta
+/// pegaban un salto hacia arriba.
+///
+/// Ahora el alto sale de [resolveHomePromoCarouselGeometry], la misma función
+/// que usan el carrusel cargado y el placeholder de vacío/error. El shimmer
+/// SIGUE al carrusel, nunca al revés: el que manda es lo que el usuario acaba
+/// viendo.
+///
+/// Ojo con lo de dentro: la composición del esqueleto (foto arriba + franja
+/// blanca con nombre y botones abajo) es la de la card ANTERIOR al rediseño de
+/// 2026-09-04. La card de hoy es foto a sangre con la cinta de vidrio
+/// superpuesta. No afecta al alto —que es de lo que va todo esto— pero está
+/// pendiente.
 class PromoCarouselShimmer extends StatelessWidget {
   const PromoCarouselShimmer({super.key});
-
-  static const _carouselH = 333.0;
-
-  /// Visible para el centro, que comparte la geometría.
-  static const carouselHeight = _carouselH;
 
   /// Las tarjetas de al lado NO están agrandadas (`enlargeCenterPage: true` en
   /// el carousel real), así que se ven más bajas que la del centro.
   ///
-  /// Antes esto era 350 —o sea MÁS alto que `_carouselH`, pese a que el
+  /// Antes esto era 350 —o sea MÁS alto que el propio carrusel, pese a que el
   /// comentario decía lo contrario— y de ahí salían los dos defectos: la
   /// tarjeta lateral no entraba en la ventana del `ClipRect`, así que sus
   /// esquinas redondeadas quedaban recortadas arriba y abajo y el borde que da
   /// al centro se veía RECTO. Al bajar la altura entra completa y el redondeo
   /// aparece solo.
   static const _sideScale = .85;
-  static const _sideH = _carouselH * _sideScale;
 
   static const _peekW = 24.0; // visible slice of each side card
 
   @override
   Widget build(BuildContext context) {
+    final alto = resolveHomePromoCarouselGeometry(
+      breakpoint: foodlyCarouselBreakpointOf(context),
+      screenWidth: context.screenWidth,
+    ).height;
+    final altoLateral = alto * _sideScale;
+
     return SizedBox(
-      height: _carouselH,
+      height: alto,
       child: Shimmer.fromColors(
         baseColor: _kBaseColor,
         highlightColor: _kHighlightColor,
-        child: const Row(
+        child: Row(
           children: [
             // Left card peeking in — only rightmost _peekW px visible
             _SidePeekCard(
               peekWidth: _peekW,
-              totalHeight: _sideH,
+              totalHeight: altoLateral,
               align: Alignment.centerRight,
             ),
 
             // Center card — gets the remaining width via Expanded
-            Expanded(child: _CenterPromoCard()),
+            Expanded(child: _CenterPromoCard(height: alto)),
 
             // Right card peeking in — only leftmost _peekW px visible
             _SidePeekCard(
               peekWidth: _peekW,
-              totalHeight: _sideH,
+              totalHeight: altoLateral,
               align: Alignment.centerLeft,
             ),
           ],
@@ -101,16 +122,17 @@ class _SidePeekCard extends StatelessWidget {
 /// Full-size center card skeleton — uses LayoutBuilder so the 16∶9 image
 /// always tracks the actual rendered width from Expanded.
 class _CenterPromoCard extends StatelessWidget {
-  const _CenterPromoCard();
+  final double height;
+
+  const _CenterPromoCard({required this.height});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        final w = constraints.maxWidth;
-        // `_carouselH` y no un número suelto: la Row acota igual a esa altura,
-        // y dejarlo explícito hace comparable la altura lateral con esta.
-        return _PromoCardSkeleton(width: w, height: PromoCarouselShimmer.carouselHeight);
+        // El alto baja desde arriba, no se recalcula: la Row acota igual a esa
+        // altura, y compartirlo hace comparable la altura lateral con esta.
+        return _PromoCardSkeleton(width: constraints.maxWidth, height: height);
       },
     );
   }

@@ -7,6 +7,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/utils/image_picker_and_cropper.dart';
@@ -253,48 +254,50 @@ class _SignUpBusinessPageState extends State<SignUpBusinessPage> {
               ),
             ),
           ],
-          body: Form(
-            key: vm.formKey,
-            autovalidateMode: vm.autovalidateMode,
-            child: SingleChildScrollView(
-              physics: vm.tooltipActive ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(
-                  right: UIDimens.SCREEN_PADDING_MOB, left: UIDimens.SCREEN_PADDING_MOB, top: 12, bottom: 36),
-              child: Column(
-                children: [
-                  const SignUpBusinessForm(),
-                  vm.userSessionDM.user.isManager
-                      ? TextButton(
-                          onPressed: () => _signUpcubit.changeUserRoleToClient(),
-                          child: Text.rich(
-                            TextSpan(
-                              style: FoodlyTextStyles.actionsBody,
-                              children: [
-                                TextSpan(text: '${S.current.switchUserCategoryTextSpan1} '),
-                                _getBoldTextSpan(S.current.customer),
-                                TextSpan(text: ', ${S.current.switchUserCategoryTextSpan2} '),
-                                _getBoldTextSpan(S.current.switchUserCategoryTextSpan3),
-                                const TextSpan(text: '.'),
-                              ],
+          body: ContentColumn(
+            child: Form(
+              key: vm.formKey,
+              autovalidateMode: vm.autovalidateMode,
+              child: SingleChildScrollView(
+                physics: vm.tooltipActive ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                    right: UIDimens.SCREEN_PADDING_MOB, left: UIDimens.SCREEN_PADDING_MOB, top: 12, bottom: 36),
+                child: Column(
+                  children: [
+                    const SignUpBusinessForm(),
+                    vm.userSessionDM.user.isManager
+                        ? TextButton(
+                            onPressed: () => _signUpcubit.changeUserRoleToClient(),
+                            child: Text.rich(
+                              TextSpan(
+                                style: FoodlyTextStyles.actionsBody,
+                                children: [
+                                  TextSpan(text: '${S.current.switchUserCategoryTextSpan1} '),
+                                  _getBoldTextSpan(S.current.customer),
+                                  TextSpan(text: ', ${S.current.switchUserCategoryTextSpan2} '),
+                                  _getBoldTextSpan(S.current.switchUserCategoryTextSpan3),
+                                  const TextSpan(text: '.'),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ).paddingSymmetric(vertical: 25)
-                      : const SizedBox(height: 25),
-                  TermsAndPrivacyPolicyBusinessWdg(enabled: !vm.tooltipActive, vm: vm),
-                  CustomNeumorphicButton(
-                    margin: EdgeInsets.zero,
-                    onPressed: () async {
-                      _signUpcubit.setAutovalidateMode(AutovalidateMode.always);
-                      if (vm.formKey?.currentState?.validate() ?? false) {
-                        await _signUpcubit.signUpBusiness();
-                      }
-                    },
-                    shape: ui.NeumorphicShape.convex,
-                    text: S.current.completeSignUp,
-                    disabled: !vm.businessTermsAndContiditionsAccepted,
-                  ).paddingOnly(top: 36, bottom: 73),
-                ],
+                          ).paddingSymmetric(vertical: 25)
+                        : const SizedBox(height: 25),
+                    TermsAndPrivacyPolicyBusinessWdg(enabled: !vm.tooltipActive, vm: vm),
+                    CustomNeumorphicButton(
+                      margin: EdgeInsets.zero,
+                      onPressed: () async {
+                        _signUpcubit.setAutovalidateMode(AutovalidateMode.always);
+                        if (vm.formKey?.currentState?.validate() ?? false) {
+                          await _signUpcubit.signUpBusiness();
+                        }
+                      },
+                      shape: ui.NeumorphicShape.convex,
+                      text: S.current.completeSignUp,
+                      disabled: !vm.businessTermsAndContiditionsAccepted,
+                    ).paddingOnly(top: 36, bottom: 73),
+                  ],
+                ),
               ),
             ),
           ),

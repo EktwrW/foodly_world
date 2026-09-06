@@ -507,7 +507,7 @@ class _MoreInfoButton extends StatelessWidget {
 /// Diseño (refactor 2026-05-11): el placeholder anterior era un icono +
 /// texto plano + botón retry — efectivo pero plano, daba sensación de
 /// "app vacía / pueblo sin nada". La nueva versión espeja exactamente el
-/// patrón visual de `_EmptyOffersWidget` (placeholder de promos): card
+/// patrón visual de `EmptyOffersWidget` (placeholder de promos): card
 /// neumórfica con `business.mp4` reproduciéndose en loop muteado de fondo
 /// y un backdrop blur encima con título + subtítulo. Botón Reintentar
 /// abajo, igual que antes.
@@ -520,7 +520,7 @@ class _MoreInfoButton extends StatelessWidget {
 ///
 /// **Por qué `VideoPlayer` puro y no `FlickVideoPlayer`:** Flick siempre
 /// dibuja controles (play/pause/progress) que serían distractores acá.
-/// Para detalles del trade-off, ver el docblock de `_EmptyOffersWidget`
+/// Para detalles del trade-off, ver el docblock de `EmptyOffersWidget`
 /// en `main_top_offers_widget.dart`.
 ///
 /// **Por qué el header morado decorativo (90px con nombre/rating) NO se
@@ -593,7 +593,7 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
       log('$e');
       // Asset roto, codec no soportado en este device, o disposed mid-init.
       // Caemos a fallback visual sin video — el blur message y el retry
-      // siguen funcionando, igual que en `_EmptyOffersWidget`.
+      // siguen funcionando, igual que en `EmptyOffersWidget`.
       await controller.dispose();
       if (mounted) setState(() => _videoFailed = true);
     }

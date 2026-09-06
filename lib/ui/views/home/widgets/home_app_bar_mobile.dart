@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/main.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/greeting_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_search_widget.dart';
@@ -32,52 +33,63 @@ class Home369AppBarMobile extends StatelessWidget {
             expandedTitleScale: 1,
             collapseMode: CollapseMode.pin,
             titlePadding: EdgeInsets.zero,
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Saludo y pregunta en la misma columna, los dos a la
-                    // izquierda. Antes el saludo iba a la izquierda y la
-                    // pregunta centrada, así que el eje cambiaba dos veces en
-                    // 149 px.
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GreetingWidget(
-                            // Invitado (5.1.1.v): no hay nombre → saludamos con
-                            // un placeholder localizado ("Invitado"/"Guest"/
-                            // "Visitante") para mantener el saludo completo y la
-                            // armonía del header.
-                            userName: di<AuthSessionService>().isGuest
-                                ? S.current.guestUserName
-                                : di<AuthSessionService>().userSessionDM?.user.firstName?.split(' ').first,
-                          ),
-                          Text(
-                            S.current.whatAreYouCravingToday,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: FoodlyTextStyles.homeGreetingSubtitle,
-                          ).paddingTop(2),
-                        ],
+            // Techo de ancho SOLO sobre el contenido: el degradado del
+            // `background` sigue a sangre, como debe. Sin esto, en un iPad la
+            // barra de busqueda medía todo el ancho de pantalla y el boton del
+            // drawer quedaba desterrado en la otra punta.
+            //
+            // La alineacion por defecto vale: `FlexibleSpaceBar` le da al
+            // title un hueco justo de alto, asi que al `Align` no le sobra
+            // espacio vertical y da igual como alinee. Medido en
+            // content_column_en_flexible_space_test.dart.
+            title: ContentColumn.list(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Saludo y pregunta en la misma columna, los dos a la
+                      // izquierda. Antes el saludo iba a la izquierda y la
+                      // pregunta centrada, así que el eje cambiaba dos veces en
+                      // 149 px.
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GreetingWidget(
+                              // Invitado (5.1.1.v): no hay nombre → saludamos con
+                              // un placeholder localizado ("Invitado"/"Guest"/
+                              // "Visitante") para mantener el saludo completo y la
+                              // armonía del header.
+                              userName: di<AuthSessionService>().isGuest
+                                  ? S.current.guestUserName
+                                  : di<AuthSessionService>().userSessionDM?.user.firstName?.split(' ').first,
+                            ),
+                            Text(
+                              S.current.whatAreYouCravingToday,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: FoodlyTextStyles.homeGreetingSubtitle,
+                            ).paddingTop(2),
+                          ],
+                        ),
                       ),
-                    ),
-                    // Circular, como el otro botón que abre el drawer (el del
-                    // avatar en `sliver_app_bar_animations.dart`), pero en
-                    // ciruela sólido: es el único control de navegación del
-                    // header y sobre el fondo claro un círculo blanco no se
-                    // separaba de nada. El icono es el mismo de siempre.
-                    const _DrawerButton().paddingHorizontal(6),
-                  ],
-                ).paddingOnly(left: 12, right: 6, bottom: 2),
-                // 26 = `_bottomMargin` (24) menos los 6 de padding interno del
-                // propio SearchWidget, más los 8 de aire hasta el borde del
-                // degradado. Sube con el margen; ver el comentario del fondo.
-                const SearchWidget().paddingBottom(20),
-              ],
+                      // Circular, como el otro botón que abre el drawer (el del
+                      // avatar en `sliver_app_bar_animations.dart`), pero en
+                      // ciruela sólido: es el único control de navegación del
+                      // header y sobre el fondo claro un círculo blanco no se
+                      // separaba de nada. El icono es el mismo de siempre.
+                      const _DrawerButton().paddingHorizontal(6),
+                    ],
+                  ).paddingOnly(left: 12, right: 6, bottom: 2),
+                  // 26 = `_bottomMargin` (24) menos los 6 de padding interno del
+                  // propio SearchWidget, más los 8 de aire hasta el borde del
+                  // degradado. Sube con el margen; ver el comentario del fondo.
+                  const SearchWidget().paddingBottom(20),
+                ],
+              ),
             ),
             background: Container(
               margin: const EdgeInsets.only(bottom: _bottomMargin),

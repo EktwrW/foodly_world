@@ -6,6 +6,7 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show FavoritesCubit, FavoritesState, S;
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart' show NearbyPromotionDM;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_views/widgets/my_favorites_business_mini_card.dart';
@@ -42,9 +43,11 @@ class SavedPromotionsPage extends StatelessWidget {
                 key: const Key('promotions-app-bar'),
                 actionText: S.current.savedPromotions,
               ),
-              body: _EmptyListPlaceholder(
-                key: const Key('saved-promos-placeholder'),
-                text: S.current.noSavedPromotions,
+              body: ContentColumn.list(
+                child: _EmptyListPlaceholder(
+                  key: const Key('saved-promos-placeholder'),
+                  text: S.current.noSavedPromotions,
+                ),
               ),
             );
           }
@@ -65,53 +68,55 @@ class SavedPromotionsPage extends StatelessWidget {
                     key: const Key('promotions-app-bar'),
                     actionText: S.current.savedPromotions,
                   ),
-                  body: BlocBuilder<SavedPromotionsViewCubit, SavedPromotionsViewState>(
-                    builder: (context, state) {
-                      final cubit = context.read<SavedPromotionsViewCubit>();
-                      final vm = state.vm;
+                  body: ContentColumn.list(
+                    child: BlocBuilder<SavedPromotionsViewCubit, SavedPromotionsViewState>(
+                      builder: (context, state) {
+                        final cubit = context.read<SavedPromotionsViewCubit>();
+                        final vm = state.vm;
 
-                      // Verificamos si ambas categorías están vacías después de quitar favoritos
-                      if (vm.currentPromos.isEmpty && vm.upcomingPromos.isEmpty) {
-                        return _EmptyListPlaceholder(
-                          text: S.current.noSavedPromotions,
-                          key: const Key('saved-promos-placeholder'),
-                        );
-                      }
+                        // Verificamos si ambas categorías están vacías después de quitar favoritos
+                        if (vm.currentPromos.isEmpty && vm.upcomingPromos.isEmpty) {
+                          return _EmptyListPlaceholder(
+                            text: S.current.noSavedPromotions,
+                            key: const Key('saved-promos-placeholder'),
+                          );
+                        }
 
-                      final savedPromotionsViews = [
-                        _SavedPromotionsView(
-                          key: Key('saved-current-promos-${vm.currentPromos.length}'),
-                          businesses: vm.businessesWithCurrentPromos,
-                          promos: vm.currentPromos,
-                          title: S.current.savedPromotionsCurrent,
-                        ),
-                        _SavedPromotionsView(
-                          key: Key('saved-upcoming-promos-${vm.upcomingPromos.length}'),
-                          businesses: vm.businessesWithUpcomingPromos,
-                          promos: vm.upcomingPromos,
-                          title: S.current.savedPromotionsUpcoming,
-                        ),
-                      ];
-
-                      return CustomScrollView(
-                        controller: ScrollController(),
-                        slivers: [
-                          const _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
-                          SliverToBoxAdapter(
-                            child: SizedBox.fromSize(
-                              size: Size(context.screenWidth, context.screenHeight),
-                              child: PageView.builder(
-                                controller: vm.controller,
-                                physics: const PageScrollPhysics(),
-                                itemCount: savedPromotionsViews.length,
-                                itemBuilder: (context, index) => savedPromotionsViews[index],
-                                onPageChanged: (i) => cubit.changeView(i),
-                              ).paddingBottom(140),
-                            ),
+                        final savedPromotionsViews = [
+                          _SavedPromotionsView(
+                            key: Key('saved-current-promos-${vm.currentPromos.length}'),
+                            businesses: vm.businessesWithCurrentPromos,
+                            promos: vm.currentPromos,
+                            title: S.current.savedPromotionsCurrent,
                           ),
-                        ],
-                      );
-                    },
+                          _SavedPromotionsView(
+                            key: Key('saved-upcoming-promos-${vm.upcomingPromos.length}'),
+                            businesses: vm.businessesWithUpcomingPromos,
+                            promos: vm.upcomingPromos,
+                            title: S.current.savedPromotionsUpcoming,
+                          ),
+                        ];
+
+                        return CustomScrollView(
+                          controller: ScrollController(),
+                          slivers: [
+                            const _SavedPromotionsToggleSwitch(key: Key('saved-promos-toggle-switch')),
+                            SliverToBoxAdapter(
+                              child: SizedBox.fromSize(
+                                size: Size(context.screenWidth, context.screenHeight),
+                                child: PageView.builder(
+                                  controller: vm.controller,
+                                  physics: const PageScrollPhysics(),
+                                  itemCount: savedPromotionsViews.length,
+                                  itemBuilder: (context, index) => savedPromotionsViews[index],
+                                  onPageChanged: (i) => cubit.changeView(i),
+                                ).paddingBottom(140),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 );
               },

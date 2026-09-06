@@ -10,6 +10,7 @@ import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/core_exports.dart' show LoadingWidgetFoodlyIso, di;
 import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
@@ -21,6 +22,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart'
     show PromoFavoriteButton, PromoFavoriteGlass, PromotionCardView;
+import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
@@ -38,6 +40,43 @@ class TopOffersWidget extends StatefulWidget {
 
   @override
   State<TopOffersWidget> createState() => _TopOffersWidgetState();
+}
+
+/// Las opciones exactas con las que la home pinta su carrusel de promos.
+///
+/// Publica y separada del `build` para que el test mida el alto del MISMO
+/// objeto que ve el usuario, en vez de una copia de las opciones que se puede
+/// desincronizar. Ver [resolveHomePromoCarouselGeometry].
+CarouselOptions homePromoCarouselOptions({
+  required FoodlyCarouselBreakpoint breakpoint,
+  required double screenWidth,
+  bool enableInfiniteScroll = true,
+  bool autoPlay = true,
+  void Function(int, CarouselPageChangedReason)? onPageChanged,
+}) {
+  final geometria = resolveHomePromoCarouselGeometry(breakpoint: breakpoint, screenWidth: screenWidth);
+
+  return CarouselOptions(
+    // `carousel_slider` le pasa esto al PageView, que por defecto recorta
+    // (`Clip.hardEdge`) y cortaba en seco la sombra de la card contra el borde
+    // de abajo. Darle hueco dentro del item no alcanzaba: con blur 26 la
+    // sombra se desvanece a lo largo de ~40 px y eso se comía la card. Lo que
+    // sobra fuera del viewport es sombra, así que se deja salir.
+    clipBehavior: Clip.none,
+    // Siempre explícito, también en móvil. El número de móvil es exactamente
+    // el que salía del aspectRatio por defecto (`screenWidth * 9 / 16`), o sea
+    // que la tira mide lo mismo que siempre; lo que cambia es que ahora el
+    // shimmer y el placeholder de vacío pueden leer ese alto y cuadrar con él.
+    //
+    // Al rotar, CarouselSlider rehace su PageController en didUpdateWidget
+    // conservando la pagina, asi que el cambio de fraccion entra solo.
+    height: geometria.height,
+    viewportFraction: geometria.viewportFraction,
+    enableInfiniteScroll: enableInfiniteScroll,
+    autoPlay: autoPlay,
+    enlargeCenterPage: true,
+    onPageChanged: onPageChanged,
+  );
 }
 
 class _TopOffersWidgetState extends State<TopOffersWidget> {
@@ -77,9 +116,10 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
               return const PromoCarouselShimmer();
             }
 
-            // Error / empty state — keep the carousel height to avoid layout jump
+            // Vacío / error. Mide exactamente lo mismo que el carrusel cargado
+            // (misma `resolveHomePromoCarouselGeometry`), así que no hay salto.
             if (promotions.isEmpty) {
-              return _EmptyOffersWidget(
+              return EmptyOffersWidget(
                 isError: vm.error != null,
                 onRetry: () => context.read<NearbyPromotionsCubit>().load(),
               );
@@ -87,18 +127,10 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
 
             return CarouselSlider(
               carouselController: _carouselController,
-              options: CarouselOptions(
-                // `carousel_slider` le pasa esto al PageView, que por defecto
-                // recorta (`Clip.hardEdge`) y cortaba en seco la sombra de la
-                // card contra el borde de abajo. Darle hueco dentro del item no
-                // alcanzaba: con blur 26 la sombra se desvanece a lo largo de
-                // ~40 px y eso se comía la card. Lo que sobra fuera del viewport
-                // es sombra, así que se deja salir.
-                clipBehavior: Clip.none,
-                viewportFraction: .83,
+              options: homePromoCarouselOptions(
+                breakpoint: foodlyCarouselBreakpointOf(context),
+                screenWidth: context.screenWidth,
                 enableInfiniteScroll: promotions.length > 2,
-                autoPlay: true,
-                enlargeCenterPage: true,
                 onPageChanged: (index, reason) => _onPageChanged(index, promotions, vm.hasMore),
               ),
               items: promotions.map((p) => NearbyPromoCard(promo: p)).toList(),
@@ -397,17 +429,30 @@ class _PromoRibbon extends StatelessWidget {
 /// `NetworkVideoPlayer` en `video_players.dart`): Flick siempre dibuja
 /// controles (play/pause/progress bar) que acá serían distractores. El
 /// widget bajo nivel `VideoPlayer` solo renderiza el video sin chrome.
-class _EmptyOffersWidget extends StatefulWidget {
+///
+/// EL ALTO (2026-09-06). El comentario de este widget prometía desde el
+/// principio "keep the carousel height to avoid layout jump", y no lo cumplía:
+/// montaba su `AspectRatio` 16/9 con 96 px de hueco debajo para el mensaje y el
+/// botón, o sea 91 px de más que el carrusel en cualquier teléfono — y en
+/// tablet se disparaba (509 px contra 225 en un iPad mini), porque nada frenaba
+/// el aspectRatio. Ahora el alto sale de `resolveHomePromoCarouselGeometry`,
+/// la misma función que usan el carrusel cargado y `PromoCarouselShimmer`, y el
+/// mensaje va SUPERPUESTO sobre el vídeo igual que `_PromoRibbon` sobre la foto
+/// de la card real. Protegido en `test/ui/home/home_promo_strip_sin_salto_test.dart`.
+///
+/// Público sólo para poder medirlo en test sin levantar cubits ni red; no es
+/// un widget para reutilizar fuera de `TopOffersWidget`.
+class EmptyOffersWidget extends StatefulWidget {
   final bool isError;
   final VoidCallback onRetry;
 
-  const _EmptyOffersWidget({required this.isError, required this.onRetry});
+  const EmptyOffersWidget({super.key, required this.isError, required this.onRetry});
 
   @override
-  State<_EmptyOffersWidget> createState() => _EmptyOffersWidgetState();
+  State<EmptyOffersWidget> createState() => _EmptyOffersWidgetState();
 }
 
-class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
+class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
   static const _videoAsset = 'assets/videos/promos.mp4';
 
   VideoPlayerController? _controller;
@@ -476,48 +521,52 @@ class _EmptyOffersWidgetState extends State<_EmptyOffersWidget> {
     final title = widget.isError ? s.promosEmptyErrorTitle : s.promosEmptyTitle;
     final subtitle = widget.isError ? s.promosEmptyErrorSubtitle : s.promosEmptySubtitle;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Card con video + blur backdrop overlay — mismo shape que `NearbyPromoCard`
-        // para mantener continuidad visual cuando aparezcan promos reales.
-        Card(
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          color: ui.NeumorphicColors.decorationMaxWhiteColor,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: _buildVideo(),
-                ),
-              ).paddingBottom(96),
-              Column(
-                spacing: 3,
-                children: [
-                  _BackdropEmptyMessage(title: title, subtitle: subtitle),
-                  SizedBox(
-                    width: 236,
-                    child: CustomNeumorphicButton(
-                      onPressed: widget.onRetry,
-                      type: CustomNeumorphicBtnType.tertiary,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                      text: s.retry,
-                      leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                      disabled: false,
-                      fontSize: 12.3,
-                      bosShapeRadius: 3.9,
-                    ),
+    // El alto sale de la MISMA función que el carrusel cargado y que
+    // `PromoCarouselShimmer`: es lo que hace cierta la promesa de "mismo alto,
+    // sin salto". Ver el comentario de clase.
+    final alto = resolveHomePromoCarouselGeometry(
+      breakpoint: foodlyCarouselBreakpointOf(context),
+      screenWidth: context.screenWidth,
+    ).height;
+
+    // Card con video + mensaje de vidrio ENCIMA — mismo shape y misma
+    // composición que `NearbyPromoCard`, que también superpone su cinta sobre
+    // la foto. Antes el mensaje iba DEBAJO del video (`paddingBottom(96)` sobre
+    // un `AspectRatio` 16/9), y esos 96 px de más eran justo el desajuste.
+    return SizedBox(
+      height: alto,
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        color: ui.NeumorphicColors.decorationMaxWhiteColor,
+        clipBehavior: Clip.antiAlias,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Positioned.fill(child: _buildVideo()),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 3,
+              children: [
+                Flexible(child: _BackdropEmptyMessage(title: title, subtitle: subtitle)),
+                SizedBox(
+                  width: 236,
+                  child: CustomNeumorphicButton(
+                    onPressed: widget.onRetry,
+                    type: CustomNeumorphicBtnType.tertiary,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    text: s.retry,
+                    leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
+                    disabled: false,
+                    fontSize: 12.3,
+                    bosShapeRadius: 3.9,
                   ),
-                ],
-              ).paddingBottom(11),
-            ],
-          ),
+                ),
+              ],
+            ).paddingBottom(11),
+          ],
         ),
-      ],
+      ),
     );
   }
 

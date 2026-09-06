@@ -7,6 +7,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/terms/terms_conditions_content.dart';
 import 'package:go_router/go_router.dart';
@@ -66,22 +67,24 @@ class TermsConditionsPage extends StatelessWidget {
           leadingWidth: 60,
         ),
         body: SafeArea(
-          child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
-            itemCount: sections.length + 1,
-            separatorBuilder: (_, __) => const Divider(height: 32),
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return _Header(colorScheme: colorScheme);
-              }
-              final section = sections[index - 1];
-              final isLast = index == sections.length;
-              return _Section(
-                section: section,
-                colorScheme: colorScheme,
-                isContact: isLast,
-              );
-            },
+          child: ContentColumn(
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
+              itemCount: sections.length + 1,
+              separatorBuilder: (_, __) => const Divider(height: 32),
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return _Header(colorScheme: colorScheme);
+                }
+                final section = sections[index - 1];
+                final isLast = index == sections.length;
+                return _Section(
+                  section: section,
+                  colorScheme: colorScheme,
+                  isContact: isLast,
+                );
+              },
+            ),
           ),
         ),
       ),

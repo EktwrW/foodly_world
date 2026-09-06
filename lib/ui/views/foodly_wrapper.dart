@@ -4,6 +4,7 @@ import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/reservations/reservation_repo.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/data_models/notifications/notifications_dm.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -166,7 +167,7 @@ class _FoodlyWrapperState extends State<FoodlyWrapper> with WidgetsBindingObserv
         showDialog(
           context: context,
           builder: (ctx) {
-            return Dialog(
+            return FoodlyDialog(
               backgroundColor: reservation.isConfirmed ? Colors.white : null,
               insetPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 13),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
