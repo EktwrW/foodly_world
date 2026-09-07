@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 extension DateExtension on DateTime {
   String get _dateStringUS => DateFormat('MMMM d, yyyy').format(toLocal());
   String get _dateStringLAT => DateFormat('d \'de\' MMMM \'de\' yyyy', FoodlyStrings.ES).format(toLocal());
-  String get _dateStringES => DateFormat('d \'de\' MMMM \'de\' yyyy', 'es_ES').format(toLocal());
   String get _dateStringPT => DateFormat('d \'de\' MMMM \'de\' yyyy', 'pt_PT').format(toLocal());
 
   String _getEnglishOrdinal(int day) {
@@ -48,20 +47,35 @@ extension DateExtension on DateTime {
 
   String get _birthdayStringLAT => DateFormat('d \'de\' MMMM', FoodlyStrings.ES).format(toLocal());
 
-  String get _birthdayStringES => DateFormat('d \'de\' MMMM', 'es_ES').format(toLocal());
-
   String get _birthdayStringPT {
     final day = this.day;
     return '$dayº de ${DateFormat('MMMM', 'pt_PT').format(toLocal())}';
   }
 
+  /// Fecha larga en el idioma de la app.
+  ///
+  /// LO MANDA EL IDIOMA, NO EL PAIS (2026-09-07). Antes esto miraba
+  /// `currentCountryCode` ANTES que el idioma, y el resultado fue que una app
+  /// en español usada desde Portugal escribia las fechas en portugues. Esta
+  /// publicado: la captura española del slide 4 de las tiendas dice «31 de
+  /// maio de 2026».
+  ///
+  /// La comprobacion de pais ademas no aportaba nada. Los tres formatos largos
+  /// comparten el MISMO patron (`d 'de' MMMM 'de' yyyy`), asi que lo unico que
+  /// cambiaba era el nombre del mes — que es justo lo que tiene que seguir al
+  /// idioma. Y `es` y `es_ES` dan el mismo nombre, o sea que la rama de España
+  /// no hacia nada.
+  ///
+  /// Tampoco habia rama de idioma portugues: con la app en portugues fuera de
+  /// Portugal, las fechas salian en ingles.
+  ///
+  /// El orden numerico (dd/MM vs MM/dd) SI es una convencion regional y sigue
+  /// en [getShortFormat], que mira el pais a proposito.
   String get getStringFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
     final lang = Intl.getCurrentLocale();
 
-    if (countryCode == 'ES') return _dateStringES;
-    if (countryCode == 'PT') return _dateStringPT;
-    if (lang == FoodlyStrings.ES) return _dateStringLAT;
+    if (lang.startsWith(FoodlyStrings.ES)) return _dateStringLAT;
+    if (lang.startsWith(FoodlyStrings.PT)) return _dateStringPT;
     return _dateStringUS;
   }
 
@@ -77,13 +91,13 @@ extension DateExtension on DateTime {
     return DateFormat('dd/MM/yyyy').format(toLocal());
   }
 
+  /// Cumpleaños en el idioma de la app. Mismo criterio que [getStringFormat]:
+  /// el nombre del mes sigue al idioma, nunca al pais del GPS.
   String get getBirthdayFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
     final lang = Intl.getCurrentLocale();
 
-    if (countryCode == 'ES') return _birthdayStringES;
-    if (countryCode == 'PT') return _birthdayStringPT;
-    if (lang == FoodlyStrings.ES) return _birthdayStringLAT;
+    if (lang.startsWith(FoodlyStrings.ES)) return _birthdayStringLAT;
+    if (lang.startsWith(FoodlyStrings.PT)) return _birthdayStringPT;
     return _birthdayStringUS;
   }
 

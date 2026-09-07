@@ -347,6 +347,47 @@ The app uses a **dual token system**: short-lived access token (24h) + long-live
 
 -   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
 
+### Las fechas las manda el idioma, no el país del GPS (2026-09-07)
+
+`getStringFormat` y `getBirthdayFormat` (`lib/core/extensions/datetime_extension.dart`)
+miraban `currentCountryCode` **antes** que el idioma:
+
+```dart
+if (countryCode == 'ES') return _dateStringES;
+if (countryCode == 'PT') return _dateStringPT;   // ← ganaba este
+if (lang == FoodlyStrings.ES) return _dateStringLAT;
+return _dateStringUS;
+```
+
+Con la app en español desde Portugal, las fechas salían en portugués. **Está
+publicado**: la captura española del slide 4 de App Store y Play dice «31 de
+maio de 2026». Se descubrió preparando la recaptura de esas fichas, no por un
+reporte.
+
+La comprobación de país además no aportaba nada: los tres formatos largos usan
+el MISMO patrón (`d 'de' MMMM 'de' yyyy`), así que lo único que cambiaba era el
+nombre del mes — justo lo que tiene que seguir al idioma. Y `es` y `es_ES` dan
+el mismo nombre, o sea que la rama de España era código muerto; se borraron
+`_dateStringES` y `_birthdayStringES`, con un test que avisa si algún día
+dejaran de coincidir.
+
+Tampoco había rama de idioma portugués: con la app en portugués fuera de
+Portugal las fechas salían en inglés.
+
+Ahora las dos ordenan por `Intl.getCurrentLocale()` con `startsWith`, porque el
+locale llega como `es_ES` / `pt_BR` / `en_US`, no pelado.
+
+**Lo que NO se tocó, y por qué.** `getShortFormat` (el `dd/MM` frente a
+`MM/dd`) sigue mirando el país a propósito: el orden numérico sí es una
+convención regional, no del idioma. Pero tiene su propio fallo sin arreglar —
+con la app en portugués desde **Brasil** devuelve `MM/dd/yyyy`, y Brasil usa
+`dd/MM`. Cambiar eso mueve el orden de las fechas en toda la app, así que es
+decisión de producto.
+
+La tabla de idioma × país está en `test/core/fecha_por_idioma_test.dart`.
+Valídala por mutación: devolver la comprobación de país al principio tiene que
+poner 5 en rojo.
+
 ### El texto de la dirección en el chip de ubicación (2026-09-05)
 
 Se armaba concatenando a mano —`'$currentAddress, $currentCity.'`— así que en
