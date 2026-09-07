@@ -58,10 +58,32 @@ class SnackBarWdg {
   SnackBar getSnackBar(BuildContext context) {
     late AnimationController fadeOutController;
 
+    // El messenger se resuelve ACÁ, con el contexto todavía vivo, y NO después
+    // del `await` de abajo.
+    //
+    // Antes esto hacía `ScaffoldMessenger.of(context)` tras esperar 446 ms de
+    // animación, detrás de un `if (context.mounted)`. Y el contexto que llega
+    // acá suele ser el del widget que MOSTRÓ el aviso, que perfectamente puede
+    // haberse desmontado mientras tanto: el botón del FAB del menú, por
+    // ejemplo, se desmonta a sí mismo (`_closeFAB()`) en el mismo `onPressed`
+    // en el que muestra el aviso.
+    //
+    // Cuando eso pasaba, el `hide` NO se llamaba nunca y el snackbar se quedaba
+    // montado, invisible tras la animación de salida, **comiéndose los taps**
+    // hasta agotar su duración. Medido en el dispositivo: pulsar «cerrar» a los
+    // 1301 ms y el chip de la orden sin responder hasta los 8153 ms — o sea los
+    // 7 s de duración cumpliéndose enteros. El síntoma que lo delató es que
+    // cerrarlo ARRASTRÁNDOLO sí funcionaba: eso lo retira Flutter y no pasa por
+    // acá.
+    //
+    // `ScaffoldMessengerState` vive en la raíz de la app, así que sobrevive a
+    // cualquier pantalla; el `mounted` sólo cubre el desmontaje de la app.
+    final messenger = ScaffoldMessenger.of(context);
+
     void handleDismiss() async {
       await fadeOutController.forward();
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (messenger.mounted) {
+        messenger.hideCurrentSnackBar();
         onDismiss?.call();
       }
     }
