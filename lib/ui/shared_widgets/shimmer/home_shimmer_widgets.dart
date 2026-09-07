@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/rejilla_adaptativa.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -388,19 +389,22 @@ class BusinessGridShimmer extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: _kBaseColor,
       highlightColor: _kHighlightColor,
-      child: GridView.count(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(top: 16, left: 6, right: 6),
-        crossAxisCount: 2,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
-        childAspectRatio: 18 / 29,
-        children: const [
-          _BusinessGridCardSkeleton(),
-          _BusinessGridCardSkeleton(),
-          _BusinessGridCardSkeleton(),
-          _BusinessGridCardSkeleton(),
-        ],
+      child: Builder(
+        builder: (context) {
+          // Mismas columnas que la rejilla de verdad: si el esqueleto pinta dos
+          // y la cargada cuatro, la pantalla salta al terminar de cargar.
+          final columnas = columnasDeRejilla(context.screenWidth);
+
+          return GridView.count(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(top: 16, left: 6, right: 6),
+            crossAxisCount: columnas,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2,
+            childAspectRatio: 18 / 29,
+            children: List.generate(columnas * 2, (_) => const _BusinessGridCardSkeleton()),
+          );
+        },
       ),
     );
   }

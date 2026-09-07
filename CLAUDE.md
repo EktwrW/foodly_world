@@ -463,6 +463,48 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### Tablet: quién puede girar, y las rejillas (2026-09-07)
+
+**Todo el trabajo de tablet era invisible, y no estaba en el inventario.** Dos
+cosas a la vez:
+
+1. `main()` bloqueaba la app en vertical para todo el mundo con
+   `setPreferredOrientations([portraitUp])`. Como el `NavigationRail` solo
+   aparece en apaisado, era código inalcanzable.
+2. `AndroidManifest.xml` declaraba `largeScreens="false"` y
+   `xlargeScreens="false"` — la app decía no soportar tabletas. El catálogo de
+   dispositivos de Play lee esas banderas: **antes de montar una prueba cerrada
+   en tableta hay que comprobar que el dispositivo aparece como compatible.**
+
+Ahora `orientacionesPermitidas` (`lib/core/utils/soporte_de_orientacion.dart`)
+decide por tamaño: lado corto >= 600 px (el `sw600dp` de Android) puede girar,
+por debajo se queda vertical. **El teléfono no se toca.** Se mide el lado corto
+y no el ancho porque la app puede arrancar ya girada. Ante la duda —vista sin
+medidas en arranque en frío— vertical.
+
+En iOS, el iPhone sigue solo vertical y el iPad gana las cuatro. **El Info.plist
+se edita a mano**: `plistlib` reescribe el fichero entero y se lleva por delante
+los comentarios XML, incluido el de cumplimiento de exportación (220 líneas de
+diff para añadir tres).
+
+**Las rejillas eran menos de las que decía el inventario.** Al contarlas solo
+hay tres con columnas fijas que importen: `business_results_view` (compartida
+por categorías y búsqueda), `my_favorite_businesses_view` y su
+`BusinessGridShimmer`. Todas pasan por `columnasDeRejilla`, que mantiene la card
+en su ancho de teléfono (200 px medidos) y enseña MÁS cards en vez de más
+grandes — la misma idea que el carrusel de promos.
+
+Dos que NO se tocan y conviene saber por qué:
+
+- **`month_calendar` tiene `crossAxisCount: 7`** y son los días de la semana. Un
+  script que "adapte todas las rejillas" lo rompe.
+- El grid de fotos del `user_profile_bottom_sheet` vive dentro de una hoja que
+  Material 3 ya acota a 640, así que su ancho no crece.
+
+El esqueleto tiene que pintar las mismas columnas que la rejilla cargada, o la
+pantalla salta al terminar de cargar — el mismo fallo que tenía la tira de
+promos.
+
 ### Tablet: la navegación en apaisado va a un NavigationRail (2026-09-06)
 
 `debeUsarNavigationRail` (en
