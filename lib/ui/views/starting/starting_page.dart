@@ -108,7 +108,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: context.screenHeight * .12,
+              height: context.screenLongestSide * .12,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
@@ -122,7 +122,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .30,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .30,
               child: Center(
                 child: AnimatedPadding(
                     padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
@@ -134,14 +134,14 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .38 : context.screenHeight * .33,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .38 : context.screenLongestSide * .33,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .13,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .13,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -192,7 +192,7 @@ class StartingPage369 extends StatelessWidget {
             ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
           ),
           SizedBox(
-            height: context.screenHeight * .09,
+            height: context.screenLongestSide * .09,
             child: Column(
               spacing: 3,
               children: [

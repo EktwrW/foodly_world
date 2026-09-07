@@ -463,6 +463,35 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
+
+Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde
+la altura se parte. El barrido de `screenHeight` en toda la app dio **una sola
+pantalla en riesgo real**, y es la peor posible: `starting_page`, la de login.
+
+Reparte la pantalla en cajas de alto proporcional —`.12`, `.19`, `.38`, `.19`—
+que sumadas dan casi toda la altura. En una tableta de 1280x800 apaisada, la
+caja del formulario (`.38`) mediría **304 px, menos que los 332 que tiene hoy en
+un iPhone 16 Pro**. El formulario se aplasta.
+
+Arreglo: `context.screenLongestSide` en vez de `context.screenHeight`. En
+VERTICAL los dos son el mismo número, así que en teléfono —bloqueado en
+vertical— no cambia absolutamente nada. En apaisado la caja conserva su tamaño
+de vertical y, como la página ya vive en un `SingleChildScrollView`, lo que
+sobra se desplaza en vez de aplastarse.
+
+**Los demás `screenHeight` se revisaron y se dejan**, que también es resultado:
+paddings proporcionales (`.15`, `.025`) son inofensivos; `maxHeight: .72` de un
+diálogo es un tope; y los `height: screenHeight` sueltos son contenedores a
+pantalla completa, que es justo lo que deben ser.
+
+**TRAMPA AL MEDIR ESTO EN TEST:** `ResponsiveBreakpoints` devuelve **0** hasta
+que su `LayoutBuilder` mide —ya estaba documentado en
+`group_order_invite_snackbar.dart`—. Leyendo `context.screenHeight` en el primer
+build salen dos ceros, y un test que compare `ladoLargo == alto` pasa en verde
+sin comprobar nada. Hay que `pump()` antes de leer, y afirmar que el valor no es
+0.
+
 ### Tablet: quién puede girar, y las rejillas (2026-09-07)
 
 **Todo el trabajo de tablet era invisible, y no estaba en el inventario.** Dos
