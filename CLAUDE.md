@@ -251,6 +251,25 @@ release y detecta diffs nativos o de assets, sin publicar. Termina en
 Un patch OTA sólo lleva **Dart**. Si el cambio toca un plugin, un permiso o el
 manifiesto, hace falta release nueva.
 
+**El token de sesión dura 15 min y el patch tarda más (2026-09-07).** El
+`patch ios` de `2.0.8+101` compiló, subió los artefactos y murió en el último
+paso con `Unauthorized` al pedir los channels. El access token de
+`~/Library/Application Support/shorebird/credentials.json` se emite al arrancar
+el comando con 15 minutos de vida y el CLI **no lo refresca a mitad de run**
+(upstream tiene abierta la rama `fix/login-expired-credentials`); solo el link
+de AOT se llevó 240 s. El patch **queda creado y subido, pero sin track**: no
+llega a ningún teléfono y no hace falta recompilar nada.
+
+```sh
+shorebird patches list --release-version 2.0.8+101      # «[no track]» = huérfano
+shorebird patches set-track --release 2.0.8+101 --patch 1 --track stable
+```
+
+`patches promote` hace lo mismo pero está deprecada y usa otros nombres de
+flags (`--release-version`, `--patch-number`).
+
+Después de cada patch, confirmá con `patches list` que dice `track: stable`.
+
 ### App Review: cómo dejar que el revisor llegue a Apple Pay (2026-09-03)
 
 Apple pidió probar las órdenes y ver Apple Pay. Lo que funcionó:
