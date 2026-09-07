@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 extension DateExtension on DateTime {
   String get _dateStringUS => DateFormat('MMMM d, yyyy').format(toLocal());
   String get _dateStringLAT => DateFormat('d \'de\' MMMM \'de\' yyyy', FoodlyStrings.ES).format(toLocal());
-  String get _dateStringES => DateFormat('d \'de\' MMMM \'de\' yyyy', 'es_ES').format(toLocal());
   String get _dateStringPT => DateFormat('d \'de\' MMMM \'de\' yyyy', 'pt_PT').format(toLocal());
 
   String _getEnglishOrdinal(int day) {
@@ -48,53 +47,37 @@ extension DateExtension on DateTime {
 
   String get _birthdayStringLAT => DateFormat('d \'de\' MMMM', FoodlyStrings.ES).format(toLocal());
 
-  String get _birthdayStringES => DateFormat('d \'de\' MMMM', 'es_ES').format(toLocal());
-
   String get _birthdayStringPT {
     final day = this.day;
     return '$dayº de ${DateFormat('MMMM', 'pt_PT').format(toLocal())}';
   }
 
   String get getStringFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
     final lang = Intl.getCurrentLocale();
 
-    if (countryCode == 'ES') return _dateStringES;
-    if (countryCode == 'PT') return _dateStringPT;
-    if (lang == FoodlyStrings.ES) return _dateStringLAT;
+    if (lang.startsWith(FoodlyStrings.ES)) return _dateStringLAT;
+    if (lang.startsWith(FoodlyStrings.PT)) return _dateStringPT;
     return _dateStringUS;
   }
 
-  /// Compact numeric date format adapted to the current locale.
-  /// Returns `MM/dd/yyyy` for English/US and `dd/MM/yyyy` for ES, PT and LATAM.
+  /// El orden de dia y mes es convencion REGIONAL, no del idioma: solo
+  /// Estados Unidos escribe el mes primero. Ver CLAUDE.md (2026-09-07).
   String get getShortFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
-    final lang = Intl.getCurrentLocale();
+    final esEstadosUnidos = di<LocationService>().currentCountryCode == FoodlyCountries.USA.countryCode;
 
-    if (countryCode == 'US' || (lang != FoodlyStrings.ES && countryCode != 'ES' && countryCode != 'PT')) {
-      return DateFormat('MM/dd/yyyy').format(toLocal());
-    }
-    return DateFormat('dd/MM/yyyy').format(toLocal());
+    return DateFormat(esEstadosUnidos ? 'MM/dd/yyyy' : 'dd/MM/yyyy').format(toLocal());
   }
 
+  /// Cumpleaños en el idioma de la app. Mismo criterio que [getStringFormat]:
+  /// el nombre del mes sigue al idioma, nunca al pais del GPS.
   String get getBirthdayFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
     final lang = Intl.getCurrentLocale();
 
-    if (countryCode == 'ES') return _birthdayStringES;
-    if (countryCode == 'PT') return _birthdayStringPT;
-    if (lang == FoodlyStrings.ES) return _birthdayStringLAT;
+    if (lang.startsWith(FoodlyStrings.ES)) return _birthdayStringLAT;
+    if (lang.startsWith(FoodlyStrings.PT)) return _birthdayStringPT;
     return _birthdayStringUS;
   }
 
-  /// Esta fecha sin hora, en local.
-  ///
-  /// Existe para comparar por DÍA DE CALENDARIO, que es como filtra el
-  /// backend: `NearbyPromotionsController` usa `whereDate('expire_date', '>=',
-  /// $today)`, o sea que una promo que vence hoy sigue siendo válida todo el
-  /// día. Comparando instantes —`expireDate.isAfter(now)`— la promo se caía a
-  /// las 00:00 de su último día y desaparecía del front aunque el backend la
-  /// siguiera devolviendo.
   DateTime get dateOnly {
     final local = toLocal();
 
