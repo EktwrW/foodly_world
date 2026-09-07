@@ -60,26 +60,8 @@ extension DateExtension on DateTime {
     return _dateStringUS;
   }
 
-  /// Fecha numerica corta. A diferencia de [getStringFormat], aqui SI manda el
-  /// pais: el orden de dia y mes es una convencion regional, no del idioma.
-  /// Un ingles en Madrid lee `31/05`, y un hispanohablante en Texas `05/31`.
-  ///
-  /// LA REGLA ESTABA AL REVES (2026-09-07). Antes `MM/dd` era el caso por
-  /// defecto y `dd/MM` la excepcion para ES, PT y quien tuviera la app en
-  /// español:
-  ///
-  /// ```dart
-  /// if (countryCode == 'US' || (lang != ES && countryCode != 'ES' && countryCode != 'PT'))
-  /// ```
-  ///
-  /// En el mundo pasa justo lo contrario — Estados Unidos es practicamente el
-  /// unico pais que escribe el mes primero. Asi que la app en portugues desde
-  /// Brasil escribia `05/31`, y tambien cualquiera fuera de ES/PT que no la
-  /// tuviera en español: Francia, Mexico, Reino Unido.
-  ///
-  /// OJO con el valor por defecto: `currentCountryCode` cae a Estados Unidos
-  /// mientras no haya ubicacion, asi que antes de resolver el GPS se ve
-  /// `MM/dd`. Es el comportamiento que ya habia y no se toca aqui.
+  /// El orden de dia y mes es convencion REGIONAL, no del idioma: solo
+  /// Estados Unidos escribe el mes primero. Ver CLAUDE.md (2026-09-07).
   String get getShortFormat {
     final esEstadosUnidos = di<LocationService>().currentCountryCode == FoodlyCountries.USA.countryCode;
 
