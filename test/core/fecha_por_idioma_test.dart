@@ -84,6 +84,51 @@ void main() {
     });
   });
 
+  /// El ORDEN NUMERICO sí es regional: lo manda el país, no el idioma. Pero la
+  /// regla estaba al revés — `MM/dd` era el caso por defecto y `dd/MM` la
+  /// excepción, cuando en el mundo pasa justo lo contrario: Estados Unidos es
+  /// prácticamente el único sitio que escribe el mes primero.
+  ///
+  /// El resultado era que la app en portugués desde Brasil escribía `05/31`, y
+  /// cualquiera fuera de ES/PT sin la app en español también.
+  group('getShortFormat: el orden lo manda el país', () {
+    const mesPrimero = '05/31/2026';
+    const diaPrimero = '31/05/2026';
+
+    const casos = <(String, String, String)>[
+      ('en', 'US', mesPrimero),
+      ('es', 'US', mesPrimero), // en EE. UU. se escribe como en EE. UU.
+      ('pt', 'BR', diaPrimero), // Brasil escribe el día primero
+      ('en', 'BR', diaPrimero),
+      ('pt', 'PT', diaPrimero),
+      ('es', 'ES', diaPrimero),
+      ('en', 'ES', diaPrimero),
+      ('es', 'AR', diaPrimero),
+      ('pt', 'FR', diaPrimero),
+      ('en', 'FR', diaPrimero),
+      ('en', 'MX', diaPrimero),
+      ('es', 'MX', diaPrimero),
+    ];
+
+    for (final (idioma, pais, esperado) in casos) {
+      test('app en $idioma desde $pais → "$esperado"', () {
+        situarse(idioma: idioma, pais: pais);
+
+        expect(fecha.getShortFormat, esperado);
+      });
+    }
+
+    test('el idioma no cambia el orden: mismo país, tres idiomas, misma cadena', () {
+      final resultados = <String>{};
+      for (final idioma in ['es', 'pt', 'en']) {
+        situarse(idioma: idioma, pais: 'BR');
+        resultados.add(fecha.getShortFormat);
+      }
+
+      expect(resultados, hasLength(1), reason: 'salieron $resultados');
+    });
+  });
+
   /// Justifica haber borrado `_dateStringES` y `_birthdayStringES`, que
   /// formateaban con 'es_ES' en vez de 'es'. Si algun dia dejaran de coincidir,
   /// esto avisa y habria que devolver la distincion.

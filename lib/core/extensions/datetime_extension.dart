@@ -60,16 +60,30 @@ extension DateExtension on DateTime {
     return _dateStringUS;
   }
 
-  /// Compact numeric date format adapted to the current locale.
-  /// Returns `MM/dd/yyyy` for English/US and `dd/MM/yyyy` for ES, PT and LATAM.
+  /// Fecha numerica corta. A diferencia de [getStringFormat], aqui SI manda el
+  /// pais: el orden de dia y mes es una convencion regional, no del idioma.
+  /// Un ingles en Madrid lee `31/05`, y un hispanohablante en Texas `05/31`.
+  ///
+  /// LA REGLA ESTABA AL REVES (2026-09-07). Antes `MM/dd` era el caso por
+  /// defecto y `dd/MM` la excepcion para ES, PT y quien tuviera la app en
+  /// español:
+  ///
+  /// ```dart
+  /// if (countryCode == 'US' || (lang != ES && countryCode != 'ES' && countryCode != 'PT'))
+  /// ```
+  ///
+  /// En el mundo pasa justo lo contrario — Estados Unidos es practicamente el
+  /// unico pais que escribe el mes primero. Asi que la app en portugues desde
+  /// Brasil escribia `05/31`, y tambien cualquiera fuera de ES/PT que no la
+  /// tuviera en español: Francia, Mexico, Reino Unido.
+  ///
+  /// OJO con el valor por defecto: `currentCountryCode` cae a Estados Unidos
+  /// mientras no haya ubicacion, asi que antes de resolver el GPS se ve
+  /// `MM/dd`. Es el comportamiento que ya habia y no se toca aqui.
   String get getShortFormat {
-    final countryCode = di<LocationService>().currentCountryCode;
-    final lang = Intl.getCurrentLocale();
+    final esEstadosUnidos = di<LocationService>().currentCountryCode == FoodlyCountries.USA.countryCode;
 
-    if (countryCode == 'US' || (lang != FoodlyStrings.ES && countryCode != 'ES' && countryCode != 'PT')) {
-      return DateFormat('MM/dd/yyyy').format(toLocal());
-    }
-    return DateFormat('dd/MM/yyyy').format(toLocal());
+    return DateFormat(esEstadosUnidos ? 'MM/dd/yyyy' : 'dd/MM/yyyy').format(toLocal());
   }
 
   /// Cumpleaños en el idioma de la app. Mismo criterio que [getStringFormat]:

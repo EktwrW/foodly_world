@@ -377,16 +377,33 @@ Portugal las fechas salían en inglés.
 Ahora las dos ordenan por `Intl.getCurrentLocale()` con `startsWith`, porque el
 locale llega como `es_ES` / `pt_BR` / `en_US`, no pelado.
 
-**Lo que NO se tocó, y por qué.** `getShortFormat` (el `dd/MM` frente a
-`MM/dd`) sigue mirando el país a propósito: el orden numérico sí es una
-convención regional, no del idioma. Pero tiene su propio fallo sin arreglar —
-con la app en portugués desde **Brasil** devuelve `MM/dd/yyyy`, y Brasil usa
-`dd/MM`. Cambiar eso mueve el orden de las fechas en toda la app, así que es
-decisión de producto.
+**`getShortFormat` es el caso contrario, y también estaba mal.** Ahí el país SÍ
+manda —el orden de día y mes es convención regional, no del idioma: un inglés en
+Madrid lee `31/05` y un hispanohablante en Texas `05/31`—, pero la regla estaba
+invertida:
 
-La tabla de idioma × país está en `test/core/fecha_por_idioma_test.dart`.
-Valídala por mutación: devolver la comprobación de país al principio tiene que
-poner 5 en rojo.
+```dart
+if (countryCode == 'US' || (lang != ES && countryCode != 'ES' && countryCode != 'PT'))
+```
+
+`MM/dd` era el caso por defecto y `dd/MM` la excepción, cuando en el mundo pasa
+justo al revés: Estados Unidos es prácticamente el único país que escribe el mes
+primero. Con la app en portugués desde Brasil salía `05/31`, y también en
+Francia, México o Reino Unido con la app en cualquier idioma que no fuera
+español. Ahora es `MM/dd` solo si el país es Estados Unidos.
+
+Riesgo de ese cambio, medido antes de hacerlo: tres sitios de uso —la fecha de
+una reseña y los dos botones de fechas al crear promoción—, los tres pintando
+texto. Nada parsea esa cadena de vuelta; lo que viaja es el `DateTime`.
+
+**Queda un resto sin tocar:** `currentCountryCode` cae a Estados Unidos mientras
+no haya ubicación, así que antes de resolver el GPS se ve `MM/dd`. Es el
+comportamiento que ya había.
+
+La tabla de idioma × país está en `test/core/fecha_por_idioma_test.dart`, 31
+casos. Valídala por mutación: devolver la comprobación de país al principio de
+`getStringFormat` pone 5 en rojo, y restaurar la regla vieja de `getShortFormat`
+otros 6.
 
 ### El texto de la dirección en el chip de ubicación (2026-09-05)
 
