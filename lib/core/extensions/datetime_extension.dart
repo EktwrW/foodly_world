@@ -52,25 +52,6 @@ extension DateExtension on DateTime {
     return '$dayº de ${DateFormat('MMMM', 'pt_PT').format(toLocal())}';
   }
 
-  /// Fecha larga en el idioma de la app.
-  ///
-  /// LO MANDA EL IDIOMA, NO EL PAIS (2026-09-07). Antes esto miraba
-  /// `currentCountryCode` ANTES que el idioma, y el resultado fue que una app
-  /// en español usada desde Portugal escribia las fechas en portugues. Esta
-  /// publicado: la captura española del slide 4 de las tiendas dice «31 de
-  /// maio de 2026».
-  ///
-  /// La comprobacion de pais ademas no aportaba nada. Los tres formatos largos
-  /// comparten el MISMO patron (`d 'de' MMMM 'de' yyyy`), asi que lo unico que
-  /// cambiaba era el nombre del mes — que es justo lo que tiene que seguir al
-  /// idioma. Y `es` y `es_ES` dan el mismo nombre, o sea que la rama de España
-  /// no hacia nada.
-  ///
-  /// Tampoco habia rama de idioma portugues: con la app en portugues fuera de
-  /// Portugal, las fechas salian en ingles.
-  ///
-  /// El orden numerico (dd/MM vs MM/dd) SI es una convencion regional y sigue
-  /// en [getShortFormat], que mira el pais a proposito.
   String get getStringFormat {
     final lang = Intl.getCurrentLocale();
 
@@ -101,14 +82,6 @@ extension DateExtension on DateTime {
     return _birthdayStringUS;
   }
 
-  /// Esta fecha sin hora, en local.
-  ///
-  /// Existe para comparar por DÍA DE CALENDARIO, que es como filtra el
-  /// backend: `NearbyPromotionsController` usa `whereDate('expire_date', '>=',
-  /// $today)`, o sea que una promo que vence hoy sigue siendo válida todo el
-  /// día. Comparando instantes —`expireDate.isAfter(now)`— la promo se caía a
-  /// las 00:00 de su último día y desaparecía del front aunque el backend la
-  /// siguiera devolviendo.
   DateTime get dateOnly {
     final local = toLocal();
 
