@@ -20,6 +20,12 @@ import 'package:sidebarx/sidebarx.dart';
 class FoodlyDrawer extends StatelessWidget {
   const FoodlyDrawer({super.key});
 
+  /// El panel tiene ancho FIJO (100 plegado, 246 desplegado), asi que su margen
+  /// interno tambien debe serlo. Antes era `screenWidth * .005`: 2 px en un
+  /// telefono pero 5 en un iPad y 6,8 en un iPad Pro, dentro de un panel que
+  /// mide lo mismo en los tres. En telefono el cambio es de +-0,2 px.
+  static const double _margenDeItem = 2;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainDrawerCubit, MainDrawerState>(
@@ -57,10 +63,10 @@ class FoodlyDrawer extends StatelessWidget {
         animationDuration: Durations.medium1,
         controller: vm.sidebarController,
         showToggleButton: false,
-        theme: SidebarXTheme(
+        theme: const SidebarXTheme(
           width: 100,
-          itemMargin: EdgeInsets.all(context.screenWidth * .005),
-          decoration: const BoxDecoration(
+          itemMargin: EdgeInsets.all(_margenDeItem),
+          decoration: BoxDecoration(
             color: ui.NeumorphicColors.background,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
@@ -149,13 +155,13 @@ class FoodlyDrawer extends StatelessWidget {
           ).paddingBottom(16);
         },
         headerDivider: const Divider(color: FoodlyThemes.primaryFoodly, thickness: 1, height: 12).paddingBottom(12),
-        extendedTheme: SidebarXTheme(
+        extendedTheme: const SidebarXTheme(
           width: 246,
-          itemMargin: EdgeInsets.all(context.screenWidth * .005),
-          itemTextPadding: const EdgeInsets.only(left: 12),
-          selectedItemTextPadding: const EdgeInsets.only(left: 9),
-          selectedTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
-          decoration: const BoxDecoration(
+          itemMargin: EdgeInsets.all(_margenDeItem),
+          itemTextPadding: EdgeInsets.only(left: 12),
+          selectedItemTextPadding: EdgeInsets.only(left: 9),
+          selectedTextStyle: TextStyle(fontWeight: FontWeight.bold, color: FoodlyThemes.primaryFoodly),
+          decoration: BoxDecoration(
             color: ui.NeumorphicColors.background,
             borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
           ),
