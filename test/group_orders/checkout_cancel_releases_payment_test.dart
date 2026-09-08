@@ -131,7 +131,7 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   }
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async =>
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) async =>
       detailOutcome ?? ApiResult.failure(_boom());
 
   @override

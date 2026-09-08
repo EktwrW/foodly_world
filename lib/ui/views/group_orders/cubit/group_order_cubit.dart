@@ -48,7 +48,13 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         // Realtime tras la primera carga exitosa: cualquier cambio remoto
         // (evento socket, tick de polling fallback o resume de la app)
         // dispara un refetch SILENCIOSO — sin spinner, la UI solo se refresca.
-        _realtime?.watch(uuid, onTouched: () => _refetchSilently(uuid)).then((sub) => _sub = sub);
+        // `coalesce: true` SOLO acá: este refetch nace de un evento, y el chip
+        // flotante está oyendo el mismo canal y pidiendo la misma orden en el
+        // mismo tick. Las lecturas que siguen a una mutación propia NO pueden
+        // coalescer (ver `getGroupOrder`).
+        _realtime
+            ?.watch(uuid, onTouched: () => _refetchSilently(uuid, coalesce: true))
+            .then((sub) => _sub = sub);
       },
       failure: _onError,
     );
@@ -62,9 +68,9 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
     if (uuid != null) await _refetchSilently(uuid);
   }
 
-  Future<void> _refetchSilently(String uuid) async {
+  Future<void> _refetchSilently(String uuid, {bool coalesce = false}) async {
     if (isClosed) return;
-    final result = await _repo.getGroupOrder(uuid);
+    final result = await _repo.getGroupOrder(uuid, coalesce: coalesce);
     if (isClosed) return;
     result.when(success: _applyResponse, failure: (_) {/* silencioso */});
   }

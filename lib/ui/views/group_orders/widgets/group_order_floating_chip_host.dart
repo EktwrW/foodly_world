@@ -88,9 +88,17 @@ class _GroupOrderFloatingChipHostState extends State<GroupOrderFloatingChipHost>
     // estaba en segundo plano, el invitado volvía a un chip que ya no
     // correspondía a nada. `refresh` sí la vuelve a pedir, y con el 404
     // limpia el carrito.
+    //
+    // `coalesce: true` (2026-09-08): el servicio de realtime es OTRO
+    // `WidgetsBindingObserver` y en `resumed` hace su propio `_notifyAll()`.
+    // El binding recorre los observers en un bucle SÍNCRONO
+    // (widgets/binding.dart:1332), así que este `refresh` y el del evento
+    // caen en el mismo turno y salían DOS peticiones idénticas en cada vuelta
+    // del background — el momento más frecuente del día. No sigue a ninguna
+    // mutación local, así que coalescer aquí es seguro.
     if (state == AppLifecycleState.resumed && widget.ordersSource == null) {
       final cubit = di<ActiveGroupOrderCubit>();
-      cubit.state == null ? cubit.syncAnyActive() : cubit.refresh();
+      cubit.state == null ? cubit.syncAnyActive() : cubit.refresh(coalesce: true);
     }
   }
 

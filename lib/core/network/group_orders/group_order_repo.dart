@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
@@ -10,7 +12,33 @@ import 'package:foodly_world/data_models/group_orders/stripe_connect_dm.dart';
 class GroupOrderRepo {
   final GroupOrderClient _client;
 
-  const GroupOrderRepo({required GroupOrderClient client}) : _client = client;
+  // Ya no puede ser `const`: el coalescer de abajo necesita estado.
+  GroupOrderRepo({required GroupOrderClient client}) : _client = client;
+
+  /// Lecturas que comparte UN MISMO evento, por uuid.
+  ///
+  /// Dos cubits del mismo cliente observan el mismo canal
+  /// `private-group-order.{uuid}` —la página (`group_order_cubit.dart:51`) y
+  /// el chip flotante (`active_group_order_cubit.dart:354`)— y ante un evento
+  /// los dos llaman aquí con el mismo uuid. Sin esto salían DOS peticiones
+  /// idénticas por evento y por dispositivo: en una mesa de 8 con la página y
+  /// el chip vivos, una mutación pasaba de 8 lecturas de la orden completa a
+  /// 16, y cada una son ~20 consultas a Neon a 35 ms de ida y vuelta.
+  ///
+  /// **La ventana es UN TURNO SÍNCRONO, no "hasta que la petición termine".**
+  /// Esto es lo que hace que el coalescer sea correcto y no solo barato:
+  /// `ChannelListeners.notificar()` avisa a los dos oyentes en el mismo turno,
+  /// así que un turno basta para colapsarlos. Y un evento POSTERIOR no puede
+  /// colgarse de una petición que salió antes de la mutación que lo causó
+  /// —recibiría una foto que por construcción no la contiene, y no hay nada
+  /// que lo recupere: el polling de 10 s solo corre con el socket caído—.
+  ///
+  /// De regalo, una petición que no termina nunca —móvil que pasa de WiFi a
+  /// datos, y este Dio no fija `receiveTimeout`— no puede dejar la orden muda
+  /// el resto de la sesión, y el mapa no puede crecer entre sesiones.
+  ///
+  /// No es una caché: nadie reusa nada fuera de ese turno.
+  final Map<String, Future<ApiResult<GroupOrderResponseDM>>> _lecturasDelTurno = {};
 
   Future<ApiResult<GroupOrdersListResponseDM>> getMyGroupOrders() async {
     try {
@@ -20,7 +48,45 @@ class GroupOrderRepo {
     }
   }
 
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async {
+  /// Lee una orden.
+  ///
+  /// [coalesce] solo para las lecturas disparadas por un EVENTO de realtime,
+  /// donde varios oyentes del MISMO evento piden lo mismo en el mismo turno y
+  /// da igual quién dispare la petición de verdad.
+  ///
+  /// **Nunca para una lectura que sigue a una mutación propia.** Ahí hay que
+  /// pedir de nuevo: una petición en vuelo salió ANTES de la mutación, y
+  /// colgarse de ella devolvería el estado anterior. Es justo lo que hace
+  /// `cancelPayment()`, que re-lee para que el pie deje de decir
+  /// "confirmando"; con el estado viejo se quedaría diciéndolo. Hay un test
+  /// que fija esto.
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) {
+    if (!coalesce) return _leerOrden(uuid);
+
+    final delTurno = _lecturasDelTurno[uuid];
+    if (delTurno != null) return delTurno;
+
+    final lectura = _leerOrden(uuid);
+    _lecturasDelTurno[uuid] = lectura;
+
+    // Se suelta al acabar el turno, NO al acabar la petición. Los microtasks
+    // se drenan antes de volver al bucle de eventos, así que el próximo
+    // evento de Pusher siempre encuentra el mapa limpio.
+    //
+    // El `identical` es DEFENSIVO y hoy está muerto: entre que una entrada se
+    // registra y corre su microtask no hay ninguna otra vía de borrado, así
+    // que el mapa sólo puede tener esa misma entrada o ninguna. No conseguí
+    // —ni la revisión— construir una secuencia que lo necesite. Se queda
+    // porque pasaría a hacer falta en cuanto alguien ensanche el borrado
+    // (un `clear()`, por ejemplo, que sí es distinguible: ver el test).
+    scheduleMicrotask(() {
+      if (identical(_lecturasDelTurno[uuid], lectura)) _lecturasDelTurno.remove(uuid);
+    });
+
+    return lectura;
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> _leerOrden(String uuid) async {
     try {
       return ApiResult.success(await _client.getGroupOrder(uuid));
     } catch (e, s) {

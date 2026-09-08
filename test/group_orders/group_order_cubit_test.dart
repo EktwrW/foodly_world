@@ -431,7 +431,7 @@ class _FakeGroupOrderRepo implements GroupOrderRepo {
   bool? lastSharedValue;
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async {
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) async {
     getCalls++;
 
     return getOutcome!;
