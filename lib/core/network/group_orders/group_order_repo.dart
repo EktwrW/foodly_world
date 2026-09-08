@@ -15,19 +15,30 @@ class GroupOrderRepo {
   // Ya no puede ser `const`: el coalescer de abajo necesita estado.
   GroupOrderRepo({required GroupOrderClient client}) : _client = client;
 
-  /// Lecturas de una orden que están EN VUELO, por uuid.
+  /// Lecturas que comparte UN MISMO evento, por uuid.
   ///
   /// Dos cubits del mismo cliente observan el mismo canal
   /// `private-group-order.{uuid}` —la página (`group_order_cubit.dart:51`) y
   /// el chip flotante (`active_group_order_cubit.dart:354`)— y ante un evento
-  /// los dos llaman aquí con el mismo uuid en el mismo tick. Sin esto salían
-  /// DOS peticiones idénticas: en una mesa de 8, una sola mutación se
-  /// convertía en 16 lecturas de la orden completa, y cada una son ~20
-  /// consultas a Neon a 35 ms de ida y vuelta.
+  /// los dos llaman aquí con el mismo uuid. Sin esto salían DOS peticiones
+  /// idénticas por evento y por dispositivo: en una mesa de 8 con la página y
+  /// el chip vivos, una mutación pasaba de 8 lecturas de la orden completa a
+  /// 16, y cada una son ~20 consultas a Neon a 35 ms de ida y vuelta.
   ///
-  /// No es una caché: la entrada se borra al terminar, así que la siguiente
-  /// lectura vuelve a pedir de verdad. Solo colapsa las que se solapan.
-  final Map<String, Future<ApiResult<GroupOrderResponseDM>>> _lecturasEnVuelo = {};
+  /// **La ventana es UN TURNO SÍNCRONO, no "hasta que la petición termine".**
+  /// Esto es lo que hace que el coalescer sea correcto y no solo barato:
+  /// `ChannelListeners.notificar()` avisa a los dos oyentes en el mismo turno,
+  /// así que un turno basta para colapsarlos. Y un evento POSTERIOR no puede
+  /// colgarse de una petición que salió antes de la mutación que lo causó
+  /// —recibiría una foto que por construcción no la contiene, y no hay nada
+  /// que lo recupere: el polling de 10 s solo corre con el socket caído—.
+  ///
+  /// De regalo, una petición que no termina nunca —móvil que pasa de WiFi a
+  /// datos, y este Dio no fija `receiveTimeout`— no puede dejar la orden muda
+  /// el resto de la sesión, y el mapa no puede crecer entre sesiones.
+  ///
+  /// No es una caché: nadie reusa nada fuera de ese turno.
+  final Map<String, Future<ApiResult<GroupOrderResponseDM>>> _lecturasDelTurno = {};
 
   Future<ApiResult<GroupOrdersListResponseDM>> getMyGroupOrders() async {
     try {
@@ -40,8 +51,8 @@ class GroupOrderRepo {
   /// Lee una orden.
   ///
   /// [coalesce] solo para las lecturas disparadas por un EVENTO de realtime,
-  /// donde varios oyentes piden lo mismo a la vez y da igual quién dispare la
-  /// petición de verdad.
+  /// donde varios oyentes del MISMO evento piden lo mismo en el mismo turno y
+  /// da igual quién dispare la petición de verdad.
   ///
   /// **Nunca para una lectura que sigue a una mutación propia.** Ahí hay que
   /// pedir de nuevo: una petición en vuelo salió ANTES de la mutación, y
@@ -52,15 +63,22 @@ class GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) {
     if (!coalesce) return _leerOrden(uuid);
 
-    final enVuelo = _lecturasEnVuelo[uuid];
-    if (enVuelo != null) return enVuelo;
+    final delTurno = _lecturasDelTurno[uuid];
+    if (delTurno != null) return delTurno;
 
-    // `whenComplete` y no `then`: la entrada tiene que soltarse también si la
-    // lectura falla, o el uuid quedaría envenenado con un Future ya resuelto
-    // en error y nadie volvería a leer esa orden en toda la sesión.
     final lectura = _leerOrden(uuid);
-    _lecturasEnVuelo[uuid] = lectura;
-    lectura.whenComplete(() => _lecturasEnVuelo.remove(uuid));
+    _lecturasDelTurno[uuid] = lectura;
+
+    // Se suelta al acabar el turno, NO al acabar la petición. Los microtasks
+    // se drenan antes de volver al bucle de eventos, así que el próximo
+    // evento de Pusher siempre encuentra el mapa limpio.
+    //
+    // El `identical` no es paranoia: sin él, si esta lectura se quedara
+    // colgada y el turno siguiente registrara otra para el mismo uuid, este
+    // microtask le borraría la entrada A LA OTRA.
+    scheduleMicrotask(() {
+      if (identical(_lecturasDelTurno[uuid], lectura)) _lecturasDelTurno.remove(uuid);
+    });
 
     return lectura;
   }

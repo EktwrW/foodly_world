@@ -21,14 +21,14 @@ import 'package:logger/logger.dart';
 ///   active_group_order_cubit.dart:354 -> refresh()   (el chip flotante)
 ///
 /// y los dos terminan en `_repo.getGroupOrder(uuid)`: **la misma petición, dos
-/// veces, por evento**. En una mesa de 8 con la página y el chip vivos, una
-/// sola mutación —alguien agrega un plato— dispara 8 eventos que se convierten
-/// en 16 lecturas de la orden completa. Cada una son ~20 consultas a Neon a
-/// 35 ms de ida y vuelta.
+/// veces, por evento y por dispositivo**.
 ///
-/// Y el backend emite UN evento por petición (comprobado: los 34 sitios que
-/// llaman a `GroupOrderTouched::safe` lo hacen una vez; `maybeAutoDeliver` no
-/// emite el suyo). O sea que el ×2 no viene del servidor: es del cliente.
+/// Las cuentas con cuidado: el backend despacha UN evento por petición
+/// (comprobado sobre los 33 sitios que llaman a `GroupOrderTouched::safe`;
+/// `maybeAutoDeliver` no emite el suyo) y Pusher lo abanica a los 8
+/// suscriptores. En una mesa de 8 con la página y el chip vivos, una mutación
+/// pasaba de 8 lecturas de la orden completa a 16, a ~20 consultas de Neon
+/// cada una. El coalescer es por dispositivo: 16 -> 8, no -> 1.
 void main() {
   group('coalescer: dos oyentes del mismo evento, una sola petición', () {
     late _ClienteFalso cliente;
@@ -85,6 +85,45 @@ void main() {
       expect(cliente.peticiones, 2, reason: 'no es una caché, es un coalescer');
     });
 
+    /// EL FALLO QUE ENCONTRÓ LA REVISIÓN. Yo blindé la mutación PROPIA y dejé
+    /// abierta la ajena, que es la misma trampa un paso más allá.
+    ///
+    /// L1 sale por un evento. Mientras está en vuelo, OTRO comensal agrega un
+    /// plato y llega un segundo evento. Si ese se cuelga de L1, recibe una
+    /// respuesta que por construcción no puede contener ese plato — y no hay
+    /// nada que lo recupere: el polling de 10 s solo corre con el socket
+    /// caído. La orden se queda rancia hasta el siguiente evento.
+    test('un evento POSTERIOR a la petición en vuelo no se cuelga de ella', () async {
+      final primerEvento = repo.getGroupOrder('o1', coalesce: true);
+
+      // El segundo evento llega en OTRO turno del bucle de eventos, que es
+      // como llegan los eventos de Pusher de verdad.
+      await Future<void>.delayed(Duration.zero);
+      final segundoEvento = repo.getGroupOrder('o1', coalesce: true);
+
+      cliente.responder('o1');
+      cliente.responder('o1');
+      await Future.wait([primerEvento, segundoEvento]);
+
+      expect(cliente.peticiones, 2,
+          reason: 'la respuesta en vuelo es anterior a la mutación del segundo evento');
+    });
+
+    /// Y el corolario: una petición que NO TERMINA NUNCA —móvil que pasa de
+    /// WiFi a datos, y el Dio de esta app no fija `receiveTimeout`— no puede
+    /// dejar la orden muda el resto de la sesión. Antes de este coalescer cada
+    /// evento salía por su cuenta; sería un modo de fallo nuevo.
+    test('una petición colgada no deja la orden muda', () async {
+      repo.getGroupOrder('o1', coalesce: true); // se queda colgada a propósito
+
+      for (var i = 0; i < 5; i++) {
+        await Future<void>.delayed(Duration.zero);
+        repo.getGroupOrder('o1', coalesce: true);
+      }
+
+      expect(cliente.peticiones, 6, reason: 'una colgada envenenaba el uuid para siempre');
+    });
+
     /// El fallo silencioso que hace peligroso un coalescer mal hecho.
     test('una lectura TRAS UNA MUTACION nunca reusa la petición en vuelo', () async {
       // Hay un refetch de evento en vuelo, salido ANTES de la mutación.
@@ -98,6 +137,20 @@ void main() {
       cliente.responder('o1');
       cliente.responder('o1');
       await Future.wait([porEvento, trasMutar]);
+
+      expect(cliente.peticiones, 2);
+    });
+
+    /// La otra mitad de la regla: una lectura sin coalesce no solo NO reusa,
+    /// tampoco se PUBLICA. Si se publicara, un evento del mismo turno podría
+    /// colgarse de ella — y ahí la asimetría se pierde por el otro lado.
+    test('una lectura sin coalesce tampoco queda disponible para otros', () async {
+      final trasMutar = repo.getGroupOrder('o1'); // sin coalesce
+      final porEvento = repo.getGroupOrder('o1', coalesce: true);
+
+      cliente.responder('o1');
+      cliente.responder('o1');
+      await Future.wait([trasMutar, porEvento]);
 
       expect(cliente.peticiones, 2);
     });
@@ -180,6 +233,24 @@ void main() {
 
       expect(repo.coalescePorLlamada, contains(true));
       await cubit.close();
+    });
+
+    /// El resume: el servicio de realtime y el host del chip son DOS
+    /// observers distintos del binding, que los recorre en un bucle síncrono
+    /// (widgets/binding.dart:1332). Los dos piden la orden en el mismo turno.
+    test('dos refresh del mismo turno son UNA petición', () async {
+      final cliente = _ClienteFalso();
+      final repoReal = GroupOrderRepo(client: cliente);
+
+      // Como en `resumed`: `_notifyAll()` del servicio y el `refresh()` del
+      // host del chip, sin ceder el turno entre medias.
+      final a = repoReal.getGroupOrder('o1', coalesce: true);
+      final b = repoReal.getGroupOrder('o1', coalesce: true);
+
+      cliente.responder('o1');
+      await Future.wait([a, b]);
+
+      expect(cliente.peticiones, 1);
     });
 
     test('pero el refresh que sigue a una mutación del comensal NO', () async {

@@ -1074,19 +1074,22 @@ active_group_order_cubit.dart:354 -> refresh()                (el chip flotante)
 ```
 
 y los dos terminan en `_repo.getGroupOrder(uuid)`. Ante un evento salían **dos
-peticiones idénticas en el mismo tick**. En una mesa de 8 con la página y el
-chip vivos, una sola mutación —alguien agrega un plato— se convertía en **16
-lecturas de la orden completa**, y cada una son ~20 consultas a Neon a 35 ms de
-ida y vuelta.
+peticiones idénticas en el mismo turno**.
+
+Las cuentas, con cuidado porque es fácil contarlas mal: el backend despacha
+**UN** evento y Pusher lo abanica a los 8 suscriptores. En una mesa de 8 con la
+página y el chip vivos, una mutación pasaba de 8 lecturas de la orden completa
+a **16**, y cada una son ~20 consultas a Neon a 35 ms de ida y vuelta. El
+coalescer es **por dispositivo**: lleva las 16 a 8, no a 1.
 
 **Dónde NO estaba el problema**: el backend emite UN evento por petición.
-Comprobado sobre los 34 sitios que llaman a `GroupOrderTouched::safe`, y
+Comprobado sobre los 33 sitios que llaman a `GroupOrderTouched::safe`, y
 `maybeAutoDeliver()` —que parece candidato— no emite el suyo. El ×2 es del
 cliente, no del servidor. Que los dos oyentes reciban el evento es CORRECTO y
 está fijado por un test: lo que sobraba era la segunda petición HTTP.
 
-**La solución**: coalescer de lecturas en vuelo en `GroupOrderRepo`. Si ya hay
-una lectura de ese uuid en curso, la segunda se cuelga de la misma.
+**La solución**: coalescer en `GroupOrderRepo`. Si en el MISMO TURNO ya se pidió
+esa orden, la segunda llamada se cuelga de la primera.
 
 ```dart
 Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false})
@@ -1104,10 +1107,28 @@ Corolario incómodo: **el default `false` hace que perder el argumento en un
 refactor no dé ningún error**. Vuelve el ×2 y nadie se entera. Hay tests de
 cableado que fijan quién pide coalescer y quién no, precisamente por eso.
 
-**No es una caché**: la entrada se suelta con `whenComplete` —no con `then`,
-o un fallo dejaría el uuid envenenado con un Future ya resuelto en error y
-nadie volvería a leer esa orden en toda la sesión—. La siguiente lectura pide
-de verdad; solo se colapsa lo que se solapa.
+**La ventana es UN TURNO SÍNCRONO, no "hasta que la petición termine"**, y esto
+es lo que separa un coalescer correcto de uno barato. La primera versión de
+esta PR usaba la ventana larga y la revisión demostró dos fallos reales:
+
+1. **Datos rancios.** Llega un evento y sale L1. Mientras L1 vuela, otro
+   comensal agrega un plato y llega un segundo evento, que se colgaba de L1 —
+   una respuesta que por construcción no contiene ese plato. Y no hay nada que
+   lo recupere: el polling de 10 s **solo corre con el socket caído**
+   (`group_order_realtime_service.dart:222` lo apaga al conectar). La orden se
+   quedaba rancia hasta el siguiente evento o un resume. Le puede pasar al
+   propio autor del cambio: `GroupOrderTouched` usa `broadcast()` sin
+   `->toOthers()`, así que uno recibe su propio evento.
+2. **Una petición colgada dejaba la orden muda toda la sesión.** Este Dio no
+   fija `receiveTimeout` ni `connectTimeout` —son `null` por defecto—, así que
+   un GET que nunca responde retenía la entrada para siempre. Modo de fallo
+   NUEVO: antes cada evento salía por su cuenta.
+
+Con la ventana de un turno los dos desaparecen: `ChannelListeners.notificar()`
+avisa a los dos oyentes en el mismo turno, que es todo lo que hay que colapsar,
+y los microtasks se drenan antes de volver al bucle de eventos, así que el
+próximo evento de Pusher siempre encuentra el mapa limpio. **No es una caché**:
+nadie reusa nada fuera de ese turno.
 
 **Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
 era mentira del detector, no del test. Con esa mutación un test se queda
@@ -1115,8 +1136,19 @@ esperando un completer y la corrida tarda un minuto, así que la salida empieza
 por `01:00` y mi `grep "^00:0"` no la veía. **Usa el código de salida de
 `flutter test`, no el texto.**
 
-**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart`: 12 casos,
-5 mutaciones, todas mueren.
+**El resume también contaba doble.** `GroupOrderRealtimeService` y
+`GroupOrderFloatingChipHost` son dos `WidgetsBindingObserver` distintos y los
+dos reaccionan a `resumed`; el binding los recorre en un bucle **síncrono**
+(`flutter/lib/src/widgets/binding.dart:1332`), así que caen en el mismo turno.
+El `refresh()` del host salía sin coalescer: dos peticiones idénticas en cada
+vuelta del background, el momento más frecuente del día.
+
+**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart` (16 casos) y
+`resume_una_sola_lectura_test.dart`. Mutaciones: mueren las 7 reales; dos
+(`clear()` en vez de `remove(uuid)`, y quitar la guarda `identical`) son
+**equivalentes** —los microtasks se drenan al final del turno, así que dentro
+del turno no se borra nada y todas las entradas del turno se van con él—; la
+guarda se queda por defensa, no porque haga falta hoy.
 
 
 ## Visited Business Mode (2026-04-12)
