@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
@@ -24,7 +26,7 @@ import 'package:logger/logger.dart';
 /// veces, por evento y por dispositivo**.
 ///
 /// Las cuentas con cuidado: el backend despacha UN evento por petición
-/// (comprobado sobre los 33 sitios que llaman a `GroupOrderTouched::safe`;
+/// (comprobado sobre los 32 sitios que llaman a `GroupOrderTouched::safe`;
 /// `maybeAutoDeliver` no emite el suyo) y Pusher lo abanica a los 8
 /// suscriptores. En una mesa de 8 con la página y el chip vivos, una mutación
 /// pasaba de 8 lecturas de la orden completa a 16, a ~20 consultas de Neon
@@ -122,6 +124,44 @@ void main() {
       }
 
       expect(cliente.peticiones, 6, reason: 'una colgada envenenaba el uuid para siempre');
+    });
+
+    /// `clear()` en vez de `remove(uuid)` NO es equivalente, y yo había escrito
+    /// que sí. Lo desmontó la segunda revisión construyendo esta secuencia.
+    ///
+    /// Hacen falta DOS órdenes y que la segunda lectura de `o1` nazca de una
+    /// continuación de microtask, para que caiga entre el registro de `o1` y
+    /// el borrado de `o2`. Hoy ninguna llamada real tiene esa forma —por eso
+    /// ningún test lo veía— pero «no observable con las llamadas de hoy» es
+    /// una afirmación mucho más débil que «equivalente».
+    test('borrar la entrada de una orden no se lleva la de otra', () async {
+      // El orden de la cola de microtasks es lo que hace la prueba, y me lo
+      // comí en el primer intento. Los tres pasos van en el MISMO turno:
+      //
+      //   1. `o2` se registra  -> encola su borrado            (M2)
+      //   2. se encola la sonda                                 (M_sonda)
+      //   3. `o1` se registra  -> encola su borrado            (M1)
+      //
+      // La cola queda M2, M_sonda, M1: la sonda corre con `o2` ya borrada y
+      // `o1` todavía viva. Con `remove(uuid)` la sonda coalesce y salen 2
+      // peticiones; con `clear()`, el borrado de `o2` se llevó también `o1` y
+      // salen 3.
+      repo.getGroupOrder('o2', coalesce: true);
+
+      var peticionesEnLaSonda = 0;
+      scheduleMicrotask(() {
+        repo.getGroupOrder('o1', coalesce: true);
+        peticionesEnLaSonda = cliente.peticiones;
+      });
+
+      repo.getGroupOrder('o1', coalesce: true);
+
+      await Future<void>.delayed(Duration.zero);
+      cliente.responder('o1');
+      cliente.responder('o2');
+
+      expect(peticionesEnLaSonda, 2,
+          reason: 'el borrado de `o2` se llevó por delante la entrada viva de `o1`');
     });
 
     /// El fallo silencioso que hace peligroso un coalescer mal hecho.
@@ -235,6 +275,25 @@ void main() {
       await cubit.close();
     });
 
+    /// La re-lectura que sigue a un pago fallido (409). Es el sitio MÁS
+    /// delicado de los que no coalescen: viene de un intento de pago que ya
+    /// tocó el servidor, así que colgarse de una petición anterior devolvería
+    /// el estado de antes de ese intento.
+    ///
+    /// El autor había blindado la PÉRDIDA del `coalesce: true`; esto blinda la
+    /// dirección contraria, que es añadirlo donde no va. Lo señaló la segunda
+    /// revisión.
+    test('la re-lectura tras un pago fallido NO coalesce', () async {
+      final cubit = GroupOrderCubit(repo: repo, logger: _mudo);
+      await cubit.load('o1');
+      repo.coalescePorLlamada.clear();
+
+      await cubit.createPayIntent();
+
+      expect(repo.coalescePorLlamada, everyElement(isFalse));
+      await cubit.close();
+    });
+
     /// El resume: el servicio de realtime y el host del chip son DOS
     /// observers distintos del binding, que los recorre en un bucle síncrono
     /// (widgets/binding.dart:1332). Los dos piden la orden en el mismo turno.
@@ -331,9 +390,34 @@ class _RepoEspia implements GroupOrderRepo {
   Future<ApiResult<GroupOrderResponseDM>> joinByCode(String code) async =>
       ApiResult.success(_respuesta('o1'));
 
+  /// Falla a propósito: el camino que re-lee es el del pago FALLIDO.
+  @override
+  Future<ApiResult<PayIntentResponseDM>> createPayIntent(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+    double? tipAmount,
+  }) async =>
+      ApiResult.failure(_fallo409());
+
   @override
   Future<ApiResult<GroupOrderResponseDM>> cancelPayment(String uuid) async =>
       ApiResult.failure(AppRequestException(error: StateError('x'), stackTrace: StackTrace.current));
+
+  /// `AppRequestException.toString()` para errores NO-Dio pasa por
+  /// `di<BaseConfig>()` y `S.current`, que no existen en un test unitario. El
+  /// branch de Dio devuelve el status sin tocarlos. Es la misma nota que ya
+  /// lleva `group_order_cubit_test.dart`.
+  static AppRequestException _fallo409() {
+    final opts = RequestOptions(path: '/group-orders/o1/pay-intent');
+    return AppRequestException(
+      error: DioException(
+        requestOptions: opts,
+        response: Response(requestOptions: opts, statusCode: 409, statusMessage: 'Conflict'),
+        type: DioExceptionType.badResponse,
+      ),
+      stackTrace: StackTrace.current,
+    );
+  }
 
   @override
   dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);

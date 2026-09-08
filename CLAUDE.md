@@ -1080,10 +1080,13 @@ Las cuentas, con cuidado porque es fácil contarlas mal: el backend despacha
 **UN** evento y Pusher lo abanica a los 8 suscriptores. En una mesa de 8 con la
 página y el chip vivos, una mutación pasaba de 8 lecturas de la orden completa
 a **16**, y cada una son ~20 consultas a Neon a 35 ms de ida y vuelta. El
-coalescer es **por dispositivo**: lleva las 16 a 8, no a 1.
+coalescer es **por dispositivo**: lleva las 16 a 8, no a 1. Y el «con la página
+y el chip vivos» carga todo el peso: sólo tiene dos oyentes quien está DENTRO
+de la orden; quien navega el menú tiene uno. El ahorro real por evento está
+entre 0 y 8 lecturas, no fijo en 8.
 
 **Dónde NO estaba el problema**: el backend emite UN evento por petición.
-Comprobado sobre los 33 sitios que llaman a `GroupOrderTouched::safe`, y
+Comprobado sobre los 32 sitios que llaman a `GroupOrderTouched::safe`, y
 `maybeAutoDeliver()` —que parece candidato— no emite el suyo. El ×2 es del
 cliente, no del servidor. Que los dos oyentes reciban el evento es CORRECTO y
 está fijado por un test: lo que sobraba era la segunda petición HTTP.
@@ -1124,11 +1127,19 @@ esta PR usaba la ventana larga y la revisión demostró dos fallos reales:
    un GET que nunca responde retenía la entrada para siempre. Modo de fallo
    NUEVO: antes cada evento salía por su cuenta.
 
-Con la ventana de un turno los dos desaparecen: `ChannelListeners.notificar()`
+Con la ventana de un turno se cierran los dos: `ChannelListeners.notificar()`
 avisa a los dos oyentes en el mismo turno, que es todo lo que hay que colapsar,
 y los microtasks se drenan antes de volver al bucle de eventos, así que el
 próximo evento de Pusher siempre encuentra el mapa limpio. **No es una caché**:
 nadie reusa nada fuera de ese turno.
+
+**Con una precisión que la segunda revisión me obligó a hacer**: lo que se
+cierra es *la ruta que abría el coalescer*, no el problema de rancidez entero.
+Queda viva la de **respuestas fuera de orden** —dos eventos en turnos
+distintos, y la respuesta del segundo llega antes que la del primero, así que
+la vieja pisa a la nueva—. Eso ya pasaba antes de esta PR y la PR lo estrecha
+(de 2 peticiones en vuelo por evento a 1), pero no lo cierra. Cerrarlo pide una
+guarda de generación: descartar una respuesta más vieja que la última aplicada.
 
 **Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
 era mentira del detector, no del test. Con esa mutación un test se queda
@@ -1143,12 +1154,28 @@ dos reaccionan a `resumed`; el binding los recorre en un bucle **síncrono**
 El `refresh()` del host salía sin coalescer: dos peticiones idénticas en cada
 vuelta del background, el momento más frecuente del día.
 
-**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart` (16 casos) y
-`resume_una_sola_lectura_test.dart`. Mutaciones: mueren las 7 reales; dos
-(`clear()` en vez de `remove(uuid)`, y quitar la guarda `identical`) son
-**equivalentes** —los microtasks se drenan al final del turno, así que dentro
-del turno no se borra nada y todas las entradas del turno se van con él—; la
-guarda se queda por defensa, no porque haga falta hoy.
+**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart` (18 casos) y
+`resume_una_sola_lectura_test.dart` (2).
+
+**Y el cableado hay que fijarlo en LAS DOS direcciones.** Yo había blindado
+sólo la pérdida del `coalesce: true`; añadirlo donde no va tampoco puede pasar
+desapercibido, y en dos sitios pasaba: la re-lectura tras un pago fallido
+(`group_order_cubit.dart`, el 409) y el `refresh()` al cerrar la página
+(`group_order_floating_chip_host.dart`). Los dos siguen a algo que ya tocó el
+servidor, que es justo el caso donde coalescer devuelve el estado anterior.
+
+De las mutaciones mueren 13. Una sola es **equivalente**: quitar la guarda
+`identical`, porque entre que una entrada se registra y corre su microtask no
+hay ninguna otra vía de borrado. Se queda por defensa, y el comentario lo dice
+así — antes decía «no es paranoia» y sí lo era.
+
+**`clear()` en vez de `remove(uuid)` NO es equivalente**, aunque yo lo escribí
+aquí. Hay una secuencia que los distingue y está en el test: si `o2` se
+registra primero, la sonda va en un microtask encolado a continuación, y `o1`
+se registra después, la cola queda `borrar-o2, sonda, borrar-o1` — la sonda
+encuentra `o1` viva con `remove`, y borrada con `clear`. Que ningún test lo
+viera sólo significaba «no observable con las llamadas de hoy», que es mucho
+más débil que «equivalente».
 
 
 ## Visited Business Mode (2026-04-12)

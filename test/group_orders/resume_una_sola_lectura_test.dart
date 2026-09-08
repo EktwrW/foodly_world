@@ -1,5 +1,6 @@
 import 'dart:async';
 
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -7,6 +8,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
 import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
+import 'package:foodly_world/ui/views/group_orders/widgets/group_order_chip_logic.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_floating_chip_host.dart';
 
 /// Volver del background pedía la orden DOS veces (hallazgo de la revisión).
@@ -39,20 +41,52 @@ void main() {
     await S.load(const Locale('es'));
   });
 
-  tearDown(() => di.reset());
+  tearDown(() {
+    GroupOrderPageVisibility.reset();
+    return di.reset();
+  });
+
+  /// El host sólo entra por las ramas que interesan cuando NO le pasan
+  /// `ordersSource`: así usa el `ActiveGroupOrderCubit` de DI.
+  Future<void> montar(WidgetTester tester) => tester.pumpWidget(
+        MaterialApp(
+          home: GroupOrderFloatingChipHost(
+            routeListenable: ValueNotifier<String>('/'),
+            locationOf: () => '/',
+            onOpenOrder: (_) {},
+            child: const Scaffold(body: SizedBox.expand()),
+          ),
+        ),
+      );
+
+  /// Y al CERRAR la página de la orden, el chip NO coalesce.
+  ///
+  /// Es la dirección contraria a la del resume, y la que el autor no había
+  /// blindado: cerrar la página puede venir justo detrás de una mutación del
+  /// comensal (agregó platos y salió), así que colgarse de una petición
+  /// anterior le devolvería el carrito de antes. Lo señaló la segunda
+  /// revisión: añadir `coalesce: true` ahí no lo notaba ningún test.
+  testWidgets('al cerrar la página de la orden el chip NO coalesce', (tester) async {
+    await montar(tester);
+    await di<ActiveGroupOrderCubit>().joinWithCode('ABC123');
+    repo.coalescePorLlamada.clear();
+
+    // Abrir y cerrar la página: el host escucha `openCount`.
+    GroupOrderPageVisibility.markOpened();
+    await tester.pump();
+    repo.coalescePorLlamada.clear();
+    GroupOrderPageVisibility.markClosed();
+    await tester.pump();
+
+    expect(
+      repo.coalescePorLlamada,
+      everyElement(isFalse),
+      reason: 'cerrar la página puede seguir a una mutación del comensal: ahí no se coalesce',
+    );
+  });
 
   testWidgets('al volver del background el chip coalesce su lectura', (tester) async {
-    // El host solo entra por esta rama cuando NO le pasan `ordersSource`.
-    await tester.pumpWidget(
-      MaterialApp(
-        home: GroupOrderFloatingChipHost(
-          routeListenable: ValueNotifier<String>('/'),
-          locationOf: () => '/',
-          onOpenOrder: (_) {},
-          child: const Scaffold(body: SizedBox.expand()),
-        ),
-      ),
-    );
+    await montar(tester);
 
     // Con orden en memoria: sin ella el host llama a `syncAnyActive()`, que es
     // otro camino y no el que se está probando.

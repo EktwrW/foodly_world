@@ -73,9 +73,12 @@ class GroupOrderRepo {
     // se drenan antes de volver al bucle de eventos, así que el próximo
     // evento de Pusher siempre encuentra el mapa limpio.
     //
-    // El `identical` no es paranoia: sin él, si esta lectura se quedara
-    // colgada y el turno siguiente registrara otra para el mismo uuid, este
-    // microtask le borraría la entrada A LA OTRA.
+    // El `identical` es DEFENSIVO y hoy está muerto: entre que una entrada se
+    // registra y corre su microtask no hay ninguna otra vía de borrado, así
+    // que el mapa sólo puede tener esa misma entrada o ninguna. No conseguí
+    // —ni la revisión— construir una secuencia que lo necesite. Se queda
+    // porque pasaría a hacer falta en cuanto alguien ensanche el borrado
+    // (un `clear()`, por ejemplo, que sí es distinguible: ver el test).
     scheduleMicrotask(() {
       if (identical(_lecturasDelTurno[uuid], lectura)) _lecturasDelTurno.remove(uuid);
     });
