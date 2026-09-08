@@ -298,10 +298,10 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
-  Future<void> refresh() async {
+  Future<void> refresh({bool coalesce = false}) async {
     final order = state;
     if (order == null) return;
-    final res = await _repo.getGroupOrder(order.uuid);
+    final res = await _repo.getGroupOrder(order.uuid, coalesce: coalesce);
     res.when(
       success: (r) => emit(r.groupOrder),
       failure: (e) {
@@ -351,7 +351,10 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     if (_realtime == null || objetivo == null || _watchedUuid == objetivo) return;
     await _sub?.cancel();
     _watchedUuid = objetivo;
-    _sub = await _realtime.watch(objetivo, onTouched: refresh);
+    // `coalesce: true`: este refresh nace de un evento y la página de la orden
+    // oye el MISMO canal. Los `refresh()` de `group_order_page.dart`, que
+    // siguen a una mutación del comensal, se quedan sin coalescer a propósito.
+    _sub = await _realtime.watch(objetivo, onTouched: () => refresh(coalesce: true));
   }
 
   /// El singleton no se cierra en producción, pero los tests sí lo hacen y

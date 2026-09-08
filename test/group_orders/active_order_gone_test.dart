@@ -134,7 +134,7 @@ class _SpyRepo implements GroupOrderRepo {
   int getCalls = 0;
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async {
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) async {
     getCalls++;
     return getOutcome!;
   }

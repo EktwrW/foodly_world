@@ -1063,6 +1063,62 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## Un evento de realtime hacía DOS lecturas idénticas (2026-09-08)
+
+**El problema** (auditoría de escalabilidad). Dos cubits del MISMO cliente
+observan el MISMO canal `private-group-order.{uuid}`:
+
+```
+group_order_cubit.dart:51         -> _refetchSilently(uuid)   (la página)
+active_group_order_cubit.dart:354 -> refresh()                (el chip flotante)
+```
+
+y los dos terminan en `_repo.getGroupOrder(uuid)`. Ante un evento salían **dos
+peticiones idénticas en el mismo tick**. En una mesa de 8 con la página y el
+chip vivos, una sola mutación —alguien agrega un plato— se convertía en **16
+lecturas de la orden completa**, y cada una son ~20 consultas a Neon a 35 ms de
+ida y vuelta.
+
+**Dónde NO estaba el problema**: el backend emite UN evento por petición.
+Comprobado sobre los 34 sitios que llaman a `GroupOrderTouched::safe`, y
+`maybeAutoDeliver()` —que parece candidato— no emite el suyo. El ×2 es del
+cliente, no del servidor. Que los dos oyentes reciban el evento es CORRECTO y
+está fijado por un test: lo que sobraba era la segunda petición HTTP.
+
+**La solución**: coalescer de lecturas en vuelo en `GroupOrderRepo`. Si ya hay
+una lectura de ese uuid en curso, la segunda se cuelga de la misma.
+
+```dart
+Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false})
+```
+
+**Y aquí está la trampa, que es lo que hace peligroso un coalescer**:
+`coalesce` es **solo para las lecturas que nacen de un evento**. Una lectura
+que sigue a una mutación propia NO puede coalescer: la petición en vuelo salió
+ANTES de la mutación, así que devolvería el estado anterior. Es justo lo que
+hace `cancelPayment()`, que re-lee para que el pie deje de decir "confirmando"
+— con el estado viejo se quedaría diciéndolo para siempre. Por eso el default
+es `false` y solo los dos `onTouched` pasan `true`.
+
+Corolario incómodo: **el default `false` hace que perder el argumento en un
+refactor no dé ningún error**. Vuelve el ×2 y nadie se entera. Hay tests de
+cableado que fijan quién pide coalescer y quién no, precisamente por eso.
+
+**No es una caché**: la entrada se suelta con `whenComplete` —no con `then`,
+o un fallo dejaría el uuid envenenado con un Future ya resuelto en error y
+nadie volvería a leer esa orden en toda la sesión—. La siguiente lectura pide
+de verdad; solo se colapsa lo que se solapa.
+
+**Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
+era mentira del detector, no del test. Con esa mutación un test se queda
+esperando un completer y la corrida tarda un minuto, así que la salida empieza
+por `01:00` y mi `grep "^00:0"` no la veía. **Usa el código de salida de
+`flutter test`, no el texto.**
+
+**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart`: 12 casos,
+5 mutaciones, todas mueren.
+
+
 ## Visited Business Mode (2026-04-12)
 
 ### Two-Page Architecture

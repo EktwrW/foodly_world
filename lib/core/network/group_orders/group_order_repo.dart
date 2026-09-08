@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
@@ -10,7 +12,22 @@ import 'package:foodly_world/data_models/group_orders/stripe_connect_dm.dart';
 class GroupOrderRepo {
   final GroupOrderClient _client;
 
-  const GroupOrderRepo({required GroupOrderClient client}) : _client = client;
+  // Ya no puede ser `const`: el coalescer de abajo necesita estado.
+  GroupOrderRepo({required GroupOrderClient client}) : _client = client;
+
+  /// Lecturas de una orden que están EN VUELO, por uuid.
+  ///
+  /// Dos cubits del mismo cliente observan el mismo canal
+  /// `private-group-order.{uuid}` —la página (`group_order_cubit.dart:51`) y
+  /// el chip flotante (`active_group_order_cubit.dart:354`)— y ante un evento
+  /// los dos llaman aquí con el mismo uuid en el mismo tick. Sin esto salían
+  /// DOS peticiones idénticas: en una mesa de 8, una sola mutación se
+  /// convertía en 16 lecturas de la orden completa, y cada una son ~20
+  /// consultas a Neon a 35 ms de ida y vuelta.
+  ///
+  /// No es una caché: la entrada se borra al terminar, así que la siguiente
+  /// lectura vuelve a pedir de verdad. Solo colapsa las que se solapan.
+  final Map<String, Future<ApiResult<GroupOrderResponseDM>>> _lecturasEnVuelo = {};
 
   Future<ApiResult<GroupOrdersListResponseDM>> getMyGroupOrders() async {
     try {
@@ -20,7 +37,35 @@ class GroupOrderRepo {
     }
   }
 
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async {
+  /// Lee una orden.
+  ///
+  /// [coalesce] solo para las lecturas disparadas por un EVENTO de realtime,
+  /// donde varios oyentes piden lo mismo a la vez y da igual quién dispare la
+  /// petición de verdad.
+  ///
+  /// **Nunca para una lectura que sigue a una mutación propia.** Ahí hay que
+  /// pedir de nuevo: una petición en vuelo salió ANTES de la mutación, y
+  /// colgarse de ella devolvería el estado anterior. Es justo lo que hace
+  /// `cancelPayment()`, que re-lee para que el pie deje de decir
+  /// "confirmando"; con el estado viejo se quedaría diciéndolo. Hay un test
+  /// que fija esto.
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) {
+    if (!coalesce) return _leerOrden(uuid);
+
+    final enVuelo = _lecturasEnVuelo[uuid];
+    if (enVuelo != null) return enVuelo;
+
+    // `whenComplete` y no `then`: la entrada tiene que soltarse también si la
+    // lectura falla, o el uuid quedaría envenenado con un Future ya resuelto
+    // en error y nadie volvería a leer esa orden en toda la sesión.
+    final lectura = _leerOrden(uuid);
+    _lecturasEnVuelo[uuid] = lectura;
+    lectura.whenComplete(() => _lecturasEnVuelo.remove(uuid));
+
+    return lectura;
+  }
+
+  Future<ApiResult<GroupOrderResponseDM>> _leerOrden(String uuid) async {
     try {
       return ApiResult.success(await _client.getGroupOrder(uuid));
     } catch (e, s) {
