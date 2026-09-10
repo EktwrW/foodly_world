@@ -35,18 +35,6 @@ import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 void main() {
   setUpAll(() async => S.load(const Locale('es')));
 
-  /// Reproduce la forma real: una lista, una fila con un botón que abre el
-  /// snackbar de confirmación, y una acción que borra ESA fila.
-  Future<void> montar(
-    WidgetTester tester, {
-    required Duration tardanzaDeRed,
-    required VoidCallback Function(BuildContext, void Function()) alConfirmar,
-  }) async {
-    await tester.pumpWidget(MaterialApp(
-      home: _Pantalla(tardanzaDeRed: tardanzaDeRed, alConfirmar: alConfirmar),
-    ));
-  }
-
   testWidgets('con la fila ya desmontada, el siguiente aviso SÍ se ve', (tester) async {
     await tester.pumpWidget(MaterialApp(
       locale: const Locale('es'),
@@ -97,13 +85,8 @@ void main() {
 /// Pantalla mínima con la misma forma que la de sesiones activas.
 class _Pantalla extends StatefulWidget {
   final Duration tardanzaDeRed;
-  final VoidCallback Function(BuildContext, void Function())? alConfirmar;
 
-  const _Pantalla({required this.tardanzaDeRed, this.alConfirmar});
-
-  const _Pantalla.porDefecto()
-      : tardanzaDeRed = const Duration(milliseconds: 30),
-        alConfirmar = null;
+  const _Pantalla.porDefecto() : tardanzaDeRed = const Duration(milliseconds: 30);
 
   @override
   State<_Pantalla> createState() => _PantallaState();
@@ -120,9 +103,9 @@ class _PantallaState extends State<_Pantalla> {
       content: const Text('¿Seguro?'),
       buttonBuilder: (dismiss) => TextButton(
         onPressed: () async {
-          final hecho = SnackBarWdg(
+          final hecho = const SnackBarWdg(
             type: SnackBarType.success,
-            content: const Text('Sesión cerrada'),
+            content: Text('Sesión cerrada'),
           ).getSnackBar(contextoDeLaFila);
 
           dismiss();
