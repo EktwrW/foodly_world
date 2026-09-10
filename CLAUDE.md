@@ -482,6 +482,41 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### El menú en tableta: índice al lado, no dos paneles (2026-09-10)
+
+En tableta el menú era una columna larguísima: para llegar a «Postres» hay que
+bajar por toda la carta, con media pantalla vacía al lado.
+
+**Se valoró el maestro-detalle —secciones a la izquierda, platos a la derecha—
+y se descartó a propósito.** Una carta se navega **mirando, no buscando**: al
+enseñar solo una sección se pierde el descubrimiento de lo que hay al lado, que
+es lo que vende platos. Y con un negocio de una o dos secciones el panel
+izquierdo queda vacío robando 168 px.
+
+Lo que hay es `MenuSectionIndex`
+(`lib/ui/shared_widgets/menu/menu_section_index.dart`): un índice que dice dónde
+estás y deja saltar, con el scroll **continuo como siempre**. El panel de platos
+es literalmente el widget de hoy, así que el riesgo queda confinado al índice —
+importante, porque nada de esto se puede verificar visualmente desde aquí.
+
+`debeMostrarIndiceDeSecciones` pide dos cosas: `sw600` de ancho (el mismo umbral
+que el resto de la app, así que sirve igual en el build web de escritorio) y al
+menos **3 secciones**. Con menos no hay recorrido que acortar.
+
+**La jerarquía real, que no es obvia:** `MenuCategory` son tres fijas —comida,
+bebidas, combos— y se pasan con un `PageView`. Dentro de cada una hay una lista
+de `CategoryDM`, que son las secciones del negocio. El índice indexa las
+segundas, no las primeras.
+
+**El detalle espinoso: la lista es PEREZOSA.** Una sección lejana no tiene
+`RenderObject`, así que `Scrollable.ensureVisible` no tiene a qué agarrarse.
+`_irASeccion` salta primero a una posición estimada por proporción y afina en el
+frame siguiente. Y `_recalcularSeccionActual` solo mira las secciones
+construidas — que son justo las que importan para «dónde estoy».
+
+**Hecho en una de las seis.** El menú visitado es la referencia; faltan gestión
+del menú y menú público, que repiten la misma forma.
+
 ### Los huecos con vídeo del home: tres tarjetas, no un placeholder (2026-09-10)
 
 Salió de probar en una tableta Lenovo. El hueco de promos «se veía muy
