@@ -514,8 +514,24 @@ segundas, no las primeras.
 frame siguiente. Y `_recalcularSeccionActual` solo mira las secciones
 construidas — que son justo las que importan para «dónde estoy».
 
-**Hecho en una de las seis.** El menú visitado es la referencia; faltan gestión
-del menú y menú público, que repiten la misma forma.
+**Aplicado en las TRES cartas** —visitada, gestión y pública—. Y son tres, no
+seis: la cuenta de «seis pantallas» incluía las páginas que las alojan, pero la
+lista de secciones vive solo en los constructores de categoría.
+
+La parte delicada vive una sola vez, en `MenuSectionIndexController`: posiciones
+de scroll y ciclos de vida son justo lo que no conviene tener por triplicado.
+
+**LAS CLAVES VAN POR UUID, NO POR ÍNDICE, y es deliberado.** Una clave por
+posición se le pega a «lo que haya en el sitio 3», así que al añadir o borrar
+una sección el estado con `AutomaticKeepAlive` se mapearía a la sección
+equivocada. Al ser una `GlobalKey` por uuid, además sustituye a la
+`ValueKey(uuid)` que ya llevaban esos widgets sin perder identidad. Hay un test
+que lo fija: borrar la primera sección no puede hacer que la segunda herede su
+clave.
+
+**Lo que NO cubre ningún test:** el salto en sí. Depende de posiciones reales de
+scroll sobre una lista perezosa, y montarlo en test sería probar una simulación
+propia, no el comportamiento. Ese gesto hay que probarlo en un dispositivo.
 
 ### Los huecos con vídeo del home: tres tarjetas, no un placeholder (2026-09-10)
 

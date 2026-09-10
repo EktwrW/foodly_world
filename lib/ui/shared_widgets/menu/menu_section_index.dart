@@ -115,3 +115,111 @@ class _EntradaDelIndice extends StatelessWidget {
     );
   }
 }
+
+/// La parte delicada del indice: saber en que seccion estas y llevarte a otra,
+/// sobre una lista PEREZOSA.
+///
+/// Vive aqui y no en cada pantalla porque las tres cartas —visitada, gestion y
+/// publica— repiten la misma forma, y este es justo el codigo que no conviene
+/// tener por triplicado: son posiciones de scroll y ciclos de vida, no layout.
+class MenuSectionIndexController extends ChangeNotifier {
+  MenuSectionIndexController({required this.scrollController}) {
+    scrollController.addListener(_recalcular);
+  }
+
+  final ScrollController scrollController;
+
+  final _claves = <String, GlobalKey>{};
+  var _orden = <String>[];
+  int _seccionActual = 0;
+
+  /// La seccion que se esta viendo, como indice dentro del orden actual.
+  int get seccionActual => _seccionActual;
+
+  /// La clave de una seccion, POR SU UUID y no por su posicion.
+  ///
+  /// Es deliberado: una clave por indice se le pega a «lo que haya en el sitio
+  /// 3», asi que al añadir o borrar una seccion el estado con `keep-alive` se
+  /// mapearia a la seccion equivocada. Ademas, al ser una `GlobalKey` sustituye
+  /// a la `ValueKey(uuid)` que ya llevaban estos widgets sin perder identidad.
+  GlobalKey claveDe(String uuid) => _claves.putIfAbsent(uuid, GlobalKey.new);
+
+  /// El orden actual de las secciones. Se llama en cada build: es lo que
+  /// traduce entre uuid y posicion.
+  void sincronizarOrden(List<String> uuids) => _orden = uuids;
+
+  /// Distancia desde arriba a partir de la cual se considera que una seccion
+  /// "ya paso". No es cero porque encima de la lista hay barras.
+  static const _margenSuperior = 140.0;
+
+  /// Marca la seccion cuyo encabezado esta mas cerca del borde de arriba sin
+  /// haberlo pasado.
+  ///
+  /// Solo mira las secciones CONSTRUIDAS: la lista es perezosa y una seccion
+  /// lejana no tiene `RenderObject`. No hace falta mas — las que importan para
+  /// «donde estoy» son justo las que se ven.
+  void _recalcular() {
+    var candidata = _seccionActual;
+    var mejorDistancia = double.infinity;
+
+    for (var i = 0; i < _orden.length; i++) {
+      final render = _claves[_orden[i]]?.currentContext?.findRenderObject();
+      if (render is! RenderBox || !render.attached) continue;
+
+      final y = render.localToGlobal(Offset.zero).dy;
+      if (y > _margenSuperior) continue;
+
+      final distancia = (_margenSuperior - y).abs();
+      if (distancia < mejorDistancia) {
+        mejorDistancia = distancia;
+        candidata = i;
+      }
+    }
+
+    if (candidata != _seccionActual) {
+      _seccionActual = candidata;
+      notifyListeners();
+    }
+  }
+
+  /// Lleva el scroll hasta una seccion.
+  ///
+  /// Si todavia no esta construida se salta primero a una posicion estimada por
+  /// proporcion y se afina en el frame siguiente: sin ese primer salto,
+  /// `ensureVisible` no tiene a que agarrarse.
+  Future<void> irA(int indice) async {
+    if (indice < 0 || indice >= _orden.length) return;
+
+    Future<bool> afinar() async {
+      final contexto = _claves[_orden[indice]]?.currentContext;
+      if (contexto == null) return false;
+
+      await Scrollable.ensureVisible(
+        contexto,
+        duration: Durations.medium2,
+        curve: Curves.easeOutCubic,
+        alignment: .02,
+      );
+
+      return true;
+    }
+
+    if (await afinar()) return;
+    if (!scrollController.hasClients) return;
+
+    final maximo = scrollController.position.maxScrollExtent;
+    await scrollController.animateTo(
+      (maximo * indice / _orden.length).clamp(0, maximo),
+      duration: Durations.medium2,
+      curve: Curves.easeOutCubic,
+    );
+    await WidgetsBinding.instance.endOfFrame;
+    await afinar();
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(_recalcular);
+    super.dispose();
+  }
+}

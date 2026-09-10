@@ -59,85 +59,24 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
 
   final _scrollController = ScrollController();
 
-  /// Una clave por seccion, para poder llevar el scroll hasta ella.
-  final _clavesDeSeccion = <int, GlobalKey>{};
-
-  /// La seccion que se esta viendo, para marcarla en el indice.
-  int _seccionActual = 0;
+  late final _indice = MenuSectionIndexController(scrollController: _scrollController);
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_recalcularSeccionActual);
+    _indice.addListener(_alCambiarDeSeccion);
+  }
+
+  void _alCambiarDeSeccion() {
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_recalcularSeccionActual);
+    _indice.removeListener(_alCambiarDeSeccion);
+    _indice.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  /// Marca en el indice la seccion cuyo encabezado esta mas cerca del borde de
-  /// arriba SIN haberlo pasado.
-  ///
-  /// Solo mira las secciones que estan CONSTRUIDAS: la lista es perezosa y una
-  /// seccion lejana no tiene `RenderObject` todavia. No hace falta mas — las
-  /// que importan para «donde estoy» son justo las que se ven.
-  void _recalcularSeccionActual() {
-    var candidata = _seccionActual;
-    var mejorDistancia = double.infinity;
-
-    for (final entrada in _clavesDeSeccion.entries) {
-      final render = entrada.value.currentContext?.findRenderObject();
-      if (render is! RenderBox || !render.attached) continue;
-
-      final y = render.localToGlobal(Offset.zero).dy;
-      if (y > 140) continue; // todavia por debajo del borde: no es la actual
-      final distancia = (140 - y).abs();
-      if (distancia < mejorDistancia) {
-        mejorDistancia = distancia;
-        candidata = entrada.key;
-      }
-    }
-
-    if (candidata != _seccionActual && mounted) setState(() => _seccionActual = candidata);
-  }
-
-  /// Lleva el scroll hasta una seccion.
-  ///
-  /// Si la seccion todavia no esta construida —la lista es perezosa— se salta
-  /// primero a una posicion estimada por la altura media de lo que SI esta
-  /// construido, y en el frame siguiente se afina. Sin ese primer salto,
-  /// `ensureVisible` no tiene a que agarrarse.
-  Future<void> _irASeccion(int indice) async {
-    Future<bool> afinar() async {
-      final contexto = _clavesDeSeccion[indice]?.currentContext;
-      if (contexto == null) return false;
-
-      await Scrollable.ensureVisible(
-        contexto,
-        duration: Durations.medium2,
-        curve: Curves.easeOutCubic,
-        alignment: .02,
-      );
-
-      return true;
-    }
-
-    if (await afinar()) return;
-
-    final total = widget.categories?.length ?? 0;
-    if (total == 0 || !_scrollController.hasClients) return;
-
-    final maximo = _scrollController.position.maxScrollExtent;
-    await _scrollController.animateTo(
-      (maximo * indice / total).clamp(0, maximo),
-      duration: Durations.medium2,
-      curve: Curves.easeOutCubic,
-    );
-    await WidgetsBinding.instance.endOfFrame;
-    await afinar();
   }
 
   @override
@@ -160,6 +99,8 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
                   secciones: secciones.length,
                 );
 
+                _indice.sincronizarOrden([for (final c in secciones) c.uuid]);
+
                 final carta = _construirCarta(cubit);
                 if (!conIndice) return carta;
 
@@ -171,8 +112,8 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
                   children: [
                     MenuSectionIndex(
                       secciones: [for (final c in secciones) c.name],
-                      seccionActual: _seccionActual,
-                      onSeleccion: _irASeccion,
+                      seccionActual: _indice.seccionActual,
+                      onSeleccion: _indice.irA,
                       encabezado: S.current.menu,
                     ),
                     const VerticalDivider(width: 1, thickness: 1),
@@ -207,7 +148,7 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
                   final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
 
                   return SubCategoryWdg(
-                    key: _clavesDeSeccion.putIfAbsent(index, GlobalKey.new),
+                    key: _indice.claveDe(subCategory?.uuid ?? ''),
                     menuCategory: widget.menuCategory,
                     cubit: cubit,
                     subCategory: subCategory,

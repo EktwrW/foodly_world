@@ -10,6 +10,7 @@ import 'package:foodly_world/data_models/menu/menu_dm.dart';
 import 'package:foodly_world/ui/constants/image_decode_sizes.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
+import 'package:foodly_world/ui/shared_widgets/menu/menu_section_index.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,9 +40,22 @@ class _PublicMenuCategoryPageState extends State<PublicMenuCategoryPage> with Au
   bool get wantKeepAlive => true;
 
   final _scrollController = ScrollController();
+  late final _indice = MenuSectionIndexController(scrollController: _scrollController);
+
+  @override
+  void initState() {
+    super.initState();
+    _indice.addListener(_alCambiarDeSeccion);
+  }
+
+  void _alCambiarDeSeccion() {
+    if (mounted) setState(() {});
+  }
 
   @override
   void dispose() {
+    _indice.removeListener(_alCambiarDeSeccion);
+    _indice.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -56,7 +70,41 @@ class _PublicMenuCategoryPageState extends State<PublicMenuCategoryPage> with Au
           Expanded(child: const NoItemsViewWdg().paddingBottom(80)),
         ] else
           Expanded(
-            child: NotificationListener<ScrollNotification>(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final secciones = widget.categories ?? const <CategoryDM>[];
+                final conIndice = debeMostrarIndiceDeSecciones(
+                  anchoDisponible: constraints.maxWidth,
+                  secciones: secciones.length,
+                );
+
+                _indice.sincronizarOrden([for (final c in secciones) c.uuid]);
+
+                final carta = _construirCarta();
+                if (!conIndice) return carta;
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MenuSectionIndex(
+                      secciones: [for (final c in secciones) c.name],
+                      seccionActual: _indice.seccionActual,
+                      onSeleccion: _indice.irA,
+                      encabezado: S.current.menu,
+                    ),
+                    const VerticalDivider(width: 1, thickness: 1),
+                    Expanded(child: carta),
+                  ],
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _construirCarta() {
+    return NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification is ScrollStartNotification) widget.onScrollStart();
                 if (notification is ScrollEndNotification) widget.onScrollEnd();
@@ -71,17 +119,14 @@ class _PublicMenuCategoryPageState extends State<PublicMenuCategoryPage> with Au
                 itemBuilder: (context, index) {
                   final subCategory = widget.categories![index];
                   return _PublicSubCategoryWdg(
-                    key: ValueKey(subCategory.uuid),
+                    key: _indice.claveDe(subCategory.uuid),
                     subCategory: subCategory,
                     menuCategory: widget.menuCategory,
                     currency: widget.currency,
                   );
                 },
               ),
-            ),
-          ),
-      ],
-    );
+            );
   }
 }
 

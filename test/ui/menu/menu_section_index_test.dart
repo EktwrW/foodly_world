@@ -97,4 +97,43 @@ void main() {
       }
     });
   });
+
+  /// El controlador guarda las claves POR UUID, no por posición.
+  ///
+  /// Una clave por índice se le pega a «lo que haya en el sitio 3», así que al
+  /// añadir o borrar una sección el estado con keep-alive se mapearía a la
+  /// sección equivocada. Y como es una `GlobalKey` por uuid, sustituye a la
+  /// `ValueKey(uuid)` que ya llevaban esos widgets sin perder identidad.
+  group('el controlador', () {
+    test('la misma sección conserva su clave aunque cambie de sitio', () {
+      final c = MenuSectionIndexController(scrollController: ScrollController());
+      addTearDown(c.dispose);
+
+      c.sincronizarOrden(['a', 'b', 'c']);
+      final claveDeB = c.claveDe('b');
+
+      // se borra la primera: «b» pasa del sitio 1 al 0
+      c.sincronizarOrden(['b', 'c']);
+
+      expect(c.claveDe('b'), same(claveDeB), reason: 'con claves por índice, «b» habría heredado la de «a»');
+    });
+
+    test('un salto fuera de rango no hace nada', () async {
+      final c = MenuSectionIndexController(scrollController: ScrollController());
+      addTearDown(c.dispose);
+      c.sincronizarOrden(['a', 'b']);
+
+      await c.irA(-1);
+      await c.irA(9);
+
+      expect(c.seccionActual, 0);
+    });
+
+    test('arranca en la primera', () {
+      final c = MenuSectionIndexController(scrollController: ScrollController());
+      addTearDown(c.dispose);
+
+      expect(c.seccionActual, 0);
+    });
+  });
 }
