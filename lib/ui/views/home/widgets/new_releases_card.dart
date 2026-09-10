@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:developer' show log;
 
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui show NeumorphicColors;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases/cubit/new_releases_cubit.dart';
@@ -76,7 +75,7 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               loading: (_) => const NewReleaseShimmer(),
               loaded: (s) {
                 if (s.vm.businesses.isEmpty) {
-                  return _EmptyNewReleasesWidget(
+                  return EmptyNewReleasesWidget(
                     isError: false,
                     onRetry: () => context.read<NewReleasesCubit>().load(),
                   );
@@ -176,7 +175,7 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
               },
               error: (_) => isCheckingLocation
                   ? const NewReleaseShimmer()
-                  : _EmptyNewReleasesWidget(
+                  : EmptyNewReleasesWidget(
                       isError: true,
                       onRetry: () => context.read<NewReleasesCubit>().load(),
                     ),
@@ -528,17 +527,17 @@ class _MoreInfoButton extends StatelessWidget {
 /// info del business. En empty state no hay business detrás, así que
 /// poner un header vacío sería ruido visual. El card placeholder ocupa
 /// toda la altura disponible y se ve "limpio".
-class _EmptyNewReleasesWidget extends StatefulWidget {
+class EmptyNewReleasesWidget extends StatefulWidget {
   final bool isError;
   final VoidCallback onRetry;
 
-  const _EmptyNewReleasesWidget({required this.isError, required this.onRetry});
+  const EmptyNewReleasesWidget({super.key, required this.isError, required this.onRetry});
 
   @override
-  State<_EmptyNewReleasesWidget> createState() => _EmptyNewReleasesWidgetState();
+  State<EmptyNewReleasesWidget> createState() => _EmptyNewReleasesWidgetState();
 }
 
-class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
+class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
   static const _videoAsset = 'assets/videos/business.mp4';
 
   VideoPlayerController? _controller;
@@ -611,56 +610,33 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
     final title = widget.isError ? s.newReleasesEmptyErrorTitle : s.newReleasesEmptyTitle;
     final subtitle = widget.isError ? s.newReleasesEmptyErrorSubtitle : s.newReleasesEmptySubtitle;
 
-    return SizedBox(
-      // Mantiene aproximadamente la altura de la card real (portada 4:3 +
-      // cuerpo + botón retry abajo). Evita layout shift cuando aparezcan
-      // negocios nuevos y se reemplace este widget por el
-      // `NewReleaseBusinessCard` real.
-      height: 430,
-      child: Column(
-        children: [
-          // Card con video + blur backdrop overlay — mismo shape que la
-          // `Card` interna de `NewReleaseBusinessCard` (ver ese widget
-          // arriba en este archivo), garantizando que la transición
-          // empty → real no se sienta como un cambio de layout.
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 6),
-            color: ui.NeumorphicColors.decorationMaxWhiteColor,
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  child: AspectRatio(
-                    aspectRatio: 4 / 3,
-                    child: _buildVideo(),
-                  ),
-                ),
-                Column(
-                  children: [
-                    _BackdropEmptyMessage(title: title, subtitle: subtitle),
-                    SizedBox(
-                      width: 239,
-                      child: CustomNeumorphicButton(
-                        onPressed: widget.onRetry,
-                        type: CustomNeumorphicBtnType.tertiary,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        text: s.retry,
-                        leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                        disabled: false,
-                        fontSize: 12.3,
-                        bosShapeRadius: 3.9,
-                      ),
-                    ),
-                  ],
-                ).paddingBottom(11),
-              ],
-            ),
-          ),
-        ],
+    // EL ALTO FIJO SE VA (2026-09-10). Era un `SizedBox(height: 430)` con un
+    // `AspectRatio(4/3)` de video dentro. En el home la seccion lleva padding
+    // lateral, asi que en una tableta el video pedia el ancho entero por 3/4 de
+    // alto y no cabia: medido, **desbordaba 250 px a 820 y 595 a 1280**. En
+    // telefono colaba de milagro.
+    //
+    // Ahora el alto lo pone la proporcion dentro de un techo de ancho, que es
+    // lo que hace que sirva igual en telefono, tableta y web.
+    return AspectRatio(
+      aspectRatio: _proporcionDelHueco,
+      child: FoodlyEmptyMediaCard(
+        background: _buildVideo(),
+        title: title,
+        subtitle: subtitle,
+        actionLabel: widget.isError ? s.retry : null,
+        onAction: widget.isError ? widget.onRetry : null,
+        maxWidth: _anchoDelHueco,
       ),
     ).paddingOnly(top: 16);
   }
+
+  /// El hueco espeja la card real: portada 4:3 mas la cinta encima.
+  static const _proporcionDelHueco = 4 / 3;
+
+  /// Un poco mas ancho que la tarjeta de promo porque la card de negocio
+  /// tambien lo es, pero con techo: sin el, en tableta se estira sola.
+  static const _anchoDelHueco = 420.0;
 
   Widget _buildVideo() {
     // Video listo → renderizar con BoxFit.cover (fill sin deformar).
@@ -699,59 +675,6 @@ class _EmptyNewReleasesWidgetState extends State<_EmptyNewReleasesWidget> {
 /// auto-contenidos y mantienen su placeholder local. Si en el futuro
 /// sumamos un 3er empty state con la misma técnica, vale la pena
 /// extraerlo a `shared_widgets/empty_state/empty_video_card.dart`.
-class _BackdropEmptyMessage extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _BackdropEmptyMessage({required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
-          child: FoodlyGlassPanel(
-            borderRadius: BorderRadius.circular(16),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  title,
-                  style: FoodlyTextStyles.promoTitleOnGlass.copyWith(fontSize: 17, height: 1.18),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-  }
-}
-
-/// Las flechas para pasar de un negocio al siguiente.
-///
-/// Estaban abajo, flanqueando los puntos, a 20 px de diámetro y en neumórfico:
-/// lejos del contenido que mueven y por debajo del mínimo táctil. Ahora van
-/// sobre la portada, a los costados, en el mismo vidrio oscuro que los
-/// controles flotantes de las cards de promo — que es el sitio donde el
-/// usuario ya espera encontrar algo que se toca sobre una foto.
-///
-/// Los puntos se quedan abajo: siguen contando cuántos hay y en cuál estás,
-/// que es lo que las flechas no dicen.
 class _NavArrow extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;

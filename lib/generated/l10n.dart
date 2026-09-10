@@ -10954,6 +10954,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Keep the ones you like`
+  String get promosTeaserSaveTitle {
+    return Intl.message(
+      'Keep the ones you like',
+      name: 'promosTeaserSaveTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the heart and you'll find it in Saved Promotions until it ends.`
+  String get promosTeaserSaveBody {
+    return Intl.message(
+      'Tap the heart and you\'ll find it in Saved Promotions until it ends.',
+      name: 'promosTeaserSaveBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Good things are meant to be shared`
+  String get promosTeaserShareTitle {
+    return Intl.message(
+      'Good things are meant to be shared',
+      name: 'promosTeaserShareTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send a promotion to whoever would come along, right from the card.`
+  String get promosTeaserShareBody {
+    return Intl.message(
+      'Send a promotion to whoever would come along, right from the card.',
+      name: 'promosTeaserShareBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your promotion, front and centre`
+  String get promosTeaserOwnerTitle {
+    return Intl.message(
+      'Your promotion, front and centre',
+      name: 'promosTeaserOwnerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create it from your business and it'll show up here for customers nearby.`
+  String get promosTeaserOwnerBody {
+    return Intl.message(
+      'Create it from your business and it\'ll show up here for customers nearby.',
+      name: 'promosTeaserOwnerBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create promotion`
+  String get promosTeaserOwnerCta {
+    return Intl.message(
+      'Create promotion',
+      name: 'promosTeaserOwnerCta',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

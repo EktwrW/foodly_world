@@ -4,12 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart' as ui;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/core_exports.dart' show LoadingWidgetFoodlyIso, di;
-import 'package:foodly_world/core/extensions/padding_extension.dart';
+import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AuthSessionService, LoadingWidgetFoodlyIso, di;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
@@ -18,13 +16,14 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart';
 import 'package:foodly_world/data_models/promotions/promotion_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart'
     show PromoFavoriteButton, PromoFavoriteGlass, PromotionCardView;
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/guest/guest_gate_sheet.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_brand_surface.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart';
@@ -32,6 +31,7 @@ import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_cubit.dart';
 import 'package:foodly_world/ui/views/home/widgets/top_offers/cubit/nearby_promotions_state.dart';
+import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap, FontAwesome;
 import 'package:video_player/video_player.dart';
 
@@ -121,6 +121,7 @@ class _TopOffersWidgetState extends State<TopOffersWidget> {
             if (promotions.isEmpty) {
               return EmptyOffersWidget(
                 isError: vm.error != null,
+                isBusinessOwner: di<AuthSessionService>().userIsManager,
                 onRetry: () => context.read<NearbyPromotionsCubit>().load(),
               );
             }
@@ -446,7 +447,17 @@ class EmptyOffersWidget extends StatefulWidget {
   final bool isError;
   final VoidCallback onRetry;
 
-  const EmptyOffersWidget({super.key, required this.isError, required this.onRetry});
+  /// Si quien mira es dueño de un negocio. Entra por PARAMETRO y no se lee de
+  /// la inyeccion de dependencias dentro del `build`: leerla ahi dejaba el
+  /// widget imposible de pintar en un test, y de hecho tumbo el que ya existia.
+  final bool isBusinessOwner;
+
+  const EmptyOffersWidget({
+    super.key,
+    required this.isError,
+    required this.onRetry,
+    this.isBusinessOwner = false,
+  });
 
   @override
   State<EmptyOffersWidget> createState() => _EmptyOffersWidgetState();
@@ -529,44 +540,86 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
       screenWidth: context.screenWidth,
     ).height;
 
-    // Card con video + mensaje de vidrio ENCIMA — mismo shape y misma
-    // composición que `NearbyPromoCard`, que también superpone su cinta sobre
-    // la foto. Antes el mensaje iba DEBAJO del video (`paddingBottom(96)` sobre
-    // un `AspectRatio` 16/9), y esos 96 px de más eran justo el desajuste.
-    return SizedBox(
-      height: alto,
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        color: ui.NeumorphicColors.decorationMaxWhiteColor,
-        clipBehavior: Clip.antiAlias,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Positioned.fill(child: _buildVideo()),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 3,
-              children: [
-                Flexible(child: _BackdropEmptyMessage(title: title, subtitle: subtitle)),
-                SizedBox(
-                  width: 236,
-                  child: CustomNeumorphicButton(
-                    onPressed: widget.onRetry,
-                    type: CustomNeumorphicBtnType.tertiary,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    text: s.retry,
-                    leading: const Icon(Bootstrap.arrow_clockwise, size: 19, color: FoodlyThemes.primaryFoodly),
-                    disabled: false,
-                    fontSize: 12.3,
-                    bosShapeRadius: 3.9,
-                  ),
-                ),
-              ],
-            ).paddingBottom(11),
-          ],
+    // VACIO vs FALLO, y no es lo mismo (2026-09-10).
+    //
+    // Si la peticion se cayo no toca enseñar la seccion, toca reintentar: una
+    // sola tarjeta con el video y el boton. Si simplemente no hay promos
+    // todavia, el hueco se aprovecha para CONTAR la seccion — tres tarjetas
+    // que rotan igual que rotarian las promos de verdad.
+    //
+    // Y ahi esta lo bueno de las tres: el vacio deja de ser un placeholder que
+    // hay que cuadrar con el cargado. ES el carrusel, con las mismas opciones y
+    // la misma geometria, asi que no hay dos alturas que puedan separarse.
+    if (widget.isError) {
+      return SizedBox(
+        height: alto,
+        child: FoodlyEmptyMediaCard(
+          background: _buildVideo(),
+          title: title,
+          subtitle: subtitle,
+          actionLabel: s.retry,
+          onAction: widget.onRetry,
+          height: alto,
         ),
+      );
+    }
+
+    return CarouselSlider(
+      options: homePromoCarouselOptions(
+        breakpoint: foodlyCarouselBreakpointOf(context),
+        screenWidth: context.screenWidth,
       ),
+      items: [
+        FoodlyEmptyMediaCard(
+          background: _buildVideo(),
+          title: title,
+          subtitle: subtitle,
+          height: alto,
+        ),
+        FoodlyEmptyMediaCard(
+          background: const FoodlyBrandSurface(tint: FoodlyBrandTint.ciruela),
+          icon: Bootstrap.heart_fill,
+          title: s.promosTeaserSaveTitle,
+          subtitle: s.promosTeaserSaveBody,
+          height: alto,
+        ),
+        _tarjetaSegunQuienMira(context, s, alto),
+      ],
+    );
+  }
+
+  /// La tercera cambia segun quien mire.
+  ///
+  /// A un dueno de negocio «lo bueno se comparte» no le dice nada; que sus
+  /// promociones salen en la portada de los clientes de al lado, si. Y es el
+  /// unico de los tres huecos que lleva boton, porque es el unico que tiene
+  /// adonde ir.
+  Widget _tarjetaSegunQuienMira(BuildContext context, S s, double alto) {
+    final esDuenyo = widget.isBusinessOwner;
+
+    return FoodlyEmptyMediaCard(
+      background: const FoodlyBrandSurface(tint: FoodlyBrandTint.verde),
+      icon: esDuenyo ? Bootstrap.megaphone_fill : Bootstrap.send_fill,
+      title: esDuenyo ? s.promosTeaserOwnerTitle : s.promosTeaserShareTitle,
+      subtitle: esDuenyo ? s.promosTeaserOwnerBody : s.promosTeaserShareBody,
+      actionLabel: esDuenyo ? s.promosTeaserOwnerCta : null,
+      onAction: esDuenyo ? () => _irAMisPromociones(context) : null,
+      height: alto,
+    );
+  }
+
+  /// Lleva al panel de promociones del negocio, que es donde se crean.
+  ///
+  /// Mismo destino y mismos argumentos que el boton de promociones del pie de
+  /// la pagina de negocio: la ruta necesita el uuid en el path.
+  void _irAMisPromociones(BuildContext context) {
+    final negocio = di<AuthSessionService>().userSessionDM?.user.business.firstOrNull;
+    if (negocio == null) return;
+
+    context.goNamed(
+      AppRoutes.managePromotions.name,
+      pathParameters: {AppRoutes.routeIdParam: negocio.uuid},
+      extra: negocio,
     );
   }
 
@@ -606,49 +659,6 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
 ///
 /// La diferencia es que este NO renderiza business name / rating / icons —
 /// es solo el "hero text" porque no hay negocio detrás del placeholder.
-class _BackdropEmptyMessage extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _BackdropEmptyMessage({required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.9),
-          child: FoodlyGlassPanel(
-            borderRadius: BorderRadius.circular(16),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  title,
-                  style: FoodlyTextStyles.promoTitleOnGlass.copyWith(fontSize: 17, height: 1.18),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: FoodlyTextStyles.homeAppBarSmallSubtitle,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-  }
-}
-
 class _PromoDetailSheet extends StatelessWidget {
   final PromotionDM promoDM;
   const _PromoDetailSheet({required this.promoDM});

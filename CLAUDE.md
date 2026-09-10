@@ -482,6 +482,60 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### Los huecos con vídeo del home: tres tarjetas, no un placeholder (2026-09-10)
+
+Salió de probar en una tableta Lenovo. El hueco de promos «se veía muy
+pequeñito». No era pequeño: estaba **aplastado**. El alto quedó clavado en 225
+px de tablet en adelante —para que las cards del carrusel conserven
+proporciones de teléfono— pero el hueco no es un carrusel de cards, era **una
+sola card a todo el ancho**: 1264 × 225, una tira de buzón.
+
+**El arreglo de fondo lo propuso Héctor y es mejor que lo que yo iba a hacer.**
+En vez de un placeholder que hay que cuadrar con el carrusel cargado, el vacío
+**ES el carrusel**: tres tarjetas con las mismas `homePromoCarouselOptions` y
+la misma geometría. Ya no hay dos alturas que puedan separarse, así que la
+promesa de «sin salto» pasa de estar vigilada por un test a ser cierta por
+construcción. Y de paso cada tarjeta ocupa el hueco de una promo, que es lo que
+arregla el aplastamiento.
+
+Las tres cuentan una historia: **llegarán → guárdalas → compártelas**. La
+tercera cambia según quién mire (`isBusinessOwner`): a un dueño «lo bueno se
+comparte» no le dice nada, y que sus promociones salen en la portada de los
+clientes de al lado, sí. Es el único de los tres huecos con botón, porque es el
+único con adónde ir.
+
+**El fondo NO es una foto, y es deliberado.** Se valoró generar imágenes con
+IA. Un plato generado dentro de una tarjeta con forma de promoción **se lee como
+una promoción de verdad**: el usuario la toca esperando una oferta y no hay
+ninguna. `FoodlyBrandSurface` es degradado + el iso de marca de agua + trama
+diagonal. No pesa (el asset ya viaja en el bundle), el contraste del vidrio deja
+de ser una lotería, y escala sin pixelarse para la web. El vídeo se queda solo
+en la primera tarjeta, que era el límite de recursos que puso Héctor.
+
+**EL DESBORDAMIENTO, medido:** el hueco de negocios nuevos era un
+`SizedBox(height: 430)` con un `AspectRatio(4/3)` dentro. Con el padding lateral
+del home, en tableta el vídeo pedía el ancho entero por 3/4 de alto:
+**desbordaba 250 px a 820 y 595 a 1280**. En teléfono colaba de milagro. Ahora
+el alto lo pone la proporción dentro de un techo de ancho.
+
+**El botón de reintentar dejó de ser neumórfico.** Un `CustomNeumorphicButton`
+—relieve, esquinas de 4 px, 32 px de alto— metido dentro de una composición de
+vidrio: dos lenguajes peleándose en 200 píxeles. Ahora es el mismo vidrio que la
+cinta, y 44 px.
+
+**DOS TRAMPAS QUE ME MORDIERON AQUÍ:**
+
+1. **No leas la inyección de dependencias dentro de un `build`.** Puse
+   `di<AuthSessionService>().userIsManager` en el build de `EmptyOffersWidget` y
+   el widget dejó de poder pintarse sin DI — tumbó el test que ya existía. El
+   dato entra por parámetro y lo resuelve quien lo construye.
+2. **Cuidado con QUÉ nodo se mide.** El nodo externo de `FoodlyEmptyMediaCard`
+   es un `Center` que ocupa todo el ancho; el techo va por dentro. Midiendo ese
+   salen 1280 y parece que no acota nada. Es exactamente el mismo despiste que
+   con las hojas inferiores de Material 3.
+
+Canvas del diseño: artifact 6da99564.
+
 ### Estados vacíos: tres intenciones, no un estilo (2026-09-10)
 
 Foodly tenía **24 estados vacíos** escritos a mano, con nueve tratamientos de

@@ -2085,6 +2085,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
       "Flavors near you, soon",
     ),
+    "promosTeaserOwnerBody": MessageLookupByLibrary.simpleMessage(
+      "Create it from your business and it\'ll show up here for customers nearby.",
+    ),
+    "promosTeaserOwnerCta": MessageLookupByLibrary.simpleMessage(
+      "Create promotion",
+    ),
+    "promosTeaserOwnerTitle": MessageLookupByLibrary.simpleMessage(
+      "Your promotion, front and centre",
+    ),
+    "promosTeaserSaveBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the heart and you\'ll find it in Saved Promotions until it ends.",
+    ),
+    "promosTeaserSaveTitle": MessageLookupByLibrary.simpleMessage(
+      "Keep the ones you like",
+    ),
+    "promosTeaserShareBody": MessageLookupByLibrary.simpleMessage(
+      "Send a promotion to whoever would come along, right from the card.",
+    ),
+    "promosTeaserShareTitle": MessageLookupByLibrary.simpleMessage(
+      "Good things are meant to be shared",
+    ),
     "promotion": MessageLookupByLibrary.simpleMessage("Promotion"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Promotion days"),
     "promotions": MessageLookupByLibrary.simpleMessage("Promotions"),
