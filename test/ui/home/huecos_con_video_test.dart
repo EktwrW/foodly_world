@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
@@ -119,6 +120,23 @@ void main() {
       expect(tarjeta.width, lessThanOrEqualTo(440),
           reason: 'sin techo, en una tableta de 1280 se iba a 1256 de ancho');
     });
+  });
+
+  /// El hueco y la tarjeta cargada tienen que medir LO MISMO de ancho.
+  ///
+  /// Estuvo a punto de no ser así: al acotar el placeholder a 420 px, la
+  /// tarjeta real se seguía estirando a 1244 en una tableta. Pasar de vacío a
+  /// cargado habría dado un salto brutal, y encima solo se ve cuando por fin
+  /// aparece un negocio — el peor momento para descubrirlo.
+  testWidgets('el hueco de negocios mide lo mismo que su techo compartido', (tester) async {
+    await pintar(tester, 1280, EmptyNewReleasesWidget(isError: false, onRetry: () {}));
+
+    final hueco = tester.getSize(
+      find.descendant(of: find.byType(FoodlyEmptyMediaCard).first, matching: find.byType(ClipRRect)).first,
+    );
+
+    expect(hueco.width, UIDimens.NEW_RELEASES_MAX_WIDTH,
+        reason: 'la tarjeta real se acota al mismo número en foodly_main_page');
   });
 
   group('el botón de reintentar dejó de ser neumórfico', () {

@@ -38,6 +38,17 @@ class UIDimens {
   /// falta. Al contrario que las hojas inferiores, que Material 3 ya acota solo
   /// a 640, los dialogos no traen tope.
   static const DIALOG_MAX_WIDTH = 460.0;
+  /// Ancho maximo de la seccion «Nuevos en Foodly».
+  ///
+  /// Lo comparten la tarjeta de negocio Y su placeholder: si difieren, pasar de
+  /// vacio a cargado da un salto — que es justo lo que estuvo a punto de pasar
+  /// al acotar solo el placeholder.
+  ///
+  /// 420 es algo mas que el ancho util de un telefono grande (430 menos los
+  /// margenes), asi que en movil no muerde; en tableta impide que una tarjeta
+  /// con portada 4:3 se estire a 1244 px y pida 933 de alto.
+  static const NEW_RELEASES_MAX_WIDTH = 420.0;
+
   static const AVATAR_BIG_SIZE_MOB = Size(140, 140);
   static const AVATAR_DRAWER_BIG_MOB = Size(120, 120);
   static const AVATAR_DRAWER_SMALL_MOB = Size(55, 55);

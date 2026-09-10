@@ -6,6 +6,7 @@ import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
+import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
@@ -626,17 +627,13 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
         subtitle: subtitle,
         actionLabel: widget.isError ? s.retry : null,
         onAction: widget.isError ? widget.onRetry : null,
-        maxWidth: _anchoDelHueco,
+        maxWidth: UIDimens.NEW_RELEASES_MAX_WIDTH,
       ),
     ).paddingOnly(top: 16);
   }
 
   /// El hueco espeja la card real: portada 4:3 mas la cinta encima.
   static const _proporcionDelHueco = 4 / 3;
-
-  /// Un poco mas ancho que la tarjeta de promo porque la card de negocio
-  /// tambien lo es, pero con techo: sin el, en tableta se estira sola.
-  static const _anchoDelHueco = 420.0;
 
   Widget _buildVideo() {
     // Video listo → renderizar con BoxFit.cover (fill sin deformar).
