@@ -125,9 +125,10 @@ class StartingPage369 extends StatelessWidget {
               height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .30,
               child: Center(
                 child: AnimatedPadding(
-                    padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
-                    duration: Durations.medium4,
-                    child: const Asset(FoodlyAssets.logo)),
+                  padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
+                  duration: Durations.medium4,
+                  child: const LogoDeArranque(),
+                ),
               ),
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
           ),
@@ -228,3 +229,39 @@ class StartingPage369 extends StatelessWidget {
     );
   }
 }
+
+/// El logo de Foodly del arranque, encogido en tableta.
+///
+/// POR QUE (2026-09-10). En una tableta el logo se veia desproporcionado
+/// respecto al resto del formulario. Se pinta al [kFactorDeLogoEnTableta] del
+/// hueco disponible.
+///
+/// Se encoge SOLO el logo: la caja que lo contiene mantiene su alto, asi que
+/// los espaciados, los botones de red social, el de invitado, el de terminos y
+/// las animaciones de `AnimatedSize` no se mueven un pixel. Era la condicion.
+///
+/// En telefono NO se envuelve en nada, y eso importa: un
+/// `FractionallySizedBox` con factor 1 no es transparente —le da al hijo
+/// constraints AJUSTADAS donde `Center` le daba sueltas— y con `BoxFit.contain`
+/// eso puede cambiar el tamaño con el que se pinta la imagen.
+class LogoDeArranque extends StatelessWidget {
+  const LogoDeArranque({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const logo = Asset(FoodlyAssets.logo);
+
+    // `isMobile` es < 600 px de ancho. Como el telefono esta bloqueado en
+    // vertical, ningun telefono llega ahi: esto solo es cierto en tableta.
+    if (context.isMobile) return logo;
+
+    return const FractionallySizedBox(
+      widthFactor: kFactorDeLogoEnTableta,
+      heightFactor: kFactorDeLogoEnTableta,
+      child: logo,
+    );
+  }
+}
+
+/// Cuanto se encoge el logo del arranque en tableta: un 25 % menos.
+const double kFactorDeLogoEnTableta = .75;
