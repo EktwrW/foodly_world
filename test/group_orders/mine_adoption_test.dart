@@ -430,7 +430,7 @@ class _RepoDeMine implements GroupOrderRepo {
   }
 
   @override
-  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid) async =>
+  Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false}) async =>
       respuestaDeGet ??
       ApiResult.success(GroupOrderResponseDM(groupOrder: GroupOrderDM(uuid: uuid)));
 

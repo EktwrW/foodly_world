@@ -251,6 +251,25 @@ release y detecta diffs nativos o de assets, sin publicar. Termina en
 Un patch OTA sólo lleva **Dart**. Si el cambio toca un plugin, un permiso o el
 manifiesto, hace falta release nueva.
 
+**El token de sesión dura 15 min y el patch tarda más (2026-09-07).** El
+`patch ios` de `2.0.8+101` compiló, subió los artefactos y murió en el último
+paso con `Unauthorized` al pedir los channels. El access token de
+`~/Library/Application Support/shorebird/credentials.json` se emite al arrancar
+el comando con 15 minutos de vida y el CLI **no lo refresca a mitad de run**
+(upstream tiene abierta la rama `fix/login-expired-credentials`); solo el link
+de AOT se llevó 240 s. El patch **queda creado y subido, pero sin track**: no
+llega a ningún teléfono y no hace falta recompilar nada.
+
+```sh
+shorebird patches list --release-version 2.0.8+101      # «[no track]» = huérfano
+shorebird patches set-track --release 2.0.8+101 --patch 1 --track stable
+```
+
+`patches promote` hace lo mismo pero está deprecada y usa otros nombres de
+flags (`--release-version`, `--patch-number`).
+
+Después de cada patch, confirmá con `patches list` que dice `track: stable`.
+
 ### App Review: cómo dejar que el revisor llegue a Apple Pay (2026-09-03)
 
 Apple pidió probar las órdenes y ver Apple Pay. Lo que funcionó:
@@ -1354,6 +1373,121 @@ dependencias, `EventTrackingService` con 3, `SpeechToText`, `LocalStorageService
 el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
+
+## Un evento de realtime hacía DOS lecturas idénticas (2026-09-08)
+
+**El problema** (auditoría de escalabilidad). Dos cubits del MISMO cliente
+observan el MISMO canal `private-group-order.{uuid}`:
+
+```
+group_order_cubit.dart:51         -> _refetchSilently(uuid)   (la página)
+active_group_order_cubit.dart:354 -> refresh()                (el chip flotante)
+```
+
+y los dos terminan en `_repo.getGroupOrder(uuid)`. Ante un evento salían **dos
+peticiones idénticas en el mismo turno**.
+
+Las cuentas, con cuidado porque es fácil contarlas mal: el backend despacha
+**UN** evento y Pusher lo abanica a los 8 suscriptores. En una mesa de 8 con la
+página y el chip vivos, una mutación pasaba de 8 lecturas de la orden completa
+a **16**, y cada una son ~20 consultas a Neon a 35 ms de ida y vuelta. El
+coalescer es **por dispositivo**: lleva las 16 a 8, no a 1. Y el «con la página
+y el chip vivos» carga todo el peso: sólo tiene dos oyentes quien está DENTRO
+de la orden; quien navega el menú tiene uno. El ahorro real por evento está
+entre 0 y 8 lecturas, no fijo en 8.
+
+**Dónde NO estaba el problema**: el backend emite UN evento por petición.
+Comprobado sobre los 32 sitios que llaman a `GroupOrderTouched::safe`, y
+`maybeAutoDeliver()` —que parece candidato— no emite el suyo. El ×2 es del
+cliente, no del servidor. Que los dos oyentes reciban el evento es CORRECTO y
+está fijado por un test: lo que sobraba era la segunda petición HTTP.
+
+**La solución**: coalescer en `GroupOrderRepo`. Si en el MISMO TURNO ya se pidió
+esa orden, la segunda llamada se cuelga de la primera.
+
+```dart
+Future<ApiResult<GroupOrderResponseDM>> getGroupOrder(String uuid, {bool coalesce = false})
+```
+
+**Y aquí está la trampa, que es lo que hace peligroso un coalescer**:
+`coalesce` es **solo para las lecturas que nacen de un evento**. Una lectura
+que sigue a una mutación propia NO puede coalescer: la petición en vuelo salió
+ANTES de la mutación, así que devolvería el estado anterior. Es justo lo que
+hace `cancelPayment()`, que re-lee para que el pie deje de decir "confirmando"
+— con el estado viejo se quedaría diciéndolo para siempre. Por eso el default
+es `false` y solo los dos `onTouched` pasan `true`.
+
+Corolario incómodo: **el default `false` hace que perder el argumento en un
+refactor no dé ningún error**. Vuelve el ×2 y nadie se entera. Hay tests de
+cableado que fijan quién pide coalescer y quién no, precisamente por eso.
+
+**La ventana es UN TURNO SÍNCRONO, no "hasta que la petición termine"**, y esto
+es lo que separa un coalescer correcto de uno barato. La primera versión de
+esta PR usaba la ventana larga y la revisión demostró dos fallos reales:
+
+1. **Datos rancios.** Llega un evento y sale L1. Mientras L1 vuela, otro
+   comensal agrega un plato y llega un segundo evento, que se colgaba de L1 —
+   una respuesta que por construcción no contiene ese plato. Y no hay nada que
+   lo recupere: el polling de 10 s **solo corre con el socket caído**
+   (`group_order_realtime_service.dart:222` lo apaga al conectar). La orden se
+   quedaba rancia hasta el siguiente evento o un resume. Le puede pasar al
+   propio autor del cambio: `GroupOrderTouched` usa `broadcast()` sin
+   `->toOthers()`, así que uno recibe su propio evento.
+2. **Una petición colgada dejaba la orden muda toda la sesión.** Este Dio no
+   fija `receiveTimeout` ni `connectTimeout` —son `null` por defecto—, así que
+   un GET que nunca responde retenía la entrada para siempre. Modo de fallo
+   NUEVO: antes cada evento salía por su cuenta.
+
+Con la ventana de un turno se cierran los dos: `ChannelListeners.notificar()`
+avisa a los dos oyentes en el mismo turno, que es todo lo que hay que colapsar,
+y los microtasks se drenan antes de volver al bucle de eventos, así que el
+próximo evento de Pusher siempre encuentra el mapa limpio. **No es una caché**:
+nadie reusa nada fuera de ese turno.
+
+**Con una precisión que la segunda revisión me obligó a hacer**: lo que se
+cierra es *la ruta que abría el coalescer*, no el problema de rancidez entero.
+Queda viva la de **respuestas fuera de orden** —dos eventos en turnos
+distintos, y la respuesta del segundo llega antes que la del primero, así que
+la vieja pisa a la nueva—. Eso ya pasaba antes de esta PR y la PR lo estrecha
+(de 2 peticiones en vuelo por evento a 1), pero no lo cierra. Cerrarlo pide una
+guarda de generación: descartar una respuesta más vieja que la última aplicada.
+
+**Trampa al medir esto**: mi primer barrido de mutaciones dio "M3 sobrevive" y
+era mentira del detector, no del test. Con esa mutación un test se queda
+esperando un completer y la corrida tarda un minuto, así que la salida empieza
+por `01:00` y mi `grep "^00:0"` no la veía. **Usa el código de salida de
+`flutter test`, no el texto.**
+
+**El resume también contaba doble.** `GroupOrderRealtimeService` y
+`GroupOrderFloatingChipHost` son dos `WidgetsBindingObserver` distintos y los
+dos reaccionan a `resumed`; el binding los recorre en un bucle **síncrono**
+(`flutter/lib/src/widgets/binding.dart:1332`), así que caen en el mismo turno.
+El `refresh()` del host salía sin coalescer: dos peticiones idénticas en cada
+vuelta del background, el momento más frecuente del día.
+
+**Fijado en** `test/group_orders/una_lectura_por_evento_test.dart` (18 casos) y
+`resume_una_sola_lectura_test.dart` (2).
+
+**Y el cableado hay que fijarlo en LAS DOS direcciones.** Yo había blindado
+sólo la pérdida del `coalesce: true`; añadirlo donde no va tampoco puede pasar
+desapercibido, y en dos sitios pasaba: la re-lectura tras un pago fallido
+(`group_order_cubit.dart`, el 409) y el `refresh()` al cerrar la página
+(`group_order_floating_chip_host.dart`). Los dos siguen a algo que ya tocó el
+servidor, que es justo el caso donde coalescer devuelve el estado anterior.
+
+De las mutaciones mueren 13. Una sola es **equivalente**: quitar la guarda
+`identical`, porque entre que una entrada se registra y corre su microtask no
+hay ninguna otra vía de borrado. Se queda por defensa, y el comentario lo dice
+así — antes decía «no es paranoia» y sí lo era.
+
+**`clear()` en vez de `remove(uuid)` NO es equivalente**, aunque yo lo escribí
+aquí. Hay una secuencia que los distingue y está en el test: si `o2` se
+registra primero, la sonda va en un microtask encolado a continuación, y `o1`
+se registra después, la cola queda `borrar-o2, sonda, borrar-o1` — la sonda
+encuentra `o1` viva con `remove`, y borrada con `clear`. Que ningún test lo
+viera sólo significaba «no observable con las llamadas de hoy», que es mucho
+más débil que «equivalente».
+
 
 ## Visited Business Mode (2026-04-12)
 
