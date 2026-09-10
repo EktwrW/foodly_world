@@ -3,6 +3,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/view_models/user_profile_vm.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -284,51 +285,53 @@ class _SignUpUserPageState extends State<SignUpUserPage> {
   Widget _buildSignUpContent(UserProfileVM vm, BuildContext context) {
     final enabled = vm.roleId != null;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
-      child: Form(
-        key: vm.formKey,
-        autovalidateMode: vm.autovalidateMode,
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: !enabled ? () => _showEnableFormSnackBar(context) : null,
-              child: const SignUpUserForm(),
-            ),
-            TermsAndPrivacyPolicyWdg(enabled: enabled, vm: vm),
-            CustomNeumorphicButton(
-              margin: EdgeInsets.zero,
-              onPressed: enabled && vm.termsAndContiditionsAccepted
-                  ? () {
-                      if (_signUpCubit.validateForm()) {
-                        if (_signUpCubit.isGoogleSignIn) {
-                          _signUpCubit.signUpUser();
-                        } else {
-                          // Prefer the complete international number (+XX...) stored via
-                          // onChanged — avoids double-prefix bugs from raw controller text.
-                          // Fall back to raw text only if the user never interacted with
-                          // the phone field (edge case).
-                          final phoneNumber = _signUpCubit.completePhone.isNotEmpty
-                              ? _signUpCubit.completePhone
-                              : vm.phoneNumberController?.controller?.text;
-                          final countryCode = _signUpCubit.phoneIsoCode.isNotEmpty
-                              ? _signUpCubit.phoneIsoCode
-                              : vm.country?.countryCode.toUpperCase();
+    return ContentColumn(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
+        child: Form(
+          key: vm.formKey,
+          autovalidateMode: vm.autovalidateMode,
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: !enabled ? () => _showEnableFormSnackBar(context) : null,
+                child: const SignUpUserForm(),
+              ),
+              TermsAndPrivacyPolicyWdg(enabled: enabled, vm: vm),
+              CustomNeumorphicButton(
+                margin: EdgeInsets.zero,
+                onPressed: enabled && vm.termsAndContiditionsAccepted
+                    ? () {
+                        if (_signUpCubit.validateForm()) {
+                          if (_signUpCubit.isGoogleSignIn) {
+                            _signUpCubit.signUpUser();
+                          } else {
+                            // Prefer the complete international number (+XX...) stored via
+                            // onChanged — avoids double-prefix bugs from raw controller text.
+                            // Fall back to raw text only if the user never interacted with
+                            // the phone field (edge case).
+                            final phoneNumber = _signUpCubit.completePhone.isNotEmpty
+                                ? _signUpCubit.completePhone
+                                : vm.phoneNumberController?.controller?.text;
+                            final countryCode = _signUpCubit.phoneIsoCode.isNotEmpty
+                                ? _signUpCubit.phoneIsoCode
+                                : vm.country?.countryCode.toUpperCase();
 
-                          _showPhoneVerificationModal(
-                            context,
-                            phoneNumber: phoneNumber,
-                            countryCode: countryCode,
-                          );
+                            _showPhoneVerificationModal(
+                              context,
+                              phoneNumber: phoneNumber,
+                              countryCode: countryCode,
+                            );
+                          }
                         }
                       }
-                    }
-                  : null,
-              shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
-              text: S.current.createUser,
-              disabled: !enabled || !vm.termsAndContiditionsAccepted,
-            ).paddingOnly(top: 36, bottom: 99),
-          ],
+                    : null,
+                shape: enabled ? ui.NeumorphicShape.convex : ui.NeumorphicShape.flat,
+                text: S.current.createUser,
+                disabled: !enabled || !vm.termsAndContiditionsAccepted,
+              ).paddingOnly(top: 36, bottom: 99),
+            ],
+          ),
         ),
       ),
     );

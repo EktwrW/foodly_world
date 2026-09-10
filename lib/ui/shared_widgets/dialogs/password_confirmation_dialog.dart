@@ -5,6 +5,7 @@ import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes;
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show LineAwesome;
@@ -106,7 +107,7 @@ class _PasswordConfirmationDialogState extends State<PasswordConfirmationDialog>
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return FoodlyDialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.symmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
       child: FadeIn(

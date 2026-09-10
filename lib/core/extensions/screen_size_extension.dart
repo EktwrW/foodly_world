@@ -6,6 +6,19 @@ import 'package:responsive_framework/responsive_framework.dart';
 extension ScreenSizeExtension on BuildContext {
   double get screenWidth => ResponsiveBreakpoints.of(this).screenWidth;
   double get screenHeight => ResponsiveBreakpoints.of(this).screenHeight;
+
+  /// El lado largo de la pantalla.
+  ///
+  /// Para alturas proporcionales (`screenHeight * .38` y compañia). En VERTICAL
+  /// es exactamente [screenHeight], asi que en telefono —que esta bloqueado en
+  /// vertical— no cambia absolutamente nada.
+  ///
+  /// En una tableta apaisada, en cambio, [screenHeight] es el lado corto: una
+  /// caja de `.38` pasa a medir menos que en un telefono y el contenido de
+  /// dentro se aplasta. Con el lado largo la caja conserva el tamaño que
+  /// tendria en vertical y, si ya no cabe en pantalla, el scroll que envuelve
+  /// se encarga.
+  double get screenLongestSide => screenWidth > screenHeight ? screenWidth : screenHeight;
   bool get isMobile => ResponsiveBreakpoints.of(this).isMobile;
   bool get isSmallTablet => !isMobile & isScreenSmallerOrEqualTo(DeviceSize.smallTablet.name);
   bool get isTablet => ResponsiveBreakpoints.of(this).equals(TABLET);

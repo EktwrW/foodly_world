@@ -423,6 +423,471 @@ La tabla de idioma × país está en `test/core/fecha_por_idioma_test.dart`, 31
 casos. Valídala por mutación: devolver la comprobación de país al principio de
 `getStringFormat` pone 5 en rojo, y restaurar la regla vieja de `getShortFormat`
 otros 6.
+### La tira de promos de la home tiene TRES estados y los tres medían distinto (2026-09-06)
+
+La home pega un salto al terminar de cargar las promos: la tira encoge y el
+título "Nuevos en Foodly" con su tarjeta suben de golpe. La causa es que la tira
+se pinta de tres formas —shimmer de carga, placeholder de vacío/error y
+carrusel cargado— y **cada una sacaba su alto por su cuenta**.
+
+Medido pintando los widgets (`test/ui/home/home_promo_strip_sin_salto_test.dart`):
+
+| ancho | shimmer | vacío | cargado | salto |
+| ----- | ------- | ----- | ------- | ----- |
+| 375 (iPhone SE) | 333 | 301,9 | **210,9** | +122 |
+| 402 (iPhone 16 Pro) | 333 | 317,1 | **226,1** | +107 |
+| 430 (16 Pro Max) | 333 | 332,9 | **241,9** | +91 |
+| 744 (iPad mini) | 333 | 509,5 | **225,0** | +285 |
+| 1024 (iPad Pro) | 333 | 667,0 | **225,0** | +442 |
+
+**La trampa: `CarouselSlider` sin `height` no tiene un alto, tiene una
+proporción.** Cae a su `aspectRatio` 16/9 sobre el ancho disponible, así que el
+alto de la tira cambia con cada teléfono y no hay ningún número en el código con
+el que cuadrar. `PromoCarouselShimmer` llevaba un `_carouselH = 333` a mano
+—escrito cuando la card era otra— y su comentario decía que compartía geometría
+con el carrusel, que era justo lo que no hacía. Y `_EmptyOffersWidget`, cuyo
+comentario prometía literalmente *"keep the carousel height to avoid layout
+jump"*, montaba su `AspectRatio` 16/9 con `paddingBottom(96)` encima: 91 px de
+más en móvil, y en tablet se disparaba porque nada lo frenaba.
+
+**El arreglo.** `resolveHomePromoCarouselGeometry` se mudó a
+`lib/ui/shared_widgets/carousel/foodly_carousel.dart` y ahora devuelve
+`height` **no nulo también en móvil**, con la misma fórmula que aplicaba el
+aspectRatio (`screenWidth / kHomePromoCarouselAspectRatio`). El número que ve el
+usuario en móvil no cambió ni un píxel; lo que cambió es que pasó a ser legible.
+Los tres estados lo leen de ahí:
+
+-   el carrusel, vía `homePromoCarouselOptions()` — pública a propósito, para
+    que el test mida las **mismas** opciones que pinta la home y no una copia;
+-   `PromoCarouselShimmer`, que ya no tiene constante propia;
+-   `EmptyOffersWidget` (antes privado; se hizo público sólo para poder
+    medirlo), que además pasó a superponer el mensaje sobre el vídeo en vez de
+    dejarle 96 px debajo — igual que hace `NearbyPromoCard` con su cinta.
+
+**El criterio, para la próxima: manda el carrusel.** El shimmer y el
+placeholder siguen a lo que el usuario acaba viendo, nunca al revés. Un
+esqueleto "bonito" con un alto inventado es exactamente cómo se llega a un
+salto de 122 px.
+
+**Lo que queda pendiente y no se tocó:** la composición interna del esqueleto
+(foto arriba + franja blanca con nombre y botones abajo) sigue siendo la de la
+card ANTERIOR al rediseño del 2026-09-04. La de hoy es foto a sangre con la
+cinta de vidrio superpuesta. No afecta al alto, que es de lo que iba esto.
+
+**Protección.** `test/ui/home/home_promo_strip_sin_salto_test.dart` mide los
+tres estados al mismo ancho en siete anchos (320 → 1024) y falla si se separan;
+comprueba además que ninguno desborda y que el alto de móvil sigue siendo el que
+daba el aspectRatio, para que "cuadrarlos" no pueda hacerse en el número
+equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
+devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
+el test en rojo por esas tres razones distintas.
+
+### El menú en tableta: índice al lado, no dos paneles (2026-09-10)
+
+En tableta el menú era una columna larguísima: para llegar a «Postres» hay que
+bajar por toda la carta, con media pantalla vacía al lado.
+
+**Se valoró el maestro-detalle —secciones a la izquierda, platos a la derecha—
+y se descartó a propósito.** Una carta se navega **mirando, no buscando**: al
+enseñar solo una sección se pierde el descubrimiento de lo que hay al lado, que
+es lo que vende platos. Y con un negocio de una o dos secciones el panel
+izquierdo queda vacío robando 168 px.
+
+Lo que hay es `MenuSectionIndex`
+(`lib/ui/shared_widgets/menu/menu_section_index.dart`): un índice que dice dónde
+estás y deja saltar, con el scroll **continuo como siempre**. El panel de platos
+es literalmente el widget de hoy, así que el riesgo queda confinado al índice —
+importante, porque nada de esto se puede verificar visualmente desde aquí.
+
+`debeMostrarIndiceDeSecciones` pide dos cosas: `sw600` de ancho (el mismo umbral
+que el resto de la app, así que sirve igual en el build web de escritorio) y al
+menos **3 secciones**. Con menos no hay recorrido que acortar.
+
+**La jerarquía real, que no es obvia:** `MenuCategory` son tres fijas —comida,
+bebidas, combos— y se pasan con un `PageView`. Dentro de cada una hay una lista
+de `CategoryDM`, que son las secciones del negocio. El índice indexa las
+segundas, no las primeras.
+
+**El detalle espinoso: la lista es PEREZOSA.** Una sección lejana no tiene
+`RenderObject`, así que `Scrollable.ensureVisible` no tiene a qué agarrarse.
+`_irASeccion` salta primero a una posición estimada por proporción y afina en el
+frame siguiente. Y `_recalcularSeccionActual` solo mira las secciones
+construidas — que son justo las que importan para «dónde estoy».
+
+**Aplicado en las TRES cartas** —visitada, gestión y pública—. Y son tres, no
+seis: la cuenta de «seis pantallas» incluía las páginas que las alojan, pero la
+lista de secciones vive solo en los constructores de categoría.
+
+La parte delicada vive una sola vez, en `MenuSectionIndexController`: posiciones
+de scroll y ciclos de vida son justo lo que no conviene tener por triplicado.
+
+**LAS CLAVES VAN POR UUID, NO POR ÍNDICE, y es deliberado.** Una clave por
+posición se le pega a «lo que haya en el sitio 3», así que al añadir o borrar
+una sección el estado con `AutomaticKeepAlive` se mapearía a la sección
+equivocada. Al ser una `GlobalKey` por uuid, además sustituye a la
+`ValueKey(uuid)` que ya llevaban esos widgets sin perder identidad. Hay un test
+que lo fija: borrar la primera sección no puede hacer que la segunda herede su
+clave.
+
+**Lo que NO cubre ningún test:** el salto en sí. Depende de posiciones reales de
+scroll sobre una lista perezosa, y montarlo en test sería probar una simulación
+propia, no el comportamiento. Ese gesto hay que probarlo en un dispositivo.
+
+### Los huecos con vídeo del home: tres tarjetas, no un placeholder (2026-09-10)
+
+Salió de probar en una tableta Lenovo. El hueco de promos «se veía muy
+pequeñito». No era pequeño: estaba **aplastado**. El alto quedó clavado en 225
+px de tablet en adelante —para que las cards del carrusel conserven
+proporciones de teléfono— pero el hueco no es un carrusel de cards, era **una
+sola card a todo el ancho**: 1264 × 225, una tira de buzón.
+
+**El arreglo de fondo lo propuso Héctor y es mejor que lo que yo iba a hacer.**
+En vez de un placeholder que hay que cuadrar con el carrusel cargado, el vacío
+**ES el carrusel**: tres tarjetas con las mismas `homePromoCarouselOptions` y
+la misma geometría. Ya no hay dos alturas que puedan separarse, así que la
+promesa de «sin salto» pasa de estar vigilada por un test a ser cierta por
+construcción. Y de paso cada tarjeta ocupa el hueco de una promo, que es lo que
+arregla el aplastamiento.
+
+Las tres cuentan una historia: **llegarán → guárdalas → compártelas**. La
+tercera cambia según quién mire (`isBusinessOwner`): a un dueño «lo bueno se
+comparte» no le dice nada, y que sus promociones salen en la portada de los
+clientes de al lado, sí. Es el único de los tres huecos con botón, porque es el
+único con adónde ir.
+
+**El fondo NO es una foto, y es deliberado.** Se valoró generar imágenes con
+IA. Un plato generado dentro de una tarjeta con forma de promoción **se lee como
+una promoción de verdad**: el usuario la toca esperando una oferta y no hay
+ninguna. `FoodlyBrandSurface` es degradado + el iso de marca de agua + trama
+diagonal. No pesa (el asset ya viaja en el bundle), el contraste del vidrio deja
+de ser una lotería, y escala sin pixelarse para la web. El vídeo se queda solo
+en la primera tarjeta, que era el límite de recursos que puso Héctor.
+
+**EL DESBORDAMIENTO, medido:** el hueco de negocios nuevos era un
+`SizedBox(height: 430)` con un `AspectRatio(4/3)` dentro. Con el padding lateral
+del home, en tableta el vídeo pedía el ancho entero por 3/4 de alto:
+**desbordaba 250 px a 820 y 595 a 1280**. En teléfono colaba de milagro. Ahora
+el alto lo pone la proporción dentro de un techo de ancho.
+
+**El botón de reintentar dejó de ser neumórfico.** Un `CustomNeumorphicButton`
+—relieve, esquinas de 4 px, 32 px de alto— metido dentro de una composición de
+vidrio: dos lenguajes peleándose en 200 píxeles. Ahora es el mismo vidrio que la
+cinta, y 44 px.
+
+**DOS TRAMPAS QUE ME MORDIERON AQUÍ:**
+
+1. **No leas la inyección de dependencias dentro de un `build`.** Puse
+   `di<AuthSessionService>().userIsManager` en el build de `EmptyOffersWidget` y
+   el widget dejó de poder pintarse sin DI — tumbó el test que ya existía. El
+   dato entra por parámetro y lo resuelve quien lo construye.
+2. **Cuidado con QUÉ nodo se mide.** El nodo externo de `FoodlyEmptyMediaCard`
+   es un `Center` que ocupa todo el ancho; el techo va por dentro. Midiendo ese
+   salen 1280 y parece que no acota nada. Es exactamente el mismo despiste que
+   con las hojas inferiores de Material 3.
+
+Canvas del diseño: artifact 6da99564.
+
+### Estados vacíos: tres intenciones, no un estilo (2026-09-10)
+
+Foodly tenía **24 estados vacíos** escritos a mano, con nueve tratamientos de
+texto y cuatro tamaños de icono. Pero la inconsistencia visual era la mitad
+fácil. El problema de fondo: **tres cosas distintas se pintaban igual**.
+
+- **novato** — no hay nada todavía; la salida es empezar algo.
+- **filtro** — sí hay contenido, pero no con este criterio; la salida es
+  cambiarlo.
+- **fallo** — no se pudo cargar; la salida es reintentar, nunca dar ánimos.
+
+Al usuario nuevo se le decía «aún no tienes nada» tanto cuando era cierto como
+cuando la petición se había caído. `FoodlyEmptyView`
+(`lib/ui/shared_widgets/placeholders/foodly_empty_view.dart`) lo separa.
+
+Alguien ya había llegado a esta conclusión una vez: `posts_feed_wdg` distingue
+por dentro entre «no hay publicaciones cerca» y «no sigues a nadie», y lo
+explica en un comentario. No se había propagado a ninguna otra pantalla.
+
+**Dato que ordena las prioridades: solo 1 de los 24 tenía botón.** Los otros 23
+son callejones sin salida — dicen que no hay nada y ahí acaban. Para un usuario
+de la primera semana eso pesa más que la tipografía. Por eso `onAction` es lo
+que decide si se pinta salida: **sin callback no hay botón**, porque es
+preferible un vacío sin salida a uno que no lleva a ninguna parte.
+
+**El vidrio NO se hereda literalmente, y es deliberado.** Un `BackdropFilter`
+necesita algo detrás que desenfocar; un estado vacío se pinta sobre fondo plano,
+así que el vidrio sería un panel teñido y nada más. Se hereda la paleta, la
+tipografía, los radios y el suelo táctil de 44 px.
+
+**Colores nuevos y por qué:** `failureOnSurface` (#C0261A) es `error` (#F31708)
+oscurecido. El original está pensado para un texto de validación; en un medallón
+de 96 px vibra y se pelea con el ciruela.
+
+**Fase 1 hecha:** `NoItemsViewWdg` —el único que ya se compartía, con cinco
+llamadas— delega ahora en `FoodlyEmptyView`. Pintaba con `NeumorphicText` y
+Poppins traído de `GoogleFonts` directo, o sea el sistema anterior al rediseño.
+Se conservan nombre y firma para no tocar las cinco llamadas. Dos de ellas
+—«no hay promociones en esta sección»— eran vacíos por FILTRO disfrazados de
+novato y ahora lo dicen.
+
+**Sin hacer:** las 15 pantallas sueltas, y el copy. Cada una necesita título,
+subtítulo y etiqueta de botón nuevos en tres idiomas — eso va con Héctor
+delante, no inventado. Por eso `subtitle` y `actionLabel` son opcionales: la
+fase 1 unifica lo visual sin bloquearse en el copy.
+
+Canvas del diseño: artifact 883d0965 (anatomía, las tres intenciones, tres
+comparativas antes-después y el plan).
+
+### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
+
+Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde
+la altura se parte. El barrido de `screenHeight` en toda la app dio **una sola
+pantalla en riesgo real**, y es la peor posible: `starting_page`, la de login.
+
+Reparte la pantalla en cajas de alto proporcional —`.12`, `.19`, `.38`, `.19`—
+que sumadas dan casi toda la altura. En una tableta de 1280x800 apaisada, la
+caja del formulario (`.38`) mediría **304 px, menos que los 332 que tiene hoy en
+un iPhone 16 Pro**. El formulario se aplasta.
+
+Arreglo: `context.screenLongestSide` en vez de `context.screenHeight`. En
+VERTICAL los dos son el mismo número, así que en teléfono —bloqueado en
+vertical— no cambia absolutamente nada. En apaisado la caja conserva su tamaño
+de vertical y, como la página ya vive en un `SingleChildScrollView`, lo que
+sobra se desplaza en vez de aplastarse.
+
+**Los demás `screenHeight` se revisaron y se dejan**, que también es resultado:
+paddings proporcionales (`.15`, `.025`) son inofensivos; `maxHeight: .72` de un
+diálogo es un tope; y los `height: screenHeight` sueltos son contenedores a
+pantalla completa, que es justo lo que deben ser.
+
+**TRAMPA AL MEDIR ESTO EN TEST:** `ResponsiveBreakpoints` devuelve **0** hasta
+que su `LayoutBuilder` mide —ya estaba documentado en
+`group_order_invite_snackbar.dart`—. Leyendo `context.screenHeight` en el primer
+build salen dos ceros, y un test que compare `ladoLargo == alto` pasa en verde
+sin comprobar nada. Hay que `pump()` antes de leer, y afirmar que el valor no es
+0.
+
+### Tablet: quién puede girar, y las rejillas (2026-09-07)
+
+**Todo el trabajo de tablet era invisible, y no estaba en el inventario.** Dos
+cosas a la vez:
+
+1. `main()` bloqueaba la app en vertical para todo el mundo con
+   `setPreferredOrientations([portraitUp])`. Como el `NavigationRail` solo
+   aparece en apaisado, era código inalcanzable.
+2. `AndroidManifest.xml` declaraba `largeScreens="false"` y
+   `xlargeScreens="false"` — la app decía no soportar tabletas. El catálogo de
+   dispositivos de Play lee esas banderas: **antes de montar una prueba cerrada
+   en tableta hay que comprobar que el dispositivo aparece como compatible.**
+
+Ahora `orientacionesPermitidas` (`lib/core/utils/soporte_de_orientacion.dart`)
+decide por tamaño: lado corto >= 600 px (el `sw600dp` de Android) puede girar,
+por debajo se queda vertical. **El teléfono no se toca.** Se mide el lado corto
+y no el ancho porque la app puede arrancar ya girada. Ante la duda —vista sin
+medidas en arranque en frío— vertical.
+
+En iOS, el iPhone sigue solo vertical y el iPad gana las cuatro. **El Info.plist
+se edita a mano**: `plistlib` reescribe el fichero entero y se lleva por delante
+los comentarios XML, incluido el de cumplimiento de exportación (220 líneas de
+diff para añadir tres).
+
+**Las rejillas eran menos de las que decía el inventario.** Al contarlas solo
+hay tres con columnas fijas que importen: `business_results_view` (compartida
+por categorías y búsqueda), `my_favorite_businesses_view` y su
+`BusinessGridShimmer`. Todas pasan por `columnasDeRejilla`, que mantiene la card
+en su ancho de teléfono (200 px medidos) y enseña MÁS cards en vez de más
+grandes — la misma idea que el carrusel de promos.
+
+Dos que NO se tocan y conviene saber por qué:
+
+- **`month_calendar` tiene `crossAxisCount: 7`** y son los días de la semana. Un
+  script que "adapte todas las rejillas" lo rompe.
+- El grid de fotos del `user_profile_bottom_sheet` vive dentro de una hoja que
+  Material 3 ya acota a 640, así que su ancho no crece.
+
+El esqueleto tiene que pintar las mismas columnas que la rejilla cargada, o la
+pantalla salta al terminar de cargar — el mismo fallo que tenía la tira de
+promos.
+
+### Tablet: la navegación en apaisado va a un NavigationRail (2026-09-06)
+
+`debeUsarNavigationRail` (en
+`lib/ui/views/home/widgets/foodly_navigation_rail.dart`) decide entre rail y
+barra inferior: **tablet o desktop Y apaisado**. En teléfono devuelve false en
+las dos orientaciones, así que `_buildContent` sale por la rama de siempre sin
+tocar nada — la app está en producción y el camino de móvil no se ha movido.
+
+En vertical se queda la barra de abajo a propósito: un rail cuesta ANCHO, y en
+apaisado lo que escasea es el alto.
+
+**La traducción del shell.** La barra inferior son cuatro iconos (0..3) más un
+FAB acoplado a la muesca del centro, que es el destino 4 (la página principal).
+El equivalente canónico en `NavigationRail` es el hueco `leading`, así que el
+iso sube arriba y quedan cuatro destinos. De ahí que `selectedIndex` sea
+**null** cuando el índice activo es el 4: ese destino no está en la lista, se
+pinta en el propio FAB, que ya cambia de versión según esté activo.
+
+Índices, gate de invitado, `navigateTo` y el globo de la campana son los mismos:
+solo cambia la presentación.
+
+**Dos diferencias deliberadas en tablet:**
+1. El rail NO se esconde durante la búsqueda. La barra inferior sí, para
+   devolverle alto a los resultados; en un rail no hay alto que devolver, y el
+   usuario conserva la navegación mientras busca.
+2. Por eso `_hideBottomBarAnimationController` no se usa en esa rama. Se sigue
+   creando y liberando igual: es estado del widget.
+
+**Duplicación consciente:** la composición de los iconos (la tienda con su
+corazón, la campana con su globo) está repetida entre el rail y
+`_FoodlyBottomNavBar._buildNavBarItem`. Unificarlas obliga a tocar el camino de
+móvil, que todavía no se ha visto en un dispositivo. Se juntan cuando se
+verifique.
+
+`FoodlyNavigationRail` es presentacional a propósito —el `hasUnread` entra por
+parámetro en vez de leerse con un `BlocSelector` como hace la barra— para poder
+medirlo sin cubits ni DI. El `BlocSelector` vive en `home_page.dart`.
+
+### Paridad en teléfono: cómo se comprueba que el trabajo de tablet no rompe nada (2026-09-06)
+
+`test/ui/layout/paridad_en_telefono_test.dart` pinta cada forma envuelta DOS
+veces —tal cual y con el techo— a 375, 402 y 440 px, y compara el rectángulo de
+todos los descendientes marcados. Cubre las nueve formas reales del grupo A más
+el mapa del alta de negocio y el `CustomScrollView` de promos guardadas.
+
+**Por qué hace falta y no basta con "640 no muerde a 402".** `ContentColumn` es
+un `Align`, y un `Align` le pasa al hijo constraints SUELTAS donde el `Scaffold`
+da ancho AJUSTADO. El ancho disponible es el mismo, pero el tipo de constraint
+no, y eso puede cambiar el tamaño de una `Column`. Medido: no cambia en ninguna
+de las formas que hay en la app, pero es el mecanismo a vigilar si se envuelve
+una pantalla nueva.
+
+Los diálogos tienen su propia paridad con los **siete `insetPadding` reales** de
+los 13 sitios migrados, y el appbar del home la suya a los tres anchos.
+
+**Valida el banco por mutación antes de fiarte:** forzar el techo a 200 px tiene
+que poner los diez en rojo. La primera versión tenía un test que pasaba en falso
+porque comparaba una cosa consigo misma (`envolver: (hijo) => hijo`).
+
+### Tablet, piezas transversales: lo que ya estaba bien y lo que no (2026-09-06)
+
+Segundo tramo de `feat/tablet-responsive`. El inventario decía que había siete
+piezas compartidas que arrastran a las 38 pantallas. Al medirlas, **dos de las
+que daba por rotas ya estaban resueltas** y una de las que daba por buenas no lo
+estaba. Todo lo de abajo está medido pintando widgets en test, no leído.
+
+**Hojas inferiores: ya acotadas, no se tocan.** Material 3 le pone
+`BoxConstraints(maxWidth: 640)` por defecto a `showModalBottomSheet`
+(`_BottomSheetDefaultsM3`), y el tema de Foodly es M3 vía `FlexThemeData`.
+Medido: 402 px de ancho en un iPhone, **640 en un iPad de 1024**. Las 24 hojas
+de la app estaban bien desde el principio.
+
+OJO al medirlo: `find.byType(BottomSheet)` devuelve el envoltorio EXTERNO, que
+sí ocupa todo el ancho — el `ConstrainedBox` va por dentro. Midiendo ese nodo
+salen 1024 y parece roto. Hay que medir el contenido.
+
+**Diálogos: esos sí.** `Dialog` se dimensiona con su hijo, acotado solo por el
+ancho de pantalla menos el `insetPadding`. Medido: 322 px en un iPhone 16 Pro y
+**944 en un iPad**; el `SocialConsentDialog` real daba 988. `DialogThemeData` no
+tiene `constraints`, así que no hay arreglo por tema: se añadió `FoodlyDialog`
+(`lib/ui/shared_widgets/dialogs/foodly_dialog.dart`), que es un `Dialog` con
+`UIDimens.DIALOG_MAX_WIDTH` (460) por delante, y se migraron los 13 sitios que
+usaban `Dialog` crudo más `DialogService.showCustomDialog`.
+
+460 está por encima del teléfono vertical más ancho (~430), así que en teléfono
+no muerde. Sí muerde en teléfono apaisado, que también es una mejora.
+
+Cuidado al migrar: **`AlertDialog(` contiene `Dialog(` como subcadena**. Un
+reemplazo sin frontera por la izquierda lo convierte en `AlertFoodlyDialog(`.
+
+**Carruseles: el compartido ya era adaptativo, el de la home no.**
+`FoodlyCarousel` ya resolvía `viewportFraction` por breakpoint con la estrategia
+de "ancho de item constante" (`resolveCarouselViewportFraction`), y
+`categories_page` y `home_categories_wdg` ya lo usaban. El que no: la tira de
+promos de la home, que es un `CarouselSlider` crudo porque necesita
+`enlargeCenterPage`. Se le pasó el mismo resolutor
+(`foodlyCarouselBreakpointOf` se hizo público para eso).
+
+Y había un segundo problema que no estaba en el inventario: **`CarouselSlider`
+sin `height` cae a su `aspectRatio` 16/9 sobre el ancho disponible**, así que la
+tira crecía con la pantalla. Medido: 226 px de alto a 402, **576 a 1024**. Con
+la fracción ya arreglada eso daba cards estrechas dentro de una caja altísima.
+`resolveHomePromoCarouselGeometry` fija el alto de smallTablet en adelante al
+que tendría un teléfono de referencia (400 × 9/16 = 225).
+
+Al rotar no hace falta ningún truco: `CarouselSlider.didUpdateWidget` rehace su
+`PageController` con la fracción nueva conservando la página.
+
+**Appbars: solo el del home.** Se le puso el techo al contenido del
+`FlexibleSpaceBar`, dejando el degradado del `background` a sangre — si no, en
+un iPad la barra de búsqueda medía todo el ancho y el botón del drawer quedaba
+en la otra punta. `SecondaryMainAppBar` se miró y se deja como está: logo a la
+izquierda y etiqueta a la derecha es lo normal en una barra ancha, no es
+contenido estirado.
+
+Aquí me esperaba una trampa que **no existe**: el contenido del appbar es una
+`Column` con `MainAxisAlignment.end`, y como `Align` encoge en el eje que no
+acota, parecía que el techo iba a subir el header al techo de la barra. Medido:
+`FlexibleSpaceBar` le da al title un hueco justo de alto, así que las dos
+alineaciones dan el MISMO rectángulo. Está en
+`test/ui/layout/content_column_en_flexible_space_test.dart`.
+
+**Sin hacer, y a propósito:** drawer fijo en tablet y bottom nav →
+`NavigationRail` en apaisado. Las dos cambian la navegación, no el ancho de una
+caja, así que van con revisión delante.
+
+**Un salto previo, de móvil, encontrado midiendo:** `PromoCarouselShimmer`
+reservaba 333 px y el carrusel real mide 226 a 402 px de ancho, así que la home
+pegaba un salto de ~107 px al cargar las promos. Era anterior a este trabajo;
+arreglado el mismo día — ver "La tira de promos de la home tiene TRES estados y
+los tres medían distinto".
+
+### Tablet: el techo de ancho es de LECTURA, no de dispositivo (2026-09-06)
+
+Rama `feat/tablet-responsive`. Foodly ya tenía `responsive_framework` cableado
+y una extensión completa de `isTablet` / `isDesktop`, pero no las usaba
+**ninguna** de las 38 pantallas. En un iPad eso no se ve roto, se ve estirado:
+líneas de texto de 1024 px, formularios de borde a borde.
+
+**El error que casi cometo.** Mi primer plan decía acotar con
+`DeviceSize.maxWidth`. Son **1440 px** — el tope del build web. Todos los iPad
+miden entre 744 y 1024, o sea por debajo, así que ese techo no habría recortado
+nada en el aparato donde hacía falta. Lo que hay que acotar no es la ventana,
+es la columna. De ahí `UIDimens.CONTENT_MAX_WIDTH = 640` (texto y formularios,
+~70 caracteres a 14 px) y `LIST_MAX_WIDTH = 700` (listas de tarjetas). Los dos
+**por debajo de 744**, que es el iPad mini en vertical; el primer valor que puse
+para listas fue 760 y el test lo cazó.
+
+`ContentColumn` (`lib/ui/shared_widgets/layout/content_column.dart`) es
+`Align` + `ConstrainedBox`. Por debajo del techo no hace nada: en móvil es
+transparente, mismo layout, y no hay condicionales por dispositivo repartidos
+por la app.
+
+**Dónde va el techo.** Nunca alrededor de contenido a sangre —sliver app bars
+con portada, cabeceras con degradado, carruseles—. En las pantallas con
+`SliverAppBar` el techo va por dentro, sobre el `SliverToBoxAdapter` o el
+`body:` del `NestedScrollView`, no sobre el `CustomScrollView` entero.
+
+**LA TRAMPA, y me equivoqué al diagnosticarla.** Al acotar una pantalla hay que
+buscar anchos de pantalla fijos (`context.screenWidth`) entre sus hijos. Pero
+solo son un problema **cuando cuelgan de un `Row`**:
+
+| dónde está el `SizedBox(width: screenWidth)` | qué pasa bajo el techo |
+| --- | --- |
+| colgando del techo directamente | se recorta solo a 640, sin error |
+| dentro de un `Row` | **se desborda** (988 px en 640) |
+| dentro de un sliver | se recorta solo a 640, sin error |
+
+Un `SizedBox` recorta su propio ancho contra las constraints que recibe
+(`BoxConstraints.enforce`); un `Row`, en cambio, da ancho **sin acotar** a sus
+hijos, así que ahí el ancho fijo se respeta tal cual. Yo "arreglé" tres sitios
+antes de medirlo y solo uno estaba roto: el mapa de `sign_up_business_form`
+(`width: context.screenWidth - 36` dentro de un `Row` → ahora `Expanded`). Los
+otros dos los revertí. Está medido en
+`test/ui/layout/content_column_test.dart`, grupo «anchos fijos por debajo del
+techo».
+
+**Sobre `dart format` en este repo.** No corras el formateador sobre un archivo
+entero solo porque tocaste dos líneas: hay archivos escritos a 80 columnas
+aunque el ruler de `.vscode/settings.json` esté a 120, y reformatearlos mete en
+el diff decenas de líneas que no tocaste. Reindenta solo lo que envuelves.
 
 ### El texto de la dirección en el chip de ubicación (2026-09-05)
 

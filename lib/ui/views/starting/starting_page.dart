@@ -108,7 +108,7 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: context.screenHeight * .12,
+              height: context.screenLongestSide * .12,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
@@ -122,26 +122,27 @@ class StartingPage369 extends StatelessWidget {
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .30,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .30,
               child: Center(
                 child: AnimatedPadding(
-                    padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
-                    duration: Durations.medium4,
-                    child: const Asset(FoodlyAssets.logo)),
+                  padding: EdgeInsets.symmetric(horizontal: vm.currentView.isLogin ? 80 : 50),
+                  duration: Durations.medium4,
+                  child: const LogoDeArranque(),
+                ),
               ),
             ).paddingSymmetric(horizontal: UIDimens.SCREEN_PADDING_MOB),
           ),
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .38 : context.screenHeight * .33,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .38 : context.screenLongestSide * .33,
               child: const AppLoginWidgets(),
             ),
           ),
           AnimatedSize(
             duration: Durations.medium4,
             child: SizedBox(
-              height: vm.currentView.isLogin ? context.screenHeight * .19 : context.screenHeight * .13,
+              height: vm.currentView.isLogin ? context.screenLongestSide * .19 : context.screenLongestSide * .13,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -192,7 +193,7 @@ class StartingPage369 extends StatelessWidget {
             ).paddingAll(UIDimens.SCREEN_PADDING_MOB),
           ),
           SizedBox(
-            height: context.screenHeight * .09,
+            height: context.screenLongestSide * .09,
             child: Column(
               spacing: 3,
               children: [
@@ -228,3 +229,39 @@ class StartingPage369 extends StatelessWidget {
     );
   }
 }
+
+/// El logo de Foodly del arranque, encogido en tableta.
+///
+/// POR QUE (2026-09-10). En una tableta el logo se veia desproporcionado
+/// respecto al resto del formulario. Se pinta al [kFactorDeLogoEnTableta] del
+/// hueco disponible.
+///
+/// Se encoge SOLO el logo: la caja que lo contiene mantiene su alto, asi que
+/// los espaciados, los botones de red social, el de invitado, el de terminos y
+/// las animaciones de `AnimatedSize` no se mueven un pixel. Era la condicion.
+///
+/// En telefono NO se envuelve en nada, y eso importa: un
+/// `FractionallySizedBox` con factor 1 no es transparente —le da al hijo
+/// constraints AJUSTADAS donde `Center` le daba sueltas— y con `BoxFit.contain`
+/// eso puede cambiar el tamaño con el que se pinta la imagen.
+class LogoDeArranque extends StatelessWidget {
+  const LogoDeArranque({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const logo = Asset(FoodlyAssets.logo);
+
+    // `isMobile` es < 600 px de ancho. Como el telefono esta bloqueado en
+    // vertical, ningun telefono llega ahi: esto solo es cierto en tableta.
+    if (context.isMobile) return logo;
+
+    return const FractionallySizedBox(
+      widthFactor: kFactorDeLogoEnTableta,
+      heightFactor: kFactorDeLogoEnTableta,
+      child: logo,
+    );
+  }
+}
+
+/// Cuanto se encoge el logo del arranque en tableta: un 25 % menos.
+const double kFactorDeLogoEnTableta = .75;

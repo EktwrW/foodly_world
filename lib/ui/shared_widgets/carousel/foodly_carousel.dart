@@ -13,6 +13,19 @@ import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 /// `BuildContext` or the Flutter test harness.
 enum FoodlyCarouselBreakpoint { mobile, smallTablet, tablet, desktop }
 
+/// El breakpoint de carrusel que corresponde a este contexto.
+///
+/// Público a propósito: no todos los carruseles de Foodly son
+/// [FoodlyCarousel]. El de promos de la home es un `CarouselSlider` porque
+/// necesita `enlargeCenterPage`, y aun así quiere exactamente la misma
+/// resolución de ancho de item. Sin esto tendría que duplicar el mapeo.
+FoodlyCarouselBreakpoint foodlyCarouselBreakpointOf(BuildContext context) {
+  if (context.isDesktop) return FoodlyCarouselBreakpoint.desktop;
+  if (context.isTablet) return FoodlyCarouselBreakpoint.tablet;
+  if (context.isSmallTablet) return FoodlyCarouselBreakpoint.smallTablet;
+  return FoodlyCarouselBreakpoint.mobile;
+}
+
 /// Default phone width (logical px) used as the reference when no per-breakpoint
 /// [FoodlyCarousel.viewportFraction] override is supplied. The auto-resolved
 /// fraction keeps each item at ~`viewportFraction * referenceWidth` physical
@@ -96,6 +109,59 @@ double resolveCarouselHeight({
     FoodlyCarouselBreakpoint.mobile => null,
   };
   return override ?? base;
+}
+
+/// Proporcion de la card de promo de la home. Es el `aspectRatio` por defecto
+/// de `CarouselSlider`, o sea el que la tira venia usando en movil sin saberlo.
+const double kHomePromoCarouselAspectRatio = 16 / 9;
+
+/// Geometria de la tira de promos de la home, por breakpoint.
+///
+/// Pura y publica para poder medirla en test sin levantar cubits ni red, y
+/// **compartida a proposito**: la pintan los tres estados de la tira — el
+/// shimmer de carga, el placeholder de vacio/error y el carrusel cargado. Es
+/// el unico sitio donde se decide cuanto mide de alto.
+///
+/// EL PROBLEMA EN TABLET (2026-09-06). `CarouselSlider` sin `height` se
+/// dimensiona con su [kHomePromoCarouselAspectRatio] sobre el ANCHO
+/// DISPONIBLE. Medido: 226 px de alto en un iPhone 16 Pro, pero **576 px** en
+/// un iPad de 1024. La tira de promos se comia media pantalla, y encima con la
+/// fraccion adaptativa las cards se quedan en ancho de telefono — o sea cards
+/// estrechas dentro de una caja altisima.
+///
+/// De tablet en adelante se fija el alto al que tendria un telefono de
+/// referencia ([kCarouselAdaptiveReferenceWidth] = 400 px), que es justo el
+/// ancho de item que persigue [resolveCarouselViewportFraction]. Asi la card
+/// conserva sus proporciones de movil en cualquier tablet.
+///
+/// EL SALTO EN MOVIL (2026-09-06). Antes esto devolvia `height: null` en movil
+/// —dejando que `CarouselSlider` sacara el alto de su aspectRatio— y entonces
+/// nadie mas podia leerlo. El shimmer tenia su propio 333 hardcodeado y el
+/// placeholder de vacio otro numero distinto que ademas crecia con la
+/// pantalla, asi que al terminar de cargar las promos la tira encogia de golpe
+/// (~107 px en un iPhone 16 Pro) y todo lo de abajo subia. Ahora el alto de
+/// movil se calcula explicito con la MISMA formula que aplicaba el
+/// aspectRatio, o sea que el numero no cambia, pero pasa a ser legible por los
+/// otros dos estados.
+({double viewportFraction, double height}) resolveHomePromoCarouselGeometry({
+  required FoodlyCarouselBreakpoint breakpoint,
+  required double screenWidth,
+}) {
+  const base = .83;
+  final esMovil = breakpoint == FoodlyCarouselBreakpoint.mobile;
+  // En movil el carrusel ocupa el ancho completo, asi que el aspectRatio se
+  // aplica sobre `screenWidth`. En tablet+ se congela en el telefono de
+  // referencia para que la tira deje de crecer con la pantalla.
+  final anchoDeReferencia = esMovil ? screenWidth : kCarouselAdaptiveReferenceWidth;
+
+  return (
+    viewportFraction: resolveCarouselViewportFraction(
+      base: base,
+      breakpoint: breakpoint,
+      screenWidth: screenWidth,
+    ),
+    height: anchoDeReferencia / kHomePromoCarouselAspectRatio,
+  );
 }
 
 /// A custom carousel widget built on top of [PageView] that avoids the
@@ -236,12 +302,7 @@ class _FoodlyCarouselState extends State<FoodlyCarousel> {
   // Responsive resolution
   // ---------------------------------------------------------------------------
 
-  FoodlyCarouselBreakpoint _breakpointOf(BuildContext context) {
-    if (context.isDesktop) return FoodlyCarouselBreakpoint.desktop;
-    if (context.isTablet) return FoodlyCarouselBreakpoint.tablet;
-    if (context.isSmallTablet) return FoodlyCarouselBreakpoint.smallTablet;
-    return FoodlyCarouselBreakpoint.mobile;
-  }
+  FoodlyCarouselBreakpoint _breakpointOf(BuildContext context) => foodlyCarouselBreakpointOf(context);
 
   double _resolveViewportFraction(BuildContext context) {
     return resolveCarouselViewportFraction(

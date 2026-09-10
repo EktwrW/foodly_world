@@ -14,6 +14,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/favorite_button.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
+import 'package:foodly_world/ui/shared_widgets/menu/menu_section_index.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/manage_menu/widgets/menu_category_builder_wdg.dart'
@@ -58,6 +59,26 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
 
   final _scrollController = ScrollController();
 
+  late final _indice = MenuSectionIndexController(scrollController: _scrollController);
+
+  @override
+  void initState() {
+    super.initState();
+    _indice.addListener(_alCambiarDeSeccion);
+  }
+
+  void _alCambiarDeSeccion() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _indice.removeListener(_alCambiarDeSeccion);
+    _indice.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -70,7 +91,44 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
           Expanded(child: const NoItemsViewWdg().paddingBottom(80))
         else
           Expanded(
-            child: NotificationListener<ScrollNotification>(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final secciones = widget.categories ?? const [];
+                final conIndice = debeMostrarIndiceDeSecciones(
+                  anchoDisponible: constraints.maxWidth,
+                  secciones: secciones.length,
+                );
+
+                _indice.sincronizarOrden([for (final c in secciones) c.uuid]);
+
+                final carta = _construirCarta(cubit);
+                if (!conIndice) return carta;
+
+                // El indice al lado, la carta EXACTAMENTE igual que en telefono:
+                // el scroll sigue siendo continuo y se sigue hojeando. Lo unico
+                // que se añade es poder saltar.
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MenuSectionIndex(
+                      secciones: [for (final c in secciones) c.name],
+                      seccionActual: _indice.seccionActual,
+                      onSeleccion: _indice.irA,
+                      encabezado: S.current.menu,
+                    ),
+                    const VerticalDivider(width: 1, thickness: 1),
+                    Expanded(child: carta),
+                  ],
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _construirCarta(VisitedMenuCubit cubit) {
+    return NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification is ScrollStartNotification) {
                   widget.onScrollStart();
@@ -90,17 +148,14 @@ class _VisitedMenuCategoryPageState extends State<VisitedMenuCategoryPage> with 
                   final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
 
                   return SubCategoryWdg(
-                    key: ValueKey(subCategory?.uuid),
+                    key: _indice.claveDe(subCategory?.uuid ?? ''),
                     menuCategory: widget.menuCategory,
                     cubit: cubit,
                     subCategory: subCategory,
                     isLastSubCategory: isLastSubCategory,
                   );
                 },
-              ),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }

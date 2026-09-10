@@ -20,6 +20,7 @@ import 'package:foodly_world/ui/shared_widgets/dialogs/password_confirmation_dia
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/editable_avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/places_autocomplete/places_autocomplete_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
@@ -125,157 +126,159 @@ class UserProfilePage extends StatelessWidget {
                   ),
                   SliverToBoxAdapter(
                     key: const PageStorageKey('sliver-profile-user'),
-                    child: Column(
-                      children: [
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingPassword
-                              ? null
-                              : () => cubit.updateEditMode(ProfileEditing.password),
-                          key: const Key('User-password'),
-                          titleFirstText: '${S.current.userPassword1} ',
-                          titleSecondText: S.current.userPassword2,
-                          footerText: '(${S.current.onlyYouPrivacyNotice})',
-                          editing: vm.edition.isEditingPassword,
-                          readOnlyWidget: _PasswordPlaceholder(vm),
-                          editingWidget:
-                              _EditUsersPassword(vm: vm, key: Key('Edit-${vm.currentUser?.fullName}-password')),
-                        ),
-                        if (vm.loggedUserCanEdit)
+                    child: ContentColumn(
+                      child: Column(
+                        children: [
                           _UserProfileSectionWdg(
-                            key: const Key('Active-sessions'),
-                            titleFirstText: S.current.activeSessionsTitle1,
-                            titleSecondText: S.current.activeSessionsTitle2,
-                            footerText: S.current.activeSessionsProfileFooter,
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingPassword
+                                ? null
+                                : () => cubit.updateEditMode(ProfileEditing.password),
+                            key: const Key('User-password'),
+                            titleFirstText: '${S.current.userPassword1} ',
+                            titleSecondText: S.current.userPassword2,
+                            footerText: '(${S.current.onlyYouPrivacyNotice})',
+                            editing: vm.edition.isEditingPassword,
+                            readOnlyWidget: _PasswordPlaceholder(vm),
+                            editingWidget:
+                                _EditUsersPassword(vm: vm, key: Key('Edit-${vm.currentUser?.fullName}-password')),
+                          ),
+                          if (vm.loggedUserCanEdit)
+                            _UserProfileSectionWdg(
+                              key: const Key('Active-sessions'),
+                              titleFirstText: S.current.activeSessionsTitle1,
+                              titleSecondText: S.current.activeSessionsTitle2,
+                              footerText: S.current.activeSessionsProfileFooter,
+                              editing: false,
+                              readOnlyWidget: const _ActiveSessionsPlaceholder(),
+                              editingWidget: const SizedBox.shrink(),
+                            ),
+                          _UserProfileSectionWdg(
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingAddress
+                                ? null
+                                : () {
+                                    if (vm.currentUser?.principalAddress?.country != null) {
+                                      cubit.setUserCountry(vm.currentUser?.principalAddress?.country);
+                                    }
+                                    vm.cityController?.controller?.text = vm.currentUserCity ?? '';
+                                    vm.zipCodeController?.controller?.text = vm.currentUserZipCode ?? '';
+                                    cubit.updateEditMode(ProfileEditing.location);
+                                  },
+                            key: const Key('User-location'),
+                            titleFirstText: '${S.current.profileUserLocation1} ',
+                            titleSecondText: S.current.profileUserLocation2,
+                            editing: vm.edition.isEditingAddress,
+                            readOnlyWidget: UserLocation(vm: vm, key: ValueKey(vm.currentUserFullAddress)),
+                            editingWidget:
+                                EditUsersLocationWidgets(vm: vm, key: ValueKey('Edit-${vm.currentUserFullAddress}')),
+                          ),
+                          _UserProfileSectionWdg(
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingDateOfBirth
+                                ? null
+                                : () => cubit.selectBirthday(context),
+                            key: const Key('Birthday-date'),
+                            titleFirstText: '${S.current.profileBirthdayText1} ',
+                            titleSecondText: S.current.profileBirthdayText2,
                             editing: false,
-                            readOnlyWidget: const _ActiveSessionsPlaceholder(),
+                            readOnlyWidget: _BirthdayDate(
+                              // Placeholder atenuado cuando no hay fecha (típico
+                              // en altas sociales que entran sin completar perfil).
+                              birthdayDate: (vm.currentUserBirthday?.isNotEmpty ?? false)
+                                  ? vm.currentUserBirthday!
+                                  : (vm.loggedUserCanEdit ? S.current.dateOfBirth : ''),
+                              isPlaceholder: !(vm.currentUserBirthday?.isNotEmpty ?? false),
+                              key: ValueKey(vm.currentUserBirthday),
+                            ),
                             editingWidget: const SizedBox.shrink(),
                           ),
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingAddress
-                              ? null
-                              : () {
-                                  if (vm.currentUser?.principalAddress?.country != null) {
-                                    cubit.setUserCountry(vm.currentUser?.principalAddress?.country);
-                                  }
-                                  vm.cityController?.controller?.text = vm.currentUserCity ?? '';
-                                  vm.zipCodeController?.controller?.text = vm.currentUserZipCode ?? '';
-                                  cubit.updateEditMode(ProfileEditing.location);
-                                },
-                          key: const Key('User-location'),
-                          titleFirstText: '${S.current.profileUserLocation1} ',
-                          titleSecondText: S.current.profileUserLocation2,
-                          editing: vm.edition.isEditingAddress,
-                          readOnlyWidget: UserLocation(vm: vm, key: ValueKey(vm.currentUserFullAddress)),
-                          editingWidget:
-                              EditUsersLocationWidgets(vm: vm, key: ValueKey('Edit-${vm.currentUserFullAddress}')),
-                        ),
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingDateOfBirth
-                              ? null
-                              : () => cubit.selectBirthday(context),
-                          key: const Key('Birthday-date'),
-                          titleFirstText: '${S.current.profileBirthdayText1} ',
-                          titleSecondText: S.current.profileBirthdayText2,
-                          editing: false,
-                          readOnlyWidget: _BirthdayDate(
-                            // Placeholder atenuado cuando no hay fecha (típico
-                            // en altas sociales que entran sin completar perfil).
-                            birthdayDate: (vm.currentUserBirthday?.isNotEmpty ?? false)
-                                ? vm.currentUserBirthday!
-                                : (vm.loggedUserCanEdit ? S.current.dateOfBirth : ''),
-                            isPlaceholder: !(vm.currentUserBirthday?.isNotEmpty ?? false),
-                            key: ValueKey(vm.currentUserBirthday),
+                          _UserProfileSectionWdg(
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingGender
+                                ? null
+                                : () {
+                                    cubit.setUserGender(vm.currentUserGender);
+                                    cubit.updateEditMode(ProfileEditing.gender);
+                                  },
+                            key: const Key('Gender'),
+                            titleFirstText: '${S.current.userGender1} ',
+                            titleSecondText: S.current.userGender2,
+                            editing: vm.edition.isEditingGender,
+                            readOnlyWidget: _UsersGender(vm: vm, key: ValueKey(vm.currentUserGender)),
+                            editingWidget: _EditUserGenderWdg(vm: vm, key: ValueKey('Edit-${vm.currentUserGender}')),
                           ),
-                          editingWidget: const SizedBox.shrink(),
-                        ),
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingGender
-                              ? null
-                              : () {
-                                  cubit.setUserGender(vm.currentUserGender);
-                                  cubit.updateEditMode(ProfileEditing.gender);
-                                },
-                          key: const Key('Gender'),
-                          titleFirstText: '${S.current.userGender1} ',
-                          titleSecondText: S.current.userGender2,
-                          editing: vm.edition.isEditingGender,
-                          readOnlyWidget: _UsersGender(vm: vm, key: ValueKey(vm.currentUserGender)),
-                          editingWidget: _EditUserGenderWdg(vm: vm, key: ValueKey('Edit-${vm.currentUserGender}')),
-                        ),
-                        // Email and phone used to live in a single "Contact" section.
-                        // Email is now isolated because changing it requires re-auth
-                        // (it's an account-recovery vector — silent email change
-                        // would enable takeover via forgot-password).
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingEmail
-                              ? null
-                              : () {
-                                  vm.emailController?.controller?.text = vm.currentUserEmail ?? '';
-                                  context.read<UserProfileCubit>().updateEditMode(ProfileEditing.email);
-                                },
-                          key: const Key('Email'),
-                          titleFirstText: '${S.current.emailSectionTitle1} ',
-                          titleSecondText: S.current.emailSectionTitle2,
-                          footerText: '(${S.current.contactPrivacyNotice})',
-                          editing: vm.edition.isEditingEmail,
-                          readOnlyWidget: _EmailWdg(vm: vm, key: const Key('Email-read-only')),
-                          editingWidget: _EmailEditingWdg(vm: vm, key: const Key('Email-editing')),
-                        ),
-                        _UserProfileSectionWdg(
-                          onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingPhone
-                              ? null
-                              : () {
-                                  vm.phoneNumberController?.controller?.text = vm.currentUserPhoneNumber ?? '';
-                                  context.read<UserProfileCubit>().updateEditMode(ProfileEditing.phone);
-                                },
-                          key: const Key('Phone'),
-                          titleFirstText: '${S.current.phoneSectionTitle1} ',
-                          titleSecondText: S.current.phoneSectionTitle2,
-                          footerText: '(${S.current.contactPrivacyNotice})',
-                          editing: vm.edition.isEditingPhone,
-                          readOnlyWidget: _PhoneWdg(vm: vm, key: const Key('Phone-read-only')),
-                          editingWidget: _PhoneEditingWdg(vm: vm, key: const Key('Phone-editing')),
-                        ),
-                        _UserProfileSectionWdg(
-                          key: const Key('User-reviews'),
-                          titleFirstText: '${S.current.userReviews1} ',
-                          titleSecondText: S.current.userReviews2,
-                          editing: false,
-                          readOnlyWidget: const _UserReviews(key: Key('My-reviews')),
-                          editingWidget: const SizedBox.shrink(),
-                        ),
-                        if (vm.loggedUserCanEdit && (vm.currentUser?.isClient ?? false))
-                          CustomNeumorphicButton(
-                            onPressed: () => _showSwitchRoleSnackBar(context),
-                            text: S.current.switchToManagerRole,
-                            shape: ui.NeumorphicShape.concave,
-                            disabled: false,
-                            type: CustomNeumorphicBtnType.outlined,
-                            margin: const EdgeInsets.only(bottom: 36),
-                            padding: const EdgeInsets.all(9),
-                          ).paddingHorizontal(27),
-                        if (vm.loggedUserCanEdit)
-                          CustomNeumorphicButton(
-                            onPressed: () => context.pushNamed(AppRoutes.blockedUsers.name),
-                            text: S.current.blockedUsers,
-                            leading: const Icon(Icons.block, size: 18, color: FoodlyThemes.primaryFoodly),
-                            shape: ui.NeumorphicShape.concave,
-                            disabled: false,
-                            type: CustomNeumorphicBtnType.secondary,
-                            margin: const EdgeInsets.only(bottom: 46),
-                            padding: const EdgeInsets.all(9),
-                          ).paddingHorizontal(27),
-                        if (vm.loggedUserCanEdit)
-                          _DeleteAccountSection(
-                            key: const Key('delete-account-section'),
-                            onDeleteConfirmed: () => cubit.deleteAccount(),
+                          // Email and phone used to live in a single "Contact" section.
+                          // Email is now isolated because changing it requires re-auth
+                          // (it's an account-recovery vector — silent email change
+                          // would enable takeover via forgot-password).
+                          _UserProfileSectionWdg(
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingEmail
+                                ? null
+                                : () {
+                                    vm.emailController?.controller?.text = vm.currentUserEmail ?? '';
+                                    context.read<UserProfileCubit>().updateEditMode(ProfileEditing.email);
+                                  },
+                            key: const Key('Email'),
+                            titleFirstText: '${S.current.emailSectionTitle1} ',
+                            titleSecondText: S.current.emailSectionTitle2,
+                            footerText: '(${S.current.contactPrivacyNotice})',
+                            editing: vm.edition.isEditingEmail,
+                            readOnlyWidget: _EmailWdg(vm: vm, key: const Key('Email-read-only')),
+                            editingWidget: _EmailEditingWdg(vm: vm, key: const Key('Email-editing')),
                           ),
-                      ],
-                    ).paddingOnly(
-                      right: UIDimens.SCREEN_PADDING_MOB,
-                      left: UIDimens.SCREEN_PADDING_MOB,
-                      top: 36,
-                      bottom: 60,
+                          _UserProfileSectionWdg(
+                            onEditBtnPressed: !vm.loggedUserCanEdit || vm.edition.isEditingPhone
+                                ? null
+                                : () {
+                                    vm.phoneNumberController?.controller?.text = vm.currentUserPhoneNumber ?? '';
+                                    context.read<UserProfileCubit>().updateEditMode(ProfileEditing.phone);
+                                  },
+                            key: const Key('Phone'),
+                            titleFirstText: '${S.current.phoneSectionTitle1} ',
+                            titleSecondText: S.current.phoneSectionTitle2,
+                            footerText: '(${S.current.contactPrivacyNotice})',
+                            editing: vm.edition.isEditingPhone,
+                            readOnlyWidget: _PhoneWdg(vm: vm, key: const Key('Phone-read-only')),
+                            editingWidget: _PhoneEditingWdg(vm: vm, key: const Key('Phone-editing')),
+                          ),
+                          _UserProfileSectionWdg(
+                            key: const Key('User-reviews'),
+                            titleFirstText: '${S.current.userReviews1} ',
+                            titleSecondText: S.current.userReviews2,
+                            editing: false,
+                            readOnlyWidget: const _UserReviews(key: Key('My-reviews')),
+                            editingWidget: const SizedBox.shrink(),
+                          ),
+                          if (vm.loggedUserCanEdit && (vm.currentUser?.isClient ?? false))
+                            CustomNeumorphicButton(
+                              onPressed: () => _showSwitchRoleSnackBar(context),
+                              text: S.current.switchToManagerRole,
+                              shape: ui.NeumorphicShape.concave,
+                              disabled: false,
+                              type: CustomNeumorphicBtnType.outlined,
+                              margin: const EdgeInsets.only(bottom: 36),
+                              padding: const EdgeInsets.all(9),
+                            ).paddingHorizontal(27),
+                          if (vm.loggedUserCanEdit)
+                            CustomNeumorphicButton(
+                              onPressed: () => context.pushNamed(AppRoutes.blockedUsers.name),
+                              text: S.current.blockedUsers,
+                              leading: const Icon(Icons.block, size: 18, color: FoodlyThemes.primaryFoodly),
+                              shape: ui.NeumorphicShape.concave,
+                              disabled: false,
+                              type: CustomNeumorphicBtnType.secondary,
+                              margin: const EdgeInsets.only(bottom: 46),
+                              padding: const EdgeInsets.all(9),
+                            ).paddingHorizontal(27),
+                          if (vm.loggedUserCanEdit)
+                            _DeleteAccountSection(
+                              key: const Key('delete-account-section'),
+                              onDeleteConfirmed: () => cubit.deleteAccount(),
+                            ),
+                        ],
+                      ).paddingOnly(
+                        right: UIDimens.SCREEN_PADDING_MOB,
+                        left: UIDimens.SCREEN_PADDING_MOB,
+                        top: 36,
+                        bottom: 60,
+                      ),
                     ),
                   ),
                 ],

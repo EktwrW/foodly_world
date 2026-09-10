@@ -8,6 +8,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/services/first_launch_service.dart';
 import 'package:foodly_world/core/services/push_notification_service.dart';
+import 'package:foodly_world/core/utils/soporte_de_orientacion.dart';
 import 'package:foodly_world/firebase_options.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/group_order_floating_chip_host.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -33,7 +34,13 @@ Future<Widget> buildFoodlyApp() async {
       return true;
     };
   } catch (_) {}
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // El telefono se queda clavado en vertical, como siempre; la tableta puede
+  // girar. Ver `orientacionesPermitidas`: sin esto el NavigationRail de la home
+  // era inalcanzable, porque solo aparece en apaisado.
+  final vista = widgetsBinding.platformDispatcher.views.firstOrNull;
+  await SystemChrome.setPreferredOrientations(
+    orientacionesPermitidas(vista == null ? null : vista.physicalSize / vista.devicePixelRatio),
+  );
   final config = BaseConfig.initConfig();
   DependencyInjectionService.registerDependencies(config);
 

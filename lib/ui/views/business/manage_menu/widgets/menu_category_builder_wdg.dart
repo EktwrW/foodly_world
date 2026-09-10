@@ -25,6 +25,7 @@ import 'package:foodly_world/ui/shared_widgets/dialogs/dialog_service.dart' show
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart' show ImageViewer;
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
 import 'package:foodly_world/ui/shared_widgets/menu/menu_item_price_tag.dart';
+import 'package:foodly_world/ui/shared_widgets/menu/menu_section_index.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/text_inputs/foodly_primary_input_text.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -67,6 +68,25 @@ class MenuCategoryPage extends StatefulWidget {
 
 class _MenuCategoryPageState extends State<MenuCategoryPage> {
   final _scrollController = ScrollController();
+  late final _indice = MenuSectionIndexController(scrollController: _scrollController);
+
+  @override
+  void initState() {
+    super.initState();
+    _indice.addListener(_alCambiarDeSeccion);
+  }
+
+  void _alCambiarDeSeccion() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _indice.removeListener(_alCambiarDeSeccion);
+    _indice.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +122,41 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
           ),
         if (widget.categories?.isNotEmpty ?? false)
           Expanded(
-            child: NotificationListener<ScrollNotification>(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final secciones = widget.categories ?? const <CategoryDM>[];
+                final conIndice = debeMostrarIndiceDeSecciones(
+                  anchoDisponible: constraints.maxWidth,
+                  secciones: secciones.length,
+                );
+
+                _indice.sincronizarOrden([for (final c in secciones) c.uuid]);
+
+                final carta = _construirCarta(cubit);
+                if (!conIndice) return carta;
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MenuSectionIndex(
+                      secciones: [for (final c in secciones) c.name],
+                      seccionActual: _indice.seccionActual,
+                      onSeleccion: _indice.irA,
+                      encabezado: S.current.menu,
+                    ),
+                    const VerticalDivider(width: 1, thickness: 1),
+                    Expanded(child: carta),
+                  ],
+                );
+              },
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _construirCarta(ManageMenuCubit cubit) {
+    return NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification is ScrollStartNotification) {
                   widget.onScrollStart();
@@ -123,7 +177,7 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                   final isLastSubCategory = index == ((widget.categories?.length ?? 1000) - 1);
 
                   return SubCategoryWdgKeepAlive(
-                    key: ValueKey(subCategory?.uuid),
+                    key: _indice.claveDe(subCategory?.uuid ?? ''),
                     menuCategory: widget.menuCategory,
                     cubit: cubit,
                     subCategory: subCategory,
@@ -133,10 +187,7 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                   );
                 },
               ),
-            ),
-          ),
-      ],
-    );
+            );
   }
 }
 

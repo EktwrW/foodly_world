@@ -2190,7 +2190,28 @@ class MessageLookup extends MessageLookupByLibrary {
       "Estamos preparando las mejores promos para ti.",
     ),
     "promosEmptyTitle": MessageLookupByLibrary.simpleMessage(
-      "Pronto, sabores cerca tuyo",
+      "Pronto, sabores cerca de ti",
+    ),
+    "promosTeaserOwnerBody": MessageLookupByLibrary.simpleMessage(
+      "Créala desde tu negocio y aparecerá aquí a los clientes que estén cerca.",
+    ),
+    "promosTeaserOwnerCta": MessageLookupByLibrary.simpleMessage(
+      "Crear promoción",
+    ),
+    "promosTeaserOwnerTitle": MessageLookupByLibrary.simpleMessage(
+      "Tu promoción, en primera plana",
+    ),
+    "promosTeaserSaveBody": MessageLookupByLibrary.simpleMessage(
+      "Toca el corazón y la encontrarás en Promociones guardadas hasta que termine.",
+    ),
+    "promosTeaserSaveTitle": MessageLookupByLibrary.simpleMessage(
+      "Guárdalas en tus favoritos",
+    ),
+    "promosTeaserShareBody": MessageLookupByLibrary.simpleMessage(
+      "Envía una promoción a quien iría contigo, sin salir de la tarjeta.",
+    ),
+    "promosTeaserShareTitle": MessageLookupByLibrary.simpleMessage(
+      "Lo bueno se comparte",
     ),
     "promotion": MessageLookupByLibrary.simpleMessage("Promo"),
     "promotionDays": MessageLookupByLibrary.simpleMessage("Días de promoción"),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/core/services/pending_group_join.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/group_orders/cubit/active_group_order_cubit.dart';
 import 'package:go_router/go_router.dart';
@@ -112,42 +113,45 @@ class _JoinByLinkPageState extends State<JoinByLinkPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Icon(Icons.link_off_rounded, size: 56, color: FoodlyThemes.secondaryFoodly),
-                const SizedBox(height: 16),
-                Text(
-                  _failureDetail ?? S.current.groupOrderJoinFailed,
-                  style: FoodlyTextStyles.sectionsTitle,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                CustomNeumorphicButton(
-                  text: S.current.groupOrderBackHome,
-                  disabled: false,
-                  margin: EdgeInsets.zero,
-                  // e2e r5: salida DETERMINISTA. Ir a '/' disparaba la
-                  // restauración de LAST_PATH, que en storage viejo podía
-                  // ser el propio /join → re-render del error = botón
-                  // "muerto". Directo a la main page (o login sin sesión).
-                  onPressed: () {
-                    final auth = di<AuthSessionService>();
-                    if (auth.isLoggedIn) {
-                      context.goNamed(
-                        AppRoutes.foodlyMainPage.name,
-                        pathParameters: {AppRoutes.routeIdParam: auth.uuid},
-                      );
-                    } else {
-                      context.goNamed(AppRoutes.login.name);
-                    }
-                  },
-                ),
-              ],
+        child: ContentColumn(
+          alignment: Alignment.center,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Icon(Icons.link_off_rounded, size: 56, color: FoodlyThemes.secondaryFoodly),
+                  const SizedBox(height: 16),
+                  Text(
+                    _failureDetail ?? S.current.groupOrderJoinFailed,
+                    style: FoodlyTextStyles.sectionsTitle,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  CustomNeumorphicButton(
+                    text: S.current.groupOrderBackHome,
+                    disabled: false,
+                    margin: EdgeInsets.zero,
+                    // e2e r5: salida DETERMINISTA. Ir a '/' disparaba la
+                    // restauración de LAST_PATH, que en storage viejo podía
+                    // ser el propio /join → re-render del error = botón
+                    // "muerto". Directo a la main page (o login sin sesión).
+                    onPressed: () {
+                      final auth = di<AuthSessionService>();
+                      if (auth.isLoggedIn) {
+                        context.goNamed(
+                          AppRoutes.foodlyMainPage.name,
+                          pathParameters: {AppRoutes.routeIdParam: auth.uuid},
+                        );
+                      } else {
+                        context.goNamed(AppRoutes.login.name);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

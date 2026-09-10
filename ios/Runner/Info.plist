@@ -110,9 +110,16 @@
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
 		</array>
+		<!-- El iPhone se queda solo en vertical, como siempre. El iPad gira:
+		     una tableta que no gira es rara de usar, y ademas el NavigationRail
+		     de la home solo aparece en apaisado. Ver `orientacionesPermitidas`
+		     en lib/core/utils/, que hace lo mismo del lado de Dart. -->
 		<key>UISupportedInterfaceOrientations~ipad</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>io.flutter.embedded_views_preview</key>
 		<true/>

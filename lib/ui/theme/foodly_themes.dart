@@ -50,6 +50,14 @@ class FoodlyThemes {
   /// tono conserva el matiz de marca y baja la luz: 15.6:1 sobre blanco y
   /// 8.3:1 en el peor caso (vidrio claro sobre una foto negra, que queda en
   /// #BDBDBD). Es lo que hace que el gancho pese más que el cuerpo.
+  /// Rojo de los estados vacios por fallo. Es [error] oscurecido: el original
+  /// (#F31708) esta pensado para un texto de validacion, y en un medallon de
+  /// 96 px vibra y se pelea con el ciruela de la marca.
+  static const failureOnSurface = Color(0xFFC0261A);
+
+  /// Fondo del medallon cuando el vacio es por fallo.
+  static const failureWash = Color(0xFFFBEAE8);
+
   static const titleOnGlass = Color(0xFF4A0039);
 
   /// Subtítulo sobre la misma cinta. 4.7:1 contra ese mismo peor caso, que

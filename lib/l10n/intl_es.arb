@@ -472,7 +472,7 @@
   "couldNotLoadPromotions": "No se pudieron cargar las promociones",
   "couldNotLoadNewReleases": "No se pudieron cargar los recién abiertos",
   "noPromotionsNearby": "No hay promociones cerca",
-  "promosEmptyTitle": "Pronto, sabores cerca tuyo",
+  "promosEmptyTitle": "Pronto, sabores cerca de ti",
   "promosEmptySubtitle": "Estamos preparando las mejores promos para ti.",
   "promosEmptyErrorTitle": "Conexión interrumpida",
   "promosEmptyErrorSubtitle": "No pudimos cargar las promos. Prueba de nuevo.",
@@ -1817,5 +1817,12 @@
   "activeSessionsClosed": "Sesión cerrada",
   "activeSessionsLoadError": "No pudimos cargar tus sesiones.",
   "activeSessionsTitle1": "Sesiones ",
-  "activeSessionsTitle2": "activas"
+  "activeSessionsTitle2": "activas",
+  "promosTeaserSaveTitle": "Guárdalas en tus favoritos",
+  "promosTeaserSaveBody": "Toca el corazón y la encontrarás en Promociones guardadas hasta que termine.",
+  "promosTeaserShareTitle": "Lo bueno se comparte",
+  "promosTeaserShareBody": "Envía una promoción a quien iría contigo, sin salir de la tarjeta.",
+  "promosTeaserOwnerTitle": "Tu promoción, en primera plana",
+  "promosTeaserOwnerBody": "Créala desde tu negocio y aparecerá aquí a los clientes que estén cerca.",
+  "promosTeaserOwnerCta": "Crear promoción"
 }

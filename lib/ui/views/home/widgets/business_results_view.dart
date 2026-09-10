@@ -7,6 +7,7 @@ import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/rejilla_adaptativa.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
@@ -57,7 +58,9 @@ class BusinessResultsView extends StatelessWidget {
           ? GridView.count(
               key: const ValueKey(BusinessResultsViewMode.grid),
               padding: EdgeInsets.only(top: 16, bottom: context.screenHeight * .15),
-              crossAxisCount: 2,
+              // En telefono son 2, como siempre. En tablet caben mas cards del
+              // MISMO tamaño en vez de dos gigantes. Ver `columnasDeRejilla`.
+              crossAxisCount: columnasDeRejilla(context.screenWidth),
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
               childAspectRatio: 18 / 29,

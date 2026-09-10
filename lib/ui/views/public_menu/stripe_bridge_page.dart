@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 
@@ -21,42 +22,45 @@ class StripeBridgePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF3F6F6),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 72,
-                height: 72,
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
-                  shape: BoxShape.circle,
+      body: ContentColumn(
+        alignment: Alignment.center,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    completed ? Icons.check_circle_rounded : Icons.hourglass_top_rounded,
+                    color: color,
+                    size: 40,
+                  ),
                 ),
-                child: Icon(
-                  completed ? Icons.check_circle_rounded : Icons.hourglass_top_rounded,
-                  color: color,
-                  size: 40,
+                const SizedBox(height: 20),
+                Text(
+                  completed
+                      ? S.current.stripeBridgeReturnTitle
+                      : S.current.stripeBridgeRefreshTitle,
+                  textAlign: TextAlign.center,
+                  style: FoodlyTextStyles.sectionsTitle,
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                completed
-                    ? S.current.stripeBridgeReturnTitle
-                    : S.current.stripeBridgeRefreshTitle,
-                textAlign: TextAlign.center,
-                style: FoodlyTextStyles.sectionsTitle,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                completed
-                    ? S.current.stripeBridgeReturnBody
-                    : S.current.stripeBridgeRefreshBody,
-                textAlign: TextAlign.center,
-                style: FoodlyTextStyles.caption,
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  completed
+                      ? S.current.stripeBridgeReturnBody
+                      : S.current.stripeBridgeRefreshBody,
+                  textAlign: TextAlign.center,
+                  style: FoodlyTextStyles.caption,
+                ),
+              ],
+            ),
           ),
         ),
       ),

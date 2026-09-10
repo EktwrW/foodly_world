@@ -1817,5 +1817,12 @@
   "activeSessionsClosed": "Sessão fechada",
   "activeSessionsLoadError": "Não conseguimos carregar as tuas sessões.",
   "activeSessionsTitle1": "Sessões ",
-  "activeSessionsTitle2": "ativas"
+  "activeSessionsTitle2": "ativas",
+  "promosTeaserSaveTitle": "Guarda as que gostares",
+  "promosTeaserSaveBody": "Toca no coração e encontra-la em Promoções guardadas até terminar.",
+  "promosTeaserShareTitle": "O que é bom partilha-se",
+  "promosTeaserShareBody": "Envia uma promoção a quem iria contigo, sem sair do cartão.",
+  "promosTeaserOwnerTitle": "A tua promoção, em destaque",
+  "promosTeaserOwnerBody": "Cria-a a partir do teu negócio e aparecerá aqui aos clientes que estiverem perto.",
+  "promosTeaserOwnerCta": "Criar promoção"
 }

@@ -64,7 +64,7 @@ class MyFavoriteBusinessesView extends StatelessWidget {
                         ? GridView.count(
                             key: const ValueKey(BusinessResultsViewMode.grid),
                             padding: _gridAndListPadding,
-                            crossAxisCount: 2,
+                            crossAxisCount: columnasDeRejilla(context.screenWidth),
                             crossAxisSpacing: 2,
                             mainAxisSpacing: 2,
                             childAspectRatio: 17 / 29,

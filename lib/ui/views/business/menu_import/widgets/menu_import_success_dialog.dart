@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodly_world/data_models/menu_import/menu_import_bulk_response_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
@@ -61,7 +62,7 @@ class MenuImportSuccessDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return FoodlyDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
