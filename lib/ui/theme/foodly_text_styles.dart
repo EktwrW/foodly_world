@@ -364,6 +364,22 @@ class FoodlyTextStyles {
     color: Colors.green[900]?.withValues(alpha: .85),
   );
 
+  /// Titulo de un estado vacio. Entre `label` (13) y `sectionsTitle` (20): en
+  /// una pantalla sin contenido este texto ES el contenido.
+  static const emptyTitle = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: FoodlyThemes.titleOnGlass,
+    height: 1.3,
+  );
+
+  /// Subtitulo de un estado vacio: dice que hacer, no que falta.
+  static const emptySubtitle = TextStyle(
+    fontSize: 13,
+    color: FoodlyThemes.promoSubtitleOnGlass,
+    height: 1.45,
+  );
+
   static const sectionsTitle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w900,

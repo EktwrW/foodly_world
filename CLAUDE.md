@@ -482,6 +482,55 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### Estados vacíos: tres intenciones, no un estilo (2026-09-10)
+
+Foodly tenía **24 estados vacíos** escritos a mano, con nueve tratamientos de
+texto y cuatro tamaños de icono. Pero la inconsistencia visual era la mitad
+fácil. El problema de fondo: **tres cosas distintas se pintaban igual**.
+
+- **novato** — no hay nada todavía; la salida es empezar algo.
+- **filtro** — sí hay contenido, pero no con este criterio; la salida es
+  cambiarlo.
+- **fallo** — no se pudo cargar; la salida es reintentar, nunca dar ánimos.
+
+Al usuario nuevo se le decía «aún no tienes nada» tanto cuando era cierto como
+cuando la petición se había caído. `FoodlyEmptyView`
+(`lib/ui/shared_widgets/placeholders/foodly_empty_view.dart`) lo separa.
+
+Alguien ya había llegado a esta conclusión una vez: `posts_feed_wdg` distingue
+por dentro entre «no hay publicaciones cerca» y «no sigues a nadie», y lo
+explica en un comentario. No se había propagado a ninguna otra pantalla.
+
+**Dato que ordena las prioridades: solo 1 de los 24 tenía botón.** Los otros 23
+son callejones sin salida — dicen que no hay nada y ahí acaban. Para un usuario
+de la primera semana eso pesa más que la tipografía. Por eso `onAction` es lo
+que decide si se pinta salida: **sin callback no hay botón**, porque es
+preferible un vacío sin salida a uno que no lleva a ninguna parte.
+
+**El vidrio NO se hereda literalmente, y es deliberado.** Un `BackdropFilter`
+necesita algo detrás que desenfocar; un estado vacío se pinta sobre fondo plano,
+así que el vidrio sería un panel teñido y nada más. Se hereda la paleta, la
+tipografía, los radios y el suelo táctil de 44 px.
+
+**Colores nuevos y por qué:** `failureOnSurface` (#C0261A) es `error` (#F31708)
+oscurecido. El original está pensado para un texto de validación; en un medallón
+de 96 px vibra y se pelea con el ciruela.
+
+**Fase 1 hecha:** `NoItemsViewWdg` —el único que ya se compartía, con cinco
+llamadas— delega ahora en `FoodlyEmptyView`. Pintaba con `NeumorphicText` y
+Poppins traído de `GoogleFonts` directo, o sea el sistema anterior al rediseño.
+Se conservan nombre y firma para no tocar las cinco llamadas. Dos de ellas
+—«no hay promociones en esta sección»— eran vacíos por FILTRO disfrazados de
+novato y ahora lo dicen.
+
+**Sin hacer:** las 15 pantallas sueltas, y el copy. Cada una necesita título,
+subtítulo y etiqueta de botón nuevos en tres idiomas — eso va con Héctor
+delante, no inventado. Por eso `subtitle` y `actionLabel` son opcionales: la
+fase 1 unifica lo visual sin bloquearse en el copy.
+
+Canvas del diseño: artifact 883d0965 (anatomía, las tres intenciones, tres
+comparativas antes-después y el plan).
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde
