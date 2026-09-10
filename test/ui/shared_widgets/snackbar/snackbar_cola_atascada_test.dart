@@ -4,7 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 
-/// El snackbar que se queda ATASCADO y bloquea la cola del messenger.
+/// El snackbar atascado, visto desde la COLA.
+///
+/// Complementa a `snackbar_dismiss_test.dart`, que ya vive al lado: aquel
+/// comprueba que el aviso se RETIRA aunque muera el contexto que lo mostró.
+/// Este comprueba la consecuencia que se notó de verdad — que el SIGUIENTE
+/// aviso llegue a verse.
 ///
 /// EL BUG (reportado el 2026-09-10 desde una tableta, pero es de toda la app).
 /// Al cerrar una sesión activa no salía el aviso de éxito. La lista se
