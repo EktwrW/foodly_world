@@ -5,6 +5,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/promotion_card_view.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/no_items_view_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -55,7 +56,7 @@ class PromotionsPage extends StatelessWidget {
                           final promos = vm.promotionsForRender(status);
 
                           if (promos.isEmpty && state.isLoaded) {
-                            return FadeIn(child: NoItemsViewWdg(text: S.current.noPromotionsInSection).paddingTop(120));
+                            return FadeIn(child: NoItemsViewWdg(text: S.current.noPromotionsInSection, intent: FoodlyEmptyIntent.filtro).paddingTop(120));
                           }
 
                           final scrollController = {
