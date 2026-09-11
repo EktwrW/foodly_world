@@ -1,1 +1,5 @@
-On-site ordering and split bills are here. Scan the table's QR code, order with whoever is with you, and the bill splits itself: everyone sees exactly what they owe before heading to the counter. On the business side: real-time orders with push notifications, table identification and full history. You can now also see and close your open sessions from your profile. Tell us what you think.
+Foodly now looks right on tablet and iPad: the app rotates, navigation moves to the side in landscape, and lists spread into columns instead of stretching edge to edge. A business's menu gets a section index, so you can jump to the desserts without scrolling past everything else.
+
+We rebuilt the empty screens: they now tell you what to do, and they tell "nothing here yet" apart from "nothing matches this filter" — with a shortcut to clear it.
+
+Also: dates follow the app's language, and search no longer flickers.

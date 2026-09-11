@@ -1,1 +1,5 @@
-Chegaram os pedidos no local e a conta dividida. Lê o código QR da mesa, faz o pedido com quem está contigo e a conta divide-se sozinha: cada um vê exatamente quanto lhe toca antes de ir à caixa. Do lado do negócio: pedidos em tempo real com notificação, mesa identificada e histórico completo. Podes também ver e fechar as tuas sessões abertas a partir do perfil. Diz-nos o que achas.
+O Foodly já se vê como deve ser em tablet e iPad: a app roda, a navegação passa para o lado na horizontal e as listas repartem-se em colunas em vez de esticarem de ponta a ponta. Na carta de um negócio há um índice de secções para saltares para as sobremesas sem percorreres tudo.
+
+Refizemos os ecrãs vazios: agora dizem-te o que fazer e distinguem «ainda não tens nada» de «não há nada com este filtro», com um atalho para o tirares.
+
+Também: as datas seguem o idioma da app e a pesquisa já não pisca.
