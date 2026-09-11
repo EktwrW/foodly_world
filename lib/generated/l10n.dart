@@ -1038,7 +1038,7 @@ class S {
   }
 
   /// `No nearby businesses in this category within {radius} km.`
-  String noNearbyBusinessesInCategory(double radius) {
+  String noNearbyBusinessesInCategory(int radius) {
     return Intl.message(
       'No nearby businesses in this category within $radius km.',
       name: 'noNearbyBusinessesInCategory',

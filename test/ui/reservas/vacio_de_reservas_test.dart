@@ -100,16 +100,19 @@ void main() {
     return cubit;
   }
 
-  Future<void> pintarDueno(WidgetTester tester, {String? filtro, FoodlyCategories? categoria}) async {
+  Future<ManageReservationsCubit> pintarDueno(
+    WidgetTester tester, {
+    String? filtro,
+    FoodlyCategories? categoria,
+  }) async {
+    final cubit = _CubitDeDueno(filtro: filtro, categoria: categoria);
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: BlocProvider<ManageReservationsCubit>.value(
-          value: _CubitDeDueno(filtro: filtro, categoria: categoria),
-          child: const ManagerReservationsList(),
-        ),
+        body: BlocProvider<ManageReservationsCubit>.value(value: cubit, child: const ManagerReservationsList()),
       ),
     ));
     await tester.pumpAndSettle();
+    return cubit;
   }
 
   FoodlyEmptyView vacio(WidgetTester tester) => tester.widget<FoodlyEmptyView>(find.byType(FoodlyEmptyView));
@@ -189,6 +192,17 @@ void main() {
       expect(v.intent, FoodlyEmptyIntent.filtro);
       expect(v.title, S.current.reservationsFilterEmptyTitle);
       expect(find.text(S.current.viewAllReservations), findsOneWidget);
+    });
+
+    testWidgets('el boton apaga el filtro y vuelve a pedir la lista', (tester) async {
+      final cubit = await pintarDueno(tester, filtro: 'today');
+      expect(cubit.activeFilterKey, 'today');
+
+      await tester.tap(find.text(S.current.viewAllReservations));
+      await tester.pumpAndSettle();
+
+      expect(cubit.activeFilterKey, isNull);
+      expect(vacio(tester).intent, FoodlyEmptyIntent.nuevo);
     });
   });
 }

@@ -829,6 +829,12 @@ en `searchEmptyTitle` y `searchEmptyBody` y la clave vieja se borró.
 `test/ui/busqueda/vacio_de_resultados_test.dart`, 6 casos. Cinco mutaciones,
 cinco muertes.
 
+**El radio salía con decimal.** `noNearbyBusinessesInCategory` declaraba su
+placeholder como `double` y `intl` interpola el valor tal cual: «dentro de 5.0
+km». Venía de antes, pero este trabajo lo puso al lado de un botón que dice
+«Ampliar a 10 km», y ahí el desajuste canta. El placeholder pasó a `int` y la
+llamada a `.toInt()`; los radios son enteros por construcción.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde

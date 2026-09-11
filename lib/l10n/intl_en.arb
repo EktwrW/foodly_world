@@ -197,7 +197,7 @@
   "@noNearbyBusinessesInCategory": {
     "placeholders": {
       "radius": {
-        "type": "double"
+        "type": "int"
       }
     }
   },

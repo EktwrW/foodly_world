@@ -337,7 +337,7 @@ class VacioDeCategoria extends StatelessWidget {
     return FoodlyEmptyView(
       intent: FoodlyEmptyIntent.filtro,
       title: S.current.categoryEmptyTitle,
-      subtitle: S.current.noNearbyBusinessesInCategory(radioActual),
+      subtitle: S.current.noNearbyBusinessesInCategory(radioActual.toInt()),
       actionLabel: puedeAmpliar ? S.current.widenRadius(siguiente.toInt()) : null,
       onAction: puedeAmpliar ? () => onAmpliarRadio(siguiente) : null,
     );
