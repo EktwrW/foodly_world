@@ -1710,6 +1710,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Gestionar Reservas",
     ),
+    "manageReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Las reservas de tus clientes aparecerán aquí en cuanto lleguen.",
+    ),
+    "manageReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Todavía no hay reservas",
+    ),
     "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
       "Verifica tu negocio con Stripe para recibir los pagos de las órdenes directo en tu cuenta bancaria. Toma ~5 minutos.",
     ),
@@ -1910,6 +1916,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "myFavorites": MessageLookupByLibrary.simpleMessage("Mis Favoritos"),
     "myHistory": MessageLookupByLibrary.simpleMessage("Mi Historial"),
     "myReservations": MessageLookupByLibrary.simpleMessage("Mis Reservas"),
+    "myReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Cuando reserves mesa o un servicio, lo verás aquí con su estado.",
+    ),
+    "myReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aún no tienes reservas",
+    ),
     "nNewMessages": m71,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "¿Necesitas las mejores recomendaciones?",
@@ -1964,12 +1976,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noRecommendationsFound": MessageLookupByLibrary.simpleMessage(
       "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
-    ),
-    "noReservationsFound": MessageLookupByLibrary.simpleMessage(
-      "No se encontraron reservas.",
-    ),
-    "noReservationsYet": MessageLookupByLibrary.simpleMessage(
-      "Aún no hay reservas.",
     ),
     "noSavedAddress": MessageLookupByLibrary.simpleMessage(
       "No tienes dirección guardada, puedes crear una en tu página de perfil.",
@@ -2390,6 +2396,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "¡Solicitud de reserva enviada!",
     ),
     "reservations": MessageLookupByLibrary.simpleMessage("Reservas"),
+    "reservationsFilterEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Prueba con otro estado o vuelve a verlas todas.",
+    ),
+    "reservationsFilterEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No hay reservas con este filtro",
+    ),
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Reservas para hoy",
     ),
@@ -2777,6 +2789,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "El video es demasiado largo. La duración máxima es de 20 segundos.",
     ),
     "view": MessageLookupByLibrary.simpleMessage("Ver"),
+    "viewAllReservations": MessageLookupByLibrary.simpleMessage("Ver todas"),
     "viewEdit": MessageLookupByLibrary.simpleMessage("Ver/Editar"),
     "viewMenuOf": MessageLookupByLibrary.simpleMessage("Ver el menú de"),
     "viewPromotion": MessageLookupByLibrary.simpleMessage("Ver promoción"),

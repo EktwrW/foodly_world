@@ -1641,6 +1641,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Manage Reservations",
     ),
+    "manageReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Your customers\' reservations will show up here as soon as they come in.",
+    ),
+    "manageReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No reservations yet",
+    ),
     "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
       "Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.",
     ),
@@ -1819,6 +1825,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "myFavorites": MessageLookupByLibrary.simpleMessage("My Favorites"),
     "myHistory": MessageLookupByLibrary.simpleMessage("My History"),
     "myReservations": MessageLookupByLibrary.simpleMessage("My Reservations"),
+    "myReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Once you book a table or a service, you\'ll see it here with its status.",
+    ),
+    "myReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You don\'t have any reservations yet",
+    ),
     "nNewMessages": m71,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "Need the best recommendations?",
@@ -1869,12 +1881,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noRecommendationsFound": MessageLookupByLibrary.simpleMessage(
       "We didn\'t find any recommendations for your search. \nTry other terms or try a different location.",
-    ),
-    "noReservationsFound": MessageLookupByLibrary.simpleMessage(
-      "No reservations found.",
-    ),
-    "noReservationsYet": MessageLookupByLibrary.simpleMessage(
-      "No reservations yet.",
     ),
     "noSavedAddress": MessageLookupByLibrary.simpleMessage(
       "You don\'t have a saved address. You can create one on your profile page.",
@@ -2267,6 +2273,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Reservation request sent!",
     ),
     "reservations": MessageLookupByLibrary.simpleMessage("Reservations"),
+    "reservationsFilterEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Try a different status, or go back to seeing them all.",
+    ),
+    "reservationsFilterEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No reservations match this filter",
+    ),
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Today\'s Reservations",
     ),
@@ -2622,6 +2634,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Video is too long. Maximum duration is 20 seconds.",
     ),
     "view": MessageLookupByLibrary.simpleMessage("View"),
+    "viewAllReservations": MessageLookupByLibrary.simpleMessage("View all"),
     "viewEdit": MessageLookupByLibrary.simpleMessage("View/Edit"),
     "viewMenuOf": MessageLookupByLibrary.simpleMessage("View menu of"),
     "viewPromotion": MessageLookupByLibrary.simpleMessage("View promotion"),

@@ -890,8 +890,6 @@
   },
   "pendingReservationsContent": "There are reservation requests waiting for your response.",
   "doItLater": "I'll do it later",
-  "noReservationsYet": "No reservations yet.",
-  "noReservationsFound": "No reservations found.",
   "reservationsForToday": "Today's Reservations",
   "reservationCancelled": "Reservation cancelled.",
   "cancelReservation": "Cancel Reservation",
@@ -1827,5 +1825,12 @@
   "favMenusEmptyTitle": "You haven't saved any menus yet",
   "favMenusEmptyBody": "Save a place's menu and you'll open it from here without searching.",
   "favItemsEmptyTitle": "You haven't saved any dishes yet",
-  "favItemsEmptyBody": "Tap the heart on a dish and you'll find it here when you come back."
+  "favItemsEmptyBody": "Tap the heart on a dish and you'll find it here when you come back.",
+  "myReservationsEmptyTitle": "You don't have any reservations yet",
+  "myReservationsEmptyBody": "Once you book a table or a service, you'll see it here with its status.",
+  "manageReservationsEmptyTitle": "No reservations yet",
+  "manageReservationsEmptyBody": "Your customers' reservations will show up here as soon as they come in.",
+  "reservationsFilterEmptyTitle": "No reservations match this filter",
+  "reservationsFilterEmptyBody": "Try a different status, or go back to seeing them all.",
+  "viewAllReservations": "View all"
 }

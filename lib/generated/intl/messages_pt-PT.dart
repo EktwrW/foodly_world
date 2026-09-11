@@ -1701,6 +1701,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Gerir Reservas",
     ),
+    "manageReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "As reservas dos teus clientes aparecerão aqui assim que chegarem.",
+    ),
+    "manageReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Ainda não há reservas",
+    ),
     "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
       "Verifique o seu negócio com a Stripe para receber os pagamentos dos pedidos diretamente na sua conta bancária. Demora ~5 minutos.",
     ),
@@ -1897,6 +1903,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "myReservations": MessageLookupByLibrary.simpleMessage(
       "As Minhas Reservas",
     ),
+    "myReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Quando reservares mesa ou um serviço, vê-lo-ás aqui com o respetivo estado.",
+    ),
+    "myReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Ainda não tens reservas",
+    ),
     "nNewMessages": m71,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "Precisa das melhores recomendações?",
@@ -1951,12 +1963,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noRecommendationsFound": MessageLookupByLibrary.simpleMessage(
       "Não encontramos recomendações para a sua pesquisa. \nTente outros termos ou tente um local diferente.",
-    ),
-    "noReservationsFound": MessageLookupByLibrary.simpleMessage(
-      "Nenhuma reserva encontrada.",
-    ),
-    "noReservationsYet": MessageLookupByLibrary.simpleMessage(
-      "Ainda não há reservas.",
     ),
     "noSavedAddress": MessageLookupByLibrary.simpleMessage(
       "Não tens uma morada guardada, podes criar uma na tua página de perfil.",
@@ -2361,6 +2367,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Pedido de reserva enviado!",
     ),
     "reservations": MessageLookupByLibrary.simpleMessage("Reservas"),
+    "reservationsFilterEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Experimenta outro estado ou volta a vê-las todas.",
+    ),
+    "reservationsFilterEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Não há reservas com este filtro",
+    ),
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Reservas para hoje",
     ),
@@ -2738,6 +2750,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "O vídeo é demasiado longo. A duração máxima é de 20 segundos.",
     ),
     "view": MessageLookupByLibrary.simpleMessage("Ver"),
+    "viewAllReservations": MessageLookupByLibrary.simpleMessage("Ver todas"),
     "viewEdit": MessageLookupByLibrary.simpleMessage("Editar"),
     "viewMenuOf": MessageLookupByLibrary.simpleMessage("Ver o menu de"),
     "viewPromotion": MessageLookupByLibrary.simpleMessage("Ver promoção"),

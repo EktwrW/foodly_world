@@ -4,6 +4,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecoration
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -90,7 +91,7 @@ class ManageReservationsPage extends StatelessWidget {
             child: Column(
               children: [
                 _StatusFilterDropdown(),
-                Expanded(child: _ManagerReservationsList()),
+                Expanded(child: ManagerReservationsList()),
               ],
             ),
           ),
@@ -176,8 +177,10 @@ class _StatusFilterDropdown extends StatelessWidget {
   }
 }
 
-class _ManagerReservationsList extends StatelessWidget {
-  const _ManagerReservationsList();
+/// La lista de reservas del dueno. Publica por el mismo motivo que
+/// [ReservationsList]: el vacio distingue filtro de novato y eso se mide.
+class ManagerReservationsList extends StatelessWidget {
+  const ManagerReservationsList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -195,15 +198,20 @@ class _ManagerReservationsList extends StatelessWidget {
           loading: (_) => const ReservationsShimmer(isManager: true),
           orElse: () {
             if (vm.reservations.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Bootstrap.calendar2_check, size: 64, color: FoodlyThemes.primaryFoodly),
-                    const SizedBox(height: 12),
-                    Text(S.current.noReservationsFound, style: FoodlyTextStyles.label),
-                  ],
-                ),
+              // `activeFilterKey` es el filtro que eligio el dueno. NO se mira
+              // `vm.bookingTypeFilter`: ese sale de la vertical del negocio, no
+              // de un control, y apagarlo no esta en su mano.
+              final hayFiltro = cubit.activeFilterKey != null;
+
+              return FoodlyEmptyView(
+                intent: hayFiltro ? FoodlyEmptyIntent.filtro : FoodlyEmptyIntent.nuevo,
+                title: hayFiltro ? S.current.reservationsFilterEmptyTitle : S.current.manageReservationsEmptyTitle,
+                subtitle: hayFiltro ? S.current.reservationsFilterEmptyBody : S.current.manageReservationsEmptyBody,
+                icon: hayFiltro
+                    ? null
+                    : const Icon(Bootstrap.calendar2_check, size: 40, color: FoodlyThemes.primaryFoodly),
+                actionLabel: hayFiltro ? S.current.viewAllReservations : null,
+                onAction: hayFiltro ? () => cubit.setFilter(null) : null,
               );
             }
 

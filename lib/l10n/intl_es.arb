@@ -890,8 +890,6 @@
   },
   "pendingReservationsContent": "Hay solicitudes de reserva esperando tu respuesta.",
   "doItLater": "Lo haré más tarde",
-  "noReservationsYet": "Aún no hay reservas.",
-  "noReservationsFound": "No se encontraron reservas.",
   "reservationsForToday": "Reservas para hoy",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
@@ -1827,5 +1825,12 @@
   "favMenusEmptyTitle": "Aún no tienes cartas guardadas",
   "favMenusEmptyBody": "Guarda la carta de un negocio y la abrirás desde aquí sin buscarla.",
   "favItemsEmptyTitle": "Aún no tienes platos favoritos",
-  "favItemsEmptyBody": "Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas."
+  "favItemsEmptyBody": "Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas.",
+  "myReservationsEmptyTitle": "Aún no tienes reservas",
+  "myReservationsEmptyBody": "Cuando reserves mesa o un servicio, lo verás aquí con su estado.",
+  "manageReservationsEmptyTitle": "Todavía no hay reservas",
+  "manageReservationsEmptyBody": "Las reservas de tus clientes aparecerán aquí en cuanto lleguen.",
+  "reservationsFilterEmptyTitle": "No hay reservas con este filtro",
+  "reservationsFilterEmptyBody": "Prueba con otro estado o vuelve a verlas todas.",
+  "viewAllReservations": "Ver todas"
 }

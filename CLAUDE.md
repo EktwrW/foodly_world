@@ -713,6 +713,42 @@ rojo tres cosas distintas.
 `noFavoriteMenus`, `noFavoriteItems`) se borraron de los tres `.arb`: no las
 usaba nadie más.
 
+**Fase 3, las dos de reservas (2026-09-11). Aquí sí había un bug de verdad**,
+no solo estilo: las dos listas viven **debajo de un filtro** y el vacío decía
+«aún no hay reservas» tuvieras 0 o tuvieras 30 filtradas por un estado que no
+casa. Es exactamente el fallo que motivó las tres intenciones, y estaba en la
+pantalla donde más duele: un dueño que filtra por «hoy» un martes tranquilo lee
+que no tiene reservas.
+
+Ahora las dos distinguen, y con un botón que **quita el filtro** — la primera
+salida de verdad que tiene un vacío en Foodly aparte de reintentar.
+
+**La regla de qué filtro se puede apagar, que es lo fino de esto:** un botón
+solo puede apagar un filtro cuya selección viva en el cubit.
+
+| filtro | dónde vive | ¿botón? |
+| --- | --- | --- |
+| desplegable de estado (comensal) | `vm.statusFilter`, y el desplegable lo pinta con un `BlocSelector` | **sí** |
+| segmentado de tipo (comensal) | `_BookingTypeFilterState._selected` + prefs | **no** — quedaría marcado sobre una lista sin filtrar |
+| desplegable del dueño | `cubit.activeFilterKey`, dentro de un `BlocBuilder` | **sí** |
+| tipo de reserva del dueño | derivado de la vertical del negocio | **no es un filtro**: el dueño no lo puso y no puede quitarlo |
+
+La última fila es la que se pierde en un refactor, porque `vm.bookingTypeFilter`
+existe en los dos VM y parece lo mismo en los dos. En el del dueño sale de
+`_deriveBookingType(businessCategory)`.
+
+`ReservationsList` y `ManagerReservationsList` se hicieron públicas para poder
+medirlas — las páginas que las contienen arrastran router, prefs y servicios que
+no hacen falta para esto. Mismo motivo que `EmptyOffersWidget`.
+
+`test/ui/reservas/vacio_de_reservas_test.dart` (7 casos) monta los cubits reales
+sobre un repo que devuelve cero reservas, así que el camino del filtro se
+recorre entero. Validado por mutación: seis mutaciones, seis muertes — y una de
+ellas, «contar la vertical como filtro», **sólo muere desde que hay un caso con
+categoría de catering**; con `businessCategory: null` sobrevivía.
+
+Las claves viejas `noReservationsYet` y `noReservationsFound` se borraron.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde

@@ -891,8 +891,6 @@
   "userSortMostFollowed": "Mais seguidos",
   "pendingReservationsContent": "Existem pedidos de reserva aguardando a sua resposta.",
   "doItLater": "Vou fazer isto mais tarde",
-  "noReservationsYet": "Ainda não há reservas.",
-  "noReservationsFound": "Nenhuma reserva encontrada.",
   "reservationsForToday": "Reservas para hoje",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
@@ -1827,5 +1825,12 @@
   "favMenusEmptyTitle": "Ainda não tens cartas guardadas",
   "favMenusEmptyBody": "Guarda a carta de um negócio e abri-la-ás daqui sem a procurares.",
   "favItemsEmptyTitle": "Ainda não tens pratos favoritos",
-  "favItemsEmptyBody": "Toca no coração de um prato e encontrá-lo-ás aqui quando voltares."
+  "favItemsEmptyBody": "Toca no coração de um prato e encontrá-lo-ás aqui quando voltares.",
+  "myReservationsEmptyTitle": "Ainda não tens reservas",
+  "myReservationsEmptyBody": "Quando reservares mesa ou um serviço, vê-lo-ás aqui com o respetivo estado.",
+  "manageReservationsEmptyTitle": "Ainda não há reservas",
+  "manageReservationsEmptyBody": "As reservas dos teus clientes aparecerão aqui assim que chegarem.",
+  "reservationsFilterEmptyTitle": "Não há reservas com este filtro",
+  "reservationsFilterEmptyBody": "Experimenta outro estado ou volta a vê-las todas.",
+  "viewAllReservations": "Ver todas"
 }

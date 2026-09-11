@@ -5944,26 +5944,6 @@ class S {
     );
   }
 
-  /// `No reservations yet.`
-  String get noReservationsYet {
-    return Intl.message(
-      'No reservations yet.',
-      name: 'noReservationsYet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No reservations found.`
-  String get noReservationsFound {
-    return Intl.message(
-      'No reservations found.',
-      name: 'noReservationsFound',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Today's Reservations`
   String get reservationsForToday {
     return Intl.message(
@@ -11050,6 +11030,76 @@ class S {
     return Intl.message(
       'Tap the heart on a dish and you\'ll find it here when you come back.',
       name: 'favItemsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't have any reservations yet`
+  String get myReservationsEmptyTitle {
+    return Intl.message(
+      'You don\'t have any reservations yet',
+      name: 'myReservationsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Once you book a table or a service, you'll see it here with its status.`
+  String get myReservationsEmptyBody {
+    return Intl.message(
+      'Once you book a table or a service, you\'ll see it here with its status.',
+      name: 'myReservationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No reservations yet`
+  String get manageReservationsEmptyTitle {
+    return Intl.message(
+      'No reservations yet',
+      name: 'manageReservationsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your customers' reservations will show up here as soon as they come in.`
+  String get manageReservationsEmptyBody {
+    return Intl.message(
+      'Your customers\' reservations will show up here as soon as they come in.',
+      name: 'manageReservationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No reservations match this filter`
+  String get reservationsFilterEmptyTitle {
+    return Intl.message(
+      'No reservations match this filter',
+      name: 'reservationsFilterEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try a different status, or go back to seeing them all.`
+  String get reservationsFilterEmptyBody {
+    return Intl.message(
+      'Try a different status, or go back to seeing them all.',
+      name: 'reservationsFilterEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View all`
+  String get viewAllReservations {
+    return Intl.message(
+      'View all',
+      name: 'viewAllReservations',
       desc: '',
       args: [],
     );
