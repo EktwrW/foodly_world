@@ -482,6 +482,49 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### Responsive: hay TRES palancas, no una (2026-09-11)
+
+Corrección a lo que hice los días anteriores. Apliqué `ContentColumn` —un techo
+de ancho— a casi todo, y **es la herramienta equivocada para dos de los tres
+casos**. Héctor lo vio probando en una tableta Lenovo: la tarjeta de negocio
+acotada «se veía pequeña», y tenía razón.
+
+| palanca | para qué | cómo se ve si te equivocas |
+| --- | --- | --- |
+| **Techo de lectura** (`ContentColumn`) | texto y formularios | — |
+| **Margen por breakpoint** (`SCREEN_PADDING_TABLET`) | tarjetas con foto | con techo: pequeñas y con hueco al lado |
+| **Columnas** (`columnasDeLista`, `columnasDeRejilla`) | listas y colecciones | con techo: media pantalla vacía |
+
+**Un techo fijo no escala**: 420 px se ven igual a 744 que a 1280. Ese es el
+defecto que delata que se usó la palanca equivocada.
+
+**Dónde SÍ va el techo, y con argumento tipográfico y no de dispositivo:**
+términos, privacidad, altas, perfil, sesiones, usuarios bloqueados. Una línea de
+más de ~75 caracteres se lee mal porque el ojo pierde el renglón — eso vale
+igual en una tableta que en un monitor de 27".
+
+**Dónde NO, y por qué cada uno falla distinto:**
+
+- Una tarjeta **con foto** quiere área. Ahí manda el margen por breakpoint.
+- Una **fila de datos** (avatar, nombre, fechas, estado) no sufre por el ancho
+  en sí: sufre por el **recorrido del ojo**. A 1200 px el avatar queda en una
+  punta y el estado en la otra. Aquí el margen por breakpoint EMPEORA las cosas;
+  la salida son columnas.
+
+Reservas, gestión de reservas e historial de órdenes pasaron de techo a
+columnas. `ListaAdaptativa` sigue siendo un `ListView.builder` por dentro —
+**la paginación y el pie de «cargando más» no se tocan**, solo cambia que cada
+elemento puede ser una fila de N tarjetas. Con una columna el resultado es
+idéntico al de antes. El historial va agrupado por día y no encaja en eso, así
+que usa `enFilasDe` y emite las filas a mano: la cabecera del día ocupa el ancho
+entero y solo las órdenes se reparten.
+
+**Una guarda que no guardaba nada.** `columnasDeLista` llevaba un
+`if (ancho < 600) return 1`. Al validar por mutación la quité y los tests
+siguieron verdes: con 620 px de objetivo, la cuenta ya da 1 por debajo de 1240,
+o sea que el `clamp` lo garantizaba solo. Se borró. Una guarda redundante es
+peor que ninguna porque invita a confiar en ella.
+
 ### El menú en tableta: índice al lado, no dos paneles (2026-09-10)
 
 En tableta el menú era una columna larguísima: para llegar a «Postres» hay que

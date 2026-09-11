@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/generated/l10n.dart';
-import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
@@ -106,37 +105,45 @@ void main() {
       });
     }
 
-    testWidgets('y se acota: en tableta no se estira a todo el ancho', (tester) async {
-      await pintar(tester, 1280, EmptyNewReleasesWidget(isError: false, onRetry: () {}));
+    /// EL CRITERIO CAMBIÓ, y conviene saber por qué (2026-09-11).
+    ///
+    /// Primero acoté el hueco a un techo fijo (420) y la tarjeta real al mismo
+    /// número, para que no hubiera salto entre vacío y cargado. Héctor lo probó
+    /// en una tableta grande y tenía razón: **un techo fijo no escala** — a
+    /// 1280 px se ve igual de pequeño que a 744, y la tarjeta quedaba diminuta
+    /// con media pantalla vacía al lado.
+    ///
+    /// Ahora el ancho lo decide el PADDING por breakpoint, y el hueco no lleva
+    /// techo propio para poder seguir a la tarjeta. Lo que este test protege
+    /// sigue siendo lo mismo de antes: que los dos midan igual. Si alguien le
+    /// vuelve a poner un techo al hueco, el vacío y el cargado se separan y
+    /// vuelve el salto — que encima solo se ve cuando por fin aparece un
+    /// negocio, el peor momento para descubrirlo.
+    testWidgets('el hueco ocupa el ancho que le den, sin techo propio', (tester) async {
+      const anchoDisponible = 600.0;
+
+      await pintar(
+        tester,
+        1280,
+        Center(
+          child: SizedBox(
+            width: anchoDisponible,
+            child: EmptyNewReleasesWidget(isError: false, onRetry: () {}),
+          ),
+        ),
+      );
 
       // OJO con qué se mide: el nodo externo de FoodlyEmptyMediaCard es un
-      // `Center` que ocupa todo el ancho — el techo va por dentro. Midiendo ese
-      // salen 1280 y parece que no acota nada. Es el mismo despiste que con las
-      // hojas inferiores de Material 3.
+      // `Center` que ocupa todo el ancho — un techo iría por dentro, así que
+      // midiendo ese nodo no se vería. Mismo despiste que con las hojas de
+      // Material 3.
       final tarjeta = tester.getSize(
         find.descendant(of: find.byType(FoodlyEmptyMediaCard).first, matching: find.byType(ClipRRect)).first,
       );
 
-      expect(tarjeta.width, lessThanOrEqualTo(440),
-          reason: 'sin techo, en una tableta de 1280 se iba a 1256 de ancho');
+      expect(tarjeta.width, anchoDisponible,
+          reason: 'con techo propio dejaría de seguir a la tarjeta real y volvería el salto');
     });
-  });
-
-  /// El hueco y la tarjeta cargada tienen que medir LO MISMO de ancho.
-  ///
-  /// Estuvo a punto de no ser así: al acotar el placeholder a 420 px, la
-  /// tarjeta real se seguía estirando a 1244 en una tableta. Pasar de vacío a
-  /// cargado habría dado un salto brutal, y encima solo se ve cuando por fin
-  /// aparece un negocio — el peor momento para descubrirlo.
-  testWidgets('el hueco de negocios mide lo mismo que su techo compartido', (tester) async {
-    await pintar(tester, 1280, EmptyNewReleasesWidget(isError: false, onRetry: () {}));
-
-    final hueco = tester.getSize(
-      find.descendant(of: find.byType(FoodlyEmptyMediaCard).first, matching: find.byType(ClipRRect)).first,
-    );
-
-    expect(hueco.width, UIDimens.NEW_RELEASES_MAX_WIDTH,
-        reason: 'la tarjeta real se acota al mismo número en foodly_main_page');
   });
 
   group('el botón de reintentar dejó de ser neumórfico', () {

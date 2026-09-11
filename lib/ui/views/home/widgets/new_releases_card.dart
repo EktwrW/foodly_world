@@ -6,7 +6,6 @@ import 'package:foodly_world/core/consts/foodly_assets.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
-import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
@@ -170,7 +169,7 @@ class _NewReleasesCardState extends State<NewReleasesCard> {
                             ),
                           ),
                         ),
-                      ).paddingSymmetric(vertical: 10),
+                      ).paddingSymmetric(vertical: context.isTablet ? 24 : 12),
                   ],
                 );
               },
@@ -627,7 +626,7 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
         subtitle: subtitle,
         actionLabel: widget.isError ? s.retry : null,
         onAction: widget.isError ? widget.onRetry : null,
-        maxWidth: UIDimens.NEW_RELEASES_MAX_WIDTH,
+        maxWidth: context.screenWidth,
       ),
     ).paddingOnly(top: 16);
   }
