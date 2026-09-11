@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/generated/l10n.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_brand_surface.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/views/home/widgets/main_top_offers_widget.dart';
 import 'package:foodly_world/ui/views/home/widgets/new_releases_card.dart';
@@ -163,6 +164,66 @@ void main() {
       await tester.pump();
 
       expect(tocado, 1);
+    });
+  });
+
+  /// LA TARJETA NO PUEDE NACER EN BLANCO (2026-09-12). Visto por Héctor en la
+  /// tableta: al entrar al home se veía aparecer **la sombra de la tarjeta** y,
+  /// un instante después, el contenido.
+  ///
+  /// La causa es que el `VideoPlayerController` tarda 100-300 ms en arrancar
+  /// —cada vez, porque el State se monta de cero— y mientras tanto el fondo era
+  /// `primaryFoodly` al 4 % sobre el fondo de la página, que es casi el mismo
+  /// color. Con la cinta de vidrio (blanco al 74 %) encima de eso, lo único que
+  /// separaba la tarjeta de la página era su sombra.
+  ///
+  /// Con contenido real no pasa: las fotos vienen de la caché y pintan en el
+  /// primer frame.
+  ///
+  /// En un test el vídeo NUNCA está listo (no hay canal de plataforma), así que
+  /// lo que se mide aquí es exactamente ese primer momento.
+  group('sin vídeo todavía, la tarjeta ya está completa', () {
+    testWidgets('el hueco de promos pinta superficie de marca desde el primer frame', (tester) async {
+      await pintar(tester, 402, EmptyOffersWidget(isError: true, onRetry: () {}));
+
+      expect(
+        find.descendant(
+          of: find.byType(FoodlyEmptyMediaCard),
+          matching: find.byType(FoodlyBrandSurface),
+        ),
+        findsWidgets,
+        reason: 'sin fondo de verdad, la tarjeta es un recuadro con sombra',
+      );
+    });
+
+    testWidgets('el hueco de negocios nuevos, igual', (tester) async {
+      await pintar(tester, 402, EmptyNewReleasesWidget(isError: false, onRetry: () {}));
+
+      expect(
+        find.descendant(
+          of: find.byType(FoodlyEmptyMediaCard),
+          matching: find.byType(FoodlyBrandSurface),
+        ),
+        findsWidgets,
+      );
+    });
+
+    testWidgets('y el vídeo entra con un fundido, no de golpe', (tester) async {
+      await pintar(tester, 402, EmptyOffersWidget(isError: true, onRetry: () {}));
+
+      final fundido = tester.widget<AnimatedOpacity>(
+        find.descendant(of: find.byType(FoodlyEmptyMediaCard), matching: find.byType(AnimatedOpacity)).first,
+      );
+      expect(fundido.opacity, 0, reason: 'sin vídeo listo, la capa del vídeo no tapa la superficie');
+      expect(fundido.duration, greaterThan(Duration.zero));
+    });
+
+    testWidgets('ya no hay indicador de carga DENTRO de la tarjeta', (tester) async {
+      // Era un indicador de carga dentro de algo que ya venía de un shimmer.
+      await pintar(tester, 402, EmptyOffersWidget(isError: true, onRetry: () {}));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.text(S.current.retry), findsOneWidget, reason: 'la salida sigue ahí');
     });
   });
 }
