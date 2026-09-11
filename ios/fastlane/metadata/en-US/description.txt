@@ -24,6 +24,9 @@ Scan the table's QR code and order with whoever is with you: everyone adds what 
 
 Businesses that turn on payments can also charge inside the app, by card or local payment method.
 
+ON PHONE AND ON TABLET
+Foodly looks right on any screen. On tablet and iPad you can rotate the device, and menus, reservations and the business dashboard use the extra room: more places in view and less scrolling.
+
 Available now in Portugal, Spain, Argentina and Venezuela, with more markets coming soon.
 
 Join Foodly and bring your food business into the digital age.
