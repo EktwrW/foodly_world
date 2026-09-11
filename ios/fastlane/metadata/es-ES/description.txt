@@ -24,6 +24,9 @@ Escanea el código QR de la mesa y haz el pedido con quien esté contigo: cada u
 
 Los negocios que activen pagos pueden además cobrar dentro de la app, con tarjeta o Bizum.
 
+EN EL MÓVIL Y EN LA TABLETA
+Foodly se ve como debe en cualquier pantalla. En tablet y iPad puedes girar el dispositivo, y la carta, las reservas y el panel del negocio aprovechan el espacio de más: más sitios a la vista y menos desplazamiento.
+
 Disponible ahora en Portugal, España, Argentina y Venezuela, con más mercados muy pronto.
 
 Únete a Foodly y lleva tu negocio gastronómico a la era digital.

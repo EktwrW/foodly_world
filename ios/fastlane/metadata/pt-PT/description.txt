@@ -24,6 +24,9 @@ Lê o código QR da mesa e faz o pedido com quem está contigo: cada um adiciona
 
 Os negócios que ativarem pagamentos podem também cobrar dentro da app, com cartão ou MB WAY.
 
+NO TELEMÓVEL E NO TABLET
+O Foodly vê-se como deve ser em qualquer ecrã. Em tablet e iPad podes rodar o dispositivo, e as cartas, as reservas e o painel do negócio aproveitam o espaço a mais: mais sítios à vista e menos deslocamento.
+
 Disponível agora em Portugal, Espanha, Argentina e Venezuela, com mais mercados muito em breve.
 
 Junta-te à Foodly e leva o teu negócio de restauração para a era digital.
