@@ -3644,16 +3644,6 @@ class S {
     );
   }
 
-  /// `You don't have any saved promotions in this section`
-  String get noSavedPromotionsInSection {
-    return Intl.message(
-      'You don\'t have any saved promotions in this section',
-      name: 'noSavedPromotionsInSection',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Current`
   String get savedPromotionsTabCurrent {
     return Intl.message(
@@ -7164,16 +7154,6 @@ class S {
     return Intl.message(
       'No packages yet',
       name: 'noPackagesYet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Tap + to create your first package`
-  String get tapPlusToCreate {
-    return Intl.message(
-      'Tap + to create your first package',
-      name: 'tapPlusToCreate',
       desc: '',
       args: [],
     );
@@ -11100,6 +11080,86 @@ class S {
     return Intl.message(
       'View all',
       name: 'viewAllReservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the bookmark on a promotion and you'll have it here until it ends.`
+  String get savedPromosEmptyBody {
+    return Intl.message(
+      'Tap the bookmark on a promotion and you\'ll have it here until it ends.',
+      name: 'savedPromosEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None of yours are running right now`
+  String get savedPromosNoCurrentTitle {
+    return Intl.message(
+      'None of yours are running right now',
+      name: 'savedPromosNoCurrentTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't have any promotions starting soon`
+  String get savedPromosNoUpcomingTitle {
+    return Intl.message(
+      'You don\'t have any promotions starting soon',
+      name: 'savedPromosNoUpcomingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The ones you saved are on the other tab.`
+  String get savedPromosSectionEmptyBody {
+    return Intl.message(
+      'The ones you saved are on the other tab.',
+      name: 'savedPromosSectionEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See {tab}`
+  String savedPromosSeeOther(String tab) {
+    return Intl.message(
+      'See $tab',
+      name: 'savedPromosSeeOther',
+      desc: '',
+      args: [tab],
+    );
+  }
+
+  /// `A package bundles what you offer with its price, so people can book it without asking.`
+  String get servicePackagesEmptyBody {
+    return Intl.message(
+      'A package bundles what you offer with its price, so people can book it without asking.',
+      name: 'servicePackagesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This place hasn't published any packages yet`
+  String get visitPackagesEmptyTitle {
+    return Intl.message(
+      'This place hasn\'t published any packages yet',
+      name: 'visitPackagesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When it publishes one, you'll see it here.`
+  String get visitPackagesEmptyBody {
+    return Intl.message(
+      'When it publishes one, you\'ll see it here.',
+      name: 'visitPackagesEmptyBody',
       desc: '',
       args: [],
     );

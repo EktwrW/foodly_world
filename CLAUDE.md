@@ -749,6 +749,52 @@ categoría de catering**; con `businessCategory: null` sobrevivía.
 
 Las claves viejas `noReservationsYet` y `noReservationsFound` se borraron.
 
+**Fase 4: promociones guardadas y paquetes de servicio (2026-09-11).**
+
+*Promociones guardadas* tiene DOS pestañas —vigentes y próximas— y las dos
+decían lo mismo: «aún no tienes promociones guardadas en esta sección». Con
+promociones en la otra pestaña eso es **falso**, y además deja al usuario sin
+enterarse de que la otra existe. Ahora el vacío dice cuál está vacía y el botón
+**salta a la otra**.
+
+Con las dos vacías no hay a dónde saltar, así que ahí vuelve a ser el vacío de
+novato sin botón. Ese caso no es teórico: la vista cruza promos con negocios y
+una promo cuyo negocio no viene en la respuesta desaparece después del filtro de
+la página.
+
+**`animateToPage` revienta si el `PageController` no está enganchado a un
+PageView** (`positions.isNotEmpty`). Lo encontró el test, no el simulador. En la
+página siempre lo está, pero quien decide qué pestaña se marca es el índice del
+cubit, así que el salto visual va detrás de un `hasClients`: puede fallar sin
+llevarse por delante el cambio de pestaña. El `onToggle` del conmutador tampoco
+lo guarda — no se tocó.
+
+`_EmptyListPlaceholder` desapareció (dos usos, los dos migrados). Llevaba un
+`SizedBox(height: screenHeight - kToolbarHeight * 4)` que no hacía falta: los dos
+sitios donde se pintaba ya tienen alto acotado.
+
+*Paquetes de servicio* son dos pantallas que compartían la clave `noPackagesYet`
+y **no comparten sujeto**: en la del dueño es «aún no hay paquetes» y tiene
+salida (el botón abre la misma hoja que el «+» de la cabecera, con
+`existingPackage: null`); en la del visitante es «este negocio aún no publicó
+paquetes» y NO tiene salida, porque el visitante no puede crear uno. La misma
+frase para las dos era el problema de siempre en pequeño.
+
+`tapPlusToCreate` —«Toca + para crear tu primer paquete»— se borró: explicar
+dónde está el botón sale más caro que poner el botón. `createPackage` ya existía
+con el texto exacto.
+
+**Sin test, y a propósito, en las dos de paquetes.** El cuerpo es privado, vive
+dentro de un `BlocConsumer` cuyo cubit tira de DI, y lo único que cambia es copy
+y un `onAction` que el analizador ya comprueba. No hay rama que fijar: montar
+ese andamiaje sería un lastre, no una red.
+
+`test/ui/promociones/vacio_de_promos_guardadas_test.dart` (5 casos) sí existe,
+porque ahí sí hay ramas. Validado por mutación: cinco mutaciones, cinco muertes.
+`SavedPromotionsView` pasó a pública para poder medirla; de paso su parámetro
+`title` se convirtió en `seccion`, que es de donde salen ahora el título de la
+sección, el del vacío y cuál es «la otra».
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde

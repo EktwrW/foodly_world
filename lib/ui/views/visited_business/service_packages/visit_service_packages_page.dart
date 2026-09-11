@@ -12,6 +12,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecoration
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/video/video_players.dart' show YouTubeVideoPlayer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/visited_business/service_packages/cubit/visit_service_packages_cubit.dart';
@@ -119,15 +120,12 @@ class _LoadedContent extends StatelessWidget {
         if (packages.isEmpty)
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 8,
-                children: [
-                  const Icon(Bootstrap.briefcase, size: 48, color: Colors.black26),
-                  Text(S.current.noPackagesYet, style: FoodlyTextStyles.label),
-                ],
-              ),
+            // El sujeto es otro: aqui no es «no tienes», es «este negocio no
+            // publico». Y no hay salida porque el visitante no puede crear uno.
+            child: FoodlyEmptyView(
+              title: S.current.visitPackagesEmptyTitle,
+              subtitle: S.current.visitPackagesEmptyBody,
+              icon: const Icon(Bootstrap.briefcase, size: 40, color: FoodlyThemes.primaryFoodly),
             ),
           )
 

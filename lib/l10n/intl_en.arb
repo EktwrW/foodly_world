@@ -559,7 +559,6 @@
   "promotion": "Promotion",
   "savedPromotions": "Saved Promotions",
   "noSavedPromotions": "You don't have any saved promotions yet",
-  "noSavedPromotionsInSection": "You don't have any saved promotions in this section",
   "savedPromotionsTabCurrent": "Current",
   "savedPromotionsTabUpcoming": "Upcoming",
   "savedPromotionsCurrent": "These are your current promotions",
@@ -1095,7 +1094,6 @@
   "servicePackages": "Service packages",
   "packages": "Packages",
   "noPackagesYet": "No packages yet",
-  "tapPlusToCreate": "Tap + to create your first package",
   "setupProfessionalProfile": "Set up your professional profile",
   "addSpecialtiesAndDetails": "Add your specialties and details",
   "professionalProfile": "Professional profile",
@@ -1832,5 +1830,20 @@
   "manageReservationsEmptyBody": "Your customers' reservations will show up here as soon as they come in.",
   "reservationsFilterEmptyTitle": "No reservations match this filter",
   "reservationsFilterEmptyBody": "Try a different status, or go back to seeing them all.",
-  "viewAllReservations": "View all"
+  "viewAllReservations": "View all",
+  "savedPromosEmptyBody": "Tap the bookmark on a promotion and you'll have it here until it ends.",
+  "savedPromosNoCurrentTitle": "None of yours are running right now",
+  "savedPromosNoUpcomingTitle": "You don't have any promotions starting soon",
+  "savedPromosSectionEmptyBody": "The ones you saved are on the other tab.",
+  "savedPromosSeeOther": "See {tab}",
+  "@savedPromosSeeOther": {
+    "placeholders": {
+      "tab": {
+        "type": "String"
+      }
+    }
+  },
+  "servicePackagesEmptyBody": "A package bundles what you offer with its price, so people can book it without asking.",
+  "visitPackagesEmptyTitle": "This place hasn't published any packages yet",
+  "visitPackagesEmptyBody": "When it publishes one, you'll see it here."
 }

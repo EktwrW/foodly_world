@@ -562,8 +562,7 @@
   "promotions": "Promoções",
   "promotion": "Promoção",
   "savedPromotions": "Promoções guardadas",
-  "noSavedPromotions": "Ainda não tem promoções guardadas",
-  "noSavedPromotionsInSection": "Ainda não tem promoções guardadas nesta seção",
+  "noSavedPromotions": "Ainda não tens promoções guardadas",
   "savedPromotionsTabCurrent": "Atuais",
   "savedPromotionsTabUpcoming": "Próximas",
   "savedPromotionsCurrent": "Estas são as suas promoções atuais",
@@ -1096,7 +1095,6 @@
   "servicePackages": "Pacotes de serviço",
   "packages": "Pacotes",
   "noPackagesYet": "Ainda não há pacotes",
-  "tapPlusToCreate": "Toque + para criar o seu primeiro pacote",
   "setupProfessionalProfile": "Configure o seu perfil profissional",
   "addSpecialtiesAndDetails": "Adicione as suas especialidades e detalhes",
   "professionalProfile": "Perfil profissional",
@@ -1832,5 +1830,20 @@
   "manageReservationsEmptyBody": "As reservas dos teus clientes aparecerão aqui assim que chegarem.",
   "reservationsFilterEmptyTitle": "Não há reservas com este filtro",
   "reservationsFilterEmptyBody": "Experimenta outro estado ou volta a vê-las todas.",
-  "viewAllReservations": "Ver todas"
+  "viewAllReservations": "Ver todas",
+  "savedPromosEmptyBody": "Toca no marcador de uma promoção e tê-la-ás aqui até terminar.",
+  "savedPromosNoCurrentTitle": "Nenhuma das tuas está a decorrer agora",
+  "savedPromosNoUpcomingTitle": "Não tens promoções por começar",
+  "savedPromosSectionEmptyBody": "As que guardaste estão no outro separador.",
+  "savedPromosSeeOther": "Ver {tab}",
+  "@savedPromosSeeOther": {
+    "placeholders": {
+      "tab": {
+        "type": "String"
+      }
+    }
+  },
+  "servicePackagesEmptyBody": "Um pacote junta o que ofereces e o preço, para que possam reservar sem perguntar.",
+  "visitPackagesEmptyTitle": "Este negócio ainda não publicou pacotes",
+  "visitPackagesEmptyBody": "Quando publicar algum, vê-lo-ás aqui."
 }

@@ -7,6 +7,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart' sh
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart' show NearbyPromotionDM;
 import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;
 import 'package:foodly_world/ui/views/home/pages/my_favorites_page/my_favorites_views/widgets/my_favorites_business_mini_card.dart';
@@ -44,9 +45,11 @@ class SavedPromotionsPage extends StatelessWidget {
                 actionText: S.current.savedPromotions,
               ),
               body: ContentColumn.list(
-                child: _EmptyListPlaceholder(
+                child: FoodlyEmptyView(
                   key: const Key('saved-promos-placeholder'),
-                  text: S.current.noSavedPromotions,
+                  title: S.current.noSavedPromotions,
+                  subtitle: S.current.savedPromosEmptyBody,
+                  icon: const Icon(Bootstrap.bookmark_heart, size: 40, color: FoodlyThemes.primaryFoodly),
                 ),
               ),
             );
@@ -76,24 +79,26 @@ class SavedPromotionsPage extends StatelessWidget {
 
                         // Verificamos si ambas categorías están vacías después de quitar favoritos
                         if (vm.currentPromos.isEmpty && vm.upcomingPromos.isEmpty) {
-                          return _EmptyListPlaceholder(
-                            text: S.current.noSavedPromotions,
+                          return FoodlyEmptyView(
                             key: const Key('saved-promos-placeholder'),
+                            title: S.current.noSavedPromotions,
+                            subtitle: S.current.savedPromosEmptyBody,
+                            icon: const Icon(Bootstrap.bookmark_heart, size: 40, color: FoodlyThemes.primaryFoodly),
                           );
                         }
 
                         final savedPromotionsViews = [
-                          _SavedPromotionsView(
+                          SavedPromotionsView(
                             key: Key('saved-current-promos-${vm.currentPromos.length}'),
                             businesses: vm.businessesWithCurrentPromos,
                             promos: vm.currentPromos,
-                            title: S.current.savedPromotionsCurrent,
+                            seccion: SavedPromotionsIndexView.currentPromos,
                           ),
-                          _SavedPromotionsView(
+                          SavedPromotionsView(
                             key: Key('saved-upcoming-promos-${vm.upcomingPromos.length}'),
                             businesses: vm.businessesWithUpcomingPromos,
                             promos: vm.upcomingPromos,
-                            title: S.current.savedPromotionsUpcoming,
+                            seccion: SavedPromotionsIndexView.upcomingPromos,
                           ),
                         ];
 
@@ -123,36 +128,6 @@ class SavedPromotionsPage extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _EmptyListPlaceholder extends StatelessWidget {
-  final String text;
-
-  const _EmptyListPlaceholder({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.screenHeight - (kToolbarHeight * 4),
-      child: Column(
-        spacing: 24,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Bootstrap.bookmark_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
-          Center(
-            child: Text(
-              text,
-              style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-              textAlign: TextAlign.center,
-            ).paddingHorizontal(24),
-          ),
-        ],
       ),
     );
   }

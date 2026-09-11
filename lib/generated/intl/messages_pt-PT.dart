@@ -237,25 +237,27 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m85(businessName) => "Reservar mesa em ${businessName}";
 
-  static String m86(city) => "Procurar em ${city}...";
+  static String m86(tab) => "Ver ${tab}";
 
-  static String m87(businessName, appName, menuUrl) =>
+  static String m87(city) => "Procurar em ${city}...";
+
+  static String m88(businessName, appName, menuUrl) =>
       "🍽️ Vê o menu de ${businessName} em 🌟 ${appName}: \n${menuUrl}";
 
-  static String m88(text) => "Pedidos especiais: ${text}";
+  static String m89(text) => "Pedidos especiais: ${text}";
 
-  static String m89(count) => "há ${count}d";
+  static String m90(count) => "há ${count}d";
 
-  static String m90(count) => "há ${count}h";
+  static String m91(count) => "há ${count}h";
 
-  static String m91(count) => "há ${count}m";
+  static String m92(count) => "há ${count}m";
 
-  static String m92(seconds) =>
+  static String m93(seconds) =>
       "Demasiadas tentativas seguidas. Tente novamente em ${seconds}s.";
 
-  static String m93(date) => "Visitado em ${date}";
+  static String m94(date) => "Visitado em ${date}";
 
-  static String m94(businessName) =>
+  static String m95(businessName) =>
       "Escreva uma avaliação para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1968,10 +1970,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Não tens uma morada guardada, podes criar uma na tua página de perfil.",
     ),
     "noSavedPromotions": MessageLookupByLibrary.simpleMessage(
-      "Ainda não tem promoções guardadas",
-    ),
-    "noSavedPromotionsInSection": MessageLookupByLibrary.simpleMessage(
-      "Ainda não tem promoções guardadas nesta seção",
+      "Ainda não tens promoções guardadas",
     ),
     "noShow": MessageLookupByLibrary.simpleMessage("Não compareceu"),
     "nonEspecified": MessageLookupByLibrary.simpleMessage("Não especificado"),
@@ -2410,6 +2409,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveToProfileForReservations": MessageLookupByLibrary.simpleMessage(
       "Guardar no meu perfil para futuras reservas",
     ),
+    "savedPromosEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Toca no marcador de uma promoção e tê-la-ás aqui até terminar.",
+    ),
+    "savedPromosNoCurrentTitle": MessageLookupByLibrary.simpleMessage(
+      "Nenhuma das tuas está a decorrer agora",
+    ),
+    "savedPromosNoUpcomingTitle": MessageLookupByLibrary.simpleMessage(
+      "Não tens promoções por começar",
+    ),
+    "savedPromosSectionEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "As que guardaste estão no outro separador.",
+    ),
+    "savedPromosSeeOther": m86,
     "savedPromotions": MessageLookupByLibrary.simpleMessage(
       "Promoções guardadas",
     ),
@@ -2431,7 +2443,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchBusinessOrAddress": MessageLookupByLibrary.simpleMessage(
       "Procurar negócio ou endereço",
     ),
-    "searchInCity": m86,
+    "searchInCity": m87,
     "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Descubra excelentes lugares para comer e beber perto de si...",
     ),
@@ -2463,6 +2475,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "servicePackages": MessageLookupByLibrary.simpleMessage(
       "Pacotes de serviço",
     ),
+    "servicePackagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Um pacote junta o que ofereces e o preço, para que possam reservar sem perguntar.",
+    ),
     "serviceRequests": MessageLookupByLibrary.simpleMessage(
       "Pedidos de serviço",
     ),
@@ -2489,7 +2504,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareMenuError": MessageLookupByLibrary.simpleMessage(
       "Ups... Algo correu mal! \n\nNão foi possível partilhar o menu.",
     ),
-    "shareMenuMessage": m87,
+    "shareMenuMessage": m88,
     "shareMenuSubject": MessageLookupByLibrary.simpleMessage(
       "Partilho contigo um menu!",
     ),
@@ -2550,7 +2565,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "specialRequests": MessageLookupByLibrary.simpleMessage(
       "Pedidos especiais",
     ),
-    "specialRequestsLabel": m88,
+    "specialRequestsLabel": m89,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Pedidos especiais (opcional)",
     ),
@@ -2614,9 +2629,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Reservas de mesa",
     ),
     "takeAway": MessageLookupByLibrary.simpleMessage("Para Levar"),
-    "tapPlusToCreate": MessageLookupByLibrary.simpleMessage(
-      "Toque + para criar o seu primeiro pacote",
-    ),
     "tapToAddPrompt": MessageLookupByLibrary.simpleMessage(
       "Toque aqui para adicionar um novo prompt",
     ),
@@ -2653,16 +2665,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "thisUser": MessageLookupByLibrary.simpleMessage("este utilizador"),
     "time": MessageLookupByLibrary.simpleMessage("Hora"),
-    "timeAgoDays": m89,
-    "timeAgoHours": m90,
+    "timeAgoDays": m90,
+    "timeAgoHours": m91,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Agora mesmo"),
-    "timeAgoMinutes": m91,
+    "timeAgoMinutes": m92,
     "title": MessageLookupByLibrary.simpleMessage("Título"),
     "today": MessageLookupByLibrary.simpleMessage("Hoje"),
     "tooManyAttempts": MessageLookupByLibrary.simpleMessage(
       "Demasiadas tentativas seguidas. Tente novamente daqui a pouco.",
     ),
-    "tooManyAttemptsIn": m92,
+    "tooManyAttemptsIn": m93,
     "topEvents": MessageLookupByLibrary.simpleMessage("Principais eventos"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total de eventos"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Taxa deslocação/km"),
@@ -2758,7 +2770,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Ver página do estabelecimento",
     ),
-    "visitedOn": m93,
+    "visitPackagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Quando publicar algum, vê-lo-ás aqui.",
+    ),
+    "visitPackagesEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Este negócio ainda não publicou pacotes",
+    ),
+    "visitedOn": m94,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitante"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitalidade"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -2810,7 +2828,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "whenDidYouVisit": MessageLookupByLibrary.simpleMessage("Quando visitou?"),
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m94,
+    "writeReviewFor": m95,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escreva sua avaliação aqui...",
     ),
