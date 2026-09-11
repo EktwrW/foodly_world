@@ -8,6 +8,21 @@ enum SavedPromotionsIndexView {
         currentPromos => S.current.savedPromotionsTabCurrent,
         upcomingPromos => S.current.savedPromotionsTabUpcoming,
       };
+
+  /// El titulo que encabeza la lista de la seccion.
+  String get sectionTitle => switch (this) {
+        currentPromos => S.current.savedPromotionsCurrent,
+        upcomingPromos => S.current.savedPromotionsUpcoming,
+      };
+
+  /// El titulo cuando la seccion esta vacia. Dice cual esta vacia, no «no hay
+  /// nada»: la otra pestaña casi siempre tiene contenido.
+  String get emptyTitle => switch (this) {
+        currentPromos => S.current.savedPromosNoCurrentTitle,
+        upcomingPromos => S.current.savedPromosNoUpcomingTitle,
+      };
+
+  SavedPromotionsIndexView get otra => this == currentPromos ? upcomingPromos : currentPromos;
 }
 
 class _SavedPromotionsToggleSwitch extends StatelessWidget {

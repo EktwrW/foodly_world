@@ -8,6 +8,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -29,7 +30,7 @@ class MyReservationsPage extends StatelessWidget {
       // would force a wasted "no-filter" fetch on every cold start when the
       // user has a persisted filter (e.g. they last viewed only `service`),
       // and would briefly flash the wrong list before the second fetch
-      // landed. [_ReservationsList] now treats `initial` as a loading state
+      // landed. [ReservationsList] now treats `initial` as a loading state
       // so the shimmer shows while the filter is being restored.
       create: (_) => MyReservationsCubit(
         reservationRepo: di(),
@@ -86,7 +87,7 @@ class MyReservationsPage extends StatelessWidget {
               children: [
                 _BookingTypeFilter(),
                 _StatusFilterDropdown(),
-                Expanded(child: _ReservationsList()),
+                Expanded(child: ReservationsList()),
               ],
             ),
           ),
@@ -358,8 +359,15 @@ class _StatusFilterDropdown extends StatelessWidget {
   }
 }
 
-class _ReservationsList extends StatelessWidget {
-  const _ReservationsList();
+/// La lista de reservas del comensal, con sus tres estados: esqueleto,
+/// vacio y lista.
+///
+/// Es publica solo para poder medirla: el vacio distingue entre «no tienes
+/// reservas» y «no hay ninguna con este filtro», y esa rama es justo lo que hay
+/// que fijar. La pagina que la contiene arrastra DI (router, prefs, servicios)
+/// que no hacen falta para eso.
+class ReservationsList extends StatelessWidget {
+  const ReservationsList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -382,15 +390,24 @@ class _ReservationsList extends StatelessWidget {
           loading: (_) => const ReservationsShimmer(),
           orElse: () {
             if (vm.reservations.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Bootstrap.calendar2_event, size: 64, color: FoodlyThemes.primaryFoodly),
-                    const SizedBox(height: 12),
-                    Text(S.current.noReservationsYet, style: FoodlyTextStyles.label),
-                  ],
-                ),
+              // Los dos filtros de esta pagina se limpian distinto: el
+              // desplegable de estado lo pinta `vm.statusFilter`, asi que
+              // apagarlo desde aqui lo deja sincronizado. El segmentado de tipo
+              // guarda su seleccion en su propio State y en prefs, y quedaria
+              // marcado sobre una lista sin filtrar — por eso no hay boton
+              // cuando el unico filtro activo es ese.
+              final hayFiltroDeEstado = vm.statusFilter != null;
+              final hayFiltro = hayFiltroDeEstado || vm.bookingTypeFilter != null;
+
+              return FoodlyEmptyView(
+                intent: hayFiltro ? FoodlyEmptyIntent.filtro : FoodlyEmptyIntent.nuevo,
+                title: hayFiltro ? S.current.reservationsFilterEmptyTitle : S.current.myReservationsEmptyTitle,
+                subtitle: hayFiltro ? S.current.reservationsFilterEmptyBody : S.current.myReservationsEmptyBody,
+                icon: hayFiltro
+                    ? null
+                    : const Icon(Bootstrap.calendar2_event, size: 40, color: FoodlyThemes.primaryFoodly),
+                actionLabel: hayFiltroDeEstado ? S.current.viewAllReservations : null,
+                onAction: hayFiltroDeEstado ? () => cubit.setStatusFilter(null) : null,
               );
             }
 

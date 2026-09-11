@@ -2,6 +2,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/service_packages/cubit/service_packages_cubit.dart';
@@ -158,21 +159,16 @@ class _ServicePackagesBody extends StatelessWidget {
                   // Package list or empty state
                   if (vm.packages.isEmpty)
                     SliverFillRemaining(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Bootstrap.box_seam, size: 64, color: FoodlyThemes.secondaryFoodly),
-                            const SizedBox(height: 12),
-                            Text(S.current.noPackagesYet, style: FoodlyTextStyles.label),
-                            const SizedBox(height: 6),
-                            Text(
-                              S.current.tapPlusToCreate,
-                              style: FoodlyTextStyles.caption,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
+                      child: FoodlyEmptyView(
+                        title: S.current.noPackagesYet,
+                        subtitle: S.current.servicePackagesEmptyBody,
+                        icon: const Icon(Bootstrap.box_seam, size: 40, color: FoodlyThemes.primaryFoodly),
+                        // La misma hoja que abre el «+» de la cabecera: sin
+                        // paquete existente es el formulario de creacion.
+                        // Explicar donde esta el boton salia mas caro que
+                        // ponerlo aqui.
+                        actionLabel: S.current.createPackage,
+                        onAction: () => _showEditPackageSheet(context, null),
                       ),
                     )
                   else

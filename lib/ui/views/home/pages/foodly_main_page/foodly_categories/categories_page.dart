@@ -7,6 +7,7 @@ import 'package:foodly_world/data_models/service_packages/service_package_dm.dar
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -28,7 +29,7 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  static const radiusDistanceOptions = <double>[5, 10, 15, 25];
+  static const radiusDistanceOptions = VacioDeCategoria.radios;
 
   StreamSubscription<LocationDetailsDM>? _locationSub;
 
@@ -279,7 +280,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               key: const Key('categories-page-business-results-view'),
                               searchResults: vm.businessesInCurrentCategory,
                               isGridView: vm.viewMode.isGrid,
-                              noResultsMessage: S.current.noNearbyBusinessesInCategory(vm.radiusDistanceInKm),
+                              emptyState: VacioDeCategoria(
+                                radioActual: vm.radiusDistanceInKm,
+                                hayUbicacion: vm.latitude != null && vm.longitude != null,
+                                onAmpliarRadio: cubit.toggleRadiusDistance,
+                              ),
                             ).paddingOnly(right: 6, left: 6, top: vm.businessesInCurrentCategory.isEmpty ? 100 : 20),
                     ),
                   ),
@@ -291,6 +296,50 @@ class _CategoriesPageState extends State<CategoriesPage> {
           diameter: 36,
         ).paddingOnly(bottom: 24, right: 12),
       ),
+    );
+  }
+}
+
+/// El vacio de una categoria es SIEMPRE por filtro: la categoria existe, el
+/// radio existe, y lo que no hay es nada dentro de los dos.
+///
+/// La palanca es el radio, y por eso el boton lo amplia en vez de mandar a otro
+/// sitio. El selector segmentado se pinta desde `vm.radiusDistanceInKm`, asi
+/// que moverlo desde aqui lo deja marcado donde toca.
+///
+/// Es presentacional —el radio y la ubicacion entran por parametro en vez de
+/// leerse del cubit— para poder medirlo sin DI, igual que
+/// `FoodlyNavigationRail`.
+class VacioDeCategoria extends StatelessWidget {
+  /// Los saltos del selector segmentado de la cabecera.
+  static const radios = <double>[5, 10, 15, 25];
+
+  final double radioActual;
+
+  /// Sin ubicacion resuelta no hay a donde ampliar: la busqueda por radio va
+  /// con `latitude!`.
+  final bool hayUbicacion;
+
+  final ValueChanged<double> onAmpliarRadio;
+
+  const VacioDeCategoria({
+    super.key,
+    required this.radioActual,
+    required this.hayUbicacion,
+    required this.onAmpliarRadio,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final siguiente = radios.where((r) => r > radioActual).firstOrNull;
+    final puedeAmpliar = siguiente != null && hayUbicacion;
+
+    return FoodlyEmptyView(
+      intent: FoodlyEmptyIntent.filtro,
+      title: S.current.categoryEmptyTitle,
+      subtitle: S.current.noNearbyBusinessesInCategory(radioActual.toInt()),
+      actionLabel: puedeAmpliar ? S.current.widenRadius(siguiente.toInt()) : null,
+      onAction: puedeAmpliar ? () => onAmpliarRadio(siguiente) : null,
     );
   }
 }

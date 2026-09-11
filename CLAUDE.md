@@ -679,6 +679,194 @@ fase 1 unifica lo visual sin bloquearse en el copy.
 Canvas del diseño: artifact 883d0965 (anatomía, las tres intenciones, tres
 comparativas antes-después y el plan).
 
+**Fase 2, los tres de favoritos (2026-09-11).** Negocios, cartas y platos eran
+el MISMO bloque copiado tres veces —icono de 64 px, una línea en cursiva con
+`height: 1.9`, y `paddingHorizontal(screenWidth * .1)`, que da 32 px en un
+iPhone SE y 102 en un iPad para un texto que mide lo mismo—. Ahora los tres son
+`FoodlyEmptyView` con intención `nuevo`, título y **subtítulo**: la línea de
+antes decía que no había nada, el subtítulo dice qué hacer para que lo haya.
+
+**Sin botón, y no por falta de ganas.** El CTA natural sería «explorar
+negocios», pero `_bottomNavIndex` es un `ValueNotifier` local de
+`_HomePage369State` que solo se siembra en `initState`: navegar por ruta desde
+otra pestaña deja la barra inferior marcando la pestaña equivocada. Es un fallo
+que ya existe —el drawer lo tiene igual— y arreglarlo toca la navegación del
+teléfono, que está en producción. El vacío mejora igual; la salida se cablea
+cuando se arregle el índice.
+
+**Los iconos se separaron a propósito.** Los tres vivían con
+`Bootstrap.search_heart`, y son tres pestañas de un `PageView`: deslizar entre
+ellas sin que cambie nada se lee como que la app no respondió. Ahora cada una
+lleva el icono de su propia tarjeta (`shop_window`, `Icons.menu_book`,
+`egg_fried`).
+
+**El hueco es fijo y no hay scroll**, que es lo que hace que la altura importe:
+el `PageView` vive en un `SizedBox.fromSize(Size(screenWidth, screenHeight))` y
+se le restan appbar y conmutador por arriba. Medido a 320 px de ancho el bloque
+son 266 px y con los 120 de relleno quedan 386 contra 448 disponibles — con los
+textos de los tres idiomas, que a ese ancho envuelven igual. Está en
+`test/ui/placeholders/vacios_de_favoritos_test.dart`; validado por mutación:
+agrandar el medallón, recortar el subtítulo a una línea y no pintarlo ponen en
+rojo tres cosas distintas.
+
+**Quedan 16 pantallas.** Las claves viejas (`noFavoriteBusinesses`,
+`noFavoriteMenus`, `noFavoriteItems`) se borraron de los tres `.arb`: no las
+usaba nadie más.
+
+**Fase 3, las dos de reservas (2026-09-11). Aquí sí había un bug de verdad**,
+no solo estilo: las dos listas viven **debajo de un filtro** y el vacío decía
+«aún no hay reservas» tuvieras 0 o tuvieras 30 filtradas por un estado que no
+casa. Es exactamente el fallo que motivó las tres intenciones, y estaba en la
+pantalla donde más duele: un dueño que filtra por «hoy» un martes tranquilo lee
+que no tiene reservas.
+
+Ahora las dos distinguen, y con un botón que **quita el filtro** — la primera
+salida de verdad que tiene un vacío en Foodly aparte de reintentar.
+
+**La regla de qué filtro se puede apagar, que es lo fino de esto:** un botón
+solo puede apagar un filtro cuya selección viva en el cubit.
+
+| filtro | dónde vive | ¿botón? |
+| --- | --- | --- |
+| desplegable de estado (comensal) | `vm.statusFilter`, y el desplegable lo pinta con un `BlocSelector` | **sí** |
+| segmentado de tipo (comensal) | `_BookingTypeFilterState._selected` + prefs | **no** — quedaría marcado sobre una lista sin filtrar |
+| desplegable del dueño | `cubit.activeFilterKey`, dentro de un `BlocBuilder` | **sí** |
+| tipo de reserva del dueño | derivado de la vertical del negocio | **no es un filtro**: el dueño no lo puso y no puede quitarlo |
+
+La última fila es la que se pierde en un refactor, porque `vm.bookingTypeFilter`
+existe en los dos VM y parece lo mismo en los dos. En el del dueño sale de
+`_deriveBookingType(businessCategory)`.
+
+`ReservationsList` y `ManagerReservationsList` se hicieron públicas para poder
+medirlas — las páginas que las contienen arrastran router, prefs y servicios que
+no hacen falta para esto. Mismo motivo que `EmptyOffersWidget`.
+
+`test/ui/reservas/vacio_de_reservas_test.dart` (7 casos) monta los cubits reales
+sobre un repo que devuelve cero reservas, así que el camino del filtro se
+recorre entero. Validado por mutación: seis mutaciones, seis muertes — y una de
+ellas, «contar la vertical como filtro», **sólo muere desde que hay un caso con
+categoría de catering**; con `businessCategory: null` sobrevivía.
+
+Las claves viejas `noReservationsYet` y `noReservationsFound` se borraron.
+
+**Fase 4: promociones guardadas y paquetes de servicio (2026-09-11).**
+
+*Promociones guardadas* tiene DOS pestañas —vigentes y próximas— y las dos
+decían lo mismo: «aún no tienes promociones guardadas en esta sección». Con
+promociones en la otra pestaña eso es **falso**, y además deja al usuario sin
+enterarse de que la otra existe. Ahora el vacío dice cuál está vacía y el botón
+**salta a la otra**.
+
+Con las dos vacías no hay a dónde saltar, así que ahí vuelve a ser el vacío de
+novato sin botón. Ese caso no es teórico: la vista cruza promos con negocios y
+una promo cuyo negocio no viene en la respuesta desaparece después del filtro de
+la página.
+
+**`animateToPage` revienta si el `PageController` no está enganchado a un
+PageView** (`positions.isNotEmpty`). Lo encontró el test, no el simulador. En la
+página siempre lo está, pero quien decide qué pestaña se marca es el índice del
+cubit, así que el salto visual va detrás de un `hasClients`: puede fallar sin
+llevarse por delante el cambio de pestaña. El `onToggle` del conmutador tampoco
+lo guarda — no se tocó.
+
+`_EmptyListPlaceholder` desapareció (dos usos, los dos migrados). Llevaba un
+`SizedBox(height: screenHeight - kToolbarHeight * 4)` que no hacía falta: los dos
+sitios donde se pintaba ya tienen alto acotado.
+
+*Paquetes de servicio* son dos pantallas que compartían la clave `noPackagesYet`
+y **no comparten sujeto**: en la del dueño es «aún no hay paquetes» y tiene
+salida (el botón abre la misma hoja que el «+» de la cabecera, con
+`existingPackage: null`); en la del visitante es «este negocio aún no publicó
+paquetes» y NO tiene salida, porque el visitante no puede crear uno. La misma
+frase para las dos era el problema de siempre en pequeño.
+
+`tapPlusToCreate` —«Toca + para crear tu primer paquete»— se borró: explicar
+dónde está el botón sale más caro que poner el botón. `createPackage` ya existía
+con el texto exacto.
+
+**Sin test, y a propósito, en las dos de paquetes.** El cuerpo es privado, vive
+dentro de un `BlocConsumer` cuyo cubit tira de DI, y lo único que cambia es copy
+y un `onAction` que el analizador ya comprueba. No hay rama que fijar: montar
+ese andamiaje sería un lastre, no una red.
+
+`test/ui/promociones/vacio_de_promos_guardadas_test.dart` (5 casos) sí existe,
+porque ahí sí hay ramas. Validado por mutación: cinco mutaciones, cinco muertes.
+`SavedPromotionsView` pasó a pública para poder medirla; de paso su parámetro
+`title` se convirtió en `seccion`, que es de donde salen ahora el título de la
+sección, el del vacío y cuál es «la otra».
+
+**Fase 5: resultados de búsqueda y categorías (2026-09-11). Una lista de
+negocios vacía NUNCA es «aún no hay nada»** — la categoría existe, el radio
+existe, la consulta existe: lo que no hay es nada *con eso*. Las dos pantallas
+comparten `BusinessResultsView`, así que el vacío es el mismo widget con dos
+palancas distintas.
+
+Por eso `noResultsMessage` (una cadena) se cambió por `emptyState` (un widget):
+**la palanca la conoce quien llama**, no la vista compartida. El valor por
+defecto es un vacío de filtro SIN botón, que es lo honesto para quien no trae
+ninguna.
+
+| pantalla | palanca | botón |
+| --- | --- | --- |
+| categorías | el radio (5/10/15/25 km) | «Ampliar a N km», el SIGUIENTE salto |
+| búsqueda | la consulta | «Borrar la búsqueda» → `resetToInitial()` |
+
+**El botón del radio no propone el máximo, propone el siguiente**, y desaparece
+en 25 km. Y desaparece también **sin ubicación resuelta**, porque
+`toggleRadiusDistance` va a buscar con `latitude!` — ofrecer ampliar ahí es
+ofrecer un crash.
+
+`VacioDeCategoria` es presentacional: el radio y la ubicación entran por
+parámetro en vez de leerse del cubit, igual que `FoodlyNavigationRail`, y por eso
+se mide sin DI. La lista de radios vive ahora en él
+(`VacioDeCategoria.radios`) y el selector segmentado de la cabecera la reusa: eran
+el mismo dato en dos sitios esperando a separarse.
+
+`noRecommendationsFound` eran dos frases pegadas con un `\n` —constatación y
+consejo— que es literalmente un título y un subtítulo escritos a mano. Se partió
+en `searchEmptyTitle` y `searchEmptyBody` y la clave vieja se borró.
+
+`test/ui/busqueda/vacio_de_resultados_test.dart`, 6 casos. Cinco mutaciones,
+cinco muertes.
+
+**El radio salía con decimal.** `noNearbyBusinessesInCategory` declaraba su
+placeholder como `double` y `intl` interpola el valor tal cual: «dentro de 5.0
+km». Venía de antes, pero este trabajo lo puso al lado de un botón que dice
+«Ampliar a 10 km», y ahí el desajuste canta. El placeholder pasó a `int` y la
+llamada a `.toInt()`; los radios son enteros por construcción.
+
+**Fase 6, la última tanda (2026-09-11):** notificaciones, mensajes de reserva,
+las tres de la comunidad (buzz, descubrir usuarios, feed de publicaciones) y los
+dos estados de ERROR —hoja de perfil y panel de analíticas—, que son los
+primeros usos reales de `FoodlyEmptyIntent.fallo`.
+
+**Un bug de verdad, en «descubrir usuarios»:** el vacío estaba **en inglés y a
+pelo**, sin pasar por l10n («No users nearby» / «Try increasing your search
+radius»), así que un usuario en español o portugués lo veía en inglés. Y encima
+el consejo era imposible de seguir: **ahí no hay ningún control de radio** —lo
+filtra el servidor desde la ubicación—. Dos fallos en una cadena de dos líneas.
+
+**La hoja de perfil era un callejón sin salida**: decía que no se pudo cargar y
+ahí acababa. `_loadProfile` se puede volver a llamar; lo único es devolver el
+indicador de carga a mano, porque no lo enciende ella.
+
+**`subtitleMaxLines` es nuevo y tiene un solo usuario a propósito.** El panel de
+analíticas pinta como subtítulo el mensaje que viene del SERVIDOR, que puede
+medir lo que quiera; el resto del copy es nuestro y es corto por construcción,
+así que el tope por defecto es «ninguno». Sin él, un error largo estira el
+bloque hasta desbordar.
+
+**Lo que NO se migró, y por qué:** `join_by_link_page`. Es una pantalla de fallo
+entera, no el vacío de una lista, y su salida —un botón a lo ancho que va
+DIRECTO a la main page— está así por un bug de e2e: ir a `/` disparaba la
+restauración de `LAST_PATH`, que podía ser el propio `/join`, y el botón quedaba
+«muerto». Meterla en `FoodlyEmptyView` cambiaría ese botón por una píldora y
+tocaría un camino cubierto por e2e, a cambio de nada.
+
+**Quedan cero vacíos de lista escritos a mano.** Los `Icon(size: 48)` que siguen
+apareciendo en un barrido son diálogos de confirmación y de resultado, que no
+son estados vacíos.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde

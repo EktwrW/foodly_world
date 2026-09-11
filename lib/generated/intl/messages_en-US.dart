@@ -232,25 +232,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m85(businessName) => "Reserve a table at ${businessName}";
 
-  static String m86(city) => "Search in ${city}...";
+  static String m86(tab) => "See ${tab}";
 
-  static String m87(businessName, appName, menuUrl) =>
+  static String m87(city) => "Search in ${city}...";
+
+  static String m88(businessName, appName, menuUrl) =>
       "🍽️ Check out ${businessName}\'s menu on 🌟 ${appName}: \n${menuUrl}";
 
-  static String m88(text) => "Special requests: ${text}";
+  static String m89(text) => "Special requests: ${text}";
 
-  static String m89(count) => "${count}d ago";
+  static String m90(count) => "${count}d ago";
 
-  static String m90(count) => "${count}h ago";
+  static String m91(count) => "${count}h ago";
 
-  static String m91(count) => "${count}m ago";
+  static String m92(count) => "${count}m ago";
 
-  static String m92(seconds) =>
+  static String m93(seconds) =>
       "Too many attempts in a row. Try again in ${seconds}s.";
 
-  static String m93(date) => "Visited on ${date}";
+  static String m94(date) => "Visited on ${date}";
 
-  static String m94(businessName) => "Write a review for ${businessName}";
+  static String m95(radius) => "Widen to ${radius} km";
+
+  static String m96(businessName) => "Write a review for ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -775,6 +779,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Category deleted successfully",
     ),
+    "categoryEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Nothing in this category nearby",
+    ),
     "categoryNameEmpty": MessageLookupByLibrary.simpleMessage(
       "Category name can not be empty",
     ),
@@ -798,6 +805,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "city": MessageLookupByLibrary.simpleMessage("City"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
+    "clearSearch": MessageLookupByLibrary.simpleMessage("Clear search"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
     "closed": MessageLookupByLibrary.simpleMessage("Closed"),
     "cocktail": MessageLookupByLibrary.simpleMessage("Cocktail"),
@@ -1128,6 +1136,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "Failed to reject reservation.",
     ),
     "fastFood": MessageLookupByLibrary.simpleMessage("Fast Food"),
+    "favBusinessesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the heart on any place and it will always be within reach.",
+    ),
+    "favBusinessesEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any places yet",
+    ),
+    "favItemsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the heart on a dish and you\'ll find it here when you come back.",
+    ),
+    "favItemsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any dishes yet",
+    ),
+    "favMenusEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Save a place\'s menu and you\'ll open it from here without searching.",
+    ),
+    "favMenusEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any menus yet",
+    ),
     "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
     "featured": MessageLookupByLibrary.simpleMessage("Featured"),
     "featuredPackageHint": MessageLookupByLibrary.simpleMessage(
@@ -1623,6 +1649,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "manageReservations": MessageLookupByLibrary.simpleMessage(
       "Manage Reservations",
     ),
+    "manageReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Your customers\' reservations will show up here as soon as they come in.",
+    ),
+    "manageReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No reservations yet",
+    ),
     "managerActivatePaymentsBody": MessageLookupByLibrary.simpleMessage(
       "Verify your business with Stripe to receive order payments straight to your bank account. Takes ~5 minutes.",
     ),
@@ -1801,6 +1833,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "myFavorites": MessageLookupByLibrary.simpleMessage("My Favorites"),
     "myHistory": MessageLookupByLibrary.simpleMessage("My History"),
     "myReservations": MessageLookupByLibrary.simpleMessage("My Reservations"),
+    "myReservationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Once you book a table or a service, you\'ll see it here with its status.",
+    ),
+    "myReservationsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You don\'t have any reservations yet",
+    ),
     "nNewMessages": m71,
     "needBestRecommendations": MessageLookupByLibrary.simpleMessage(
       "Need the best recommendations?",
@@ -1831,15 +1869,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "noConnection": MessageLookupByLibrary.simpleMessage(
       "No internet connection. Check your network and try again.",
     ),
-    "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any businesses in your favorites list yet",
-    ),
-    "noFavoriteItems": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any items in your favorites list yet",
-    ),
-    "noFavoriteMenus": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any menus in your favorites list yet",
-    ),
     "noItemsYet": MessageLookupByLibrary.simpleMessage(
       "There are no items added yet",
     ),
@@ -1858,23 +1887,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "noPromotionsNearby": MessageLookupByLibrary.simpleMessage(
       "No promotions nearby",
     ),
-    "noRecommendationsFound": MessageLookupByLibrary.simpleMessage(
-      "We didn\'t find any recommendations for your search. \nTry other terms or try a different location.",
-    ),
-    "noReservationsFound": MessageLookupByLibrary.simpleMessage(
-      "No reservations found.",
-    ),
-    "noReservationsYet": MessageLookupByLibrary.simpleMessage(
-      "No reservations yet.",
-    ),
     "noSavedAddress": MessageLookupByLibrary.simpleMessage(
       "You don\'t have a saved address. You can create one on your profile page.",
     ),
     "noSavedPromotions": MessageLookupByLibrary.simpleMessage(
       "You don\'t have any saved promotions yet",
-    ),
-    "noSavedPromotionsInSection": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any saved promotions in this section",
     ),
     "noShow": MessageLookupByLibrary.simpleMessage("No Show"),
     "nonEspecified": MessageLookupByLibrary.simpleMessage("Not Specified"),
@@ -1888,6 +1905,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "notesLabel": m73,
     "notification": MessageLookupByLibrary.simpleMessage("Notification"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "notificationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Your alerts about reservations, promotions and community activity show up here.",
+    ),
     "november": MessageLookupByLibrary.simpleMessage("November"),
     "october": MessageLookupByLibrary.simpleMessage("October"),
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Let\'s go!"),
@@ -2248,6 +2268,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "reservationDetails": MessageLookupByLibrary.simpleMessage(
       "Reservation Details",
     ),
+    "reservationMessagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Write below to sort out the details of this reservation.",
+    ),
     "reservationRejected": MessageLookupByLibrary.simpleMessage(
       "Reservation rejected.",
     ),
@@ -2258,6 +2281,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Reservation request sent!",
     ),
     "reservations": MessageLookupByLibrary.simpleMessage("Reservations"),
+    "reservationsFilterEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Try a different status, or go back to seeing them all.",
+    ),
+    "reservationsFilterEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No reservations match this filter",
+    ),
     "reservationsForToday": MessageLookupByLibrary.simpleMessage(
       "Today\'s Reservations",
     ),
@@ -2293,6 +2322,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveToProfileForReservations": MessageLookupByLibrary.simpleMessage(
       "Save to my profile for future reservations",
     ),
+    "savedPromosEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the bookmark on a promotion and you\'ll have it here until it ends.",
+    ),
+    "savedPromosNoCurrentTitle": MessageLookupByLibrary.simpleMessage(
+      "None of yours are running right now",
+    ),
+    "savedPromosNoUpcomingTitle": MessageLookupByLibrary.simpleMessage(
+      "You don\'t have any promotions starting soon",
+    ),
+    "savedPromosSectionEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "The ones you saved are on the other tab.",
+    ),
+    "savedPromosSeeOther": m86,
     "savedPromotions": MessageLookupByLibrary.simpleMessage("Saved Promotions"),
     "savedPromotionsCurrent": MessageLookupByLibrary.simpleMessage(
       "These are your current promotions",
@@ -2314,7 +2356,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchBusinessOrAddress": MessageLookupByLibrary.simpleMessage(
       "Search Business or Address",
     ),
-    "searchInCity": m86,
+    "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Try different words, or search from another location.",
+    ),
+    "searchEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "We didn\'t find anything for your search",
+    ),
+    "searchInCity": m87,
     "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Discover great places to eat and drink nearby...",
     ),
@@ -2342,6 +2390,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Service request",
     ),
     "servicePackages": MessageLookupByLibrary.simpleMessage("Service packages"),
+    "servicePackagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "A package bundles what you offer with its price, so people can book it without asking.",
+    ),
     "serviceRequests": MessageLookupByLibrary.simpleMessage("Service requests"),
     "serviceType": MessageLookupByLibrary.simpleMessage("Service type"),
     "serviceTypeAll": MessageLookupByLibrary.simpleMessage("All"),
@@ -2364,7 +2415,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareMenuError": MessageLookupByLibrary.simpleMessage(
       "Oops... Something went wrong! \n\nCouldn\'t share the menu.",
     ),
-    "shareMenuMessage": m87,
+    "shareMenuMessage": m88,
     "shareMenuSubject": MessageLookupByLibrary.simpleMessage(
       "Sharing a menu with you!",
     ),
@@ -2417,7 +2468,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sortBy": MessageLookupByLibrary.simpleMessage("Sort by"),
     "specialRequests": MessageLookupByLibrary.simpleMessage("Special requests"),
-    "specialRequestsLabel": m88,
+    "specialRequestsLabel": m89,
     "specialRequestsOptional": MessageLookupByLibrary.simpleMessage(
       "Special requests (optional)",
     ),
@@ -2481,9 +2532,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Table reservations",
     ),
     "takeAway": MessageLookupByLibrary.simpleMessage("Take Away"),
-    "tapPlusToCreate": MessageLookupByLibrary.simpleMessage(
-      "Tap + to create your first package",
-    ),
     "tapToAddPrompt": MessageLookupByLibrary.simpleMessage(
       "Tap here to add a new prompt",
     ),
@@ -2518,16 +2566,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "thisBusiness": MessageLookupByLibrary.simpleMessage("this business"),
     "thisUser": MessageLookupByLibrary.simpleMessage("this user"),
     "time": MessageLookupByLibrary.simpleMessage("Time"),
-    "timeAgoDays": m89,
-    "timeAgoHours": m90,
+    "timeAgoDays": m90,
+    "timeAgoHours": m91,
     "timeAgoJustNow": MessageLookupByLibrary.simpleMessage("Just now"),
-    "timeAgoMinutes": m91,
+    "timeAgoMinutes": m92,
     "title": MessageLookupByLibrary.simpleMessage("Title"),
     "today": MessageLookupByLibrary.simpleMessage("Today"),
     "tooManyAttempts": MessageLookupByLibrary.simpleMessage(
       "Too many attempts in a row. Try again in a moment.",
     ),
-    "tooManyAttemptsIn": m92,
+    "tooManyAttemptsIn": m93,
     "topEvents": MessageLookupByLibrary.simpleMessage("Top events"),
     "totalEvents": MessageLookupByLibrary.simpleMessage("Total events"),
     "travelFeeKm": MessageLookupByLibrary.simpleMessage("Travel fee/km"),
@@ -2593,6 +2641,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Username not available",
     ),
     "users": MessageLookupByLibrary.simpleMessage("Users"),
+    "usersDiscoveryEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "When there are Foodly users near you, they\'ll show up in this list.",
+    ),
+    "usersDiscoveryEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No one around here yet",
+    ),
     "usersHaveTheAbilityToCreateAndManage":
         MessageLookupByLibrary.simpleMessage(
           "are users who have the ability to create and manage",
@@ -2613,6 +2667,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Video is too long. Maximum duration is 20 seconds.",
     ),
     "view": MessageLookupByLibrary.simpleMessage("View"),
+    "viewAllReservations": MessageLookupByLibrary.simpleMessage("View all"),
     "viewEdit": MessageLookupByLibrary.simpleMessage("View/Edit"),
     "viewMenuOf": MessageLookupByLibrary.simpleMessage("View menu of"),
     "viewPromotion": MessageLookupByLibrary.simpleMessage("View promotion"),
@@ -2620,7 +2675,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "visitBusinessPage": MessageLookupByLibrary.simpleMessage(
       "Visit Business Page",
     ),
-    "visitedOn": m93,
+    "visitPackagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "When it publishes one, you\'ll see it here.",
+    ),
+    "visitPackagesEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "This place hasn\'t published any packages yet",
+    ),
+    "visitedOn": m94,
     "visitor": MessageLookupByLibrary.simpleMessage("Visitor"),
     "vitality": MessageLookupByLibrary.simpleMessage("Vitality"),
     "weWillCheckAvailability": MessageLookupByLibrary.simpleMessage(
@@ -2673,8 +2734,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "whenDidYouVisit": MessageLookupByLibrary.simpleMessage(
       "When did you visit?",
     ),
+    "widenRadius": m95,
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m94,
+    "writeReviewFor": m96,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Write your review here...",
     ),

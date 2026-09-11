@@ -111,6 +111,34 @@ void main() {
       expect(tester.widget<Text>(find.text('T')).style, FoodlyTextStyles.emptyTitle);
       expect(tester.widget<Text>(find.text('S')).style, FoodlyTextStyles.emptySubtitle);
     });
+
+    testWidgets('sin tope no lo tiene: el copy propio es corto por construcción', (tester) async {
+      await pintar(tester, const FoodlyEmptyView(title: 'T', subtitle: 'S'));
+
+      final sub = tester.widget<Text>(find.text('S'));
+      expect(sub.maxLines, isNull);
+      expect(sub.overflow, isNull);
+    });
+
+    testWidgets('con tope recorta: lo necesita quien pinta un mensaje del servidor', (tester) async {
+      // El panel de analíticas pinta el mensaje de error tal como llega del
+      // backend, que puede tener cualquier longitud. Sin tope, un mensaje largo
+      // estira el bloque hasta desbordar la pantalla.
+      const largo = 'Algo salió mal al pedir los datos y este mensaje viene del servidor, '
+          'así que puede ser tan largo como al servidor le apetezca, sin que nadie '
+          'lo haya escrito pensando en el hueco donde se va a pintar, ni en pantallas pequeñas.';
+
+      await pintar(tester, const FoodlyEmptyView(title: 'T', subtitle: largo));
+      final sinTope = tester.getSize(find.byType(Column).first).height;
+
+      await pintar(tester, const FoodlyEmptyView(title: 'T', subtitle: largo, subtitleMaxLines: 3));
+      final conTope = tester.getSize(find.byType(Column).first).height;
+
+      expect(conTope, lessThan(sinTope));
+      final sub = tester.widget<Text>(find.text(largo));
+      expect(sub.maxLines, 3);
+      expect(sub.overflow, TextOverflow.ellipsis);
+    });
   });
 
   group('NoItemsViewWdg sigue funcionando igual para quien ya lo usaba', () {

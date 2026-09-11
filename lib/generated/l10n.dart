@@ -1038,7 +1038,7 @@ class S {
   }
 
   /// `No nearby businesses in this category within {radius} km.`
-  String noNearbyBusinessesInCategory(double radius) {
+  String noNearbyBusinessesInCategory(int radius) {
     return Intl.message(
       'No nearby businesses in this category within $radius km.',
       name: 'noNearbyBusinessesInCategory',
@@ -2974,36 +2974,6 @@ class S {
     );
   }
 
-  /// `You don't have any items in your favorites list yet`
-  String get noFavoriteItems {
-    return Intl.message(
-      'You don\'t have any items in your favorites list yet',
-      name: 'noFavoriteItems',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any menus in your favorites list yet`
-  String get noFavoriteMenus {
-    return Intl.message(
-      'You don\'t have any menus in your favorites list yet',
-      name: 'noFavoriteMenus',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any businesses in your favorites list yet`
-  String get noFavoriteBusinesses {
-    return Intl.message(
-      'You don\'t have any businesses in your favorites list yet',
-      name: 'noFavoriteBusinesses',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Not Specified`
   String get nonEspecified {
     return Intl.message(
@@ -3144,16 +3114,6 @@ class S {
     return Intl.message(
       'Failed to load promotion details',
       name: 'failedToLoadPromotionDetails',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `We didn't find any recommendations for your search. \nTry other terms or try a different location.`
-  String get noRecommendationsFound {
-    return Intl.message(
-      'We didn\'t find any recommendations for your search. \nTry other terms or try a different location.',
-      name: 'noRecommendationsFound',
       desc: '',
       args: [],
     );
@@ -3669,16 +3629,6 @@ class S {
     return Intl.message(
       'You don\'t have any saved promotions yet',
       name: 'noSavedPromotions',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any saved promotions in this section`
-  String get noSavedPromotionsInSection {
-    return Intl.message(
-      'You don\'t have any saved promotions in this section',
-      name: 'noSavedPromotionsInSection',
       desc: '',
       args: [],
     );
@@ -5974,26 +5924,6 @@ class S {
     );
   }
 
-  /// `No reservations yet.`
-  String get noReservationsYet {
-    return Intl.message(
-      'No reservations yet.',
-      name: 'noReservationsYet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No reservations found.`
-  String get noReservationsFound {
-    return Intl.message(
-      'No reservations found.',
-      name: 'noReservationsFound',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Today's Reservations`
   String get reservationsForToday {
     return Intl.message(
@@ -7214,16 +7144,6 @@ class S {
     return Intl.message(
       'No packages yet',
       name: 'noPackagesYet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Tap + to create your first package`
-  String get tapPlusToCreate {
-    return Intl.message(
-      'Tap + to create your first package',
-      name: 'tapPlusToCreate',
       desc: '',
       args: [],
     );
@@ -11020,6 +10940,306 @@ class S {
     return Intl.message(
       'Create promotion',
       name: 'promosTeaserOwnerCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any places yet`
+  String get favBusinessesEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any places yet',
+      name: 'favBusinessesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the heart on any place and it will always be within reach.`
+  String get favBusinessesEmptyBody {
+    return Intl.message(
+      'Tap the heart on any place and it will always be within reach.',
+      name: 'favBusinessesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any menus yet`
+  String get favMenusEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any menus yet',
+      name: 'favMenusEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save a place's menu and you'll open it from here without searching.`
+  String get favMenusEmptyBody {
+    return Intl.message(
+      'Save a place\'s menu and you\'ll open it from here without searching.',
+      name: 'favMenusEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any dishes yet`
+  String get favItemsEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any dishes yet',
+      name: 'favItemsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the heart on a dish and you'll find it here when you come back.`
+  String get favItemsEmptyBody {
+    return Intl.message(
+      'Tap the heart on a dish and you\'ll find it here when you come back.',
+      name: 'favItemsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't have any reservations yet`
+  String get myReservationsEmptyTitle {
+    return Intl.message(
+      'You don\'t have any reservations yet',
+      name: 'myReservationsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Once you book a table or a service, you'll see it here with its status.`
+  String get myReservationsEmptyBody {
+    return Intl.message(
+      'Once you book a table or a service, you\'ll see it here with its status.',
+      name: 'myReservationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No reservations yet`
+  String get manageReservationsEmptyTitle {
+    return Intl.message(
+      'No reservations yet',
+      name: 'manageReservationsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your customers' reservations will show up here as soon as they come in.`
+  String get manageReservationsEmptyBody {
+    return Intl.message(
+      'Your customers\' reservations will show up here as soon as they come in.',
+      name: 'manageReservationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No reservations match this filter`
+  String get reservationsFilterEmptyTitle {
+    return Intl.message(
+      'No reservations match this filter',
+      name: 'reservationsFilterEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try a different status, or go back to seeing them all.`
+  String get reservationsFilterEmptyBody {
+    return Intl.message(
+      'Try a different status, or go back to seeing them all.',
+      name: 'reservationsFilterEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View all`
+  String get viewAllReservations {
+    return Intl.message(
+      'View all',
+      name: 'viewAllReservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the bookmark on a promotion and you'll have it here until it ends.`
+  String get savedPromosEmptyBody {
+    return Intl.message(
+      'Tap the bookmark on a promotion and you\'ll have it here until it ends.',
+      name: 'savedPromosEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None of yours are running right now`
+  String get savedPromosNoCurrentTitle {
+    return Intl.message(
+      'None of yours are running right now',
+      name: 'savedPromosNoCurrentTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't have any promotions starting soon`
+  String get savedPromosNoUpcomingTitle {
+    return Intl.message(
+      'You don\'t have any promotions starting soon',
+      name: 'savedPromosNoUpcomingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The ones you saved are on the other tab.`
+  String get savedPromosSectionEmptyBody {
+    return Intl.message(
+      'The ones you saved are on the other tab.',
+      name: 'savedPromosSectionEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See {tab}`
+  String savedPromosSeeOther(String tab) {
+    return Intl.message(
+      'See $tab',
+      name: 'savedPromosSeeOther',
+      desc: '',
+      args: [tab],
+    );
+  }
+
+  /// `A package bundles what you offer with its price, so people can book it without asking.`
+  String get servicePackagesEmptyBody {
+    return Intl.message(
+      'A package bundles what you offer with its price, so people can book it without asking.',
+      name: 'servicePackagesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This place hasn't published any packages yet`
+  String get visitPackagesEmptyTitle {
+    return Intl.message(
+      'This place hasn\'t published any packages yet',
+      name: 'visitPackagesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When it publishes one, you'll see it here.`
+  String get visitPackagesEmptyBody {
+    return Intl.message(
+      'When it publishes one, you\'ll see it here.',
+      name: 'visitPackagesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We didn't find anything for your search`
+  String get searchEmptyTitle {
+    return Intl.message(
+      'We didn\'t find anything for your search',
+      name: 'searchEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try different words, or search from another location.`
+  String get searchEmptyBody {
+    return Intl.message(
+      'Try different words, or search from another location.',
+      name: 'searchEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear search`
+  String get clearSearch {
+    return Intl.message(
+      'Clear search',
+      name: 'clearSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nothing in this category nearby`
+  String get categoryEmptyTitle {
+    return Intl.message(
+      'Nothing in this category nearby',
+      name: 'categoryEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Widen to {radius} km`
+  String widenRadius(int radius) {
+    return Intl.message(
+      'Widen to $radius km',
+      name: 'widenRadius',
+      desc: '',
+      args: [radius],
+    );
+  }
+
+  /// `Your alerts about reservations, promotions and community activity show up here.`
+  String get notificationsEmptyBody {
+    return Intl.message(
+      'Your alerts about reservations, promotions and community activity show up here.',
+      name: 'notificationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write below to sort out the details of this reservation.`
+  String get reservationMessagesEmptyBody {
+    return Intl.message(
+      'Write below to sort out the details of this reservation.',
+      name: 'reservationMessagesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No one around here yet`
+  String get usersDiscoveryEmptyTitle {
+    return Intl.message(
+      'No one around here yet',
+      name: 'usersDiscoveryEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When there are Foodly users near you, they'll show up in this list.`
+  String get usersDiscoveryEmptyBody {
+    return Intl.message(
+      'When there are Foodly users near you, they\'ll show up in this list.',
+      name: 'usersDiscoveryEmptyBody',
       desc: '',
       args: [],
     );

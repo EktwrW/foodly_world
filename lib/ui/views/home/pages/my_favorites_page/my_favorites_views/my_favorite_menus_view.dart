@@ -13,17 +13,10 @@ class MyFavoriteMenusView extends StatelessWidget {
       },
       builder: (context, favoriteMenus) {
         if (favoriteMenus.isEmpty) {
-          return Column(
-            spacing: 24,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
-              Text(
-                S.current.noFavoriteMenus,
-                style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-                textAlign: TextAlign.center,
-              ).paddingHorizontal(context.screenWidth * .1),
-            ],
+          return FoodlyEmptyView(
+            title: S.current.favMenusEmptyTitle,
+            subtitle: S.current.favMenusEmptyBody,
+            icon: const Icon(Icons.menu_book, size: 40, color: FoodlyThemes.primaryFoodly),
           ).paddingBottom(120);
         }
 

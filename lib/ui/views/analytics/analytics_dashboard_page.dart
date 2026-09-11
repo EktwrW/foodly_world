@@ -4,6 +4,7 @@ import 'package:foodly_world/data_models/analytics/service_overview_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart' show AnalyticsDashboardShimmer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/analytics/cubit/analytics_cubit.dart';
@@ -127,36 +128,17 @@ class _ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-            const SizedBox(height: 16),
-            Text(
-              S.current.couldNotLoadAnalytics,
-              style: FoodlyTextStyles.actionsBodyBold,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: FoodlyTextStyles.caption,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 20),
-            FilledButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: Text(S.current.retry),
-              style: FilledButton.styleFrom(backgroundColor: FoodlyThemes.primaryFoodly),
-            ),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 32),
+      // El subtitulo es el mensaje del servidor, no copy nuestro: puede venir
+      // con cualquier longitud, de ahi el tope de lineas.
+      child: FoodlyEmptyView(
+        intent: FoodlyEmptyIntent.fallo,
+        title: S.current.couldNotLoadAnalytics,
+        subtitle: message,
+        subtitleMaxLines: 3,
+        actionLabel: S.current.retry,
+        onAction: onRetry,
       ),
     );
   }

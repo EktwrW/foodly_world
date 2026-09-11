@@ -5,6 +5,7 @@ import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingE
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/user_discovery/nearby_user_dm.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
@@ -77,16 +78,18 @@ class _UserProfileBottomSheetState extends State<UserProfileBottomSheet> {
     );
   }
 
+  /// Era un callejon sin salida: decia que no se pudo cargar y ahi acababa.
+  /// `_loadProfile` se puede volver a llamar, solo hay que devolver el
+  /// indicador de carga a mano porque no lo enciende el mismo.
   Widget _buildErrorState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error_outline, size: 48, color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.5)),
-          const SizedBox(height: 12),
-          Text(S.current.couldNotLoadProfile, style: FoodlyTextStyles.label.copyWith(color: Colors.black54)),
-        ],
-      ),
+    return FoodlyEmptyView(
+      intent: FoodlyEmptyIntent.fallo,
+      title: S.current.couldNotLoadProfile,
+      actionLabel: S.current.retry,
+      onAction: () {
+        setState(() => _isLoading = true);
+        _loadProfile();
+      },
     );
   }
 

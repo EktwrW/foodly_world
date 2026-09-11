@@ -198,7 +198,7 @@
   "@noNearbyBusinessesInCategory": {
     "placeholders": {
       "radius": {
-        "type": "double"
+        "type": "int"
       }
     }
   },
@@ -464,9 +464,6 @@
   "nickName": "Nombre de usuario",
   "noAudioDetected": "No se detectó audio. Por favor, intenta de nuevo.",
   "noItemsYet": "Aún no hay items añadidos",
-  "noFavoriteItems": "Aún no tienes items en tu lista de favoritos",
-  "noFavoriteMenus": "Aún no tienes menús en tu lista de favoritos",
-  "noFavoriteBusinesses": "Aún no tienes negocios en tu lista de favoritos",
   "nonEspecified": "No especificado",
   "noPromotionsInSection": "No hay promociones en esta sección",
   "couldNotLoadPromotions": "No se pudieron cargar las promociones",
@@ -483,7 +480,6 @@
   "visitBusinessPage": "Ver página del negocio",
   "viewPromotion": "Ver promoción",
   "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",
-  "noRecommendationsFound": "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
   "note": "Nota",
   "notFoundPageText": "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
   "notification": "Notificación",
@@ -564,7 +560,6 @@
   "promotion": "Promo",
   "savedPromotions": "Promociones guardadas",
   "noSavedPromotions": "Aún no tienes promociones guardadas",
-  "noSavedPromotionsInSection": "Aún no tienes promociones guardadas en esta sección",
   "savedPromotionsTabCurrent": "Vigentes",
   "savedPromotionsTabUpcoming": "Próximas",
   "savedPromotionsCurrent": "Estas son tus Promociones Vigentes",
@@ -893,8 +888,6 @@
   },
   "pendingReservationsContent": "Hay solicitudes de reserva esperando tu respuesta.",
   "doItLater": "Lo haré más tarde",
-  "noReservationsYet": "Aún no hay reservas.",
-  "noReservationsFound": "No se encontraron reservas.",
   "reservationsForToday": "Reservas para hoy",
   "reservationCancelled": "Reserva cancelada.",
   "cancelReservation": "Cancelar Reserva",
@@ -1101,7 +1094,6 @@
   "servicePackages": "Paquetes de servicio",
   "packages": "Paquetes",
   "noPackagesYet": "Aún no hay paquetes",
-  "tapPlusToCreate": "Toca + para crear tu primer paquete",
   "setupProfessionalProfile": "Configura tu perfil profesional",
   "addSpecialtiesAndDetails": "Agrega tus especialidades y detalles",
   "professionalProfile": "Perfil profesional",
@@ -1824,5 +1816,49 @@
   "promosTeaserShareBody": "Envía una promoción a quien iría contigo, sin salir de la tarjeta.",
   "promosTeaserOwnerTitle": "Tu promoción, en primera plana",
   "promosTeaserOwnerBody": "Créala desde tu negocio y aparecerá aquí a los clientes que estén cerca.",
-  "promosTeaserOwnerCta": "Crear promoción"
+  "promosTeaserOwnerCta": "Crear promoción",
+  "favBusinessesEmptyTitle": "Aún no tienes negocios favoritos",
+  "favBusinessesEmptyBody": "Toca el corazón en cualquier negocio y lo tendrás siempre a mano.",
+  "favMenusEmptyTitle": "Aún no tienes cartas guardadas",
+  "favMenusEmptyBody": "Guarda la carta de un negocio y la abrirás desde aquí sin buscarla.",
+  "favItemsEmptyTitle": "Aún no tienes platos favoritos",
+  "favItemsEmptyBody": "Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas.",
+  "myReservationsEmptyTitle": "Aún no tienes reservas",
+  "myReservationsEmptyBody": "Cuando reserves mesa o un servicio, lo verás aquí con su estado.",
+  "manageReservationsEmptyTitle": "Todavía no hay reservas",
+  "manageReservationsEmptyBody": "Las reservas de tus clientes aparecerán aquí en cuanto lleguen.",
+  "reservationsFilterEmptyTitle": "No hay reservas con este filtro",
+  "reservationsFilterEmptyBody": "Prueba con otro estado o vuelve a verlas todas.",
+  "viewAllReservations": "Ver todas",
+  "savedPromosEmptyBody": "Toca el marcador en una promoción y la tendrás aquí hasta que termine.",
+  "savedPromosNoCurrentTitle": "Ninguna de las tuyas está vigente ahora",
+  "savedPromosNoUpcomingTitle": "No tienes promociones por empezar",
+  "savedPromosSectionEmptyBody": "Las que guardaste están en la otra pestaña.",
+  "savedPromosSeeOther": "Ver {tab}",
+  "@savedPromosSeeOther": {
+    "placeholders": {
+      "tab": {
+        "type": "String"
+      }
+    }
+  },
+  "servicePackagesEmptyBody": "Un paquete agrupa lo que ofreces y su precio, para que puedan reservarlo sin preguntar.",
+  "visitPackagesEmptyTitle": "Este negocio aún no publicó paquetes",
+  "visitPackagesEmptyBody": "Cuando publique alguno, lo verás aquí.",
+  "searchEmptyTitle": "No encontramos nada para tu búsqueda",
+  "searchEmptyBody": "Prueba con otras palabras, o busca desde otra ubicación.",
+  "clearSearch": "Borrar la búsqueda",
+  "categoryEmptyTitle": "Aquí cerca no hay nada de esta categoría",
+  "widenRadius": "Ampliar a {radius} km",
+  "@widenRadius": {
+    "placeholders": {
+      "radius": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsEmptyBody": "Aquí aparecen tus avisos de reservas, promociones y novedades de la comunidad.",
+  "reservationMessagesEmptyBody": "Escribe abajo para coordinar los detalles de esta reserva.",
+  "usersDiscoveryEmptyTitle": "Por aquí no hay nadie todavía",
+  "usersDiscoveryEmptyBody": "Cuando haya usuarios de Foodly cerca de ti, aparecerán en esta lista."
 }
