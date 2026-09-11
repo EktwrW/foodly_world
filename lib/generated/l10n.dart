@@ -3119,16 +3119,6 @@ class S {
     );
   }
 
-  /// `We didn't find any recommendations for your search. \nTry other terms or try a different location.`
-  String get noRecommendationsFound {
-    return Intl.message(
-      'We didn\'t find any recommendations for your search. \nTry other terms or try a different location.',
-      name: 'noRecommendationsFound',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Note`
   String get note {
     return Intl.message('Note', name: 'note', desc: '', args: []);
@@ -11162,6 +11152,56 @@ class S {
       name: 'visitPackagesEmptyBody',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `We didn't find anything for your search`
+  String get searchEmptyTitle {
+    return Intl.message(
+      'We didn\'t find anything for your search',
+      name: 'searchEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try different words, or search from another location.`
+  String get searchEmptyBody {
+    return Intl.message(
+      'Try different words, or search from another location.',
+      name: 'searchEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear search`
+  String get clearSearch {
+    return Intl.message(
+      'Clear search',
+      name: 'clearSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nothing in this category nearby`
+  String get categoryEmptyTitle {
+    return Intl.message(
+      'Nothing in this category nearby',
+      name: 'categoryEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Widen to {radius} km`
+  String widenRadius(int radius) {
+    return Intl.message(
+      'Widen to $radius km',
+      name: 'widenRadius',
+      desc: '',
+      args: [radius],
     );
   }
 }

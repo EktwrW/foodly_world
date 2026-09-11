@@ -478,7 +478,6 @@
   "newReleasesEmptyErrorSubtitle": "We couldn't load new businesses. Try again.",
   "retry": "Retry",
   "failedToLoadPromotionDetails": "Failed to load promotion details",
-  "noRecommendationsFound": "We didn't find any recommendations for your search. \nTry other terms or try a different location.",
   "note": "Note",
   "notFoundPageText": "The requested route does not exist, or you do not have permission to access it.",
   "notification": "Notification",
@@ -1845,5 +1844,17 @@
   },
   "servicePackagesEmptyBody": "A package bundles what you offer with its price, so people can book it without asking.",
   "visitPackagesEmptyTitle": "This place hasn't published any packages yet",
-  "visitPackagesEmptyBody": "When it publishes one, you'll see it here."
+  "visitPackagesEmptyBody": "When it publishes one, you'll see it here.",
+  "searchEmptyTitle": "We didn't find anything for your search",
+  "searchEmptyBody": "Try different words, or search from another location.",
+  "clearSearch": "Clear search",
+  "categoryEmptyTitle": "Nothing in this category nearby",
+  "widenRadius": "Widen to {radius} km",
+  "@widenRadius": {
+    "placeholders": {
+      "radius": {
+        "type": "int"
+      }
+    }
+  }
 }

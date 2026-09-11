@@ -482,7 +482,6 @@
   "viewEdit": "Editar",
   "viewPromotion": "Ver promoção",
   "failedToLoadPromotionDetails": "Falha ao carregar os detalhes da promoção.",
-  "noRecommendationsFound": "Não encontramos recomendações para a sua pesquisa. \nTente outros termos ou tente um local diferente.",
   "note": "Nota",
   "notFoundPageText": "A rota solicitada não existe, ou não tem permissão para aceder a ela.",
   "notification": "Notificação",
@@ -1845,5 +1844,17 @@
   },
   "servicePackagesEmptyBody": "Um pacote junta o que ofereces e o preço, para que possam reservar sem perguntar.",
   "visitPackagesEmptyTitle": "Este negócio ainda não publicou pacotes",
-  "visitPackagesEmptyBody": "Quando publicar algum, vê-lo-ás aqui."
+  "visitPackagesEmptyBody": "Quando publicar algum, vê-lo-ás aqui.",
+  "searchEmptyTitle": "Não encontrámos nada para a tua pesquisa",
+  "searchEmptyBody": "Experimenta outras palavras ou pesquisa a partir de outro local.",
+  "clearSearch": "Limpar a pesquisa",
+  "categoryEmptyTitle": "Aqui perto não há nada desta categoria",
+  "widenRadius": "Alargar para {radius} km",
+  "@widenRadius": {
+    "placeholders": {
+      "radius": {
+        "type": "int"
+      }
+    }
+  }
 }

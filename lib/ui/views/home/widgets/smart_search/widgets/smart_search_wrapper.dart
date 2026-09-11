@@ -67,6 +67,16 @@ class _SmartSearchWrapper extends StatelessWidget {
                   searchResults: vm.searchResults,
                   isGridView: vm.viewMode.isGrid,
                   searchQuery: vm.inputController.text,
+                  emptyState: FoodlyEmptyView(
+                    intent: FoodlyEmptyIntent.filtro,
+                    title: S.current.searchEmptyTitle,
+                    subtitle: S.current.searchEmptyBody,
+                    icon: const Asset(FoodlyAssets.searchBusinessAgain, width: 40),
+                    // Devuelve la caja vacia y el home, que es de donde se sale
+                    // a probar otra cosa.
+                    actionLabel: S.current.clearSearch,
+                    onAction: context.read<SmartSearchCubit>().resetToInitial,
+                  ),
                 ),
               ),
             ],

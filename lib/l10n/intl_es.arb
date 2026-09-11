@@ -480,7 +480,6 @@
   "visitBusinessPage": "Ver página del negocio",
   "viewPromotion": "Ver promoción",
   "failedToLoadPromotionDetails": "Error al cargar los detalles de la promoción.",
-  "noRecommendationsFound": "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
   "note": "Nota",
   "notFoundPageText": "La ruta solicitada no existe, o no tienes permiso para acceder a ella.",
   "notification": "Notificación",
@@ -1845,5 +1844,17 @@
   },
   "servicePackagesEmptyBody": "Un paquete agrupa lo que ofreces y su precio, para que puedan reservarlo sin preguntar.",
   "visitPackagesEmptyTitle": "Este negocio aún no publicó paquetes",
-  "visitPackagesEmptyBody": "Cuando publique alguno, lo verás aquí."
+  "visitPackagesEmptyBody": "Cuando publique alguno, lo verás aquí.",
+  "searchEmptyTitle": "No encontramos nada para tu búsqueda",
+  "searchEmptyBody": "Prueba con otras palabras, o busca desde otra ubicación.",
+  "clearSearch": "Borrar la búsqueda",
+  "categoryEmptyTitle": "Aquí cerca no hay nada de esta categoría",
+  "widenRadius": "Ampliar a {radius} km",
+  "@widenRadius": {
+    "placeholders": {
+      "radius": {
+        "type": "int"
+      }
+    }
+  }
 }

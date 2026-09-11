@@ -257,7 +257,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m94(date) => "Visitado el ${date}";
 
-  static String m95(businessName) => "Escribe una reseña para ${businessName}";
+  static String m95(radius) => "Ampliar a ${radius} km";
+
+  static String m96(businessName) => "Escribe una reseña para ${businessName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -800,6 +802,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryDeletedSuccess": MessageLookupByLibrary.simpleMessage(
       "Categoría eliminada correctamente",
     ),
+    "categoryEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aquí cerca no hay nada de esta categoría",
+    ),
     "categoryNameEmpty": MessageLookupByLibrary.simpleMessage(
       "El nombre de la categoría no puede estar vacío",
     ),
@@ -825,6 +830,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "city": MessageLookupByLibrary.simpleMessage("Ciudad"),
     "clear": MessageLookupByLibrary.simpleMessage("Limpiar"),
+    "clearSearch": MessageLookupByLibrary.simpleMessage("Borrar la búsqueda"),
     "close": MessageLookupByLibrary.simpleMessage("Cerrar"),
     "closed": MessageLookupByLibrary.simpleMessage("Cerrado"),
     "cocktail": MessageLookupByLibrary.simpleMessage("Cóctel"),
@@ -1976,9 +1982,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "noPromotionsNearby": MessageLookupByLibrary.simpleMessage(
       "No hay promociones cerca",
     ),
-    "noRecommendationsFound": MessageLookupByLibrary.simpleMessage(
-      "No encontramos recomendaciones para tu búsqueda. \nIntenta con otros términos o prueba en una ubicación diferente.",
-    ),
     "noSavedAddress": MessageLookupByLibrary.simpleMessage(
       "No tienes dirección guardada, puedes crear una en tu página de perfil.",
     ),
@@ -2478,6 +2481,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchBusinessOrAddress": MessageLookupByLibrary.simpleMessage(
       "Buscar negocio o dirección",
     ),
+    "searchEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Prueba con otras palabras, o busca desde otra ubicación.",
+    ),
+    "searchEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "No encontramos nada para tu búsqueda",
+    ),
     "searchInCity": m87,
     "searchPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Descubre excelentes lugares para comer y beber cerca de ti...",
@@ -2870,8 +2879,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "whenDidYouVisit": MessageLookupByLibrary.simpleMessage(
       "¿Cuándo nos visitaste?",
     ),
+    "widenRadius": m95,
     "wifi": MessageLookupByLibrary.simpleMessage("Wifi"),
-    "writeReviewFor": m95,
+    "writeReviewFor": m96,
     "writeYourReviewHint": MessageLookupByLibrary.simpleMessage(
       "Escribe tu reseña aquí...",
     ),

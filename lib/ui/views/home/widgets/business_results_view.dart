@@ -8,39 +8,39 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic
     show CustomRoundedNeumorphicButton;
 import 'package:foodly_world/ui/shared_widgets/cards/business_card.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/rejilla_adaptativa.dart';
-import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart' show Bootstrap;
 
 class BusinessResultsView extends StatelessWidget {
   final List<BusinessDM> searchResults;
   final bool isGridView;
-  final String? noResultsMessage;
   final String? searchQuery;
+
+  /// Que pintar cuando no hay resultados.
+  ///
+  /// Lo trae quien llama porque **cada pantalla tiene su propia palanca**: en
+  /// categorias es el radio, en la busqueda es la consulta. Una lista vacia
+  /// aqui nunca es «no hay nada todavia», siempre es «no hay nada CON ESTO».
+  final Widget? emptyState;
 
   const BusinessResultsView({
     super.key,
     required this.searchResults,
     required this.isGridView,
-    this.noResultsMessage,
     this.searchQuery,
+    this.emptyState,
   });
 
   @override
   Widget build(BuildContext context) {
     if (searchResults.isEmpty) {
-      return Column(
-        spacing: 24,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Asset(FoodlyAssets.searchBusinessAgain, width: 48),
-          Text(
-            noResultsMessage ?? S.current.noRecommendationsFound,
-            style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-            textAlign: TextAlign.center,
-          ).paddingHorizontal(context.screenWidth * .1),
-          const SizedBox(height: 48),
-        ],
-      );
+      return emptyState ??
+          FoodlyEmptyView(
+            intent: FoodlyEmptyIntent.filtro,
+            title: S.current.searchEmptyTitle,
+            subtitle: S.current.searchEmptyBody,
+            icon: const Asset(FoodlyAssets.searchBusinessAgain, width: 40),
+          );
     }
 
     return AnimatedSwitcher(

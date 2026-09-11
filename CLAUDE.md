@@ -795,6 +795,40 @@ porque ahí sí hay ramas. Validado por mutación: cinco mutaciones, cinco muert
 `title` se convirtió en `seccion`, que es de donde salen ahora el título de la
 sección, el del vacío y cuál es «la otra».
 
+**Fase 5: resultados de búsqueda y categorías (2026-09-11). Una lista de
+negocios vacía NUNCA es «aún no hay nada»** — la categoría existe, el radio
+existe, la consulta existe: lo que no hay es nada *con eso*. Las dos pantallas
+comparten `BusinessResultsView`, así que el vacío es el mismo widget con dos
+palancas distintas.
+
+Por eso `noResultsMessage` (una cadena) se cambió por `emptyState` (un widget):
+**la palanca la conoce quien llama**, no la vista compartida. El valor por
+defecto es un vacío de filtro SIN botón, que es lo honesto para quien no trae
+ninguna.
+
+| pantalla | palanca | botón |
+| --- | --- | --- |
+| categorías | el radio (5/10/15/25 km) | «Ampliar a N km», el SIGUIENTE salto |
+| búsqueda | la consulta | «Borrar la búsqueda» → `resetToInitial()` |
+
+**El botón del radio no propone el máximo, propone el siguiente**, y desaparece
+en 25 km. Y desaparece también **sin ubicación resuelta**, porque
+`toggleRadiusDistance` va a buscar con `latitude!` — ofrecer ampliar ahí es
+ofrecer un crash.
+
+`VacioDeCategoria` es presentacional: el radio y la ubicación entran por
+parámetro en vez de leerse del cubit, igual que `FoodlyNavigationRail`, y por eso
+se mide sin DI. La lista de radios vive ahora en él
+(`VacioDeCategoria.radios`) y el selector segmentado de la cabecera la reusa: eran
+el mismo dato en dos sitios esperando a separarse.
+
+`noRecommendationsFound` eran dos frases pegadas con un `\n` —constatación y
+consejo— que es literalmente un título y un subtítulo escritos a mano. Se partió
+en `searchEmptyTitle` y `searchEmptyBody` y la clave vieja se borró.
+
+`test/ui/busqueda/vacio_de_resultados_test.dart`, 6 casos. Cinco mutaciones,
+cinco muertes.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde
