@@ -1171,6 +1171,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "No se pudo rechazar la reserva.",
     ),
     "fastFood": MessageLookupByLibrary.simpleMessage("Comida Rápida"),
+    "favBusinessesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Toca el corazón en cualquier negocio y lo tendrás siempre a mano.",
+    ),
+    "favBusinessesEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aún no tienes negocios favoritos",
+    ),
+    "favItemsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Toca el corazón en un plato y lo encontrarás aquí cuando vuelvas.",
+    ),
+    "favItemsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aún no tienes platos favoritos",
+    ),
+    "favMenusEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Guarda la carta de un negocio y la abrirás desde aquí sin buscarla.",
+    ),
+    "favMenusEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Aún no tienes cartas guardadas",
+    ),
     "favorites": MessageLookupByLibrary.simpleMessage("Favoritos"),
     "featured": MessageLookupByLibrary.simpleMessage("Destacado"),
     "featuredPackageHint": MessageLookupByLibrary.simpleMessage(
@@ -1921,15 +1939,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noConnection": MessageLookupByLibrary.simpleMessage(
       "Sin conexión a internet. Revisa tu red e inténtalo de nuevo.",
-    ),
-    "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
-      "Aún no tienes negocios en tu lista de favoritos",
-    ),
-    "noFavoriteItems": MessageLookupByLibrary.simpleMessage(
-      "Aún no tienes items en tu lista de favoritos",
-    ),
-    "noFavoriteMenus": MessageLookupByLibrary.simpleMessage(
-      "Aún no tienes menús en tu lista de favoritos",
     ),
     "noItemsYet": MessageLookupByLibrary.simpleMessage(
       "Aún no hay items añadidos",

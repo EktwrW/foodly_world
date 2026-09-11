@@ -464,9 +464,6 @@
   "nickName": "Nome de utilizador",
   "noAudioDetected": "Nenhum áudio detetado. Por favor, tente novamente.",
   "noItemsYet": "Ainda não existem itens adicionados",
-  "noFavoriteItems": "Ainda não tem itens na sua lista de favoritos",
-  "noFavoriteMenus": "Ainda não tem menus na sua lista de favoritos",
-  "noFavoriteBusinesses": "Ainda não tem negócios na sua lista de favoritos",
   "nonEspecified": "Não especificado",
   "noPromotionsInSection": "Não há promoções nesta secção",
   "couldNotLoadPromotions": "Não foi possível carregar as promoções",
@@ -1824,5 +1821,11 @@
   "promosTeaserShareBody": "Envia uma promoção a quem iria contigo, sem sair do cartão.",
   "promosTeaserOwnerTitle": "A tua promoção, em destaque",
   "promosTeaserOwnerBody": "Cria-a a partir do teu negócio e aparecerá aqui aos clientes que estiverem perto.",
-  "promosTeaserOwnerCta": "Criar promoção"
+  "promosTeaserOwnerCta": "Criar promoção",
+  "favBusinessesEmptyTitle": "Ainda não tens negócios favoritos",
+  "favBusinessesEmptyBody": "Toca no coração de qualquer negócio e tê-lo-ás sempre à mão.",
+  "favMenusEmptyTitle": "Ainda não tens cartas guardadas",
+  "favMenusEmptyBody": "Guarda a carta de um negócio e abri-la-ás daqui sem a procurares.",
+  "favItemsEmptyTitle": "Ainda não tens pratos favoritos",
+  "favItemsEmptyBody": "Toca no coração de um prato e encontrá-lo-ás aqui quando voltares."
 }

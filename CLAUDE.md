@@ -679,6 +679,40 @@ fase 1 unifica lo visual sin bloquearse en el copy.
 Canvas del diseño: artifact 883d0965 (anatomía, las tres intenciones, tres
 comparativas antes-después y el plan).
 
+**Fase 2, los tres de favoritos (2026-09-11).** Negocios, cartas y platos eran
+el MISMO bloque copiado tres veces —icono de 64 px, una línea en cursiva con
+`height: 1.9`, y `paddingHorizontal(screenWidth * .1)`, que da 32 px en un
+iPhone SE y 102 en un iPad para un texto que mide lo mismo—. Ahora los tres son
+`FoodlyEmptyView` con intención `nuevo`, título y **subtítulo**: la línea de
+antes decía que no había nada, el subtítulo dice qué hacer para que lo haya.
+
+**Sin botón, y no por falta de ganas.** El CTA natural sería «explorar
+negocios», pero `_bottomNavIndex` es un `ValueNotifier` local de
+`_HomePage369State` que solo se siembra en `initState`: navegar por ruta desde
+otra pestaña deja la barra inferior marcando la pestaña equivocada. Es un fallo
+que ya existe —el drawer lo tiene igual— y arreglarlo toca la navegación del
+teléfono, que está en producción. El vacío mejora igual; la salida se cablea
+cuando se arregle el índice.
+
+**Los iconos se separaron a propósito.** Los tres vivían con
+`Bootstrap.search_heart`, y son tres pestañas de un `PageView`: deslizar entre
+ellas sin que cambie nada se lee como que la app no respondió. Ahora cada una
+lleva el icono de su propia tarjeta (`shop_window`, `Icons.menu_book`,
+`egg_fried`).
+
+**El hueco es fijo y no hay scroll**, que es lo que hace que la altura importe:
+el `PageView` vive en un `SizedBox.fromSize(Size(screenWidth, screenHeight))` y
+se le restan appbar y conmutador por arriba. Medido a 320 px de ancho el bloque
+son 266 px y con los 120 de relleno quedan 386 contra 448 disponibles — con los
+textos de los tres idiomas, que a ese ancho envuelven igual. Está en
+`test/ui/placeholders/vacios_de_favoritos_test.dart`; validado por mutación:
+agrandar el medallón, recortar el subtítulo a una línea y no pintarlo ponen en
+rojo tres cosas distintas.
+
+**Quedan 16 pantallas.** Las claves viejas (`noFavoriteBusinesses`,
+`noFavoriteMenus`, `noFavoriteItems`) se borraron de los tres `.arb`: no las
+usaba nadie más.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde

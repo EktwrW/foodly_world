@@ -2974,36 +2974,6 @@ class S {
     );
   }
 
-  /// `You don't have any items in your favorites list yet`
-  String get noFavoriteItems {
-    return Intl.message(
-      'You don\'t have any items in your favorites list yet',
-      name: 'noFavoriteItems',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any menus in your favorites list yet`
-  String get noFavoriteMenus {
-    return Intl.message(
-      'You don\'t have any menus in your favorites list yet',
-      name: 'noFavoriteMenus',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any businesses in your favorites list yet`
-  String get noFavoriteBusinesses {
-    return Intl.message(
-      'You don\'t have any businesses in your favorites list yet',
-      name: 'noFavoriteBusinesses',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Not Specified`
   String get nonEspecified {
     return Intl.message(
@@ -11020,6 +10990,66 @@ class S {
     return Intl.message(
       'Create promotion',
       name: 'promosTeaserOwnerCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any places yet`
+  String get favBusinessesEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any places yet',
+      name: 'favBusinessesEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the heart on any place and it will always be within reach.`
+  String get favBusinessesEmptyBody {
+    return Intl.message(
+      'Tap the heart on any place and it will always be within reach.',
+      name: 'favBusinessesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any menus yet`
+  String get favMenusEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any menus yet',
+      name: 'favMenusEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save a place's menu and you'll open it from here without searching.`
+  String get favMenusEmptyBody {
+    return Intl.message(
+      'Save a place\'s menu and you\'ll open it from here without searching.',
+      name: 'favMenusEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't saved any dishes yet`
+  String get favItemsEmptyTitle {
+    return Intl.message(
+      'You haven\'t saved any dishes yet',
+      name: 'favItemsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap the heart on a dish and you'll find it here when you come back.`
+  String get favItemsEmptyBody {
+    return Intl.message(
+      'Tap the heart on a dish and you\'ll find it here when you come back.',
+      name: 'favItemsEmptyBody',
       desc: '',
       args: [],
     );

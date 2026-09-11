@@ -17,17 +17,10 @@ class MyFavoriteBusinessesView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator.adaptive()).paddingBottom(120);
           }
 
-          return Column(
-            spacing: 24,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
-              Text(
-                S.current.noFavoriteBusinesses,
-                style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-                textAlign: TextAlign.center,
-              ).paddingHorizontal(context.screenWidth * .1),
-            ],
+          return FoodlyEmptyView(
+            title: S.current.favBusinessesEmptyTitle,
+            subtitle: S.current.favBusinessesEmptyBody,
+            icon: const Icon(Bootstrap.shop_window, size: 40, color: FoodlyThemes.primaryFoodly),
           ).paddingBottom(120);
         }
 

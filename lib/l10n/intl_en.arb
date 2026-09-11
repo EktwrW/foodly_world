@@ -463,9 +463,6 @@
   "nickName": "Username",
   "noAudioDetected": "No audio detected. Please try again.",
   "noItemsYet": "There are no items added yet",
-  "noFavoriteItems": "You don't have any items in your favorites list yet",
-  "noFavoriteMenus": "You don't have any menus in your favorites list yet",
-  "noFavoriteBusinesses": "You don't have any businesses in your favorites list yet",
   "nonEspecified": "Not Specified",
   "noPromotionsInSection": "There are no promotions in this section",
   "couldNotLoadPromotions": "Could not load promotions",
@@ -1824,5 +1821,11 @@
   "promosTeaserShareBody": "Send a promotion to whoever would come along, right from the card.",
   "promosTeaserOwnerTitle": "Your promotion, front and centre",
   "promosTeaserOwnerBody": "Create it from your business and it'll show up here for customers nearby.",
-  "promosTeaserOwnerCta": "Create promotion"
+  "promosTeaserOwnerCta": "Create promotion",
+  "favBusinessesEmptyTitle": "You haven't saved any places yet",
+  "favBusinessesEmptyBody": "Tap the heart on any place and it will always be within reach.",
+  "favMenusEmptyTitle": "You haven't saved any menus yet",
+  "favMenusEmptyBody": "Save a place's menu and you'll open it from here without searching.",
+  "favItemsEmptyTitle": "You haven't saved any dishes yet",
+  "favItemsEmptyBody": "Tap the heart on a dish and you'll find it here when you come back."
 }

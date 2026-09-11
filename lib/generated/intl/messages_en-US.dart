@@ -1128,6 +1128,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "Failed to reject reservation.",
     ),
     "fastFood": MessageLookupByLibrary.simpleMessage("Fast Food"),
+    "favBusinessesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the heart on any place and it will always be within reach.",
+    ),
+    "favBusinessesEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any places yet",
+    ),
+    "favItemsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Tap the heart on a dish and you\'ll find it here when you come back.",
+    ),
+    "favItemsEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any dishes yet",
+    ),
+    "favMenusEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Save a place\'s menu and you\'ll open it from here without searching.",
+    ),
+    "favMenusEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "You haven\'t saved any menus yet",
+    ),
     "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
     "featured": MessageLookupByLibrary.simpleMessage("Featured"),
     "featuredPackageHint": MessageLookupByLibrary.simpleMessage(
@@ -1830,15 +1848,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noConnection": MessageLookupByLibrary.simpleMessage(
       "No internet connection. Check your network and try again.",
-    ),
-    "noFavoriteBusinesses": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any businesses in your favorites list yet",
-    ),
-    "noFavoriteItems": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any items in your favorites list yet",
-    ),
-    "noFavoriteMenus": MessageLookupByLibrary.simpleMessage(
-      "You don\'t have any menus in your favorites list yet",
     ),
     "noItemsYet": MessageLookupByLibrary.simpleMessage(
       "There are no items added yet",

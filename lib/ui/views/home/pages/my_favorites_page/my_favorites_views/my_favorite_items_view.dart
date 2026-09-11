@@ -11,17 +11,10 @@ class MyFavoriteItemsView extends StatelessWidget {
       selector: (state) => state.vm.favoriteItems,
       builder: (context, favoriteItems) {
         if (favoriteItems.isEmpty) {
-          return Column(
-            spacing: 24,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Bootstrap.search_heart, size: 64, color: FoodlyThemes.secondaryFoodly),
-              Text(
-                S.current.noFavoriteItems,
-                style: FoodlyTextStyles.actionsBody.copyWith(fontStyle: FontStyle.italic, height: 1.9),
-                textAlign: TextAlign.center,
-              ).paddingHorizontal(context.screenWidth * .1),
-            ],
+          return FoodlyEmptyView(
+            title: S.current.favItemsEmptyTitle,
+            subtitle: S.current.favItemsEmptyBody,
+            icon: const Icon(Bootstrap.egg_fried, size: 40, color: FoodlyThemes.primaryFoodly),
           ).paddingBottom(120);
         }
 
