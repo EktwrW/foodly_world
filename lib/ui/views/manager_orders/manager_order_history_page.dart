@@ -5,7 +5,7 @@ import 'package:foodly_world/data_models/group_orders/group_order_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
-import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -101,8 +101,7 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
         ),
         centerTitle: true,
       ),
-      body: ContentColumn.list(
-        child: SafeArea(
+      body: SafeArea(
           top: false,
           child: BlocBuilder<ManagerHistoryCubit, ManagerHistoryState>(
             builder: (context, state) {
@@ -123,6 +122,10 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
               }
 
               final groups = groupOrdersByDay(state.orders);
+
+              // Las columnas se deciden con el ancho REAL, no con el de
+              // pantalla: esta lista vive dentro de su propio hueco.
+              final columnas = columnasDeLista(MediaQuery.sizeOf(context).width);
 
               return ListView(
                 controller: _scroll,
@@ -149,12 +152,27 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
                         ],
                       ),
                     ),
-                    for (final order in g.orders)
+                    // La cabecera del dia ocupa todo el ancho; sus ordenes se
+                    // reparten debajo. Con una columna sale exactamente igual
+                    // que antes.
+                    for (final fila in enFilasDe(g.orders, columnas))
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: ManagerOrderCard(
-                          order: order,
-                          onTap: () => _showOrderSheet(context, order),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (var c = 0; c < fila.length; c++) ...[
+                              if (c > 0) const SizedBox(width: 12),
+                              Expanded(
+                                child: fila[c] == null
+                                    ? const SizedBox.shrink()
+                                    : ManagerOrderCard(
+                                        order: fila[c]!,
+                                        onTap: () => _showOrderSheet(context, fila[c]!),
+                                      ),
+                              ),
+                            ],
+                          ],
                         ),
                       ),
                   ],
@@ -173,7 +191,6 @@ class _ManagerOrderHistoryPageState extends State<ManagerOrderHistoryPage> {
               );
             },
           ),
-        ),
       ),
     );
   }

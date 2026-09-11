@@ -3,7 +3,7 @@ import 'package:foodly_world/data_models/reservations/reservation_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
-import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -86,14 +86,12 @@ class ManageReservationsPage extends StatelessWidget {
             ).paddingSymmetric(vertical: 10, horizontal: 10),
             leadingWidth: 60,
           ),
-          body: const ContentColumn.list(
-            child: SafeArea(
-              child: Column(
-                children: [
-                  _StatusFilterDropdown(),
-                  Expanded(child: _ManagerReservationsList()),
-                ],
-              ),
+          body: const SafeArea(
+            child: Column(
+              children: [
+                _StatusFilterDropdown(),
+                Expanded(child: _ManagerReservationsList()),
+              ],
             ),
           ),
         ),
@@ -218,17 +216,16 @@ class _ManagerReservationsList extends StatelessWidget {
                   }
                   return false;
                 },
-                child: ListView.builder(
+                child: ListaAdaptativa(
                   padding: const EdgeInsets.only(top: 4, bottom: 24),
-                  itemCount: vm.reservations.length + (vm.isLoadingMore ? 1 : 0),
-                  itemBuilder: (context, index) {
-                    if (index >= vm.reservations.length) {
-                      return const Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Center(child: CircularProgressIndicator()),
-                      );
-                    }
-
+                  elementos: vm.reservations.length,
+                  pie: vm.isLoadingMore
+                      ? const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : null,
+                  constructor: (context, index) {
                     final reservation = vm.reservations[index];
                     // Table bookings: manager confirms directly.
                     // Service bookings: manager sends a quote (not a direct confirm).
