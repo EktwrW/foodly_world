@@ -598,6 +598,35 @@ comparte» no le dice nada, y que sus promociones salen en la portada de los
 clientes de al lado, sí. Es el único de los tres huecos con botón, porque es el
 único con adónde ir.
 
+**LA TARJETA NO PUEDE NACER EN BLANCO (2026-09-12).** Lo vio Héctor probando en
+la tableta: al entrar al home aparecía primero **la sombra de la tarjeta** y un
+instante después el contenido. Solo en los huecos, nunca con negocios y promos
+de verdad.
+
+La causa no era la sombra: era que **durante 100-300 ms el interior de la
+tarjeta estaba prácticamente vacío**. Mientras el `VideoPlayerController`
+arranca —cada vez, porque el `State` se monta de cero al volver al home— el
+fondo era `primaryFoodly` al **4 %** sobre `NeumorphicColors.background`, o sea
+casi el mismo color; y encima de eso la cinta de vidrio, que es blanco al 74 %,
+tampoco se separaba de nada. Lo único que delataba la tarjeta era su sombra. Con
+contenido real no pasa porque las fotos vienen de `FoodlyImageCache` y pintan en
+el primer frame.
+
+Ahora el fondo de los dos huecos con vídeo es `FoodlyBrandSurface` **desde el
+primer frame**, y el vídeo entra encima con un fundido. La tarjeta está completa
+siempre; lo que llega tarde es una textura, no la tarjeta.
+
+De paso desapareció el `LoadingWidgetFoodlyIso` que iba dentro: era un indicador
+de carga dentro de algo que ya venía de un shimmer. Y `_videoFailed` se borró de
+los dos States — la superficie de marca ES el fallback, así que ya no había nada
+que decidir.
+
+**En test el vídeo nunca está listo** (no hay canal de plataforma), lo cual es
+justo el momento que hay que medir: `huecos_con_video_test.dart` comprueba que la
+tarjeta ya trae superficie de marca en ese primer frame. Validado por mutación:
+devolver el tinte al 4 % en cualquiera de los dos huecos, o quitar el fundido,
+ponen el banco en rojo.
+
 **El fondo NO es una foto, y es deliberado.** Se valoró generar imágenes con
 IA. Un plato generado dentro de una tarjeta con forma de promoción **se lee como
 una promoción de verdad**: el usuario la toca esperando una oferta y no hay

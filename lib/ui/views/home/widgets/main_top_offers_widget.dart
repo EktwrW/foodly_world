@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodly_world/core/blocs/location/location_bloc.dart';
 import 'package:foodly_world/core/consts/foodly_assets.dart';
-import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AuthSessionService, LoadingWidgetFoodlyIso, di;
+import 'package:foodly_world/core/core_exports.dart' show AppRoutes, AuthSessionService, di;
 import 'package:foodly_world/core/extensions/screen_size_extension.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/business/business_repo.dart';
@@ -468,7 +468,6 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
 
   VideoPlayerController? _controller;
   bool _videoReady = false;
-  bool _videoFailed = false;
 
   @override
   void initState() {
@@ -513,10 +512,9 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
       });
     } catch (_) {
       // Asset roto, codec no soportado en este device, o disposed mid-init.
-      // Caemos a fallback visual sin video — el blur message y el retry
-      // siguen funcionando.
+      // No hay nada que hacer: la superficie de marca que ya se esta pintando
+      // detras ES el fallback, y la cinta y el boton siguen funcionando.
       await controller.dispose();
-      if (mounted) setState(() => _videoFailed = true);
     }
   }
 
@@ -623,30 +621,51 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
     );
   }
 
+  /// El fondo de la tarjeta: superficie de marca SIEMPRE, con el video encima
+  /// en cuanto esta listo.
+  ///
+  /// ANTES LA TARJETA NACIA EN BLANCO (2026-09-12). Mientras el
+  /// `VideoPlayerController` se inicializaba —100-300 ms cada vez que se entra
+  /// al home, porque el State se monta de cero— el fondo era
+  /// `primaryFoodly` al **4 %** sobre `NeumorphicColors.background`, que es
+  /// practicamente el mismo color. Sobre ese hueco casi blanco, la cinta de
+  /// vidrio (blanco al 74 %) tampoco se separaba de nada.
+  ///
+  /// Resultado: durante ese rato **lo unico que delataba la tarjeta era su
+  /// sombra**. Se veia aparecer el recuadro y, despues, el contenido de golpe.
+  /// Con contenido real no pasaba porque las fotos ya vienen de la cache de
+  /// imagenes y pintan en el primer frame.
+  ///
+  /// Ahora la tarjeta esta COMPLETA desde el primer frame —degradado, marca de
+  /// agua, trama y cinta— y lo unico que llega tarde es el video, que entra con
+  /// un fundido sobre un fondo que ya estaba lleno. Y de paso desaparece el iso
+  /// de carga: era un indicador de carga dentro de algo que ya venia de un
+  /// shimmer.
   Widget _buildVideo() {
-    // Video listo → renderizar con BoxFit.cover (fill sin deformar).
-    if (_videoReady && _controller != null) {
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: _controller!.value.size.width,
-          height: _controller!.value.size.height,
-          child: VideoPlayer(_controller!),
+    final listo = _videoReady && _controller != null;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const FoodlyBrandSurface(tint: FoodlyBrandTint.ciruela),
+        AnimatedOpacity(
+          opacity: listo ? 1 : 0,
+          duration: Durations.medium2,
+          curve: Curves.easeOut,
+          child: listo
+              ? FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: _controller!.value.size.width,
+                    height: _controller!.value.size.height,
+                    child: VideoPlayer(_controller!),
+                  ),
+                )
+              // Asset roto o codec no soportado: se queda la superficie de
+              // marca, que es un fondo de verdad y no un tinte palido.
+              : const SizedBox.shrink(),
         ),
-      );
-    }
-
-    // Asset roto → fondo purple translúcido sutil. El blur message arriba
-    // sigue siendo legible y el retry funciona igual.
-    if (_videoFailed) {
-      return ColoredBox(color: FoodlyThemes.primaryFoodly.withValues(alpha: .08));
-    }
-
-    // Inicializando (primeros ~100-300 ms tras mount). Loading iso oficial
-    // para mantener el lenguaje visual del resto de la app.
-    return ColoredBox(
-      color: FoodlyThemes.primaryFoodly.withValues(alpha: .04),
-      child: const Center(child: LoadingWidgetFoodlyIso(height: 46)),
+      ],
     );
   }
 }

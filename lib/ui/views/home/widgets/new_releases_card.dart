@@ -9,6 +9,7 @@ import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/glass/foodly_glass.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/image/feed_multi_image_view/feed_multi_image_view.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_brand_surface.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_media_card.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -542,7 +543,6 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
 
   VideoPlayerController? _controller;
   bool _videoReady = false;
-  bool _videoFailed = false;
 
   @override
   void initState() {
@@ -591,10 +591,9 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
     } catch (e) {
       log('$e');
       // Asset roto, codec no soportado en este device, o disposed mid-init.
-      // Caemos a fallback visual sin video — el blur message y el retry
-      // siguen funcionando, igual que en `EmptyOffersWidget`.
+      // No hay nada que hacer: la superficie de marca que ya se esta pintando
+      // detras ES el fallback, igual que en `EmptyOffersWidget`.
       await controller.dispose();
-      if (mounted) setState(() => _videoFailed = true);
     }
   }
 
@@ -634,30 +633,32 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
   /// El hueco espeja la card real: portada 4:3 mas la cinta encima.
   static const _proporcionDelHueco = 4 / 3;
 
+  /// Mismo arreglo que en `EmptyOffersWidget._buildVideo`, y por el mismo
+  /// motivo: la tarjeta no puede nacer en blanco mientras arranca el video, o
+  /// durante 100-300 ms lo unico que se ve es su sombra. Ver alli el detalle.
   Widget _buildVideo() {
-    // Video listo → renderizar con BoxFit.cover (fill sin deformar).
-    if (_videoReady && _controller != null) {
-      return FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: _controller!.value.size.width,
-          height: _controller!.value.size.height,
-          child: VideoPlayer(_controller!),
+    final listo = _videoReady && _controller != null;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const FoodlyBrandSurface(tint: FoodlyBrandTint.ciruela),
+        AnimatedOpacity(
+          opacity: listo ? 1 : 0,
+          duration: Durations.medium2,
+          curve: Curves.easeOut,
+          child: listo
+              ? FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: _controller!.value.size.width,
+                    height: _controller!.value.size.height,
+                    child: VideoPlayer(_controller!),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
-      );
-    }
-
-    // Asset roto → fondo purple translúcido sutil. El blur message arriba
-    // sigue siendo legible y el retry funciona igual.
-    if (_videoFailed) {
-      return ColoredBox(color: FoodlyThemes.primaryFoodly.withValues(alpha: .08));
-    }
-
-    // Inicializando (primeros ~100-300 ms tras mount). Loading iso oficial
-    // para mantener el lenguaje visual del resto de la app.
-    return ColoredBox(
-      color: FoodlyThemes.primaryFoodly.withValues(alpha: .04),
-      child: const Center(child: LoadingWidgetFoodlyIso(height: 46)),
+      ],
     );
   }
 }
