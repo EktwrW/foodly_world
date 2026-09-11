@@ -1752,6 +1752,58 @@ para actualizar `lib/generated/`.
 
 ---
 
+## Rendimiento: dónde está el coste de verdad
+
+**La pregunta no es «¿qué orden tiene?», sino «¿con qué n, y cuántas veces por
+segundo?».** Un O(n²) sobre 10 elementos una vez es gratis; un O(n) sobre 10
+elementos sesenta veces por segundo, no.
+
+Esta sección existe porque la regla genérica —«cuida la complejidad»— **no
+habría cazado ni uno** de los problemas reales que ha tenido esta app. Todos
+están medidos y documentados más arriba, y ninguno era asintótico.
+
+La jerarquía, de lo que más duele a lo que menos:
+
+**1. Viajes de red.** Cada consulta a Neon cuesta ~35 ms de ida y vuelta, así
+que la palanca es **cuántas consultas**, no cuán rápida es cada una. La pantalla
+de Favoritos llegó a tardar ~10 s por un N+1 en el backend; un evento de
+realtime hacía dos lecturas idénticas por dispositivo. Antes de optimizar un
+bucle, cuenta las peticiones.
+
+**2. Trabajo repetido por frame.** Un getter que recorre listas **dentro de un
+`build`** se paga en cada reconstrucción, y un `BlocBuilder` reconstruye mucho.
+Ahí el orden importa poco y la frecuencia importa todo. Si el resultado no
+cambia entre builds, se calcula una vez y se guarda.
+
+**3. Memoria por elemento.** Es constante, no asintótico, y aun así fue el peor:
+una foto de 1280 px se decodificaba entera —unos 5 MB— para pintar una tarjeta
+de 100 px, la caché de 100 MB de Flutter se llenaba con veinte y redecodificaba
+al hacer scroll. `memCacheWidth` siempre que la imagen se pinte pequeña.
+
+**4. Complejidad asintótica.** La última, porque aquí las `n` son pequeñas:
+paquetes de servicio, secciones de una carta, promos guardadas. **La señal de
+que sí importa es que la lista pueda crecer sin techo** —mensajes de un chat,
+platos de una carta grande, historial de órdenes— y entonces la salida suele ser
+un `Set` o un `Map` en vez de `List.contains` / `List.where` dentro de un bucle.
+
+Hecho bien, en `reservation_messages_sheet.dart`: para descartar los mensajes ya
+recibidos monta un `Set` de uuids **una vez** y pregunta contra él, en vez de
+recorrer la lista por cada mensaje entrante. Es O(n+m) en un sitio donde la
+lista crece con la conversación.
+
+El caso 2 y el 4 juntos, en `saved_promotions_view_model.dart`: los dos getters
+de negocios se leen **dentro de un `build`**, y antes recorrían la lista de
+negocios por cada promoción —O(promos × negocios)—. Ahora montan un índice por
+uuid y quedan en O(promos + negocios). Con las `n` de hoy la diferencia no se
+ve; lo que lo justifica es que era trabajo por frame. Hay banco que fija las tres
+cosas que no podían cambiar —el orden, que un negocio no se repita, y que una
+promoción sin negocio no aparezca— y se comprobó que la implementación vieja lo
+pasa igual, que es como se demuestra que el cambio no altera el comportamiento.
+
+**Al revisar código, el orden de las preguntas es ese**: ¿cuántas peticiones
+salen?, ¿esto corre en cada frame?, ¿cuánta memoria pide por elemento?, y solo
+entonces, ¿puede crecer la `n` sin techo?
+
 ## Registro del idioma: `intl_es.arb` es español NEUTRO
 
 **Regla: español neutro con tuteo. Ni voseo rioplatense, ni vosotros de España.**

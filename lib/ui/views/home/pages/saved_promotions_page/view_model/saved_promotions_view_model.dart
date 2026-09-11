@@ -33,25 +33,25 @@ class SavedPromotionsViewVM {
     );
   }
 
-  List<SavedPromoBusinessDM> get businessesWithCurrentPromos {
-    final result = <SavedPromoBusinessDM>[];
-    for (final promo in currentPromos) {
-      if (!result.any((b) => b.uuid == promo.businessUuid)) {
-        final matches = businesses.where((b) => b.uuid == promo.businessUuid);
-        if (matches.isNotEmpty) result.add(matches.first);
-      }
-    }
-    return result;
-  }
+  List<SavedPromoBusinessDM> get businessesWithCurrentPromos => _negociosDe(currentPromos);
 
-  List<SavedPromoBusinessDM> get businessesWithUpcomingPromos {
-    final result = <SavedPromoBusinessDM>[];
-    for (final promo in upcomingPromos) {
-      if (!result.any((b) => b.uuid == promo.businessUuid)) {
-        final matches = businesses.where((b) => b.uuid == promo.businessUuid);
-        if (matches.isNotEmpty) result.add(matches.first);
-      }
+  List<SavedPromoBusinessDM> get businessesWithUpcomingPromos => _negociosDe(upcomingPromos);
+
+  /// Negocios con al menos una promoción en [promos], en el orden en que
+  /// aparece la primera de cada uno. Se lee dentro de un `build`: el índice por
+  /// uuid es para no recorrer `businesses` por cada promo.
+  List<SavedPromoBusinessDM> _negociosDe(List<NearbyPromotionDM> promos) {
+    final porUuid = {for (final negocio in businesses) negocio.uuid: negocio};
+    final vistos = <String>{};
+    final resultado = <SavedPromoBusinessDM>[];
+
+    for (final promo in promos) {
+      if (!vistos.add(promo.businessUuid)) continue; // `add` es false si ya estaba
+
+      final negocio = porUuid[promo.businessUuid];
+      if (negocio != null) resultado.add(negocio);
     }
-    return result;
+
+    return resultado;
   }
 }
