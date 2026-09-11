@@ -88,10 +88,25 @@ class FoodlyEmptyView extends StatelessWidget {
   /// Suelo táctil, el mismo que los botones de vidrio de la card de promo.
   static const alturaDeAccion = 44.0;
 
+  /// LOS TRES SON GLIFOS QUE YA VIAJABAN EN EL BINARIO PUBLICADO, y eso no es
+  /// casualidad (2026-09-12).
+  ///
+  /// Las fuentes de iconos se recortan al montar (`tree-shaking`), así que un
+  /// icono que el código no usaba **no está dentro del binario**. Un patch OTA
+  /// solo reemplaza el snapshot de Dart: no puede añadir glifos. Pedir uno que
+  /// falte deja el medallón en blanco en el dispositivo.
+  ///
+  /// Las tres primeras versiones eran `inbox_outlined`, `filter_alt_outlined` y
+  /// `wifi_off_outlined`, y eran los ÚNICOS glifos nuevos de todo el trabajo de
+  /// estados vacíos — justo los que se pintan cuando la pantalla no trae icono
+  /// propio, o sea todos los vacíos de filtro y de fallo. Shorebird lo avisó al
+  /// preparar el patch de `2.0.8+101`.
+  ///
+  /// Si hace falta uno nuevo, entra por una release de tienda, no por un patch.
   IconData get _iconoPorDefecto => switch (intent) {
-        FoodlyEmptyIntent.nuevo => Icons.inbox_outlined,
-        FoodlyEmptyIntent.filtro => Icons.filter_alt_outlined,
-        FoodlyEmptyIntent.fallo => Icons.wifi_off_outlined,
+        FoodlyEmptyIntent.nuevo => Icons.outbox_rounded,
+        FoodlyEmptyIntent.filtro => Icons.tune_rounded,
+        FoodlyEmptyIntent.fallo => Icons.wifi_off_rounded,
       };
 
   @override

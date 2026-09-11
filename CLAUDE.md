@@ -1,88 +1,30 @@
-# Instrucciones para Claude: Desarrollo Flutter 3.29 y Dart 3
+# Foodly · notas para Claude
 
-## Perfil de Asistencia
+Este fichero NO es una guía de Flutter: es lo que no se deduce leyendo el
+código. Está organizado en tres partes:
 
-Eres Claude, un asistente de IA especializado en desarrollo senior y arquitectura de aplicaciones en Flutter 3.38 y Dart 3.7. Tu objetivo es proporcionar asistencia de alto nivel para el diseño, implementación y resolución de problemas en proyectos de Flutter complejos, con énfasis en código moderno, elegante y optimizado.
+1. **El stack real** y las reglas de publicación en tiendas.
+2. **Los hallazgos**, uno por sección y **fechados**, de lo más nuevo a lo más
+   viejo. Cada uno cuenta qué estaba mal, qué se midió y qué trampa hay dentro.
+3. **Las convenciones** de idioma y de l10n, al final.
 
-## Áreas de Experiencia
+**Stack:** Flutter **3.44.6** (la versión que fijan las tasks de Shorebird) con
+`sdk: ^3.6.0`. Material 3 vía `FlexThemeData`. El detalle, en la sección
+siguiente.
 
-Arquitectura de aplicaciones Flutter a escala empresarial
+**Cómo se escribe aquí:**
 
-Código Dart moderno con características avanzadas de Dart 3.7
-
-Widgets especializados y optimización de rendimiento UI
-
-Patrones de diseño avanzados (Clean Architecture, MVVM, BLoC, Riverpod)
-
-Programación asíncrona y reactiva con Dart 3
-
-Optimización de rendimiento y mejora de UX
-
-Integración de APIs y servicios externos
-
-Manejo avanzado de estado con enfoques modernos
-
-Null safety y características avanzadas de Dart 3.7
-
-Pruebas unitarias, de integración y de widgets
-
-CI/CD para aplicaciones Flutter
-
-Soluciones multi-plataforma (iOS, Android, Web, Desktop)
-
-Migraciones y actualizaciones de versiones
-
-Seguridad y mejores prácticas
-
-Flutter DevTools y depuración avanzada
-
-## Directrices para la Asistencia
-
-### Generales
-
-1. **Enfoque Arquitectónico**: Prioriza soluciones escalables, mantenibles y que sigan las mejores prácticas de la industria.
-2. **Código de Alta Calidad**: Proporciona implementaciones que sigan los principios SOLID, DRY y patrones de diseño adecuados.
-3. **Pensamiento Crítico**: Evalúa críticamente los requerimientos y sugiere mejoras cuando sea apropiado.
-4. **Explicaciones Detalladas**: Incluye comentarios explicativos en el código y justifica las decisiones arquitectónicas.
-
-### Específicas para Flutter 3.38 y Dart 3
-
-Características Modernas de Dart: Utiliza records, pattern matching, sealed classes, extension types, extension methods y class modifiers.
-
-Widgets Especializados: Evita Container cuando sea posible, priorizando SizedBox, ConstrainedBox, DecoratedBox, ColoredBox, etc.
-
-Material 3 y Widgets Actualizados: Implementa con Material 3, Material3 theme y widgets modernos.
-
-Rendimiento: Optimiza con const widgets, ListView.builder, RepaintBoundary, y técnicas de build optimization.
-
-Null Safety: Código 100% null-safe con sound null safety.
-
-Multiplataforma: Considera las particularidades de cada plataforma.
-
-## Formato de Respuestas
-
-### Para Consultas Arquitectónicas
-
-1. **Análisis del Requisito**: Evalúa y clarifica lo solicitado.
-2. **Consideraciones Arquitectónicas**: Presenta diferentes enfoques con sus pros y contras.
-3. **Recomendación Justificada**: Proporciona una solución recomendada con justificación técnica.
-4. **Diagrama Conceptual**: Cuando sea útil, proporciona diagramas para ilustrar la arquitectura.
-5. **Ejemplos de Implementación**: Código de muestra para los componentes principales.
-
-### Para Implementaciones de Código
-
-1. **Estructura de Archivos**: Sugiere una organización de archivos lógica.
-2. **Implementación Completa**: Proporciona código completo, no solo fragmentos.
-3. **Tests**: Incluye pruebas unitarias o de widget cuando sea apropiado.
-4. **Documentación**: Añade comentarios de documentación en formato Dart Doc.
-5. **Consideraciones de Rendimiento**: Menciona posibles cuellos de botella y optimizaciones.
-
-### Para Debugging y Resolución de Problemas
-
-1. **Análisis Sistemático**: Enfoque paso a paso para identificar la causa raíz.
-2. **Soluciones Alternativas**: Diferentes enfoques para resolver el problema.
-3. **Prevención**: Sugerencias para evitar problemas similares en el futuro.
-4. **Herramientas de Diagnóstico**: Consejos sobre cómo utilizar DevTools u otras herramientas.
+- **El código va escueto; las explicaciones, en este fichero.** Un docblock de
+  treinta líneas dentro de un widget es ruido — el porqué vive aquí, con su
+  fecha y su medición.
+- **Widgets concretos antes que `Container`**: `SizedBox`, `ConstrainedBox`,
+  `DecoratedBox`, `ColoredBox`.
+- **Medir antes que razonar.** Casi todos los hallazgos de abajo empiezan
+  porque el inventario decía una cosa y las medidas decían otra.
+- **Un test verde puede estarlo por el motivo equivocado.** Valídalo por
+  mutación: rompe la línea que debería protegerlo y comprueba que se pone rojo.
+- **Una recomendación, no un volcado de opciones.** Si hay que decidir, decide y
+  explica por qué; si la decisión es del usuario, se pregunta una vez y en corto.
 
 ## El stack REAL de este proyecto
 
@@ -158,11 +100,13 @@ recapturar en Android.
 - **Apple ID:** owentours@gmail.com
 - **Team ID:** V76AZLAYJ4
 - **Bundle ID:** com.foodlysolutions.app
-- **App Store Connect App ID:** 6761689908 (App name: "Foodly Solutions")
+- **App Store Connect App ID:** 6761689908 (nombre de la app: "Foodly Solutions")
 - **SKU:** foodly_ios_app
-- **Min iOS:** 15.0
+- **iOS mínimo:** 15.0
 
-> **Note:** There is an old app record "Foodly World" (ID: 6741719812) with bundle ID `world.foodly.mobile` — this is deprecated and should not be used. The active app uses `com.foodlysolutions.app`.
+> **Ojo:** existe una ficha vieja, "Foodly World" (ID: 6741719812), con bundle id
+> `world.foodly.mobile`. Está obsoleta y no se usa. La app activa es
+> `com.foodlysolutions.app`.
 
 ### Runbook de release iOS
 
@@ -270,6 +214,45 @@ flags (`--release-version`, `--patch-number`).
 
 Después de cada patch, confirmá con `patches list` que dice `track: stable`.
 
+**UN ICONO NUEVO ES UN CAMBIO DE ASSET, aunque parezca Dart puro (2026-09-12).**
+Las fuentes de iconos se recortan al montar —el `tree-shaken … 99.1% reduction`
+que sale en el log de build— así que **dentro del binario solo están los glifos
+que el código usaba ese día**. Un patch reemplaza el snapshot de Dart y nada
+más: no puede añadir glifos. Referenciar uno que falte deja el icono **en
+blanco** en el dispositivo, sin error y sin aviso en tiempo de ejecución.
+
+Shorebird sí avisa, pero con un mensaje que se malinterpreta fácil:
+
+```
+[WARN] Your app contains asset changes, which will not be included in the patch.
+    Changed files:
+        …/flutter_assets/fonts/MaterialIcons-Regular.otf
+        …/packages/icons_plus_pro/assets/fonts/Bootstrap.ttf
+Continue anyway? (y/N)
+```
+
+**Lo que importa NO es que los ficheros difieran**, que es lo único que dice el
+aviso: importa si el código nuevo pide un glifo que el binario no trae. Quitar
+iconos también cambia la fuente y es inofensivo. La comprobación, que se hace
+en segundos:
+
+```sh
+# glifos referenciados en el commit de la release vs los del arbol de trabajo
+git ls-tree -r --name-only <commit-de-la-release> lib/ | grep '\.dart$'
+# … y buscar `Icons.` / `Bootstrap.` en los dos lados: lo que sobre en el
+# arbol de trabajo es lo que saldria en blanco.
+```
+
+Pasó preparando el patch #2 de `2.0.8+101`: de todo el trabajo de estados
+vacíos, los **únicos tres glifos nuevos** eran los iconos por defecto de
+`FoodlyEmptyView` (`inbox_outlined`, `filter_alt_outlined`, `wifi_off_outlined`)
+— justo los que se pintan cuando la pantalla no trae icono propio, o sea todos
+los vacíos de filtro y de fallo. Se cambiaron por `outbox_rounded`,
+`tune_rounded` y `wifi_off_rounded`, que ya viajaban dentro. Está documentado en
+el propio `_iconoPorDefecto`.
+
+Si de verdad hace falta un glifo nuevo, entra por release de tienda.
+
 ### App Review: cómo dejar que el revisor llegue a Apple Pay (2026-09-03)
 
 Apple pidió probar las órdenes y ver Apple Pay. Lo que funcionó:
@@ -301,70 +284,108 @@ iPhone por TestFlight.
 en `ios/fastlane/metadata/*/name.txt` y los sube `fastlane metadata`; en Play
 el nombre es un campo manual de la consola — nada en el repo lo escribe.
 
-### Signing
-- **Automatic signing** via Xcode with Team V76AZLAYJ4
-- Provisioning profiles are managed automatically by Xcode
-- Capabilities enabled: Associated Domains, Push Notifications
+### Firma
+- **Firma automática** desde Xcode con el Team V76AZLAYJ4
+- Los perfiles de aprovisionamiento los gestiona Xcode solo
+- Capacidades activadas: Associated Domains, Push Notifications
 
-### App Store Metadata
-Prepared metadata (descriptions, keywords, release notes) in 3 languages (EN/ES/PT) is in `ios/fastlane/metadata/app-store-metadata.md`.
+### Metadatos de App Store
+Los textos preparados —descripciones, palabras clave, notas de versión— en los
+tres idiomas (EN/ES/PT) están en `ios/fastlane/metadata/app-store-metadata.md`.
 
-### Localized Permission Strings
-iOS permission descriptions are localized in:
+### Textos de permisos, traducidos
+Las descripciones de permisos de iOS viven en:
 - `ios/Runner/en.lproj/InfoPlist.strings`
 - `ios/Runner/es.lproj/InfoPlist.strings`
 - `ios/Runner/pt.lproj/InfoPlist.strings`
 
-### Security Notes
+### Notas de seguridad
 - `.vscode/tasks.json` todavía trae en claro `GOOGLE_MAPS_API_KEY`,
   `GOOGLE_SIGN_IN_CLIENT_ID` y `ANALYTICS_TOKEN`. `STRIPE_PUBLISHABLE_KEY` ya
   no: se lee de `${env:...}`. Las tres primeras viajan igualmente dentro del
   binario publicado —son claves de cliente—, así que lo que las protege son
   las restricciones del lado del servidor, no el secreto
-- `android/key.properties` and `android/app/foodly-release.jks` are committed to repo despite being in `.gitignore` — need to rotate and clean git history
-- `NSAllowsArbitraryLoads` is set to `true` in Info.plist (needed for some image URLs) — may need justification during App Review
+- `android/key.properties` y `android/app/foodly-release.jks` **están
+  commiteados** en el repo a pesar de figurar en `.gitignore`. Hay que rotarlos
+  y limpiar el historial de git
+- `NSAllowsArbitraryLoads` está en `true` en el `Info.plist` (hace falta para
+  algunas URL de imagen) — puede pedir justificación en App Review
 
 ---
 
-## Dual Token Authentication System (2026-04-12)
+## Autenticación con doble token (2026-04-12)
 
-### Architecture
+### La idea
 
-The app uses a **dual token system**: short-lived access token (24h) + long-lived refresh token (180 days). This enables biometric login to work after weeks of inactivity without requiring the user to re-authenticate.
+La app usa **dos tokens**: uno de acceso, corto (24 h), y uno de refresco,
+largo (180 días). Es lo que permite que el login biométrico siga funcionando
+después de semanas sin abrir la app, sin pedirle al usuario que se autentique
+otra vez.
 
-### Token Flow
+### El recorrido de los tokens
 
-1. **Login/Register/Social Login** → Backend returns both `access_token` and `refresh_token`
-2. **Normal API calls** → Use `access_token` as Bearer header
-3. **Access token expires (23h client threshold)** → Proactive silent refresh using `refresh_token`
-4. **401 response on any API call** → Reactive silent refresh + retry original request
-5. **Refresh token expires (180d)** → Session cleared, user must re-authenticate
+1. **Login / registro / login social** → el backend devuelve `access_token` y
+   `refresh_token`
+2. **Peticiones normales** → va el `access_token` como cabecera Bearer
+3. **El de acceso caduca** (umbral de 23 h en el cliente) → refresco silencioso
+   proactivo con el `refresh_token`
+4. **Un 401 en cualquier petición** → refresco silencioso reactivo y reintento
+   de la petición original
+5. **El de refresco caduca** (180 días) → se limpia la sesión y el usuario tiene
+   que volver a autenticarse
 
-### Key Files
+### Ficheros clave
 
--   **`lib/core/services/auth_session_service.dart`**: Central session manager. Stores `_refreshToken` in memory, delegates persistence to `SecureTokenService`. Methods:
-    -   `setSession(UserSessionDM)` — stores both tokens, persists to secure storage
-    -   `silentRefresh()` — exchanges refresh token for new pair via `POST /token/refresh`. Temporarily injects refresh token as Bearer header, restores access token on success.
-    -   `initializeSessionOrClear()` — on app startup, tries silent refresh if access token is expired
-    -   `restoreTokensFromSecureStorage()` — restores tokens from encrypted storage on cold start + one-time migration from HydratedBloc
-    -   `isAccessTokenExpired` — uses 23h threshold (backend access token is 24h)
-    -   `clearSession()` — wipes `_refreshToken` and `SecureTokenService.clearAll()`
+-   **`lib/core/services/auth_session_service.dart`**: el gestor central de la
+    sesión. Guarda `_refreshToken` en memoria y delega la persistencia en
+    `SecureTokenService`. Métodos:
+    -   `setSession(UserSessionDM)` — guarda los dos tokens y los persiste en el
+        almacenamiento seguro
+    -   `silentRefresh()` — canjea el token de refresco por un par nuevo con
+        `POST /token/refresh`. Inyecta temporalmente el de refresco como
+        cabecera Bearer y restaura el de acceso si sale bien.
+    -   `initializeSessionOrClear()` — al arrancar la app, intenta el refresco
+        silencioso si el token de acceso está caducado
+    -   `restoreTokensFromSecureStorage()` — restaura los tokens del
+        almacenamiento cifrado en arranque en frío, más la migración de una sola
+        vez desde HydratedBloc
+    -   `isAccessTokenExpired` — usa un umbral de 23 h (el del backend es de 24)
+    -   `clearSession()` — borra `_refreshToken` y llama a
+        `SecureTokenService.clearAll()`
 
--   **`lib/core/services/secure_token_service.dart`**: Wraps `flutter_secure_storage` v10. Stores access token, refresh token, token type, and creation timestamp in encrypted platform storage (Keychain on iOS, AES-GCM on Android).
-    -   Keys: `foodly_access_token`, `foodly_refresh_token`, `foodly_token_type`, `foodly_token_created_at`
-    -   Android: Default `AndroidOptions()` — v10 uses AES-GCM with RSA OAEP key wrapping automatically (no `encryptedSharedPreferences` flag needed, it's deprecated)
+-   **`lib/core/services/secure_token_service.dart`**: envuelve
+    `flutter_secure_storage` v10. Guarda el token de acceso, el de refresco, el
+    tipo y la marca de tiempo de creación en el almacenamiento cifrado de la
+    plataforma (Keychain en iOS, AES-GCM en Android).
+    -   Claves: `foodly_access_token`, `foodly_refresh_token`,
+        `foodly_token_type`, `foodly_token_created_at`
+    -   Android: `AndroidOptions()` por defecto — la v10 usa AES-GCM con
+        envoltura de clave RSA OAEP automáticamente; **no hace falta** el flag
+        `encryptedSharedPreferences`, que está obsoleto
     -   iOS: `IOSOptions(accessibility: KeychainAccessibility.first_unlock)`
 
--   **`lib/core/network/base/dio_request_handler.dart`**: Dio interceptor with:
-    -   **Request interceptor (proactive)**: Before sending any request, checks `isAccessTokenExpired`. If expired and not already refreshing, calls `silentRefresh()` and updates the header.
-    -   **Error interceptor (reactive)**: On 401, attempts `silentRefresh()` + retries original request once. If refresh fails, calls `notifyTokenExpired()`.
-    -   **Exclusion list**: `/token/refresh`, `/login`, `/register`, `/social-login` — these endpoints skip the refresh interceptor to prevent infinite loops.
+-   **`lib/core/network/base/dio_request_handler.dart`**: el interceptor de Dio.
+    -   **Interceptor de petición (proactivo)**: antes de mandar nada comprueba
+        `isAccessTokenExpired`. Si está caducado y no hay ya un refresco en
+        curso, llama a `silentRefresh()` y actualiza la cabecera.
+    -   **Interceptor de error (reactivo)**: ante un 401 intenta
+        `silentRefresh()` y reintenta la petición original UNA vez. Si el
+        refresco falla, llama a `notifyTokenExpired()`.
+    -   **Lista de exclusión**: `/token/refresh`, `/login`, `/register`,
+        `/social-login`. Esos endpoints se saltan el interceptor de refresco
+        para no entrar en un bucle infinito.
 
--   **`lib/core/blocs/root/root_bloc.dart`**: HydratedBloc persistence. `toJson()` strips `token`, `access_token`, `refresh_token` before writing to SharedPreferences (plaintext). `fromJson()` restores session from secure storage via `unawaited(_restoreAndInitialize())`.
+-   **`lib/core/blocs/root/root_bloc.dart`**: la persistencia de HydratedBloc.
+    `toJson()` quita `token`, `access_token` y `refresh_token` antes de escribir
+    en SharedPreferences, que va en claro. `fromJson()` restaura la sesión desde
+    el almacenamiento seguro con `unawaited(_restoreAndInitialize())`.
 
--   **`lib/core/network/users/me_client.dart`**: Retrofit endpoint `POST /token/refresh → UserSessionDM`
+-   **`lib/core/network/users/me_client.dart`**: el endpoint de Retrofit
+    `POST /token/refresh → UserSessionDM`
 
--   **`lib/data_models/user_session/user_session_dm.dart`**: Freezed model includes `accessToken` (`@JsonKey(name: 'access_token')`) and `refreshToken` (`@JsonKey(name: 'refresh_token')`) fields.
+-   **`lib/data_models/user_session/user_session_dm.dart`**: el modelo de Freezed
+    lleva `accessToken` (`@JsonKey(name: 'access_token')`) y `refreshToken`
+    (`@JsonKey(name: 'refresh_token')`).
 
 ### Las fechas las manda el idioma, no el país del GPS (2026-09-07)
 
@@ -1657,57 +1678,77 @@ mínimos y deja escrito qué colores se retiraron y por qué.
 El texto **deshabilitado está exento** de la norma y debe seguir viéndose
 apagado: oscurecerlo sería mentir sobre el estado del control.
 
-### One-Time Migration
+### La migración de una sola vez
 
-Existing users who upgrade from the old single-token system are transparently migrated: `restoreTokensFromSecureStorage()` checks if tokens exist in secure storage. If not but a session exists in HydratedBloc, it copies the legacy `token` to secure storage as the access token.
+A quien venía del sistema de un solo token se le migra sin que se entere:
+`restoreTokensFromSecureStorage()` mira si hay tokens en el almacenamiento
+seguro; si no los hay pero sí hay sesión en HydratedBloc, copia el `token` viejo
+al almacenamiento seguro como token de acceso.
 
-### Dependencies
+### Qué hace falta para que esto funcione
 
--   `flutter_secure_storage: ^10.0.0` in `pubspec.yaml`
--   `SecureTokenService` registered as lazy singleton in `dependency_injection_service.dart`
--   `AuthSessionService` constructor receives `secureTokenService: di()`
+-   `flutter_secure_storage: ^10.0.0` en `pubspec.yaml`
+-   `SecureTokenService` registrado como lazy singleton en
+    `dependency_injection_service.dart`
+-   El constructor de `AuthSessionService` recibe `secureTokenService: di()`
 
 ---
 
-## Business Analytics Dashboard (2026-04-13)
+## El panel de analíticas del negocio (2026-04-13)
 
-### Architecture
+### Qué es
 
-Manager-only feature showing business performance metrics. Data comes from the NLP microservice (`GET /nlp-service/business/{uuid}/overview?days=30`).
+Una función solo para managers, con las métricas de rendimiento del negocio.
+Los datos vienen del microservicio de NLP
+(`GET /nlp-service/business/{uuid}/overview?days=30`).
 
-### Key Frontend Files
+### Ficheros clave del front
 
--   **Data models**: `lib/data_models/analytics/business_overview_dm.dart` — Freezed models: `BusinessOverviewResponseDM`, `BusinessOverviewDataDM`, `KpisDM`, `FunnelDM`, `FunnelStepDM`, `FunnelConversionDM`, `DailySeriesDM`, `DailyPointDM`, `BreakdownsDM`, `BreakdownItemDM`
--   **Generated files**: `business_overview_dm.g.dart` has **custom deserialization** helpers (not standard Freezed output):
-    -   `_parseFunnelSteps()` — converts backend Map `{"key": value}` → `List<FunnelStepDM>`
-    -   `_parseBreakdownMapOrList()` — converts backend Map `{"status": count}` → `List<BreakdownItemDM>`
-    -   `_parseEventTypes()` — maps `event_type`→`label`, `count`→`value` from backend format
--   **Cubit**: `lib/ui/views/analytics/cubit/` — fetches data from NLP service
+-   **Modelos**: `lib/data_models/analytics/business_overview_dm.dart` — modelos
+    de Freezed: `BusinessOverviewResponseDM`, `BusinessOverviewDataDM`,
+    `KpisDM`, `FunnelDM`, `FunnelStepDM`, `FunnelConversionDM`,
+    `DailySeriesDM`, `DailyPointDM`, `BreakdownsDM`, `BreakdownItemDM`
+-   **Generados**: `business_overview_dm.g.dart` lleva ayudantes de
+    **deserialización escritos a mano**, que NO son salida estándar de Freezed:
+    -   `_parseFunnelSteps()` — convierte el Map del backend `{"clave": valor}`
+        en `List<FunnelStepDM>`
+    -   `_parseBreakdownMapOrList()` — convierte el Map `{"estado": cuenta}` en
+        `List<BreakdownItemDM>`
+    -   `_parseEventTypes()` — mapea `event_type`→`label` y `count`→`value`
+-   **Cubit**: `lib/ui/views/analytics/cubit/` — pide los datos al NLP
 -   **Widgets**:
-    -   `funnel_chart.dart` — Horizontal bar funnel with gradient bars
-    -   `daily_trends_chart.dart` — Line chart (fl_chart) showing reservations + events over time
-    -   `top_events_bar.dart` — Bar chart of most common event types
-    -   `reservations_donut.dart` — Pie chart of reservation statuses with color-coded legend
--   **Label humanizer**: `lib/ui/views/analytics/helpers/analytics_label_helper.dart` — Converts raw backend keys (`business_open`, `cta_clicked`, `reservation_started`, etc.) into localized user-friendly labels via `S.current.*`. Three methods: `funnelStep()`, `eventType()`, `reservationStatus()`. Has fallback that replaces `_`/`.` with spaces + capitalizes.
+    -   `funnel_chart.dart` — embudo de barras horizontales con degradado
+    -   `daily_trends_chart.dart` — gráfico de líneas (fl_chart) con reservas y
+        eventos a lo largo del tiempo
+    -   `top_events_bar.dart` — barras con los tipos de evento más frecuentes
+    -   `reservations_donut.dart` — quesito de estados de reserva, con leyenda
+        por color
+-   **Humanizador de etiquetas**:
+    `lib/ui/views/analytics/helpers/analytics_label_helper.dart` — convierte las
+    claves crudas del backend (`business_open`, `cta_clicked`,
+    `reservation_started`…) en etiquetas traducidas vía `S.current.*`. Tres
+    métodos: `funnelStep()`, `eventType()` y `reservationStatus()`. Si no
+    reconoce la clave, cambia `_` y `.` por espacios y pone mayúscula inicial.
 
-### Backend JSON ↔ Frontend Model Mapping
+### Correspondencia entre el JSON del backend y el modelo del front
 
-| Backend JSON key | Frontend Dart field | Notes |
+| clave del JSON | campo en Dart | notas |
 |---|---|---|
-| `funnel.steps` (Map) | `FunnelDM.steps` (List<FunnelStepDM>) | Custom `_parseFunnelSteps()` in `.g.dart` |
+| `funnel.steps` (Map) | `FunnelDM.steps` (List<FunnelStepDM>) | `_parseFunnelSteps()` a mano, en el `.g.dart` |
 | `funnel.conversion.open_to_cta_rate` | `FunnelConversionDM.openToCtaRate` | |
 | `funnel.conversion.open_to_reservation_rate` | `FunnelConversionDM.openToReservationRate` | |
 | `funnel.conversion.cta_to_reservation_rate` | `FunnelConversionDM.ctaToReservationRate` | |
 | `series.*_daily[].value` | `DailyPointDM.value` | |
-| `breakdowns.reservations_by_status` (Map) | `BreakdownsDM.reservationsByStatus` (List) | Custom `_parseBreakdownMapOrList()` |
-| `breakdowns.top_event_types[].event_type` | `BreakdownItemDM.label` | Custom `_parseEventTypes()` |
-| `breakdowns.top_event_types[].count` | `BreakdownItemDM.value` | Custom `_parseEventTypes()` |
+| `breakdowns.reservations_by_status` (Map) | `BreakdownsDM.reservationsByStatus` (List) | `_parseBreakdownMapOrList()` a mano |
+| `breakdowns.top_event_types[].event_type` | `BreakdownItemDM.label` | `_parseEventTypes()` a mano |
+| `breakdowns.top_event_types[].count` | `BreakdownItemDM.value` | `_parseEventTypes()` a mano |
 
-### l10n Keys (analytics labels)
+### Las claves de l10n de las etiquetas
 
-Added 22 keys to all 3 `.arb` files (EN/ES/PT): `analyticsLabelBusinessOpen`, `analyticsLabelCtaClicked`, `analyticsLabelCtaWhatsapp`, `analyticsLabelCtaPhone`, `analyticsLabelCtaWebsite`, `analyticsLabelCtaDirections`, `analyticsLabelCtaInstagram`, `analyticsLabelSearchResult`, `analyticsLabelReservationStarted`, `analyticsLabelReservationSubmitted`, `analyticsLabelReservationSucceeded`, `analyticsLabelFavoriteAdded`, `analyticsLabelFavoriteRemoved`, `analyticsLabelReviewCreated`, `analyticsLabelMenuViewed`, `analyticsLabelShare`, `analyticsStatusConfirmed`, `analyticsStatusCompleted`, `analyticsStatusPending`, `analyticsStatusCancelled`, `analyticsStatusRejected`, `analyticsStatusNoShow`.
+Son 22 claves en los tres `.arb` (EN/ES/PT): `analyticsLabelBusinessOpen`, `analyticsLabelCtaClicked`, `analyticsLabelCtaWhatsapp`, `analyticsLabelCtaPhone`, `analyticsLabelCtaWebsite`, `analyticsLabelCtaDirections`, `analyticsLabelCtaInstagram`, `analyticsLabelSearchResult`, `analyticsLabelReservationStarted`, `analyticsLabelReservationSubmitted`, `analyticsLabelReservationSucceeded`, `analyticsLabelFavoriteAdded`, `analyticsLabelFavoriteRemoved`, `analyticsLabelReviewCreated`, `analyticsLabelMenuViewed`, `analyticsLabelShare`, `analyticsStatusConfirmed`, `analyticsStatusCompleted`, `analyticsStatusPending`, `analyticsStatusCancelled`, `analyticsStatusRejected`, `analyticsStatusNoShow`.
 
-**Important**: After editing `.arb` files, run the l10n generator to update `lib/generated/`.
+**Importante**: después de tocar un `.arb` hay que correr el generador de l10n
+para actualizar `lib/generated/`.
 
 ---
 
@@ -1746,9 +1787,11 @@ Sin salida = limpio.
 **`intl_pt.arb` es portugués de Portugal** (no de Brasil): "ao balcão", "estás",
 "dirige-te".
 
-### Route Guard
+### El guardia de la ruta
 
-`businessAnalytics` route is registered in `permission_guarded_resource_enum.dart` → `_appModulesMap` mapped to `ModuleGuardType.business`, so only managers with an active business can access it.
+La ruta `businessAnalytics` está declarada en
+`permission_guarded_resource_enum.dart` → `_appModulesMap`, asociada a
+`ModuleGuardType.business`: solo entran los managers con un negocio activo.
 
 ---
 
@@ -1903,17 +1946,22 @@ viera sólo significaba «no observable con las llamadas de hoy», que es mucho
 más débil que «equivalente».
 
 
-## Visited Business Mode (2026-04-12)
+## El modo «negocio visitado» (2026-04-12)
 
-### Two-Page Architecture
+### Son dos páginas, no una
 
--   `BusinessPage` — Owner/manager view with edit controls (accessed from "My Business" in drawer)
--   `VisitedBusinessPage` — Visitor view, read-only (accessed from categories, search, favorites, Buzz)
+-   `BusinessPage` — la vista del dueño, con los controles de edición. Se llega
+    desde «Mi negocio», en el drawer.
+-   `VisitedBusinessPage` — la vista del visitante, de solo lectura. Se llega
+    desde categorías, búsqueda, favoritos y Buzz.
 
-When a manager visits their OWN business via categories/search/favorites, they see `VisitedBusinessPage` (visitor mode) — no edit buttons, no management controls. This is by design: the visited business module has NO dependency on `BusinessBloc` or ownership state.
+**Cuando un manager visita su PROPIO negocio** desde categorías, búsqueda o
+favoritos, ve `VisitedBusinessPage` —modo visitante— sin botones de edición ni
+controles de gestión. Es deliberado: el módulo de negocio visitado **no depende**
+de `BusinessBloc` ni de saber quién es el dueño.
 
-**Dead code removed** (2026-04-12): `business_name.dart` widget in visited business module (imported `BusinessBloc`/`BusinessVM` from owner module and had edit `onTap`), and dead `loggedUserCanEdit` / `loggerUserCanEdit` getters in `promotions_vm.dart` and `menu_vm.dart`.
-
----
-
-Estoy aquí para ayudarte a desarrollar aplicaciones Flutter de alta calidad siguiendo las mejores prácticas de ingeniería de software. Te asistirá como un compañero de desarrollo senior especializado en Flutter 3.38 y Dart 3.7.
+**Código muerto retirado** (2026-04-12): el widget `business_name.dart` del
+módulo de negocio visitado, que importaba `BusinessBloc`/`BusinessVM` del módulo
+del dueño y traía un `onTap` de edición; y los getters muertos
+`loggedUserCanEdit` / `loggerUserCanEdit` de `promotions_vm.dart` y
+`menu_vm.dart`.
