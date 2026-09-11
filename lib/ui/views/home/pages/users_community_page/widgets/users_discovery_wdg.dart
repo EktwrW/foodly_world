@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingExtension, S;
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -115,27 +116,14 @@ class _UsersDiscoveryWidgetState extends State<UsersDiscoveryWidget> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.people_outline,
-            size: 64,
-            color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.5),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'No users nearby',
-            style: FoodlyTextStyles.label.copyWith(color: Colors.black54),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Try increasing your search radius',
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
-          ),
-        ],
-      ).paddingBottom(60),
-    );
+    // El texto estaba EN INGLES Y A PELO, sin pasar por l10n, y ademas decia
+    // «prueba a ampliar tu radio de busqueda»: aqui no hay ningun control de
+    // radio — lo filtra el servidor desde la ubicacion. Mandaba a hacer algo
+    // que no se puede hacer.
+    return FoodlyEmptyView(
+      title: S.current.usersDiscoveryEmptyTitle,
+      subtitle: S.current.usersDiscoveryEmptyBody,
+      icon: const Icon(Icons.people_outline, size: 40, color: FoodlyThemes.primaryFoodly),
+    ).paddingBottom(60);
   }
 }

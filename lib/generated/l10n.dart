@@ -11204,6 +11204,46 @@ class S {
       args: [radius],
     );
   }
+
+  /// `Your alerts about reservations, promotions and community activity show up here.`
+  String get notificationsEmptyBody {
+    return Intl.message(
+      'Your alerts about reservations, promotions and community activity show up here.',
+      name: 'notificationsEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write below to sort out the details of this reservation.`
+  String get reservationMessagesEmptyBody {
+    return Intl.message(
+      'Write below to sort out the details of this reservation.',
+      name: 'reservationMessagesEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No one around here yet`
+  String get usersDiscoveryEmptyTitle {
+    return Intl.message(
+      'No one around here yet',
+      name: 'usersDiscoveryEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When there are Foodly users near you, they'll show up in this list.`
+  String get usersDiscoveryEmptyBody {
+    return Intl.message(
+      'When there are Foodly users near you, they\'ll show up in this list.',
+      name: 'usersDiscoveryEmptyBody',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

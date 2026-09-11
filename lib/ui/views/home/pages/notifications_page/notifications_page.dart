@@ -20,6 +20,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
 import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -57,16 +58,13 @@ class NotificationsPage extends StatelessWidget {
               final vm = state.vm;
 
               if (vm.notifications.isEmpty) {
-                return Center(
-                  child: Column(
-                    spacing: 16,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Bootstrap.bell_slash, size: 48, color: FoodlyThemes.secondaryFoodly),
-                      Text(S.current.noNotificationsYet),
-                    ],
-                  ).paddingBottom(48),
-                );
+                // Sin salida: los avisos llegan solos, no hay nada que tocar
+                // desde aqui.
+                return FoodlyEmptyView(
+                  title: S.current.noNotificationsYet,
+                  subtitle: S.current.notificationsEmptyBody,
+                  icon: const Icon(Bootstrap.bell_slash, size: 40, color: FoodlyThemes.primaryFoodly),
+                ).paddingBottom(48);
               }
 
               return Column(

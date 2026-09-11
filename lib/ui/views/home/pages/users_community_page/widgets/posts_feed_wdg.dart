@@ -4,6 +4,7 @@ import 'package:foodly_world/core/core_exports.dart' show FoodlyThemes, PaddingE
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/services/event_tracking_service.dart';
 import 'package:foodly_world/core/utils/scroll_tracker.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -161,34 +162,23 @@ class _PostsFeedWidgetState extends State<PostsFeedWidget> {
     // ("sé el primero"), pero el del feed following es un dead-end social
     // — la solución no es publicar, es seguir gente. Le decimos eso.
     final isFollowing = filter == PostsFeedFilter.following;
-    final icon = isFollowing ? Bootstrap.person_check : Bootstrap.chat_square_text;
-    final title = isFollowing ? S.current.feedFollowingEmptyTitle : S.current.postsFeedNoPosts;
-    final subtitle = isFollowing ? S.current.feedFollowingEmptySubtitle : S.current.postsFeedBeFirst;
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            size: 56,
-            color: FoodlyThemes.secondaryFoodly,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: FoodlyTextStyles.label.copyWith(color: Colors.black54),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
-          ).paddingSymmetric(horizontal: 24),
-        ],
-      ).paddingBottom(60),
-    );
+    // «No sigues a nadie» es un vacio por FILTRO —hay publicaciones, pero no de
+    // quien tu sigues— y «se el primero» es uno de novato. El widget lo pinta
+    // distinto porque son cosas distintas.
+    //
+    // Sin boton en ninguno de los dos: el SegmentedButton que cambia de feed
+    // esta justo encima, a proposito (ver arriba).
+    return FoodlyEmptyView(
+      intent: isFollowing ? FoodlyEmptyIntent.filtro : FoodlyEmptyIntent.nuevo,
+      title: isFollowing ? S.current.feedFollowingEmptyTitle : S.current.postsFeedNoPosts,
+      subtitle: isFollowing ? S.current.feedFollowingEmptySubtitle : S.current.postsFeedBeFirst,
+      icon: Icon(
+        isFollowing ? Bootstrap.person_check : Bootstrap.chat_square_text,
+        size: 40,
+        color: isFollowing ? FoodlyThemes.secondaryFoodlyText : FoodlyThemes.primaryFoodly,
+      ),
+    ).paddingBottom(60);
   }
 
   void _confirmDelete(BuildContext context, String uuid) {

@@ -5,6 +5,7 @@ import 'package:foodly_world/core/extensions/datetime_extension.dart';
 import 'package:foodly_world/data_models/buzz/buzz_item_dm.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/home/pages/users_community_page/cubit/social_cubit.dart';
@@ -85,28 +86,11 @@ class _BuzzFeedWidgetState extends State<BuzzFeedWidget> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.campaign_outlined,
-            size: 64,
-            color: FoodlyThemes.secondaryFoodly.withValues(alpha: 0.5),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            S.current.buzzEmptyTitle,
-            style: FoodlyTextStyles.label.copyWith(color: Colors.black54),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            S.current.buzzEmptySubtitle,
-            style: FoodlyTextStyles.caption.copyWith(color: Colors.black38),
-          ),
-        ],
-      ).paddingBottom(60),
-    );
+    return FoodlyEmptyView(
+      title: S.current.buzzEmptyTitle,
+      subtitle: S.current.buzzEmptySubtitle,
+      icon: const Icon(Icons.campaign_outlined, size: 40, color: FoodlyThemes.primaryFoodly),
+    ).paddingBottom(60);
   }
 }
 

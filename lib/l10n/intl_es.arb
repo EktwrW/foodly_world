@@ -1856,5 +1856,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notificationsEmptyBody": "Aquí aparecen tus avisos de reservas, promociones y novedades de la comunidad.",
+  "reservationMessagesEmptyBody": "Escribe abajo para coordinar los detalles de esta reserva.",
+  "usersDiscoveryEmptyTitle": "Por aquí no hay nadie todavía",
+  "usersDiscoveryEmptyBody": "Cuando haya usuarios de Foodly cerca de ti, aparecerán en esta lista."
 }

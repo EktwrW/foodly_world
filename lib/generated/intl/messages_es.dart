@@ -2000,6 +2000,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "notesLabel": m73,
     "notification": MessageLookupByLibrary.simpleMessage("Notificación"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notificaciones"),
+    "notificationsEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Aquí aparecen tus avisos de reservas, promociones y novedades de la comunidad.",
+    ),
     "november": MessageLookupByLibrary.simpleMessage("Noviembre"),
     "october": MessageLookupByLibrary.simpleMessage("Octubre"),
     "okGo": MessageLookupByLibrary.simpleMessage("Ok, Vamos!"),
@@ -2387,6 +2390,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reservationDetails": MessageLookupByLibrary.simpleMessage(
       "Detalles de la reserva",
+    ),
+    "reservationMessagesEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Escribe abajo para coordinar los detalles de esta reserva.",
     ),
     "reservationRejected": MessageLookupByLibrary.simpleMessage(
       "Reserva rechazada.",
@@ -2790,6 +2796,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Nombre de usuario no disponible",
     ),
     "users": MessageLookupByLibrary.simpleMessage("Usuarios"),
+    "usersDiscoveryEmptyBody": MessageLookupByLibrary.simpleMessage(
+      "Cuando haya usuarios de Foodly cerca de ti, aparecerán en esta lista.",
+    ),
+    "usersDiscoveryEmptyTitle": MessageLookupByLibrary.simpleMessage(
+      "Por aquí no hay nadie todavía",
+    ),
     "usersHaveTheAbilityToCreateAndManage":
         MessageLookupByLibrary.simpleMessage(
           "son usuarios que tienen la capacidad de crear y gestionar",

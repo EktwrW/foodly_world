@@ -57,6 +57,11 @@ class FoodlyEmptyView extends StatelessWidget {
   /// esté aprobado para cada pantalla.
   final String? subtitle;
 
+  /// Tope de líneas del subtítulo. Nulo —sin tope— para el copy propio, que es
+  /// corto por construcción. Lo necesita quien pinta un mensaje que viene del
+  /// SERVIDOR y puede tener cualquier longitud.
+  final int? subtitleMaxLines;
+
   /// Icono del medallón. Se pinta a 40 px; si se pasa un [Widget] propio
   /// (un `Asset`, por ejemplo) se respeta tal cual.
   final Widget? icon;
@@ -71,6 +76,7 @@ class FoodlyEmptyView extends StatelessWidget {
     required this.title,
     this.intent = FoodlyEmptyIntent.nuevo,
     this.subtitle,
+    this.subtitleMaxLines,
     this.icon,
     this.actionLabel,
     this.onAction,
@@ -114,7 +120,13 @@ class FoodlyEmptyView extends StatelessWidget {
                 Text(title, style: FoodlyTextStyles.emptyTitle, textAlign: TextAlign.center),
                 if (subtitle?.isNotEmpty ?? false) ...[
                   const SizedBox(height: 8),
-                  Text(subtitle!, style: FoodlyTextStyles.emptySubtitle, textAlign: TextAlign.center),
+                  Text(
+                    subtitle!,
+                    style: FoodlyTextStyles.emptySubtitle,
+                    textAlign: TextAlign.center,
+                    maxLines: subtitleMaxLines,
+                    overflow: subtitleMaxLines == null ? null : TextOverflow.ellipsis,
+                  ),
                 ],
               ],
             ),

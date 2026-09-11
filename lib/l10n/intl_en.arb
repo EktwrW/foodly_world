@@ -1856,5 +1856,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "notificationsEmptyBody": "Your alerts about reservations, promotions and community activity show up here.",
+  "reservationMessagesEmptyBody": "Write below to sort out the details of this reservation.",
+  "usersDiscoveryEmptyTitle": "No one around here yet",
+  "usersDiscoveryEmptyBody": "When there are Foodly users near you, they'll show up in this list."
 }

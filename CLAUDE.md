@@ -835,6 +835,38 @@ km». Venía de antes, pero este trabajo lo puso al lado de un botón que dice
 «Ampliar a 10 km», y ahí el desajuste canta. El placeholder pasó a `int` y la
 llamada a `.toInt()`; los radios son enteros por construcción.
 
+**Fase 6, la última tanda (2026-09-11):** notificaciones, mensajes de reserva,
+las tres de la comunidad (buzz, descubrir usuarios, feed de publicaciones) y los
+dos estados de ERROR —hoja de perfil y panel de analíticas—, que son los
+primeros usos reales de `FoodlyEmptyIntent.fallo`.
+
+**Un bug de verdad, en «descubrir usuarios»:** el vacío estaba **en inglés y a
+pelo**, sin pasar por l10n («No users nearby» / «Try increasing your search
+radius»), así que un usuario en español o portugués lo veía en inglés. Y encima
+el consejo era imposible de seguir: **ahí no hay ningún control de radio** —lo
+filtra el servidor desde la ubicación—. Dos fallos en una cadena de dos líneas.
+
+**La hoja de perfil era un callejón sin salida**: decía que no se pudo cargar y
+ahí acababa. `_loadProfile` se puede volver a llamar; lo único es devolver el
+indicador de carga a mano, porque no lo enciende ella.
+
+**`subtitleMaxLines` es nuevo y tiene un solo usuario a propósito.** El panel de
+analíticas pinta como subtítulo el mensaje que viene del SERVIDOR, que puede
+medir lo que quiera; el resto del copy es nuestro y es corto por construcción,
+así que el tope por defecto es «ninguno». Sin él, un error largo estira el
+bloque hasta desbordar.
+
+**Lo que NO se migró, y por qué:** `join_by_link_page`. Es una pantalla de fallo
+entera, no el vacío de una lista, y su salida —un botón a lo ancho que va
+DIRECTO a la main page— está así por un bug de e2e: ir a `/` disparaba la
+restauración de `LAST_PATH`, que podía ser el propio `/join`, y el botón quedaba
+«muerto». Meterla en `FoodlyEmptyView` cambiaría ese botón por una píldora y
+tocaría un camino cubierto por e2e, a cambio de nada.
+
+**Quedan cero vacíos de lista escritos a mano.** Los `Icon(size: 48)` que siguen
+apareciendo en un barrido son diálogos de confirmación y de resultado, que no
+son estados vacíos.
+
 ### Alturas proporcionales: usa el LADO LARGO, no `screenHeight` (2026-09-07)
 
 Al permitir que la tableta gire hubo que revisar qué se rompe en apaisado, donde
