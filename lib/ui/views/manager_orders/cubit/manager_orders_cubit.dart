@@ -73,7 +73,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// Suscripción PROPIA al canal del negocio. Antes el servicio era
   /// mono-canal y cualquier otro consumidor (el chip del comensal) dejaba
   /// mudo este panel al suscribirse (2026-08-06).
-  RealtimeSubscription? _sub;
+  /// El FUTURO, no la suscripción resuelta: hasta que `watchBusiness` vuelve,
+  /// `_sub` era null y un segundo `load()` no tenía nada que cancelar.
+  Future<RealtimeSubscription>? _sub;
   final String businessUuid;
 
   ManagerOrdersCubit({
@@ -126,8 +128,41 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
     await _fetch();
-    // Canal live del panel: cualquier evento → refetch silencioso.
-    _sub = await _realtime?.watchBusiness(businessUuid, onTouched: refetchSilently);
+    await _suscribir();
+  }
+
+  /// Canal live del panel: cualquier evento → refetch silencioso.
+  ///
+  /// `_sub` se asignaba DESPUÉS de dos `await`, así que salir de la pantalla
+  /// mientras corría la primera lectura dejaba la suscripción naciendo sobre un
+  /// cubit ya cerrado: `close()` cancelaba un `_sub` todavía null y el oyente se
+  /// quedaba oyendo para siempre, con un GET por cada resume.
+  /// La bandera se marca ANTES del await: sin eso, dos `load()` seguidos entran
+  /// los dos con `_sub` todavía en null y ninguno cancela nada.
+  bool _suscrito = false;
+
+  Future<void> _suscribir() async {
+    final realtime = _realtime;
+    if (realtime == null || isClosed || _suscrito) return;
+    _suscrito = true;
+    // `watchBusiness` registra el oyente SINCRÓNICAMENTE: cancelar antes metería
+    // un microtask entre la carga y la suscripción, y ahí se pierde un evento.
+    final anterior = _sub;
+    final pendiente = realtime.watchBusiness(businessUuid, onTouched: refetchSilently);
+    _sub = pendiente;
+    _cancelarCuandoExista(anterior);
+    final sub = await pendiente;
+    if (isClosed) {
+      await sub.cancel();
+      _suscrito = false;
+    }
+  }
+
+  /// No se puede ESPERAR a cancelar: si la suscripción no llega nunca, `close()`
+  /// se quedaría colgado. `cancel()` es idempotente.
+  static void _cancelarCuandoExista(Future<RealtimeSubscription>? pendiente) {
+    if (pendiente == null) return;
+    unawaited(pendiente.then((s) => s.cancel()).catchError((_) {}));
   }
 
   Future<void> selectBucket(String? bucket) async {
@@ -311,7 +346,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   Future<void> close() async {
     _redDeSeguridad?.cancel();
     _redDeSeguridad = null;
-    await _sub?.cancel();
+    _suscrito = false;
+    _cancelarCuandoExista(_sub);
+    _sub = null;
     return super.close();
   }
 }

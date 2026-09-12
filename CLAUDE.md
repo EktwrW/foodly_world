@@ -2665,6 +2665,71 @@ suscripción que nadie cancela — y un GET por cada resume, para siempre. Es
 preexistente y lo midió la contra-revisión.
 
 
+## Las suscripciones de realtime se quedaban huérfanas (2026-09-13)
+
+Lo encontró la contra-revisión de la #87 mirando fuera del marco en el que
+estábamos los tres (generaciones, embudos, contar peticiones). Es preexistente y
+afecta a los dos cubits que piden canal.
+
+**El fallo.** `load()` pedía la suscripción **después** de esperar la primera
+lectura, y guardaba el resultado en `_sub` al volver. Salir de la pantalla
+mientras esa lectura viajaba dejaba a `close()` cancelando un `_sub` todavía
+null, y al oyente naciendo sobre un cubit muerto: **nadie lo cancela nunca**.
+
+No es sólo memoria: el canal cuenta como vivo, así que el servicio mantiene el
+polling y **cada resume dispara una lectura por cada huérfano**, sobre un cubit
+que ya no pinta nada.
+
+Y en la página había un segundo camino: cada `load()` pedía otra suscripción y
+pisaba `_sub` sin cancelar la anterior. El botón de reintentar las acumulaba, y
+con N oyentes un evento dispara N refetch — justo el ×N que la #69 se dedicó a
+quitar.
+
+**SE GUARDA EL FUTURO, NO LA SUSCRIPCIÓN RESUELTA.** Es el detalle que costó dos
+intentos: `watch` tarda en volver —espera a la conexión— y hasta entonces `_sub`
+es null, así que un segundo `load()` **no encontraba nada que cancelar** y los
+dos oyentes quedaban vivos igual. Guardando el futuro, la anterior se cancela en
+cuanto exista.
+
+**Y el orden importa: `watch` PRIMERO, cancelar después.** El servicio registra
+el oyente **sincrónicamente** y sólo luego espera a la conexión
+(`_subscribe` hace `sub.add(id, onTouched)` antes del `await _connect()`). Poner
+un `await` delante abre un hueco entre la carga y la suscripción en el que un
+evento se pierde. Lo cazó un test que ya existía, y **el control del barrido fue
+lo que me hizo mirarlo**: ocho tests estaban en rojo y yo lo habría leído como
+«todas las mutaciones mueren».
+
+**Cancelar nunca se espera.** `_cancelarCuandoExista` engancha un `then` y sigue:
+si la suscripción no llega nunca, un `await` en `close()` lo colgaría. `cancel()`
+es idempotente, así que cancelar dos veces no molesta.
+
+**Tres pares de guardas REDUNDANTES, comprobados por pares y no supuestos:**
+
+| par | quitar una | quitar las dos |
+|---|---|---|
+| idempotencia (`_observado`/`_suscrito`) y cancelar la anterior | no se nota | rojo |
+| el `isClosed` de después del await y el cancelado de `close()` | no se nota | rojo |
+
+La idempotencia se queda porque además ahorra una suscripción y su cancelación
+en el caso corriente, no sólo por defensa.
+
+**Trampa al testear, y me pasó:** `_suscribir` de la **página** va `unawaited`,
+así que `await load()` **no** espera a que la suscripción nazca. Mi test de
+«cerrar mientras nace» pasaba porque el oyente todavía no existía, no porque se
+hubiera cancelado — verde por el motivo equivocado, y lo delató que la mutación
+de las dos guardas del cierre sobrevivía. Hay que esperar de verdad (`_asentar`,
+60 ms): `watch` espera a `_connect()`, que sin socket falla y cae al polling. El
+panel no tiene ese problema porque su `load()` sí espera a `_suscribir`.
+
+**El testigo es `pollingActivo`**: el servicio suelta sus timers cuando se va el
+último oyente, así que si tras cerrar el cubit sigue encendido es que quedó
+alguien oyendo. No hay getter del número de oyentes, y éste sirve.
+
+**Fijado en** `test/group_orders/suscripciones_huerfanas_test.dart` (8 casos),
+con su control positivo: con la pantalla abierta la suscripción SÍ tiene que
+quedar, porque «no suscribirse nunca» pasaría todo lo demás.
+
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una
