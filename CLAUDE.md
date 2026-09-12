@@ -1883,6 +1883,102 @@ el repo—. Un test así se rompería cada vez que cambie cualquiera de esos
 constructores: sería un lastre, no una red. Verificado con `flutter analyze`
 limpio y por lectura de la cadena estado → wrapper, que es corta y cerrada.
 
+## El panel del manager leía la lista DOS veces por acción (2026-09-12)
+
+**Medido en producción, no deducido.** Cuatro pares limpios en los logs de
+Cloud Run, con el mismo tamaño de respuesta y el mismo PoP de Cloudflare — o
+sea un solo dispositivo pidiendo dos veces:
+
+```
+17:23:06.606  y  17:23:06.806     (1178 bytes los dos)
+17:23:18.427  y  17:23:18.505     (1186 / 1186)
+17:23:32.475  y  17:23:33.546     (1179 / 1179)
+17:23:51.646  y  17:23:52.145     (1181 / 1181)
+```
+
+**Los dos disparadores:**
+
+1. `_applyAction()` llamaba a `refetchSilently()` en la rama de éxito, **sólo
+   para re-sincronizar los contadores de los chips** (lo decía su propio
+   comentario).
+2. Esa misma mutación emite `BusinessOrdersTouched`, que llega por Pusher
+   entre 52 ms y 1 s después y vuelve a llamar a `refetchSilently()`.
+
+**Por qué el coalescer de lecturas no lo tapaba**: aquel colapsa dos oyentes
+del MISMO evento en el MISMO turno. Esto son dos turnos distintos separados por
+la latencia del socket. Ningún coalescer por turno los junta.
+
+**Y por qué no lo vio la revisión**: el primer revisor descartó el panel porque
+`watchBusiness` tiene un solo oyente, y es verdad. El segundo disparador no es
+el canal, es la rama local del propio cubit. Sin los logs de producción no
+había forma de verlo — los tests no cuentan peticiones entre turnos.
+
+**La solución**: la acción ya no lee. Arma una **red de seguridad** y deja que
+resincronice el evento.
+
+```dart
+void _pedirResincronizacion() {
+  _redDeSeguridad?.cancel();
+  _redDeSeguridad = Timer(_esperaDeResincronizacion, () {
+    if (!isClosed) refetchSilently();
+  });
+}
+```
+
+- Socket sano: el evento llega en 52 ms – 1 s → **una** lectura.
+- Socket caído o evento perdido: salta la red a los 2 s → una lectura, un poco
+  más tarde. (Los 2 s salen de la medición de arriba, con margen.)
+- Cualquier lectura real desarma la red, la dispare quien la dispare.
+- Un solo temporizador para todas las acciones: tres acciones seguidas no
+  dejan tres lecturas encoladas.
+
+**La fila del manager no espera a nada de esto**: la actualiza el `emit`
+optimista con la respuesta de la propia mutación. Lo único que llega con la
+latencia del socket son los contadores de los chips.
+
+**Trampa al testear**: el temporizador de 2 s deja un *pending timer* al acabar
+el cuerpo de un `testWidgets`, y `addTearDown(cubit.close)` corre DESPUÉS de esa
+comprobación — así que cuatro tests de `manager_orders_page_test.dart` fallaban
+con «A Timer is still pending». Se arregla pasando una espera mínima al cubit
+en ese fichero; los `pump` que ya hacían esos tests la dejan correr.
+
+**Trampa de git, y me la comí**: ramé sin comprobar el HEAD y salí del commit de
+OTRA sesión que trabajaba en paralelo (los timeouts de Dio), no de `main`. Se
+ve con `git log --oneline origin/main..HEAD` — si sale vacío, la rama no aporta
+nada y está atrasada. **Comprobar el HEAD antes de `git checkout -b`** cuando
+hay más de una sesión en marcha.
+
+**Dos fallos de la primera versión, los dos encontrados por la revisión:**
+
+1. **La red se desarmaba con el INTENTO, no con el éxito.** `_fetch()`
+   cancelaba antes del `await`, así que una lectura fallida dejaba los
+   contadores viejos sin nadie que reintentara. Antes de este cambio había DOS
+   lecturas por acción y la segunda tapaba el fallo de la primera; ahora hay
+   una. Y **no hay rescate**: el polling de 10 s sólo corre con el socket
+   caído, o sea que justo en el caso que esto optimiza —socket sano— los chips
+   se quedaban congelados hasta que llegara un evento de otra orden. Ahora
+   desarma el éxito, y un fallo re-arma la red con un tope de 3 reintentos
+   para no martillear un backend caído.
+2. **Nada fijaba los 2 s de producción.** Los tests inyectan 60 ms, así que
+   poner el valor por defecto a cero —lo que **restaura la doble lectura que
+   este cambio existe para borrar**— pasaba las 1 181 pruebas sin que nadie se
+   enterara. La constante está expuesta y hay un test que la acota: por encima
+   del máximo medido del evento (1 s) y por debajo de 5 s.
+
+**Lo que este cambio empeora, y conviene tenerlo dicho**: el `emit` optimista
+actualiza la FILA pero no los contadores ni la pertenencia al panel. Así que
+al cerrar una cuenta, al liquidarla o al moverla de cubo con un chip filtrando,
+la fila tarda en desaparecer lo que tarde el evento (52 ms – 1 s típico, 2 s si
+se pierde) en vez del RTT de antes. Se cierra del todo cuando la respuesta de
+la mutación traiga los contadores — que con el `GROUP BY` del panel ya
+mergeado en el backend cuesta una consulta, no cinco.
+
+**Fijado en** `test/group_orders/panel_una_lectura_por_accion_test.dart`:
+10 casos. De las mutaciones mueren 6; las dos guardas del cierre (`close()`
+cancela el timer, y el `!isClosed` de dentro) son **redundantes entre sí** —
+quitar una sola no se nota, quitar las dos sí, y hay test.
+
+
 ## Un evento de realtime hacía DOS lecturas idénticas (2026-09-08)
 
 **El problema** (auditoría de escalabilidad). Dos cubits del MISMO cliente

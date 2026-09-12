@@ -139,8 +139,14 @@ void main() {
       cubit.state.orders.firstWhere((o) => o.uuid == 'a').fulfillmentStatus,
       GroupFulfillmentStatus.ready,
     );
-    // load + refetch post-acción.
-    expect(repo.managerOrdersCalls, 2);
+    // Sólo la carga: desde 2026-09-12 la acción NO lee la lista.
+    //
+    // Leía para re-sincronizar los contadores, y la misma mutación emite
+    // `BusinessOrdersTouched`, que llega por Pusher y lee otra vez: dos
+    // lecturas completas del panel por cada acción del manager, medidas en
+    // producción. Ahora la acción arma una red de seguridad y deja que lo
+    // haga el evento. Ver `panel_una_lectura_por_accion_test.dart`.
+    expect(repo.managerOrdersCalls, 1);
   });
 
   test('setItemDelivered y setTableLabel plumbean sus argumentos', () async {
