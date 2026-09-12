@@ -26,6 +26,10 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   RealtimeSubscription? _sub;
   GroupOrderVM _vm;
 
+  /// Sube al lanzar un refetch silencioso y con cada cambio de estado: el que
+  /// vuelve con una generación vieja llega tarde y se descarta (2026-09-12).
+  int _generacion = 0;
+
   GroupOrderCubit({
     required GroupOrderRepo repo,
     required Logger logger,
@@ -37,6 +41,13 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         super(const GroupOrderState.initial(GroupOrderVM()));
 
   GroupOrderVM get vm => _vm;
+
+  /// Aquí, para que ninguna mutación tenga que acordarse de subirla.
+  @override
+  void onChange(Change<GroupOrderState> change) {
+    super.onChange(change);
+    _generacion++;
+  }
 
   /// Carga (o recarga) el detalle de una orden por su uuid.
   Future<void> load(String uuid) async {
@@ -70,8 +81,9 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   Future<void> _refetchSilently(String uuid, {bool coalesce = false}) async {
     if (isClosed) return;
+    final generacion = ++_generacion;
     final result = await _repo.getGroupOrder(uuid, coalesce: coalesce);
-    if (isClosed) return;
+    if (isClosed || generacion != _generacion) return;
     result.when(success: _applyResponse, failure: (_) {/* silencioso */});
   }
 

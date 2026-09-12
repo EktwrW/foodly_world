@@ -31,11 +31,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   RealtimeSubscription? _sub;
   bool _busy = false;
 
-  /// Sube en cada [end]. Un `syncAnyActive` que quedó en vuelo compara contra
-  /// este valor antes de emitir: si la sesión se limpió mientras la respuesta
-  /// viajaba, el resultado ya no corresponde a nadie y se descarta. Sin esto,
-  /// `_validateRestoredSession` podía invalidar la sesión y el sync repoblaba
-  /// el chip igual, resucitando la orden del usuario anterior.
+  /// Sube al lanzar una lectura, con cada cambio de estado y en cada [end]: la
+  /// respuesta que vuelve con una generación vieja llega tarde y se descarta.
+  /// El [end] va explícito — ver el CLAUDE.md, no es redundante (2026-09-12).
   int _generacion = 0;
 
   ActiveGroupOrderCubit({
@@ -63,6 +61,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   @override
   void onChange(Change<GroupOrderDM?> change) {
     super.onChange(change);
+    _generacion++;
     final order = change.nextState;
     // El uuid se pasa explícito: `onChange` corre ANTES de que bloc asigne el
     // estado nuevo, así que `state` acá todavía es el anterior.
@@ -112,9 +111,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// sin entregar). No-op si ya hay estado o sin sesión (401 silencioso).
   Future<void> syncAnyActive() async {
     if (state != null || _busy) return;
-    final generacionAlPedir = _generacion;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
-    if (generacionAlPedir != _generacion) return; // la sesión se limpió mientras viajaba
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         final cart = r.groupOrders.where((o) => o.isOpen || o.isPayable).toList();
@@ -301,7 +300,11 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   Future<void> refresh({bool coalesce = false}) async {
     final order = state;
     if (order == null) return;
+    final generacion = ++_generacion;
     final res = await _repo.getGroupOrder(order.uuid, coalesce: coalesce);
+    // Cubre el `end()` de abajo: un 404 de la orden ANTERIOR no puede vaciar
+    // un carrito que ya es otro.
+    if (isClosed || generacion != _generacion) return;
     res.when(
       success: (r) => emit(r.groupOrder),
       failure: (e) {
