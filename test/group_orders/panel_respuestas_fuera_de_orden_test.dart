@@ -88,6 +88,88 @@ void main() {
     });
   });
 
+  /// LO QUE ENCONTRÓ LA REVISIÓN, y es la trampa de descartar una lectura que
+  /// el manager está esperando: quien la releva puede fallar EN SILENCIO (un
+  /// refetch de fondo no le cuenta errores al manager, y es deliberado). Sin
+  /// nadie que recoja el testigo, la pantalla se queda con las filas del cubo
+  /// ANTERIOR, sin spinner y sin error — el estado exacto que esta PR existe
+  /// para borrar, y peor que antes de tocar nada.
+  group('descartar no puede dejar la pantalla peor', () {
+    test('si el relevo falla en silencio, alguien vuelve a leer', () async {
+      final carga = cubit.load();
+      repo.responder(0, ['de-pendientes']);
+      await carga;
+
+      final chip = cubit.selectBucket('ready');
+      unawaited(cubit.refetchSilently()); // el relevo
+
+      repo.responder(1, ['de-listos']); // la del chip: descartada
+      await chip;
+      repo.fallar(2); // y el relevo se cae sin decir nada
+      await _turno();
+
+      final antes = repo.lecturas;
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+      expect(repo.lecturas, antes + 1,
+          reason: 'nadie más iba a arreglar esa pantalla');
+    });
+
+    /// Y el control del control: pedir que alguien relea NO puede convertirse
+    /// en una petición de más en el caso corriente. Si ya llegó algo más nuevo
+    /// que la descartada, la pantalla está fresca y no hace falta nadie.
+    test('pero si ya llegó algo más nuevo, no se pide nada', () async {
+      final vieja = cubit.refetchSilently();
+      final nueva = cubit.refetchSilently();
+
+      repo.responder(1, ['nuevas']); // la nueva llega primero y se aplica
+      await nueva;
+      repo.responder(0, ['viejas']); // la vieja se descarta
+      await vieja;
+
+      final antes = repo.lecturas;
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+      expect(repo.lecturas, antes, reason: 'la pantalla ya está fresca');
+    });
+
+    /// El reintento del `LoadFailureView` va por `refetchSilently`, así que si
+    /// se descarta no emite NADA: ni datos, ni spinner, ni error. El manager
+    /// acaba de pulsar el botón y parece muerto.
+    test('un reintento descartado no se pierde', () async {
+      final carga = cubit.load();
+      repo.fallar(0);
+      await carga;
+
+      final reintento = cubit.refetchSilently();
+      unawaited(cubit.refetchSilently()); // algo lo releva
+
+      repo.responder(1, ['buenas']);
+      await reintento;
+      repo.fallar(2);
+      await _turno();
+
+      final antes = repo.lecturas;
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+      expect(repo.lecturas, antes + 1);
+    });
+
+    /// Y el spinner es de quien lo encendió: descartar la lectura del PRIMER
+    /// chip no puede apagar el que encendió el segundo, que sigue en vuelo.
+    /// Con la lista vacía, apagarlo pinta «No hay órdenes» — un dato falso.
+    test('descartar una lectura no apaga el spinner de otra', () async {
+      final primera = cubit.selectBucket('pending');
+      final segunda = cubit.selectBucket('ready');
+
+      repo.responder(0, ['viejas']); // la primera se descarta
+      await primera;
+
+      expect(cubit.state.loading, isTrue,
+          reason: 'la segunda sigue en vuelo: su spinner no es de la primera');
+      repo.responder(1, ['nuevas']);
+      await segunda;
+      expect(cubit.state.loading, isFalse);
+    });
+  });
+
   group('dos lecturas del mismo cubo', () {
     test('la respuesta vieja no pisa a la nueva', () async {
       final vieja = cubit.refetchSilently();
@@ -136,6 +218,26 @@ void main() {
 
       expect(cubit.state.orders.single.tableLabel, 'ya-lista',
           reason: 'una lectura anterior a la acción no puede revertir la fila');
+    });
+
+    /// Una acción sobre una orden que NO está en la lista (otro cubo, o el chip
+    /// filtrando) no cambia nada de lo que se ve, así que no puede invalidar
+    /// una lectura buena en vuelo. `copyWith` construía una lista nueva SIEMPRE.
+    test('una acción que no toca la lista no invalida nada', () async {
+      final carga = cubit.load();
+      repo.responder(0, ['a']);
+      await carga;
+
+      final lectura = cubit.refetchSilently();
+
+      final accion = cubit.advanceFulfillment('no-esta', 'ready');
+      repo.responderAccion(uuid: 'no-esta', mesa: 'otra');
+      await accion;
+
+      repo.responder(1, ['a', 'b']);
+      await lectura;
+
+      expect(cubit.state.orders.length, 2);
     });
 
     /// LA LECCIÓN DE LA #86, y aquí valía igual: un error NO trae foto del

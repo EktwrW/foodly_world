@@ -119,6 +119,17 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// vuelve con una generación vieja llega tarde y se descarta (2026-09-12).
   int _generacion = 0;
 
+  /// Generación de la última lectura que SÍ se aplicó. Con ella se distingue
+  /// «me descartaron y ya hay datos más nuevos en pantalla» de «me descartaron
+  /// y nadie ha traído nada todavía», que son dos cosas muy distintas.
+  int _ultimaAplicada = 0;
+
+  /// Cuántas lecturas VISIBLES (las que encienden el spinner) hay en vuelo. El
+  /// spinner es de quien lo encendió: descartar una no puede apagar el de otra
+  /// que sigue esperando — con la lista vacía, apagarlo pinta «No hay órdenes»,
+  /// que es un dato falso.
+  int _visiblesEnVuelo = 0;
+
   /// El embudo. `loading` y `error` son banderas y no invalidan nada; lo que
   /// invalida es que cambien los datos o el cubo, porque entonces la respuesta
   /// en vuelo habla de otra cosa.
@@ -179,19 +190,28 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   Future<void> _fetch({bool silent = false}) async {
     final generacion = ++_generacion;
+    if (!silent) _visiblesEnVuelo++;
     final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
+    if (!silent) _visiblesEnVuelo--;
     if (isClosed) return;
 
     if (generacion != _generacion) {
       // Llegó tarde: sus filas son de otro cubo, o de antes de una acción que
       // ya se aplicó. No se aplican, no desarman la red —sus contadores son
-      // igual de viejos— y no consumen reintento: de todo eso responde la
-      // lectura que la relevó.
+      // igual de viejos— y no consumen reintento.
       //
-      // Lo único que sí hay que hacer es apagar el spinner que encendió ESTA
-      // lectura: quien la relevó puede ser un refetch silencioso, y ésos
-      // fallan sin emitir nada.
-      if (!silent && state.loading) emit(state.copyWith(loading: false));
+      // El spinner sólo se apaga si no queda ninguna lectura visible esperando:
+      // es de quien lo encendió.
+      if (!silent && _visiblesEnVuelo == 0 && state.loading) {
+        emit(state.copyWith(loading: false));
+      }
+
+      // Y SE PIDE QUE ALGUIEN VUELVA A LEER, salvo que ya haya llegado algo más
+      // nuevo. Descartar sin más dejaba la pantalla con las filas del cubo
+      // anterior, sin spinner y sin error: quien releva a esta lectura puede
+      // ser un refetch silencioso, y ésos fallan SIN EMITIR NADA (deliberado —
+      // un tick de fondo no le cuenta errores al manager). Nadie lo arreglaba.
+      if (_ultimaAplicada < generacion) _pedirResincronizacion();
       return;
     }
 
@@ -207,6 +227,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // así que justo en el caso que esto optimiza —socket sano— los chips
         // se quedaban congelados hasta el siguiente evento de otra orden. Lo
         // encontró la revisión, con test.
+        _ultimaAplicada = generacion;
         _contadoresSucios = false;
         _reintentosDeRed = 0;
         _redDeSeguridad?.cancel();
@@ -287,10 +308,14 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // Los contadores los mueve el cambio de bucket de esa orden, y de eso
         // se encarga el evento de la propia mutación (ver
         // `_pedirResincronizacion`).
+        // La MISMA lista si la orden no está en ella (otro cubo, o el chip
+        // filtrando): construir una nueva subiría la generación y mataría una
+        // lectura buena en vuelo sin que hubiera cambiado nada de lo que se ve.
+        final enLaLista = state.orders.any((o) => o.uuid == updated.uuid);
         emit(state.copyWith(
-          orders: [
-            for (final o in state.orders) o.uuid == updated.uuid ? updated : o,
-          ],
+          orders: enLaLista
+              ? [for (final o in state.orders) o.uuid == updated.uuid ? updated : o]
+              : state.orders,
           error: null,
         ));
         _pedirResincronizacion();

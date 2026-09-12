@@ -2592,43 +2592,85 @@ El `identical` no es pereza: `copyWith` deja pasar la MISMA instancia cuando no
 se le pasa el campo, así que comparar identidad es exactamente «¿lo tocó esta
 emisión?».
 
+**De las tres cláusulas, la portante es la de `orders`; las otras dos son
+defensivas y HOY están muertas**, y conviene decirlo en vez de presentarlas como
+diseño. Lo demostró la revisión: dejando sólo `orders` el banco entero sigue
+verde. `bucket:` sólo se pasa en `selectBucket`, que llama a `_fetch()` en la
+línea siguiente —el bump de lanzamiento ya lo cubre—, y `counts:` sólo se pasa
+junto a `orders: r.orders`, que ya es lista nueva. Se quedan porque dejarían de
+estar muertas en cuanto alguien emita un cubo sin leer detrás, que es
+exactamente el refactor que rompería la guarda en silencio.
+
 **Y aquí `onChange` SÍ vale como embudo, al revés que en el chip flotante.** En
 aquél hubo que sobrescribir `emit` porque bloc deduplica los estados iguales y
 `onChange` no corre. `ManagerOrdersState` es una clase plana **sin `operator ==`**
 (lo dice su propio docblock: «sin freezed a propósito»), así que dos instancias
-nunca son iguales y bloc no deduplica nada. **Si algún día alguien le pone
-`==` o lo pasa a freezed, esta guarda se vuelve intermitente sin que nada falle.**
+nunca son iguales y bloc no deduplica nada.
+
+**Y aquí me corrigió la revisión**: yo había escrito que ponerle `==` «vuelve la
+guarda intermitente sin que nada falle», y lo midió parcheando el estado con
+`==` y `hashCode`: **el banco entero sigue verde**. El daño real es sólo el bump
+del lado de aplicar en emisiones value-iguales, y ése no es portante porque lo
+cubre el `++` de lanzamiento. O sea: la intención del aviso es correcta —nada lo
+detectaría— pero el daño que anunciaba era mayor que el real.
+
+**DESCARTAR UNA LECTURA NO PUEDE DEJAR LA PANTALLA PEOR, y mi primera versión
+sí lo hacía.** Es el hallazgo bloqueante de la revisión y es el mismo error de
+fondo que la #86: tratar todas las lecturas como si fueran mejor-esfuerzo.
+
+Con el socket SANO: el manager toca «listos», su lectura sale, y llega un evento
+de Pusher que lanza otra. La del chip vuelve, la generación dice que es vieja y
+se tira. Y entonces la relevista **falla en silencio** —un refetch de fondo no
+le cuenta errores al manager, y eso es deliberado—. Resultado medido:
+
+    bucket=ready · orders=[las de PENDIENTES] · loading=false · error=null
+
+Las filas del cubo anterior bajo el chip nuevo, sin spinner y sin aviso: **el
+estado exacto que esta PR existe para borrar**, y peor que antes de tocar nada,
+porque sin guarda la lectura del chip se aplicaba. Lo mismo con el botón de
+reintentar de `LoadFailureView`, que va por `refetchSilently`: un reintento
+descartado no emite NADA y el botón parece muerto.
+
+El arreglo usa la pieza que ya estaba: **al descartar se pide una
+resincronización**, y de ella responde la red de seguridad. Con una condición
+para que no cueste peticiones de más: sólo si no ha llegado ya algo más nuevo
+(`_ultimaAplicada`). En el caso corriente —dos lecturas cruzadas, la nueva
+gana— la pantalla ya está fresca y no se pide nada.
 
 **La red de seguridad y la lectura descartada.** Una respuesta que llega tarde
 **no desarma la red y no consume reintento**: sus contadores son tan viejos como
 sus filas, y desarmar con ellos dejaría los chips congelados sin nadie que
-volviera a pedirlos. De eso responde la lectura que la relevó. Hay test, y su
-control —una lectura que sí se aplica sí desarma— también.
+volviera a pedirlos.
 
-**El spinner, que es la trampa de esto.** Si se descarta una lectura que encendió
-`loading`, hay que apagarlo a mano: **quien la releva puede ser un refetch
-silencioso, y ésos fallan sin emitir nada** (es deliberado: un tick fallido no
-le cuenta un error al manager). Sin eso, el panel se queda girando para siempre.
-Es un modo de fallo NUEVO que introduce la guarda, no algo que ya estuviera.
+**El spinner es de quien lo encendió.** Descartar una lectura no puede apagar el
+`loading` de OTRA que sigue en vuelo — dos chips seguidos, y con la lista vacía
+eso pinta **«No hay órdenes»**, un dato falso, que es justo lo que los
+comentarios de `manager_orders_page.dart` dicen que no puede pasar. Por eso hay
+un contador de lecturas visibles en vuelo y sólo se apaga cuando llega a cero.
+
+**Una acción que no toca la lista no invalida nada.** `copyWith` construía la
+lista nueva SIEMPRE, incluso cuando la orden no estaba en ella (otro cubo, o el
+chip filtrando), y eso mataba lecturas buenas en vuelo. Ahora se pasa la MISMA
+instancia cuando no hay nada que sustituir.
 
 **Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
-(11 casos). Tres son CONTROLES a propósito: el cambio de chip normal sí pinta sus
-filas, una acción que falla no invalida nada, y una lectura aplicada sí desarma
-la red. Sin ellos, una guarda que descarte SIEMPRE pasaría el banco.
+(16 casos). Cuatro son CONTROLES a propósito: el cambio de chip normal sí pinta
+sus filas, una acción que falla no invalida nada, una lectura aplicada sí
+desarma la red, y pedir relectura al descartar **no** cuesta una petición de más
+cuando ya llegó algo más nuevo. Sin ellos, una guarda que descarte SIEMPRE —o
+que pida relectura siempre— pasaría el banco.
 
-**De las siete mutaciones no sobrevive ninguna**, con una de control que sí
-sobrevive (renombrar una local). Las dos que más dicen:
+**De las once mutaciones probadas no sobrevive ninguna**, con una de control que
+sí sobrevive. Pero el número, otra vez, no es la parte importante: **mi primer
+barrido daba «7 de 7 mueren» y la revisión encontró cuatro fallos reales
+debajo**, dos de ellos bloqueantes. Es la segunda vez seguida. Lo que se me
+escapó esta vez, por si sirve de patrón:
 
-- **Subir el contador en TODA emisión** —el error que costó dos regresiones en
-  la #86— **muere aquí**, así que la lección quedó codificada y no sólo escrita.
-- **Desarmar la red con una lectura descartada** muere: es la decisión de diseño
-  que la orden grupal no tenía que tomar.
-
-**Pero «7 de 7 mueren» ya me engañó una vez** (ver la entrada de la #86: la
-revisión encontró once mutaciones más que sobrevivían). Un barrido mide lo que
-se te ocurrió romper. Si tocas esto, pregúntate primero qué familia de
-aserciones te falta — en la #86 era **contar peticiones** en vez de mirar sólo
-el estado final.
+- **Miraba el flag y no las filas.** Mi test del spinner afirmaba
+  `loading == false` y nada más; el agujero estaba en `orders`.
+- **No pregunté qué pasa si el relevo falla.** La guarda delega en «ya vendrá
+  otra lectura» y yo no comprobé que venga. En la #86 era lo mismo con otro
+  nombre: «el sistema se cura solo» sólo vale si hay quien lo cure.
 
 
 ## El modo «negocio visitado» (2026-04-12)
