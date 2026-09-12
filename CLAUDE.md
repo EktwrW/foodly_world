@@ -1948,10 +1948,35 @@ ve con `git log --oneline origin/main..HEAD` — si sale vacío, la rama no apor
 nada y está atrasada. **Comprobar el HEAD antes de `git checkout -b`** cuando
 hay más de una sesión en marcha.
 
+**Dos fallos de la primera versión, los dos encontrados por la revisión:**
+
+1. **La red se desarmaba con el INTENTO, no con el éxito.** `_fetch()`
+   cancelaba antes del `await`, así que una lectura fallida dejaba los
+   contadores viejos sin nadie que reintentara. Antes de este cambio había DOS
+   lecturas por acción y la segunda tapaba el fallo de la primera; ahora hay
+   una. Y **no hay rescate**: el polling de 10 s sólo corre con el socket
+   caído, o sea que justo en el caso que esto optimiza —socket sano— los chips
+   se quedaban congelados hasta que llegara un evento de otra orden. Ahora
+   desarma el éxito, y un fallo re-arma la red con un tope de 3 reintentos
+   para no martillear un backend caído.
+2. **Nada fijaba los 2 s de producción.** Los tests inyectan 60 ms, así que
+   poner el valor por defecto a cero —lo que **restaura la doble lectura que
+   este cambio existe para borrar**— pasaba las 1 181 pruebas sin que nadie se
+   enterara. La constante está expuesta y hay un test que la acota: por encima
+   del máximo medido del evento (1 s) y por debajo de 5 s.
+
+**Lo que este cambio empeora, y conviene tenerlo dicho**: el `emit` optimista
+actualiza la FILA pero no los contadores ni la pertenencia al panel. Así que
+al cerrar una cuenta, al liquidarla o al moverla de cubo con un chip filtrando,
+la fila tarda en desaparecer lo que tarde el evento (52 ms – 1 s típico, 2 s si
+se pierde) en vez del RTT de antes. Se cierra del todo cuando la respuesta de
+la mutación traiga los contadores — que con el `GROUP BY` del panel ya
+mergeado en el backend cuesta una consulta, no cinco.
+
 **Fijado en** `test/group_orders/panel_una_lectura_por_accion_test.dart`:
-6 casos, 6 mutaciones. Cuatro mueren; las dos guardas del cierre
-(`close()` cancela el timer, y el `!isClosed` de dentro) son **redundantes
-entre sí** — quitar una sola no se nota, quitar las dos sí, y hay test.
+10 casos. De las mutaciones mueren 6; las dos guardas del cierre (`close()`
+cancela el timer, y el `!isClosed` de dentro) son **redundantes entre sí** —
+quitar una sola no se nota, quitar las dos sí, y hay test.
 
 
 ## Un evento de realtime hacía DOS lecturas idénticas (2026-09-08)

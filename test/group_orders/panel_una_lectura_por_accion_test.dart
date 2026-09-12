@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
+import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
@@ -119,6 +120,84 @@ void main() {
     expect(repo.lecturas, 2, reason: 'tres acciones no pueden dejar tres lecturas encoladas');
   });
 
+  /// EL FALLO QUE ENCONTRÓ LA REVISIÓN. La primera versión cancelaba la red
+  /// ANTES del `await`, o sea con el INTENTO y no con el éxito.
+  ///
+  /// Antes de esta pantalla había DOS lecturas por acción y la segunda tapaba
+  /// el fallo de la primera. Ahora sólo hay una, y si falla nadie la rescata:
+  /// el polling de 10 s SÓLO corre con el socket caído, así que justo en el
+  /// caso que esto optimiza —socket sano— los chips se quedaban congelados
+  /// hasta que llegara un evento de otra orden.
+  test('si la lectura del evento falla, la red sigue armada y reintenta', () async {
+    await cubit.load();
+    await cubit.advanceFulfillment('a', 'ready');
+
+    repo.fallaLaLectura = true;
+    realtime.tocar(); // el evento lee... y falla
+    await Future<void>.delayed(Duration.zero);
+    expect(repo.lecturas, 2);
+
+    repo.fallaLaLectura = false;
+    await Future<void>.delayed(espera * 3);
+
+    expect(repo.lecturas, 3,
+        reason: 'una lectura fallida no puede dejar los contadores viejos para siempre');
+  });
+
+  test('y si falla la propia red, se re-arma', () async {
+    await cubit.load();
+    repo.fallaLaLectura = true;
+    await cubit.advanceFulfillment('a', 'ready');
+
+    await Future<void>.delayed(espera * 3);
+    expect(repo.lecturas, greaterThan(1), reason: 'la red disparó');
+
+    repo.fallaLaLectura = false;
+    final antes = repo.lecturas;
+    await Future<void>.delayed(espera * 3);
+
+    expect(repo.lecturas, greaterThan(antes), reason: 'la red no se re-armó tras fallar');
+  });
+
+  /// Pero con tope: un backend caído no puede convertirse en un GET cada dos
+  /// segundos para siempre.
+  test('los reintentos tienen tope', () async {
+    await cubit.load();
+    repo.fallaLaLectura = true;
+    await cubit.advanceFulfillment('a', 'ready');
+
+    await Future<void>.delayed(espera * 20);
+
+    // carga + la red + 3 reintentos = 5 como mucho.
+    expect(repo.lecturas, lessThanOrEqualTo(5),
+        reason: 'la red se re-arma sin fin y martillea un backend caído');
+  });
+
+  /// El valor de PRODUCCIÓN, que no lo fijaba nada: los tests inyectan 60 ms,
+  /// así que ponerlo a cero —lo que restaura la doble lectura que esta PR
+  /// existe para borrar— pasaba la suite entera. Lo señaló la revisión.
+  test('la espera por defecto deja tiempo al evento sin dejar tirado al manager', () {
+    final porDefecto = ManagerOrdersCubit(
+      businessUuid: 'b1',
+      repo: repo,
+      logger: Logger(level: Level.off),
+    );
+    addTearDown(porDefecto.close);
+
+    // Medido en producción: el evento llegaba entre 52 ms y 1 s.
+    expect(
+      porDefecto.esperaDeResincronizacion,
+      greaterThan(const Duration(seconds: 1)),
+      reason: 'por debajo del máximo medido, la red dispara antes que el evento '
+          'y vuelve la doble lectura',
+    );
+    expect(
+      porDefecto.esperaDeResincronizacion,
+      lessThanOrEqualTo(const Duration(seconds: 5)),
+      reason: 'demasiado alto deja los contadores viejos si el evento se pierde',
+    );
+  });
+
   test('cerrar el panel cancela la red de seguridad', () async {
     await cubit.load();
     await cubit.advanceFulfillment('a', 'ready');
@@ -132,6 +211,7 @@ void main() {
 
 class _RepoEspia implements GroupOrderRepo {
   int lecturas = 0;
+  bool fallaLaLectura = false;
 
   static const _orden = GroupOrderDM(uuid: 'a', businessUuid: 'b1');
 
@@ -142,6 +222,11 @@ class _RepoEspia implements GroupOrderRepo {
     int? page,
   }) async {
     lecturas++;
+    if (fallaLaLectura) {
+      return ApiResult.failure(
+        AppRequestException(error: StateError('sin red'), stackTrace: StackTrace.current),
+      );
+    }
     return const ApiResult.success(ManagerOrdersResponseDM(orders: [_orden]));
   }
 
