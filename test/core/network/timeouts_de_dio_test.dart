@@ -17,20 +17,9 @@ import 'package:foodly_world/data_transfer_objects/menu_import/menu_import_parse
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:logger/logger.dart';
 
-/// UNA PETICIÓN TIENE QUE TERMINAR (2026-09-12).
-///
-/// `FoodlyApiProvider` no fijaba ninguno de los tres timeouts de Dio, y en Dio
-/// 5.9.2 los tres son `null` por defecto —comprobado en
-/// `dio-5.9.2/lib/src/options.dart`—, que significa SIN LÍMITE. En un móvil eso
-/// no es teórico: un salto de WiFi a datos, o una red que se traga los paquetes,
-/// deja la petición en vuelo para siempre. La pantalla se queda girando sin
-/// error y sin reintento, y sólo se destraba matando la app.
-///
-/// Salió revisando la PR #69: una versión anterior de aquel coalescer retenía
-/// la petición en vuelo hasta que terminara, y sin timeouts «una petición
-/// colgada» se convertía en «la orden queda muda toda la sesión». Aquella PR se
-/// arregló por otro lado (acotó la ventana a un turno síncrono), pero la falta
-/// de timeouts seguía afectando a la app entera.
+/// Una petición tiene que terminar. Los tres timeouts de Dio son `null` por
+/// defecto, o sea SIN LÍMITE. Historia y números: CLAUDE.md, «El cliente HTTP
+/// no tenía techo» (2026-09-12).
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -86,10 +75,8 @@ void main() {
     });
   });
 
-  /// `sendTimeout` acota la subida ENTERA del cuerpo, no un tramo de ella. Con
-  /// el global de 30 s, el vídeo de una promo —hasta 80 MB, `edit_promo_media
-  /// .dart:205`— se cortaría a mitad de subida en cualquier red de móvil. Sería
-  /// romper en nombre de arreglar.
+  /// `sendTimeout` acota la subida ENTERA del cuerpo: el global de 30 s
+  /// cortaría el vídeo de una promo —hasta 80 MB— a mitad de subida.
   group('una subida no puede heredar el techo de un JSON', () {
     test('un multipart sube su propio techo de envío', () async {
       await proveedor.dio.post<dynamic>('/promos/media', data: _subidaConFichero());
@@ -114,11 +101,8 @@ void main() {
       expect(adaptador.visto?.connectTimeout, FoodlyApiProvider.connectTimeout);
     });
 
-    /// El matiz que se me escapó y cazó la revisión: `@MultiPart()` genera
-    /// `FormData` TAMBIÉN para formularios de puro texto —`updateProfile` no
-    /// manda ni un `MultipartFile`—. Lo que hay que acotar es el peso, no el
-    /// `Content-Type`: darle diez minutos a un cambio de nombre de usuario es
-    /// dejarlo colgado diez minutos.
+    /// `@MultiPart()` genera `FormData` también para formularios de puro texto.
+    /// Lo que hay que acotar es el peso, no el `Content-Type`.
     test('un multipart SIN ficheros se queda con el global', () async {
       await proveedor.dio.post<dynamic>('/me/update', data: FormData.fromMap({'username': 'hector'}));
 
@@ -146,19 +130,16 @@ void main() {
       expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.receiveTimeout);
     });
 
-    /// `/register` es multipart —manda la foto de perfil— y sale por el
-    /// `return` temprano de los endpoints de auth. Si el bloque se colocara
-    /// después de ese `return`, el registro se quedaría con el techo del JSON.
+    /// `/register` es multipart y sale por el `return` temprano de los
+    /// endpoints de auth: el bloque tiene que ir antes.
     test('el registro también, aunque salga por el atajo de los endpoints de auth', () async {
       await proveedor.dio.post<dynamic>('/register', data: _subidaConFichero());
 
       expect(adaptador.visto?.sendTimeout, FoodlyApiProvider.uploadSendTimeout);
     });
 
-    /// Y la otra dirección, que es la que se rompe en silencio: hay repos que
-    /// eligen su propio techo a conciencia —`MenuImportRepo` le da 90 s al
-    /// parse de una foto porque el fallback de visión es lento—. Pisárselo
-    /// desde el interceptor sería decidir por ellos.
+    /// Hay repos que eligen su propio techo a conciencia; pisárselo desde el
+    /// interceptor sería decidir por ellos.
     test('quien pasa su propio techo se lo queda', () async {
       await proveedor.dio.post<dynamic>(
         '/menu-import/parse',
@@ -171,12 +152,8 @@ void main() {
     });
   });
 
-  /// El techo puesto en `BaseOptions` NO llega a todas las peticiones, y esto
-  /// lo destapó la revisión independiente. Los endpoints con `@DioOptions()`
-  /// no pasan por `Options.compose`: Retrofit les construye un `RequestOptions`
-  /// desde cero copiando sólo lo que cabe en un `Options`, y `connectTimeout`
-  /// no es un campo de `Options`. Salían sin límite de conexión — justo en la
-  /// ruta del onboarding que ya colgó una vez.
+  /// Fijar algo en `BaseOptions` NO garantiza que llegue a la petición: los
+  /// endpoints con `@DioOptions()` no pasan por `Options.compose`.
   group('el techo llega por todos los caminos, no sólo por el compuesto', () {
     test('la ruta @DioOptions de Retrofit también trae connectTimeout', () async {
       final cliente = MenuImportClient(proveedor.dio);
@@ -208,11 +185,8 @@ void main() {
     });
   });
 
-  /// Un JSON diminuto con una espera larguísima: `/promotions/ai-generate`
-  /// proxea síncronamente dos generaciones de Replicate. Los 30 s globales lo
-  /// cortarían a media faena, y la cuota mensual la aplica el backend en la
-  /// misma transacción que genera — el manager pagaría la generación y se
-  /// quedaría sin ella.
+  /// JSON diminuto, espera larguísima: `/promotions/ai-generate` proxea dos
+  /// generaciones de Replicate, y la cuota se consume aunque expire.
   group('el endpoint lento tiene su propia espera, sin subir la de nadie', () {
     test('/promotions/ai-generate recibe más que el global', () async {
       await proveedor.dio.post<dynamic>('/promotions/ai-generate', data: {'prompt': 'pizza'});
@@ -228,15 +202,8 @@ void main() {
     });
   });
 
-  /// EL CUELGUE QUE NINGÚN TIMEOUT ARREGLA. Los timeouts de Dio empiezan a
-  /// contar en el adaptador, o sea DESPUÉS de los interceptores. Una petición
-  /// que se queda dentro del interceptor no los ve nunca.
-  ///
-  /// Y ahí había dos `return;` pelados en el camino de `silentRefresh`. En un
-  /// interceptor de petición eso no cancela nada: el futuro de quien llamó se
-  /// completa cuando alguien invoca `handler.next/resolve/reject`
-  /// (`dio_mixin.dart:400`) y con nada más. El usuario veía la redirección a
-  /// /login con el spinner de la pantalla anterior girando debajo.
+  /// El cuelgue que ningún timeout arregla: los de Dio empiezan a contar en el
+  /// adaptador, así que una petición que se queda en el interceptor no los ve.
   group('la petición que no llega a salir tampoco se queda colgada', () {
     setUp(() {
       sesion
@@ -281,13 +248,8 @@ void main() {
       expect(sesion.avisosDeExpiracion, 1);
     });
 
-    /// LO QUE SE PINTA. La primera versión rechazaba con un 401 sintético
-    /// confiando en que `FoodlyErrorPresenter` lo silenciaría… y ese presenter
-    /// NO TIENE NI UN LLAMANTE en `lib/`: es código muerto que sólo usaban
-    /// estos tests. La ruta real son los ~63 `emit(_Error(e.errorMsg, ...))`,
-    /// y por ahí salía a pantalla «Unauthenticated error code: 401», en inglés,
-    /// encima del aviso de sesión expirada. Lo demostró ejecutándolo la
-    /// revisión independiente.
+    /// Lo que se pinta de verdad son los ~63 `emit(_Error(e.errorMsg, ...))`:
+    /// `FoodlyErrorPresenter` no tiene ni un llamante en `lib/`.
     test('y lo que llega a pantalla es el aviso de sesión, no «error code: 401»', () async {
       sesion.hasRefreshToken = false;
 
@@ -299,9 +261,7 @@ void main() {
       expect(e.errorMsg, isNot(contains('Unauthenticated')));
     });
 
-    /// Y un 401 DE VERDAD tiene que leerse igual: hoy Laravel manda
-    /// `{"message": "Unauthenticated."}` y eso se pintaba tal cual, en inglés,
-    /// en una app en español.
+    /// Y un 401 de verdad igual: Laravel manda «Unauthenticated.» en inglés.
     test('un 401 del servidor tampoco enseña «Unauthenticated.»', () {
       final opciones = RequestOptions(path: '/x');
       final e = AppRequestException(
@@ -379,8 +339,7 @@ void main() {
       expect(e.errorMsg, isNot(contains('null')));
     });
 
-    /// La otra mitad: lo que SÍ trae respuesta no puede cambiar de mensaje, o
-    /// se perderían los errores del backend que ya se pintan bien.
+    /// Lo que SÍ trae mensaje del backend no puede cambiar.
     test('el mensaje del backend sigue mandando cuando lo hay', () {
       final opciones = RequestOptions(path: '/x');
       final e = AppRequestException(
@@ -400,21 +359,18 @@ void main() {
   });
 }
 
-/// Marcador de «este futuro no se completó». Un objeto y no un bool porque el
-/// resultado legítimo de una petición también puede ser falsy.
+/// Marcador de «no se completó». Un objeto, no un bool: la respuesta legítima
+/// también puede ser falsy.
 final Object _colgada = Object();
 
-/// Espera al futuro de una petición y devuelve su respuesta, su error, o
-/// [_colgada] si no terminó. Medio segundo sobra: el adaptador es falso y no
-/// hay E/S de verdad en ningún camino de estos tests.
+/// Devuelve la respuesta, el error, o [_colgada] si no terminó.
 Future<Object?> _resuelveOSeCuelga(Future<Object?> peticion) => peticion
     .then<Object?>((r) => r)
     .catchError((Object e) => e)
     .timeout(const Duration(milliseconds: 500), onTimeout: () => _colgada);
 
-/// Un multipart CON un fichero dentro, que es lo que hace cara la subida. Un
-/// `FormData` de puro texto no cuenta: `@MultiPart()` también genera uno para
-/// `updateProfile`, que no manda ni un `MultipartFile`.
+/// Un multipart con fichero dentro, que es lo que hace cara la subida.
+
 FormData _subidaConFichero() => FormData.fromMap({
       'promotion_uuid': 'p1',
       'business_promo_media_url[]': MultipartFile.fromBytes([1, 2, 3], filename: 'promo.mp4'),
@@ -434,9 +390,8 @@ class _ConfigFalsa implements BaseConfig {
   noSuchMethod(Invocation invocation) => null;
 }
 
-/// Adaptador que anota las `RequestOptions` tal y como le llegan —después de
-/// los interceptores— y responde 200 sin tocar la red. Es el único sitio donde
-/// se puede comprobar qué techo acabó teniendo la petición de verdad.
+/// Anota las `RequestOptions` como llegan tras los interceptores: el único
+/// sitio donde se ve qué techo acabó teniendo la petición.
 class _AdaptadorEspia implements HttpClientAdapter {
   RequestOptions? visto;
 
@@ -460,9 +415,8 @@ class _AdaptadorEspia implements HttpClientAdapter {
   void close({bool force = false}) {}
 }
 
-/// Sesión a mano. Sólo los miembros que lee el interceptor: los demás caen en
-/// `noSuchMethod`, y los que devuelven `bool`/`int` no pueden caer ahí porque
-/// null no es asignable.
+/// Sólo los miembros que lee el interceptor. Los `bool`/`int` no pueden caer en
+/// `noSuchMethod`: null no es asignable.
 class _SesionFalsa implements AuthSessionService {
   bool refrescoSaleBien = false;
   int refrescos = 0;
