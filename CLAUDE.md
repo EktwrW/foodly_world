@@ -2552,6 +2552,85 @@ próxima:
   de las demás valdría nada.
 
 
+## El panel del manager pintaba las filas del cubo anterior (2026-09-12)
+
+Cola de «Una respuesta que llegaba tarde dejaba la orden rancia». Aquella
+entrada cerró la carrera en los dos cubits de la orden grupal; `ManagerOrdersCubit`
+tenía la misma y se quedó fuera por alcance. **Aquí se ve en pantalla**, que es
+lo que la hace peor que la de la orden.
+
+**El fallo.** `_fetch` leía `state.bucket` al LANZAR y aplicaba al volver, sin
+comprobar nada. Dos caminos:
+
+1. **El manager toca otro chip.** `selectBucket` emite el cubo nuevo y vuelve a
+   leer. Si la lectura del cubo ANTERIOR responde después, **sus filas se
+   pintan con el chip nuevo ya marcado**: «listos» mostrando pendientes.
+2. **Dos lecturas del mismo cubo**: el evento de Pusher y la red de seguridad de
+   2 s. Si la segunda responde antes que la primera, la vieja pisa a la nueva.
+
+El coalescer de lecturas no tapa ninguno de los dos: colapsa oyentes del MISMO
+evento en el MISMO turno, y esto son turnos distintos.
+
+**La guarda es la misma que la #86**, con la diferencia que importa:
+
+**EL EMBUDO NO PUEDE SER «TODA EMISIÓN», y ésa es la regresión que la #86 pagó
+por aprender.** `loading` y `error` son **banderas**, no datos del servidor. Si
+subieran el contador, una acción que falla —un 409 al avanzar el fulfillment de
+una orden que otro camarero acaba de cerrar— taparía la lectura que venía con la
+verdad, y no hay segundo evento que la repare. Aquí el embudo sube sólo cuando
+cambia **qué muestra la lista**: las filas, los contadores o el cubo.
+
+```dart
+if (!identical(antes.orders, ahora.orders) ||
+    !identical(antes.counts, ahora.counts) ||
+    antes.bucket != ahora.bucket) {
+  _generacion++;
+}
+```
+
+El `identical` no es pereza: `copyWith` deja pasar la MISMA instancia cuando no
+se le pasa el campo, así que comparar identidad es exactamente «¿lo tocó esta
+emisión?».
+
+**Y aquí `onChange` SÍ vale como embudo, al revés que en el chip flotante.** En
+aquél hubo que sobrescribir `emit` porque bloc deduplica los estados iguales y
+`onChange` no corre. `ManagerOrdersState` es una clase plana **sin `operator ==`**
+(lo dice su propio docblock: «sin freezed a propósito»), así que dos instancias
+nunca son iguales y bloc no deduplica nada. **Si algún día alguien le pone
+`==` o lo pasa a freezed, esta guarda se vuelve intermitente sin que nada falle.**
+
+**La red de seguridad y la lectura descartada.** Una respuesta que llega tarde
+**no desarma la red y no consume reintento**: sus contadores son tan viejos como
+sus filas, y desarmar con ellos dejaría los chips congelados sin nadie que
+volviera a pedirlos. De eso responde la lectura que la relevó. Hay test, y su
+control —una lectura que sí se aplica sí desarma— también.
+
+**El spinner, que es la trampa de esto.** Si se descarta una lectura que encendió
+`loading`, hay que apagarlo a mano: **quien la releva puede ser un refetch
+silencioso, y ésos fallan sin emitir nada** (es deliberado: un tick fallido no
+le cuenta un error al manager). Sin eso, el panel se queda girando para siempre.
+Es un modo de fallo NUEVO que introduce la guarda, no algo que ya estuviera.
+
+**Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
+(11 casos). Tres son CONTROLES a propósito: el cambio de chip normal sí pinta sus
+filas, una acción que falla no invalida nada, y una lectura aplicada sí desarma
+la red. Sin ellos, una guarda que descarte SIEMPRE pasaría el banco.
+
+**De las siete mutaciones no sobrevive ninguna**, con una de control que sí
+sobrevive (renombrar una local). Las dos que más dicen:
+
+- **Subir el contador en TODA emisión** —el error que costó dos regresiones en
+  la #86— **muere aquí**, así que la lección quedó codificada y no sólo escrita.
+- **Desarmar la red con una lectura descartada** muere: es la decisión de diseño
+  que la orden grupal no tenía que tomar.
+
+**Pero «7 de 7 mueren» ya me engañó una vez** (ver la entrada de la #86: la
+revisión encontró once mutaciones más que sobrevivían). Un barrido mide lo que
+se te ocurrió romper. Si tocas esto, pregúntate primero qué familia de
+aserciones te falta — en la #86 era **contar peticiones** en vez de mirar sólo
+el estado final.
+
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una

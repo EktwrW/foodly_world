@@ -115,6 +115,25 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   int _reintentosDeRed = 0;
   static const int _maxReintentosDeRed = 3;
 
+  /// Sube al lanzar una lectura y cuando cambia QUÉ muestra la lista: la que
+  /// vuelve con una generación vieja llega tarde y se descarta (2026-09-12).
+  int _generacion = 0;
+
+  /// El embudo. `loading` y `error` son banderas y no invalidan nada; lo que
+  /// invalida es que cambien los datos o el cubo, porque entonces la respuesta
+  /// en vuelo habla de otra cosa.
+  @override
+  void onChange(Change<ManagerOrdersState> change) {
+    super.onChange(change);
+    final antes = change.currentState;
+    final ahora = change.nextState;
+    if (!identical(antes.orders, ahora.orders) ||
+        !identical(antes.counts, ahora.counts) ||
+        antes.bucket != ahora.bucket) {
+      _generacion++;
+    }
+  }
+
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
     await _fetch();
@@ -159,7 +178,23 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   }
 
   Future<void> _fetch({bool silent = false}) async {
+    final generacion = ++_generacion;
     final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
+    if (isClosed) return;
+
+    if (generacion != _generacion) {
+      // Llegó tarde: sus filas son de otro cubo, o de antes de una acción que
+      // ya se aplicó. No se aplican, no desarman la red —sus contadores son
+      // igual de viejos— y no consumen reintento: de todo eso responde la
+      // lectura que la relevó.
+      //
+      // Lo único que sí hay que hacer es apagar el spinner que encendió ESTA
+      // lectura: quien la relevó puede ser un refetch silencioso, y ésos
+      // fallan sin emitir nada.
+      if (!silent && state.loading) emit(state.copyWith(loading: false));
+      return;
+    }
+
     res.when(
       success: (r) {
         // Desarma el ÉXITO, no el intento.
