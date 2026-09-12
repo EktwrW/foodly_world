@@ -41,5 +41,4 @@ class DemoConfig extends BaseConfig {
 
   @override
   String get googleSignInClientId => envGoogleSignInClientId;
-
 }

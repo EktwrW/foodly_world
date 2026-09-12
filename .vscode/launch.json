@@ -23,10 +23,10 @@
       ]
     },
     {
-      "name": "iOS 18.6 - iPhone 16e (dev mode)",
+      "name": "iOS 26.5 - iPhone 17 Pro Max (dev mode)",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "8E983487-90D5-4EC0-B933-AE0ACE6D8021"],
+      "args": ["-d", "C18C309E-6F14-4106-94A1-6485C10D09F2"],
       "toolArgs": [
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
@@ -45,10 +45,10 @@
       ]
     },
     {
-      "name": "iOS 18.6 - iPhone 16 Pro (dev mode)",
+      "name": "iOS 26.5 - iPad Pro 13 (dev mode)",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "897408C4-3A21-4CB4-ABC7-2882482D3538"],
+      "args": ["-d", "5C8F1B6D-602F-4660-8E19-3973AC9EEFFD"],
       "toolArgs": [
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=https://api.foodly.solutions",
@@ -150,7 +150,7 @@
       "name": "Group Orders test — iPhone 16e (LOCAL backend)",
       "request": "launch",
       "type": "dart",
-      "args": ["-d", "8E983487-90D5-4EC0-B933-AE0ACE6D8021"],
+      "args": ["-d", "C18C309E-6F14-4106-94A1-6485C10D09F2"],
       "toolArgs": [
         "--dart-define=ENV=dev",
         "--dart-define=DOMAIN=http://localhost:8000",

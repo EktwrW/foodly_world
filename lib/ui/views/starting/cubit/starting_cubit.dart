@@ -52,12 +52,30 @@ class StartingCubit extends Cubit<StartingState> {
         _logger = logger,
         _meRepo = meRepo,
         _vm = StartingVM(
-          emailController: TextEditingController(),
-          passwordController: TextEditingController(),
+          emailController: TextEditingController(text: _prefill.email),
+          passwordController: TextEditingController(text: _prefill.password),
         ),
         super(const StartingState.initial()) {
     if (kIsWeb) FlutterNativeSplash.remove();
     setView(StartingPageView.initial);
+  }
+
+  /// Credenciales con las que nace el formulario de login.
+  ///
+  /// POR QUE (2026-09-12). Escribir un correo en el simulador es un suplicio:
+  /// el mapa de teclado del simulador traduce la `@` del layout español como
+  /// `"`, asi que ni tecleando ni inyectando texto se puede meter una
+  /// direccion. El cableado para evitarlo ya existia —`LOG_EMAIL`, `LOG_PASS`
+  /// y `REG_PREFILL` en [BaseConfig.initConfig]— pero no lo leia nadie.
+  ///
+  /// LA GUARDA ES DOBLE Y ES A PROPOSITO: [BaseConfig.shouldPrefillLogin] solo
+  /// lo puede poner a true [DevConfig], y aqui ademas se comprueba `isDev`. Una
+  /// sola guarda basta hoy; dos siguen bastando si alguien añade un entorno.
+  static ({String password, String email}) get _prefill {
+    final config = di<BaseConfig>();
+    if (!config.isDev || !config.shouldPrefillLogin) return (email: '', password: '');
+
+    return (email: config.prefillEmail, password: config.prefillPassword);
   }
 
   /// Modo invitado (App Store 5.1.1.v): el usuario explora el descubrimiento
