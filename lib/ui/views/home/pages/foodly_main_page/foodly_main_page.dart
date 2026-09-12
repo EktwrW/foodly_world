@@ -21,7 +21,7 @@ class FoodlyMainPage extends StatelessWidget {
 
   (double, double) _labelsTopAndBottomPadding(BuildContext ctx) {
     if (ctx.isTablet) {
-      return (44, 18);
+      return (48, 18);
     }
     return (26, 12);
   }

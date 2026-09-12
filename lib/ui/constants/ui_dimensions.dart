@@ -4,7 +4,7 @@ class UIDimens {
   const UIDimens._();
 
   static const SCREEN_PADDING_MOB = 18.0;
-  static const SCREEN_PADDING_TABLET = 40.0;
+  static const SCREEN_PADDING_TABLET = 44.0;
   static const CONTENT_MAX_WIDTH = 640.0;
   static const LIST_MAX_WIDTH = 700.0;
   static const DIALOG_MAX_WIDTH = 460.0;
