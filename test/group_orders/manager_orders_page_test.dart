@@ -117,14 +117,6 @@ void main() {
         repo: repo,
         logger: Logger(level: Level.off),
         businessUuid: 'biz-1',
-        // Desde 2026-09-12 una acción arma una red de seguridad que re-lee la
-        // lista si el evento de Pusher no llega (ver
-        // `panel_una_lectura_por_accion_test.dart`). En un `testWidgets` ese
-        // temporizador queda pendiente al acabar el cuerpo del test —
-        // `addTearDown` corre DESPUÉS de esa comprobación— y lo hace fallar
-        // con "A Timer is still pending". Con una espera mínima basta un
-        // `pump` de los que ya hace cada test basta para dejarlo correr.
-        esperaDeResincronizacion: const Duration(milliseconds: 1),
       );
 
   group('ManagerOrdersPage', () {

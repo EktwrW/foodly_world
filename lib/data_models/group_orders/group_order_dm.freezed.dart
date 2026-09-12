@@ -2554,7 +2554,21 @@ mixin _$GroupOrderResponseDM {
   @JsonKey(name: 'my_share', fromJson: _money)
   double get myShare;
   @JsonKey(name: 'my_participant_uuid')
-  String? get myParticipantUuid;
+  String?
+      get myParticipantUuid; // Contexto del panel del manager: sólo lo traen las mutaciones del panel
+// (be-foodly #148), y por eso son opcionales — el mismo DM lo devuelven
+// endpoints del comensal, que no saben nada de chips ni de cubos.
+//
+// `stillInPanel` no lo calcula el cliente a propósito: el predicado de
+// "está en el panel en vivo" vive en el backend, se corrigió tres veces en
+// agosto de 2026, y replicarlo aquí sería mantener dos copias de algo que
+// ya costó caro con una.
+  @JsonKey(name: 'counts')
+  ManagerOrderCountsDM? get panelCounts;
+  @JsonKey(name: 'counts_total')
+  int? get panelTotal;
+  @JsonKey(name: 'still_in_panel')
+  bool? get stillInPanel;
 
   /// Create a copy of GroupOrderResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -2577,17 +2591,23 @@ mixin _$GroupOrderResponseDM {
                 other.groupOrder == groupOrder) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
             (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid));
+                other.myParticipantUuid == myParticipantUuid) &&
+            (identical(other.panelCounts, panelCounts) ||
+                other.panelCounts == panelCounts) &&
+            (identical(other.panelTotal, panelTotal) ||
+                other.panelTotal == panelTotal) &&
+            (identical(other.stillInPanel, stillInPanel) ||
+                other.stillInPanel == stillInPanel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
+  int get hashCode => Object.hash(runtimeType, success, groupOrder, myShare,
+      myParticipantUuid, panelCounts, panelTotal, stillInPanel);
 
   @override
   String toString() {
-    return 'GroupOrderResponseDM(success: $success, groupOrder: $groupOrder, myShare: $myShare, myParticipantUuid: $myParticipantUuid)';
+    return 'GroupOrderResponseDM(success: $success, groupOrder: $groupOrder, myShare: $myShare, myParticipantUuid: $myParticipantUuid, panelCounts: $panelCounts, panelTotal: $panelTotal, stillInPanel: $stillInPanel)';
   }
 }
 
@@ -2601,9 +2621,13 @@ abstract mixin class $GroupOrderResponseDMCopyWith<$Res> {
       {bool success,
       @JsonKey(name: 'group_order') GroupOrderDM groupOrder,
       @JsonKey(name: 'my_share', fromJson: _money) double myShare,
-      @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid});
+      @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+      @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+      @JsonKey(name: 'counts_total') int? panelTotal,
+      @JsonKey(name: 'still_in_panel') bool? stillInPanel});
 
   $GroupOrderDMCopyWith<$Res> get groupOrder;
+  $ManagerOrderCountsDMCopyWith<$Res>? get panelCounts;
 }
 
 /// @nodoc
@@ -2623,6 +2647,9 @@ class _$GroupOrderResponseDMCopyWithImpl<$Res>
     Object? groupOrder = null,
     Object? myShare = null,
     Object? myParticipantUuid = freezed,
+    Object? panelCounts = freezed,
+    Object? panelTotal = freezed,
+    Object? stillInPanel = freezed,
   }) {
     return _then(_self.copyWith(
       success: null == success
@@ -2641,6 +2668,18 @@ class _$GroupOrderResponseDMCopyWithImpl<$Res>
           ? _self.myParticipantUuid
           : myParticipantUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      panelCounts: freezed == panelCounts
+          ? _self.panelCounts
+          : panelCounts // ignore: cast_nullable_to_non_nullable
+              as ManagerOrderCountsDM?,
+      panelTotal: freezed == panelTotal
+          ? _self.panelTotal
+          : panelTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      stillInPanel: freezed == stillInPanel
+          ? _self.stillInPanel
+          : stillInPanel // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 
@@ -2651,6 +2690,20 @@ class _$GroupOrderResponseDMCopyWithImpl<$Res>
   $GroupOrderDMCopyWith<$Res> get groupOrder {
     return $GroupOrderDMCopyWith<$Res>(_self.groupOrder, (value) {
       return _then(_self.copyWith(groupOrder: value));
+    });
+  }
+
+  /// Create a copy of GroupOrderResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagerOrderCountsDMCopyWith<$Res>? get panelCounts {
+    if (_self.panelCounts == null) {
+      return null;
+    }
+
+    return $ManagerOrderCountsDMCopyWith<$Res>(_self.panelCounts!, (value) {
+      return _then(_self.copyWith(panelCounts: value));
     });
   }
 }
@@ -2752,15 +2805,24 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
             bool success,
             @JsonKey(name: 'group_order') GroupOrderDM groupOrder,
             @JsonKey(name: 'my_share', fromJson: _money) double myShare,
-            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid)?
+            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+            @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+            @JsonKey(name: 'counts_total') int? panelTotal,
+            @JsonKey(name: 'still_in_panel') bool? stillInPanel)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM() when $default != null:
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(
+            _that.success,
+            _that.groupOrder,
+            _that.myShare,
+            _that.myParticipantUuid,
+            _that.panelCounts,
+            _that.panelTotal,
+            _that.stillInPanel);
       case _:
         return orElse();
     }
@@ -2785,14 +2847,23 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
             bool success,
             @JsonKey(name: 'group_order') GroupOrderDM groupOrder,
             @JsonKey(name: 'my_share', fromJson: _money) double myShare,
-            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid)
+            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+            @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+            @JsonKey(name: 'counts_total') int? panelTotal,
+            @JsonKey(name: 'still_in_panel') bool? stillInPanel)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM():
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(
+            _that.success,
+            _that.groupOrder,
+            _that.myShare,
+            _that.myParticipantUuid,
+            _that.panelCounts,
+            _that.panelTotal,
+            _that.stillInPanel);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -2816,14 +2887,23 @@ extension GroupOrderResponseDMPatterns on GroupOrderResponseDM {
             bool success,
             @JsonKey(name: 'group_order') GroupOrderDM groupOrder,
             @JsonKey(name: 'my_share', fromJson: _money) double myShare,
-            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid)?
+            @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+            @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+            @JsonKey(name: 'counts_total') int? panelTotal,
+            @JsonKey(name: 'still_in_panel') bool? stillInPanel)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _GroupOrderResponseDM() when $default != null:
-        return $default(_that.success, _that.groupOrder, _that.myShare,
-            _that.myParticipantUuid);
+        return $default(
+            _that.success,
+            _that.groupOrder,
+            _that.myShare,
+            _that.myParticipantUuid,
+            _that.panelCounts,
+            _that.panelTotal,
+            _that.stillInPanel);
       case _:
         return null;
     }
@@ -2837,7 +2917,10 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
       {this.success = true,
       @JsonKey(name: 'group_order') required this.groupOrder,
       @JsonKey(name: 'my_share', fromJson: _money) this.myShare = 0,
-      @JsonKey(name: 'my_participant_uuid') this.myParticipantUuid});
+      @JsonKey(name: 'my_participant_uuid') this.myParticipantUuid,
+      @JsonKey(name: 'counts') this.panelCounts,
+      @JsonKey(name: 'counts_total') this.panelTotal,
+      @JsonKey(name: 'still_in_panel') this.stillInPanel});
   factory _GroupOrderResponseDM.fromJson(Map<String, dynamic> json) =>
       _$GroupOrderResponseDMFromJson(json);
 
@@ -2853,6 +2936,23 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
   @override
   @JsonKey(name: 'my_participant_uuid')
   final String? myParticipantUuid;
+// Contexto del panel del manager: sólo lo traen las mutaciones del panel
+// (be-foodly #148), y por eso son opcionales — el mismo DM lo devuelven
+// endpoints del comensal, que no saben nada de chips ni de cubos.
+//
+// `stillInPanel` no lo calcula el cliente a propósito: el predicado de
+// "está en el panel en vivo" vive en el backend, se corrigió tres veces en
+// agosto de 2026, y replicarlo aquí sería mantener dos copias de algo que
+// ya costó caro con una.
+  @override
+  @JsonKey(name: 'counts')
+  final ManagerOrderCountsDM? panelCounts;
+  @override
+  @JsonKey(name: 'counts_total')
+  final int? panelTotal;
+  @override
+  @JsonKey(name: 'still_in_panel')
+  final bool? stillInPanel;
 
   /// Create a copy of GroupOrderResponseDM
   /// with the given fields replaced by the non-null parameter values.
@@ -2880,17 +2980,23 @@ class _GroupOrderResponseDM implements GroupOrderResponseDM {
                 other.groupOrder == groupOrder) &&
             (identical(other.myShare, myShare) || other.myShare == myShare) &&
             (identical(other.myParticipantUuid, myParticipantUuid) ||
-                other.myParticipantUuid == myParticipantUuid));
+                other.myParticipantUuid == myParticipantUuid) &&
+            (identical(other.panelCounts, panelCounts) ||
+                other.panelCounts == panelCounts) &&
+            (identical(other.panelTotal, panelTotal) ||
+                other.panelTotal == panelTotal) &&
+            (identical(other.stillInPanel, stillInPanel) ||
+                other.stillInPanel == stillInPanel));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, success, groupOrder, myShare, myParticipantUuid);
+  int get hashCode => Object.hash(runtimeType, success, groupOrder, myShare,
+      myParticipantUuid, panelCounts, panelTotal, stillInPanel);
 
   @override
   String toString() {
-    return 'GroupOrderResponseDM(success: $success, groupOrder: $groupOrder, myShare: $myShare, myParticipantUuid: $myParticipantUuid)';
+    return 'GroupOrderResponseDM(success: $success, groupOrder: $groupOrder, myShare: $myShare, myParticipantUuid: $myParticipantUuid, panelCounts: $panelCounts, panelTotal: $panelTotal, stillInPanel: $stillInPanel)';
   }
 }
 
@@ -2906,10 +3012,15 @@ abstract mixin class _$GroupOrderResponseDMCopyWith<$Res>
       {bool success,
       @JsonKey(name: 'group_order') GroupOrderDM groupOrder,
       @JsonKey(name: 'my_share', fromJson: _money) double myShare,
-      @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid});
+      @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+      @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+      @JsonKey(name: 'counts_total') int? panelTotal,
+      @JsonKey(name: 'still_in_panel') bool? stillInPanel});
 
   @override
   $GroupOrderDMCopyWith<$Res> get groupOrder;
+  @override
+  $ManagerOrderCountsDMCopyWith<$Res>? get panelCounts;
 }
 
 /// @nodoc
@@ -2929,6 +3040,9 @@ class __$GroupOrderResponseDMCopyWithImpl<$Res>
     Object? groupOrder = null,
     Object? myShare = null,
     Object? myParticipantUuid = freezed,
+    Object? panelCounts = freezed,
+    Object? panelTotal = freezed,
+    Object? stillInPanel = freezed,
   }) {
     return _then(_GroupOrderResponseDM(
       success: null == success
@@ -2947,6 +3061,18 @@ class __$GroupOrderResponseDMCopyWithImpl<$Res>
           ? _self.myParticipantUuid
           : myParticipantUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      panelCounts: freezed == panelCounts
+          ? _self.panelCounts
+          : panelCounts // ignore: cast_nullable_to_non_nullable
+              as ManagerOrderCountsDM?,
+      panelTotal: freezed == panelTotal
+          ? _self.panelTotal
+          : panelTotal // ignore: cast_nullable_to_non_nullable
+              as int?,
+      stillInPanel: freezed == stillInPanel
+          ? _self.stillInPanel
+          : stillInPanel // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 
@@ -2957,6 +3083,20 @@ class __$GroupOrderResponseDMCopyWithImpl<$Res>
   $GroupOrderDMCopyWith<$Res> get groupOrder {
     return $GroupOrderDMCopyWith<$Res>(_self.groupOrder, (value) {
       return _then(_self.copyWith(groupOrder: value));
+    });
+  }
+
+  /// Create a copy of GroupOrderResponseDM
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ManagerOrderCountsDMCopyWith<$Res>? get panelCounts {
+    if (_self.panelCounts == null) {
+      return null;
+    }
+
+    return $ManagerOrderCountsDMCopyWith<$Res>(_self.panelCounts!, (value) {
+      return _then(_self.copyWith(panelCounts: value));
     });
   }
 }
