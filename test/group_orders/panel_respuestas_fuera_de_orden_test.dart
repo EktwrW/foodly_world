@@ -260,18 +260,58 @@ void main() {
       expect(cubit.state.orders.single.uuid, 'b');
     });
 
-    /// Y lo mismo con una lectura que falla de cara al manager: emite `error`,
-    /// que es una bandera, no datos.
-    test('una lectura que falla tampoco invalida a la que viene detrás', () async {
+    /// LA PREMISA DE ESTE TEST NO OCURRÍA, y lo cazó la revisión: yo lanzaba la
+    /// lectura que falla ANTES que otra, así que la guarda la descartaba por el
+    /// bump de lanzamiento y nunca llegaba a la rama de fallo. El test pasaba
+    /// sin ejercitar nada. La aserción del `error` es lo que lo impide ahora.
+    ///
+    /// (Que una lectura en vuelo sobreviva a un `error` sólo puede pasar con
+    /// las ACCIONES, que no suben el contador al lanzarse. Eso es el test de
+    /// arriba; para las lecturas es imposible por construcción.)
+    test('una lectura que falla pinta el error y la siguiente lo repara', () async {
       final visible = cubit.selectBucket('ready');
-      final silenciosa = cubit.refetchSilently();
-
-      repo.fallar(0); // la del chip falla y pinta el error
+      repo.fallar(0);
       await visible;
+
+      expect(cubit.state.error, isNotNull,
+          reason: 'sin llegar a la rama de fallo, este test no mide nada');
+      expect(cubit.state.loading, isFalse);
+
+      final siguiente = cubit.refetchSilently();
       repo.responder(1, ['buenas']);
-      await silenciosa;
+      await siguiente;
 
       expect(cubit.state.orders.single.uuid, 'buenas');
+    });
+  });
+
+  group('lo que sólo se ve contando peticiones', () {
+    /// El fake ignoraba el cubo, así que ningún test comprobaba que la petición
+    /// saliera con el chip correcto: la historia entera estaba simulada con
+    /// etiquetas. Lo señaló la revisión.
+    test('cada chip pide SU cubo', () async {
+      final a = cubit.selectBucket('pending');
+      repo.responder(0, ['x']);
+      await a;
+      final b = cubit.selectBucket('ready');
+      repo.responder(1, ['y']);
+      await b;
+
+      expect(repo.cubosPedidos, ['pending', 'ready'],
+          reason: 'cada chip pide el suyo, no el que estuviera antes');
+    });
+
+    /// Una lectura que falla SIN nada pendiente de resincronizar no puede
+    /// re-armar la red: serían hasta tres GET de más cada dos segundos contra
+    /// un backend que ya está fallando.
+    test('una lectura fallida sin resync pendiente no re-arma la red', () async {
+      final carga = cubit.load();
+      repo.fallar(0);
+      await carga;
+
+      final antes = repo.lecturas;
+      await Future<void>.delayed(const Duration(milliseconds: 140));
+      expect(repo.lecturas, antes, reason: 'no había nada que resincronizar');
     });
   });
 
@@ -343,12 +383,18 @@ class _RepoFalso implements GroupOrderRepo {
 
   int get lecturas => _lecturas.length;
 
+  /// Con qué cubo salió cada petición, en orden. Sin esto el fake ignoraba el
+  /// argumento y toda la historia del «cubo anterior» quedaba simulada con
+  /// etiquetas: ningún test comprobaba qué se pidió de verdad.
+  final List<String?> cubosPedidos = [];
+
   @override
   Future<ApiResult<ManagerOrdersResponseDM>> managerOrders(
     String businessUuid, {
     String? bucket,
     int? page,
   }) {
+    cubosPedidos.add(bucket);
     final c = Completer<ApiResult<ManagerOrdersResponseDM>>();
     _lecturas.add(c);
     return c.future;

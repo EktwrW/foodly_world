@@ -2568,8 +2568,11 @@ comprobar nada. Dos caminos:
 2. **Dos lecturas del mismo cubo**: el evento de Pusher y la red de seguridad de
    2 s. Si la segunda responde antes que la primera, la vieja pisa a la nueva.
 
-El coalescer de lecturas no tapa ninguno de los dos: colapsa oyentes del MISMO
-evento en el MISMO turno, y esto son turnos distintos.
+El coalescer de lecturas no tapa ninguno de los dos, y por una razón más simple
+de la que yo escribí primero: **`managerOrders` no pasa por el coalescer en
+absoluto** — `_lecturasDelTurno` sólo envuelve a `getGroupOrder`. Aunque pasara
+tampoco serviría: colapsa oyentes del mismo evento en el mismo turno, y esto son
+turnos distintos.
 
 **La guarda es la misma que la #86**, con la diferencia que importa:
 
@@ -2588,9 +2591,13 @@ if (!identical(antes.orders, ahora.orders) ||
 }
 ```
 
-El `identical` no es pereza: `copyWith` deja pasar la MISMA instancia cuando no
+El `identical` no es pereza —`copyWith` deja pasar la MISMA instancia cuando no
 se le pasa el campo, así que comparar identidad es exactamente «¿lo tocó esta
-emisión?».
+emisión?»— **pero tampoco está fijado por nada**: cambiarlo por `==` sobrevive
+al banco entero. Y el término de `counts` **no puede dispararse en un test**,
+porque freezed canonicaliza el `@Default(ManagerOrderCountsDM())` y las dos
+instancias son siempre la misma. Lo midió la revisión; conviene saberlo antes
+de fiarse de esa línea.
 
 **De las tres cláusulas, la portante es la de `orders`; las otras dos son
 defensivas y HOY están muertas**, y conviene decirlo en vez de presentarlas como
@@ -2654,14 +2661,29 @@ chip filtrando), y eso mataba lecturas buenas en vuelo. Ahora se pasa la MISMA
 instancia cuando no hay nada que sustituir.
 
 **Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
-(16 casos). Cuatro son CONTROLES a propósito: el cambio de chip normal sí pinta
-sus filas, una acción que falla no invalida nada, una lectura aplicada sí
-desarma la red, y pedir relectura al descartar **no** cuesta una petición de más
-cuando ya llegó algo más nuevo. Sin ellos, una guarda que descarte SIEMPRE —o
-que pida relectura siempre— pasaría el banco.
+(18 casos). Cuatro son CONTROLES: el cambio de chip normal sí pinta sus filas,
+una acción que falla no invalida nada, una lectura aplicada sí desarma la red, y
+pedir relectura al descartar **no** cuesta una petición de más cuando ya llegó
+algo más nuevo.
 
-**De las once mutaciones probadas no sobrevive ninguna**, con una de control que
-sí sobrevive. Pero el número, otra vez, no es la parte importante: **mi primer
+**Yo escribí aquí que sin esos controles «una guarda que descarte SIEMPRE
+pasaría el banco», y es FALSO**: la revisión los saltó con `skip:`, aplicó la
+mutación y el banco siguió muriendo — cualquier aserción del tipo
+`orders.single.uuid` ya exige que alguna lectura se aplique. Los controles
+valen, pero no por lo que yo decía: el que sí sostiene algo en solitario es el
+de «no pide una petición de más», porque ése **cuenta peticiones** y ninguna
+otra aserción lo hace.
+
+**Dos guardas son redundantes HOY y conviene tenerlo dicho en vez de fingir que
+las fija un test.** El `!silent` del apagado del spinner lo subsume el contador
+de lecturas visibles (si `loading` sigue encendido es porque queda una visible
+esperando, y entonces el contador ya bloquea). Y de los tres `isClosed` del
+cubit, sólo el de `_fetch` está fijado en solitario: los de
+`_pedirResincronizacion` y el del temporizador **se tapan el uno al otro**, así
+que quitar uno no se nota y quitar los dos sí.
+
+**De las trece mutaciones probadas no sobrevive ninguna** salvo las redundantes
+de arriba, con una de control que sí sobrevive. Pero el número, otra vez, no es la parte importante: **mi primer
 barrido daba «7 de 7 mueren» y la revisión encontró cuatro fallos reales
 debajo**, dos de ellos bloqueantes. Es la segunda vez seguida. Lo que se me
 escapó esta vez, por si sirve de patrón:
@@ -2671,6 +2693,16 @@ escapó esta vez, por si sirve de patrón:
 - **No pregunté qué pasa si el relevo falla.** La guarda delega en «ya vendrá
   otra lectura» y yo no comprobé que venga. En la #86 era lo mismo con otro
   nombre: «el sistema se cura solo» sólo vale si hay quien lo cure.
+- **Un test mío medía un escenario IMPOSIBLE.** «Una lectura que falla no
+  invalida a la que viene detrás» lanzaba la que falla ANTES que la otra, así
+  que la guarda la descartaba por el bump de lanzamiento y nunca llegaba a la
+  rama de fallo: pasaba sin ejercitar nada. Para las lecturas ese caso no existe
+  —toda lectura sube el contador al lanzarse—; sólo existe para las ACCIONES.
+  Ahora el test afirma que el error se emitió, que es lo que impide que vuelva a
+  medir el vacío.
+- **El fake mentía por omisión**: ignoraba el cubo, así que toda la historia del
+  «cubo anterior» estaba simulada con etiquetas y ningún test comprobaba qué se
+  pedía de verdad.
 
 
 ## El modo «negocio visitado» (2026-04-12)

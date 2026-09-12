@@ -202,6 +202,9 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
       //
       // El spinner sólo se apaga si no queda ninguna lectura visible esperando:
       // es de quien lo encendió.
+      // El `!silent` es redundante hoy —si `loading` sigue encendido es que
+      // queda una visible esperando, y el contador ya bloquea— pero dice la
+      // intención: el spinner es de quien lo encendió.
       if (!silent && _visiblesEnVuelo == 0 && state.loading) {
         emit(state.copyWith(loading: false));
       }
