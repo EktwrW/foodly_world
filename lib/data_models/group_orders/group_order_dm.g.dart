@@ -255,6 +255,12 @@ _GroupOrderResponseDM _$GroupOrderResponseDMFromJson(
           GroupOrderDM.fromJson(json['group_order'] as Map<String, dynamic>),
       myShare: json['my_share'] == null ? 0 : _money(json['my_share']),
       myParticipantUuid: json['my_participant_uuid'] as String?,
+      panelCounts: json['counts'] == null
+          ? null
+          : ManagerOrderCountsDM.fromJson(
+              json['counts'] as Map<String, dynamic>),
+      panelTotal: (json['counts_total'] as num?)?.toInt(),
+      stillInPanel: json['still_in_panel'] as bool?,
     );
 
 Map<String, dynamic> _$GroupOrderResponseDMToJson(
@@ -265,6 +271,9 @@ Map<String, dynamic> _$GroupOrderResponseDMToJson(
       'my_share': instance.myShare,
       if (instance.myParticipantUuid case final value?)
         'my_participant_uuid': value,
+      if (instance.panelCounts?.toJson() case final value?) 'counts': value,
+      if (instance.panelTotal case final value?) 'counts_total': value,
+      if (instance.stillInPanel case final value?) 'still_in_panel': value,
     };
 
 _GroupOrdersListResponseDM _$GroupOrdersListResponseDMFromJson(
