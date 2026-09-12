@@ -7,11 +7,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/configs/base_config.dart';
 import 'package:foodly_world/core/network/base/app_api_provider.dart';
 import 'package:foodly_world/core/network/base/request_exception.dart';
+import 'package:foodly_world/core/network/menu_import/menu_import_client.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/dependency_injection_service.dart' show di;
 import 'package:foodly_world/core/utils/foodly_error_presenter.dart';
 import 'package:foodly_world/data_models/user/user_dm.dart';
 import 'package:foodly_world/data_models/user_session/user_session_dm.dart';
+import 'package:foodly_world/data_transfer_objects/menu_import/menu_import_parse_dto.dart';
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:logger/logger.dart';
 
@@ -90,7 +92,7 @@ void main() {
   /// romper en nombre de arreglar.
   group('una subida no puede heredar el techo de un JSON', () {
     test('un multipart sube su propio techo de envío', () async {
-      await proveedor.dio.post<dynamic>('/promos/media', data: FormData.fromMap({'x': 'y'}));
+      await proveedor.dio.post<dynamic>('/promos/media', data: _subidaConFichero());
 
       expect(adaptador.visto?.sendTimeout, FoodlyApiProvider.uploadSendTimeout);
       expect(
@@ -101,15 +103,40 @@ void main() {
     });
 
     test('y también el de recepción: el backend todavía tiene que mover el fichero', () async {
-      await proveedor.dio.post<dynamic>('/promos/media', data: FormData.fromMap({'x': 'y'}));
+      await proveedor.dio.post<dynamic>('/promos/media', data: _subidaConFichero());
 
       expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.uploadReceiveTimeout);
     });
 
     test('pero el de conexión NO: un handshake no tarda más por subir un vídeo', () async {
-      await proveedor.dio.post<dynamic>('/promos/media', data: FormData.fromMap({'x': 'y'}));
+      await proveedor.dio.post<dynamic>('/promos/media', data: _subidaConFichero());
 
       expect(adaptador.visto?.connectTimeout, FoodlyApiProvider.connectTimeout);
+    });
+
+    /// El matiz que se me escapó y cazó la revisión: `@MultiPart()` genera
+    /// `FormData` TAMBIÉN para formularios de puro texto —`updateProfile` no
+    /// manda ni un `MultipartFile`—. Lo que hay que acotar es el peso, no el
+    /// `Content-Type`: darle diez minutos a un cambio de nombre de usuario es
+    /// dejarlo colgado diez minutos.
+    test('un multipart SIN ficheros se queda con el global', () async {
+      await proveedor.dio.post<dynamic>('/me/update', data: FormData.fromMap({'username': 'hector'}));
+
+      expect(adaptador.visto?.sendTimeout, FoodlyApiProvider.sendTimeout);
+      expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.receiveTimeout);
+    });
+
+    test('el techo de subida cubre el vídeo más grande que la app deja elegir', () {
+      // 80 MB (`edit_promo_media.dart:203`) a 2 Mbps de subida son 320 s. La
+      // primera versión puso 5 min = 300 s, o sea que el vídeo máximo en la
+      // red de referencia del propio comentario se cortaba al 94 %.
+      const segundosDeUnVideoMaximoA2Mbps = 80 * 1024 * 1024 * 8 / (2 * 1000 * 1000);
+
+      expect(
+        FoodlyApiProvider.uploadSendTimeout.inSeconds,
+        greaterThan(segundosDeUnVideoMaximoA2Mbps),
+        reason: 'el techo corta el vídeo más grande que la propia app admite',
+      );
     });
 
     test('un JSON se queda con el global', () async {
@@ -123,7 +150,7 @@ void main() {
     /// `return` temprano de los endpoints de auth. Si el bloque se colocara
     /// después de ese `return`, el registro se quedaría con el techo del JSON.
     test('el registro también, aunque salga por el atajo de los endpoints de auth', () async {
-      await proveedor.dio.post<dynamic>('/register', data: FormData.fromMap({'photo': 'x'}));
+      await proveedor.dio.post<dynamic>('/register', data: _subidaConFichero());
 
       expect(adaptador.visto?.sendTimeout, FoodlyApiProvider.uploadSendTimeout);
     });
@@ -135,12 +162,69 @@ void main() {
     test('quien pasa su propio techo se lo queda', () async {
       await proveedor.dio.post<dynamic>(
         '/menu-import/parse',
-        data: FormData.fromMap({'x': 'y'}),
+        data: _subidaConFichero(),
         options: Options(sendTimeout: const Duration(seconds: 90), receiveTimeout: const Duration(seconds: 90)),
       );
 
       expect(adaptador.visto?.sendTimeout, const Duration(seconds: 90));
       expect(adaptador.visto?.receiveTimeout, const Duration(seconds: 90));
+    });
+  });
+
+  /// El techo puesto en `BaseOptions` NO llega a todas las peticiones, y esto
+  /// lo destapó la revisión independiente. Los endpoints con `@DioOptions()`
+  /// no pasan por `Options.compose`: Retrofit les construye un `RequestOptions`
+  /// desde cero copiando sólo lo que cabe en un `Options`, y `connectTimeout`
+  /// no es un campo de `Options`. Salían sin límite de conexión — justo en la
+  /// ruta del onboarding que ya colgó una vez.
+  group('el techo llega por todos los caminos, no sólo por el compuesto', () {
+    test('la ruta @DioOptions de Retrofit también trae connectTimeout', () async {
+      final cliente = MenuImportClient(proveedor.dio);
+
+      // El adaptador responde `{}` y el DM no sabe parsearlo: da igual, lo que
+      // se mira es lo que VIO el adaptador, anotado antes de responder.
+      try {
+        await cliente.parseImage(
+          'menu-1',
+          const MenuImportParseDTO(imagePath: 'gs://x/1.jpg'),
+          options: Options(sendTimeout: const Duration(seconds: 90), receiveTimeout: const Duration(seconds: 90)),
+        );
+      } catch (_) {}
+
+      expect(
+        adaptador.visto?.connectTimeout,
+        FoodlyApiProvider.connectTimeout,
+        reason: 'Options no lleva connectTimeout: si no lo pone el interceptor, no lo pone nadie',
+      );
+      expect(adaptador.visto?.receiveTimeout, const Duration(seconds: 90), reason: 'y sin pisar lo que eligió el repo');
+    });
+
+    test('una RequestOptions construida a mano y sin techos los recibe', () async {
+      await proveedor.dio.fetch<dynamic>(RequestOptions(path: '/lo-que-sea', method: 'GET'));
+
+      expect(adaptador.visto?.connectTimeout, FoodlyApiProvider.connectTimeout);
+      expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.receiveTimeout);
+      expect(adaptador.visto?.sendTimeout, FoodlyApiProvider.sendTimeout);
+    });
+  });
+
+  /// Un JSON diminuto con una espera larguísima: `/promotions/ai-generate`
+  /// proxea síncronamente dos generaciones de Replicate. Los 30 s globales lo
+  /// cortarían a media faena, y la cuota mensual la aplica el backend en la
+  /// misma transacción que genera — el manager pagaría la generación y se
+  /// quedaría sin ella.
+  group('el endpoint lento tiene su propia espera, sin subir la de nadie', () {
+    test('/promotions/ai-generate recibe más que el global', () async {
+      await proveedor.dio.post<dynamic>('/promotions/ai-generate', data: {'prompt': 'pizza'});
+
+      expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.slowEndpointReceiveTimeout);
+      expect(adaptador.visto!.receiveTimeout!, greaterThan(FoodlyApiProvider.receiveTimeout));
+    });
+
+    test('y el de al lado NO se contagia', () async {
+      await proveedor.dio.post<dynamic>('/promotions', data: {'title': 'x'});
+
+      expect(adaptador.visto?.receiveTimeout, FoodlyApiProvider.receiveTimeout);
     });
   });
 
@@ -189,11 +273,53 @@ void main() {
       expect(adaptador.visto, isNull);
     });
 
-    /// Se rechaza con un 401 sintético —la petición ESTABA sin autenticar; el
-    /// interceptor sólo se ahorró el viaje— para que el aviso no se duplique:
-    /// `FoodlyErrorPresenter` clasifica los 401 como `auth` y se calla, porque
-    /// el modal ya lo pone `notifyTokenExpired`.
-    test('el fallo se clasifica como auth, para que la UI no pinte un segundo aviso', () async {
+    test('y avisa UNA vez de que la sesión expiró', () async {
+      sesion.hasRefreshToken = false;
+
+      await _resuelveOSeCuelga(proveedor.dio.get<dynamic>('/mi-perfil'));
+
+      expect(sesion.avisosDeExpiracion, 1);
+    });
+
+    /// LO QUE SE PINTA. La primera versión rechazaba con un 401 sintético
+    /// confiando en que `FoodlyErrorPresenter` lo silenciaría… y ese presenter
+    /// NO TIENE NI UN LLAMANTE en `lib/`: es código muerto que sólo usaban
+    /// estos tests. La ruta real son los ~63 `emit(_Error(e.errorMsg, ...))`,
+    /// y por ahí salía a pantalla «Unauthenticated error code: 401», en inglés,
+    /// encima del aviso de sesión expirada. Lo demostró ejecutándolo la
+    /// revisión independiente.
+    test('y lo que llega a pantalla es el aviso de sesión, no «error code: 401»', () async {
+      sesion.hasRefreshToken = false;
+
+      final r = await _resuelveOSeCuelga(proveedor.dio.get<dynamic>('/mi-perfil'));
+      final e = AppRequestException(error: r);
+
+      expect(e.errorMsg, S.current.sessionExpiredMessage);
+      expect(e.errorMsg, isNot(contains('error code')));
+      expect(e.errorMsg, isNot(contains('Unauthenticated')));
+    });
+
+    /// Y un 401 DE VERDAD tiene que leerse igual: hoy Laravel manda
+    /// `{"message": "Unauthenticated."}` y eso se pintaba tal cual, en inglés,
+    /// en una app en español.
+    test('un 401 del servidor tampoco enseña «Unauthenticated.»', () {
+      final opciones = RequestOptions(path: '/x');
+      final e = AppRequestException(
+        error: DioException(
+          requestOptions: opciones,
+          type: DioExceptionType.badResponse,
+          response: Response<dynamic>(
+            requestOptions: opciones,
+            statusCode: 401,
+            data: {'message': 'Unauthenticated.'},
+          ),
+        ),
+      );
+
+      expect(e.errorMsg, S.current.sessionExpiredMessage);
+    });
+
+    test('el fallo sigue clasificándose como auth', () async {
       sesion.hasRefreshToken = false;
 
       final r = await _resuelveOSeCuelga(proveedor.dio.get<dynamic>('/mi-perfil'));
@@ -285,6 +411,14 @@ Future<Object?> _resuelveOSeCuelga(Future<Object?> peticion) => peticion
     .then<Object?>((r) => r)
     .catchError((Object e) => e)
     .timeout(const Duration(milliseconds: 500), onTimeout: () => _colgada);
+
+/// Un multipart CON un fichero dentro, que es lo que hace cara la subida. Un
+/// `FormData` de puro texto no cuenta: `@MultiPart()` también genera uno para
+/// `updateProfile`, que no manda ni un `MultipartFile`.
+FormData _subidaConFichero() => FormData.fromMap({
+      'promotion_uuid': 'p1',
+      'business_promo_media_url[]': MultipartFile.fromBytes([1, 2, 3], filename: 'promo.mp4'),
+    });
 
 DioException _sinRespuesta(DioExceptionType tipo) =>
     DioException(requestOptions: RequestOptions(path: '/x'), type: tipo);

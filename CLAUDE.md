@@ -2032,33 +2032,46 @@ tráfico legítimo hace más daño que la que no está**.
 
 **Las subidas no pueden heredar el techo del JSON, y esa es la trampa.**
 `sendTimeout` acota la subida **entera** del cuerpo, no un tramo de ella:
-`io_adapter.dart:142` lo envuelve sobre `request.addStream`. Con el global de
-30 s, el vídeo de una promo —hasta **80 MB**, `edit_promo_media.dart:205`— se
+`io_adapter.dart:145` lo envuelve sobre el `request.addStream` de la 144. Con el global de
+30 s, el vídeo de una promo —hasta **80 MB**, `edit_promo_media.dart:203`— se
 cortaría a mitad de subida en cualquier red de móvil. Sería romper en nombre de
 arreglar.
 
-Así que el interceptor le sube el techo a las subidas, por petición: 5 minutos
-de envío y 60 s de recepción (el backend todavía tiene que mover el fichero a
-GCS antes de contestar). Cinco minutos no cubren cualquier red —80 MB a 1 Mbps
-piden diez— pero acotan lo que hoy no tiene techo: quien suba por una red así va
-a fallar igual, y la diferencia es que **falla con un error en vez de dejar la
-pantalla girando para siempre**.
+Así que el interceptor le sube el techo a las subidas, por petición: **10
+minutos** de envío y 60 s de recepción (el backend todavía tiene que mover el
+fichero a GCS antes de contestar).
+
+El número sale de los 80 MB, no de una cifra redonda: a 2 Mbps de subida —un 4G
+mediocre, que es la red de la que hay que preocuparse— son **320 s**. La primera
+versión puso cinco minutos, y su propio comentario ya decía 320 s: el vídeo
+máximo, en la red de referencia que yo mismo había elegido, se habría cortado al
+94 %. Lo cazó la revisión independiente, y es el error más tonto de la PR —tenía
+la aritmética escrita dos líneas encima del número—. Quien suba por una red peor
+va a fallar igual, y la diferencia sigue siendo que **falla con un error en vez
+de dejar la pantalla girando para siempre**.
 
 Dos decisiones dentro de ese bloque, las dos con test que las fija:
 
-1. **Se detecta por forma, `data is FormData`, no con una lista de rutas.** Es
-   exactamente la condición que hace cara la subida, y el endpoint multipart que
-   se añada mañana lo hereda solo. Retrofit genera `FormData` para todo
-   `@MultiPart()`.
+1. **Se detecta por forma —`data is FormData` y con ficheros dentro—, no con una
+   lista de rutas.** Es la condición que hace cara la subida, y el endpoint
+   multipart que se añada mañana lo hereda solo. Lo de **«con ficheros dentro»**
+   es el matiz que se me escapó: `@MultiPart()` también genera `FormData` para
+   formularios de puro texto —`updateProfile` (`me_client.dart:104`) no manda ni
+   un `MultipartFile`—, y darle diez minutos a un cambio de nombre de usuario es
+   dejarlo colgado diez minutos. **Lo que hay que acotar es el peso, no el
+   `Content-Type`.**
 2. **Va antes del `return` de los endpoints de auth**, porque `/register` es
    multipart: manda la foto de perfil. Colocarlo después lo dejaría con el techo
    del JSON, y es el tipo de fallo que no da ningún error.
 
-Y sólo se toca el valor si sigue siendo el global, para no pisar a quien eligió
-el suyo a conciencia —`MenuImportRepo` le da 90 s al parse de una foto porque el
-fallback de visión es lento—. Aquí las `BaseOptions` ya vienen fundidas en
-`RequestOptions` (`Options.compose`), así que comparar contra el global es la
-única manera de distinguir «nadie dijo nada» de «el llamante eligió esto».
+Y sólo se toca el valor si sigue siendo el global, para no pisar a quien eligiera
+el suyo. Aquí las `BaseOptions` ya vienen fundidas en `RequestOptions`
+(`Options.compose`), así que comparar contra el global es la única manera de
+distinguir «nadie dijo nada» de «el llamante eligió esto». **Es una guarda
+defensiva, no la respuesta a un caso vivo**: hoy ningún llamante combina
+`Options` con `FormData` —los dos repos que pasan `Options` mandan JSON,
+`MenuImportRepo.parseImage` un DTO y `PlacesProxyRepo.reverse` otro—. La primera
+versión de esta entrada decía lo contrario, y era falso.
 
 **El cuelgue que ningún timeout arregla.** Los timeouts de Dio empiezan a contar
 **en el adaptador**, o sea después de los interceptores. Una petición que se
@@ -2073,16 +2086,32 @@ return;   // ← y aquí se acababa todo
 
 En un interceptor de petición un `return` pelado **no cancela nada**. El futuro
 que espera quien llamó se completa cuando alguien invoca
-`handler.next/resolve/reject` y con nada más (`dio_mixin.dart:400`: el resultado
+`handler.next/resolve/reject` y con nada más (`dio_mixin.dart:402`: el resultado
 del interceptor *es* `handler.future`). Sin esa llamada la petición se queda
 pendiente para siempre. Lo que veía el usuario: la redirección a /login con el
 spinner de la pantalla anterior girando debajo.
 
 Ahora se rechaza con un **401 sintético**, no con un tipo nuevo: desde el punto
 de vista de la app la petición **estaba** sin autenticar, el interceptor sólo se
-ahorró el viaje. Así `FoodlyErrorPresenter` la clasifica como `auth` y se calla
-—el aviso ya lo pone `notifyTokenExpired`— sin enseñarle un concepto nuevo a
-nadie. Y `reject` sin su segundo argumento **no** pasa por `dioErrorHandler`
+ahorró el viaje.
+
+**Y aquí va el error de razonamiento que cazó la revisión independiente.** Yo
+defendí ese 401 diciendo que `FoodlyErrorPresenter` lo clasificaría como `auth`
+y se callaría. **Ese presenter no tiene ni un llamante en `lib/`**: es código
+muerto que sólo usaban los tests. `grep -rn "classify(\|showGlobal(" lib/`
+devuelve únicamente su propia definición. La ruta real son los ~63
+`emit(_Error(e.errorMsg, ...))`, y por ahí salía a pantalla **«Unauthenticated
+error code: 401»**, en inglés, encima del aviso de sesión expirada — la misma
+forma de cadena que esta PR estaba arreglando dos ficheros más allá.
+
+La lección no es el bug, es el método: **«el presenter lo silencia» era una
+afirmación sobre el código, comprobable con un grep, y no la comprobé**. La
+revisión sí, y además lo ejecutó.
+
+El arreglo va en `errorMsg`, que ahora devuelve `sessionExpiredMessage` para
+cualquier 401 —el sintético y el de verdad—, y va **antes** de leer el cuerpo: un
+401 de Laravel trae `{"message": "Unauthenticated."}` y esa rama lo pintaba tal
+cual, en inglés, en una app en español. Y `reject` sin su segundo argumento **no** pasa por `dioErrorHandler`
 (`interceptor.dart:84`), así que este 401 no puede realimentar otro ciclo de
 refresco.
 
@@ -2090,8 +2119,11 @@ refresco.
 `AppRequestException.errorMsg` devolvía, para un error **sin respuesta**, la
 cadena `'${statusMessage} error code: ${statusCode}'` con los dos a null — o
 sea, literalmente **«null error code: null»**, en un snackbar, en producción.
-Hay **82 sitios** que pintan `errorMsg` sin pasar por `FoodlyErrorPresenter`, y
-tocar los 82 no era el trabajo: el arreglo va en el getter.
+Hay **82 usos** de `errorMsg` en la app —19 dentro de un logger, los otros ~63
+camino de un snackbar— y **ninguno** pasa por `FoodlyErrorPresenter`, que no
+tiene llamantes. Tocar los 63 no era el trabajo: el arreglo va en el getter.
+(La primera versión de esta entrada decía «82 sitios que lo pintan», contando
+los logs como pantalla.)
 
 Esa rama era casi inalcanzable mientras no hubiera timeouts, porque la petición
 no terminaba. **Fijarlos es justo lo que la vuelve alcanzable**, y por eso el
@@ -2106,15 +2138,73 @@ antes.
 tiene su propio `NlpApiProvider` con 15 s / 30 s ya puestos, así que sus 14 s de
 arranque en frío no obligan a subir nada aquí. Las analíticas
 (`AnalyticsApiProvider`) y el Dio de geocodificación de `LocationBloc` también
-traían los suyos. **El cliente principal era el único sin techo**, que es lo
-llamativo: el patrón ya existía en el repo y justo el Dio por el que pasa casi
-todo se lo había saltado.
+traían los suyos. Lo llamativo es que el patrón ya existía en el repo y justo el
+Dio por el que pasa casi todo se lo había saltado.
 
-**Fijado en** `test/core/network/timeouts_de_dio_test.dart` (24 casos). De las
-seis mutaciones probadas no sobrevive ninguna, incluidas las dos finas: mover el
+**Pero «el cliente principal era el único sin techo» es falso**, y así lo decía
+la primera versión de esta entrada. Quedan cuatro `Dio()` crudos, con los tres
+timeouts en null, que esta PR **no** toca porque no son el cliente de la API:
+
+| dónde | qué hace |
+|---|---|
+| `group_order_realtime_service.dart:255` | `/broadcasting/auth` — camino crítico del realtime |
+| `file_handler_mobile.dart:68` | baja el avatar del login social, justo antes de `/register` |
+| `post_card.dart:253` | descarga la foto de un post para compartirla |
+| `share_promotion_helper.dart:61` | ídem con la promo |
+
+El de `broadcasting/auth` es el que más pinta tiene de merecer su propia pasada.
+
+**Y el techo puesto en `BaseOptions` no llega a todas las peticiones.** Ésta es
+la que más duele, porque la PR original afirmaba haber cerrado el agujero y lo
+dejó abierto justo en la ruta que ya colgó una vez.
+
+Los endpoints con `@DioOptions()` —`/import/parse` y `/geocoding/reverse` hoy—
+**no pasan por `Options.compose`**. Retrofit les construye un `RequestOptions`
+**desde cero** (`newRequestOptions`, p.ej. `menu_import_client.g.dart:125`)
+copiando sólo lo que cabe en un `Options`… y **`connectTimeout` no es un campo de
+`Options`**. Las `BaseOptions` del cliente no se consultan en ningún momento.
+Resultado: esas dos rutas salían con `connectTimeout` en null —sin límite— en el
+escenario exacto del que va esta entrada, el salto de WiFi a datos durante el
+onboarding, que es el bug de prod que documenta `places_proxy_repo.dart:162`.
+
+El arreglo es estructural y va donde ya vivía el resto: **el interceptor es el
+único punto por el que pasan TODAS las peticiones**, las compuestas y las
+construidas a mano, así que el suelo se pone ahí con `??=` —rellena lo que venga
+sin poner, nunca pisa una decisión—.
+
+**Moraleja para la próxima vez que alguien toque `BaseOptions` en este repo:**
+fijar algo en `BaseOptions` **no** garantiza que llegue a la petición. Compruébalo
+en el adaptador, que es el único sitio donde se ve lo que salió de verdad.
+
+**Y el caso contrario: JSON diminuto, espera larguísima.**
+`/promotions/ai-generate` proxea síncronamente a Replicate —copy más dos artes—
+antes de contestar, así que los 30 s globales lo habrían cortado a media
+generación. Peor: la cuota mensual (3-6) la aplica el backend «en la misma
+transacción que genera» (`manage_promotions_cubit.dart:322`), o sea que el
+manager pagaba la generación y se quedaba sin ella. Y como `receiveTimeout`
+cuenta como `isOffline`, habría leído «sin conexión a internet» con la red
+perfecta.
+
+Ese endpoint lleva su propia espera (3 min) desde una lista de rutas en el
+interceptor. **Aquí sí hace falta una lista**, porque no hay nada en la *forma*
+de la petición que delate lo lenta que es — y que sea una lista y no un número
+más alto en el global es justo el punto: la espera es de UN endpoint y el resto
+de la app no tiene por qué heredarla.
+
+**Fijado en** `test/core/network/timeouts_de_dio_test.dart` (33 casos). De las
+once mutaciones probadas no sobrevive ninguna, incluidas las finas: mover el
 bloque de subidas **detrás** del `return` de los endpoints de auth mata el caso
-de `/register`, y quitar la guarda de «sólo si es el global» mata el de
-`MenuImportRepo`.
+de `/register`; quitar `files.isNotEmpty` mata el del multipart de puro texto;
+quitar el `??=` del `connectTimeout` mata el de la ruta `@DioOptions`; y volver a
+poner cinco minutos de subida mata el que compara el techo contra los 80 MB del
+vídeo.
+
+**Lo que esta entrada NO puede afirmar**, porque no está medido: que el arranque
+en frío real de `api.foodly.solutions` cabe en 30 s. Toda la elección de
+`receiveTimeout` descansa en esa suposición y no hay ninguna medición de un frío
+en el repo — sólo la del caso caliente (0,2 s). Si alguna vez aparece un pico de
+`receiveTimeout` en Crashlytics sin que el usuario esté offline, empieza por
+ahí.
 
 
 ## El modo «negocio visitado» (2026-04-12)
