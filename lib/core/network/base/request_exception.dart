@@ -103,6 +103,21 @@ class AppRequestException implements Exception {
             : S.current.tooManyAttempts;
       }
 
+      // 401 — la sesión murió, y da igual si el 401 vino del servidor o si lo
+      // fabricó el interceptor al cortar una petición que ya no podía salir
+      // (`DioRequestHandler._sesionMuerta`). El usuario necesita leer lo mismo
+      // en los dos casos, y lo mismo que ya le dice `notifyTokenExpired`.
+      //
+      // Va ANTES de mirar el cuerpo a propósito: un 401 de Laravel trae
+      // `{"message": "Unauthenticated."}` y esa rama lo pintaba tal cual, en
+      // inglés, en una app en español. La forma sintética era peor todavía
+      // —«Unauthenticated error code: 401»— y la revisión independiente
+      // demostró ejecutándolo que sí llega a pantalla: mi defensa era que
+      // `FoodlyErrorPresenter` lo silenciaría, y resulta que ese presenter NO
+      // TIENE NI UN LLAMANTE en `lib/`. Es código muerto que sólo usaban los
+      // tests. La ruta real son los ~82 `emit(_Error(e.errorMsg, ...))`.
+      if (dio.response?.statusCode == 401) return S.current.sessionExpiredMessage;
+
       final data = dio.response?.data;
       if (data is Map) {
         // If there are field-level validation errors, surface them.
@@ -121,8 +136,9 @@ class AppRequestException implements Exception {
       }
       // Sin respuesta NO hay nada técnico que enseñar: `statusMessage` y
       // `statusCode` son los dos null y esta cadena se leía literalmente
-      // «null error code: null» EN PANTALLA, porque 82 sitios pintan
-      // `errorMsg` en un snackbar sin pasar por `FoodlyErrorPresenter`.
+      // «null error code: null» EN PANTALLA. Hay 82 usos de `errorMsg` en la
+      // app —19 dentro de un logger, los otros ~63 camino de un snackbar— y
+      // NINGUNO pasa por `FoodlyErrorPresenter`, que no tiene llamantes.
       //
       // Ya no es un caso de laboratorio: desde que el cliente fija timeouts
       // (`FoodlyApiProvider`), una petición colgada TERMINA —en

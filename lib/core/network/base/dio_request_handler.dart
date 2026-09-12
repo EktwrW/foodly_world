@@ -42,34 +42,76 @@ abstract class DioRequestHandler {
     // completo ('pt-PT', 'es-AR'); el backend se queda con el primario.
     options.headers[FoodlyStrings.ACCEPT_LANGUAGE] = FoodlyLocales.deviceLocaleTag;
 
+    // EL TECHO NO LLEGA SOLO A TODAS LAS PETICIONES, y esto lo destapó la
+    // revisión independiente de esta misma PR.
+    //
+    // Los endpoints con `@DioOptions()` —`/import/parse` y `/geocoding/reverse`
+    // hoy— NO pasan por `Options.compose`: Retrofit les construye un
+    // `RequestOptions` DESDE CERO (`newRequestOptions`, p.ej.
+    // `menu_import_client.g.dart:125`) copiando sólo lo que cabe en un
+    // `Options`… y `connectTimeout` no es un campo de `Options`. Las
+    // `BaseOptions` del cliente no se consultan en ningún momento, así que
+    // esas dos rutas salían con `connectTimeout` en null —sin límite—
+    // exactamente en el escenario del que va esta PR: el salto de WiFi a datos
+    // durante el onboarding, que ya dejó colgado a `LocationBloc` una vez
+    // (`places_proxy_repo.dart:162`).
+    //
+    // El interceptor es el único punto por el que pasan TODAS las peticiones,
+    // las compuestas y las construidas a mano, así que el suelo se pone aquí.
+    // `??=`: sólo rellena lo que venga sin poner; nunca pisa una decisión.
+    options.connectTimeout ??= FoodlyApiProvider.connectTimeout;
+    options.receiveTimeout ??= FoodlyApiProvider.receiveTimeout;
+    options.sendTimeout ??= FoodlyApiProvider.sendTimeout;
+
     // SUBIDAS: el techo del cuerpo no puede ser el global.
     //
     // `sendTimeout` acota la subida ENTERA del cuerpo, no un tramo de ella
-    // (`dio/src/adapters/io_adapter.dart:142` lo envuelve sobre
-    // `request.addStream`). Los 30 s que le sobran a un JSON de unos KB
-    // romperían lo que hoy funciona: el vídeo de una promo admite hasta 80 MB
-    // (`edit_promo_media.dart:205`) y una importación de carta sube hasta 25
-    // fotos de golpe.
+    // (`dio/src/adapters/io_adapter.dart:145` lo envuelve sobre el
+    // `request.addStream` de la 144). Los 30 s que le sobran a un JSON de unos
+    // KB romperían lo que hoy funciona: el vídeo de una promo admite hasta
+    // 80 MB (`edit_promo_media.dart:203`) y una importación de carta sube
+    // hasta 25 fotos de golpe.
     //
-    // Se detecta por FORMA —`data is FormData`— y no con una lista de rutas:
-    // es exactamente la condición que hace cara la subida, y el endpoint
-    // multipart que se añada mañana lo hereda solo. Retrofit genera `FormData`
-    // para todo `@MultiPart()`. Va ANTES del `return` de los endpoints de
-    // auth porque `/register` es multipart: manda la foto de perfil.
+    // Se detecta por FORMA y no con una lista de rutas: es exactamente la
+    // condición que hace cara la subida, y el endpoint multipart que se añada
+    // mañana lo hereda solo. Retrofit genera `FormData` para todo
+    // `@MultiPart()`. Va ANTES del `return` de los endpoints de auth porque
+    // `/register` es multipart: manda la foto de perfil.
     //
-    // Solo se toca si el valor sigue siendo el global, para no pisar a quien
-    // pasó su propio `Options(sendTimeout:...)` —`MenuImportRepo` y
-    // `PlacesProxyRepo` lo hacen—. Aquí las `BaseOptions` ya vienen fundidas
-    // en `RequestOptions` (`Options.compose`), así que comparar contra el
-    // global es la única manera de distinguir «nadie dijo nada» de «el
-    // llamante eligió esto».
-    if (options.data is FormData) {
+    // **Con ficheros dentro**, que es el matiz que se me escapó: `@MultiPart()`
+    // también genera `FormData` para formularios de puro texto —`updateProfile`
+    // (`me_client.dart:104`) no manda ni un `MultipartFile`—, y darle cinco
+    // minutos a un cambio de nombre de usuario es dejarlo colgado cinco
+    // minutos. Lo que hay que acotar es el peso, no el `Content-Type`.
+    //
+    // Y sólo se toca si el valor sigue siendo el global, para no pisar a quien
+    // eligiera el suyo. Hoy NINGÚN llamante combina `Options` con `FormData`
+    // —los dos repos que pasan `Options` mandan JSON: `MenuImportRepo.parseImage`
+    // manda un DTO y `PlacesProxyRepo.reverse` otro—, así que la guarda es
+    // defensiva, no la respuesta a un caso vivo.
+    final cuerpo = options.data;
+    if (cuerpo is FormData && cuerpo.files.isNotEmpty) {
       if (options.sendTimeout == FoodlyApiProvider.sendTimeout) {
         options.sendTimeout = FoodlyApiProvider.uploadSendTimeout;
       }
       if (options.receiveTimeout == FoodlyApiProvider.receiveTimeout) {
         options.receiveTimeout = FoodlyApiProvider.uploadReceiveTimeout;
       }
+    }
+
+    // Y el caso contrario: JSON diminuto, espera larguísima. `/promotions/ai-generate`
+    // proxea SÍNCRONAMENTE a Replicate —copy más dos artes— antes de contestar,
+    // así que los 30 s globales lo cortarían a media generación. Peor todavía:
+    // la cuota mensual (3-6 generaciones) la aplica el backend «en la misma
+    // transacción que genera» (`manage_promotions_cubit.dart:322`), o sea que
+    // el manager pagaría la generación y se quedaría sin ella.
+    //
+    // Aquí sí hace falta una lista de rutas porque no hay nada en la FORMA de
+    // la petición que delate lo lenta que es. Que sea una lista y no un número
+    // más alto en el global es justamente el punto: esta espera es de UN
+    // endpoint, y el resto de la app no tiene por qué heredarla.
+    if (_endpointsLentos.contains(options.path) && options.receiveTimeout == FoodlyApiProvider.receiveTimeout) {
+      options.receiveTimeout = FoodlyApiProvider.slowEndpointReceiveTimeout;
     }
 
     await authSessionService.validateAccessToken();
@@ -213,7 +255,7 @@ abstract class DioRequestHandler {
   /// Aquí había un `return;` pelado, y en un interceptor de petición eso no
   /// cancela nada. El futuro que espera quien llamó se completa cuando alguien
   /// invoca `handler.next/resolve/reject`, y con nada más
-  /// (`dio/src/dio_mixin.dart:400`: el resultado del interceptor ES
+  /// (`dio/src/dio_mixin.dart:402`: el resultado del interceptor ES
   /// `handler.future`). Sin esa llamada la petición se queda pendiente PARA
   /// SIEMPRE — y ningún timeout de Dio la rescata, porque los timeouts
   /// empiezan a contar en el adaptador, ya pasados los interceptores. Lo que
@@ -239,6 +281,11 @@ abstract class DioRequestHandler {
         ),
         error: 'la sesión ya no vale; la petición no llegó a salir',
       );
+
+  /// Rutas del cliente principal cuya espera legítima no cabe en el techo
+  /// global. Que esté vacía de más es barato; que le falte una es un endpoint
+  /// que se corta a media faena.
+  static const _endpointsLentos = <String>{'/promotions/ai-generate'};
 
   /// Rutas que abren o renuevan una sesión, y por tanto crean una fila en la
   /// lista de sesiones activas del usuario.

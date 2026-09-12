@@ -12,7 +12,7 @@ class FoodlyApiProvider {
   static const connectTimeout = Duration(seconds: 10);
 
   /// Tiempo hasta el primer byte, y después inactividad ENTRE bytes — no la
-  /// duración total de la descarga (`dio/src/options.dart:404`). Un listado
+  /// duración total de la descarga (`dio/src/options.dart:403`). Un listado
   /// largo no lo agota mientras siga llegando.
   ///
   /// Treinta y no veinte porque el backend vive en Cloud Run sin ping que lo
@@ -28,21 +28,35 @@ class FoodlyApiProvider {
   /// sube [DioRequestHandler] por petición (ver [uploadSendTimeout]).
   static const sendTimeout = Duration(seconds: 30);
 
-  /// Subidas multipart. `sendTimeout` acota la subida ENTERA del cuerpo
-  /// (`dio/src/adapters/io_adapter.dart:142` lo aplica sobre
-  /// `request.addStream`), así que el global de 30 s rompería lo que hoy
-  /// funciona: el vídeo de una promo admite hasta 80 MB
-  /// (`edit_promo_media.dart:205`), que a 2 Mbps de subida son 320 s.
+  /// Subidas multipart CON FICHEROS. `sendTimeout` acota la subida ENTERA del
+  /// cuerpo (`dio/src/adapters/io_adapter.dart:145` lo aplica sobre el
+  /// `request.addStream` de la 144), así que el global de 30 s rompería lo que
+  /// hoy funciona: el vídeo de una promo admite hasta 80 MB
+  /// (`edit_promo_media.dart:203`).
   ///
-  /// Cinco minutos no cubren cualquier red —a 1 Mbps harían falta diez— pero
-  /// acotan lo que hoy no tiene techo. Quien suba por una red así va a fallar
-  /// igual; la diferencia es que ahora falla con un error en vez de dejar la
-  /// pantalla girando para siempre.
-  static const uploadSendTimeout = Duration(minutes: 5);
+  /// Y el número sale de esos 80 MB, no de una cifra redonda: a 2 Mbps de
+  /// subida —un 4G mediocre, que es la red de la que hay que preocuparse— son
+  /// **320 s**. La primera versión de esta PR puso cinco minutos y su propio
+  /// comentario ya decía 320 s: el vídeo máximo, en la red de referencia que
+  /// yo mismo elegí, se habría cortado al 94 %. Lo cazó la revisión
+  /// independiente.
+  ///
+  /// Diez minutos cubren esos 80 MB con holgura y siguen acotando lo que hoy
+  /// no tiene techo: quien suba por una red peor va a fallar igual, y la
+  /// diferencia es que falla con un error en vez de dejar la pantalla girando
+  /// para siempre.
+  static const uploadSendTimeout = Duration(minutes: 10);
 
   /// Y el backend todavía tiene que mover el fichero a GCS antes de contestar,
   /// así que el primer byte tarda más que en un GET normal.
   static const uploadReceiveTimeout = Duration(seconds: 60);
+
+  /// Para el puñado de endpoints cuya espera legítima no cabe en el techo
+  /// global — hoy sólo `/promotions/ai-generate`, que proxea síncronamente dos
+  /// generaciones de Replicate. La lista vive en [DioRequestHandler]; esto es
+  /// sólo el número, aquí para que la política de timeouts se lea entera en un
+  /// sitio.
+  static const slowEndpointReceiveTimeout = Duration(minutes: 3);
 
   FoodlyApiProvider(BaseConfig config) {
     _dio = Dio(BaseOptions(
