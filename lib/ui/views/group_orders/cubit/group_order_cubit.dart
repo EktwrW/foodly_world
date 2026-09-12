@@ -26,7 +26,7 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
   RealtimeSubscription? _sub;
   GroupOrderVM _vm;
 
-  /// Sube al lanzar un refetch silencioso y con cada cambio de estado: el que
+  /// Sube al lanzar un refetch silencioso y al APLICAR una respuesta: el que
   /// vuelve con una generación vieja llega tarde y se descarta (2026-09-12).
   int _generacion = 0;
 
@@ -41,13 +41,6 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
         super(const GroupOrderState.initial(GroupOrderVM()));
 
   GroupOrderVM get vm => _vm;
-
-  /// Aquí, para que ninguna mutación tenga que acordarse de subirla.
-  @override
-  void onChange(Change<GroupOrderState> change) {
-    super.onChange(change);
-    _generacion++;
-  }
 
   /// Carga (o recarga) el detalle de una orden por su uuid.
   Future<void> load(String uuid) async {
@@ -383,7 +376,11 @@ class GroupOrderCubit extends Cubit<GroupOrderState> {
 
   // ── Helpers ────────────────────────────────────────────────────
 
+  /// Aquí, y no en `onChange`, para que ninguna mutación tenga que acordarse
+  /// de subirla y para que `loading`/`error`/`isPaying` —que no traen foto del
+  /// servidor— no invaliden una lectura en vuelo.
   void _applyResponse(GroupOrderResponseDM r) {
+    _generacion++;
     _vm = _vm.copyWith(
       order: r.groupOrder,
       myShare: r.myShare,

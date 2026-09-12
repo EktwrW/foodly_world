@@ -195,7 +195,9 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       // webhook, y acá solo sabemos que se abrió el navegador. El refetch al
       // volver a la pantalla trae el estado real.
       FoodlySnackbars.infoGeneric(context, S.current.groupOrderPaymentInBrowser);
-      if (uuid != null) cubit.load(uuid);
+      // `refetch` y no `load`: es el camino con guarda de generación, así que
+      // una respuesta que llegue tarde no puede revertir lo que selló el webhook.
+      if (uuid != null) cubit.refetch();
       return;
     }
 
@@ -229,7 +231,7 @@ class _GroupOrderViewState extends State<_GroupOrderView> {
       case StripePaymentResult.completed:
         FoodlySnackbars.successGeneric(context, S.current.groupOrderPaymentSucceeded);
         di<ActiveGroupOrderCubit>().end(); // resetea el carrito del menú
-        if (uuid != null) cubit.load(uuid); // refetch — el webhook sella el estado
+        if (uuid != null) cubit.refetch(); // el webhook sella el estado
       case StripePaymentResult.canceled:
         // Cerrar la hoja sin pagar SUELTA el intento (2026-08-15).
         //

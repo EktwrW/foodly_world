@@ -90,7 +90,9 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   /// servidor tiene una orden activa para este negocio, se adopta.
   Future<void> syncForBusiness(String businessUuid) async {
     if (isActiveFor(businessUuid) || _busy) return;
+    final generacion = ++_generacion;
     final res = await _repo.getMyGroupOrders();
+    if (isClosed || generacion != _generacion) return; // llegó tarde
     res.when(
       success: (r) {
         // F4b: en cuenta abierta la orden CONFIRMADA sigue siendo el carrito
@@ -302,11 +304,11 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     if (order == null) return;
     final generacion = ++_generacion;
     final res = await _repo.getGroupOrder(order.uuid, coalesce: coalesce);
-    // Cubre el `end()` de abajo: un 404 de la orden ANTERIOR no puede vaciar
-    // un carrito que ya es otro.
-    if (isClosed || generacion != _generacion) return;
+    if (isClosed) return;
     res.when(
-      success: (r) => emit(r.groupOrder),
+      success: (r) {
+        if (generacion == _generacion) emit(r.groupOrder);
+      },
       failure: (e) {
         _logger.e(e);
         // La orden dejó de ser mía. El backend ya avisaba —`destroy` emite
@@ -324,8 +326,13 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         // SOLO esos dos. Un corte de red, un 500 o un timeout no pueden
         // vaciarle el carrito a nadie: ahí la orden sigue existiendo y lo
         // correcto es conservarla hasta poder confirmarlo.
+        //
+        // Esto NO se juzga por generación: «esta orden dejó de ser mía» sigue
+        // siendo verdad aunque la respuesta llegue tarde, y descartarla dejaba
+        // el chip con una orden borrada (no hay segundo evento que lo repare).
+        // Lo que sí hay que comprobar es que el carrito siga siendo ESA orden.
         final code = e.statusCode;
-        if (code == 404 || code == 403) end();
+        if ((code == 404 || code == 403) && state?.uuid == order.uuid) end();
       },
     );
   }

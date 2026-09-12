@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodly_world/core/enums/foodly_enums.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_client.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
@@ -151,6 +152,26 @@ void main() {
       expect(cubit.state?.tableLabel, 'con-la-mutacion');
     });
 
+    /// EL BUMP AL LANZAR, que es la otra mitad de la guarda y no estaba medido
+    /// (lo encontró la revisión). Aquí las respuestas llegan EN ORDEN: si el
+    /// contador sólo subiera al aplicar, la primera en volver ganaría y la
+    /// segunda —más nueva— se descartaría.
+    test('en orden, gana la ÚLTIMA lanzada y no la primera en volver', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final vieja = cubit.refresh();
+      final nueva = cubit.refresh();
+
+      cliente.responder(1, mesa: 'vieja'); // la primera vuelve primero
+      await vieja;
+      cliente.responder(2, mesa: 'nueva');
+      await nueva;
+
+      expect(cubit.state?.tableLabel, 'nueva');
+    });
+
     /// El caso que NO es sólo cosmético: `refresh()` trata el 404 y el 403 como
     /// "la orden dejó de ser mía" y llama a `end()`, que vacía el carrito. Un
     /// 404 de la orden ANTERIOR, llegando tarde, borraba la orden a la que el
@@ -205,6 +226,59 @@ void main() {
       expect(cubit.state, isNull, reason: 'esa orden es del usuario que se fue');
     });
 
+    /// TERCER HALLAZGO DE LA REVISIÓN: `syncForBusiness` tenía la misma
+    /// carrera y ninguna guarda. Se llama al abrir el menú de un negocio, así
+    /// que basta con cerrar sesión antes de que vuelva `/mine`.
+    test('cerrar sesión mientras syncForBusiness viaja no repuebla el chip', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+      cubit.end(); // bloc ya deduplica a partir de aquí
+
+      final sync = cubit.syncForBusiness('b1');
+      cubit.resetForLogout();
+      cliente.responderMine('oA');
+      await sync;
+
+      expect(cubit.state, isNull);
+    });
+
+    /// EL CONTROL QUE FALTABA, y lo señaló la revisión: sin él, una guarda que
+    /// descarte SIEMPRE pasa el banco — y eso apagaría la recuperación en frío
+    /// del carrito (F4a: quien pagó y cerró la app no tendría camino de vuelta).
+    test('sin nada que la invalide, /mine SÍ adopta la orden', () async {
+      final sync = cubit.syncAnyActive();
+      cliente.responderMine('oA');
+      await sync;
+
+      expect(cubit.state?.uuid, 'oA');
+    });
+
+    /// OTRO HALLAZGO DE LA REVISIÓN. Juzgar el 404 por generación lo perdía:
+    /// «esta orden dejó de ser mía» sigue siendo verdad aunque la respuesta
+    /// llegue tarde, y el evento `deleted` ya se gastó —el backend lo emite
+    /// ANTES de borrar, justo para que refetcheemos— así que no viene otro. El
+    /// chip se quedaba con una orden borrada: monto, notificación, y al tocarlo
+    /// una pantalla de error. Por eso esa rama se juzga por uuid.
+    test('un 404 que llega tarde sigue vaciando el carrito', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final lectura = cubit.refresh(); // sale para o1 y se queda en vuelo
+
+      // Un plato que salió ANTES del borrado y responde bien: emite, y con la
+      // guarda por generación eso condenaba al 404 de abajo.
+      final plato = cubit.addFood('food', 'f1', version: Version.regular);
+      cliente.responder(2, mesa: 'con-plato');
+      await plato;
+
+      cliente.fallar(1, 404); // el host ya la había borrado
+      await lectura;
+
+      expect(cubit.state, isNull, reason: 'la orden ya no existe: el chip se va');
+    });
+
     /// El control: un 404 de la orden que SÍ está en pantalla tiene que seguir
     /// vaciando el carrito. Es la razón por la que ese `end()` existe.
     test('pero el 404 de la orden ACTUAL sigue vaciando el carrito', () async {
@@ -217,6 +291,117 @@ void main() {
       await lectura;
 
       expect(cubit.state, isNull, reason: 'el host la borró: el chip se va');
+    });
+  });
+
+  /// `isClosed`: quitarlo no ponía nada en rojo (lo vio la revisión). Emitir
+  /// sobre un cubit cerrado lanza `StateError`, y una lectura en vuelo
+  /// sobrevive al cierre de la pantalla.
+  group('cerrar la pantalla con una lectura en vuelo', () {
+    test('la página no revienta al volver la respuesta', () async {
+      final cliente = _ClienteFalso();
+      final realtime = _RealtimeEspia();
+      final cubit = GroupOrderCubit(repo: GroupOrderRepo(client: cliente), logger: _mudo, realtime: realtime);
+      final carga = cubit.load('o1');
+      cliente.responder(0, mesa: 'inicial');
+      await carga;
+
+      realtime.tocar(); // lectura en vuelo
+      await _turno();
+      await cubit.close();
+
+      cliente.responder(1, mesa: 'tarde');
+      await expectLater(_turno(), completes);
+    });
+
+    test('y el chip tampoco', () async {
+      final cliente = _ClienteFalso();
+      final cubit = ActiveGroupOrderCubit(repo: GroupOrderRepo(client: cliente), logger: _mudo);
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final lectura = cubit.refresh();
+      await cubit.close();
+
+      cliente.responder(1, mesa: 'tarde');
+      await expectLater(lectura, completes);
+    });
+  });
+
+  /// LO QUE ENCONTRÓ LA REVISIÓN INDEPENDIENTE, y que la primera versión de
+  /// esta guarda ROMPÍA. El contador subía con CADA emisión, así que emisiones
+  /// que NO traen una foto del servidor —`loading`, `error`, el `isPaying` del
+  /// pago— mataban la lectura que venía con la verdad. Y de esas no se vuelve:
+  /// el evento que la disparó ya se gastó y el polling de 10 s está apagado con
+  /// el socket sano.
+  group('sólo una foto del servidor puede invalidar una lectura', () {
+    late _ClienteFalso cliente;
+    late GroupOrderRepo repo;
+    late _RealtimeEspia realtime;
+    late GroupOrderCubit cubit;
+
+    setUp(() async {
+      cliente = _ClienteFalso();
+      repo = GroupOrderRepo(client: cliente);
+      realtime = _RealtimeEspia();
+      cubit = GroupOrderCubit(repo: repo, logger: _mudo, realtime: realtime);
+      final carga = cubit.load('o1');
+      cliente.responder(0, mesa: 'abierta');
+      await carga;
+    });
+
+    tearDown(() => cubit.close());
+
+    /// El host cierra la cuenta; su evento lanza L1. Antes de que L1 vuelva, el
+    /// comensal toca "compartir" un ítem y el backend responde 409 porque la
+    /// orden YA está cerrada. Ese error no sabe nada de la orden: no puede
+    /// tapar la única lectura que traía el cierre.
+    test('una mutación que FALLA no mata la lectura que traía el cierre', () async {
+      realtime.tocar(); // L1, del evento del cierre
+      await _turno();
+
+      final fallo = cubit.setItemShared('i1', true);
+      cliente.fallar(2, 409);
+      await fallo;
+
+      cliente.responder(1, mesa: 'cerrada'); // L1 llega ahora
+      await _turno();
+
+      expect(cubit.vm.order?.tableLabel, 'cerrada',
+          reason: 'un 409 no trae foto: no puede invalidar nada');
+    });
+
+    /// `createPayIntent` emite `isPaying` ANTES de pedir, y su rama de éxito
+    /// sólo apaga el flag — nunca vuelve a leer la orden. Si ese emit mata la
+    /// lectura en vuelo, la pantalla se queda con la foto anterior al evento.
+    test('abrir el pago no mata la lectura en vuelo', () async {
+      realtime.tocar();
+      await _turno();
+
+      cubit.createPayIntent(); // emite isPaying y se queda esperando a Stripe
+      await _turno();
+
+      cliente.responder(1, mesa: 'con-el-plato-nuevo');
+      await _turno();
+
+      expect(cubit.vm.order?.tableLabel, 'con-el-plato-nuevo');
+    });
+
+    /// El control de este grupo: una mutación con ÉXITO sí trae foto, así que
+    /// sí tiene que invalidar lo que salió antes que ella.
+    test('pero una mutación con ÉXITO sigue invalidando lo anterior', () async {
+      realtime.tocar(); // L1 sale antes del cierre
+      await _turno();
+
+      final cierre = cubit.lock();
+      cliente.responder(2, mesa: 'cerrada');
+      await cierre;
+
+      cliente.responder(1, mesa: 'abierta'); // L1 llega tarde
+      await _turno();
+
+      expect(cubit.vm.order?.tableLabel, 'cerrada');
     });
   });
 
@@ -332,6 +517,38 @@ class _ClienteFalso implements GroupOrderClient {
     String? tableLabel,
   }) =>
       _encolar();
+
+  @override
+  Future<GroupOrderResponseDM> addItem(
+    String uuid, {
+    required String itemableType,
+    required String itemableUuid,
+    required int quantity,
+    String? notes,
+    bool? shared,
+    String? version,
+  }) =>
+      _encolar();
+
+  @override
+  Future<GroupOrderResponseDM> updateItem(
+    String uuid,
+    String itemUuid, {
+    int? quantity,
+    String? notes,
+    bool? shared,
+  }) =>
+      _encolar();
+
+  /// Se queda SIEMPRE en vuelo: las sondas del pago sólo necesitan el `emit`
+  /// de `isPaying` que sale ANTES del await.
+  @override
+  Future<PayIntentResponseDM> createPayIntent(
+    String uuid, {
+    List<String>? coverParticipantUuids,
+    double? tipAmount,
+  }) =>
+      Completer<PayIntentResponseDM>().future;
 
   Future<GroupOrderResponseDM> _encolar() {
     final c = Completer<GroupOrderResponseDM>();
