@@ -1,11 +1,11 @@
 import 'package:animate_do/animate_do.dart' show FadeIn;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:foodly_world/core/core_exports.dart' show AuthSessionService, FoodlyThemes, PaddingExtension, di;
 import 'package:foodly_world/core/extensions/datetime_extension.dart';
+import 'package:foodly_world/core/network/base/download_client.dart';
 import 'package:foodly_world/core/network/moderation/moderation_repo.dart' show ReportableType;
 import 'package:foodly_world/core/services/foodly_image_cache.dart';
 import 'package:foodly_world/data_models/posts/post_dm.dart';
@@ -250,7 +250,7 @@ class PostCard extends StatelessWidget {
       try {
         final dir = await getTemporaryDirectory();
         final file = uni_io.File('${dir.path}/post_${post.uuid}.jpg');
-        await Dio().download(post.photoUrl!, file.path);
+        await dioDeDescarga().download(post.photoUrl!, file.path);
         // ignore: deprecated_member_use
         await Share.shareXFiles([XFile(file.path)], text: shareText);
         file.deleteSync();

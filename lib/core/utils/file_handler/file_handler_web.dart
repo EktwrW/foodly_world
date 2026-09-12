@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:foodly_world/core/network/base/download_client.dart';
 import 'package:foodly_world/core/utils/file_handler/file_handler.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,7 +57,7 @@ class FileHandlerWeb implements FileHandler {
   Future<MultipartFile?> getMultipartFileFromUrl(String? imageUrl) async {
     if (imageUrl?.isEmpty ?? true) return null;
 
-    final dio = Dio();
+    final dio = dioDeDescarga();
 
     try {
       final response = await dio.get(

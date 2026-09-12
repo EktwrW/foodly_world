@@ -36,8 +36,19 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 ///
 /// La key y el cluster son PÚBLICOS (mismo criterio que firebase_options).
 class GroupOrderRealtimeService with WidgetsBindingObserver {
-  GroupOrderRealtimeService({required AuthSessionService authSession})
-      : _authSession = authSession;
+  GroupOrderRealtimeService({required AuthSessionService authSession, Dio? clienteDeAutorizacion})
+      : _authSession = authSession,
+        _dioAuth = clienteDeAutorizacion ?? dioDeAutorizacion();
+
+  static const connectTimeoutDeAutorizacion = Duration(seconds: 10);
+  static const receiveTimeoutDeAutorizacion = Duration(seconds: 15);
+
+  /// `connectTimeout` sólo se puede fijar aquí: no es un campo de `Options`.
+  @visibleForTesting
+  static Dio dioDeAutorizacion() => Dio(BaseOptions(
+        connectTimeout: connectTimeoutDeAutorizacion,
+        receiveTimeout: receiveTimeoutDeAutorizacion,
+      ));
 
   static const String _pusherKey =
       String.fromEnvironment('PUSHER_KEY', defaultValue: 'ce919f2ae5c3eb4188a7');
@@ -52,6 +63,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   static const Duration _retryInterval = Duration(seconds: 60);
 
   final AuthSessionService _authSession;
+  final Dio _dioAuth;
 
   PusherChannelsFlutter? _pusher;
   bool _initialized = false;
@@ -77,6 +89,9 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   /// excepción cada 60 s. El socket quedaba muerto el resto de la sesión
   /// después del primer apagado de pantalla (bug 2026-08-17).
   final _suscritosNativos = <String>{};
+
+  @visibleForTesting
+  Set<String> get suscritosNativos => _suscritosNativos;
 
   /// Estado de los timers, para que un test pueda afirmar que la pausa no deja
   /// trabajo corriendo en background.
@@ -193,7 +208,7 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
         await pusher.init(
           apiKey: _pusherKey,
           cluster: _pusherCluster,
-          onAuthorizer: _authorize,
+          onAuthorizer: authorize,
           onConnectionStateChange: (current, previous) {
             _socketHealthy = current == 'CONNECTED';
           },
@@ -250,21 +265,42 @@ class GroupOrderRealtimeService with WidgetsBindingObserver {
   }
 
   /// Autoriza el canal privado contra el backend (Sanctum Bearer).
-  Future<dynamic> _authorize(String channelName, String socketId, dynamic options) async {
-    final token = _authSession.userSessionDM?.accessToken;
-    final response = await Dio().post<Map<String, dynamic>>(
-      '$_domain/api/broadcasting/auth',
-      data: {'channel_name': channelName, 'socket_id': socketId},
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Accept': 'application/json',
-        },
-        contentType: Headers.formUrlEncodedContentType,
-      ),
-    );
-    final data = response.data;
-    return data is String ? jsonDecode(data as String) : data;
+  ///
+  /// Lo llama el PLUGIN, fuera del `try` de [_connect]: su fallo no llega a
+  /// aquel `catch`, así que el fallback hay que encenderlo aquí. Sin esto, una
+  /// autorización fallida dejaba el socket "conectado", el canal sin suscribir
+  /// y el polling apagado por la línea 222 — la orden muda toda la sesión.
+  @visibleForTesting
+  Future<dynamic> authorize(String channelName, String socketId, dynamic options) async {
+    try {
+      final token = _authSession.userSessionDM?.accessToken;
+      final response = await _dioAuth.post<Map<String, dynamic>>(
+        '$_domain/api/broadcasting/auth',
+        data: {'channel_name': channelName, 'socket_id': socketId},
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          },
+          contentType: Headers.formUrlEncodedContentType,
+        ),
+      );
+      final data = response.data;
+      return data is String ? jsonDecode(data as String) : data;
+    } catch (e) {
+      log('Autorización de $channelName fallida ($e) — fallback a polling', name: 'GroupOrderRealtime');
+      _degradarAPolling(channelName);
+      rethrow;
+    }
+  }
+
+  /// El canal se saca de [_suscritosNativos] porque si no el reintento lo
+  /// saltaría: quedó anotado como suscrito antes de que la autorización fallara.
+  void _degradarAPolling(String channelName) {
+    _socketHealthy = false;
+    _suscritosNativos.remove(channelName);
+    _startPolling();
+    _scheduleRetry();
   }
 
   // ── Fallback: polling suave mientras la pantalla está activa ─────────
