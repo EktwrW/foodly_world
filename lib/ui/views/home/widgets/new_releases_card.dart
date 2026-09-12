@@ -589,7 +589,7 @@ class _EmptyNewReleasesWidgetState extends State<EmptyNewReleasesWidget> {
         _videoReady = true;
       });
     } catch (e) {
-      log('$e');
+      log('[video] $_videoAsset no arranco: $e');
       // Asset roto, codec no soportado en este device, o disposed mid-init.
       // No hay nada que hacer: la superficie de marca que ya se esta pintando
       // detras ES el fallback, igual que en `EmptyOffersWidget`.

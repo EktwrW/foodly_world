@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui' as dart_ui show ImageFilter;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -510,10 +511,21 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
         _controller = controller;
         _videoReady = true;
       });
-    } catch (_) {
+    } catch (e) {
       // Asset roto, codec no soportado en este device, o disposed mid-init.
       // No hay nada que hacer: la superficie de marca que ya se esta pintando
       // detras ES el fallback, y la cinta y el boton siguen funcionando.
+      //
+      // PERO SE DICE (2026-09-12). Antes esto era `catch (_)` mudo, y el
+      // resultado es que cuando el video no arranca la tarjeta se ve
+      // perfectamente bien —la superficie de marca ES un fondo de verdad— sin
+      // que nada indique que falto algo. Hector lo vio en un iPad y lo primero
+      // que penso fue que alguien habia quitado el video. Un fallback bueno
+      // esconde el fallo: por eso tiene que dejar rastro.
+      //
+      // `new_releases_card` ya lo hacia; esto lo iguala, y los dos dicen ahora
+      // QUE asset fallo, que es lo unico que distingue un caso del otro.
+      log('[video] $_videoAsset no arranco: $e');
       await controller.dispose();
     }
   }
