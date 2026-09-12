@@ -115,6 +115,14 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   int _reintentosDeRed = 0;
   static const int _maxReintentosDeRed = 3;
 
+  /// Sube al LANZAR cada lectura. Nada más: no es un «algo cambió», es un
+  /// número de orden de salida (2026-09-12).
+  int _generacion = 0;
+
+  /// La de la última lectura que SÍ se aplicó — y la de la acción que tocó una
+  /// fila visible, que es la otra cosa que deja la pantalla al día.
+  int _ultimaAplicada = 0;
+
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
     await _fetch();
@@ -123,7 +131,18 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   }
 
   Future<void> selectBucket(String? bucket) async {
-    emit(state.copyWith(bucket: bucket, loading: true, error: null));
+    // La lista se VACÍA, y no es cosmético: el panel sólo pinta el spinner con
+    // `loading && orders.isEmpty`, así que conservando las filas del cubo
+    // anterior se veían bajo el chip nuevo durante todo el viaje, sin spinner
+    // y sin aviso. Es el síntoma que da nombre a esto, y pasaba en CADA cambio
+    // de chip, sin carrera ninguna. `total` va con ellas o el pie miente.
+    emit(state.copyWith(
+      bucket: bucket,
+      loading: true,
+      error: null,
+      orders: const [],
+      total: 0,
+    ));
     await _fetch();
   }
 
@@ -159,7 +178,18 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   }
 
   Future<void> _fetch({bool silent = false}) async {
-    final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
+    final generacion = ++_generacion;
+    final cubo = state.bucket;
+    final res = await _repo.managerOrders(businessUuid, bucket: cubo);
+    if (isClosed) return;
+
+    // SE DESCARTA SÓLO SI YA HAY ALGO MEJOR EN PANTALLA, O SI ESTAS FILAS SON
+    // DE OTRO CUBO. Que alguien haya lanzado después NO basta: esa otra lectura
+    // puede fallar en silencio —un refetch de fondo no le cuenta errores al
+    // manager— y entonces tirar ésta deja la pantalla con las filas viejas, sin
+    // spinner y sin aviso, que es justo lo que esto existe para borrar.
+    if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
+
     res.when(
       success: (r) {
         // Desarma el ÉXITO, no el intento.
@@ -172,6 +202,7 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // así que justo en el caso que esto optimiza —socket sano— los chips
         // se quedaban congelados hasta el siguiente evento de otra orden. Lo
         // encontró la revisión, con test.
+        _ultimaAplicada = generacion;
         _contadoresSucios = false;
         _reintentosDeRed = 0;
         _redDeSeguridad?.cancel();
@@ -252,10 +283,17 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
         // Los contadores los mueve el cambio de bucket de esa orden, y de eso
         // se encarga el evento de la propia mutación (ver
         // `_pedirResincronizacion`).
+        // La MISMA lista si la orden no está en ella (otro cubo, o el chip
+        // filtrando): construir una nueva subiría la generación y mataría una
+        // lectura buena en vuelo sin que hubiera cambiado nada de lo que se ve.
+        final enLaLista = state.orders.any((o) => o.uuid == updated.uuid);
+        // Si tocó una fila visible, la pantalla queda tan al día como una
+        // lectura: las que salieron antes ya no tienen nada que aportar.
+        if (enLaLista) _ultimaAplicada = _generacion;
         emit(state.copyWith(
-          orders: [
-            for (final o in state.orders) o.uuid == updated.uuid ? updated : o,
-          ],
+          orders: enLaLista
+              ? [for (final o in state.orders) o.uuid == updated.uuid ? updated : o]
+              : state.orders,
           error: null,
         ));
         _pedirResincronizacion();

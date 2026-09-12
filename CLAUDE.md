@@ -2552,6 +2552,119 @@ próxima:
   de las demás valdría nada.
 
 
+## El panel del manager pintaba las filas del cubo anterior (2026-09-12)
+
+Cola de «Una respuesta que llegaba tarde dejaba la orden rancia». Aquella cerró
+la carrera en los dos cubits de la orden grupal; `ManagerOrdersCubit` tenía la
+misma. **Aquí se ve en pantalla**, que es lo que la hace peor.
+
+**Y son DOS fallos, no uno.** Tardé tres diseños en separarlos, y mezclarlos fue
+la causa de todo lo que salió mal por el camino.
+
+### 1. La ventana: en CADA cambio de chip, sin carrera ninguna
+
+`selectBucket` emitía el cubo nuevo y **no vaciaba `orders`**. El panel pinta el
+spinner sólo con `loading && orders.isEmpty` (`manager_orders_page.dart:196`), o
+sea que durante todo el viaje se veían las filas del cubo anterior bajo el chip
+nuevo, **sin spinner y sin aviso**. Lo encontró la contra-revisión, midiéndolo a
+nivel de widget, y es el síntoma que da nombre a esto.
+
+Se arregla vaciando la lista (y `total`, o el pie dice «N de M» del cubo viejo).
+Una línea. **La guarda de generación no lo tocaba**: aquélla evita que una
+respuesta se aplique TARDE, no que la ventana exista. Yo escribí una PR entera
+sobre «las filas del cubo anterior» sin arreglar el caso más común de eso.
+
+### 2. La carrera: respuestas fuera de orden
+
+`_fetch` leía `state.bucket` al lanzar y aplicaba al volver sin comprobar nada.
+Dos lecturas del mismo cubo —el evento de Pusher y la red de seguridad de 2 s—
+podían cruzarse y dejar la vieja encima.
+
+El coalescer no tapa nada de esto, y por una razón más simple de la que escribí
+primero: **`managerOrders` no pasa por el coalescer en absoluto** —
+`_lecturasDelTurno` sólo envuelve a `getGroupOrder`.
+
+**La regla, y es la tercera que probé:**
+
+```dart
+if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
+```
+
+**Se descarta sólo si ya hay algo MEJOR en pantalla, o si estas filas son de otro
+cubo.** Dos campos: el número de orden de salida, y el de la última que se
+aplicó (que también pone una acción que toca una fila visible, porque eso deja
+la pantalla igual de al día).
+
+### Las dos reglas que probé antes, y por qué estaban mal
+
+**Primera: «sube el contador con cada emisión».** Es el error que ya había
+costado dos regresiones en la #86 y que yo creía traer aprendido. Aquí lo evité
+a medias con un embudo de tres cláusulas en `onChange`… y de las tres **sólo la
+de `orders` era portante**; las otras dos estaban muertas. Peor: la contra-revisión
+demostró que el embudo entero, con su `identical` y su trampa del `operator ==`,
+**existía para expresar una asignación en el único sitio que la necesitaba** —la
+acción que toca una fila visible—. Doce líneas para una.
+
+**Segunda: «descarto si alguien lanzó después de mí».** Suena bien y es
+demasiado agresiva: **la otra lectura puede fallar en silencio** —un refetch de
+fondo no le cuenta errores al manager, y eso es deliberado— y entonces tirar la
+mía deja la pantalla con las filas viejas, sin spinner y sin error. Medido por
+la revisión contra `main`: `main` mostraba las filas correctas y mi versión no.
+**Era peor que no hacer nada**, que es exactamente el mismo modo de fallo que la
+#86: «ya vendrá otra lectura» sólo vale si viene.
+
+Mi parche de aquello fue pedir una resincronización al descartar. **Y eso
+derrotaba el tope de 3 reintentos**, porque `_pedirResincronizacion()` resetea
+`_reintentosDeRed`: medido, 22 peticiones contra las 4 de referencia con el
+backend caído. El propio comentario del cubit promete que «un backend caído no
+puede convertirse en un GET cada dos segundos para siempre», y podía. Hay test
+que lo acota.
+
+Con la regla buena nada de eso hace falta: la lectura **no se descarta, se
+aplica**, y no se paga ninguna petición de rescate.
+
+### Lo que queda dicho, y no fingido
+
+- **Una lectura descartada no desarma la red ni consume reintento**: sus
+  contadores son tan viejos como sus filas.
+- **Una acción que no toca la lista no invalida nada.** `copyWith` construía la
+  lista nueva SIEMPRE, incluso cuando la orden no estaba en ella (otro cubo, o
+  el chip filtrando), y eso mataba lecturas buenas.
+- **De los tres `isClosed` del cubit sólo el de `_fetch` está fijado en
+  solitario**: los de `_pedirResincronizacion` y el del temporizador se tapan el
+  uno al otro.
+- **`managerOrders` ignora `page`**: el panel pide una sola página a propósito.
+
+**Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
+(20 casos). Varios son controles, y el que más sostiene es el que **cuenta
+peticiones**: ninguna otra aserción lo hace, y ahí es donde se esconden los
+fallos de esta familia.
+
+**De las mutaciones probadas no sobrevive ninguna**, con una de control que sí.
+Pero el número no significa nada por sí solo, y ésta es la tercera vez seguida
+que lo compruebo: **mi barrido dio «7 de 7 mueren» y luego aparecieron ocho
+fallos reales**, dos de ellos bloqueantes y uno introducido por mi propio
+arreglo. Lo que se me escapó, por si sirve de patrón:
+
+- **Miraba el flag y no las filas.** Mi test del spinner afirmaba
+  `loading == false` y el agujero estaba en `orders`.
+- **No pregunté qué pasa si el relevo falla.**
+- **Un test mío medía un escenario IMPOSIBLE**: lanzaba la lectura que falla
+  ANTES que otra, así que la guarda la descartaba y nunca llegaba a la rama de
+  fallo. Pasaba sin ejercitar nada.
+- **El fake mentía por omisión**: ignoraba el cubo, así que toda la historia del
+  «cubo anterior» estaba simulada con etiquetas.
+- **No medí a nivel de widget.** El fallo nº 1 de arriba es invisible mirando
+  sólo el estado del cubit: hace falta saber con qué condición pinta el spinner.
+- **Y afirmé en falso que los controles sostenían el banco.** La revisión los
+  saltó con `skip:` y el banco siguió muriendo.
+
+**Pendiente, en su propia PR**: `load()` hace `await _fetch()` y **después**
+asigna `_sub`, así que salir de la pantalla durante la primera lectura deja una
+suscripción que nadie cancela — y un GET por cada resume, para siempre. Es
+preexistente y lo midió la contra-revisión.
+
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una
