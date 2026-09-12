@@ -119,6 +119,19 @@ class AppRequestException implements Exception {
         final msg = data['message'] as String?;
         if (msg != null && msg.isNotEmpty) return msg;
       }
+      // Sin respuesta NO hay nada técnico que enseñar: `statusMessage` y
+      // `statusCode` son los dos null y esta cadena se leía literalmente
+      // «null error code: null» EN PANTALLA, porque 82 sitios pintan
+      // `errorMsg` en un snackbar sin pasar por `FoodlyErrorPresenter`.
+      //
+      // Ya no es un caso de laboratorio: desde que el cliente fija timeouts
+      // (`FoodlyApiProvider`), una petición colgada TERMINA —en
+      // `connectionTimeout` o `receiveTimeout`, los dos sin respuesta— en vez
+      // de no terminar nunca. El arreglo de los timeouts es lo que hace
+      // alcanzable esta rama.
+      if (dio.response == null) {
+        return isOffline ? S.current.noConnection : S.current.genericErrorRetry;
+      }
       return '${dio.response?.statusMessage} error code: ${dio.response?.statusCode}';
     }
 

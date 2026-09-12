@@ -1998,6 +1998,125 @@ viera sólo significaba «no observable con las llamadas de hoy», que es mucho
 más débil que «equivalente».
 
 
+## El cliente HTTP no tenía techo: una petición podía no terminar nunca (2026-09-12)
+
+**El problema.** `FoodlyApiProvider` no fijaba ninguno de los tres timeouts de
+Dio, y en Dio 5.9.2 `connectTimeout`, `receiveTimeout` y `sendTimeout` son
+`null` por defecto —comprobado en `dio-5.9.2/lib/src/options.dart`—, que
+significa **sin límite**. No «el del sistema»: sin límite.
+
+En un móvil eso no es teórico. Un salto de WiFi a datos, o una red que se traga
+los paquetes, deja la petición en vuelo para siempre: la pantalla se queda
+girando, sin error y sin reintento, y sólo se destraba matando la app.
+
+Salió revisando la PR #69. Una versión anterior de aquel coalescer retenía la
+petición en vuelo hasta que terminara, y sin timeouts «una petición colgada» se
+convertía en «la orden queda muda toda la sesión». Aquella PR se arregló por
+otro lado —acotó la ventana a un turno síncrono— pero la falta de timeouts
+seguía ahí, afectando a la app entera.
+
+**Los números, y de dónde salen.** Medido contra `api.foodly.solutions` desde
+una conexión sana: handshake TCP+TLS 50 ms, TTFB 0,2 s.
+
+| | valor | por qué |
+|---|---|---|
+| `connectTimeout` | 10 s | 200× el handshake medido |
+| `receiveTimeout` | 30 s | tiene que caber un arranque en frío de Cloud Run |
+| `sendTimeout` | 30 s | de sobra para el JSON de unos KB que manda casi todo |
+
+**Treinta y no veinte** porque el backend vive en Cloud Run **sin ping que lo
+mantenga caliente** —el ping que hay es para el NLP, que es otro servicio— y un
+arranque en frío tiene que caber. Esto es una red de seguridad contra el cuelgue
+infinito, no una promesa de velocidad, y **una red de seguridad que salta sobre
+tráfico legítimo hace más daño que la que no está**.
+
+**Las subidas no pueden heredar el techo del JSON, y esa es la trampa.**
+`sendTimeout` acota la subida **entera** del cuerpo, no un tramo de ella:
+`io_adapter.dart:142` lo envuelve sobre `request.addStream`. Con el global de
+30 s, el vídeo de una promo —hasta **80 MB**, `edit_promo_media.dart:205`— se
+cortaría a mitad de subida en cualquier red de móvil. Sería romper en nombre de
+arreglar.
+
+Así que el interceptor le sube el techo a las subidas, por petición: 5 minutos
+de envío y 60 s de recepción (el backend todavía tiene que mover el fichero a
+GCS antes de contestar). Cinco minutos no cubren cualquier red —80 MB a 1 Mbps
+piden diez— pero acotan lo que hoy no tiene techo: quien suba por una red así va
+a fallar igual, y la diferencia es que **falla con un error en vez de dejar la
+pantalla girando para siempre**.
+
+Dos decisiones dentro de ese bloque, las dos con test que las fija:
+
+1. **Se detecta por forma, `data is FormData`, no con una lista de rutas.** Es
+   exactamente la condición que hace cara la subida, y el endpoint multipart que
+   se añada mañana lo hereda solo. Retrofit genera `FormData` para todo
+   `@MultiPart()`.
+2. **Va antes del `return` de los endpoints de auth**, porque `/register` es
+   multipart: manda la foto de perfil. Colocarlo después lo dejaría con el techo
+   del JSON, y es el tipo de fallo que no da ningún error.
+
+Y sólo se toca el valor si sigue siendo el global, para no pisar a quien eligió
+el suyo a conciencia —`MenuImportRepo` le da 90 s al parse de una foto porque el
+fallback de visión es lento—. Aquí las `BaseOptions` ya vienen fundidas en
+`RequestOptions` (`Options.compose`), así que comparar contra el global es la
+única manera de distinguir «nadie dijo nada» de «el llamante eligió esto».
+
+**El cuelgue que ningún timeout arregla.** Los timeouts de Dio empiezan a contar
+**en el adaptador**, o sea después de los interceptores. Una petición que se
+queda dentro del interceptor no los ve nunca — y había dos sitios donde se
+quedaba. En el camino de `silentRefresh`, cuando el refresco fallaba o no había
+refresh token, el código hacía:
+
+```dart
+authSessionService.notifyTokenExpired();
+return;   // ← y aquí se acababa todo
+```
+
+En un interceptor de petición un `return` pelado **no cancela nada**. El futuro
+que espera quien llamó se completa cuando alguien invoca
+`handler.next/resolve/reject` y con nada más (`dio_mixin.dart:400`: el resultado
+del interceptor *es* `handler.future`). Sin esa llamada la petición se queda
+pendiente para siempre. Lo que veía el usuario: la redirección a /login con el
+spinner de la pantalla anterior girando debajo.
+
+Ahora se rechaza con un **401 sintético**, no con un tipo nuevo: desde el punto
+de vista de la app la petición **estaba** sin autenticar, el interceptor sólo se
+ahorró el viaje. Así `FoodlyErrorPresenter` la clasifica como `auth` y se calla
+—el aviso ya lo pone `notifyTokenExpired`— sin enseñarle un concepto nuevo a
+nadie. Y `reject` sin su segundo argumento **no** pasa por `dioErrorHandler`
+(`interceptor.dart:84`), así que este 401 no puede realimentar otro ciclo de
+refresco.
+
+**Que la petición termine no basta: lo que termina hay que poder pintarlo.**
+`AppRequestException.errorMsg` devolvía, para un error **sin respuesta**, la
+cadena `'${statusMessage} error code: ${statusCode}'` con los dos a null — o
+sea, literalmente **«null error code: null»**, en un snackbar, en producción.
+Hay **82 sitios** que pintan `errorMsg` sin pasar por `FoodlyErrorPresenter`, y
+tocar los 82 no era el trabajo: el arreglo va en el getter.
+
+Esa rama era casi inalcanzable mientras no hubiera timeouts, porque la petición
+no terminaba. **Fijarlos es justo lo que la vuelve alcanzable**, y por eso el
+arreglo va en esta PR y no en otra: sin él, el cambio de los timeouts habría
+cambiado «pantalla colgada» por «pantalla con un mensaje absurdo».
+
+Sólo cambia el caso sin respuesta —`noConnection` si es de red, el genérico si
+no—; en cuanto hay respuesta, el mensaje del backend sigue mandando igual que
+antes.
+
+**Dónde NO estaba el problema.** El NLP de búsqueda **no** usa este cliente:
+tiene su propio `NlpApiProvider` con 15 s / 30 s ya puestos, así que sus 14 s de
+arranque en frío no obligan a subir nada aquí. Las analíticas
+(`AnalyticsApiProvider`) y el Dio de geocodificación de `LocationBloc` también
+traían los suyos. **El cliente principal era el único sin techo**, que es lo
+llamativo: el patrón ya existía en el repo y justo el Dio por el que pasa casi
+todo se lo había saltado.
+
+**Fijado en** `test/core/network/timeouts_de_dio_test.dart` (24 casos). De las
+seis mutaciones probadas no sobrevive ninguna, incluidas las dos finas: mover el
+bloque de subidas **detrás** del `return` de los endpoints de auth mata el caso
+de `/register`, y quitar la guarda de «sólo si es el global» mata el de
+`MenuImportRepo`.
+
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una
