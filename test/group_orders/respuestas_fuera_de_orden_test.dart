@@ -282,6 +282,29 @@ void main() {
       expect(cliente.peticiones, 4, reason: 'y no se reintenta el reintento');
     });
 
+    /// QUINTO HALLAZGO. El embudo del chip estaba en `onChange`, que NO corre
+    /// cuando bloc deduplica un estado igual al actual. Una mutación cuya
+    /// respuesta es idéntica a lo que ya hay no subía el contador, y una
+    /// lectura más vieja en vuelo la pisaba. Por eso el embudo es `emit`: una
+    /// respuesta idéntica sigue siendo una foto aplicada.
+    test('una respuesta IDÉNTICA sigue invalidando lo anterior', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final vieja = cubit.refresh(); // sale ahora, se queda en vuelo
+
+      // Mutación cuya respuesta es idéntica al estado actual: bloc la deduplica.
+      final plato = cubit.addFood('food', 'f1', version: Version.regular);
+      cliente.responder(2, mesa: 'inicial');
+      await plato;
+
+      cliente.responder(1, mesa: 'vieja'); // la de antes llega tarde
+      await vieja;
+
+      expect(cubit.state?.tableLabel, 'inicial');
+    });
+
     /// El TOPE del reintento. Sólo se distingue si algo emite MIENTRAS el
     /// reintento viaja: sin tope, ese reintento vuelve a llegar «tarde» y pide
     /// otro, y otro, mientras siga habiendo actividad. Una cadena sin fin de
@@ -374,6 +397,28 @@ void main() {
 
       cliente.responder(1, mesa: 'tarde');
       await expectLater(_turno(), completes);
+    });
+
+    test('ni syncForBusiness al cerrarse el chip', () async {
+      final cliente = _ClienteFalso();
+      final cubit = ActiveGroupOrderCubit(repo: GroupOrderRepo(client: cliente), logger: _mudo);
+
+      final sync = cubit.syncForBusiness('b1');
+      await cubit.close();
+
+      cliente.responderMine('oA');
+      await expectLater(sync, completes);
+    });
+
+    test('ni syncAnyActive', () async {
+      final cliente = _ClienteFalso();
+      final cubit = ActiveGroupOrderCubit(repo: GroupOrderRepo(client: cliente), logger: _mudo);
+
+      final sync = cubit.syncAnyActive();
+      await cubit.close();
+
+      cliente.responderMine('oA');
+      await expectLater(sync, completes);
     });
 
     test('y el chip tampoco', () async {

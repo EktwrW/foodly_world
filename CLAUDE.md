@@ -2394,8 +2394,8 @@ cubits, y creer que sí era el fallo de la primera versión**:
 
 - **La página** lo sube en `_applyResponse`, que es por donde pasa toda
   respuesta con foto del servidor.
-- **El chip** lo sube en `onChange`, porque ahí *todo* estado es una foto o un
-  vaciado: su estado ES la orden, no tiene `loading` ni `error`.
+- **El chip** lo sube sobrescribiendo **`emit`**, porque ahí *todo* estado es una
+  foto o un vaciado: su estado ES la orden, no tiene `loading` ni `error`.
 
 **POR QUÉ NO VALE `onChange` EN LA PÁGINA, que es lo que yo había puesto.** Su
 estado tiene emisiones que NO traen foto —`loading`, `error`, el `isPaying` de
@@ -2428,15 +2428,23 @@ de lanzar, con dos lecturas en vuelo gana **la primera en volver** en vez de la
 última lanzada, que es justo lo contrario de lo que se busca. No estaba medido
 —lo señaló la revisión— y ahora hay un test con las respuestas EN ORDEN.
 
-**El `_generacion++` explícito de `end()` tampoco es redundante.** Bloc deduplica
-`state == _state && _emitted` (`bloc-9.2.0/lib/src/bloc_base.dart:102`), y
-**`_emitted` es false hasta la primera emisión**: en un cubit recién nacido
-`emit(null)` sí propaga. Lo escribí primero como argumento, el barrido lo
-desmintió como medida —quitarlo no ponía nada en rojo— y al escribir el test
-apareció el porqué: mi primer intento montaba la carrera sobre un cubit sin
-estrenar, así que pasaba con la mutación puesta. Hay que estrenarlo antes: join,
-`end()`, y recién entonces la carrera. **Ese caso protege código que ya estaba en
-`main`**, no algo que arregle esta PR.
+**Y el embudo del chip es `emit`, NO `onChange`, por la deduplicación de bloc.**
+Ésta me costó dos correcciones seguidas y la lección es la misma las dos veces.
+
+Bloc no propaga un `emit` igual al estado actual: la condición es
+`state == _state && _emitted` (`bloc-9.2.0/lib/src/bloc_base.dart:102`). Con el
+contador colgado de `onChange`, **una mutación cuya respuesta es idéntica a lo
+que ya hay no subía nada**, y una lectura más vieja en vuelo la pisaba. Es el
+caso corriente de un refetch coalescido sin cambios. `emit` sí corre siempre, y
+una respuesta idéntica **sigue siendo una foto aplicada**.
+
+De paso desapareció el `_generacion++` explícito que `end()` llevaba desde
+antes: existía justamente porque `emit(null)` sobre un estado ya null no
+dispara `onChange`, y con el embudo en `emit` pasó a ser redundante de verdad.
+**Antes no lo era, y este fichero llegó a afirmar lo contrario dos veces**: en
+un cubit recién nacido `_emitted` es false y `emit(null)` sí propaga, así que un
+test que monte la carrera sobre un cubit sin estrenar pasa con la mutación
+puesta. Si vuelves a tocar esto: estrena el cubit antes de medir.
 
 **El 404 y el 403 NO se juzgan por generación, y tampoco basta el uuid.** Ésta
 fue la parte que costó tres intentos, así que la regla entera:
@@ -2497,7 +2505,7 @@ Cerrar el hueco del todo pediría una versión o un `updated_at` en la respuesta
 comprobado que hoy no existe ninguno en `GroupOrderDM` (hay `confirmedAt`,
 `closedAt`, `billRequestedAt`, pero no un orden global).
 
-**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (21 casos).
+**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (24 casos).
 Varios son CONTROLES y están a propósito, porque una guarda que descarte SIEMPRE
 también pondría verde al resto: en orden normal la última respuesta se aplica; el
 pull-to-refresh sigue aplicando la suya; un 404 de la orden actual sigue vaciando
@@ -2505,6 +2513,21 @@ el carrito; una mutación con ÉXITO sigue invalidando lo anterior; y `/mine`, s
 nada que la invalide, SÍ adopta la orden. **Ese último faltaba** y sin él se
 podía apagar entera la recuperación en frío del carrito (F4a) sin que nada se
 pusiera rojo.
+
+**Tres residuos que se aceptan a sabiendas**, los tres medidos por la revisión:
+
+- **El relevo sólo funciona si el relevista llega.** La rama de fallo de
+  `createPayIntent` lanza un `_refetchSilently`, y ese lanzamiento sube el
+  contador y mata la lectura del evento en vuelo. Si el refetch interno también
+  falla —red mala, que es justo cuando falla un pay-intent— la pantalla se queda
+  rancia. Mismo patrón que el 404, pero aquí no se trata aparte.
+- **Re-unirse a la misma orden DURANTE el reintento** vuelve a vaciar el
+  carrito: el tope corta antes de mirar la generación. Es el agujero del 403 una
+  ventana más adentro, y pide dos re-uniones en dos RTT consecutivos. **El tope
+  es lo que hace que esto termine**, así que se queda.
+- **404 y luego 500 en el reintento**: el carrito conserva una orden borrada.
+  «Ante la duda no vacío» es defendible, pero conviene saber que aquí tampoco
+  hay segundo evento.
 
 **Sobre el barrido de mutaciones, y es la lección que más vale de esta PR.**
 Ninguna sobrevive, pero eso sólo es verdad **después de tres rondas**. Mi primer

@@ -31,9 +31,8 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   RealtimeSubscription? _sub;
   bool _busy = false;
 
-  /// Sube al lanzar una lectura, con cada cambio de estado y en cada [end]: la
-  /// respuesta que vuelve con una generación vieja llega tarde y se descarta.
-  /// El [end] va explícito — ver el CLAUDE.md, no es redundante (2026-09-12).
+  /// Sube al lanzar una lectura y al emitir: la respuesta que vuelve con una
+  /// generación vieja llega tarde y se descarta (2026-09-12).
   int _generacion = 0;
 
   ActiveGroupOrderCubit({
@@ -61,7 +60,6 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   @override
   void onChange(Change<GroupOrderDM?> change) {
     super.onChange(change);
-    _generacion++;
     final order = change.nextState;
     // El uuid se pasa explícito: `onChange` corre ANTES de que bloc asigne el
     // estado nuevo, así que `state` acá todavía es el anterior.
@@ -79,6 +77,17 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         currency: order.currency,
       );
     }
+  }
+
+  /// El embudo de la generación. En `emit` y no en `onChange` porque bloc
+  /// deduplica los estados iguales y entonces `onChange` NO corre — y una
+  /// respuesta idéntica a la que ya hay sigue siendo una foto aplicada. Aquí
+  /// vale porque todo estado de este cubit es una foto o un vaciado; en la
+  /// página no valdría (ver `_applyResponse`).
+  @override
+  void emit(GroupOrderDM? state) {
+    _generacion++;
+    super.emit(state);
   }
 
   /// ¿Hay una orden activa para este negocio?
@@ -396,7 +405,6 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
     // realtime, así que un evento de Pusher soltaría un cerrojo que sostiene
     // otra operación en vuelo y dos peticiones saldrían a la vez. Para el
     // caso de cierre de sesión existe `resetForLogout()`.
-    _generacion++;
     emit(null);
   }
 
