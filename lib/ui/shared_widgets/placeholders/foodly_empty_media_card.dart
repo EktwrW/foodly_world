@@ -12,7 +12,7 @@ import 'package:foodly_world/ui/theme/foodly_themes.dart';
 ///
 /// Sin este techo, en una tableta de 1280 px la tarjeta salía a 1264 × 225: una
 /// tira de buzón. No se veía pequeña, se veía **aplastada**.
-const double kAnchoDeTarjetaVacia = 334;
+const double kAnchoDeTarjetaVacia = 400;
 
 /// Una tarjeta de estado vacío con fondo de medio: el vídeo de siempre, o una
 /// superficie de marca.
@@ -107,7 +107,8 @@ class FoodlyEmptyMediaCard extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   subtitle,
-                                  style: FoodlyTextStyles.homeAppBarSmallSubtitle.copyWith(fontSize: 11.5, height: 1.35),
+                                  style:
+                                      FoodlyTextStyles.homeAppBarSmallSubtitle.copyWith(fontSize: 11.5, height: 1.35),
                                   maxLines: 3,
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,

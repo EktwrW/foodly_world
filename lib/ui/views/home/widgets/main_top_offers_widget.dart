@@ -55,24 +55,12 @@ CarouselOptions homePromoCarouselOptions({
   bool autoPlay = true,
   void Function(int, CarouselPageChangedReason)? onPageChanged,
 }) {
-  final geometria = resolveHomePromoCarouselGeometry(breakpoint: breakpoint, screenWidth: screenWidth);
+  final geometry = resolveHomePromoCarouselGeometry(breakpoint: breakpoint, screenWidth: screenWidth);
 
   return CarouselOptions(
-    // `carousel_slider` le pasa esto al PageView, que por defecto recorta
-    // (`Clip.hardEdge`) y cortaba en seco la sombra de la card contra el borde
-    // de abajo. Darle hueco dentro del item no alcanzaba: con blur 26 la
-    // sombra se desvanece a lo largo de ~40 px y eso se comía la card. Lo que
-    // sobra fuera del viewport es sombra, así que se deja salir.
     clipBehavior: Clip.none,
-    // Siempre explícito, también en móvil. El número de móvil es exactamente
-    // el que salía del aspectRatio por defecto (`screenWidth * 9 / 16`), o sea
-    // que la tira mide lo mismo que siempre; lo que cambia es que ahora el
-    // shimmer y el placeholder de vacío pueden leer ese alto y cuadrar con él.
-    //
-    // Al rotar, CarouselSlider rehace su PageController en didUpdateWidget
-    // conservando la pagina, asi que el cambio de fraccion entra solo.
-    height: geometria.height,
-    viewportFraction: geometria.viewportFraction,
+    height: geometry.height,
+    viewportFraction: geometry.viewportFraction,
     enableInfiniteScroll: enableInfiniteScroll,
     autoPlay: autoPlay,
     enlargeCenterPage: true,
@@ -512,19 +500,6 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
         _videoReady = true;
       });
     } catch (e) {
-      // Asset roto, codec no soportado en este device, o disposed mid-init.
-      // No hay nada que hacer: la superficie de marca que ya se esta pintando
-      // detras ES el fallback, y la cinta y el boton siguen funcionando.
-      //
-      // PERO SE DICE (2026-09-12). Antes esto era `catch (_)` mudo, y el
-      // resultado es que cuando el video no arranca la tarjeta se ve
-      // perfectamente bien —la superficie de marca ES un fondo de verdad— sin
-      // que nada indique que falto algo. Hector lo vio en un iPad y lo primero
-      // que penso fue que alguien habia quitado el video. Un fallback bueno
-      // esconde el fallo: por eso tiene que dejar rastro.
-      //
-      // `new_releases_card` ya lo hacia; esto lo iguala, y los dos dicen ahora
-      // QUE asset fallo, que es lo unico que distingue un caso del otro.
       log('[video] $_videoAsset no arranco: $e');
       await controller.dispose();
     }
@@ -542,24 +517,11 @@ class _EmptyOffersWidgetState extends State<EmptyOffersWidget> {
     final title = widget.isError ? s.promosEmptyErrorTitle : s.promosEmptyTitle;
     final subtitle = widget.isError ? s.promosEmptyErrorSubtitle : s.promosEmptySubtitle;
 
-    // El alto sale de la MISMA función que el carrusel cargado y que
-    // `PromoCarouselShimmer`: es lo que hace cierta la promesa de "mismo alto,
-    // sin salto". Ver el comentario de clase.
     final alto = resolveHomePromoCarouselGeometry(
       breakpoint: foodlyCarouselBreakpointOf(context),
       screenWidth: context.screenWidth,
     ).height;
 
-    // VACIO vs FALLO, y no es lo mismo (2026-09-10).
-    //
-    // Si la peticion se cayo no toca enseñar la seccion, toca reintentar: una
-    // sola tarjeta con el video y el boton. Si simplemente no hay promos
-    // todavia, el hueco se aprovecha para CONTAR la seccion — tres tarjetas
-    // que rotan igual que rotarian las promos de verdad.
-    //
-    // Y ahi esta lo bueno de las tres: el vacio deja de ser un placeholder que
-    // hay que cuadrar con el cargado. ES el carrusel, con las mismas opciones y
-    // la misma geometria, asi que no hay dos alturas que puedan separarse.
     if (widget.isError) {
       return SizedBox(
         height: alto,
