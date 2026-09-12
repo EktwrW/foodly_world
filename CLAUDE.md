@@ -2303,6 +2303,46 @@ en el repo — sólo la del caso caliente (0,2 s). Si alguna vez aparece un pico
 ahí.
 
 
+## La orden se quedaba muda sin que nada fallara (2026-09-12)
+
+Cola de «El cliente HTTP no tenía techo», más arriba: aquella pasada dejó cinco
+`Dio()` crudos sin tocar, y uno estaba en el camino crítico del realtime.
+
+**El fallo.** `pusher.connect()` funciona → `_socketHealthy = true` →
+`_stopPolling()` («el socket manda, adiós fallback»). Pero la suscripción al
+canal privado pasa después por `_authorize`, que salía con un `Dio()` **sin
+ningún techo**. Si se colgaba: socket «conectado», canal nunca suscrito, polling
+apagado. Ni evento, ni fallback, ni error. La orden muda el resto de la sesión.
+
+**Y el techo solo NO lo arregla**, que es lo que casi hago. Al authorizer lo
+llama el PLUGIN, fuera del `try` de `_connect`, así que su excepción no llega a
+aquel `catch` — el que enciende el polling. Con timeout y sin nada más, la
+petición falla a los 15 s y la orden se queda igual de muda.
+
+Hacen falta las dos cosas: el techo, y que el fallo **degrade a polling desde el
+propio `authorize`**.
+
+**Y un tercer detalle que se rompe en silencio:** `_suscritosNativos.add(channel)`
+corre justo después de `subscribe()`, o sea ANTES de que la autorización falle. Y
+`_connect` salta los canales que ya están en ese set. Sin sacarlo al degradar, el
+reintento de 60 s no volvería a pedir ese canal nunca.
+
+**Los otros cuatro** son descargas de URLs arbitrarias (avatar del login social,
+foto de un post o de una promo para compartir) y van por `dioDeDescarga()`:
+10 s de conexión, 30 s de recepción. El daño ahí era un botón girando, no una
+orden muda.
+
+**El tropiezo que se repite:** `connectTimeout` **no es un campo de `Options`**,
+sólo se puede fijar en `BaseOptions`. Es la tercera vez en el día que me muerde.
+
+**Fijado en** `test/group_orders/autorizacion_de_canal_test.dart` (6 casos). Tres
+mutaciones, ninguna sobrevive: quitar el degradado, no sacar el canal del set, y
+volver al `Dio()` sin techo.
+
+**Lo que NO está medido:** con qué frecuencia se cuelga ese POST en producción.
+El argumento no es que pase mucho, es que cuando pasa no hay nada que lo
+recupere.
+
 ## El modo «negocio visitado» (2026-04-12)
 
 ### Son dos páginas, no una
