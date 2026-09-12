@@ -503,6 +503,123 @@ equivocado. Validado por mutación: hardcodear otra vez el 333 en el shimmer,
 devolverle los 96 px al placeholder, y cambiar la proporción compartida, ponen
 el test en rojo por esas tres razones distintas.
 
+### iOS era SOLO-IPHONE, y eso hacía invisible todo lo de tableta (2026-09-12)
+
+`TARGETED_DEVICE_FAMILY` valía `1` en las tres configuraciones del pbxproj. En
+un iPad la app corría en **modo compatibilidad** —una ventana de iPhone
+escalada—, así que ni el trabajo de tabletas llegaba a iOS ni las orientaciones
+de iPad del Info.plist se aplicaban: en ese modo se ignoran. Y App Store no
+acepta capturas de iPad de una app solo-iPhone, o sea que no había dónde
+subirlas. Ahora es `"1,2"`.
+
+El catálogo de iconos ya estaba listo (`idiom: universal` con 152, 167 y 1024),
+que es lo que suele tumbar la validación al pasar a universal.
+
+**Al hacerla universal, Apple la revisa COMO APP DE IPAD.** Lo que se vea mal
+ahí es motivo de rechazo, así que el universal no se sube hasta que las vistas
+estén terminadas.
+
+### Las 22 pantallas que faltaban de tableta (2026-09-12)
+
+Continúa la sección de las tres palancas. El inventario decía 38 pantallas sin
+tratar; al contarlas de verdad eran **22**, porque el tratamiento de las cartas
+(`MenuSectionIndex`) vive en sus widgets constructores de categoría y no en la
+página, así que un grep por nombre de pantalla no las ve.
+
+Reparto: `ContentColumn` a texto y formularios (arranque, legal, feed social),
+`ListaAdaptativa` a listas de tarjetas (promos guardadas, favoritos,
+promociones del visitante y del gestor, pedidos del gestor), y `SliverConTecho`
+—nuevo— a las tres pantallas que son `CustomScrollView`.
+
+**`SliverConTecho` acota por el PADDING, no envolviendo.** `ContentColumn` es un
+widget de caja: meterlo en un `CustomScrollView` obliga a un
+`SliverToBoxAdapter`, y eso pinta de golpe lo que el sliver pintaba a demanda.
+En fichas largas —dirección, horarios, servicios, reseñas— se nota.
+
+**El pie de una lista deja de ser un elemento +1.** En `manager_orders_page` el
+«mostrando N de M» era `itemCount + 1`. Con varias columnas eso es una CELDA
+suelta en la última fila, no una línea centrada debajo: va en el parámetro `pie`
+de `ListaAdaptativa`.
+
+**La cabecera del home pasó de `LIST_MAX_WIDTH` (700) a
+`HOME_APP_BAR_MAX_WIDTH` (820).** No es una lista de tarjetas sino una banda
+—saludo, drawer y buscador—; con 700 los márgenes laterales se comían 166 px por
+lado en un iPad de 13".
+
+**Una sospecha que resultó falsa, y el test se quedó.** `saved_promotions_page`
+envuelve en `ContentColumn.list` un selector con `minWidth: context.screenWidth`
+—1032 dentro de una caja de 700—. Parecía un overflow esperando a pasar y
+**medido no lo es**: el `ToggleSwitch` respeta las constraints. Lo que queda mal
+es la intención, no el resultado. `screen_width_dentro_de_techo_test.dart` lo
+fija por si un cambio de versión del paquete lo convierte en overflow de verdad.
+
+Escribiéndolo caí DOS VECES en trampas que ya estaban en este fichero: el
+`pump()` que hace falta porque `ResponsiveBreakpoints` devuelve 0 hasta medir
+—sin él el test pasaba en verde sin comprobar nada—, y duplicar un caso que ya
+cubría el grupo «anchos fijos por debajo del techo» de `content_column_test`.
+
+### El login se prerrellena en dev, y PROD no podía encenderlo (2026-09-12)
+
+`base_config.dart` ya leía `LOG_EMAIL`, `LOG_PASS` y `REG_PREFILL`, `DevConfig`
+ya exponía `shouldPrefillLogin` y `launch.json` ya pasaba los defines contra
+`${env:...}`. **No lo consumía nadie**: fontanería muerta. Ahora `StartingCubit`
+nace con los controllers rellenos.
+
+**Hace falta porque escribir un correo en el simulador es impracticable:** el
+mapa de teclado traduce la `@` del layout español como `"`, y no solo al teclear
+—la inyección de texto por `simctl` sufre lo mismo—. Los arreglos son
+`defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool false`
+(sale el teclado en pantalla) o pegar desde `xcrun simctl pbcopy`.
+
+**EL RIESGO QUE HABÍA QUE CERRAR ANTES DE CONECTARLO:** `ProdConfig` también
+implementaba `shouldPrefillLogin => regPrefill ?? false`. Mientras nadie lo leía
+daba igual; conectado, un build de tienda con `REG_PREFILL=true` habría
+arrancado con credenciales en el formulario. `ProdConfig` ya no recibe
+`regPrefill` y hereda `false`; la guarda además es doble, porque el cubit
+comprueba `isDev` por su cuenta. `test/core/prefill_solo_en_dev_test.dart` lo
+fija, validado por mutación.
+
+**Las credenciales viven en el entorno del desarrollador** (`~/.zshrc`), la
+misma convención que `STRIPE_PUBLISHABLE_KEY`. Nunca en el repo.
+
+Dos cosas del simulador que no son bugs de la app: al restaurar sesión pide el
+**código del iPad** para leer el token del Keychain —se esquiva con
+`simctl uninstall`, que limpia el Keychain de la app—, y el vídeo del hueco de
+promos **no arranca en el simulador aunque el asset cargue sin error**; en un
+Android real se ve. El `catch` de `_initVideo` era mudo y por eso parecía que
+alguien había quitado el vídeo: ahora deja rastro.
+
+### `render.js` compone también para iPad (2026-09-12)
+
+Vive en `brand-assets/store-assets`, **fuera del repo de la app**, y esa carpeta
+no es repo git: hacer copia antes de tocarla.
+
+App Store pide 2064×2752 para el iPad de 13". No es un reescalado del teléfono:
+la proporción pasa de 0,46 a **0,75**. Con la composición de 1290×2796 escalada,
+el bloque de texto pedía ~3536 px de alto sobre 2752 y se salía medio
+dispositivo.
+
+**El modelo que funcionó: el lienzo CSS mide SIEMPRE 1290 de ancho.** Así cada
+valor en px del diseño conserva su significado entre destinos; lo que cambia es
+el alto disponible y el factor de escala del render.
+
+```
+appstore  1290 x 2796 @2    -> /2 -> 1290 x 2796
+play      1290 x 2580 @2    -> /2 -> 1290 x 2580
+ipad      1290 x 1720 @3.2  -> /2 -> 2064 x 2752
+```
+
+El iPad no es más grande: es más **corto**. 1720 contra 2796. Ahí el bloque
+superior no cabe con los valores del teléfono, así que hay un override
+(`CORTO`) que solo se aplica a ese destino. Los dos destinos publicados salen
+idénticos, con el mismo alto y el mismo factor.
+
+**Las capturas del simulador de iPad salen nativas a 2064×2752**, el tamaño
+exacto de App Store, sin reescalar.
+
+Pendiente: cablear los `SHOTS_*` del iPad cuando existan las capturas, y bajar
+el ancho del dispositivo —hoy al 74 %, pensado para una captura estrecha—.
+
 ### Responsive: hay TRES palancas, no una (2026-09-11)
 
 Corrección a lo que hice los días anteriores. Apliqué `ContentColumn` —un techo
