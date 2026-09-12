@@ -7,6 +7,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart' sh
 import 'package:foodly_world/data_models/favorites/saved_promotions_response_dm.dart' show SavedPromoBusinessDM;
 import 'package:foodly_world/data_models/promotions/nearby_promotion_dm.dart' show NearbyPromotionDM;
 import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart' show FoodlyThemes;

@@ -86,9 +86,13 @@ class SavedPromotionsView extends StatelessWidget {
           style: FoodlyTextStyles.sectionsTitle.copyWith(fontSize: 15),
         ).paddingTop(16),
         Expanded(
-          child: ListView.separated(
+          // Tarjetas de negocio: en tableta caben mas columnas, no tarjetas
+          // mas anchas (2026-09-12). Ver [ListaAdaptativa].
+          child: ListaAdaptativa(
             padding: const EdgeInsets.only(bottom: 160),
-            itemBuilder: (_, i) {
+            separacion: 16,
+            elementos: businessesWithPromos.length,
+            constructor: (_, i) {
               final business = businessesWithPromos[i];
               final businessPromos = businessPromosMap[business.uuid] ?? [];
 
@@ -98,8 +102,6 @@ class SavedPromotionsView extends StatelessWidget {
                 promos: businessPromos,
               );
             },
-            separatorBuilder: (_, i) => const SizedBox(height: 16),
-            itemCount: businessesWithPromos.length,
           ),
         ),
       ],

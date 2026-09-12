@@ -4,6 +4,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/privacy/privacy_policy_content.dart';
 import 'package:foodly_world/ui/views/terms/terms_conditions_content.dart';
@@ -66,36 +67,40 @@ class _LegalContentView extends StatelessWidget {
         ).paddingSymmetric(vertical: 8, horizontal: 8),
         leadingWidth: 60,
       ),
+      // Texto legal: techo de lectura (2026-09-12). Son parrafos largos, y a
+      // 1032 px el ojo no vuelve bien al principio de la linea siguiente.
       body: SafeArea(
-        child: ListView.separated(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
-          itemCount: sections.length,
-          separatorBuilder: (_, __) => const Divider(height: 32),
-          itemBuilder: (_, i) {
-            final (heading, body) = sections[i];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  heading,
-                  style: FoodlyTextStyles.label.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: colorScheme.onSurface,
+        child: ContentColumn(
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
+            itemCount: sections.length,
+            separatorBuilder: (_, __) => const Divider(height: 32),
+            itemBuilder: (_, i) {
+              final (heading, body) = sections[i];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    heading,
+                    style: FoodlyTextStyles.label.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: colorScheme.onSurface,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  body,
-                  style: FoodlyTextStyles.label.copyWith(
-                    height: 1.65,
-                    fontSize: 13,
-                    color: colorScheme.onSurface.withValues(alpha: 0.80),
+                  const SizedBox(height: 10),
+                  Text(
+                    body,
+                    style: FoodlyTextStyles.label.copyWith(
+                      height: 1.65,
+                      fontSize: 13,
+                      color: colorScheme.onSurface.withValues(alpha: 0.80),
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

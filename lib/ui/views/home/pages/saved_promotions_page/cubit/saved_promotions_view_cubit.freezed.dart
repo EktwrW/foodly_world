@@ -21,8 +21,7 @@ mixin _$SavedPromotionsViewState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $SavedPromotionsViewStateCopyWith<SavedPromotionsViewState> get copyWith =>
-      _$SavedPromotionsViewStateCopyWithImpl<SavedPromotionsViewState>(
-          this as SavedPromotionsViewState, _$identity);
+      _$SavedPromotionsViewStateCopyWithImpl<SavedPromotionsViewState>(this as SavedPromotionsViewState, _$identity);
 
   @override
   bool operator ==(Object other) {
@@ -43,16 +42,15 @@ mixin _$SavedPromotionsViewState {
 
 /// @nodoc
 abstract mixin class $SavedPromotionsViewStateCopyWith<$Res> {
-  factory $SavedPromotionsViewStateCopyWith(SavedPromotionsViewState value,
-          $Res Function(SavedPromotionsViewState) _then) =
+  factory $SavedPromotionsViewStateCopyWith(
+          SavedPromotionsViewState value, $Res Function(SavedPromotionsViewState) _then) =
       _$SavedPromotionsViewStateCopyWithImpl;
   @useResult
   $Res call({SavedPromotionsViewVM vm});
 }
 
 /// @nodoc
-class _$SavedPromotionsViewStateCopyWithImpl<$Res>
-    implements $SavedPromotionsViewStateCopyWith<$Res> {
+class _$SavedPromotionsViewStateCopyWithImpl<$Res> implements $SavedPromotionsViewStateCopyWith<$Res> {
   _$SavedPromotionsViewStateCopyWithImpl(this._self, this._then);
 
   final SavedPromotionsViewState _self;
@@ -258,15 +256,12 @@ class _Initial implements SavedPromotionsViewState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$InitialCopyWith<_Initial> get copyWith => __$InitialCopyWithImpl<_Initial>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Initial &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _Initial && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -279,10 +274,8 @@ class _Initial implements SavedPromotionsViewState {
 }
 
 /// @nodoc
-abstract mixin class _$InitialCopyWith<$Res>
-    implements $SavedPromotionsViewStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) =
-      __$InitialCopyWithImpl;
+abstract mixin class _$InitialCopyWith<$Res> implements $SavedPromotionsViewStateCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
   @override
   @useResult
   $Res call({SavedPromotionsViewVM vm});
@@ -324,15 +317,12 @@ class _ChangeView implements SavedPromotionsViewState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ChangeViewCopyWith<_ChangeView> get copyWith =>
-      __$ChangeViewCopyWithImpl<_ChangeView>(this, _$identity);
+  _$ChangeViewCopyWith<_ChangeView> get copyWith => __$ChangeViewCopyWithImpl<_ChangeView>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _ChangeView &&
-            (identical(other.vm, vm) || other.vm == vm));
+        (other.runtimeType == runtimeType && other is _ChangeView && (identical(other.vm, vm) || other.vm == vm));
   }
 
   @override
@@ -345,11 +335,8 @@ class _ChangeView implements SavedPromotionsViewState {
 }
 
 /// @nodoc
-abstract mixin class _$ChangeViewCopyWith<$Res>
-    implements $SavedPromotionsViewStateCopyWith<$Res> {
-  factory _$ChangeViewCopyWith(
-          _ChangeView value, $Res Function(_ChangeView) _then) =
-      __$ChangeViewCopyWithImpl;
+abstract mixin class _$ChangeViewCopyWith<$Res> implements $SavedPromotionsViewStateCopyWith<$Res> {
+  factory _$ChangeViewCopyWith(_ChangeView value, $Res Function(_ChangeView) _then) = __$ChangeViewCopyWithImpl;
   @override
   @useResult
   $Res call({SavedPromotionsViewVM vm});

@@ -21,13 +21,15 @@ class MyFavoriteItemsView extends StatelessWidget {
         return Column(
           children: [
             Expanded(
-              child: ListView.separated(
-                key: const ValueKey(BusinessResultsViewMode.list),
+              // Tarjetas de favoritos: mas columnas en tableta, mismo tamaño
+              // de tarjeta (2026-09-12). Ver [ListaAdaptativa].
+              child: ListaAdaptativa(
+                claveDeLista: const ValueKey(BusinessResultsViewMode.list),
                 controller: ScrollController(),
-                itemCount: favoriteItems.length,
+                elementos: favoriteItems.length,
                 padding: _padding,
-                separatorBuilder: (_, __) => const SizedBox(height: 6),
-                itemBuilder: (context, index) {
+                separacion: 6,
+                constructor: (context, index) {
                   final favoriteItemDM = favoriteItems[index];
                   return _FavoriteItemsCard(
                     key: Key('my-items-from: ${favoriteItemDM.business?.uuid}'),

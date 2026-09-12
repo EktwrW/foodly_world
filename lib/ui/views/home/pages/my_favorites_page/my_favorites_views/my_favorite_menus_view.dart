@@ -23,13 +23,15 @@ class MyFavoriteMenusView extends StatelessWidget {
         return Column(
           children: [
             Expanded(
-              child: ListView.separated(
-                key: const Key('my-favs-menus-view'),
-                itemCount: favoriteMenus.length,
+              // Tarjetas de favoritos: mas columnas en tableta, mismo tamaño
+              // de tarjeta (2026-09-12). Ver [ListaAdaptativa].
+              child: ListaAdaptativa(
+                claveDeLista: const Key('my-favs-menus-view'),
+                elementos: favoriteMenus.length,
                 controller: ScrollController(),
                 padding: _padding,
-                separatorBuilder: (_, __) => const SizedBox(height: 6),
-                itemBuilder: (context, index) {
+                separacion: 6,
+                constructor: (context, index) {
                   final menu = favoriteMenus[index];
                   return _FavoriteMenusCard(
                     key: const Key('my-favs-menus-view'),
