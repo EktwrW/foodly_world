@@ -1,8 +1,8 @@
+import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
-import 'package:foodly_world/core/network/base/request_exception.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
 import 'package:foodly_world/core/services/auth_session_service.dart';
 import 'package:foodly_world/core/services/group_order_realtime_service.dart';
@@ -11,41 +11,33 @@ import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
 import 'package:foodly_world/ui/views/manager_orders/cubit/manager_orders_cubit.dart';
 import 'package:logger/logger.dart';
 
-/// El panel del manager leía la lista DOS veces por cada acción.
+/// Una acción del manager NO lee la lista. Nunca.
 ///
-/// MEDIDO EN PRODUCCIÓN el 2026-09-12, no deducido. Cuatro pares limpios, con
-/// el mismo tamaño de respuesta y el mismo PoP de Cloudflare —o sea un solo
-/// dispositivo pidiendo dos veces—:
+/// EL CAMINO HASTA AQUÍ, porque explica por qué el test dice lo que dice:
 ///
-///     17:23:06.606  y  17:23:06.806     (1178 bytes los dos)
-///     17:23:18.427  y  17:23:18.505     (1186 / 1186)
-///     17:23:32.475  y  17:23:33.546     (1179 / 1179)
-///     17:23:51.646  y  17:23:52.145     (1181 / 1181)
+///  1. El panel leía la lista entera después de cada acción, sólo para mover
+///     un cubo de los chips. Y la misma mutación emite `BusinessOrdersTouched`,
+///     que llega por Pusher y lee otra vez: DOS lecturas por acción, medidas
+///     en producción el 2026-09-12 (cuatro pares limpios, mismo tamaño de
+///     respuesta y mismo PoP de Cloudflare).
+///  2. Se quitó la lectura local y se dejó una red de seguridad de 2 s. Una
+///     lectura menos, pero la fila se quedaba a la vista hasta que llegara el
+///     evento: al cerrar una cuenta, o al mover una orden de cubo con un chip
+///     filtrando, hasta 2 s mostrando algo que el backend ya no incluye.
+///  3. Ahora la respuesta de la mutación trae los contadores y si la orden
+///     sigue en el panel (be-foodly #148). No hay nada que releer, y la red
+///     de seguridad —con su temporizador, sus reintentos y su constante—
+///     desaparece.
 ///
-/// Los dos disparadores:
-///
-///   1. `_applyAction` llamaba a `refetchSilently()` en la rama de éxito,
-///      SOLO para re-sincronizar los contadores de los chips.
-///   2. Esa misma mutación emite `BusinessOrdersTouched`, que llega por Pusher
-///      entre 52 ms y 1 s después y vuelve a llamar a `refetchSilently()`.
-///
-/// No es el ×2 que arregló el coalescer de lecturas: ahí eran dos oyentes del
-/// mismo evento en el mismo turno. Aquí son dos turnos distintos separados por
-/// la latencia del socket, así que ningún coalescer por turno los junta.
-///
-/// El arreglo: la acción ya no lee. Pide una resincronización y deja que la
-/// haga el evento, con una red de seguridad por si el socket está caído o el
-/// evento se pierde. La fila del manager se actualiza igual de rápido, porque
-/// eso lo hace el `emit` optimista con la respuesta de la propia mutación; lo
-/// único que espera son los contadores.
+/// `stillInPanel` lo decide el BACKEND a propósito: el predicado de "está en
+/// el panel" se corrigió tres veces en agosto de 2026, y replicarlo en Dart
+/// sería mantener dos copias de algo que ya costó caro con una.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late _RepoEspia repo;
   late _RealtimeEspia realtime;
   late ManagerOrdersCubit cubit;
-
-  const espera = Duration(milliseconds: 60);
 
   setUp(() {
     repo = _RepoEspia();
@@ -55,7 +47,6 @@ void main() {
       repo: repo,
       logger: Logger(level: Level.off),
       realtime: realtime,
-      esperaDeResincronizacion: espera,
     );
   });
 
@@ -64,16 +55,49 @@ void main() {
     await realtime.unwatchAll(); // el fallback a polling deja timers vivos
   });
 
-  test('una acción del manager NO lee la lista al instante', () async {
+  test('una acción del manager no lee la lista', () async {
     await cubit.load();
     expect(repo.lecturas, 1, reason: 'la carga inicial');
 
     await cubit.advanceFulfillment('a', 'ready');
 
-    expect(repo.lecturas, 1, reason: 'la acción no puede disparar su propia lectura');
+    expect(repo.lecturas, 1, reason: 'la acción no puede leer la lista');
   });
 
-  test('pero la fila SÍ se actualiza en el acto, sin esperar a nadie', () async {
+  /// Y no la lee NUNCA: ni al instante ni diferida. La versión anterior armaba
+  /// un temporizador de 2 s, así que esperar no bastaba para distinguirlas.
+  test('ni la lee más tarde', () async {
+    await cubit.load();
+    await cubit.advanceFulfillment('a', 'ready');
+
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+
+    expect(repo.lecturas, 1, reason: 'quedó un refetch diferido');
+  });
+
+  test('los contadores salen de la respuesta de la mutación', () async {
+    await cubit.load();
+    repo.contadores = const ManagerOrderCountsDM(preparing: 3, ready: 1);
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.counts.preparing, 3);
+    expect(cubit.state.counts.ready, 1);
+  });
+
+  test('y el total también, sin que el cliente sume los cubos', () async {
+    await cubit.load();
+    // El total es MAYOR que la suma de los cubos: el backend cuenta también
+    // los `fulfillment_status` que el cliente no conoce.
+    repo.contadores = const ManagerOrderCountsDM(pending: 1);
+    repo.total = 4;
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.total, 4, reason: 'sumar los cuatro cubos se queda corto');
+  });
+
+  test('la fila se actualiza en el acto', () async {
     await cubit.load();
 
     await cubit.advanceFulfillment('a', 'ready');
@@ -81,137 +105,62 @@ void main() {
     expect(
       cubit.state.orders.firstWhere((o) => o.uuid == 'a').fulfillmentStatus,
       GroupFulfillmentStatus.ready,
-      reason: 'el emit optimista con la respuesta de la mutación es lo que da la sensación de rápido',
     );
   });
 
-  test('el evento de esa mutación resincroniza, y UNA sola vez', () async {
+  /// EL CASO QUE MOTIVÓ TODO ESTO: una cuenta que se cierra sale del panel en
+  /// vivo en el acto, no "cuando llegue el evento".
+  test('una orden que deja el panel desaparece de la lista al instante', () async {
     await cubit.load();
+    repo.sigueEnElPanel = false;
+
     await cubit.advanceFulfillment('a', 'ready');
 
-    realtime.tocar(); // llega `BusinessOrdersTouched`
+    expect(
+      cubit.state.orders.where((o) => o.uuid == 'a'),
+      isEmpty,
+      reason: 'el panel de "en vivo" sigue mostrando una orden que el backend ya excluye',
+    );
+  });
+
+  /// Y una respuesta vieja —de un backend sin desplegar— no puede vaciar la
+  /// lista: sin el campo, la orden se queda.
+  test('sin el campo, la orden se queda en la lista', () async {
+    await cubit.load();
+    repo.sigueEnElPanel = null;
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.orders.map((o) => o.uuid), contains('a'));
+  });
+
+  /// Lo mismo con los contadores: sin ellos se conservan los que había, no se
+  /// ponen a cero.
+  test('sin contadores en la respuesta, se conservan los de antes', () async {
+    repo.contadores = const ManagerOrderCountsDM(pending: 7);
+    await cubit.load();
+    repo.contadores = null;
+
+    await cubit.advanceFulfillment('a', 'ready');
+
+    expect(cubit.state.counts.pending, 7);
+  });
+
+  test('el evento de realtime sigue leyendo, que es lo que NO hay que romper', () async {
+    await cubit.load();
+
+    realtime.tocar();
     await Future<void>.delayed(Duration.zero);
 
-    expect(repo.lecturas, 2, reason: 'carga + la del evento: una por acción, no dos');
-
-    // Y la red de seguridad ya no dispara: el evento la desarmó.
-    await Future<void>.delayed(espera * 3);
-    expect(repo.lecturas, 2, reason: 'la red de seguridad disparó además del evento');
-  });
-
-  test('si el evento NO llega, la red de seguridad resincroniza igual', () async {
-    await cubit.load();
-    await cubit.advanceFulfillment('a', 'ready');
-
-    await Future<void>.delayed(espera * 3);
-
-    expect(repo.lecturas, 2,
-        reason: 'con el socket caído los contadores se quedarían desincronizados para siempre');
-  });
-
-  test('varias acciones seguidas arman UNA sola red, no una por acción', () async {
-    await cubit.load();
-    await cubit.advanceFulfillment('a', 'ready');
-    await cubit.advanceFulfillment('a', 'delivered');
-    await cubit.advanceFulfillment('a', 'ready');
-
-    await Future<void>.delayed(espera * 3);
-
-    expect(repo.lecturas, 2, reason: 'tres acciones no pueden dejar tres lecturas encoladas');
-  });
-
-  /// EL FALLO QUE ENCONTRÓ LA REVISIÓN. La primera versión cancelaba la red
-  /// ANTES del `await`, o sea con el INTENTO y no con el éxito.
-  ///
-  /// Antes de esta pantalla había DOS lecturas por acción y la segunda tapaba
-  /// el fallo de la primera. Ahora sólo hay una, y si falla nadie la rescata:
-  /// el polling de 10 s SÓLO corre con el socket caído, así que justo en el
-  /// caso que esto optimiza —socket sano— los chips se quedaban congelados
-  /// hasta que llegara un evento de otra orden.
-  test('si la lectura del evento falla, la red sigue armada y reintenta', () async {
-    await cubit.load();
-    await cubit.advanceFulfillment('a', 'ready');
-
-    repo.fallaLaLectura = true;
-    realtime.tocar(); // el evento lee... y falla
-    await Future<void>.delayed(Duration.zero);
-    expect(repo.lecturas, 2);
-
-    repo.fallaLaLectura = false;
-    await Future<void>.delayed(espera * 3);
-
-    expect(repo.lecturas, 3,
-        reason: 'una lectura fallida no puede dejar los contadores viejos para siempre');
-  });
-
-  test('y si falla la propia red, se re-arma', () async {
-    await cubit.load();
-    repo.fallaLaLectura = true;
-    await cubit.advanceFulfillment('a', 'ready');
-
-    await Future<void>.delayed(espera * 3);
-    expect(repo.lecturas, greaterThan(1), reason: 'la red disparó');
-
-    repo.fallaLaLectura = false;
-    final antes = repo.lecturas;
-    await Future<void>.delayed(espera * 3);
-
-    expect(repo.lecturas, greaterThan(antes), reason: 'la red no se re-armó tras fallar');
-  });
-
-  /// Pero con tope: un backend caído no puede convertirse en un GET cada dos
-  /// segundos para siempre.
-  test('los reintentos tienen tope', () async {
-    await cubit.load();
-    repo.fallaLaLectura = true;
-    await cubit.advanceFulfillment('a', 'ready');
-
-    await Future<void>.delayed(espera * 20);
-
-    // carga + la red + 3 reintentos = 5 como mucho.
-    expect(repo.lecturas, lessThanOrEqualTo(5),
-        reason: 'la red se re-arma sin fin y martillea un backend caído');
-  });
-
-  /// El valor de PRODUCCIÓN, que no lo fijaba nada: los tests inyectan 60 ms,
-  /// así que ponerlo a cero —lo que restaura la doble lectura que esta PR
-  /// existe para borrar— pasaba la suite entera. Lo señaló la revisión.
-  test('la espera por defecto deja tiempo al evento sin dejar tirado al manager', () {
-    final porDefecto = ManagerOrdersCubit(
-      businessUuid: 'b1',
-      repo: repo,
-      logger: Logger(level: Level.off),
-    );
-    addTearDown(porDefecto.close);
-
-    // Medido en producción: el evento llegaba entre 52 ms y 1 s.
-    expect(
-      porDefecto.esperaDeResincronizacion,
-      greaterThan(const Duration(seconds: 1)),
-      reason: 'por debajo del máximo medido, la red dispara antes que el evento '
-          'y vuelve la doble lectura',
-    );
-    expect(
-      porDefecto.esperaDeResincronizacion,
-      lessThanOrEqualTo(const Duration(seconds: 5)),
-      reason: 'demasiado alto deja los contadores viejos si el evento se pierde',
-    );
-  });
-
-  test('cerrar el panel cancela la red de seguridad', () async {
-    await cubit.load();
-    await cubit.advanceFulfillment('a', 'ready');
-    await cubit.close();
-
-    await Future<void>.delayed(espera * 3);
-
-    expect(repo.lecturas, 1, reason: 'un cubit cerrado no puede seguir pidiendo');
+    expect(repo.lecturas, 2, reason: 'el panel dejó de escuchar el canal del negocio');
   });
 }
 
 class _RepoEspia implements GroupOrderRepo {
   int lecturas = 0;
-  bool fallaLaLectura = false;
+  ManagerOrderCountsDM? contadores = const ManagerOrderCountsDM();
+  int? total;
+  bool? sigueEnElPanel = true;
 
   static const _orden = GroupOrderDM(uuid: 'a', businessUuid: 'b1');
 
@@ -222,12 +171,10 @@ class _RepoEspia implements GroupOrderRepo {
     int? page,
   }) async {
     lecturas++;
-    if (fallaLaLectura) {
-      return ApiResult.failure(
-        AppRequestException(error: StateError('sin red'), stackTrace: StackTrace.current),
-      );
-    }
-    return const ApiResult.success(ManagerOrdersResponseDM(orders: [_orden]));
+    return ApiResult.success(ManagerOrdersResponseDM(
+      orders: const [_orden],
+      counts: contadores ?? const ManagerOrderCountsDM(),
+    ));
   }
 
   @override
@@ -239,20 +186,19 @@ class _RepoEspia implements GroupOrderRepo {
         groupOrder: _orden.copyWith(
           fulfillmentStatus: GroupFulfillmentStatus.values.byName(status),
         ),
+        panelCounts: contadores,
+        panelTotal: total,
+        stillInPanel: sigueEnElPanel,
       ));
 
   @override
   dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
 }
 
-/// Extiende el servicio REAL en vez de implementarlo.
-///
-/// `load()` hace `_sub = await _realtime?.watchBusiness(...)`, así que un fake
-/// que devuelva un `Future` sin completar cuelga el cubit entero — y
-/// `RealtimeSubscription` tiene constructor privado, o sea que no se puede
-/// fabricar uno. Delegando en el real sale una suscripción de verdad: el
-/// `_connect()` falla sin plugin de Pusher y cae a polling, que el `tearDown`
-/// limpia con `unwatchAll()`.
+/// Extiende el servicio REAL: `load()` hace
+/// `_sub = await _realtime?.watchBusiness(...)`, así que un fake que devuelva
+/// un `Future` sin completar cuelga el cubit, y `RealtimeSubscription` tiene
+/// constructor privado.
 class _RealtimeEspia extends GroupOrderRealtimeService {
   _RealtimeEspia() : super(authSession: _AuthFalso());
 

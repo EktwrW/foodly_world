@@ -1,5 +1,6 @@
 import 'package:foodly_world/core/enums/foodly_countries.dart';
 import 'package:foodly_world/core/enums/foodly_enums.dart';
+import 'package:foodly_world/data_models/group_orders/manager_orders_dm.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'group_order_dm.freezed.dart';
@@ -678,6 +679,18 @@ abstract class GroupOrderResponseDM with _$GroupOrderResponseDM {
     @JsonKey(name: 'group_order') required GroupOrderDM groupOrder,
     @JsonKey(name: 'my_share', fromJson: _money) @Default(0) double myShare,
     @JsonKey(name: 'my_participant_uuid') String? myParticipantUuid,
+
+    // Contexto del panel del manager: sólo lo traen las mutaciones del panel
+    // (be-foodly #148), y por eso son opcionales — el mismo DM lo devuelven
+    // endpoints del comensal, que no saben nada de chips ni de cubos.
+    //
+    // `stillInPanel` no lo calcula el cliente a propósito: el predicado de
+    // "está en el panel en vivo" vive en el backend, se corrigió tres veces en
+    // agosto de 2026, y replicarlo aquí sería mantener dos copias de algo que
+    // ya costó caro con una.
+    @JsonKey(name: 'counts') ManagerOrderCountsDM? panelCounts,
+    @JsonKey(name: 'counts_total') int? panelTotal,
+    @JsonKey(name: 'still_in_panel') bool? stillInPanel,
   }) = _GroupOrderResponseDM;
 
   factory GroupOrderResponseDM.fromJson(Map<String, dynamic> json) =>
