@@ -42,6 +42,36 @@ abstract class DioRequestHandler {
     // completo ('pt-PT', 'es-AR'); el backend se queda con el primario.
     options.headers[FoodlyStrings.ACCEPT_LANGUAGE] = FoodlyLocales.deviceLocaleTag;
 
+    // SUBIDAS: el techo del cuerpo no puede ser el global.
+    //
+    // `sendTimeout` acota la subida ENTERA del cuerpo, no un tramo de ella
+    // (`dio/src/adapters/io_adapter.dart:142` lo envuelve sobre
+    // `request.addStream`). Los 30 s que le sobran a un JSON de unos KB
+    // romperían lo que hoy funciona: el vídeo de una promo admite hasta 80 MB
+    // (`edit_promo_media.dart:205`) y una importación de carta sube hasta 25
+    // fotos de golpe.
+    //
+    // Se detecta por FORMA —`data is FormData`— y no con una lista de rutas:
+    // es exactamente la condición que hace cara la subida, y el endpoint
+    // multipart que se añada mañana lo hereda solo. Retrofit genera `FormData`
+    // para todo `@MultiPart()`. Va ANTES del `return` de los endpoints de
+    // auth porque `/register` es multipart: manda la foto de perfil.
+    //
+    // Solo se toca si el valor sigue siendo el global, para no pisar a quien
+    // pasó su propio `Options(sendTimeout:...)` —`MenuImportRepo` y
+    // `PlacesProxyRepo` lo hacen—. Aquí las `BaseOptions` ya vienen fundidas
+    // en `RequestOptions` (`Options.compose`), así que comparar contra el
+    // global es la única manera de distinguir «nadie dijo nada» de «el
+    // llamante eligió esto».
+    if (options.data is FormData) {
+      if (options.sendTimeout == FoodlyApiProvider.sendTimeout) {
+        options.sendTimeout = FoodlyApiProvider.uploadSendTimeout;
+      }
+      if (options.receiveTimeout == FoodlyApiProvider.receiveTimeout) {
+        options.receiveTimeout = FoodlyApiProvider.uploadReceiveTimeout;
+      }
+    }
+
     await authSessionService.validateAccessToken();
 
     // Public auth endpoints must NEVER be blocked by stale token checks.
@@ -138,7 +168,7 @@ abstract class DioRequestHandler {
         final refreshed = await authSessionService.silentRefresh();
         if (!refreshed) {
           authSessionService.notifyTokenExpired();
-          return;
+          return handler.reject(_sesionMuerta(options));
         }
         // After refresh, fall through to use the new access token below.
         //
@@ -150,7 +180,7 @@ abstract class DioRequestHandler {
         options.extra[_kSessionGenerationKey] = authSessionService.sessionGeneration;
       } else {
         authSessionService.notifyTokenExpired();
-        return;
+        return handler.reject(_sesionMuerta(options));
       }
     }
 
@@ -177,6 +207,38 @@ abstract class DioRequestHandler {
 
     return handler.next(options);
   }
+
+  /// Corta una petición cuya sesión ya no vale y que NO llegó a salir a la red.
+  ///
+  /// Aquí había un `return;` pelado, y en un interceptor de petición eso no
+  /// cancela nada. El futuro que espera quien llamó se completa cuando alguien
+  /// invoca `handler.next/resolve/reject`, y con nada más
+  /// (`dio/src/dio_mixin.dart:400`: el resultado del interceptor ES
+  /// `handler.future`). Sin esa llamada la petición se queda pendiente PARA
+  /// SIEMPRE — y ningún timeout de Dio la rescata, porque los timeouts
+  /// empiezan a contar en el adaptador, ya pasados los interceptores. Lo que
+  /// veía el usuario: la redirección a /login con el spinner de la pantalla
+  /// anterior girando debajo, hasta matar la app.
+  ///
+  /// Se rechaza con un 401 sintético y no con un tipo nuevo porque desde el
+  /// punto de vista de la app la petición ESTABA sin autenticar; el interceptor
+  /// solo se ahorró el viaje de ida y vuelta. Así `FoodlyErrorPresenter` la
+  /// clasifica como `auth` y se calla —el aviso ya lo pone
+  /// `notifyTokenExpired`— sin enseñarle un concepto nuevo a nadie.
+  ///
+  /// `reject` sin su segundo argumento NO pasa por `dioErrorHandler`
+  /// (`dio/src/interceptor.dart:84`), así que este 401 no puede realimentar
+  /// otro ciclo de refresco.
+  static DioException _sesionMuerta(RequestOptions options) => DioException(
+        requestOptions: options,
+        type: DioExceptionType.badResponse,
+        response: Response<dynamic>(
+          requestOptions: options,
+          statusCode: 401,
+          statusMessage: 'Unauthenticated',
+        ),
+        error: 'la sesión ya no vale; la petición no llegó a salir',
+      );
 
   /// Rutas que abren o renuevan una sesión, y por tanto crean una fila en la
   /// lista de sesiones activas del usuario.
