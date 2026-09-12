@@ -19,6 +19,7 @@ import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/dialogs/foodly_dialog.dart';
 import 'package:foodly_world/ui/shared_widgets/image/avatar_widget.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/snackbar_wdg.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
@@ -1428,54 +1429,59 @@ class _Content extends StatelessWidget {
         Expanded(
           // Pull-to-refresh (audit): re-consulta la orden a demanda — red
           // de seguridad si el socket/polling se perdió algún evento.
-          child: RefreshIndicator(
-            color: FoodlyThemes.primaryFoodly,
-            onRefresh: () => context.read<GroupOrderCubit>().refetch(),
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(12, 16, 12, 24),
-              children: [
-                // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
-                // de cocina (los eventos fulfillment_changed refrescan solos).
-                if (order.isConfirmed) ...[
-                  _ClientFulfillmentBanner(order: order),
-                  const SizedBox(height: 12),
-                ],
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _SectionTitle(S.current.groupOrderParticipants),
-                    if (order.isEditableCart)
-                      CustomRoundedNeumorphicButton(
-                        diameter: 24,
-                        tooltip: S.current.groupOrderInviteCta,
-                        onPressed: () => _onInvite(context),
-                        child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 18),
-                      ),
+          // Techo de lista (2026-09-12). Va DENTRO del Expanded, no sobre la
+          // Column: el pie de totales se pinta fuera y sigue a todo el ancho a
+          // proposito, porque se encarga el mismo de la barra de gestos.
+          child: ContentColumn.list(
+            child: RefreshIndicator(
+              color: FoodlyThemes.primaryFoodly,
+              onRefresh: () => context.read<GroupOrderCubit>().refetch(),
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(12, 16, 12, 24),
+                children: [
+                  // e2e F4a: con la orden pagada, el cliente ve EN VIVO el estado
+                  // de cocina (los eventos fulfillment_changed refrescan solos).
+                  if (order.isConfirmed) ...[
+                    _ClientFulfillmentBanner(order: order),
+                    const SizedBox(height: 12),
                   ],
-                ).paddingBottom(16),
-                // Ítems agrupados por participante (Expansible). Mi grupo abre
-                // expandido; el estado de expansión sobrevive a refreshes del
-                // cubit gracias a la key estable por uuid.
-                ...order.participants.map(
-                  (p) => ParticipantExpansibleTile(
-                    key: ValueKey(p.uuid),
-                    order: order,
-                    participant: p,
-                    initiallyExpanded: p.uuid == vm.myParticipantUuid,
-                    onRemoveItem:
-                        _canRemoveItemsOf(p) ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid) : null,
-                    // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
-                    // con VARIOS participantes — compartir "con la mesa" no
-                    // significa nada si estás solo (feedback e2e 2026-07-31).
-                    onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
-                        ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
-                        : null,
-                    onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
-                    paidByName: _paidByNameFor(p),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _SectionTitle(S.current.groupOrderParticipants),
+                      if (order.isEditableCart)
+                        CustomRoundedNeumorphicButton(
+                          diameter: 24,
+                          tooltip: S.current.groupOrderInviteCta,
+                          onPressed: () => _onInvite(context),
+                          child: const Icon(FontAwesome.user_plus_solid, color: FoodlyThemes.primaryFoodly, size: 18),
+                        ),
+                    ],
+                  ).paddingBottom(16),
+                  // Ítems agrupados por participante (Expansible). Mi grupo abre
+                  // expandido; el estado de expansión sobrevive a refreshes del
+                  // cubit gracias a la key estable por uuid.
+                  ...order.participants.map(
+                    (p) => ParticipantExpansibleTile(
+                      key: ValueKey(p.uuid),
+                      order: order,
+                      participant: p,
+                      initiallyExpanded: p.uuid == vm.myParticipantUuid,
+                      onRemoveItem:
+                          _canRemoveItemsOf(p) ? (item) => context.read<GroupOrderCubit>().removeItem(item.uuid) : null,
+                      // F2c: misma regla que el borrado (OPEN + dueño/host), y solo
+                      // con VARIOS participantes — compartir "con la mesa" no
+                      // significa nada si estás solo (feedback e2e 2026-07-31).
+                      onToggleSharedItem: (_canRemoveItemsOf(p) && !isBusy && order.participants.length > 1)
+                          ? (item) => context.read<GroupOrderCubit>().setItemShared(item.uuid, !item.shared)
+                          : null,
+                      onCover: (_canCover(p) && !isBusy) ? () => onCover(p) : null,
+                      paidByName: _paidByNameFor(p),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

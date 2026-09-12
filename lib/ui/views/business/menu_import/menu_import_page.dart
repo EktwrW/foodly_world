@@ -10,6 +10,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart'
 import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
@@ -213,27 +214,31 @@ class _UploadFormBody extends StatelessWidget {
     final vm = state.vm;
     final hasFiles = vm.selectedFiles.isNotEmpty;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const _HeroCard(),
-          const SizedBox(height: 20),
-          const _AiDisclaimerCard(),
-          const SizedBox(height: 24),
-          if (hasFiles) ...[
-            _SectionLabel(text: S.current.aiMenuImportSelectedPhotosLabel(vm.selectedFiles.length)),
-            const SizedBox(height: 12),
-            _SelectedPhotosStrip(files: vm.selectedFiles),
+    // Formulario de importacion: techo de LECTURA (2026-09-12). Es hero,
+    // explicacion y botones, no una coleccion.
+    return ContentColumn(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _HeroCard(),
             const SizedBox(height: 20),
+            const _AiDisclaimerCard(),
+            const SizedBox(height: 24),
+            if (hasFiles) ...[
+              _SectionLabel(text: S.current.aiMenuImportSelectedPhotosLabel(vm.selectedFiles.length)),
+              const SizedBox(height: 12),
+              _SelectedPhotosStrip(files: vm.selectedFiles),
+              const SizedBox(height: 20),
+            ],
+            _PickerActions(),
+            if (hasFiles) ...[
+              const SizedBox(height: 28),
+              _AnalyzeButton(businessMenuUuid: businessMenuUuid),
+            ],
           ],
-          _PickerActions(),
-          if (hasFiles) ...[
-            const SizedBox(height: 28),
-            _AnalyzeButton(businessMenuUuid: businessMenuUuid),
-          ],
-        ],
+        ),
       ),
     );
   }

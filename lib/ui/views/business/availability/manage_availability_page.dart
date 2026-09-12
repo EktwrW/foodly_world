@@ -2,6 +2,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/views/business/availability/cubit/availability_cubit.dart';
@@ -135,20 +136,26 @@ class _ManageAvailabilityPageState extends State<ManageAvailabilityPage> {
                       onRefresh: () async {
                         _fetchVisibleMonth();
                       },
-                      child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
-                        child: Column(
-                          children: [
-                            MonthCalendar(
-                              month: _visibleMonth,
-                              entriesForDate: vm.entriesForDate,
-                              isFullyBlocked: vm.isFullyBlocked,
-                              hasPartialBlocks: vm.hasPartialBlocks,
-                              onDayTap: (date) => _handleDayTap(context, vm, date),
-                              isLoading: isLoading,
-                            ),
-                          ],
+                      // Calendario: techo de LISTA, no de lectura (2026-09-12).
+                      // Una rejilla de dias no es texto; con 640 se quedaba
+                      // estrecha. Ojo: `MonthCalendar` lleva `crossAxisCount: 7`
+                      // clavado y eso NO se toca, son los dias de la semana.
+                      child: ContentColumn.list(
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
+                          child: Column(
+                            children: [
+                              MonthCalendar(
+                                month: _visibleMonth,
+                                entriesForDate: vm.entriesForDate,
+                                isFullyBlocked: vm.isFullyBlocked,
+                                hasPartialBlocks: vm.hasPartialBlocks,
+                                onDayTap: (date) => _handleDayTap(context, vm, date),
+                                isLoading: isLoading,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

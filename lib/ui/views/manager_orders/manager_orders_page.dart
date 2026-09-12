@@ -1,6 +1,7 @@
 import 'package:foodly_world/core/core_exports.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/lista_adaptativa.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/state/load_failure_view.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -216,30 +217,36 @@ class ManagerOrdersPage extends StatelessWidget {
                                 : RefreshIndicator(
                                     color: FoodlyThemes.primaryFoodly,
                                     onRefresh: cubit.refetchSilently,
-                                    child: ListView.separated(
-                                      physics: const AlwaysScrollableScrollPhysics(),
+                                    // Tarjetas de pedido en columnas (2026-09-12):
+                                    // en tableta caben mas, del mismo tamaño.
+                                    //
+                                    // El pie de "mostrando N de M" deja de ser un
+                                    // elemento +1 de la lista y pasa al `pie` de
+                                    // [ListaAdaptativa]: con varias columnas, un
+                                    // elemento mas seria una CELDA suelta en la
+                                    // ultima fila, no una linea centrada debajo.
+                                    // El panel NO pagina (ver el comentario del
+                                    // cubit): si hay mas de las que caben, se dice
+                                    // — un contador que no cuadra con la lista es
+                                    // peor que una lista corta y honesta.
+                                    child: ListaAdaptativa(
                                       padding: const EdgeInsets.fromLTRB(14, 8, 14, 20),
-                                      // +1 para el pie de "mostrando N de M". El
-                                      // panel NO pagina (ver el comentario del
-                                      // cubit): si hay más de las que caben, se dice
-                                      // — un contador que no cuadra con la lista es
-                                      // peor que una lista corta y honesta.
-                                      itemCount: state.orders.length + (state.isTruncated ? 1 : 0),
-                                      separatorBuilder: (_, __) => const SizedBox(height: 10),
-                                      itemBuilder: (context, i) {
-                                        if (i >= state.orders.length) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(top: 6),
-                                            child: Text(
-                                              S.current.managerOrdersTruncated(
-                                                state.orders.length,
-                                                state.total,
+                                      separacion: 10,
+                                      elementos: state.orders.length,
+                                      pie: state.isTruncated
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(top: 6),
+                                              child: Text(
+                                                S.current.managerOrdersTruncated(
+                                                  state.orders.length,
+                                                  state.total,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                                style: FoodlyTextStyles.caption,
                                               ),
-                                              textAlign: TextAlign.center,
-                                              style: FoodlyTextStyles.caption,
-                                            ),
-                                          );
-                                        }
+                                            )
+                                          : null,
+                                      constructor: (context, i) {
                                         final order = state.orders[i];
                                         return ManagerOrderCard(
                                           order: order,

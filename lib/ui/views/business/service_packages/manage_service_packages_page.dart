@@ -2,6 +2,7 @@ import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -114,82 +115,88 @@ class _ServicePackagesBody extends StatelessWidget {
           orElse: () {
             return RefreshIndicator(
               onRefresh: cubit.fetchAll,
-              child: CustomScrollView(
-                slivers: [
-                  // Professional profile summary card
-                  SliverToBoxAdapter(child: _ProfileSummaryCard(vm: vm)),
+              // Aqui el techo puede ir FUERA del CustomScrollView, y no por
+              // dentro como en las fichas de negocio (2026-09-12): esta
+              // pantalla no tiene portada a sangre, es contenido de principio
+              // a fin. Tarjetas de paquete, asi que techo de LISTA.
+              child: ContentColumn.list(
+                child: CustomScrollView(
+                  slivers: [
+                    // Professional profile summary card
+                    SliverToBoxAdapter(child: _ProfileSummaryCard(vm: vm)),
 
-                  // Section header
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${S.current.packages} (${vm.packages.length})',
-                            style: FoodlyTextStyles.actionsBodyBold,
-                          ),
-                          if (vm.packages.length > 1)
-                            TextButton.icon(
-                              onPressed: vm.isReordering ? null : () => _showReorderHint(context),
-                              icon: Icon(
-                                Bootstrap.arrows_move,
-                                size: 14,
-                                color: vm.isReordering ? Colors.grey : FoodlyThemes.primaryFoodly,
-                              ),
-                              label: Text(
-                                S.current.reorder,
-                                style: TextStyle(
-                                  fontSize: 12,
+                    // Section header
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${S.current.packages} (${vm.packages.length})',
+                              style: FoodlyTextStyles.actionsBodyBold,
+                            ),
+                            if (vm.packages.length > 1)
+                              TextButton.icon(
+                                onPressed: vm.isReordering ? null : () => _showReorderHint(context),
+                                icon: Icon(
+                                  Bootstrap.arrows_move,
+                                  size: 14,
                                   color: vm.isReordering ? Colors.grey : FoodlyThemes.primaryFoodly,
                                 ),
+                                label: Text(
+                                  S.current.reorder,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: vm.isReordering ? Colors.grey : FoodlyThemes.primaryFoodly,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  minimumSize: Size.zero,
+                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                ),
                               ),
-                              style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Package list or empty state
-                  if (vm.packages.isEmpty)
-                    SliverFillRemaining(
-                      child: FoodlyEmptyView(
-                        title: S.current.noPackagesYet,
-                        subtitle: S.current.servicePackagesEmptyBody,
-                        icon: const Icon(Bootstrap.box_seam, size: 40, color: FoodlyThemes.primaryFoodly),
-                        // La misma hoja que abre el «+» de la cabecera: sin
-                        // paquete existente es el formulario de creacion.
-                        // Explicar donde esta el boton salia mas caro que
-                        // ponerlo aqui.
-                        actionLabel: S.current.createPackage,
-                        onAction: () => _showEditPackageSheet(context, null),
-                      ),
-                    )
-                  else
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final pkg = vm.packages[index];
-                          return ServicePackageCard(
-                            package: pkg,
-                            isManager: true,
-                            onEdit: () => _showEditPackageSheet(context, pkg),
-                            onDelete: () => _confirmDelete(context, cubit, pkg.uuid!),
-                          );
-                        },
-                        childCount: vm.packages.length,
+                          ],
+                        ),
                       ),
                     ),
 
-                  // Bottom padding
-                  const SliverPadding(padding: EdgeInsets.only(bottom: 80)),
-                ],
+                    // Package list or empty state
+                    if (vm.packages.isEmpty)
+                      SliverFillRemaining(
+                        child: FoodlyEmptyView(
+                          title: S.current.noPackagesYet,
+                          subtitle: S.current.servicePackagesEmptyBody,
+                          icon: const Icon(Bootstrap.box_seam, size: 40, color: FoodlyThemes.primaryFoodly),
+                          // La misma hoja que abre el «+» de la cabecera: sin
+                          // paquete existente es el formulario de creacion.
+                          // Explicar donde esta el boton salia mas caro que
+                          // ponerlo aqui.
+                          actionLabel: S.current.createPackage,
+                          onAction: () => _showEditPackageSheet(context, null),
+                        ),
+                      )
+                    else
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final pkg = vm.packages[index];
+                            return ServicePackageCard(
+                              package: pkg,
+                              isManager: true,
+                              onEdit: () => _showEditPackageSheet(context, pkg),
+                              onDelete: () => _confirmDelete(context, cubit, pkg.uuid!),
+                            );
+                          },
+                          childCount: vm.packages.length,
+                        ),
+                      ),
+
+                    // Bottom padding
+                    const SliverPadding(padding: EdgeInsets.only(bottom: 80)),
+                  ],
+                ),
               ),
             );
           },

@@ -4,11 +4,11 @@ import 'package:foodly_world/core/consts/foodly_assets.dart' show FoodlyAssets;
 import 'package:foodly_world/core/services/dependency_injection_service.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart' show Asset;
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
-import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/save_and_cancel_buttons.dart' show SaveAndCancelButtons;
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel_basic.dart';
 import 'package:foodly_world/ui/shared_widgets/dropdown_buttons/foodly_dropdown_button_form_field.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/sliver_con_techo.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart' show FoodlySectionsTitle;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -65,7 +65,7 @@ class _BusinessPageState extends State<BusinessPage> {
             updatingLogo: (vm) => _dialogService.showLoading(),
             updatingMenu: (vm) => _dialogService.showLoading(),
             loaded: (vm) {
-              if(context.read<MainDrawerCubit>().state.vm.currentIndex != 1){
+              if (context.read<MainDrawerCubit>().state.vm.currentIndex != 1) {
                 context.read<MainDrawerCubit>().updateSelectedIndex(1);
               }
               _dialogService.hideLoading();
@@ -103,11 +103,12 @@ class _BusinessPageState extends State<BusinessPage> {
             body: CustomScrollView(
               slivers: [
                 const BusinessSliverAppBar(),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: UIDimens.SCREEN_PADDING_MOB,
-                    vertical: 28,
-                  ),
+                // La portada (`BusinessSliverAppBar`) sigue a sangre; el techo
+                // va solo sobre la ficha. Mismo tratamiento que la vista de
+                // visitante. Ver [SliverConTecho].
+                SliverConTecho(
+                  top: 28,
+                  bottom: 28,
                   sliver: SliverToBoxAdapter(
                     child: Column(
                       spacing: 40,

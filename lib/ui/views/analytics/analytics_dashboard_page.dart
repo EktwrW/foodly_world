@@ -4,6 +4,7 @@ import 'package:foodly_world/data_models/analytics/service_overview_dm.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart' show UIDecorations;
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart'
     show CustomRoundedNeumorphicButton;
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/shared_widgets/placeholders/foodly_empty_view.dart';
 import 'package:foodly_world/ui/shared_widgets/shimmer/home_shimmer_widgets.dart' show AnalyticsDashboardShimmer;
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
@@ -174,64 +175,69 @@ class _RestaurantDashboardBody extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       color: FoodlyThemes.primaryFoodly,
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(top: 16, bottom: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PeriodSelector(
-              selectedDays: vm.selectedDays,
-              onChanged: onPeriodChanged,
-            ),
-            const SizedBox(height: 16),
-            if (overview.kpis != null) KpiRow(kpis: overview.kpis!),
-            const SizedBox(height: 20),
-            if (overview.series != null)
-              DailyTrendsChart(
-                eventsDaily: overview.series!.eventsDaily,
-                reservationsDaily: overview.series!.reservationsDaily,
+      // Techo de lista (2026-09-12). El LayoutBuilder de mas abajo ya reparte
+      // donut y barras en fila a partir de 500 px; esto solo evita que los
+      // graficos se estiren a los 1032 de un iPad.
+      child: ContentColumn.list(
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(top: 16, bottom: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PeriodSelector(
+                selectedDays: vm.selectedDays,
+                onChanged: onPeriodChanged,
               ),
-            const SizedBox(height: 20),
-            if (overview.funnel != null && overview.funnel!.steps.isNotEmpty) FunnelChart(funnel: overview.funnel!),
-            const SizedBox(height: 20),
-            if (overview.breakdowns != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final wide = constraints.maxWidth > 500;
+              const SizedBox(height: 16),
+              if (overview.kpis != null) KpiRow(kpis: overview.kpis!),
+              const SizedBox(height: 20),
+              if (overview.series != null)
+                DailyTrendsChart(
+                  eventsDaily: overview.series!.eventsDaily,
+                  reservationsDaily: overview.series!.reservationsDaily,
+                ),
+              const SizedBox(height: 20),
+              if (overview.funnel != null && overview.funnel!.steps.isNotEmpty) FunnelChart(funnel: overview.funnel!),
+              const SizedBox(height: 20),
+              if (overview.breakdowns != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final wide = constraints.maxWidth > 500;
 
-                    final donut = overview.breakdowns!.reservationsByStatus.isNotEmpty
-                        ? ReservationsDonut(items: overview.breakdowns!.reservationsByStatus)
-                        : null;
+                      final donut = overview.breakdowns!.reservationsByStatus.isNotEmpty
+                          ? ReservationsDonut(items: overview.breakdowns!.reservationsByStatus)
+                          : null;
 
-                    final bar = overview.breakdowns!.topEventTypes.isNotEmpty
-                        ? TopEventsBar(items: overview.breakdowns!.topEventTypes)
-                        : null;
+                      final bar = overview.breakdowns!.topEventTypes.isNotEmpty
+                          ? TopEventsBar(items: overview.breakdowns!.topEventTypes)
+                          : null;
 
-                    if (wide && donut != null && bar != null) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      if (wide && donut != null && bar != null) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: donut),
+                            const SizedBox(width: 12),
+                            Expanded(child: bar),
+                          ],
+                        );
+                      }
+
+                      return Column(
                         children: [
-                          Expanded(child: donut),
-                          const SizedBox(width: 12),
-                          Expanded(child: bar),
+                          if (donut != null) donut,
+                          if (donut != null && bar != null) const SizedBox(height: 16),
+                          if (bar != null) bar,
                         ],
                       );
-                    }
-
-                    return Column(
-                      children: [
-                        if (donut != null) donut,
-                        if (donut != null && bar != null) const SizedBox(height: 16),
-                        if (bar != null) bar,
-                      ],
-                    );
-                  },
+                    },
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -256,69 +262,74 @@ class _ServiceDashboardBody extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       color: FoodlyThemes.primaryFoodly,
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(top: 16, bottom: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PeriodSelector(
-              selectedDays: vm.selectedDays,
-              onChanged: onPeriodChanged,
-            ),
-            const SizedBox(height: 16),
-            if (overview.kpis != null) ServiceKpiRow(kpis: overview.kpis!),
-            const SizedBox(height: 20),
-            if (overview.series != null)
-              DailyTrendsChart(
-                eventsDaily: overview.series!.eventsDaily,
-                // The service flavour reuses the chart with `bookingsDaily`
-                // sitting in the slot that the restaurant flavour fills with
-                // `reservationsDaily`. Same chart shape, different label.
-                reservationsDaily: overview.series!.bookingsDaily,
-                primaryLabel: S.current.analyticsBookings,
+      // Techo de lista (2026-09-12). El LayoutBuilder de mas abajo ya reparte
+      // donut y barras en fila a partir de 500 px; esto solo evita que los
+      // graficos se estiren a los 1032 de un iPad.
+      child: ContentColumn.list(
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(top: 16, bottom: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PeriodSelector(
+                selectedDays: vm.selectedDays,
+                onChanged: onPeriodChanged,
               ),
-            const SizedBox(height: 20),
-            if (overview.funnel != null && overview.funnel!.steps.isNotEmpty)
-              ServiceFunnelChart(funnel: overview.funnel!),
-            const SizedBox(height: 20),
-            if (overview.breakdowns != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final wide = constraints.maxWidth > 500;
+              const SizedBox(height: 16),
+              if (overview.kpis != null) ServiceKpiRow(kpis: overview.kpis!),
+              const SizedBox(height: 20),
+              if (overview.series != null)
+                DailyTrendsChart(
+                  eventsDaily: overview.series!.eventsDaily,
+                  // The service flavour reuses the chart with `bookingsDaily`
+                  // sitting in the slot that the restaurant flavour fills with
+                  // `reservationsDaily`. Same chart shape, different label.
+                  reservationsDaily: overview.series!.bookingsDaily,
+                  primaryLabel: S.current.analyticsBookings,
+                ),
+              const SizedBox(height: 20),
+              if (overview.funnel != null && overview.funnel!.steps.isNotEmpty)
+                ServiceFunnelChart(funnel: overview.funnel!),
+              const SizedBox(height: 20),
+              if (overview.breakdowns != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final wide = constraints.maxWidth > 500;
 
-                    final donut = overview.breakdowns!.bookingsByStatus.isNotEmpty
-                        ? ReservationsDonut(items: overview.breakdowns!.bookingsByStatus)
-                        : null;
+                      final donut = overview.breakdowns!.bookingsByStatus.isNotEmpty
+                          ? ReservationsDonut(items: overview.breakdowns!.bookingsByStatus)
+                          : null;
 
-                    final bar = overview.breakdowns!.topPackages.isNotEmpty
-                        ? TopPackagesBar(items: overview.breakdowns!.topPackages)
-                        : null;
+                      final bar = overview.breakdowns!.topPackages.isNotEmpty
+                          ? TopPackagesBar(items: overview.breakdowns!.topPackages)
+                          : null;
 
-                    if (wide && donut != null && bar != null) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      if (wide && donut != null && bar != null) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: donut),
+                            const SizedBox(width: 12),
+                            Expanded(child: bar),
+                          ],
+                        );
+                      }
+
+                      return Column(
                         children: [
-                          Expanded(child: donut),
-                          const SizedBox(width: 12),
-                          Expanded(child: bar),
+                          if (donut != null) donut,
+                          if (donut != null && bar != null) const SizedBox(height: 16),
+                          if (bar != null) bar,
                         ],
                       );
-                    }
-
-                    return Column(
-                      children: [
-                        if (donut != null) donut,
-                        if (donut != null && bar != null) const SizedBox(height: 16),
-                        if (bar != null) bar,
-                      ],
-                    );
-                  },
+                    },
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

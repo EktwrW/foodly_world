@@ -9,6 +9,7 @@ import 'package:foodly_world/generated/l10n.dart';
 import 'package:foodly_world/ui/constants/ui_decorations.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_neumorphic_button.dart';
 import 'package:foodly_world/ui/shared_widgets/buttons/custom_rounded_neumorphic_button.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/content_column.dart';
 import 'package:foodly_world/ui/theme/foodly_text_styles.dart';
 import 'package:foodly_world/ui/theme/foodly_themes.dart';
 import 'package:foodly_world/ui/views/group_orders/widgets/foodly_group_dialogs.dart';
@@ -154,162 +155,167 @@ class _ManagerOrderDetailPageState extends State<ManagerOrderDetailPage> {
           ),
           body: SafeArea(
             top: false,
-            child: Column(
-              children: [
-                ManagerFulfillmentStepper(status: order.fulfillmentStatus),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 2, 16, 6),
-                  child: Row(
-                    children: [
-                      Text(S.current.groupOrderParticipants, style: FoodlyTextStyles.sectionsTitle),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          S.current.managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
-                          style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Affordance del checklist (e2e F4a): antes NADA indicaba que
-                // los ítems se tocaban para marcar entrega.
-                if (canCheck)
+            // Detalle de pedido: techo de LISTA (2026-09-12). Lleva el
+            // stepper de estado, las lineas agrupadas por comensal y los
+            // totales — es una coleccion, no un texto largo.
+            child: ContentColumn.list(
+              child: Column(
+                children: [
+                  ManagerFulfillmentStepper(status: order.fulfillmentStatus),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    padding: const EdgeInsets.fromLTRB(16, 2, 16, 6),
                     child: Row(
                       children: [
-                        const Icon(Icons.touch_app_rounded, size: 13, color: FoodlyThemes.secondaryFoodly),
-                        const SizedBox(width: 4),
-                        Expanded(
+                        Text(S.current.groupOrderParticipants, style: FoodlyTextStyles.sectionsTitle),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: FoodlyThemes.tertiaryFoodly.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           child: Text(
-                            S.current.managerChecklistHint,
-                            style:
-                                FoodlyTextStyles.caption.copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
+                            S.current.managerItemsDelivered(order.deliveredItemsCount, order.liveItemsCount),
+                            style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40), fontSize: 10),
                           ),
                         ),
                       ],
                     ),
                   ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                    children: [
-                      for (final p in order.participants)
-                        // Con key: ahora la fila guarda estado propio (el ítem
-                        // en vuelo) y sin ella un reordenamiento de la lista se
-                        // lo pasaría al comensal de al lado.
-                        _ParticipantChecklist(
-                          key: ValueKey(p.uuid),
-                          order: order,
-                          participant: p,
-                          cubit: cubit,
-                        ),
-                    ],
-                  ),
-                ),
-                // CTA zone (maqueta 2): un CTA principal + atajos.
-                Container(
-                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 16),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                    boxShadow: [BoxShadow(color: Color(0x141B1015), blurRadius: 18, offset: Offset(0, -6))],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // e2e 2026-08-08: el BE exige `confirmed` para TODA
-                      // acción de cocina (advance, setItemDelivered,
-                      // markAllDelivered). No alcanza con "no terminal":
-                      // `locked` también entra al panel y tampoco la acepta.
-                      if (!order.isConfirmed)
-                        _ClosedTabNotice(order: order)
-                      else if (next != null) ...[
-                        // Sin fricción (decisión Hector e2e F4a): ENTREGADA
-                        // siempre habilitada — el BE auto-tilda el checklist.
-                        CustomNeumorphicButton(
-                          text: next.$1,
-                          disabled: false,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          onPressed: () => cubit.advanceFulfillment(order.uuid, next.$2.name),
-                        ),
-                        // Saltable (decisión de producto): entregar TODO de una,
-                        // sin pasar por los estados intermedios.
-                        if (order.fulfillmentStatus != GroupFulfillmentStatus.ready)
-                          TextButton(
-                            // e2e F4b: SOLO deliverAll — el BE ya auto-entrega
-                            // la orden al completarse el checklist. El advance
-                            // que había acá daba 409 (delivered→delivered) y
-                            // mostraba un modal de error tras una acción OK.
-                            onPressed: () => cubit.deliverAll(order.uuid),
+                  // Affordance del checklist (e2e F4a): antes NADA indicaba que
+                  // los ítems se tocaban para marcar entrega.
+                  if (canCheck)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.touch_app_rounded, size: 13, color: FoodlyThemes.secondaryFoodly),
+                          const SizedBox(width: 4),
+                          Expanded(
                             child: Text(
-                              S.current.managerDeliverAllAndClose,
-                              style: FoodlyTextStyles.captionPurpleBold,
+                              S.current.managerChecklistHint,
+                              style: FoodlyTextStyles.caption
+                                  .copyWith(fontSize: 10.5, color: FoodlyThemes.secondaryFoodly),
                             ),
-                          ).paddingTop(12),
-                      ] else
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                      children: [
+                        for (final p in order.participants)
+                          // Con key: ahora la fila guarda estado propio (el ítem
+                          // en vuelo) y sin ella un reordenamiento de la lista se
+                          // lo pasaría al comensal de al lado.
+                          _ParticipantChecklist(
+                            key: ValueKey(p.uuid),
+                            order: order,
+                            participant: p,
+                            cubit: cubit,
+                          ),
+                      ],
+                    ),
+                  ),
+                  // CTA zone (maqueta 2): un CTA principal + atajos.
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(14, 12, 14, 16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                      boxShadow: [BoxShadow(color: Color(0x141B1015), blurRadius: 18, offset: Offset(0, -6))],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // e2e 2026-08-08: el BE exige `confirmed` para TODA
+                        // acción de cocina (advance, setItemDelivered,
+                        // markAllDelivered). No alcanza con "no terminal":
+                        // `locked` también entra al panel y tampoco la acepta.
+                        if (!order.isConfirmed)
+                          _ClosedTabNotice(order: order)
+                        else if (next != null) ...[
+                          // Sin fricción (decisión Hector e2e F4a): ENTREGADA
+                          // siempre habilitada — el BE auto-tilda el checklist.
+                          CustomNeumorphicButton(
+                            text: next.$1,
+                            disabled: false,
+                            margin: const EdgeInsets.symmetric(vertical: 6),
+                            onPressed: () => cubit.advanceFulfillment(order.uuid, next.$2.name),
+                          ),
+                          // Saltable (decisión de producto): entregar TODO de una,
+                          // sin pasar por los estados intermedios.
+                          if (order.fulfillmentStatus != GroupFulfillmentStatus.ready)
+                            TextButton(
+                              // e2e F4b: SOLO deliverAll — el BE ya auto-entrega
+                              // la orden al completarse el checklist. El advance
+                              // que había acá daba 409 (delivered→delivered) y
+                              // mostraba un modal de error tras una acción OK.
+                              onPressed: () => cubit.deliverAll(order.uuid),
+                              child: Text(
+                                S.current.managerDeliverAllAndClose,
+                                style: FoodlyTextStyles.captionPurpleBold,
+                              ),
+                            ).paddingTop(12),
+                        ] else
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.check_circle_rounded, color: Color(0xFF0B8A40), size: 18),
+                                const SizedBox(width: 6),
+                                Text(
+                                  S.current.managerBadgeDelivered,
+                                  style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        // F4b: cerrar la cuenta cobrada FUERA de Foodly. En un
+                        // restaurante tradicional es el desenlace más común, y
+                        // sin esto la orden quedaba viva para siempre en el
+                        // panel. Solo con cuenta abierta y sin un pago en vuelo;
+                        // el MOTIVO lo decide la hoja según lo ya cobrado —
+                        // `partially_paid` cuando entró dinero por la app, que
+                        // es lo único que el BE acepta ahí.
+                        // F4b: la mesa avisó que paga en el mostrador. El aviso
+                        // va junto al botón de cerrar porque son la misma
+                        // acción vista desde los dos lados — el mesero cobra y
+                        // confirma acá mismo.
+                        if (order.isAwaitingCashPayment) ...[
+                          const SizedBox(height: 8),
+                          Row(
                             children: [
-                              const Icon(Icons.check_circle_rounded, color: Color(0xFF0B8A40), size: 18),
+                              const Icon(Icons.storefront_rounded, size: 16, color: kManagerAmber),
                               const SizedBox(width: 6),
-                              Text(
-                                S.current.managerBadgeDelivered,
-                                style: FoodlyTextStyles.captionBold.copyWith(color: const Color(0xFF0B8A40)),
+                              Expanded(
+                                child: Text(
+                                  S.current.managerAwaitingCashNotice,
+                                  style: FoodlyTextStyles.caption.copyWith(fontSize: 10.5),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      // F4b: cerrar la cuenta cobrada FUERA de Foodly. En un
-                      // restaurante tradicional es el desenlace más común, y
-                      // sin esto la orden quedaba viva para siempre en el
-                      // panel. Solo con cuenta abierta y sin un pago en vuelo;
-                      // el MOTIVO lo decide la hoja según lo ya cobrado —
-                      // `partially_paid` cuando entró dinero por la app, que
-                      // es lo único que el BE acepta ahí.
-                      // F4b: la mesa avisó que paga en el mostrador. El aviso
-                      // va junto al botón de cerrar porque son la misma
-                      // acción vista desde los dos lados — el mesero cobra y
-                      // confirma acá mismo.
-                      if (order.isAwaitingCashPayment) ...[
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.storefront_rounded, size: 16, color: kManagerAmber),
-                            const SizedBox(width: 6),
-                            Expanded(
-                              child: Text(
-                                S.current.managerAwaitingCashNotice,
-                                style: FoodlyTextStyles.caption.copyWith(fontSize: 10.5),
-                              ),
+                        ],
+                        if (order.canBeClosedByBusiness) ...[
+                          const SizedBox(height: 4),
+                          TextButton.icon(
+                            icon: const Icon(Icons.receipt_long_rounded, size: 18),
+                            label: Text(S.current.managerCloseTab),
+                            style: TextButton.styleFrom(
+                              foregroundColor: FoodlyThemes.primaryFoodly,
                             ),
-                          ],
-                        ),
-                      ],
-                      if (order.canBeClosedByBusiness) ...[
-                        const SizedBox(height: 4),
-                        TextButton.icon(
-                          icon: const Icon(Icons.receipt_long_rounded, size: 18),
-                          label: Text(S.current.managerCloseTab),
-                          style: TextButton.styleFrom(
-                            foregroundColor: FoodlyThemes.primaryFoodly,
+                            onPressed: () => _onCloseTab(context, cubit, order),
                           ),
-                          onPressed: () => _onCloseTab(context, cubit, order),
-                        ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
