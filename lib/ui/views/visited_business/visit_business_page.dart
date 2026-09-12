@@ -25,9 +25,9 @@ import 'package:foodly_world/core/services/pending_menu_jump.dart';
 import 'package:foodly_world/core/utils/assets_handler/assets_handler.dart';
 import 'package:foodly_world/core/utils/url_launcher.dart';
 import 'package:foodly_world/data_models/reviews/review_dm.dart' show ReviewDM;
-import 'package:foodly_world/ui/constants/ui_dimensions.dart';
 import 'package:foodly_world/ui/shared_widgets/cards/review_card.dart';
 import 'package:foodly_world/ui/shared_widgets/carousel/foodly_carousel_basic.dart';
+import 'package:foodly_world/ui/shared_widgets/layout/sliver_con_techo.dart';
 import 'package:foodly_world/ui/shared_widgets/snackbar/foodly_snackbars.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/email_phone_text_links.dart';
 import 'package:foodly_world/ui/shared_widgets/texts/foodly_sections_text_wdgs.dart';
@@ -130,11 +130,11 @@ class _VisitedBusinessPageState extends State<VisitedBusinessPage> {
           body: CustomScrollView(
             slivers: [
               const VisitBusinessSliverAppBar(),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: UIDimens.SCREEN_PADDING_MOB,
-                  vertical: 28,
-                ),
+              // La portada (`VisitBusinessSliverAppBar`) sigue a sangre; el
+              // techo va solo sobre el texto de la ficha. Ver [SliverConTecho].
+              SliverConTecho(
+                top: 28,
+                bottom: 28,
                 sliver: SliverList.list(
                   children: const [
                     _AddressWdg(key: Key('visited-business-address')),
