@@ -188,10 +188,14 @@ void main() {
       await segundoJoin;
       expect(cubit.state?.uuid, 'oB');
 
+      final antes = cliente.peticiones;
       cliente.fallar(1, 404); // oA ya no existe, y la respuesta llega ahora
       await lecturaDeA;
+      await _turno();
 
       expect(cubit.state?.uuid, 'oB', reason: 'el 404 era de la orden vieja');
+      expect(cliente.peticiones, antes,
+          reason: 'un veredicto sobre OTRA orden no merece ni una re-lectura');
     });
 
     /// LA MUTACIÓN QUE SOBREVIVIÓ AL PRIMER BARRIDO, y por eso está este caso.
@@ -226,6 +230,89 @@ void main() {
       expect(cubit.state, isNull, reason: 'esa orden es del usuario que se fue');
     });
 
+    /// CUARTO HALLAZGO, y lo predijo la revisión antes de que existiera el
+    /// código: juzgar el 404/403 SÓLO por uuid es más débil que la generación
+    /// en un eje. El host me saca de la mesa (su evento lanza R1, que dará
+    /// 403) y dentro de esa ventana me vuelvo a unir: MISMO uuid, así que el
+    /// 403 tardío me vaciaba el carrito al que acababa de volver.
+    ///
+    /// Por eso una respuesta que llegó tarde no se cree a ciegas: se vuelve a
+    /// preguntar una vez. Si de verdad ya no es mía, el reintento lo confirma.
+    test('un 403 tardío no me echa de la orden a la que acabo de volver', () async {
+      final j1 = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'antes');
+      await j1;
+
+      final r1 = cubit.refresh(); // del evento: me sacaron de la mesa
+
+      final j2 = cubit.joinWithCode('ABC123'); // me re-uno, MISMO uuid
+      cliente.responder(2, mesa: 'me-reuni');
+      await j2;
+
+      cliente.fallar(1, 403); // R1 llega ahora
+      await r1;
+      await _turno();
+      cliente.responder(3, mesa: 'me-reuni'); // el reintento: sigue siendo mía
+      await _turno();
+
+      expect(cubit.state?.tableLabel, 'me-reuni');
+    });
+
+    /// Y el reintento no puede tapar un borrado de verdad: si la orden ya no
+    /// existe, el reintento vuelve a dar 404 y ahí sí se vacía.
+    test('pero si el reintento confirma el 404, el carrito se vacía', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final lectura = cubit.refresh();
+      final plato = cubit.addFood('food', 'f1', version: Version.regular);
+      cliente.responder(2, mesa: 'con-plato');
+      await plato;
+
+      cliente.fallar(1, 404);
+      await lectura;
+      await _turno();
+      expect(cliente.peticiones, 4, reason: 'el reintento sale una vez');
+
+      cliente.fallar(3, 404); // el reintento lo confirma
+      await _turno();
+
+      expect(cubit.state, isNull);
+      expect(cliente.peticiones, 4, reason: 'y no se reintenta el reintento');
+    });
+
+    /// El TOPE del reintento. Sólo se distingue si algo emite MIENTRAS el
+    /// reintento viaja: sin tope, ese reintento vuelve a llegar «tarde» y pide
+    /// otro, y otro, mientras siga habiendo actividad. Una cadena sin fin de
+    /// peticiones sobre una orden que ya no existe.
+    test('el reintento es la última palabra, no encadena otro', () async {
+      final join = cubit.joinWithCode('ABC123');
+      cliente.responder(0, mesa: 'inicial');
+      await join;
+
+      final lectura = cubit.refresh();
+      final plato = cubit.addFood('food', 'f1', version: Version.regular);
+      cliente.responder(2, mesa: 'con-plato');
+      await plato;
+
+      cliente.fallar(1, 404);
+      await lectura;
+      await _turno();
+      expect(cliente.peticiones, 4, reason: 'salió el reintento');
+
+      // Otra emisión MIENTRAS el reintento viaja: vuelve a dejarlo «tarde».
+      final otro = cubit.addFood('food', 'f2', version: Version.regular);
+      cliente.responder(4, mesa: 'con-otro-plato');
+      await otro;
+
+      cliente.fallar(3, 404); // el reintento lo confirma igual
+      await _turno();
+
+      expect(cubit.state, isNull, reason: 'el reintento ya preguntó: se acabó');
+      expect(cliente.peticiones, 5, reason: 'y no encadena un tercero');
+    });
+
     /// TERCER HALLAZGO DE LA REVISIÓN: `syncForBusiness` tenía la misma
     /// carrera y ninguna guarda. Se llama al abrir el menú de un negocio, así
     /// que basta con cerrar sesión antes de que vuelva `/mine`.
@@ -252,31 +339,6 @@ void main() {
       await sync;
 
       expect(cubit.state?.uuid, 'oA');
-    });
-
-    /// OTRO HALLAZGO DE LA REVISIÓN. Juzgar el 404 por generación lo perdía:
-    /// «esta orden dejó de ser mía» sigue siendo verdad aunque la respuesta
-    /// llegue tarde, y el evento `deleted` ya se gastó —el backend lo emite
-    /// ANTES de borrar, justo para que refetcheemos— así que no viene otro. El
-    /// chip se quedaba con una orden borrada: monto, notificación, y al tocarlo
-    /// una pantalla de error. Por eso esa rama se juzga por uuid.
-    test('un 404 que llega tarde sigue vaciando el carrito', () async {
-      final join = cubit.joinWithCode('ABC123');
-      cliente.responder(0, mesa: 'inicial');
-      await join;
-
-      final lectura = cubit.refresh(); // sale para o1 y se queda en vuelo
-
-      // Un plato que salió ANTES del borrado y responde bien: emite, y con la
-      // guarda por generación eso condenaba al 404 de abajo.
-      final plato = cubit.addFood('food', 'f1', version: Version.regular);
-      cliente.responder(2, mesa: 'con-plato');
-      await plato;
-
-      cliente.fallar(1, 404); // el host ya la había borrado
-      await lectura;
-
-      expect(cubit.state, isNull, reason: 'la orden ya no existe: el chip se va');
     });
 
     /// El control: un 404 de la orden que SÍ está en pantalla tiene que seguir

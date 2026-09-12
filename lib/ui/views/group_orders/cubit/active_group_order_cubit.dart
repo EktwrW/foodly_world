@@ -299,7 +299,7 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
   }
 
   /// Re-lee la orden activa desde el backend (p. ej. al volver del detalle).
-  Future<void> refresh({bool coalesce = false}) async {
+  Future<void> refresh({bool coalesce = false, bool esReintento = false}) async {
     final order = state;
     if (order == null) return;
     final generacion = ++_generacion;
@@ -326,13 +326,22 @@ class ActiveGroupOrderCubit extends Cubit<GroupOrderDM?> {
         // SOLO esos dos. Un corte de red, un 500 o un timeout no pueden
         // vaciarle el carrito a nadie: ahí la orden sigue existiendo y lo
         // correcto es conservarla hasta poder confirmarlo.
-        //
-        // Esto NO se juzga por generación: «esta orden dejó de ser mía» sigue
-        // siendo verdad aunque la respuesta llegue tarde, y descartarla dejaba
-        // el chip con una orden borrada (no hay segundo evento que lo repare).
-        // Lo que sí hay que comprobar es que el carrito siga siendo ESA orden.
         final code = e.statusCode;
-        if ((code == 404 || code == 403) && state?.uuid == order.uuid) end();
+        if (code != 404 && code != 403) return;
+
+        // El carrito ya es OTRA orden: este veredicto no habla de ella.
+        if (state?.uuid != order.uuid) return;
+
+        // Si nadie tocó el carrito mientras esto viajaba, es la última palabra.
+        // Si algo lo tocó, NO se cree a ciegas —pude RE-UNIRME a la misma orden
+        // en esa ventana— pero tampoco se tira: se vuelve a preguntar, una sola
+        // vez. Descartarlo sin más dejaba el chip con una orden borrada, y no
+        // hay segundo evento que lo repare: `deleted` se emite ANTES de borrar.
+        if (generacion == _generacion || esReintento) {
+          end();
+        } else {
+          unawaited(refresh(esReintento: true));
+        }
       },
     );
   }

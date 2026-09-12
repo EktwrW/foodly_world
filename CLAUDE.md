@@ -2438,13 +2438,37 @@ estrenar, así que pasaba con la mutación puesta. Hay que estrenarlo antes: joi
 `end()`, y recién entonces la carrera. **Ese caso protege código que ya estaba en
 `main`**, no algo que arregle esta PR.
 
-**El 404 y el 403 se juzgan por uuid, no por generación.** `refresh()` los trata
-como «esta orden dejó de ser mía» y llama a `end()`. Pasarlos por la guarda de
-generación los perdía: el backend emite `deleted` **antes** de borrar, justo para
-que refetcheemos, así que **no viene un segundo evento** y el chip se quedaba con
-una orden borrada —monto, notificación ongoing, y al tocarlo una pantalla de
-error—. «El sistema se cura solo» no aplica ahí. Lo que sí hay que comprobar es
-que el carrito siga siendo ESA orden, y eso es una comparación de uuid.
+**El 404 y el 403 NO se juzgan por generación, y tampoco basta el uuid.** Ésta
+fue la parte que costó tres intentos, así que la regla entera:
+
+`refresh()` trata el 404/403 como «esta orden dejó de ser mía» y llama a
+`end()`, que vacía el carrito. Pasarlos por la guarda de generación los perdía:
+el backend emite `deleted` **antes** de borrar, justo para que refetcheemos, así
+que **no viene un segundo evento** y el chip se quedaba con una orden borrada
+—monto, notificación ongoing, y al tocarlo una pantalla de error—. «El sistema
+se cura solo» no aplica ahí.
+
+El segundo intento fue juzgarlo por uuid, y la revisión **predijo el agujero
+antes de que el código existiera**: el uuid no distingue épocas de pertenencia.
+El host me saca de la mesa (su evento lanza R1, que dará 403) y dentro de esa
+ventana me vuelvo a unir con el código: **mismo uuid**, así que el 403 tardío me
+vaciaba el carrito al que acababa de volver. Verificado con una sonda antes de
+tocar nada. Por ese eje la regla de uuid es **más débil** que la de generación.
+
+Lo que hay ahora no elige entre las dos: **una respuesta que llegó tarde no se
+cree a ciegas, se vuelve a preguntar.**
+
+```
+el carrito ya es OTRA orden          -> este veredicto no habla de ella: nada
+nadie tocó el carrito mientras viajaba -> es la última palabra: end()
+algo lo tocó                          -> re-preguntar, UNA vez; su respuesta manda
+```
+
+El caso corriente —un 404 sin nada concurrente— no cuesta ninguna petición
+extra. Y el **tope** no es decorativo: sin él, el reintento vuelve a llegar
+«tarde» si algo emite mientras viaja, y pide otro, y otro, mientras siga habiendo
+actividad. Hay test, y sólo se distingue metiendo una emisión DURANTE el
+reintento — sin eso la mutación sobrevive.
 
 **`syncForBusiness` tenía la misma carrera y se quedó fuera de la primera
 versión.** Lo encontró la segunda revisión escribiendo el test gemelo del de
@@ -2473,7 +2497,7 @@ Cerrar el hueco del todo pediría una versión o un `updated_at` en la respuesta
 comprobado que hoy no existe ninguno en `GroupOrderDM` (hay `confirmedAt`,
 `closedAt`, `billRequestedAt`, pero no un orden global).
 
-**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (19 casos).
+**Fijado en** `test/group_orders/respuestas_fuera_de_orden_test.dart` (21 casos).
 Varios son CONTROLES y están a propósito, porque una guarda que descarte SIEMPRE
 también pondría verde al resto: en orden normal la última respuesta se aplica; el
 pull-to-refresh sigue aplicando la suya; un 404 de la orden actual sigue vaciando
@@ -2482,11 +2506,20 @@ nada que la invalide, SÍ adopta la orden. **Ese último faltaba** y sin él se
 podía apagar entera la recuperación en frío del carrito (F4a) sin que nada se
 pusiera rojo.
 
-**Sobre el barrido de mutaciones.** Ninguna sobrevive, pero eso sólo es verdad
-**después de dos rondas de revisión**: la primera dejó seis vivas —la guarda de
-`syncAnyActive` sin control positivo, el bump de lanzamiento en las tres
-lecturas, y el `isClosed` en dos de ellas— y una, la de `end()`, hubo que
-escribirle el test dos veces. Dos avisos para la próxima:
+**Sobre el barrido de mutaciones, y es la lección que más vale de esta PR.**
+Ninguna sobrevive, pero eso sólo es verdad **después de tres rondas**. Mi primer
+barrido dio «7 de 7 mueren» y era insuficiente: la revisión encontró **nueve**
+mutaciones más que sobrevivían —el control positivo de `syncAnyActive` (sin él
+se podía apagar entera la recuperación en frío del carrito, F4a, sin que nada se
+pusiera rojo), el bump de lanzamiento en las tres lecturas, el `isClosed` en dos,
+y las tres de la rama del 404—. **Un barrido mide lo que se te ocurre romper**;
+que salga limpio dice bastante menos de lo que parece. Tres avisos para la
+próxima:
+
+- Dos de esas nueve sólo se distinguen **contando peticiones**, no mirando el
+  estado final: el tope del reintento y el «esto no habla de mi orden». Si todas
+  tus aserciones miran el estado, hay una familia entera que no estás midiendo.
+
 
 - **Un fallo de compilación también da exit ≠ 0.** La mutación que mueve el
   contador al repo hay que verificarla mirando QUÉ falla: compila, deja el resto
