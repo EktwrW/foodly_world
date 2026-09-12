@@ -59,6 +59,30 @@ void main() {
       expect(cubit.state.bucket, 'ready');
     });
 
+    /// EL SÍNTOMA QUE DA NOMBRE A ESTO, y no necesita ninguna carrera: lo
+    /// encontró la contra-revisión. `selectBucket` no vaciaba la lista, y el
+    /// panel sólo pinta el spinner con `loading && orders.isEmpty`
+    /// (`manager_orders_page.dart:196`). O sea que en CADA cambio de chip se
+    /// veían las filas del cubo anterior bajo el chip nuevo, sin spinner y sin
+    /// aviso, durante todo el viaje. La guarda de generación no lo tocaba: sólo
+    /// evita que se apliquen TARDE, no la ventana.
+    test('al cambiar de chip la lista se vacía y el spinner puede salir', () async {
+      final carga = cubit.load();
+      repo.responder(0, ['de-pendientes']);
+      await carga;
+
+      final chip = cubit.selectBucket('ready'); // sin responder: en pleno viaje
+
+      expect(cubit.state.orders, isEmpty,
+          reason: 'las filas del cubo anterior no son las de éste');
+      expect(cubit.state.loading, isTrue);
+      expect(cubit.state.total, 0, reason: 'el pie diría «N de M» del cubo viejo');
+
+      repo.responder(1, ['de-listos']);
+      await chip;
+      expect(cubit.state.orders.single.uuid, 'de-listos');
+    });
+
     /// El control: sin nada que la invalide, la lectura del chip SÍ se aplica.
     /// Sin esto, una guarda que descarte siempre pasaría el banco.
     test('pero el cambio de chip normal sí pinta sus filas', () async {
@@ -95,23 +119,27 @@ void main() {
   /// ANTERIOR, sin spinner y sin error — el estado exacto que esta PR existe
   /// para borrar, y peor que antes de tocar nada.
   group('descartar no puede dejar la pantalla peor', () {
-    test('si el relevo falla en silencio, alguien vuelve a leer', () async {
+    test('si el relevo falla en silencio, las filas buenas se aplican igual', () async {
       final carga = cubit.load();
       repo.responder(0, ['de-pendientes']);
       await carga;
 
       final chip = cubit.selectBucket('ready');
-      unawaited(cubit.refetchSilently()); // el relevo
+      unawaited(cubit.refetchSilently()); // el relevo, que se va a caer
 
-      repo.responder(1, ['de-listos']); // la del chip: descartada
+      repo.responder(1, ['de-listos']); // las filas BUENAS del cubo actual
       await chip;
       repo.fallar(2); // y el relevo se cae sin decir nada
       await _turno();
 
+      // Descartarlas por «alguien lanzó después» dejaba la pantalla con las
+      // filas de PENDIENTES bajo el chip de LISTOS. Son del cubo que se está
+      // mirando y nadie ha traído nada mejor: se aplican.
+      expect(cubit.state.orders.single.uuid, 'de-listos');
+
       final antes = repo.lecturas;
       await Future<void>.delayed(const Duration(milliseconds: 80));
-      expect(repo.lecturas, antes + 1,
-          reason: 'nadie más iba a arreglar esa pantalla');
+      expect(repo.lecturas, antes, reason: 'y sin pagar una petición de rescate');
     });
 
     /// Y el control del control: pedir que alguien relea NO puede convertirse
@@ -134,22 +162,24 @@ void main() {
     /// El reintento del `LoadFailureView` va por `refetchSilently`, así que si
     /// se descarta no emite NADA: ni datos, ni spinner, ni error. El manager
     /// acaba de pulsar el botón y parece muerto.
-    test('un reintento descartado no se pierde', () async {
+    /// El reintento del `LoadFailureView` va por `refetchSilently`. Si se
+    /// descartara no emitiría NADA —ni datos, ni spinner, ni error— y el botón
+    /// parecería muerto con el manager mirándolo.
+    test('un reintento no se pierde aunque algo lo releve', () async {
       final carga = cubit.load();
       repo.fallar(0);
       await carga;
 
       final reintento = cubit.refetchSilently();
-      unawaited(cubit.refetchSilently()); // algo lo releva
+      unawaited(cubit.refetchSilently()); // algo lo releva y se cae
 
       repo.responder(1, ['buenas']);
       await reintento;
       repo.fallar(2);
       await _turno();
 
-      final antes = repo.lecturas;
-      await Future<void>.delayed(const Duration(milliseconds: 80));
-      expect(repo.lecturas, antes + 1);
+      expect(cubit.state.orders.single.uuid, 'buenas');
+      expect(cubit.state.error, isNull);
     });
 
     /// Y el spinner es de quien lo encendió: descartar la lectura del PRIMER
@@ -338,6 +368,36 @@ void main() {
       expect(repo.lecturas, antes + 1, reason: 'la red tenía que saltar igual');
     });
 
+    /// EL TOPE DE REINTENTOS TIENE QUE AGUANTAR CON LECTURAS CRUZADAS, y la
+    /// versión anterior de esta guarda lo rompía: pedía una resincronización al
+    /// descartar, y eso reseteaba `_reintentosDeRed`, así que cada descarte
+    /// devolvía la red a cero. Medido por la contra-revisión: 22 peticiones
+    /// contra las 4 de referencia. El comentario del propio cubit dice que «un
+    /// backend caído no puede convertirse en un GET cada dos segundos para
+    /// siempre» — y podía.
+    test('un backend caído no dispara una tormenta de peticiones', () async {
+      final carga = cubit.load();
+      repo.fallar(0);
+      await carga;
+
+      final accion = cubit.advanceFulfillment('a', 'ready'); // arma la red
+      repo.responderAccion(uuid: 'a', mesa: 'x');
+      await accion;
+
+      // Todo lo que salga a partir de aquí se cae, y encima cruzado.
+      for (var i = 0; i < 12; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 25));
+        unawaited(cubit.refetchSilently());
+        for (var j = repo.respondidas; j < repo.lecturas; j++) {
+          repo.fallar(j);
+        }
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+
+      expect(repo.lecturas, lessThanOrEqualTo(18),
+          reason: 'el tope de 3 reintentos tiene que seguir acotando');
+    });
+
     /// El control: una lectura que SÍ se aplica sí la desarma. Sin esto, «no
     /// desarmar nunca» pasaría el test de arriba.
     test('pero una lectura que se aplica sí la desarma', () async {
@@ -406,9 +466,16 @@ class _RepoFalso implements GroupOrderRepo {
         orders: [for (final u in uuids) GroupOrderDM(uuid: u, businessUuid: 'b1')],
       )));
 
-  void fallar(int indice) => _lecturas[indice].complete(ApiResult.failure(
-        AppRequestException(error: StateError('sin red'), stackTrace: StackTrace.current),
-      ));
+  /// Hasta dónde se ha respondido ya, para poder ir contestando una ráfaga sin
+  /// llevar la cuenta desde fuera.
+  int respondidas = 0;
+
+  void fallar(int indice) {
+    if (indice >= respondidas) respondidas = indice + 1;
+    _lecturas[indice].complete(ApiResult.failure(
+      AppRequestException(error: StateError('sin red'), stackTrace: StackTrace.current),
+    ));
+  }
 
   @override
   Future<ApiResult<GroupOrderResponseDM>> managerSetFulfillment(

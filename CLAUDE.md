@@ -2554,155 +2554,115 @@ próxima:
 
 ## El panel del manager pintaba las filas del cubo anterior (2026-09-12)
 
-Cola de «Una respuesta que llegaba tarde dejaba la orden rancia». Aquella
-entrada cerró la carrera en los dos cubits de la orden grupal; `ManagerOrdersCubit`
-tenía la misma y se quedó fuera por alcance. **Aquí se ve en pantalla**, que es
-lo que la hace peor que la de la orden.
+Cola de «Una respuesta que llegaba tarde dejaba la orden rancia». Aquella cerró
+la carrera en los dos cubits de la orden grupal; `ManagerOrdersCubit` tenía la
+misma. **Aquí se ve en pantalla**, que es lo que la hace peor.
 
-**El fallo.** `_fetch` leía `state.bucket` al LANZAR y aplicaba al volver, sin
-comprobar nada. Dos caminos:
+**Y son DOS fallos, no uno.** Tardé tres diseños en separarlos, y mezclarlos fue
+la causa de todo lo que salió mal por el camino.
 
-1. **El manager toca otro chip.** `selectBucket` emite el cubo nuevo y vuelve a
-   leer. Si la lectura del cubo ANTERIOR responde después, **sus filas se
-   pintan con el chip nuevo ya marcado**: «listos» mostrando pendientes.
-2. **Dos lecturas del mismo cubo**: el evento de Pusher y la red de seguridad de
-   2 s. Si la segunda responde antes que la primera, la vieja pisa a la nueva.
+### 1. La ventana: en CADA cambio de chip, sin carrera ninguna
 
-El coalescer de lecturas no tapa ninguno de los dos, y por una razón más simple
-de la que yo escribí primero: **`managerOrders` no pasa por el coalescer en
-absoluto** — `_lecturasDelTurno` sólo envuelve a `getGroupOrder`. Aunque pasara
-tampoco serviría: colapsa oyentes del mismo evento en el mismo turno, y esto son
-turnos distintos.
+`selectBucket` emitía el cubo nuevo y **no vaciaba `orders`**. El panel pinta el
+spinner sólo con `loading && orders.isEmpty` (`manager_orders_page.dart:196`), o
+sea que durante todo el viaje se veían las filas del cubo anterior bajo el chip
+nuevo, **sin spinner y sin aviso**. Lo encontró la contra-revisión, midiéndolo a
+nivel de widget, y es el síntoma que da nombre a esto.
 
-**La guarda es la misma que la #86**, con la diferencia que importa:
+Se arregla vaciando la lista (y `total`, o el pie dice «N de M» del cubo viejo).
+Una línea. **La guarda de generación no lo tocaba**: aquélla evita que una
+respuesta se aplique TARDE, no que la ventana exista. Yo escribí una PR entera
+sobre «las filas del cubo anterior» sin arreglar el caso más común de eso.
 
-**EL EMBUDO NO PUEDE SER «TODA EMISIÓN», y ésa es la regresión que la #86 pagó
-por aprender.** `loading` y `error` son **banderas**, no datos del servidor. Si
-subieran el contador, una acción que falla —un 409 al avanzar el fulfillment de
-una orden que otro camarero acaba de cerrar— taparía la lectura que venía con la
-verdad, y no hay segundo evento que la repare. Aquí el embudo sube sólo cuando
-cambia **qué muestra la lista**: las filas, los contadores o el cubo.
+### 2. La carrera: respuestas fuera de orden
+
+`_fetch` leía `state.bucket` al lanzar y aplicaba al volver sin comprobar nada.
+Dos lecturas del mismo cubo —el evento de Pusher y la red de seguridad de 2 s—
+podían cruzarse y dejar la vieja encima.
+
+El coalescer no tapa nada de esto, y por una razón más simple de la que escribí
+primero: **`managerOrders` no pasa por el coalescer en absoluto** —
+`_lecturasDelTurno` sólo envuelve a `getGroupOrder`.
+
+**La regla, y es la tercera que probé:**
 
 ```dart
-if (!identical(antes.orders, ahora.orders) ||
-    !identical(antes.counts, ahora.counts) ||
-    antes.bucket != ahora.bucket) {
-  _generacion++;
-}
+if (generacion <= _ultimaAplicada || cubo != state.bucket) return;
 ```
 
-El `identical` no es pereza —`copyWith` deja pasar la MISMA instancia cuando no
-se le pasa el campo, así que comparar identidad es exactamente «¿lo tocó esta
-emisión?»— **pero tampoco está fijado por nada**: cambiarlo por `==` sobrevive
-al banco entero. Y el término de `counts` **no puede dispararse en un test**,
-porque freezed canonicaliza el `@Default(ManagerOrderCountsDM())` y las dos
-instancias son siempre la misma. Lo midió la revisión; conviene saberlo antes
-de fiarse de esa línea.
+**Se descarta sólo si ya hay algo MEJOR en pantalla, o si estas filas son de otro
+cubo.** Dos campos: el número de orden de salida, y el de la última que se
+aplicó (que también pone una acción que toca una fila visible, porque eso deja
+la pantalla igual de al día).
 
-**De las tres cláusulas, la portante es la de `orders`; las otras dos son
-defensivas y HOY están muertas**, y conviene decirlo en vez de presentarlas como
-diseño. Lo demostró la revisión: dejando sólo `orders` el banco entero sigue
-verde. `bucket:` sólo se pasa en `selectBucket`, que llama a `_fetch()` en la
-línea siguiente —el bump de lanzamiento ya lo cubre—, y `counts:` sólo se pasa
-junto a `orders: r.orders`, que ya es lista nueva. Se quedan porque dejarían de
-estar muertas en cuanto alguien emita un cubo sin leer detrás, que es
-exactamente el refactor que rompería la guarda en silencio.
+### Las dos reglas que probé antes, y por qué estaban mal
 
-**Y aquí `onChange` SÍ vale como embudo, al revés que en el chip flotante.** En
-aquél hubo que sobrescribir `emit` porque bloc deduplica los estados iguales y
-`onChange` no corre. `ManagerOrdersState` es una clase plana **sin `operator ==`**
-(lo dice su propio docblock: «sin freezed a propósito»), así que dos instancias
-nunca son iguales y bloc no deduplica nada.
+**Primera: «sube el contador con cada emisión».** Es el error que ya había
+costado dos regresiones en la #86 y que yo creía traer aprendido. Aquí lo evité
+a medias con un embudo de tres cláusulas en `onChange`… y de las tres **sólo la
+de `orders` era portante**; las otras dos estaban muertas. Peor: la contra-revisión
+demostró que el embudo entero, con su `identical` y su trampa del `operator ==`,
+**existía para expresar una asignación en el único sitio que la necesitaba** —la
+acción que toca una fila visible—. Doce líneas para una.
 
-**Y aquí me corrigió la revisión**: yo había escrito que ponerle `==` «vuelve la
-guarda intermitente sin que nada falle», y lo midió parcheando el estado con
-`==` y `hashCode`: **el banco entero sigue verde**. El daño real es sólo el bump
-del lado de aplicar en emisiones value-iguales, y ése no es portante porque lo
-cubre el `++` de lanzamiento. O sea: la intención del aviso es correcta —nada lo
-detectaría— pero el daño que anunciaba era mayor que el real.
+**Segunda: «descarto si alguien lanzó después de mí».** Suena bien y es
+demasiado agresiva: **la otra lectura puede fallar en silencio** —un refetch de
+fondo no le cuenta errores al manager, y eso es deliberado— y entonces tirar la
+mía deja la pantalla con las filas viejas, sin spinner y sin error. Medido por
+la revisión contra `main`: `main` mostraba las filas correctas y mi versión no.
+**Era peor que no hacer nada**, que es exactamente el mismo modo de fallo que la
+#86: «ya vendrá otra lectura» sólo vale si viene.
 
-**DESCARTAR UNA LECTURA NO PUEDE DEJAR LA PANTALLA PEOR, y mi primera versión
-sí lo hacía.** Es el hallazgo bloqueante de la revisión y es el mismo error de
-fondo que la #86: tratar todas las lecturas como si fueran mejor-esfuerzo.
+Mi parche de aquello fue pedir una resincronización al descartar. **Y eso
+derrotaba el tope de 3 reintentos**, porque `_pedirResincronizacion()` resetea
+`_reintentosDeRed`: medido, 22 peticiones contra las 4 de referencia con el
+backend caído. El propio comentario del cubit promete que «un backend caído no
+puede convertirse en un GET cada dos segundos para siempre», y podía. Hay test
+que lo acota.
 
-Con el socket SANO: el manager toca «listos», su lectura sale, y llega un evento
-de Pusher que lanza otra. La del chip vuelve, la generación dice que es vieja y
-se tira. Y entonces la relevista **falla en silencio** —un refetch de fondo no
-le cuenta errores al manager, y eso es deliberado—. Resultado medido:
+Con la regla buena nada de eso hace falta: la lectura **no se descarta, se
+aplica**, y no se paga ninguna petición de rescate.
 
-    bucket=ready · orders=[las de PENDIENTES] · loading=false · error=null
+### Lo que queda dicho, y no fingido
 
-Las filas del cubo anterior bajo el chip nuevo, sin spinner y sin aviso: **el
-estado exacto que esta PR existe para borrar**, y peor que antes de tocar nada,
-porque sin guarda la lectura del chip se aplicaba. Lo mismo con el botón de
-reintentar de `LoadFailureView`, que va por `refetchSilently`: un reintento
-descartado no emite NADA y el botón parece muerto.
-
-El arreglo usa la pieza que ya estaba: **al descartar se pide una
-resincronización**, y de ella responde la red de seguridad. Con una condición
-para que no cueste peticiones de más: sólo si no ha llegado ya algo más nuevo
-(`_ultimaAplicada`). En el caso corriente —dos lecturas cruzadas, la nueva
-gana— la pantalla ya está fresca y no se pide nada.
-
-**La red de seguridad y la lectura descartada.** Una respuesta que llega tarde
-**no desarma la red y no consume reintento**: sus contadores son tan viejos como
-sus filas, y desarmar con ellos dejaría los chips congelados sin nadie que
-volviera a pedirlos.
-
-**El spinner es de quien lo encendió.** Descartar una lectura no puede apagar el
-`loading` de OTRA que sigue en vuelo — dos chips seguidos, y con la lista vacía
-eso pinta **«No hay órdenes»**, un dato falso, que es justo lo que los
-comentarios de `manager_orders_page.dart` dicen que no puede pasar. Por eso hay
-un contador de lecturas visibles en vuelo y sólo se apaga cuando llega a cero.
-
-**Una acción que no toca la lista no invalida nada.** `copyWith` construía la
-lista nueva SIEMPRE, incluso cuando la orden no estaba en ella (otro cubo, o el
-chip filtrando), y eso mataba lecturas buenas en vuelo. Ahora se pasa la MISMA
-instancia cuando no hay nada que sustituir.
+- **Una lectura descartada no desarma la red ni consume reintento**: sus
+  contadores son tan viejos como sus filas.
+- **Una acción que no toca la lista no invalida nada.** `copyWith` construía la
+  lista nueva SIEMPRE, incluso cuando la orden no estaba en ella (otro cubo, o
+  el chip filtrando), y eso mataba lecturas buenas.
+- **De los tres `isClosed` del cubit sólo el de `_fetch` está fijado en
+  solitario**: los de `_pedirResincronizacion` y el del temporizador se tapan el
+  uno al otro.
+- **`managerOrders` ignora `page`**: el panel pide una sola página a propósito.
 
 **Fijado en** `test/group_orders/panel_respuestas_fuera_de_orden_test.dart`
-(18 casos). Cuatro son CONTROLES: el cambio de chip normal sí pinta sus filas,
-una acción que falla no invalida nada, una lectura aplicada sí desarma la red, y
-pedir relectura al descartar **no** cuesta una petición de más cuando ya llegó
-algo más nuevo.
+(20 casos). Varios son controles, y el que más sostiene es el que **cuenta
+peticiones**: ninguna otra aserción lo hace, y ahí es donde se esconden los
+fallos de esta familia.
 
-**Yo escribí aquí que sin esos controles «una guarda que descarte SIEMPRE
-pasaría el banco», y es FALSO**: la revisión los saltó con `skip:`, aplicó la
-mutación y el banco siguió muriendo — cualquier aserción del tipo
-`orders.single.uuid` ya exige que alguna lectura se aplique. Los controles
-valen, pero no por lo que yo decía: el que sí sostiene algo en solitario es el
-de «no pide una petición de más», porque ése **cuenta peticiones** y ninguna
-otra aserción lo hace.
-
-**Dos guardas son redundantes HOY y conviene tenerlo dicho en vez de fingir que
-las fija un test.** El `!silent` del apagado del spinner lo subsume el contador
-de lecturas visibles (si `loading` sigue encendido es porque queda una visible
-esperando, y entonces el contador ya bloquea). Y de los tres `isClosed` del
-cubit, sólo el de `_fetch` está fijado en solitario: los de
-`_pedirResincronizacion` y el del temporizador **se tapan el uno al otro**, así
-que quitar uno no se nota y quitar los dos sí.
-
-**De las trece mutaciones probadas no sobrevive ninguna** salvo las redundantes
-de arriba, con una de control que sí sobrevive. Pero el número, otra vez, no es la parte importante: **mi primer
-barrido daba «7 de 7 mueren» y la revisión encontró cuatro fallos reales
-debajo**, dos de ellos bloqueantes. Es la segunda vez seguida. Lo que se me
-escapó esta vez, por si sirve de patrón:
+**De las mutaciones probadas no sobrevive ninguna**, con una de control que sí.
+Pero el número no significa nada por sí solo, y ésta es la tercera vez seguida
+que lo compruebo: **mi barrido dio «7 de 7 mueren» y luego aparecieron ocho
+fallos reales**, dos de ellos bloqueantes y uno introducido por mi propio
+arreglo. Lo que se me escapó, por si sirve de patrón:
 
 - **Miraba el flag y no las filas.** Mi test del spinner afirmaba
-  `loading == false` y nada más; el agujero estaba en `orders`.
-- **No pregunté qué pasa si el relevo falla.** La guarda delega en «ya vendrá
-  otra lectura» y yo no comprobé que venga. En la #86 era lo mismo con otro
-  nombre: «el sistema se cura solo» sólo vale si hay quien lo cure.
-- **Un test mío medía un escenario IMPOSIBLE.** «Una lectura que falla no
-  invalida a la que viene detrás» lanzaba la que falla ANTES que la otra, así
-  que la guarda la descartaba por el bump de lanzamiento y nunca llegaba a la
-  rama de fallo: pasaba sin ejercitar nada. Para las lecturas ese caso no existe
-  —toda lectura sube el contador al lanzarse—; sólo existe para las ACCIONES.
-  Ahora el test afirma que el error se emitió, que es lo que impide que vuelva a
-  medir el vacío.
+  `loading == false` y el agujero estaba en `orders`.
+- **No pregunté qué pasa si el relevo falla.**
+- **Un test mío medía un escenario IMPOSIBLE**: lanzaba la lectura que falla
+  ANTES que otra, así que la guarda la descartaba y nunca llegaba a la rama de
+  fallo. Pasaba sin ejercitar nada.
 - **El fake mentía por omisión**: ignoraba el cubo, así que toda la historia del
-  «cubo anterior» estaba simulada con etiquetas y ningún test comprobaba qué se
-  pedía de verdad.
+  «cubo anterior» estaba simulada con etiquetas.
+- **No medí a nivel de widget.** El fallo nº 1 de arriba es invisible mirando
+  sólo el estado del cubit: hace falta saber con qué condición pinta el spinner.
+- **Y afirmé en falso que los controles sostenían el banco.** La revisión los
+  saltó con `skip:` y el banco siguió muriendo.
+
+**Pendiente, en su propia PR**: `load()` hace `await _fetch()` y **después**
+asigna `_sub`, así que salir de la pantalla durante la primera lectura deja una
+suscripción que nadie cancela — y un GET por cada resume, para siempre. Es
+preexistente y lo midió la contra-revisión.
 
 
 ## El modo «negocio visitado» (2026-04-12)
