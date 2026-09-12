@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodly_world/core/network/base/api_result.dart';
 import 'package:foodly_world/core/network/group_orders/group_order_repo.dart';
@@ -78,10 +80,23 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     required Logger logger,
     required this.businessUuid,
     GroupOrderRealtimeService? realtime,
+    Duration esperaDeResincronizacion = const Duration(seconds: 2),
   })  : _repo = repo,
         _logger = logger,
         _realtime = realtime,
+        _esperaDeResincronizacion = esperaDeResincronizacion,
         super(const ManagerOrdersState());
+
+  /// Cuánto se espera al evento antes de leer por nuestra cuenta.
+  ///
+  /// Dos segundos con margen: medido en producción, el `BusinessOrdersTouched`
+  /// de la propia mutación llegaba entre 52 ms y 1 s después de que la
+  /// mutación respondiera. Parametrizable sólo para los tests.
+  final Duration _esperaDeResincronizacion;
+
+  /// Red de seguridad por si el evento no llega (socket caído, evento
+  /// perdido). La desarma cualquier lectura real.
+  Timer? _redDeSeguridad;
 
   Future<void> load() async {
     emit(state.copyWith(loading: true, error: null));
@@ -99,7 +114,32 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
   /// un tick que falla no interrumpe al manager.
   Future<void> refetchSilently() => _fetch(silent: true);
 
+  /// Pide que los contadores se re-sincronicen, SIN leer ahora mismo.
+  ///
+  /// La mutación que acaba de responder emite `BusinessOrdersTouched`, y ese
+  /// evento ya dispara un `refetchSilently()`. Leer aquí además era pedir dos
+  /// veces lo mismo por cada acción del manager — medido en producción, con
+  /// 52 ms a 1 s entre las dos peticiones.
+  ///
+  /// La fila del manager NO espera a esto: la actualiza el `emit` optimista
+  /// con la respuesta de la propia mutación. Lo único que llega con la
+  /// latencia del socket son los contadores de los chips.
+  ///
+  /// Un solo temporizador para todas las acciones: tres acciones seguidas no
+  /// pueden dejar tres lecturas encoladas.
+  void _pedirResincronizacion() {
+    _redDeSeguridad?.cancel();
+    _redDeSeguridad = Timer(_esperaDeResincronizacion, () {
+      if (!isClosed) refetchSilently();
+    });
+  }
+
   Future<void> _fetch({bool silent = false}) async {
+    // Cualquier lectura real desarma la red: da igual quién la haya
+    // disparado, los contadores ya se van a poner al día.
+    _redDeSeguridad?.cancel();
+    _redDeSeguridad = null;
+
     final res = await _repo.managerOrders(businessUuid, bucket: state.bucket);
     res.when(
       success: (r) => emit(state.copyWith(
@@ -163,16 +203,17 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
     return res.when(
       success: (r) {
         final updated = r.groupOrder;
-        // La orden actualizada reemplaza a su versión en la lista; los
-        // contadores se re-sincronizan con un refetch silencioso (los mueve
-        // el cambio de bucket de esa orden).
+        // La orden actualizada reemplaza a su versión en la lista en el acto.
+        // Los contadores los mueve el cambio de bucket de esa orden, y de eso
+        // se encarga el evento de la propia mutación (ver
+        // `_pedirResincronizacion`).
         emit(state.copyWith(
           orders: [
             for (final o in state.orders) o.uuid == updated.uuid ? updated : o,
           ],
           error: null,
         ));
-        refetchSilently();
+        _pedirResincronizacion();
         return true;
       },
       failure: (e) {
@@ -185,6 +226,8 @@ class ManagerOrdersCubit extends Cubit<ManagerOrdersState> {
 
   @override
   Future<void> close() async {
+    _redDeSeguridad?.cancel();
+    _redDeSeguridad = null;
     await _sub?.cancel();
     return super.close();
   }
